@@ -15,20 +15,17 @@ is nullified and whose length is 1 otherwise.
 
 from __future__ import annotations
 
+import argparse
 import copy
 import logging
 import pathlib
 import sys
+import tomllib
 from dataclasses import dataclass, field
 
-from . import interface_input_params as params
 from . import transforms
 from .enums import ENUM_FILENAME, write_enums
-from .paths import (
-    ACC_ROOT_DIR,
-    CODEGEN_ROOT,
-    CPPBMAD_ROOT,
-)
+from .paths import ACC_ROOT_DIR, CODEGEN_ROOT, CPPBMAD_ROOT
 from .proxy import (
     create_cpp_proxy_header,
     create_cpp_proxy_impl,
@@ -59,13 +56,26 @@ from .util import write_if_differs
 logger = logging.getLogger(__name__)
 
 DEBUG = False  # Change to True to enable more verbose printout
-DEBUG_EQUALITY = False
-DEBUG_INSTANTIATION = False
 
 
 def print_debug(line):
     if DEBUG:
         logger.warning(line)
+
+
+@dataclass
+class CodegenConfig:
+    struct_def_files: list[str]
+    struct_def_json_files: list[str]
+    struct_list: list[str]
+    component_no_translate_list: list[str]
+    interface_ignore_list: list[str]
+    structs_defined_externally: list[str]
+    include_header_files: list[str]
+    c_side_name_translation: dict[str, str]
+
+    equality_use_statements: list[str] = field(default_factory=list)  # TODO remove
+    test_use_statements: list[str] = field(default_factory=list)  # TODO remove
 
 
 @dataclass
@@ -597,34 +607,31 @@ def get_structure_definitions() -> list[CodegenStructure]:
     return structs
 
 
-def generate():
+def generate(config_file: pathlib.Path = CODEGEN_ROOT / "default.toml"):
     # TODO refactor globals
     global params  # noqa: PLW0603
-
-    logging.basicConfig(level="INFO")
-    logger.setLevel("DEBUG")
 
     include_dir = CPPBMAD_ROOT / "include"
     include_dir.mkdir(exist_ok=True)
 
-    if len(sys.argv) > 1:
-        master_input_file = sys.argv[1]
-        params = __import__(sys.argv[1])
-        logging.error(f"Custom input file: {master_input_file}")
+    with open(config_file, "rb") as fp:
+        params = CodegenConfig(**tomllib.load(fp))
+
+    logger.info(f"Config file: {config_file}")
 
     structs = get_structure_definitions()
     n_found = sum(1 for struct in structs if struct.short_name)
 
     # Print diagnostics
-    logging.info(f"Number of structs in input list: {len(structs)}")
-    logging.info(f"Number of structs found:         {n_found}")
+    logger.info(f"Number of structs in input list: {len(structs)}")
+    logger.info(f"Number of structs found:         {n_found}")
 
     check_missing(structs)
-    write_output(structs)
+    write_output(params, structs)
     write_if_differs(write_enums, ENUM_FILENAME)
 
 
-def write_output(structs: list[CodegenStructure]) -> None:
+def write_output(params: CodegenConfig, structs: list[CodegenStructure]) -> None:
     if DEBUG:
         write_parsed_structures(structs, "f_structs.parsed")
 
@@ -649,6 +656,7 @@ def write_output(structs: list[CodegenStructure]) -> None:
     write_if_differs(
         create_fortran_proxy_code,
         generated / "proxy_mod.f90",
+        params,
         structs,
     )
     cpp_proxy_header_template = (CODEGEN_ROOT / "tao_proxies.tpl.hpp").read_text()
@@ -656,6 +664,7 @@ def write_output(structs: list[CodegenStructure]) -> None:
     write_if_differs(
         create_cpp_proxy_header,
         CPPBMAD_ROOT / "include" / "tao_proxies.hpp",
+        params,
         cpp_proxy_header_template,
         cpp_proxy_cpp_template,
         structs,
@@ -663,6 +672,7 @@ def write_output(structs: list[CodegenStructure]) -> None:
     write_if_differs(
         create_cpp_proxy_impl,
         generated / "tao_proxies.cpp",
+        params,
         cpp_proxy_header_template,
         cpp_proxy_cpp_template,
         structs,
@@ -689,5 +699,35 @@ def get_c_type(type_val: str) -> str:
     raise NotImplementedError(f"Unknown type: {type_val}")
 
 
+def main():
+    global DEBUG
+
+    parser = argparse.ArgumentParser(description="Run the cppbmad code generator.")
+    parser.add_argument(
+        "--log-level",
+        default="INFO",
+        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+        help="Set the logging level.",
+    )
+    parser.add_argument(
+        "--config-file",
+        type=pathlib.Path,
+        default=CODEGEN_ROOT / "default.toml",
+        help="Path to the configuration file.",
+    )
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Enable debug mode",
+    )
+    args = parser.parse_args()
+
+    DEBUG = args.debug
+    logging.basicConfig(level=args.log_level)
+    logging.getLogger("codegen").setLevel(args.log_level)
+
+    generate(config_file=args.config_file)
+
+
 if __name__ == "__main__":
-    generate()
+    main()

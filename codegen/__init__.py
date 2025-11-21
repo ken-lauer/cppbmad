@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from . import transforms
-from .create_interface import (
+from .structs import StructureMember
+from .gen import (
     Argument,
     CodegenStructure,
     CSideTransform,

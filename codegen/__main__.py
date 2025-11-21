@@ -1,5 +1,5 @@
 from __future__ import annotations
 
-from .create_interface import generate
+from .gen import main
 
-generate()
+main()

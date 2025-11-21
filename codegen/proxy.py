@@ -5,12 +5,11 @@ from dataclasses import dataclass
 from string import Template
 from typing import TYPE_CHECKING
 
-from .interface_input_params import c_side_name_translation
 from .types import ArgumentType, FullType, PointerType
 from .util import snake_to_camel
 
 if TYPE_CHECKING:
-    from .create_interface import CodegenStructure
+    from .gen import CodegenStructure, CodegenConfig
 
 logger = logging.getLogger(__name__)
 
@@ -842,7 +841,13 @@ def split_signature(cpp_template: str, class_name: str) -> tuple[str, str]:
     return header_declaration, implementation
 
 
-def generate_accessor_code(struct_name: str, attr_name: str, full_type: FullType, attr_kind: str = ""):
+def generate_accessor_code(
+    params: CodegenConfig,
+    struct_name: str,
+    attr_name: str,
+    full_type: FullType,
+    attr_kind: str = "",
+):
     """
     Generate Fortran and C++ accessor code for a given struct/attribute/type combination.
     """
@@ -852,7 +857,7 @@ def generate_accessor_code(struct_name: str, attr_name: str, full_type: FullType
     except KeyError as ex:
         raise ValueError(f"Unsupported type: {full_type}") from ex
 
-    cattr_name = c_side_name_translation.get(f"{struct_name}%{attr_name}", attr_name)
+    cattr_name = params.c_side_name_translation.get(f"{struct_name}%{attr_name}", attr_name)
 
     to_replace = {"structname": struct_name, "fattrname": attr_name, "cattrname": cattr_name}
     if attr_kind:
@@ -873,7 +878,7 @@ def generate_accessor_code(struct_name: str, attr_name: str, full_type: FullType
     }
 
 
-def create_fortran_proxy_code(fout, structs: list[CodegenStructure]):
+def create_fortran_proxy_code(fout, params: CodegenConfig, structs: list[CodegenStructure]):
     print(
         """\
 module bmad_struct_proxy_mod
@@ -944,7 +949,7 @@ contains
             if not arg.is_component:
                 continue
             try:
-                acc = generate_accessor_code(struct.f_name, arg.f_name, arg.full_type, arg.kind)
+                acc = generate_accessor_code(params, struct.f_name, arg.f_name, arg.full_type, arg.kind)
             except ValueError as ex:
                 print(f"  ! skipped {struct.f_name}%{arg.f_name}: {ex}", file=fout)
                 continue
@@ -957,7 +962,10 @@ contains
 
 
 def get_proxy_header_and_code(
-    header_template_src: str, cpp_template_src: str, structs: list[CodegenStructure]
+    params: CodegenConfig,
+    header_template_src: str,
+    cpp_template_src: str,
+    structs: list[CodegenStructure],
 ) -> tuple[str, str]:
     c_forward_declarations = []
     subs = {}
@@ -1002,9 +1010,9 @@ class ${class_name} : public FortranProxy<${class_name}> {
             if not arg.is_component:
                 continue
             try:
-                acc = generate_accessor_code(struct.f_name, arg.f_name, arg.full_type, arg.kind)
+                acc = generate_accessor_code(params, struct.f_name, arg.f_name, arg.full_type, arg.kind)
             except ValueError as ex:
-                logging.warning(f"Proxy class {struct.f_name}%{arg.f_name} skipped: {ex}")
+                logger.warning(f"Proxy class {struct.f_name}%{arg.f_name} skipped: {ex}")
                 continue
 
             # Add getter declarations
@@ -1079,14 +1087,22 @@ using {class_name}Array3D = FortranTypeArray3D<{class_name}>;
 
 
 def create_cpp_proxy_header(
-    fout, header_template_src: str, cpp_template_src: str, structs: list[CodegenStructure]
+    fout,
+    params: CodegenConfig,
+    header_template_src: str,
+    cpp_template_src: str,
+    structs: list[CodegenStructure],
 ):
-    header, _ = get_proxy_header_and_code(header_template_src, cpp_template_src, structs)
+    header, _ = get_proxy_header_and_code(params, header_template_src, cpp_template_src, structs)
     fout.write(header)
 
 
 def create_cpp_proxy_impl(
-    fout, header_template_src: str, cpp_template_src: str, structs: list[CodegenStructure]
+    fout,
+    params: CodegenConfig,
+    header_template_src: str,
+    cpp_template_src: str,
+    structs: list[CodegenStructure],
 ):
-    _, impl = get_proxy_header_and_code(header_template_src, cpp_template_src, structs)
+    _, impl = get_proxy_header_and_code(params, header_template_src, cpp_template_src, structs)
     fout.write(impl)

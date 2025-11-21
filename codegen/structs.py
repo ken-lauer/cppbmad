@@ -1,5 +1,6 @@
 from __future__ import annotations
 import importlib
+import logging
 import pathlib
 import sys
 from .paths import ACC_ROOT_DIR
@@ -22,7 +23,9 @@ def find_bmad_struct_parser(
                 "Unable to import bmad_struct_parser: ACC_ROOT_DIR is unset and no Bmad path was given"
             )
 
-    sys.path.insert(0, str(bmad_root / subdirectory))
+    structs_path = str(bmad_root / subdirectory)
+    logging.info(f"Adding {structs_path} to sys.path...")
+    sys.path.insert(0, structs_path)
 
 
 bmad_struct_parser = find_bmad_struct_parser()
