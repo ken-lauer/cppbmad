@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Script to create:
 
@@ -420,7 +419,6 @@ def filter_structs(
     ]
 
 
-# NOTE: after moving this out of bmad, we no longer generate the equality code
 # def create_fortran_equality_check_code(f_equ, structs: list[CodegenStructure], module_name: str):
 #     f_equ.write(
 #         textwrap.dedent(f"""\
@@ -494,8 +492,8 @@ def filter_structs(
 #         f_equ.write(f"\nend function eq_{struct.short_name}\n")
 #
 #     f_equ.write("end module\n")
-#
-#
+
+
 # def get_to_json_source(struct: CodegenStructure) -> list[str]:
 #     args = [arg for arg in struct.args_to_convert if arg.is_component and arg.member is not None]
 #
@@ -614,7 +612,7 @@ def generate(config_file: pathlib.Path = CODEGEN_ROOT / "default.toml"):
     include_dir = CPPBMAD_ROOT / "include"
     include_dir.mkdir(exist_ok=True)
 
-    with open(config_file, "rb") as fp:
+    with config_file.open("rb") as fp:
         params = CodegenConfig(**tomllib.load(fp))
 
     logger.info(f"Config file: {config_file}")
@@ -635,10 +633,11 @@ def write_output(params: CodegenConfig, structs: list[CodegenStructure]) -> None
     if DEBUG:
         write_parsed_structures(structs, "f_structs.parsed")
 
+    generated = CPPBMAD_ROOT / "src" / "generated"
+
+    # We aren't generating equality these now that it's moved out of bmad-ecosystem
     # bmad_structs = [struct for struct in structs if struct.parsed.filename.parts[1].lower() not in {"tao"}]
     # tao_structs = [struct for struct in structs if struct.parsed.filename.parts[1].lower() == "tao"]
-
-    # We aren't generating these now that it's moved out of bmad-ecosystem
     # write_if_differs(
     #     create_fortran_equality_check_code,
     #     ACC_ROOT_DIR / "bmad" / "modules" / "equality_mod.f90",
@@ -647,12 +646,12 @@ def write_output(params: CodegenConfig, structs: list[CodegenStructure]) -> None
     # )
     # write_if_differs(
     #     create_fortran_equality_check_code,
-    #     ACC_ROOT_DIR / "tao" / "code" / "tao_equality_mod.f90",
+    #     # ACC_ROOT_DIR / "tao" / "src" / "tao_equality_mod.f90",
+    #     generated / "tao_equality_mod.f90",
     #     tao_structs,
     #     module_name="tao_equality_mod",
     # )
 
-    generated = CPPBMAD_ROOT / "code" / "generated"
     write_if_differs(
         create_fortran_proxy_code,
         generated / "proxy_mod.f90",
@@ -700,8 +699,6 @@ def get_c_type(type_val: str) -> str:
 
 
 def main():
-    global DEBUG
-
     parser = argparse.ArgumentParser(description="Run the cppbmad code generator.")
     parser.add_argument(
         "--log-level",
@@ -722,7 +719,6 @@ def main():
     )
     args = parser.parse_args()
 
-    DEBUG = args.debug
     logging.basicConfig(level=args.log_level)
     logging.getLogger("codegen").setLevel(args.log_level)
 
@@ -730,4 +726,5 @@ def main():
 
 
 if __name__ == "__main__":
+    DEBUG = "--debug" in sys.argv
     main()

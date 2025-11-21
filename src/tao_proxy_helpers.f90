@@ -1,6 +1,7 @@
 module tao_c_proxy_interface
   use bmad
   use tao_interface
+  use tao_equality_mod
   use fortran_cpp_utils, only: to_c_str
 
   implicit none

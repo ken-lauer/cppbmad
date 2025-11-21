@@ -9,7 +9,7 @@ from .types import ArgumentType, FullType, PointerType
 from .util import snake_to_camel
 
 if TYPE_CHECKING:
-    from .gen import CodegenStructure, CodegenConfig
+    from .gen import CodegenConfig, CodegenStructure
 
 logger = logging.getLogger(__name__)
 

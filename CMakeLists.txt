@@ -11,15 +11,49 @@ project(
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-file(GLOB GENERATED_SOURCES src/generated/*.cpp)
-
 add_library(${LIBNAME} SHARED
-  ${GENERATED_SOURCES}
-  src/_routines.cpp
-  src/_routines.f90
-  src/tao_index_proxies.cpp
-  src/cpptest.cpp
+  src/tao_proxy_helpers.f90
+  src/generated/proxy_mod.f90
+  src/test_struct_defs.f90
+
+  src/proxy_base.cpp
+  src/to_string.cpp
+  src/generated/tao_proxies.cpp
 )
+
+if (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
+  message(STATUS "Configuring gfortran options for ${LIBNAME}")
+
+  # This strange syntax add compiler options just for Fortran source files:
+  target_compile_options(${LIBNAME} PRIVATE
+    $<$<COMPILE_LANGUAGE:Fortran>:
+    # Generate backtrace on runtime error
+    -fbacktrace
+
+    # Allow lines to be any length (standard is usually 132)
+    -ffree-line-length-none
+  # Disable range checking on array subscripts
+  # -fno-range-check
+
+  # Allow dollar signs in entity names
+  # -fdollar-ok
+
+  # Generate backtrace on runtime error
+  -fbacktrace
+
+  # Link static libraries
+  # add_link_options(-Bstatic
+
+  # Allow lines to be any length (standard is usually 132
+  -ffree-line-length-none
+
+  # Enable OpenMP shared-memory parallel processing
+  # -fopenmp
+  # link options, too: -fopenmp
+  >
+  )
+
+endif()
 
 target_include_directories(${LIBNAME} PRIVATE
   "./include"
@@ -34,9 +68,11 @@ target_link_directories(
 )
 
 target_link_libraries(${LIBNAME} PUBLIC
+  forest
   bmad
   sim_utils
-  cpp_bmad_interface
+  tao
+  # cpp_bmad_interface
 )
 
 if(APPLE)
@@ -47,3 +83,14 @@ set_property(TARGET ${LIBNAME} PROPERTY CXX_STANDARD 17)
 target_compile_definitions(${LIBNAME} PRIVATE VERSION_INFO="${PROJECT_VERSION}")
 
 install(TARGETS ${LIBNAME} DESTINATION lib)
+
+add_executable(test1 src/tests/test1.cpp)
+target_include_directories(test1 PRIVATE
+  "./include"
+)
+target_link_directories(
+  test1
+  PRIVATE
+  "$ENV{ACC_ROOT_DIR}/${BUILD_TYPE}/lib"
+)
+target_link_libraries(test1 PRIVATE ${LIBNAME})

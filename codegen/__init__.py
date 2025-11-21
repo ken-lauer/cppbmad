@@ -1,15 +1,14 @@
 from __future__ import annotations
 
 from . import transforms
-from .structs import StructureMember
 from .gen import (
     Argument,
     CodegenStructure,
     CSideTransform,
     FortranSideTransform,
-    StructureMember,
     get_structure_definitions,
 )
+from .structs import StructureMember
 
 __all__ = [
     "Argument",
