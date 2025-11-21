@@ -6,9 +6,8 @@ from string import Template
 from typing import TYPE_CHECKING
 
 from .interface_input_params import c_side_name_translation
-from .util import snake_to_camel
-
 from .types import ArgumentType, FullType, PointerType
+from .util import snake_to_camel
 
 if TYPE_CHECKING:
     from .create_interface import CodegenStructure

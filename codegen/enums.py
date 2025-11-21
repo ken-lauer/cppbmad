@@ -12,22 +12,19 @@ import pathlib
 import re
 from dataclasses import dataclass
 
-from bmad_struct_parser.util import FileLine
-
-from .paths import ACC_ROOT_DIR
+from .paths import ACC_ROOT_DIR, CPPBMAD_INCLUDE
+from .structs import FileLine
 from .util import write_if_differs
 
-INCLUDE_DIR = ACC_ROOT_DIR / "cpp_bmad_interface" / "include"
-INCLUDE_DIR.mkdir(parents=True, exist_ok=True)
-ENUM_FILENAME = INCLUDE_DIR / "bmad_enums.h"
+ENUM_FILENAME = CPPBMAD_INCLUDE / "bmad_enums.h"
 
 ENUM_FILENAMES = [
-    ACC_ROOT_DIR / "bmad/modules/bmad_struct.f90",
-    ACC_ROOT_DIR / "sim_utils/io/output_mod.f90",
-    ACC_ROOT_DIR / "sim_utils/interfaces/physical_constants.f90",
-    ACC_ROOT_DIR / "sim_utils/interfaces/particle_species_mod.f90",
-    ACC_ROOT_DIR / "sim_utils/interfaces/sim_utils_struct.f90",
-    ACC_ROOT_DIR / "sim_utils/plot/quick_plot_struct.f90",
+    "bmad/modules/bmad_struct.f90",
+    "sim_utils/io/output_mod.f90",
+    "sim_utils/interfaces/physical_constants.f90",
+    "sim_utils/interfaces/particle_species_mod.f90",
+    "sim_utils/interfaces/sim_utils_struct.f90",
+    "sim_utils/plot/quick_plot_struct.f90",
 ]
 
 re_int = re.compile("INTEGER, *PARAMETER *:: *")
@@ -179,7 +176,8 @@ namespace Bmad {
 """
     ]
 
-    for fn in ENUM_FILENAMES:
+    for filename in ENUM_FILENAMES:
+        fn = ACC_ROOT_DIR / filename
         enums = parse_fortran_enums(fn)
         result.append("")
         result.append(f"// Enums from {fn.name}")

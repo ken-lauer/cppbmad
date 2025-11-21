@@ -1,5 +1,8 @@
 #!/bin/bash
 
-# cd ${ACC_ROOT_DIR}/cpp_bmad_interface
-# python -m pip install ./bmad_cpp_codegen
+if [ -z "$ACC_ROOT_DIR" ]; then
+  echo "ACC_ROOT_DIR is unset."
+  exit 1
+fi
+
 python3 -m bmad_cpp_codegen

@@ -4,14 +4,17 @@ import os
 import pathlib
 import shutil
 
-CODEGEN_ROOT = pathlib.Path(__file__).resolve().absolute().parent
 
-if "ACC_ROOT_DIR" in os.environ:
-    ACC_ROOT_DIR = pathlib.Path(os.environ["ACC_ROOT_DIR"]).resolve().absolute()
-else:
-    ACC_ROOT_DIR = CODEGEN_ROOT.parents[2]
+def normalize(path: str) -> pathlib.Path:
+    path = os.path.expandvars(path)
+    return pathlib.Path(path).expanduser().resolve().absolute()
 
-CPP_INTERFACE_ROOT = ACC_ROOT_DIR / "cpp_bmad_interface"
-STRUCT_PARSER_ROOT = ACC_ROOT_DIR / "structs"
 
+if "ACC_ROOT_DIR" not in os.environ:
+    raise RuntimeError("Environment variable ACC_ROOT_DIR is unset")
+
+ACC_ROOT_DIR = normalize(os.path.expandvars(os.environ["ACC_ROOT_DIR"]))
 CLANG_FORMAT_PATH = os.environ.get("CLANG_FORMAT_PATH", shutil.which("clang-format"))
+CODEGEN_ROOT = pathlib.Path(__file__).resolve().absolute().parent
+CPPBMAD_ROOT = CODEGEN_ROOT.parent
+CPPBMAD_INCLUDE = CODEGEN_ROOT.parent / "include"
