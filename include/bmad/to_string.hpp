@@ -1,10 +1,11 @@
 #pragma once
 #include <complex>
 #include <iostream>
+#include <optional>
 #include <sstream>
 #include <string>
 
-namespace tao {
+namespace Bmad {
 using std::complex;
 using std::string;
 using std::to_string;
@@ -41,4 +42,4 @@ std::string to_string(const T* opt) {
 
 template string to_string(const complex<double>&);
 
-} // namespace tao
+} // namespace Bmad

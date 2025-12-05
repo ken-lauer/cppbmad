@@ -1,22 +1,4 @@
-# Paths are relative to ACC_ROOT_DIR.
-struct_def_files = [
-  "sim_utils/math/spline_mod.f90",
-  "bmad/modules/bmad_struct.f90",
-  "bmad/modules/taylor_mod.f90",
-  "bmad/space_charge/csr_and_space_charge_mod.f90",
-  "bmad/modules/complex_taylor_mod.f90",
-]
-
-# Paths are relative to ACC_ROOT_DIR.
-struct_def_json_files = [
-  "structs/json/bmad_structs.json",
-  "structs/json/forest_structs.json",
-  "structs/json/sim_utils_structs.json",
-  "structs/json/tao_structs.json",
-]
-
 # List of use statements needed in various Fortran modules.
-
 equality_use_statements = [
   "use bmad_struct",
   # "use tao_struct",
@@ -48,6 +30,7 @@ struct_list = [
   "lat_ele_loc_struct",
   "wake_struct",
   "taylor_term_struct",
+  # "taylor",
   "taylor_struct",
   "em_taylor_term_struct",
   "em_taylor_struct",
@@ -160,6 +143,11 @@ struct_list = [
   "tao_universe_calc_struct",
   "lat_ele_order_struct",
   "tao_universe_struct",
+
+  # Testing
+  "all_encompassing_struct",
+  "test_sub_struct",
+  "test_sub_sub_struct",
 ]
 
 # List of structure components to not translate.
@@ -227,12 +215,112 @@ interface_ignore_list = [
 
 structs_defined_externally = []
 
-include_header_files = [
-  '#include "bmad_enums.h"',
-  '#include "bmad_std_typedef.h"',
+include_header_files = ['#include "bmad_enums.h"', '#include "bmad/types.h"']
+
+skips = [
+  # Optionally compiled in
+  "fft_interface_mod",
+  # JSON-related
+  "tao_json",
+  "bmad_json",
+  "forest_json",
+  "sim_utils_json",
+
+  # Abstract hooks
+  "check_aperture_limit_custom_def",
+  "distance_to_aperture_custom_def",
+  "ele_geometry_hook_def",
+  "init_custom_def",
+  "lat_make_mat6_hook_def",
+  "make_mat6_custom_def",
+  "radiation_integrals_custom_def",
+  "time_runge_kutta_periodic_kick_hook_def",
+  "track1_bunch_hook_def",
+  "track1_custom_def",
+  "track1_postprocess_def",
+  "track1_preprocess_def",
+  "track1_spin_custom_def",
+  "track1_wake_hook_def",
+  "track_many_hook_def",
+  "wall_hit_handler_custom_def",
+
+  # pointer handling
+  "deallocate_ele_array_pointers",
+  "transfer_wall3d",
+  "unlink_fieldmap",
+  "allocate_element_array",
+  "pointer_to_ele_multipole",
+  "unlink_wall3d",
+
+  # array size handling?
+  "ccfftam",
+  "sfft",
+
+  # sim_utils
+  "node_put",
+
+  # taylor1(:) +- taylor2(:) -> taylor3(size(taylor1))
+  "taylor_plus_taylor",
+  "taylor_minus_taylor",
+
+  # No longer compiled in, but still in the interface?
+  "bmad_and_xsif_parser",
+  "aml_parser",
+  "xsif_parser",
+
+  # string array handling bug
+  "set_tune_via_group_knobs",
+  "spin_concat_linear_maps",
+
+  # sim_utils:
+  # sized output
+  "ed",
+  "han",
+
+  # why bother? (and because they don't compile...)
+  "isatty",
+  "substr",
+  "str_set",
+  "int_logic", # return value gets renamed -> lookup fails -> makes inout
+
+  # Tao
+  # Output size based on input size:
+  "avv",
+  "tao_geo_lm_func",
+
+  # TODO: string handling (excite_zero)
+  "tao_spin_polarization_calc",
+  "tao_spin_matrix_calc",
+
+  # Tao hook functions
+  "tao_hook_branch_calc_def",
+  "tao_hook_command_def",
+  "tao_hook_data_sanity_check_def",
+  "tao_hook_evaluate_a_datum_def",
+  "tao_hook_init1_def",
+  "tao_hook_init2_def",
+  "tao_hook_init_beam_def",
+  "tao_hook_init_data_def",
+  "tao_hook_init_lattice_post_parse_def",
+  "tao_hook_init_plotting_def",
+  "tao_hook_init_read_lattice_info_def",
+  "tao_hook_init_var_def",
+  "tao_hook_lattice_calc_def",
+  "tao_hook_merit_data_def",
+  "tao_hook_optimizer_def",
+  "tao_hook_parse_command_args_def",
+  "tao_hook_plot_setup_def",
+  "tao_hook_post_process_data_def",
 ]
 
 # Translations on C++ side to avoid clash with reserved words
 [c_side_name_translation]
 "wake_sr_struct%long" = "long_wake"
 "wake_sr_struct%trans" = "trans_wake"
+"template" = "template_"
+"switch" = "switch_"
+"default" = "default_"
+"int" = "int_"
+"char" = "char_"
+"float" = "float_"
+"double" = "double_"

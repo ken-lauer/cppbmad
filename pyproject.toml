@@ -13,6 +13,7 @@ readme = { file = "README.md", content-type = "text/markdown" }
 # 3.11+ for tomllib in standard library
 requires-python = ">=3.11"
 dynamic = ["version"]
+dependencies = ["pydantic"]
 
 classifiers = [
   "Programming Language :: Python :: 3 :: Only",
@@ -33,7 +34,7 @@ classifiers = [
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["bmad_cpp_codegen*"]
+include = ["codegen*"]
 namespaces = false
 
 [project.urls]
@@ -79,8 +80,9 @@ ignore = [
 isort.required-imports = ["from __future__ import annotations"]
 
 [tool.ruff.lint.per-file-ignores]
-"bmad_cpp_codegen/create_interface.py" = ["T201"]
+"codegen/gen.py" = ["T201"]
+"codegen/structs.py" = ["E402"]
 
 [tool.setuptools_scm]
-version_file = "bmad_cpp_codegen/_version.py"
+version_file = "codegen/_version.py"
 root = ".."

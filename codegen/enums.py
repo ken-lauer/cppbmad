@@ -16,7 +16,7 @@ from .paths import ACC_ROOT_DIR, CPPBMAD_INCLUDE
 from .structs import FileLine
 from .util import write_if_differs
 
-ENUM_FILENAME = CPPBMAD_INCLUDE / "bmad_enums.h"
+ENUM_FILENAME = CPPBMAD_INCLUDE / "bmad" / "generated" / "enums.h"
 
 ENUM_FILENAMES = [
     "bmad/modules/bmad_struct.f90",

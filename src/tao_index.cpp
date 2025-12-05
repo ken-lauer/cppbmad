@@ -1,6 +1,7 @@
-#include "tao_proxies.hpp"
+#include "bmad/tao_index.hpp"
 
-using namespace tao;
+using namespace Bmad;
+using namespace Tao;
 
 TaoUniverseProxy TaoUniverseIndexProxy::operator*() const {
   int n_universes = tao_get_n_universes();

@@ -3,11 +3,10 @@
 
 #include <complex>
 #include <cstddef>
-#include <iomanip> //setprecision
 #include <string>
 #include <vector>
 
-#include "bmad_std_typedef.h"
+#include "bmad/types.h"
 
 //---------------------------------------------------------------------------
 
@@ -77,8 +76,6 @@ std::ostream& operator<<(std::ostream& os, const Bmad::VariableArray2D<T>& obj);
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const Bmad::VariableArray3D<T>& obj);
 
-// TODO: move out implementation to .cpp file
-//
 template <typename T, size_t DIM1>
 void operator<<(Bmad::FixedArray1D<T, DIM1>& arr, const T* ptr) {
   for (size_t i = 0; i < DIM1; i++) {

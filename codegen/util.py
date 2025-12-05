@@ -88,6 +88,66 @@ def write_if_differs(
     return False
 
 
+def write_contents_if_differs(
+    target_path: pathlib.Path | str,
+    contents: str | list[str],
+) -> bool:
+    """
+    Execute a write function to a temporary file first, and only write to the target file
+    if the contents differ from the existing file or if the target file doesn't exist.
+
+    Parameters
+    ----------
+    target_path : pathlib.Path
+        Path to the target file that may be written to
+    contents: str
+
+    Returns
+    -------
+    bool
+        True if the target file was updated, False if no update was needed
+
+    Notes
+    -----
+    This function assumes text contents and does not handle encoding specifications.
+    """
+    if isinstance(contents, list):
+        contents = "\n".join(contents)
+
+    target_path = pathlib.Path(target_path)
+
+    if CLANG_FORMAT_PATH and target_path.suffix in (".h", ".hpp", ".cpp"):
+        try:
+            formatted_content = subprocess.run(
+                [CLANG_FORMAT_PATH],
+                input=contents.encode(),
+                capture_output=True,
+                check=True,
+            )
+        except subprocess.SubprocessError as ex:
+            logger.error("clang-format failed: %s", ex)
+        else:
+            contents = formatted_content.stdout.decode()
+
+    if not target_path.exists():
+        target_path.parent.mkdir(parents=True, exist_ok=True)
+        logger.info(f"* Writing to {target_path} (new file) {len(contents)} bytes")
+        target_path.write_text(contents)
+        return True
+
+    target_content = target_path.read_text()
+
+    if contents != target_content:
+        logger.info(
+            f"* Writing to {target_path} (new contents) {len(target_content)} -> {len(contents)} bytes"
+        )
+        target_path.write_text(contents)
+        return True
+
+    logger.info(f"* Not writing {target_path} (contents same)")
+    return False
+
+
 def is_number(s: str) -> bool:
     try:
         float(s.replace("d", "e").replace("D", "e"))
@@ -96,7 +156,7 @@ def is_number(s: str) -> bool:
         return False
 
 
-def wrap_line(line, indent, cont_char):
+def wrap_line(line, indent: str = "", cont_char: str = " &"):
     """
     Wrap a line of text to a maximum width with appropriate indentation and continuation character.
 
@@ -141,3 +201,7 @@ def snake_to_camel(snake_str: str) -> str:
 
     components = snake_str.split("_")
     return "".join(word.capitalize() for word in components)
+
+
+def struct_to_proxy_class_name(name: str) -> str:
+    return snake_to_camel(name.removesuffix("_struct") + "_proxy")

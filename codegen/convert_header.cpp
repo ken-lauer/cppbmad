@@ -9,7 +9,7 @@
 
 #include <iostream>
 #include <sstream>
-#include "converter_templates.h"
+#include "bmad/convert.h"
 
 using namespace Bmad;
 

@@ -2,7 +2,7 @@ module test_struct_defs
 
 use bmad, only: rp, dp
 
-type wake_lr_struct
+type test_sub_sub_struct
   integer(8) :: aaa
   integer :: bbb
   character(200) :: file = ''
@@ -12,8 +12,8 @@ type wake_lr_struct
 end type
 
 
-type wake_struct
-  type (wake_lr_struct) :: sr = wake_lr_struct(0, 0, '', 0, 0)
+type test_sub_struct
+  type (test_sub_sub_struct) :: sr = test_sub_sub_struct(0, 0, '', 0, 0)
 end type
 
 type all_encompassing_struct
@@ -53,7 +53,8 @@ type all_encompassing_struct
   complex(dp) :: complex_dp_2d(3, 4)
   complex(dp) :: complex_dp_3d(3, 4, 5)
 
-  complex(dp), pointer :: complex_dp_0d_ptr
+  ! TODO
+  ! complex(dp), pointer :: complex_dp_0d_ptr
   complex(dp), pointer :: complex_dp_1d_ptr(:)
   complex(dp), pointer :: complex_dp_2d_ptr(:,:)
   complex(dp), pointer :: complex_dp_3d_ptr(:,:,:)
@@ -108,19 +109,19 @@ type all_encompassing_struct
   ! logical, allocatable :: logical_3d_alloc(:,:,:)
 
   ! type
-  type(wake_lr_struct) type_0d
-  type(wake_lr_struct) :: type_1d(3)
-  type(wake_lr_struct) :: type_2d(3, 4)
-  type(wake_lr_struct) :: type_3d(3, 4, 5)
+  type(test_sub_struct) type_0d
+  type(test_sub_struct) :: type_1d(3)
+  type(test_sub_struct) :: type_2d(3, 4)
+  type(test_sub_struct) :: type_3d(3, 4, 5)
 
-  type(wake_lr_struct), pointer :: type_0d_ptr
-  type(wake_lr_struct), pointer :: type_1d_ptr(:)
-  type(wake_lr_struct), pointer :: type_2d_ptr(:,:)
-  type(wake_lr_struct), pointer :: type_3d_ptr(:,:,:)
+  type(test_sub_struct), pointer :: type_0d_ptr
+  type(test_sub_struct), pointer :: type_1d_ptr(:)
+  type(test_sub_struct), pointer :: type_2d_ptr(:,:)
+  type(test_sub_struct), pointer :: type_3d_ptr(:,:,:)
 
-  type(wake_lr_struct), allocatable :: type_1d_alloc(:)
-  type(wake_lr_struct), allocatable :: type_2d_alloc(:,:)
-  type(wake_lr_struct), allocatable :: type_3d_alloc(:,:,:)
+  type(test_sub_struct), allocatable :: type_1d_alloc(:)
+  type(test_sub_struct), allocatable :: type_2d_alloc(:,:)
+  type(test_sub_struct), allocatable :: type_3d_alloc(:,:,:)
 
 end type
 

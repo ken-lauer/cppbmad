@@ -15,316 +15,43 @@ is nullified and whose length is 1 otherwise.
 from __future__ import annotations
 
 import argparse
-import copy
 import logging
 import pathlib
 import sys
 import tomllib
-from dataclasses import dataclass, field
+import typing
 
-from . import transforms
+from .arg import Argument, CodegenStructure
+from .config import CodegenConfig
+from .context import ConfigContext, config_context
+from .cpp import generate_routines_header
 from .enums import ENUM_FILENAME, write_enums
-from .paths import ACC_ROOT_DIR, CODEGEN_ROOT, CPPBMAD_ROOT
+from .paths import CODEGEN_ROOT, CPPBMAD_ROOT
 from .proxy import (
     create_cpp_proxy_header,
     create_cpp_proxy_impl,
     create_fortran_proxy_code,
     struct_to_proxy_class_name,
 )
-from .structs import ParsedStructure, StructureMember, load_structures_by_filename
-from .transforms import CSideTransform, FortranSideTransform
-from .types import (
-    ALLOC,
-    CHAR,
-    CMPLX,
-    INT,
-    INT8,
-    LOGIC,
-    NOT,
-    PTR,
-    REAL,
-    REAL16,
-    SIZE,
-    STRUCT,
-    ArgumentType,
-    FullType,
-    PointerType,
+from .routines import (
+    generate_cpp_routine_code,
+    generate_fortran_routine_code,
+    parse_bmad_routines,
+    prune_routines,
+    routine_settings,
 )
-from .util import write_if_differs
+from .structs import ParsedStructure, load_bmad_parser_structures
+from .types import (
+    STRUCT,
+)
+from .util import write_contents_if_differs, write_if_differs
+
+if typing.TYPE_CHECKING:
+    pass
 
 logger = logging.getLogger(__name__)
 
 DEBUG = False  # Change to True to enable more verbose printout
-
-
-def print_debug(line):
-    if DEBUG:
-        logger.warning(line)
-
-
-@dataclass
-class CodegenConfig:
-    struct_def_files: list[str]
-    struct_def_json_files: list[str]
-    struct_list: list[str]
-    component_no_translate_list: list[str]
-    interface_ignore_list: list[str]
-    structs_defined_externally: list[str]
-    include_header_files: list[str]
-    c_side_name_translation: dict[str, str]
-
-    equality_use_statements: list[str] = field(default_factory=list)  # TODO remove
-    test_use_statements: list[str] = field(default_factory=list)  # TODO remove
-
-
-@dataclass
-class Argument:
-    """
-    Represents an argument or component in the Fortran to C++ interface.
-
-    Attributes
-    ----------
-    is_component : bool
-        Whether this is a structure component. If False, it's an array bound.
-    f_name : str
-        Fortran side name of argument (lowercase).
-    c_name : str
-        C++ side name of argument, potentially mangled to avoid reserved word conflicts.
-    type : str
-        Fortran type without parameters, e.g., 'real', 'type', 'character'.
-    kind : str
-        Fortran kind, e.g., '', 'rp', 'coord_struct'.
-    pointer_type : str
-        Pointer type: NOT, PTR, or ALLOC.
-    array : List[str]
-        Array dimension specifications, e.g., [':', ':'] or ['0:6', '3'].
-    lbound : List[Any]
-        Lower bounds for each array dimension.
-    ubound : List[Any]
-        Upper bounds for each array dimension.
-    init_value : str
-        Initialization value.
-    comment : str
-        Comment from the Fortran structure definition.
-    f_side : FortranSideTransform
-        Fortran side translation.
-    c_side : CSideTransform
-        C++ side translation.
-    """
-
-    is_component: bool = True
-    f_name: str = ""
-    c_name: str = ""
-    type: ArgumentType = "real"
-    kind: str = ""
-    pointer_type: PointerType = NOT
-    array: list[str] = field(default_factory=list)
-    init_value: str | None = None
-    comment: str = ""
-    member: StructureMember | None = None
-    f_side: FortranSideTransform = field(default_factory=FortranSideTransform)
-    c_side: CSideTransform = field(default_factory=CSideTransform)
-
-    @property
-    def is_pointer(self) -> bool:
-        return self.pointer_type == {"PTR", "ALLOC"}
-
-    @classmethod
-    def from_fstruct(cls, fstruct: ParsedStructure, member: StructureMember):
-        if member.kind and member.type.lower() == "integer":
-            type_ = INT8
-        else:
-            type_ = member.type
-
-        if member.kind and member.kind.lower() == "qp" and member.type.lower() == "real":
-            type_ = REAL16
-
-        if member.type_info.pointer:
-            pointer_type = PTR
-        elif member.type_info.allocatable:
-            pointer_type = ALLOC
-        else:
-            pointer_type = NOT
-
-        return cls(
-            is_component=True,
-            f_name=member.name,
-            c_name=params.c_side_name_translation.get(f"{fstruct.name}%{member.name}", member.name),
-            type=type_,
-            kind=member.kind or "",
-            pointer_type=pointer_type,
-            array=member.dimension.replace(" ", "").split(",") if member.dimension else [],
-            init_value=str(member.default) if member.default else None,
-            comment=member.comment,
-            member=member,
-        )
-
-    @property
-    def full_type(self):
-        return FullType(self.type, len(self.array), self.pointer_type)
-
-    @property
-    def lbound(self) -> list[str]:
-        if not self.array or self.array[0] == ":":
-            return []
-
-        return [dim.split(":")[0] if ":" in dim else "1" for dim in self.array]
-
-    @property
-    def ubound(self) -> list[str]:
-        if not self.array or self.array[0] == ":":
-            return []
-
-        return [dim.split(":")[1] if ":" in dim else dim for dim in self.array]
-
-    def get_dim1(self) -> tuple[str, str]:
-        if self.ubound[0][-1] == "$":
-            f_dim1 = self.ubound[0]
-            c_dim1 = "Bmad::" + self.ubound[0][0:-1].upper()
-            if self.lbound[0] != "1":
-                logger.error('lbound not "1" with parameter upper bound!')
-                sys.exit("STOPPING HERE")
-            if self.ubound[0].lower() == "num_ele_attrib$":
-                # NOTE: special case: this is an element attributes array, and we intend
-                # to keep the array indices the same from C++/Fortran.
-                return "num_ele_attrib$", "Bmad::NUM_ELE_ATTRIB+1"
-
-        if not self.ubound[0].isnumeric():
-            # NOTE: special case: n_pole_maxx->Bmad::N_POLE_MAXX
-            return self.ubound[0], "Bmad::" + self.ubound[0].upper().rstrip("$")
-
-        f_dim1 = str(1 + int(self.ubound[0]) - int(self.lbound[0]))
-        c_dim1 = f_dim1
-        return f_dim1, c_dim1
-
-    @property
-    def f_dims(self):
-        if not self.array:
-            return ()
-        if len(self.array) == 1:
-            return (self.f_dim1,)
-        if len(self.array) == 2:
-            return (self.f_dim1, self.dim2)
-        if len(self.array) == 3:
-            return (self.f_dim1, self.dim2, self.dim3)
-        raise NotImplementedError(len(self.array))
-
-    @property
-    def c_dims(self):
-        if not self.array:
-            return ()
-        if len(self.array) == 1:
-            return (self.c_dim1,)
-        if len(self.array) == 2:
-            return (self.c_dim1, self.dim2)
-        if len(self.array) == 3:
-            return (self.c_dim1, self.dim2, self.dim3)
-        raise NotImplementedError(len(self.array))
-
-    @property
-    def c_dim1(self) -> str:
-        _, c_dim1 = self.get_dim1()
-        return c_dim1
-
-    @property
-    def f_dim1(self) -> str:
-        f_dim1, _ = self.get_dim1()
-        return f_dim1
-
-    @property
-    def dim2(self) -> int:
-        return 1 + int(self.ubound[1]) - int(self.lbound[1])
-
-    @property
-    def dim3(self) -> int:
-        return 1 + int(self.ubound[2]) - int(self.lbound[2])
-
-    def should_translate(self, struct_name: str) -> bool:
-        return (
-            self.kind not in params.component_no_translate_list
-            and f"{struct_name}%{self.f_name}" not in params.component_no_translate_list
-        )
-
-    def _handle_type_argument(self) -> None:
-        """Process 'type' arguments by replacing KIND placeholders."""
-        if self.type.lower() != "type":
-            return
-
-        kind = self.kind
-        if kind.lower().endswith("_struct"):
-            kind = kind[: -len("_struct")]
-
-        if not kind:
-            raise RuntimeError("Kind is empty?")
-        self.f_side.replace_all("KIND", kind)
-        self.c_side.replace_all("KIND", kind)
-        self.c_side.replace_all("PROXYCLS", struct_to_proxy_class_name(kind))
-
-    def _fix_struct_arg_placeholders(self) -> None:
-        """
-        Substitute placeholder names in argument patterns with actual values.
-
-        This function processes an argument object, replacing placeholders like "NAME", "DIM1", etc.,
-        with the actual values relevant to the structure and argument.
-        """
-        print_debug("self: " + str(self))
-
-        if self.type == "type":
-            self._handle_type_argument()
-
-        if self.pointer_type == NOT:
-            # not a pointer/dynamically allocated type;
-            # replace DIM1, DIM2, DIM3 here
-            if len(self.array) >= 1:
-                self.f_side.replace_all("DIM1", self.f_dim1)
-                self.c_side.replace_all("DIM1", self.c_dim1)
-
-            if len(self.array) >= 2:
-                self.f_side.replace_all("DIM2", str(self.dim2))
-                self.c_side.replace_all("DIM2", str(self.dim2))
-
-            if len(self.array) >= 3:
-                self.f_side.replace_all("DIM3", str(self.dim3))
-                self.c_side.replace_all("DIM3", str(self.dim3))
-
-        self.f_side.replace_all("NAME", self.f_name)
-        self.c_side.replace_all("NAME", self.c_name)
-
-    def original_repr(self) -> str:
-        return f'["{self.type}({self.kind})", "{self.pointer_type}", "{self.f_name}", {self.array}, {self.lbound} {self.ubound} "{self.init_value}"]'
-
-
-@dataclass
-class CodegenStructure:
-    f_name: str = ""  # Struct name on Fortran side
-    short_name: str = ""  # Struct name without trailing '_struct'. Note: C++ name is 'CPP_<short_name>'
-    cpp_class: str = ""  # C++ name.
-    arg: list[Argument] = field(
-        default_factory=list
-    )  # List of structrure components + array bound dimensions.
-    c_constructor_arg_list: str = ""
-    c_constructor_body: str = ""  # Body of the C++ class_initializer
-    c_extra_methods: str = ""  # Additional custom methods
-
-    module: str = "unknown_module"
-    parsed: ParsedStructure | None = None
-
-    @property
-    def args_to_convert(self):
-        return [arg for arg in self.arg if f"{self.f_name}%{arg.f_name}" not in params.interface_ignore_list]
-
-    @property
-    def recursive(self) -> bool:
-        return any(
-            arg.is_component
-            and arg.type == "type"
-            and arg.member is not None
-            and arg.member.type_info.kind.lower() == self.f_name.lower()
-            for arg in self.arg
-        )
-
-    def __str__(self) -> str:
-        return f"[name: {self.short_name}, #arg: {len(self.arg)}]"
 
 
 ##################################################################################
@@ -345,21 +72,6 @@ def match_structure_definition(
     struct.arg = [Argument.from_fstruct(fstruct, member) for member in fstruct.members.values()]
     struct.module = fstruct.module
     struct.parsed = fstruct
-
-
-def set_translations(struct: CodegenStructure) -> None:
-    # Throw out any sub-structures that are not to be translated
-    struct.arg = [arg for arg in struct.arg if arg.should_translate(struct.f_name)]
-
-    for arg in struct.arg:
-        if arg.full_type not in transforms.f_transforms:
-            logger.error(
-                f"NO TRANSLATION FOR: {struct.short_name}%{arg.f_name} [{arg.full_type}]",
-            )
-            continue
-
-        arg.f_side = copy.deepcopy(transforms.f_transforms[arg.full_type])
-        arg.c_side = copy.deepcopy(transforms.c_transforms[arg.full_type])
 
 
 def write_parsed_structures(structs, fn):
@@ -419,81 +131,6 @@ def filter_structs(
     ]
 
 
-# def create_fortran_equality_check_code(f_equ, structs: list[CodegenStructure], module_name: str):
-#     f_equ.write(
-#         textwrap.dedent(f"""\
-#         !+
-#         ! Module {module_name}
-#         !
-#         ! This module defines a set of functions which overload the equality operator ("==").
-#         ! These functions test for equality between instances of a given structure.
-#         !
-#         ! This file is generated as a by product of the Bmad/C++ interface code generation
-#         ! The code generation files can be found in cpp_bmad_interface.
-#         !
-#         ! DO NOT EDIT THIS FILE DIRECTLY!
-#         !-
-#
-#         module {module_name}
-#         """)
-#     )
-#
-#     if module_name != "equality_mod":
-#         print("use equality_mod", file=f_equ)
-#
-#     f_equ.write("""
-#
-# interface operator (==)
-# """)
-#
-#     for i in range(0, len(structs), 5):
-#         f_equ.write(
-#             "  module procedure " + ", ".join(f"eq_{f.short_name}" for f in structs[i : i + 5]) + "\n"
-#         )
-#
-#     f_equ.write("""\
-# end interface
-#
-# contains
-# """)
-#
-#     for struct in structs:
-#         equ_defn = textwrap.dedent(f"""
-#
-#             !--------------------------------------------------------------------------------
-#             !--------------------------------------------------------------------------------
-#
-#             elemental function eq_{struct.short_name} (f1, f2) result (is_eq)
-#
-#             use {struct.module}, only: {struct.f_name}
-#             implicit none
-#
-#             type({struct.f_name}), intent(in) :: f1, f2
-#             logical is_eq
-#
-#             !
-#
-#             is_eq = .true.
-#             """)
-#
-#         if struct.recursive:
-#             equ_defn = equ_defn.replace("elemental function", "recursive elemental function")
-#
-#         f_equ.write(equ_defn)
-#
-#         for arg in struct.args_to_convert:
-#             if not arg.is_component:
-#                 continue
-#
-#             f_equ.write(f"!! f_side.equality_test[{arg.full_type}]\n")
-#
-#             print(arg.f_side.equality_test, file=f_equ)
-#
-#         f_equ.write(f"\nend function eq_{struct.short_name}\n")
-#
-#     f_equ.write("end module\n")
-
-
 # def get_to_json_source(struct: CodegenStructure) -> list[str]:
 #     args = [arg for arg in struct.args_to_convert if arg.is_component and arg.member is not None]
 #
@@ -545,7 +182,7 @@ def filter_structs(
 #             #include <memory>
 #             #include <optional>
 #
-#             #include "converter_templates.h"
+#             #include "bmad/convert.h"
 #             #include "json.hpp"
 #             ${include_headers}
 #
@@ -579,45 +216,101 @@ def filter_structs(
 #     file.write(header_template.substitute(include_headers=include_headers, json_helpers=json_helpers))
 
 
-def get_parsed_files() -> list[CodegenStructure]:
-    """Return a list of serialized (already-parsed) structures."""
-    structures = []
-    for fn in params.struct_def_json_files:
-        structures.extend(load_structures_by_filename(ACC_ROOT_DIR / fn))
-    return structures
-
-
-def get_structure_definitions() -> list[CodegenStructure]:
-    parsed_structures = get_parsed_files()
-
+def get_structure_definitions(
+    params: CodegenConfig, parsed_structures: list[ParsedStructure]
+) -> list[CodegenStructure]:
     structs: list[CodegenStructure] = []
 
     for name in params.struct_list:
         struct = CodegenStructure(name)
         match_structure_definition(parsed_structures, struct)
-        set_translations(struct)
-
-        print_debug("\nStruct: " + str(struct))
-        for arg in struct.arg:
-            arg._fix_struct_arg_placeholders()
-
+        struct.arg = [arg for arg in struct.arg if arg.should_translate(struct.f_name)]
+        logger.debug(f"Struct: {struct}")
         structs.append(struct)
     return structs
+
+
+def generate_routines():
+    logger.info("Parsing routines")
+
+    all_routines = []
+    all_routines_by_name = {}
+    to_write = {}
+    for settings in routine_settings:
+        # Filter out private routines to start with:
+        routines = [routine for routine in parse_bmad_routines(settings) if not routine.private]
+        all_routines.extend(routines)
+        logger.info(f"Pruning routines ({settings.fortran_output_filename})")
+        routines_by_name = prune_routines(routines)
+        all_routines_by_name.update(routines_by_name)
+        logger.info("Generating code: routines Fortran side")
+
+        routines_header = generate_routines_header(
+            template=(CODEGEN_ROOT / "routines.tpl.hpp").read_text(),
+            routines=routines_by_name,
+            settings=settings,
+        )
+        logger.info("Generating code: routines C++ side")
+        cpp_routine_code = generate_cpp_routine_code(
+            template=(CODEGEN_ROOT / "routines.tpl.cpp").read_text(),
+            routines=routines_by_name,
+            settings=settings,
+        )
+        fortran_routine_code = generate_fortran_routine_code(
+            template=(CODEGEN_ROOT / "routines.tpl.f90").read_text(),
+            routines=routines_by_name,
+            settings=settings,
+        )
+
+        generated = CPPBMAD_ROOT / "src" / "generated"
+        header_path = CPPBMAD_ROOT / "include" / "bmad" / "generated" / settings.cpp_header_filename
+        to_write[header_path] = routines_header
+        to_write[generated / settings.fortran_output_filename] = fortran_routine_code
+        to_write[generated / settings.cpp_output_filename] = cpp_routine_code
+
+    for fn, contents in to_write.items():
+        write_contents_if_differs(
+            target_path=fn,
+            contents=contents,
+        )
+
+    unique_routines = {rt.name: rt for rt in all_routines}
+    usable = [rt for rt in unique_routines.values() if rt.usable]
+    logger.info("Usable procedures: %d / %d total", len(usable), len(all_routines))
+    logger.info("Done")
+    return all_routines, all_routines_by_name
 
 
 def generate(config_file: pathlib.Path = CODEGEN_ROOT / "default.toml"):
     # TODO refactor globals
     global params  # noqa: PLW0603
 
-    include_dir = CPPBMAD_ROOT / "include"
-    include_dir.mkdir(exist_ok=True)
-
     with config_file.open("rb") as fp:
         params = CodegenConfig(**tomllib.load(fp))
 
     logger.info(f"Config file: {config_file}")
 
-    structs = get_structure_definitions()
+    parsed_structs = load_bmad_parser_structures()
+    config_context.set(
+        ConfigContext(
+            params=params,
+            codegen_structs=[],
+            parsed_structs=parsed_structs,
+        )
+    )
+
+    # TODO this needs context.params for some reason
+    structs = get_structure_definitions(params, parsed_structs)
+
+    config_context.set(
+        ConfigContext(
+            params=params,
+            codegen_structs=structs,
+            parsed_structs=parsed_structs,
+        )
+    )
+    assert len(config_context.get().codegen_structs)
+
     n_found = sum(1 for struct in structs if struct.short_name)
 
     # Print diagnostics
@@ -627,6 +320,9 @@ def generate(config_file: pathlib.Path = CODEGEN_ROOT / "default.toml"):
     check_missing(structs)
     write_output(params, structs)
     write_if_differs(write_enums, ENUM_FILENAME)
+
+    routines, routines_by_name = generate_routines()
+    return structs, parsed_structs, routines, routines_by_name
 
 
 def write_output(params: CodegenConfig, structs: list[CodegenStructure]) -> None:
@@ -658,11 +354,11 @@ def write_output(params: CodegenConfig, structs: list[CodegenStructure]) -> None
         params,
         structs,
     )
-    cpp_proxy_header_template = (CODEGEN_ROOT / "tao_proxies.tpl.hpp").read_text()
-    cpp_proxy_cpp_template = (CODEGEN_ROOT / "tao_proxies.tpl.cpp").read_text()
+    cpp_proxy_header_template = (CODEGEN_ROOT / "proxy.tpl.hpp").read_text()
+    cpp_proxy_cpp_template = (CODEGEN_ROOT / "proxy.tpl.cpp").read_text()
     write_if_differs(
         create_cpp_proxy_header,
-        CPPBMAD_ROOT / "include" / "tao_proxies.hpp",
+        CPPBMAD_ROOT / "include" / "bmad" / "generated" / "proxy.hpp",
         params,
         cpp_proxy_header_template,
         cpp_proxy_cpp_template,
@@ -670,32 +366,12 @@ def write_output(params: CodegenConfig, structs: list[CodegenStructure]) -> None
     )
     write_if_differs(
         create_cpp_proxy_impl,
-        generated / "tao_proxies.cpp",
+        generated / "proxy.cpp",
         params,
         cpp_proxy_header_template,
         cpp_proxy_cpp_template,
         structs,
     )
-
-
-def get_c_type(type_val: str) -> str:
-    """Get the C++ type string for a given type value"""
-    type_mapping = {
-        REAL: "Real",
-        REAL16: "Real",
-        CMPLX: "Complex",
-        INT: "Int",
-        INT8: "Int8",
-        LOGIC: "Bool",
-        CHAR: "string",
-        SIZE: "Int",
-        STRUCT: "PROXYCLS",
-    }
-
-    if type_val in type_mapping:
-        return type_mapping[type_val]
-
-    raise NotImplementedError(f"Unknown type: {type_val}")
 
 
 def main():
@@ -722,9 +398,8 @@ def main():
     logging.basicConfig(level=args.log_level)
     logging.getLogger("codegen").setLevel(args.log_level)
 
-    generate(config_file=args.config_file)
+    return generate(config_file=args.config_file)
 
 
 if __name__ == "__main__":
-    DEBUG = "--debug" in sys.argv
-    main()
+    structs, parsed_structs, routines, routines_by_name = main()

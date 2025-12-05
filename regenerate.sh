@@ -5,6 +5,8 @@ if [ -z "$ACC_ROOT_DIR" ]; then
   exit 1
 fi
 
-python3 -m codegen &&
+python -m codegen &&
   cmake -B build . &&
-  make -C build
+  make -j -C build &&
+  ./build/test_all_encompassing &&
+  ./build/test_integration

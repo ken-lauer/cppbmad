@@ -1,8 +1,11 @@
-#include "to_string.hpp"
-#include "fortran_arrays.hpp"
 
-namespace tao {
-string to_string(const tao::FortranCharArray1D& arr) {
+#include <string>
+
+#include "bmad/fortran_arrays.hpp"
+#include "bmad/to_string.hpp"
+
+namespace Bmad {
+std::string to_string(const Bmad::FortranCharArray1D& arr) {
   auto vec = arr.to_vector();
   if (vec.empty())
     return "[]";
@@ -18,4 +21,4 @@ string to_string(const tao::FortranCharArray1D& arr) {
   return oss.str();
 }
 
-} // namespace std
+} // namespace Bmad

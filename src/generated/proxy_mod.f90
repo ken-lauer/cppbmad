@@ -1,46 +1,865 @@
 module bmad_struct_proxy_mod
   use bmad_struct
   use tao_struct
+  use test_struct_defs
   use, intrinsic :: iso_c_binding
+
+  
+  type :: spline_struct_container_alloc
+    type(spline_struct), allocatable :: data(:)
+  end type spline_struct_container_alloc
+
+  type :: spin_polar_struct_container_alloc
+    type(spin_polar_struct), allocatable :: data(:)
+  end type spin_polar_struct_container_alloc
+
+  type :: ac_kicker_time_struct_container_alloc
+    type(ac_kicker_time_struct), allocatable :: data(:)
+  end type ac_kicker_time_struct_container_alloc
+
+  type :: ac_kicker_freq_struct_container_alloc
+    type(ac_kicker_freq_struct), allocatable :: data(:)
+  end type ac_kicker_freq_struct_container_alloc
+
+  type :: ac_kicker_struct_container_alloc
+    type(ac_kicker_struct), allocatable :: data(:)
+  end type ac_kicker_struct_container_alloc
+
+  type :: interval1_coef_struct_container_alloc
+    type(interval1_coef_struct), allocatable :: data(:)
+  end type interval1_coef_struct_container_alloc
+
+  type :: photon_reflect_table_struct_container_alloc
+    type(photon_reflect_table_struct), allocatable :: data(:)
+  end type photon_reflect_table_struct_container_alloc
+
+  type :: photon_reflect_surface_struct_container_alloc
+    type(photon_reflect_surface_struct), allocatable :: data(:)
+  end type photon_reflect_surface_struct_container_alloc
+
+  type :: coord_struct_container_alloc
+    type(coord_struct), allocatable :: data(:)
+  end type coord_struct_container_alloc
+
+  type :: coord_array_struct_container_alloc
+    type(coord_array_struct), allocatable :: data(:)
+  end type coord_array_struct_container_alloc
+
+  type :: bpm_phase_coupling_struct_container_alloc
+    type(bpm_phase_coupling_struct), allocatable :: data(:)
+  end type bpm_phase_coupling_struct_container_alloc
+
+  type :: expression_atom_struct_container_alloc
+    type(expression_atom_struct), allocatable :: data(:)
+  end type expression_atom_struct_container_alloc
+
+  type :: wake_sr_z_long_struct_container_alloc
+    type(wake_sr_z_long_struct), allocatable :: data(:)
+  end type wake_sr_z_long_struct_container_alloc
+
+  type :: wake_sr_mode_struct_container_alloc
+    type(wake_sr_mode_struct), allocatable :: data(:)
+  end type wake_sr_mode_struct_container_alloc
+
+  type :: wake_sr_struct_container_alloc
+    type(wake_sr_struct), allocatable :: data(:)
+  end type wake_sr_struct_container_alloc
+
+  type :: wake_lr_mode_struct_container_alloc
+    type(wake_lr_mode_struct), allocatable :: data(:)
+  end type wake_lr_mode_struct_container_alloc
+
+  type :: wake_lr_struct_container_alloc
+    type(wake_lr_struct), allocatable :: data(:)
+  end type wake_lr_struct_container_alloc
+
+  type :: lat_ele_loc_struct_container_alloc
+    type(lat_ele_loc_struct), allocatable :: data(:)
+  end type lat_ele_loc_struct_container_alloc
+
+  type :: wake_struct_container_alloc
+    type(wake_struct), allocatable :: data(:)
+  end type wake_struct_container_alloc
+
+  type :: taylor_term_struct_container_alloc
+    type(taylor_term_struct), allocatable :: data(:)
+  end type taylor_term_struct_container_alloc
+
+  type :: taylor_struct_container_alloc
+    type(taylor_struct), allocatable :: data(:)
+  end type taylor_struct_container_alloc
+
+  type :: em_taylor_term_struct_container_alloc
+    type(em_taylor_term_struct), allocatable :: data(:)
+  end type em_taylor_term_struct_container_alloc
+
+  type :: em_taylor_struct_container_alloc
+    type(em_taylor_struct), allocatable :: data(:)
+  end type em_taylor_struct_container_alloc
+
+  type :: cartesian_map_term1_struct_container_alloc
+    type(cartesian_map_term1_struct), allocatable :: data(:)
+  end type cartesian_map_term1_struct_container_alloc
+
+  type :: cartesian_map_term_struct_container_alloc
+    type(cartesian_map_term_struct), allocatable :: data(:)
+  end type cartesian_map_term_struct_container_alloc
+
+  type :: cartesian_map_struct_container_alloc
+    type(cartesian_map_struct), allocatable :: data(:)
+  end type cartesian_map_struct_container_alloc
+
+  type :: cylindrical_map_term1_struct_container_alloc
+    type(cylindrical_map_term1_struct), allocatable :: data(:)
+  end type cylindrical_map_term1_struct_container_alloc
+
+  type :: cylindrical_map_term_struct_container_alloc
+    type(cylindrical_map_term_struct), allocatable :: data(:)
+  end type cylindrical_map_term_struct_container_alloc
+
+  type :: cylindrical_map_struct_container_alloc
+    type(cylindrical_map_struct), allocatable :: data(:)
+  end type cylindrical_map_struct_container_alloc
+
+  type :: bicubic_cmplx_coef_struct_container_alloc
+    type(bicubic_cmplx_coef_struct), allocatable :: data(:)
+  end type bicubic_cmplx_coef_struct_container_alloc
+
+  type :: tricubic_cmplx_coef_struct_container_alloc
+    type(tricubic_cmplx_coef_struct), allocatable :: data(:)
+  end type tricubic_cmplx_coef_struct_container_alloc
+
+  type :: grid_field_pt1_struct_container_alloc
+    type(grid_field_pt1_struct), allocatable :: data(:)
+  end type grid_field_pt1_struct_container_alloc
+
+  type :: grid_field_pt_struct_container_alloc
+    type(grid_field_pt_struct), allocatable :: data(:)
+  end type grid_field_pt_struct_container_alloc
+
+  type :: grid_field_struct_container_alloc
+    type(grid_field_struct), allocatable :: data(:)
+  end type grid_field_struct_container_alloc
+
+  type :: floor_position_struct_container_alloc
+    type(floor_position_struct), allocatable :: data(:)
+  end type floor_position_struct_container_alloc
+
+  type :: high_energy_space_charge_struct_container_alloc
+    type(high_energy_space_charge_struct), allocatable :: data(:)
+  end type high_energy_space_charge_struct_container_alloc
+
+  type :: xy_disp_struct_container_alloc
+    type(xy_disp_struct), allocatable :: data(:)
+  end type xy_disp_struct_container_alloc
+
+  type :: twiss_struct_container_alloc
+    type(twiss_struct), allocatable :: data(:)
+  end type twiss_struct_container_alloc
+
+  type :: mode3_struct_container_alloc
+    type(mode3_struct), allocatable :: data(:)
+  end type mode3_struct_container_alloc
+
+  type :: bookkeeping_state_struct_container_alloc
+    type(bookkeeping_state_struct), allocatable :: data(:)
+  end type bookkeeping_state_struct_container_alloc
+
+  type :: rad_map_struct_container_alloc
+    type(rad_map_struct), allocatable :: data(:)
+  end type rad_map_struct_container_alloc
+
+  type :: rad_map_ele_struct_container_alloc
+    type(rad_map_ele_struct), allocatable :: data(:)
+  end type rad_map_ele_struct_container_alloc
+
+  type :: gen_grad1_struct_container_alloc
+    type(gen_grad1_struct), allocatable :: data(:)
+  end type gen_grad1_struct_container_alloc
+
+  type :: gen_grad_map_struct_container_alloc
+    type(gen_grad_map_struct), allocatable :: data(:)
+  end type gen_grad_map_struct_container_alloc
+
+  type :: surface_segmented_pt_struct_container_alloc
+    type(surface_segmented_pt_struct), allocatable :: data(:)
+  end type surface_segmented_pt_struct_container_alloc
+
+  type :: surface_segmented_struct_container_alloc
+    type(surface_segmented_struct), allocatable :: data(:)
+  end type surface_segmented_struct_container_alloc
+
+  type :: surface_h_misalign_pt_struct_container_alloc
+    type(surface_h_misalign_pt_struct), allocatable :: data(:)
+  end type surface_h_misalign_pt_struct_container_alloc
+
+  type :: surface_h_misalign_struct_container_alloc
+    type(surface_h_misalign_struct), allocatable :: data(:)
+  end type surface_h_misalign_struct_container_alloc
+
+  type :: surface_displacement_pt_struct_container_alloc
+    type(surface_displacement_pt_struct), allocatable :: data(:)
+  end type surface_displacement_pt_struct_container_alloc
+
+  type :: surface_displacement_struct_container_alloc
+    type(surface_displacement_struct), allocatable :: data(:)
+  end type surface_displacement_struct_container_alloc
+
+  type :: target_point_struct_container_alloc
+    type(target_point_struct), allocatable :: data(:)
+  end type target_point_struct_container_alloc
+
+  type :: surface_curvature_struct_container_alloc
+    type(surface_curvature_struct), allocatable :: data(:)
+  end type surface_curvature_struct_container_alloc
+
+  type :: photon_target_struct_container_alloc
+    type(photon_target_struct), allocatable :: data(:)
+  end type photon_target_struct_container_alloc
+
+  type :: photon_material_struct_container_alloc
+    type(photon_material_struct), allocatable :: data(:)
+  end type photon_material_struct_container_alloc
+
+  type :: pixel_pt_struct_container_alloc
+    type(pixel_pt_struct), allocatable :: data(:)
+  end type pixel_pt_struct_container_alloc
+
+  type :: pixel_detec_struct_container_alloc
+    type(pixel_detec_struct), allocatable :: data(:)
+  end type pixel_detec_struct_container_alloc
+
+  type :: photon_element_struct_container_alloc
+    type(photon_element_struct), allocatable :: data(:)
+  end type photon_element_struct_container_alloc
+
+  type :: wall3d_vertex_struct_container_alloc
+    type(wall3d_vertex_struct), allocatable :: data(:)
+  end type wall3d_vertex_struct_container_alloc
+
+  type :: wall3d_section_struct_container_alloc
+    type(wall3d_section_struct), allocatable :: data(:)
+  end type wall3d_section_struct_container_alloc
+
+  type :: wall3d_struct_container_alloc
+    type(wall3d_struct), allocatable :: data(:)
+  end type wall3d_struct_container_alloc
+
+  type :: ramper_lord_struct_container_alloc
+    type(ramper_lord_struct), allocatable :: data(:)
+  end type ramper_lord_struct_container_alloc
+
+  type :: control_struct_container_alloc
+    type(control_struct), allocatable :: data(:)
+  end type control_struct_container_alloc
+
+  type :: control_var1_struct_container_alloc
+    type(control_var1_struct), allocatable :: data(:)
+  end type control_var1_struct_container_alloc
+
+  type :: control_ramp1_struct_container_alloc
+    type(control_ramp1_struct), allocatable :: data(:)
+  end type control_ramp1_struct_container_alloc
+
+  type :: controller_struct_container_alloc
+    type(controller_struct), allocatable :: data(:)
+  end type controller_struct_container_alloc
+
+  type :: ellipse_beam_init_struct_container_alloc
+    type(ellipse_beam_init_struct), allocatable :: data(:)
+  end type ellipse_beam_init_struct_container_alloc
+
+  type :: kv_beam_init_struct_container_alloc
+    type(kv_beam_init_struct), allocatable :: data(:)
+  end type kv_beam_init_struct_container_alloc
+
+  type :: grid_beam_init_struct_container_alloc
+    type(grid_beam_init_struct), allocatable :: data(:)
+  end type grid_beam_init_struct_container_alloc
+
+  type :: beam_init_struct_container_alloc
+    type(beam_init_struct), allocatable :: data(:)
+  end type beam_init_struct_container_alloc
+
+  type :: lat_param_struct_container_alloc
+    type(lat_param_struct), allocatable :: data(:)
+  end type lat_param_struct_container_alloc
+
+  type :: mode_info_struct_container_alloc
+    type(mode_info_struct), allocatable :: data(:)
+  end type mode_info_struct_container_alloc
+
+  type :: pre_tracker_struct_container_alloc
+    type(pre_tracker_struct), allocatable :: data(:)
+  end type pre_tracker_struct_container_alloc
+
+  type :: anormal_mode_struct_container_alloc
+    type(anormal_mode_struct), allocatable :: data(:)
+  end type anormal_mode_struct_container_alloc
+
+  type :: linac_normal_mode_struct_container_alloc
+    type(linac_normal_mode_struct), allocatable :: data(:)
+  end type linac_normal_mode_struct_container_alloc
+
+  type :: normal_modes_struct_container_alloc
+    type(normal_modes_struct), allocatable :: data(:)
+  end type normal_modes_struct_container_alloc
+
+  type :: em_field_struct_container_alloc
+    type(em_field_struct), allocatable :: data(:)
+  end type em_field_struct_container_alloc
+
+  type :: strong_beam_struct_container_alloc
+    type(strong_beam_struct), allocatable :: data(:)
+  end type strong_beam_struct_container_alloc
+
+  type :: track_point_struct_container_alloc
+    type(track_point_struct), allocatable :: data(:)
+  end type track_point_struct_container_alloc
+
+  type :: track_struct_container_alloc
+    type(track_struct), allocatable :: data(:)
+  end type track_struct_container_alloc
+
+  type :: space_charge_common_struct_container_alloc
+    type(space_charge_common_struct), allocatable :: data(:)
+  end type space_charge_common_struct_container_alloc
+
+  type :: bmad_common_struct_container_alloc
+    type(bmad_common_struct), allocatable :: data(:)
+  end type bmad_common_struct_container_alloc
+
+  type :: rad_int1_struct_container_alloc
+    type(rad_int1_struct), allocatable :: data(:)
+  end type rad_int1_struct_container_alloc
+
+  type :: rad_int_branch_struct_container_alloc
+    type(rad_int_branch_struct), allocatable :: data(:)
+  end type rad_int_branch_struct_container_alloc
+
+  type :: rad_int_all_ele_struct_container_alloc
+    type(rad_int_all_ele_struct), allocatable :: data(:)
+  end type rad_int_all_ele_struct_container_alloc
+
+  type :: rf_stair_step_struct_container_alloc
+    type(rf_stair_step_struct), allocatable :: data(:)
+  end type rf_stair_step_struct_container_alloc
+
+  type :: rf_ele_struct_container_alloc
+    type(rf_ele_struct), allocatable :: data(:)
+  end type rf_ele_struct_container_alloc
+
+  type :: ele_struct_container_alloc
+    type(ele_struct), allocatable :: data(:)
+  end type ele_struct_container_alloc
+
+  type :: complex_taylor_term_struct_container_alloc
+    type(complex_taylor_term_struct), allocatable :: data(:)
+  end type complex_taylor_term_struct_container_alloc
+
+  type :: complex_taylor_struct_container_alloc
+    type(complex_taylor_struct), allocatable :: data(:)
+  end type complex_taylor_struct_container_alloc
+
+  type :: branch_struct_container_alloc
+    type(branch_struct), allocatable :: data(:)
+  end type branch_struct_container_alloc
+
+  type :: lat_struct_container_alloc
+    type(lat_struct), allocatable :: data(:)
+  end type lat_struct_container_alloc
+
+  type :: bunch_struct_container_alloc
+    type(bunch_struct), allocatable :: data(:)
+  end type bunch_struct_container_alloc
+
+  type :: bunch_params_struct_container_alloc
+    type(bunch_params_struct), allocatable :: data(:)
+  end type bunch_params_struct_container_alloc
+
+  type :: beam_struct_container_alloc
+    type(beam_struct), allocatable :: data(:)
+  end type beam_struct_container_alloc
+
+  type :: aperture_point_struct_container_alloc
+    type(aperture_point_struct), allocatable :: data(:)
+  end type aperture_point_struct_container_alloc
+
+  type :: aperture_param_struct_container_alloc
+    type(aperture_param_struct), allocatable :: data(:)
+  end type aperture_param_struct_container_alloc
+
+  type :: aperture_scan_struct_container_alloc
+    type(aperture_scan_struct), allocatable :: data(:)
+  end type aperture_scan_struct_container_alloc
+
+  type :: tao_spin_dn_dpz_struct_container_alloc
+    type(tao_spin_dn_dpz_struct), allocatable :: data(:)
+  end type tao_spin_dn_dpz_struct_container_alloc
+
+  type :: resonance_h_struct_container_alloc
+    type(resonance_h_struct), allocatable :: data(:)
+  end type resonance_h_struct_container_alloc
+
+  type :: spin_orbit_map1_struct_container_alloc
+    type(spin_orbit_map1_struct), allocatable :: data(:)
+  end type spin_orbit_map1_struct_container_alloc
+
+  type :: spin_axis_struct_container_alloc
+    type(spin_axis_struct), allocatable :: data(:)
+  end type spin_axis_struct_container_alloc
+
+  type :: ptc_normal_form_struct_container_alloc
+    type(ptc_normal_form_struct), allocatable :: data(:)
+  end type ptc_normal_form_struct_container_alloc
+
+  type :: bmad_normal_form_struct_container_alloc
+    type(bmad_normal_form_struct), allocatable :: data(:)
+  end type bmad_normal_form_struct_container_alloc
+
+  type :: bunch_track_struct_container_alloc
+    type(bunch_track_struct), allocatable :: data(:)
+  end type bunch_track_struct_container_alloc
+
+  type :: summation_rdt_struct_container_alloc
+    type(summation_rdt_struct), allocatable :: data(:)
+  end type summation_rdt_struct_container_alloc
+
+  type :: lat_ele_order1_struct_container_alloc
+    type(lat_ele_order1_struct), allocatable :: data(:)
+  end type lat_ele_order1_struct_container_alloc
+
+  type :: lat_ele_order_array_struct_container_alloc
+    type(lat_ele_order_array_struct), allocatable :: data(:)
+  end type lat_ele_order_array_struct_container_alloc
+
+  type :: tao_lat_sigma_struct_container_alloc
+    type(tao_lat_sigma_struct), allocatable :: data(:)
+  end type tao_lat_sigma_struct_container_alloc
+
+  type :: tao_spin_ele_struct_container_alloc
+    type(tao_spin_ele_struct), allocatable :: data(:)
+  end type tao_spin_ele_struct_container_alloc
+
+  type :: tao_plot_cache_struct_container_alloc
+    type(tao_plot_cache_struct), allocatable :: data(:)
+  end type tao_plot_cache_struct_container_alloc
+
+  type :: tao_spin_polarization_struct_container_alloc
+    type(tao_spin_polarization_struct), allocatable :: data(:)
+  end type tao_spin_polarization_struct_container_alloc
+
+  type :: tao_lattice_branch_struct_container_alloc
+    type(tao_lattice_branch_struct), allocatable :: data(:)
+  end type tao_lattice_branch_struct_container_alloc
+
+  type :: tao_model_element_struct_container_alloc
+    type(tao_model_element_struct), allocatable :: data(:)
+  end type tao_model_element_struct_container_alloc
+
+  type :: tao_beam_branch_struct_container_alloc
+    type(tao_beam_branch_struct), allocatable :: data(:)
+  end type tao_beam_branch_struct_container_alloc
+
+  type :: tao_d1_data_struct_container_alloc
+    type(tao_d1_data_struct), allocatable :: data(:)
+  end type tao_d1_data_struct_container_alloc
+
+  type :: tao_lattice_struct_container_alloc
+    type(tao_lattice_struct), allocatable :: data(:)
+  end type tao_lattice_struct_container_alloc
+
+  type :: tao_beam_uni_struct_container_alloc
+    type(tao_beam_uni_struct), allocatable :: data(:)
+  end type tao_beam_uni_struct_container_alloc
+
+  type :: tao_dynamic_aperture_struct_container_alloc
+    type(tao_dynamic_aperture_struct), allocatable :: data(:)
+  end type tao_dynamic_aperture_struct_container_alloc
+
+  type :: tao_model_branch_struct_container_alloc
+    type(tao_model_branch_struct), allocatable :: data(:)
+  end type tao_model_branch_struct_container_alloc
+
+  type :: tao_d2_data_struct_container_alloc
+    type(tao_d2_data_struct), allocatable :: data(:)
+  end type tao_d2_data_struct_container_alloc
+
+  type :: tao_spin_map_struct_container_alloc
+    type(tao_spin_map_struct), allocatable :: data(:)
+  end type tao_spin_map_struct_container_alloc
+
+  type :: tao_data_struct_container_alloc
+    type(tao_data_struct), allocatable :: data(:)
+  end type tao_data_struct_container_alloc
+
+  type :: tao_ping_scale_struct_container_alloc
+    type(tao_ping_scale_struct), allocatable :: data(:)
+  end type tao_ping_scale_struct_container_alloc
+
+  type :: tao_universe_calc_struct_container_alloc
+    type(tao_universe_calc_struct), allocatable :: data(:)
+  end type tao_universe_calc_struct_container_alloc
+
+  type :: lat_ele_order_struct_container_alloc
+    type(lat_ele_order_struct), allocatable :: data(:)
+  end type lat_ele_order_struct_container_alloc
+
+  type :: tao_universe_struct_container_alloc
+    type(tao_universe_struct), allocatable :: data(:)
+  end type tao_universe_struct_container_alloc
+
+  type :: all_encompassing_struct_container_alloc
+    type(all_encompassing_struct), allocatable :: data(:)
+  end type all_encompassing_struct_container_alloc
+
+  type :: test_sub_struct_container_alloc
+    type(test_sub_struct), allocatable :: data(:)
+  end type test_sub_struct_container_alloc
+
+  type :: test_sub_sub_struct_container_alloc
+    type(test_sub_sub_struct), allocatable :: data(:)
+  end type test_sub_sub_struct_container_alloc
+
+  type :: real_container_alloc
+    real(rp), allocatable :: data(:)
+  end type real_container_alloc
+
+  type :: integer_container_alloc
+    integer, allocatable :: data(:)
+  end type integer_container_alloc
+
+  type :: logical_container_alloc
+    logical, allocatable :: data(:)
+  end type logical_container_alloc
+
+  type :: complex_container_alloc
+    complex(rp), allocatable :: data(:)
+  end type complex_container_alloc
+
 contains
 
+
+  function allocate_real_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(real_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_real_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(real_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_real_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(real_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_real_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(real_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+            
+
+  function allocate_integer_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(integer_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_integer_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(integer_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_integer_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(integer_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_integer_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(integer_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+            
+
+  function allocate_logical_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(logical_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_logical_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(logical_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_logical_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(logical_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_logical_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(logical_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+            
+
+  function allocate_complex_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(complex_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_complex_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(complex_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_complex_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(complex_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_complex_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(complex_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+            
   !! spline_struct
 
     function allocate_fortran_spline_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(spline_struct), pointer :: fptr
-    type(spline_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(spline_struct), pointer :: fptr
+      type(spline_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_spline_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(spline_struct), pointer :: fptr
-    type(spline_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(spline_struct), pointer :: fptr
+      type(spline_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_spline_struct(src_ptr, dst_ptr) bind(c)
@@ -55,7 +874,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_spline_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(spline_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_spline_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(spline_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_spline_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(spline_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_spline_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(spline_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! spline_struct%x0: 0D_NOT_real
 
   subroutine spline_struct_get_x0(struct_obj_ptr, value_out) bind(c, name='spline_struct_get_x0')
@@ -122,9 +1011,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(spline_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%coef)) then
       data_ptr = c_loc(struct_obj%coef(lbound(struct_obj%coef, 1)))
       bounds(1) = int(lbound(struct_obj%coef, 1), c_int)
@@ -142,40 +1031,40 @@ contains
   !! spin_polar_struct
 
     function allocate_fortran_spin_polar_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(spin_polar_struct), pointer :: fptr
-    type(spin_polar_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(spin_polar_struct), pointer :: fptr
+      type(spin_polar_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_spin_polar_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(spin_polar_struct), pointer :: fptr
-    type(spin_polar_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(spin_polar_struct), pointer :: fptr
+      type(spin_polar_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_spin_polar_struct(src_ptr, dst_ptr) bind(c)
@@ -190,7 +1079,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_spin_polar_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(spin_polar_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_spin_polar_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(spin_polar_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_spin_polar_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(spin_polar_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_spin_polar_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(spin_polar_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! spin_polar_struct%polarization: 0D_NOT_real
 
   subroutine spin_polar_struct_get_polarization(struct_obj_ptr, value_out) bind(c, name='spin_polar_struct_get_polarization')
@@ -270,40 +1229,40 @@ contains
   !! ac_kicker_time_struct
 
     function allocate_fortran_ac_kicker_time_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(ac_kicker_time_struct), pointer :: fptr
-    type(ac_kicker_time_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(ac_kicker_time_struct), pointer :: fptr
+      type(ac_kicker_time_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_ac_kicker_time_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(ac_kicker_time_struct), pointer :: fptr
-    type(ac_kicker_time_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(ac_kicker_time_struct), pointer :: fptr
+      type(ac_kicker_time_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_ac_kicker_time_struct(src_ptr, dst_ptr) bind(c)
@@ -318,7 +1277,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_ac_kicker_time_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(ac_kicker_time_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_ac_kicker_time_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(ac_kicker_time_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_ac_kicker_time_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(ac_kicker_time_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_ac_kicker_time_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(ac_kicker_time_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! ac_kicker_time_struct%amp: 0D_NOT_real
 
   subroutine ac_kicker_time_struct_get_amp(struct_obj_ptr, value_out) bind(c, name='ac_kicker_time_struct_get_amp')
@@ -381,40 +1410,40 @@ contains
   !! ac_kicker_freq_struct
 
     function allocate_fortran_ac_kicker_freq_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(ac_kicker_freq_struct), pointer :: fptr
-    type(ac_kicker_freq_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(ac_kicker_freq_struct), pointer :: fptr
+      type(ac_kicker_freq_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_ac_kicker_freq_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(ac_kicker_freq_struct), pointer :: fptr
-    type(ac_kicker_freq_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(ac_kicker_freq_struct), pointer :: fptr
+      type(ac_kicker_freq_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_ac_kicker_freq_struct(src_ptr, dst_ptr) bind(c)
@@ -429,7 +1458,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_ac_kicker_freq_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(ac_kicker_freq_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_ac_kicker_freq_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(ac_kicker_freq_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_ac_kicker_freq_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(ac_kicker_freq_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_ac_kicker_freq_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(ac_kicker_freq_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! ac_kicker_freq_struct%f: 0D_NOT_real
 
   subroutine ac_kicker_freq_struct_get_f(struct_obj_ptr, value_out) bind(c, name='ac_kicker_freq_struct_get_f')
@@ -487,62 +1586,43 @@ contains
     struct_obj%phi = value_in
   end subroutine
 
-  ! ac_kicker_freq_struct%rf_clock_harmonic: 0D_NOT_integer
-
-  subroutine ac_kicker_freq_struct_get_rf_clock_harmonic(struct_obj_ptr, value_out) bind(c, name='ac_kicker_freq_struct_get_rf_clock_harmonic')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_int), intent(out) :: value_out
-    type(ac_kicker_freq_struct), pointer :: struct_obj
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    value_out = struct_obj%rf_clock_harmonic
-  end subroutine
-
-
-  subroutine ac_kicker_freq_struct_set_rf_clock_harmonic(struct_obj_ptr, value_in) bind(c, name='ac_kicker_freq_struct_set_rf_clock_harmonic')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_int), intent(in), value :: value_in
-    type(ac_kicker_freq_struct), pointer :: struct_obj
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    struct_obj%rf_clock_harmonic = value_in
-  end subroutine
-
   !! ac_kicker_struct
 
     function allocate_fortran_ac_kicker_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(ac_kicker_struct), pointer :: fptr
-    type(ac_kicker_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(ac_kicker_struct), pointer :: fptr
+      type(ac_kicker_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_ac_kicker_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(ac_kicker_struct), pointer :: fptr
-    type(ac_kicker_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(ac_kicker_struct), pointer :: fptr
+      type(ac_kicker_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_ac_kicker_struct(src_ptr, dst_ptr) bind(c)
@@ -557,7 +1637,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_ac_kicker_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(ac_kicker_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_ac_kicker_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(ac_kicker_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_ac_kicker_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(ac_kicker_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_ac_kicker_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(ac_kicker_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! ac_kicker_struct%amp_vs_time: 1D_ALLOC_type
 
   subroutine ac_kicker_struct_get_amp_vs_time_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -568,9 +1718,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(ac_kicker_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%amp_vs_time) .and. is_contiguous(struct_obj%amp_vs_time)) then
       data_ptr = c_loc(struct_obj%amp_vs_time(lbound(struct_obj%amp_vs_time, 1)))
       bounds(1) = int(lbound(struct_obj%amp_vs_time, 1), c_int)
@@ -596,9 +1746,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(ac_kicker_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%frequency) .and. is_contiguous(struct_obj%frequency)) then
       data_ptr = c_loc(struct_obj%frequency(lbound(struct_obj%frequency, 1)))
       bounds(1) = int(lbound(struct_obj%frequency, 1), c_int)
@@ -617,40 +1767,40 @@ contains
   !! interval1_coef_struct
 
     function allocate_fortran_interval1_coef_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(interval1_coef_struct), pointer :: fptr
-    type(interval1_coef_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(interval1_coef_struct), pointer :: fptr
+      type(interval1_coef_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_interval1_coef_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(interval1_coef_struct), pointer :: fptr
-    type(interval1_coef_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(interval1_coef_struct), pointer :: fptr
+      type(interval1_coef_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_interval1_coef_struct(src_ptr, dst_ptr) bind(c)
@@ -665,7 +1815,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_interval1_coef_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(interval1_coef_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_interval1_coef_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(interval1_coef_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_interval1_coef_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(interval1_coef_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_interval1_coef_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(interval1_coef_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! interval1_coef_struct%c0: 0D_NOT_real
 
   subroutine interval1_coef_struct_get_c0(struct_obj_ptr, value_out) bind(c, name='interval1_coef_struct_get_c0')
@@ -726,40 +1946,40 @@ contains
   !! photon_reflect_table_struct
 
     function allocate_fortran_photon_reflect_table_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(photon_reflect_table_struct), pointer :: fptr
-    type(photon_reflect_table_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(photon_reflect_table_struct), pointer :: fptr
+      type(photon_reflect_table_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_photon_reflect_table_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(photon_reflect_table_struct), pointer :: fptr
-    type(photon_reflect_table_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(photon_reflect_table_struct), pointer :: fptr
+      type(photon_reflect_table_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_photon_reflect_table_struct(src_ptr, dst_ptr) bind(c)
@@ -774,7 +1994,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_photon_reflect_table_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(photon_reflect_table_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_photon_reflect_table_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(photon_reflect_table_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_photon_reflect_table_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(photon_reflect_table_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_photon_reflect_table_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(photon_reflect_table_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! photon_reflect_table_struct%angle: 1D_ALLOC_real
 
   subroutine photon_reflect_table_struct_get_angle_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -784,9 +2074,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(photon_reflect_table_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%angle) .and. is_contiguous(struct_obj%angle)) then
       data_ptr = c_loc(struct_obj%angle(lbound(struct_obj%angle, 1)))
       bounds(1) = int(lbound(struct_obj%angle, 1), c_int)
@@ -810,9 +2100,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(photon_reflect_table_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%energy) .and. is_contiguous(struct_obj%energy)) then
       data_ptr = c_loc(struct_obj%energy(lbound(struct_obj%energy, 1)))
       bounds(1) = int(lbound(struct_obj%energy, 1), c_int)
@@ -837,9 +2127,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(photon_reflect_table_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%int1) .and. is_contiguous(struct_obj%int1)) then
       data_ptr = c_loc(struct_obj%int1(lbound(struct_obj%int1, 1)))
       bounds(1) = int(lbound(struct_obj%int1, 1), c_int)
@@ -866,9 +2156,9 @@ contains
     type(photon_reflect_table_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%p_reflect) .and. is_contiguous(struct_obj%p_reflect)) then
       data_ptr = c_loc(struct_obj%p_reflect(lbound(struct_obj%p_reflect, 1), lbound(struct_obj%p_reflect, 2)))
       bounds(1) = int(lbound(struct_obj%p_reflect, 1), c_int)
@@ -916,9 +2206,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(photon_reflect_table_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%p_reflect_scratch) .and. is_contiguous(struct_obj%p_reflect_scratch)) then
       data_ptr = c_loc(struct_obj%p_reflect_scratch(lbound(struct_obj%p_reflect_scratch, 1)))
       bounds(1) = int(lbound(struct_obj%p_reflect_scratch, 1), c_int)
@@ -942,9 +2232,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(photon_reflect_table_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%bragg_angle) .and. is_contiguous(struct_obj%bragg_angle)) then
       data_ptr = c_loc(struct_obj%bragg_angle(lbound(struct_obj%bragg_angle, 1)))
       bounds(1) = int(lbound(struct_obj%bragg_angle, 1), c_int)
@@ -962,40 +2252,40 @@ contains
   !! photon_reflect_surface_struct
 
     function allocate_fortran_photon_reflect_surface_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(photon_reflect_surface_struct), pointer :: fptr
-    type(photon_reflect_surface_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(photon_reflect_surface_struct), pointer :: fptr
+      type(photon_reflect_surface_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_photon_reflect_surface_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(photon_reflect_surface_struct), pointer :: fptr
-    type(photon_reflect_surface_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(photon_reflect_surface_struct), pointer :: fptr
+      type(photon_reflect_surface_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_photon_reflect_surface_struct(src_ptr, dst_ptr) bind(c)
@@ -1010,7 +2300,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_photon_reflect_surface_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(photon_reflect_surface_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_photon_reflect_surface_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(photon_reflect_surface_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_photon_reflect_surface_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(photon_reflect_surface_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_photon_reflect_surface_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(photon_reflect_surface_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! photon_reflect_surface_struct%name: 0D_NOT_character
 
   subroutine photon_reflect_surface_struct_get_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -1105,9 +2465,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(photon_reflect_surface_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%table) .and. is_contiguous(struct_obj%table)) then
       data_ptr = c_loc(struct_obj%table(lbound(struct_obj%table, 1)))
       bounds(1) = int(lbound(struct_obj%table, 1), c_int)
@@ -1183,40 +2543,40 @@ contains
   !! coord_struct
 
     function allocate_fortran_coord_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(coord_struct), pointer :: fptr
-    type(coord_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(coord_struct), pointer :: fptr
+      type(coord_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_coord_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(coord_struct), pointer :: fptr
-    type(coord_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(coord_struct), pointer :: fptr
+      type(coord_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_coord_struct(src_ptr, dst_ptr) bind(c)
@@ -1231,7 +2591,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_coord_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(coord_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_coord_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(coord_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_coord_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(coord_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_coord_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(coord_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! coord_struct%vec: 1D_NOT_real
 
   subroutine coord_struct_get_vec_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -1241,9 +2671,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(coord_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%vec)) then
       data_ptr = c_loc(struct_obj%vec(lbound(struct_obj%vec, 1)))
       bounds(1) = int(lbound(struct_obj%vec, 1), c_int)
@@ -1305,9 +2735,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(coord_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%spin)) then
       data_ptr = c_loc(struct_obj%spin(lbound(struct_obj%spin, 1)))
       bounds(1) = int(lbound(struct_obj%spin, 1), c_int)
@@ -1331,9 +2761,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(coord_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%field)) then
       data_ptr = c_loc(struct_obj%field(lbound(struct_obj%field, 1)))
       bounds(1) = int(lbound(struct_obj%field, 1), c_int)
@@ -1357,9 +2787,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(coord_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%phase)) then
       data_ptr = c_loc(struct_obj%phase(lbound(struct_obj%phase, 1)))
       bounds(1) = int(lbound(struct_obj%phase, 1), c_int)
@@ -1662,40 +3092,40 @@ contains
   !! coord_array_struct
 
     function allocate_fortran_coord_array_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(coord_array_struct), pointer :: fptr
-    type(coord_array_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(coord_array_struct), pointer :: fptr
+      type(coord_array_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_coord_array_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(coord_array_struct), pointer :: fptr
-    type(coord_array_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(coord_array_struct), pointer :: fptr
+      type(coord_array_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_coord_array_struct(src_ptr, dst_ptr) bind(c)
@@ -1710,7 +3140,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_coord_array_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(coord_array_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_coord_array_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(coord_array_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_coord_array_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(coord_array_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_coord_array_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(coord_array_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! coord_array_struct%orbit: 1D_ALLOC_type
 
   subroutine coord_array_struct_get_orbit_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -1721,9 +3221,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(coord_array_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%orbit) .and. is_contiguous(struct_obj%orbit)) then
       data_ptr = c_loc(struct_obj%orbit(lbound(struct_obj%orbit, 1)))
       bounds(1) = int(lbound(struct_obj%orbit, 1), c_int)
@@ -1742,40 +3242,40 @@ contains
   !! bpm_phase_coupling_struct
 
     function allocate_fortran_bpm_phase_coupling_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(bpm_phase_coupling_struct), pointer :: fptr
-    type(bpm_phase_coupling_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(bpm_phase_coupling_struct), pointer :: fptr
+      type(bpm_phase_coupling_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_bpm_phase_coupling_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(bpm_phase_coupling_struct), pointer :: fptr
-    type(bpm_phase_coupling_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(bpm_phase_coupling_struct), pointer :: fptr
+      type(bpm_phase_coupling_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_bpm_phase_coupling_struct(src_ptr, dst_ptr) bind(c)
@@ -1790,7 +3290,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_bpm_phase_coupling_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(bpm_phase_coupling_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_bpm_phase_coupling_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(bpm_phase_coupling_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_bpm_phase_coupling_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bpm_phase_coupling_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_bpm_phase_coupling_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(bpm_phase_coupling_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! bpm_phase_coupling_struct%K_22a: 0D_NOT_real
 
   subroutine bpm_phase_coupling_struct_get_K_22a(struct_obj_ptr, value_out) bind(c, name='bpm_phase_coupling_struct_get_K_22a')
@@ -1984,40 +3554,40 @@ contains
   !! expression_atom_struct
 
     function allocate_fortran_expression_atom_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(expression_atom_struct), pointer :: fptr
-    type(expression_atom_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(expression_atom_struct), pointer :: fptr
+      type(expression_atom_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_expression_atom_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(expression_atom_struct), pointer :: fptr
-    type(expression_atom_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(expression_atom_struct), pointer :: fptr
+      type(expression_atom_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_expression_atom_struct(src_ptr, dst_ptr) bind(c)
@@ -2032,7 +3602,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_expression_atom_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(expression_atom_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_expression_atom_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(expression_atom_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_expression_atom_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(expression_atom_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_expression_atom_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(expression_atom_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! expression_atom_struct%name: 0D_NOT_character
 
   subroutine expression_atom_struct_get_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -2102,40 +3742,40 @@ contains
   !! wake_sr_z_long_struct
 
     function allocate_fortran_wake_sr_z_long_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(wake_sr_z_long_struct), pointer :: fptr
-    type(wake_sr_z_long_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(wake_sr_z_long_struct), pointer :: fptr
+      type(wake_sr_z_long_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_wake_sr_z_long_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(wake_sr_z_long_struct), pointer :: fptr
-    type(wake_sr_z_long_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(wake_sr_z_long_struct), pointer :: fptr
+      type(wake_sr_z_long_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_wake_sr_z_long_struct(src_ptr, dst_ptr) bind(c)
@@ -2150,7 +3790,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_wake_sr_z_long_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(wake_sr_z_long_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_wake_sr_z_long_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(wake_sr_z_long_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_wake_sr_z_long_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wake_sr_z_long_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_wake_sr_z_long_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(wake_sr_z_long_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! wake_sr_z_long_struct%w: 1D_ALLOC_real
 
   subroutine wake_sr_z_long_struct_get_w_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -2160,9 +3870,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(wake_sr_z_long_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%w) .and. is_contiguous(struct_obj%w)) then
       data_ptr = c_loc(struct_obj%w(lbound(struct_obj%w, 1)))
       bounds(1) = int(lbound(struct_obj%w, 1), c_int)
@@ -2186,9 +3896,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(wake_sr_z_long_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%fw) .and. is_contiguous(struct_obj%fw)) then
       data_ptr = c_loc(struct_obj%fw(lbound(struct_obj%fw, 1)))
       bounds(1) = int(lbound(struct_obj%fw, 1), c_int)
@@ -2212,9 +3922,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(wake_sr_z_long_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%fbunch) .and. is_contiguous(struct_obj%fbunch)) then
       data_ptr = c_loc(struct_obj%fbunch(lbound(struct_obj%fbunch, 1)))
       bounds(1) = int(lbound(struct_obj%fbunch, 1), c_int)
@@ -2238,9 +3948,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(wake_sr_z_long_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%w_out) .and. is_contiguous(struct_obj%w_out)) then
       data_ptr = c_loc(struct_obj%w_out(lbound(struct_obj%w_out, 1)))
       bounds(1) = int(lbound(struct_obj%w_out, 1), c_int)
@@ -2353,40 +4063,40 @@ contains
   !! wake_sr_mode_struct
 
     function allocate_fortran_wake_sr_mode_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(wake_sr_mode_struct), pointer :: fptr
-    type(wake_sr_mode_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(wake_sr_mode_struct), pointer :: fptr
+      type(wake_sr_mode_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_wake_sr_mode_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(wake_sr_mode_struct), pointer :: fptr
-    type(wake_sr_mode_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(wake_sr_mode_struct), pointer :: fptr
+      type(wake_sr_mode_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_wake_sr_mode_struct(src_ptr, dst_ptr) bind(c)
@@ -2401,7 +4111,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_wake_sr_mode_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(wake_sr_mode_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_wake_sr_mode_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(wake_sr_mode_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_wake_sr_mode_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wake_sr_mode_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_wake_sr_mode_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(wake_sr_mode_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! wake_sr_mode_struct%amp: 0D_NOT_real
 
   subroutine wake_sr_mode_struct_get_amp(struct_obj_ptr, value_out) bind(c, name='wake_sr_mode_struct_get_amp')
@@ -2595,40 +4375,40 @@ contains
   !! wake_sr_struct
 
     function allocate_fortran_wake_sr_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(wake_sr_struct), pointer :: fptr
-    type(wake_sr_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(wake_sr_struct), pointer :: fptr
+      type(wake_sr_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_wake_sr_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(wake_sr_struct), pointer :: fptr
-    type(wake_sr_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(wake_sr_struct), pointer :: fptr
+      type(wake_sr_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_wake_sr_struct(src_ptr, dst_ptr) bind(c)
@@ -2643,7 +4423,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_wake_sr_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(wake_sr_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_wake_sr_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(wake_sr_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_wake_sr_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wake_sr_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_wake_sr_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(wake_sr_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! wake_sr_struct%file: 0D_NOT_character
 
   subroutine wake_sr_struct_get_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -2703,9 +4553,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(wake_sr_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%long) .and. is_contiguous(struct_obj%long)) then
       data_ptr = c_loc(struct_obj%long(lbound(struct_obj%long, 1)))
       bounds(1) = int(lbound(struct_obj%long, 1), c_int)
@@ -2731,9 +4581,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(wake_sr_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%trans) .and. is_contiguous(struct_obj%trans)) then
       data_ptr = c_loc(struct_obj%trans(lbound(struct_obj%trans, 1)))
       bounds(1) = int(lbound(struct_obj%trans, 1), c_int)
@@ -2866,40 +4716,40 @@ contains
   !! wake_lr_mode_struct
 
     function allocate_fortran_wake_lr_mode_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(wake_lr_mode_struct), pointer :: fptr
-    type(wake_lr_mode_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(wake_lr_mode_struct), pointer :: fptr
+      type(wake_lr_mode_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_wake_lr_mode_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(wake_lr_mode_struct), pointer :: fptr
-    type(wake_lr_mode_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(wake_lr_mode_struct), pointer :: fptr
+      type(wake_lr_mode_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_wake_lr_mode_struct(src_ptr, dst_ptr) bind(c)
@@ -2914,7 +4764,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_wake_lr_mode_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(wake_lr_mode_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_wake_lr_mode_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(wake_lr_mode_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_wake_lr_mode_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wake_lr_mode_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_wake_lr_mode_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(wake_lr_mode_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! wake_lr_mode_struct%freq: 0D_NOT_real
 
   subroutine wake_lr_mode_struct_get_freq(struct_obj_ptr, value_out) bind(c, name='wake_lr_mode_struct_get_freq')
@@ -3165,40 +5085,40 @@ contains
   !! wake_lr_struct
 
     function allocate_fortran_wake_lr_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(wake_lr_struct), pointer :: fptr
-    type(wake_lr_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(wake_lr_struct), pointer :: fptr
+      type(wake_lr_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_wake_lr_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(wake_lr_struct), pointer :: fptr
-    type(wake_lr_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(wake_lr_struct), pointer :: fptr
+      type(wake_lr_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_wake_lr_struct(src_ptr, dst_ptr) bind(c)
@@ -3213,7 +5133,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_wake_lr_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(wake_lr_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_wake_lr_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(wake_lr_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_wake_lr_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wake_lr_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_wake_lr_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(wake_lr_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! wake_lr_struct%file: 0D_NOT_character
 
   subroutine wake_lr_struct_get_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -3252,9 +5242,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(wake_lr_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%mode) .and. is_contiguous(struct_obj%mode)) then
       data_ptr = c_loc(struct_obj%mode(lbound(struct_obj%mode, 1)))
       bounds(1) = int(lbound(struct_obj%mode, 1), c_int)
@@ -3368,40 +5358,40 @@ contains
   !! lat_ele_loc_struct
 
     function allocate_fortran_lat_ele_loc_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(lat_ele_loc_struct), pointer :: fptr
-    type(lat_ele_loc_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(lat_ele_loc_struct), pointer :: fptr
+      type(lat_ele_loc_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_lat_ele_loc_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(lat_ele_loc_struct), pointer :: fptr
-    type(lat_ele_loc_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(lat_ele_loc_struct), pointer :: fptr
+      type(lat_ele_loc_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_lat_ele_loc_struct(src_ptr, dst_ptr) bind(c)
@@ -3416,7 +5406,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_lat_ele_loc_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(lat_ele_loc_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_lat_ele_loc_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(lat_ele_loc_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_lat_ele_loc_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(lat_ele_loc_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_lat_ele_loc_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(lat_ele_loc_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! lat_ele_loc_struct%ix_ele: 0D_NOT_integer
 
   subroutine lat_ele_loc_struct_get_ix_ele(struct_obj_ptr, value_out) bind(c, name='lat_ele_loc_struct_get_ix_ele')
@@ -3458,40 +5518,40 @@ contains
   !! wake_struct
 
     function allocate_fortran_wake_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(wake_struct), pointer :: fptr
-    type(wake_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(wake_struct), pointer :: fptr
+      type(wake_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_wake_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(wake_struct), pointer :: fptr
-    type(wake_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(wake_struct), pointer :: fptr
+      type(wake_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_wake_struct(src_ptr, dst_ptr) bind(c)
@@ -3506,7 +5566,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_wake_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(wake_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_wake_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(wake_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_wake_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wake_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_wake_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(wake_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! wake_struct%sr: 0D_NOT_type
 
   subroutine wake_struct_get_sr(struct_obj_ptr, ptr_out) bind(c, name='wake_struct_get_sr')
@@ -3552,40 +5682,40 @@ contains
   !! taylor_term_struct
 
     function allocate_fortran_taylor_term_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(taylor_term_struct), pointer :: fptr
-    type(taylor_term_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(taylor_term_struct), pointer :: fptr
+      type(taylor_term_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_taylor_term_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(taylor_term_struct), pointer :: fptr
-    type(taylor_term_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(taylor_term_struct), pointer :: fptr
+      type(taylor_term_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_taylor_term_struct(src_ptr, dst_ptr) bind(c)
@@ -3600,7 +5730,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_taylor_term_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(taylor_term_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_taylor_term_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(taylor_term_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_taylor_term_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(taylor_term_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_taylor_term_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(taylor_term_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! taylor_term_struct%coef: 0D_NOT_real
 
   subroutine taylor_term_struct_get_coef(struct_obj_ptr, value_out) bind(c, name='taylor_term_struct_get_coef')
@@ -3629,9 +5829,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(taylor_term_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%expn)) then
       data_ptr = c_loc(struct_obj%expn(lbound(struct_obj%expn, 1)))
       bounds(1) = int(lbound(struct_obj%expn, 1), c_int)
@@ -3649,40 +5849,40 @@ contains
   !! taylor_struct
 
     function allocate_fortran_taylor_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(taylor_struct), pointer :: fptr
-    type(taylor_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(taylor_struct), pointer :: fptr
+      type(taylor_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_taylor_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(taylor_struct), pointer :: fptr
-    type(taylor_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(taylor_struct), pointer :: fptr
+      type(taylor_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_taylor_struct(src_ptr, dst_ptr) bind(c)
@@ -3697,7 +5897,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_taylor_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(taylor_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_taylor_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(taylor_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_taylor_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(taylor_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_taylor_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(taylor_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! taylor_struct%ref: 0D_NOT_real
 
   subroutine taylor_struct_get_ref(struct_obj_ptr, value_out) bind(c, name='taylor_struct_get_ref')
@@ -3727,9 +5997,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(taylor_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%term) .and. is_contiguous(struct_obj%term)) then
       data_ptr = c_loc(struct_obj%term(lbound(struct_obj%term, 1)))
       bounds(1) = int(lbound(struct_obj%term, 1), c_int)
@@ -3748,40 +6018,40 @@ contains
   !! em_taylor_term_struct
 
     function allocate_fortran_em_taylor_term_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(em_taylor_term_struct), pointer :: fptr
-    type(em_taylor_term_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(em_taylor_term_struct), pointer :: fptr
+      type(em_taylor_term_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_em_taylor_term_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(em_taylor_term_struct), pointer :: fptr
-    type(em_taylor_term_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(em_taylor_term_struct), pointer :: fptr
+      type(em_taylor_term_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_em_taylor_term_struct(src_ptr, dst_ptr) bind(c)
@@ -3796,7 +6066,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_em_taylor_term_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(em_taylor_term_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_em_taylor_term_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(em_taylor_term_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_em_taylor_term_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(em_taylor_term_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_em_taylor_term_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(em_taylor_term_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! em_taylor_term_struct%coef: 0D_NOT_real
 
   subroutine em_taylor_term_struct_get_coef(struct_obj_ptr, value_out) bind(c, name='em_taylor_term_struct_get_coef')
@@ -3825,9 +6165,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(em_taylor_term_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%expn)) then
       data_ptr = c_loc(struct_obj%expn(lbound(struct_obj%expn, 1)))
       bounds(1) = int(lbound(struct_obj%expn, 1), c_int)
@@ -3845,40 +6185,40 @@ contains
   !! em_taylor_struct
 
     function allocate_fortran_em_taylor_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(em_taylor_struct), pointer :: fptr
-    type(em_taylor_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(em_taylor_struct), pointer :: fptr
+      type(em_taylor_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_em_taylor_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(em_taylor_struct), pointer :: fptr
-    type(em_taylor_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(em_taylor_struct), pointer :: fptr
+      type(em_taylor_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_em_taylor_struct(src_ptr, dst_ptr) bind(c)
@@ -3893,7 +6233,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_em_taylor_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(em_taylor_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_em_taylor_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(em_taylor_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_em_taylor_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(em_taylor_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_em_taylor_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(em_taylor_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! em_taylor_struct%ref: 0D_NOT_real
 
   subroutine em_taylor_struct_get_ref(struct_obj_ptr, value_out) bind(c, name='em_taylor_struct_get_ref')
@@ -3923,9 +6333,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(em_taylor_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%term) .and. is_contiguous(struct_obj%term)) then
       data_ptr = c_loc(struct_obj%term(lbound(struct_obj%term, 1)))
       bounds(1) = int(lbound(struct_obj%term, 1), c_int)
@@ -3944,40 +6354,40 @@ contains
   !! cartesian_map_term1_struct
 
     function allocate_fortran_cartesian_map_term1_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(cartesian_map_term1_struct), pointer :: fptr
-    type(cartesian_map_term1_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(cartesian_map_term1_struct), pointer :: fptr
+      type(cartesian_map_term1_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_cartesian_map_term1_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(cartesian_map_term1_struct), pointer :: fptr
-    type(cartesian_map_term1_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(cartesian_map_term1_struct), pointer :: fptr
+      type(cartesian_map_term1_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_cartesian_map_term1_struct(src_ptr, dst_ptr) bind(c)
@@ -3992,7 +6402,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_cartesian_map_term1_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(cartesian_map_term1_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_cartesian_map_term1_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(cartesian_map_term1_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_cartesian_map_term1_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(cartesian_map_term1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_cartesian_map_term1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(cartesian_map_term1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! cartesian_map_term1_struct%coef: 0D_NOT_real
 
   subroutine cartesian_map_term1_struct_get_coef(struct_obj_ptr, value_out) bind(c, name='cartesian_map_term1_struct_get_coef')
@@ -4167,40 +6647,40 @@ contains
   !! cartesian_map_term_struct
 
     function allocate_fortran_cartesian_map_term_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(cartesian_map_term_struct), pointer :: fptr
-    type(cartesian_map_term_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(cartesian_map_term_struct), pointer :: fptr
+      type(cartesian_map_term_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_cartesian_map_term_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(cartesian_map_term_struct), pointer :: fptr
-    type(cartesian_map_term_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(cartesian_map_term_struct), pointer :: fptr
+      type(cartesian_map_term_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_cartesian_map_term_struct(src_ptr, dst_ptr) bind(c)
@@ -4215,7 +6695,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_cartesian_map_term_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(cartesian_map_term_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_cartesian_map_term_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(cartesian_map_term_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_cartesian_map_term_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(cartesian_map_term_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_cartesian_map_term_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(cartesian_map_term_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! cartesian_map_term_struct%file: 0D_NOT_character
 
   subroutine cartesian_map_term_struct_get_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -4273,9 +6823,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(cartesian_map_term_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%term) .and. is_contiguous(struct_obj%term)) then
       data_ptr = c_loc(struct_obj%term(lbound(struct_obj%term, 1)))
       bounds(1) = int(lbound(struct_obj%term, 1), c_int)
@@ -4294,40 +6844,40 @@ contains
   !! cartesian_map_struct
 
     function allocate_fortran_cartesian_map_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(cartesian_map_struct), pointer :: fptr
-    type(cartesian_map_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(cartesian_map_struct), pointer :: fptr
+      type(cartesian_map_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_cartesian_map_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(cartesian_map_struct), pointer :: fptr
-    type(cartesian_map_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(cartesian_map_struct), pointer :: fptr
+      type(cartesian_map_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_cartesian_map_struct(src_ptr, dst_ptr) bind(c)
@@ -4342,7 +6892,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_cartesian_map_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(cartesian_map_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_cartesian_map_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(cartesian_map_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_cartesian_map_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(cartesian_map_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_cartesian_map_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(cartesian_map_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! cartesian_map_struct%field_scale: 0D_NOT_real
 
   subroutine cartesian_map_struct_get_field_scale(struct_obj_ptr, value_out) bind(c, name='cartesian_map_struct_get_field_scale')
@@ -4371,9 +6991,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(cartesian_map_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%r0)) then
       data_ptr = c_loc(struct_obj%r0(lbound(struct_obj%r0, 1)))
       bounds(1) = int(lbound(struct_obj%r0, 1), c_int)
@@ -4475,40 +7095,40 @@ contains
   !! cylindrical_map_term1_struct
 
     function allocate_fortran_cylindrical_map_term1_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(cylindrical_map_term1_struct), pointer :: fptr
-    type(cylindrical_map_term1_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(cylindrical_map_term1_struct), pointer :: fptr
+      type(cylindrical_map_term1_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_cylindrical_map_term1_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(cylindrical_map_term1_struct), pointer :: fptr
-    type(cylindrical_map_term1_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(cylindrical_map_term1_struct), pointer :: fptr
+      type(cylindrical_map_term1_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_cylindrical_map_term1_struct(src_ptr, dst_ptr) bind(c)
@@ -4523,7 +7143,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_cylindrical_map_term1_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(cylindrical_map_term1_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_cylindrical_map_term1_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(cylindrical_map_term1_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_cylindrical_map_term1_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(cylindrical_map_term1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_cylindrical_map_term1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(cylindrical_map_term1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! cylindrical_map_term1_struct%e_coef: 0D_NOT_complex
 
   subroutine cylindrical_map_term1_struct_get_e_coef(struct_obj_ptr, value_out) bind(c, name='cylindrical_map_term1_struct_get_e_coef')
@@ -4565,40 +7255,40 @@ contains
   !! cylindrical_map_term_struct
 
     function allocate_fortran_cylindrical_map_term_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(cylindrical_map_term_struct), pointer :: fptr
-    type(cylindrical_map_term_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(cylindrical_map_term_struct), pointer :: fptr
+      type(cylindrical_map_term_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_cylindrical_map_term_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(cylindrical_map_term_struct), pointer :: fptr
-    type(cylindrical_map_term_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(cylindrical_map_term_struct), pointer :: fptr
+      type(cylindrical_map_term_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_cylindrical_map_term_struct(src_ptr, dst_ptr) bind(c)
@@ -4613,7 +7303,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_cylindrical_map_term_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(cylindrical_map_term_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_cylindrical_map_term_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(cylindrical_map_term_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_cylindrical_map_term_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(cylindrical_map_term_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_cylindrical_map_term_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(cylindrical_map_term_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! cylindrical_map_term_struct%file: 0D_NOT_character
 
   subroutine cylindrical_map_term_struct_get_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -4671,9 +7431,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(cylindrical_map_term_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%term) .and. is_contiguous(struct_obj%term)) then
       data_ptr = c_loc(struct_obj%term(lbound(struct_obj%term, 1)))
       bounds(1) = int(lbound(struct_obj%term, 1), c_int)
@@ -4692,40 +7452,40 @@ contains
   !! cylindrical_map_struct
 
     function allocate_fortran_cylindrical_map_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(cylindrical_map_struct), pointer :: fptr
-    type(cylindrical_map_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(cylindrical_map_struct), pointer :: fptr
+      type(cylindrical_map_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_cylindrical_map_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(cylindrical_map_struct), pointer :: fptr
-    type(cylindrical_map_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(cylindrical_map_struct), pointer :: fptr
+      type(cylindrical_map_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_cylindrical_map_struct(src_ptr, dst_ptr) bind(c)
@@ -4740,7 +7500,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_cylindrical_map_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(cylindrical_map_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_cylindrical_map_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(cylindrical_map_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_cylindrical_map_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(cylindrical_map_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_cylindrical_map_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(cylindrical_map_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! cylindrical_map_struct%m: 0D_NOT_integer
 
   subroutine cylindrical_map_struct_get_m(struct_obj_ptr, value_out) bind(c, name='cylindrical_map_struct_get_m')
@@ -4902,9 +7732,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(cylindrical_map_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%r0)) then
       data_ptr = c_loc(struct_obj%r0(lbound(struct_obj%r0, 1)))
       bounds(1) = int(lbound(struct_obj%r0, 1), c_int)
@@ -4949,40 +7779,40 @@ contains
   !! bicubic_cmplx_coef_struct
 
     function allocate_fortran_bicubic_cmplx_coef_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(bicubic_cmplx_coef_struct), pointer :: fptr
-    type(bicubic_cmplx_coef_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(bicubic_cmplx_coef_struct), pointer :: fptr
+      type(bicubic_cmplx_coef_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_bicubic_cmplx_coef_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(bicubic_cmplx_coef_struct), pointer :: fptr
-    type(bicubic_cmplx_coef_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(bicubic_cmplx_coef_struct), pointer :: fptr
+      type(bicubic_cmplx_coef_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_bicubic_cmplx_coef_struct(src_ptr, dst_ptr) bind(c)
@@ -4997,7 +7827,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_bicubic_cmplx_coef_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(bicubic_cmplx_coef_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_bicubic_cmplx_coef_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(bicubic_cmplx_coef_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_bicubic_cmplx_coef_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bicubic_cmplx_coef_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_bicubic_cmplx_coef_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(bicubic_cmplx_coef_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! bicubic_cmplx_coef_struct%coef: 2D_NOT_complex
 
   subroutine bicubic_cmplx_coef_struct_get_coef_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -5009,9 +7909,9 @@ contains
     type(bicubic_cmplx_coef_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%coef)) then
       data_ptr = c_loc(struct_obj%coef(lbound(struct_obj%coef, 1), lbound(struct_obj%coef, 2)))
       bounds(1) = int(lbound(struct_obj%coef, 1), c_int)
@@ -5040,9 +7940,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(bicubic_cmplx_coef_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%i_box)) then
       data_ptr = c_loc(struct_obj%i_box(lbound(struct_obj%i_box, 1)))
       bounds(1) = int(lbound(struct_obj%i_box, 1), c_int)
@@ -5060,40 +7960,40 @@ contains
   !! tricubic_cmplx_coef_struct
 
     function allocate_fortran_tricubic_cmplx_coef_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tricubic_cmplx_coef_struct), pointer :: fptr
-    type(tricubic_cmplx_coef_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tricubic_cmplx_coef_struct), pointer :: fptr
+      type(tricubic_cmplx_coef_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tricubic_cmplx_coef_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tricubic_cmplx_coef_struct), pointer :: fptr
-    type(tricubic_cmplx_coef_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tricubic_cmplx_coef_struct), pointer :: fptr
+      type(tricubic_cmplx_coef_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tricubic_cmplx_coef_struct(src_ptr, dst_ptr) bind(c)
@@ -5108,7 +8008,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tricubic_cmplx_coef_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tricubic_cmplx_coef_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tricubic_cmplx_coef_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tricubic_cmplx_coef_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tricubic_cmplx_coef_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tricubic_cmplx_coef_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tricubic_cmplx_coef_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tricubic_cmplx_coef_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tricubic_cmplx_coef_struct%coef: 3D_NOT_complex
 
   subroutine tricubic_cmplx_coef_struct_get_coef_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -5120,9 +8090,9 @@ contains
     type(tricubic_cmplx_coef_struct), pointer :: struct_obj
     integer(c_int), dimension(3), intent(out) :: strides
     integer :: d1, d2
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%coef)) then
       data_ptr = c_loc(struct_obj%coef(lbound(struct_obj%coef, 1), lbound(struct_obj%coef, 2), lbound(struct_obj%coef, 3)))
       bounds(1) = int(lbound(struct_obj%coef, 1), c_int)
@@ -5155,9 +8125,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(tricubic_cmplx_coef_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%i_box)) then
       data_ptr = c_loc(struct_obj%i_box(lbound(struct_obj%i_box, 1)))
       bounds(1) = int(lbound(struct_obj%i_box, 1), c_int)
@@ -5175,40 +8145,40 @@ contains
   !! grid_field_pt1_struct
 
     function allocate_fortran_grid_field_pt1_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(grid_field_pt1_struct), pointer :: fptr
-    type(grid_field_pt1_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(grid_field_pt1_struct), pointer :: fptr
+      type(grid_field_pt1_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_grid_field_pt1_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(grid_field_pt1_struct), pointer :: fptr
-    type(grid_field_pt1_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(grid_field_pt1_struct), pointer :: fptr
+      type(grid_field_pt1_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_grid_field_pt1_struct(src_ptr, dst_ptr) bind(c)
@@ -5223,7 +8193,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_grid_field_pt1_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(grid_field_pt1_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_grid_field_pt1_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(grid_field_pt1_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_grid_field_pt1_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(grid_field_pt1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_grid_field_pt1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(grid_field_pt1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! grid_field_pt1_struct%E: 1D_NOT_complex
 
   subroutine grid_field_pt1_struct_get_E_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -5233,9 +8273,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(grid_field_pt1_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%E)) then
       data_ptr = c_loc(struct_obj%E(lbound(struct_obj%E, 1)))
       bounds(1) = int(lbound(struct_obj%E, 1), c_int)
@@ -5259,9 +8299,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(grid_field_pt1_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%B)) then
       data_ptr = c_loc(struct_obj%B(lbound(struct_obj%B, 1)))
       bounds(1) = int(lbound(struct_obj%B, 1), c_int)
@@ -5279,40 +8319,40 @@ contains
   !! grid_field_pt_struct
 
     function allocate_fortran_grid_field_pt_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(grid_field_pt_struct), pointer :: fptr
-    type(grid_field_pt_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(grid_field_pt_struct), pointer :: fptr
+      type(grid_field_pt_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_grid_field_pt_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(grid_field_pt_struct), pointer :: fptr
-    type(grid_field_pt_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(grid_field_pt_struct), pointer :: fptr
+      type(grid_field_pt_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_grid_field_pt_struct(src_ptr, dst_ptr) bind(c)
@@ -5327,7 +8367,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_grid_field_pt_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(grid_field_pt_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_grid_field_pt_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(grid_field_pt_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_grid_field_pt_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(grid_field_pt_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_grid_field_pt_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(grid_field_pt_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! grid_field_pt_struct%file: 0D_NOT_character
 
   subroutine grid_field_pt_struct_get_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -5387,9 +8497,9 @@ contains
     integer(c_int), dimension(3), intent(out) :: strides
     integer :: d1, d2
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%pt) .and. is_contiguous(struct_obj%pt)) then
       data_ptr = c_loc(struct_obj%pt(lbound(struct_obj%pt, 1), lbound(struct_obj%pt, 2), lbound(struct_obj%pt, 3)))
       bounds(1) = int(lbound(struct_obj%pt, 1), c_int)
@@ -5417,40 +8527,40 @@ contains
   !! grid_field_struct
 
     function allocate_fortran_grid_field_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(grid_field_struct), pointer :: fptr
-    type(grid_field_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(grid_field_struct), pointer :: fptr
+      type(grid_field_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_grid_field_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(grid_field_struct), pointer :: fptr
-    type(grid_field_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(grid_field_struct), pointer :: fptr
+      type(grid_field_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_grid_field_struct(src_ptr, dst_ptr) bind(c)
@@ -5465,7 +8575,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_grid_field_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(grid_field_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_grid_field_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(grid_field_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_grid_field_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(grid_field_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_grid_field_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(grid_field_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! grid_field_struct%geometry: 0D_NOT_integer
 
   subroutine grid_field_struct_get_geometry(struct_obj_ptr, value_out) bind(c, name='grid_field_struct_get_geometry')
@@ -5627,9 +8807,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(grid_field_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%dr)) then
       data_ptr = c_loc(struct_obj%dr(lbound(struct_obj%dr, 1)))
       bounds(1) = int(lbound(struct_obj%dr, 1), c_int)
@@ -5653,9 +8833,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(grid_field_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%r0)) then
       data_ptr = c_loc(struct_obj%r0(lbound(struct_obj%r0, 1)))
       bounds(1) = int(lbound(struct_obj%r0, 1), c_int)
@@ -5728,9 +8908,9 @@ contains
     integer(c_int), dimension(3), intent(out) :: strides
     integer :: d1, d2
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%bi_coef)) then
       data_ptr = c_loc(struct_obj%bi_coef(lbound(struct_obj%bi_coef, 1), lbound(struct_obj%bi_coef, 2), lbound(struct_obj%bi_coef, 3)))
       bounds(1) = int(lbound(struct_obj%bi_coef, 1), c_int)
@@ -5767,9 +8947,9 @@ contains
     integer(c_int), dimension(3), intent(out) :: strides
     integer :: d1, d2
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%tri_coef)) then
       data_ptr = c_loc(struct_obj%tri_coef(lbound(struct_obj%tri_coef, 1), lbound(struct_obj%tri_coef, 2), lbound(struct_obj%tri_coef, 3)))
       bounds(1) = int(lbound(struct_obj%tri_coef, 1), c_int)
@@ -5797,40 +8977,40 @@ contains
   !! floor_position_struct
 
     function allocate_fortran_floor_position_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(floor_position_struct), pointer :: fptr
-    type(floor_position_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(floor_position_struct), pointer :: fptr
+      type(floor_position_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_floor_position_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(floor_position_struct), pointer :: fptr
-    type(floor_position_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(floor_position_struct), pointer :: fptr
+      type(floor_position_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_floor_position_struct(src_ptr, dst_ptr) bind(c)
@@ -5845,7 +9025,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_floor_position_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(floor_position_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_floor_position_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(floor_position_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_floor_position_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(floor_position_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_floor_position_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(floor_position_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! floor_position_struct%r: 1D_NOT_real
 
   subroutine floor_position_struct_get_r_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -5855,9 +9105,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(floor_position_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%r)) then
       data_ptr = c_loc(struct_obj%r(lbound(struct_obj%r, 1)))
       bounds(1) = int(lbound(struct_obj%r, 1), c_int)
@@ -5883,9 +9133,9 @@ contains
     type(floor_position_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%w)) then
       data_ptr = c_loc(struct_obj%w(lbound(struct_obj%w, 1), lbound(struct_obj%w, 2)))
       bounds(1) = int(lbound(struct_obj%w, 1), c_int)
@@ -5965,40 +9215,40 @@ contains
   !! high_energy_space_charge_struct
 
     function allocate_fortran_high_energy_space_charge_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(high_energy_space_charge_struct), pointer :: fptr
-    type(high_energy_space_charge_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(high_energy_space_charge_struct), pointer :: fptr
+      type(high_energy_space_charge_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_high_energy_space_charge_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(high_energy_space_charge_struct), pointer :: fptr
-    type(high_energy_space_charge_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(high_energy_space_charge_struct), pointer :: fptr
+      type(high_energy_space_charge_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_high_energy_space_charge_struct(src_ptr, dst_ptr) bind(c)
@@ -6013,7 +9263,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_high_energy_space_charge_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(high_energy_space_charge_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_high_energy_space_charge_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(high_energy_space_charge_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_high_energy_space_charge_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(high_energy_space_charge_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_high_energy_space_charge_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(high_energy_space_charge_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! high_energy_space_charge_struct%closed_orb: 0D_NOT_type
 
   subroutine high_energy_space_charge_struct_get_closed_orb(struct_obj_ptr, ptr_out) bind(c, name='high_energy_space_charge_struct_get_closed_orb')
@@ -6171,40 +9491,40 @@ contains
   !! xy_disp_struct
 
     function allocate_fortran_xy_disp_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(xy_disp_struct), pointer :: fptr
-    type(xy_disp_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(xy_disp_struct), pointer :: fptr
+      type(xy_disp_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_xy_disp_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(xy_disp_struct), pointer :: fptr
-    type(xy_disp_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(xy_disp_struct), pointer :: fptr
+      type(xy_disp_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_xy_disp_struct(src_ptr, dst_ptr) bind(c)
@@ -6219,7 +9539,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_xy_disp_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(xy_disp_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_xy_disp_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(xy_disp_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_xy_disp_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(xy_disp_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_xy_disp_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(xy_disp_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! xy_disp_struct%eta: 0D_NOT_real
 
   subroutine xy_disp_struct_get_eta(struct_obj_ptr, value_out) bind(c, name='xy_disp_struct_get_eta')
@@ -6337,40 +9727,40 @@ contains
   !! twiss_struct
 
     function allocate_fortran_twiss_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(twiss_struct), pointer :: fptr
-    type(twiss_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(twiss_struct), pointer :: fptr
+      type(twiss_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_twiss_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(twiss_struct), pointer :: fptr
-    type(twiss_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(twiss_struct), pointer :: fptr
+      type(twiss_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_twiss_struct(src_ptr, dst_ptr) bind(c)
@@ -6385,7 +9775,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_twiss_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(twiss_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_twiss_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(twiss_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_twiss_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(twiss_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_twiss_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(twiss_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! twiss_struct%beta: 0D_NOT_real
 
   subroutine twiss_struct_get_beta(struct_obj_ptr, value_out) bind(c, name='twiss_struct_get_beta')
@@ -6693,40 +10153,40 @@ contains
   !! mode3_struct
 
     function allocate_fortran_mode3_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(mode3_struct), pointer :: fptr
-    type(mode3_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(mode3_struct), pointer :: fptr
+      type(mode3_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_mode3_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(mode3_struct), pointer :: fptr
-    type(mode3_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(mode3_struct), pointer :: fptr
+      type(mode3_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_mode3_struct(src_ptr, dst_ptr) bind(c)
@@ -6741,7 +10201,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_mode3_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(mode3_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_mode3_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(mode3_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_mode3_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(mode3_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_mode3_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(mode3_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! mode3_struct%v: 2D_NOT_real
 
   subroutine mode3_struct_get_v_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -6753,9 +10283,9 @@ contains
     type(mode3_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%v)) then
       data_ptr = c_loc(struct_obj%v(lbound(struct_obj%v, 1), lbound(struct_obj%v, 2)))
       bounds(1) = int(lbound(struct_obj%v, 1), c_int)
@@ -6883,40 +10413,40 @@ contains
   !! bookkeeping_state_struct
 
     function allocate_fortran_bookkeeping_state_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(bookkeeping_state_struct), pointer :: fptr
-    type(bookkeeping_state_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(bookkeeping_state_struct), pointer :: fptr
+      type(bookkeeping_state_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_bookkeeping_state_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(bookkeeping_state_struct), pointer :: fptr
-    type(bookkeeping_state_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(bookkeeping_state_struct), pointer :: fptr
+      type(bookkeeping_state_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_bookkeeping_state_struct(src_ptr, dst_ptr) bind(c)
@@ -6931,7 +10461,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_bookkeeping_state_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(bookkeeping_state_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_bookkeeping_state_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(bookkeeping_state_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_bookkeeping_state_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bookkeeping_state_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_bookkeeping_state_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(bookkeeping_state_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! bookkeeping_state_struct%attributes: 0D_NOT_integer
 
   subroutine bookkeeping_state_struct_get_attributes(struct_obj_ptr, value_out) bind(c, name='bookkeeping_state_struct_get_attributes')
@@ -7106,40 +10706,40 @@ contains
   !! rad_map_struct
 
     function allocate_fortran_rad_map_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(rad_map_struct), pointer :: fptr
-    type(rad_map_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(rad_map_struct), pointer :: fptr
+      type(rad_map_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_rad_map_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(rad_map_struct), pointer :: fptr
-    type(rad_map_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(rad_map_struct), pointer :: fptr
+      type(rad_map_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_rad_map_struct(src_ptr, dst_ptr) bind(c)
@@ -7154,7 +10754,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_rad_map_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(rad_map_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_rad_map_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(rad_map_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_rad_map_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(rad_map_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_rad_map_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(rad_map_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! rad_map_struct%ref_orb: 1D_NOT_real
 
   subroutine rad_map_struct_get_ref_orb_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -7164,9 +10834,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(rad_map_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%ref_orb)) then
       data_ptr = c_loc(struct_obj%ref_orb(lbound(struct_obj%ref_orb, 1)))
       bounds(1) = int(lbound(struct_obj%ref_orb, 1), c_int)
@@ -7192,9 +10862,9 @@ contains
     type(rad_map_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%damp_dmat)) then
       data_ptr = c_loc(struct_obj%damp_dmat(lbound(struct_obj%damp_dmat, 1), lbound(struct_obj%damp_dmat, 2)))
       bounds(1) = int(lbound(struct_obj%damp_dmat, 1), c_int)
@@ -7223,9 +10893,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(rad_map_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%xfer_damp_vec)) then
       data_ptr = c_loc(struct_obj%xfer_damp_vec(lbound(struct_obj%xfer_damp_vec, 1)))
       bounds(1) = int(lbound(struct_obj%xfer_damp_vec, 1), c_int)
@@ -7251,9 +10921,9 @@ contains
     type(rad_map_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%xfer_damp_mat)) then
       data_ptr = c_loc(struct_obj%xfer_damp_mat(lbound(struct_obj%xfer_damp_mat, 1), lbound(struct_obj%xfer_damp_mat, 2)))
       bounds(1) = int(lbound(struct_obj%xfer_damp_mat, 1), c_int)
@@ -7284,9 +10954,9 @@ contains
     type(rad_map_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%stoc_mat)) then
       data_ptr = c_loc(struct_obj%stoc_mat(lbound(struct_obj%stoc_mat, 1), lbound(struct_obj%stoc_mat, 2)))
       bounds(1) = int(lbound(struct_obj%stoc_mat, 1), c_int)
@@ -7309,40 +10979,40 @@ contains
   !! rad_map_ele_struct
 
     function allocate_fortran_rad_map_ele_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(rad_map_ele_struct), pointer :: fptr
-    type(rad_map_ele_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(rad_map_ele_struct), pointer :: fptr
+      type(rad_map_ele_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_rad_map_ele_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(rad_map_ele_struct), pointer :: fptr
-    type(rad_map_ele_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(rad_map_ele_struct), pointer :: fptr
+      type(rad_map_ele_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_rad_map_ele_struct(src_ptr, dst_ptr) bind(c)
@@ -7357,7 +11027,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_rad_map_ele_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(rad_map_ele_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_rad_map_ele_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(rad_map_ele_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_rad_map_ele_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(rad_map_ele_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_rad_map_ele_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(rad_map_ele_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! rad_map_ele_struct%rm0: 0D_NOT_type
 
   subroutine rad_map_ele_struct_get_rm0(struct_obj_ptr, ptr_out) bind(c, name='rad_map_ele_struct_get_rm0')
@@ -7422,40 +11162,40 @@ contains
   !! gen_grad1_struct
 
     function allocate_fortran_gen_grad1_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(gen_grad1_struct), pointer :: fptr
-    type(gen_grad1_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(gen_grad1_struct), pointer :: fptr
+      type(gen_grad1_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_gen_grad1_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(gen_grad1_struct), pointer :: fptr
-    type(gen_grad1_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(gen_grad1_struct), pointer :: fptr
+      type(gen_grad1_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_gen_grad1_struct(src_ptr, dst_ptr) bind(c)
@@ -7470,7 +11210,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_gen_grad1_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(gen_grad1_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_gen_grad1_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(gen_grad1_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_gen_grad1_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(gen_grad1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_gen_grad1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(gen_grad1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! gen_grad1_struct%m: 0D_NOT_integer
 
   subroutine gen_grad1_struct_get_m(struct_obj_ptr, value_out) bind(c, name='gen_grad1_struct_get_m')
@@ -7539,9 +11349,9 @@ contains
     type(gen_grad1_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%deriv) .and. is_contiguous(struct_obj%deriv)) then
       data_ptr = c_loc(struct_obj%deriv(lbound(struct_obj%deriv, 1), lbound(struct_obj%deriv, 2)))
       bounds(1) = int(lbound(struct_obj%deriv, 1), c_int)
@@ -7564,40 +11374,40 @@ contains
   !! gen_grad_map_struct
 
     function allocate_fortran_gen_grad_map_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(gen_grad_map_struct), pointer :: fptr
-    type(gen_grad_map_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(gen_grad_map_struct), pointer :: fptr
+      type(gen_grad_map_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_gen_grad_map_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(gen_grad_map_struct), pointer :: fptr
-    type(gen_grad_map_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(gen_grad_map_struct), pointer :: fptr
+      type(gen_grad_map_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_gen_grad_map_struct(src_ptr, dst_ptr) bind(c)
@@ -7612,7 +11422,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_gen_grad_map_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(gen_grad_map_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_gen_grad_map_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(gen_grad_map_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_gen_grad_map_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(gen_grad_map_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_gen_grad_map_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(gen_grad_map_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! gen_grad_map_struct%file: 0D_NOT_character
 
   subroutine gen_grad_map_struct_get_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -7651,9 +11531,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(gen_grad_map_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%gg) .and. is_contiguous(struct_obj%gg)) then
       data_ptr = c_loc(struct_obj%gg(lbound(struct_obj%gg, 1)))
       bounds(1) = int(lbound(struct_obj%gg, 1), c_int)
@@ -7773,9 +11653,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(gen_grad_map_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%r0)) then
       data_ptr = c_loc(struct_obj%r0(lbound(struct_obj%r0, 1)))
       bounds(1) = int(lbound(struct_obj%r0, 1), c_int)
@@ -7850,40 +11730,40 @@ contains
   !! surface_segmented_pt_struct
 
     function allocate_fortran_surface_segmented_pt_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(surface_segmented_pt_struct), pointer :: fptr
-    type(surface_segmented_pt_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(surface_segmented_pt_struct), pointer :: fptr
+      type(surface_segmented_pt_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_surface_segmented_pt_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(surface_segmented_pt_struct), pointer :: fptr
-    type(surface_segmented_pt_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(surface_segmented_pt_struct), pointer :: fptr
+      type(surface_segmented_pt_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_surface_segmented_pt_struct(src_ptr, dst_ptr) bind(c)
@@ -7898,7 +11778,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_surface_segmented_pt_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(surface_segmented_pt_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_surface_segmented_pt_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(surface_segmented_pt_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_surface_segmented_pt_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(surface_segmented_pt_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_surface_segmented_pt_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(surface_segmented_pt_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! surface_segmented_pt_struct%x0: 0D_NOT_real
 
   subroutine surface_segmented_pt_struct_get_x0(struct_obj_ptr, value_out) bind(c, name='surface_segmented_pt_struct_get_x0')
@@ -7997,40 +11947,40 @@ contains
   !! surface_segmented_struct
 
     function allocate_fortran_surface_segmented_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(surface_segmented_struct), pointer :: fptr
-    type(surface_segmented_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(surface_segmented_struct), pointer :: fptr
+      type(surface_segmented_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_surface_segmented_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(surface_segmented_struct), pointer :: fptr
-    type(surface_segmented_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(surface_segmented_struct), pointer :: fptr
+      type(surface_segmented_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_surface_segmented_struct(src_ptr, dst_ptr) bind(c)
@@ -8045,7 +11995,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_surface_segmented_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(surface_segmented_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_surface_segmented_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(surface_segmented_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_surface_segmented_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(surface_segmented_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_surface_segmented_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(surface_segmented_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! surface_segmented_struct%active: 0D_NOT_logical
 
   subroutine surface_segmented_struct_get_active(struct_obj_ptr, value_out) bind(c, name='surface_segmented_struct_get_active')
@@ -8074,9 +12094,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(surface_segmented_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%dr)) then
       data_ptr = c_loc(struct_obj%dr(lbound(struct_obj%dr, 1)))
       bounds(1) = int(lbound(struct_obj%dr, 1), c_int)
@@ -8100,9 +12120,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(surface_segmented_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%r0)) then
       data_ptr = c_loc(struct_obj%r0(lbound(struct_obj%r0, 1)))
       bounds(1) = int(lbound(struct_obj%r0, 1), c_int)
@@ -8129,9 +12149,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%pt) .and. is_contiguous(struct_obj%pt)) then
       data_ptr = c_loc(struct_obj%pt(lbound(struct_obj%pt, 1), lbound(struct_obj%pt, 2)))
       bounds(1) = int(lbound(struct_obj%pt, 1), c_int)
@@ -8155,40 +12175,40 @@ contains
   !! surface_h_misalign_pt_struct
 
     function allocate_fortran_surface_h_misalign_pt_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(surface_h_misalign_pt_struct), pointer :: fptr
-    type(surface_h_misalign_pt_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(surface_h_misalign_pt_struct), pointer :: fptr
+      type(surface_h_misalign_pt_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_surface_h_misalign_pt_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(surface_h_misalign_pt_struct), pointer :: fptr
-    type(surface_h_misalign_pt_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(surface_h_misalign_pt_struct), pointer :: fptr
+      type(surface_h_misalign_pt_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_surface_h_misalign_pt_struct(src_ptr, dst_ptr) bind(c)
@@ -8203,7 +12223,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_surface_h_misalign_pt_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(surface_h_misalign_pt_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_surface_h_misalign_pt_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(surface_h_misalign_pt_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_surface_h_misalign_pt_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(surface_h_misalign_pt_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_surface_h_misalign_pt_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(surface_h_misalign_pt_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! surface_h_misalign_pt_struct%x0: 0D_NOT_real
 
   subroutine surface_h_misalign_pt_struct_get_x0(struct_obj_ptr, value_out) bind(c, name='surface_h_misalign_pt_struct_get_x0')
@@ -8321,40 +12411,40 @@ contains
   !! surface_h_misalign_struct
 
     function allocate_fortran_surface_h_misalign_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(surface_h_misalign_struct), pointer :: fptr
-    type(surface_h_misalign_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(surface_h_misalign_struct), pointer :: fptr
+      type(surface_h_misalign_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_surface_h_misalign_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(surface_h_misalign_struct), pointer :: fptr
-    type(surface_h_misalign_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(surface_h_misalign_struct), pointer :: fptr
+      type(surface_h_misalign_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_surface_h_misalign_struct(src_ptr, dst_ptr) bind(c)
@@ -8369,7 +12459,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_surface_h_misalign_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(surface_h_misalign_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_surface_h_misalign_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(surface_h_misalign_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_surface_h_misalign_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(surface_h_misalign_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_surface_h_misalign_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(surface_h_misalign_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! surface_h_misalign_struct%active: 0D_NOT_logical
 
   subroutine surface_h_misalign_struct_get_active(struct_obj_ptr, value_out) bind(c, name='surface_h_misalign_struct_get_active')
@@ -8398,9 +12558,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(surface_h_misalign_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%dr)) then
       data_ptr = c_loc(struct_obj%dr(lbound(struct_obj%dr, 1)))
       bounds(1) = int(lbound(struct_obj%dr, 1), c_int)
@@ -8424,9 +12584,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(surface_h_misalign_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%r0)) then
       data_ptr = c_loc(struct_obj%r0(lbound(struct_obj%r0, 1)))
       bounds(1) = int(lbound(struct_obj%r0, 1), c_int)
@@ -8453,9 +12613,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%pt) .and. is_contiguous(struct_obj%pt)) then
       data_ptr = c_loc(struct_obj%pt(lbound(struct_obj%pt, 1), lbound(struct_obj%pt, 2)))
       bounds(1) = int(lbound(struct_obj%pt, 1), c_int)
@@ -8479,40 +12639,40 @@ contains
   !! surface_displacement_pt_struct
 
     function allocate_fortran_surface_displacement_pt_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(surface_displacement_pt_struct), pointer :: fptr
-    type(surface_displacement_pt_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(surface_displacement_pt_struct), pointer :: fptr
+      type(surface_displacement_pt_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_surface_displacement_pt_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(surface_displacement_pt_struct), pointer :: fptr
-    type(surface_displacement_pt_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(surface_displacement_pt_struct), pointer :: fptr
+      type(surface_displacement_pt_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_surface_displacement_pt_struct(src_ptr, dst_ptr) bind(c)
@@ -8527,7 +12687,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_surface_displacement_pt_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(surface_displacement_pt_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_surface_displacement_pt_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(surface_displacement_pt_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_surface_displacement_pt_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(surface_displacement_pt_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_surface_displacement_pt_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(surface_displacement_pt_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! surface_displacement_pt_struct%x0: 0D_NOT_real
 
   subroutine surface_displacement_pt_struct_get_x0(struct_obj_ptr, value_out) bind(c, name='surface_displacement_pt_struct_get_x0')
@@ -8645,40 +12875,40 @@ contains
   !! surface_displacement_struct
 
     function allocate_fortran_surface_displacement_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(surface_displacement_struct), pointer :: fptr
-    type(surface_displacement_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(surface_displacement_struct), pointer :: fptr
+      type(surface_displacement_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_surface_displacement_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(surface_displacement_struct), pointer :: fptr
-    type(surface_displacement_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(surface_displacement_struct), pointer :: fptr
+      type(surface_displacement_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_surface_displacement_struct(src_ptr, dst_ptr) bind(c)
@@ -8693,7 +12923,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_surface_displacement_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(surface_displacement_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_surface_displacement_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(surface_displacement_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_surface_displacement_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(surface_displacement_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_surface_displacement_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(surface_displacement_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! surface_displacement_struct%active: 0D_NOT_logical
 
   subroutine surface_displacement_struct_get_active(struct_obj_ptr, value_out) bind(c, name='surface_displacement_struct_get_active')
@@ -8722,9 +13022,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(surface_displacement_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%dr)) then
       data_ptr = c_loc(struct_obj%dr(lbound(struct_obj%dr, 1)))
       bounds(1) = int(lbound(struct_obj%dr, 1), c_int)
@@ -8748,9 +13048,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(surface_displacement_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%r0)) then
       data_ptr = c_loc(struct_obj%r0(lbound(struct_obj%r0, 1)))
       bounds(1) = int(lbound(struct_obj%r0, 1), c_int)
@@ -8777,9 +13077,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%pt) .and. is_contiguous(struct_obj%pt)) then
       data_ptr = c_loc(struct_obj%pt(lbound(struct_obj%pt, 1), lbound(struct_obj%pt, 2)))
       bounds(1) = int(lbound(struct_obj%pt, 1), c_int)
@@ -8803,40 +13103,40 @@ contains
   !! target_point_struct
 
     function allocate_fortran_target_point_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(target_point_struct), pointer :: fptr
-    type(target_point_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(target_point_struct), pointer :: fptr
+      type(target_point_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_target_point_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(target_point_struct), pointer :: fptr
-    type(target_point_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(target_point_struct), pointer :: fptr
+      type(target_point_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_target_point_struct(src_ptr, dst_ptr) bind(c)
@@ -8851,7 +13151,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_target_point_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(target_point_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_target_point_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(target_point_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_target_point_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(target_point_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_target_point_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(target_point_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! target_point_struct%r: 1D_NOT_real
 
   subroutine target_point_struct_get_r_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -8861,9 +13231,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(target_point_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%r)) then
       data_ptr = c_loc(struct_obj%r(lbound(struct_obj%r, 1)))
       bounds(1) = int(lbound(struct_obj%r, 1), c_int)
@@ -8881,40 +13251,40 @@ contains
   !! surface_curvature_struct
 
     function allocate_fortran_surface_curvature_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(surface_curvature_struct), pointer :: fptr
-    type(surface_curvature_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(surface_curvature_struct), pointer :: fptr
+      type(surface_curvature_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_surface_curvature_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(surface_curvature_struct), pointer :: fptr
-    type(surface_curvature_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(surface_curvature_struct), pointer :: fptr
+      type(surface_curvature_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_surface_curvature_struct(src_ptr, dst_ptr) bind(c)
@@ -8929,7 +13299,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_surface_curvature_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(surface_curvature_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_surface_curvature_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(surface_curvature_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_surface_curvature_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(surface_curvature_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_surface_curvature_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(surface_curvature_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! surface_curvature_struct%xy: 2D_NOT_real
 
   subroutine surface_curvature_struct_get_xy_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -8941,9 +13381,9 @@ contains
     type(surface_curvature_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%xy)) then
       data_ptr = c_loc(struct_obj%xy(lbound(struct_obj%xy, 1), lbound(struct_obj%xy, 2)))
       bounds(1) = int(lbound(struct_obj%xy, 1), c_int)
@@ -8991,9 +13431,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(surface_curvature_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%elliptical)) then
       data_ptr = c_loc(struct_obj%elliptical(lbound(struct_obj%elliptical, 1)))
       bounds(1) = int(lbound(struct_obj%elliptical, 1), c_int)
@@ -9030,40 +13470,40 @@ contains
   !! photon_target_struct
 
     function allocate_fortran_photon_target_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(photon_target_struct), pointer :: fptr
-    type(photon_target_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(photon_target_struct), pointer :: fptr
+      type(photon_target_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_photon_target_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(photon_target_struct), pointer :: fptr
-    type(photon_target_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(photon_target_struct), pointer :: fptr
+      type(photon_target_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_photon_target_struct(src_ptr, dst_ptr) bind(c)
@@ -9078,7 +13518,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_photon_target_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(photon_target_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_photon_target_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(photon_target_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_photon_target_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(photon_target_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_photon_target_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(photon_target_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! photon_target_struct%type: 0D_NOT_integer
 
   subroutine photon_target_struct_get_type(struct_obj_ptr, value_out) bind(c, name='photon_target_struct_get_type')
@@ -9148,9 +13658,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(photon_target_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%corner)) then
       data_ptr = c_loc(struct_obj%corner(lbound(struct_obj%corner, 1)))
       bounds(1) = int(lbound(struct_obj%corner, 1), c_int)
@@ -9190,40 +13700,40 @@ contains
   !! photon_material_struct
 
     function allocate_fortran_photon_material_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(photon_material_struct), pointer :: fptr
-    type(photon_material_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(photon_material_struct), pointer :: fptr
+      type(photon_material_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_photon_material_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(photon_material_struct), pointer :: fptr
-    type(photon_material_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(photon_material_struct), pointer :: fptr
+      type(photon_material_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_photon_material_struct(src_ptr, dst_ptr) bind(c)
@@ -9238,7 +13748,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_photon_material_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(photon_material_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_photon_material_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(photon_material_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_photon_material_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(photon_material_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_photon_material_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(photon_material_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! photon_material_struct%f0_m1: 0D_NOT_complex
 
   subroutine photon_material_struct_get_f0_m1(struct_obj_ptr, value_out) bind(c, name='photon_material_struct_get_f0_m1')
@@ -9362,9 +13942,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(photon_material_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%h_norm)) then
       data_ptr = c_loc(struct_obj%h_norm(lbound(struct_obj%h_norm, 1)))
       bounds(1) = int(lbound(struct_obj%h_norm, 1), c_int)
@@ -9388,9 +13968,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(photon_material_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%l_ref)) then
       data_ptr = c_loc(struct_obj%l_ref(lbound(struct_obj%l_ref, 1)))
       bounds(1) = int(lbound(struct_obj%l_ref, 1), c_int)
@@ -9408,40 +13988,40 @@ contains
   !! pixel_pt_struct
 
     function allocate_fortran_pixel_pt_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(pixel_pt_struct), pointer :: fptr
-    type(pixel_pt_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(pixel_pt_struct), pointer :: fptr
+      type(pixel_pt_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_pixel_pt_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(pixel_pt_struct), pointer :: fptr
-    type(pixel_pt_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(pixel_pt_struct), pointer :: fptr
+      type(pixel_pt_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_pixel_pt_struct(src_ptr, dst_ptr) bind(c)
@@ -9456,12 +14036,82 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_pixel_pt_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(pixel_pt_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_pixel_pt_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(pixel_pt_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_pixel_pt_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(pixel_pt_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_pixel_pt_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(pixel_pt_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! pixel_pt_struct%n_photon: 0D_NOT_integer8
 
   subroutine pixel_pt_struct_get_n_photon(struct_obj_ptr, value_out) bind(c, name='pixel_pt_struct_get_n_photon')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_long_long), intent(out) :: value_out
+    integer(c_int64_t), intent(out) :: value_out
     type(pixel_pt_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     value_out = struct_obj%n_photon
@@ -9470,7 +14120,7 @@ contains
 
   subroutine pixel_pt_struct_set_n_photon(struct_obj_ptr, value_in) bind(c, name='pixel_pt_struct_set_n_photon')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_long_long), intent(in), value :: value_in
+    integer(c_int64_t), intent(in), value :: value_in
     type(pixel_pt_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     struct_obj%n_photon = value_in
@@ -9580,9 +14230,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(pixel_pt_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%orbit)) then
       data_ptr = c_loc(struct_obj%orbit(lbound(struct_obj%orbit, 1)))
       bounds(1) = int(lbound(struct_obj%orbit, 1), c_int)
@@ -9606,9 +14256,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(pixel_pt_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%orbit_rms)) then
       data_ptr = c_loc(struct_obj%orbit_rms(lbound(struct_obj%orbit_rms, 1)))
       bounds(1) = int(lbound(struct_obj%orbit_rms, 1), c_int)
@@ -9632,9 +14282,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(pixel_pt_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%init_orbit)) then
       data_ptr = c_loc(struct_obj%init_orbit(lbound(struct_obj%init_orbit, 1)))
       bounds(1) = int(lbound(struct_obj%init_orbit, 1), c_int)
@@ -9658,9 +14308,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(pixel_pt_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%init_orbit_rms)) then
       data_ptr = c_loc(struct_obj%init_orbit_rms(lbound(struct_obj%init_orbit_rms, 1)))
       bounds(1) = int(lbound(struct_obj%init_orbit_rms, 1), c_int)
@@ -9678,40 +14328,40 @@ contains
   !! pixel_detec_struct
 
     function allocate_fortran_pixel_detec_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(pixel_detec_struct), pointer :: fptr
-    type(pixel_detec_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(pixel_detec_struct), pointer :: fptr
+      type(pixel_detec_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_pixel_detec_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(pixel_detec_struct), pointer :: fptr
-    type(pixel_detec_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(pixel_detec_struct), pointer :: fptr
+      type(pixel_detec_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_pixel_detec_struct(src_ptr, dst_ptr) bind(c)
@@ -9726,7 +14376,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_pixel_detec_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(pixel_detec_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_pixel_detec_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(pixel_detec_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_pixel_detec_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(pixel_detec_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_pixel_detec_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(pixel_detec_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! pixel_detec_struct%dr: 1D_NOT_real
 
   subroutine pixel_detec_struct_get_dr_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -9736,9 +14456,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(pixel_detec_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%dr)) then
       data_ptr = c_loc(struct_obj%dr(lbound(struct_obj%dr, 1)))
       bounds(1) = int(lbound(struct_obj%dr, 1), c_int)
@@ -9762,9 +14482,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(pixel_detec_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%r0)) then
       data_ptr = c_loc(struct_obj%r0(lbound(struct_obj%r0, 1)))
       bounds(1) = int(lbound(struct_obj%r0, 1), c_int)
@@ -9783,7 +14503,7 @@ contains
 
   subroutine pixel_detec_struct_get_n_track_tot(struct_obj_ptr, value_out) bind(c, name='pixel_detec_struct_get_n_track_tot')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_long_long), intent(out) :: value_out
+    integer(c_int64_t), intent(out) :: value_out
     type(pixel_detec_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     value_out = struct_obj%n_track_tot
@@ -9792,7 +14512,7 @@ contains
 
   subroutine pixel_detec_struct_set_n_track_tot(struct_obj_ptr, value_in) bind(c, name='pixel_detec_struct_set_n_track_tot')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_long_long), intent(in), value :: value_in
+    integer(c_int64_t), intent(in), value :: value_in
     type(pixel_detec_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     struct_obj%n_track_tot = value_in
@@ -9802,7 +14522,7 @@ contains
 
   subroutine pixel_detec_struct_get_n_hit_detec(struct_obj_ptr, value_out) bind(c, name='pixel_detec_struct_get_n_hit_detec')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_long_long), intent(out) :: value_out
+    integer(c_int64_t), intent(out) :: value_out
     type(pixel_detec_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     value_out = struct_obj%n_hit_detec
@@ -9811,7 +14531,7 @@ contains
 
   subroutine pixel_detec_struct_set_n_hit_detec(struct_obj_ptr, value_in) bind(c, name='pixel_detec_struct_set_n_hit_detec')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_long_long), intent(in), value :: value_in
+    integer(c_int64_t), intent(in), value :: value_in
     type(pixel_detec_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     struct_obj%n_hit_detec = value_in
@@ -9821,7 +14541,7 @@ contains
 
   subroutine pixel_detec_struct_get_n_hit_pixel(struct_obj_ptr, value_out) bind(c, name='pixel_detec_struct_get_n_hit_pixel')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_long_long), intent(out) :: value_out
+    integer(c_int64_t), intent(out) :: value_out
     type(pixel_detec_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     value_out = struct_obj%n_hit_pixel
@@ -9830,7 +14550,7 @@ contains
 
   subroutine pixel_detec_struct_set_n_hit_pixel(struct_obj_ptr, value_in) bind(c, name='pixel_detec_struct_set_n_hit_pixel')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_long_long), intent(in), value :: value_in
+    integer(c_int64_t), intent(in), value :: value_in
     type(pixel_detec_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     struct_obj%n_hit_pixel = value_in
@@ -9848,9 +14568,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%pt) .and. is_contiguous(struct_obj%pt)) then
       data_ptr = c_loc(struct_obj%pt(lbound(struct_obj%pt, 1), lbound(struct_obj%pt, 2)))
       bounds(1) = int(lbound(struct_obj%pt, 1), c_int)
@@ -9874,40 +14594,40 @@ contains
   !! photon_element_struct
 
     function allocate_fortran_photon_element_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(photon_element_struct), pointer :: fptr
-    type(photon_element_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(photon_element_struct), pointer :: fptr
+      type(photon_element_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_photon_element_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(photon_element_struct), pointer :: fptr
-    type(photon_element_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(photon_element_struct), pointer :: fptr
+      type(photon_element_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_photon_element_struct(src_ptr, dst_ptr) bind(c)
@@ -9922,7 +14642,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_photon_element_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(photon_element_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_photon_element_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(photon_element_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_photon_element_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(photon_element_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_photon_element_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(photon_element_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! photon_element_struct%curvature: 0D_NOT_type
 
   subroutine photon_element_struct_get_curvature(struct_obj_ptr, ptr_out) bind(c, name='photon_element_struct_get_curvature')
@@ -10141,9 +14931,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(photon_element_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%init_energy_prob) .and. is_contiguous(struct_obj%init_energy_prob)) then
       data_ptr = c_loc(struct_obj%init_energy_prob(lbound(struct_obj%init_energy_prob, 1)))
       bounds(1) = int(lbound(struct_obj%init_energy_prob, 1), c_int)
@@ -10168,9 +14958,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(photon_element_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%integrated_init_energy_prob) .and. is_contiguous(struct_obj%integrated_init_energy_prob)) then
       data_ptr = c_loc(struct_obj%integrated_init_energy_prob(lbound(struct_obj%integrated_init_energy_prob, 1)))
       bounds(1) = int(lbound(struct_obj%integrated_init_energy_prob, 1), c_int)
@@ -10188,40 +14978,40 @@ contains
   !! wall3d_vertex_struct
 
     function allocate_fortran_wall3d_vertex_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(wall3d_vertex_struct), pointer :: fptr
-    type(wall3d_vertex_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(wall3d_vertex_struct), pointer :: fptr
+      type(wall3d_vertex_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_wall3d_vertex_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(wall3d_vertex_struct), pointer :: fptr
-    type(wall3d_vertex_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(wall3d_vertex_struct), pointer :: fptr
+      type(wall3d_vertex_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_wall3d_vertex_struct(src_ptr, dst_ptr) bind(c)
@@ -10236,7 +15026,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_wall3d_vertex_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(wall3d_vertex_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_wall3d_vertex_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(wall3d_vertex_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_wall3d_vertex_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wall3d_vertex_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_wall3d_vertex_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(wall3d_vertex_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! wall3d_vertex_struct%x: 0D_NOT_real
 
   subroutine wall3d_vertex_struct_get_x(struct_obj_ptr, value_out) bind(c, name='wall3d_vertex_struct_get_x')
@@ -10411,40 +15271,40 @@ contains
   !! wall3d_section_struct
 
     function allocate_fortran_wall3d_section_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(wall3d_section_struct), pointer :: fptr
-    type(wall3d_section_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(wall3d_section_struct), pointer :: fptr
+      type(wall3d_section_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_wall3d_section_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(wall3d_section_struct), pointer :: fptr
-    type(wall3d_section_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(wall3d_section_struct), pointer :: fptr
+      type(wall3d_section_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_wall3d_section_struct(src_ptr, dst_ptr) bind(c)
@@ -10459,7 +15319,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_wall3d_section_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(wall3d_section_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_wall3d_section_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(wall3d_section_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_wall3d_section_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wall3d_section_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_wall3d_section_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(wall3d_section_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! wall3d_section_struct%name: 0D_NOT_character
 
   subroutine wall3d_section_struct_get_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -10526,9 +15456,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(wall3d_section_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%v) .and. is_contiguous(struct_obj%v)) then
       data_ptr = c_loc(struct_obj%v(lbound(struct_obj%v, 1)))
       bounds(1) = int(lbound(struct_obj%v, 1), c_int)
@@ -10732,9 +15662,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(wall3d_section_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%r0)) then
       data_ptr = c_loc(struct_obj%r0(lbound(struct_obj%r0, 1)))
       bounds(1) = int(lbound(struct_obj%r0, 1), c_int)
@@ -10796,9 +15726,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(wall3d_section_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%x0_coef)) then
       data_ptr = c_loc(struct_obj%x0_coef(lbound(struct_obj%x0_coef, 1)))
       bounds(1) = int(lbound(struct_obj%x0_coef, 1), c_int)
@@ -10822,9 +15752,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(wall3d_section_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%y0_coef)) then
       data_ptr = c_loc(struct_obj%y0_coef(lbound(struct_obj%y0_coef, 1)))
       bounds(1) = int(lbound(struct_obj%y0_coef, 1), c_int)
@@ -10867,9 +15797,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(wall3d_section_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%p1_coef)) then
       data_ptr = c_loc(struct_obj%p1_coef(lbound(struct_obj%p1_coef, 1)))
       bounds(1) = int(lbound(struct_obj%p1_coef, 1), c_int)
@@ -10893,9 +15823,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(wall3d_section_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%p2_coef)) then
       data_ptr = c_loc(struct_obj%p2_coef(lbound(struct_obj%p2_coef, 1)))
       bounds(1) = int(lbound(struct_obj%p2_coef, 1), c_int)
@@ -10913,40 +15843,40 @@ contains
   !! wall3d_struct
 
     function allocate_fortran_wall3d_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(wall3d_struct), pointer :: fptr
-    type(wall3d_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(wall3d_struct), pointer :: fptr
+      type(wall3d_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_wall3d_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(wall3d_struct), pointer :: fptr
-    type(wall3d_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(wall3d_struct), pointer :: fptr
+      type(wall3d_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_wall3d_struct(src_ptr, dst_ptr) bind(c)
@@ -10961,7 +15891,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_wall3d_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(wall3d_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_wall3d_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(wall3d_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_wall3d_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wall3d_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_wall3d_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(wall3d_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! wall3d_struct%name: 0D_NOT_character
 
   subroutine wall3d_struct_get_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -11170,9 +16170,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(wall3d_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%section) .and. is_contiguous(struct_obj%section)) then
       data_ptr = c_loc(struct_obj%section(lbound(struct_obj%section, 1)))
       bounds(1) = int(lbound(struct_obj%section, 1), c_int)
@@ -11191,40 +16191,40 @@ contains
   !! ramper_lord_struct
 
     function allocate_fortran_ramper_lord_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(ramper_lord_struct), pointer :: fptr
-    type(ramper_lord_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(ramper_lord_struct), pointer :: fptr
+      type(ramper_lord_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_ramper_lord_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(ramper_lord_struct), pointer :: fptr
-    type(ramper_lord_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(ramper_lord_struct), pointer :: fptr
+      type(ramper_lord_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_ramper_lord_struct(src_ptr, dst_ptr) bind(c)
@@ -11239,7 +16239,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_ramper_lord_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(ramper_lord_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_ramper_lord_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(ramper_lord_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_ramper_lord_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(ramper_lord_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_ramper_lord_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(ramper_lord_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! ramper_lord_struct%ix_ele: 0D_NOT_integer
 
   subroutine ramper_lord_struct_get_ix_ele(struct_obj_ptr, value_out) bind(c, name='ramper_lord_struct_get_ix_ele')
@@ -11306,40 +16376,40 @@ contains
   !! control_struct
 
     function allocate_fortran_control_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(control_struct), pointer :: fptr
-    type(control_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(control_struct), pointer :: fptr
+      type(control_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_control_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(control_struct), pointer :: fptr
-    type(control_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(control_struct), pointer :: fptr
+      type(control_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_control_struct(src_ptr, dst_ptr) bind(c)
@@ -11354,7 +16424,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_control_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(control_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_control_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(control_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_control_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(control_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_control_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(control_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! control_struct%value: 0D_NOT_real
 
   subroutine control_struct_get_value(struct_obj_ptr, value_out) bind(c, name='control_struct_get_value')
@@ -11383,9 +16523,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(control_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%y_knot) .and. is_contiguous(struct_obj%y_knot)) then
       data_ptr = c_loc(struct_obj%y_knot(lbound(struct_obj%y_knot, 1)))
       bounds(1) = int(lbound(struct_obj%y_knot, 1), c_int)
@@ -11410,9 +16550,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(control_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%stack) .and. is_contiguous(struct_obj%stack)) then
       data_ptr = c_loc(struct_obj%stack(lbound(struct_obj%stack, 1)))
       bounds(1) = int(lbound(struct_obj%stack, 1), c_int)
@@ -11548,40 +16688,40 @@ contains
   !! control_var1_struct
 
     function allocate_fortran_control_var1_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(control_var1_struct), pointer :: fptr
-    type(control_var1_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(control_var1_struct), pointer :: fptr
+      type(control_var1_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_control_var1_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(control_var1_struct), pointer :: fptr
-    type(control_var1_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(control_var1_struct), pointer :: fptr
+      type(control_var1_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_control_var1_struct(src_ptr, dst_ptr) bind(c)
@@ -11596,7 +16736,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_control_var1_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(control_var1_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_control_var1_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(control_var1_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_control_var1_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(control_var1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_control_var1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(control_var1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! control_var1_struct%name: 0D_NOT_character
 
   subroutine control_var1_struct_get_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -11666,40 +16876,40 @@ contains
   !! control_ramp1_struct
 
     function allocate_fortran_control_ramp1_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(control_ramp1_struct), pointer :: fptr
-    type(control_ramp1_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(control_ramp1_struct), pointer :: fptr
+      type(control_ramp1_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_control_ramp1_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(control_ramp1_struct), pointer :: fptr
-    type(control_ramp1_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(control_ramp1_struct), pointer :: fptr
+      type(control_ramp1_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_control_ramp1_struct(src_ptr, dst_ptr) bind(c)
@@ -11714,7 +16924,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_control_ramp1_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(control_ramp1_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_control_ramp1_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(control_ramp1_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_control_ramp1_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(control_ramp1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_control_ramp1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(control_ramp1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! control_ramp1_struct%y_knot: 1D_ALLOC_real
 
   subroutine control_ramp1_struct_get_y_knot_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -11724,9 +17004,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(control_ramp1_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%y_knot) .and. is_contiguous(struct_obj%y_knot)) then
       data_ptr = c_loc(struct_obj%y_knot(lbound(struct_obj%y_knot, 1)))
       bounds(1) = int(lbound(struct_obj%y_knot, 1), c_int)
@@ -11751,9 +17031,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(control_ramp1_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%stack) .and. is_contiguous(struct_obj%stack)) then
       data_ptr = c_loc(struct_obj%stack(lbound(struct_obj%stack, 1)))
       bounds(1) = int(lbound(struct_obj%stack, 1), c_int)
@@ -11847,40 +17127,40 @@ contains
   !! controller_struct
 
     function allocate_fortran_controller_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(controller_struct), pointer :: fptr
-    type(controller_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(controller_struct), pointer :: fptr
+      type(controller_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_controller_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(controller_struct), pointer :: fptr
-    type(controller_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(controller_struct), pointer :: fptr
+      type(controller_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_controller_struct(src_ptr, dst_ptr) bind(c)
@@ -11895,7 +17175,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_controller_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(controller_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_controller_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(controller_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_controller_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(controller_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_controller_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(controller_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! controller_struct%var: 1D_ALLOC_type
 
   subroutine controller_struct_get_var_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -11906,9 +17256,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(controller_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%var) .and. is_contiguous(struct_obj%var)) then
       data_ptr = c_loc(struct_obj%var(lbound(struct_obj%var, 1)))
       bounds(1) = int(lbound(struct_obj%var, 1), c_int)
@@ -11934,9 +17284,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(controller_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%ramp) .and. is_contiguous(struct_obj%ramp)) then
       data_ptr = c_loc(struct_obj%ramp(lbound(struct_obj%ramp, 1)))
       bounds(1) = int(lbound(struct_obj%ramp, 1), c_int)
@@ -11962,9 +17312,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(controller_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%ramper_lord) .and. is_contiguous(struct_obj%ramper_lord)) then
       data_ptr = c_loc(struct_obj%ramper_lord(lbound(struct_obj%ramper_lord, 1)))
       bounds(1) = int(lbound(struct_obj%ramper_lord, 1), c_int)
@@ -11989,9 +17339,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(controller_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%x_knot) .and. is_contiguous(struct_obj%x_knot)) then
       data_ptr = c_loc(struct_obj%x_knot(lbound(struct_obj%x_knot, 1)))
       bounds(1) = int(lbound(struct_obj%x_knot, 1), c_int)
@@ -12009,40 +17359,40 @@ contains
   !! ellipse_beam_init_struct
 
     function allocate_fortran_ellipse_beam_init_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(ellipse_beam_init_struct), pointer :: fptr
-    type(ellipse_beam_init_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(ellipse_beam_init_struct), pointer :: fptr
+      type(ellipse_beam_init_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_ellipse_beam_init_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(ellipse_beam_init_struct), pointer :: fptr
-    type(ellipse_beam_init_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(ellipse_beam_init_struct), pointer :: fptr
+      type(ellipse_beam_init_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_ellipse_beam_init_struct(src_ptr, dst_ptr) bind(c)
@@ -12057,7 +17407,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_ellipse_beam_init_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(ellipse_beam_init_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_ellipse_beam_init_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(ellipse_beam_init_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_ellipse_beam_init_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(ellipse_beam_init_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_ellipse_beam_init_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(ellipse_beam_init_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! ellipse_beam_init_struct%part_per_ellipse: 0D_NOT_integer
 
   subroutine ellipse_beam_init_struct_get_part_per_ellipse(struct_obj_ptr, value_out) bind(c, name='ellipse_beam_init_struct_get_part_per_ellipse')
@@ -12118,40 +17538,40 @@ contains
   !! kv_beam_init_struct
 
     function allocate_fortran_kv_beam_init_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(kv_beam_init_struct), pointer :: fptr
-    type(kv_beam_init_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(kv_beam_init_struct), pointer :: fptr
+      type(kv_beam_init_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_kv_beam_init_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(kv_beam_init_struct), pointer :: fptr
-    type(kv_beam_init_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(kv_beam_init_struct), pointer :: fptr
+      type(kv_beam_init_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_kv_beam_init_struct(src_ptr, dst_ptr) bind(c)
@@ -12166,7 +17586,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_kv_beam_init_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(kv_beam_init_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_kv_beam_init_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(kv_beam_init_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_kv_beam_init_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(kv_beam_init_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_kv_beam_init_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(kv_beam_init_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! kv_beam_init_struct%part_per_phi: 1D_NOT_integer
 
   subroutine kv_beam_init_struct_get_part_per_phi_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -12176,9 +17666,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(kv_beam_init_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%part_per_phi)) then
       data_ptr = c_loc(struct_obj%part_per_phi(lbound(struct_obj%part_per_phi, 1)))
       bounds(1) = int(lbound(struct_obj%part_per_phi, 1), c_int)
@@ -12234,40 +17724,40 @@ contains
   !! grid_beam_init_struct
 
     function allocate_fortran_grid_beam_init_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(grid_beam_init_struct), pointer :: fptr
-    type(grid_beam_init_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(grid_beam_init_struct), pointer :: fptr
+      type(grid_beam_init_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_grid_beam_init_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(grid_beam_init_struct), pointer :: fptr
-    type(grid_beam_init_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(grid_beam_init_struct), pointer :: fptr
+      type(grid_beam_init_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_grid_beam_init_struct(src_ptr, dst_ptr) bind(c)
@@ -12282,7 +17772,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_grid_beam_init_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(grid_beam_init_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_grid_beam_init_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(grid_beam_init_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_grid_beam_init_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(grid_beam_init_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_grid_beam_init_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(grid_beam_init_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! grid_beam_init_struct%n_x: 0D_NOT_integer
 
   subroutine grid_beam_init_struct_get_n_x(struct_obj_ptr, value_out) bind(c, name='grid_beam_init_struct_get_n_x')
@@ -12400,40 +17960,40 @@ contains
   !! beam_init_struct
 
     function allocate_fortran_beam_init_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(beam_init_struct), pointer :: fptr
-    type(beam_init_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(beam_init_struct), pointer :: fptr
+      type(beam_init_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_beam_init_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(beam_init_struct), pointer :: fptr
-    type(beam_init_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(beam_init_struct), pointer :: fptr
+      type(beam_init_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_beam_init_struct(src_ptr, dst_ptr) bind(c)
@@ -12448,7 +18008,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_beam_init_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(beam_init_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_beam_init_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(beam_init_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_beam_init_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(beam_init_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_beam_init_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(beam_init_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! beam_init_struct%position_file: 0D_NOT_character
 
   subroutine beam_init_struct_get_position_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -12488,7 +18118,7 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(beam_init_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true.) then
       data_ptr = c_loc(struct_obj%distribution_type(lbound(struct_obj%distribution_type, 1)))
       bounds(1) = int(lbound(struct_obj%distribution_type, 1), c_int)
@@ -12512,9 +18142,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(beam_init_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%spin)) then
       data_ptr = c_loc(struct_obj%spin(lbound(struct_obj%spin, 1)))
       bounds(1) = int(lbound(struct_obj%spin, 1), c_int)
@@ -12539,9 +18169,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(beam_init_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%ellipse)) then
       data_ptr = c_loc(struct_obj%ellipse(lbound(struct_obj%ellipse, 1)))
       bounds(1) = int(lbound(struct_obj%ellipse, 1), c_int)
@@ -12588,9 +18218,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(beam_init_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%grid)) then
       data_ptr = c_loc(struct_obj%grid(lbound(struct_obj%grid, 1)))
       bounds(1) = int(lbound(struct_obj%grid, 1), c_int)
@@ -12615,9 +18245,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(beam_init_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%center_jitter)) then
       data_ptr = c_loc(struct_obj%center_jitter(lbound(struct_obj%center_jitter, 1)))
       bounds(1) = int(lbound(struct_obj%center_jitter, 1), c_int)
@@ -12641,9 +18271,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(beam_init_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%emit_jitter)) then
       data_ptr = c_loc(struct_obj%emit_jitter(lbound(struct_obj%emit_jitter, 1)))
       bounds(1) = int(lbound(struct_obj%emit_jitter, 1), c_int)
@@ -12932,9 +18562,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(beam_init_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%center)) then
       data_ptr = c_loc(struct_obj%center(lbound(struct_obj%center, 1)))
       bounds(1) = int(lbound(struct_obj%center, 1), c_int)
@@ -13217,40 +18847,40 @@ contains
   !! lat_param_struct
 
     function allocate_fortran_lat_param_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(lat_param_struct), pointer :: fptr
-    type(lat_param_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(lat_param_struct), pointer :: fptr
+      type(lat_param_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_lat_param_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(lat_param_struct), pointer :: fptr
-    type(lat_param_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(lat_param_struct), pointer :: fptr
+      type(lat_param_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_lat_param_struct(src_ptr, dst_ptr) bind(c)
@@ -13265,7 +18895,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_lat_param_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(lat_param_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_lat_param_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(lat_param_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_lat_param_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(lat_param_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_lat_param_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(lat_param_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! lat_param_struct%n_part: 0D_NOT_real
 
   subroutine lat_param_struct_get_n_part(struct_obj_ptr, value_out) bind(c, name='lat_param_struct_get_n_part')
@@ -13334,9 +19034,9 @@ contains
     type(lat_param_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%t1_with_RF)) then
       data_ptr = c_loc(struct_obj%t1_with_RF(lbound(struct_obj%t1_with_RF, 1), lbound(struct_obj%t1_with_RF, 2)))
       bounds(1) = int(lbound(struct_obj%t1_with_RF, 1), c_int)
@@ -13367,9 +19067,9 @@ contains
     type(lat_param_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%t1_no_RF)) then
       data_ptr = c_loc(struct_obj%t1_no_RF(lbound(struct_obj%t1_no_RF, 1), lbound(struct_obj%t1_no_RF, 2)))
       bounds(1) = int(lbound(struct_obj%t1_no_RF, 1), c_int)
@@ -13624,40 +19324,40 @@ contains
   !! mode_info_struct
 
     function allocate_fortran_mode_info_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(mode_info_struct), pointer :: fptr
-    type(mode_info_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(mode_info_struct), pointer :: fptr
+      type(mode_info_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_mode_info_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(mode_info_struct), pointer :: fptr
-    type(mode_info_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(mode_info_struct), pointer :: fptr
+      type(mode_info_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_mode_info_struct(src_ptr, dst_ptr) bind(c)
@@ -13672,7 +19372,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_mode_info_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(mode_info_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_mode_info_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(mode_info_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_mode_info_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(mode_info_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_mode_info_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(mode_info_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! mode_info_struct%stable: 0D_NOT_logical
 
   subroutine mode_info_struct_get_stable(struct_obj_ptr, value_out) bind(c, name='mode_info_struct_get_stable')
@@ -13790,40 +19560,40 @@ contains
   !! pre_tracker_struct
 
     function allocate_fortran_pre_tracker_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(pre_tracker_struct), pointer :: fptr
-    type(pre_tracker_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(pre_tracker_struct), pointer :: fptr
+      type(pre_tracker_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_pre_tracker_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(pre_tracker_struct), pointer :: fptr
-    type(pre_tracker_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(pre_tracker_struct), pointer :: fptr
+      type(pre_tracker_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_pre_tracker_struct(src_ptr, dst_ptr) bind(c)
@@ -13838,7 +19608,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_pre_tracker_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(pre_tracker_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_pre_tracker_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(pre_tracker_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_pre_tracker_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(pre_tracker_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_pre_tracker_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(pre_tracker_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! pre_tracker_struct%who: 0D_NOT_integer
 
   subroutine pre_tracker_struct_get_who(struct_obj_ptr, value_out) bind(c, name='pre_tracker_struct_get_who')
@@ -13927,40 +19767,40 @@ contains
   !! anormal_mode_struct
 
     function allocate_fortran_anormal_mode_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(anormal_mode_struct), pointer :: fptr
-    type(anormal_mode_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(anormal_mode_struct), pointer :: fptr
+      type(anormal_mode_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_anormal_mode_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(anormal_mode_struct), pointer :: fptr
-    type(anormal_mode_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(anormal_mode_struct), pointer :: fptr
+      type(anormal_mode_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_anormal_mode_struct(src_ptr, dst_ptr) bind(c)
@@ -13975,7 +19815,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_anormal_mode_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(anormal_mode_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_anormal_mode_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(anormal_mode_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_anormal_mode_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(anormal_mode_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_anormal_mode_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(anormal_mode_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! anormal_mode_struct%emittance: 0D_NOT_real
 
   subroutine anormal_mode_struct_get_emittance(struct_obj_ptr, value_out) bind(c, name='anormal_mode_struct_get_emittance')
@@ -14023,9 +19933,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(anormal_mode_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%synch_int)) then
       data_ptr = c_loc(struct_obj%synch_int(lbound(struct_obj%synch_int, 1)))
       bounds(1) = int(lbound(struct_obj%synch_int, 1), c_int)
@@ -14119,40 +20029,40 @@ contains
   !! linac_normal_mode_struct
 
     function allocate_fortran_linac_normal_mode_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(linac_normal_mode_struct), pointer :: fptr
-    type(linac_normal_mode_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(linac_normal_mode_struct), pointer :: fptr
+      type(linac_normal_mode_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_linac_normal_mode_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(linac_normal_mode_struct), pointer :: fptr
-    type(linac_normal_mode_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(linac_normal_mode_struct), pointer :: fptr
+      type(linac_normal_mode_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_linac_normal_mode_struct(src_ptr, dst_ptr) bind(c)
@@ -14167,7 +20077,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_linac_normal_mode_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(linac_normal_mode_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_linac_normal_mode_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(linac_normal_mode_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_linac_normal_mode_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(linac_normal_mode_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_linac_normal_mode_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(linac_normal_mode_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! linac_normal_mode_struct%i2_E4: 0D_NOT_real
 
   subroutine linac_normal_mode_struct_get_i2_E4(struct_obj_ptr, value_out) bind(c, name='linac_normal_mode_struct_get_i2_E4')
@@ -14304,40 +20284,40 @@ contains
   !! normal_modes_struct
 
     function allocate_fortran_normal_modes_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(normal_modes_struct), pointer :: fptr
-    type(normal_modes_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(normal_modes_struct), pointer :: fptr
+      type(normal_modes_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_normal_modes_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(normal_modes_struct), pointer :: fptr
-    type(normal_modes_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(normal_modes_struct), pointer :: fptr
+      type(normal_modes_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_normal_modes_struct(src_ptr, dst_ptr) bind(c)
@@ -14352,7 +20332,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_normal_modes_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(normal_modes_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_normal_modes_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(normal_modes_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_normal_modes_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(normal_modes_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_normal_modes_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(normal_modes_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! normal_modes_struct%synch_int: 1D_NOT_real
 
   subroutine normal_modes_struct_get_synch_int_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -14362,9 +20412,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(normal_modes_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%synch_int)) then
       data_ptr = c_loc(struct_obj%synch_int(lbound(struct_obj%synch_int, 1)))
       bounds(1) = int(lbound(struct_obj%synch_int, 1), c_int)
@@ -14618,40 +20668,40 @@ contains
   !! em_field_struct
 
     function allocate_fortran_em_field_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(em_field_struct), pointer :: fptr
-    type(em_field_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(em_field_struct), pointer :: fptr
+      type(em_field_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_em_field_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(em_field_struct), pointer :: fptr
-    type(em_field_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(em_field_struct), pointer :: fptr
+      type(em_field_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_em_field_struct(src_ptr, dst_ptr) bind(c)
@@ -14666,7 +20716,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_em_field_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(em_field_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_em_field_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(em_field_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_em_field_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(em_field_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_em_field_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(em_field_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! em_field_struct%E: 1D_NOT_real
 
   subroutine em_field_struct_get_E_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -14676,9 +20796,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(em_field_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%E)) then
       data_ptr = c_loc(struct_obj%E(lbound(struct_obj%E, 1)))
       bounds(1) = int(lbound(struct_obj%E, 1), c_int)
@@ -14702,9 +20822,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(em_field_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%B)) then
       data_ptr = c_loc(struct_obj%B(lbound(struct_obj%B, 1)))
       bounds(1) = int(lbound(struct_obj%B, 1), c_int)
@@ -14730,9 +20850,9 @@ contains
     type(em_field_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%dE)) then
       data_ptr = c_loc(struct_obj%dE(lbound(struct_obj%dE, 1), lbound(struct_obj%dE, 2)))
       bounds(1) = int(lbound(struct_obj%dE, 1), c_int)
@@ -14763,9 +20883,9 @@ contains
     type(em_field_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%dB)) then
       data_ptr = c_loc(struct_obj%dB(lbound(struct_obj%dB, 1), lbound(struct_obj%dB, 2)))
       bounds(1) = int(lbound(struct_obj%dB, 1), c_int)
@@ -14832,9 +20952,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(em_field_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%A)) then
       data_ptr = c_loc(struct_obj%A(lbound(struct_obj%A, 1)))
       bounds(1) = int(lbound(struct_obj%A, 1), c_int)
@@ -14852,40 +20972,40 @@ contains
   !! strong_beam_struct
 
     function allocate_fortran_strong_beam_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(strong_beam_struct), pointer :: fptr
-    type(strong_beam_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(strong_beam_struct), pointer :: fptr
+      type(strong_beam_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_strong_beam_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(strong_beam_struct), pointer :: fptr
-    type(strong_beam_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(strong_beam_struct), pointer :: fptr
+      type(strong_beam_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_strong_beam_struct(src_ptr, dst_ptr) bind(c)
@@ -14900,7 +21020,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_strong_beam_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(strong_beam_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_strong_beam_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(strong_beam_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_strong_beam_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(strong_beam_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_strong_beam_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(strong_beam_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! strong_beam_struct%ix_slice: 0D_NOT_integer
 
   subroutine strong_beam_struct_get_ix_slice(struct_obj_ptr, value_out) bind(c, name='strong_beam_struct_get_ix_slice')
@@ -15037,40 +21227,40 @@ contains
   !! track_point_struct
 
     function allocate_fortran_track_point_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(track_point_struct), pointer :: fptr
-    type(track_point_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(track_point_struct), pointer :: fptr
+      type(track_point_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_track_point_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(track_point_struct), pointer :: fptr
-    type(track_point_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(track_point_struct), pointer :: fptr
+      type(track_point_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_track_point_struct(src_ptr, dst_ptr) bind(c)
@@ -15085,7 +21275,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_track_point_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(track_point_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_track_point_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(track_point_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_track_point_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(track_point_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_track_point_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(track_point_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! track_point_struct%s_lab: 0D_NOT_real
 
   subroutine track_point_struct_get_s_lab(struct_obj_ptr, value_out) bind(c, name='track_point_struct_get_s_lab')
@@ -15196,9 +21456,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(track_point_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%vec0)) then
       data_ptr = c_loc(struct_obj%vec0(lbound(struct_obj%vec0, 1)))
       bounds(1) = int(lbound(struct_obj%vec0, 1), c_int)
@@ -15224,9 +21484,9 @@ contains
     type(track_point_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%mat6)) then
       data_ptr = c_loc(struct_obj%mat6(lbound(struct_obj%mat6, 1), lbound(struct_obj%mat6, 2)))
       bounds(1) = int(lbound(struct_obj%mat6, 1), c_int)
@@ -15249,40 +21509,40 @@ contains
   !! track_struct
 
     function allocate_fortran_track_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(track_struct), pointer :: fptr
-    type(track_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(track_struct), pointer :: fptr
+      type(track_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_track_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(track_struct), pointer :: fptr
-    type(track_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(track_struct), pointer :: fptr
+      type(track_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_track_struct(src_ptr, dst_ptr) bind(c)
@@ -15297,7 +21557,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_track_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(track_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_track_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(track_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_track_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(track_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_track_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(track_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! track_struct%pt: 1D_ALLOC_type
 
   subroutine track_struct_get_pt_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -15308,9 +21638,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(track_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%pt) .and. is_contiguous(struct_obj%pt)) then
       data_ptr = c_loc(struct_obj%pt(lbound(struct_obj%pt, 1)))
       bounds(1) = int(lbound(struct_obj%pt, 1), c_int)
@@ -15405,40 +21735,40 @@ contains
   !! space_charge_common_struct
 
     function allocate_fortran_space_charge_common_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(space_charge_common_struct), pointer :: fptr
-    type(space_charge_common_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(space_charge_common_struct), pointer :: fptr
+      type(space_charge_common_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_space_charge_common_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(space_charge_common_struct), pointer :: fptr
-    type(space_charge_common_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(space_charge_common_struct), pointer :: fptr
+      type(space_charge_common_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_space_charge_common_struct(src_ptr, dst_ptr) bind(c)
@@ -15453,7 +21783,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_space_charge_common_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(space_charge_common_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_space_charge_common_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(space_charge_common_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_space_charge_common_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(space_charge_common_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_space_charge_common_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(space_charge_common_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! space_charge_common_struct%ds_track_step: 0D_NOT_real
 
   subroutine space_charge_common_struct_get_ds_track_step(struct_obj_ptr, value_out) bind(c, name='space_charge_common_struct_get_ds_track_step')
@@ -15615,9 +22015,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(space_charge_common_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%space_charge_mesh_size)) then
       data_ptr = c_loc(struct_obj%space_charge_mesh_size(lbound(struct_obj%space_charge_mesh_size, 1)))
       bounds(1) = int(lbound(struct_obj%space_charge_mesh_size, 1), c_int)
@@ -15641,9 +22041,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(space_charge_common_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%csr3d_mesh_size)) then
       data_ptr = c_loc(struct_obj%csr3d_mesh_size(lbound(struct_obj%csr3d_mesh_size, 1)))
       bounds(1) = int(lbound(struct_obj%csr3d_mesh_size, 1), c_int)
@@ -15803,40 +22203,40 @@ contains
   !! bmad_common_struct
 
     function allocate_fortran_bmad_common_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(bmad_common_struct), pointer :: fptr
-    type(bmad_common_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(bmad_common_struct), pointer :: fptr
+      type(bmad_common_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_bmad_common_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(bmad_common_struct), pointer :: fptr
-    type(bmad_common_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(bmad_common_struct), pointer :: fptr
+      type(bmad_common_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_bmad_common_struct(src_ptr, dst_ptr) bind(c)
@@ -15851,7 +22251,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_bmad_common_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(bmad_common_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_bmad_common_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(bmad_common_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_bmad_common_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bmad_common_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_bmad_common_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(bmad_common_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! bmad_common_struct%max_aperture_limit: 0D_NOT_real
 
   subroutine bmad_common_struct_get_max_aperture_limit(struct_obj_ptr, value_out) bind(c, name='bmad_common_struct_get_max_aperture_limit')
@@ -15880,9 +22350,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(bmad_common_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%d_orb)) then
       data_ptr = c_loc(struct_obj%d_orb(lbound(struct_obj%d_orb, 1)))
       bounds(1) = int(lbound(struct_obj%d_orb, 1), c_int)
@@ -16660,40 +23130,40 @@ contains
   !! rad_int1_struct
 
     function allocate_fortran_rad_int1_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(rad_int1_struct), pointer :: fptr
-    type(rad_int1_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(rad_int1_struct), pointer :: fptr
+      type(rad_int1_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_rad_int1_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(rad_int1_struct), pointer :: fptr
-    type(rad_int1_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(rad_int1_struct), pointer :: fptr
+      type(rad_int1_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_rad_int1_struct(src_ptr, dst_ptr) bind(c)
@@ -16708,7 +23178,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_rad_int1_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(rad_int1_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_rad_int1_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(rad_int1_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_rad_int1_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(rad_int1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_rad_int1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(rad_int1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! rad_int1_struct%i0: 0D_NOT_real
 
   subroutine rad_int1_struct_get_i0(struct_obj_ptr, value_out) bind(c, name='rad_int1_struct_get_i0')
@@ -17054,40 +23594,40 @@ contains
   !! rad_int_branch_struct
 
     function allocate_fortran_rad_int_branch_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(rad_int_branch_struct), pointer :: fptr
-    type(rad_int_branch_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(rad_int_branch_struct), pointer :: fptr
+      type(rad_int_branch_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_rad_int_branch_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(rad_int_branch_struct), pointer :: fptr
-    type(rad_int_branch_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(rad_int_branch_struct), pointer :: fptr
+      type(rad_int_branch_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_rad_int_branch_struct(src_ptr, dst_ptr) bind(c)
@@ -17102,7 +23642,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_rad_int_branch_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(rad_int_branch_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_rad_int_branch_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(rad_int_branch_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_rad_int_branch_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(rad_int_branch_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_rad_int_branch_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(rad_int_branch_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! rad_int_branch_struct%ele: 1D_ALLOC_type
 
   subroutine rad_int_branch_struct_get_ele_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -17113,9 +23723,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(rad_int_branch_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%ele) .and. is_contiguous(struct_obj%ele)) then
       data_ptr = c_loc(struct_obj%ele(lbound(struct_obj%ele, 1)))
       bounds(1) = int(lbound(struct_obj%ele, 1), c_int)
@@ -17134,40 +23744,40 @@ contains
   !! rad_int_all_ele_struct
 
     function allocate_fortran_rad_int_all_ele_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(rad_int_all_ele_struct), pointer :: fptr
-    type(rad_int_all_ele_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(rad_int_all_ele_struct), pointer :: fptr
+      type(rad_int_all_ele_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_rad_int_all_ele_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(rad_int_all_ele_struct), pointer :: fptr
-    type(rad_int_all_ele_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(rad_int_all_ele_struct), pointer :: fptr
+      type(rad_int_all_ele_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_rad_int_all_ele_struct(src_ptr, dst_ptr) bind(c)
@@ -17182,7 +23792,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_rad_int_all_ele_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(rad_int_all_ele_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_rad_int_all_ele_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(rad_int_all_ele_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_rad_int_all_ele_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(rad_int_all_ele_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_rad_int_all_ele_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(rad_int_all_ele_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! rad_int_all_ele_struct%branch: 1D_ALLOC_type
 
   subroutine rad_int_all_ele_struct_get_branch_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -17193,9 +23873,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(rad_int_all_ele_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%branch) .and. is_contiguous(struct_obj%branch)) then
       data_ptr = c_loc(struct_obj%branch(lbound(struct_obj%branch, 1)))
       bounds(1) = int(lbound(struct_obj%branch, 1), c_int)
@@ -17214,40 +23894,40 @@ contains
   !! rf_stair_step_struct
 
     function allocate_fortran_rf_stair_step_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(rf_stair_step_struct), pointer :: fptr
-    type(rf_stair_step_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(rf_stair_step_struct), pointer :: fptr
+      type(rf_stair_step_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_rf_stair_step_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(rf_stair_step_struct), pointer :: fptr
-    type(rf_stair_step_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(rf_stair_step_struct), pointer :: fptr
+      type(rf_stair_step_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_rf_stair_step_struct(src_ptr, dst_ptr) bind(c)
@@ -17262,7 +23942,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_rf_stair_step_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(rf_stair_step_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_rf_stair_step_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(rf_stair_step_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_rf_stair_step_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(rf_stair_step_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_rf_stair_step_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(rf_stair_step_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! rf_stair_step_struct%E_tot0: 0D_NOT_real
 
   subroutine rf_stair_step_struct_get_E_tot0(struct_obj_ptr, value_out) bind(c, name='rf_stair_step_struct_get_E_tot0')
@@ -17339,25 +24089,6 @@ contains
     struct_obj%p1c = value_in
   end subroutine
 
-  ! rf_stair_step_struct%dE_amp: 0D_NOT_real
-
-  subroutine rf_stair_step_struct_get_dE_amp(struct_obj_ptr, value_out) bind(c, name='rf_stair_step_struct_get_dE_amp')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    real(c_double), intent(out) :: value_out
-    type(rf_stair_step_struct), pointer :: struct_obj
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    value_out = struct_obj%dE_amp
-  end subroutine
-
-
-  subroutine rf_stair_step_struct_set_dE_amp(struct_obj_ptr, value_in) bind(c, name='rf_stair_step_struct_set_dE_amp')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    real(c_double), intent(in), value :: value_in
-    type(rf_stair_step_struct), pointer :: struct_obj
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    struct_obj%dE_amp = value_in
-  end subroutine
-
   ! rf_stair_step_struct%scale: 0D_NOT_real
 
   subroutine rf_stair_step_struct_get_scale(struct_obj_ptr, value_out) bind(c, name='rf_stair_step_struct_get_scale')
@@ -17394,6 +24125,25 @@ contains
     type(rf_stair_step_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     struct_obj%time = value_in
+  end subroutine
+
+  ! rf_stair_step_struct%s0: 0D_NOT_real
+
+  subroutine rf_stair_step_struct_get_s0(struct_obj_ptr, value_out) bind(c, name='rf_stair_step_struct_get_s0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(rf_stair_step_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%s0
+  end subroutine
+
+
+  subroutine rf_stair_step_struct_set_s0(struct_obj_ptr, value_in) bind(c, name='rf_stair_step_struct_set_s0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(rf_stair_step_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%s0 = value_in
   end subroutine
 
   ! rf_stair_step_struct%s: 0D_NOT_real
@@ -17437,40 +24187,40 @@ contains
   !! rf_ele_struct
 
     function allocate_fortran_rf_ele_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(rf_ele_struct), pointer :: fptr
-    type(rf_ele_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(rf_ele_struct), pointer :: fptr
+      type(rf_ele_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_rf_ele_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(rf_ele_struct), pointer :: fptr
-    type(rf_ele_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(rf_ele_struct), pointer :: fptr
+      type(rf_ele_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_rf_ele_struct(src_ptr, dst_ptr) bind(c)
@@ -17485,7 +24235,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_rf_ele_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(rf_ele_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_rf_ele_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(rf_ele_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_rf_ele_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(rf_ele_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_rf_ele_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(rf_ele_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! rf_ele_struct%steps: 1D_ALLOC_type
 
   subroutine rf_ele_struct_get_steps_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -17496,9 +24316,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(rf_ele_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%steps) .and. is_contiguous(struct_obj%steps)) then
       data_ptr = c_loc(struct_obj%steps(lbound(struct_obj%steps, 1)))
       bounds(1) = int(lbound(struct_obj%steps, 1), c_int)
@@ -17536,40 +24356,40 @@ contains
   !! ele_struct
 
     function allocate_fortran_ele_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(ele_struct), pointer :: fptr
-    type(ele_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(ele_struct), pointer :: fptr
+      type(ele_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_ele_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(ele_struct), pointer :: fptr
-    type(ele_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(ele_struct), pointer :: fptr
+      type(ele_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_ele_struct(src_ptr, dst_ptr) bind(c)
@@ -17584,7 +24404,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_ele_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(ele_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_ele_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(ele_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_ele_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(ele_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_ele_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(ele_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! ele_struct%name: 0D_NOT_character
 
   subroutine ele_struct_get_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -17707,7 +24597,7 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%descrip)) then
       data_ptr = c_loc(struct_obj%descrip)
       str_len = int(len(struct_obj%descrip), c_int)
@@ -17726,11 +24616,11 @@ contains
     integer(c_int), intent(in), value :: str_len
     type(ele_struct), pointer :: struct_obj
     character(len=str_len), pointer :: temp_str
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%descrip)) deallocate(struct_obj%descrip)
-    
+
     if (str_len > 0) then
         call c_f_pointer(str_ptr, temp_str)
         allocate(struct_obj%descrip, source=temp_str)
@@ -18139,9 +25029,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%taylor)) then
       data_ptr = c_loc(struct_obj%taylor(lbound(struct_obj%taylor, 1)))
       bounds(1) = int(lbound(struct_obj%taylor, 1), c_int)
@@ -18166,9 +25056,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%spin_taylor_ref_orb_in)) then
       data_ptr = c_loc(struct_obj%spin_taylor_ref_orb_in(lbound(struct_obj%spin_taylor_ref_orb_in, 1)))
       bounds(1) = int(lbound(struct_obj%spin_taylor_ref_orb_in, 1), c_int)
@@ -18193,9 +25083,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%spin_taylor)) then
       data_ptr = c_loc(struct_obj%spin_taylor(lbound(struct_obj%spin_taylor, 1)))
       bounds(1) = int(lbound(struct_obj%spin_taylor, 1), c_int)
@@ -18248,9 +25138,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%wall3d) .and. is_contiguous(struct_obj%wall3d)) then
       data_ptr = c_loc(struct_obj%wall3d(lbound(struct_obj%wall3d, 1)))
       bounds(1) = int(lbound(struct_obj%wall3d, 1), c_int)
@@ -18276,9 +25166,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%cartesian_map) .and. is_contiguous(struct_obj%cartesian_map)) then
       data_ptr = c_loc(struct_obj%cartesian_map(lbound(struct_obj%cartesian_map, 1)))
       bounds(1) = int(lbound(struct_obj%cartesian_map, 1), c_int)
@@ -18304,9 +25194,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%cylindrical_map) .and. is_contiguous(struct_obj%cylindrical_map)) then
       data_ptr = c_loc(struct_obj%cylindrical_map(lbound(struct_obj%cylindrical_map, 1)))
       bounds(1) = int(lbound(struct_obj%cylindrical_map, 1), c_int)
@@ -18332,9 +25222,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%gen_grad_map) .and. is_contiguous(struct_obj%gen_grad_map)) then
       data_ptr = c_loc(struct_obj%gen_grad_map(lbound(struct_obj%gen_grad_map, 1)))
       bounds(1) = int(lbound(struct_obj%gen_grad_map, 1), c_int)
@@ -18360,9 +25250,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%grid_field) .and. is_contiguous(struct_obj%grid_field)) then
       data_ptr = c_loc(struct_obj%grid_field(lbound(struct_obj%grid_field, 1)))
       bounds(1) = int(lbound(struct_obj%grid_field, 1), c_int)
@@ -18471,9 +25361,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%value)) then
       data_ptr = c_loc(struct_obj%value(lbound(struct_obj%value, 1)))
       bounds(1) = int(lbound(struct_obj%value, 1), c_int)
@@ -18497,9 +25387,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%old_value)) then
       data_ptr = c_loc(struct_obj%old_value(lbound(struct_obj%old_value, 1)))
       bounds(1) = int(lbound(struct_obj%old_value, 1), c_int)
@@ -18525,9 +25415,9 @@ contains
     type(ele_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%spin_q)) then
       data_ptr = c_loc(struct_obj%spin_q(lbound(struct_obj%spin_q, 1), lbound(struct_obj%spin_q, 2)))
       bounds(1) = int(lbound(struct_obj%spin_q, 1), c_int)
@@ -18556,9 +25446,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%vec0)) then
       data_ptr = c_loc(struct_obj%vec0(lbound(struct_obj%vec0, 1)))
       bounds(1) = int(lbound(struct_obj%vec0, 1), c_int)
@@ -18584,9 +25474,9 @@ contains
     type(ele_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%mat6)) then
       data_ptr = c_loc(struct_obj%mat6(lbound(struct_obj%mat6, 1), lbound(struct_obj%mat6, 2)))
       bounds(1) = int(lbound(struct_obj%mat6, 1), c_int)
@@ -18617,15 +25507,48 @@ contains
     type(ele_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%c_mat)) then
       data_ptr = c_loc(struct_obj%c_mat(lbound(struct_obj%c_mat, 1), lbound(struct_obj%c_mat, 2)))
       bounds(1) = int(lbound(struct_obj%c_mat, 1), c_int)
       bounds(2) = int(ubound(struct_obj%c_mat, 1), c_int)
       bounds(3) = int(lbound(struct_obj%c_mat, 2), c_int)
       bounds(4) = int(ubound(struct_obj%c_mat, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! ele_struct%dc_mat_dpz: 2D_NOT_real
+
+  subroutine ele_struct_get_dc_mat_dpz_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='ele_struct_get_dc_mat_dpz_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(ele_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%dc_mat_dpz)) then
+      data_ptr = c_loc(struct_obj%dc_mat_dpz(lbound(struct_obj%dc_mat_dpz, 1), lbound(struct_obj%dc_mat_dpz, 2)))
+      bounds(1) = int(lbound(struct_obj%dc_mat_dpz, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%dc_mat_dpz, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%dc_mat_dpz, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%dc_mat_dpz, 2), c_int)
       strides(1) = 1_c_int
       d1 = bounds(2) - bounds(1) + 1
       strides(2) = d1
@@ -18724,9 +25647,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%a_pole) .and. is_contiguous(struct_obj%a_pole)) then
       data_ptr = c_loc(struct_obj%a_pole(lbound(struct_obj%a_pole, 1)))
       bounds(1) = int(lbound(struct_obj%a_pole, 1), c_int)
@@ -18750,9 +25673,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%b_pole) .and. is_contiguous(struct_obj%b_pole)) then
       data_ptr = c_loc(struct_obj%b_pole(lbound(struct_obj%b_pole, 1)))
       bounds(1) = int(lbound(struct_obj%b_pole, 1), c_int)
@@ -18776,9 +25699,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%a_pole_elec) .and. is_contiguous(struct_obj%a_pole_elec)) then
       data_ptr = c_loc(struct_obj%a_pole_elec(lbound(struct_obj%a_pole_elec, 1)))
       bounds(1) = int(lbound(struct_obj%a_pole_elec, 1), c_int)
@@ -18802,9 +25725,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%b_pole_elec) .and. is_contiguous(struct_obj%b_pole_elec)) then
       data_ptr = c_loc(struct_obj%b_pole_elec(lbound(struct_obj%b_pole_elec, 1)))
       bounds(1) = int(lbound(struct_obj%b_pole_elec, 1), c_int)
@@ -18828,9 +25751,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(ele_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%custom) .and. is_contiguous(struct_obj%custom)) then
       data_ptr = c_loc(struct_obj%custom(lbound(struct_obj%custom, 1)))
       bounds(1) = int(lbound(struct_obj%custom, 1), c_int)
@@ -18856,9 +25779,9 @@ contains
     type(ele_struct), pointer :: struct_obj
     integer(c_int), dimension(3), intent(out) :: strides
     integer :: d1, d2
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%r) .and. is_contiguous(struct_obj%r)) then
       data_ptr = c_loc(struct_obj%r(lbound(struct_obj%r, 1), lbound(struct_obj%r, 2), lbound(struct_obj%r, 3)))
       bounds(1) = int(lbound(struct_obj%r, 1), c_int)
@@ -19626,40 +26549,40 @@ contains
   !! complex_taylor_term_struct
 
     function allocate_fortran_complex_taylor_term_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(complex_taylor_term_struct), pointer :: fptr
-    type(complex_taylor_term_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(complex_taylor_term_struct), pointer :: fptr
+      type(complex_taylor_term_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_complex_taylor_term_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(complex_taylor_term_struct), pointer :: fptr
-    type(complex_taylor_term_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(complex_taylor_term_struct), pointer :: fptr
+      type(complex_taylor_term_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_complex_taylor_term_struct(src_ptr, dst_ptr) bind(c)
@@ -19674,7 +26597,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_complex_taylor_term_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(complex_taylor_term_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_complex_taylor_term_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(complex_taylor_term_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_complex_taylor_term_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(complex_taylor_term_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_complex_taylor_term_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(complex_taylor_term_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! complex_taylor_term_struct%coef: 0D_NOT_complex
 
   subroutine complex_taylor_term_struct_get_coef(struct_obj_ptr, value_out) bind(c, name='complex_taylor_term_struct_get_coef')
@@ -19703,9 +26696,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(complex_taylor_term_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%expn)) then
       data_ptr = c_loc(struct_obj%expn(lbound(struct_obj%expn, 1)))
       bounds(1) = int(lbound(struct_obj%expn, 1), c_int)
@@ -19723,40 +26716,40 @@ contains
   !! complex_taylor_struct
 
     function allocate_fortran_complex_taylor_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(complex_taylor_struct), pointer :: fptr
-    type(complex_taylor_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(complex_taylor_struct), pointer :: fptr
+      type(complex_taylor_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_complex_taylor_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(complex_taylor_struct), pointer :: fptr
-    type(complex_taylor_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(complex_taylor_struct), pointer :: fptr
+      type(complex_taylor_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_complex_taylor_struct(src_ptr, dst_ptr) bind(c)
@@ -19771,7 +26764,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_complex_taylor_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(complex_taylor_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_complex_taylor_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(complex_taylor_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_complex_taylor_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(complex_taylor_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_complex_taylor_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(complex_taylor_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! complex_taylor_struct%ref: 0D_NOT_complex
 
   subroutine complex_taylor_struct_get_ref(struct_obj_ptr, value_out) bind(c, name='complex_taylor_struct_get_ref')
@@ -19801,9 +26864,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(complex_taylor_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%term) .and. is_contiguous(struct_obj%term)) then
       data_ptr = c_loc(struct_obj%term(lbound(struct_obj%term, 1)))
       bounds(1) = int(lbound(struct_obj%term, 1), c_int)
@@ -19822,40 +26885,40 @@ contains
   !! branch_struct
 
     function allocate_fortran_branch_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(branch_struct), pointer :: fptr
-    type(branch_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(branch_struct), pointer :: fptr
+      type(branch_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_branch_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(branch_struct), pointer :: fptr
-    type(branch_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(branch_struct), pointer :: fptr
+      type(branch_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_branch_struct(src_ptr, dst_ptr) bind(c)
@@ -19870,7 +26933,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_branch_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(branch_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_branch_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(branch_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_branch_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(branch_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_branch_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(branch_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! branch_struct%name: 0D_NOT_character
 
   subroutine branch_struct_get_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -20132,9 +27265,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(branch_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%ele) .and. is_contiguous(struct_obj%ele)) then
       data_ptr = c_loc(struct_obj%ele(lbound(struct_obj%ele, 1)))
       bounds(1) = int(lbound(struct_obj%ele, 1), c_int)
@@ -20202,9 +27335,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(branch_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%wall3d) .and. is_contiguous(struct_obj%wall3d)) then
       data_ptr = c_loc(struct_obj%wall3d(lbound(struct_obj%wall3d, 1)))
       bounds(1) = int(lbound(struct_obj%wall3d, 1), c_int)
@@ -20223,40 +27356,40 @@ contains
   !! lat_struct
 
     function allocate_fortran_lat_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(lat_struct), pointer :: fptr
-    type(lat_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(lat_struct), pointer :: fptr
+      type(lat_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_lat_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(lat_struct), pointer :: fptr
-    type(lat_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(lat_struct), pointer :: fptr
+      type(lat_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_lat_struct(src_ptr, dst_ptr) bind(c)
@@ -20271,7 +27404,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_lat_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(lat_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_lat_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(lat_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_lat_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(lat_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_lat_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(lat_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! lat_struct%use_name: 0D_NOT_character
 
   subroutine lat_struct_get_use_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -20423,7 +27626,7 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(lat_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%print_str)) then
       data_ptr = c_loc(struct_obj%print_str(lbound(struct_obj%print_str, 1)))
       bounds(1) = int(lbound(struct_obj%print_str, 1), c_int)
@@ -20448,9 +27651,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(lat_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%constant) .and. is_contiguous(struct_obj%constant)) then
       data_ptr = c_loc(struct_obj%constant(lbound(struct_obj%constant, 1)))
       bounds(1) = int(lbound(struct_obj%constant, 1), c_int)
@@ -20626,9 +27829,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(lat_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%ele) .and. is_contiguous(struct_obj%ele)) then
       data_ptr = c_loc(struct_obj%ele(lbound(struct_obj%ele, 1)))
       bounds(1) = int(lbound(struct_obj%ele, 1), c_int)
@@ -20654,9 +27857,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(lat_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%branch) .and. is_contiguous(struct_obj%branch)) then
       data_ptr = c_loc(struct_obj%branch(lbound(struct_obj%branch, 1)))
       bounds(1) = int(lbound(struct_obj%branch, 1), c_int)
@@ -20682,9 +27885,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(lat_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%control) .and. is_contiguous(struct_obj%control)) then
       data_ptr = c_loc(struct_obj%control(lbound(struct_obj%control, 1)))
       bounds(1) = int(lbound(struct_obj%control, 1), c_int)
@@ -20778,9 +27981,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(lat_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%custom) .and. is_contiguous(struct_obj%custom)) then
       data_ptr = c_loc(struct_obj%custom(lbound(struct_obj%custom, 1)))
       bounds(1) = int(lbound(struct_obj%custom, 1), c_int)
@@ -20930,9 +28133,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(lat_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%ic) .and. is_contiguous(struct_obj%ic)) then
       data_ptr = c_loc(struct_obj%ic(lbound(struct_obj%ic, 1)))
       bounds(1) = int(lbound(struct_obj%ic, 1), c_int)
@@ -21007,40 +28210,40 @@ contains
   !! bunch_struct
 
     function allocate_fortran_bunch_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(bunch_struct), pointer :: fptr
-    type(bunch_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(bunch_struct), pointer :: fptr
+      type(bunch_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_bunch_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(bunch_struct), pointer :: fptr
-    type(bunch_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(bunch_struct), pointer :: fptr
+      type(bunch_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_bunch_struct(src_ptr, dst_ptr) bind(c)
@@ -21055,7 +28258,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_bunch_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(bunch_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_bunch_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(bunch_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_bunch_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bunch_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_bunch_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(bunch_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! bunch_struct%particle: 1D_ALLOC_type
 
   subroutine bunch_struct_get_particle_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -21066,9 +28339,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(bunch_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%particle) .and. is_contiguous(struct_obj%particle)) then
       data_ptr = c_loc(struct_obj%particle(lbound(struct_obj%particle, 1)))
       bounds(1) = int(lbound(struct_obj%particle, 1), c_int)
@@ -21093,9 +28366,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(bunch_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%ix_z) .and. is_contiguous(struct_obj%ix_z)) then
       data_ptr = c_loc(struct_obj%ix_z(lbound(struct_obj%ix_z, 1)))
       bounds(1) = int(lbound(struct_obj%ix_z, 1), c_int)
@@ -21341,40 +28614,40 @@ contains
   !! bunch_params_struct
 
     function allocate_fortran_bunch_params_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(bunch_params_struct), pointer :: fptr
-    type(bunch_params_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(bunch_params_struct), pointer :: fptr
+      type(bunch_params_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_bunch_params_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(bunch_params_struct), pointer :: fptr
-    type(bunch_params_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(bunch_params_struct), pointer :: fptr
+      type(bunch_params_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_bunch_params_struct(src_ptr, dst_ptr) bind(c)
@@ -21389,7 +28662,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_bunch_params_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(bunch_params_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_bunch_params_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(bunch_params_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_bunch_params_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bunch_params_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_bunch_params_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(bunch_params_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! bunch_params_struct%centroid: 0D_NOT_type
 
   subroutine bunch_params_struct_get_centroid(struct_obj_ptr, ptr_out) bind(c, name='bunch_params_struct_get_centroid')
@@ -21548,9 +28891,9 @@ contains
     type(bunch_params_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%sigma)) then
       data_ptr = c_loc(struct_obj%sigma(lbound(struct_obj%sigma, 1), lbound(struct_obj%sigma, 2)))
       bounds(1) = int(lbound(struct_obj%sigma, 1), c_int)
@@ -21579,9 +28922,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(bunch_params_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%rel_max)) then
       data_ptr = c_loc(struct_obj%rel_max(lbound(struct_obj%rel_max, 1)))
       bounds(1) = int(lbound(struct_obj%rel_max, 1), c_int)
@@ -21605,9 +28948,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(bunch_params_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%rel_min)) then
       data_ptr = c_loc(struct_obj%rel_min(lbound(struct_obj%rel_min, 1)))
       bounds(1) = int(lbound(struct_obj%rel_min, 1), c_int)
@@ -21872,40 +29215,40 @@ contains
   !! beam_struct
 
     function allocate_fortran_beam_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(beam_struct), pointer :: fptr
-    type(beam_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(beam_struct), pointer :: fptr
+      type(beam_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_beam_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(beam_struct), pointer :: fptr
-    type(beam_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(beam_struct), pointer :: fptr
+      type(beam_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_beam_struct(src_ptr, dst_ptr) bind(c)
@@ -21920,7 +29263,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_beam_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(beam_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_beam_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(beam_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_beam_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(beam_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_beam_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(beam_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! beam_struct%bunch: 1D_ALLOC_type
 
   subroutine beam_struct_get_bunch_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -21931,9 +29344,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(beam_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%bunch) .and. is_contiguous(struct_obj%bunch)) then
       data_ptr = c_loc(struct_obj%bunch(lbound(struct_obj%bunch, 1)))
       bounds(1) = int(lbound(struct_obj%bunch, 1), c_int)
@@ -21952,40 +29365,40 @@ contains
   !! aperture_point_struct
 
     function allocate_fortran_aperture_point_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(aperture_point_struct), pointer :: fptr
-    type(aperture_point_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(aperture_point_struct), pointer :: fptr
+      type(aperture_point_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_aperture_point_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(aperture_point_struct), pointer :: fptr
-    type(aperture_point_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(aperture_point_struct), pointer :: fptr
+      type(aperture_point_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_aperture_point_struct(src_ptr, dst_ptr) bind(c)
@@ -22000,7 +29413,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_aperture_point_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(aperture_point_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_aperture_point_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(aperture_point_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_aperture_point_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(aperture_point_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_aperture_point_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(aperture_point_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! aperture_point_struct%x: 0D_NOT_real
 
   subroutine aperture_point_struct_get_x(struct_obj_ptr, value_out) bind(c, name='aperture_point_struct_get_x')
@@ -22099,40 +29582,40 @@ contains
   !! aperture_param_struct
 
     function allocate_fortran_aperture_param_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(aperture_param_struct), pointer :: fptr
-    type(aperture_param_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(aperture_param_struct), pointer :: fptr
+      type(aperture_param_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_aperture_param_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(aperture_param_struct), pointer :: fptr
-    type(aperture_param_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(aperture_param_struct), pointer :: fptr
+      type(aperture_param_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_aperture_param_struct(src_ptr, dst_ptr) bind(c)
@@ -22147,7 +29630,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_aperture_param_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(aperture_param_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_aperture_param_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(aperture_param_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_aperture_param_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(aperture_param_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_aperture_param_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(aperture_param_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! aperture_param_struct%min_angle: 0D_NOT_real
 
   subroutine aperture_param_struct_get_min_angle(struct_obj_ptr, value_out) bind(c, name='aperture_param_struct_get_min_angle')
@@ -22331,40 +29884,40 @@ contains
   !! aperture_scan_struct
 
     function allocate_fortran_aperture_scan_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(aperture_scan_struct), pointer :: fptr
-    type(aperture_scan_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(aperture_scan_struct), pointer :: fptr
+      type(aperture_scan_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_aperture_scan_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(aperture_scan_struct), pointer :: fptr
-    type(aperture_scan_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(aperture_scan_struct), pointer :: fptr
+      type(aperture_scan_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_aperture_scan_struct(src_ptr, dst_ptr) bind(c)
@@ -22379,7 +29932,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_aperture_scan_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(aperture_scan_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_aperture_scan_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(aperture_scan_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_aperture_scan_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(aperture_scan_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_aperture_scan_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(aperture_scan_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! aperture_scan_struct%point: 1D_ALLOC_type
 
   subroutine aperture_scan_struct_get_point_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -22390,9 +30013,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(aperture_scan_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%point) .and. is_contiguous(struct_obj%point)) then
       data_ptr = c_loc(struct_obj%point(lbound(struct_obj%point, 1)))
       bounds(1) = int(lbound(struct_obj%point, 1), c_int)
@@ -22451,40 +30074,40 @@ contains
   !! tao_spin_dn_dpz_struct
 
     function allocate_fortran_tao_spin_dn_dpz_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_spin_dn_dpz_struct), pointer :: fptr
-    type(tao_spin_dn_dpz_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_spin_dn_dpz_struct), pointer :: fptr
+      type(tao_spin_dn_dpz_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_spin_dn_dpz_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_spin_dn_dpz_struct), pointer :: fptr
-    type(tao_spin_dn_dpz_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_spin_dn_dpz_struct), pointer :: fptr
+      type(tao_spin_dn_dpz_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_spin_dn_dpz_struct(src_ptr, dst_ptr) bind(c)
@@ -22499,7 +30122,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_spin_dn_dpz_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_spin_dn_dpz_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_spin_dn_dpz_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_spin_dn_dpz_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_spin_dn_dpz_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_spin_dn_dpz_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_spin_dn_dpz_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_spin_dn_dpz_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_spin_dn_dpz_struct%vec: 1D_NOT_real
 
   subroutine tao_spin_dn_dpz_struct_get_vec_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -22509,9 +30202,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(tao_spin_dn_dpz_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%vec)) then
       data_ptr = c_loc(struct_obj%vec(lbound(struct_obj%vec, 1)))
       bounds(1) = int(lbound(struct_obj%vec, 1), c_int)
@@ -22537,9 +30230,9 @@ contains
     type(tao_spin_dn_dpz_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%partial)) then
       data_ptr = c_loc(struct_obj%partial(lbound(struct_obj%partial, 1), lbound(struct_obj%partial, 2)))
       bounds(1) = int(lbound(struct_obj%partial, 1), c_int)
@@ -22570,9 +30263,9 @@ contains
     type(tao_spin_dn_dpz_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%partial2)) then
       data_ptr = c_loc(struct_obj%partial2(lbound(struct_obj%partial2, 1), lbound(struct_obj%partial2, 2)))
       bounds(1) = int(lbound(struct_obj%partial2, 1), c_int)
@@ -22595,40 +30288,40 @@ contains
   !! resonance_h_struct
 
     function allocate_fortran_resonance_h_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(resonance_h_struct), pointer :: fptr
-    type(resonance_h_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(resonance_h_struct), pointer :: fptr
+      type(resonance_h_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_resonance_h_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(resonance_h_struct), pointer :: fptr
-    type(resonance_h_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(resonance_h_struct), pointer :: fptr
+      type(resonance_h_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_resonance_h_struct(src_ptr, dst_ptr) bind(c)
@@ -22643,7 +30336,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_resonance_h_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(resonance_h_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_resonance_h_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(resonance_h_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_resonance_h_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(resonance_h_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_resonance_h_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(resonance_h_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! resonance_h_struct%id: 0D_NOT_character
 
   subroutine resonance_h_struct_get_id_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -22694,40 +30457,40 @@ contains
   !! spin_orbit_map1_struct
 
     function allocate_fortran_spin_orbit_map1_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(spin_orbit_map1_struct), pointer :: fptr
-    type(spin_orbit_map1_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(spin_orbit_map1_struct), pointer :: fptr
+      type(spin_orbit_map1_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_spin_orbit_map1_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(spin_orbit_map1_struct), pointer :: fptr
-    type(spin_orbit_map1_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(spin_orbit_map1_struct), pointer :: fptr
+      type(spin_orbit_map1_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_spin_orbit_map1_struct(src_ptr, dst_ptr) bind(c)
@@ -22742,7 +30505,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_spin_orbit_map1_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(spin_orbit_map1_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_spin_orbit_map1_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(spin_orbit_map1_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_spin_orbit_map1_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(spin_orbit_map1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_spin_orbit_map1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(spin_orbit_map1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! spin_orbit_map1_struct%orb_mat: 2D_NOT_real
 
   subroutine spin_orbit_map1_struct_get_orb_mat_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -22754,9 +30587,9 @@ contains
     type(spin_orbit_map1_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%orb_mat)) then
       data_ptr = c_loc(struct_obj%orb_mat(lbound(struct_obj%orb_mat, 1), lbound(struct_obj%orb_mat, 2)))
       bounds(1) = int(lbound(struct_obj%orb_mat, 1), c_int)
@@ -22785,9 +30618,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(spin_orbit_map1_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%vec0)) then
       data_ptr = c_loc(struct_obj%vec0(lbound(struct_obj%vec0, 1)))
       bounds(1) = int(lbound(struct_obj%vec0, 1), c_int)
@@ -22813,9 +30646,9 @@ contains
     type(spin_orbit_map1_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%spin_q)) then
       data_ptr = c_loc(struct_obj%spin_q(lbound(struct_obj%spin_q, 1), lbound(struct_obj%spin_q, 2)))
       bounds(1) = int(lbound(struct_obj%spin_q, 1), c_int)
@@ -22838,40 +30671,40 @@ contains
   !! spin_axis_struct
 
     function allocate_fortran_spin_axis_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(spin_axis_struct), pointer :: fptr
-    type(spin_axis_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(spin_axis_struct), pointer :: fptr
+      type(spin_axis_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_spin_axis_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(spin_axis_struct), pointer :: fptr
-    type(spin_axis_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(spin_axis_struct), pointer :: fptr
+      type(spin_axis_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_spin_axis_struct(src_ptr, dst_ptr) bind(c)
@@ -22886,7 +30719,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_spin_axis_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(spin_axis_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_spin_axis_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(spin_axis_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_spin_axis_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(spin_axis_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_spin_axis_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(spin_axis_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! spin_axis_struct%l: 1D_NOT_real
 
   subroutine spin_axis_struct_get_l_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -22896,9 +30799,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(spin_axis_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%l)) then
       data_ptr = c_loc(struct_obj%l(lbound(struct_obj%l, 1)))
       bounds(1) = int(lbound(struct_obj%l, 1), c_int)
@@ -22922,9 +30825,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(spin_axis_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%n0)) then
       data_ptr = c_loc(struct_obj%n0(lbound(struct_obj%n0, 1)))
       bounds(1) = int(lbound(struct_obj%n0, 1), c_int)
@@ -22948,9 +30851,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(spin_axis_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%m)) then
       data_ptr = c_loc(struct_obj%m(lbound(struct_obj%m, 1)))
       bounds(1) = int(lbound(struct_obj%m, 1), c_int)
@@ -22968,40 +30871,40 @@ contains
   !! ptc_normal_form_struct
 
     function allocate_fortran_ptc_normal_form_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(ptc_normal_form_struct), pointer :: fptr
-    type(ptc_normal_form_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(ptc_normal_form_struct), pointer :: fptr
+      type(ptc_normal_form_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_ptc_normal_form_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(ptc_normal_form_struct), pointer :: fptr
-    type(ptc_normal_form_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(ptc_normal_form_struct), pointer :: fptr
+      type(ptc_normal_form_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_ptc_normal_form_struct(src_ptr, dst_ptr) bind(c)
@@ -23016,7 +30919,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_ptc_normal_form_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(ptc_normal_form_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_ptc_normal_form_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(ptc_normal_form_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_ptc_normal_form_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(ptc_normal_form_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_ptc_normal_form_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(ptc_normal_form_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! ptc_normal_form_struct%ele_origin: 0D_PTR_type
 
   subroutine ptc_normal_form_struct_get_ele_origin(struct_obj_ptr, ptr_out) bind(c, name='ptc_normal_form_struct_get_ele_origin')
@@ -23053,9 +31026,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(ptc_normal_form_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%orb0)) then
       data_ptr = c_loc(struct_obj%orb0(lbound(struct_obj%orb0, 1)))
       bounds(1) = int(lbound(struct_obj%orb0, 1), c_int)
@@ -23092,40 +31065,40 @@ contains
   !! bmad_normal_form_struct
 
     function allocate_fortran_bmad_normal_form_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(bmad_normal_form_struct), pointer :: fptr
-    type(bmad_normal_form_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(bmad_normal_form_struct), pointer :: fptr
+      type(bmad_normal_form_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_bmad_normal_form_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(bmad_normal_form_struct), pointer :: fptr
-    type(bmad_normal_form_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(bmad_normal_form_struct), pointer :: fptr
+      type(bmad_normal_form_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_bmad_normal_form_struct(src_ptr, dst_ptr) bind(c)
@@ -23140,7 +31113,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_bmad_normal_form_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(bmad_normal_form_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_bmad_normal_form_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(bmad_normal_form_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_bmad_normal_form_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bmad_normal_form_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_bmad_normal_form_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(bmad_normal_form_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! bmad_normal_form_struct%ele_origin: 0D_PTR_type
 
   subroutine bmad_normal_form_struct_get_ele_origin(struct_obj_ptr, ptr_out) bind(c, name='bmad_normal_form_struct_get_ele_origin')
@@ -23178,9 +31221,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(bmad_normal_form_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%M)) then
       data_ptr = c_loc(struct_obj%M(lbound(struct_obj%M, 1)))
       bounds(1) = int(lbound(struct_obj%M, 1), c_int)
@@ -23206,9 +31249,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(bmad_normal_form_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%A)) then
       data_ptr = c_loc(struct_obj%A(lbound(struct_obj%A, 1)))
       bounds(1) = int(lbound(struct_obj%A, 1), c_int)
@@ -23234,9 +31277,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(bmad_normal_form_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%A_inv)) then
       data_ptr = c_loc(struct_obj%A_inv(lbound(struct_obj%A_inv, 1)))
       bounds(1) = int(lbound(struct_obj%A_inv, 1), c_int)
@@ -23262,9 +31305,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(bmad_normal_form_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%dhdj)) then
       data_ptr = c_loc(struct_obj%dhdj(lbound(struct_obj%dhdj, 1)))
       bounds(1) = int(lbound(struct_obj%dhdj, 1), c_int)
@@ -23290,9 +31333,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(bmad_normal_form_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%F)) then
       data_ptr = c_loc(struct_obj%F(lbound(struct_obj%F, 1)))
       bounds(1) = int(lbound(struct_obj%F, 1), c_int)
@@ -23318,9 +31361,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(bmad_normal_form_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%L)) then
       data_ptr = c_loc(struct_obj%L(lbound(struct_obj%L, 1)))
       bounds(1) = int(lbound(struct_obj%L, 1), c_int)
@@ -23346,9 +31389,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(bmad_normal_form_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%h) .and. is_contiguous(struct_obj%h)) then
       data_ptr = c_loc(struct_obj%h(lbound(struct_obj%h, 1)))
       bounds(1) = int(lbound(struct_obj%h, 1), c_int)
@@ -23367,40 +31410,40 @@ contains
   !! bunch_track_struct
 
     function allocate_fortran_bunch_track_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(bunch_track_struct), pointer :: fptr
-    type(bunch_track_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(bunch_track_struct), pointer :: fptr
+      type(bunch_track_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_bunch_track_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(bunch_track_struct), pointer :: fptr
-    type(bunch_track_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(bunch_track_struct), pointer :: fptr
+      type(bunch_track_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_bunch_track_struct(src_ptr, dst_ptr) bind(c)
@@ -23415,7 +31458,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_bunch_track_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(bunch_track_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_bunch_track_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(bunch_track_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_bunch_track_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bunch_track_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_bunch_track_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(bunch_track_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! bunch_track_struct%pt: 1D_ALLOC_type
 
   subroutine bunch_track_struct_get_pt_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -23426,9 +31539,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(bunch_track_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%pt) .and. is_contiguous(struct_obj%pt)) then
       data_ptr = c_loc(struct_obj%pt(lbound(struct_obj%pt, 1)))
       bounds(1) = int(lbound(struct_obj%pt, 1), c_int)
@@ -23485,40 +31598,40 @@ contains
   !! summation_rdt_struct
 
     function allocate_fortran_summation_rdt_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(summation_rdt_struct), pointer :: fptr
-    type(summation_rdt_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(summation_rdt_struct), pointer :: fptr
+      type(summation_rdt_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_summation_rdt_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(summation_rdt_struct), pointer :: fptr
-    type(summation_rdt_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(summation_rdt_struct), pointer :: fptr
+      type(summation_rdt_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_summation_rdt_struct(src_ptr, dst_ptr) bind(c)
@@ -23533,7 +31646,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_summation_rdt_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(summation_rdt_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_summation_rdt_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(summation_rdt_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_summation_rdt_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(summation_rdt_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_summation_rdt_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(summation_rdt_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! summation_rdt_struct%h11001: 0D_NOT_complex
 
   subroutine summation_rdt_struct_get_h11001(struct_obj_ptr, value_out) bind(c, name='summation_rdt_struct_get_h11001')
@@ -23936,40 +32119,40 @@ contains
   !! lat_ele_order1_struct
 
     function allocate_fortran_lat_ele_order1_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(lat_ele_order1_struct), pointer :: fptr
-    type(lat_ele_order1_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(lat_ele_order1_struct), pointer :: fptr
+      type(lat_ele_order1_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_lat_ele_order1_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(lat_ele_order1_struct), pointer :: fptr
-    type(lat_ele_order1_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(lat_ele_order1_struct), pointer :: fptr
+      type(lat_ele_order1_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_lat_ele_order1_struct(src_ptr, dst_ptr) bind(c)
@@ -23984,7 +32167,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_lat_ele_order1_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(lat_ele_order1_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_lat_ele_order1_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(lat_ele_order1_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_lat_ele_order1_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(lat_ele_order1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_lat_ele_order1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(lat_ele_order1_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! lat_ele_order1_struct%ix_branch: 0D_NOT_integer
 
   subroutine lat_ele_order1_struct_get_ix_branch(struct_obj_ptr, value_out) bind(c, name='lat_ele_order1_struct_get_ix_branch')
@@ -24026,40 +32279,40 @@ contains
   !! lat_ele_order_array_struct
 
     function allocate_fortran_lat_ele_order_array_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(lat_ele_order_array_struct), pointer :: fptr
-    type(lat_ele_order_array_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(lat_ele_order_array_struct), pointer :: fptr
+      type(lat_ele_order_array_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_lat_ele_order_array_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(lat_ele_order_array_struct), pointer :: fptr
-    type(lat_ele_order_array_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(lat_ele_order_array_struct), pointer :: fptr
+      type(lat_ele_order_array_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_lat_ele_order_array_struct(src_ptr, dst_ptr) bind(c)
@@ -24074,7 +32327,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_lat_ele_order_array_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(lat_ele_order_array_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_lat_ele_order_array_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(lat_ele_order_array_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_lat_ele_order_array_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(lat_ele_order_array_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_lat_ele_order_array_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(lat_ele_order_array_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! lat_ele_order_array_struct%ele: 1D_ALLOC_type
 
   subroutine lat_ele_order_array_struct_get_ele_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -24085,9 +32408,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(lat_ele_order_array_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%ele) .and. is_contiguous(struct_obj%ele)) then
       data_ptr = c_loc(struct_obj%ele(lbound(struct_obj%ele, 1)))
       bounds(1) = int(lbound(struct_obj%ele, 1), c_int)
@@ -24106,40 +32429,40 @@ contains
   !! tao_lat_sigma_struct
 
     function allocate_fortran_tao_lat_sigma_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_lat_sigma_struct), pointer :: fptr
-    type(tao_lat_sigma_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_lat_sigma_struct), pointer :: fptr
+      type(tao_lat_sigma_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_lat_sigma_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_lat_sigma_struct), pointer :: fptr
-    type(tao_lat_sigma_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_lat_sigma_struct), pointer :: fptr
+      type(tao_lat_sigma_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_lat_sigma_struct(src_ptr, dst_ptr) bind(c)
@@ -24154,7 +32477,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_lat_sigma_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_lat_sigma_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_lat_sigma_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_lat_sigma_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_lat_sigma_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_lat_sigma_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_lat_sigma_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_lat_sigma_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_lat_sigma_struct%mat: 2D_NOT_real
 
   subroutine tao_lat_sigma_struct_get_mat_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -24166,9 +32559,9 @@ contains
     type(tao_lat_sigma_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%mat)) then
       data_ptr = c_loc(struct_obj%mat(lbound(struct_obj%mat, 1), lbound(struct_obj%mat, 2)))
       bounds(1) = int(lbound(struct_obj%mat, 1), c_int)
@@ -24191,40 +32584,40 @@ contains
   !! tao_spin_ele_struct
 
     function allocate_fortran_tao_spin_ele_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_spin_ele_struct), pointer :: fptr
-    type(tao_spin_ele_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_spin_ele_struct), pointer :: fptr
+      type(tao_spin_ele_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_spin_ele_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_spin_ele_struct), pointer :: fptr
-    type(tao_spin_ele_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_spin_ele_struct), pointer :: fptr
+      type(tao_spin_ele_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_spin_ele_struct(src_ptr, dst_ptr) bind(c)
@@ -24239,7 +32632,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_spin_ele_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_spin_ele_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_spin_ele_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_spin_ele_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_spin_ele_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_spin_ele_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_spin_ele_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_spin_ele_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_spin_ele_struct%dn_dpz: 0D_NOT_type
 
   subroutine tao_spin_ele_struct_get_dn_dpz(struct_obj_ptr, ptr_out) bind(c, name='tao_spin_ele_struct_get_dn_dpz')
@@ -24270,9 +32733,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(tao_spin_ele_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%orb_eigen_val)) then
       data_ptr = c_loc(struct_obj%orb_eigen_val(lbound(struct_obj%orb_eigen_val, 1)))
       bounds(1) = int(lbound(struct_obj%orb_eigen_val, 1), c_int)
@@ -24298,9 +32761,9 @@ contains
     type(tao_spin_ele_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%orb_eigen_vec)) then
       data_ptr = c_loc(struct_obj%orb_eigen_vec(lbound(struct_obj%orb_eigen_vec, 1), lbound(struct_obj%orb_eigen_vec, 2)))
       bounds(1) = int(lbound(struct_obj%orb_eigen_vec, 1), c_int)
@@ -24331,9 +32794,9 @@ contains
     type(tao_spin_ele_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%spin_eigen_vec)) then
       data_ptr = c_loc(struct_obj%spin_eigen_vec(lbound(struct_obj%spin_eigen_vec, 1), lbound(struct_obj%spin_eigen_vec, 2)))
       bounds(1) = int(lbound(struct_obj%spin_eigen_vec, 1), c_int)
@@ -24375,40 +32838,40 @@ contains
   !! tao_plot_cache_struct
 
     function allocate_fortran_tao_plot_cache_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_plot_cache_struct), pointer :: fptr
-    type(tao_plot_cache_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_plot_cache_struct), pointer :: fptr
+      type(tao_plot_cache_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_plot_cache_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_plot_cache_struct), pointer :: fptr
-    type(tao_plot_cache_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_plot_cache_struct), pointer :: fptr
+      type(tao_plot_cache_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_plot_cache_struct(src_ptr, dst_ptr) bind(c)
@@ -24423,7 +32886,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_plot_cache_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_plot_cache_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_plot_cache_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_plot_cache_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_plot_cache_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_plot_cache_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_plot_cache_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_plot_cache_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_plot_cache_struct%ele_to_s: 0D_NOT_type
 
   subroutine tao_plot_cache_struct_get_ele_to_s(struct_obj_ptr, ptr_out) bind(c, name='tao_plot_cache_struct_get_ele_to_s')
@@ -24488,40 +33021,40 @@ contains
   !! tao_spin_polarization_struct
 
     function allocate_fortran_tao_spin_polarization_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_spin_polarization_struct), pointer :: fptr
-    type(tao_spin_polarization_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_spin_polarization_struct), pointer :: fptr
+      type(tao_spin_polarization_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_spin_polarization_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_spin_polarization_struct), pointer :: fptr
-    type(tao_spin_polarization_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_spin_polarization_struct), pointer :: fptr
+      type(tao_spin_polarization_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_spin_polarization_struct(src_ptr, dst_ptr) bind(c)
@@ -24536,7 +33069,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_spin_polarization_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_spin_polarization_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_spin_polarization_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_spin_polarization_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_spin_polarization_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_spin_polarization_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_spin_polarization_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_spin_polarization_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_spin_polarization_struct%tune: 0D_NOT_real
 
   subroutine tao_spin_polarization_struct_get_tune(struct_obj_ptr, value_out) bind(c, name='tao_spin_polarization_struct_get_tune')
@@ -24603,9 +33206,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(tao_spin_polarization_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%pol_limit_dk_partial)) then
       data_ptr = c_loc(struct_obj%pol_limit_dk_partial(lbound(struct_obj%pol_limit_dk_partial, 1)))
       bounds(1) = int(lbound(struct_obj%pol_limit_dk_partial, 1), c_int)
@@ -24629,9 +33232,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(tao_spin_polarization_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%pol_limit_dk_partial2)) then
       data_ptr = c_loc(struct_obj%pol_limit_dk_partial2(lbound(struct_obj%pol_limit_dk_partial2, 1)))
       bounds(1) = int(lbound(struct_obj%pol_limit_dk_partial2, 1), c_int)
@@ -24693,9 +33296,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(tao_spin_polarization_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%depol_rate_partial)) then
       data_ptr = c_loc(struct_obj%depol_rate_partial(lbound(struct_obj%depol_rate_partial, 1)))
       bounds(1) = int(lbound(struct_obj%depol_rate_partial, 1), c_int)
@@ -24719,9 +33322,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(tao_spin_polarization_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%depol_rate_partial2)) then
       data_ptr = c_loc(struct_obj%depol_rate_partial2(lbound(struct_obj%depol_rate_partial2, 1)))
       bounds(1) = int(lbound(struct_obj%depol_rate_partial2, 1), c_int)
@@ -24862,9 +33465,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_spin_polarization_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%q_ele) .and. is_contiguous(struct_obj%q_ele)) then
       data_ptr = c_loc(struct_obj%q_ele(lbound(struct_obj%q_ele, 1)))
       bounds(1) = int(lbound(struct_obj%q_ele, 1), c_int)
@@ -24883,40 +33486,40 @@ contains
   !! tao_lattice_branch_struct
 
     function allocate_fortran_tao_lattice_branch_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_lattice_branch_struct), pointer :: fptr
-    type(tao_lattice_branch_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_lattice_branch_struct), pointer :: fptr
+      type(tao_lattice_branch_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_lattice_branch_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_lattice_branch_struct), pointer :: fptr
-    type(tao_lattice_branch_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_lattice_branch_struct), pointer :: fptr
+      type(tao_lattice_branch_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_lattice_branch_struct(src_ptr, dst_ptr) bind(c)
@@ -24931,7 +33534,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_lattice_branch_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_lattice_branch_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_lattice_branch_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_lattice_branch_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_lattice_branch_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_lattice_branch_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_lattice_branch_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_lattice_branch_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_lattice_branch_struct%tao_lat: 0D_PTR_type
 
   subroutine tao_lattice_branch_struct_get_tao_lat(struct_obj_ptr, ptr_out) bind(c, name='tao_lattice_branch_struct_get_tao_lat')
@@ -24969,9 +33642,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_lattice_branch_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%lat_sigma) .and. is_contiguous(struct_obj%lat_sigma)) then
       data_ptr = c_loc(struct_obj%lat_sigma(lbound(struct_obj%lat_sigma, 1)))
       bounds(1) = int(lbound(struct_obj%lat_sigma, 1), c_int)
@@ -24997,9 +33670,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_lattice_branch_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%spin_ele) .and. is_contiguous(struct_obj%spin_ele)) then
       data_ptr = c_loc(struct_obj%spin_ele(lbound(struct_obj%spin_ele, 1)))
       bounds(1) = int(lbound(struct_obj%spin_ele, 1), c_int)
@@ -25025,9 +33698,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_lattice_branch_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%bunch_params) .and. is_contiguous(struct_obj%bunch_params)) then
       data_ptr = c_loc(struct_obj%bunch_params(lbound(struct_obj%bunch_params, 1)))
       bounds(1) = int(lbound(struct_obj%bunch_params, 1), c_int)
@@ -25053,9 +33726,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_lattice_branch_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%bunch_params_comb) .and. is_contiguous(struct_obj%bunch_params_comb)) then
       data_ptr = c_loc(struct_obj%bunch_params_comb(lbound(struct_obj%bunch_params_comb, 1)))
       bounds(1) = int(lbound(struct_obj%bunch_params_comb, 1), c_int)
@@ -25081,9 +33754,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_lattice_branch_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%orbit) .and. is_contiguous(struct_obj%orbit)) then
       data_ptr = c_loc(struct_obj%orbit(lbound(struct_obj%orbit, 1)))
       bounds(1) = int(lbound(struct_obj%orbit, 1), c_int)
@@ -25109,9 +33782,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_lattice_branch_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%plot_cache) .and. is_contiguous(struct_obj%plot_cache)) then
       data_ptr = c_loc(struct_obj%plot_cache(lbound(struct_obj%plot_cache, 1)))
       bounds(1) = int(lbound(struct_obj%plot_cache, 1), c_int)
@@ -25284,9 +33957,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_lattice_branch_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%high_E_orb) .and. is_contiguous(struct_obj%high_E_orb)) then
       data_ptr = c_loc(struct_obj%high_E_orb(lbound(struct_obj%high_E_orb, 1)))
       bounds(1) = int(lbound(struct_obj%high_E_orb, 1), c_int)
@@ -25312,15 +33985,43 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_lattice_branch_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%low_E_orb) .and. is_contiguous(struct_obj%low_E_orb)) then
       data_ptr = c_loc(struct_obj%low_E_orb(lbound(struct_obj%low_E_orb, 1)))
       bounds(1) = int(lbound(struct_obj%low_E_orb, 1), c_int)
       bounds(2) = int(ubound(struct_obj%low_E_orb, 1), c_int)
       
       el_size = int(storage_size(struct_obj%low_E_orb(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_lattice_branch_struct%taylor_save: 1D_NOT_type
+
+  subroutine tao_lattice_branch_struct_get_taylor_save_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_lattice_branch_struct_get_taylor_save_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_lattice_branch_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%taylor_save)) then
+      data_ptr = c_loc(struct_obj%taylor_save(lbound(struct_obj%taylor_save, 1)))
+      bounds(1) = int(lbound(struct_obj%taylor_save, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%taylor_save, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%taylor_save(bounds(1))) / 8, c_size_t)
       is_allocated = .true.
     else
       data_ptr = c_null_ptr
@@ -25385,6 +34086,44 @@ contains
     type(tao_lattice_branch_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     struct_obj%comb_ds_save = value_in
+  end subroutine
+
+  ! tao_lattice_branch_struct%ix_ref_taylor: 0D_NOT_integer
+
+  subroutine tao_lattice_branch_struct_get_ix_ref_taylor(struct_obj_ptr, value_out) bind(c, name='tao_lattice_branch_struct_get_ix_ref_taylor')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_lattice_branch_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_ref_taylor
+  end subroutine
+
+
+  subroutine tao_lattice_branch_struct_set_ix_ref_taylor(struct_obj_ptr, value_in) bind(c, name='tao_lattice_branch_struct_set_ix_ref_taylor')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_lattice_branch_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_ref_taylor = value_in
+  end subroutine
+
+  ! tao_lattice_branch_struct%ix_ele_taylor: 0D_NOT_integer
+
+  subroutine tao_lattice_branch_struct_get_ix_ele_taylor(struct_obj_ptr, value_out) bind(c, name='tao_lattice_branch_struct_get_ix_ele_taylor')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_lattice_branch_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_ele_taylor
+  end subroutine
+
+
+  subroutine tao_lattice_branch_struct_set_ix_ele_taylor(struct_obj_ptr, value_in) bind(c, name='tao_lattice_branch_struct_set_ix_ele_taylor')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_lattice_branch_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_ele_taylor = value_in
   end subroutine
 
   ! tao_lattice_branch_struct%track_state: 0D_NOT_integer
@@ -25618,40 +34357,40 @@ contains
   !! tao_model_element_struct
 
     function allocate_fortran_tao_model_element_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_model_element_struct), pointer :: fptr
-    type(tao_model_element_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_model_element_struct), pointer :: fptr
+      type(tao_model_element_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_model_element_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_model_element_struct), pointer :: fptr
-    type(tao_model_element_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_model_element_struct), pointer :: fptr
+      type(tao_model_element_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_model_element_struct(src_ptr, dst_ptr) bind(c)
@@ -25666,7 +34405,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_model_element_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_model_element_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_model_element_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_model_element_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_model_element_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_model_element_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_model_element_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_model_element_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_model_element_struct%beam: 0D_NOT_type
 
   subroutine tao_model_element_struct_get_beam(struct_obj_ptr, ptr_out) bind(c, name='tao_model_element_struct_get_beam')
@@ -25729,40 +34538,40 @@ contains
   !! tao_beam_branch_struct
 
     function allocate_fortran_tao_beam_branch_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_beam_branch_struct), pointer :: fptr
-    type(tao_beam_branch_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_beam_branch_struct), pointer :: fptr
+      type(tao_beam_branch_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_beam_branch_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_beam_branch_struct), pointer :: fptr
-    type(tao_beam_branch_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_beam_branch_struct), pointer :: fptr
+      type(tao_beam_branch_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_beam_branch_struct(src_ptr, dst_ptr) bind(c)
@@ -25777,7 +34586,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_beam_branch_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_beam_branch_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_beam_branch_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_beam_branch_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_beam_branch_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_beam_branch_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_beam_branch_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_beam_branch_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_beam_branch_struct%beam_at_start: 0D_NOT_type
 
   subroutine tao_beam_branch_struct_get_beam_at_start(struct_obj_ptr, ptr_out) bind(c, name='tao_beam_branch_struct_get_beam_at_start')
@@ -25976,40 +34855,40 @@ contains
   !! tao_d1_data_struct
 
     function allocate_fortran_tao_d1_data_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_d1_data_struct), pointer :: fptr
-    type(tao_d1_data_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_d1_data_struct), pointer :: fptr
+      type(tao_d1_data_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_d1_data_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_d1_data_struct), pointer :: fptr
-    type(tao_d1_data_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_d1_data_struct), pointer :: fptr
+      type(tao_d1_data_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_d1_data_struct(src_ptr, dst_ptr) bind(c)
@@ -26024,7 +34903,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_d1_data_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_d1_data_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_d1_data_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_d1_data_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_d1_data_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_d1_data_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_d1_data_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_d1_data_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_d1_data_struct%name: 0D_NOT_character
 
   subroutine tao_d1_data_struct_get_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -26090,9 +35039,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_d1_data_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%d) .and. is_contiguous(struct_obj%d)) then
       data_ptr = c_loc(struct_obj%d(lbound(struct_obj%d, 1)))
       bounds(1) = int(lbound(struct_obj%d, 1), c_int)
@@ -26111,40 +35060,40 @@ contains
   !! tao_lattice_struct
 
     function allocate_fortran_tao_lattice_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_lattice_struct), pointer :: fptr
-    type(tao_lattice_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_lattice_struct), pointer :: fptr
+      type(tao_lattice_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_lattice_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_lattice_struct), pointer :: fptr
-    type(tao_lattice_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_lattice_struct), pointer :: fptr
+      type(tao_lattice_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_lattice_struct(src_ptr, dst_ptr) bind(c)
@@ -26159,7 +35108,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_lattice_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_lattice_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_lattice_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_lattice_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_lattice_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_lattice_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_lattice_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_lattice_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_lattice_struct%name: 0D_NOT_character
 
   subroutine tao_lattice_struct_get_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -26303,9 +35322,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_lattice_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%tao_branch) .and. is_contiguous(struct_obj%tao_branch)) then
       data_ptr = c_loc(struct_obj%tao_branch(lbound(struct_obj%tao_branch, 1)))
       bounds(1) = int(lbound(struct_obj%tao_branch, 1), c_int)
@@ -26324,40 +35343,40 @@ contains
   !! tao_beam_uni_struct
 
     function allocate_fortran_tao_beam_uni_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_beam_uni_struct), pointer :: fptr
-    type(tao_beam_uni_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_beam_uni_struct), pointer :: fptr
+      type(tao_beam_uni_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_beam_uni_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_beam_uni_struct), pointer :: fptr
-    type(tao_beam_uni_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_beam_uni_struct), pointer :: fptr
+      type(tao_beam_uni_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_beam_uni_struct(src_ptr, dst_ptr) bind(c)
@@ -26372,7 +35391,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_beam_uni_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_beam_uni_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_beam_uni_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_beam_uni_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_beam_uni_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_beam_uni_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_beam_uni_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_beam_uni_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_beam_uni_struct%saved_at: 0D_NOT_character
 
   subroutine tao_beam_uni_struct_get_saved_at_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -26498,40 +35587,40 @@ contains
   !! tao_dynamic_aperture_struct
 
     function allocate_fortran_tao_dynamic_aperture_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_dynamic_aperture_struct), pointer :: fptr
-    type(tao_dynamic_aperture_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_dynamic_aperture_struct), pointer :: fptr
+      type(tao_dynamic_aperture_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_dynamic_aperture_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_dynamic_aperture_struct), pointer :: fptr
-    type(tao_dynamic_aperture_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_dynamic_aperture_struct), pointer :: fptr
+      type(tao_dynamic_aperture_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_dynamic_aperture_struct(src_ptr, dst_ptr) bind(c)
@@ -26546,7 +35635,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_dynamic_aperture_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_dynamic_aperture_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_dynamic_aperture_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_dynamic_aperture_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_dynamic_aperture_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_dynamic_aperture_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_dynamic_aperture_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_dynamic_aperture_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_dynamic_aperture_struct%param: 0D_NOT_type
 
   subroutine tao_dynamic_aperture_struct_get_param(struct_obj_ptr, ptr_out) bind(c, name='tao_dynamic_aperture_struct_get_param')
@@ -26578,9 +35737,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_dynamic_aperture_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%scan) .and. is_contiguous(struct_obj%scan)) then
       data_ptr = c_loc(struct_obj%scan(lbound(struct_obj%scan, 1)))
       bounds(1) = int(lbound(struct_obj%scan, 1), c_int)
@@ -26605,9 +35764,9 @@ contains
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
     type(tao_dynamic_aperture_struct), pointer :: struct_obj
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%pz) .and. is_contiguous(struct_obj%pz)) then
       data_ptr = c_loc(struct_obj%pz(lbound(struct_obj%pz, 1)))
       bounds(1) = int(lbound(struct_obj%pz, 1), c_int)
@@ -26682,40 +35841,40 @@ contains
   !! tao_model_branch_struct
 
     function allocate_fortran_tao_model_branch_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_model_branch_struct), pointer :: fptr
-    type(tao_model_branch_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_model_branch_struct), pointer :: fptr
+      type(tao_model_branch_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_model_branch_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_model_branch_struct), pointer :: fptr
-    type(tao_model_branch_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_model_branch_struct), pointer :: fptr
+      type(tao_model_branch_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_model_branch_struct(src_ptr, dst_ptr) bind(c)
@@ -26730,7 +35889,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_model_branch_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_model_branch_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_model_branch_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_model_branch_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_model_branch_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_model_branch_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_model_branch_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_model_branch_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_model_branch_struct%ele: 1D_ALLOC_type
 
   subroutine tao_model_branch_struct_get_ele_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -26741,9 +35970,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_model_branch_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%ele) .and. is_contiguous(struct_obj%ele)) then
       data_ptr = c_loc(struct_obj%ele(lbound(struct_obj%ele, 1)))
       bounds(1) = int(lbound(struct_obj%ele, 1), c_int)
@@ -26783,40 +36012,40 @@ contains
   !! tao_d2_data_struct
 
     function allocate_fortran_tao_d2_data_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_d2_data_struct), pointer :: fptr
-    type(tao_d2_data_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_d2_data_struct), pointer :: fptr
+      type(tao_d2_data_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_d2_data_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_d2_data_struct), pointer :: fptr
-    type(tao_d2_data_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_d2_data_struct), pointer :: fptr
+      type(tao_d2_data_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_d2_data_struct(src_ptr, dst_ptr) bind(c)
@@ -26831,7 +36060,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_d2_data_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_d2_data_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_d2_data_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_d2_data_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_d2_data_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_d2_data_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_d2_data_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_d2_data_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_d2_data_struct%name: 0D_NOT_character
 
   subroutine tao_d2_data_struct_get_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -26983,7 +36282,7 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_d2_data_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true.) then
       data_ptr = c_loc(struct_obj%descrip(lbound(struct_obj%descrip, 1)))
       bounds(1) = int(lbound(struct_obj%descrip, 1), c_int)
@@ -27008,9 +36307,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_d2_data_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%d1) .and. is_contiguous(struct_obj%d1)) then
       data_ptr = c_loc(struct_obj%d1(lbound(struct_obj%d1, 1)))
       bounds(1) = int(lbound(struct_obj%d1, 1), c_int)
@@ -27124,40 +36423,40 @@ contains
   !! tao_spin_map_struct
 
     function allocate_fortran_tao_spin_map_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_spin_map_struct), pointer :: fptr
-    type(tao_spin_map_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_spin_map_struct), pointer :: fptr
+      type(tao_spin_map_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_spin_map_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_spin_map_struct), pointer :: fptr
-    type(tao_spin_map_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_spin_map_struct), pointer :: fptr
+      type(tao_spin_map_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_spin_map_struct(src_ptr, dst_ptr) bind(c)
@@ -27172,7 +36471,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_spin_map_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_spin_map_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_spin_map_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_spin_map_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_spin_map_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_spin_map_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_spin_map_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_spin_map_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_spin_map_struct%valid: 0D_NOT_logical
 
   subroutine tao_spin_map_struct_get_valid(struct_obj_ptr, value_out) bind(c, name='tao_spin_map_struct_get_valid')
@@ -27363,9 +36732,9 @@ contains
     type(tao_spin_map_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (.true. .and. is_contiguous(struct_obj%mat8)) then
       data_ptr = c_loc(struct_obj%mat8(lbound(struct_obj%mat8, 1), lbound(struct_obj%mat8, 2)))
       bounds(1) = int(lbound(struct_obj%mat8, 1), c_int)
@@ -27388,40 +36757,40 @@ contains
   !! tao_data_struct
 
     function allocate_fortran_tao_data_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_data_struct), pointer :: fptr
-    type(tao_data_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_data_struct), pointer :: fptr
+      type(tao_data_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_data_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_data_struct), pointer :: fptr
-    type(tao_data_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_data_struct), pointer :: fptr
+      type(tao_data_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_data_struct(src_ptr, dst_ptr) bind(c)
@@ -27436,7 +36805,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_data_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_data_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_data_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_data_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_data_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_data_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_data_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_data_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_data_struct%ele_name: 0D_NOT_character
 
   subroutine tao_data_struct_get_ele_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -27531,7 +36970,7 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_data_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%data_type)) then
       data_ptr = c_loc(struct_obj%data_type)
       str_len = int(len(struct_obj%data_type), c_int)
@@ -27550,11 +36989,11 @@ contains
     integer(c_int), intent(in), value :: str_len
     type(tao_data_struct), pointer :: struct_obj
     character(len=str_len), pointer :: temp_str
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%data_type)) deallocate(struct_obj%data_type)
-    
+
     if (str_len > 0) then
        call c_f_pointer(str_ptr, temp_str)
        allocate(struct_obj%data_type, source=temp_str)
@@ -28130,6 +37569,25 @@ contains
     struct_obj%s_offset = value_in
   end subroutine
 
+  ! tao_data_struct%ref_s_offset: 0D_NOT_real
+
+  subroutine tao_data_struct_get_ref_s_offset(struct_obj_ptr, value_out) bind(c, name='tao_data_struct_get_ref_s_offset')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_data_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ref_s_offset
+  end subroutine
+
+
+  subroutine tao_data_struct_set_ref_s_offset(struct_obj_ptr, value_in) bind(c, name='tao_data_struct_set_ref_s_offset')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_data_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ref_s_offset = value_in
+  end subroutine
+
   ! tao_data_struct%err_message_printed: 0D_NOT_logical
 
   subroutine tao_data_struct_get_err_message_printed(struct_obj_ptr, value_out) bind(c, name='tao_data_struct_get_err_message_printed')
@@ -28409,40 +37867,40 @@ contains
   !! tao_ping_scale_struct
 
     function allocate_fortran_tao_ping_scale_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_ping_scale_struct), pointer :: fptr
-    type(tao_ping_scale_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_ping_scale_struct), pointer :: fptr
+      type(tao_ping_scale_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_ping_scale_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_ping_scale_struct), pointer :: fptr
-    type(tao_ping_scale_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_ping_scale_struct), pointer :: fptr
+      type(tao_ping_scale_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_ping_scale_struct(src_ptr, dst_ptr) bind(c)
@@ -28457,7 +37915,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_ping_scale_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_ping_scale_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_ping_scale_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_ping_scale_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_ping_scale_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_ping_scale_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_ping_scale_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_ping_scale_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_ping_scale_struct%a_mode_meas: 0D_NOT_real
 
   subroutine tao_ping_scale_struct_get_a_mode_meas(struct_obj_ptr, value_out) bind(c, name='tao_ping_scale_struct_get_a_mode_meas')
@@ -28537,40 +38065,40 @@ contains
   !! tao_universe_calc_struct
 
     function allocate_fortran_tao_universe_calc_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_universe_calc_struct), pointer :: fptr
-    type(tao_universe_calc_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_universe_calc_struct), pointer :: fptr
+      type(tao_universe_calc_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_universe_calc_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_universe_calc_struct), pointer :: fptr
-    type(tao_universe_calc_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_universe_calc_struct), pointer :: fptr
+      type(tao_universe_calc_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_universe_calc_struct(src_ptr, dst_ptr) bind(c)
@@ -28585,7 +38113,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_universe_calc_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_universe_calc_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_universe_calc_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_universe_calc_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_universe_calc_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_universe_calc_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_universe_calc_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_universe_calc_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_universe_calc_struct%srdt_for_data: 0D_NOT_integer
 
   subroutine tao_universe_calc_struct_get_srdt_for_data(struct_obj_ptr, value_out) bind(c, name='tao_universe_calc_struct_get_srdt_for_data')
@@ -28836,40 +38434,40 @@ contains
   !! lat_ele_order_struct
 
     function allocate_fortran_lat_ele_order_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(lat_ele_order_struct), pointer :: fptr
-    type(lat_ele_order_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(lat_ele_order_struct), pointer :: fptr
+      type(lat_ele_order_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_lat_ele_order_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(lat_ele_order_struct), pointer :: fptr
-    type(lat_ele_order_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(lat_ele_order_struct), pointer :: fptr
+      type(lat_ele_order_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_lat_ele_order_struct(src_ptr, dst_ptr) bind(c)
@@ -28884,7 +38482,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_lat_ele_order_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(lat_ele_order_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_lat_ele_order_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(lat_ele_order_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_lat_ele_order_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(lat_ele_order_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_lat_ele_order_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(lat_ele_order_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! lat_ele_order_struct%branch: 1D_ALLOC_type
 
   subroutine lat_ele_order_struct_get_branch_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -28895,9 +38563,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(lat_ele_order_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%branch) .and. is_contiguous(struct_obj%branch)) then
       data_ptr = c_loc(struct_obj%branch(lbound(struct_obj%branch, 1)))
       bounds(1) = int(lbound(struct_obj%branch, 1), c_int)
@@ -28916,40 +38584,40 @@ contains
   !! tao_universe_struct
 
     function allocate_fortran_tao_universe_struct(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type(tao_universe_struct), pointer :: fptr
-    type(tao_universe_struct), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_universe_struct), pointer :: fptr
+      type(tao_universe_struct), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_tao_universe_struct(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type(tao_universe_struct), pointer :: fptr
-    type(tao_universe_struct), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_universe_struct), pointer :: fptr
+      type(tao_universe_struct), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_tao_universe_struct(src_ptr, dst_ptr) bind(c)
@@ -28964,7 +38632,77 @@ contains
     end if
   end subroutine
 
-        
+  function allocate_tao_universe_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_universe_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_universe_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_universe_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_universe_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_universe_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_universe_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_universe_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
   ! tao_universe_struct%model: 0D_PTR_type
 
   subroutine tao_universe_struct_get_model(struct_obj_ptr, ptr_out) bind(c, name='tao_universe_struct_get_model')
@@ -29098,9 +38836,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_universe_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%model_branch) .and. is_contiguous(struct_obj%model_branch)) then
       data_ptr = c_loc(struct_obj%model_branch(lbound(struct_obj%model_branch, 1)))
       bounds(1) = int(lbound(struct_obj%model_branch, 1), c_int)
@@ -29126,9 +38864,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_universe_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%d2_data) .and. is_contiguous(struct_obj%d2_data)) then
       data_ptr = c_loc(struct_obj%d2_data(lbound(struct_obj%d2_data, 1)))
       bounds(1) = int(lbound(struct_obj%d2_data, 1), c_int)
@@ -29154,9 +38892,9 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     type(tao_universe_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%data) .and. is_contiguous(struct_obj%data)) then
       data_ptr = c_loc(struct_obj%data(lbound(struct_obj%data, 1)))
       bounds(1) = int(lbound(struct_obj%data, 1), c_int)
@@ -29288,9 +39026,9 @@ contains
     type(tao_universe_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%dModel_dVar) .and. is_contiguous(struct_obj%dModel_dVar)) then
       data_ptr = c_loc(struct_obj%dModel_dVar(lbound(struct_obj%dModel_dVar, 1), lbound(struct_obj%dModel_dVar, 2)))
       bounds(1) = int(lbound(struct_obj%dModel_dVar, 1), c_int)
@@ -29422,6 +39160,2254 @@ contains
     type(tao_universe_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     struct_obj%picked_uni = value_in
+  end subroutine
+
+  !! all_encompassing_struct
+
+    function allocate_fortran_all_encompassing_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(all_encompassing_struct), pointer :: fptr
+      type(all_encompassing_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_all_encompassing_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(all_encompassing_struct), pointer :: fptr
+      type(all_encompassing_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_all_encompassing_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(all_encompassing_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_all_encompassing_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(all_encompassing_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_all_encompassing_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(all_encompassing_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_all_encompassing_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(all_encompassing_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_all_encompassing_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(all_encompassing_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! all_encompassing_struct%real_rp_0d: 0D_NOT_real
+
+  subroutine all_encompassing_struct_get_real_rp_0d(struct_obj_ptr, value_out) bind(c, name='all_encompassing_struct_get_real_rp_0d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%real_rp_0d
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_real_rp_0d(struct_obj_ptr, value_in) bind(c, name='all_encompassing_struct_set_real_rp_0d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%real_rp_0d = value_in
+  end subroutine
+
+  ! all_encompassing_struct%real_rp_1d: 1D_NOT_real
+
+  subroutine all_encompassing_struct_get_real_rp_1d_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_rp_1d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%real_rp_1d)) then
+      data_ptr = c_loc(struct_obj%real_rp_1d(lbound(struct_obj%real_rp_1d, 1)))
+      bounds(1) = int(lbound(struct_obj%real_rp_1d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_rp_1d, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_rp_2d: 2D_NOT_real
+
+  subroutine all_encompassing_struct_get_real_rp_2d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_rp_2d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%real_rp_2d)) then
+      data_ptr = c_loc(struct_obj%real_rp_2d(lbound(struct_obj%real_rp_2d, 1), lbound(struct_obj%real_rp_2d, 2)))
+      bounds(1) = int(lbound(struct_obj%real_rp_2d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_rp_2d, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%real_rp_2d, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%real_rp_2d, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_rp_3d: 3D_NOT_real
+
+  subroutine all_encompassing_struct_get_real_rp_3d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_rp_3d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%real_rp_3d)) then
+      data_ptr = c_loc(struct_obj%real_rp_3d(lbound(struct_obj%real_rp_3d, 1), lbound(struct_obj%real_rp_3d, 2), lbound(struct_obj%real_rp_3d, 3)))
+      bounds(1) = int(lbound(struct_obj%real_rp_3d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_rp_3d, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%real_rp_3d, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%real_rp_3d, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%real_rp_3d, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%real_rp_3d, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_rp_0d_ptr: 0D_PTR_real
+
+  subroutine all_encompassing_struct_get_real_rp_0d_ptr(struct_obj_ptr, ptr_out) bind(c, name='all_encompassing_struct_get_real_rp_0d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%real_rp_0d_ptr)) then
+      ptr_out = c_loc(struct_obj%real_rp_0d_ptr)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_real_rp_0d_ptr(struct_obj_ptr, value_in) bind(c, name='all_encompassing_struct_set_real_rp_0d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%real_rp_0d_ptr)) then
+      struct_obj%real_rp_0d_ptr = value_in
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_rp_1d_ptr: 1D_PTR_real
+
+  subroutine all_encompassing_struct_get_real_rp_1d_ptr_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_rp_1d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%real_rp_1d_ptr) .and. is_contiguous(struct_obj%real_rp_1d_ptr)) then
+      data_ptr = c_loc(struct_obj%real_rp_1d_ptr(lbound(struct_obj%real_rp_1d_ptr, 1)))
+      bounds(1) = int(lbound(struct_obj%real_rp_1d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_rp_1d_ptr, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_rp_2d_ptr: 2D_PTR_real
+
+  subroutine all_encompassing_struct_get_real_rp_2d_ptr_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_rp_2d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%real_rp_2d_ptr) .and. is_contiguous(struct_obj%real_rp_2d_ptr)) then
+      data_ptr = c_loc(struct_obj%real_rp_2d_ptr(lbound(struct_obj%real_rp_2d_ptr, 1), lbound(struct_obj%real_rp_2d_ptr, 2)))
+      bounds(1) = int(lbound(struct_obj%real_rp_2d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_rp_2d_ptr, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%real_rp_2d_ptr, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%real_rp_2d_ptr, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_rp_3d_ptr: 3D_PTR_real
+
+  subroutine all_encompassing_struct_get_real_rp_3d_ptr_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_rp_3d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%real_rp_3d_ptr) .and. is_contiguous(struct_obj%real_rp_3d_ptr)) then
+      data_ptr = c_loc(struct_obj%real_rp_3d_ptr(lbound(struct_obj%real_rp_3d_ptr, 1), lbound(struct_obj%real_rp_3d_ptr, 2), lbound(struct_obj%real_rp_3d_ptr, 3)))
+      bounds(1) = int(lbound(struct_obj%real_rp_3d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_rp_3d_ptr, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%real_rp_3d_ptr, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%real_rp_3d_ptr, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%real_rp_3d_ptr, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%real_rp_3d_ptr, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_rp_1d_alloc: 1D_ALLOC_real
+
+  subroutine all_encompassing_struct_get_real_rp_1d_alloc_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_rp_1d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%real_rp_1d_alloc) .and. is_contiguous(struct_obj%real_rp_1d_alloc)) then
+      data_ptr = c_loc(struct_obj%real_rp_1d_alloc(lbound(struct_obj%real_rp_1d_alloc, 1)))
+      bounds(1) = int(lbound(struct_obj%real_rp_1d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_rp_1d_alloc, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_rp_2d_alloc: 2D_ALLOC_real
+
+  subroutine all_encompassing_struct_get_real_rp_2d_alloc_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_rp_2d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%real_rp_2d_alloc) .and. is_contiguous(struct_obj%real_rp_2d_alloc)) then
+      data_ptr = c_loc(struct_obj%real_rp_2d_alloc(lbound(struct_obj%real_rp_2d_alloc, 1), lbound(struct_obj%real_rp_2d_alloc, 2)))
+      bounds(1) = int(lbound(struct_obj%real_rp_2d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_rp_2d_alloc, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%real_rp_2d_alloc, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%real_rp_2d_alloc, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_rp_3d_alloc: 3D_ALLOC_real
+
+  subroutine all_encompassing_struct_get_real_rp_3d_alloc_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_rp_3d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%real_rp_3d_alloc) .and. is_contiguous(struct_obj%real_rp_3d_alloc)) then
+      data_ptr = c_loc(struct_obj%real_rp_3d_alloc(lbound(struct_obj%real_rp_3d_alloc, 1), lbound(struct_obj%real_rp_3d_alloc, 2), lbound(struct_obj%real_rp_3d_alloc, 3)))
+      bounds(1) = int(lbound(struct_obj%real_rp_3d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_rp_3d_alloc, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%real_rp_3d_alloc, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%real_rp_3d_alloc, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%real_rp_3d_alloc, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%real_rp_3d_alloc, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_dp_0d: 0D_NOT_real
+
+  subroutine all_encompassing_struct_get_real_dp_0d(struct_obj_ptr, value_out) bind(c, name='all_encompassing_struct_get_real_dp_0d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%real_dp_0d
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_real_dp_0d(struct_obj_ptr, value_in) bind(c, name='all_encompassing_struct_set_real_dp_0d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%real_dp_0d = value_in
+  end subroutine
+
+  ! all_encompassing_struct%real_dp_1d: 1D_NOT_real
+
+  subroutine all_encompassing_struct_get_real_dp_1d_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_dp_1d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%real_dp_1d)) then
+      data_ptr = c_loc(struct_obj%real_dp_1d(lbound(struct_obj%real_dp_1d, 1)))
+      bounds(1) = int(lbound(struct_obj%real_dp_1d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_dp_1d, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_dp_2d: 2D_NOT_real
+
+  subroutine all_encompassing_struct_get_real_dp_2d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_dp_2d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%real_dp_2d)) then
+      data_ptr = c_loc(struct_obj%real_dp_2d(lbound(struct_obj%real_dp_2d, 1), lbound(struct_obj%real_dp_2d, 2)))
+      bounds(1) = int(lbound(struct_obj%real_dp_2d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_dp_2d, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%real_dp_2d, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%real_dp_2d, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_dp_3d: 3D_NOT_real
+
+  subroutine all_encompassing_struct_get_real_dp_3d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_dp_3d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%real_dp_3d)) then
+      data_ptr = c_loc(struct_obj%real_dp_3d(lbound(struct_obj%real_dp_3d, 1), lbound(struct_obj%real_dp_3d, 2), lbound(struct_obj%real_dp_3d, 3)))
+      bounds(1) = int(lbound(struct_obj%real_dp_3d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_dp_3d, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%real_dp_3d, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%real_dp_3d, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%real_dp_3d, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%real_dp_3d, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_dp_0d_ptr: 0D_PTR_real
+
+  subroutine all_encompassing_struct_get_real_dp_0d_ptr(struct_obj_ptr, ptr_out) bind(c, name='all_encompassing_struct_get_real_dp_0d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%real_dp_0d_ptr)) then
+      ptr_out = c_loc(struct_obj%real_dp_0d_ptr)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_real_dp_0d_ptr(struct_obj_ptr, value_in) bind(c, name='all_encompassing_struct_set_real_dp_0d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%real_dp_0d_ptr)) then
+      struct_obj%real_dp_0d_ptr = value_in
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_dp_1d_ptr: 1D_PTR_real
+
+  subroutine all_encompassing_struct_get_real_dp_1d_ptr_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_dp_1d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%real_dp_1d_ptr) .and. is_contiguous(struct_obj%real_dp_1d_ptr)) then
+      data_ptr = c_loc(struct_obj%real_dp_1d_ptr(lbound(struct_obj%real_dp_1d_ptr, 1)))
+      bounds(1) = int(lbound(struct_obj%real_dp_1d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_dp_1d_ptr, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_dp_2d_ptr: 2D_PTR_real
+
+  subroutine all_encompassing_struct_get_real_dp_2d_ptr_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_dp_2d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%real_dp_2d_ptr) .and. is_contiguous(struct_obj%real_dp_2d_ptr)) then
+      data_ptr = c_loc(struct_obj%real_dp_2d_ptr(lbound(struct_obj%real_dp_2d_ptr, 1), lbound(struct_obj%real_dp_2d_ptr, 2)))
+      bounds(1) = int(lbound(struct_obj%real_dp_2d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_dp_2d_ptr, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%real_dp_2d_ptr, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%real_dp_2d_ptr, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_dp_3d_ptr: 3D_PTR_real
+
+  subroutine all_encompassing_struct_get_real_dp_3d_ptr_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_dp_3d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%real_dp_3d_ptr) .and. is_contiguous(struct_obj%real_dp_3d_ptr)) then
+      data_ptr = c_loc(struct_obj%real_dp_3d_ptr(lbound(struct_obj%real_dp_3d_ptr, 1), lbound(struct_obj%real_dp_3d_ptr, 2), lbound(struct_obj%real_dp_3d_ptr, 3)))
+      bounds(1) = int(lbound(struct_obj%real_dp_3d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_dp_3d_ptr, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%real_dp_3d_ptr, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%real_dp_3d_ptr, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%real_dp_3d_ptr, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%real_dp_3d_ptr, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_dp_1d_alloc: 1D_ALLOC_real
+
+  subroutine all_encompassing_struct_get_real_dp_1d_alloc_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_dp_1d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%real_dp_1d_alloc) .and. is_contiguous(struct_obj%real_dp_1d_alloc)) then
+      data_ptr = c_loc(struct_obj%real_dp_1d_alloc(lbound(struct_obj%real_dp_1d_alloc, 1)))
+      bounds(1) = int(lbound(struct_obj%real_dp_1d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_dp_1d_alloc, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_dp_2d_alloc: 2D_ALLOC_real
+
+  subroutine all_encompassing_struct_get_real_dp_2d_alloc_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_dp_2d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%real_dp_2d_alloc) .and. is_contiguous(struct_obj%real_dp_2d_alloc)) then
+      data_ptr = c_loc(struct_obj%real_dp_2d_alloc(lbound(struct_obj%real_dp_2d_alloc, 1), lbound(struct_obj%real_dp_2d_alloc, 2)))
+      bounds(1) = int(lbound(struct_obj%real_dp_2d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_dp_2d_alloc, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%real_dp_2d_alloc, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%real_dp_2d_alloc, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%real_dp_3d_alloc: 3D_ALLOC_real
+
+  subroutine all_encompassing_struct_get_real_dp_3d_alloc_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_real_dp_3d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%real_dp_3d_alloc) .and. is_contiguous(struct_obj%real_dp_3d_alloc)) then
+      data_ptr = c_loc(struct_obj%real_dp_3d_alloc(lbound(struct_obj%real_dp_3d_alloc, 1), lbound(struct_obj%real_dp_3d_alloc, 2), lbound(struct_obj%real_dp_3d_alloc, 3)))
+      bounds(1) = int(lbound(struct_obj%real_dp_3d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%real_dp_3d_alloc, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%real_dp_3d_alloc, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%real_dp_3d_alloc, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%real_dp_3d_alloc, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%real_dp_3d_alloc, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%complex_dp_0d: 0D_NOT_complex
+
+  subroutine all_encompassing_struct_get_complex_dp_0d(struct_obj_ptr, value_out) bind(c, name='all_encompassing_struct_get_complex_dp_0d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    complex(c_double_complex), intent(out) :: value_out
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%complex_dp_0d
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_complex_dp_0d(struct_obj_ptr, value_in) bind(c, name='all_encompassing_struct_set_complex_dp_0d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    complex(c_double_complex), intent(in), value :: value_in
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%complex_dp_0d = value_in
+  end subroutine
+
+  ! all_encompassing_struct%complex_dp_1d: 1D_NOT_complex
+
+  subroutine all_encompassing_struct_get_complex_dp_1d_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_complex_dp_1d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%complex_dp_1d)) then
+      data_ptr = c_loc(struct_obj%complex_dp_1d(lbound(struct_obj%complex_dp_1d, 1)))
+      bounds(1) = int(lbound(struct_obj%complex_dp_1d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%complex_dp_1d, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%complex_dp_2d: 2D_NOT_complex
+
+  subroutine all_encompassing_struct_get_complex_dp_2d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_complex_dp_2d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%complex_dp_2d)) then
+      data_ptr = c_loc(struct_obj%complex_dp_2d(lbound(struct_obj%complex_dp_2d, 1), lbound(struct_obj%complex_dp_2d, 2)))
+      bounds(1) = int(lbound(struct_obj%complex_dp_2d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%complex_dp_2d, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%complex_dp_2d, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%complex_dp_2d, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%complex_dp_3d: 3D_NOT_complex
+
+  subroutine all_encompassing_struct_get_complex_dp_3d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_complex_dp_3d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%complex_dp_3d)) then
+      data_ptr = c_loc(struct_obj%complex_dp_3d(lbound(struct_obj%complex_dp_3d, 1), lbound(struct_obj%complex_dp_3d, 2), lbound(struct_obj%complex_dp_3d, 3)))
+      bounds(1) = int(lbound(struct_obj%complex_dp_3d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%complex_dp_3d, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%complex_dp_3d, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%complex_dp_3d, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%complex_dp_3d, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%complex_dp_3d, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%complex_dp_1d_ptr: 1D_PTR_complex
+
+  subroutine all_encompassing_struct_get_complex_dp_1d_ptr_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_complex_dp_1d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%complex_dp_1d_ptr) .and. is_contiguous(struct_obj%complex_dp_1d_ptr)) then
+      data_ptr = c_loc(struct_obj%complex_dp_1d_ptr(lbound(struct_obj%complex_dp_1d_ptr, 1)))
+      bounds(1) = int(lbound(struct_obj%complex_dp_1d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%complex_dp_1d_ptr, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%complex_dp_2d_ptr: 2D_PTR_complex
+
+  subroutine all_encompassing_struct_get_complex_dp_2d_ptr_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_complex_dp_2d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%complex_dp_2d_ptr) .and. is_contiguous(struct_obj%complex_dp_2d_ptr)) then
+      data_ptr = c_loc(struct_obj%complex_dp_2d_ptr(lbound(struct_obj%complex_dp_2d_ptr, 1), lbound(struct_obj%complex_dp_2d_ptr, 2)))
+      bounds(1) = int(lbound(struct_obj%complex_dp_2d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%complex_dp_2d_ptr, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%complex_dp_2d_ptr, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%complex_dp_2d_ptr, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%complex_dp_3d_ptr: 3D_PTR_complex
+
+  subroutine all_encompassing_struct_get_complex_dp_3d_ptr_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_complex_dp_3d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%complex_dp_3d_ptr) .and. is_contiguous(struct_obj%complex_dp_3d_ptr)) then
+      data_ptr = c_loc(struct_obj%complex_dp_3d_ptr(lbound(struct_obj%complex_dp_3d_ptr, 1), lbound(struct_obj%complex_dp_3d_ptr, 2), lbound(struct_obj%complex_dp_3d_ptr, 3)))
+      bounds(1) = int(lbound(struct_obj%complex_dp_3d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%complex_dp_3d_ptr, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%complex_dp_3d_ptr, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%complex_dp_3d_ptr, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%complex_dp_3d_ptr, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%complex_dp_3d_ptr, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%complex_dp_1d_alloc: 1D_ALLOC_complex
+
+  subroutine all_encompassing_struct_get_complex_dp_1d_alloc_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_complex_dp_1d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%complex_dp_1d_alloc) .and. is_contiguous(struct_obj%complex_dp_1d_alloc)) then
+      data_ptr = c_loc(struct_obj%complex_dp_1d_alloc(lbound(struct_obj%complex_dp_1d_alloc, 1)))
+      bounds(1) = int(lbound(struct_obj%complex_dp_1d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%complex_dp_1d_alloc, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%complex_dp_2d_alloc: 2D_ALLOC_complex
+
+  subroutine all_encompassing_struct_get_complex_dp_2d_alloc_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_complex_dp_2d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%complex_dp_2d_alloc) .and. is_contiguous(struct_obj%complex_dp_2d_alloc)) then
+      data_ptr = c_loc(struct_obj%complex_dp_2d_alloc(lbound(struct_obj%complex_dp_2d_alloc, 1), lbound(struct_obj%complex_dp_2d_alloc, 2)))
+      bounds(1) = int(lbound(struct_obj%complex_dp_2d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%complex_dp_2d_alloc, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%complex_dp_2d_alloc, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%complex_dp_2d_alloc, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%complex_dp_3d_alloc: 3D_ALLOC_complex
+
+  subroutine all_encompassing_struct_get_complex_dp_3d_alloc_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_complex_dp_3d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%complex_dp_3d_alloc) .and. is_contiguous(struct_obj%complex_dp_3d_alloc)) then
+      data_ptr = c_loc(struct_obj%complex_dp_3d_alloc(lbound(struct_obj%complex_dp_3d_alloc, 1), lbound(struct_obj%complex_dp_3d_alloc, 2), lbound(struct_obj%complex_dp_3d_alloc, 3)))
+      bounds(1) = int(lbound(struct_obj%complex_dp_3d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%complex_dp_3d_alloc, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%complex_dp_3d_alloc, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%complex_dp_3d_alloc, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%complex_dp_3d_alloc, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%complex_dp_3d_alloc, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int_0d: 0D_NOT_integer
+
+  subroutine all_encompassing_struct_get_int_0d(struct_obj_ptr, value_out) bind(c, name='all_encompassing_struct_get_int_0d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%int_0d
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int_0d(struct_obj_ptr, value_in) bind(c, name='all_encompassing_struct_set_int_0d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%int_0d = value_in
+  end subroutine
+
+  ! all_encompassing_struct%int_1d: 1D_NOT_integer
+
+  subroutine all_encompassing_struct_get_int_1d_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int_1d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%int_1d)) then
+      data_ptr = c_loc(struct_obj%int_1d(lbound(struct_obj%int_1d, 1)))
+      bounds(1) = int(lbound(struct_obj%int_1d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int_1d, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int_2d: 2D_NOT_integer
+
+  subroutine all_encompassing_struct_get_int_2d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int_2d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%int_2d)) then
+      data_ptr = c_loc(struct_obj%int_2d(lbound(struct_obj%int_2d, 1), lbound(struct_obj%int_2d, 2)))
+      bounds(1) = int(lbound(struct_obj%int_2d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int_2d, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%int_2d, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%int_2d, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int_3d: 3D_NOT_integer
+
+  subroutine all_encompassing_struct_get_int_3d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int_3d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%int_3d)) then
+      data_ptr = c_loc(struct_obj%int_3d(lbound(struct_obj%int_3d, 1), lbound(struct_obj%int_3d, 2), lbound(struct_obj%int_3d, 3)))
+      bounds(1) = int(lbound(struct_obj%int_3d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int_3d, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%int_3d, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%int_3d, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%int_3d, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%int_3d, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int_0d_ptr: 0D_PTR_integer
+
+  subroutine all_encompassing_struct_get_int_0d_ptr(struct_obj_ptr, ptr_out) bind(c, name='all_encompassing_struct_get_int_0d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%int_0d_ptr)) then
+      ptr_out = c_loc(struct_obj%int_0d_ptr)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int_0d_ptr(struct_obj_ptr, value_in) bind(c, name='all_encompassing_struct_set_int_0d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%int_0d_ptr)) then
+      struct_obj%int_0d_ptr = value_in
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int_1d_ptr: 1D_PTR_integer
+
+  subroutine all_encompassing_struct_get_int_1d_ptr_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int_1d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%int_1d_ptr) .and. is_contiguous(struct_obj%int_1d_ptr)) then
+      data_ptr = c_loc(struct_obj%int_1d_ptr(lbound(struct_obj%int_1d_ptr, 1)))
+      bounds(1) = int(lbound(struct_obj%int_1d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int_1d_ptr, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int_2d_ptr: 2D_PTR_integer
+
+  subroutine all_encompassing_struct_get_int_2d_ptr_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int_2d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%int_2d_ptr) .and. is_contiguous(struct_obj%int_2d_ptr)) then
+      data_ptr = c_loc(struct_obj%int_2d_ptr(lbound(struct_obj%int_2d_ptr, 1), lbound(struct_obj%int_2d_ptr, 2)))
+      bounds(1) = int(lbound(struct_obj%int_2d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int_2d_ptr, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%int_2d_ptr, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%int_2d_ptr, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int_3d_ptr: 3D_PTR_integer
+
+  subroutine all_encompassing_struct_get_int_3d_ptr_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int_3d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%int_3d_ptr) .and. is_contiguous(struct_obj%int_3d_ptr)) then
+      data_ptr = c_loc(struct_obj%int_3d_ptr(lbound(struct_obj%int_3d_ptr, 1), lbound(struct_obj%int_3d_ptr, 2), lbound(struct_obj%int_3d_ptr, 3)))
+      bounds(1) = int(lbound(struct_obj%int_3d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int_3d_ptr, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%int_3d_ptr, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%int_3d_ptr, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%int_3d_ptr, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%int_3d_ptr, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int_1d_alloc: 1D_ALLOC_integer
+
+  subroutine all_encompassing_struct_get_int_1d_alloc_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int_1d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%int_1d_alloc) .and. is_contiguous(struct_obj%int_1d_alloc)) then
+      data_ptr = c_loc(struct_obj%int_1d_alloc(lbound(struct_obj%int_1d_alloc, 1)))
+      bounds(1) = int(lbound(struct_obj%int_1d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int_1d_alloc, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int_2d_alloc: 2D_ALLOC_integer
+
+  subroutine all_encompassing_struct_get_int_2d_alloc_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int_2d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%int_2d_alloc) .and. is_contiguous(struct_obj%int_2d_alloc)) then
+      data_ptr = c_loc(struct_obj%int_2d_alloc(lbound(struct_obj%int_2d_alloc, 1), lbound(struct_obj%int_2d_alloc, 2)))
+      bounds(1) = int(lbound(struct_obj%int_2d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int_2d_alloc, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%int_2d_alloc, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%int_2d_alloc, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int_3d_alloc: 3D_ALLOC_integer
+
+  subroutine all_encompassing_struct_get_int_3d_alloc_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int_3d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%int_3d_alloc) .and. is_contiguous(struct_obj%int_3d_alloc)) then
+      data_ptr = c_loc(struct_obj%int_3d_alloc(lbound(struct_obj%int_3d_alloc, 1), lbound(struct_obj%int_3d_alloc, 2), lbound(struct_obj%int_3d_alloc, 3)))
+      bounds(1) = int(lbound(struct_obj%int_3d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int_3d_alloc, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%int_3d_alloc, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%int_3d_alloc, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%int_3d_alloc, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%int_3d_alloc, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int8_0d: 0D_NOT_integer8
+
+  subroutine all_encompassing_struct_get_int8_0d(struct_obj_ptr, value_out) bind(c, name='all_encompassing_struct_get_int8_0d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int64_t), intent(out) :: value_out
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%int8_0d
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int8_0d(struct_obj_ptr, value_in) bind(c, name='all_encompassing_struct_set_int8_0d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int64_t), intent(in), value :: value_in
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%int8_0d = value_in
+  end subroutine
+
+  ! skipped all_encompassing_struct%int8_1d: Unsupported type: 1D_NOT_integer8
+  ! skipped all_encompassing_struct%int8_2d: Unsupported type: 2D_NOT_integer8
+  ! skipped all_encompassing_struct%int8_3d: Unsupported type: 3D_NOT_integer8
+  ! all_encompassing_struct%int8_0d_ptr: 0D_PTR_integer8
+
+  subroutine all_encompassing_struct_get_int8_0d_ptr(struct_obj_ptr, ptr_out) bind(c, name='all_encompassing_struct_get_int8_0d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%int8_0d_ptr)) then
+      ptr_out = c_loc(struct_obj%int8_0d_ptr)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int8_0d_ptr(struct_obj_ptr, value_in) bind(c, name='all_encompassing_struct_set_int8_0d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int64_t), intent(in), value :: value_in
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%int8_0d_ptr)) then
+      struct_obj%int8_0d_ptr = value_in
+    endif
+  end subroutine
+
+  ! skipped all_encompassing_struct%int8_1d_ptr: Unsupported type: 1D_PTR_integer8
+  ! skipped all_encompassing_struct%int8_2d_ptr: Unsupported type: 2D_PTR_integer8
+  ! skipped all_encompassing_struct%int8_3d_ptr: Unsupported type: 3D_PTR_integer8
+  ! skipped all_encompassing_struct%int8_1d_alloc: Unsupported type: 1D_ALLOC_integer8
+  ! skipped all_encompassing_struct%int8_2d_alloc: Unsupported type: 2D_ALLOC_integer8
+  ! skipped all_encompassing_struct%int8_3d_alloc: Unsupported type: 3D_ALLOC_integer8
+  ! all_encompassing_struct%logical_0d: 0D_NOT_logical
+
+  subroutine all_encompassing_struct_get_logical_0d(struct_obj_ptr, value_out) bind(c, name='all_encompassing_struct_get_logical_0d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%logical_0d
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_logical_0d(struct_obj_ptr, value_in) bind(c, name='all_encompassing_struct_set_logical_0d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%logical_0d = value_in
+  end subroutine
+
+  ! skipped all_encompassing_struct%logical_1d: Unsupported type: 1D_NOT_logical
+  ! skipped all_encompassing_struct%logical_2d: Unsupported type: 2D_NOT_logical
+  ! skipped all_encompassing_struct%logical_3d: Unsupported type: 3D_NOT_logical
+  ! all_encompassing_struct%logical_0d_ptr: 0D_PTR_logical
+
+  subroutine all_encompassing_struct_get_logical_0d_ptr(struct_obj_ptr, ptr_out) bind(c, name='all_encompassing_struct_get_logical_0d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%logical_0d_ptr)) then
+      ptr_out = c_loc(struct_obj%logical_0d_ptr)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_logical_0d_ptr(struct_obj_ptr, value_in) bind(c, name='all_encompassing_struct_set_logical_0d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%logical_0d_ptr)) then
+      struct_obj%logical_0d_ptr = value_in
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%type_0d: 0D_NOT_type
+
+  subroutine all_encompassing_struct_get_type_0d(struct_obj_ptr, ptr_out) bind(c, name='all_encompassing_struct_get_type_0d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%type_0d)
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_type_0d(struct_obj_ptr, src_ptr) bind(c, name='all_encompassing_struct_set_type_0d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(all_encompassing_struct), pointer :: struct_obj
+    type(test_sub_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%type_0d = src_obj
+  end subroutine
+
+  ! all_encompassing_struct%type_1d: 1D_NOT_type
+
+  subroutine all_encompassing_struct_get_type_1d_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='all_encompassing_struct_get_type_1d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%type_1d)) then
+      data_ptr = c_loc(struct_obj%type_1d(lbound(struct_obj%type_1d, 1)))
+      bounds(1) = int(lbound(struct_obj%type_1d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%type_1d, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%type_1d(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%type_2d: 2D_NOT_type
+
+  subroutine all_encompassing_struct_get_type_2d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated, el_size) &
+        bind(c, name='all_encompassing_struct_get_type_2d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%type_2d)) then
+      data_ptr = c_loc(struct_obj%type_2d(lbound(struct_obj%type_2d, 1), lbound(struct_obj%type_2d, 2)))
+      bounds(1) = int(lbound(struct_obj%type_2d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%type_2d, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%type_2d, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%type_2d, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      el_size = int(storage_size(struct_obj%type_2d(bounds(1), bounds(3))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%type_3d: 3D_NOT_type
+
+  subroutine all_encompassing_struct_get_type_3d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated, el_size) &
+        bind(c, name='all_encompassing_struct_get_type_3d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%type_3d)) then
+      data_ptr = c_loc(struct_obj%type_3d(lbound(struct_obj%type_3d, 1), lbound(struct_obj%type_3d, 2), lbound(struct_obj%type_3d, 3)))
+      bounds(1) = int(lbound(struct_obj%type_3d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%type_3d, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%type_3d, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%type_3d, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%type_3d, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%type_3d, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      el_size = int(storage_size(struct_obj%type_3d(bounds(1), bounds(3), bounds(5))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%type_0d_ptr: 0D_PTR_type
+
+  subroutine all_encompassing_struct_get_type_0d_ptr(struct_obj_ptr, ptr_out) bind(c, name='all_encompassing_struct_get_type_0d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%type_0d_ptr)) then
+      ptr_out = c_loc(struct_obj%type_0d_ptr)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_type_0d_ptr(struct_obj_ptr, src_ptr) bind(c, name='all_encompassing_struct_set_type_0d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(all_encompassing_struct), pointer :: struct_obj
+    type(test_sub_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%type_0d_ptr)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%type_0d_ptr = src_obj
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%type_1d_ptr: 1D_PTR_type
+
+  subroutine all_encompassing_struct_get_type_1d_ptr_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='all_encompassing_struct_get_type_1d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%type_1d_ptr) .and. is_contiguous(struct_obj%type_1d_ptr)) then
+      data_ptr = c_loc(struct_obj%type_1d_ptr(lbound(struct_obj%type_1d_ptr, 1)))
+      bounds(1) = int(lbound(struct_obj%type_1d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%type_1d_ptr, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%type_1d_ptr(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%type_2d_ptr: 2D_PTR_type
+
+  subroutine all_encompassing_struct_get_type_2d_ptr_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated, el_size) &
+        bind(c, name='all_encompassing_struct_get_type_2d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%type_2d_ptr) .and. is_contiguous(struct_obj%type_2d_ptr)) then
+      data_ptr = c_loc(struct_obj%type_2d_ptr(lbound(struct_obj%type_2d_ptr, 1), lbound(struct_obj%type_2d_ptr, 2)))
+      bounds(1) = int(lbound(struct_obj%type_2d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%type_2d_ptr, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%type_2d_ptr, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%type_2d_ptr, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      el_size = int(storage_size(struct_obj%type_2d_ptr(bounds(1), bounds(3))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%type_3d_ptr: 3D_PTR_type
+
+  subroutine all_encompassing_struct_get_type_3d_ptr_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated, el_size) &
+        bind(c, name='all_encompassing_struct_get_type_3d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%type_3d_ptr) .and. is_contiguous(struct_obj%type_3d_ptr)) then
+      data_ptr = c_loc(struct_obj%type_3d_ptr(lbound(struct_obj%type_3d_ptr, 1), lbound(struct_obj%type_3d_ptr, 2), lbound(struct_obj%type_3d_ptr, 3)))
+      bounds(1) = int(lbound(struct_obj%type_3d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%type_3d_ptr, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%type_3d_ptr, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%type_3d_ptr, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%type_3d_ptr, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%type_3d_ptr, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      el_size = int(storage_size(struct_obj%type_3d_ptr(bounds(1), bounds(3), bounds(5))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%type_1d_alloc: 1D_ALLOC_type
+
+  subroutine all_encompassing_struct_get_type_1d_alloc_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='all_encompassing_struct_get_type_1d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%type_1d_alloc) .and. is_contiguous(struct_obj%type_1d_alloc)) then
+      data_ptr = c_loc(struct_obj%type_1d_alloc(lbound(struct_obj%type_1d_alloc, 1)))
+      bounds(1) = int(lbound(struct_obj%type_1d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%type_1d_alloc, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%type_1d_alloc(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%type_2d_alloc: 2D_ALLOC_type
+
+  subroutine all_encompassing_struct_get_type_2d_alloc_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated, el_size) &
+        bind(c, name='all_encompassing_struct_get_type_2d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%type_2d_alloc) .and. is_contiguous(struct_obj%type_2d_alloc)) then
+      data_ptr = c_loc(struct_obj%type_2d_alloc(lbound(struct_obj%type_2d_alloc, 1), lbound(struct_obj%type_2d_alloc, 2)))
+      bounds(1) = int(lbound(struct_obj%type_2d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%type_2d_alloc, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%type_2d_alloc, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%type_2d_alloc, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      el_size = int(storage_size(struct_obj%type_2d_alloc(bounds(1), bounds(3))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%type_3d_alloc: 3D_ALLOC_type
+
+  subroutine all_encompassing_struct_get_type_3d_alloc_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated, el_size) &
+        bind(c, name='all_encompassing_struct_get_type_3d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%type_3d_alloc) .and. is_contiguous(struct_obj%type_3d_alloc)) then
+      data_ptr = c_loc(struct_obj%type_3d_alloc(lbound(struct_obj%type_3d_alloc, 1), lbound(struct_obj%type_3d_alloc, 2), lbound(struct_obj%type_3d_alloc, 3)))
+      bounds(1) = int(lbound(struct_obj%type_3d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%type_3d_alloc, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%type_3d_alloc, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%type_3d_alloc, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%type_3d_alloc, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%type_3d_alloc, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      el_size = int(storage_size(struct_obj%type_3d_alloc(bounds(1), bounds(3), bounds(5))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  !! test_sub_struct
+
+    function allocate_fortran_test_sub_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(test_sub_struct), pointer :: fptr
+      type(test_sub_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_test_sub_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(test_sub_struct), pointer :: fptr
+      type(test_sub_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_test_sub_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(test_sub_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_test_sub_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(test_sub_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_test_sub_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(test_sub_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_test_sub_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(test_sub_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_test_sub_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(test_sub_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! test_sub_struct%sr: 0D_NOT_type
+
+  subroutine test_sub_struct_get_sr(struct_obj_ptr, ptr_out) bind(c, name='test_sub_struct_get_sr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(test_sub_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%sr)
+  end subroutine
+
+
+  subroutine test_sub_struct_set_sr(struct_obj_ptr, src_ptr) bind(c, name='test_sub_struct_set_sr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(test_sub_struct), pointer :: struct_obj
+    type(test_sub_sub_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%sr = src_obj
+  end subroutine
+
+  !! test_sub_sub_struct
+
+    function allocate_fortran_test_sub_sub_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(test_sub_sub_struct), pointer :: fptr
+      type(test_sub_sub_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_test_sub_sub_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(test_sub_sub_struct), pointer :: fptr
+      type(test_sub_sub_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_test_sub_sub_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(test_sub_sub_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_test_sub_sub_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(test_sub_sub_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_test_sub_sub_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(test_sub_sub_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_test_sub_sub_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(test_sub_sub_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_test_sub_sub_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(test_sub_sub_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! test_sub_sub_struct%aaa: 0D_NOT_integer8
+
+  subroutine test_sub_sub_struct_get_aaa(struct_obj_ptr, value_out) bind(c, name='test_sub_sub_struct_get_aaa')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int64_t), intent(out) :: value_out
+    type(test_sub_sub_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%aaa
+  end subroutine
+
+
+  subroutine test_sub_sub_struct_set_aaa(struct_obj_ptr, value_in) bind(c, name='test_sub_sub_struct_set_aaa')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int64_t), intent(in), value :: value_in
+    type(test_sub_sub_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%aaa = value_in
+  end subroutine
+
+  ! test_sub_sub_struct%bbb: 0D_NOT_integer
+
+  subroutine test_sub_sub_struct_get_bbb(struct_obj_ptr, value_out) bind(c, name='test_sub_sub_struct_get_bbb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(test_sub_sub_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%bbb
+  end subroutine
+
+
+  subroutine test_sub_sub_struct_set_bbb(struct_obj_ptr, value_in) bind(c, name='test_sub_sub_struct_set_bbb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(test_sub_sub_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%bbb = value_in
+  end subroutine
+
+  ! test_sub_sub_struct%file: 0D_NOT_character
+
+  subroutine test_sub_sub_struct_get_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='test_sub_sub_struct_get_file_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(test_sub_sub_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%file)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%file), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine test_sub_sub_struct_set_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='test_sub_sub_struct_set_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(test_sub_sub_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%file = str_in ! implicitly handles padding
+  end subroutine
+
+  ! test_sub_sub_struct%t_ref: 0D_NOT_real
+
+  subroutine test_sub_sub_struct_get_t_ref(struct_obj_ptr, value_out) bind(c, name='test_sub_sub_struct_get_t_ref')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(test_sub_sub_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%t_ref
+  end subroutine
+
+
+  subroutine test_sub_sub_struct_set_t_ref(struct_obj_ptr, value_in) bind(c, name='test_sub_sub_struct_set_t_ref')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(test_sub_sub_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%t_ref = value_in
+  end subroutine
+
+  ! test_sub_sub_struct%freq_spread: 0D_NOT_real
+
+  subroutine test_sub_sub_struct_get_freq_spread(struct_obj_ptr, value_out) bind(c, name='test_sub_sub_struct_get_freq_spread')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(test_sub_sub_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%freq_spread
+  end subroutine
+
+
+  subroutine test_sub_sub_struct_set_freq_spread(struct_obj_ptr, value_in) bind(c, name='test_sub_sub_struct_set_freq_spread')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(test_sub_sub_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%freq_spread = value_in
   end subroutine
 
 end module

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "fortran_arrays.hpp"
-#include "proxy_base.hpp"
+#include "bmad/fortran_arrays.hpp"
+#include "bmad/proxy_base.hpp"
 
 #include <complex>
 #include <memory>
@@ -42,12 +42,6 @@ void ac_kicker_freq_struct_get_amp(const void* struct_obj, double* value_out);
 void ac_kicker_freq_struct_set_amp(void* struct_obj, double value_in);
 void ac_kicker_freq_struct_get_phi(const void* struct_obj, double* value_out);
 void ac_kicker_freq_struct_set_phi(void* struct_obj, double value_in);
-void ac_kicker_freq_struct_get_rf_clock_harmonic(
-    const void* struct_obj,
-    int* value_out);
-void ac_kicker_freq_struct_set_rf_clock_harmonic(
-    void* struct_obj,
-    int value_in);
 
 void ac_kicker_struct_get_amp_vs_time_info(
     const void* s,
@@ -1231,8 +1225,8 @@ void photon_material_struct_get_l_ref_info(
     double** d,
     int* bounds,
     bool* is_alloc);
-void pixel_pt_struct_get_n_photon(const void* struct_obj, long long* value_out);
-void pixel_pt_struct_set_n_photon(void* struct_obj, long long value_in);
+void pixel_pt_struct_get_n_photon(const void* struct_obj, int64_t* value_out);
+void pixel_pt_struct_set_n_photon(void* struct_obj, int64_t value_in);
 void pixel_pt_struct_get_E_x(
     const void* struct_obj,
     std::complex<double>* value_out);
@@ -1279,16 +1273,16 @@ void pixel_detec_struct_get_r0_info(
     bool* is_alloc);
 void pixel_detec_struct_get_n_track_tot(
     const void* struct_obj,
-    long long* value_out);
-void pixel_detec_struct_set_n_track_tot(void* struct_obj, long long value_in);
+    int64_t* value_out);
+void pixel_detec_struct_set_n_track_tot(void* struct_obj, int64_t value_in);
 void pixel_detec_struct_get_n_hit_detec(
     const void* struct_obj,
-    long long* value_out);
-void pixel_detec_struct_set_n_hit_detec(void* struct_obj, long long value_in);
+    int64_t* value_out);
+void pixel_detec_struct_set_n_hit_detec(void* struct_obj, int64_t value_in);
 void pixel_detec_struct_get_n_hit_pixel(
     const void* struct_obj,
-    long long* value_out);
-void pixel_detec_struct_set_n_hit_pixel(void* struct_obj, long long value_in);
+    int64_t* value_out);
+void pixel_detec_struct_set_n_hit_pixel(void* struct_obj, int64_t value_in);
 
 void pixel_detec_struct_get_pt_info(
     const void* s,
@@ -2474,12 +2468,12 @@ void rf_stair_step_struct_get_p0c(const void* struct_obj, double* value_out);
 void rf_stair_step_struct_set_p0c(void* struct_obj, double value_in);
 void rf_stair_step_struct_get_p1c(const void* struct_obj, double* value_out);
 void rf_stair_step_struct_set_p1c(void* struct_obj, double value_in);
-void rf_stair_step_struct_get_dE_amp(const void* struct_obj, double* value_out);
-void rf_stair_step_struct_set_dE_amp(void* struct_obj, double value_in);
 void rf_stair_step_struct_get_scale(const void* struct_obj, double* value_out);
 void rf_stair_step_struct_set_scale(void* struct_obj, double value_in);
 void rf_stair_step_struct_get_time(const void* struct_obj, double* value_out);
 void rf_stair_step_struct_set_time(void* struct_obj, double value_in);
+void rf_stair_step_struct_get_s0(const void* struct_obj, double* value_out);
+void rf_stair_step_struct_set_s0(void* struct_obj, double value_in);
 void rf_stair_step_struct_get_s(const void* struct_obj, double* value_out);
 void rf_stair_step_struct_set_s(void* struct_obj, double value_in);
 void rf_stair_step_struct_get_ix_step(const void* struct_obj, int* value_out);
@@ -2648,6 +2642,12 @@ void ele_struct_get_mat6_info(
     int* strides,
     bool* is_alloc);
 void ele_struct_get_c_mat_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void ele_struct_get_dc_mat_dpz_info(
     const void* s,
     double** d,
     int* bounds,
@@ -3643,6 +3643,13 @@ void tao_lattice_branch_struct_get_low_E_orb_info(
     bool* is_alloc,
     size_t* el_size);
 
+void tao_lattice_branch_struct_get_taylor_save_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
 void tao_lattice_branch_struct_get_cache_x_min(
     const void* struct_obj,
     double* value_out);
@@ -3661,6 +3668,18 @@ void tao_lattice_branch_struct_get_comb_ds_save(
 void tao_lattice_branch_struct_set_comb_ds_save(
     void* struct_obj,
     double value_in);
+void tao_lattice_branch_struct_get_ix_ref_taylor(
+    const void* struct_obj,
+    int* value_out);
+void tao_lattice_branch_struct_set_ix_ref_taylor(
+    void* struct_obj,
+    int value_in);
+void tao_lattice_branch_struct_get_ix_ele_taylor(
+    const void* struct_obj,
+    int* value_out);
+void tao_lattice_branch_struct_set_ix_ele_taylor(
+    void* struct_obj,
+    int value_in);
 void tao_lattice_branch_struct_get_track_state(
     const void* struct_obj,
     int* value_out);
@@ -4146,6 +4165,10 @@ void tao_data_struct_get_s(const void* struct_obj, double* value_out);
 void tao_data_struct_set_s(void* struct_obj, double value_in);
 void tao_data_struct_get_s_offset(const void* struct_obj, double* value_out);
 void tao_data_struct_set_s_offset(void* struct_obj, double value_in);
+void tao_data_struct_get_ref_s_offset(
+    const void* struct_obj,
+    double* value_out);
+void tao_data_struct_set_ref_s_offset(void* struct_obj, double value_in);
 void tao_data_struct_get_err_message_printed(
     const void* struct_obj,
     bool* value_out);
@@ -4344,60 +4367,530 @@ void tao_universe_struct_get_picked_uni(
     const void* struct_obj,
     bool* value_out);
 void tao_universe_struct_set_picked_uni(void* struct_obj, bool value_in);
+void all_encompassing_struct_get_real_rp_0d(
+    const void* struct_obj,
+    double* value_out);
+void all_encompassing_struct_set_real_rp_0d(void* struct_obj, double value_in);
+void all_encompassing_struct_get_real_rp_1d_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_rp_2d_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_rp_3d_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_rp_0d_ptr(
+    const void* struct_obj,
+    double** ptr_out);
+void all_encompassing_struct_set_real_rp_0d_ptr(
+    void* struct_obj,
+    double value_in);
+void all_encompassing_struct_get_real_rp_1d_ptr_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_rp_2d_ptr_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_rp_3d_ptr_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_rp_1d_alloc_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_rp_2d_alloc_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_rp_3d_alloc_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_dp_0d(
+    const void* struct_obj,
+    double* value_out);
+void all_encompassing_struct_set_real_dp_0d(void* struct_obj, double value_in);
+void all_encompassing_struct_get_real_dp_1d_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_dp_2d_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_dp_3d_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_dp_0d_ptr(
+    const void* struct_obj,
+    double** ptr_out);
+void all_encompassing_struct_set_real_dp_0d_ptr(
+    void* struct_obj,
+    double value_in);
+void all_encompassing_struct_get_real_dp_1d_ptr_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_dp_2d_ptr_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_dp_3d_ptr_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_dp_1d_alloc_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_dp_2d_alloc_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_real_dp_3d_alloc_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_complex_dp_0d(
+    const void* struct_obj,
+    std::complex<double>* value_out);
+void all_encompassing_struct_set_complex_dp_0d(
+    void* struct_obj,
+    std::complex<double> value_in);
+void all_encompassing_struct_get_complex_dp_1d_info(
+    const void* s,
+    std::complex<double>** d,
+    int* bounds,
+    bool* is_alloc);
+void all_encompassing_struct_get_complex_dp_2d_info(
+    const void* s,
+    std::complex<double>** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_complex_dp_3d_info(
+    const void* s,
+    std::complex<double>** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_complex_dp_1d_ptr_info(
+    const void* s,
+    std::complex<double>** d,
+    int* bounds,
+    bool* is_alloc);
+void all_encompassing_struct_get_complex_dp_2d_ptr_info(
+    const void* s,
+    std::complex<double>** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_complex_dp_3d_ptr_info(
+    const void* s,
+    std::complex<double>** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_complex_dp_1d_alloc_info(
+    const void* s,
+    std::complex<double>** d,
+    int* bounds,
+    bool* is_alloc);
+void all_encompassing_struct_get_complex_dp_2d_alloc_info(
+    const void* s,
+    std::complex<double>** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_complex_dp_3d_alloc_info(
+    const void* s,
+    std::complex<double>** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_int_0d(const void* struct_obj, int* value_out);
+void all_encompassing_struct_set_int_0d(void* struct_obj, int value_in);
+void all_encompassing_struct_get_int_1d_info(
+    const void* s,
+    int** d,
+    int* bounds,
+    bool* is_alloc);
+void all_encompassing_struct_get_int_2d_info(
+    const void* s,
+    int** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_int_3d_info(
+    const void* s,
+    int** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_int_0d_ptr(
+    const void* struct_obj,
+    int** ptr_out);
+void all_encompassing_struct_set_int_0d_ptr(void* struct_obj, int value_in);
+void all_encompassing_struct_get_int_1d_ptr_info(
+    const void* s,
+    int** d,
+    int* bounds,
+    bool* is_alloc);
+void all_encompassing_struct_get_int_2d_ptr_info(
+    const void* s,
+    int** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_int_3d_ptr_info(
+    const void* s,
+    int** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_int_1d_alloc_info(
+    const void* s,
+    int** d,
+    int* bounds,
+    bool* is_alloc);
+void all_encompassing_struct_get_int_2d_alloc_info(
+    const void* s,
+    int** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_int_3d_alloc_info(
+    const void* s,
+    int** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void all_encompassing_struct_get_int8_0d(
+    const void* struct_obj,
+    int64_t* value_out);
+void all_encompassing_struct_set_int8_0d(void* struct_obj, int64_t value_in);
+void all_encompassing_struct_get_int8_0d_ptr(
+    const void* struct_obj,
+    int64_t** ptr_out);
+void all_encompassing_struct_set_int8_0d_ptr(
+    void* struct_obj,
+    int64_t value_in);
+void all_encompassing_struct_get_logical_0d(
+    const void* struct_obj,
+    bool* value_out);
+void all_encompassing_struct_set_logical_0d(void* struct_obj, bool value_in);
+void all_encompassing_struct_get_logical_0d_ptr(
+    const void* struct_obj,
+    bool** ptr_out);
+void all_encompassing_struct_set_logical_0d_ptr(
+    void* struct_obj,
+    bool value_in);
+void all_encompassing_struct_get_type_0d(
+    const void* struct_obj,
+    void** ptr_out);
+void all_encompassing_struct_set_type_0d(void* struct_obj, const void* src_ptr);
 
-// Global functions (index-based, only for initial access)
-int tao_get_n_universes();
-void* tao_c_get_universe_ptr(int ix_uni);
-void* tao_c_get_tao_lattice_ptr(int ix_uni, int ix_lat);
-void* tao_c_get_lattice_ptr(int ix_uni, int ix_lat);
-void* tao_c_get_branch_ptr(int ix_uni, int ix_lat, int ix_branch);
-void* tao_c_get_element_ptr(int ix_uni, int ix_lat, int ix_branch, int ix_ele);
+void all_encompassing_struct_get_type_1d_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
 
-// Pointer-based functions (efficient access using C pointers)
-int tao_lat_get_n_branches(void* lat_ptr);
-void* tao_lat_get_branch_ptr(void* lat_ptr, int ix_branch);
-int tao_branch_get_n_elements(void* branch_ptr);
-void* tao_branch_get_element_ptr(void* branch_ptr, int ix_ele);
+void all_encompassing_struct_get_type_2d_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    int* strides,
+    bool* a,
+    size_t* es);
+
+void all_encompassing_struct_get_type_3d_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    int* strides,
+    bool* a,
+    size_t* es);
+
+void all_encompassing_struct_get_type_0d_ptr(
+    const void* struct_obj,
+    void** ptr_out);
+void all_encompassing_struct_set_type_0d_ptr(
+    void* struct_obj,
+    const void* src_ptr);
+
+void all_encompassing_struct_get_type_1d_ptr_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void all_encompassing_struct_get_type_2d_ptr_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    int* strides,
+    bool* a,
+    size_t* es);
+
+void all_encompassing_struct_get_type_3d_ptr_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    int* strides,
+    bool* a,
+    size_t* es);
+
+void all_encompassing_struct_get_type_1d_alloc_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void all_encompassing_struct_get_type_2d_alloc_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    int* strides,
+    bool* a,
+    size_t* es);
+
+void all_encompassing_struct_get_type_3d_alloc_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    int* strides,
+    bool* a,
+    size_t* es);
+
+void test_sub_struct_get_sr(const void* struct_obj, void** ptr_out);
+void test_sub_struct_set_sr(void* struct_obj, const void* src_ptr);
+void test_sub_sub_struct_get_aaa(const void* struct_obj, int64_t* value_out);
+void test_sub_sub_struct_set_aaa(void* struct_obj, int64_t value_in);
+void test_sub_sub_struct_get_bbb(const void* struct_obj, int* value_out);
+void test_sub_sub_struct_set_bbb(void* struct_obj, int value_in);
+void test_sub_sub_struct_get_file_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void test_sub_sub_struct_set_file(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void test_sub_sub_struct_get_t_ref(const void* struct_obj, double* value_out);
+void test_sub_sub_struct_set_t_ref(void* struct_obj, double value_in);
+void test_sub_sub_struct_get_freq_spread(
+    const void* struct_obj,
+    double* value_out);
+void test_sub_sub_struct_set_freq_spread(void* struct_obj, double value_in);
 }
 
-namespace tao {
+namespace Bmad {
 
-// Lattice type enumeration
-enum class LatticeType : int { MODEL = 1, DESIGN = 2, BASE = 3 };
-
-// Forward declarations
-class TaoUniverseIndexProxy;
-class TaoLatticeIndexProxy;
-class TaoBranchIndexProxy;
 extern "C" {
+
+void* allocate_real_container();
+void reallocate_real_container_data(void*, int, size_t) noexcept;
+void deallocate_real_container(void*) noexcept;
+void access_real_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_integer_container();
+void reallocate_integer_container_data(void*, int, size_t) noexcept;
+void deallocate_integer_container(void*) noexcept;
+void access_integer_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_logical_container();
+void reallocate_logical_container_data(void*, int, size_t) noexcept;
+void deallocate_logical_container(void*) noexcept;
+void access_logical_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_complex_container();
+void reallocate_complex_container_data(void*, int, size_t) noexcept;
+void deallocate_complex_container(void*) noexcept;
+void access_complex_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_spline_struct(int n, size_t* element_size);
 void deallocate_fortran_spline_struct(void* ptr, int n) noexcept;
 void copy_fortran_spline_struct(const void* src, void* dst);
 
+void* allocate_spline_struct_container();
+void reallocate_spline_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_spline_struct_container(void*) noexcept;
+void access_spline_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_spin_polar_struct(int n, size_t* element_size);
 void deallocate_fortran_spin_polar_struct(void* ptr, int n) noexcept;
 void copy_fortran_spin_polar_struct(const void* src, void* dst);
+
+void* allocate_spin_polar_struct_container();
+void reallocate_spin_polar_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_spin_polar_struct_container(void*) noexcept;
+void access_spin_polar_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_ac_kicker_time_struct(int n, size_t* element_size);
 void deallocate_fortran_ac_kicker_time_struct(void* ptr, int n) noexcept;
 void copy_fortran_ac_kicker_time_struct(const void* src, void* dst);
 
+void* allocate_ac_kicker_time_struct_container();
+void reallocate_ac_kicker_time_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_ac_kicker_time_struct_container(void*) noexcept;
+void access_ac_kicker_time_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_ac_kicker_freq_struct(int n, size_t* element_size);
 void deallocate_fortran_ac_kicker_freq_struct(void* ptr, int n) noexcept;
 void copy_fortran_ac_kicker_freq_struct(const void* src, void* dst);
+
+void* allocate_ac_kicker_freq_struct_container();
+void reallocate_ac_kicker_freq_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_ac_kicker_freq_struct_container(void*) noexcept;
+void access_ac_kicker_freq_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_ac_kicker_struct(int n, size_t* element_size);
 void deallocate_fortran_ac_kicker_struct(void* ptr, int n) noexcept;
 void copy_fortran_ac_kicker_struct(const void* src, void* dst);
 
+void* allocate_ac_kicker_struct_container();
+void reallocate_ac_kicker_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_ac_kicker_struct_container(void*) noexcept;
+void access_ac_kicker_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_interval1_coef_struct(int n, size_t* element_size);
 void deallocate_fortran_interval1_coef_struct(void* ptr, int n) noexcept;
 void copy_fortran_interval1_coef_struct(const void* src, void* dst);
 
+void* allocate_interval1_coef_struct_container();
+void reallocate_interval1_coef_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_interval1_coef_struct_container(void*) noexcept;
+void access_interval1_coef_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_photon_reflect_table_struct(int n, size_t* element_size);
 void deallocate_fortran_photon_reflect_table_struct(void* ptr, int n) noexcept;
 void copy_fortran_photon_reflect_table_struct(const void* src, void* dst);
+
+void* allocate_photon_reflect_table_struct_container();
+void reallocate_photon_reflect_table_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_photon_reflect_table_struct_container(void*) noexcept;
+void access_photon_reflect_table_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_photon_reflect_surface_struct(
     int n,
@@ -4407,77 +4900,310 @@ void deallocate_fortran_photon_reflect_surface_struct(
     int n) noexcept;
 void copy_fortran_photon_reflect_surface_struct(const void* src, void* dst);
 
+void* allocate_photon_reflect_surface_struct_container();
+void reallocate_photon_reflect_surface_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_photon_reflect_surface_struct_container(void*) noexcept;
+void access_photon_reflect_surface_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_coord_struct(int n, size_t* element_size);
 void deallocate_fortran_coord_struct(void* ptr, int n) noexcept;
 void copy_fortran_coord_struct(const void* src, void* dst);
+
+void* allocate_coord_struct_container();
+void reallocate_coord_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_coord_struct_container(void*) noexcept;
+void access_coord_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_coord_array_struct(int n, size_t* element_size);
 void deallocate_fortran_coord_array_struct(void* ptr, int n) noexcept;
 void copy_fortran_coord_array_struct(const void* src, void* dst);
 
+void* allocate_coord_array_struct_container();
+void reallocate_coord_array_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_coord_array_struct_container(void*) noexcept;
+void access_coord_array_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_bpm_phase_coupling_struct(int n, size_t* element_size);
 void deallocate_fortran_bpm_phase_coupling_struct(void* ptr, int n) noexcept;
 void copy_fortran_bpm_phase_coupling_struct(const void* src, void* dst);
+
+void* allocate_bpm_phase_coupling_struct_container();
+void reallocate_bpm_phase_coupling_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_bpm_phase_coupling_struct_container(void*) noexcept;
+void access_bpm_phase_coupling_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_expression_atom_struct(int n, size_t* element_size);
 void deallocate_fortran_expression_atom_struct(void* ptr, int n) noexcept;
 void copy_fortran_expression_atom_struct(const void* src, void* dst);
 
+void* allocate_expression_atom_struct_container();
+void reallocate_expression_atom_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_expression_atom_struct_container(void*) noexcept;
+void access_expression_atom_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_wake_sr_z_long_struct(int n, size_t* element_size);
 void deallocate_fortran_wake_sr_z_long_struct(void* ptr, int n) noexcept;
 void copy_fortran_wake_sr_z_long_struct(const void* src, void* dst);
+
+void* allocate_wake_sr_z_long_struct_container();
+void reallocate_wake_sr_z_long_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_wake_sr_z_long_struct_container(void*) noexcept;
+void access_wake_sr_z_long_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_wake_sr_mode_struct(int n, size_t* element_size);
 void deallocate_fortran_wake_sr_mode_struct(void* ptr, int n) noexcept;
 void copy_fortran_wake_sr_mode_struct(const void* src, void* dst);
 
+void* allocate_wake_sr_mode_struct_container();
+void reallocate_wake_sr_mode_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_wake_sr_mode_struct_container(void*) noexcept;
+void access_wake_sr_mode_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_wake_sr_struct(int n, size_t* element_size);
 void deallocate_fortran_wake_sr_struct(void* ptr, int n) noexcept;
 void copy_fortran_wake_sr_struct(const void* src, void* dst);
+
+void* allocate_wake_sr_struct_container();
+void reallocate_wake_sr_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_wake_sr_struct_container(void*) noexcept;
+void access_wake_sr_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_wake_lr_mode_struct(int n, size_t* element_size);
 void deallocate_fortran_wake_lr_mode_struct(void* ptr, int n) noexcept;
 void copy_fortran_wake_lr_mode_struct(const void* src, void* dst);
 
+void* allocate_wake_lr_mode_struct_container();
+void reallocate_wake_lr_mode_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_wake_lr_mode_struct_container(void*) noexcept;
+void access_wake_lr_mode_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_wake_lr_struct(int n, size_t* element_size);
 void deallocate_fortran_wake_lr_struct(void* ptr, int n) noexcept;
 void copy_fortran_wake_lr_struct(const void* src, void* dst);
+
+void* allocate_wake_lr_struct_container();
+void reallocate_wake_lr_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_wake_lr_struct_container(void*) noexcept;
+void access_wake_lr_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_lat_ele_loc_struct(int n, size_t* element_size);
 void deallocate_fortran_lat_ele_loc_struct(void* ptr, int n) noexcept;
 void copy_fortran_lat_ele_loc_struct(const void* src, void* dst);
 
+void* allocate_lat_ele_loc_struct_container();
+void reallocate_lat_ele_loc_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_lat_ele_loc_struct_container(void*) noexcept;
+void access_lat_ele_loc_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_wake_struct(int n, size_t* element_size);
 void deallocate_fortran_wake_struct(void* ptr, int n) noexcept;
 void copy_fortran_wake_struct(const void* src, void* dst);
+
+void* allocate_wake_struct_container();
+void reallocate_wake_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_wake_struct_container(void*) noexcept;
+void access_wake_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_taylor_term_struct(int n, size_t* element_size);
 void deallocate_fortran_taylor_term_struct(void* ptr, int n) noexcept;
 void copy_fortran_taylor_term_struct(const void* src, void* dst);
 
+void* allocate_taylor_term_struct_container();
+void reallocate_taylor_term_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_taylor_term_struct_container(void*) noexcept;
+void access_taylor_term_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_taylor_struct(int n, size_t* element_size);
 void deallocate_fortran_taylor_struct(void* ptr, int n) noexcept;
 void copy_fortran_taylor_struct(const void* src, void* dst);
+
+void* allocate_taylor_struct_container();
+void reallocate_taylor_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_taylor_struct_container(void*) noexcept;
+void access_taylor_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_em_taylor_term_struct(int n, size_t* element_size);
 void deallocate_fortran_em_taylor_term_struct(void* ptr, int n) noexcept;
 void copy_fortran_em_taylor_term_struct(const void* src, void* dst);
 
+void* allocate_em_taylor_term_struct_container();
+void reallocate_em_taylor_term_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_em_taylor_term_struct_container(void*) noexcept;
+void access_em_taylor_term_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_em_taylor_struct(int n, size_t* element_size);
 void deallocate_fortran_em_taylor_struct(void* ptr, int n) noexcept;
 void copy_fortran_em_taylor_struct(const void* src, void* dst);
+
+void* allocate_em_taylor_struct_container();
+void reallocate_em_taylor_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_em_taylor_struct_container(void*) noexcept;
+void access_em_taylor_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_cartesian_map_term1_struct(int n, size_t* element_size);
 void deallocate_fortran_cartesian_map_term1_struct(void* ptr, int n) noexcept;
 void copy_fortran_cartesian_map_term1_struct(const void* src, void* dst);
 
+void* allocate_cartesian_map_term1_struct_container();
+void reallocate_cartesian_map_term1_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_cartesian_map_term1_struct_container(void*) noexcept;
+void access_cartesian_map_term1_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_cartesian_map_term_struct(int n, size_t* element_size);
 void deallocate_fortran_cartesian_map_term_struct(void* ptr, int n) noexcept;
 void copy_fortran_cartesian_map_term_struct(const void* src, void* dst);
 
+void* allocate_cartesian_map_term_struct_container();
+void reallocate_cartesian_map_term_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_cartesian_map_term_struct_container(void*) noexcept;
+void access_cartesian_map_term_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_cartesian_map_struct(int n, size_t* element_size);
 void deallocate_fortran_cartesian_map_struct(void* ptr, int n) noexcept;
 void copy_fortran_cartesian_map_struct(const void* src, void* dst);
+
+void* allocate_cartesian_map_struct_container();
+void reallocate_cartesian_map_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_cartesian_map_struct_container(void*) noexcept;
+void access_cartesian_map_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_cylindrical_map_term1_struct(
     int n,
@@ -4485,37 +5211,160 @@ void* allocate_fortran_cylindrical_map_term1_struct(
 void deallocate_fortran_cylindrical_map_term1_struct(void* ptr, int n) noexcept;
 void copy_fortran_cylindrical_map_term1_struct(const void* src, void* dst);
 
+void* allocate_cylindrical_map_term1_struct_container();
+void reallocate_cylindrical_map_term1_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_cylindrical_map_term1_struct_container(void*) noexcept;
+void access_cylindrical_map_term1_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_cylindrical_map_term_struct(int n, size_t* element_size);
 void deallocate_fortran_cylindrical_map_term_struct(void* ptr, int n) noexcept;
 void copy_fortran_cylindrical_map_term_struct(const void* src, void* dst);
+
+void* allocate_cylindrical_map_term_struct_container();
+void reallocate_cylindrical_map_term_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_cylindrical_map_term_struct_container(void*) noexcept;
+void access_cylindrical_map_term_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_cylindrical_map_struct(int n, size_t* element_size);
 void deallocate_fortran_cylindrical_map_struct(void* ptr, int n) noexcept;
 void copy_fortran_cylindrical_map_struct(const void* src, void* dst);
 
+void* allocate_cylindrical_map_struct_container();
+void reallocate_cylindrical_map_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_cylindrical_map_struct_container(void*) noexcept;
+void access_cylindrical_map_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_bicubic_cmplx_coef_struct(int n, size_t* element_size);
 void deallocate_fortran_bicubic_cmplx_coef_struct(void* ptr, int n) noexcept;
 void copy_fortran_bicubic_cmplx_coef_struct(const void* src, void* dst);
+
+void* allocate_bicubic_cmplx_coef_struct_container();
+void reallocate_bicubic_cmplx_coef_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_bicubic_cmplx_coef_struct_container(void*) noexcept;
+void access_bicubic_cmplx_coef_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_tricubic_cmplx_coef_struct(int n, size_t* element_size);
 void deallocate_fortran_tricubic_cmplx_coef_struct(void* ptr, int n) noexcept;
 void copy_fortran_tricubic_cmplx_coef_struct(const void* src, void* dst);
 
+void* allocate_tricubic_cmplx_coef_struct_container();
+void reallocate_tricubic_cmplx_coef_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tricubic_cmplx_coef_struct_container(void*) noexcept;
+void access_tricubic_cmplx_coef_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_grid_field_pt1_struct(int n, size_t* element_size);
 void deallocate_fortran_grid_field_pt1_struct(void* ptr, int n) noexcept;
 void copy_fortran_grid_field_pt1_struct(const void* src, void* dst);
+
+void* allocate_grid_field_pt1_struct_container();
+void reallocate_grid_field_pt1_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_grid_field_pt1_struct_container(void*) noexcept;
+void access_grid_field_pt1_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_grid_field_pt_struct(int n, size_t* element_size);
 void deallocate_fortran_grid_field_pt_struct(void* ptr, int n) noexcept;
 void copy_fortran_grid_field_pt_struct(const void* src, void* dst);
 
+void* allocate_grid_field_pt_struct_container();
+void reallocate_grid_field_pt_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_grid_field_pt_struct_container(void*) noexcept;
+void access_grid_field_pt_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_grid_field_struct(int n, size_t* element_size);
 void deallocate_fortran_grid_field_struct(void* ptr, int n) noexcept;
 void copy_fortran_grid_field_struct(const void* src, void* dst);
 
+void* allocate_grid_field_struct_container();
+void reallocate_grid_field_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_grid_field_struct_container(void*) noexcept;
+void access_grid_field_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_floor_position_struct(int n, size_t* element_size);
 void deallocate_fortran_floor_position_struct(void* ptr, int n) noexcept;
 void copy_fortran_floor_position_struct(const void* src, void* dst);
+
+void* allocate_floor_position_struct_container();
+void reallocate_floor_position_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_floor_position_struct_container(void*) noexcept;
+void access_floor_position_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_high_energy_space_charge_struct(
     int n,
@@ -4525,45 +5374,178 @@ void deallocate_fortran_high_energy_space_charge_struct(
     int n) noexcept;
 void copy_fortran_high_energy_space_charge_struct(const void* src, void* dst);
 
+void* allocate_high_energy_space_charge_struct_container();
+void reallocate_high_energy_space_charge_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_high_energy_space_charge_struct_container(void*) noexcept;
+void access_high_energy_space_charge_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_xy_disp_struct(int n, size_t* element_size);
 void deallocate_fortran_xy_disp_struct(void* ptr, int n) noexcept;
 void copy_fortran_xy_disp_struct(const void* src, void* dst);
+
+void* allocate_xy_disp_struct_container();
+void reallocate_xy_disp_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_xy_disp_struct_container(void*) noexcept;
+void access_xy_disp_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_twiss_struct(int n, size_t* element_size);
 void deallocate_fortran_twiss_struct(void* ptr, int n) noexcept;
 void copy_fortran_twiss_struct(const void* src, void* dst);
 
+void* allocate_twiss_struct_container();
+void reallocate_twiss_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_twiss_struct_container(void*) noexcept;
+void access_twiss_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_mode3_struct(int n, size_t* element_size);
 void deallocate_fortran_mode3_struct(void* ptr, int n) noexcept;
 void copy_fortran_mode3_struct(const void* src, void* dst);
+
+void* allocate_mode3_struct_container();
+void reallocate_mode3_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_mode3_struct_container(void*) noexcept;
+void access_mode3_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_bookkeeping_state_struct(int n, size_t* element_size);
 void deallocate_fortran_bookkeeping_state_struct(void* ptr, int n) noexcept;
 void copy_fortran_bookkeeping_state_struct(const void* src, void* dst);
 
+void* allocate_bookkeeping_state_struct_container();
+void reallocate_bookkeeping_state_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_bookkeeping_state_struct_container(void*) noexcept;
+void access_bookkeeping_state_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_rad_map_struct(int n, size_t* element_size);
 void deallocate_fortran_rad_map_struct(void* ptr, int n) noexcept;
 void copy_fortran_rad_map_struct(const void* src, void* dst);
+
+void* allocate_rad_map_struct_container();
+void reallocate_rad_map_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_rad_map_struct_container(void*) noexcept;
+void access_rad_map_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_rad_map_ele_struct(int n, size_t* element_size);
 void deallocate_fortran_rad_map_ele_struct(void* ptr, int n) noexcept;
 void copy_fortran_rad_map_ele_struct(const void* src, void* dst);
 
+void* allocate_rad_map_ele_struct_container();
+void reallocate_rad_map_ele_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_rad_map_ele_struct_container(void*) noexcept;
+void access_rad_map_ele_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_gen_grad1_struct(int n, size_t* element_size);
 void deallocate_fortran_gen_grad1_struct(void* ptr, int n) noexcept;
 void copy_fortran_gen_grad1_struct(const void* src, void* dst);
+
+void* allocate_gen_grad1_struct_container();
+void reallocate_gen_grad1_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_gen_grad1_struct_container(void*) noexcept;
+void access_gen_grad1_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_gen_grad_map_struct(int n, size_t* element_size);
 void deallocate_fortran_gen_grad_map_struct(void* ptr, int n) noexcept;
 void copy_fortran_gen_grad_map_struct(const void* src, void* dst);
 
+void* allocate_gen_grad_map_struct_container();
+void reallocate_gen_grad_map_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_gen_grad_map_struct_container(void*) noexcept;
+void access_gen_grad_map_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_surface_segmented_pt_struct(int n, size_t* element_size);
 void deallocate_fortran_surface_segmented_pt_struct(void* ptr, int n) noexcept;
 void copy_fortran_surface_segmented_pt_struct(const void* src, void* dst);
 
+void* allocate_surface_segmented_pt_struct_container();
+void reallocate_surface_segmented_pt_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_surface_segmented_pt_struct_container(void*) noexcept;
+void access_surface_segmented_pt_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_surface_segmented_struct(int n, size_t* element_size);
 void deallocate_fortran_surface_segmented_struct(void* ptr, int n) noexcept;
 void copy_fortran_surface_segmented_struct(const void* src, void* dst);
+
+void* allocate_surface_segmented_struct_container();
+void reallocate_surface_segmented_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_surface_segmented_struct_container(void*) noexcept;
+void access_surface_segmented_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_surface_h_misalign_pt_struct(
     int n,
@@ -4571,9 +5553,37 @@ void* allocate_fortran_surface_h_misalign_pt_struct(
 void deallocate_fortran_surface_h_misalign_pt_struct(void* ptr, int n) noexcept;
 void copy_fortran_surface_h_misalign_pt_struct(const void* src, void* dst);
 
+void* allocate_surface_h_misalign_pt_struct_container();
+void reallocate_surface_h_misalign_pt_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_surface_h_misalign_pt_struct_container(void*) noexcept;
+void access_surface_h_misalign_pt_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_surface_h_misalign_struct(int n, size_t* element_size);
 void deallocate_fortran_surface_h_misalign_struct(void* ptr, int n) noexcept;
 void copy_fortran_surface_h_misalign_struct(const void* src, void* dst);
+
+void* allocate_surface_h_misalign_struct_container();
+void reallocate_surface_h_misalign_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_surface_h_misalign_struct_container(void*) noexcept;
+void access_surface_h_misalign_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_surface_displacement_pt_struct(
     int n,
@@ -4583,249 +5593,1021 @@ void deallocate_fortran_surface_displacement_pt_struct(
     int n) noexcept;
 void copy_fortran_surface_displacement_pt_struct(const void* src, void* dst);
 
+void* allocate_surface_displacement_pt_struct_container();
+void reallocate_surface_displacement_pt_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_surface_displacement_pt_struct_container(void*) noexcept;
+void access_surface_displacement_pt_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_surface_displacement_struct(int n, size_t* element_size);
 void deallocate_fortran_surface_displacement_struct(void* ptr, int n) noexcept;
 void copy_fortran_surface_displacement_struct(const void* src, void* dst);
+
+void* allocate_surface_displacement_struct_container();
+void reallocate_surface_displacement_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_surface_displacement_struct_container(void*) noexcept;
+void access_surface_displacement_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_target_point_struct(int n, size_t* element_size);
 void deallocate_fortran_target_point_struct(void* ptr, int n) noexcept;
 void copy_fortran_target_point_struct(const void* src, void* dst);
 
+void* allocate_target_point_struct_container();
+void reallocate_target_point_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_target_point_struct_container(void*) noexcept;
+void access_target_point_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_surface_curvature_struct(int n, size_t* element_size);
 void deallocate_fortran_surface_curvature_struct(void* ptr, int n) noexcept;
 void copy_fortran_surface_curvature_struct(const void* src, void* dst);
+
+void* allocate_surface_curvature_struct_container();
+void reallocate_surface_curvature_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_surface_curvature_struct_container(void*) noexcept;
+void access_surface_curvature_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_photon_target_struct(int n, size_t* element_size);
 void deallocate_fortran_photon_target_struct(void* ptr, int n) noexcept;
 void copy_fortran_photon_target_struct(const void* src, void* dst);
 
+void* allocate_photon_target_struct_container();
+void reallocate_photon_target_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_photon_target_struct_container(void*) noexcept;
+void access_photon_target_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_photon_material_struct(int n, size_t* element_size);
 void deallocate_fortran_photon_material_struct(void* ptr, int n) noexcept;
 void copy_fortran_photon_material_struct(const void* src, void* dst);
+
+void* allocate_photon_material_struct_container();
+void reallocate_photon_material_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_photon_material_struct_container(void*) noexcept;
+void access_photon_material_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_pixel_pt_struct(int n, size_t* element_size);
 void deallocate_fortran_pixel_pt_struct(void* ptr, int n) noexcept;
 void copy_fortran_pixel_pt_struct(const void* src, void* dst);
 
+void* allocate_pixel_pt_struct_container();
+void reallocate_pixel_pt_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_pixel_pt_struct_container(void*) noexcept;
+void access_pixel_pt_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_pixel_detec_struct(int n, size_t* element_size);
 void deallocate_fortran_pixel_detec_struct(void* ptr, int n) noexcept;
 void copy_fortran_pixel_detec_struct(const void* src, void* dst);
+
+void* allocate_pixel_detec_struct_container();
+void reallocate_pixel_detec_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_pixel_detec_struct_container(void*) noexcept;
+void access_pixel_detec_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_photon_element_struct(int n, size_t* element_size);
 void deallocate_fortran_photon_element_struct(void* ptr, int n) noexcept;
 void copy_fortran_photon_element_struct(const void* src, void* dst);
 
+void* allocate_photon_element_struct_container();
+void reallocate_photon_element_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_photon_element_struct_container(void*) noexcept;
+void access_photon_element_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_wall3d_vertex_struct(int n, size_t* element_size);
 void deallocate_fortran_wall3d_vertex_struct(void* ptr, int n) noexcept;
 void copy_fortran_wall3d_vertex_struct(const void* src, void* dst);
+
+void* allocate_wall3d_vertex_struct_container();
+void reallocate_wall3d_vertex_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_wall3d_vertex_struct_container(void*) noexcept;
+void access_wall3d_vertex_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_wall3d_section_struct(int n, size_t* element_size);
 void deallocate_fortran_wall3d_section_struct(void* ptr, int n) noexcept;
 void copy_fortran_wall3d_section_struct(const void* src, void* dst);
 
+void* allocate_wall3d_section_struct_container();
+void reallocate_wall3d_section_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_wall3d_section_struct_container(void*) noexcept;
+void access_wall3d_section_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_wall3d_struct(int n, size_t* element_size);
 void deallocate_fortran_wall3d_struct(void* ptr, int n) noexcept;
 void copy_fortran_wall3d_struct(const void* src, void* dst);
+
+void* allocate_wall3d_struct_container();
+void reallocate_wall3d_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_wall3d_struct_container(void*) noexcept;
+void access_wall3d_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_ramper_lord_struct(int n, size_t* element_size);
 void deallocate_fortran_ramper_lord_struct(void* ptr, int n) noexcept;
 void copy_fortran_ramper_lord_struct(const void* src, void* dst);
 
+void* allocate_ramper_lord_struct_container();
+void reallocate_ramper_lord_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_ramper_lord_struct_container(void*) noexcept;
+void access_ramper_lord_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_control_struct(int n, size_t* element_size);
 void deallocate_fortran_control_struct(void* ptr, int n) noexcept;
 void copy_fortran_control_struct(const void* src, void* dst);
+
+void* allocate_control_struct_container();
+void reallocate_control_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_control_struct_container(void*) noexcept;
+void access_control_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_control_var1_struct(int n, size_t* element_size);
 void deallocate_fortran_control_var1_struct(void* ptr, int n) noexcept;
 void copy_fortran_control_var1_struct(const void* src, void* dst);
 
+void* allocate_control_var1_struct_container();
+void reallocate_control_var1_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_control_var1_struct_container(void*) noexcept;
+void access_control_var1_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_control_ramp1_struct(int n, size_t* element_size);
 void deallocate_fortran_control_ramp1_struct(void* ptr, int n) noexcept;
 void copy_fortran_control_ramp1_struct(const void* src, void* dst);
+
+void* allocate_control_ramp1_struct_container();
+void reallocate_control_ramp1_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_control_ramp1_struct_container(void*) noexcept;
+void access_control_ramp1_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_controller_struct(int n, size_t* element_size);
 void deallocate_fortran_controller_struct(void* ptr, int n) noexcept;
 void copy_fortran_controller_struct(const void* src, void* dst);
 
+void* allocate_controller_struct_container();
+void reallocate_controller_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_controller_struct_container(void*) noexcept;
+void access_controller_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_ellipse_beam_init_struct(int n, size_t* element_size);
 void deallocate_fortran_ellipse_beam_init_struct(void* ptr, int n) noexcept;
 void copy_fortran_ellipse_beam_init_struct(const void* src, void* dst);
+
+void* allocate_ellipse_beam_init_struct_container();
+void reallocate_ellipse_beam_init_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_ellipse_beam_init_struct_container(void*) noexcept;
+void access_ellipse_beam_init_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_kv_beam_init_struct(int n, size_t* element_size);
 void deallocate_fortran_kv_beam_init_struct(void* ptr, int n) noexcept;
 void copy_fortran_kv_beam_init_struct(const void* src, void* dst);
 
+void* allocate_kv_beam_init_struct_container();
+void reallocate_kv_beam_init_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_kv_beam_init_struct_container(void*) noexcept;
+void access_kv_beam_init_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_grid_beam_init_struct(int n, size_t* element_size);
 void deallocate_fortran_grid_beam_init_struct(void* ptr, int n) noexcept;
 void copy_fortran_grid_beam_init_struct(const void* src, void* dst);
+
+void* allocate_grid_beam_init_struct_container();
+void reallocate_grid_beam_init_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_grid_beam_init_struct_container(void*) noexcept;
+void access_grid_beam_init_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_beam_init_struct(int n, size_t* element_size);
 void deallocate_fortran_beam_init_struct(void* ptr, int n) noexcept;
 void copy_fortran_beam_init_struct(const void* src, void* dst);
 
+void* allocate_beam_init_struct_container();
+void reallocate_beam_init_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_beam_init_struct_container(void*) noexcept;
+void access_beam_init_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_lat_param_struct(int n, size_t* element_size);
 void deallocate_fortran_lat_param_struct(void* ptr, int n) noexcept;
 void copy_fortran_lat_param_struct(const void* src, void* dst);
+
+void* allocate_lat_param_struct_container();
+void reallocate_lat_param_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_lat_param_struct_container(void*) noexcept;
+void access_lat_param_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_mode_info_struct(int n, size_t* element_size);
 void deallocate_fortran_mode_info_struct(void* ptr, int n) noexcept;
 void copy_fortran_mode_info_struct(const void* src, void* dst);
 
+void* allocate_mode_info_struct_container();
+void reallocate_mode_info_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_mode_info_struct_container(void*) noexcept;
+void access_mode_info_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_pre_tracker_struct(int n, size_t* element_size);
 void deallocate_fortran_pre_tracker_struct(void* ptr, int n) noexcept;
 void copy_fortran_pre_tracker_struct(const void* src, void* dst);
+
+void* allocate_pre_tracker_struct_container();
+void reallocate_pre_tracker_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_pre_tracker_struct_container(void*) noexcept;
+void access_pre_tracker_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_anormal_mode_struct(int n, size_t* element_size);
 void deallocate_fortran_anormal_mode_struct(void* ptr, int n) noexcept;
 void copy_fortran_anormal_mode_struct(const void* src, void* dst);
 
+void* allocate_anormal_mode_struct_container();
+void reallocate_anormal_mode_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_anormal_mode_struct_container(void*) noexcept;
+void access_anormal_mode_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_linac_normal_mode_struct(int n, size_t* element_size);
 void deallocate_fortran_linac_normal_mode_struct(void* ptr, int n) noexcept;
 void copy_fortran_linac_normal_mode_struct(const void* src, void* dst);
+
+void* allocate_linac_normal_mode_struct_container();
+void reallocate_linac_normal_mode_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_linac_normal_mode_struct_container(void*) noexcept;
+void access_linac_normal_mode_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_normal_modes_struct(int n, size_t* element_size);
 void deallocate_fortran_normal_modes_struct(void* ptr, int n) noexcept;
 void copy_fortran_normal_modes_struct(const void* src, void* dst);
 
+void* allocate_normal_modes_struct_container();
+void reallocate_normal_modes_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_normal_modes_struct_container(void*) noexcept;
+void access_normal_modes_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_em_field_struct(int n, size_t* element_size);
 void deallocate_fortran_em_field_struct(void* ptr, int n) noexcept;
 void copy_fortran_em_field_struct(const void* src, void* dst);
+
+void* allocate_em_field_struct_container();
+void reallocate_em_field_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_em_field_struct_container(void*) noexcept;
+void access_em_field_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_strong_beam_struct(int n, size_t* element_size);
 void deallocate_fortran_strong_beam_struct(void* ptr, int n) noexcept;
 void copy_fortran_strong_beam_struct(const void* src, void* dst);
 
+void* allocate_strong_beam_struct_container();
+void reallocate_strong_beam_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_strong_beam_struct_container(void*) noexcept;
+void access_strong_beam_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_track_point_struct(int n, size_t* element_size);
 void deallocate_fortran_track_point_struct(void* ptr, int n) noexcept;
 void copy_fortran_track_point_struct(const void* src, void* dst);
+
+void* allocate_track_point_struct_container();
+void reallocate_track_point_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_track_point_struct_container(void*) noexcept;
+void access_track_point_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_track_struct(int n, size_t* element_size);
 void deallocate_fortran_track_struct(void* ptr, int n) noexcept;
 void copy_fortran_track_struct(const void* src, void* dst);
 
+void* allocate_track_struct_container();
+void reallocate_track_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_track_struct_container(void*) noexcept;
+void access_track_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_space_charge_common_struct(int n, size_t* element_size);
 void deallocate_fortran_space_charge_common_struct(void* ptr, int n) noexcept;
 void copy_fortran_space_charge_common_struct(const void* src, void* dst);
+
+void* allocate_space_charge_common_struct_container();
+void reallocate_space_charge_common_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_space_charge_common_struct_container(void*) noexcept;
+void access_space_charge_common_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_bmad_common_struct(int n, size_t* element_size);
 void deallocate_fortran_bmad_common_struct(void* ptr, int n) noexcept;
 void copy_fortran_bmad_common_struct(const void* src, void* dst);
 
+void* allocate_bmad_common_struct_container();
+void reallocate_bmad_common_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_bmad_common_struct_container(void*) noexcept;
+void access_bmad_common_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_rad_int1_struct(int n, size_t* element_size);
 void deallocate_fortran_rad_int1_struct(void* ptr, int n) noexcept;
 void copy_fortran_rad_int1_struct(const void* src, void* dst);
+
+void* allocate_rad_int1_struct_container();
+void reallocate_rad_int1_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_rad_int1_struct_container(void*) noexcept;
+void access_rad_int1_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_rad_int_branch_struct(int n, size_t* element_size);
 void deallocate_fortran_rad_int_branch_struct(void* ptr, int n) noexcept;
 void copy_fortran_rad_int_branch_struct(const void* src, void* dst);
 
+void* allocate_rad_int_branch_struct_container();
+void reallocate_rad_int_branch_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_rad_int_branch_struct_container(void*) noexcept;
+void access_rad_int_branch_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_rad_int_all_ele_struct(int n, size_t* element_size);
 void deallocate_fortran_rad_int_all_ele_struct(void* ptr, int n) noexcept;
 void copy_fortran_rad_int_all_ele_struct(const void* src, void* dst);
+
+void* allocate_rad_int_all_ele_struct_container();
+void reallocate_rad_int_all_ele_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_rad_int_all_ele_struct_container(void*) noexcept;
+void access_rad_int_all_ele_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_rf_stair_step_struct(int n, size_t* element_size);
 void deallocate_fortran_rf_stair_step_struct(void* ptr, int n) noexcept;
 void copy_fortran_rf_stair_step_struct(const void* src, void* dst);
 
+void* allocate_rf_stair_step_struct_container();
+void reallocate_rf_stair_step_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_rf_stair_step_struct_container(void*) noexcept;
+void access_rf_stair_step_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_rf_ele_struct(int n, size_t* element_size);
 void deallocate_fortran_rf_ele_struct(void* ptr, int n) noexcept;
 void copy_fortran_rf_ele_struct(const void* src, void* dst);
+
+void* allocate_rf_ele_struct_container();
+void reallocate_rf_ele_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_rf_ele_struct_container(void*) noexcept;
+void access_rf_ele_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_ele_struct(int n, size_t* element_size);
 void deallocate_fortran_ele_struct(void* ptr, int n) noexcept;
 void copy_fortran_ele_struct(const void* src, void* dst);
 
+void* allocate_ele_struct_container();
+void reallocate_ele_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_ele_struct_container(void*) noexcept;
+void access_ele_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_complex_taylor_term_struct(int n, size_t* element_size);
 void deallocate_fortran_complex_taylor_term_struct(void* ptr, int n) noexcept;
 void copy_fortran_complex_taylor_term_struct(const void* src, void* dst);
+
+void* allocate_complex_taylor_term_struct_container();
+void reallocate_complex_taylor_term_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_complex_taylor_term_struct_container(void*) noexcept;
+void access_complex_taylor_term_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_complex_taylor_struct(int n, size_t* element_size);
 void deallocate_fortran_complex_taylor_struct(void* ptr, int n) noexcept;
 void copy_fortran_complex_taylor_struct(const void* src, void* dst);
 
+void* allocate_complex_taylor_struct_container();
+void reallocate_complex_taylor_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_complex_taylor_struct_container(void*) noexcept;
+void access_complex_taylor_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_branch_struct(int n, size_t* element_size);
 void deallocate_fortran_branch_struct(void* ptr, int n) noexcept;
 void copy_fortran_branch_struct(const void* src, void* dst);
+
+void* allocate_branch_struct_container();
+void reallocate_branch_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_branch_struct_container(void*) noexcept;
+void access_branch_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_lat_struct(int n, size_t* element_size);
 void deallocate_fortran_lat_struct(void* ptr, int n) noexcept;
 void copy_fortran_lat_struct(const void* src, void* dst);
 
+void* allocate_lat_struct_container();
+void reallocate_lat_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_lat_struct_container(void*) noexcept;
+void access_lat_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_bunch_struct(int n, size_t* element_size);
 void deallocate_fortran_bunch_struct(void* ptr, int n) noexcept;
 void copy_fortran_bunch_struct(const void* src, void* dst);
+
+void* allocate_bunch_struct_container();
+void reallocate_bunch_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_bunch_struct_container(void*) noexcept;
+void access_bunch_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_bunch_params_struct(int n, size_t* element_size);
 void deallocate_fortran_bunch_params_struct(void* ptr, int n) noexcept;
 void copy_fortran_bunch_params_struct(const void* src, void* dst);
 
+void* allocate_bunch_params_struct_container();
+void reallocate_bunch_params_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_bunch_params_struct_container(void*) noexcept;
+void access_bunch_params_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_beam_struct(int n, size_t* element_size);
 void deallocate_fortran_beam_struct(void* ptr, int n) noexcept;
 void copy_fortran_beam_struct(const void* src, void* dst);
+
+void* allocate_beam_struct_container();
+void reallocate_beam_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_beam_struct_container(void*) noexcept;
+void access_beam_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_aperture_point_struct(int n, size_t* element_size);
 void deallocate_fortran_aperture_point_struct(void* ptr, int n) noexcept;
 void copy_fortran_aperture_point_struct(const void* src, void* dst);
 
+void* allocate_aperture_point_struct_container();
+void reallocate_aperture_point_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_aperture_point_struct_container(void*) noexcept;
+void access_aperture_point_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_aperture_param_struct(int n, size_t* element_size);
 void deallocate_fortran_aperture_param_struct(void* ptr, int n) noexcept;
 void copy_fortran_aperture_param_struct(const void* src, void* dst);
+
+void* allocate_aperture_param_struct_container();
+void reallocate_aperture_param_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_aperture_param_struct_container(void*) noexcept;
+void access_aperture_param_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_aperture_scan_struct(int n, size_t* element_size);
 void deallocate_fortran_aperture_scan_struct(void* ptr, int n) noexcept;
 void copy_fortran_aperture_scan_struct(const void* src, void* dst);
 
+void* allocate_aperture_scan_struct_container();
+void reallocate_aperture_scan_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_aperture_scan_struct_container(void*) noexcept;
+void access_aperture_scan_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_tao_spin_dn_dpz_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_spin_dn_dpz_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_spin_dn_dpz_struct(const void* src, void* dst);
+
+void* allocate_tao_spin_dn_dpz_struct_container();
+void reallocate_tao_spin_dn_dpz_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_spin_dn_dpz_struct_container(void*) noexcept;
+void access_tao_spin_dn_dpz_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_resonance_h_struct(int n, size_t* element_size);
 void deallocate_fortran_resonance_h_struct(void* ptr, int n) noexcept;
 void copy_fortran_resonance_h_struct(const void* src, void* dst);
 
+void* allocate_resonance_h_struct_container();
+void reallocate_resonance_h_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_resonance_h_struct_container(void*) noexcept;
+void access_resonance_h_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_spin_orbit_map1_struct(int n, size_t* element_size);
 void deallocate_fortran_spin_orbit_map1_struct(void* ptr, int n) noexcept;
 void copy_fortran_spin_orbit_map1_struct(const void* src, void* dst);
+
+void* allocate_spin_orbit_map1_struct_container();
+void reallocate_spin_orbit_map1_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_spin_orbit_map1_struct_container(void*) noexcept;
+void access_spin_orbit_map1_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_spin_axis_struct(int n, size_t* element_size);
 void deallocate_fortran_spin_axis_struct(void* ptr, int n) noexcept;
 void copy_fortran_spin_axis_struct(const void* src, void* dst);
 
+void* allocate_spin_axis_struct_container();
+void reallocate_spin_axis_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_spin_axis_struct_container(void*) noexcept;
+void access_spin_axis_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_ptc_normal_form_struct(int n, size_t* element_size);
 void deallocate_fortran_ptc_normal_form_struct(void* ptr, int n) noexcept;
 void copy_fortran_ptc_normal_form_struct(const void* src, void* dst);
+
+void* allocate_ptc_normal_form_struct_container();
+void reallocate_ptc_normal_form_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_ptc_normal_form_struct_container(void*) noexcept;
+void access_ptc_normal_form_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_bmad_normal_form_struct(int n, size_t* element_size);
 void deallocate_fortran_bmad_normal_form_struct(void* ptr, int n) noexcept;
 void copy_fortran_bmad_normal_form_struct(const void* src, void* dst);
 
+void* allocate_bmad_normal_form_struct_container();
+void reallocate_bmad_normal_form_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_bmad_normal_form_struct_container(void*) noexcept;
+void access_bmad_normal_form_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_bunch_track_struct(int n, size_t* element_size);
 void deallocate_fortran_bunch_track_struct(void* ptr, int n) noexcept;
 void copy_fortran_bunch_track_struct(const void* src, void* dst);
+
+void* allocate_bunch_track_struct_container();
+void reallocate_bunch_track_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_bunch_track_struct_container(void*) noexcept;
+void access_bunch_track_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_summation_rdt_struct(int n, size_t* element_size);
 void deallocate_fortran_summation_rdt_struct(void* ptr, int n) noexcept;
 void copy_fortran_summation_rdt_struct(const void* src, void* dst);
 
+void* allocate_summation_rdt_struct_container();
+void reallocate_summation_rdt_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_summation_rdt_struct_container(void*) noexcept;
+void access_summation_rdt_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_lat_ele_order1_struct(int n, size_t* element_size);
 void deallocate_fortran_lat_ele_order1_struct(void* ptr, int n) noexcept;
 void copy_fortran_lat_ele_order1_struct(const void* src, void* dst);
+
+void* allocate_lat_ele_order1_struct_container();
+void reallocate_lat_ele_order1_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_lat_ele_order1_struct_container(void*) noexcept;
+void access_lat_ele_order1_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_lat_ele_order_array_struct(int n, size_t* element_size);
 void deallocate_fortran_lat_ele_order_array_struct(void* ptr, int n) noexcept;
 void copy_fortran_lat_ele_order_array_struct(const void* src, void* dst);
 
+void* allocate_lat_ele_order_array_struct_container();
+void reallocate_lat_ele_order_array_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_lat_ele_order_array_struct_container(void*) noexcept;
+void access_lat_ele_order_array_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_tao_lat_sigma_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_lat_sigma_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_lat_sigma_struct(const void* src, void* dst);
+
+void* allocate_tao_lat_sigma_struct_container();
+void reallocate_tao_lat_sigma_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_lat_sigma_struct_container(void*) noexcept;
+void access_tao_lat_sigma_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_tao_spin_ele_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_spin_ele_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_spin_ele_struct(const void* src, void* dst);
 
+void* allocate_tao_spin_ele_struct_container();
+void reallocate_tao_spin_ele_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_tao_spin_ele_struct_container(void*) noexcept;
+void access_tao_spin_ele_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_tao_plot_cache_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_plot_cache_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_plot_cache_struct(const void* src, void* dst);
+
+void* allocate_tao_plot_cache_struct_container();
+void reallocate_tao_plot_cache_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_plot_cache_struct_container(void*) noexcept;
+void access_tao_plot_cache_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_tao_spin_polarization_struct(
     int n,
@@ -4833,66 +6615,346 @@ void* allocate_fortran_tao_spin_polarization_struct(
 void deallocate_fortran_tao_spin_polarization_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_spin_polarization_struct(const void* src, void* dst);
 
+void* allocate_tao_spin_polarization_struct_container();
+void reallocate_tao_spin_polarization_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_spin_polarization_struct_container(void*) noexcept;
+void access_tao_spin_polarization_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_tao_lattice_branch_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_lattice_branch_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_lattice_branch_struct(const void* src, void* dst);
+
+void* allocate_tao_lattice_branch_struct_container();
+void reallocate_tao_lattice_branch_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_lattice_branch_struct_container(void*) noexcept;
+void access_tao_lattice_branch_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_tao_model_element_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_model_element_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_model_element_struct(const void* src, void* dst);
 
+void* allocate_tao_model_element_struct_container();
+void reallocate_tao_model_element_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_model_element_struct_container(void*) noexcept;
+void access_tao_model_element_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_tao_beam_branch_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_beam_branch_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_beam_branch_struct(const void* src, void* dst);
+
+void* allocate_tao_beam_branch_struct_container();
+void reallocate_tao_beam_branch_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_beam_branch_struct_container(void*) noexcept;
+void access_tao_beam_branch_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_tao_d1_data_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_d1_data_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_d1_data_struct(const void* src, void* dst);
 
+void* allocate_tao_d1_data_struct_container();
+void reallocate_tao_d1_data_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_tao_d1_data_struct_container(void*) noexcept;
+void access_tao_d1_data_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_tao_lattice_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_lattice_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_lattice_struct(const void* src, void* dst);
+
+void* allocate_tao_lattice_struct_container();
+void reallocate_tao_lattice_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_tao_lattice_struct_container(void*) noexcept;
+void access_tao_lattice_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_tao_beam_uni_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_beam_uni_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_beam_uni_struct(const void* src, void* dst);
 
+void* allocate_tao_beam_uni_struct_container();
+void reallocate_tao_beam_uni_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_tao_beam_uni_struct_container(void*) noexcept;
+void access_tao_beam_uni_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_tao_dynamic_aperture_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_dynamic_aperture_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_dynamic_aperture_struct(const void* src, void* dst);
+
+void* allocate_tao_dynamic_aperture_struct_container();
+void reallocate_tao_dynamic_aperture_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_dynamic_aperture_struct_container(void*) noexcept;
+void access_tao_dynamic_aperture_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_tao_model_branch_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_model_branch_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_model_branch_struct(const void* src, void* dst);
 
+void* allocate_tao_model_branch_struct_container();
+void reallocate_tao_model_branch_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_model_branch_struct_container(void*) noexcept;
+void access_tao_model_branch_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_tao_d2_data_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_d2_data_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_d2_data_struct(const void* src, void* dst);
+
+void* allocate_tao_d2_data_struct_container();
+void reallocate_tao_d2_data_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_tao_d2_data_struct_container(void*) noexcept;
+void access_tao_d2_data_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_tao_spin_map_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_spin_map_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_spin_map_struct(const void* src, void* dst);
 
+void* allocate_tao_spin_map_struct_container();
+void reallocate_tao_spin_map_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_tao_spin_map_struct_container(void*) noexcept;
+void access_tao_spin_map_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_tao_data_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_data_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_data_struct(const void* src, void* dst);
+
+void* allocate_tao_data_struct_container();
+void reallocate_tao_data_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_tao_data_struct_container(void*) noexcept;
+void access_tao_data_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_tao_ping_scale_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_ping_scale_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_ping_scale_struct(const void* src, void* dst);
 
+void* allocate_tao_ping_scale_struct_container();
+void reallocate_tao_ping_scale_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_ping_scale_struct_container(void*) noexcept;
+void access_tao_ping_scale_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_tao_universe_calc_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_universe_calc_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_universe_calc_struct(const void* src, void* dst);
+
+void* allocate_tao_universe_calc_struct_container();
+void reallocate_tao_universe_calc_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_universe_calc_struct_container(void*) noexcept;
+void access_tao_universe_calc_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 
 void* allocate_fortran_lat_ele_order_struct(int n, size_t* element_size);
 void deallocate_fortran_lat_ele_order_struct(void* ptr, int n) noexcept;
 void copy_fortran_lat_ele_order_struct(const void* src, void* dst);
 
+void* allocate_lat_ele_order_struct_container();
+void reallocate_lat_ele_order_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_lat_ele_order_struct_container(void*) noexcept;
+void access_lat_ele_order_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_tao_universe_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_universe_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_universe_struct(const void* src, void* dst);
+
+void* allocate_tao_universe_struct_container();
+void reallocate_tao_universe_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_tao_universe_struct_container(void*) noexcept;
+void access_tao_universe_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_all_encompassing_struct(int n, size_t* element_size);
+void deallocate_fortran_all_encompassing_struct(void* ptr, int n) noexcept;
+void copy_fortran_all_encompassing_struct(const void* src, void* dst);
+
+void* allocate_all_encompassing_struct_container();
+void reallocate_all_encompassing_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_all_encompassing_struct_container(void*) noexcept;
+void access_all_encompassing_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_test_sub_struct(int n, size_t* element_size);
+void deallocate_fortran_test_sub_struct(void* ptr, int n) noexcept;
+void copy_fortran_test_sub_struct(const void* src, void* dst);
+
+void* allocate_test_sub_struct_container();
+void reallocate_test_sub_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_test_sub_struct_container(void*) noexcept;
+void access_test_sub_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_test_sub_sub_struct(int n, size_t* element_size);
+void deallocate_fortran_test_sub_sub_struct(void* ptr, int n) noexcept;
+void copy_fortran_test_sub_sub_struct(const void* src, void* dst);
+
+void* allocate_test_sub_sub_struct_container();
+void reallocate_test_sub_sub_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_test_sub_sub_struct_container(void*) noexcept;
+void access_test_sub_sub_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
 }
+
+using RealAllocatable1D = FortranAllocatable1D<
+    double,
+    allocate_real_container,
+    deallocate_real_container,
+    reallocate_real_container_data,
+    access_real_container>;
+
+using IntAllocatable1D = FortranAllocatable1D<
+    int,
+    allocate_integer_container,
+    deallocate_integer_container,
+    reallocate_integer_container_data,
+    access_integer_container>;
+
+using BoolAllocatable1D = FortranAllocatable1D<
+    bool,
+    allocate_logical_container,
+    deallocate_logical_container,
+    reallocate_logical_container_data,
+    access_logical_container>;
+
+using ComplexAllocatable1D = FortranAllocatable1D<
+    std::complex<double>,
+    allocate_complex_container,
+    deallocate_complex_container,
+    reallocate_complex_container_data,
+    access_complex_container>;
+
 class SplineProxy;
 
 using SplineProxyArray1D = FortranTypeArray1D<
@@ -4901,6 +6963,13 @@ using SplineProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_spline_struct>;
 using SplineProxyArray2D = FortranTypeArray2D<SplineProxy>;
 using SplineProxyArray3D = FortranTypeArray3D<SplineProxy>;
+
+using SplineProxyAllocatable1D = FortranTypeAllocatable1D<
+    SplineProxyArray1D,
+    allocate_spline_struct_container,
+    deallocate_spline_struct_container,
+    reallocate_spline_struct_container_data,
+    access_spline_struct_container>;
 
 class SpinPolarProxy;
 
@@ -4911,6 +6980,13 @@ using SpinPolarProxyArray1D = FortranTypeArray1D<
 using SpinPolarProxyArray2D = FortranTypeArray2D<SpinPolarProxy>;
 using SpinPolarProxyArray3D = FortranTypeArray3D<SpinPolarProxy>;
 
+using SpinPolarProxyAllocatable1D = FortranTypeAllocatable1D<
+    SpinPolarProxyArray1D,
+    allocate_spin_polar_struct_container,
+    deallocate_spin_polar_struct_container,
+    reallocate_spin_polar_struct_container_data,
+    access_spin_polar_struct_container>;
+
 class AcKickerTimeProxy;
 
 using AcKickerTimeProxyArray1D = FortranTypeArray1D<
@@ -4919,6 +6995,13 @@ using AcKickerTimeProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_ac_kicker_time_struct>;
 using AcKickerTimeProxyArray2D = FortranTypeArray2D<AcKickerTimeProxy>;
 using AcKickerTimeProxyArray3D = FortranTypeArray3D<AcKickerTimeProxy>;
+
+using AcKickerTimeProxyAllocatable1D = FortranTypeAllocatable1D<
+    AcKickerTimeProxyArray1D,
+    allocate_ac_kicker_time_struct_container,
+    deallocate_ac_kicker_time_struct_container,
+    reallocate_ac_kicker_time_struct_container_data,
+    access_ac_kicker_time_struct_container>;
 
 class AcKickerFreqProxy;
 
@@ -4929,6 +7012,13 @@ using AcKickerFreqProxyArray1D = FortranTypeArray1D<
 using AcKickerFreqProxyArray2D = FortranTypeArray2D<AcKickerFreqProxy>;
 using AcKickerFreqProxyArray3D = FortranTypeArray3D<AcKickerFreqProxy>;
 
+using AcKickerFreqProxyAllocatable1D = FortranTypeAllocatable1D<
+    AcKickerFreqProxyArray1D,
+    allocate_ac_kicker_freq_struct_container,
+    deallocate_ac_kicker_freq_struct_container,
+    reallocate_ac_kicker_freq_struct_container_data,
+    access_ac_kicker_freq_struct_container>;
+
 class AcKickerProxy;
 
 using AcKickerProxyArray1D = FortranTypeArray1D<
@@ -4938,6 +7028,13 @@ using AcKickerProxyArray1D = FortranTypeArray1D<
 using AcKickerProxyArray2D = FortranTypeArray2D<AcKickerProxy>;
 using AcKickerProxyArray3D = FortranTypeArray3D<AcKickerProxy>;
 
+using AcKickerProxyAllocatable1D = FortranTypeAllocatable1D<
+    AcKickerProxyArray1D,
+    allocate_ac_kicker_struct_container,
+    deallocate_ac_kicker_struct_container,
+    reallocate_ac_kicker_struct_container_data,
+    access_ac_kicker_struct_container>;
+
 class Interval1CoefProxy;
 
 using Interval1CoefProxyArray1D = FortranTypeArray1D<
@@ -4946,6 +7043,13 @@ using Interval1CoefProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_interval1_coef_struct>;
 using Interval1CoefProxyArray2D = FortranTypeArray2D<Interval1CoefProxy>;
 using Interval1CoefProxyArray3D = FortranTypeArray3D<Interval1CoefProxy>;
+
+using Interval1CoefProxyAllocatable1D = FortranTypeAllocatable1D<
+    Interval1CoefProxyArray1D,
+    allocate_interval1_coef_struct_container,
+    deallocate_interval1_coef_struct_container,
+    reallocate_interval1_coef_struct_container_data,
+    access_interval1_coef_struct_container>;
 
 class PhotonReflectTableProxy;
 
@@ -4958,6 +7062,13 @@ using PhotonReflectTableProxyArray2D =
 using PhotonReflectTableProxyArray3D =
     FortranTypeArray3D<PhotonReflectTableProxy>;
 
+using PhotonReflectTableProxyAllocatable1D = FortranTypeAllocatable1D<
+    PhotonReflectTableProxyArray1D,
+    allocate_photon_reflect_table_struct_container,
+    deallocate_photon_reflect_table_struct_container,
+    reallocate_photon_reflect_table_struct_container_data,
+    access_photon_reflect_table_struct_container>;
+
 class PhotonReflectSurfaceProxy;
 
 using PhotonReflectSurfaceProxyArray1D = FortranTypeArray1D<
@@ -4969,6 +7080,13 @@ using PhotonReflectSurfaceProxyArray2D =
 using PhotonReflectSurfaceProxyArray3D =
     FortranTypeArray3D<PhotonReflectSurfaceProxy>;
 
+using PhotonReflectSurfaceProxyAllocatable1D = FortranTypeAllocatable1D<
+    PhotonReflectSurfaceProxyArray1D,
+    allocate_photon_reflect_surface_struct_container,
+    deallocate_photon_reflect_surface_struct_container,
+    reallocate_photon_reflect_surface_struct_container_data,
+    access_photon_reflect_surface_struct_container>;
+
 class CoordProxy;
 
 using CoordProxyArray1D = FortranTypeArray1D<
@@ -4977,6 +7095,13 @@ using CoordProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_coord_struct>;
 using CoordProxyArray2D = FortranTypeArray2D<CoordProxy>;
 using CoordProxyArray3D = FortranTypeArray3D<CoordProxy>;
+
+using CoordProxyAllocatable1D = FortranTypeAllocatable1D<
+    CoordProxyArray1D,
+    allocate_coord_struct_container,
+    deallocate_coord_struct_container,
+    reallocate_coord_struct_container_data,
+    access_coord_struct_container>;
 
 class CoordArrayProxy;
 
@@ -4987,6 +7112,13 @@ using CoordArrayProxyArray1D = FortranTypeArray1D<
 using CoordArrayProxyArray2D = FortranTypeArray2D<CoordArrayProxy>;
 using CoordArrayProxyArray3D = FortranTypeArray3D<CoordArrayProxy>;
 
+using CoordArrayProxyAllocatable1D = FortranTypeAllocatable1D<
+    CoordArrayProxyArray1D,
+    allocate_coord_array_struct_container,
+    deallocate_coord_array_struct_container,
+    reallocate_coord_array_struct_container_data,
+    access_coord_array_struct_container>;
+
 class BpmPhaseCouplingProxy;
 
 using BpmPhaseCouplingProxyArray1D = FortranTypeArray1D<
@@ -4995,6 +7127,13 @@ using BpmPhaseCouplingProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_bpm_phase_coupling_struct>;
 using BpmPhaseCouplingProxyArray2D = FortranTypeArray2D<BpmPhaseCouplingProxy>;
 using BpmPhaseCouplingProxyArray3D = FortranTypeArray3D<BpmPhaseCouplingProxy>;
+
+using BpmPhaseCouplingProxyAllocatable1D = FortranTypeAllocatable1D<
+    BpmPhaseCouplingProxyArray1D,
+    allocate_bpm_phase_coupling_struct_container,
+    deallocate_bpm_phase_coupling_struct_container,
+    reallocate_bpm_phase_coupling_struct_container_data,
+    access_bpm_phase_coupling_struct_container>;
 
 class ExpressionAtomProxy;
 
@@ -5005,6 +7144,13 @@ using ExpressionAtomProxyArray1D = FortranTypeArray1D<
 using ExpressionAtomProxyArray2D = FortranTypeArray2D<ExpressionAtomProxy>;
 using ExpressionAtomProxyArray3D = FortranTypeArray3D<ExpressionAtomProxy>;
 
+using ExpressionAtomProxyAllocatable1D = FortranTypeAllocatable1D<
+    ExpressionAtomProxyArray1D,
+    allocate_expression_atom_struct_container,
+    deallocate_expression_atom_struct_container,
+    reallocate_expression_atom_struct_container_data,
+    access_expression_atom_struct_container>;
+
 class WakeSrZLongProxy;
 
 using WakeSrZLongProxyArray1D = FortranTypeArray1D<
@@ -5013,6 +7159,13 @@ using WakeSrZLongProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_wake_sr_z_long_struct>;
 using WakeSrZLongProxyArray2D = FortranTypeArray2D<WakeSrZLongProxy>;
 using WakeSrZLongProxyArray3D = FortranTypeArray3D<WakeSrZLongProxy>;
+
+using WakeSrZLongProxyAllocatable1D = FortranTypeAllocatable1D<
+    WakeSrZLongProxyArray1D,
+    allocate_wake_sr_z_long_struct_container,
+    deallocate_wake_sr_z_long_struct_container,
+    reallocate_wake_sr_z_long_struct_container_data,
+    access_wake_sr_z_long_struct_container>;
 
 class WakeSrModeProxy;
 
@@ -5023,6 +7176,13 @@ using WakeSrModeProxyArray1D = FortranTypeArray1D<
 using WakeSrModeProxyArray2D = FortranTypeArray2D<WakeSrModeProxy>;
 using WakeSrModeProxyArray3D = FortranTypeArray3D<WakeSrModeProxy>;
 
+using WakeSrModeProxyAllocatable1D = FortranTypeAllocatable1D<
+    WakeSrModeProxyArray1D,
+    allocate_wake_sr_mode_struct_container,
+    deallocate_wake_sr_mode_struct_container,
+    reallocate_wake_sr_mode_struct_container_data,
+    access_wake_sr_mode_struct_container>;
+
 class WakeSrProxy;
 
 using WakeSrProxyArray1D = FortranTypeArray1D<
@@ -5031,6 +7191,13 @@ using WakeSrProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_wake_sr_struct>;
 using WakeSrProxyArray2D = FortranTypeArray2D<WakeSrProxy>;
 using WakeSrProxyArray3D = FortranTypeArray3D<WakeSrProxy>;
+
+using WakeSrProxyAllocatable1D = FortranTypeAllocatable1D<
+    WakeSrProxyArray1D,
+    allocate_wake_sr_struct_container,
+    deallocate_wake_sr_struct_container,
+    reallocate_wake_sr_struct_container_data,
+    access_wake_sr_struct_container>;
 
 class WakeLrModeProxy;
 
@@ -5041,6 +7208,13 @@ using WakeLrModeProxyArray1D = FortranTypeArray1D<
 using WakeLrModeProxyArray2D = FortranTypeArray2D<WakeLrModeProxy>;
 using WakeLrModeProxyArray3D = FortranTypeArray3D<WakeLrModeProxy>;
 
+using WakeLrModeProxyAllocatable1D = FortranTypeAllocatable1D<
+    WakeLrModeProxyArray1D,
+    allocate_wake_lr_mode_struct_container,
+    deallocate_wake_lr_mode_struct_container,
+    reallocate_wake_lr_mode_struct_container_data,
+    access_wake_lr_mode_struct_container>;
+
 class WakeLrProxy;
 
 using WakeLrProxyArray1D = FortranTypeArray1D<
@@ -5049,6 +7223,13 @@ using WakeLrProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_wake_lr_struct>;
 using WakeLrProxyArray2D = FortranTypeArray2D<WakeLrProxy>;
 using WakeLrProxyArray3D = FortranTypeArray3D<WakeLrProxy>;
+
+using WakeLrProxyAllocatable1D = FortranTypeAllocatable1D<
+    WakeLrProxyArray1D,
+    allocate_wake_lr_struct_container,
+    deallocate_wake_lr_struct_container,
+    reallocate_wake_lr_struct_container_data,
+    access_wake_lr_struct_container>;
 
 class LatEleLocProxy;
 
@@ -5059,6 +7240,13 @@ using LatEleLocProxyArray1D = FortranTypeArray1D<
 using LatEleLocProxyArray2D = FortranTypeArray2D<LatEleLocProxy>;
 using LatEleLocProxyArray3D = FortranTypeArray3D<LatEleLocProxy>;
 
+using LatEleLocProxyAllocatable1D = FortranTypeAllocatable1D<
+    LatEleLocProxyArray1D,
+    allocate_lat_ele_loc_struct_container,
+    deallocate_lat_ele_loc_struct_container,
+    reallocate_lat_ele_loc_struct_container_data,
+    access_lat_ele_loc_struct_container>;
+
 class WakeProxy;
 
 using WakeProxyArray1D = FortranTypeArray1D<
@@ -5067,6 +7255,13 @@ using WakeProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_wake_struct>;
 using WakeProxyArray2D = FortranTypeArray2D<WakeProxy>;
 using WakeProxyArray3D = FortranTypeArray3D<WakeProxy>;
+
+using WakeProxyAllocatable1D = FortranTypeAllocatable1D<
+    WakeProxyArray1D,
+    allocate_wake_struct_container,
+    deallocate_wake_struct_container,
+    reallocate_wake_struct_container_data,
+    access_wake_struct_container>;
 
 class TaylorTermProxy;
 
@@ -5077,6 +7272,13 @@ using TaylorTermProxyArray1D = FortranTypeArray1D<
 using TaylorTermProxyArray2D = FortranTypeArray2D<TaylorTermProxy>;
 using TaylorTermProxyArray3D = FortranTypeArray3D<TaylorTermProxy>;
 
+using TaylorTermProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaylorTermProxyArray1D,
+    allocate_taylor_term_struct_container,
+    deallocate_taylor_term_struct_container,
+    reallocate_taylor_term_struct_container_data,
+    access_taylor_term_struct_container>;
+
 class TaylorProxy;
 
 using TaylorProxyArray1D = FortranTypeArray1D<
@@ -5085,6 +7287,13 @@ using TaylorProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_taylor_struct>;
 using TaylorProxyArray2D = FortranTypeArray2D<TaylorProxy>;
 using TaylorProxyArray3D = FortranTypeArray3D<TaylorProxy>;
+
+using TaylorProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaylorProxyArray1D,
+    allocate_taylor_struct_container,
+    deallocate_taylor_struct_container,
+    reallocate_taylor_struct_container_data,
+    access_taylor_struct_container>;
 
 class EmTaylorTermProxy;
 
@@ -5095,6 +7304,13 @@ using EmTaylorTermProxyArray1D = FortranTypeArray1D<
 using EmTaylorTermProxyArray2D = FortranTypeArray2D<EmTaylorTermProxy>;
 using EmTaylorTermProxyArray3D = FortranTypeArray3D<EmTaylorTermProxy>;
 
+using EmTaylorTermProxyAllocatable1D = FortranTypeAllocatable1D<
+    EmTaylorTermProxyArray1D,
+    allocate_em_taylor_term_struct_container,
+    deallocate_em_taylor_term_struct_container,
+    reallocate_em_taylor_term_struct_container_data,
+    access_em_taylor_term_struct_container>;
+
 class EmTaylorProxy;
 
 using EmTaylorProxyArray1D = FortranTypeArray1D<
@@ -5103,6 +7319,13 @@ using EmTaylorProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_em_taylor_struct>;
 using EmTaylorProxyArray2D = FortranTypeArray2D<EmTaylorProxy>;
 using EmTaylorProxyArray3D = FortranTypeArray3D<EmTaylorProxy>;
+
+using EmTaylorProxyAllocatable1D = FortranTypeAllocatable1D<
+    EmTaylorProxyArray1D,
+    allocate_em_taylor_struct_container,
+    deallocate_em_taylor_struct_container,
+    reallocate_em_taylor_struct_container_data,
+    access_em_taylor_struct_container>;
 
 class CartesianMapTerm1Proxy;
 
@@ -5115,6 +7338,13 @@ using CartesianMapTerm1ProxyArray2D =
 using CartesianMapTerm1ProxyArray3D =
     FortranTypeArray3D<CartesianMapTerm1Proxy>;
 
+using CartesianMapTerm1ProxyAllocatable1D = FortranTypeAllocatable1D<
+    CartesianMapTerm1ProxyArray1D,
+    allocate_cartesian_map_term1_struct_container,
+    deallocate_cartesian_map_term1_struct_container,
+    reallocate_cartesian_map_term1_struct_container_data,
+    access_cartesian_map_term1_struct_container>;
+
 class CartesianMapTermProxy;
 
 using CartesianMapTermProxyArray1D = FortranTypeArray1D<
@@ -5124,6 +7354,13 @@ using CartesianMapTermProxyArray1D = FortranTypeArray1D<
 using CartesianMapTermProxyArray2D = FortranTypeArray2D<CartesianMapTermProxy>;
 using CartesianMapTermProxyArray3D = FortranTypeArray3D<CartesianMapTermProxy>;
 
+using CartesianMapTermProxyAllocatable1D = FortranTypeAllocatable1D<
+    CartesianMapTermProxyArray1D,
+    allocate_cartesian_map_term_struct_container,
+    deallocate_cartesian_map_term_struct_container,
+    reallocate_cartesian_map_term_struct_container_data,
+    access_cartesian_map_term_struct_container>;
+
 class CartesianMapProxy;
 
 using CartesianMapProxyArray1D = FortranTypeArray1D<
@@ -5132,6 +7369,13 @@ using CartesianMapProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_cartesian_map_struct>;
 using CartesianMapProxyArray2D = FortranTypeArray2D<CartesianMapProxy>;
 using CartesianMapProxyArray3D = FortranTypeArray3D<CartesianMapProxy>;
+
+using CartesianMapProxyAllocatable1D = FortranTypeAllocatable1D<
+    CartesianMapProxyArray1D,
+    allocate_cartesian_map_struct_container,
+    deallocate_cartesian_map_struct_container,
+    reallocate_cartesian_map_struct_container_data,
+    access_cartesian_map_struct_container>;
 
 class CylindricalMapTerm1Proxy;
 
@@ -5144,6 +7388,13 @@ using CylindricalMapTerm1ProxyArray2D =
 using CylindricalMapTerm1ProxyArray3D =
     FortranTypeArray3D<CylindricalMapTerm1Proxy>;
 
+using CylindricalMapTerm1ProxyAllocatable1D = FortranTypeAllocatable1D<
+    CylindricalMapTerm1ProxyArray1D,
+    allocate_cylindrical_map_term1_struct_container,
+    deallocate_cylindrical_map_term1_struct_container,
+    reallocate_cylindrical_map_term1_struct_container_data,
+    access_cylindrical_map_term1_struct_container>;
+
 class CylindricalMapTermProxy;
 
 using CylindricalMapTermProxyArray1D = FortranTypeArray1D<
@@ -5155,6 +7406,13 @@ using CylindricalMapTermProxyArray2D =
 using CylindricalMapTermProxyArray3D =
     FortranTypeArray3D<CylindricalMapTermProxy>;
 
+using CylindricalMapTermProxyAllocatable1D = FortranTypeAllocatable1D<
+    CylindricalMapTermProxyArray1D,
+    allocate_cylindrical_map_term_struct_container,
+    deallocate_cylindrical_map_term_struct_container,
+    reallocate_cylindrical_map_term_struct_container_data,
+    access_cylindrical_map_term_struct_container>;
+
 class CylindricalMapProxy;
 
 using CylindricalMapProxyArray1D = FortranTypeArray1D<
@@ -5164,6 +7422,13 @@ using CylindricalMapProxyArray1D = FortranTypeArray1D<
 using CylindricalMapProxyArray2D = FortranTypeArray2D<CylindricalMapProxy>;
 using CylindricalMapProxyArray3D = FortranTypeArray3D<CylindricalMapProxy>;
 
+using CylindricalMapProxyAllocatable1D = FortranTypeAllocatable1D<
+    CylindricalMapProxyArray1D,
+    allocate_cylindrical_map_struct_container,
+    deallocate_cylindrical_map_struct_container,
+    reallocate_cylindrical_map_struct_container_data,
+    access_cylindrical_map_struct_container>;
+
 class BicubicCmplxCoefProxy;
 
 using BicubicCmplxCoefProxyArray1D = FortranTypeArray1D<
@@ -5172,6 +7437,13 @@ using BicubicCmplxCoefProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_bicubic_cmplx_coef_struct>;
 using BicubicCmplxCoefProxyArray2D = FortranTypeArray2D<BicubicCmplxCoefProxy>;
 using BicubicCmplxCoefProxyArray3D = FortranTypeArray3D<BicubicCmplxCoefProxy>;
+
+using BicubicCmplxCoefProxyAllocatable1D = FortranTypeAllocatable1D<
+    BicubicCmplxCoefProxyArray1D,
+    allocate_bicubic_cmplx_coef_struct_container,
+    deallocate_bicubic_cmplx_coef_struct_container,
+    reallocate_bicubic_cmplx_coef_struct_container_data,
+    access_bicubic_cmplx_coef_struct_container>;
 
 class TricubicCmplxCoefProxy;
 
@@ -5184,6 +7456,13 @@ using TricubicCmplxCoefProxyArray2D =
 using TricubicCmplxCoefProxyArray3D =
     FortranTypeArray3D<TricubicCmplxCoefProxy>;
 
+using TricubicCmplxCoefProxyAllocatable1D = FortranTypeAllocatable1D<
+    TricubicCmplxCoefProxyArray1D,
+    allocate_tricubic_cmplx_coef_struct_container,
+    deallocate_tricubic_cmplx_coef_struct_container,
+    reallocate_tricubic_cmplx_coef_struct_container_data,
+    access_tricubic_cmplx_coef_struct_container>;
+
 class GridFieldPt1Proxy;
 
 using GridFieldPt1ProxyArray1D = FortranTypeArray1D<
@@ -5192,6 +7471,13 @@ using GridFieldPt1ProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_grid_field_pt1_struct>;
 using GridFieldPt1ProxyArray2D = FortranTypeArray2D<GridFieldPt1Proxy>;
 using GridFieldPt1ProxyArray3D = FortranTypeArray3D<GridFieldPt1Proxy>;
+
+using GridFieldPt1ProxyAllocatable1D = FortranTypeAllocatable1D<
+    GridFieldPt1ProxyArray1D,
+    allocate_grid_field_pt1_struct_container,
+    deallocate_grid_field_pt1_struct_container,
+    reallocate_grid_field_pt1_struct_container_data,
+    access_grid_field_pt1_struct_container>;
 
 class GridFieldPtProxy;
 
@@ -5202,6 +7488,13 @@ using GridFieldPtProxyArray1D = FortranTypeArray1D<
 using GridFieldPtProxyArray2D = FortranTypeArray2D<GridFieldPtProxy>;
 using GridFieldPtProxyArray3D = FortranTypeArray3D<GridFieldPtProxy>;
 
+using GridFieldPtProxyAllocatable1D = FortranTypeAllocatable1D<
+    GridFieldPtProxyArray1D,
+    allocate_grid_field_pt_struct_container,
+    deallocate_grid_field_pt_struct_container,
+    reallocate_grid_field_pt_struct_container_data,
+    access_grid_field_pt_struct_container>;
+
 class GridFieldProxy;
 
 using GridFieldProxyArray1D = FortranTypeArray1D<
@@ -5211,6 +7504,13 @@ using GridFieldProxyArray1D = FortranTypeArray1D<
 using GridFieldProxyArray2D = FortranTypeArray2D<GridFieldProxy>;
 using GridFieldProxyArray3D = FortranTypeArray3D<GridFieldProxy>;
 
+using GridFieldProxyAllocatable1D = FortranTypeAllocatable1D<
+    GridFieldProxyArray1D,
+    allocate_grid_field_struct_container,
+    deallocate_grid_field_struct_container,
+    reallocate_grid_field_struct_container_data,
+    access_grid_field_struct_container>;
+
 class FloorPositionProxy;
 
 using FloorPositionProxyArray1D = FortranTypeArray1D<
@@ -5219,6 +7519,13 @@ using FloorPositionProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_floor_position_struct>;
 using FloorPositionProxyArray2D = FortranTypeArray2D<FloorPositionProxy>;
 using FloorPositionProxyArray3D = FortranTypeArray3D<FloorPositionProxy>;
+
+using FloorPositionProxyAllocatable1D = FortranTypeAllocatable1D<
+    FloorPositionProxyArray1D,
+    allocate_floor_position_struct_container,
+    deallocate_floor_position_struct_container,
+    reallocate_floor_position_struct_container_data,
+    access_floor_position_struct_container>;
 
 class HighEnergySpaceChargeProxy;
 
@@ -5231,6 +7538,13 @@ using HighEnergySpaceChargeProxyArray2D =
 using HighEnergySpaceChargeProxyArray3D =
     FortranTypeArray3D<HighEnergySpaceChargeProxy>;
 
+using HighEnergySpaceChargeProxyAllocatable1D = FortranTypeAllocatable1D<
+    HighEnergySpaceChargeProxyArray1D,
+    allocate_high_energy_space_charge_struct_container,
+    deallocate_high_energy_space_charge_struct_container,
+    reallocate_high_energy_space_charge_struct_container_data,
+    access_high_energy_space_charge_struct_container>;
+
 class XyDispProxy;
 
 using XyDispProxyArray1D = FortranTypeArray1D<
@@ -5239,6 +7553,13 @@ using XyDispProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_xy_disp_struct>;
 using XyDispProxyArray2D = FortranTypeArray2D<XyDispProxy>;
 using XyDispProxyArray3D = FortranTypeArray3D<XyDispProxy>;
+
+using XyDispProxyAllocatable1D = FortranTypeAllocatable1D<
+    XyDispProxyArray1D,
+    allocate_xy_disp_struct_container,
+    deallocate_xy_disp_struct_container,
+    reallocate_xy_disp_struct_container_data,
+    access_xy_disp_struct_container>;
 
 class TwissProxy;
 
@@ -5249,6 +7570,13 @@ using TwissProxyArray1D = FortranTypeArray1D<
 using TwissProxyArray2D = FortranTypeArray2D<TwissProxy>;
 using TwissProxyArray3D = FortranTypeArray3D<TwissProxy>;
 
+using TwissProxyAllocatable1D = FortranTypeAllocatable1D<
+    TwissProxyArray1D,
+    allocate_twiss_struct_container,
+    deallocate_twiss_struct_container,
+    reallocate_twiss_struct_container_data,
+    access_twiss_struct_container>;
+
 class Mode3Proxy;
 
 using Mode3ProxyArray1D = FortranTypeArray1D<
@@ -5257,6 +7585,13 @@ using Mode3ProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_mode3_struct>;
 using Mode3ProxyArray2D = FortranTypeArray2D<Mode3Proxy>;
 using Mode3ProxyArray3D = FortranTypeArray3D<Mode3Proxy>;
+
+using Mode3ProxyAllocatable1D = FortranTypeAllocatable1D<
+    Mode3ProxyArray1D,
+    allocate_mode3_struct_container,
+    deallocate_mode3_struct_container,
+    reallocate_mode3_struct_container_data,
+    access_mode3_struct_container>;
 
 class BookkeepingStateProxy;
 
@@ -5267,6 +7602,13 @@ using BookkeepingStateProxyArray1D = FortranTypeArray1D<
 using BookkeepingStateProxyArray2D = FortranTypeArray2D<BookkeepingStateProxy>;
 using BookkeepingStateProxyArray3D = FortranTypeArray3D<BookkeepingStateProxy>;
 
+using BookkeepingStateProxyAllocatable1D = FortranTypeAllocatable1D<
+    BookkeepingStateProxyArray1D,
+    allocate_bookkeeping_state_struct_container,
+    deallocate_bookkeeping_state_struct_container,
+    reallocate_bookkeeping_state_struct_container_data,
+    access_bookkeeping_state_struct_container>;
+
 class RadMapProxy;
 
 using RadMapProxyArray1D = FortranTypeArray1D<
@@ -5275,6 +7617,13 @@ using RadMapProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_rad_map_struct>;
 using RadMapProxyArray2D = FortranTypeArray2D<RadMapProxy>;
 using RadMapProxyArray3D = FortranTypeArray3D<RadMapProxy>;
+
+using RadMapProxyAllocatable1D = FortranTypeAllocatable1D<
+    RadMapProxyArray1D,
+    allocate_rad_map_struct_container,
+    deallocate_rad_map_struct_container,
+    reallocate_rad_map_struct_container_data,
+    access_rad_map_struct_container>;
 
 class RadMapEleProxy;
 
@@ -5285,6 +7634,13 @@ using RadMapEleProxyArray1D = FortranTypeArray1D<
 using RadMapEleProxyArray2D = FortranTypeArray2D<RadMapEleProxy>;
 using RadMapEleProxyArray3D = FortranTypeArray3D<RadMapEleProxy>;
 
+using RadMapEleProxyAllocatable1D = FortranTypeAllocatable1D<
+    RadMapEleProxyArray1D,
+    allocate_rad_map_ele_struct_container,
+    deallocate_rad_map_ele_struct_container,
+    reallocate_rad_map_ele_struct_container_data,
+    access_rad_map_ele_struct_container>;
+
 class GenGrad1Proxy;
 
 using GenGrad1ProxyArray1D = FortranTypeArray1D<
@@ -5294,6 +7650,13 @@ using GenGrad1ProxyArray1D = FortranTypeArray1D<
 using GenGrad1ProxyArray2D = FortranTypeArray2D<GenGrad1Proxy>;
 using GenGrad1ProxyArray3D = FortranTypeArray3D<GenGrad1Proxy>;
 
+using GenGrad1ProxyAllocatable1D = FortranTypeAllocatable1D<
+    GenGrad1ProxyArray1D,
+    allocate_gen_grad1_struct_container,
+    deallocate_gen_grad1_struct_container,
+    reallocate_gen_grad1_struct_container_data,
+    access_gen_grad1_struct_container>;
+
 class GenGradMapProxy;
 
 using GenGradMapProxyArray1D = FortranTypeArray1D<
@@ -5302,6 +7665,13 @@ using GenGradMapProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_gen_grad_map_struct>;
 using GenGradMapProxyArray2D = FortranTypeArray2D<GenGradMapProxy>;
 using GenGradMapProxyArray3D = FortranTypeArray3D<GenGradMapProxy>;
+
+using GenGradMapProxyAllocatable1D = FortranTypeAllocatable1D<
+    GenGradMapProxyArray1D,
+    allocate_gen_grad_map_struct_container,
+    deallocate_gen_grad_map_struct_container,
+    reallocate_gen_grad_map_struct_container_data,
+    access_gen_grad_map_struct_container>;
 
 class SurfaceSegmentedPtProxy;
 
@@ -5314,6 +7684,13 @@ using SurfaceSegmentedPtProxyArray2D =
 using SurfaceSegmentedPtProxyArray3D =
     FortranTypeArray3D<SurfaceSegmentedPtProxy>;
 
+using SurfaceSegmentedPtProxyAllocatable1D = FortranTypeAllocatable1D<
+    SurfaceSegmentedPtProxyArray1D,
+    allocate_surface_segmented_pt_struct_container,
+    deallocate_surface_segmented_pt_struct_container,
+    reallocate_surface_segmented_pt_struct_container_data,
+    access_surface_segmented_pt_struct_container>;
+
 class SurfaceSegmentedProxy;
 
 using SurfaceSegmentedProxyArray1D = FortranTypeArray1D<
@@ -5322,6 +7699,13 @@ using SurfaceSegmentedProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_surface_segmented_struct>;
 using SurfaceSegmentedProxyArray2D = FortranTypeArray2D<SurfaceSegmentedProxy>;
 using SurfaceSegmentedProxyArray3D = FortranTypeArray3D<SurfaceSegmentedProxy>;
+
+using SurfaceSegmentedProxyAllocatable1D = FortranTypeAllocatable1D<
+    SurfaceSegmentedProxyArray1D,
+    allocate_surface_segmented_struct_container,
+    deallocate_surface_segmented_struct_container,
+    reallocate_surface_segmented_struct_container_data,
+    access_surface_segmented_struct_container>;
 
 class SurfaceHMisalignPtProxy;
 
@@ -5334,6 +7718,13 @@ using SurfaceHMisalignPtProxyArray2D =
 using SurfaceHMisalignPtProxyArray3D =
     FortranTypeArray3D<SurfaceHMisalignPtProxy>;
 
+using SurfaceHMisalignPtProxyAllocatable1D = FortranTypeAllocatable1D<
+    SurfaceHMisalignPtProxyArray1D,
+    allocate_surface_h_misalign_pt_struct_container,
+    deallocate_surface_h_misalign_pt_struct_container,
+    reallocate_surface_h_misalign_pt_struct_container_data,
+    access_surface_h_misalign_pt_struct_container>;
+
 class SurfaceHMisalignProxy;
 
 using SurfaceHMisalignProxyArray1D = FortranTypeArray1D<
@@ -5342,6 +7733,13 @@ using SurfaceHMisalignProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_surface_h_misalign_struct>;
 using SurfaceHMisalignProxyArray2D = FortranTypeArray2D<SurfaceHMisalignProxy>;
 using SurfaceHMisalignProxyArray3D = FortranTypeArray3D<SurfaceHMisalignProxy>;
+
+using SurfaceHMisalignProxyAllocatable1D = FortranTypeAllocatable1D<
+    SurfaceHMisalignProxyArray1D,
+    allocate_surface_h_misalign_struct_container,
+    deallocate_surface_h_misalign_struct_container,
+    reallocate_surface_h_misalign_struct_container_data,
+    access_surface_h_misalign_struct_container>;
 
 class SurfaceDisplacementPtProxy;
 
@@ -5354,6 +7752,13 @@ using SurfaceDisplacementPtProxyArray2D =
 using SurfaceDisplacementPtProxyArray3D =
     FortranTypeArray3D<SurfaceDisplacementPtProxy>;
 
+using SurfaceDisplacementPtProxyAllocatable1D = FortranTypeAllocatable1D<
+    SurfaceDisplacementPtProxyArray1D,
+    allocate_surface_displacement_pt_struct_container,
+    deallocate_surface_displacement_pt_struct_container,
+    reallocate_surface_displacement_pt_struct_container_data,
+    access_surface_displacement_pt_struct_container>;
+
 class SurfaceDisplacementProxy;
 
 using SurfaceDisplacementProxyArray1D = FortranTypeArray1D<
@@ -5365,6 +7770,13 @@ using SurfaceDisplacementProxyArray2D =
 using SurfaceDisplacementProxyArray3D =
     FortranTypeArray3D<SurfaceDisplacementProxy>;
 
+using SurfaceDisplacementProxyAllocatable1D = FortranTypeAllocatable1D<
+    SurfaceDisplacementProxyArray1D,
+    allocate_surface_displacement_struct_container,
+    deallocate_surface_displacement_struct_container,
+    reallocate_surface_displacement_struct_container_data,
+    access_surface_displacement_struct_container>;
+
 class TargetPointProxy;
 
 using TargetPointProxyArray1D = FortranTypeArray1D<
@@ -5373,6 +7785,13 @@ using TargetPointProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_target_point_struct>;
 using TargetPointProxyArray2D = FortranTypeArray2D<TargetPointProxy>;
 using TargetPointProxyArray3D = FortranTypeArray3D<TargetPointProxy>;
+
+using TargetPointProxyAllocatable1D = FortranTypeAllocatable1D<
+    TargetPointProxyArray1D,
+    allocate_target_point_struct_container,
+    deallocate_target_point_struct_container,
+    reallocate_target_point_struct_container_data,
+    access_target_point_struct_container>;
 
 class SurfaceCurvatureProxy;
 
@@ -5383,6 +7802,13 @@ using SurfaceCurvatureProxyArray1D = FortranTypeArray1D<
 using SurfaceCurvatureProxyArray2D = FortranTypeArray2D<SurfaceCurvatureProxy>;
 using SurfaceCurvatureProxyArray3D = FortranTypeArray3D<SurfaceCurvatureProxy>;
 
+using SurfaceCurvatureProxyAllocatable1D = FortranTypeAllocatable1D<
+    SurfaceCurvatureProxyArray1D,
+    allocate_surface_curvature_struct_container,
+    deallocate_surface_curvature_struct_container,
+    reallocate_surface_curvature_struct_container_data,
+    access_surface_curvature_struct_container>;
+
 class PhotonTargetProxy;
 
 using PhotonTargetProxyArray1D = FortranTypeArray1D<
@@ -5391,6 +7817,13 @@ using PhotonTargetProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_photon_target_struct>;
 using PhotonTargetProxyArray2D = FortranTypeArray2D<PhotonTargetProxy>;
 using PhotonTargetProxyArray3D = FortranTypeArray3D<PhotonTargetProxy>;
+
+using PhotonTargetProxyAllocatable1D = FortranTypeAllocatable1D<
+    PhotonTargetProxyArray1D,
+    allocate_photon_target_struct_container,
+    deallocate_photon_target_struct_container,
+    reallocate_photon_target_struct_container_data,
+    access_photon_target_struct_container>;
 
 class PhotonMaterialProxy;
 
@@ -5401,6 +7834,13 @@ using PhotonMaterialProxyArray1D = FortranTypeArray1D<
 using PhotonMaterialProxyArray2D = FortranTypeArray2D<PhotonMaterialProxy>;
 using PhotonMaterialProxyArray3D = FortranTypeArray3D<PhotonMaterialProxy>;
 
+using PhotonMaterialProxyAllocatable1D = FortranTypeAllocatable1D<
+    PhotonMaterialProxyArray1D,
+    allocate_photon_material_struct_container,
+    deallocate_photon_material_struct_container,
+    reallocate_photon_material_struct_container_data,
+    access_photon_material_struct_container>;
+
 class PixelPtProxy;
 
 using PixelPtProxyArray1D = FortranTypeArray1D<
@@ -5409,6 +7849,13 @@ using PixelPtProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_pixel_pt_struct>;
 using PixelPtProxyArray2D = FortranTypeArray2D<PixelPtProxy>;
 using PixelPtProxyArray3D = FortranTypeArray3D<PixelPtProxy>;
+
+using PixelPtProxyAllocatable1D = FortranTypeAllocatable1D<
+    PixelPtProxyArray1D,
+    allocate_pixel_pt_struct_container,
+    deallocate_pixel_pt_struct_container,
+    reallocate_pixel_pt_struct_container_data,
+    access_pixel_pt_struct_container>;
 
 class PixelDetecProxy;
 
@@ -5419,6 +7866,13 @@ using PixelDetecProxyArray1D = FortranTypeArray1D<
 using PixelDetecProxyArray2D = FortranTypeArray2D<PixelDetecProxy>;
 using PixelDetecProxyArray3D = FortranTypeArray3D<PixelDetecProxy>;
 
+using PixelDetecProxyAllocatable1D = FortranTypeAllocatable1D<
+    PixelDetecProxyArray1D,
+    allocate_pixel_detec_struct_container,
+    deallocate_pixel_detec_struct_container,
+    reallocate_pixel_detec_struct_container_data,
+    access_pixel_detec_struct_container>;
+
 class PhotonElementProxy;
 
 using PhotonElementProxyArray1D = FortranTypeArray1D<
@@ -5427,6 +7881,13 @@ using PhotonElementProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_photon_element_struct>;
 using PhotonElementProxyArray2D = FortranTypeArray2D<PhotonElementProxy>;
 using PhotonElementProxyArray3D = FortranTypeArray3D<PhotonElementProxy>;
+
+using PhotonElementProxyAllocatable1D = FortranTypeAllocatable1D<
+    PhotonElementProxyArray1D,
+    allocate_photon_element_struct_container,
+    deallocate_photon_element_struct_container,
+    reallocate_photon_element_struct_container_data,
+    access_photon_element_struct_container>;
 
 class Wall3dVertexProxy;
 
@@ -5437,6 +7898,13 @@ using Wall3dVertexProxyArray1D = FortranTypeArray1D<
 using Wall3dVertexProxyArray2D = FortranTypeArray2D<Wall3dVertexProxy>;
 using Wall3dVertexProxyArray3D = FortranTypeArray3D<Wall3dVertexProxy>;
 
+using Wall3dVertexProxyAllocatable1D = FortranTypeAllocatable1D<
+    Wall3dVertexProxyArray1D,
+    allocate_wall3d_vertex_struct_container,
+    deallocate_wall3d_vertex_struct_container,
+    reallocate_wall3d_vertex_struct_container_data,
+    access_wall3d_vertex_struct_container>;
+
 class Wall3dSectionProxy;
 
 using Wall3dSectionProxyArray1D = FortranTypeArray1D<
@@ -5445,6 +7913,13 @@ using Wall3dSectionProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_wall3d_section_struct>;
 using Wall3dSectionProxyArray2D = FortranTypeArray2D<Wall3dSectionProxy>;
 using Wall3dSectionProxyArray3D = FortranTypeArray3D<Wall3dSectionProxy>;
+
+using Wall3dSectionProxyAllocatable1D = FortranTypeAllocatable1D<
+    Wall3dSectionProxyArray1D,
+    allocate_wall3d_section_struct_container,
+    deallocate_wall3d_section_struct_container,
+    reallocate_wall3d_section_struct_container_data,
+    access_wall3d_section_struct_container>;
 
 class Wall3dProxy;
 
@@ -5455,6 +7930,13 @@ using Wall3dProxyArray1D = FortranTypeArray1D<
 using Wall3dProxyArray2D = FortranTypeArray2D<Wall3dProxy>;
 using Wall3dProxyArray3D = FortranTypeArray3D<Wall3dProxy>;
 
+using Wall3dProxyAllocatable1D = FortranTypeAllocatable1D<
+    Wall3dProxyArray1D,
+    allocate_wall3d_struct_container,
+    deallocate_wall3d_struct_container,
+    reallocate_wall3d_struct_container_data,
+    access_wall3d_struct_container>;
+
 class RamperLordProxy;
 
 using RamperLordProxyArray1D = FortranTypeArray1D<
@@ -5463,6 +7945,13 @@ using RamperLordProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_ramper_lord_struct>;
 using RamperLordProxyArray2D = FortranTypeArray2D<RamperLordProxy>;
 using RamperLordProxyArray3D = FortranTypeArray3D<RamperLordProxy>;
+
+using RamperLordProxyAllocatable1D = FortranTypeAllocatable1D<
+    RamperLordProxyArray1D,
+    allocate_ramper_lord_struct_container,
+    deallocate_ramper_lord_struct_container,
+    reallocate_ramper_lord_struct_container_data,
+    access_ramper_lord_struct_container>;
 
 class ControlProxy;
 
@@ -5473,6 +7962,13 @@ using ControlProxyArray1D = FortranTypeArray1D<
 using ControlProxyArray2D = FortranTypeArray2D<ControlProxy>;
 using ControlProxyArray3D = FortranTypeArray3D<ControlProxy>;
 
+using ControlProxyAllocatable1D = FortranTypeAllocatable1D<
+    ControlProxyArray1D,
+    allocate_control_struct_container,
+    deallocate_control_struct_container,
+    reallocate_control_struct_container_data,
+    access_control_struct_container>;
+
 class ControlVar1Proxy;
 
 using ControlVar1ProxyArray1D = FortranTypeArray1D<
@@ -5481,6 +7977,13 @@ using ControlVar1ProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_control_var1_struct>;
 using ControlVar1ProxyArray2D = FortranTypeArray2D<ControlVar1Proxy>;
 using ControlVar1ProxyArray3D = FortranTypeArray3D<ControlVar1Proxy>;
+
+using ControlVar1ProxyAllocatable1D = FortranTypeAllocatable1D<
+    ControlVar1ProxyArray1D,
+    allocate_control_var1_struct_container,
+    deallocate_control_var1_struct_container,
+    reallocate_control_var1_struct_container_data,
+    access_control_var1_struct_container>;
 
 class ControlRamp1Proxy;
 
@@ -5491,6 +7994,13 @@ using ControlRamp1ProxyArray1D = FortranTypeArray1D<
 using ControlRamp1ProxyArray2D = FortranTypeArray2D<ControlRamp1Proxy>;
 using ControlRamp1ProxyArray3D = FortranTypeArray3D<ControlRamp1Proxy>;
 
+using ControlRamp1ProxyAllocatable1D = FortranTypeAllocatable1D<
+    ControlRamp1ProxyArray1D,
+    allocate_control_ramp1_struct_container,
+    deallocate_control_ramp1_struct_container,
+    reallocate_control_ramp1_struct_container_data,
+    access_control_ramp1_struct_container>;
+
 class ControllerProxy;
 
 using ControllerProxyArray1D = FortranTypeArray1D<
@@ -5499,6 +8009,13 @@ using ControllerProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_controller_struct>;
 using ControllerProxyArray2D = FortranTypeArray2D<ControllerProxy>;
 using ControllerProxyArray3D = FortranTypeArray3D<ControllerProxy>;
+
+using ControllerProxyAllocatable1D = FortranTypeAllocatable1D<
+    ControllerProxyArray1D,
+    allocate_controller_struct_container,
+    deallocate_controller_struct_container,
+    reallocate_controller_struct_container_data,
+    access_controller_struct_container>;
 
 class EllipseBeamInitProxy;
 
@@ -5509,6 +8026,13 @@ using EllipseBeamInitProxyArray1D = FortranTypeArray1D<
 using EllipseBeamInitProxyArray2D = FortranTypeArray2D<EllipseBeamInitProxy>;
 using EllipseBeamInitProxyArray3D = FortranTypeArray3D<EllipseBeamInitProxy>;
 
+using EllipseBeamInitProxyAllocatable1D = FortranTypeAllocatable1D<
+    EllipseBeamInitProxyArray1D,
+    allocate_ellipse_beam_init_struct_container,
+    deallocate_ellipse_beam_init_struct_container,
+    reallocate_ellipse_beam_init_struct_container_data,
+    access_ellipse_beam_init_struct_container>;
+
 class KvBeamInitProxy;
 
 using KvBeamInitProxyArray1D = FortranTypeArray1D<
@@ -5517,6 +8041,13 @@ using KvBeamInitProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_kv_beam_init_struct>;
 using KvBeamInitProxyArray2D = FortranTypeArray2D<KvBeamInitProxy>;
 using KvBeamInitProxyArray3D = FortranTypeArray3D<KvBeamInitProxy>;
+
+using KvBeamInitProxyAllocatable1D = FortranTypeAllocatable1D<
+    KvBeamInitProxyArray1D,
+    allocate_kv_beam_init_struct_container,
+    deallocate_kv_beam_init_struct_container,
+    reallocate_kv_beam_init_struct_container_data,
+    access_kv_beam_init_struct_container>;
 
 class GridBeamInitProxy;
 
@@ -5527,6 +8058,13 @@ using GridBeamInitProxyArray1D = FortranTypeArray1D<
 using GridBeamInitProxyArray2D = FortranTypeArray2D<GridBeamInitProxy>;
 using GridBeamInitProxyArray3D = FortranTypeArray3D<GridBeamInitProxy>;
 
+using GridBeamInitProxyAllocatable1D = FortranTypeAllocatable1D<
+    GridBeamInitProxyArray1D,
+    allocate_grid_beam_init_struct_container,
+    deallocate_grid_beam_init_struct_container,
+    reallocate_grid_beam_init_struct_container_data,
+    access_grid_beam_init_struct_container>;
+
 class BeamInitProxy;
 
 using BeamInitProxyArray1D = FortranTypeArray1D<
@@ -5535,6 +8073,13 @@ using BeamInitProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_beam_init_struct>;
 using BeamInitProxyArray2D = FortranTypeArray2D<BeamInitProxy>;
 using BeamInitProxyArray3D = FortranTypeArray3D<BeamInitProxy>;
+
+using BeamInitProxyAllocatable1D = FortranTypeAllocatable1D<
+    BeamInitProxyArray1D,
+    allocate_beam_init_struct_container,
+    deallocate_beam_init_struct_container,
+    reallocate_beam_init_struct_container_data,
+    access_beam_init_struct_container>;
 
 class LatParamProxy;
 
@@ -5545,6 +8090,13 @@ using LatParamProxyArray1D = FortranTypeArray1D<
 using LatParamProxyArray2D = FortranTypeArray2D<LatParamProxy>;
 using LatParamProxyArray3D = FortranTypeArray3D<LatParamProxy>;
 
+using LatParamProxyAllocatable1D = FortranTypeAllocatable1D<
+    LatParamProxyArray1D,
+    allocate_lat_param_struct_container,
+    deallocate_lat_param_struct_container,
+    reallocate_lat_param_struct_container_data,
+    access_lat_param_struct_container>;
+
 class ModeInfoProxy;
 
 using ModeInfoProxyArray1D = FortranTypeArray1D<
@@ -5553,6 +8105,13 @@ using ModeInfoProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_mode_info_struct>;
 using ModeInfoProxyArray2D = FortranTypeArray2D<ModeInfoProxy>;
 using ModeInfoProxyArray3D = FortranTypeArray3D<ModeInfoProxy>;
+
+using ModeInfoProxyAllocatable1D = FortranTypeAllocatable1D<
+    ModeInfoProxyArray1D,
+    allocate_mode_info_struct_container,
+    deallocate_mode_info_struct_container,
+    reallocate_mode_info_struct_container_data,
+    access_mode_info_struct_container>;
 
 class PreTrackerProxy;
 
@@ -5563,6 +8122,13 @@ using PreTrackerProxyArray1D = FortranTypeArray1D<
 using PreTrackerProxyArray2D = FortranTypeArray2D<PreTrackerProxy>;
 using PreTrackerProxyArray3D = FortranTypeArray3D<PreTrackerProxy>;
 
+using PreTrackerProxyAllocatable1D = FortranTypeAllocatable1D<
+    PreTrackerProxyArray1D,
+    allocate_pre_tracker_struct_container,
+    deallocate_pre_tracker_struct_container,
+    reallocate_pre_tracker_struct_container_data,
+    access_pre_tracker_struct_container>;
+
 class AnormalModeProxy;
 
 using AnormalModeProxyArray1D = FortranTypeArray1D<
@@ -5571,6 +8137,13 @@ using AnormalModeProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_anormal_mode_struct>;
 using AnormalModeProxyArray2D = FortranTypeArray2D<AnormalModeProxy>;
 using AnormalModeProxyArray3D = FortranTypeArray3D<AnormalModeProxy>;
+
+using AnormalModeProxyAllocatable1D = FortranTypeAllocatable1D<
+    AnormalModeProxyArray1D,
+    allocate_anormal_mode_struct_container,
+    deallocate_anormal_mode_struct_container,
+    reallocate_anormal_mode_struct_container_data,
+    access_anormal_mode_struct_container>;
 
 class LinacNormalModeProxy;
 
@@ -5581,6 +8154,13 @@ using LinacNormalModeProxyArray1D = FortranTypeArray1D<
 using LinacNormalModeProxyArray2D = FortranTypeArray2D<LinacNormalModeProxy>;
 using LinacNormalModeProxyArray3D = FortranTypeArray3D<LinacNormalModeProxy>;
 
+using LinacNormalModeProxyAllocatable1D = FortranTypeAllocatable1D<
+    LinacNormalModeProxyArray1D,
+    allocate_linac_normal_mode_struct_container,
+    deallocate_linac_normal_mode_struct_container,
+    reallocate_linac_normal_mode_struct_container_data,
+    access_linac_normal_mode_struct_container>;
+
 class NormalModesProxy;
 
 using NormalModesProxyArray1D = FortranTypeArray1D<
@@ -5589,6 +8169,13 @@ using NormalModesProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_normal_modes_struct>;
 using NormalModesProxyArray2D = FortranTypeArray2D<NormalModesProxy>;
 using NormalModesProxyArray3D = FortranTypeArray3D<NormalModesProxy>;
+
+using NormalModesProxyAllocatable1D = FortranTypeAllocatable1D<
+    NormalModesProxyArray1D,
+    allocate_normal_modes_struct_container,
+    deallocate_normal_modes_struct_container,
+    reallocate_normal_modes_struct_container_data,
+    access_normal_modes_struct_container>;
 
 class EmFieldProxy;
 
@@ -5599,6 +8186,13 @@ using EmFieldProxyArray1D = FortranTypeArray1D<
 using EmFieldProxyArray2D = FortranTypeArray2D<EmFieldProxy>;
 using EmFieldProxyArray3D = FortranTypeArray3D<EmFieldProxy>;
 
+using EmFieldProxyAllocatable1D = FortranTypeAllocatable1D<
+    EmFieldProxyArray1D,
+    allocate_em_field_struct_container,
+    deallocate_em_field_struct_container,
+    reallocate_em_field_struct_container_data,
+    access_em_field_struct_container>;
+
 class StrongBeamProxy;
 
 using StrongBeamProxyArray1D = FortranTypeArray1D<
@@ -5607,6 +8201,13 @@ using StrongBeamProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_strong_beam_struct>;
 using StrongBeamProxyArray2D = FortranTypeArray2D<StrongBeamProxy>;
 using StrongBeamProxyArray3D = FortranTypeArray3D<StrongBeamProxy>;
+
+using StrongBeamProxyAllocatable1D = FortranTypeAllocatable1D<
+    StrongBeamProxyArray1D,
+    allocate_strong_beam_struct_container,
+    deallocate_strong_beam_struct_container,
+    reallocate_strong_beam_struct_container_data,
+    access_strong_beam_struct_container>;
 
 class TrackPointProxy;
 
@@ -5617,6 +8218,13 @@ using TrackPointProxyArray1D = FortranTypeArray1D<
 using TrackPointProxyArray2D = FortranTypeArray2D<TrackPointProxy>;
 using TrackPointProxyArray3D = FortranTypeArray3D<TrackPointProxy>;
 
+using TrackPointProxyAllocatable1D = FortranTypeAllocatable1D<
+    TrackPointProxyArray1D,
+    allocate_track_point_struct_container,
+    deallocate_track_point_struct_container,
+    reallocate_track_point_struct_container_data,
+    access_track_point_struct_container>;
+
 class TrackProxy;
 
 using TrackProxyArray1D = FortranTypeArray1D<
@@ -5625,6 +8233,13 @@ using TrackProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_track_struct>;
 using TrackProxyArray2D = FortranTypeArray2D<TrackProxy>;
 using TrackProxyArray3D = FortranTypeArray3D<TrackProxy>;
+
+using TrackProxyAllocatable1D = FortranTypeAllocatable1D<
+    TrackProxyArray1D,
+    allocate_track_struct_container,
+    deallocate_track_struct_container,
+    reallocate_track_struct_container_data,
+    access_track_struct_container>;
 
 class SpaceChargeCommonProxy;
 
@@ -5637,6 +8252,13 @@ using SpaceChargeCommonProxyArray2D =
 using SpaceChargeCommonProxyArray3D =
     FortranTypeArray3D<SpaceChargeCommonProxy>;
 
+using SpaceChargeCommonProxyAllocatable1D = FortranTypeAllocatable1D<
+    SpaceChargeCommonProxyArray1D,
+    allocate_space_charge_common_struct_container,
+    deallocate_space_charge_common_struct_container,
+    reallocate_space_charge_common_struct_container_data,
+    access_space_charge_common_struct_container>;
+
 class BmadCommonProxy;
 
 using BmadCommonProxyArray1D = FortranTypeArray1D<
@@ -5645,6 +8267,13 @@ using BmadCommonProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_bmad_common_struct>;
 using BmadCommonProxyArray2D = FortranTypeArray2D<BmadCommonProxy>;
 using BmadCommonProxyArray3D = FortranTypeArray3D<BmadCommonProxy>;
+
+using BmadCommonProxyAllocatable1D = FortranTypeAllocatable1D<
+    BmadCommonProxyArray1D,
+    allocate_bmad_common_struct_container,
+    deallocate_bmad_common_struct_container,
+    reallocate_bmad_common_struct_container_data,
+    access_bmad_common_struct_container>;
 
 class RadInt1Proxy;
 
@@ -5655,6 +8284,13 @@ using RadInt1ProxyArray1D = FortranTypeArray1D<
 using RadInt1ProxyArray2D = FortranTypeArray2D<RadInt1Proxy>;
 using RadInt1ProxyArray3D = FortranTypeArray3D<RadInt1Proxy>;
 
+using RadInt1ProxyAllocatable1D = FortranTypeAllocatable1D<
+    RadInt1ProxyArray1D,
+    allocate_rad_int1_struct_container,
+    deallocate_rad_int1_struct_container,
+    reallocate_rad_int1_struct_container_data,
+    access_rad_int1_struct_container>;
+
 class RadIntBranchProxy;
 
 using RadIntBranchProxyArray1D = FortranTypeArray1D<
@@ -5663,6 +8299,13 @@ using RadIntBranchProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_rad_int_branch_struct>;
 using RadIntBranchProxyArray2D = FortranTypeArray2D<RadIntBranchProxy>;
 using RadIntBranchProxyArray3D = FortranTypeArray3D<RadIntBranchProxy>;
+
+using RadIntBranchProxyAllocatable1D = FortranTypeAllocatable1D<
+    RadIntBranchProxyArray1D,
+    allocate_rad_int_branch_struct_container,
+    deallocate_rad_int_branch_struct_container,
+    reallocate_rad_int_branch_struct_container_data,
+    access_rad_int_branch_struct_container>;
 
 class RadIntAllEleProxy;
 
@@ -5673,6 +8316,13 @@ using RadIntAllEleProxyArray1D = FortranTypeArray1D<
 using RadIntAllEleProxyArray2D = FortranTypeArray2D<RadIntAllEleProxy>;
 using RadIntAllEleProxyArray3D = FortranTypeArray3D<RadIntAllEleProxy>;
 
+using RadIntAllEleProxyAllocatable1D = FortranTypeAllocatable1D<
+    RadIntAllEleProxyArray1D,
+    allocate_rad_int_all_ele_struct_container,
+    deallocate_rad_int_all_ele_struct_container,
+    reallocate_rad_int_all_ele_struct_container_data,
+    access_rad_int_all_ele_struct_container>;
+
 class RfStairStepProxy;
 
 using RfStairStepProxyArray1D = FortranTypeArray1D<
@@ -5681,6 +8331,13 @@ using RfStairStepProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_rf_stair_step_struct>;
 using RfStairStepProxyArray2D = FortranTypeArray2D<RfStairStepProxy>;
 using RfStairStepProxyArray3D = FortranTypeArray3D<RfStairStepProxy>;
+
+using RfStairStepProxyAllocatable1D = FortranTypeAllocatable1D<
+    RfStairStepProxyArray1D,
+    allocate_rf_stair_step_struct_container,
+    deallocate_rf_stair_step_struct_container,
+    reallocate_rf_stair_step_struct_container_data,
+    access_rf_stair_step_struct_container>;
 
 class RfEleProxy;
 
@@ -5691,6 +8348,13 @@ using RfEleProxyArray1D = FortranTypeArray1D<
 using RfEleProxyArray2D = FortranTypeArray2D<RfEleProxy>;
 using RfEleProxyArray3D = FortranTypeArray3D<RfEleProxy>;
 
+using RfEleProxyAllocatable1D = FortranTypeAllocatable1D<
+    RfEleProxyArray1D,
+    allocate_rf_ele_struct_container,
+    deallocate_rf_ele_struct_container,
+    reallocate_rf_ele_struct_container_data,
+    access_rf_ele_struct_container>;
+
 class EleProxy;
 
 using EleProxyArray1D = FortranTypeArray1D<
@@ -5699,6 +8363,13 @@ using EleProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_ele_struct>;
 using EleProxyArray2D = FortranTypeArray2D<EleProxy>;
 using EleProxyArray3D = FortranTypeArray3D<EleProxy>;
+
+using EleProxyAllocatable1D = FortranTypeAllocatable1D<
+    EleProxyArray1D,
+    allocate_ele_struct_container,
+    deallocate_ele_struct_container,
+    reallocate_ele_struct_container_data,
+    access_ele_struct_container>;
 
 class ComplexTaylorTermProxy;
 
@@ -5711,6 +8382,13 @@ using ComplexTaylorTermProxyArray2D =
 using ComplexTaylorTermProxyArray3D =
     FortranTypeArray3D<ComplexTaylorTermProxy>;
 
+using ComplexTaylorTermProxyAllocatable1D = FortranTypeAllocatable1D<
+    ComplexTaylorTermProxyArray1D,
+    allocate_complex_taylor_term_struct_container,
+    deallocate_complex_taylor_term_struct_container,
+    reallocate_complex_taylor_term_struct_container_data,
+    access_complex_taylor_term_struct_container>;
+
 class ComplexTaylorProxy;
 
 using ComplexTaylorProxyArray1D = FortranTypeArray1D<
@@ -5719,6 +8397,13 @@ using ComplexTaylorProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_complex_taylor_struct>;
 using ComplexTaylorProxyArray2D = FortranTypeArray2D<ComplexTaylorProxy>;
 using ComplexTaylorProxyArray3D = FortranTypeArray3D<ComplexTaylorProxy>;
+
+using ComplexTaylorProxyAllocatable1D = FortranTypeAllocatable1D<
+    ComplexTaylorProxyArray1D,
+    allocate_complex_taylor_struct_container,
+    deallocate_complex_taylor_struct_container,
+    reallocate_complex_taylor_struct_container_data,
+    access_complex_taylor_struct_container>;
 
 class BranchProxy;
 
@@ -5729,6 +8414,13 @@ using BranchProxyArray1D = FortranTypeArray1D<
 using BranchProxyArray2D = FortranTypeArray2D<BranchProxy>;
 using BranchProxyArray3D = FortranTypeArray3D<BranchProxy>;
 
+using BranchProxyAllocatable1D = FortranTypeAllocatable1D<
+    BranchProxyArray1D,
+    allocate_branch_struct_container,
+    deallocate_branch_struct_container,
+    reallocate_branch_struct_container_data,
+    access_branch_struct_container>;
+
 class LatProxy;
 
 using LatProxyArray1D = FortranTypeArray1D<
@@ -5737,6 +8429,13 @@ using LatProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_lat_struct>;
 using LatProxyArray2D = FortranTypeArray2D<LatProxy>;
 using LatProxyArray3D = FortranTypeArray3D<LatProxy>;
+
+using LatProxyAllocatable1D = FortranTypeAllocatable1D<
+    LatProxyArray1D,
+    allocate_lat_struct_container,
+    deallocate_lat_struct_container,
+    reallocate_lat_struct_container_data,
+    access_lat_struct_container>;
 
 class BunchProxy;
 
@@ -5747,6 +8446,13 @@ using BunchProxyArray1D = FortranTypeArray1D<
 using BunchProxyArray2D = FortranTypeArray2D<BunchProxy>;
 using BunchProxyArray3D = FortranTypeArray3D<BunchProxy>;
 
+using BunchProxyAllocatable1D = FortranTypeAllocatable1D<
+    BunchProxyArray1D,
+    allocate_bunch_struct_container,
+    deallocate_bunch_struct_container,
+    reallocate_bunch_struct_container_data,
+    access_bunch_struct_container>;
+
 class BunchParamsProxy;
 
 using BunchParamsProxyArray1D = FortranTypeArray1D<
@@ -5755,6 +8461,13 @@ using BunchParamsProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_bunch_params_struct>;
 using BunchParamsProxyArray2D = FortranTypeArray2D<BunchParamsProxy>;
 using BunchParamsProxyArray3D = FortranTypeArray3D<BunchParamsProxy>;
+
+using BunchParamsProxyAllocatable1D = FortranTypeAllocatable1D<
+    BunchParamsProxyArray1D,
+    allocate_bunch_params_struct_container,
+    deallocate_bunch_params_struct_container,
+    reallocate_bunch_params_struct_container_data,
+    access_bunch_params_struct_container>;
 
 class BeamProxy;
 
@@ -5765,6 +8478,13 @@ using BeamProxyArray1D = FortranTypeArray1D<
 using BeamProxyArray2D = FortranTypeArray2D<BeamProxy>;
 using BeamProxyArray3D = FortranTypeArray3D<BeamProxy>;
 
+using BeamProxyAllocatable1D = FortranTypeAllocatable1D<
+    BeamProxyArray1D,
+    allocate_beam_struct_container,
+    deallocate_beam_struct_container,
+    reallocate_beam_struct_container_data,
+    access_beam_struct_container>;
+
 class AperturePointProxy;
 
 using AperturePointProxyArray1D = FortranTypeArray1D<
@@ -5773,6 +8493,13 @@ using AperturePointProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_aperture_point_struct>;
 using AperturePointProxyArray2D = FortranTypeArray2D<AperturePointProxy>;
 using AperturePointProxyArray3D = FortranTypeArray3D<AperturePointProxy>;
+
+using AperturePointProxyAllocatable1D = FortranTypeAllocatable1D<
+    AperturePointProxyArray1D,
+    allocate_aperture_point_struct_container,
+    deallocate_aperture_point_struct_container,
+    reallocate_aperture_point_struct_container_data,
+    access_aperture_point_struct_container>;
 
 class ApertureParamProxy;
 
@@ -5783,6 +8510,13 @@ using ApertureParamProxyArray1D = FortranTypeArray1D<
 using ApertureParamProxyArray2D = FortranTypeArray2D<ApertureParamProxy>;
 using ApertureParamProxyArray3D = FortranTypeArray3D<ApertureParamProxy>;
 
+using ApertureParamProxyAllocatable1D = FortranTypeAllocatable1D<
+    ApertureParamProxyArray1D,
+    allocate_aperture_param_struct_container,
+    deallocate_aperture_param_struct_container,
+    reallocate_aperture_param_struct_container_data,
+    access_aperture_param_struct_container>;
+
 class ApertureScanProxy;
 
 using ApertureScanProxyArray1D = FortranTypeArray1D<
@@ -5791,6 +8525,13 @@ using ApertureScanProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_aperture_scan_struct>;
 using ApertureScanProxyArray2D = FortranTypeArray2D<ApertureScanProxy>;
 using ApertureScanProxyArray3D = FortranTypeArray3D<ApertureScanProxy>;
+
+using ApertureScanProxyAllocatable1D = FortranTypeAllocatable1D<
+    ApertureScanProxyArray1D,
+    allocate_aperture_scan_struct_container,
+    deallocate_aperture_scan_struct_container,
+    reallocate_aperture_scan_struct_container_data,
+    access_aperture_scan_struct_container>;
 
 class TaoSpinDnDpzProxy;
 
@@ -5801,6 +8542,13 @@ using TaoSpinDnDpzProxyArray1D = FortranTypeArray1D<
 using TaoSpinDnDpzProxyArray2D = FortranTypeArray2D<TaoSpinDnDpzProxy>;
 using TaoSpinDnDpzProxyArray3D = FortranTypeArray3D<TaoSpinDnDpzProxy>;
 
+using TaoSpinDnDpzProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoSpinDnDpzProxyArray1D,
+    allocate_tao_spin_dn_dpz_struct_container,
+    deallocate_tao_spin_dn_dpz_struct_container,
+    reallocate_tao_spin_dn_dpz_struct_container_data,
+    access_tao_spin_dn_dpz_struct_container>;
+
 class ResonanceHProxy;
 
 using ResonanceHProxyArray1D = FortranTypeArray1D<
@@ -5809,6 +8557,13 @@ using ResonanceHProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_resonance_h_struct>;
 using ResonanceHProxyArray2D = FortranTypeArray2D<ResonanceHProxy>;
 using ResonanceHProxyArray3D = FortranTypeArray3D<ResonanceHProxy>;
+
+using ResonanceHProxyAllocatable1D = FortranTypeAllocatable1D<
+    ResonanceHProxyArray1D,
+    allocate_resonance_h_struct_container,
+    deallocate_resonance_h_struct_container,
+    reallocate_resonance_h_struct_container_data,
+    access_resonance_h_struct_container>;
 
 class SpinOrbitMap1Proxy;
 
@@ -5819,6 +8574,13 @@ using SpinOrbitMap1ProxyArray1D = FortranTypeArray1D<
 using SpinOrbitMap1ProxyArray2D = FortranTypeArray2D<SpinOrbitMap1Proxy>;
 using SpinOrbitMap1ProxyArray3D = FortranTypeArray3D<SpinOrbitMap1Proxy>;
 
+using SpinOrbitMap1ProxyAllocatable1D = FortranTypeAllocatable1D<
+    SpinOrbitMap1ProxyArray1D,
+    allocate_spin_orbit_map1_struct_container,
+    deallocate_spin_orbit_map1_struct_container,
+    reallocate_spin_orbit_map1_struct_container_data,
+    access_spin_orbit_map1_struct_container>;
+
 class SpinAxisProxy;
 
 using SpinAxisProxyArray1D = FortranTypeArray1D<
@@ -5827,6 +8589,13 @@ using SpinAxisProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_spin_axis_struct>;
 using SpinAxisProxyArray2D = FortranTypeArray2D<SpinAxisProxy>;
 using SpinAxisProxyArray3D = FortranTypeArray3D<SpinAxisProxy>;
+
+using SpinAxisProxyAllocatable1D = FortranTypeAllocatable1D<
+    SpinAxisProxyArray1D,
+    allocate_spin_axis_struct_container,
+    deallocate_spin_axis_struct_container,
+    reallocate_spin_axis_struct_container_data,
+    access_spin_axis_struct_container>;
 
 class PtcNormalFormProxy;
 
@@ -5837,6 +8606,13 @@ using PtcNormalFormProxyArray1D = FortranTypeArray1D<
 using PtcNormalFormProxyArray2D = FortranTypeArray2D<PtcNormalFormProxy>;
 using PtcNormalFormProxyArray3D = FortranTypeArray3D<PtcNormalFormProxy>;
 
+using PtcNormalFormProxyAllocatable1D = FortranTypeAllocatable1D<
+    PtcNormalFormProxyArray1D,
+    allocate_ptc_normal_form_struct_container,
+    deallocate_ptc_normal_form_struct_container,
+    reallocate_ptc_normal_form_struct_container_data,
+    access_ptc_normal_form_struct_container>;
+
 class BmadNormalFormProxy;
 
 using BmadNormalFormProxyArray1D = FortranTypeArray1D<
@@ -5845,6 +8621,13 @@ using BmadNormalFormProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_bmad_normal_form_struct>;
 using BmadNormalFormProxyArray2D = FortranTypeArray2D<BmadNormalFormProxy>;
 using BmadNormalFormProxyArray3D = FortranTypeArray3D<BmadNormalFormProxy>;
+
+using BmadNormalFormProxyAllocatable1D = FortranTypeAllocatable1D<
+    BmadNormalFormProxyArray1D,
+    allocate_bmad_normal_form_struct_container,
+    deallocate_bmad_normal_form_struct_container,
+    reallocate_bmad_normal_form_struct_container_data,
+    access_bmad_normal_form_struct_container>;
 
 class BunchTrackProxy;
 
@@ -5855,6 +8638,13 @@ using BunchTrackProxyArray1D = FortranTypeArray1D<
 using BunchTrackProxyArray2D = FortranTypeArray2D<BunchTrackProxy>;
 using BunchTrackProxyArray3D = FortranTypeArray3D<BunchTrackProxy>;
 
+using BunchTrackProxyAllocatable1D = FortranTypeAllocatable1D<
+    BunchTrackProxyArray1D,
+    allocate_bunch_track_struct_container,
+    deallocate_bunch_track_struct_container,
+    reallocate_bunch_track_struct_container_data,
+    access_bunch_track_struct_container>;
+
 class SummationRdtProxy;
 
 using SummationRdtProxyArray1D = FortranTypeArray1D<
@@ -5863,6 +8653,13 @@ using SummationRdtProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_summation_rdt_struct>;
 using SummationRdtProxyArray2D = FortranTypeArray2D<SummationRdtProxy>;
 using SummationRdtProxyArray3D = FortranTypeArray3D<SummationRdtProxy>;
+
+using SummationRdtProxyAllocatable1D = FortranTypeAllocatable1D<
+    SummationRdtProxyArray1D,
+    allocate_summation_rdt_struct_container,
+    deallocate_summation_rdt_struct_container,
+    reallocate_summation_rdt_struct_container_data,
+    access_summation_rdt_struct_container>;
 
 class LatEleOrder1Proxy;
 
@@ -5873,6 +8670,13 @@ using LatEleOrder1ProxyArray1D = FortranTypeArray1D<
 using LatEleOrder1ProxyArray2D = FortranTypeArray2D<LatEleOrder1Proxy>;
 using LatEleOrder1ProxyArray3D = FortranTypeArray3D<LatEleOrder1Proxy>;
 
+using LatEleOrder1ProxyAllocatable1D = FortranTypeAllocatable1D<
+    LatEleOrder1ProxyArray1D,
+    allocate_lat_ele_order1_struct_container,
+    deallocate_lat_ele_order1_struct_container,
+    reallocate_lat_ele_order1_struct_container_data,
+    access_lat_ele_order1_struct_container>;
+
 class LatEleOrderArrayProxy;
 
 using LatEleOrderArrayProxyArray1D = FortranTypeArray1D<
@@ -5881,6 +8685,13 @@ using LatEleOrderArrayProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_lat_ele_order_array_struct>;
 using LatEleOrderArrayProxyArray2D = FortranTypeArray2D<LatEleOrderArrayProxy>;
 using LatEleOrderArrayProxyArray3D = FortranTypeArray3D<LatEleOrderArrayProxy>;
+
+using LatEleOrderArrayProxyAllocatable1D = FortranTypeAllocatable1D<
+    LatEleOrderArrayProxyArray1D,
+    allocate_lat_ele_order_array_struct_container,
+    deallocate_lat_ele_order_array_struct_container,
+    reallocate_lat_ele_order_array_struct_container_data,
+    access_lat_ele_order_array_struct_container>;
 
 class TaoLatSigmaProxy;
 
@@ -5891,6 +8702,13 @@ using TaoLatSigmaProxyArray1D = FortranTypeArray1D<
 using TaoLatSigmaProxyArray2D = FortranTypeArray2D<TaoLatSigmaProxy>;
 using TaoLatSigmaProxyArray3D = FortranTypeArray3D<TaoLatSigmaProxy>;
 
+using TaoLatSigmaProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoLatSigmaProxyArray1D,
+    allocate_tao_lat_sigma_struct_container,
+    deallocate_tao_lat_sigma_struct_container,
+    reallocate_tao_lat_sigma_struct_container_data,
+    access_tao_lat_sigma_struct_container>;
+
 class TaoSpinEleProxy;
 
 using TaoSpinEleProxyArray1D = FortranTypeArray1D<
@@ -5900,6 +8718,13 @@ using TaoSpinEleProxyArray1D = FortranTypeArray1D<
 using TaoSpinEleProxyArray2D = FortranTypeArray2D<TaoSpinEleProxy>;
 using TaoSpinEleProxyArray3D = FortranTypeArray3D<TaoSpinEleProxy>;
 
+using TaoSpinEleProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoSpinEleProxyArray1D,
+    allocate_tao_spin_ele_struct_container,
+    deallocate_tao_spin_ele_struct_container,
+    reallocate_tao_spin_ele_struct_container_data,
+    access_tao_spin_ele_struct_container>;
+
 class TaoPlotCacheProxy;
 
 using TaoPlotCacheProxyArray1D = FortranTypeArray1D<
@@ -5908,6 +8733,13 @@ using TaoPlotCacheProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_tao_plot_cache_struct>;
 using TaoPlotCacheProxyArray2D = FortranTypeArray2D<TaoPlotCacheProxy>;
 using TaoPlotCacheProxyArray3D = FortranTypeArray3D<TaoPlotCacheProxy>;
+
+using TaoPlotCacheProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoPlotCacheProxyArray1D,
+    allocate_tao_plot_cache_struct_container,
+    deallocate_tao_plot_cache_struct_container,
+    reallocate_tao_plot_cache_struct_container_data,
+    access_tao_plot_cache_struct_container>;
 
 class TaoSpinPolarizationProxy;
 
@@ -5920,6 +8752,13 @@ using TaoSpinPolarizationProxyArray2D =
 using TaoSpinPolarizationProxyArray3D =
     FortranTypeArray3D<TaoSpinPolarizationProxy>;
 
+using TaoSpinPolarizationProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoSpinPolarizationProxyArray1D,
+    allocate_tao_spin_polarization_struct_container,
+    deallocate_tao_spin_polarization_struct_container,
+    reallocate_tao_spin_polarization_struct_container_data,
+    access_tao_spin_polarization_struct_container>;
+
 class TaoLatticeBranchProxy;
 
 using TaoLatticeBranchProxyArray1D = FortranTypeArray1D<
@@ -5928,6 +8767,13 @@ using TaoLatticeBranchProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_tao_lattice_branch_struct>;
 using TaoLatticeBranchProxyArray2D = FortranTypeArray2D<TaoLatticeBranchProxy>;
 using TaoLatticeBranchProxyArray3D = FortranTypeArray3D<TaoLatticeBranchProxy>;
+
+using TaoLatticeBranchProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoLatticeBranchProxyArray1D,
+    allocate_tao_lattice_branch_struct_container,
+    deallocate_tao_lattice_branch_struct_container,
+    reallocate_tao_lattice_branch_struct_container_data,
+    access_tao_lattice_branch_struct_container>;
 
 class TaoModelElementProxy;
 
@@ -5938,6 +8784,13 @@ using TaoModelElementProxyArray1D = FortranTypeArray1D<
 using TaoModelElementProxyArray2D = FortranTypeArray2D<TaoModelElementProxy>;
 using TaoModelElementProxyArray3D = FortranTypeArray3D<TaoModelElementProxy>;
 
+using TaoModelElementProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoModelElementProxyArray1D,
+    allocate_tao_model_element_struct_container,
+    deallocate_tao_model_element_struct_container,
+    reallocate_tao_model_element_struct_container_data,
+    access_tao_model_element_struct_container>;
+
 class TaoBeamBranchProxy;
 
 using TaoBeamBranchProxyArray1D = FortranTypeArray1D<
@@ -5946,6 +8799,13 @@ using TaoBeamBranchProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_tao_beam_branch_struct>;
 using TaoBeamBranchProxyArray2D = FortranTypeArray2D<TaoBeamBranchProxy>;
 using TaoBeamBranchProxyArray3D = FortranTypeArray3D<TaoBeamBranchProxy>;
+
+using TaoBeamBranchProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoBeamBranchProxyArray1D,
+    allocate_tao_beam_branch_struct_container,
+    deallocate_tao_beam_branch_struct_container,
+    reallocate_tao_beam_branch_struct_container_data,
+    access_tao_beam_branch_struct_container>;
 
 class TaoD1DataProxy;
 
@@ -5956,6 +8816,13 @@ using TaoD1DataProxyArray1D = FortranTypeArray1D<
 using TaoD1DataProxyArray2D = FortranTypeArray2D<TaoD1DataProxy>;
 using TaoD1DataProxyArray3D = FortranTypeArray3D<TaoD1DataProxy>;
 
+using TaoD1DataProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoD1DataProxyArray1D,
+    allocate_tao_d1_data_struct_container,
+    deallocate_tao_d1_data_struct_container,
+    reallocate_tao_d1_data_struct_container_data,
+    access_tao_d1_data_struct_container>;
+
 class TaoLatticeProxy;
 
 using TaoLatticeProxyArray1D = FortranTypeArray1D<
@@ -5965,6 +8832,13 @@ using TaoLatticeProxyArray1D = FortranTypeArray1D<
 using TaoLatticeProxyArray2D = FortranTypeArray2D<TaoLatticeProxy>;
 using TaoLatticeProxyArray3D = FortranTypeArray3D<TaoLatticeProxy>;
 
+using TaoLatticeProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoLatticeProxyArray1D,
+    allocate_tao_lattice_struct_container,
+    deallocate_tao_lattice_struct_container,
+    reallocate_tao_lattice_struct_container_data,
+    access_tao_lattice_struct_container>;
+
 class TaoBeamUniProxy;
 
 using TaoBeamUniProxyArray1D = FortranTypeArray1D<
@@ -5973,6 +8847,13 @@ using TaoBeamUniProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_tao_beam_uni_struct>;
 using TaoBeamUniProxyArray2D = FortranTypeArray2D<TaoBeamUniProxy>;
 using TaoBeamUniProxyArray3D = FortranTypeArray3D<TaoBeamUniProxy>;
+
+using TaoBeamUniProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoBeamUniProxyArray1D,
+    allocate_tao_beam_uni_struct_container,
+    deallocate_tao_beam_uni_struct_container,
+    reallocate_tao_beam_uni_struct_container_data,
+    access_tao_beam_uni_struct_container>;
 
 class TaoDynamicApertureProxy;
 
@@ -5985,6 +8866,13 @@ using TaoDynamicApertureProxyArray2D =
 using TaoDynamicApertureProxyArray3D =
     FortranTypeArray3D<TaoDynamicApertureProxy>;
 
+using TaoDynamicApertureProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoDynamicApertureProxyArray1D,
+    allocate_tao_dynamic_aperture_struct_container,
+    deallocate_tao_dynamic_aperture_struct_container,
+    reallocate_tao_dynamic_aperture_struct_container_data,
+    access_tao_dynamic_aperture_struct_container>;
+
 class TaoModelBranchProxy;
 
 using TaoModelBranchProxyArray1D = FortranTypeArray1D<
@@ -5993,6 +8881,13 @@ using TaoModelBranchProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_tao_model_branch_struct>;
 using TaoModelBranchProxyArray2D = FortranTypeArray2D<TaoModelBranchProxy>;
 using TaoModelBranchProxyArray3D = FortranTypeArray3D<TaoModelBranchProxy>;
+
+using TaoModelBranchProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoModelBranchProxyArray1D,
+    allocate_tao_model_branch_struct_container,
+    deallocate_tao_model_branch_struct_container,
+    reallocate_tao_model_branch_struct_container_data,
+    access_tao_model_branch_struct_container>;
 
 class TaoD2DataProxy;
 
@@ -6003,6 +8898,13 @@ using TaoD2DataProxyArray1D = FortranTypeArray1D<
 using TaoD2DataProxyArray2D = FortranTypeArray2D<TaoD2DataProxy>;
 using TaoD2DataProxyArray3D = FortranTypeArray3D<TaoD2DataProxy>;
 
+using TaoD2DataProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoD2DataProxyArray1D,
+    allocate_tao_d2_data_struct_container,
+    deallocate_tao_d2_data_struct_container,
+    reallocate_tao_d2_data_struct_container_data,
+    access_tao_d2_data_struct_container>;
+
 class TaoSpinMapProxy;
 
 using TaoSpinMapProxyArray1D = FortranTypeArray1D<
@@ -6011,6 +8913,13 @@ using TaoSpinMapProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_tao_spin_map_struct>;
 using TaoSpinMapProxyArray2D = FortranTypeArray2D<TaoSpinMapProxy>;
 using TaoSpinMapProxyArray3D = FortranTypeArray3D<TaoSpinMapProxy>;
+
+using TaoSpinMapProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoSpinMapProxyArray1D,
+    allocate_tao_spin_map_struct_container,
+    deallocate_tao_spin_map_struct_container,
+    reallocate_tao_spin_map_struct_container_data,
+    access_tao_spin_map_struct_container>;
 
 class TaoDataProxy;
 
@@ -6021,6 +8930,13 @@ using TaoDataProxyArray1D = FortranTypeArray1D<
 using TaoDataProxyArray2D = FortranTypeArray2D<TaoDataProxy>;
 using TaoDataProxyArray3D = FortranTypeArray3D<TaoDataProxy>;
 
+using TaoDataProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoDataProxyArray1D,
+    allocate_tao_data_struct_container,
+    deallocate_tao_data_struct_container,
+    reallocate_tao_data_struct_container_data,
+    access_tao_data_struct_container>;
+
 class TaoPingScaleProxy;
 
 using TaoPingScaleProxyArray1D = FortranTypeArray1D<
@@ -6029,6 +8945,13 @@ using TaoPingScaleProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_tao_ping_scale_struct>;
 using TaoPingScaleProxyArray2D = FortranTypeArray2D<TaoPingScaleProxy>;
 using TaoPingScaleProxyArray3D = FortranTypeArray3D<TaoPingScaleProxy>;
+
+using TaoPingScaleProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoPingScaleProxyArray1D,
+    allocate_tao_ping_scale_struct_container,
+    deallocate_tao_ping_scale_struct_container,
+    reallocate_tao_ping_scale_struct_container_data,
+    access_tao_ping_scale_struct_container>;
 
 class TaoUniverseCalcProxy;
 
@@ -6039,6 +8962,13 @@ using TaoUniverseCalcProxyArray1D = FortranTypeArray1D<
 using TaoUniverseCalcProxyArray2D = FortranTypeArray2D<TaoUniverseCalcProxy>;
 using TaoUniverseCalcProxyArray3D = FortranTypeArray3D<TaoUniverseCalcProxy>;
 
+using TaoUniverseCalcProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoUniverseCalcProxyArray1D,
+    allocate_tao_universe_calc_struct_container,
+    deallocate_tao_universe_calc_struct_container,
+    reallocate_tao_universe_calc_struct_container_data,
+    access_tao_universe_calc_struct_container>;
+
 class LatEleOrderProxy;
 
 using LatEleOrderProxyArray1D = FortranTypeArray1D<
@@ -6048,6 +8978,13 @@ using LatEleOrderProxyArray1D = FortranTypeArray1D<
 using LatEleOrderProxyArray2D = FortranTypeArray2D<LatEleOrderProxy>;
 using LatEleOrderProxyArray3D = FortranTypeArray3D<LatEleOrderProxy>;
 
+using LatEleOrderProxyAllocatable1D = FortranTypeAllocatable1D<
+    LatEleOrderProxyArray1D,
+    allocate_lat_ele_order_struct_container,
+    deallocate_lat_ele_order_struct_container,
+    reallocate_lat_ele_order_struct_container_data,
+    access_lat_ele_order_struct_container>;
+
 class TaoUniverseProxy;
 
 using TaoUniverseProxyArray1D = FortranTypeArray1D<
@@ -6056,6 +8993,61 @@ using TaoUniverseProxyArray1D = FortranTypeArray1D<
     deallocate_fortran_tao_universe_struct>;
 using TaoUniverseProxyArray2D = FortranTypeArray2D<TaoUniverseProxy>;
 using TaoUniverseProxyArray3D = FortranTypeArray3D<TaoUniverseProxy>;
+
+using TaoUniverseProxyAllocatable1D = FortranTypeAllocatable1D<
+    TaoUniverseProxyArray1D,
+    allocate_tao_universe_struct_container,
+    deallocate_tao_universe_struct_container,
+    reallocate_tao_universe_struct_container_data,
+    access_tao_universe_struct_container>;
+
+class AllEncompassingProxy;
+
+using AllEncompassingProxyArray1D = FortranTypeArray1D<
+    AllEncompassingProxy,
+    allocate_fortran_all_encompassing_struct,
+    deallocate_fortran_all_encompassing_struct>;
+using AllEncompassingProxyArray2D = FortranTypeArray2D<AllEncompassingProxy>;
+using AllEncompassingProxyArray3D = FortranTypeArray3D<AllEncompassingProxy>;
+
+using AllEncompassingProxyAllocatable1D = FortranTypeAllocatable1D<
+    AllEncompassingProxyArray1D,
+    allocate_all_encompassing_struct_container,
+    deallocate_all_encompassing_struct_container,
+    reallocate_all_encompassing_struct_container_data,
+    access_all_encompassing_struct_container>;
+
+class TestSubProxy;
+
+using TestSubProxyArray1D = FortranTypeArray1D<
+    TestSubProxy,
+    allocate_fortran_test_sub_struct,
+    deallocate_fortran_test_sub_struct>;
+using TestSubProxyArray2D = FortranTypeArray2D<TestSubProxy>;
+using TestSubProxyArray3D = FortranTypeArray3D<TestSubProxy>;
+
+using TestSubProxyAllocatable1D = FortranTypeAllocatable1D<
+    TestSubProxyArray1D,
+    allocate_test_sub_struct_container,
+    deallocate_test_sub_struct_container,
+    reallocate_test_sub_struct_container_data,
+    access_test_sub_struct_container>;
+
+class TestSubSubProxy;
+
+using TestSubSubProxyArray1D = FortranTypeArray1D<
+    TestSubSubProxy,
+    allocate_fortran_test_sub_sub_struct,
+    deallocate_fortran_test_sub_sub_struct>;
+using TestSubSubProxyArray2D = FortranTypeArray2D<TestSubSubProxy>;
+using TestSubSubProxyArray3D = FortranTypeArray3D<TestSubSubProxy>;
+
+using TestSubSubProxyAllocatable1D = FortranTypeAllocatable1D<
+    TestSubSubProxyArray1D,
+    allocate_test_sub_sub_struct_container,
+    deallocate_test_sub_sub_struct_container,
+    reallocate_test_sub_sub_struct_container_data,
+    access_test_sub_sub_struct_container>;
 
 template <>
 struct FortranTraits<SplineProxy> {
@@ -6178,8 +9170,6 @@ class AcKickerFreqProxy : public FortranProxy<AcKickerFreqProxy> {
   void set_amp(double value);
   double phi() const; // 0D_NOT_real
   void set_phi(double value);
-  int rf_clock_harmonic() const; // 0D_NOT_integer
-  void set_rf_clock_harmonic(int value);
 };
 
 template <>
@@ -7923,8 +10913,8 @@ class PixelPtProxy : public FortranProxy<PixelPtProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  long long n_photon() const; // 0D_NOT_integer8
-  void set_n_photon(long long value);
+  int64_t n_photon() const; // 0D_NOT_integer8
+  void set_n_photon(int64_t value);
   std::complex<double> E_x() const; // 0D_NOT_complex
   void set_E_x(std::complex<double> value);
   std::complex<double> E_y() const; // 0D_NOT_complex
@@ -7965,12 +10955,12 @@ class PixelDetecProxy : public FortranProxy<PixelDetecProxy> {
 
   FortranArray1D<double> dr() const; // 1D_NOT_real
   FortranArray1D<double> r0() const; // 1D_NOT_real
-  long long n_track_tot() const; // 0D_NOT_integer8
-  void set_n_track_tot(long long value);
-  long long n_hit_detec() const; // 0D_NOT_integer8
-  void set_n_hit_detec(long long value);
-  long long n_hit_pixel() const; // 0D_NOT_integer8
-  void set_n_hit_pixel(long long value);
+  int64_t n_track_tot() const; // 0D_NOT_integer8
+  void set_n_track_tot(int64_t value);
+  int64_t n_hit_detec() const; // 0D_NOT_integer8
+  void set_n_hit_detec(int64_t value);
+  int64_t n_hit_pixel() const; // 0D_NOT_integer8
+  void set_n_hit_pixel(int64_t value);
   PixelPtProxyArray2D pt() const; // 2D_ALLOC_type
 };
 
@@ -9194,12 +12184,12 @@ class RfStairStepProxy : public FortranProxy<RfStairStepProxy> {
   void set_p0c(double value);
   double p1c() const; // 0D_NOT_real
   void set_p1c(double value);
-  double dE_amp() const; // 0D_NOT_real
-  void set_dE_amp(double value);
   double scale() const; // 0D_NOT_real
   void set_scale(double value);
   double time() const; // 0D_NOT_real
   void set_time(double value);
+  double s0() const; // 0D_NOT_real
+  void set_s0(double value);
   double s() const; // 0D_NOT_real
   void set_s(double value);
   int ix_step() const; // 0D_NOT_integer
@@ -9322,6 +12312,7 @@ class EleProxy : public FortranProxy<EleProxy> {
   FortranArray1D<double> vec0() const; // 1D_NOT_real
   FortranArray2D<double> mat6() const; // 2D_NOT_real
   FortranArray2D<double> c_mat() const; // 2D_NOT_real
+  FortranArray2D<double> dc_mat_dpz() const; // 2D_NOT_real
   double gamma_c() const; // 0D_NOT_real
   void set_gamma_c(double value);
   double s_start() const; // 0D_NOT_real
@@ -10350,12 +13341,17 @@ class TaoLatticeBranchProxy : public FortranProxy<TaoLatticeBranchProxy> {
   void set_bmad_normal_form(const BmadNormalFormProxy& src);
   CoordProxyArray1D high_E_orb() const; // 1D_ALLOC_type
   CoordProxyArray1D low_E_orb() const; // 1D_ALLOC_type
+  TaylorProxyArray1D taylor_save() const; // 1D_NOT_type
   double cache_x_min() const; // 0D_NOT_real
   void set_cache_x_min(double value);
   double cache_x_max() const; // 0D_NOT_real
   void set_cache_x_max(double value);
   double comb_ds_save() const; // 0D_NOT_real
   void set_comb_ds_save(double value);
+  int ix_ref_taylor() const; // 0D_NOT_integer
+  void set_ix_ref_taylor(int value);
+  int ix_ele_taylor() const; // 0D_NOT_integer
+  void set_ix_ele_taylor(int value);
   int track_state() const; // 0D_NOT_integer
   void set_track_state(int value);
   int cache_n_pts() const; // 0D_NOT_integer
@@ -10790,6 +13786,8 @@ class TaoDataProxy : public FortranProxy<TaoDataProxy> {
   void set_s(double value);
   double s_offset() const; // 0D_NOT_real
   void set_s_offset(double value);
+  double ref_s_offset() const; // 0D_NOT_real
+  void set_ref_s_offset(double value);
   bool err_message_printed() const; // 0D_NOT_logical
   void set_err_message_printed(bool value);
   bool exists() const; // 0D_NOT_logical
@@ -10987,137 +13985,165 @@ class TaoUniverseProxy : public FortranProxy<TaoUniverseProxy> {
   void set_picked_uni(bool value);
 };
 
-// Tao proxy classes for navigating the hierarchy
-// TaoElementIndexProxy does not map onto a specific Tao struct
-// TaoUniverseProxy maps onto tao_universe_struct
-class TaoElementIndexProxy {
- private:
-  int ix_uni_, ix_lat_, ix_branch_, ix_ele_;
-
-  void* get_fortran_ptr_() const {
-    void* ele_ptr =
-        tao_c_get_element_ptr(ix_uni_, ix_lat_, ix_branch_, ix_ele_);
-    if (!ele_ptr) {
-      throw NullPointerException(
-          "TaoElementIndexProxy dereference for ix_uni=" +
-          std::to_string(ix_uni_) + " ix_lat=" + std::to_string(ix_lat_) +
-          " ix_branch=" + std::to_string(ix_branch_) +
-          " ix_ele=" + std::to_string(ix_ele_) + "");
-    }
-    return ele_ptr;
+template <>
+struct FortranTraits<AllEncompassingProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_all_encompassing_struct(0, &sz);
   }
-
- public:
-  TaoElementIndexProxy(
-      int ix_uni,
-      LatticeType lattice_type,
-      int ix_branch,
-      int ix_ele)
-      : ix_uni_(ix_uni),
-        ix_lat_(static_cast<int>(lattice_type)),
-        ix_branch_(ix_branch),
-        ix_ele_(ix_ele) {}
-
-  EleProxy operator*() const {
-    return EleProxy(get_fortran_ptr_());
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_all_encompassing_struct(ptr, 0);
   }
-
-  std::unique_ptr<EleProxy> operator->() const {
-    return std::make_unique<EleProxy>(get_fortran_ptr_());
+  static void copy(const void* src, void* dst) {
+    copy_fortran_all_encompassing_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "all_encompassing_struct";
   }
 };
 
-class TaoBranchIndexProxy {
- private:
-  int ix_uni_, ix_lat_, ix_branch_;
-
-  void* get_fortran_ptr_() const {
-    void* branch_ptr = tao_c_get_branch_ptr(ix_uni_, ix_lat_, ix_branch_);
-    if (!branch_ptr) {
-      throw NullPointerException(
-          "TaoBranchIndexProxy dereference for [" + std::to_string(ix_uni_) +
-          "," + std::to_string(ix_lat_) + "," + std::to_string(ix_branch_) +
-          "]");
-    }
-    return branch_ptr;
-  }
-
+class AllEncompassingProxy : public FortranProxy<AllEncompassingProxy> {
  public:
-  TaoBranchIndexProxy(int ix_uni, LatticeType lattice_type, int ix_branch)
-      : ix_uni_(ix_uni),
-        ix_lat_(static_cast<int>(lattice_type)),
-        ix_branch_(ix_branch) {}
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
 
-  BranchProxy operator*() const {
-    return BranchProxy(get_fortran_ptr_());
+  double real_rp_0d() const; // 0D_NOT_real
+  void set_real_rp_0d(double value);
+  FortranArray1D<double> real_rp_1d() const; // 1D_NOT_real
+  FortranArray2D<double> real_rp_2d() const; // 2D_NOT_real
+  FortranArray3D<double> real_rp_3d() const; // 3D_NOT_real
+  double* real_rp_0d_ptr() const; // 0D_PTR_real
+  void set_real_rp_0d_ptr(double value);
+  FortranArray1D<double> real_rp_1d_ptr() const; // 1D_PTR_real
+  FortranArray2D<double> real_rp_2d_ptr() const; // 2D_PTR_real
+  FortranArray3D<double> real_rp_3d_ptr() const; // 3D_PTR_real
+  FortranArray1D<double> real_rp_1d_alloc() const; // 1D_ALLOC_real
+  FortranArray2D<double> real_rp_2d_alloc() const; // 2D_ALLOC_real
+  FortranArray3D<double> real_rp_3d_alloc() const; // 3D_ALLOC_real
+  double real_dp_0d() const; // 0D_NOT_real
+  void set_real_dp_0d(double value);
+  FortranArray1D<double> real_dp_1d() const; // 1D_NOT_real
+  FortranArray2D<double> real_dp_2d() const; // 2D_NOT_real
+  FortranArray3D<double> real_dp_3d() const; // 3D_NOT_real
+  double* real_dp_0d_ptr() const; // 0D_PTR_real
+  void set_real_dp_0d_ptr(double value);
+  FortranArray1D<double> real_dp_1d_ptr() const; // 1D_PTR_real
+  FortranArray2D<double> real_dp_2d_ptr() const; // 2D_PTR_real
+  FortranArray3D<double> real_dp_3d_ptr() const; // 3D_PTR_real
+  FortranArray1D<double> real_dp_1d_alloc() const; // 1D_ALLOC_real
+  FortranArray2D<double> real_dp_2d_alloc() const; // 2D_ALLOC_real
+  FortranArray3D<double> real_dp_3d_alloc() const; // 3D_ALLOC_real
+  std::complex<double> complex_dp_0d() const; // 0D_NOT_complex
+  void set_complex_dp_0d(std::complex<double> value);
+  FortranArray1D<std::complex<double>> complex_dp_1d() const; // 1D_NOT_complex
+  FortranArray2D<std::complex<double>> complex_dp_2d() const; // 2D_NOT_complex
+  FortranArray3D<std::complex<double>> complex_dp_3d() const; // 3D_NOT_complex
+  FortranArray1D<std::complex<double>> complex_dp_1d_ptr()
+      const; // 1D_PTR_complex
+  FortranArray2D<std::complex<double>> complex_dp_2d_ptr()
+      const; // 2D_PTR_complex
+  FortranArray3D<std::complex<double>> complex_dp_3d_ptr()
+      const; // 3D_PTR_complex
+  FortranArray1D<std::complex<double>> complex_dp_1d_alloc()
+      const; // 1D_ALLOC_complex
+  FortranArray2D<std::complex<double>> complex_dp_2d_alloc()
+      const; // 2D_ALLOC_complex
+  FortranArray3D<std::complex<double>> complex_dp_3d_alloc()
+      const; // 3D_ALLOC_complex
+  int int_0d() const; // 0D_NOT_integer
+  void set_int_0d(int value);
+  FortranArray1D<int> int_1d() const; // 1D_NOT_integer
+  FortranArray2D<int> int_2d() const; // 2D_NOT_integer
+  FortranArray3D<int> int_3d() const; // 3D_NOT_integer
+  int* int_0d_ptr() const; // 0D_PTR_integer
+  void set_int_0d_ptr(int value);
+  FortranArray1D<int> int_1d_ptr() const; // 1D_PTR_integer
+  FortranArray2D<int> int_2d_ptr() const; // 2D_PTR_integer
+  FortranArray3D<int> int_3d_ptr() const; // 3D_PTR_integer
+  FortranArray1D<int> int_1d_alloc() const; // 1D_ALLOC_integer
+  FortranArray2D<int> int_2d_alloc() const; // 2D_ALLOC_integer
+  FortranArray3D<int> int_3d_alloc() const; // 3D_ALLOC_integer
+  int64_t int8_0d() const; // 0D_NOT_integer8
+  void set_int8_0d(int64_t value);
+  int64_t* int8_0d_ptr() const; // 0D_PTR_integer8
+  void set_int8_0d_ptr(int64_t value);
+  bool logical_0d() const; // 0D_NOT_logical
+  void set_logical_0d(bool value);
+  bool* logical_0d_ptr() const; // 0D_PTR_logical
+  void set_logical_0d_ptr(bool value);
+  TestSubProxy type_0d() const; // 0D_NOT_type
+  void set_type_0d(const TestSubProxy& src);
+  TestSubProxyArray1D type_1d() const; // 1D_NOT_type
+  TestSubProxyArray2D type_2d() const; // 2D_NOT_type
+  TestSubProxyArray3D type_3d() const; // 3D_NOT_type
+  std::optional<TestSubProxy> type_0d_ptr() const; // 0D_PTR_type
+  void set_type_0d_ptr(const TestSubProxy& src);
+  TestSubProxyArray1D type_1d_ptr() const; // 1D_PTR_type
+  TestSubProxyArray2D type_2d_ptr() const; // 2D_PTR_type
+  TestSubProxyArray3D type_3d_ptr() const; // 3D_PTR_type
+  TestSubProxyArray1D type_1d_alloc() const; // 1D_ALLOC_type
+  TestSubProxyArray2D type_2d_alloc() const; // 2D_ALLOC_type
+  TestSubProxyArray3D type_3d_alloc() const; // 3D_ALLOC_type
+};
+
+template <>
+struct FortranTraits<TestSubProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_test_sub_struct(0, &sz);
   }
-
-  std::unique_ptr<BranchProxy> operator->() const {
-    return std::make_unique<BranchProxy>(get_fortran_ptr_());
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_test_sub_struct(ptr, 0);
   }
-
-  TaoElementIndexProxy get_element(int ix_ele) const {
-    return TaoElementIndexProxy(
-        ix_uni_, static_cast<LatticeType>(ix_lat_), ix_branch_, ix_ele);
+  static void copy(const void* src, void* dst) {
+    copy_fortran_test_sub_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "test_sub_struct";
   }
 };
 
-class TaoLatticeIndexProxy {
- private:
-  int ix_uni_, ix_lat_;
-
-  void* get_fortran_ptr_() const {
-    void* lat_ptr = tao_c_get_tao_lattice_ptr(ix_uni_, ix_lat_);
-    if (!lat_ptr) {
-      throw NullPointerException(
-          "TaoLatticeIndexProxy dereference for [" + std::to_string(ix_uni_) +
-          "," + std::to_string(ix_lat_) + "]");
-    }
-    return lat_ptr;
-  }
-
+class TestSubProxy : public FortranProxy<TestSubProxy> {
  public:
-  TaoLatticeIndexProxy(int ix_uni, LatticeType lattice_type)
-      : ix_uni_(ix_uni), ix_lat_(static_cast<int>(lattice_type)) {}
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
 
-  TaoBranchIndexProxy get_branch(int ix_branch) const {
-    return TaoBranchIndexProxy(
-        ix_uni_, static_cast<LatticeType>(ix_lat_), ix_branch);
-  }
+  TestSubSubProxy sr() const; // 0D_NOT_type
+  void set_sr(const TestSubSubProxy& src);
+};
 
-  TaoLatticeProxy operator*() const {
-    return TaoLatticeProxy(get_fortran_ptr_());
+template <>
+struct FortranTraits<TestSubSubProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_test_sub_sub_struct(0, &sz);
   }
-  std::unique_ptr<TaoLatticeProxy> operator->() const {
-    return std::make_unique<TaoLatticeProxy>(**this);
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_test_sub_sub_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_test_sub_sub_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "test_sub_sub_struct";
   }
 };
 
-class TaoUniverseIndexProxy {
- private:
-  int ix_uni_;
-
-  void* get_fortran_ptr_() const {
-    void* uni_ptr = tao_c_get_universe_ptr(ix_uni_);
-    if (!uni_ptr) {
-      throw NullPointerException(
-          "TaoUniverseIndexProxy dereference for universe " +
-          std::to_string(ix_uni_));
-    }
-    return uni_ptr;
-  }
-
+class TestSubSubProxy : public FortranProxy<TestSubSubProxy> {
  public:
-  explicit TaoUniverseIndexProxy(int ix_uni) : ix_uni_(ix_uni) {}
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
 
-  TaoUniverseProxy operator*() const;
-  std::unique_ptr<TaoUniverseProxy> operator->() const {
-    return std::make_unique<TaoUniverseProxy>(get_fortran_ptr_());
-  }
-
-  TaoLatticeIndexProxy get_lattice(LatticeType lattice_type) const {
-    return TaoLatticeIndexProxy(ix_uni_, lattice_type);
-  }
+  int64_t aaa() const; // 0D_NOT_integer8
+  void set_aaa(int64_t value);
+  int bbb() const; // 0D_NOT_integer
+  void set_bbb(int value);
+  std::string file() const; // 0D_NOT_character
+  void set_file(const std::string& value);
+  double t_ref() const; // 0D_NOT_real
+  void set_t_ref(double value);
+  double freq_spread() const; // 0D_NOT_real
+  void set_freq_spread(double value);
 };
 
-} // namespace tao
+} // namespace Bmad

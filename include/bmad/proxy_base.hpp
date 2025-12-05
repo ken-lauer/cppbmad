@@ -9,25 +9,25 @@
 #include <type_traits>
 #include <utility>
 
-namespace tao {
-class TaoException : public std::runtime_error {
+namespace Bmad {
+class BmadException : public std::runtime_error {
  public:
-  explicit TaoException(const std::string& message)
+  explicit BmadException(const std::string& message)
       : std::runtime_error(message) {}
 };
 
-class InvalidIndexException : public TaoException {
+class InvalidIndexException : public BmadException {
  public:
   InvalidIndexException(const std::string& index_type, int index, int max_value)
-      : TaoException(
+      : BmadException(
             "Invalid " + index_type + " index " + std::to_string(index) +
             " (valid range: 0-" + std::to_string(max_value - 1) + ")") {}
 };
 
-class NullPointerException : public TaoException {
+class NullPointerException : public BmadException {
  public:
   NullPointerException(const std::string& context)
-      : TaoException("Null pointer encountered in " + context) {}
+      : BmadException("Null pointer encountered in " + context) {}
 };
 
 // Forward declaration for traits
@@ -167,4 +167,7 @@ auto make_fortran_owned_copy(void* ptr) {
   return T{ptr, true};
 }
 
-} // namespace tao
+extern "C" void* bmad_get_space_charge_com();
+extern "C" void* bmad_get_bmad_com();
+
+} // namespace Bmad

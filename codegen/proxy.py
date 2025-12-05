@@ -5,54 +5,13 @@ from dataclasses import dataclass
 from string import Template
 from typing import TYPE_CHECKING
 
-from .types import ArgumentType, FullType, PointerType
-from .util import snake_to_camel
+from .types import STANDARD_TYPES, ArgumentType, FullType, PointerType
+from .util import struct_to_proxy_class_name
 
 if TYPE_CHECKING:
     from .gen import CodegenConfig, CodegenStructure
 
 logger = logging.getLogger(__name__)
-
-
-@dataclass
-class TypeMapping:
-    fortran_type: str
-    cpp_type: str
-
-
-class TypeMappings:
-    real = TypeMapping(
-        fortran_type="real(c_double)",
-        cpp_type="double",
-    )
-    real16 = TypeMapping(
-        fortran_type="real(c_long_double)",
-        cpp_type="long double",
-    )
-    integer = TypeMapping(
-        fortran_type="integer(c_int)",
-        cpp_type="int",
-    )
-    integer8 = TypeMapping(
-        fortran_type="integer(c_long_long)",
-        cpp_type="long long",
-    )
-    complex = TypeMapping(
-        fortran_type="complex(c_double_complex)",
-        cpp_type="std::complex<double>",
-    )
-    logical = TypeMapping(
-        fortran_type="logical(c_bool)",
-        cpp_type="bool",
-    )
-    character = TypeMapping(
-        fortran_type="character",
-        cpp_type="char",
-    )
-    type = TypeMapping(
-        fortran_type="type",
-        cpp_type="void*",
-    )
 
 
 @dataclass
@@ -192,9 +151,9 @@ def generate_fortran_array_routine(
   subroutine STRUCTNAME_get_FATTRNAME_info({arg_str}) &
         bind(c, name='STRUCTNAME_get_FATTRNAME_info')
     {decls_str}
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if ({condition}) then
       data_ptr = c_loc(struct_obj%FATTRNAME({loc_args}))
       {bound_str}
@@ -326,7 +285,6 @@ CPP_TYPE_SCALAR_SET_ACCESSOR = """
 CPP_TYPE_POINTER_SET_DECL = CPP_TYPE_SCALAR_SET_DECL
 CPP_TYPE_POINTER_SET_ACCESSOR = CPP_TYPE_SCALAR_SET_ACCESSOR
 
-
 # ---------------------------------------------------------------------------
 # Character scalars / Array 1D
 # ---------------------------------------------------------------------------
@@ -341,7 +299,7 @@ FORTRAN_CHAR_SCALAR_DYN_GETTER = """
     logical(c_bool), intent(out) :: is_allocated
     type(STRUCTNAME), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (CONDITION) then
       data_ptr = c_loc(struct_obj%FATTRNAME)
       str_len = int(len(struct_obj%FATTRNAME), c_int)
@@ -361,11 +319,11 @@ FORTRAN_CHAR_ALLOC_SETTER = """
     integer(c_int), intent(in), value :: str_len
     type(STRUCTNAME), pointer :: struct_obj
     character(len=str_len), pointer :: temp_str
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (allocated(struct_obj%FATTRNAME)) deallocate(struct_obj%FATTRNAME)
-    
+
     if (str_len > 0) then
        call c_f_pointer(str_ptr, temp_str)
        allocate(struct_obj%FATTRNAME, source=temp_str)
@@ -380,11 +338,11 @@ FORTRAN_CHAR_PTR_SETTER = """
     integer(c_int), intent(in), value :: str_len
     type(STRUCTNAME), pointer :: struct_obj
     character(len=str_len), pointer :: temp_str
-    
+
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (associated(struct_obj%FATTRNAME)) deallocate(struct_obj%FATTRNAME)
-    
+
     if (str_len > 0) then
         call c_f_pointer(str_ptr, temp_str)
         allocate(struct_obj%FATTRNAME, source=temp_str)
@@ -405,7 +363,7 @@ FORTRAN_CHAR_ARRAY_1D_ALL = """
     logical(c_bool), intent(out) :: is_allocated
     type(STRUCTNAME), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    
+
     if (CONDITION) then
       data_ptr = c_loc(struct_obj%FATTRNAME(lbound(struct_obj%FATTRNAME, 1)))
       bounds(1) = int(lbound(struct_obj%FATTRNAME, 1), c_int)
@@ -423,9 +381,9 @@ FORTRAN_CHAR_ARRAY_1D_ALL = """
 
 CPP_CHAR_SCALAR_DYN_DECL = """
     void STRUCTNAME_get_FATTRNAME_info(
-        const void* s, 
-        char** d, 
-        int* len, 
+        const void* s,
+        char** d,
+        int* len,
         bool* is_alloc
     );
 """
@@ -437,10 +395,10 @@ CPP_CHAR_SCALAR_DYN_ACCESSOR = """
 """
 CPP_CHAR_ARRAY_1D_DECL = """
     void STRUCTNAME_get_FATTRNAME_info(
-        const void* s, 
-        char** d, 
+        const void* s,
+        char** d,
         int* bounds,    // [lower, upper]
-        int* str_len, 
+        int* str_len,
         bool* is_alloc
     );
 """
@@ -457,13 +415,6 @@ def subst(s: str, **kw) -> str:
     for k, v in kw.items():
         out = out.replace(k.upper(), v)
     return out
-
-
-# ---------------------------------------------------------------------------
-# Structure/Proxy Name Helpers
-# ---------------------------------------------------------------------------
-def struct_to_proxy_class_name(name: str) -> str:
-    return snake_to_camel(name.removesuffix("_struct") + "_proxy")
 
 
 # ---------------------------------------------------------------------------
@@ -548,15 +499,16 @@ templates: dict[FullType, TemplateEntry] = {}
 # Scalar simple types
 _simple_types: list[ArgumentType] = ["real", "real16", "integer", "integer8", "logical"]
 for tname in _simple_types:
-    tm = getattr(TypeMappings, tname)
-    templates[FullType(tname, 0, "NOT")] = make_scalar(tm.fortran_type, tm.cpp_type)
-    templates[FullType(tname, 0, "PTR")] = make_scalar_pointer(tm.fortran_type, tm.cpp_type)
+    info = STANDARD_TYPES[tname]
+    templates[FullType(tname, 0, "NOT")] = make_scalar(info.fortran_type, info.c_type)
+    templates[FullType(tname, 0, "PTR")] = make_scalar_pointer(info.fortran_type, info.c_type)
 
 # Complex Scalar (custom accessors needed)
+info = STANDARD_TYPES["complex"]
 templates[FullType("complex", 0, "NOT")] = TemplateEntry(
-    fortran_getter=subst(FORTRAN_SCALAR_GETTER, fortrantype=TypeMappings.complex.fortran_type),
-    fortran_setter=subst(FORTRAN_SCALAR_SETTER, fortrantype=TypeMappings.complex.fortran_type),
-    cpp_get_decl=subst(CPP_SCALAR_DECL, ctype=TypeMappings.complex.cpp_type),
+    fortran_getter=subst(FORTRAN_SCALAR_GETTER, fortrantype=info.fortran_type),
+    fortran_setter=subst(FORTRAN_SCALAR_SETTER, fortrantype=info.fortran_type),
+    cpp_get_decl=subst(CPP_SCALAR_DECL, ctype=info.c_type),
     cpp_get_accessors=[
         """
     std::complex<double> CATTRNAME() const {
@@ -566,7 +518,7 @@ templates[FullType("complex", 0, "NOT")] = TemplateEntry(
     }
 """
     ],
-    cpp_set_decl=subst(CPP_SCALAR_SET_DECL, ctype=TypeMappings.complex.cpp_type),
+    cpp_set_decl=subst(CPP_SCALAR_SET_DECL, ctype=info.c_type),
     cpp_set_accessors=[
         """
     void set_CATTRNAME(std::complex<double> value) {
@@ -579,7 +531,7 @@ templates[FullType("complex", 0, "NOT")] = TemplateEntry(
 # Complex Pointer scalar
 templates[FullType("complex", 0, "PTR")] = TemplateEntry(
     fortran_getter=FORTRAN_POINTER_GETTER,
-    fortran_setter=subst(FORTRAN_POINTER_SETTER, fortrantype=TypeMappings.complex.fortran_type),
+    fortran_setter=subst(FORTRAN_POINTER_SETTER, fortrantype=info.fortran_type),
     cpp_get_decl="    void STRUCTNAME_get_FATTRNAME(const void* struct_obj, double _Complex** ptr_out);",
     cpp_get_accessors=[
         """
@@ -686,26 +638,25 @@ CPP_ARRAY_3D_ACCESSOR = """
     }
 """
 
-std_types = ["real", "integer", "complex"]
+std_types = ["real", "real16", "integer", "complex"]
 
 for tname in std_types:
-    tm = getattr(TypeMappings, tname)
+    info = STANDARD_TYPES[tname]
 
     # Loop over dimensions and logic types
     for ptr_type in ["NOT", "ALLOC", "PTR"]:
         # 1D
         templates[FullType(tname, 1, ptr_type)] = make_array_template(
-            1, ptr_type, tm.cpp_type, CPP_ARRAY_1D_DECL, CPP_ARRAY_1D_ACCESSOR
+            1, ptr_type, info.c_type, CPP_ARRAY_1D_DECL, CPP_ARRAY_1D_ACCESSOR
         )
         # 2D
         templates[FullType(tname, 2, ptr_type)] = make_array_template(
-            2, ptr_type, tm.cpp_type, CPP_ARRAY_2D_DECL, CPP_ARRAY_2D_ACCESSOR
+            2, ptr_type, info.c_type, CPP_ARRAY_2D_DECL, CPP_ARRAY_2D_ACCESSOR
         )
         # 3D
         templates[FullType(tname, 3, ptr_type)] = make_array_template(
-            3, ptr_type, tm.cpp_type, CPP_ARRAY_3D_DECL, CPP_ARRAY_3D_ACCESSOR
+            3, ptr_type, info.c_type, CPP_ARRAY_3D_DECL, CPP_ARRAY_3D_ACCESSOR
         )
-
 
 # ---------------------------------------------------------------------------
 # Derived Types
@@ -759,17 +710,17 @@ templates[FullType("type", 0, "PTR")] = TemplateEntry(
 # Derived Type C++ definitions
 CPP_TYPE_ARRAY_1D_DECL = """
     void STRUCTNAME_get_FATTRNAME_info(
-        const void* s, 
-        void** d, 
-        int* bounds, 
-        bool* is_alloc, 
+        const void* s,
+        void** d,
+        int* bounds,
+        bool* is_alloc,
         size_t* el_size
     );
 """
 CPP_TYPE_ARRAY_1D_ACCESSOR = """
     ${return_proxy_name}Array1D CATTRNAME() const {
         return BmadProxyHelpers::get_type_array_1d<${return_proxy_name}Array1D>(
-            fortran_ptr_, 
+            fortran_ptr_,
             STRUCTNAME_get_FATTRNAME_info
         );
     }
@@ -783,7 +734,7 @@ CPP_TYPE_ARRAY_2D_DECL = """
 CPP_TYPE_ARRAY_2D_ACCESSOR = """
     ${return_proxy_name}Array2D CATTRNAME() const {
         return BmadProxyHelpers::get_type_array_2d<${return_proxy_name}Array2D>(
-            fortran_ptr_, 
+            fortran_ptr_,
             STRUCTNAME_get_FATTRNAME_info
         );
     }
@@ -796,7 +747,7 @@ CPP_TYPE_ARRAY_3D_DECL = """
 CPP_TYPE_ARRAY_3D_ACCESSOR = """
     ${return_proxy_name}Array3D CATTRNAME() const {
         return BmadProxyHelpers::get_type_array_3d<${return_proxy_name}Array3D>(
-            fortran_ptr_, 
+            fortran_ptr_,
             STRUCTNAME_get_FATTRNAME_info
         );
     }
@@ -879,55 +830,169 @@ def generate_accessor_code(
 
 
 def create_fortran_proxy_code(fout, params: CodegenConfig, structs: list[CodegenStructure]):
+    container_types = []
+    # TODO: only generate containers if they're used
+    for struct in structs:
+        container_types.append(
+            f"""\
+
+  type :: {struct.container_alloc_name}
+    type({struct.f_name}), allocatable :: data(:)
+  end type {struct.container_alloc_name}
+            """.rstrip()
+        )
+
+    # Native types containers
+    native_types = [
+        ("real", "real(rp)"),
+        ("integer", "integer"),
+        ("logical", "logical"),
+        ("complex", "complex(rp)"),
+    ]
+
+    for name, ftype in native_types:
+        container_types.append(
+            f"""\
+
+  type :: {name}_container_alloc
+    {ftype}, allocatable :: data(:)
+  end type {name}_container_alloc
+            """.rstrip()
+        )
+
+    containers = "\n".join(container_types)
     print(
-        """\
+        f"""\
 module bmad_struct_proxy_mod
   use bmad_struct
   use tao_struct
+  use test_struct_defs
   use, intrinsic :: iso_c_binding
+
+  {containers}
+
 contains
 """,
         file=fout,
     )
+
+    for name, _ in native_types:
+        struct_name = name
+        container_name = f"{name}_container_alloc"
+        print(
+            f"""
+  function allocate_{struct_name}_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type({container_name}), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_{struct_name}_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type({container_name}), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_{struct_name}_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type({container_name}), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_{struct_name}_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type({container_name}), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+            """,
+            file=fout,
+        )
+
     for struct in structs:
         print(f"  !! {struct.f_name}", file=fout)
         print(
             f"""
     function allocate_fortran_{struct.f_name}(n, element_size) result(ptr) bind(c)
-    implicit none
-    integer(c_int), value :: n
-    integer(c_size_t), intent(out) :: element_size
-    type(c_ptr) :: ptr
-    type({struct.f_name}), pointer :: fptr
-    type({struct.f_name}), pointer :: fptr_array(:)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type({struct.f_name}), pointer :: fptr
+      type({struct.f_name}), pointer :: fptr_array(:)
 
-    if (n <= 0) then
+      if (n <= 0) then
         allocate(fptr)
         ptr = c_loc(fptr)
         element_size = int(storage_size(fptr) / 8, c_size_t)
-    else
+      else
         allocate(fptr_array(n))
         ptr = c_loc(fptr_array)
         element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-    end if
+      end if
     end function
 
     subroutine deallocate_fortran_{struct.f_name}(ptr, n) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    integer(c_int), value :: n
-    type({struct.f_name}), pointer :: fptr
-    type({struct.f_name}), pointer :: fptr_array(:)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type({struct.f_name}), pointer :: fptr
+      type({struct.f_name}), pointer :: fptr_array(:)
 
-    if (c_associated(ptr)) then
+      if (c_associated(ptr)) then
         if (n <= 0) then
-        call c_f_pointer(ptr, fptr)
-        deallocate(fptr)
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
         else
-        call c_f_pointer(ptr, fptr_array, [n])
-        deallocate(fptr_array)
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
         end if
-    end if
+      end if
     end subroutine
 
   subroutine copy_fortran_{struct.f_name}(src_ptr, dst_ptr) bind(c)
@@ -942,9 +1007,87 @@ contains
     end if
   end subroutine
 
-        """,
+  function allocate_{struct.f_name}_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type({struct.container_alloc_name}), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_{struct.f_name}_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type({struct.container_alloc_name}), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_{struct.f_name}_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type({struct.container_alloc_name}), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_{struct.f_name}_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type({struct.container_alloc_name}), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    """,
             file=fout,
         )
+
+        # TODO: realloc could preserve data with something like:
+        """
+        type({struct.f_name}), allocatable :: tmp(:)
+        allocate(tmp(n))
+        tmp(1:min(n, size(ctr%data))) = ctr%data(1:min(n, size(ctr%data)))
+        call move_alloc(tmp, ctr%data)
+        """
         for arg in struct.arg:
             if not arg.is_component:
                 continue
@@ -1048,14 +1191,48 @@ class ${class_name} : public FortranProxy<${class_name}> {
     proxy_classes = []
 
     class_forward_declarations.append('extern "C" {')
+
+    # Native types helpers
+    native_types = [
+        ("real", "double", "RealAllocatable1D"),
+        ("integer", "int", "IntAllocatable1D"),
+        ("logical", "bool", "BoolAllocatable1D"),
+        ("complex", "std::complex<double>", "ComplexAllocatable1D"),
+    ]
+
+    for name, _, _ in native_types:
+        class_forward_declarations.append(f"""
+  void* allocate_{name}_container();
+  void reallocate_{name}_container_data(void *, int, size_t) noexcept;
+  void deallocate_{name}_container(void *) noexcept;
+  void access_{name}_container(void* handle, void** data, int* lbound, int* size, size_t* elem_size, bool* alloc);
+""")
+
     for struct_name in classes:
         class_forward_declarations.append(f"""
   void* allocate_fortran_{struct_name}(int n, size_t *element_size);
   void deallocate_fortran_{struct_name}(void* ptr, int n) noexcept;
   void copy_fortran_{struct_name}(const void* src, void* dst);
+
+  void* allocate_{struct_name}_container();
+  void reallocate_{struct_name}_container_data(void *, int, size_t) noexcept;
+  void deallocate_{struct_name}_container(void *) noexcept;
+  void access_{struct_name}_container(void* handle, void** data, int* lbound, int* size, size_t* elem_size, bool* alloc);
   """)
 
     class_forward_declarations.append("}")
+
+    # Native types aliases
+    for name, ctype, alias in native_types:
+        class_forward_declarations.append(f"""
+using {alias} = FortranAllocatable1D<
+    {ctype},
+    allocate_{name}_container,
+    deallocate_{name}_container,
+    reallocate_{name}_container_data,
+    access_{name}_container
+>;
+""")
 
     for struct_name, class_body in classes.items():
         class_name = struct_to_proxy_class_name(struct_name)
@@ -1068,6 +1245,14 @@ using {class_name}Array1D = FortranTypeArray1D<
 >;
 using {class_name}Array2D = FortranTypeArray2D<{class_name}>;
 using {class_name}Array3D = FortranTypeArray3D<{class_name}>;
+
+using {class_name}Allocatable1D = FortranTypeAllocatable1D<
+    {class_name}Array1D,
+    allocate_{struct_name}_container,
+    deallocate_{struct_name}_container,
+    reallocate_{struct_name}_container_data,
+    access_{struct_name}_container
+>;
         """)
         proxy_classes.append(
             class_template.substitute(

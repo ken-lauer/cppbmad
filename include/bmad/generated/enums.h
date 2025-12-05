@@ -25,7 +25,7 @@
 namespace Bmad {
 
 // Enums from bmad_struct.f90
-const int BMAD_INC_VERSION = 344;
+const int BMAD_INC_VERSION = 350;
 const int NONE = 1;
 // maximum multipole order
 const int N_POLE_MAXX = 21;
@@ -117,6 +117,7 @@ const int UNSTABLE_B = 6;
 const int XFER_MAT_CALC_FAILURE = 7;
 const int TWISS_PROPAGATE_FAILURE = 8;
 const int NO_CLOSED_ORBIT = 9;
+const int NO_COMPLETE_ORBIT = 10;
 const int INCLUDE_KICKS = 1;
 const int SHORT = 8;
 const int USER_SET = 0;
@@ -428,6 +429,10 @@ const int DETA_DPZ_X_STORED = 46;
 const int DETA_DPZ_Y_STORED = 47;
 const int DETAP_DPZ_X_STORED = 48;
 const int DETAP_DPZ_Y_STORED = 49;
+const int DCMAT_DPZ_11_STORED = 65;
+const int DCMAT_DPZ_12_STORED = 66;
+const int DCMAT_DPZ_21_STORED = 67;
+const int DCMAT_DPZ_22_STORED = 68;
 const int RADIUS = 3;
 const int FOCAL_STRENGTH = 5;
 // Assumed unique. Do not assign 1 to another attribute.
@@ -522,7 +527,6 @@ const int GRAZE_ANGLE_OUT = 16;
 const int R0_MAG = 16;
 const int RF_WAVELENGTH = 16;
 const int SIG_VX = 17;
-const int STATIC_LINEAR_MAP = 17;
 const int SIG_VY = 18;
 const int CONSTANT_REF_ENERGY = 18;
 const int KS = 18;
@@ -619,7 +623,6 @@ const int E_FIELD_X = 28;
 const int Y_DISPERSION_ERR = 28;
 const int Z_APERTURE_WIDTH2 = 28;
 const int USER_SETS_LENGTH = 28;
-const int RF_CLOCK_HARMONIC = 28;
 const int B_FIELD_TOT = 28;
 const int UPSTREAM_COORD_DIR = 29;
 const int DZ_ORIGIN = 29;
@@ -1094,7 +1097,6 @@ enum class EleAttribute : size_t {
   R0_MAG = 16,
   RF_WAVELENGTH = 16,
   SIG_VX = 17,
-  STATIC_LINEAR_MAP = 17,
   SIG_VY = 18,
   CONSTANT_REF_ENERGY = 18,
   KS = 18,
@@ -1191,7 +1193,6 @@ enum class EleAttribute : size_t {
   Y_DISPERSION_ERR = 28,
   Z_APERTURE_WIDTH2 = 28,
   USER_SETS_LENGTH = 28,
-  RF_CLOCK_HARMONIC = 28,
   B_FIELD_TOT = 28,
   UPSTREAM_COORD_DIR = 29,
   DZ_ORIGIN = 29,

@@ -2,71 +2,37 @@ from __future__ import annotations
 
 from dataclasses import dataclass, fields
 
-from .types import FullType
+from .types import STANDARD_TYPES, FullType, Intent
+from .util import struct_to_proxy_class_name
 
 
 @dataclass
-class CSideTransform:
-    c_class: str = ""
+class Transform:
+    # The C++ type for arguments
+    cpp_type: str = ""
+    # The C++ type when declared
+    cpp_declare_type: str = ""
+    # The C++ type used when calling the exported Fortran function
+    cpp_call_fortran_type: str = ""
+    # The native Fortran type
+    fortran_type: str = ""
+    # The default value for the C++ argument
+    cpp_default: str = ""
+    # The return type for the C++ function
+    cpp_return_type: str = ""
+    # The native Fortran type (if different from fortran_type)
+    fortran_native_type: str = ""
 
-    # C++ --> Fortran
-    # |   C++     |    Fortran |
-    # obj_to_f() -> obj_to_f2()
-    #
-    # (C) handles obj_to_f()  - picks out class members
-    # (F) handles obj_to_f2() - takes flattened class members to reconstruct a new Fortran structure
+    def is_reference(self):
+        return self.is_optional_ref or "&" in self.cpp_type
 
-    # C -> F2 argument type:
-    to_f2_arg: str = ""
+    @property
+    def is_std_optional(self):
+        return self.cpp_type.startswith("std::optional<")
 
-    # Fortran --> C++
-    # | Fortran   |  C++       |
-    # obj_to_c() -> obj_to_c2()
-    #
-    # (F) handles obj_to_c()  - picks out structure members
-    # (C) handles obj_to_c2() - takes flattened class members to reconstruct a new C++ class instance
-
-    # C2 function: parameter type
-    to_c2_arg: str = ""
-
-    def replace_all(self, old: str, new: str) -> None:
-        for fld in fields(self):
-            value = getattr(self, fld.name)
-
-            if isinstance(value, str):
-                setattr(self, fld.name, value.replace(old, new))
-            else:
-                setattr(self, fld.name, [v.replace(old, new) for v in value])
-
-    def __str__(self):
-        return f"{self.c_class},  {self.to_f2_arg},  {self.to_c2_arg}"
-
-
-@dataclass
-class FortranSideTransform:
-    # Fortran -> C++:
-    #
-    # | Fortran   |  C++       |
-    # obj_to_c() -> obj_to_c2()
-    #
-    # (F) handles obj_to_c()  - picks out structure members
-    # (C) handles obj_to_c2() - takes flattened class members to reconstruct a new C++ class instance
-    #
-    # F -> C2: how to call obj_to_c2() from fortran with the argument
-    # to_c2_call: str = ""
-    # F -> C2: how to define the local variable in to_c to call to_c2:
-    to_c2_type: str = ""
-
-    # C++ -> Fortran:
-    #
-    # |   C++     |    Fortran |
-    # obj_to_f() -> obj_to_f2()
-    #
-    # (C) handles obj_to_f()  - picks out class members
-    # (F) handles obj_to_f2() - takes flattened class members to reconstruct a new Fortran structure
-    to_f2_type: str = ""
-
-    equality_test: str = "is_eq = is_eq .and. all(f1%NAME == f2%NAME)\n"
+    @property
+    def is_optional_ref(self):
+        return self.cpp_type.startswith("optional_ref<")
 
     def replace_all(self, old: str, new: str) -> None:
         for fld in fields(self):
@@ -78,1075 +44,168 @@ class FortranSideTransform:
                 setattr(self, fld.name, [v.replace(old, new) for v in value])
 
 
-transforms = {
-    FullType(type="character", dim=0, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="character(c_char)",
-            to_f2_type="character(c_char)",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="std::optional<string>",
-            to_f2_arg="  c_Char",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="character", dim=0, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="character(c_char)",
-            to_f2_type="character(c_char)",
-            equality_test="is_eq = is_eq .and. (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="string",
-            to_f2_arg="  c_Char",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="character", dim=0, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="character(c_char)",
-            to_f2_type="character(c_char)",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="std::optional<string>",
-            to_f2_arg="  c_Char",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="character", dim=1, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="type(c_ptr)",
-            to_f2_type="type(c_ptr)",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray1D<string>",
-            to_f2_arg="        c_Char*",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="character", dim=1, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="type(c_ptr)",
-            to_f2_type="type(c_ptr)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray1D<string, DIM1>",
-            to_f2_arg="  c_Char*",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="character", dim=1, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="type(c_ptr)",
-            to_f2_type="type(c_ptr)",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray1D<string>",
-            to_f2_arg="        c_Char*",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="complex", dim=0, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="complex(c_double_complex)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="std::optional<Complex>",
-            to_f2_arg="  c_ComplexArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="complex", dim=0, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="complex(c_double_complex)",
-            to_f2_type="complex(c_double_complex)",
-            equality_test="is_eq = is_eq .and. (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="Complex",
-            to_f2_arg="  c_Complex&",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="complex", dim=0, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="complex(c_double_complex)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="std::optional<Complex>",
-            to_f2_arg="  c_ComplexArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="complex", dim=1, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="complex(c_double_complex)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray1D<Complex>",
-            to_f2_arg="  c_ComplexArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="complex", dim=1, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="complex(c_double_complex)",
-            to_f2_type="complex(c_double_complex)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray1D<Complex, DIM1>",
-            to_f2_arg="  c_ComplexArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="complex", dim=1, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="complex(c_double_complex)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray1D<Complex>",
-            to_f2_arg="  c_ComplexArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="complex", dim=2, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="complex(c_double_complex)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray2D<Complex>",
-            to_f2_arg="  c_ComplexArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="complex", dim=2, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="complex(c_double_complex)",
-            to_f2_type="complex(c_double_complex)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray2D<Complex, DIM1, DIM2>",
-            to_f2_arg="  c_ComplexArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="complex", dim=2, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="complex(c_double_complex)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray2D<Complex>",
-            to_f2_arg="  c_ComplexArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="complex", dim=3, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="complex(c_double_complex)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray3D<Complex>",
-            to_f2_arg="        c_ComplexArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="complex", dim=3, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="complex(c_double_complex)",
-            to_f2_type="complex(c_double_complex)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray3D<Complex, DIM1, DIM2, DIM3>", to_f2_arg="  c_ComplexArr", to_c2_arg=""
-        ),
-    ),
-    FullType(type="complex", dim=3, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="complex(c_double_complex)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray3D<Complex>",
-            to_f2_arg="        c_ComplexArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer", dim=0, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="std::optional<Int>",
-            to_f2_arg="  c_IntArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer", dim=0, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int)",
-            to_f2_type="integer(c_int)",
-            equality_test="is_eq = is_eq .and. (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="Int",
-            to_f2_arg="  c_Int&",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer", dim=0, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="std::optional<Int>",
-            to_f2_arg="  c_IntArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer", dim=1, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray1D<Int>",
-            to_f2_arg="  c_IntArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer", dim=1, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int)",
-            to_f2_type="integer(c_int)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray1D<Int, DIM1>",
-            to_f2_arg="  c_IntArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer", dim=1, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray1D<Int>",
-            to_f2_arg="  c_IntArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer", dim=2, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray2D<Int>",
-            to_f2_arg="  c_IntArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer", dim=2, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int)",
-            to_f2_type="integer(c_int)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray2D<Int, DIM1, DIM2>",
-            to_f2_arg="  c_IntArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer", dim=2, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray2D<Int>",
-            to_f2_arg="  c_IntArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer", dim=3, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray3D<Int>",
-            to_f2_arg="        c_IntArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer", dim=3, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int)",
-            to_f2_type="integer(c_int)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray3D<Int, DIM1, DIM2, DIM3>",
-            to_f2_arg="  c_IntArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer", dim=3, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray3D<Int>",
-            to_f2_arg="        c_IntArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer8", dim=0, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_long)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="std::optional<Int8>",
-            to_f2_arg="  c_Int8Arr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer8", dim=0, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_long)",
-            to_f2_type="integer(c_long)",
-            equality_test="is_eq = is_eq .and. (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="Int8",
-            to_f2_arg="  c_Int8&",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer8", dim=0, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_long)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="std::optional<Int8>",
-            to_f2_arg="  c_Int8Arr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer8", dim=1, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_long)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray1D<Int8>",
-            to_f2_arg="  c_Int8Arr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer8", dim=1, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_long)",
-            to_f2_type="integer(c_long)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray1D<Int8, DIM1>",
-            to_f2_arg="  c_Int8Arr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer8", dim=1, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_long)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray1D<Int8>",
-            to_f2_arg="  c_Int8Arr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer8", dim=2, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_long)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray2D<Int8>",
-            to_f2_arg="  c_Int8Arr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer8", dim=2, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_long)",
-            to_f2_type="integer(c_long)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray2D<Int8, DIM1, DIM2>",
-            to_f2_arg="  c_Int8Arr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer8", dim=2, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_long)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray2D<Int8>",
-            to_f2_arg="  c_Int8Arr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer8", dim=3, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_long)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray3D<Int8>",
-            to_f2_arg="        c_Int8Arr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer8", dim=3, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_long)",
-            to_f2_type="integer(c_long)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray3D<Int8, DIM1, DIM2, DIM3>",
-            to_f2_arg="  c_Int8Arr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="integer8", dim=3, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_long)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray3D<Int8>",
-            to_f2_arg="        c_Int8Arr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="logical", dim=0, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="logical(c_bool)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = (f1%NAME .eqv. f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="std::optional<Bool>",
-            to_f2_arg="  c_BoolArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="logical", dim=0, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="logical(c_bool)",
-            to_f2_type="logical(c_bool)",
-            equality_test="is_eq = is_eq .and. (f1%NAME .eqv. f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="Bool",
-            to_f2_arg="  c_Bool&",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="logical", dim=0, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="logical(c_bool)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = (f1%NAME .eqv. f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="std::optional<Bool>",
-            to_f2_arg="  c_BoolArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="logical", dim=1, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="logical(c_bool)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME .eqv. f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray1D<Bool>",
-            to_f2_arg="  c_BoolArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="logical", dim=1, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="logical(c_bool)",
-            to_f2_type="logical(c_bool)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME .eqv. f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray1D<Bool, DIM1>",
-            to_f2_arg="  c_BoolArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="logical", dim=1, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="logical(c_bool)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME .eqv. f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray1D<Bool>",
-            to_f2_arg="  c_BoolArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="logical", dim=2, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="logical(c_bool)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME .eqv. f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray2D<Bool>",
-            to_f2_arg="  c_BoolArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="logical", dim=2, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="logical(c_bool)",
-            to_f2_type="logical(c_bool)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME .eqv. f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray2D<Bool, DIM1, DIM2>",
-            to_f2_arg="  c_BoolArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="logical", dim=2, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="logical(c_bool)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME .eqv. f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray2D<Bool>",
-            to_f2_arg="  c_BoolArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="logical", dim=3, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="logical(c_bool)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME .eqv. f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray3D<Bool>",
-            to_f2_arg="        c_BoolArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="logical", dim=3, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="logical(c_bool)",
-            to_f2_type="logical(c_bool)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME .eqv. f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray3D<Bool, DIM1, DIM2, DIM3>",
-            to_f2_arg="  c_BoolArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="logical", dim=3, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="logical(c_bool)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME .eqv. f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray3D<Bool>",
-            to_f2_arg="        c_BoolArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="real", dim=0, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="real(c_double)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="std::optional<Real>",
-            to_f2_arg="  c_RealArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="real", dim=0, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="real(c_double)",
-            to_f2_type="real(c_double)",
-            equality_test="is_eq = is_eq .and. (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="Real",
-            to_f2_arg="  c_Real&",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="real", dim=0, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="real(c_double)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="std::optional<Real>",
-            to_f2_arg="  c_RealArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="real", dim=1, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="real(c_double)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray1D<Real>",
-            to_f2_arg="  c_RealArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="real", dim=1, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="real(c_double)",
-            to_f2_type="real(c_double)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray1D<Real, DIM1>",
-            to_f2_arg="  c_RealArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="real", dim=1, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="real(c_double)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray1D<Real>",
-            to_f2_arg="  c_RealArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="real", dim=2, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="real(c_double)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray2D<Real>",
-            to_f2_arg="  c_RealArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="real", dim=2, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="real(c_double)",
-            to_f2_type="real(c_double)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray2D<Real, DIM1, DIM2>",
-            to_f2_arg="  c_RealArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="real", dim=2, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="real(c_double)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray2D<Real>",
-            to_f2_arg="  c_RealArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="real", dim=3, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="real(c_double)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray3D<Real>",
-            to_f2_arg="        c_RealArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="real", dim=3, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="real(c_double)",
-            to_f2_type="real(c_double)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray3D<Real, DIM1, DIM2, DIM3>",
-            to_f2_arg="  c_RealArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="real", dim=3, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="real(c_double)",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray3D<Real>",
-            to_f2_arg="        c_RealArr",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="real16", dim=0, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="real(c_double)",
-            to_f2_type="real(c_double)",
-            equality_test="is_eq = is_eq .and. (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="Real",
-            to_f2_arg="  c_Real&",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="size", dim=0, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int), value",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = (f1%NAME == f2%NAME)",
-        ),
-        None,
-    ),
-    FullType(type="size", dim=0, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int), value",
-            to_f2_type="integer(c_int), value",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="",
-            to_f2_arg="  c_Int",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="size", dim=0, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int), value",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = (f1%NAME == f2%NAME)",
-        ),
-        None,
-    ),
-    FullType(type="size", dim=1, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int), value",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        None,
-    ),
-    FullType(type="size", dim=1, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int), value",
-            to_f2_type="integer(c_int), value",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="",
-            to_f2_arg="  c_Int",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="size", dim=1, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int), value",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        None,
-    ),
-    FullType(type="size", dim=2, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int), value",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        None,
-    ),
-    FullType(type="size", dim=2, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int), value",
-            to_f2_type="integer(c_int), value",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="",
-            to_f2_arg="  c_Int",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="size", dim=2, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int), value",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        None,
-    ),
-    FullType(type="size", dim=3, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int), value",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        None,
-    ),
-    FullType(type="size", dim=3, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int), value",
-            to_f2_type="integer(c_int), value",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="",
-            to_f2_arg="  c_Int",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="size", dim=3, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="integer(c_int), value",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        None,
-    ),
-    FullType(type="type", dim=0, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="type(c_ptr), value",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="std::optional<PROXYCLS>",
-            to_f2_arg="  void*",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="type", dim=0, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="type(c_ptr), value",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="PROXYCLS",
-            to_f2_arg="  void *",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="type", dim=0, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="type(c_ptr), value",
-            to_f2_type="type(c_ptr), value",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = (f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="std::optional<PROXYCLS>",
-            to_f2_arg="  void *",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="type", dim=1, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="type(c_ptr)",
-            to_f2_type="type(c_ptr)",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray1D<PROXYCLS>",
-            to_f2_arg="  const PROXYCLS**",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="type", dim=1, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="type(c_ptr)",
-            to_f2_type="type(c_ptr)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray1D<PROXYCLS, DIM1>",
-            to_f2_arg="  void*",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="type", dim=1, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="type(c_ptr)",
-            to_f2_type="type(c_ptr)",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray1D<PROXYCLS>",
-            to_f2_arg="  const PROXYCLS**",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="type", dim=2, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="type(c_ptr)",
-            to_f2_type="type(c_ptr)",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray2D<PROXYCLS>",
-            to_f2_arg="  const PROXYCLS**",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="type", dim=2, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="type(c_ptr)",
-            to_f2_type="type(c_ptr)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray2D<PROXYCLS, DIM1, DIM2>", to_f2_arg="  const PROXYCLS**", to_c2_arg=""
-        ),
-    ),
-    FullType(type="type", dim=2, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="type(c_ptr)",
-            to_f2_type="type(c_ptr)",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray2D<PROXYCLS>",
-            to_f2_arg="  const PROXYCLS**",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="type", dim=3, ptr="ALLOC"): (
-        FortranSideTransform(
-            to_c2_type="type(c_ptr)",
-            to_f2_type="type(c_ptr)",
-            equality_test="is_eq = is_eq .and. (allocated(f1%NAME) .eqv. allocated(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (allocated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray3D<PROXYCLS>",
-            to_f2_arg="  const PROXYCLS**",
-            to_c2_arg="",
-        ),
-    ),
-    FullType(type="type", dim=3, ptr="NOT"): (
-        FortranSideTransform(
-            to_c2_type="type(c_ptr)",
-            to_f2_type="type(c_ptr)",
-            equality_test="is_eq = is_eq .and. all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="FixedArray3D<PROXYCLS, DIM1, DIM2, DIM3>", to_f2_arg="  const PROXYCLS**", to_c2_arg=""
-        ),
-    ),
-    FullType(type="type", dim=3, ptr="PTR"): (
-        FortranSideTransform(
-            to_c2_type="type(c_ptr)",
-            to_f2_type="type(c_ptr)",
-            equality_test="is_eq = is_eq .and. (associated(f1%NAME) .eqv. associated(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(shape(f1%NAME) == shape(f2%NAME))\nif (.not. is_eq) return\nif (associated(f1%NAME)) is_eq = all(f1%NAME == f2%NAME)",
-        ),
-        CSideTransform(
-            c_class="VariableArray3D<PROXYCLS>",
-            to_f2_arg="  const PROXYCLS**",
-            to_c2_arg="",
-        ),
-    ),
-}
+def get_cpp_container(cpp_base: str, dim: int, ptr: str) -> str:
+    """Determines standard Local C++ container syntax."""
+    if dim == 0:
+        return cpp_base if ptr == "NOT" else f"std::optional<{cpp_base}>"
+
+    if cpp_base == "PROXYCLS" and ptr != "NOT":
+        return f"PROXYCLSAllocatable{dim}D&"
+
+    if ptr == "NOT":
+        dims = ", ".join(f"DIM{i + 1}" for i in range(dim))
+        return f"FixedArray{dim}D<{cpp_base}, {dims}>"
+
+    return f"VariableArray{dim}D<{cpp_base}>"
 
 
-def _split_transforms(transforms):
-    f_transforms = {}
-    c_transforms = {}
-
-    for full_type, (f_transform, c_transform) in transforms.items():
-        if f_transform is not None:
-            f_transforms[full_type] = f_transform
-        if c_transform is not None:
-            c_transforms[full_type] = c_transform
-
-    return f_transforms, c_transforms
+class UnsupportedTypeError(Exception):
+    pass
 
 
-f_transforms, c_transforms = _split_transforms(transforms)
+def get_type_transform(
+    ft: FullType,
+    intent: Intent = "in",
+    is_optional: bool = False,
+    kind: str = "",
+    is_dynamic_array: bool = False,
+) -> Transform:
+    """
+    Generates a specific Transform object for a given type configuration.
+
+    Parameters
+    ----------
+    ft : FullType
+        The full type description (type name, dimension, pointer status).
+    intent : Intent
+        The argument intent (in, out, inout).
+    is_optional : bool
+        Whether the argument is optional.
+    kind : str
+        The kind of the type (e.g. struct name), if applicable.
+
+    Returns
+    -------
+    Transform
+    """
+
+    info = STANDARD_TYPES[ft.type]
+    proxy_cls = None
+
+    # Logic:
+    # - Scalars (Fixed/NOT) are passed by Reference (&).
+    # - Everything else (Arrays/Allocatable/Pointers) uses Array Typedefs.
+
+    if ft.type == "type" or is_dynamic_array:
+        cpp_call_type = "void*"
+    else:
+        # cpp_call_type = info.cpp_call_fortran_type or info.cpp_call_ref
+        if ft.dim == 0 and ft.ptr != "PTR":
+            cpp_call_type = info.cpp_call_ref
+        else:
+            cpp_call_type = info.cpp_call_arr
+
+        if intent in {"in", "inout"} and is_optional:
+            cpp_call_type = cpp_call_type.replace("&", "*")
+
+    # --- C++ Type Logic ---
+    if ft.type == "type":
+        proxy_cls = struct_to_proxy_class_name(kind) if kind else "PROXYCLS"
+        cpp_base = f"{proxy_cls}&"
+    elif ft.type == "character":
+        cpp_base = "std::string"
+    else:
+        cpp_base = info.c_type
+
+    if ft.dim > 0:
+        # Array handling
+        if ft.dim == 1 and ft.ptr != "NOT" and info.allocatable_container:
+            # Native allocatable array
+            alloc_container = info.allocatable_container
+            if is_optional:
+                cpp_type = f"optional_ref<{alloc_container}>"
+            else:
+                cpp_type = f"{alloc_container}&"
+        elif ft.type == "type" and ft.ptr != "NOT":
+            alloc_container = f"{proxy_cls}Allocatable{ft.dim}D"
+            if is_optional:
+                cpp_type = f"optional_ref<{alloc_container}>"
+            else:
+                cpp_type = f"{alloc_container}&"
+        elif is_optional:
+            # Optional array
+            container = get_cpp_container(info.cpp_bmad_type, ft.dim, ft.ptr)
+            cpp_type = f"std::optional<{container}>"
+        else:
+            # Standard array
+            cpp_type = get_cpp_container(info.cpp_bmad_type, ft.dim, ft.ptr)
+    elif ft.type == "type":
+        # Scalar type
+        cpp_type = cpp_base
+        if is_optional:
+            cpp_type = cpp_type.replace("&", "")
+            cpp_type = f"optional_ref<{cpp_type}>"
+    elif is_optional:
+        # Optional scalar
+        if intent == "inout":
+            cpp_type = f"optional_ref<{cpp_base}>"
+        else:
+            cpp_type = f"std::optional<{cpp_base}>"
+    else:
+        # Standard scalar
+        cpp_type = cpp_base
+
+    # Clean up reference in optional
+    if "std::optional" in cpp_type:
+        cpp_type = cpp_type.replace("&", "")
+
+    # --- C++ Default Value Logic ---
+    cpp_default = ""
+    if is_optional:
+        if cpp_type.startswith(("optional_ref", "std::optional")):
+            cpp_default = " = std::nullopt"
+        else:
+            cpp_default = " = nullptr"
+
+    # --- C++ Return Type Logic ---
+    cpp_return_type = cpp_base
+    if ft.type == "type":
+        assert proxy_cls is not None
+        if intent in {"in", "inout"} or ft.dim == 0:
+            cpp_return_type = proxy_cls
+        elif ft.ptr == "NOT":
+            cpp_return_type = f"{proxy_cls}Array{ft.dim}D"
+        else:
+            cpp_return_type = f"{proxy_cls}Allocatable{ft.dim}D"
+    elif ft.dim > 0:
+        if is_dynamic_array:
+            cpp_return_type = info.allocatable_container
+            assert cpp_return_type
+        else:
+            cpp_return_type = get_cpp_container(info.cpp_bmad_type, ft.dim, ft.ptr)
+
+    # --- Fortran Type Logic ---
+    fortran_type = info.fortran_type
+    # Note: Attributes like pointer, allocatable, value, intent are handled in fortran.py
+    # based on the argument properties, but we can store the base type here.
+
+    fortran_native_type = info.fortran_native_type or ""
+    if ft.type == "type" and kind:
+        fortran_native_type = f"type({kind})"
+
+    def remove_optional(typ: str) -> str:
+        if typ.startswith("optional_ref<"):
+            return typ.removeprefix("optional_ref<")[:-1]
+        if typ.startswith("std::optional"):
+            return typ.removeprefix("std::optional<")[:-1]
+        return typ
+
+    return Transform(
+        fortran_type=fortran_type,
+        cpp_type=cpp_type,
+        cpp_declare_type=remove_optional(cpp_type),
+        cpp_call_fortran_type=cpp_call_type,
+        cpp_default=cpp_default,
+        cpp_return_type=cpp_return_type,
+        fortran_native_type=fortran_native_type,
+    )

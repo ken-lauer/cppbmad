@@ -1,0 +1,2 @@
+- [ ] intent="inout" strings
+- [ ] intent="out" strings arbitrarily set to 4k chars (!)

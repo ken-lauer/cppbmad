@@ -1,7 +1,6 @@
 module tao_c_proxy_interface
   use bmad
   use tao_interface
-  use tao_equality_mod
   use fortran_cpp_utils, only: to_c_str
 
   implicit none
@@ -20,6 +19,16 @@ contains
     else
       n = 0
     end if
+  end function
+
+  function c_get_space_charge_com() result(ptr) bind(c, name="bmad_get_space_charge_com")
+    type(c_ptr) :: ptr
+    ptr = c_loc(space_charge_com)
+  end function
+
+  function c_get_bmad_com() result(ptr) bind(c, name="bmad_get_bmad_com")
+    type(c_ptr) :: ptr
+    ptr = c_loc(bmad_com)
   end function
 
   ! Global accessor functions (only these use indices)

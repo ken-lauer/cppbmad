@@ -20,14 +20,14 @@ using Bool = bool;
 using Complex = complex<double>;
 using Real = double;
 using Int = int;
-using Int8 = long int;
+using Int8 = int64_t;
 using Char = char*;
 
 using c_Bool = const bool;
 using c_Complex = const Complex;
 using c_Real = const double;
 using c_Int = const int;
-using c_Int8 = const long int;
+using c_Int8 = const int64_t;
 using c_String = const string;
 using c_Char = const char*;
 
@@ -50,13 +50,6 @@ template <typename T>
 using VariableArray2D = std::vector<VariableArray1D<T>>;
 template <typename T>
 using VariableArray3D = std::vector<VariableArray2D<T>>;
-
-template <typename T>
-using SharedVector1D = std::vector<std::shared_ptr<T>>;
-template <typename T>
-using SharedVector2D = std::vector<SharedVector1D<T>>;
-template <typename T>
-using SharedVector3D = std::vector<SharedVector2D<T>>;
 
 template <typename T>
 using optional_ref = std::optional<std::reference_wrapper<T>>;
