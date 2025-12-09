@@ -127,7 +127,7 @@ def get_type_transform(
             else:
                 cpp_type = f"{alloc_container}&"
         elif ft.type == "type" and ft.ptr != "NOT":
-            alloc_container = f"{proxy_cls}Allocatable{ft.dim}D"
+            alloc_container = f"{proxy_cls}Alloc{ft.dim}D"
             if is_optional:
                 cpp_type = f"optional_ref<{alloc_container}>"
             else:
@@ -176,7 +176,7 @@ def get_type_transform(
         elif ft.ptr == "NOT":
             cpp_return_type = f"{proxy_cls}Array{ft.dim}D"
         else:
-            cpp_return_type = f"{proxy_cls}Allocatable{ft.dim}D"
+            cpp_return_type = f"{proxy_cls}Alloc{ft.dim}D"
     elif ft.dim > 0:
         if is_dynamic_array:
             cpp_return_type = info.allocatable_container

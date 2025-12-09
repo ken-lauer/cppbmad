@@ -13,14 +13,13 @@
 using namespace Bmad;
 
 using json = nlohmann::json;
-void Tao::tao_deallocate_plot_cache(
-    TaoPlotCacheProxyAllocatable1D& plot_cache) {
+void Tao::tao_deallocate_plot_cache(TaoPlotCacheProxyAlloc1D& plot_cache) {
   // intent=inout allocatable type array
   fortran_tao_deallocate_plot_cache(/* void* */ plot_cache.get_fortran_ptr());
 }
 void Tao::tao_lattice_branches_equal_tao_lattice_branches(
-    TaoLatticeBranchProxyAllocatable1D& tlb1,
-    TaoLatticeBranchProxyAllocatable1D& tlb2) {
+    TaoLatticeBranchProxyAlloc1D& tlb1,
+    TaoLatticeBranchProxyAlloc1D& tlb2) {
   // intent=inout allocatable type array
   // intent=inout allocatable type array
   fortran_tao_lattice_branches_equal_tao_lattice_branches(
@@ -429,7 +428,7 @@ void Tao::tao_use_data(std::string action, std::string data_name) {
   fortran_tao_use_data(/* c_Char */ _action, /* c_Char */ _data_name);
 }
 void Tao::tao_set_opt_vars(
-    RealAllocatable1D& var_vec,
+    RealAlloc1D& var_vec,
     std::optional<bool> print_limit_warning) {
   // intent=in allocatable general array
   bool print_limit_warning_lvalue;
@@ -591,7 +590,7 @@ Tao::TaoEvaluateLatOrBeamData Tao::tao_evaluate_lat_or_beam_data(
   bool _err{};
   auto _data_name = data_name.c_str();
   // intent=out allocatable general array
-  auto values{RealAllocatable1D()};
+  auto values{RealAlloc1D()};
   auto _default_source = default_source.c_str(); // ptr, inout, required
   auto* _dflt_ele_ref = dflt_ele_ref.has_value()
       ? dflt_ele_ref->get().get_fortran_ptr()
@@ -656,13 +655,13 @@ Tao::TaoToPhaseAndCouplingReading Tao::tao_to_phase_and_coupling_reading(
 }
 Tao::TaoGetData Tao::tao_get_data() {
   // intent=out allocatable general array
-  auto data_value{RealAllocatable1D()};
+  auto data_value{RealAlloc1D()};
   // intent=out allocatable general array
-  auto data_weight{RealAllocatable1D()};
+  auto data_weight{RealAlloc1D()};
   // intent=out allocatable general array
-  auto data_meas_value{RealAllocatable1D()};
+  auto data_meas_value{RealAlloc1D()};
   // intent=out allocatable general array
-  auto data_ix_dModel{IntAllocatable1D()};
+  auto data_ix_dModel{IntAlloc1D()};
   fortran_tao_get_data(
       /* void* */ data_value.get_fortran_ptr(),
       /* void* */ data_weight.get_fortran_ptr(),
@@ -688,7 +687,7 @@ std::string Tao::tao_expression_hash_substitute(
   return _expression_out;
 }
 void Tao::tao_load_this_datum(
-    RealAllocatable1D& vec,
+    RealAlloc1D& vec,
     EleProxy& ele_ref,
     EleProxy& ele_start,
     EleProxy& ele,
@@ -697,7 +696,7 @@ void Tao::tao_load_this_datum(
     TaoDataProxy& datum,
     BranchProxy& branch,
     optional_ref<std::string> why_invalid,
-    optional_ref<BoolAllocatable1D> good) {
+    optional_ref<BoolAlloc1D> good) {
   // intent=inout allocatable general array
   auto _ele_ref = &ele_ref; // input, required, pointer
   auto _ele_start = &ele_start; // input, required, pointer
@@ -730,8 +729,8 @@ double Tao::tao_datum_s_position(TaoDataProxy& datum, EleProxy& ele) {
 Tao::TaoDatumIntegrate Tao::tao_datum_integrate(
     TaoDataProxy& datum,
     BranchProxy& branch,
-    RealAllocatable1D& s_pos,
-    RealAllocatable1D& values) {
+    RealAlloc1D& s_pos,
+    RealAlloc1D& values) {
   // intent=in allocatable general array
   // intent=in allocatable general array
   bool _valid_value{};
@@ -766,7 +765,7 @@ void Tao::integrate_min(
     double datum_value,
     int ix_m,
     BranchProxy& branch,
-    RealAllocatable1D& vec,
+    RealAlloc1D& vec,
     TaoDataProxy& datum) {
   // intent=inout allocatable general array
   fortran_integrate_min(
@@ -784,7 +783,7 @@ void Tao::integrate_max(
     double datum_value,
     int ix_m,
     BranchProxy& branch,
-    RealAllocatable1D& vec,
+    RealAlloc1D& vec,
     TaoDataProxy& datum) {
   // intent=inout allocatable general array
   fortran_integrate_max(
@@ -802,7 +801,7 @@ void Tao::tao_scratch_values_calc(
     EleProxy& ele,
     TaoDataProxy& datum,
     BranchProxy& branch,
-    CoordProxyAllocatable1D& orbit) {
+    CoordProxyAlloc1D& orbit) {
   auto _ele_ref = &ele_ref; // input, required, pointer
   auto _ele_start = &ele_start; // input, required, pointer
   auto _ele = &ele; // input, required, pointer
@@ -1009,7 +1008,7 @@ void Tao::tao_evaluate_tune(
       /* c_Real& */ q_val);
 }
 void Tao::re_allocate_c_double(
-    RealAllocatable1D& re,
+    RealAlloc1D& re,
     int n,
     std::optional<bool> exact,
     optional_ref<double> init_val) {
@@ -1166,11 +1165,10 @@ void Tao::tao_init_data_in_universe(
       /* c_Int& */ n_d2_add,
       /* c_Bool* */ _keep_existing_data);
 }
-ResonanceHProxyAllocatable1D Tao::tao_add_to_normal_mode_h_array(
-    std::string h_str) {
+ResonanceHProxyAlloc1D Tao::tao_add_to_normal_mode_h_array(std::string h_str) {
   auto _h_str = h_str.c_str();
   // intent=out allocatable type array
-  auto h_array{ResonanceHProxyAllocatable1D()};
+  auto h_array{ResonanceHProxyAlloc1D()};
   fortran_tao_add_to_normal_mode_h_array(
       /* c_Char */ _h_str, /* void* */ h_array.get_fortran_ptr());
   return std::move(h_array);
@@ -1190,13 +1188,13 @@ int Tao::tao_phase_space_axis_index(std::string data_type, bool err) {
 }
 Tao::TaoParticleDataValue Tao::tao_particle_data_value(
     std::string data_type,
-    CoordProxyAllocatable1D& p,
+    CoordProxyAlloc1D& p,
     EleProxy& ele,
     int ix_bunch) {
   auto _data_type = data_type.c_str();
   // intent=in allocatable type array
   // intent=out allocatable general array
-  auto value{RealAllocatable1D()};
+  auto value{RealAlloc1D()};
   bool _err{};
   fortran_tao_particle_data_value(
       /* c_Char */ _data_type,
@@ -1230,15 +1228,15 @@ void Tao::tao_read_cmd(
 }
 Tao::TaoGetOptVars Tao::tao_get_opt_vars() {
   // intent=out allocatable general array
-  auto var_value{RealAllocatable1D()};
+  auto var_value{RealAlloc1D()};
   // intent=out allocatable general array
-  auto var_step{RealAllocatable1D()};
+  auto var_step{RealAlloc1D()};
   // intent=out allocatable general array
-  auto var_delta{RealAllocatable1D()};
+  auto var_delta{RealAlloc1D()};
   // intent=out allocatable general array
-  auto var_weight{RealAllocatable1D()};
+  auto var_weight{RealAlloc1D()};
   // intent=out allocatable general array
-  auto var_ix{IntAllocatable1D()};
+  auto var_ix{IntAlloc1D()};
   bool _ignore_if_weight_is_zero{};
   bool _ignore_if_not_limited{};
   fortran_tao_get_opt_vars(
@@ -1323,7 +1321,7 @@ Tao::TaoPickUniverse Tao::tao_pick_universe(
   auto _name_in = name_in.c_str();
   char _name_out[4096];
   // intent=out allocatable general array
-  auto picked{BoolAllocatable1D()};
+  auto picked{BoolAlloc1D()};
   bool _err{};
   int _ix_uni{};
   bool _explicit_uni{};
@@ -1554,7 +1552,7 @@ bool Tao::tao_run_cmd(std::string which) {
   fortran_tao_run_cmd(/* c_Char */ _which, /* c_Bool& */ _abort);
   return _abort;
 }
-void Tao::tao_set_data_useit_opt(optional_ref<TaoDataProxyAllocatable1D> data) {
+void Tao::tao_set_data_useit_opt(optional_ref<TaoDataProxyAlloc1D> data) {
   // intent=in allocatable type array
   auto* _data = data.has_value() ? data->get().get_fortran_ptr()
                                  : nullptr; // input, optional
@@ -1683,7 +1681,7 @@ bool Tao::tao_change_ele(
 void Tao::tao_to_change_number(
     std::string num_str,
     int n_size,
-    RealAllocatable1D& change_number,
+    RealAlloc1D& change_number,
     std::string abs_or_rel,
     bool err) {
   auto _num_str = num_str.c_str(); // ptr, inout, required

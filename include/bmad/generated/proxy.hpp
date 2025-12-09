@@ -6927,28 +6927,28 @@ void access_test_sub_sub_struct_container(
     bool* alloc);
 }
 
-using RealAllocatable1D = FortranAllocatable1D<
+using RealAlloc1D = FAlloc1D<
     double,
     allocate_real_container,
     deallocate_real_container,
     reallocate_real_container_data,
     access_real_container>;
 
-using IntAllocatable1D = FortranAllocatable1D<
+using IntAlloc1D = FAlloc1D<
     int,
     allocate_integer_container,
     deallocate_integer_container,
     reallocate_integer_container_data,
     access_integer_container>;
 
-using BoolAllocatable1D = FortranAllocatable1D<
+using BoolAlloc1D = FAlloc1D<
     bool,
     allocate_logical_container,
     deallocate_logical_container,
     reallocate_logical_container_data,
     access_logical_container>;
 
-using ComplexAllocatable1D = FortranAllocatable1D<
+using ComplexAlloc1D = FAlloc1D<
     std::complex<double>,
     allocate_complex_container,
     deallocate_complex_container,
@@ -6957,14 +6957,14 @@ using ComplexAllocatable1D = FortranAllocatable1D<
 
 class SplineProxy;
 
-using SplineProxyArray1D = FortranTypeArray1D<
+using SplineProxyArray1D = FTypeArray1D<
     SplineProxy,
     allocate_fortran_spline_struct,
     deallocate_fortran_spline_struct>;
-using SplineProxyArray2D = FortranTypeArray2D<SplineProxy>;
-using SplineProxyArray3D = FortranTypeArray3D<SplineProxy>;
+using SplineProxyArray2D = FTypeArray2D<SplineProxy>;
+using SplineProxyArray3D = FTypeArray3D<SplineProxy>;
 
-using SplineProxyAllocatable1D = FortranTypeAllocatable1D<
+using SplineProxyAlloc1D = FTypeAlloc1D<
     SplineProxyArray1D,
     allocate_spline_struct_container,
     deallocate_spline_struct_container,
@@ -6973,14 +6973,14 @@ using SplineProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class SpinPolarProxy;
 
-using SpinPolarProxyArray1D = FortranTypeArray1D<
+using SpinPolarProxyArray1D = FTypeArray1D<
     SpinPolarProxy,
     allocate_fortran_spin_polar_struct,
     deallocate_fortran_spin_polar_struct>;
-using SpinPolarProxyArray2D = FortranTypeArray2D<SpinPolarProxy>;
-using SpinPolarProxyArray3D = FortranTypeArray3D<SpinPolarProxy>;
+using SpinPolarProxyArray2D = FTypeArray2D<SpinPolarProxy>;
+using SpinPolarProxyArray3D = FTypeArray3D<SpinPolarProxy>;
 
-using SpinPolarProxyAllocatable1D = FortranTypeAllocatable1D<
+using SpinPolarProxyAlloc1D = FTypeAlloc1D<
     SpinPolarProxyArray1D,
     allocate_spin_polar_struct_container,
     deallocate_spin_polar_struct_container,
@@ -6989,14 +6989,14 @@ using SpinPolarProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class AcKickerTimeProxy;
 
-using AcKickerTimeProxyArray1D = FortranTypeArray1D<
+using AcKickerTimeProxyArray1D = FTypeArray1D<
     AcKickerTimeProxy,
     allocate_fortran_ac_kicker_time_struct,
     deallocate_fortran_ac_kicker_time_struct>;
-using AcKickerTimeProxyArray2D = FortranTypeArray2D<AcKickerTimeProxy>;
-using AcKickerTimeProxyArray3D = FortranTypeArray3D<AcKickerTimeProxy>;
+using AcKickerTimeProxyArray2D = FTypeArray2D<AcKickerTimeProxy>;
+using AcKickerTimeProxyArray3D = FTypeArray3D<AcKickerTimeProxy>;
 
-using AcKickerTimeProxyAllocatable1D = FortranTypeAllocatable1D<
+using AcKickerTimeProxyAlloc1D = FTypeAlloc1D<
     AcKickerTimeProxyArray1D,
     allocate_ac_kicker_time_struct_container,
     deallocate_ac_kicker_time_struct_container,
@@ -7005,14 +7005,14 @@ using AcKickerTimeProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class AcKickerFreqProxy;
 
-using AcKickerFreqProxyArray1D = FortranTypeArray1D<
+using AcKickerFreqProxyArray1D = FTypeArray1D<
     AcKickerFreqProxy,
     allocate_fortran_ac_kicker_freq_struct,
     deallocate_fortran_ac_kicker_freq_struct>;
-using AcKickerFreqProxyArray2D = FortranTypeArray2D<AcKickerFreqProxy>;
-using AcKickerFreqProxyArray3D = FortranTypeArray3D<AcKickerFreqProxy>;
+using AcKickerFreqProxyArray2D = FTypeArray2D<AcKickerFreqProxy>;
+using AcKickerFreqProxyArray3D = FTypeArray3D<AcKickerFreqProxy>;
 
-using AcKickerFreqProxyAllocatable1D = FortranTypeAllocatable1D<
+using AcKickerFreqProxyAlloc1D = FTypeAlloc1D<
     AcKickerFreqProxyArray1D,
     allocate_ac_kicker_freq_struct_container,
     deallocate_ac_kicker_freq_struct_container,
@@ -7021,14 +7021,14 @@ using AcKickerFreqProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class AcKickerProxy;
 
-using AcKickerProxyArray1D = FortranTypeArray1D<
+using AcKickerProxyArray1D = FTypeArray1D<
     AcKickerProxy,
     allocate_fortran_ac_kicker_struct,
     deallocate_fortran_ac_kicker_struct>;
-using AcKickerProxyArray2D = FortranTypeArray2D<AcKickerProxy>;
-using AcKickerProxyArray3D = FortranTypeArray3D<AcKickerProxy>;
+using AcKickerProxyArray2D = FTypeArray2D<AcKickerProxy>;
+using AcKickerProxyArray3D = FTypeArray3D<AcKickerProxy>;
 
-using AcKickerProxyAllocatable1D = FortranTypeAllocatable1D<
+using AcKickerProxyAlloc1D = FTypeAlloc1D<
     AcKickerProxyArray1D,
     allocate_ac_kicker_struct_container,
     deallocate_ac_kicker_struct_container,
@@ -7037,14 +7037,14 @@ using AcKickerProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class Interval1CoefProxy;
 
-using Interval1CoefProxyArray1D = FortranTypeArray1D<
+using Interval1CoefProxyArray1D = FTypeArray1D<
     Interval1CoefProxy,
     allocate_fortran_interval1_coef_struct,
     deallocate_fortran_interval1_coef_struct>;
-using Interval1CoefProxyArray2D = FortranTypeArray2D<Interval1CoefProxy>;
-using Interval1CoefProxyArray3D = FortranTypeArray3D<Interval1CoefProxy>;
+using Interval1CoefProxyArray2D = FTypeArray2D<Interval1CoefProxy>;
+using Interval1CoefProxyArray3D = FTypeArray3D<Interval1CoefProxy>;
 
-using Interval1CoefProxyAllocatable1D = FortranTypeAllocatable1D<
+using Interval1CoefProxyAlloc1D = FTypeAlloc1D<
     Interval1CoefProxyArray1D,
     allocate_interval1_coef_struct_container,
     deallocate_interval1_coef_struct_container,
@@ -7053,16 +7053,14 @@ using Interval1CoefProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class PhotonReflectTableProxy;
 
-using PhotonReflectTableProxyArray1D = FortranTypeArray1D<
+using PhotonReflectTableProxyArray1D = FTypeArray1D<
     PhotonReflectTableProxy,
     allocate_fortran_photon_reflect_table_struct,
     deallocate_fortran_photon_reflect_table_struct>;
-using PhotonReflectTableProxyArray2D =
-    FortranTypeArray2D<PhotonReflectTableProxy>;
-using PhotonReflectTableProxyArray3D =
-    FortranTypeArray3D<PhotonReflectTableProxy>;
+using PhotonReflectTableProxyArray2D = FTypeArray2D<PhotonReflectTableProxy>;
+using PhotonReflectTableProxyArray3D = FTypeArray3D<PhotonReflectTableProxy>;
 
-using PhotonReflectTableProxyAllocatable1D = FortranTypeAllocatable1D<
+using PhotonReflectTableProxyAlloc1D = FTypeAlloc1D<
     PhotonReflectTableProxyArray1D,
     allocate_photon_reflect_table_struct_container,
     deallocate_photon_reflect_table_struct_container,
@@ -7071,16 +7069,16 @@ using PhotonReflectTableProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class PhotonReflectSurfaceProxy;
 
-using PhotonReflectSurfaceProxyArray1D = FortranTypeArray1D<
+using PhotonReflectSurfaceProxyArray1D = FTypeArray1D<
     PhotonReflectSurfaceProxy,
     allocate_fortran_photon_reflect_surface_struct,
     deallocate_fortran_photon_reflect_surface_struct>;
 using PhotonReflectSurfaceProxyArray2D =
-    FortranTypeArray2D<PhotonReflectSurfaceProxy>;
+    FTypeArray2D<PhotonReflectSurfaceProxy>;
 using PhotonReflectSurfaceProxyArray3D =
-    FortranTypeArray3D<PhotonReflectSurfaceProxy>;
+    FTypeArray3D<PhotonReflectSurfaceProxy>;
 
-using PhotonReflectSurfaceProxyAllocatable1D = FortranTypeAllocatable1D<
+using PhotonReflectSurfaceProxyAlloc1D = FTypeAlloc1D<
     PhotonReflectSurfaceProxyArray1D,
     allocate_photon_reflect_surface_struct_container,
     deallocate_photon_reflect_surface_struct_container,
@@ -7089,14 +7087,14 @@ using PhotonReflectSurfaceProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class CoordProxy;
 
-using CoordProxyArray1D = FortranTypeArray1D<
+using CoordProxyArray1D = FTypeArray1D<
     CoordProxy,
     allocate_fortran_coord_struct,
     deallocate_fortran_coord_struct>;
-using CoordProxyArray2D = FortranTypeArray2D<CoordProxy>;
-using CoordProxyArray3D = FortranTypeArray3D<CoordProxy>;
+using CoordProxyArray2D = FTypeArray2D<CoordProxy>;
+using CoordProxyArray3D = FTypeArray3D<CoordProxy>;
 
-using CoordProxyAllocatable1D = FortranTypeAllocatable1D<
+using CoordProxyAlloc1D = FTypeAlloc1D<
     CoordProxyArray1D,
     allocate_coord_struct_container,
     deallocate_coord_struct_container,
@@ -7105,14 +7103,14 @@ using CoordProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class CoordArrayProxy;
 
-using CoordArrayProxyArray1D = FortranTypeArray1D<
+using CoordArrayProxyArray1D = FTypeArray1D<
     CoordArrayProxy,
     allocate_fortran_coord_array_struct,
     deallocate_fortran_coord_array_struct>;
-using CoordArrayProxyArray2D = FortranTypeArray2D<CoordArrayProxy>;
-using CoordArrayProxyArray3D = FortranTypeArray3D<CoordArrayProxy>;
+using CoordArrayProxyArray2D = FTypeArray2D<CoordArrayProxy>;
+using CoordArrayProxyArray3D = FTypeArray3D<CoordArrayProxy>;
 
-using CoordArrayProxyAllocatable1D = FortranTypeAllocatable1D<
+using CoordArrayProxyAlloc1D = FTypeAlloc1D<
     CoordArrayProxyArray1D,
     allocate_coord_array_struct_container,
     deallocate_coord_array_struct_container,
@@ -7121,14 +7119,14 @@ using CoordArrayProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class BpmPhaseCouplingProxy;
 
-using BpmPhaseCouplingProxyArray1D = FortranTypeArray1D<
+using BpmPhaseCouplingProxyArray1D = FTypeArray1D<
     BpmPhaseCouplingProxy,
     allocate_fortran_bpm_phase_coupling_struct,
     deallocate_fortran_bpm_phase_coupling_struct>;
-using BpmPhaseCouplingProxyArray2D = FortranTypeArray2D<BpmPhaseCouplingProxy>;
-using BpmPhaseCouplingProxyArray3D = FortranTypeArray3D<BpmPhaseCouplingProxy>;
+using BpmPhaseCouplingProxyArray2D = FTypeArray2D<BpmPhaseCouplingProxy>;
+using BpmPhaseCouplingProxyArray3D = FTypeArray3D<BpmPhaseCouplingProxy>;
 
-using BpmPhaseCouplingProxyAllocatable1D = FortranTypeAllocatable1D<
+using BpmPhaseCouplingProxyAlloc1D = FTypeAlloc1D<
     BpmPhaseCouplingProxyArray1D,
     allocate_bpm_phase_coupling_struct_container,
     deallocate_bpm_phase_coupling_struct_container,
@@ -7137,14 +7135,14 @@ using BpmPhaseCouplingProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class ExpressionAtomProxy;
 
-using ExpressionAtomProxyArray1D = FortranTypeArray1D<
+using ExpressionAtomProxyArray1D = FTypeArray1D<
     ExpressionAtomProxy,
     allocate_fortran_expression_atom_struct,
     deallocate_fortran_expression_atom_struct>;
-using ExpressionAtomProxyArray2D = FortranTypeArray2D<ExpressionAtomProxy>;
-using ExpressionAtomProxyArray3D = FortranTypeArray3D<ExpressionAtomProxy>;
+using ExpressionAtomProxyArray2D = FTypeArray2D<ExpressionAtomProxy>;
+using ExpressionAtomProxyArray3D = FTypeArray3D<ExpressionAtomProxy>;
 
-using ExpressionAtomProxyAllocatable1D = FortranTypeAllocatable1D<
+using ExpressionAtomProxyAlloc1D = FTypeAlloc1D<
     ExpressionAtomProxyArray1D,
     allocate_expression_atom_struct_container,
     deallocate_expression_atom_struct_container,
@@ -7153,14 +7151,14 @@ using ExpressionAtomProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class WakeSrZLongProxy;
 
-using WakeSrZLongProxyArray1D = FortranTypeArray1D<
+using WakeSrZLongProxyArray1D = FTypeArray1D<
     WakeSrZLongProxy,
     allocate_fortran_wake_sr_z_long_struct,
     deallocate_fortran_wake_sr_z_long_struct>;
-using WakeSrZLongProxyArray2D = FortranTypeArray2D<WakeSrZLongProxy>;
-using WakeSrZLongProxyArray3D = FortranTypeArray3D<WakeSrZLongProxy>;
+using WakeSrZLongProxyArray2D = FTypeArray2D<WakeSrZLongProxy>;
+using WakeSrZLongProxyArray3D = FTypeArray3D<WakeSrZLongProxy>;
 
-using WakeSrZLongProxyAllocatable1D = FortranTypeAllocatable1D<
+using WakeSrZLongProxyAlloc1D = FTypeAlloc1D<
     WakeSrZLongProxyArray1D,
     allocate_wake_sr_z_long_struct_container,
     deallocate_wake_sr_z_long_struct_container,
@@ -7169,14 +7167,14 @@ using WakeSrZLongProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class WakeSrModeProxy;
 
-using WakeSrModeProxyArray1D = FortranTypeArray1D<
+using WakeSrModeProxyArray1D = FTypeArray1D<
     WakeSrModeProxy,
     allocate_fortran_wake_sr_mode_struct,
     deallocate_fortran_wake_sr_mode_struct>;
-using WakeSrModeProxyArray2D = FortranTypeArray2D<WakeSrModeProxy>;
-using WakeSrModeProxyArray3D = FortranTypeArray3D<WakeSrModeProxy>;
+using WakeSrModeProxyArray2D = FTypeArray2D<WakeSrModeProxy>;
+using WakeSrModeProxyArray3D = FTypeArray3D<WakeSrModeProxy>;
 
-using WakeSrModeProxyAllocatable1D = FortranTypeAllocatable1D<
+using WakeSrModeProxyAlloc1D = FTypeAlloc1D<
     WakeSrModeProxyArray1D,
     allocate_wake_sr_mode_struct_container,
     deallocate_wake_sr_mode_struct_container,
@@ -7185,14 +7183,14 @@ using WakeSrModeProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class WakeSrProxy;
 
-using WakeSrProxyArray1D = FortranTypeArray1D<
+using WakeSrProxyArray1D = FTypeArray1D<
     WakeSrProxy,
     allocate_fortran_wake_sr_struct,
     deallocate_fortran_wake_sr_struct>;
-using WakeSrProxyArray2D = FortranTypeArray2D<WakeSrProxy>;
-using WakeSrProxyArray3D = FortranTypeArray3D<WakeSrProxy>;
+using WakeSrProxyArray2D = FTypeArray2D<WakeSrProxy>;
+using WakeSrProxyArray3D = FTypeArray3D<WakeSrProxy>;
 
-using WakeSrProxyAllocatable1D = FortranTypeAllocatable1D<
+using WakeSrProxyAlloc1D = FTypeAlloc1D<
     WakeSrProxyArray1D,
     allocate_wake_sr_struct_container,
     deallocate_wake_sr_struct_container,
@@ -7201,14 +7199,14 @@ using WakeSrProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class WakeLrModeProxy;
 
-using WakeLrModeProxyArray1D = FortranTypeArray1D<
+using WakeLrModeProxyArray1D = FTypeArray1D<
     WakeLrModeProxy,
     allocate_fortran_wake_lr_mode_struct,
     deallocate_fortran_wake_lr_mode_struct>;
-using WakeLrModeProxyArray2D = FortranTypeArray2D<WakeLrModeProxy>;
-using WakeLrModeProxyArray3D = FortranTypeArray3D<WakeLrModeProxy>;
+using WakeLrModeProxyArray2D = FTypeArray2D<WakeLrModeProxy>;
+using WakeLrModeProxyArray3D = FTypeArray3D<WakeLrModeProxy>;
 
-using WakeLrModeProxyAllocatable1D = FortranTypeAllocatable1D<
+using WakeLrModeProxyAlloc1D = FTypeAlloc1D<
     WakeLrModeProxyArray1D,
     allocate_wake_lr_mode_struct_container,
     deallocate_wake_lr_mode_struct_container,
@@ -7217,14 +7215,14 @@ using WakeLrModeProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class WakeLrProxy;
 
-using WakeLrProxyArray1D = FortranTypeArray1D<
+using WakeLrProxyArray1D = FTypeArray1D<
     WakeLrProxy,
     allocate_fortran_wake_lr_struct,
     deallocate_fortran_wake_lr_struct>;
-using WakeLrProxyArray2D = FortranTypeArray2D<WakeLrProxy>;
-using WakeLrProxyArray3D = FortranTypeArray3D<WakeLrProxy>;
+using WakeLrProxyArray2D = FTypeArray2D<WakeLrProxy>;
+using WakeLrProxyArray3D = FTypeArray3D<WakeLrProxy>;
 
-using WakeLrProxyAllocatable1D = FortranTypeAllocatable1D<
+using WakeLrProxyAlloc1D = FTypeAlloc1D<
     WakeLrProxyArray1D,
     allocate_wake_lr_struct_container,
     deallocate_wake_lr_struct_container,
@@ -7233,14 +7231,14 @@ using WakeLrProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class LatEleLocProxy;
 
-using LatEleLocProxyArray1D = FortranTypeArray1D<
+using LatEleLocProxyArray1D = FTypeArray1D<
     LatEleLocProxy,
     allocate_fortran_lat_ele_loc_struct,
     deallocate_fortran_lat_ele_loc_struct>;
-using LatEleLocProxyArray2D = FortranTypeArray2D<LatEleLocProxy>;
-using LatEleLocProxyArray3D = FortranTypeArray3D<LatEleLocProxy>;
+using LatEleLocProxyArray2D = FTypeArray2D<LatEleLocProxy>;
+using LatEleLocProxyArray3D = FTypeArray3D<LatEleLocProxy>;
 
-using LatEleLocProxyAllocatable1D = FortranTypeAllocatable1D<
+using LatEleLocProxyAlloc1D = FTypeAlloc1D<
     LatEleLocProxyArray1D,
     allocate_lat_ele_loc_struct_container,
     deallocate_lat_ele_loc_struct_container,
@@ -7249,14 +7247,14 @@ using LatEleLocProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class WakeProxy;
 
-using WakeProxyArray1D = FortranTypeArray1D<
+using WakeProxyArray1D = FTypeArray1D<
     WakeProxy,
     allocate_fortran_wake_struct,
     deallocate_fortran_wake_struct>;
-using WakeProxyArray2D = FortranTypeArray2D<WakeProxy>;
-using WakeProxyArray3D = FortranTypeArray3D<WakeProxy>;
+using WakeProxyArray2D = FTypeArray2D<WakeProxy>;
+using WakeProxyArray3D = FTypeArray3D<WakeProxy>;
 
-using WakeProxyAllocatable1D = FortranTypeAllocatable1D<
+using WakeProxyAlloc1D = FTypeAlloc1D<
     WakeProxyArray1D,
     allocate_wake_struct_container,
     deallocate_wake_struct_container,
@@ -7265,14 +7263,14 @@ using WakeProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaylorTermProxy;
 
-using TaylorTermProxyArray1D = FortranTypeArray1D<
+using TaylorTermProxyArray1D = FTypeArray1D<
     TaylorTermProxy,
     allocate_fortran_taylor_term_struct,
     deallocate_fortran_taylor_term_struct>;
-using TaylorTermProxyArray2D = FortranTypeArray2D<TaylorTermProxy>;
-using TaylorTermProxyArray3D = FortranTypeArray3D<TaylorTermProxy>;
+using TaylorTermProxyArray2D = FTypeArray2D<TaylorTermProxy>;
+using TaylorTermProxyArray3D = FTypeArray3D<TaylorTermProxy>;
 
-using TaylorTermProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaylorTermProxyAlloc1D = FTypeAlloc1D<
     TaylorTermProxyArray1D,
     allocate_taylor_term_struct_container,
     deallocate_taylor_term_struct_container,
@@ -7281,14 +7279,14 @@ using TaylorTermProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaylorProxy;
 
-using TaylorProxyArray1D = FortranTypeArray1D<
+using TaylorProxyArray1D = FTypeArray1D<
     TaylorProxy,
     allocate_fortran_taylor_struct,
     deallocate_fortran_taylor_struct>;
-using TaylorProxyArray2D = FortranTypeArray2D<TaylorProxy>;
-using TaylorProxyArray3D = FortranTypeArray3D<TaylorProxy>;
+using TaylorProxyArray2D = FTypeArray2D<TaylorProxy>;
+using TaylorProxyArray3D = FTypeArray3D<TaylorProxy>;
 
-using TaylorProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaylorProxyAlloc1D = FTypeAlloc1D<
     TaylorProxyArray1D,
     allocate_taylor_struct_container,
     deallocate_taylor_struct_container,
@@ -7297,14 +7295,14 @@ using TaylorProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class EmTaylorTermProxy;
 
-using EmTaylorTermProxyArray1D = FortranTypeArray1D<
+using EmTaylorTermProxyArray1D = FTypeArray1D<
     EmTaylorTermProxy,
     allocate_fortran_em_taylor_term_struct,
     deallocate_fortran_em_taylor_term_struct>;
-using EmTaylorTermProxyArray2D = FortranTypeArray2D<EmTaylorTermProxy>;
-using EmTaylorTermProxyArray3D = FortranTypeArray3D<EmTaylorTermProxy>;
+using EmTaylorTermProxyArray2D = FTypeArray2D<EmTaylorTermProxy>;
+using EmTaylorTermProxyArray3D = FTypeArray3D<EmTaylorTermProxy>;
 
-using EmTaylorTermProxyAllocatable1D = FortranTypeAllocatable1D<
+using EmTaylorTermProxyAlloc1D = FTypeAlloc1D<
     EmTaylorTermProxyArray1D,
     allocate_em_taylor_term_struct_container,
     deallocate_em_taylor_term_struct_container,
@@ -7313,14 +7311,14 @@ using EmTaylorTermProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class EmTaylorProxy;
 
-using EmTaylorProxyArray1D = FortranTypeArray1D<
+using EmTaylorProxyArray1D = FTypeArray1D<
     EmTaylorProxy,
     allocate_fortran_em_taylor_struct,
     deallocate_fortran_em_taylor_struct>;
-using EmTaylorProxyArray2D = FortranTypeArray2D<EmTaylorProxy>;
-using EmTaylorProxyArray3D = FortranTypeArray3D<EmTaylorProxy>;
+using EmTaylorProxyArray2D = FTypeArray2D<EmTaylorProxy>;
+using EmTaylorProxyArray3D = FTypeArray3D<EmTaylorProxy>;
 
-using EmTaylorProxyAllocatable1D = FortranTypeAllocatable1D<
+using EmTaylorProxyAlloc1D = FTypeAlloc1D<
     EmTaylorProxyArray1D,
     allocate_em_taylor_struct_container,
     deallocate_em_taylor_struct_container,
@@ -7329,16 +7327,14 @@ using EmTaylorProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class CartesianMapTerm1Proxy;
 
-using CartesianMapTerm1ProxyArray1D = FortranTypeArray1D<
+using CartesianMapTerm1ProxyArray1D = FTypeArray1D<
     CartesianMapTerm1Proxy,
     allocate_fortran_cartesian_map_term1_struct,
     deallocate_fortran_cartesian_map_term1_struct>;
-using CartesianMapTerm1ProxyArray2D =
-    FortranTypeArray2D<CartesianMapTerm1Proxy>;
-using CartesianMapTerm1ProxyArray3D =
-    FortranTypeArray3D<CartesianMapTerm1Proxy>;
+using CartesianMapTerm1ProxyArray2D = FTypeArray2D<CartesianMapTerm1Proxy>;
+using CartesianMapTerm1ProxyArray3D = FTypeArray3D<CartesianMapTerm1Proxy>;
 
-using CartesianMapTerm1ProxyAllocatable1D = FortranTypeAllocatable1D<
+using CartesianMapTerm1ProxyAlloc1D = FTypeAlloc1D<
     CartesianMapTerm1ProxyArray1D,
     allocate_cartesian_map_term1_struct_container,
     deallocate_cartesian_map_term1_struct_container,
@@ -7347,14 +7343,14 @@ using CartesianMapTerm1ProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class CartesianMapTermProxy;
 
-using CartesianMapTermProxyArray1D = FortranTypeArray1D<
+using CartesianMapTermProxyArray1D = FTypeArray1D<
     CartesianMapTermProxy,
     allocate_fortran_cartesian_map_term_struct,
     deallocate_fortran_cartesian_map_term_struct>;
-using CartesianMapTermProxyArray2D = FortranTypeArray2D<CartesianMapTermProxy>;
-using CartesianMapTermProxyArray3D = FortranTypeArray3D<CartesianMapTermProxy>;
+using CartesianMapTermProxyArray2D = FTypeArray2D<CartesianMapTermProxy>;
+using CartesianMapTermProxyArray3D = FTypeArray3D<CartesianMapTermProxy>;
 
-using CartesianMapTermProxyAllocatable1D = FortranTypeAllocatable1D<
+using CartesianMapTermProxyAlloc1D = FTypeAlloc1D<
     CartesianMapTermProxyArray1D,
     allocate_cartesian_map_term_struct_container,
     deallocate_cartesian_map_term_struct_container,
@@ -7363,14 +7359,14 @@ using CartesianMapTermProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class CartesianMapProxy;
 
-using CartesianMapProxyArray1D = FortranTypeArray1D<
+using CartesianMapProxyArray1D = FTypeArray1D<
     CartesianMapProxy,
     allocate_fortran_cartesian_map_struct,
     deallocate_fortran_cartesian_map_struct>;
-using CartesianMapProxyArray2D = FortranTypeArray2D<CartesianMapProxy>;
-using CartesianMapProxyArray3D = FortranTypeArray3D<CartesianMapProxy>;
+using CartesianMapProxyArray2D = FTypeArray2D<CartesianMapProxy>;
+using CartesianMapProxyArray3D = FTypeArray3D<CartesianMapProxy>;
 
-using CartesianMapProxyAllocatable1D = FortranTypeAllocatable1D<
+using CartesianMapProxyAlloc1D = FTypeAlloc1D<
     CartesianMapProxyArray1D,
     allocate_cartesian_map_struct_container,
     deallocate_cartesian_map_struct_container,
@@ -7379,16 +7375,14 @@ using CartesianMapProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class CylindricalMapTerm1Proxy;
 
-using CylindricalMapTerm1ProxyArray1D = FortranTypeArray1D<
+using CylindricalMapTerm1ProxyArray1D = FTypeArray1D<
     CylindricalMapTerm1Proxy,
     allocate_fortran_cylindrical_map_term1_struct,
     deallocate_fortran_cylindrical_map_term1_struct>;
-using CylindricalMapTerm1ProxyArray2D =
-    FortranTypeArray2D<CylindricalMapTerm1Proxy>;
-using CylindricalMapTerm1ProxyArray3D =
-    FortranTypeArray3D<CylindricalMapTerm1Proxy>;
+using CylindricalMapTerm1ProxyArray2D = FTypeArray2D<CylindricalMapTerm1Proxy>;
+using CylindricalMapTerm1ProxyArray3D = FTypeArray3D<CylindricalMapTerm1Proxy>;
 
-using CylindricalMapTerm1ProxyAllocatable1D = FortranTypeAllocatable1D<
+using CylindricalMapTerm1ProxyAlloc1D = FTypeAlloc1D<
     CylindricalMapTerm1ProxyArray1D,
     allocate_cylindrical_map_term1_struct_container,
     deallocate_cylindrical_map_term1_struct_container,
@@ -7397,16 +7391,14 @@ using CylindricalMapTerm1ProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class CylindricalMapTermProxy;
 
-using CylindricalMapTermProxyArray1D = FortranTypeArray1D<
+using CylindricalMapTermProxyArray1D = FTypeArray1D<
     CylindricalMapTermProxy,
     allocate_fortran_cylindrical_map_term_struct,
     deallocate_fortran_cylindrical_map_term_struct>;
-using CylindricalMapTermProxyArray2D =
-    FortranTypeArray2D<CylindricalMapTermProxy>;
-using CylindricalMapTermProxyArray3D =
-    FortranTypeArray3D<CylindricalMapTermProxy>;
+using CylindricalMapTermProxyArray2D = FTypeArray2D<CylindricalMapTermProxy>;
+using CylindricalMapTermProxyArray3D = FTypeArray3D<CylindricalMapTermProxy>;
 
-using CylindricalMapTermProxyAllocatable1D = FortranTypeAllocatable1D<
+using CylindricalMapTermProxyAlloc1D = FTypeAlloc1D<
     CylindricalMapTermProxyArray1D,
     allocate_cylindrical_map_term_struct_container,
     deallocate_cylindrical_map_term_struct_container,
@@ -7415,14 +7407,14 @@ using CylindricalMapTermProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class CylindricalMapProxy;
 
-using CylindricalMapProxyArray1D = FortranTypeArray1D<
+using CylindricalMapProxyArray1D = FTypeArray1D<
     CylindricalMapProxy,
     allocate_fortran_cylindrical_map_struct,
     deallocate_fortran_cylindrical_map_struct>;
-using CylindricalMapProxyArray2D = FortranTypeArray2D<CylindricalMapProxy>;
-using CylindricalMapProxyArray3D = FortranTypeArray3D<CylindricalMapProxy>;
+using CylindricalMapProxyArray2D = FTypeArray2D<CylindricalMapProxy>;
+using CylindricalMapProxyArray3D = FTypeArray3D<CylindricalMapProxy>;
 
-using CylindricalMapProxyAllocatable1D = FortranTypeAllocatable1D<
+using CylindricalMapProxyAlloc1D = FTypeAlloc1D<
     CylindricalMapProxyArray1D,
     allocate_cylindrical_map_struct_container,
     deallocate_cylindrical_map_struct_container,
@@ -7431,14 +7423,14 @@ using CylindricalMapProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class BicubicCmplxCoefProxy;
 
-using BicubicCmplxCoefProxyArray1D = FortranTypeArray1D<
+using BicubicCmplxCoefProxyArray1D = FTypeArray1D<
     BicubicCmplxCoefProxy,
     allocate_fortran_bicubic_cmplx_coef_struct,
     deallocate_fortran_bicubic_cmplx_coef_struct>;
-using BicubicCmplxCoefProxyArray2D = FortranTypeArray2D<BicubicCmplxCoefProxy>;
-using BicubicCmplxCoefProxyArray3D = FortranTypeArray3D<BicubicCmplxCoefProxy>;
+using BicubicCmplxCoefProxyArray2D = FTypeArray2D<BicubicCmplxCoefProxy>;
+using BicubicCmplxCoefProxyArray3D = FTypeArray3D<BicubicCmplxCoefProxy>;
 
-using BicubicCmplxCoefProxyAllocatable1D = FortranTypeAllocatable1D<
+using BicubicCmplxCoefProxyAlloc1D = FTypeAlloc1D<
     BicubicCmplxCoefProxyArray1D,
     allocate_bicubic_cmplx_coef_struct_container,
     deallocate_bicubic_cmplx_coef_struct_container,
@@ -7447,16 +7439,14 @@ using BicubicCmplxCoefProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TricubicCmplxCoefProxy;
 
-using TricubicCmplxCoefProxyArray1D = FortranTypeArray1D<
+using TricubicCmplxCoefProxyArray1D = FTypeArray1D<
     TricubicCmplxCoefProxy,
     allocate_fortran_tricubic_cmplx_coef_struct,
     deallocate_fortran_tricubic_cmplx_coef_struct>;
-using TricubicCmplxCoefProxyArray2D =
-    FortranTypeArray2D<TricubicCmplxCoefProxy>;
-using TricubicCmplxCoefProxyArray3D =
-    FortranTypeArray3D<TricubicCmplxCoefProxy>;
+using TricubicCmplxCoefProxyArray2D = FTypeArray2D<TricubicCmplxCoefProxy>;
+using TricubicCmplxCoefProxyArray3D = FTypeArray3D<TricubicCmplxCoefProxy>;
 
-using TricubicCmplxCoefProxyAllocatable1D = FortranTypeAllocatable1D<
+using TricubicCmplxCoefProxyAlloc1D = FTypeAlloc1D<
     TricubicCmplxCoefProxyArray1D,
     allocate_tricubic_cmplx_coef_struct_container,
     deallocate_tricubic_cmplx_coef_struct_container,
@@ -7465,14 +7455,14 @@ using TricubicCmplxCoefProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class GridFieldPt1Proxy;
 
-using GridFieldPt1ProxyArray1D = FortranTypeArray1D<
+using GridFieldPt1ProxyArray1D = FTypeArray1D<
     GridFieldPt1Proxy,
     allocate_fortran_grid_field_pt1_struct,
     deallocate_fortran_grid_field_pt1_struct>;
-using GridFieldPt1ProxyArray2D = FortranTypeArray2D<GridFieldPt1Proxy>;
-using GridFieldPt1ProxyArray3D = FortranTypeArray3D<GridFieldPt1Proxy>;
+using GridFieldPt1ProxyArray2D = FTypeArray2D<GridFieldPt1Proxy>;
+using GridFieldPt1ProxyArray3D = FTypeArray3D<GridFieldPt1Proxy>;
 
-using GridFieldPt1ProxyAllocatable1D = FortranTypeAllocatable1D<
+using GridFieldPt1ProxyAlloc1D = FTypeAlloc1D<
     GridFieldPt1ProxyArray1D,
     allocate_grid_field_pt1_struct_container,
     deallocate_grid_field_pt1_struct_container,
@@ -7481,14 +7471,14 @@ using GridFieldPt1ProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class GridFieldPtProxy;
 
-using GridFieldPtProxyArray1D = FortranTypeArray1D<
+using GridFieldPtProxyArray1D = FTypeArray1D<
     GridFieldPtProxy,
     allocate_fortran_grid_field_pt_struct,
     deallocate_fortran_grid_field_pt_struct>;
-using GridFieldPtProxyArray2D = FortranTypeArray2D<GridFieldPtProxy>;
-using GridFieldPtProxyArray3D = FortranTypeArray3D<GridFieldPtProxy>;
+using GridFieldPtProxyArray2D = FTypeArray2D<GridFieldPtProxy>;
+using GridFieldPtProxyArray3D = FTypeArray3D<GridFieldPtProxy>;
 
-using GridFieldPtProxyAllocatable1D = FortranTypeAllocatable1D<
+using GridFieldPtProxyAlloc1D = FTypeAlloc1D<
     GridFieldPtProxyArray1D,
     allocate_grid_field_pt_struct_container,
     deallocate_grid_field_pt_struct_container,
@@ -7497,14 +7487,14 @@ using GridFieldPtProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class GridFieldProxy;
 
-using GridFieldProxyArray1D = FortranTypeArray1D<
+using GridFieldProxyArray1D = FTypeArray1D<
     GridFieldProxy,
     allocate_fortran_grid_field_struct,
     deallocate_fortran_grid_field_struct>;
-using GridFieldProxyArray2D = FortranTypeArray2D<GridFieldProxy>;
-using GridFieldProxyArray3D = FortranTypeArray3D<GridFieldProxy>;
+using GridFieldProxyArray2D = FTypeArray2D<GridFieldProxy>;
+using GridFieldProxyArray3D = FTypeArray3D<GridFieldProxy>;
 
-using GridFieldProxyAllocatable1D = FortranTypeAllocatable1D<
+using GridFieldProxyAlloc1D = FTypeAlloc1D<
     GridFieldProxyArray1D,
     allocate_grid_field_struct_container,
     deallocate_grid_field_struct_container,
@@ -7513,14 +7503,14 @@ using GridFieldProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class FloorPositionProxy;
 
-using FloorPositionProxyArray1D = FortranTypeArray1D<
+using FloorPositionProxyArray1D = FTypeArray1D<
     FloorPositionProxy,
     allocate_fortran_floor_position_struct,
     deallocate_fortran_floor_position_struct>;
-using FloorPositionProxyArray2D = FortranTypeArray2D<FloorPositionProxy>;
-using FloorPositionProxyArray3D = FortranTypeArray3D<FloorPositionProxy>;
+using FloorPositionProxyArray2D = FTypeArray2D<FloorPositionProxy>;
+using FloorPositionProxyArray3D = FTypeArray3D<FloorPositionProxy>;
 
-using FloorPositionProxyAllocatable1D = FortranTypeAllocatable1D<
+using FloorPositionProxyAlloc1D = FTypeAlloc1D<
     FloorPositionProxyArray1D,
     allocate_floor_position_struct_container,
     deallocate_floor_position_struct_container,
@@ -7529,16 +7519,16 @@ using FloorPositionProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class HighEnergySpaceChargeProxy;
 
-using HighEnergySpaceChargeProxyArray1D = FortranTypeArray1D<
+using HighEnergySpaceChargeProxyArray1D = FTypeArray1D<
     HighEnergySpaceChargeProxy,
     allocate_fortran_high_energy_space_charge_struct,
     deallocate_fortran_high_energy_space_charge_struct>;
 using HighEnergySpaceChargeProxyArray2D =
-    FortranTypeArray2D<HighEnergySpaceChargeProxy>;
+    FTypeArray2D<HighEnergySpaceChargeProxy>;
 using HighEnergySpaceChargeProxyArray3D =
-    FortranTypeArray3D<HighEnergySpaceChargeProxy>;
+    FTypeArray3D<HighEnergySpaceChargeProxy>;
 
-using HighEnergySpaceChargeProxyAllocatable1D = FortranTypeAllocatable1D<
+using HighEnergySpaceChargeProxyAlloc1D = FTypeAlloc1D<
     HighEnergySpaceChargeProxyArray1D,
     allocate_high_energy_space_charge_struct_container,
     deallocate_high_energy_space_charge_struct_container,
@@ -7547,14 +7537,14 @@ using HighEnergySpaceChargeProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class XyDispProxy;
 
-using XyDispProxyArray1D = FortranTypeArray1D<
+using XyDispProxyArray1D = FTypeArray1D<
     XyDispProxy,
     allocate_fortran_xy_disp_struct,
     deallocate_fortran_xy_disp_struct>;
-using XyDispProxyArray2D = FortranTypeArray2D<XyDispProxy>;
-using XyDispProxyArray3D = FortranTypeArray3D<XyDispProxy>;
+using XyDispProxyArray2D = FTypeArray2D<XyDispProxy>;
+using XyDispProxyArray3D = FTypeArray3D<XyDispProxy>;
 
-using XyDispProxyAllocatable1D = FortranTypeAllocatable1D<
+using XyDispProxyAlloc1D = FTypeAlloc1D<
     XyDispProxyArray1D,
     allocate_xy_disp_struct_container,
     deallocate_xy_disp_struct_container,
@@ -7563,14 +7553,14 @@ using XyDispProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TwissProxy;
 
-using TwissProxyArray1D = FortranTypeArray1D<
+using TwissProxyArray1D = FTypeArray1D<
     TwissProxy,
     allocate_fortran_twiss_struct,
     deallocate_fortran_twiss_struct>;
-using TwissProxyArray2D = FortranTypeArray2D<TwissProxy>;
-using TwissProxyArray3D = FortranTypeArray3D<TwissProxy>;
+using TwissProxyArray2D = FTypeArray2D<TwissProxy>;
+using TwissProxyArray3D = FTypeArray3D<TwissProxy>;
 
-using TwissProxyAllocatable1D = FortranTypeAllocatable1D<
+using TwissProxyAlloc1D = FTypeAlloc1D<
     TwissProxyArray1D,
     allocate_twiss_struct_container,
     deallocate_twiss_struct_container,
@@ -7579,14 +7569,14 @@ using TwissProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class Mode3Proxy;
 
-using Mode3ProxyArray1D = FortranTypeArray1D<
+using Mode3ProxyArray1D = FTypeArray1D<
     Mode3Proxy,
     allocate_fortran_mode3_struct,
     deallocate_fortran_mode3_struct>;
-using Mode3ProxyArray2D = FortranTypeArray2D<Mode3Proxy>;
-using Mode3ProxyArray3D = FortranTypeArray3D<Mode3Proxy>;
+using Mode3ProxyArray2D = FTypeArray2D<Mode3Proxy>;
+using Mode3ProxyArray3D = FTypeArray3D<Mode3Proxy>;
 
-using Mode3ProxyAllocatable1D = FortranTypeAllocatable1D<
+using Mode3ProxyAlloc1D = FTypeAlloc1D<
     Mode3ProxyArray1D,
     allocate_mode3_struct_container,
     deallocate_mode3_struct_container,
@@ -7595,14 +7585,14 @@ using Mode3ProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class BookkeepingStateProxy;
 
-using BookkeepingStateProxyArray1D = FortranTypeArray1D<
+using BookkeepingStateProxyArray1D = FTypeArray1D<
     BookkeepingStateProxy,
     allocate_fortran_bookkeeping_state_struct,
     deallocate_fortran_bookkeeping_state_struct>;
-using BookkeepingStateProxyArray2D = FortranTypeArray2D<BookkeepingStateProxy>;
-using BookkeepingStateProxyArray3D = FortranTypeArray3D<BookkeepingStateProxy>;
+using BookkeepingStateProxyArray2D = FTypeArray2D<BookkeepingStateProxy>;
+using BookkeepingStateProxyArray3D = FTypeArray3D<BookkeepingStateProxy>;
 
-using BookkeepingStateProxyAllocatable1D = FortranTypeAllocatable1D<
+using BookkeepingStateProxyAlloc1D = FTypeAlloc1D<
     BookkeepingStateProxyArray1D,
     allocate_bookkeeping_state_struct_container,
     deallocate_bookkeeping_state_struct_container,
@@ -7611,14 +7601,14 @@ using BookkeepingStateProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class RadMapProxy;
 
-using RadMapProxyArray1D = FortranTypeArray1D<
+using RadMapProxyArray1D = FTypeArray1D<
     RadMapProxy,
     allocate_fortran_rad_map_struct,
     deallocate_fortran_rad_map_struct>;
-using RadMapProxyArray2D = FortranTypeArray2D<RadMapProxy>;
-using RadMapProxyArray3D = FortranTypeArray3D<RadMapProxy>;
+using RadMapProxyArray2D = FTypeArray2D<RadMapProxy>;
+using RadMapProxyArray3D = FTypeArray3D<RadMapProxy>;
 
-using RadMapProxyAllocatable1D = FortranTypeAllocatable1D<
+using RadMapProxyAlloc1D = FTypeAlloc1D<
     RadMapProxyArray1D,
     allocate_rad_map_struct_container,
     deallocate_rad_map_struct_container,
@@ -7627,14 +7617,14 @@ using RadMapProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class RadMapEleProxy;
 
-using RadMapEleProxyArray1D = FortranTypeArray1D<
+using RadMapEleProxyArray1D = FTypeArray1D<
     RadMapEleProxy,
     allocate_fortran_rad_map_ele_struct,
     deallocate_fortran_rad_map_ele_struct>;
-using RadMapEleProxyArray2D = FortranTypeArray2D<RadMapEleProxy>;
-using RadMapEleProxyArray3D = FortranTypeArray3D<RadMapEleProxy>;
+using RadMapEleProxyArray2D = FTypeArray2D<RadMapEleProxy>;
+using RadMapEleProxyArray3D = FTypeArray3D<RadMapEleProxy>;
 
-using RadMapEleProxyAllocatable1D = FortranTypeAllocatable1D<
+using RadMapEleProxyAlloc1D = FTypeAlloc1D<
     RadMapEleProxyArray1D,
     allocate_rad_map_ele_struct_container,
     deallocate_rad_map_ele_struct_container,
@@ -7643,14 +7633,14 @@ using RadMapEleProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class GenGrad1Proxy;
 
-using GenGrad1ProxyArray1D = FortranTypeArray1D<
+using GenGrad1ProxyArray1D = FTypeArray1D<
     GenGrad1Proxy,
     allocate_fortran_gen_grad1_struct,
     deallocate_fortran_gen_grad1_struct>;
-using GenGrad1ProxyArray2D = FortranTypeArray2D<GenGrad1Proxy>;
-using GenGrad1ProxyArray3D = FortranTypeArray3D<GenGrad1Proxy>;
+using GenGrad1ProxyArray2D = FTypeArray2D<GenGrad1Proxy>;
+using GenGrad1ProxyArray3D = FTypeArray3D<GenGrad1Proxy>;
 
-using GenGrad1ProxyAllocatable1D = FortranTypeAllocatable1D<
+using GenGrad1ProxyAlloc1D = FTypeAlloc1D<
     GenGrad1ProxyArray1D,
     allocate_gen_grad1_struct_container,
     deallocate_gen_grad1_struct_container,
@@ -7659,14 +7649,14 @@ using GenGrad1ProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class GenGradMapProxy;
 
-using GenGradMapProxyArray1D = FortranTypeArray1D<
+using GenGradMapProxyArray1D = FTypeArray1D<
     GenGradMapProxy,
     allocate_fortran_gen_grad_map_struct,
     deallocate_fortran_gen_grad_map_struct>;
-using GenGradMapProxyArray2D = FortranTypeArray2D<GenGradMapProxy>;
-using GenGradMapProxyArray3D = FortranTypeArray3D<GenGradMapProxy>;
+using GenGradMapProxyArray2D = FTypeArray2D<GenGradMapProxy>;
+using GenGradMapProxyArray3D = FTypeArray3D<GenGradMapProxy>;
 
-using GenGradMapProxyAllocatable1D = FortranTypeAllocatable1D<
+using GenGradMapProxyAlloc1D = FTypeAlloc1D<
     GenGradMapProxyArray1D,
     allocate_gen_grad_map_struct_container,
     deallocate_gen_grad_map_struct_container,
@@ -7675,16 +7665,14 @@ using GenGradMapProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class SurfaceSegmentedPtProxy;
 
-using SurfaceSegmentedPtProxyArray1D = FortranTypeArray1D<
+using SurfaceSegmentedPtProxyArray1D = FTypeArray1D<
     SurfaceSegmentedPtProxy,
     allocate_fortran_surface_segmented_pt_struct,
     deallocate_fortran_surface_segmented_pt_struct>;
-using SurfaceSegmentedPtProxyArray2D =
-    FortranTypeArray2D<SurfaceSegmentedPtProxy>;
-using SurfaceSegmentedPtProxyArray3D =
-    FortranTypeArray3D<SurfaceSegmentedPtProxy>;
+using SurfaceSegmentedPtProxyArray2D = FTypeArray2D<SurfaceSegmentedPtProxy>;
+using SurfaceSegmentedPtProxyArray3D = FTypeArray3D<SurfaceSegmentedPtProxy>;
 
-using SurfaceSegmentedPtProxyAllocatable1D = FortranTypeAllocatable1D<
+using SurfaceSegmentedPtProxyAlloc1D = FTypeAlloc1D<
     SurfaceSegmentedPtProxyArray1D,
     allocate_surface_segmented_pt_struct_container,
     deallocate_surface_segmented_pt_struct_container,
@@ -7693,14 +7681,14 @@ using SurfaceSegmentedPtProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class SurfaceSegmentedProxy;
 
-using SurfaceSegmentedProxyArray1D = FortranTypeArray1D<
+using SurfaceSegmentedProxyArray1D = FTypeArray1D<
     SurfaceSegmentedProxy,
     allocate_fortran_surface_segmented_struct,
     deallocate_fortran_surface_segmented_struct>;
-using SurfaceSegmentedProxyArray2D = FortranTypeArray2D<SurfaceSegmentedProxy>;
-using SurfaceSegmentedProxyArray3D = FortranTypeArray3D<SurfaceSegmentedProxy>;
+using SurfaceSegmentedProxyArray2D = FTypeArray2D<SurfaceSegmentedProxy>;
+using SurfaceSegmentedProxyArray3D = FTypeArray3D<SurfaceSegmentedProxy>;
 
-using SurfaceSegmentedProxyAllocatable1D = FortranTypeAllocatable1D<
+using SurfaceSegmentedProxyAlloc1D = FTypeAlloc1D<
     SurfaceSegmentedProxyArray1D,
     allocate_surface_segmented_struct_container,
     deallocate_surface_segmented_struct_container,
@@ -7709,16 +7697,14 @@ using SurfaceSegmentedProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class SurfaceHMisalignPtProxy;
 
-using SurfaceHMisalignPtProxyArray1D = FortranTypeArray1D<
+using SurfaceHMisalignPtProxyArray1D = FTypeArray1D<
     SurfaceHMisalignPtProxy,
     allocate_fortran_surface_h_misalign_pt_struct,
     deallocate_fortran_surface_h_misalign_pt_struct>;
-using SurfaceHMisalignPtProxyArray2D =
-    FortranTypeArray2D<SurfaceHMisalignPtProxy>;
-using SurfaceHMisalignPtProxyArray3D =
-    FortranTypeArray3D<SurfaceHMisalignPtProxy>;
+using SurfaceHMisalignPtProxyArray2D = FTypeArray2D<SurfaceHMisalignPtProxy>;
+using SurfaceHMisalignPtProxyArray3D = FTypeArray3D<SurfaceHMisalignPtProxy>;
 
-using SurfaceHMisalignPtProxyAllocatable1D = FortranTypeAllocatable1D<
+using SurfaceHMisalignPtProxyAlloc1D = FTypeAlloc1D<
     SurfaceHMisalignPtProxyArray1D,
     allocate_surface_h_misalign_pt_struct_container,
     deallocate_surface_h_misalign_pt_struct_container,
@@ -7727,14 +7713,14 @@ using SurfaceHMisalignPtProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class SurfaceHMisalignProxy;
 
-using SurfaceHMisalignProxyArray1D = FortranTypeArray1D<
+using SurfaceHMisalignProxyArray1D = FTypeArray1D<
     SurfaceHMisalignProxy,
     allocate_fortran_surface_h_misalign_struct,
     deallocate_fortran_surface_h_misalign_struct>;
-using SurfaceHMisalignProxyArray2D = FortranTypeArray2D<SurfaceHMisalignProxy>;
-using SurfaceHMisalignProxyArray3D = FortranTypeArray3D<SurfaceHMisalignProxy>;
+using SurfaceHMisalignProxyArray2D = FTypeArray2D<SurfaceHMisalignProxy>;
+using SurfaceHMisalignProxyArray3D = FTypeArray3D<SurfaceHMisalignProxy>;
 
-using SurfaceHMisalignProxyAllocatable1D = FortranTypeAllocatable1D<
+using SurfaceHMisalignProxyAlloc1D = FTypeAlloc1D<
     SurfaceHMisalignProxyArray1D,
     allocate_surface_h_misalign_struct_container,
     deallocate_surface_h_misalign_struct_container,
@@ -7743,16 +7729,16 @@ using SurfaceHMisalignProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class SurfaceDisplacementPtProxy;
 
-using SurfaceDisplacementPtProxyArray1D = FortranTypeArray1D<
+using SurfaceDisplacementPtProxyArray1D = FTypeArray1D<
     SurfaceDisplacementPtProxy,
     allocate_fortran_surface_displacement_pt_struct,
     deallocate_fortran_surface_displacement_pt_struct>;
 using SurfaceDisplacementPtProxyArray2D =
-    FortranTypeArray2D<SurfaceDisplacementPtProxy>;
+    FTypeArray2D<SurfaceDisplacementPtProxy>;
 using SurfaceDisplacementPtProxyArray3D =
-    FortranTypeArray3D<SurfaceDisplacementPtProxy>;
+    FTypeArray3D<SurfaceDisplacementPtProxy>;
 
-using SurfaceDisplacementPtProxyAllocatable1D = FortranTypeAllocatable1D<
+using SurfaceDisplacementPtProxyAlloc1D = FTypeAlloc1D<
     SurfaceDisplacementPtProxyArray1D,
     allocate_surface_displacement_pt_struct_container,
     deallocate_surface_displacement_pt_struct_container,
@@ -7761,16 +7747,14 @@ using SurfaceDisplacementPtProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class SurfaceDisplacementProxy;
 
-using SurfaceDisplacementProxyArray1D = FortranTypeArray1D<
+using SurfaceDisplacementProxyArray1D = FTypeArray1D<
     SurfaceDisplacementProxy,
     allocate_fortran_surface_displacement_struct,
     deallocate_fortran_surface_displacement_struct>;
-using SurfaceDisplacementProxyArray2D =
-    FortranTypeArray2D<SurfaceDisplacementProxy>;
-using SurfaceDisplacementProxyArray3D =
-    FortranTypeArray3D<SurfaceDisplacementProxy>;
+using SurfaceDisplacementProxyArray2D = FTypeArray2D<SurfaceDisplacementProxy>;
+using SurfaceDisplacementProxyArray3D = FTypeArray3D<SurfaceDisplacementProxy>;
 
-using SurfaceDisplacementProxyAllocatable1D = FortranTypeAllocatable1D<
+using SurfaceDisplacementProxyAlloc1D = FTypeAlloc1D<
     SurfaceDisplacementProxyArray1D,
     allocate_surface_displacement_struct_container,
     deallocate_surface_displacement_struct_container,
@@ -7779,14 +7763,14 @@ using SurfaceDisplacementProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TargetPointProxy;
 
-using TargetPointProxyArray1D = FortranTypeArray1D<
+using TargetPointProxyArray1D = FTypeArray1D<
     TargetPointProxy,
     allocate_fortran_target_point_struct,
     deallocate_fortran_target_point_struct>;
-using TargetPointProxyArray2D = FortranTypeArray2D<TargetPointProxy>;
-using TargetPointProxyArray3D = FortranTypeArray3D<TargetPointProxy>;
+using TargetPointProxyArray2D = FTypeArray2D<TargetPointProxy>;
+using TargetPointProxyArray3D = FTypeArray3D<TargetPointProxy>;
 
-using TargetPointProxyAllocatable1D = FortranTypeAllocatable1D<
+using TargetPointProxyAlloc1D = FTypeAlloc1D<
     TargetPointProxyArray1D,
     allocate_target_point_struct_container,
     deallocate_target_point_struct_container,
@@ -7795,14 +7779,14 @@ using TargetPointProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class SurfaceCurvatureProxy;
 
-using SurfaceCurvatureProxyArray1D = FortranTypeArray1D<
+using SurfaceCurvatureProxyArray1D = FTypeArray1D<
     SurfaceCurvatureProxy,
     allocate_fortran_surface_curvature_struct,
     deallocate_fortran_surface_curvature_struct>;
-using SurfaceCurvatureProxyArray2D = FortranTypeArray2D<SurfaceCurvatureProxy>;
-using SurfaceCurvatureProxyArray3D = FortranTypeArray3D<SurfaceCurvatureProxy>;
+using SurfaceCurvatureProxyArray2D = FTypeArray2D<SurfaceCurvatureProxy>;
+using SurfaceCurvatureProxyArray3D = FTypeArray3D<SurfaceCurvatureProxy>;
 
-using SurfaceCurvatureProxyAllocatable1D = FortranTypeAllocatable1D<
+using SurfaceCurvatureProxyAlloc1D = FTypeAlloc1D<
     SurfaceCurvatureProxyArray1D,
     allocate_surface_curvature_struct_container,
     deallocate_surface_curvature_struct_container,
@@ -7811,14 +7795,14 @@ using SurfaceCurvatureProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class PhotonTargetProxy;
 
-using PhotonTargetProxyArray1D = FortranTypeArray1D<
+using PhotonTargetProxyArray1D = FTypeArray1D<
     PhotonTargetProxy,
     allocate_fortran_photon_target_struct,
     deallocate_fortran_photon_target_struct>;
-using PhotonTargetProxyArray2D = FortranTypeArray2D<PhotonTargetProxy>;
-using PhotonTargetProxyArray3D = FortranTypeArray3D<PhotonTargetProxy>;
+using PhotonTargetProxyArray2D = FTypeArray2D<PhotonTargetProxy>;
+using PhotonTargetProxyArray3D = FTypeArray3D<PhotonTargetProxy>;
 
-using PhotonTargetProxyAllocatable1D = FortranTypeAllocatable1D<
+using PhotonTargetProxyAlloc1D = FTypeAlloc1D<
     PhotonTargetProxyArray1D,
     allocate_photon_target_struct_container,
     deallocate_photon_target_struct_container,
@@ -7827,14 +7811,14 @@ using PhotonTargetProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class PhotonMaterialProxy;
 
-using PhotonMaterialProxyArray1D = FortranTypeArray1D<
+using PhotonMaterialProxyArray1D = FTypeArray1D<
     PhotonMaterialProxy,
     allocate_fortran_photon_material_struct,
     deallocate_fortran_photon_material_struct>;
-using PhotonMaterialProxyArray2D = FortranTypeArray2D<PhotonMaterialProxy>;
-using PhotonMaterialProxyArray3D = FortranTypeArray3D<PhotonMaterialProxy>;
+using PhotonMaterialProxyArray2D = FTypeArray2D<PhotonMaterialProxy>;
+using PhotonMaterialProxyArray3D = FTypeArray3D<PhotonMaterialProxy>;
 
-using PhotonMaterialProxyAllocatable1D = FortranTypeAllocatable1D<
+using PhotonMaterialProxyAlloc1D = FTypeAlloc1D<
     PhotonMaterialProxyArray1D,
     allocate_photon_material_struct_container,
     deallocate_photon_material_struct_container,
@@ -7843,14 +7827,14 @@ using PhotonMaterialProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class PixelPtProxy;
 
-using PixelPtProxyArray1D = FortranTypeArray1D<
+using PixelPtProxyArray1D = FTypeArray1D<
     PixelPtProxy,
     allocate_fortran_pixel_pt_struct,
     deallocate_fortran_pixel_pt_struct>;
-using PixelPtProxyArray2D = FortranTypeArray2D<PixelPtProxy>;
-using PixelPtProxyArray3D = FortranTypeArray3D<PixelPtProxy>;
+using PixelPtProxyArray2D = FTypeArray2D<PixelPtProxy>;
+using PixelPtProxyArray3D = FTypeArray3D<PixelPtProxy>;
 
-using PixelPtProxyAllocatable1D = FortranTypeAllocatable1D<
+using PixelPtProxyAlloc1D = FTypeAlloc1D<
     PixelPtProxyArray1D,
     allocate_pixel_pt_struct_container,
     deallocate_pixel_pt_struct_container,
@@ -7859,14 +7843,14 @@ using PixelPtProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class PixelDetecProxy;
 
-using PixelDetecProxyArray1D = FortranTypeArray1D<
+using PixelDetecProxyArray1D = FTypeArray1D<
     PixelDetecProxy,
     allocate_fortran_pixel_detec_struct,
     deallocate_fortran_pixel_detec_struct>;
-using PixelDetecProxyArray2D = FortranTypeArray2D<PixelDetecProxy>;
-using PixelDetecProxyArray3D = FortranTypeArray3D<PixelDetecProxy>;
+using PixelDetecProxyArray2D = FTypeArray2D<PixelDetecProxy>;
+using PixelDetecProxyArray3D = FTypeArray3D<PixelDetecProxy>;
 
-using PixelDetecProxyAllocatable1D = FortranTypeAllocatable1D<
+using PixelDetecProxyAlloc1D = FTypeAlloc1D<
     PixelDetecProxyArray1D,
     allocate_pixel_detec_struct_container,
     deallocate_pixel_detec_struct_container,
@@ -7875,14 +7859,14 @@ using PixelDetecProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class PhotonElementProxy;
 
-using PhotonElementProxyArray1D = FortranTypeArray1D<
+using PhotonElementProxyArray1D = FTypeArray1D<
     PhotonElementProxy,
     allocate_fortran_photon_element_struct,
     deallocate_fortran_photon_element_struct>;
-using PhotonElementProxyArray2D = FortranTypeArray2D<PhotonElementProxy>;
-using PhotonElementProxyArray3D = FortranTypeArray3D<PhotonElementProxy>;
+using PhotonElementProxyArray2D = FTypeArray2D<PhotonElementProxy>;
+using PhotonElementProxyArray3D = FTypeArray3D<PhotonElementProxy>;
 
-using PhotonElementProxyAllocatable1D = FortranTypeAllocatable1D<
+using PhotonElementProxyAlloc1D = FTypeAlloc1D<
     PhotonElementProxyArray1D,
     allocate_photon_element_struct_container,
     deallocate_photon_element_struct_container,
@@ -7891,14 +7875,14 @@ using PhotonElementProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class Wall3dVertexProxy;
 
-using Wall3dVertexProxyArray1D = FortranTypeArray1D<
+using Wall3dVertexProxyArray1D = FTypeArray1D<
     Wall3dVertexProxy,
     allocate_fortran_wall3d_vertex_struct,
     deallocate_fortran_wall3d_vertex_struct>;
-using Wall3dVertexProxyArray2D = FortranTypeArray2D<Wall3dVertexProxy>;
-using Wall3dVertexProxyArray3D = FortranTypeArray3D<Wall3dVertexProxy>;
+using Wall3dVertexProxyArray2D = FTypeArray2D<Wall3dVertexProxy>;
+using Wall3dVertexProxyArray3D = FTypeArray3D<Wall3dVertexProxy>;
 
-using Wall3dVertexProxyAllocatable1D = FortranTypeAllocatable1D<
+using Wall3dVertexProxyAlloc1D = FTypeAlloc1D<
     Wall3dVertexProxyArray1D,
     allocate_wall3d_vertex_struct_container,
     deallocate_wall3d_vertex_struct_container,
@@ -7907,14 +7891,14 @@ using Wall3dVertexProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class Wall3dSectionProxy;
 
-using Wall3dSectionProxyArray1D = FortranTypeArray1D<
+using Wall3dSectionProxyArray1D = FTypeArray1D<
     Wall3dSectionProxy,
     allocate_fortran_wall3d_section_struct,
     deallocate_fortran_wall3d_section_struct>;
-using Wall3dSectionProxyArray2D = FortranTypeArray2D<Wall3dSectionProxy>;
-using Wall3dSectionProxyArray3D = FortranTypeArray3D<Wall3dSectionProxy>;
+using Wall3dSectionProxyArray2D = FTypeArray2D<Wall3dSectionProxy>;
+using Wall3dSectionProxyArray3D = FTypeArray3D<Wall3dSectionProxy>;
 
-using Wall3dSectionProxyAllocatable1D = FortranTypeAllocatable1D<
+using Wall3dSectionProxyAlloc1D = FTypeAlloc1D<
     Wall3dSectionProxyArray1D,
     allocate_wall3d_section_struct_container,
     deallocate_wall3d_section_struct_container,
@@ -7923,14 +7907,14 @@ using Wall3dSectionProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class Wall3dProxy;
 
-using Wall3dProxyArray1D = FortranTypeArray1D<
+using Wall3dProxyArray1D = FTypeArray1D<
     Wall3dProxy,
     allocate_fortran_wall3d_struct,
     deallocate_fortran_wall3d_struct>;
-using Wall3dProxyArray2D = FortranTypeArray2D<Wall3dProxy>;
-using Wall3dProxyArray3D = FortranTypeArray3D<Wall3dProxy>;
+using Wall3dProxyArray2D = FTypeArray2D<Wall3dProxy>;
+using Wall3dProxyArray3D = FTypeArray3D<Wall3dProxy>;
 
-using Wall3dProxyAllocatable1D = FortranTypeAllocatable1D<
+using Wall3dProxyAlloc1D = FTypeAlloc1D<
     Wall3dProxyArray1D,
     allocate_wall3d_struct_container,
     deallocate_wall3d_struct_container,
@@ -7939,14 +7923,14 @@ using Wall3dProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class RamperLordProxy;
 
-using RamperLordProxyArray1D = FortranTypeArray1D<
+using RamperLordProxyArray1D = FTypeArray1D<
     RamperLordProxy,
     allocate_fortran_ramper_lord_struct,
     deallocate_fortran_ramper_lord_struct>;
-using RamperLordProxyArray2D = FortranTypeArray2D<RamperLordProxy>;
-using RamperLordProxyArray3D = FortranTypeArray3D<RamperLordProxy>;
+using RamperLordProxyArray2D = FTypeArray2D<RamperLordProxy>;
+using RamperLordProxyArray3D = FTypeArray3D<RamperLordProxy>;
 
-using RamperLordProxyAllocatable1D = FortranTypeAllocatable1D<
+using RamperLordProxyAlloc1D = FTypeAlloc1D<
     RamperLordProxyArray1D,
     allocate_ramper_lord_struct_container,
     deallocate_ramper_lord_struct_container,
@@ -7955,14 +7939,14 @@ using RamperLordProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class ControlProxy;
 
-using ControlProxyArray1D = FortranTypeArray1D<
+using ControlProxyArray1D = FTypeArray1D<
     ControlProxy,
     allocate_fortran_control_struct,
     deallocate_fortran_control_struct>;
-using ControlProxyArray2D = FortranTypeArray2D<ControlProxy>;
-using ControlProxyArray3D = FortranTypeArray3D<ControlProxy>;
+using ControlProxyArray2D = FTypeArray2D<ControlProxy>;
+using ControlProxyArray3D = FTypeArray3D<ControlProxy>;
 
-using ControlProxyAllocatable1D = FortranTypeAllocatable1D<
+using ControlProxyAlloc1D = FTypeAlloc1D<
     ControlProxyArray1D,
     allocate_control_struct_container,
     deallocate_control_struct_container,
@@ -7971,14 +7955,14 @@ using ControlProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class ControlVar1Proxy;
 
-using ControlVar1ProxyArray1D = FortranTypeArray1D<
+using ControlVar1ProxyArray1D = FTypeArray1D<
     ControlVar1Proxy,
     allocate_fortran_control_var1_struct,
     deallocate_fortran_control_var1_struct>;
-using ControlVar1ProxyArray2D = FortranTypeArray2D<ControlVar1Proxy>;
-using ControlVar1ProxyArray3D = FortranTypeArray3D<ControlVar1Proxy>;
+using ControlVar1ProxyArray2D = FTypeArray2D<ControlVar1Proxy>;
+using ControlVar1ProxyArray3D = FTypeArray3D<ControlVar1Proxy>;
 
-using ControlVar1ProxyAllocatable1D = FortranTypeAllocatable1D<
+using ControlVar1ProxyAlloc1D = FTypeAlloc1D<
     ControlVar1ProxyArray1D,
     allocate_control_var1_struct_container,
     deallocate_control_var1_struct_container,
@@ -7987,14 +7971,14 @@ using ControlVar1ProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class ControlRamp1Proxy;
 
-using ControlRamp1ProxyArray1D = FortranTypeArray1D<
+using ControlRamp1ProxyArray1D = FTypeArray1D<
     ControlRamp1Proxy,
     allocate_fortran_control_ramp1_struct,
     deallocate_fortran_control_ramp1_struct>;
-using ControlRamp1ProxyArray2D = FortranTypeArray2D<ControlRamp1Proxy>;
-using ControlRamp1ProxyArray3D = FortranTypeArray3D<ControlRamp1Proxy>;
+using ControlRamp1ProxyArray2D = FTypeArray2D<ControlRamp1Proxy>;
+using ControlRamp1ProxyArray3D = FTypeArray3D<ControlRamp1Proxy>;
 
-using ControlRamp1ProxyAllocatable1D = FortranTypeAllocatable1D<
+using ControlRamp1ProxyAlloc1D = FTypeAlloc1D<
     ControlRamp1ProxyArray1D,
     allocate_control_ramp1_struct_container,
     deallocate_control_ramp1_struct_container,
@@ -8003,14 +7987,14 @@ using ControlRamp1ProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class ControllerProxy;
 
-using ControllerProxyArray1D = FortranTypeArray1D<
+using ControllerProxyArray1D = FTypeArray1D<
     ControllerProxy,
     allocate_fortran_controller_struct,
     deallocate_fortran_controller_struct>;
-using ControllerProxyArray2D = FortranTypeArray2D<ControllerProxy>;
-using ControllerProxyArray3D = FortranTypeArray3D<ControllerProxy>;
+using ControllerProxyArray2D = FTypeArray2D<ControllerProxy>;
+using ControllerProxyArray3D = FTypeArray3D<ControllerProxy>;
 
-using ControllerProxyAllocatable1D = FortranTypeAllocatable1D<
+using ControllerProxyAlloc1D = FTypeAlloc1D<
     ControllerProxyArray1D,
     allocate_controller_struct_container,
     deallocate_controller_struct_container,
@@ -8019,14 +8003,14 @@ using ControllerProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class EllipseBeamInitProxy;
 
-using EllipseBeamInitProxyArray1D = FortranTypeArray1D<
+using EllipseBeamInitProxyArray1D = FTypeArray1D<
     EllipseBeamInitProxy,
     allocate_fortran_ellipse_beam_init_struct,
     deallocate_fortran_ellipse_beam_init_struct>;
-using EllipseBeamInitProxyArray2D = FortranTypeArray2D<EllipseBeamInitProxy>;
-using EllipseBeamInitProxyArray3D = FortranTypeArray3D<EllipseBeamInitProxy>;
+using EllipseBeamInitProxyArray2D = FTypeArray2D<EllipseBeamInitProxy>;
+using EllipseBeamInitProxyArray3D = FTypeArray3D<EllipseBeamInitProxy>;
 
-using EllipseBeamInitProxyAllocatable1D = FortranTypeAllocatable1D<
+using EllipseBeamInitProxyAlloc1D = FTypeAlloc1D<
     EllipseBeamInitProxyArray1D,
     allocate_ellipse_beam_init_struct_container,
     deallocate_ellipse_beam_init_struct_container,
@@ -8035,14 +8019,14 @@ using EllipseBeamInitProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class KvBeamInitProxy;
 
-using KvBeamInitProxyArray1D = FortranTypeArray1D<
+using KvBeamInitProxyArray1D = FTypeArray1D<
     KvBeamInitProxy,
     allocate_fortran_kv_beam_init_struct,
     deallocate_fortran_kv_beam_init_struct>;
-using KvBeamInitProxyArray2D = FortranTypeArray2D<KvBeamInitProxy>;
-using KvBeamInitProxyArray3D = FortranTypeArray3D<KvBeamInitProxy>;
+using KvBeamInitProxyArray2D = FTypeArray2D<KvBeamInitProxy>;
+using KvBeamInitProxyArray3D = FTypeArray3D<KvBeamInitProxy>;
 
-using KvBeamInitProxyAllocatable1D = FortranTypeAllocatable1D<
+using KvBeamInitProxyAlloc1D = FTypeAlloc1D<
     KvBeamInitProxyArray1D,
     allocate_kv_beam_init_struct_container,
     deallocate_kv_beam_init_struct_container,
@@ -8051,14 +8035,14 @@ using KvBeamInitProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class GridBeamInitProxy;
 
-using GridBeamInitProxyArray1D = FortranTypeArray1D<
+using GridBeamInitProxyArray1D = FTypeArray1D<
     GridBeamInitProxy,
     allocate_fortran_grid_beam_init_struct,
     deallocate_fortran_grid_beam_init_struct>;
-using GridBeamInitProxyArray2D = FortranTypeArray2D<GridBeamInitProxy>;
-using GridBeamInitProxyArray3D = FortranTypeArray3D<GridBeamInitProxy>;
+using GridBeamInitProxyArray2D = FTypeArray2D<GridBeamInitProxy>;
+using GridBeamInitProxyArray3D = FTypeArray3D<GridBeamInitProxy>;
 
-using GridBeamInitProxyAllocatable1D = FortranTypeAllocatable1D<
+using GridBeamInitProxyAlloc1D = FTypeAlloc1D<
     GridBeamInitProxyArray1D,
     allocate_grid_beam_init_struct_container,
     deallocate_grid_beam_init_struct_container,
@@ -8067,14 +8051,14 @@ using GridBeamInitProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class BeamInitProxy;
 
-using BeamInitProxyArray1D = FortranTypeArray1D<
+using BeamInitProxyArray1D = FTypeArray1D<
     BeamInitProxy,
     allocate_fortran_beam_init_struct,
     deallocate_fortran_beam_init_struct>;
-using BeamInitProxyArray2D = FortranTypeArray2D<BeamInitProxy>;
-using BeamInitProxyArray3D = FortranTypeArray3D<BeamInitProxy>;
+using BeamInitProxyArray2D = FTypeArray2D<BeamInitProxy>;
+using BeamInitProxyArray3D = FTypeArray3D<BeamInitProxy>;
 
-using BeamInitProxyAllocatable1D = FortranTypeAllocatable1D<
+using BeamInitProxyAlloc1D = FTypeAlloc1D<
     BeamInitProxyArray1D,
     allocate_beam_init_struct_container,
     deallocate_beam_init_struct_container,
@@ -8083,14 +8067,14 @@ using BeamInitProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class LatParamProxy;
 
-using LatParamProxyArray1D = FortranTypeArray1D<
+using LatParamProxyArray1D = FTypeArray1D<
     LatParamProxy,
     allocate_fortran_lat_param_struct,
     deallocate_fortran_lat_param_struct>;
-using LatParamProxyArray2D = FortranTypeArray2D<LatParamProxy>;
-using LatParamProxyArray3D = FortranTypeArray3D<LatParamProxy>;
+using LatParamProxyArray2D = FTypeArray2D<LatParamProxy>;
+using LatParamProxyArray3D = FTypeArray3D<LatParamProxy>;
 
-using LatParamProxyAllocatable1D = FortranTypeAllocatable1D<
+using LatParamProxyAlloc1D = FTypeAlloc1D<
     LatParamProxyArray1D,
     allocate_lat_param_struct_container,
     deallocate_lat_param_struct_container,
@@ -8099,14 +8083,14 @@ using LatParamProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class ModeInfoProxy;
 
-using ModeInfoProxyArray1D = FortranTypeArray1D<
+using ModeInfoProxyArray1D = FTypeArray1D<
     ModeInfoProxy,
     allocate_fortran_mode_info_struct,
     deallocate_fortran_mode_info_struct>;
-using ModeInfoProxyArray2D = FortranTypeArray2D<ModeInfoProxy>;
-using ModeInfoProxyArray3D = FortranTypeArray3D<ModeInfoProxy>;
+using ModeInfoProxyArray2D = FTypeArray2D<ModeInfoProxy>;
+using ModeInfoProxyArray3D = FTypeArray3D<ModeInfoProxy>;
 
-using ModeInfoProxyAllocatable1D = FortranTypeAllocatable1D<
+using ModeInfoProxyAlloc1D = FTypeAlloc1D<
     ModeInfoProxyArray1D,
     allocate_mode_info_struct_container,
     deallocate_mode_info_struct_container,
@@ -8115,14 +8099,14 @@ using ModeInfoProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class PreTrackerProxy;
 
-using PreTrackerProxyArray1D = FortranTypeArray1D<
+using PreTrackerProxyArray1D = FTypeArray1D<
     PreTrackerProxy,
     allocate_fortran_pre_tracker_struct,
     deallocate_fortran_pre_tracker_struct>;
-using PreTrackerProxyArray2D = FortranTypeArray2D<PreTrackerProxy>;
-using PreTrackerProxyArray3D = FortranTypeArray3D<PreTrackerProxy>;
+using PreTrackerProxyArray2D = FTypeArray2D<PreTrackerProxy>;
+using PreTrackerProxyArray3D = FTypeArray3D<PreTrackerProxy>;
 
-using PreTrackerProxyAllocatable1D = FortranTypeAllocatable1D<
+using PreTrackerProxyAlloc1D = FTypeAlloc1D<
     PreTrackerProxyArray1D,
     allocate_pre_tracker_struct_container,
     deallocate_pre_tracker_struct_container,
@@ -8131,14 +8115,14 @@ using PreTrackerProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class AnormalModeProxy;
 
-using AnormalModeProxyArray1D = FortranTypeArray1D<
+using AnormalModeProxyArray1D = FTypeArray1D<
     AnormalModeProxy,
     allocate_fortran_anormal_mode_struct,
     deallocate_fortran_anormal_mode_struct>;
-using AnormalModeProxyArray2D = FortranTypeArray2D<AnormalModeProxy>;
-using AnormalModeProxyArray3D = FortranTypeArray3D<AnormalModeProxy>;
+using AnormalModeProxyArray2D = FTypeArray2D<AnormalModeProxy>;
+using AnormalModeProxyArray3D = FTypeArray3D<AnormalModeProxy>;
 
-using AnormalModeProxyAllocatable1D = FortranTypeAllocatable1D<
+using AnormalModeProxyAlloc1D = FTypeAlloc1D<
     AnormalModeProxyArray1D,
     allocate_anormal_mode_struct_container,
     deallocate_anormal_mode_struct_container,
@@ -8147,14 +8131,14 @@ using AnormalModeProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class LinacNormalModeProxy;
 
-using LinacNormalModeProxyArray1D = FortranTypeArray1D<
+using LinacNormalModeProxyArray1D = FTypeArray1D<
     LinacNormalModeProxy,
     allocate_fortran_linac_normal_mode_struct,
     deallocate_fortran_linac_normal_mode_struct>;
-using LinacNormalModeProxyArray2D = FortranTypeArray2D<LinacNormalModeProxy>;
-using LinacNormalModeProxyArray3D = FortranTypeArray3D<LinacNormalModeProxy>;
+using LinacNormalModeProxyArray2D = FTypeArray2D<LinacNormalModeProxy>;
+using LinacNormalModeProxyArray3D = FTypeArray3D<LinacNormalModeProxy>;
 
-using LinacNormalModeProxyAllocatable1D = FortranTypeAllocatable1D<
+using LinacNormalModeProxyAlloc1D = FTypeAlloc1D<
     LinacNormalModeProxyArray1D,
     allocate_linac_normal_mode_struct_container,
     deallocate_linac_normal_mode_struct_container,
@@ -8163,14 +8147,14 @@ using LinacNormalModeProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class NormalModesProxy;
 
-using NormalModesProxyArray1D = FortranTypeArray1D<
+using NormalModesProxyArray1D = FTypeArray1D<
     NormalModesProxy,
     allocate_fortran_normal_modes_struct,
     deallocate_fortran_normal_modes_struct>;
-using NormalModesProxyArray2D = FortranTypeArray2D<NormalModesProxy>;
-using NormalModesProxyArray3D = FortranTypeArray3D<NormalModesProxy>;
+using NormalModesProxyArray2D = FTypeArray2D<NormalModesProxy>;
+using NormalModesProxyArray3D = FTypeArray3D<NormalModesProxy>;
 
-using NormalModesProxyAllocatable1D = FortranTypeAllocatable1D<
+using NormalModesProxyAlloc1D = FTypeAlloc1D<
     NormalModesProxyArray1D,
     allocate_normal_modes_struct_container,
     deallocate_normal_modes_struct_container,
@@ -8179,14 +8163,14 @@ using NormalModesProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class EmFieldProxy;
 
-using EmFieldProxyArray1D = FortranTypeArray1D<
+using EmFieldProxyArray1D = FTypeArray1D<
     EmFieldProxy,
     allocate_fortran_em_field_struct,
     deallocate_fortran_em_field_struct>;
-using EmFieldProxyArray2D = FortranTypeArray2D<EmFieldProxy>;
-using EmFieldProxyArray3D = FortranTypeArray3D<EmFieldProxy>;
+using EmFieldProxyArray2D = FTypeArray2D<EmFieldProxy>;
+using EmFieldProxyArray3D = FTypeArray3D<EmFieldProxy>;
 
-using EmFieldProxyAllocatable1D = FortranTypeAllocatable1D<
+using EmFieldProxyAlloc1D = FTypeAlloc1D<
     EmFieldProxyArray1D,
     allocate_em_field_struct_container,
     deallocate_em_field_struct_container,
@@ -8195,14 +8179,14 @@ using EmFieldProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class StrongBeamProxy;
 
-using StrongBeamProxyArray1D = FortranTypeArray1D<
+using StrongBeamProxyArray1D = FTypeArray1D<
     StrongBeamProxy,
     allocate_fortran_strong_beam_struct,
     deallocate_fortran_strong_beam_struct>;
-using StrongBeamProxyArray2D = FortranTypeArray2D<StrongBeamProxy>;
-using StrongBeamProxyArray3D = FortranTypeArray3D<StrongBeamProxy>;
+using StrongBeamProxyArray2D = FTypeArray2D<StrongBeamProxy>;
+using StrongBeamProxyArray3D = FTypeArray3D<StrongBeamProxy>;
 
-using StrongBeamProxyAllocatable1D = FortranTypeAllocatable1D<
+using StrongBeamProxyAlloc1D = FTypeAlloc1D<
     StrongBeamProxyArray1D,
     allocate_strong_beam_struct_container,
     deallocate_strong_beam_struct_container,
@@ -8211,14 +8195,14 @@ using StrongBeamProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TrackPointProxy;
 
-using TrackPointProxyArray1D = FortranTypeArray1D<
+using TrackPointProxyArray1D = FTypeArray1D<
     TrackPointProxy,
     allocate_fortran_track_point_struct,
     deallocate_fortran_track_point_struct>;
-using TrackPointProxyArray2D = FortranTypeArray2D<TrackPointProxy>;
-using TrackPointProxyArray3D = FortranTypeArray3D<TrackPointProxy>;
+using TrackPointProxyArray2D = FTypeArray2D<TrackPointProxy>;
+using TrackPointProxyArray3D = FTypeArray3D<TrackPointProxy>;
 
-using TrackPointProxyAllocatable1D = FortranTypeAllocatable1D<
+using TrackPointProxyAlloc1D = FTypeAlloc1D<
     TrackPointProxyArray1D,
     allocate_track_point_struct_container,
     deallocate_track_point_struct_container,
@@ -8227,14 +8211,14 @@ using TrackPointProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TrackProxy;
 
-using TrackProxyArray1D = FortranTypeArray1D<
+using TrackProxyArray1D = FTypeArray1D<
     TrackProxy,
     allocate_fortran_track_struct,
     deallocate_fortran_track_struct>;
-using TrackProxyArray2D = FortranTypeArray2D<TrackProxy>;
-using TrackProxyArray3D = FortranTypeArray3D<TrackProxy>;
+using TrackProxyArray2D = FTypeArray2D<TrackProxy>;
+using TrackProxyArray3D = FTypeArray3D<TrackProxy>;
 
-using TrackProxyAllocatable1D = FortranTypeAllocatable1D<
+using TrackProxyAlloc1D = FTypeAlloc1D<
     TrackProxyArray1D,
     allocate_track_struct_container,
     deallocate_track_struct_container,
@@ -8243,16 +8227,14 @@ using TrackProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class SpaceChargeCommonProxy;
 
-using SpaceChargeCommonProxyArray1D = FortranTypeArray1D<
+using SpaceChargeCommonProxyArray1D = FTypeArray1D<
     SpaceChargeCommonProxy,
     allocate_fortran_space_charge_common_struct,
     deallocate_fortran_space_charge_common_struct>;
-using SpaceChargeCommonProxyArray2D =
-    FortranTypeArray2D<SpaceChargeCommonProxy>;
-using SpaceChargeCommonProxyArray3D =
-    FortranTypeArray3D<SpaceChargeCommonProxy>;
+using SpaceChargeCommonProxyArray2D = FTypeArray2D<SpaceChargeCommonProxy>;
+using SpaceChargeCommonProxyArray3D = FTypeArray3D<SpaceChargeCommonProxy>;
 
-using SpaceChargeCommonProxyAllocatable1D = FortranTypeAllocatable1D<
+using SpaceChargeCommonProxyAlloc1D = FTypeAlloc1D<
     SpaceChargeCommonProxyArray1D,
     allocate_space_charge_common_struct_container,
     deallocate_space_charge_common_struct_container,
@@ -8261,14 +8243,14 @@ using SpaceChargeCommonProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class BmadCommonProxy;
 
-using BmadCommonProxyArray1D = FortranTypeArray1D<
+using BmadCommonProxyArray1D = FTypeArray1D<
     BmadCommonProxy,
     allocate_fortran_bmad_common_struct,
     deallocate_fortran_bmad_common_struct>;
-using BmadCommonProxyArray2D = FortranTypeArray2D<BmadCommonProxy>;
-using BmadCommonProxyArray3D = FortranTypeArray3D<BmadCommonProxy>;
+using BmadCommonProxyArray2D = FTypeArray2D<BmadCommonProxy>;
+using BmadCommonProxyArray3D = FTypeArray3D<BmadCommonProxy>;
 
-using BmadCommonProxyAllocatable1D = FortranTypeAllocatable1D<
+using BmadCommonProxyAlloc1D = FTypeAlloc1D<
     BmadCommonProxyArray1D,
     allocate_bmad_common_struct_container,
     deallocate_bmad_common_struct_container,
@@ -8277,14 +8259,14 @@ using BmadCommonProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class RadInt1Proxy;
 
-using RadInt1ProxyArray1D = FortranTypeArray1D<
+using RadInt1ProxyArray1D = FTypeArray1D<
     RadInt1Proxy,
     allocate_fortran_rad_int1_struct,
     deallocate_fortran_rad_int1_struct>;
-using RadInt1ProxyArray2D = FortranTypeArray2D<RadInt1Proxy>;
-using RadInt1ProxyArray3D = FortranTypeArray3D<RadInt1Proxy>;
+using RadInt1ProxyArray2D = FTypeArray2D<RadInt1Proxy>;
+using RadInt1ProxyArray3D = FTypeArray3D<RadInt1Proxy>;
 
-using RadInt1ProxyAllocatable1D = FortranTypeAllocatable1D<
+using RadInt1ProxyAlloc1D = FTypeAlloc1D<
     RadInt1ProxyArray1D,
     allocate_rad_int1_struct_container,
     deallocate_rad_int1_struct_container,
@@ -8293,14 +8275,14 @@ using RadInt1ProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class RadIntBranchProxy;
 
-using RadIntBranchProxyArray1D = FortranTypeArray1D<
+using RadIntBranchProxyArray1D = FTypeArray1D<
     RadIntBranchProxy,
     allocate_fortran_rad_int_branch_struct,
     deallocate_fortran_rad_int_branch_struct>;
-using RadIntBranchProxyArray2D = FortranTypeArray2D<RadIntBranchProxy>;
-using RadIntBranchProxyArray3D = FortranTypeArray3D<RadIntBranchProxy>;
+using RadIntBranchProxyArray2D = FTypeArray2D<RadIntBranchProxy>;
+using RadIntBranchProxyArray3D = FTypeArray3D<RadIntBranchProxy>;
 
-using RadIntBranchProxyAllocatable1D = FortranTypeAllocatable1D<
+using RadIntBranchProxyAlloc1D = FTypeAlloc1D<
     RadIntBranchProxyArray1D,
     allocate_rad_int_branch_struct_container,
     deallocate_rad_int_branch_struct_container,
@@ -8309,14 +8291,14 @@ using RadIntBranchProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class RadIntAllEleProxy;
 
-using RadIntAllEleProxyArray1D = FortranTypeArray1D<
+using RadIntAllEleProxyArray1D = FTypeArray1D<
     RadIntAllEleProxy,
     allocate_fortran_rad_int_all_ele_struct,
     deallocate_fortran_rad_int_all_ele_struct>;
-using RadIntAllEleProxyArray2D = FortranTypeArray2D<RadIntAllEleProxy>;
-using RadIntAllEleProxyArray3D = FortranTypeArray3D<RadIntAllEleProxy>;
+using RadIntAllEleProxyArray2D = FTypeArray2D<RadIntAllEleProxy>;
+using RadIntAllEleProxyArray3D = FTypeArray3D<RadIntAllEleProxy>;
 
-using RadIntAllEleProxyAllocatable1D = FortranTypeAllocatable1D<
+using RadIntAllEleProxyAlloc1D = FTypeAlloc1D<
     RadIntAllEleProxyArray1D,
     allocate_rad_int_all_ele_struct_container,
     deallocate_rad_int_all_ele_struct_container,
@@ -8325,14 +8307,14 @@ using RadIntAllEleProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class RfStairStepProxy;
 
-using RfStairStepProxyArray1D = FortranTypeArray1D<
+using RfStairStepProxyArray1D = FTypeArray1D<
     RfStairStepProxy,
     allocate_fortran_rf_stair_step_struct,
     deallocate_fortran_rf_stair_step_struct>;
-using RfStairStepProxyArray2D = FortranTypeArray2D<RfStairStepProxy>;
-using RfStairStepProxyArray3D = FortranTypeArray3D<RfStairStepProxy>;
+using RfStairStepProxyArray2D = FTypeArray2D<RfStairStepProxy>;
+using RfStairStepProxyArray3D = FTypeArray3D<RfStairStepProxy>;
 
-using RfStairStepProxyAllocatable1D = FortranTypeAllocatable1D<
+using RfStairStepProxyAlloc1D = FTypeAlloc1D<
     RfStairStepProxyArray1D,
     allocate_rf_stair_step_struct_container,
     deallocate_rf_stair_step_struct_container,
@@ -8341,14 +8323,14 @@ using RfStairStepProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class RfEleProxy;
 
-using RfEleProxyArray1D = FortranTypeArray1D<
+using RfEleProxyArray1D = FTypeArray1D<
     RfEleProxy,
     allocate_fortran_rf_ele_struct,
     deallocate_fortran_rf_ele_struct>;
-using RfEleProxyArray2D = FortranTypeArray2D<RfEleProxy>;
-using RfEleProxyArray3D = FortranTypeArray3D<RfEleProxy>;
+using RfEleProxyArray2D = FTypeArray2D<RfEleProxy>;
+using RfEleProxyArray3D = FTypeArray3D<RfEleProxy>;
 
-using RfEleProxyAllocatable1D = FortranTypeAllocatable1D<
+using RfEleProxyAlloc1D = FTypeAlloc1D<
     RfEleProxyArray1D,
     allocate_rf_ele_struct_container,
     deallocate_rf_ele_struct_container,
@@ -8357,14 +8339,14 @@ using RfEleProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class EleProxy;
 
-using EleProxyArray1D = FortranTypeArray1D<
+using EleProxyArray1D = FTypeArray1D<
     EleProxy,
     allocate_fortran_ele_struct,
     deallocate_fortran_ele_struct>;
-using EleProxyArray2D = FortranTypeArray2D<EleProxy>;
-using EleProxyArray3D = FortranTypeArray3D<EleProxy>;
+using EleProxyArray2D = FTypeArray2D<EleProxy>;
+using EleProxyArray3D = FTypeArray3D<EleProxy>;
 
-using EleProxyAllocatable1D = FortranTypeAllocatable1D<
+using EleProxyAlloc1D = FTypeAlloc1D<
     EleProxyArray1D,
     allocate_ele_struct_container,
     deallocate_ele_struct_container,
@@ -8373,16 +8355,14 @@ using EleProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class ComplexTaylorTermProxy;
 
-using ComplexTaylorTermProxyArray1D = FortranTypeArray1D<
+using ComplexTaylorTermProxyArray1D = FTypeArray1D<
     ComplexTaylorTermProxy,
     allocate_fortran_complex_taylor_term_struct,
     deallocate_fortran_complex_taylor_term_struct>;
-using ComplexTaylorTermProxyArray2D =
-    FortranTypeArray2D<ComplexTaylorTermProxy>;
-using ComplexTaylorTermProxyArray3D =
-    FortranTypeArray3D<ComplexTaylorTermProxy>;
+using ComplexTaylorTermProxyArray2D = FTypeArray2D<ComplexTaylorTermProxy>;
+using ComplexTaylorTermProxyArray3D = FTypeArray3D<ComplexTaylorTermProxy>;
 
-using ComplexTaylorTermProxyAllocatable1D = FortranTypeAllocatable1D<
+using ComplexTaylorTermProxyAlloc1D = FTypeAlloc1D<
     ComplexTaylorTermProxyArray1D,
     allocate_complex_taylor_term_struct_container,
     deallocate_complex_taylor_term_struct_container,
@@ -8391,14 +8371,14 @@ using ComplexTaylorTermProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class ComplexTaylorProxy;
 
-using ComplexTaylorProxyArray1D = FortranTypeArray1D<
+using ComplexTaylorProxyArray1D = FTypeArray1D<
     ComplexTaylorProxy,
     allocate_fortran_complex_taylor_struct,
     deallocate_fortran_complex_taylor_struct>;
-using ComplexTaylorProxyArray2D = FortranTypeArray2D<ComplexTaylorProxy>;
-using ComplexTaylorProxyArray3D = FortranTypeArray3D<ComplexTaylorProxy>;
+using ComplexTaylorProxyArray2D = FTypeArray2D<ComplexTaylorProxy>;
+using ComplexTaylorProxyArray3D = FTypeArray3D<ComplexTaylorProxy>;
 
-using ComplexTaylorProxyAllocatable1D = FortranTypeAllocatable1D<
+using ComplexTaylorProxyAlloc1D = FTypeAlloc1D<
     ComplexTaylorProxyArray1D,
     allocate_complex_taylor_struct_container,
     deallocate_complex_taylor_struct_container,
@@ -8407,14 +8387,14 @@ using ComplexTaylorProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class BranchProxy;
 
-using BranchProxyArray1D = FortranTypeArray1D<
+using BranchProxyArray1D = FTypeArray1D<
     BranchProxy,
     allocate_fortran_branch_struct,
     deallocate_fortran_branch_struct>;
-using BranchProxyArray2D = FortranTypeArray2D<BranchProxy>;
-using BranchProxyArray3D = FortranTypeArray3D<BranchProxy>;
+using BranchProxyArray2D = FTypeArray2D<BranchProxy>;
+using BranchProxyArray3D = FTypeArray3D<BranchProxy>;
 
-using BranchProxyAllocatable1D = FortranTypeAllocatable1D<
+using BranchProxyAlloc1D = FTypeAlloc1D<
     BranchProxyArray1D,
     allocate_branch_struct_container,
     deallocate_branch_struct_container,
@@ -8423,14 +8403,14 @@ using BranchProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class LatProxy;
 
-using LatProxyArray1D = FortranTypeArray1D<
+using LatProxyArray1D = FTypeArray1D<
     LatProxy,
     allocate_fortran_lat_struct,
     deallocate_fortran_lat_struct>;
-using LatProxyArray2D = FortranTypeArray2D<LatProxy>;
-using LatProxyArray3D = FortranTypeArray3D<LatProxy>;
+using LatProxyArray2D = FTypeArray2D<LatProxy>;
+using LatProxyArray3D = FTypeArray3D<LatProxy>;
 
-using LatProxyAllocatable1D = FortranTypeAllocatable1D<
+using LatProxyAlloc1D = FTypeAlloc1D<
     LatProxyArray1D,
     allocate_lat_struct_container,
     deallocate_lat_struct_container,
@@ -8439,14 +8419,14 @@ using LatProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class BunchProxy;
 
-using BunchProxyArray1D = FortranTypeArray1D<
+using BunchProxyArray1D = FTypeArray1D<
     BunchProxy,
     allocate_fortran_bunch_struct,
     deallocate_fortran_bunch_struct>;
-using BunchProxyArray2D = FortranTypeArray2D<BunchProxy>;
-using BunchProxyArray3D = FortranTypeArray3D<BunchProxy>;
+using BunchProxyArray2D = FTypeArray2D<BunchProxy>;
+using BunchProxyArray3D = FTypeArray3D<BunchProxy>;
 
-using BunchProxyAllocatable1D = FortranTypeAllocatable1D<
+using BunchProxyAlloc1D = FTypeAlloc1D<
     BunchProxyArray1D,
     allocate_bunch_struct_container,
     deallocate_bunch_struct_container,
@@ -8455,14 +8435,14 @@ using BunchProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class BunchParamsProxy;
 
-using BunchParamsProxyArray1D = FortranTypeArray1D<
+using BunchParamsProxyArray1D = FTypeArray1D<
     BunchParamsProxy,
     allocate_fortran_bunch_params_struct,
     deallocate_fortran_bunch_params_struct>;
-using BunchParamsProxyArray2D = FortranTypeArray2D<BunchParamsProxy>;
-using BunchParamsProxyArray3D = FortranTypeArray3D<BunchParamsProxy>;
+using BunchParamsProxyArray2D = FTypeArray2D<BunchParamsProxy>;
+using BunchParamsProxyArray3D = FTypeArray3D<BunchParamsProxy>;
 
-using BunchParamsProxyAllocatable1D = FortranTypeAllocatable1D<
+using BunchParamsProxyAlloc1D = FTypeAlloc1D<
     BunchParamsProxyArray1D,
     allocate_bunch_params_struct_container,
     deallocate_bunch_params_struct_container,
@@ -8471,14 +8451,14 @@ using BunchParamsProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class BeamProxy;
 
-using BeamProxyArray1D = FortranTypeArray1D<
+using BeamProxyArray1D = FTypeArray1D<
     BeamProxy,
     allocate_fortran_beam_struct,
     deallocate_fortran_beam_struct>;
-using BeamProxyArray2D = FortranTypeArray2D<BeamProxy>;
-using BeamProxyArray3D = FortranTypeArray3D<BeamProxy>;
+using BeamProxyArray2D = FTypeArray2D<BeamProxy>;
+using BeamProxyArray3D = FTypeArray3D<BeamProxy>;
 
-using BeamProxyAllocatable1D = FortranTypeAllocatable1D<
+using BeamProxyAlloc1D = FTypeAlloc1D<
     BeamProxyArray1D,
     allocate_beam_struct_container,
     deallocate_beam_struct_container,
@@ -8487,14 +8467,14 @@ using BeamProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class AperturePointProxy;
 
-using AperturePointProxyArray1D = FortranTypeArray1D<
+using AperturePointProxyArray1D = FTypeArray1D<
     AperturePointProxy,
     allocate_fortran_aperture_point_struct,
     deallocate_fortran_aperture_point_struct>;
-using AperturePointProxyArray2D = FortranTypeArray2D<AperturePointProxy>;
-using AperturePointProxyArray3D = FortranTypeArray3D<AperturePointProxy>;
+using AperturePointProxyArray2D = FTypeArray2D<AperturePointProxy>;
+using AperturePointProxyArray3D = FTypeArray3D<AperturePointProxy>;
 
-using AperturePointProxyAllocatable1D = FortranTypeAllocatable1D<
+using AperturePointProxyAlloc1D = FTypeAlloc1D<
     AperturePointProxyArray1D,
     allocate_aperture_point_struct_container,
     deallocate_aperture_point_struct_container,
@@ -8503,14 +8483,14 @@ using AperturePointProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class ApertureParamProxy;
 
-using ApertureParamProxyArray1D = FortranTypeArray1D<
+using ApertureParamProxyArray1D = FTypeArray1D<
     ApertureParamProxy,
     allocate_fortran_aperture_param_struct,
     deallocate_fortran_aperture_param_struct>;
-using ApertureParamProxyArray2D = FortranTypeArray2D<ApertureParamProxy>;
-using ApertureParamProxyArray3D = FortranTypeArray3D<ApertureParamProxy>;
+using ApertureParamProxyArray2D = FTypeArray2D<ApertureParamProxy>;
+using ApertureParamProxyArray3D = FTypeArray3D<ApertureParamProxy>;
 
-using ApertureParamProxyAllocatable1D = FortranTypeAllocatable1D<
+using ApertureParamProxyAlloc1D = FTypeAlloc1D<
     ApertureParamProxyArray1D,
     allocate_aperture_param_struct_container,
     deallocate_aperture_param_struct_container,
@@ -8519,14 +8499,14 @@ using ApertureParamProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class ApertureScanProxy;
 
-using ApertureScanProxyArray1D = FortranTypeArray1D<
+using ApertureScanProxyArray1D = FTypeArray1D<
     ApertureScanProxy,
     allocate_fortran_aperture_scan_struct,
     deallocate_fortran_aperture_scan_struct>;
-using ApertureScanProxyArray2D = FortranTypeArray2D<ApertureScanProxy>;
-using ApertureScanProxyArray3D = FortranTypeArray3D<ApertureScanProxy>;
+using ApertureScanProxyArray2D = FTypeArray2D<ApertureScanProxy>;
+using ApertureScanProxyArray3D = FTypeArray3D<ApertureScanProxy>;
 
-using ApertureScanProxyAllocatable1D = FortranTypeAllocatable1D<
+using ApertureScanProxyAlloc1D = FTypeAlloc1D<
     ApertureScanProxyArray1D,
     allocate_aperture_scan_struct_container,
     deallocate_aperture_scan_struct_container,
@@ -8535,14 +8515,14 @@ using ApertureScanProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoSpinDnDpzProxy;
 
-using TaoSpinDnDpzProxyArray1D = FortranTypeArray1D<
+using TaoSpinDnDpzProxyArray1D = FTypeArray1D<
     TaoSpinDnDpzProxy,
     allocate_fortran_tao_spin_dn_dpz_struct,
     deallocate_fortran_tao_spin_dn_dpz_struct>;
-using TaoSpinDnDpzProxyArray2D = FortranTypeArray2D<TaoSpinDnDpzProxy>;
-using TaoSpinDnDpzProxyArray3D = FortranTypeArray3D<TaoSpinDnDpzProxy>;
+using TaoSpinDnDpzProxyArray2D = FTypeArray2D<TaoSpinDnDpzProxy>;
+using TaoSpinDnDpzProxyArray3D = FTypeArray3D<TaoSpinDnDpzProxy>;
 
-using TaoSpinDnDpzProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoSpinDnDpzProxyAlloc1D = FTypeAlloc1D<
     TaoSpinDnDpzProxyArray1D,
     allocate_tao_spin_dn_dpz_struct_container,
     deallocate_tao_spin_dn_dpz_struct_container,
@@ -8551,14 +8531,14 @@ using TaoSpinDnDpzProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class ResonanceHProxy;
 
-using ResonanceHProxyArray1D = FortranTypeArray1D<
+using ResonanceHProxyArray1D = FTypeArray1D<
     ResonanceHProxy,
     allocate_fortran_resonance_h_struct,
     deallocate_fortran_resonance_h_struct>;
-using ResonanceHProxyArray2D = FortranTypeArray2D<ResonanceHProxy>;
-using ResonanceHProxyArray3D = FortranTypeArray3D<ResonanceHProxy>;
+using ResonanceHProxyArray2D = FTypeArray2D<ResonanceHProxy>;
+using ResonanceHProxyArray3D = FTypeArray3D<ResonanceHProxy>;
 
-using ResonanceHProxyAllocatable1D = FortranTypeAllocatable1D<
+using ResonanceHProxyAlloc1D = FTypeAlloc1D<
     ResonanceHProxyArray1D,
     allocate_resonance_h_struct_container,
     deallocate_resonance_h_struct_container,
@@ -8567,14 +8547,14 @@ using ResonanceHProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class SpinOrbitMap1Proxy;
 
-using SpinOrbitMap1ProxyArray1D = FortranTypeArray1D<
+using SpinOrbitMap1ProxyArray1D = FTypeArray1D<
     SpinOrbitMap1Proxy,
     allocate_fortran_spin_orbit_map1_struct,
     deallocate_fortran_spin_orbit_map1_struct>;
-using SpinOrbitMap1ProxyArray2D = FortranTypeArray2D<SpinOrbitMap1Proxy>;
-using SpinOrbitMap1ProxyArray3D = FortranTypeArray3D<SpinOrbitMap1Proxy>;
+using SpinOrbitMap1ProxyArray2D = FTypeArray2D<SpinOrbitMap1Proxy>;
+using SpinOrbitMap1ProxyArray3D = FTypeArray3D<SpinOrbitMap1Proxy>;
 
-using SpinOrbitMap1ProxyAllocatable1D = FortranTypeAllocatable1D<
+using SpinOrbitMap1ProxyAlloc1D = FTypeAlloc1D<
     SpinOrbitMap1ProxyArray1D,
     allocate_spin_orbit_map1_struct_container,
     deallocate_spin_orbit_map1_struct_container,
@@ -8583,14 +8563,14 @@ using SpinOrbitMap1ProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class SpinAxisProxy;
 
-using SpinAxisProxyArray1D = FortranTypeArray1D<
+using SpinAxisProxyArray1D = FTypeArray1D<
     SpinAxisProxy,
     allocate_fortran_spin_axis_struct,
     deallocate_fortran_spin_axis_struct>;
-using SpinAxisProxyArray2D = FortranTypeArray2D<SpinAxisProxy>;
-using SpinAxisProxyArray3D = FortranTypeArray3D<SpinAxisProxy>;
+using SpinAxisProxyArray2D = FTypeArray2D<SpinAxisProxy>;
+using SpinAxisProxyArray3D = FTypeArray3D<SpinAxisProxy>;
 
-using SpinAxisProxyAllocatable1D = FortranTypeAllocatable1D<
+using SpinAxisProxyAlloc1D = FTypeAlloc1D<
     SpinAxisProxyArray1D,
     allocate_spin_axis_struct_container,
     deallocate_spin_axis_struct_container,
@@ -8599,14 +8579,14 @@ using SpinAxisProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class PtcNormalFormProxy;
 
-using PtcNormalFormProxyArray1D = FortranTypeArray1D<
+using PtcNormalFormProxyArray1D = FTypeArray1D<
     PtcNormalFormProxy,
     allocate_fortran_ptc_normal_form_struct,
     deallocate_fortran_ptc_normal_form_struct>;
-using PtcNormalFormProxyArray2D = FortranTypeArray2D<PtcNormalFormProxy>;
-using PtcNormalFormProxyArray3D = FortranTypeArray3D<PtcNormalFormProxy>;
+using PtcNormalFormProxyArray2D = FTypeArray2D<PtcNormalFormProxy>;
+using PtcNormalFormProxyArray3D = FTypeArray3D<PtcNormalFormProxy>;
 
-using PtcNormalFormProxyAllocatable1D = FortranTypeAllocatable1D<
+using PtcNormalFormProxyAlloc1D = FTypeAlloc1D<
     PtcNormalFormProxyArray1D,
     allocate_ptc_normal_form_struct_container,
     deallocate_ptc_normal_form_struct_container,
@@ -8615,14 +8595,14 @@ using PtcNormalFormProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class BmadNormalFormProxy;
 
-using BmadNormalFormProxyArray1D = FortranTypeArray1D<
+using BmadNormalFormProxyArray1D = FTypeArray1D<
     BmadNormalFormProxy,
     allocate_fortran_bmad_normal_form_struct,
     deallocate_fortran_bmad_normal_form_struct>;
-using BmadNormalFormProxyArray2D = FortranTypeArray2D<BmadNormalFormProxy>;
-using BmadNormalFormProxyArray3D = FortranTypeArray3D<BmadNormalFormProxy>;
+using BmadNormalFormProxyArray2D = FTypeArray2D<BmadNormalFormProxy>;
+using BmadNormalFormProxyArray3D = FTypeArray3D<BmadNormalFormProxy>;
 
-using BmadNormalFormProxyAllocatable1D = FortranTypeAllocatable1D<
+using BmadNormalFormProxyAlloc1D = FTypeAlloc1D<
     BmadNormalFormProxyArray1D,
     allocate_bmad_normal_form_struct_container,
     deallocate_bmad_normal_form_struct_container,
@@ -8631,14 +8611,14 @@ using BmadNormalFormProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class BunchTrackProxy;
 
-using BunchTrackProxyArray1D = FortranTypeArray1D<
+using BunchTrackProxyArray1D = FTypeArray1D<
     BunchTrackProxy,
     allocate_fortran_bunch_track_struct,
     deallocate_fortran_bunch_track_struct>;
-using BunchTrackProxyArray2D = FortranTypeArray2D<BunchTrackProxy>;
-using BunchTrackProxyArray3D = FortranTypeArray3D<BunchTrackProxy>;
+using BunchTrackProxyArray2D = FTypeArray2D<BunchTrackProxy>;
+using BunchTrackProxyArray3D = FTypeArray3D<BunchTrackProxy>;
 
-using BunchTrackProxyAllocatable1D = FortranTypeAllocatable1D<
+using BunchTrackProxyAlloc1D = FTypeAlloc1D<
     BunchTrackProxyArray1D,
     allocate_bunch_track_struct_container,
     deallocate_bunch_track_struct_container,
@@ -8647,14 +8627,14 @@ using BunchTrackProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class SummationRdtProxy;
 
-using SummationRdtProxyArray1D = FortranTypeArray1D<
+using SummationRdtProxyArray1D = FTypeArray1D<
     SummationRdtProxy,
     allocate_fortran_summation_rdt_struct,
     deallocate_fortran_summation_rdt_struct>;
-using SummationRdtProxyArray2D = FortranTypeArray2D<SummationRdtProxy>;
-using SummationRdtProxyArray3D = FortranTypeArray3D<SummationRdtProxy>;
+using SummationRdtProxyArray2D = FTypeArray2D<SummationRdtProxy>;
+using SummationRdtProxyArray3D = FTypeArray3D<SummationRdtProxy>;
 
-using SummationRdtProxyAllocatable1D = FortranTypeAllocatable1D<
+using SummationRdtProxyAlloc1D = FTypeAlloc1D<
     SummationRdtProxyArray1D,
     allocate_summation_rdt_struct_container,
     deallocate_summation_rdt_struct_container,
@@ -8663,14 +8643,14 @@ using SummationRdtProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class LatEleOrder1Proxy;
 
-using LatEleOrder1ProxyArray1D = FortranTypeArray1D<
+using LatEleOrder1ProxyArray1D = FTypeArray1D<
     LatEleOrder1Proxy,
     allocate_fortran_lat_ele_order1_struct,
     deallocate_fortran_lat_ele_order1_struct>;
-using LatEleOrder1ProxyArray2D = FortranTypeArray2D<LatEleOrder1Proxy>;
-using LatEleOrder1ProxyArray3D = FortranTypeArray3D<LatEleOrder1Proxy>;
+using LatEleOrder1ProxyArray2D = FTypeArray2D<LatEleOrder1Proxy>;
+using LatEleOrder1ProxyArray3D = FTypeArray3D<LatEleOrder1Proxy>;
 
-using LatEleOrder1ProxyAllocatable1D = FortranTypeAllocatable1D<
+using LatEleOrder1ProxyAlloc1D = FTypeAlloc1D<
     LatEleOrder1ProxyArray1D,
     allocate_lat_ele_order1_struct_container,
     deallocate_lat_ele_order1_struct_container,
@@ -8679,14 +8659,14 @@ using LatEleOrder1ProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class LatEleOrderArrayProxy;
 
-using LatEleOrderArrayProxyArray1D = FortranTypeArray1D<
+using LatEleOrderArrayProxyArray1D = FTypeArray1D<
     LatEleOrderArrayProxy,
     allocate_fortran_lat_ele_order_array_struct,
     deallocate_fortran_lat_ele_order_array_struct>;
-using LatEleOrderArrayProxyArray2D = FortranTypeArray2D<LatEleOrderArrayProxy>;
-using LatEleOrderArrayProxyArray3D = FortranTypeArray3D<LatEleOrderArrayProxy>;
+using LatEleOrderArrayProxyArray2D = FTypeArray2D<LatEleOrderArrayProxy>;
+using LatEleOrderArrayProxyArray3D = FTypeArray3D<LatEleOrderArrayProxy>;
 
-using LatEleOrderArrayProxyAllocatable1D = FortranTypeAllocatable1D<
+using LatEleOrderArrayProxyAlloc1D = FTypeAlloc1D<
     LatEleOrderArrayProxyArray1D,
     allocate_lat_ele_order_array_struct_container,
     deallocate_lat_ele_order_array_struct_container,
@@ -8695,14 +8675,14 @@ using LatEleOrderArrayProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoLatSigmaProxy;
 
-using TaoLatSigmaProxyArray1D = FortranTypeArray1D<
+using TaoLatSigmaProxyArray1D = FTypeArray1D<
     TaoLatSigmaProxy,
     allocate_fortran_tao_lat_sigma_struct,
     deallocate_fortran_tao_lat_sigma_struct>;
-using TaoLatSigmaProxyArray2D = FortranTypeArray2D<TaoLatSigmaProxy>;
-using TaoLatSigmaProxyArray3D = FortranTypeArray3D<TaoLatSigmaProxy>;
+using TaoLatSigmaProxyArray2D = FTypeArray2D<TaoLatSigmaProxy>;
+using TaoLatSigmaProxyArray3D = FTypeArray3D<TaoLatSigmaProxy>;
 
-using TaoLatSigmaProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoLatSigmaProxyAlloc1D = FTypeAlloc1D<
     TaoLatSigmaProxyArray1D,
     allocate_tao_lat_sigma_struct_container,
     deallocate_tao_lat_sigma_struct_container,
@@ -8711,14 +8691,14 @@ using TaoLatSigmaProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoSpinEleProxy;
 
-using TaoSpinEleProxyArray1D = FortranTypeArray1D<
+using TaoSpinEleProxyArray1D = FTypeArray1D<
     TaoSpinEleProxy,
     allocate_fortran_tao_spin_ele_struct,
     deallocate_fortran_tao_spin_ele_struct>;
-using TaoSpinEleProxyArray2D = FortranTypeArray2D<TaoSpinEleProxy>;
-using TaoSpinEleProxyArray3D = FortranTypeArray3D<TaoSpinEleProxy>;
+using TaoSpinEleProxyArray2D = FTypeArray2D<TaoSpinEleProxy>;
+using TaoSpinEleProxyArray3D = FTypeArray3D<TaoSpinEleProxy>;
 
-using TaoSpinEleProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoSpinEleProxyAlloc1D = FTypeAlloc1D<
     TaoSpinEleProxyArray1D,
     allocate_tao_spin_ele_struct_container,
     deallocate_tao_spin_ele_struct_container,
@@ -8727,14 +8707,14 @@ using TaoSpinEleProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoPlotCacheProxy;
 
-using TaoPlotCacheProxyArray1D = FortranTypeArray1D<
+using TaoPlotCacheProxyArray1D = FTypeArray1D<
     TaoPlotCacheProxy,
     allocate_fortran_tao_plot_cache_struct,
     deallocate_fortran_tao_plot_cache_struct>;
-using TaoPlotCacheProxyArray2D = FortranTypeArray2D<TaoPlotCacheProxy>;
-using TaoPlotCacheProxyArray3D = FortranTypeArray3D<TaoPlotCacheProxy>;
+using TaoPlotCacheProxyArray2D = FTypeArray2D<TaoPlotCacheProxy>;
+using TaoPlotCacheProxyArray3D = FTypeArray3D<TaoPlotCacheProxy>;
 
-using TaoPlotCacheProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoPlotCacheProxyAlloc1D = FTypeAlloc1D<
     TaoPlotCacheProxyArray1D,
     allocate_tao_plot_cache_struct_container,
     deallocate_tao_plot_cache_struct_container,
@@ -8743,16 +8723,14 @@ using TaoPlotCacheProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoSpinPolarizationProxy;
 
-using TaoSpinPolarizationProxyArray1D = FortranTypeArray1D<
+using TaoSpinPolarizationProxyArray1D = FTypeArray1D<
     TaoSpinPolarizationProxy,
     allocate_fortran_tao_spin_polarization_struct,
     deallocate_fortran_tao_spin_polarization_struct>;
-using TaoSpinPolarizationProxyArray2D =
-    FortranTypeArray2D<TaoSpinPolarizationProxy>;
-using TaoSpinPolarizationProxyArray3D =
-    FortranTypeArray3D<TaoSpinPolarizationProxy>;
+using TaoSpinPolarizationProxyArray2D = FTypeArray2D<TaoSpinPolarizationProxy>;
+using TaoSpinPolarizationProxyArray3D = FTypeArray3D<TaoSpinPolarizationProxy>;
 
-using TaoSpinPolarizationProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoSpinPolarizationProxyAlloc1D = FTypeAlloc1D<
     TaoSpinPolarizationProxyArray1D,
     allocate_tao_spin_polarization_struct_container,
     deallocate_tao_spin_polarization_struct_container,
@@ -8761,14 +8739,14 @@ using TaoSpinPolarizationProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoLatticeBranchProxy;
 
-using TaoLatticeBranchProxyArray1D = FortranTypeArray1D<
+using TaoLatticeBranchProxyArray1D = FTypeArray1D<
     TaoLatticeBranchProxy,
     allocate_fortran_tao_lattice_branch_struct,
     deallocate_fortran_tao_lattice_branch_struct>;
-using TaoLatticeBranchProxyArray2D = FortranTypeArray2D<TaoLatticeBranchProxy>;
-using TaoLatticeBranchProxyArray3D = FortranTypeArray3D<TaoLatticeBranchProxy>;
+using TaoLatticeBranchProxyArray2D = FTypeArray2D<TaoLatticeBranchProxy>;
+using TaoLatticeBranchProxyArray3D = FTypeArray3D<TaoLatticeBranchProxy>;
 
-using TaoLatticeBranchProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoLatticeBranchProxyAlloc1D = FTypeAlloc1D<
     TaoLatticeBranchProxyArray1D,
     allocate_tao_lattice_branch_struct_container,
     deallocate_tao_lattice_branch_struct_container,
@@ -8777,14 +8755,14 @@ using TaoLatticeBranchProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoModelElementProxy;
 
-using TaoModelElementProxyArray1D = FortranTypeArray1D<
+using TaoModelElementProxyArray1D = FTypeArray1D<
     TaoModelElementProxy,
     allocate_fortran_tao_model_element_struct,
     deallocate_fortran_tao_model_element_struct>;
-using TaoModelElementProxyArray2D = FortranTypeArray2D<TaoModelElementProxy>;
-using TaoModelElementProxyArray3D = FortranTypeArray3D<TaoModelElementProxy>;
+using TaoModelElementProxyArray2D = FTypeArray2D<TaoModelElementProxy>;
+using TaoModelElementProxyArray3D = FTypeArray3D<TaoModelElementProxy>;
 
-using TaoModelElementProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoModelElementProxyAlloc1D = FTypeAlloc1D<
     TaoModelElementProxyArray1D,
     allocate_tao_model_element_struct_container,
     deallocate_tao_model_element_struct_container,
@@ -8793,14 +8771,14 @@ using TaoModelElementProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoBeamBranchProxy;
 
-using TaoBeamBranchProxyArray1D = FortranTypeArray1D<
+using TaoBeamBranchProxyArray1D = FTypeArray1D<
     TaoBeamBranchProxy,
     allocate_fortran_tao_beam_branch_struct,
     deallocate_fortran_tao_beam_branch_struct>;
-using TaoBeamBranchProxyArray2D = FortranTypeArray2D<TaoBeamBranchProxy>;
-using TaoBeamBranchProxyArray3D = FortranTypeArray3D<TaoBeamBranchProxy>;
+using TaoBeamBranchProxyArray2D = FTypeArray2D<TaoBeamBranchProxy>;
+using TaoBeamBranchProxyArray3D = FTypeArray3D<TaoBeamBranchProxy>;
 
-using TaoBeamBranchProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoBeamBranchProxyAlloc1D = FTypeAlloc1D<
     TaoBeamBranchProxyArray1D,
     allocate_tao_beam_branch_struct_container,
     deallocate_tao_beam_branch_struct_container,
@@ -8809,14 +8787,14 @@ using TaoBeamBranchProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoD1DataProxy;
 
-using TaoD1DataProxyArray1D = FortranTypeArray1D<
+using TaoD1DataProxyArray1D = FTypeArray1D<
     TaoD1DataProxy,
     allocate_fortran_tao_d1_data_struct,
     deallocate_fortran_tao_d1_data_struct>;
-using TaoD1DataProxyArray2D = FortranTypeArray2D<TaoD1DataProxy>;
-using TaoD1DataProxyArray3D = FortranTypeArray3D<TaoD1DataProxy>;
+using TaoD1DataProxyArray2D = FTypeArray2D<TaoD1DataProxy>;
+using TaoD1DataProxyArray3D = FTypeArray3D<TaoD1DataProxy>;
 
-using TaoD1DataProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoD1DataProxyAlloc1D = FTypeAlloc1D<
     TaoD1DataProxyArray1D,
     allocate_tao_d1_data_struct_container,
     deallocate_tao_d1_data_struct_container,
@@ -8825,14 +8803,14 @@ using TaoD1DataProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoLatticeProxy;
 
-using TaoLatticeProxyArray1D = FortranTypeArray1D<
+using TaoLatticeProxyArray1D = FTypeArray1D<
     TaoLatticeProxy,
     allocate_fortran_tao_lattice_struct,
     deallocate_fortran_tao_lattice_struct>;
-using TaoLatticeProxyArray2D = FortranTypeArray2D<TaoLatticeProxy>;
-using TaoLatticeProxyArray3D = FortranTypeArray3D<TaoLatticeProxy>;
+using TaoLatticeProxyArray2D = FTypeArray2D<TaoLatticeProxy>;
+using TaoLatticeProxyArray3D = FTypeArray3D<TaoLatticeProxy>;
 
-using TaoLatticeProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoLatticeProxyAlloc1D = FTypeAlloc1D<
     TaoLatticeProxyArray1D,
     allocate_tao_lattice_struct_container,
     deallocate_tao_lattice_struct_container,
@@ -8841,14 +8819,14 @@ using TaoLatticeProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoBeamUniProxy;
 
-using TaoBeamUniProxyArray1D = FortranTypeArray1D<
+using TaoBeamUniProxyArray1D = FTypeArray1D<
     TaoBeamUniProxy,
     allocate_fortran_tao_beam_uni_struct,
     deallocate_fortran_tao_beam_uni_struct>;
-using TaoBeamUniProxyArray2D = FortranTypeArray2D<TaoBeamUniProxy>;
-using TaoBeamUniProxyArray3D = FortranTypeArray3D<TaoBeamUniProxy>;
+using TaoBeamUniProxyArray2D = FTypeArray2D<TaoBeamUniProxy>;
+using TaoBeamUniProxyArray3D = FTypeArray3D<TaoBeamUniProxy>;
 
-using TaoBeamUniProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoBeamUniProxyAlloc1D = FTypeAlloc1D<
     TaoBeamUniProxyArray1D,
     allocate_tao_beam_uni_struct_container,
     deallocate_tao_beam_uni_struct_container,
@@ -8857,16 +8835,14 @@ using TaoBeamUniProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoDynamicApertureProxy;
 
-using TaoDynamicApertureProxyArray1D = FortranTypeArray1D<
+using TaoDynamicApertureProxyArray1D = FTypeArray1D<
     TaoDynamicApertureProxy,
     allocate_fortran_tao_dynamic_aperture_struct,
     deallocate_fortran_tao_dynamic_aperture_struct>;
-using TaoDynamicApertureProxyArray2D =
-    FortranTypeArray2D<TaoDynamicApertureProxy>;
-using TaoDynamicApertureProxyArray3D =
-    FortranTypeArray3D<TaoDynamicApertureProxy>;
+using TaoDynamicApertureProxyArray2D = FTypeArray2D<TaoDynamicApertureProxy>;
+using TaoDynamicApertureProxyArray3D = FTypeArray3D<TaoDynamicApertureProxy>;
 
-using TaoDynamicApertureProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoDynamicApertureProxyAlloc1D = FTypeAlloc1D<
     TaoDynamicApertureProxyArray1D,
     allocate_tao_dynamic_aperture_struct_container,
     deallocate_tao_dynamic_aperture_struct_container,
@@ -8875,14 +8851,14 @@ using TaoDynamicApertureProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoModelBranchProxy;
 
-using TaoModelBranchProxyArray1D = FortranTypeArray1D<
+using TaoModelBranchProxyArray1D = FTypeArray1D<
     TaoModelBranchProxy,
     allocate_fortran_tao_model_branch_struct,
     deallocate_fortran_tao_model_branch_struct>;
-using TaoModelBranchProxyArray2D = FortranTypeArray2D<TaoModelBranchProxy>;
-using TaoModelBranchProxyArray3D = FortranTypeArray3D<TaoModelBranchProxy>;
+using TaoModelBranchProxyArray2D = FTypeArray2D<TaoModelBranchProxy>;
+using TaoModelBranchProxyArray3D = FTypeArray3D<TaoModelBranchProxy>;
 
-using TaoModelBranchProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoModelBranchProxyAlloc1D = FTypeAlloc1D<
     TaoModelBranchProxyArray1D,
     allocate_tao_model_branch_struct_container,
     deallocate_tao_model_branch_struct_container,
@@ -8891,14 +8867,14 @@ using TaoModelBranchProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoD2DataProxy;
 
-using TaoD2DataProxyArray1D = FortranTypeArray1D<
+using TaoD2DataProxyArray1D = FTypeArray1D<
     TaoD2DataProxy,
     allocate_fortran_tao_d2_data_struct,
     deallocate_fortran_tao_d2_data_struct>;
-using TaoD2DataProxyArray2D = FortranTypeArray2D<TaoD2DataProxy>;
-using TaoD2DataProxyArray3D = FortranTypeArray3D<TaoD2DataProxy>;
+using TaoD2DataProxyArray2D = FTypeArray2D<TaoD2DataProxy>;
+using TaoD2DataProxyArray3D = FTypeArray3D<TaoD2DataProxy>;
 
-using TaoD2DataProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoD2DataProxyAlloc1D = FTypeAlloc1D<
     TaoD2DataProxyArray1D,
     allocate_tao_d2_data_struct_container,
     deallocate_tao_d2_data_struct_container,
@@ -8907,14 +8883,14 @@ using TaoD2DataProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoSpinMapProxy;
 
-using TaoSpinMapProxyArray1D = FortranTypeArray1D<
+using TaoSpinMapProxyArray1D = FTypeArray1D<
     TaoSpinMapProxy,
     allocate_fortran_tao_spin_map_struct,
     deallocate_fortran_tao_spin_map_struct>;
-using TaoSpinMapProxyArray2D = FortranTypeArray2D<TaoSpinMapProxy>;
-using TaoSpinMapProxyArray3D = FortranTypeArray3D<TaoSpinMapProxy>;
+using TaoSpinMapProxyArray2D = FTypeArray2D<TaoSpinMapProxy>;
+using TaoSpinMapProxyArray3D = FTypeArray3D<TaoSpinMapProxy>;
 
-using TaoSpinMapProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoSpinMapProxyAlloc1D = FTypeAlloc1D<
     TaoSpinMapProxyArray1D,
     allocate_tao_spin_map_struct_container,
     deallocate_tao_spin_map_struct_container,
@@ -8923,14 +8899,14 @@ using TaoSpinMapProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoDataProxy;
 
-using TaoDataProxyArray1D = FortranTypeArray1D<
+using TaoDataProxyArray1D = FTypeArray1D<
     TaoDataProxy,
     allocate_fortran_tao_data_struct,
     deallocate_fortran_tao_data_struct>;
-using TaoDataProxyArray2D = FortranTypeArray2D<TaoDataProxy>;
-using TaoDataProxyArray3D = FortranTypeArray3D<TaoDataProxy>;
+using TaoDataProxyArray2D = FTypeArray2D<TaoDataProxy>;
+using TaoDataProxyArray3D = FTypeArray3D<TaoDataProxy>;
 
-using TaoDataProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoDataProxyAlloc1D = FTypeAlloc1D<
     TaoDataProxyArray1D,
     allocate_tao_data_struct_container,
     deallocate_tao_data_struct_container,
@@ -8939,14 +8915,14 @@ using TaoDataProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoPingScaleProxy;
 
-using TaoPingScaleProxyArray1D = FortranTypeArray1D<
+using TaoPingScaleProxyArray1D = FTypeArray1D<
     TaoPingScaleProxy,
     allocate_fortran_tao_ping_scale_struct,
     deallocate_fortran_tao_ping_scale_struct>;
-using TaoPingScaleProxyArray2D = FortranTypeArray2D<TaoPingScaleProxy>;
-using TaoPingScaleProxyArray3D = FortranTypeArray3D<TaoPingScaleProxy>;
+using TaoPingScaleProxyArray2D = FTypeArray2D<TaoPingScaleProxy>;
+using TaoPingScaleProxyArray3D = FTypeArray3D<TaoPingScaleProxy>;
 
-using TaoPingScaleProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoPingScaleProxyAlloc1D = FTypeAlloc1D<
     TaoPingScaleProxyArray1D,
     allocate_tao_ping_scale_struct_container,
     deallocate_tao_ping_scale_struct_container,
@@ -8955,14 +8931,14 @@ using TaoPingScaleProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoUniverseCalcProxy;
 
-using TaoUniverseCalcProxyArray1D = FortranTypeArray1D<
+using TaoUniverseCalcProxyArray1D = FTypeArray1D<
     TaoUniverseCalcProxy,
     allocate_fortran_tao_universe_calc_struct,
     deallocate_fortran_tao_universe_calc_struct>;
-using TaoUniverseCalcProxyArray2D = FortranTypeArray2D<TaoUniverseCalcProxy>;
-using TaoUniverseCalcProxyArray3D = FortranTypeArray3D<TaoUniverseCalcProxy>;
+using TaoUniverseCalcProxyArray2D = FTypeArray2D<TaoUniverseCalcProxy>;
+using TaoUniverseCalcProxyArray3D = FTypeArray3D<TaoUniverseCalcProxy>;
 
-using TaoUniverseCalcProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoUniverseCalcProxyAlloc1D = FTypeAlloc1D<
     TaoUniverseCalcProxyArray1D,
     allocate_tao_universe_calc_struct_container,
     deallocate_tao_universe_calc_struct_container,
@@ -8971,14 +8947,14 @@ using TaoUniverseCalcProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class LatEleOrderProxy;
 
-using LatEleOrderProxyArray1D = FortranTypeArray1D<
+using LatEleOrderProxyArray1D = FTypeArray1D<
     LatEleOrderProxy,
     allocate_fortran_lat_ele_order_struct,
     deallocate_fortran_lat_ele_order_struct>;
-using LatEleOrderProxyArray2D = FortranTypeArray2D<LatEleOrderProxy>;
-using LatEleOrderProxyArray3D = FortranTypeArray3D<LatEleOrderProxy>;
+using LatEleOrderProxyArray2D = FTypeArray2D<LatEleOrderProxy>;
+using LatEleOrderProxyArray3D = FTypeArray3D<LatEleOrderProxy>;
 
-using LatEleOrderProxyAllocatable1D = FortranTypeAllocatable1D<
+using LatEleOrderProxyAlloc1D = FTypeAlloc1D<
     LatEleOrderProxyArray1D,
     allocate_lat_ele_order_struct_container,
     deallocate_lat_ele_order_struct_container,
@@ -8987,14 +8963,14 @@ using LatEleOrderProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TaoUniverseProxy;
 
-using TaoUniverseProxyArray1D = FortranTypeArray1D<
+using TaoUniverseProxyArray1D = FTypeArray1D<
     TaoUniverseProxy,
     allocate_fortran_tao_universe_struct,
     deallocate_fortran_tao_universe_struct>;
-using TaoUniverseProxyArray2D = FortranTypeArray2D<TaoUniverseProxy>;
-using TaoUniverseProxyArray3D = FortranTypeArray3D<TaoUniverseProxy>;
+using TaoUniverseProxyArray2D = FTypeArray2D<TaoUniverseProxy>;
+using TaoUniverseProxyArray3D = FTypeArray3D<TaoUniverseProxy>;
 
-using TaoUniverseProxyAllocatable1D = FortranTypeAllocatable1D<
+using TaoUniverseProxyAlloc1D = FTypeAlloc1D<
     TaoUniverseProxyArray1D,
     allocate_tao_universe_struct_container,
     deallocate_tao_universe_struct_container,
@@ -9003,14 +8979,14 @@ using TaoUniverseProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class AllEncompassingProxy;
 
-using AllEncompassingProxyArray1D = FortranTypeArray1D<
+using AllEncompassingProxyArray1D = FTypeArray1D<
     AllEncompassingProxy,
     allocate_fortran_all_encompassing_struct,
     deallocate_fortran_all_encompassing_struct>;
-using AllEncompassingProxyArray2D = FortranTypeArray2D<AllEncompassingProxy>;
-using AllEncompassingProxyArray3D = FortranTypeArray3D<AllEncompassingProxy>;
+using AllEncompassingProxyArray2D = FTypeArray2D<AllEncompassingProxy>;
+using AllEncompassingProxyArray3D = FTypeArray3D<AllEncompassingProxy>;
 
-using AllEncompassingProxyAllocatable1D = FortranTypeAllocatable1D<
+using AllEncompassingProxyAlloc1D = FTypeAlloc1D<
     AllEncompassingProxyArray1D,
     allocate_all_encompassing_struct_container,
     deallocate_all_encompassing_struct_container,
@@ -9019,14 +8995,14 @@ using AllEncompassingProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TestSubProxy;
 
-using TestSubProxyArray1D = FortranTypeArray1D<
+using TestSubProxyArray1D = FTypeArray1D<
     TestSubProxy,
     allocate_fortran_test_sub_struct,
     deallocate_fortran_test_sub_struct>;
-using TestSubProxyArray2D = FortranTypeArray2D<TestSubProxy>;
-using TestSubProxyArray3D = FortranTypeArray3D<TestSubProxy>;
+using TestSubProxyArray2D = FTypeArray2D<TestSubProxy>;
+using TestSubProxyArray3D = FTypeArray3D<TestSubProxy>;
 
-using TestSubProxyAllocatable1D = FortranTypeAllocatable1D<
+using TestSubProxyAlloc1D = FTypeAlloc1D<
     TestSubProxyArray1D,
     allocate_test_sub_struct_container,
     deallocate_test_sub_struct_container,
@@ -9035,14 +9011,14 @@ using TestSubProxyAllocatable1D = FortranTypeAllocatable1D<
 
 class TestSubSubProxy;
 
-using TestSubSubProxyArray1D = FortranTypeArray1D<
+using TestSubSubProxyArray1D = FTypeArray1D<
     TestSubSubProxy,
     allocate_fortran_test_sub_sub_struct,
     deallocate_fortran_test_sub_sub_struct>;
-using TestSubSubProxyArray2D = FortranTypeArray2D<TestSubSubProxy>;
-using TestSubSubProxyArray3D = FortranTypeArray3D<TestSubSubProxy>;
+using TestSubSubProxyArray2D = FTypeArray2D<TestSubSubProxy>;
+using TestSubSubProxyArray3D = FTypeArray3D<TestSubSubProxy>;
 
-using TestSubSubProxyAllocatable1D = FortranTypeAllocatable1D<
+using TestSubSubProxyAlloc1D = FTypeAlloc1D<
     TestSubSubProxyArray1D,
     allocate_test_sub_sub_struct_container,
     deallocate_test_sub_sub_struct_container,
@@ -9077,7 +9053,7 @@ class SplineProxy : public FortranProxy<SplineProxy> {
   void set_y0(double value);
   double x1() const; // 0D_NOT_real
   void set_x1(double value);
-  FortranArray1D<double> coef() const; // 1D_NOT_real
+  FArray1D<double> coef() const; // 1D_NOT_real
 };
 
 template <>
@@ -9250,14 +9226,14 @@ class PhotonReflectTableProxy : public FortranProxy<PhotonReflectTableProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray1D<double> angle() const; // 1D_ALLOC_real
-  FortranArray1D<double> energy() const; // 1D_ALLOC_real
+  FArray1D<double> angle() const; // 1D_ALLOC_real
+  FArray1D<double> energy() const; // 1D_ALLOC_real
   Interval1CoefProxyArray1D int1() const; // 1D_ALLOC_type
-  FortranArray2D<double> p_reflect() const; // 2D_ALLOC_real
+  FArray2D<double> p_reflect() const; // 2D_ALLOC_real
   double max_energy() const; // 0D_NOT_real
   void set_max_energy(double value);
-  FortranArray1D<double> p_reflect_scratch() const; // 1D_ALLOC_real
-  FortranArray1D<double> bragg_angle() const; // 1D_ALLOC_real
+  FArray1D<double> p_reflect_scratch() const; // 1D_ALLOC_real
+  FArray1D<double> bragg_angle() const; // 1D_ALLOC_real
 };
 
 template <>
@@ -9320,14 +9296,14 @@ class CoordProxy : public FortranProxy<CoordProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray1D<double> vec() const; // 1D_NOT_real
+  FArray1D<double> vec() const; // 1D_NOT_real
   double s() const; // 0D_NOT_real
   void set_s(double value);
   long double t() const; // 0D_NOT_real16
   void set_t(long double value);
-  FortranArray1D<double> spin() const; // 1D_NOT_real
-  FortranArray1D<double> field() const; // 1D_NOT_real
-  FortranArray1D<double> phase() const; // 1D_NOT_real
+  FArray1D<double> spin() const; // 1D_NOT_real
+  FArray1D<double> field() const; // 1D_NOT_real
+  FArray1D<double> phase() const; // 1D_NOT_real
   double charge() const; // 0D_NOT_real
   void set_charge(double value);
   double dt_ref() const; // 0D_NOT_real
@@ -9481,10 +9457,10 @@ class WakeSrZLongProxy : public FortranProxy<WakeSrZLongProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray1D<double> w() const; // 1D_ALLOC_real
-  FortranArray1D<std::complex<double>> fw() const; // 1D_ALLOC_complex
-  FortranArray1D<std::complex<double>> fbunch() const; // 1D_ALLOC_complex
-  FortranArray1D<std::complex<double>> w_out() const; // 1D_ALLOC_complex
+  FArray1D<double> w() const; // 1D_ALLOC_real
+  FArray1D<std::complex<double>> fw() const; // 1D_ALLOC_complex
+  FArray1D<std::complex<double>> fbunch() const; // 1D_ALLOC_complex
+  FArray1D<std::complex<double>> w_out() const; // 1D_ALLOC_complex
   double dz() const; // 0D_NOT_real
   void set_dz(double value);
   double z0() const; // 0D_NOT_real
@@ -9750,7 +9726,7 @@ class TaylorTermProxy : public FortranProxy<TaylorTermProxy> {
 
   double coef() const; // 0D_NOT_real
   void set_coef(double value);
-  FortranArray1D<int> expn() const; // 1D_NOT_integer
+  FArray1D<int> expn() const; // 1D_NOT_integer
 };
 
 template <>
@@ -9804,7 +9780,7 @@ class EmTaylorTermProxy : public FortranProxy<EmTaylorTermProxy> {
 
   double coef() const; // 0D_NOT_real
   void set_coef(double value);
-  FortranArray1D<int> expn() const; // 1D_NOT_integer
+  FArray1D<int> expn() const; // 1D_NOT_integer
 };
 
 template <>
@@ -9929,7 +9905,7 @@ class CartesianMapProxy : public FortranProxy<CartesianMapProxy> {
 
   double field_scale() const; // 0D_NOT_real
   void set_field_scale(double value);
-  FortranArray1D<double> r0() const; // 1D_NOT_real
+  FArray1D<double> r0() const; // 1D_NOT_real
   int master_parameter() const; // 0D_NOT_integer
   void set_master_parameter(int value);
   int ele_anchor_pt() const; // 0D_NOT_integer
@@ -10035,7 +10011,7 @@ class CylindricalMapProxy : public FortranProxy<CylindricalMapProxy> {
   void set_ele_anchor_pt(int value);
   double dz() const; // 0D_NOT_real
   void set_dz(double value);
-  FortranArray1D<double> r0() const; // 1D_NOT_real
+  FArray1D<double> r0() const; // 1D_NOT_real
   std::optional<CylindricalMapTermProxy> ptr() const; // 0D_PTR_type
   void set_ptr(const CylindricalMapTermProxy& src);
 };
@@ -10062,8 +10038,8 @@ class BicubicCmplxCoefProxy : public FortranProxy<BicubicCmplxCoefProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray2D<std::complex<double>> coef() const; // 2D_NOT_complex
-  FortranArray1D<int> i_box() const; // 1D_NOT_integer
+  FArray2D<std::complex<double>> coef() const; // 2D_NOT_complex
+  FArray1D<int> i_box() const; // 1D_NOT_integer
 };
 
 template <>
@@ -10088,8 +10064,8 @@ class TricubicCmplxCoefProxy : public FortranProxy<TricubicCmplxCoefProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray3D<std::complex<double>> coef() const; // 3D_NOT_complex
-  FortranArray1D<int> i_box() const; // 1D_NOT_integer
+  FArray3D<std::complex<double>> coef() const; // 3D_NOT_complex
+  FArray1D<int> i_box() const; // 1D_NOT_integer
 };
 
 template <>
@@ -10114,8 +10090,8 @@ class GridFieldPt1Proxy : public FortranProxy<GridFieldPt1Proxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray1D<std::complex<double>> E() const; // 1D_NOT_complex
-  FortranArray1D<std::complex<double>> B() const; // 1D_NOT_complex
+  FArray1D<std::complex<double>> E() const; // 1D_NOT_complex
+  FArray1D<std::complex<double>> B() const; // 1D_NOT_complex
 };
 
 template <>
@@ -10185,8 +10161,8 @@ class GridFieldProxy : public FortranProxy<GridFieldProxy> {
   void set_ele_anchor_pt(int value);
   int interpolation_order() const; // 0D_NOT_integer
   void set_interpolation_order(int value);
-  FortranArray1D<double> dr() const; // 1D_NOT_real
-  FortranArray1D<double> r0() const; // 1D_NOT_real
+  FArray1D<double> dr() const; // 1D_NOT_real
+  FArray1D<double> r0() const; // 1D_NOT_real
   bool curved_ref_frame() const; // 0D_NOT_logical
   void set_curved_ref_frame(bool value);
   std::optional<GridFieldPtProxy> ptr() const; // 0D_PTR_type
@@ -10217,8 +10193,8 @@ class FloorPositionProxy : public FortranProxy<FloorPositionProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray1D<double> r() const; // 1D_NOT_real
-  FortranArray2D<double> w() const; // 2D_NOT_real
+  FArray1D<double> r() const; // 1D_NOT_real
+  FArray2D<double> w() const; // 2D_NOT_real
   double theta() const; // 0D_NOT_real
   void set_theta(double value);
   double phi() const; // 0D_NOT_real
@@ -10382,7 +10358,7 @@ class Mode3Proxy : public FortranProxy<Mode3Proxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray2D<double> v() const; // 2D_NOT_real
+  FArray2D<double> v() const; // 2D_NOT_real
   TwissProxy a() const; // 0D_NOT_type
   void set_a(const TwissProxy& src);
   TwissProxy b() const; // 0D_NOT_type
@@ -10459,11 +10435,11 @@ class RadMapProxy : public FortranProxy<RadMapProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray1D<double> ref_orb() const; // 1D_NOT_real
-  FortranArray2D<double> damp_dmat() const; // 2D_NOT_real
-  FortranArray1D<double> xfer_damp_vec() const; // 1D_NOT_real
-  FortranArray2D<double> xfer_damp_mat() const; // 2D_NOT_real
-  FortranArray2D<double> stoc_mat() const; // 2D_NOT_real
+  FArray1D<double> ref_orb() const; // 1D_NOT_real
+  FArray2D<double> damp_dmat() const; // 2D_NOT_real
+  FArray1D<double> xfer_damp_vec() const; // 1D_NOT_real
+  FArray2D<double> xfer_damp_mat() const; // 2D_NOT_real
+  FArray2D<double> stoc_mat() const; // 2D_NOT_real
 };
 
 template <>
@@ -10524,7 +10500,7 @@ class GenGrad1Proxy : public FortranProxy<GenGrad1Proxy> {
   void set_sincos(int value);
   int n_deriv_max() const; // 0D_NOT_integer
   void set_n_deriv_max(int value);
-  FortranArray2D<double> deriv() const; // 2D_ALLOC_real
+  FArray2D<double> deriv() const; // 2D_ALLOC_real
 };
 
 template <>
@@ -10562,7 +10538,7 @@ class GenGradMapProxy : public FortranProxy<GenGradMapProxy> {
   void set_iz1(int value);
   double dz() const; // 0D_NOT_real
   void set_dz(double value);
-  FortranArray1D<double> r0() const; // 1D_NOT_real
+  FArray1D<double> r0() const; // 1D_NOT_real
   double field_scale() const; // 0D_NOT_real
   void set_field_scale(double value);
   int master_parameter() const; // 0D_NOT_integer
@@ -10629,8 +10605,8 @@ class SurfaceSegmentedProxy : public FortranProxy<SurfaceSegmentedProxy> {
 
   bool active() const; // 0D_NOT_logical
   void set_active(bool value);
-  FortranArray1D<double> dr() const; // 1D_NOT_real
-  FortranArray1D<double> r0() const; // 1D_NOT_real
+  FArray1D<double> dr() const; // 1D_NOT_real
+  FArray1D<double> r0() const; // 1D_NOT_real
   SurfaceSegmentedPtProxyArray2D pt() const; // 2D_ALLOC_type
 };
 
@@ -10694,8 +10670,8 @@ class SurfaceHMisalignProxy : public FortranProxy<SurfaceHMisalignProxy> {
 
   bool active() const; // 0D_NOT_logical
   void set_active(bool value);
-  FortranArray1D<double> dr() const; // 1D_NOT_real
-  FortranArray1D<double> r0() const; // 1D_NOT_real
+  FArray1D<double> dr() const; // 1D_NOT_real
+  FArray1D<double> r0() const; // 1D_NOT_real
   SurfaceHMisalignPtProxyArray2D pt() const; // 2D_ALLOC_type
 };
 
@@ -10760,8 +10736,8 @@ class SurfaceDisplacementProxy : public FortranProxy<SurfaceDisplacementProxy> {
 
   bool active() const; // 0D_NOT_logical
   void set_active(bool value);
-  FortranArray1D<double> dr() const; // 1D_NOT_real
-  FortranArray1D<double> r0() const; // 1D_NOT_real
+  FArray1D<double> dr() const; // 1D_NOT_real
+  FArray1D<double> r0() const; // 1D_NOT_real
   SurfaceDisplacementPtProxyArray2D pt() const; // 2D_ALLOC_type
 };
 
@@ -10787,7 +10763,7 @@ class TargetPointProxy : public FortranProxy<TargetPointProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray1D<double> r() const; // 1D_NOT_real
+  FArray1D<double> r() const; // 1D_NOT_real
 };
 
 template <>
@@ -10812,10 +10788,10 @@ class SurfaceCurvatureProxy : public FortranProxy<SurfaceCurvatureProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray2D<double> xy() const; // 2D_NOT_real
+  FArray2D<double> xy() const; // 2D_NOT_real
   double spherical() const; // 0D_NOT_real
   void set_spherical(double value);
-  FortranArray1D<double> elliptical() const; // 1D_NOT_real
+  FArray1D<double> elliptical() const; // 1D_NOT_real
   bool has_curvature() const; // 0D_NOT_logical
   void set_has_curvature(bool value);
 };
@@ -10887,8 +10863,8 @@ class PhotonMaterialProxy : public FortranProxy<PhotonMaterialProxy> {
   void set_f_hbar(std::complex<double> value);
   std::complex<double> f_hkl() const; // 0D_NOT_complex
   void set_f_hkl(std::complex<double> value);
-  FortranArray1D<double> h_norm() const; // 1D_NOT_real
-  FortranArray1D<double> l_ref() const; // 1D_NOT_real
+  FArray1D<double> h_norm() const; // 1D_NOT_real
+  FArray1D<double> l_ref() const; // 1D_NOT_real
 };
 
 template <>
@@ -10925,10 +10901,10 @@ class PixelPtProxy : public FortranProxy<PixelPtProxy> {
   void set_intensity_y(double value);
   double intensity() const; // 0D_NOT_real
   void set_intensity(double value);
-  FortranArray1D<double> orbit() const; // 1D_NOT_real
-  FortranArray1D<double> orbit_rms() const; // 1D_NOT_real
-  FortranArray1D<double> init_orbit() const; // 1D_NOT_real
-  FortranArray1D<double> init_orbit_rms() const; // 1D_NOT_real
+  FArray1D<double> orbit() const; // 1D_NOT_real
+  FArray1D<double> orbit_rms() const; // 1D_NOT_real
+  FArray1D<double> init_orbit() const; // 1D_NOT_real
+  FArray1D<double> init_orbit_rms() const; // 1D_NOT_real
 };
 
 template <>
@@ -10953,8 +10929,8 @@ class PixelDetecProxy : public FortranProxy<PixelDetecProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray1D<double> dr() const; // 1D_NOT_real
-  FortranArray1D<double> r0() const; // 1D_NOT_real
+  FArray1D<double> dr() const; // 1D_NOT_real
+  FArray1D<double> r0() const; // 1D_NOT_real
   int64_t n_track_tot() const; // 0D_NOT_integer8
   void set_n_track_tot(int64_t value);
   int64_t n_hit_detec() const; // 0D_NOT_integer8
@@ -11007,7 +10983,7 @@ class PhotonElementProxy : public FortranProxy<PhotonElementProxy> {
   PhotonReflectTableProxy reflectivity_table_pi() const; // 0D_NOT_type
   void set_reflectivity_table_pi(const PhotonReflectTableProxy& src);
   SplineProxyArray1D init_energy_prob() const; // 1D_ALLOC_type
-  FortranArray1D<double> integrated_init_energy_prob() const; // 1D_ALLOC_real
+  FArray1D<double> integrated_init_energy_prob() const; // 1D_ALLOC_real
 };
 
 template <>
@@ -11097,17 +11073,17 @@ class Wall3dSectionProxy : public FortranProxy<Wall3dSectionProxy> {
   void set_thickness(double value);
   double s() const; // 0D_NOT_real
   void set_s(double value);
-  FortranArray1D<double> r0() const; // 1D_NOT_real
+  FArray1D<double> r0() const; // 1D_NOT_real
   double dx0_ds() const; // 0D_NOT_real
   void set_dx0_ds(double value);
   double dy0_ds() const; // 0D_NOT_real
   void set_dy0_ds(double value);
-  FortranArray1D<double> x0_coef() const; // 1D_NOT_real
-  FortranArray1D<double> y0_coef() const; // 1D_NOT_real
+  FArray1D<double> x0_coef() const; // 1D_NOT_real
+  FArray1D<double> y0_coef() const; // 1D_NOT_real
   double dr_ds() const; // 0D_NOT_real
   void set_dr_ds(double value);
-  FortranArray1D<double> p1_coef() const; // 1D_NOT_real
-  FortranArray1D<double> p2_coef() const; // 1D_NOT_real
+  FArray1D<double> p1_coef() const; // 1D_NOT_real
+  FArray1D<double> p2_coef() const; // 1D_NOT_real
 };
 
 template <>
@@ -11207,7 +11183,7 @@ class ControlProxy : public FortranProxy<ControlProxy> {
 
   double value() const; // 0D_NOT_real
   void set_value(double value);
-  FortranArray1D<double> y_knot() const; // 1D_ALLOC_real
+  FArray1D<double> y_knot() const; // 1D_ALLOC_real
   ExpressionAtomProxyArray1D stack() const; // 1D_ALLOC_type
   LatEleLocProxy slave() const; // 0D_NOT_type
   void set_slave(const LatEleLocProxy& src);
@@ -11273,7 +11249,7 @@ class ControlRamp1Proxy : public FortranProxy<ControlRamp1Proxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray1D<double> y_knot() const; // 1D_ALLOC_real
+  FArray1D<double> y_knot() const; // 1D_ALLOC_real
   ExpressionAtomProxyArray1D stack() const; // 1D_ALLOC_type
   std::string attribute() const; // 0D_NOT_character
   void set_attribute(const std::string& value);
@@ -11308,7 +11284,7 @@ class ControllerProxy : public FortranProxy<ControllerProxy> {
   ControlVar1ProxyArray1D var() const; // 1D_ALLOC_type
   ControlRamp1ProxyArray1D ramp() const; // 1D_ALLOC_type
   RamperLordProxyArray1D ramper_lord() const; // 1D_ALLOC_type
-  FortranArray1D<double> x_knot() const; // 1D_ALLOC_real
+  FArray1D<double> x_knot() const; // 1D_ALLOC_real
 };
 
 template <>
@@ -11363,7 +11339,7 @@ class KvBeamInitProxy : public FortranProxy<KvBeamInitProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray1D<int> part_per_phi() const; // 1D_NOT_integer
+  FArray1D<int> part_per_phi() const; // 1D_NOT_integer
   int n_I2() const; // 0D_NOT_integer
   void set_n_I2(int value);
   double A() const; // 0D_NOT_real
@@ -11430,14 +11406,14 @@ class BeamInitProxy : public FortranProxy<BeamInitProxy> {
 
   std::string position_file() const; // 0D_NOT_character
   void set_position_file(const std::string& value);
-  FortranCharArray1D distribution_type() const; // 1D_NOT_character
-  FortranArray1D<double> spin() const; // 1D_NOT_real
+  FCharArray1D distribution_type() const; // 1D_NOT_character
+  FArray1D<double> spin() const; // 1D_NOT_real
   EllipseBeamInitProxyArray1D ellipse() const; // 1D_NOT_type
   KvBeamInitProxy KV() const; // 0D_NOT_type
   void set_KV(const KvBeamInitProxy& src);
   GridBeamInitProxyArray1D grid() const; // 1D_NOT_type
-  FortranArray1D<double> center_jitter() const; // 1D_NOT_real
-  FortranArray1D<double> emit_jitter() const; // 1D_NOT_real
+  FArray1D<double> center_jitter() const; // 1D_NOT_real
+  FArray1D<double> emit_jitter() const; // 1D_NOT_real
   double sig_z_jitter() const; // 0D_NOT_real
   void set_sig_z_jitter(double value);
   double sig_pz_jitter() const; // 0D_NOT_real
@@ -11464,7 +11440,7 @@ class BeamInitProxy : public FortranProxy<BeamInitProxy> {
   void set_b_emit(double value);
   double dPz_dz() const; // 0D_NOT_real
   void set_dPz_dz(double value);
-  FortranArray1D<double> center() const; // 1D_NOT_real
+  FArray1D<double> center() const; // 1D_NOT_real
   double t_offset() const; // 0D_NOT_real
   void set_t_offset(double value);
   double dt_bunch() const; // 0D_NOT_real
@@ -11521,8 +11497,8 @@ class LatParamProxy : public FortranProxy<LatParamProxy> {
   void set_total_length(double value);
   double unstable_factor() const; // 0D_NOT_real
   void set_unstable_factor(double value);
-  FortranArray2D<double> t1_with_RF() const; // 2D_NOT_real
-  FortranArray2D<double> t1_no_RF() const; // 2D_NOT_real
+  FArray2D<double> t1_with_RF() const; // 2D_NOT_real
+  FArray2D<double> t1_no_RF() const; // 2D_NOT_real
   double spin_tune() const; // 0D_NOT_real
   void set_spin_tune(double value);
   int particle() const; // 0D_NOT_integer
@@ -11643,7 +11619,7 @@ class AnormalModeProxy : public FortranProxy<AnormalModeProxy> {
   void set_emittance(double value);
   double emittance_no_vert() const; // 0D_NOT_real
   void set_emittance_no_vert(double value);
-  FortranArray1D<double> synch_int() const; // 1D_NOT_real
+  FArray1D<double> synch_int() const; // 1D_NOT_real
   double j_damp() const; // 0D_NOT_real
   void set_j_damp(double value);
   double alpha_damp() const; // 0D_NOT_real
@@ -11714,7 +11690,7 @@ class NormalModesProxy : public FortranProxy<NormalModesProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray1D<double> synch_int() const; // 1D_NOT_real
+  FArray1D<double> synch_int() const; // 1D_NOT_real
   double sigE_E() const; // 0D_NOT_real
   void set_sigE_E(double value);
   double sig_z() const; // 0D_NOT_real
@@ -11763,15 +11739,15 @@ class EmFieldProxy : public FortranProxy<EmFieldProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray1D<double> E() const; // 1D_NOT_real
-  FortranArray1D<double> B() const; // 1D_NOT_real
-  FortranArray2D<double> dE() const; // 2D_NOT_real
-  FortranArray2D<double> dB() const; // 2D_NOT_real
+  FArray1D<double> E() const; // 1D_NOT_real
+  FArray1D<double> B() const; // 1D_NOT_real
+  FArray2D<double> dE() const; // 2D_NOT_real
+  FArray2D<double> dB() const; // 2D_NOT_real
   double phi() const; // 0D_NOT_real
   void set_phi(double value);
   double phi_B() const; // 0D_NOT_real
   void set_phi_B(double value);
-  FortranArray1D<double> A() const; // 1D_NOT_real
+  FArray1D<double> A() const; // 1D_NOT_real
 };
 
 template <>
@@ -11844,8 +11820,8 @@ class TrackPointProxy : public FortranProxy<TrackPointProxy> {
   void set_field(const EmFieldProxy& src);
   StrongBeamProxy strong_beam() const; // 0D_NOT_type
   void set_strong_beam(const StrongBeamProxy& src);
-  FortranArray1D<double> vec0() const; // 1D_NOT_real
-  FortranArray2D<double> mat6() const; // 2D_NOT_real
+  FArray1D<double> vec0() const; // 1D_NOT_real
+  FArray2D<double> mat6() const; // 2D_NOT_real
 };
 
 template <>
@@ -11919,8 +11895,8 @@ class SpaceChargeCommonProxy : public FortranProxy<SpaceChargeCommonProxy> {
   void set_lsc_sigma_cutoff(double value);
   double particle_sigma_cutoff() const; // 0D_NOT_real
   void set_particle_sigma_cutoff(double value);
-  FortranArray1D<int> space_charge_mesh_size() const; // 1D_NOT_integer
-  FortranArray1D<int> csr3d_mesh_size() const; // 1D_NOT_integer
+  FArray1D<int> space_charge_mesh_size() const; // 1D_NOT_integer
+  FArray1D<int> csr3d_mesh_size() const; // 1D_NOT_integer
   int n_bin() const; // 0D_NOT_integer
   void set_n_bin(int value);
   int particle_bin_span() const; // 0D_NOT_integer
@@ -11961,7 +11937,7 @@ class BmadCommonProxy : public FortranProxy<BmadCommonProxy> {
 
   double max_aperture_limit() const; // 0D_NOT_real
   void set_max_aperture_limit(double value);
-  FortranArray1D<double> d_orb() const; // 1D_NOT_real
+  FArray1D<double> d_orb() const; // 1D_NOT_real
   double default_ds_step() const; // 0D_NOT_real
   void set_default_ds_step(double value);
   double significant_length() const; // 0D_NOT_real
@@ -12289,7 +12265,7 @@ class EleProxy : public FortranProxy<EleProxy> {
   std::optional<RadMapEleProxy> rad_map() const; // 0D_PTR_type
   void set_rad_map(const RadMapEleProxy& src);
   TaylorProxyArray1D taylor() const; // 1D_NOT_type
-  FortranArray1D<double> spin_taylor_ref_orb_in() const; // 1D_NOT_real
+  FArray1D<double> spin_taylor_ref_orb_in() const; // 1D_NOT_real
   TaylorProxyArray1D spin_taylor() const; // 1D_NOT_type
   std::optional<WakeProxy> wake() const; // 0D_PTR_type
   void set_wake(const WakeProxy& src);
@@ -12306,13 +12282,13 @@ class EleProxy : public FortranProxy<EleProxy> {
   void set_time_ref_orb_in(const CoordProxy& src);
   CoordProxy time_ref_orb_out() const; // 0D_NOT_type
   void set_time_ref_orb_out(const CoordProxy& src);
-  FortranArray1D<double> value() const; // 1D_NOT_real
-  FortranArray1D<double> old_value() const; // 1D_NOT_real
-  FortranArray2D<double> spin_q() const; // 2D_NOT_real
-  FortranArray1D<double> vec0() const; // 1D_NOT_real
-  FortranArray2D<double> mat6() const; // 2D_NOT_real
-  FortranArray2D<double> c_mat() const; // 2D_NOT_real
-  FortranArray2D<double> dc_mat_dpz() const; // 2D_NOT_real
+  FArray1D<double> value() const; // 1D_NOT_real
+  FArray1D<double> old_value() const; // 1D_NOT_real
+  FArray2D<double> spin_q() const; // 2D_NOT_real
+  FArray1D<double> vec0() const; // 1D_NOT_real
+  FArray2D<double> mat6() const; // 2D_NOT_real
+  FArray2D<double> c_mat() const; // 2D_NOT_real
+  FArray2D<double> dc_mat_dpz() const; // 2D_NOT_real
   double gamma_c() const; // 0D_NOT_real
   void set_gamma_c(double value);
   double s_start() const; // 0D_NOT_real
@@ -12321,12 +12297,12 @@ class EleProxy : public FortranProxy<EleProxy> {
   void set_s(double value);
   double ref_time() const; // 0D_NOT_real
   void set_ref_time(double value);
-  FortranArray1D<double> a_pole() const; // 1D_PTR_real
-  FortranArray1D<double> b_pole() const; // 1D_PTR_real
-  FortranArray1D<double> a_pole_elec() const; // 1D_PTR_real
-  FortranArray1D<double> b_pole_elec() const; // 1D_PTR_real
-  FortranArray1D<double> custom() const; // 1D_PTR_real
-  FortranArray3D<double> r() const; // 3D_PTR_real
+  FArray1D<double> a_pole() const; // 1D_PTR_real
+  FArray1D<double> b_pole() const; // 1D_PTR_real
+  FArray1D<double> a_pole_elec() const; // 1D_PTR_real
+  FArray1D<double> b_pole_elec() const; // 1D_PTR_real
+  FArray1D<double> custom() const; // 1D_PTR_real
+  FArray3D<double> r() const; // 3D_PTR_real
   int key() const; // 0D_NOT_integer
   void set_key(int value);
   int sub_key() const; // 0D_NOT_integer
@@ -12431,7 +12407,7 @@ class ComplexTaylorTermProxy : public FortranProxy<ComplexTaylorTermProxy> {
 
   std::complex<double> coef() const; // 0D_NOT_complex
   void set_coef(std::complex<double> value);
-  FortranArray1D<int> expn() const; // 1D_NOT_integer
+  FArray1D<int> expn() const; // 1D_NOT_integer
 };
 
 template <>
@@ -12547,7 +12523,7 @@ class LatProxy : public FortranProxy<LatProxy> {
   void set_input_file_name(const std::string& value);
   std::string title() const; // 0D_NOT_character
   void set_title(const std::string& value);
-  FortranCharArray1D print_str() const; // 1D_ALLOC_character
+  FCharArray1D print_str() const; // 1D_ALLOC_character
   ExpressionAtomProxyArray1D constant() const; // 1D_ALLOC_type
   std::optional<ModeInfoProxy> a() const; // 0D_PTR_type
   void set_a(const ModeInfoProxy& src);
@@ -12570,7 +12546,7 @@ class LatProxy : public FortranProxy<LatProxy> {
   void set_beam_init(const BeamInitProxy& src);
   PreTrackerProxy pre_tracker() const; // 0D_NOT_type
   void set_pre_tracker(const PreTrackerProxy& src);
-  FortranArray1D<double> custom() const; // 1D_ALLOC_real
+  FArray1D<double> custom() const; // 1D_ALLOC_real
   int version() const; // 0D_NOT_integer
   void set_version(int value);
   int* n_ele_track() const; // 0D_PTR_integer
@@ -12583,7 +12559,7 @@ class LatProxy : public FortranProxy<LatProxy> {
   void set_n_ic_max(int value);
   int input_taylor_order() const; // 0D_NOT_integer
   void set_input_taylor_order(int value);
-  FortranArray1D<int> ic() const; // 1D_ALLOC_integer
+  FArray1D<int> ic() const; // 1D_ALLOC_integer
   int photon_type() const; // 0D_NOT_integer
   void set_photon_type(int value);
   int creation_hash() const; // 0D_NOT_integer
@@ -12615,7 +12591,7 @@ class BunchProxy : public FortranProxy<BunchProxy> {
   using FortranProxy::operator=;
 
   CoordProxyArray1D particle() const; // 1D_ALLOC_type
-  FortranArray1D<int> ix_z() const; // 1D_ALLOC_integer
+  FArray1D<int> ix_z() const; // 1D_ALLOC_integer
   double charge_tot() const; // 0D_NOT_real
   void set_charge_tot(double value);
   double charge_live() const; // 0D_NOT_real
@@ -12678,9 +12654,9 @@ class BunchParamsProxy : public FortranProxy<BunchParamsProxy> {
   void set_b(const TwissProxy& src);
   TwissProxy c() const; // 0D_NOT_type
   void set_c(const TwissProxy& src);
-  FortranArray2D<double> sigma() const; // 2D_NOT_real
-  FortranArray1D<double> rel_max() const; // 1D_NOT_real
-  FortranArray1D<double> rel_min() const; // 1D_NOT_real
+  FArray2D<double> sigma() const; // 2D_NOT_real
+  FArray1D<double> rel_max() const; // 1D_NOT_real
+  FArray1D<double> rel_min() const; // 1D_NOT_real
   double s() const; // 0D_NOT_real
   void set_s(double value);
   double t() const; // 0D_NOT_real
@@ -12861,9 +12837,9 @@ class TaoSpinDnDpzProxy : public FortranProxy<TaoSpinDnDpzProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray1D<double> vec() const; // 1D_NOT_real
-  FortranArray2D<double> partial() const; // 2D_NOT_real
-  FortranArray2D<double> partial2() const; // 2D_NOT_real
+  FArray1D<double> vec() const; // 1D_NOT_real
+  FArray2D<double> partial() const; // 2D_NOT_real
+  FArray2D<double> partial2() const; // 2D_NOT_real
 };
 
 template <>
@@ -12916,9 +12892,9 @@ class SpinOrbitMap1Proxy : public FortranProxy<SpinOrbitMap1Proxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray2D<double> orb_mat() const; // 2D_NOT_real
-  FortranArray1D<double> vec0() const; // 1D_NOT_real
-  FortranArray2D<double> spin_q() const; // 2D_NOT_real
+  FArray2D<double> orb_mat() const; // 2D_NOT_real
+  FArray1D<double> vec0() const; // 1D_NOT_real
+  FArray2D<double> spin_q() const; // 2D_NOT_real
 };
 
 template <>
@@ -12943,9 +12919,9 @@ class SpinAxisProxy : public FortranProxy<SpinAxisProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray1D<double> l() const; // 1D_NOT_real
-  FortranArray1D<double> n0() const; // 1D_NOT_real
-  FortranArray1D<double> m() const; // 1D_NOT_real
+  FArray1D<double> l() const; // 1D_NOT_real
+  FArray1D<double> n0() const; // 1D_NOT_real
+  FArray1D<double> m() const; // 1D_NOT_real
 };
 
 template <>
@@ -12972,7 +12948,7 @@ class PtcNormalFormProxy : public FortranProxy<PtcNormalFormProxy> {
 
   std::optional<EleProxy> ele_origin() const; // 0D_PTR_type
   void set_ele_origin(const EleProxy& src);
-  FortranArray1D<double> orb0() const; // 1D_NOT_real
+  FArray1D<double> orb0() const; // 1D_NOT_real
   bool valid_map() const; // 0D_NOT_logical
   void set_valid_map(bool value);
 };
@@ -13180,7 +13156,7 @@ class TaoLatSigmaProxy : public FortranProxy<TaoLatSigmaProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  FortranArray2D<double> mat() const; // 2D_NOT_real
+  FArray2D<double> mat() const; // 2D_NOT_real
 };
 
 template <>
@@ -13207,9 +13183,9 @@ class TaoSpinEleProxy : public FortranProxy<TaoSpinEleProxy> {
 
   TaoSpinDnDpzProxy dn_dpz() const; // 0D_NOT_type
   void set_dn_dpz(const TaoSpinDnDpzProxy& src);
-  FortranArray1D<double> orb_eigen_val() const; // 1D_NOT_real
-  FortranArray2D<double> orb_eigen_vec() const; // 2D_NOT_real
-  FortranArray2D<double> spin_eigen_vec() const; // 2D_NOT_real
+  FArray1D<double> orb_eigen_val() const; // 1D_NOT_real
+  FArray2D<double> orb_eigen_vec() const; // 2D_NOT_real
+  FArray2D<double> spin_eigen_vec() const; // 2D_NOT_real
   bool valid() const; // 0D_NOT_logical
   void set_valid(bool value);
 };
@@ -13272,14 +13248,14 @@ class TaoSpinPolarizationProxy : public FortranProxy<TaoSpinPolarizationProxy> {
   void set_pol_limit_st(double value);
   double pol_limit_dk() const; // 0D_NOT_real
   void set_pol_limit_dk(double value);
-  FortranArray1D<double> pol_limit_dk_partial() const; // 1D_NOT_real
-  FortranArray1D<double> pol_limit_dk_partial2() const; // 1D_NOT_real
+  FArray1D<double> pol_limit_dk_partial() const; // 1D_NOT_real
+  FArray1D<double> pol_limit_dk_partial2() const; // 1D_NOT_real
   double pol_rate_bks() const; // 0D_NOT_real
   void set_pol_rate_bks(double value);
   double depol_rate() const; // 0D_NOT_real
   void set_depol_rate(double value);
-  FortranArray1D<double> depol_rate_partial() const; // 1D_NOT_real
-  FortranArray1D<double> depol_rate_partial2() const; // 1D_NOT_real
+  FArray1D<double> depol_rate_partial() const; // 1D_NOT_real
+  FArray1D<double> depol_rate_partial2() const; // 1D_NOT_real
   double integral_bn() const; // 0D_NOT_real
   void set_integral_bn(double value);
   double integral_bdn() const; // 0D_NOT_real
@@ -13575,7 +13551,7 @@ class TaoDynamicApertureProxy : public FortranProxy<TaoDynamicApertureProxy> {
   ApertureParamProxy param() const; // 0D_NOT_type
   void set_param(const ApertureParamProxy& src);
   ApertureScanProxyArray1D scan() const; // 1D_ALLOC_type
-  FortranArray1D<double> pz() const; // 1D_ALLOC_real
+  FArray1D<double> pz() const; // 1D_ALLOC_real
   double ellipse_scale() const; // 0D_NOT_real
   void set_ellipse_scale(double value);
   double a_emit() const; // 0D_NOT_real
@@ -13643,7 +13619,7 @@ class TaoD2DataProxy : public FortranProxy<TaoD2DataProxy> {
   void set_data_date(const std::string& value);
   std::string ref_date() const; // 0D_NOT_character
   void set_ref_date(const std::string& value);
-  FortranCharArray1D descrip() const; // 1D_NOT_character
+  FCharArray1D descrip() const; // 1D_NOT_character
   TaoD1DataProxyArray1D d1() const; // 1D_ALLOC_type
   int ix_universe() const; // 0D_NOT_integer
   void set_ix_universe(int value);
@@ -13697,7 +13673,7 @@ class TaoSpinMapProxy : public FortranProxy<TaoSpinMapProxy> {
   void set_ix_uni(int value);
   int ix_branch() const; // 0D_NOT_integer
   void set_ix_branch(int value);
-  FortranArray2D<double> mat8() const; // 2D_NOT_real
+  FArray2D<double> mat8() const; // 2D_NOT_real
 };
 
 template <>
@@ -13970,7 +13946,7 @@ class TaoUniverseProxy : public FortranProxy<TaoUniverseProxy> {
   void set_ele_order(const LatEleOrderProxy& src);
   TaoSpinMapProxy spin_map() const; // 0D_NOT_type
   void set_spin_map(const TaoSpinMapProxy& src);
-  FortranArray2D<double> dModel_dVar() const; // 2D_ALLOC_real
+  FArray2D<double> dModel_dVar() const; // 2D_ALLOC_real
   int ix_uni() const; // 0D_NOT_integer
   void set_ix_uni(int value);
   int n_d2_data_used() const; // 0D_NOT_integer
@@ -14009,60 +13985,57 @@ class AllEncompassingProxy : public FortranProxy<AllEncompassingProxy> {
 
   double real_rp_0d() const; // 0D_NOT_real
   void set_real_rp_0d(double value);
-  FortranArray1D<double> real_rp_1d() const; // 1D_NOT_real
-  FortranArray2D<double> real_rp_2d() const; // 2D_NOT_real
-  FortranArray3D<double> real_rp_3d() const; // 3D_NOT_real
+  FArray1D<double> real_rp_1d() const; // 1D_NOT_real
+  FArray2D<double> real_rp_2d() const; // 2D_NOT_real
+  FArray3D<double> real_rp_3d() const; // 3D_NOT_real
   double* real_rp_0d_ptr() const; // 0D_PTR_real
   void set_real_rp_0d_ptr(double value);
-  FortranArray1D<double> real_rp_1d_ptr() const; // 1D_PTR_real
-  FortranArray2D<double> real_rp_2d_ptr() const; // 2D_PTR_real
-  FortranArray3D<double> real_rp_3d_ptr() const; // 3D_PTR_real
-  FortranArray1D<double> real_rp_1d_alloc() const; // 1D_ALLOC_real
-  FortranArray2D<double> real_rp_2d_alloc() const; // 2D_ALLOC_real
-  FortranArray3D<double> real_rp_3d_alloc() const; // 3D_ALLOC_real
+  FArray1D<double> real_rp_1d_ptr() const; // 1D_PTR_real
+  FArray2D<double> real_rp_2d_ptr() const; // 2D_PTR_real
+  FArray3D<double> real_rp_3d_ptr() const; // 3D_PTR_real
+  FArray1D<double> real_rp_1d_alloc() const; // 1D_ALLOC_real
+  FArray2D<double> real_rp_2d_alloc() const; // 2D_ALLOC_real
+  FArray3D<double> real_rp_3d_alloc() const; // 3D_ALLOC_real
   double real_dp_0d() const; // 0D_NOT_real
   void set_real_dp_0d(double value);
-  FortranArray1D<double> real_dp_1d() const; // 1D_NOT_real
-  FortranArray2D<double> real_dp_2d() const; // 2D_NOT_real
-  FortranArray3D<double> real_dp_3d() const; // 3D_NOT_real
+  FArray1D<double> real_dp_1d() const; // 1D_NOT_real
+  FArray2D<double> real_dp_2d() const; // 2D_NOT_real
+  FArray3D<double> real_dp_3d() const; // 3D_NOT_real
   double* real_dp_0d_ptr() const; // 0D_PTR_real
   void set_real_dp_0d_ptr(double value);
-  FortranArray1D<double> real_dp_1d_ptr() const; // 1D_PTR_real
-  FortranArray2D<double> real_dp_2d_ptr() const; // 2D_PTR_real
-  FortranArray3D<double> real_dp_3d_ptr() const; // 3D_PTR_real
-  FortranArray1D<double> real_dp_1d_alloc() const; // 1D_ALLOC_real
-  FortranArray2D<double> real_dp_2d_alloc() const; // 2D_ALLOC_real
-  FortranArray3D<double> real_dp_3d_alloc() const; // 3D_ALLOC_real
+  FArray1D<double> real_dp_1d_ptr() const; // 1D_PTR_real
+  FArray2D<double> real_dp_2d_ptr() const; // 2D_PTR_real
+  FArray3D<double> real_dp_3d_ptr() const; // 3D_PTR_real
+  FArray1D<double> real_dp_1d_alloc() const; // 1D_ALLOC_real
+  FArray2D<double> real_dp_2d_alloc() const; // 2D_ALLOC_real
+  FArray3D<double> real_dp_3d_alloc() const; // 3D_ALLOC_real
   std::complex<double> complex_dp_0d() const; // 0D_NOT_complex
   void set_complex_dp_0d(std::complex<double> value);
-  FortranArray1D<std::complex<double>> complex_dp_1d() const; // 1D_NOT_complex
-  FortranArray2D<std::complex<double>> complex_dp_2d() const; // 2D_NOT_complex
-  FortranArray3D<std::complex<double>> complex_dp_3d() const; // 3D_NOT_complex
-  FortranArray1D<std::complex<double>> complex_dp_1d_ptr()
-      const; // 1D_PTR_complex
-  FortranArray2D<std::complex<double>> complex_dp_2d_ptr()
-      const; // 2D_PTR_complex
-  FortranArray3D<std::complex<double>> complex_dp_3d_ptr()
-      const; // 3D_PTR_complex
-  FortranArray1D<std::complex<double>> complex_dp_1d_alloc()
+  FArray1D<std::complex<double>> complex_dp_1d() const; // 1D_NOT_complex
+  FArray2D<std::complex<double>> complex_dp_2d() const; // 2D_NOT_complex
+  FArray3D<std::complex<double>> complex_dp_3d() const; // 3D_NOT_complex
+  FArray1D<std::complex<double>> complex_dp_1d_ptr() const; // 1D_PTR_complex
+  FArray2D<std::complex<double>> complex_dp_2d_ptr() const; // 2D_PTR_complex
+  FArray3D<std::complex<double>> complex_dp_3d_ptr() const; // 3D_PTR_complex
+  FArray1D<std::complex<double>> complex_dp_1d_alloc()
       const; // 1D_ALLOC_complex
-  FortranArray2D<std::complex<double>> complex_dp_2d_alloc()
+  FArray2D<std::complex<double>> complex_dp_2d_alloc()
       const; // 2D_ALLOC_complex
-  FortranArray3D<std::complex<double>> complex_dp_3d_alloc()
+  FArray3D<std::complex<double>> complex_dp_3d_alloc()
       const; // 3D_ALLOC_complex
   int int_0d() const; // 0D_NOT_integer
   void set_int_0d(int value);
-  FortranArray1D<int> int_1d() const; // 1D_NOT_integer
-  FortranArray2D<int> int_2d() const; // 2D_NOT_integer
-  FortranArray3D<int> int_3d() const; // 3D_NOT_integer
+  FArray1D<int> int_1d() const; // 1D_NOT_integer
+  FArray2D<int> int_2d() const; // 2D_NOT_integer
+  FArray3D<int> int_3d() const; // 3D_NOT_integer
   int* int_0d_ptr() const; // 0D_PTR_integer
   void set_int_0d_ptr(int value);
-  FortranArray1D<int> int_1d_ptr() const; // 1D_PTR_integer
-  FortranArray2D<int> int_2d_ptr() const; // 2D_PTR_integer
-  FortranArray3D<int> int_3d_ptr() const; // 3D_PTR_integer
-  FortranArray1D<int> int_1d_alloc() const; // 1D_ALLOC_integer
-  FortranArray2D<int> int_2d_alloc() const; // 2D_ALLOC_integer
-  FortranArray3D<int> int_3d_alloc() const; // 3D_ALLOC_integer
+  FArray1D<int> int_1d_ptr() const; // 1D_PTR_integer
+  FArray2D<int> int_2d_ptr() const; // 2D_PTR_integer
+  FArray3D<int> int_3d_ptr() const; // 3D_PTR_integer
+  FArray1D<int> int_1d_alloc() const; // 1D_ALLOC_integer
+  FArray2D<int> int_2d_alloc() const; // 2D_ALLOC_integer
+  FArray3D<int> int_3d_alloc() const; // 3D_ALLOC_integer
   int64_t int8_0d() const; // 0D_NOT_integer8
   void set_int8_0d(int64_t value);
   int64_t* int8_0d_ptr() const; // 0D_PTR_integer8

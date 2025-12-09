@@ -30,7 +30,7 @@ extern "C" void fortran_apfft(
     c_Real& phase /* 0D_NOT_real */,
     c_Int* diag /* 0D_NOT_integer */);
 void apfft(
-    RealAllocatable1D& rdata_in,
+    RealAlloc1D& rdata_in,
     FixedArray1D<Real, 2> bounds,
     std::string window,
     double phase,
@@ -49,7 +49,7 @@ struct ApfftCorr {
   double freq;
 };
 ApfftCorr apfft_corr(
-    RealAllocatable1D& rdata_in,
+    RealAlloc1D& rdata_in,
     std::optional<FixedArray1D<Real, 2>> bounds,
     std::string window,
     std::optional<int> diag = std::nullopt);
@@ -62,7 +62,7 @@ extern "C" void fortran_apfft_ext(
     c_Real& freq /* 0D_NOT_real */,
     c_Int* diag /* 0D_NOT_integer */);
 void apfft_ext(
-    RealAllocatable1D& rdata,
+    RealAlloc1D& rdata,
     FixedArray1D<Real, 2> bounds,
     std::string window,
     double phase,
@@ -78,7 +78,7 @@ extern "C" bool fortran_assert_equal(
     void* int_arr /* 1D_ALLOC_integer */,
     c_Char err_str /* 0D_NOT_character */,
     c_Int& ival /* 0D_NOT_integer */);
-void assert_equal(IntAllocatable1D& int_arr, std::string err_str, int ival);
+void assert_equal(IntAlloc1D& int_arr, std::string err_str, int ival);
 extern "C" bool fortran_atomic_number(
     c_Int& species /* 0D_NOT_integer */,
     c_Int& atomic_num /* 0D_NOT_integer */);
@@ -185,7 +185,7 @@ struct BracketIndexForSpline {
   bool ok;
 };
 BracketIndexForSpline bracket_index_for_spline(
-    RealAllocatable1D& x_knot,
+    RealAlloc1D& x_knot,
     double x,
     std::optional<bool> strict = std::nullopt,
     std::optional<bool> print_err = std::nullopt);
@@ -220,7 +220,7 @@ extern "C" bool fortran_coarse_frequency_estimate(
     c_Bool* error /* 0D_NOT_logical */,
     c_Real& frequency /* 0D_NOT_real */);
 double coarse_frequency_estimate(
-    RealAllocatable1D& data,
+    RealAlloc1D& data,
     optional_ref<bool> error = std::nullopt);
 extern "C" void fortran_complex_error_function(
     c_Real& wr /* 0D_NOT_real */,
@@ -257,18 +257,15 @@ extern "C" bool fortran_create_a_spline(
     c_Real& slope1 /* 0D_NOT_real */,
     void* spline /* 0D_NOT_type */);
 SplineProxy create_a_spline(
-    RealAllocatable1D& r0,
-    RealAllocatable1D& r1,
+    RealAlloc1D& r0,
+    RealAlloc1D& r1,
     double slope0,
     double slope1);
 extern "C" bool fortran_cross_product(
     void* a /* 1D_ALLOC_real */,
     void* b /* 1D_ALLOC_real */,
     c_RealArr c /* 1D_NOT_real */);
-void cross_product(
-    RealAllocatable1D& a,
-    RealAllocatable1D& b,
-    FixedArray1D<Real, 3> c);
+void cross_product(RealAlloc1D& a, RealAlloc1D& b, FixedArray1D<Real, 3> c);
 
 // Skipped unusable routine da2_div:
 // Variable in sized array: ta(0:,0:) 2D_NOT_real
@@ -341,7 +338,7 @@ void downcase_string(std::string string);
 extern "C" void fortran_end_akima_spline_calc(
     void* spline /* 1D_ALLOC_type */,
     c_Int& which_end /* 0D_NOT_integer */);
-void end_akima_spline_calc(SplineProxyAllocatable1D& spline, int which_end);
+void end_akima_spline_calc(SplineProxyAlloc1D& spline, int which_end);
 extern "C" void fortran_err_exit(c_Char err_str /* 0D_NOT_character */);
 void err_exit(optional_ref<std::string> err_str = std::nullopt);
 extern "C" bool fortran_factorial(
@@ -359,7 +356,7 @@ void faddeeva_function(
 extern "C" void fortran_fft_1d(
     void* arr /* 1D_ALLOC_complex */,
     c_Int& isign /* 0D_NOT_integer */);
-void fft_1d(ComplexAllocatable1D& arr, int isign);
+void fft_1d(ComplexAlloc1D& arr, int isign);
 extern "C" void fortran_file_directorizer(
     c_Char in_file /* 0D_NOT_character */,
     c_Char out_file /* 0D_NOT_character */,
@@ -404,17 +401,17 @@ extern "C" bool fortran_find_location_int(
     void* arr /* 1D_ALLOC_integer */,
     c_Int& value /* 0D_NOT_integer */,
     c_Int& ix_match /* 0D_NOT_integer */);
-void find_location_int(IntAllocatable1D& arr, int value, int ix_match);
+void find_location_int(IntAlloc1D& arr, int value, int ix_match);
 extern "C" bool fortran_find_location_logic(
     void* arr /* 1D_ALLOC_logical */,
     c_Bool& value /* 0D_NOT_logical */,
     c_Int& ix_match /* 0D_NOT_integer */);
-void find_location_logic(BoolAllocatable1D& arr, bool value, int ix_match);
+void find_location_logic(BoolAlloc1D& arr, bool value, int ix_match);
 extern "C" bool fortran_find_location_real(
     void* arr /* 1D_ALLOC_real */,
     c_Real& value /* 0D_NOT_real */,
     c_Int& ix_match /* 0D_NOT_integer */);
-void find_location_real(RealAllocatable1D& arr, double value, int ix_match);
+void find_location_real(RealAlloc1D& arr, double value, int ix_match);
 
 // Skipped unusable routine find_location_str:
 // Variable-sized inout character array: arr(:) 1D_ALLOC_character
@@ -422,7 +419,7 @@ void find_location_real(RealAllocatable1D& arr, double value, int ix_match);
 extern "C" bool fortran_fine_frequency_estimate(
     void* data /* 1D_ALLOC_real */,
     c_Real& frequency /* 0D_NOT_real */);
-double fine_frequency_estimate(RealAllocatable1D& data);
+double fine_frequency_estimate(RealAlloc1D& data);
 extern "C" bool fortran_fixedwindowls(
     c_Real& ynew /* 0D_NOT_real */,
     c_Int& id /* 0D_NOT_integer */,
@@ -441,7 +438,7 @@ struct FourierAmplitude {
   double dcos_amp;
   double dsin_amp;
 };
-FourierAmplitude fourier_amplitude(RealAllocatable1D& data, double frequency);
+FourierAmplitude fourier_amplitude(RealAlloc1D& data, double frequency);
 extern "C" bool fortran_gen_complete_elliptic(
     c_Real& kc /* 0D_NOT_real */,
     c_Real& p /* 0D_NOT_real */,
@@ -485,7 +482,7 @@ void get_file_time_stamp(std::string file, std::string time_stamp);
 extern "C" void fortran_hanhan(
     c_Int& N /* 0D_NOT_integer */,
     void* hh /* 1D_ALLOC_real */);
-void hanhan(int N, RealAllocatable1D& hh);
+void hanhan(int N, RealAlloc1D& hh);
 extern "C" bool fortran_i_bessel(
     c_Int& m /* 0D_NOT_integer */,
     c_Real& arg /* 0D_NOT_real */,
@@ -533,7 +530,7 @@ extern "C" bool fortran_interpolated_fft(
     c_Int* opt_dump_index /* 0D_NOT_integer */,
     c_Real& this_fft /* 0D_NOT_real */);
 void interpolated_fft(
-    ComplexAllocatable1D& cdata,
+    ComplexAlloc1D& cdata,
     bool calc_ok,
     optional_ref<int> opt_dump_spectrum,
     optional_ref<int> opt_dump_index,
@@ -545,7 +542,7 @@ extern "C" bool fortran_interpolated_fft_gsl(
     c_Int* opt_dump_index /* 0D_NOT_integer */,
     c_Real& this_fft /* 0D_NOT_real */);
 void interpolated_fft_gsl(
-    ComplexAllocatable1D& cdata,
+    ComplexAlloc1D& cdata,
     bool calc_ok,
     optional_ref<int> opt_dump_spectrum,
     optional_ref<int> opt_dump_index,
@@ -572,7 +569,7 @@ extern "C" bool fortran_is_decreasing_sequence(
     c_Bool* strict /* 0D_NOT_logical */,
     c_Bool& is_decreasing /* 0D_NOT_logical */);
 void is_decreasing_sequence(
-    RealAllocatable1D& array,
+    RealAlloc1D& array,
     std::optional<bool> strict,
     bool is_decreasing);
 extern "C" bool fortran_is_false(
@@ -584,7 +581,7 @@ extern "C" bool fortran_is_increasing_sequence(
     c_Bool* strict /* 0D_NOT_logical */,
     c_Bool& is_increasing /* 0D_NOT_logical */);
 void is_increasing_sequence(
-    RealAllocatable1D& array,
+    RealAlloc1D& array,
     std::optional<bool> strict,
     bool is_increasing);
 extern "C" bool fortran_is_integer(
@@ -639,8 +636,8 @@ extern "C" void fortran_linear_fit(
     c_Real& sig_a /* 0D_NOT_real */,
     c_Real& sig_b /* 0D_NOT_real */);
 void linear_fit(
-    RealAllocatable1D& x,
-    RealAllocatable1D& y,
+    RealAlloc1D& x,
+    RealAlloc1D& y,
     int n_data,
     double a,
     double b,
@@ -652,9 +649,9 @@ extern "C" void fortran_linear_fit_2d(
     void* z /* 1D_ALLOC_real */,
     c_RealArr coef /* 1D_NOT_real */);
 FixedArray1D<Real, 3> linear_fit_2d(
-    RealAllocatable1D& x,
-    RealAllocatable1D& y,
-    RealAllocatable1D& z);
+    RealAlloc1D& x,
+    RealAlloc1D& y,
+    RealAlloc1D& z);
 
 // Skipped unusable routine location_decode:
 // Translated arg count mismatch (unsupported?)
@@ -738,7 +735,7 @@ extern "C" bool fortran_maximize_projection(
     c_Real& func_retval__ /* 0D_NOT_real */);
 void maximize_projection(
     double seed,
-    ComplexAllocatable1D& cdata,
+    ComplexAlloc1D& cdata,
     double func_retval__);
 extern "C" void fortran_milli_sleep(c_Int& milli_sec /* 0D_NOT_integer */);
 void milli_sleep(int milli_sec);
@@ -759,9 +756,9 @@ extern "C" void fortran_n_spline_create(
     void* deriv1 /* 1D_ALLOC_real */,
     c_Real& x1 /* 0D_NOT_real */,
     void* n_spline /* 1D_ALLOC_real */);
-RealAllocatable1D n_spline_create(
-    RealAllocatable1D& deriv0,
-    RealAllocatable1D& deriv1,
+RealAlloc1D n_spline_create(
+    RealAlloc1D& deriv0,
+    RealAlloc1D& deriv1,
     double x1);
 extern "C" void fortran_naff(
     void* cdata /* 1D_ALLOC_complex */,
@@ -770,9 +767,9 @@ extern "C" void fortran_naff(
     c_Int* opt_dump_spectra /* 0D_NOT_integer */,
     c_Bool* opt_zero_first /* 0D_NOT_logical */);
 void naff(
-    ComplexAllocatable1D& cdata,
-    RealAllocatable1D& freqs,
-    ComplexAllocatable1D& amps,
+    ComplexAlloc1D& cdata,
+    RealAlloc1D& freqs,
+    ComplexAlloc1D& amps,
     optional_ref<int> opt_dump_spectra = std::nullopt,
     optional_ref<bool> opt_zero_first = std::nullopt);
 
@@ -836,7 +833,7 @@ extern "C" bool fortran_poly_eval(
     c_Bool* diff_coef /* 0D_NOT_logical */,
     c_Real& y /* 0D_NOT_real */);
 void poly_eval(
-    RealAllocatable1D& poly,
+    RealAlloc1D& poly,
     double x,
     std::optional<bool> diff_coef,
     double y);
@@ -849,8 +846,8 @@ extern "C" bool fortran_projdd(
     void* b /* 1D_ALLOC_complex */,
     c_Complex& func_retval__ /* 0D_NOT_complex */);
 void projdd(
-    ComplexAllocatable1D& a,
-    ComplexAllocatable1D& b,
+    ComplexAlloc1D& a,
+    ComplexAlloc1D& b,
     std::complex<double> func_retval__);
 extern "C" bool fortran_quadratic_roots(
     c_RealArr coefs /* 1D_NOT_real */,
@@ -1034,7 +1031,7 @@ extern "C" void fortran_reallocate_spline(
     c_Int* n_min /* 0D_NOT_integer */,
     c_Bool* exact /* 0D_NOT_logical */);
 void reallocate_spline(
-    SplineProxyAllocatable1D& spline,
+    SplineProxyAlloc1D& spline,
     int n,
     std::optional<int> n_min = std::nullopt,
     std::optional<bool> exact = std::nullopt);
@@ -1050,8 +1047,8 @@ extern "C" bool fortran_rms_value(
     c_Real& ave_val /* 0D_NOT_real */,
     c_Real& rms_val /* 0D_NOT_real */);
 double rms_value(
-    RealAllocatable1D& val_arr,
-    optional_ref<BoolAllocatable1D> good_val,
+    RealAlloc1D& val_arr,
+    optional_ref<BoolAlloc1D> good_val,
     double rms_val);
 extern "C" bool fortran_rot_2d(
     c_RealArr vec_in /* 1D_NOT_real */,
@@ -1068,7 +1065,7 @@ extern "C" void fortran_rotate_vec(
     void* vec /* 1D_ALLOC_real */,
     c_Int& axis /* 0D_NOT_integer */,
     c_Real& angle /* 0D_NOT_real */);
-void rotate_vec(RealAllocatable1D& vec, int axis, double angle);
+void rotate_vec(RealAlloc1D& vec, int axis, double angle);
 extern "C" bool fortran_rotate_vec_given_axis_angle(
     c_RealArr vec_in /* 1D_NOT_real */,
     void* axis /* 1D_ALLOC_real */,
@@ -1076,7 +1073,7 @@ extern "C" bool fortran_rotate_vec_given_axis_angle(
     c_RealArr vec_out /* 1D_NOT_real */);
 FixedArray1D<Real, 3> rotate_vec_given_axis_angle(
     FixedArray1D<Real, 3> vec_in,
-    RealAllocatable1D& axis,
+    RealAlloc1D& axis,
     double angle);
 extern "C" bool fortran_rp8(
     c_Int& int_in /* 0D_NOT_integer */,
@@ -1174,7 +1171,7 @@ double spline1(
 extern "C" void fortran_spline_akima(
     void* spline /* 1D_ALLOC_type */,
     c_Bool& ok /* 0D_NOT_logical */);
-bool spline_akima(SplineProxyAllocatable1D& spline);
+bool spline_akima(SplineProxyAlloc1D& spline);
 extern "C" void fortran_spline_akima_interpolate(
     void* x_knot /* 1D_ALLOC_real */,
     void* y_knot /* 1D_ALLOC_real */,
@@ -1188,8 +1185,8 @@ struct SplineAkimaInterpolate {
   double dy;
 };
 SplineAkimaInterpolate spline_akima_interpolate(
-    RealAllocatable1D& x_knot,
-    RealAllocatable1D& y_knot,
+    RealAlloc1D& x_knot,
+    RealAlloc1D& y_knot,
     double x);
 extern "C" void fortran_spline_evaluate(
     void* spline /* 1D_ALLOC_type */,
@@ -1202,7 +1199,7 @@ struct SplineEvaluate {
   double y;
   double dy;
 };
-SplineEvaluate spline_evaluate(SplineProxyAllocatable1D& spline, double x);
+SplineEvaluate spline_evaluate(SplineProxyAlloc1D& spline, double x);
 extern "C" bool fortran_sqrt_alpha(
     c_Real& alpha /* 0D_NOT_real */,
     c_Real& x /* 0D_NOT_real */,
@@ -1441,15 +1438,12 @@ struct SuperPolint {
   double y;
   double dy;
 };
-SuperPolint super_polint(
-    RealAllocatable1D& xa,
-    RealAllocatable1D& ya,
-    double x);
+SuperPolint super_polint(RealAlloc1D& xa, RealAlloc1D& ya, double x);
 extern "C" bool fortran_super_poly(
     c_Real& x /* 0D_NOT_real */,
     void* coeffs /* 1D_ALLOC_real */,
     c_Real& value /* 0D_NOT_real */);
-double super_poly(double x, RealAllocatable1D& coeffs);
+double super_poly(double x, RealAlloc1D& coeffs);
 
 // Skipped unusable routine super_qromb:
 // Argument not defined: func (have: [])
@@ -1481,7 +1475,7 @@ double super_poly(double x, RealAllocatable1D& coeffs);
 // Skipped unusable routine super_sobseq:
 // Untranslated type: RandomStateProxy (0D_NOT_type)
 extern "C" void fortran_super_sort(void* arr /* 1D_ALLOC_integer */);
-void super_sort(IntAllocatable1D& arr);
+void super_sort(IntAlloc1D& arr);
 
 // Skipped unusable routine super_trapzd:
 // Argument not defined: func (have: [])

@@ -13,29 +13,29 @@ namespace Bmad {
 
 // Forward declarations
 template <typename T, std::size_t N>
-class FortranArrayND;
+class FArrayND;
 template <typename T>
-class FortranArrayND<T, 1>; // 1D partial specialization
+class FArrayND<T, 1>; // 1D partial specialization
 
 template <typename T>
-using FortranArray1D = FortranArrayND<T, 1>;
+using FArray1D = FArrayND<T, 1>;
 template <typename T>
-using FortranArray2D = FortranArrayND<T, 2>;
+using FArray2D = FArrayND<T, 2>;
 template <typename T>
-using FortranArray3D = FortranArrayND<T, 3>;
+using FArray3D = FArrayND<T, 3>;
 
 template <
     typename ProxyType,
     std::size_t N,
     void* (*AllocFunc)(int, size_t*) = nullptr,
     void (*DeallocFunc)(void*, int) = nullptr>
-class FortranTypeArrayND;
+class FTypeArrayND;
 
 template <
     typename ProxyType,
     void* (*AllocFunc)(int, size_t*),
     void (*DeallocFunc)(void*, int)>
-class FortranTypeArrayND<
+class FTypeArrayND<
     ProxyType,
     1,
     AllocFunc,
@@ -45,15 +45,14 @@ template <
     typename ProxyType,
     void* (*AllocFunc)(int, size_t*) = nullptr,
     void (*DeallocFunc)(void*, int) = nullptr>
-using FortranTypeArray1D =
-    FortranTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc>;
+using FTypeArray1D = FTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc>;
 
 template <typename ProxyType>
-using FortranTypeArray2D = FortranTypeArrayND<ProxyType, 2>;
+using FTypeArray2D = FTypeArrayND<ProxyType, 2>;
 template <typename ProxyType>
-using FortranTypeArray3D = FortranTypeArrayND<ProxyType, 3>;
+using FTypeArray3D = FTypeArrayND<ProxyType, 3>;
 
-class FortranCharArray1D;
+class FCharArray1D;
 
 template <
     typename ViewType,
@@ -61,7 +60,7 @@ template <
     void (*DeallocFunc)(void*),
     void (*ReallocFunc)(void*, int, size_t),
     void (*AccessFunc)(void*, void**, int*, int*, size_t*, bool*)>
-class FortranTypeAllocatable1D;
+class FTypeAlloc1D;
 
 template <
     typename T,
@@ -69,16 +68,16 @@ template <
     void (*DeallocFunc)(void*),
     void (*ReallocFunc)(void*, int, size_t),
     void (*AccessFunc)(void*, void**, int*, int*, size_t*, bool*)>
-class FortranAllocatable1D;
+class FAlloc1D;
 
 using std::to_string;
 
 // =============================================================================
-// FortranArrayND<T, N> - Primary template for N-dimensional primitive arrays
+// FArrayND<T, N> - Primary template for N-dimensional primitive arrays
 // =============================================================================
 
 template <typename T, std::size_t N>
-class FortranArrayND {
+class FArrayND {
  private:
   T* data_;
   std::array<int, N> sizes_;
@@ -128,14 +127,14 @@ class FortranArrayND {
   }
 
  public:
-  FortranArrayND() : data_(nullptr), valid_(false) {
+  FArrayND() : data_(nullptr), valid_(false) {
     sizes_.fill(0);
     lower_bounds_.fill(0);
     upper_bounds_.fill(-1);
     strides_.fill(0);
   }
 
-  FortranArrayND(
+  FArrayND(
       T* data,
       const std::array<int, N>& sizes,
       const std::array<int, N>& lower_bounds,
@@ -153,7 +152,7 @@ class FortranArrayND {
   template <
       typename... Args,
       typename = std::enable_if_t<sizeof...(Args) == 4 * N + 1>>
-  FortranArrayND(T* data, Args... args) : data_(data) {
+  FArrayND(T* data, Args... args) : data_(data) {
     std::array<int, 4 * N + 1> a{static_cast<int>(args)...};
     for (std::size_t i = 0; i < N; ++i) {
       sizes_[i] = a[i * 3];
@@ -274,11 +273,11 @@ class FortranArrayND {
 };
 
 // =============================================================================
-// FortranArrayND<T, 1> - Explicit 1D specialization (simpler, more readable)
+// FArrayND<T, 1> - Explicit 1D specialization (simpler, more readable)
 // =============================================================================
 
 template <typename T>
-class FortranArrayND<T, 1> {
+class FArrayND<T, 1> {
  private:
   T* data_;
   int size_;
@@ -288,14 +287,14 @@ class FortranArrayND<T, 1> {
 
  public:
   // Constructors
-  FortranArrayND()
+  FArrayND()
       : data_(nullptr),
         size_(0),
         lower_bound_(0),
         upper_bound_(-1),
         valid_(false) {}
 
-  FortranArrayND(T* data, int size, int lower, int upper, bool valid)
+  FArrayND(T* data, int size, int lower, int upper, bool valid)
       : data_(data),
         size_(size),
         lower_bound_(lower),
@@ -420,7 +419,7 @@ class FortranArrayND<T, 1> {
 };
 
 // =============================================================================
-// FortranTypeArrayND<ProxyType, N> - Primary template for N-D derived type arrays
+// FTypeArrayND<ProxyType, N> - Primary template for N-D derived type arrays
 // =============================================================================
 
 template <
@@ -428,7 +427,7 @@ template <
     std::size_t N,
     void* (*AllocFunc)(int, size_t*),
     void (*DeallocFunc)(void*, int)>
-class FortranTypeArrayND {
+class FTypeArrayND {
  private:
   void* data_;
   std::array<int, N> sizes_;
@@ -461,14 +460,14 @@ class FortranTypeArrayND {
   }
 
  public:
-  FortranTypeArrayND() : data_(nullptr), valid_(false), element_size_(0) {
+  FTypeArrayND() : data_(nullptr), valid_(false), element_size_(0) {
     sizes_.fill(0);
     lower_bounds_.fill(0);
     upper_bounds_.fill(-1);
     strides_.fill(0);
   }
 
-  FortranTypeArrayND(
+  FTypeArrayND(
       void* data,
       const std::array<int, N>& sizes,
       const std::array<int, N>& lower_bounds,
@@ -570,11 +569,11 @@ class FortranTypeArrayND {
   }
 
   class iterator {
-    const FortranTypeArrayND* arr_;
+    const FTypeArrayND* arr_;
     size_t idx_;
 
    public:
-    iterator(const FortranTypeArrayND* a, size_t i) : arr_(a), idx_(i) {}
+    iterator(const FTypeArrayND* a, size_t i) : arr_(a), idx_(i) {}
     ProxyType operator*() {
       return ProxyType(arr_->element_ptr(idx_));
     }
@@ -595,14 +594,14 @@ class FortranTypeArrayND {
 };
 
 // =============================================================================
-// FortranTypeArrayND<ProxyType, 1> - Explicit 1D specialization with ownership
+// FTypeArrayND<ProxyType, 1> - Explicit 1D specialization with ownership
 // =============================================================================
 
 template <
     typename ProxyType,
     void* (*AllocFunc)(int, size_t*),
     void (*DeallocFunc)(void*, int)>
-class FortranTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
+class FTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
  private:
   void* data_;
   int size_;
@@ -618,7 +617,7 @@ class FortranTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
 
  public:
   // Constructors
-  FortranTypeArrayND()
+  FTypeArrayND()
       : data_(nullptr),
         size_(0),
         lower_bound_(0),
@@ -627,7 +626,7 @@ class FortranTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
         element_size_(0),
         owned_(false) {}
 
-  FortranTypeArrayND(
+  FTypeArrayND(
       void* data,
       int size,
       int lower,
@@ -646,14 +645,14 @@ class FortranTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
   template <
       typename =
           std::enable_if_t<AllocFunc != nullptr && DeallocFunc != nullptr>>
-  static FortranTypeArrayND allocate(int size, int lower_bound = 1) {
+  static FTypeArrayND allocate(int size, int lower_bound = 1) {
     if (size < 0)
       throw std::invalid_argument("Size must be non-negative");
     size_t elem_size = 0;
     void* data = AllocFunc(size, &elem_size);
     if (!data)
       throw std::runtime_error("Failed to allocate");
-    FortranTypeArrayND arr;
+    FTypeArrayND arr;
     arr.data_ = data;
     arr.size_ = size;
     arr.lower_bound_ = lower_bound;
@@ -665,7 +664,7 @@ class FortranTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
   }
 
   // Destructor
-  ~FortranTypeArrayND() {
+  ~FTypeArrayND() {
     if (owned_ && data_ && DeallocFunc) {
       DeallocFunc(data_, size_);
       data_ = nullptr;
@@ -673,7 +672,7 @@ class FortranTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
   }
 
   // Copy (non-owned only)
-  FortranTypeArrayND(const FortranTypeArrayND& o) {
+  FTypeArrayND(const FTypeArrayND& o) {
     if (o.owned_)
       throw std::runtime_error("Cannot copy owned array");
     data_ = o.data_;
@@ -684,7 +683,7 @@ class FortranTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
     element_size_ = o.element_size_;
     owned_ = false;
   }
-  FortranTypeArrayND& operator=(const FortranTypeArrayND& o) {
+  FTypeArrayND& operator=(const FTypeArrayND& o) {
     if (this != &o) {
       if (o.owned_)
         throw std::runtime_error("Cannot copy owned array");
@@ -702,7 +701,7 @@ class FortranTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
   }
 
   // Move
-  FortranTypeArrayND(FortranTypeArrayND&& o) noexcept
+  FTypeArrayND(FTypeArrayND&& o) noexcept
       : data_(o.data_),
         size_(o.size_),
         lower_bound_(o.lower_bound_),
@@ -715,7 +714,7 @@ class FortranTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
     o.valid_ = false;
     o.owned_ = false;
   }
-  FortranTypeArrayND& operator=(FortranTypeArrayND&& o) noexcept {
+  FTypeArrayND& operator=(FTypeArrayND&& o) noexcept {
     if (this != &o) {
       if (owned_ && data_ && DeallocFunc)
         DeallocFunc(data_, size_);
@@ -734,8 +733,8 @@ class FortranTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
     return *this;
   }
 
-  FortranTypeArrayND as_view() const {
-    return FortranTypeArrayND(
+  FTypeArrayND as_view() const {
+    return FTypeArrayND(
         data_, size_, lower_bound_, upper_bound_, valid_, element_size_);
   }
   bool is_owned() const {
@@ -838,11 +837,11 @@ class FortranTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
 
   // Iterators
   class iterator {
-    const FortranTypeArrayND* arr_;
+    const FTypeArrayND* arr_;
     int idx_;
 
    public:
-    iterator(const FortranTypeArrayND* a, int i) : arr_(a), idx_(i) {}
+    iterator(const FTypeArrayND* a, int i) : arr_(a), idx_(i) {}
     ProxyType operator*() {
       return ProxyType(arr_->element_ptr(idx_));
     }
@@ -869,10 +868,10 @@ class FortranTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
 };
 
 // =============================================================================
-// FortranCharArray1D - Character string arrays (special handling)
+// FCharArray1D - Character string arrays (special handling)
 // =============================================================================
 
-class FortranCharArray1D {
+class FCharArray1D {
  private:
   char* data_;
   int size_;
@@ -896,7 +895,7 @@ class FortranCharArray1D {
   }
 
  public:
-  FortranCharArray1D()
+  FCharArray1D()
       : data_(nullptr),
         size_(0),
         lower_bound_(0),
@@ -904,7 +903,7 @@ class FortranCharArray1D {
         str_len_(0),
         valid_(false) {}
 
-  FortranCharArray1D(
+  FCharArray1D(
       char* data,
       int size,
       int lower,
@@ -921,10 +920,10 @@ class FortranCharArray1D {
   class StringProxy {
     char* data_;
     int len_;
-    FortranCharArray1D* parent_;
+    FCharArray1D* parent_;
 
    public:
-    StringProxy(char* d, int l, FortranCharArray1D* p)
+    StringProxy(char* d, int l, FCharArray1D* p)
         : data_(d), len_(l), parent_(p) {}
     operator std::string() const {
       return parent_->trim(data_, len_);
@@ -947,10 +946,10 @@ class FortranCharArray1D {
   class ConstStringProxy {
     const char* data_;
     int len_;
-    const FortranCharArray1D* parent_;
+    const FCharArray1D* parent_;
 
    public:
-    ConstStringProxy(const char* d, int l, const FortranCharArray1D* p)
+    ConstStringProxy(const char* d, int l, const FCharArray1D* p)
         : data_(d), len_(l), parent_(p) {}
     operator std::string() const {
       return parent_->trim(data_, len_);
@@ -1026,11 +1025,11 @@ class FortranCharArray1D {
   }
 
   class Iterator {
-    FortranCharArray1D* p_;
+    FCharArray1D* p_;
     int i_;
 
    public:
-    Iterator(FortranCharArray1D* p, int i) : p_(p), i_(i) {}
+    Iterator(FCharArray1D* p, int i) : p_(p), i_(i) {}
     StringProxy operator*() {
       return (*p_)[i_];
     }
@@ -1051,7 +1050,7 @@ class FortranCharArray1D {
 };
 
 // =============================================================================
-// FortranTypeAllocatable1D - Container for Fortran allocatable arrays
+// FTypeAlloc1D - Container for Fortran allocatable arrays
 // =============================================================================
 
 template <
@@ -1060,7 +1059,7 @@ template <
     void (*DeallocFunc)(void*),
     void (*ReallocFunc)(void*, int, size_t),
     void (*AccessFunc)(void*, void**, int*, int*, size_t*, bool*)>
-class FortranTypeAllocatable1D {
+class FTypeAlloc1D {
  private:
   void* handle_ = nullptr;
   mutable ViewType view_;
@@ -1079,25 +1078,25 @@ class FortranTypeAllocatable1D {
   }
 
  public:
-  FortranTypeAllocatable1D() {
+  FTypeAlloc1D() {
     handle_ = AllocFunc();
   }
-  explicit FortranTypeAllocatable1D(int lbound, int n) {
+  explicit FTypeAlloc1D(int lbound, int n) {
     handle_ = AllocFunc();
     if (n > 0)
       resize(lbound, n);
   }
-  ~FortranTypeAllocatable1D() {
+  ~FTypeAlloc1D() {
     if (handle_)
       DeallocFunc(handle_);
   }
 
-  FortranTypeAllocatable1D(FortranTypeAllocatable1D&& o) noexcept
+  FTypeAlloc1D(FTypeAlloc1D&& o) noexcept
       : handle_(o.handle_), view_(std::move(o.view_)), stale_(o.stale_) {
     o.handle_ = nullptr;
     o.stale_ = true;
   }
-  FortranTypeAllocatable1D& operator=(FortranTypeAllocatable1D&& o) noexcept {
+  FTypeAlloc1D& operator=(FTypeAlloc1D&& o) noexcept {
     if (this != &o) {
       if (handle_)
         DeallocFunc(handle_);
@@ -1109,8 +1108,8 @@ class FortranTypeAllocatable1D {
     }
     return *this;
   }
-  FortranTypeAllocatable1D(const FortranTypeAllocatable1D&) = delete;
-  FortranTypeAllocatable1D& operator=(const FortranTypeAllocatable1D&) = delete;
+  FTypeAlloc1D(const FTypeAlloc1D&) = delete;
+  FTypeAlloc1D& operator=(const FTypeAlloc1D&) = delete;
 
   void resize(int lbound, int n) {
     ReallocFunc(handle_, lbound, n);
@@ -1150,7 +1149,7 @@ class FortranTypeAllocatable1D {
 };
 
 // =============================================================================
-// FortranAllocatable1D - Container for Fortran allocatable arrays (native types)
+// FAlloc1D - Container for Fortran allocatable arrays (native types)
 // =============================================================================
 
 template <
@@ -1159,10 +1158,10 @@ template <
     void (*DeallocFunc)(void*),
     void (*ReallocFunc)(void*, int, size_t),
     void (*AccessFunc)(void*, void**, int*, int*, size_t*, bool*)>
-class FortranAllocatable1D {
+class FAlloc1D {
  private:
   void* handle_ = nullptr;
-  mutable FortranArray1D<T> view_;
+  mutable FArray1D<T> view_;
   mutable bool stale_ = true;
 
   void refresh() const {
@@ -1173,31 +1172,31 @@ class FortranAllocatable1D {
     AccessFunc(handle_, &data_ptr, &lbound, &size, &elem_size, &alloc);
     T* data = static_cast<T*>(data_ptr);
     view_ = (alloc && data && size > 0)
-        ? FortranArray1D<T>(data, size, lbound, lbound + size - 1, true)
-        : FortranArray1D<T>();
+        ? FArray1D<T>(data, size, lbound, lbound + size - 1, true)
+        : FArray1D<T>();
     stale_ = false;
   }
 
  public:
-  FortranAllocatable1D() {
+  FAlloc1D() {
     handle_ = AllocFunc();
   }
-  explicit FortranAllocatable1D(int lbound, int n) {
+  explicit FAlloc1D(int lbound, int n) {
     handle_ = AllocFunc();
     if (n > 0)
       resize(lbound, n);
   }
-  ~FortranAllocatable1D() {
+  ~FAlloc1D() {
     if (handle_)
       DeallocFunc(handle_);
   }
 
-  FortranAllocatable1D(FortranAllocatable1D&& o) noexcept
+  FAlloc1D(FAlloc1D&& o) noexcept
       : handle_(o.handle_), view_(std::move(o.view_)), stale_(o.stale_) {
     o.handle_ = nullptr;
     o.stale_ = true;
   }
-  FortranAllocatable1D& operator=(FortranAllocatable1D&& o) noexcept {
+  FAlloc1D& operator=(FAlloc1D&& o) noexcept {
     if (this != &o) {
       if (handle_)
         DeallocFunc(handle_);
@@ -1209,8 +1208,8 @@ class FortranAllocatable1D {
     }
     return *this;
   }
-  FortranAllocatable1D(const FortranAllocatable1D&) = delete;
-  FortranAllocatable1D& operator=(const FortranAllocatable1D&) = delete;
+  FAlloc1D(const FAlloc1D&) = delete;
+  FAlloc1D& operator=(const FAlloc1D&) = delete;
 
   void resize(int lbound, int n) {
     ReallocFunc(handle_, lbound, n);
@@ -1224,11 +1223,11 @@ class FortranAllocatable1D {
   void* get_fortran_ptr() const {
     return handle_;
   }
-  FortranArray1D<T>& view() const {
+  FArray1D<T>& view() const {
     refresh();
     return view_;
   }
-  FortranArray1D<T>& get() const {
+  FArray1D<T>& get() const {
     return view();
   }
   int size() const {
@@ -1262,16 +1261,16 @@ class FortranAllocatable1D {
 // to_string overloads
 // =============================================================================
 
-std::string to_string(const FortranCharArray1D& arr);
+std::string to_string(const FCharArray1D& arr);
 
 template <typename T, std::size_t N>
-std::string to_string(const FortranArrayND<T, N>& arr) {
+std::string to_string(const FArrayND<T, N>& arr) {
   return arr.to_string();
 }
 
 template <typename ProxyType, std::size_t N, auto AllocFunc, auto DeallocFunc>
 std::string to_string(
-    const FortranTypeArrayND<ProxyType, N, AllocFunc, DeallocFunc>& arr) {
+    const FTypeArrayND<ProxyType, N, AllocFunc, DeallocFunc>& arr) {
   std::ostringstream oss;
   oss << "[";
   if constexpr (N == 1) {
@@ -1287,33 +1286,33 @@ std::string to_string(
   return oss.str();
 }
 
-template std::string to_string(const FortranArray1D<std::complex<double>>&);
+template std::string to_string(const FArray1D<std::complex<double>>&);
 
 // =============================================================================
-// BmadProxyHelpers - Helper functions for proxy generation
+// ProxyHelpers - Helper functions for proxy generation
 // =============================================================================
 
-class BmadProxyHelpers {
+class ProxyHelpers {
  public:
   template <typename T, typename Func>
-  static FortranArray1D<T> get_array_1d(const void* ptr, Func f) {
+  static FArray1D<T> get_array_1d(const void* ptr, Func f) {
     T* data = nullptr;
     int bounds[2];
     bool alloc = false;
     f(ptr, &data, bounds, &alloc);
     int size = alloc ? (bounds[1] - bounds[0] + 1) : 0;
-    return FortranArray1D<T>(data, size, bounds[0], bounds[1], alloc);
+    return FArray1D<T>(data, size, bounds[0], bounds[1], alloc);
   }
 
   template <typename T, typename Func>
-  static FortranArray2D<T> get_array_2d(const void* ptr, Func f) {
+  static FArray2D<T> get_array_2d(const void* ptr, Func f) {
     T* data = nullptr;
     int bounds[4], strides[2];
     bool alloc = false;
     f(ptr, &data, bounds, strides, &alloc);
     int s1 = alloc ? (bounds[1] - bounds[0] + 1) : 0;
     int s2 = alloc ? (bounds[3] - bounds[2] + 1) : 0;
-    return FortranArray2D<T>(
+    return FArray2D<T>(
         data,
         s1,
         bounds[0],
@@ -1327,7 +1326,7 @@ class BmadProxyHelpers {
   }
 
   template <typename T, typename Func>
-  static FortranArray3D<T> get_array_3d(const void* ptr, Func f) {
+  static FArray3D<T> get_array_3d(const void* ptr, Func f) {
     T* data = nullptr;
     int bounds[6], strides[3];
     bool alloc = false;
@@ -1335,7 +1334,7 @@ class BmadProxyHelpers {
     int s1 = alloc ? (bounds[1] - bounds[0] + 1) : 0;
     int s2 = alloc ? (bounds[3] - bounds[2] + 1) : 0;
     int s3 = alloc ? (bounds[5] - bounds[4] + 1) : 0;
-    return FortranArray3D<T>(
+    return FArray3D<T>(
         data,
         s1,
         bounds[0],
@@ -1353,13 +1352,13 @@ class BmadProxyHelpers {
   }
 
   template <typename Func>
-  static FortranCharArray1D get_char_array_1d(const void* ptr, Func f) {
+  static FCharArray1D get_char_array_1d(const void* ptr, Func f) {
     char* data = nullptr;
     int bounds[2], str_len = 0;
     bool alloc = false;
     f(ptr, &data, bounds, &str_len, &alloc);
     int size = alloc ? (bounds[1] - bounds[0] + 1) : 0;
-    return FortranCharArray1D(data, size, bounds[0], bounds[1], str_len, alloc);
+    return FCharArray1D(data, size, bounds[0], bounds[1], str_len, alloc);
   }
 
   template <typename Func>

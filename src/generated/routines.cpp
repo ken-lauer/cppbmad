@@ -32,9 +32,9 @@ Bmad::MultipoleEleToKt Bmad::multipole_ele_to_kt(
     std::optional<int> include_kicks) {
   int _ix_pole_max{};
   // intent=out allocatable general array
-  auto knl{RealAllocatable1D()};
+  auto knl{RealAlloc1D()};
   // intent=out allocatable general array
-  auto tilt{RealAllocatable1D()};
+  auto tilt{RealAlloc1D()};
   int pole_type_lvalue;
   auto* _pole_type{&pole_type_lvalue};
   if (pole_type.has_value()) {
@@ -75,11 +75,11 @@ void Bmad::attribute_bookkeeper(
 Bmad::ClosedOrbitFromTracking Bmad::closed_orbit_from_tracking(
     LatProxy& lat,
     int i_dim,
-    optional_ref<RealAllocatable1D> eps_rel,
-    optional_ref<RealAllocatable1D> eps_abs,
+    optional_ref<RealAlloc1D> eps_rel,
+    optional_ref<RealAlloc1D> eps_abs,
     optional_ref<CoordProxy> init_guess) {
   // intent=out allocatable type array
-  auto closed_orb{CoordProxyAllocatable1D()};
+  auto closed_orb{CoordProxyAlloc1D()};
   // intent=in allocatable general array
   auto* _eps_rel = eps_rel.has_value() ? eps_rel->get().get_fortran_ptr()
                                        : nullptr; // input, optional
@@ -157,13 +157,13 @@ Bmad::PointerToSuperLord Bmad::pointer_to_super_lord(
   return PointerToSuperLord{
       std::move(_control), _ix_slave_back, _ix_control, _ix_ic};
 }
-void Bmad::kill_taylor(TaylorProxyAllocatable1D& bmad_taylor) {
+void Bmad::kill_taylor(TaylorProxyAlloc1D& bmad_taylor) {
   // intent=inout allocatable type array
   fortran_kill_taylor(/* void* */ bmad_taylor.get_fortran_ptr());
 }
 Bmad::TrackAll Bmad::track_all(
     LatProxy& lat,
-    CoordProxyAllocatable1D& orbit,
+    CoordProxyAlloc1D& orbit,
     std::optional<int> ix_branch,
     std::optional<bool> init_lost) {
   // intent=inout allocatable type array
@@ -177,7 +177,7 @@ Bmad::TrackAll Bmad::track_all(
   int _track_state{};
   bool _err_flag{};
   // intent=out allocatable type array
-  auto orbit0{CoordProxyAllocatable1D()};
+  auto orbit0{CoordProxyAlloc1D()};
   bool init_lost_lvalue;
   auto* _init_lost{&init_lost_lvalue};
   if (init_lost.has_value()) {
@@ -480,7 +480,7 @@ Bmad::SetEleAttribute Bmad::set_ele_attribute(
 Bmad::TwissFromTracking Bmad::twiss_from_tracking(
     LatProxy& lat,
     CoordProxy& ref_orb0,
-    optional_ref<RealAllocatable1D> d_orb) {
+    optional_ref<RealAlloc1D> d_orb) {
   double _symp_err{};
   bool _err_flag{};
   // intent=in allocatable general array
@@ -681,14 +681,14 @@ Bmad::Track1 Bmad::track1(
   return Track1{std::move(_end_orb), _err_flag};
 }
 Bmad::MultipoleAbToKt Bmad::multipole_ab_to_kt(
-    RealAllocatable1D& an,
-    RealAllocatable1D& bn) {
+    RealAlloc1D& an,
+    RealAlloc1D& bn) {
   // intent=in allocatable general array
   // intent=in allocatable general array
   // intent=out allocatable general array
-  auto knl{RealAllocatable1D()};
+  auto knl{RealAlloc1D()};
   // intent=out allocatable general array
-  auto tn{RealAllocatable1D()};
+  auto tn{RealAlloc1D()};
   fortran_multipole_ab_to_kt(
       /* void* */ an.get_fortran_ptr(),
       /* void* */ bn.get_fortran_ptr(),
@@ -834,9 +834,9 @@ Bmad::ChromCalc Bmad::chrom_calc(
   LatProxy _low_E_lat;
   LatProxy _high_E_lat;
   // intent=out allocatable type array
-  auto low_E_orb{CoordProxyAllocatable1D()};
+  auto low_E_orb{CoordProxyAlloc1D()};
   // intent=out allocatable type array
-  auto high_E_orb{CoordProxyAllocatable1D()};
+  auto high_E_orb{CoordProxyAlloc1D()};
   int ix_branch_lvalue;
   auto* _ix_branch{&ix_branch_lvalue};
   if (ix_branch.has_value()) {
@@ -885,7 +885,7 @@ void Bmad::at_this_ele_end(int now_at, int where_at, bool is_at_this_end) {
 }
 bool Bmad::transfer_map_calc(
     LatProxy& lat,
-    TaylorProxyAllocatable1D& orb_map,
+    TaylorProxyAlloc1D& orb_map,
     std::optional<int> ix1,
     std::optional<int> ix2,
     optional_ref<CoordProxy> ref_orb,
@@ -893,7 +893,7 @@ bool Bmad::transfer_map_calc(
     std::optional<bool> one_turn,
     std::optional<bool> unit_start,
     std::optional<bool> concat_if_possible,
-    optional_ref<TaylorProxyAllocatable1D> spin_map) {
+    optional_ref<TaylorProxyAlloc1D> spin_map) {
   // intent=inout allocatable type array
   bool _err_flag{};
   int ix1_lvalue;
@@ -1291,7 +1291,7 @@ Bmad::GBendingStrengthFromEmField Bmad::g_bending_strength_from_em_field(
   return GBendingStrengthFromEmField{_g, dg};
 }
 Bmad::MultiTurnTrackingAnalysis Bmad::multi_turn_tracking_analysis(
-    CoordProxyAllocatable1D& track,
+    CoordProxyAlloc1D& track,
     int i_dim) {
   // intent=in allocatable type array
   CoordProxy _track0;
@@ -1450,7 +1450,7 @@ void Bmad::transfer_matrix_calc(
 }
 void Bmad::tilt_coords(
     double tilt_val,
-    RealAllocatable1D& coord,
+    RealAlloc1D& coord,
     std::optional<FixedArray2D<Real, 6, 6>> mat6,
     std::optional<bool> make_matrix) {
   // intent=inout allocatable general array
@@ -1489,8 +1489,8 @@ Bmad::MakeGMats Bmad::make_g_mats(EleProxy& ele) {
   return MakeGMats{g_mat, g_inv_mat};
 }
 void Bmad::knots_to_string(
-    RealAllocatable1D& x_knot,
-    RealAllocatable1D& y_knot,
+    RealAlloc1D& x_knot,
+    RealAlloc1D& y_knot,
     std::string str) {
   // intent=inout allocatable general array
   // intent=inout allocatable general array
@@ -1526,7 +1526,7 @@ void Bmad::insert_element(
     EleProxy& insert_ele,
     int ix_ele,
     std::optional<int> ix_branch,
-    optional_ref<CoordProxyAllocatable1D> orbit) {
+    optional_ref<CoordProxyAlloc1D> orbit) {
   int ix_branch_lvalue;
   auto* _ix_branch{&ix_branch_lvalue};
   if (ix_branch.has_value()) {
@@ -1548,10 +1548,10 @@ void Bmad::set_on_off(
     int key,
     LatProxy& lat,
     int switch_,
-    optional_ref<CoordProxyAllocatable1D> orb,
+    optional_ref<CoordProxyAlloc1D> orb,
     std::optional<bool> use_ref_orb,
     std::optional<int> ix_branch,
-    optional_ref<RealAllocatable1D> saved_values,
+    optional_ref<RealAlloc1D> saved_values,
     std::optional<std::string> attribute,
     std::optional<int> set_val) {
   // intent=in allocatable type array
@@ -1622,16 +1622,16 @@ bool Bmad::chrom_tune(
   return _err_flag;
 }
 Bmad::MultipoleKtToAb Bmad::multipole_kt_to_ab(
-    RealAllocatable1D& knl,
-    RealAllocatable1D& knsl,
-    RealAllocatable1D& tn) {
+    RealAlloc1D& knl,
+    RealAlloc1D& knsl,
+    RealAlloc1D& tn) {
   // intent=in allocatable general array
   // intent=in allocatable general array
   // intent=in allocatable general array
   // intent=out allocatable general array
-  auto an{RealAllocatable1D()};
+  auto an{RealAlloc1D()};
   // intent=out allocatable general array
-  auto bn{RealAllocatable1D()};
+  auto bn{RealAlloc1D()};
   fortran_multipole_kt_to_ab(
       /* void* */ knl.get_fortran_ptr(),
       /* void* */ knsl.get_fortran_ptr(),
@@ -1643,7 +1643,7 @@ Bmad::MultipoleKtToAb Bmad::multipole_kt_to_ab(
 LatProxy Bmad::make_hybrid_lat(
     LatProxy& lat_in,
     std::optional<bool> use_taylor,
-    optional_ref<CoordArrayProxyAllocatable1D> orb0_arr) {
+    optional_ref<CoordArrayProxyAlloc1D> orb0_arr) {
   LatProxy _lat_out;
   bool use_taylor_lvalue;
   auto* _use_taylor{&use_taylor_lvalue};
@@ -1774,7 +1774,7 @@ Bmad::TrackFromSToS Bmad::track_from_s_to_s(
     std::optional<int> ix_ele_end) {
   CoordProxy _orbit_end;
   // intent=out allocatable type array
-  auto all_orb{CoordProxyAllocatable1D()};
+  auto all_orb{CoordProxyAlloc1D()};
   int ix_branch_lvalue;
   auto* _ix_branch{&ix_branch_lvalue};
   if (ix_branch.has_value()) {
@@ -1830,8 +1830,8 @@ void Bmad::ele_compute_ref_energy_and_time(
 }
 void Bmad::ele_value_has_changed(
     EleProxy& ele,
-    IntAllocatable1D& list,
-    RealAllocatable1D& abs_tol,
+    IntAlloc1D& list,
+    RealAlloc1D& abs_tol,
     bool set_old,
     bool has_changed) {
   // intent=in allocatable general array
@@ -1843,12 +1843,12 @@ void Bmad::ele_value_has_changed(
       /* c_Bool& */ set_old,
       /* c_Bool& */ has_changed);
 }
-CoordProxyAllocatable1D Bmad::set_orbit_to_zero(
+CoordProxyAlloc1D Bmad::set_orbit_to_zero(
     int n1,
     int n2,
     std::optional<int> ix_noset) {
   // intent=out allocatable type array
-  auto orbit{CoordProxyAllocatable1D()};
+  auto orbit{CoordProxyAlloc1D()};
   int ix_noset_lvalue;
   auto* _ix_noset{&ix_noset_lvalue};
   if (ix_noset.has_value()) {
@@ -2020,7 +2020,7 @@ bool Bmad::lat_sanity_check(LatProxy& lat) {
 bool Bmad::lat_make_mat6(
     LatProxy& lat,
     std::optional<int> ix_ele,
-    optional_ref<CoordProxyAllocatable1D> ref_orb,
+    optional_ref<CoordProxyAlloc1D> ref_orb,
     std::optional<int> ix_branch) {
   int ix_ele_lvalue;
   auto* _ix_ele{&ix_ele_lvalue};
@@ -2078,7 +2078,7 @@ bool Bmad::set_z_tune(
 }
 int Bmad::track_many(
     LatProxy& lat,
-    CoordProxyAllocatable1D& orbit,
+    CoordProxyAlloc1D& orbit,
     int ix_start,
     int ix_end,
     int direction,
@@ -2196,7 +2196,7 @@ Bmad::ConvertPcTo Bmad::convert_pc_to(double pc, int particle) {
 }
 Bmad::RadiationIntegrals Bmad::radiation_integrals(
     LatProxy& lat,
-    CoordProxyAllocatable1D& orbit,
+    CoordProxyAlloc1D& orbit,
     optional_ref<int> ix_cache,
     std::optional<int> ix_branch) {
   // intent=in allocatable type array
@@ -2461,7 +2461,7 @@ LatProxy Bmad::clear_lat_1turn_mats() {
 }
 bool Bmad::closed_orbit_calc(
     LatProxy& lat,
-    CoordProxyAllocatable1D& closed_orb,
+    CoordProxyAlloc1D& closed_orb,
     std::optional<int> i_dim,
     std::optional<int> direction,
     std::optional<int> ix_branch,
@@ -3373,10 +3373,10 @@ void Bmad::check_aperture_limit(
       /* void* */ _old_orb,
       /* c_Bool* */ _check_momentum);
 }
-EleProxyAllocatable1D Bmad::transfer_eles(EleProxyAllocatable1D& ele1) {
+EleProxyAlloc1D Bmad::transfer_eles(EleProxyAlloc1D& ele1) {
   // intent=in allocatable type array
   // intent=out allocatable type array
-  auto ele2{EleProxyAllocatable1D()};
+  auto ele2{EleProxyAlloc1D()};
   fortran_transfer_eles(
       /* void* */ ele1.get_fortran_ptr(), /* void* */ ele2.get_fortran_ptr());
   return std::move(ele2);
@@ -3660,8 +3660,8 @@ void Bmad::absolute_time_tracking(EleProxy& ele, bool is_abs_time) {
       /* void* */ ele.get_fortran_ptr(), /* c_Bool& */ is_abs_time);
 }
 bool Bmad::knot_interpolate(
-    RealAllocatable1D& x_knot,
-    RealAllocatable1D& y_knot,
+    RealAlloc1D& x_knot,
+    RealAlloc1D& y_knot,
     double x_pt,
     int interpolation,
     double y_pt) {
@@ -3925,9 +3925,9 @@ FixedArray2D<Real, 6, 6> Bmad::track_a_rfcavity(
   vec_to_matrix(_mat6_vec, mat6);
   return mat6;
 }
-RealAllocatable1D Bmad::bbi_slice_calc(EleProxy& ele, int n_slice) {
+RealAlloc1D Bmad::bbi_slice_calc(EleProxy& ele, int n_slice) {
   // intent=out allocatable general array
-  auto z_slice{RealAllocatable1D()};
+  auto z_slice{RealAlloc1D()};
   fortran_bbi_slice_calc(
       /* void* */ ele.get_fortran_ptr(),
       /* c_Int& */ n_slice,
@@ -3991,8 +3991,8 @@ EleProxy Bmad::transfer_twiss(EleProxy& ele_in, std::optional<bool> reverse) {
   return std::move(_ele_out);
 }
 FixedArray2D<Real, 6, 6> Bmad::multipole_kick_mat(
-    RealAllocatable1D& knl,
-    RealAllocatable1D& tilt,
+    RealAlloc1D& knl,
+    RealAlloc1D& tilt,
     int ref_species,
     EleProxy& ele,
     CoordProxy& orbit,
@@ -5038,13 +5038,13 @@ void Bmad::mat6_add_offsets(EleProxy& ele, LatParamProxy& param) {
   fortran_mat6_add_offsets(
       /* void* */ ele.get_fortran_ptr(), /* void* */ param.get_fortran_ptr());
 }
-void Bmad::reallocate_coord_n(CoordProxyAllocatable1D& coord, int n_coord) {
+void Bmad::reallocate_coord_n(CoordProxyAlloc1D& coord, int n_coord) {
   // intent=inout allocatable type array
   fortran_reallocate_coord_n(
       /* void* */ coord.get_fortran_ptr(), /* c_Int& */ n_coord);
 }
 void Bmad::reallocate_coord_lat(
-    CoordProxyAllocatable1D& coord,
+    CoordProxyAlloc1D& coord,
     LatProxy& lat,
     std::optional<int> ix_branch) {
   // intent=inout allocatable type array
@@ -5061,7 +5061,7 @@ void Bmad::reallocate_coord_lat(
       /* c_Int* */ _ix_branch);
 }
 void Bmad::reallocate_coord_array(
-    CoordArrayProxyAllocatable1D& coord_array,
+    CoordArrayProxyAlloc1D& coord_array,
     LatProxy& lat) {
   // intent=inout allocatable type array
   fortran_reallocate_coord_array(
@@ -5441,11 +5441,10 @@ void Bmad::ele_has_constant_ds_dt_ref(EleProxy& ele, bool is_const) {
   fortran_ele_has_constant_ds_dt_ref(
       /* void* */ ele.get_fortran_ptr(), /* c_Bool& */ is_const);
 }
-BranchProxyAllocatable1D Bmad::transfer_branches(
-    BranchProxyAllocatable1D& branch1) {
+BranchProxyAlloc1D Bmad::transfer_branches(BranchProxyAlloc1D& branch1) {
   // intent=in allocatable type array
   // intent=out allocatable type array
-  auto branch2{BranchProxyAllocatable1D()};
+  auto branch2{BranchProxyAlloc1D()};
   fortran_transfer_branches(
       /* void* */ branch1.get_fortran_ptr(),
       /* void* */ branch2.get_fortran_ptr());
@@ -5544,7 +5543,7 @@ LatProxy Bmad::transfer_lat(LatProxy& lat1) {
   return std::move(_lat2);
 }
 void Bmad::reallocate_expression_stack(
-    ExpressionAtomProxyAllocatable1D& stack,
+    ExpressionAtomProxyAlloc1D& stack,
     int n,
     std::optional<bool> exact) {
   // intent=inout allocatable type array
@@ -5668,7 +5667,7 @@ Bmad::ToOrbitReading Bmad::to_orbit_reading(
   return ToOrbitReading{_reading, _err};
 }
 Bmad::ToEtaReading Bmad::to_eta_reading(
-    RealAllocatable1D& eta_actual,
+    RealAlloc1D& eta_actual,
     EleProxy& ele,
     int axis,
     bool add_noise) {
@@ -6094,7 +6093,7 @@ EmFieldProxy Bmad::em_field_derivatives(
   return std::move(_dfield);
 }
 void Bmad::gen_grad_field(
-    RealAllocatable1D& deriv,
+    RealAlloc1D& deriv,
     GenGrad1Proxy& gg,
     double rho,
     double theta,
@@ -6138,13 +6137,13 @@ EmFieldProxy Bmad::convert_field_ele_to_lab(
       /* c_Bool* */ _calc_potential);
   return std::move(_field);
 }
-ApertureScanProxyAllocatable1D Bmad::dynamic_aperture_scan(
+ApertureScanProxyAlloc1D Bmad::dynamic_aperture_scan(
     ApertureParamProxy& aperture_param,
-    RealAllocatable1D& pz_start,
+    RealAlloc1D& pz_start,
     LatProxy& lat,
     std::optional<bool> print_timing) {
   // intent=out allocatable type array
-  auto aperture_scan{ApertureScanProxyAllocatable1D()};
+  auto aperture_scan{ApertureScanProxyAlloc1D()};
   // intent=in allocatable general array
   bool print_timing_lvalue;
   auto* _print_timing{&print_timing_lvalue};
@@ -6237,16 +6236,16 @@ void Bmad::makeup_control_slave(LatProxy& lat, EleProxy& slave, bool err_flag) {
 void Bmad::aperture_bookkeeper(EleProxy& ele) {
   fortran_aperture_bookkeeper(/* void* */ ele.get_fortran_ptr());
 }
-RealAllocatable1D Bmad::attributes_need_bookkeeping(EleProxy& ele) {
+RealAlloc1D Bmad::attributes_need_bookkeeping(EleProxy& ele) {
   // intent=out allocatable general array
-  auto dval{RealAllocatable1D()};
+  auto dval{RealAlloc1D()};
   fortran_attributes_need_bookkeeping(
       /* void* */ ele.get_fortran_ptr(), /* void* */ dval.get_fortran_ptr());
   return std::move(dval);
 }
 Bmad::TransferMapFromSToS Bmad::transfer_map_from_s_to_s(
     LatProxy& lat,
-    TaylorProxyAllocatable1D& t_map,
+    TaylorProxyAlloc1D& t_map,
     std::optional<double> s1,
     std::optional<double> s2,
     optional_ref<CoordProxy> ref_orb_in,
@@ -6254,7 +6253,7 @@ Bmad::TransferMapFromSToS Bmad::transfer_map_from_s_to_s(
     std::optional<bool> one_turn,
     std::optional<bool> unit_start,
     std::optional<bool> concat_if_possible,
-    optional_ref<TaylorProxyAllocatable1D> spin_map) {
+    optional_ref<TaylorProxyAlloc1D> spin_map) {
   // intent=inout allocatable type array
   double s1_lvalue;
   auto* _s1{&s1_lvalue};
@@ -7092,7 +7091,7 @@ SummationRdtProxy Bmad::srdt_calc(
     int order,
     std::optional<int> n_slices_gen_opt,
     std::optional<int> n_slices_sxt_opt,
-    optional_ref<SummationRdtProxyAllocatable1D> per_ele_out) {
+    optional_ref<SummationRdtProxyAlloc1D> per_ele_out) {
   SummationRdtProxy _srdt_sums;
   int n_slices_gen_opt_lvalue;
   auto* _n_slices_gen_opt{&n_slices_gen_opt_lvalue};
@@ -7121,9 +7120,9 @@ SummationRdtProxy Bmad::srdt_calc(
       /* void* */ _per_ele_out);
   return std::move(_srdt_sums);
 }
-RealAllocatable1D Bmad::srdt_lsq_solution(
+RealAlloc1D Bmad::srdt_lsq_solution(
     LatProxy& lat,
-    IntAllocatable1D& var_indexes,
+    IntAlloc1D& var_indexes,
     std::optional<int> n_slices_gen_opt,
     std::optional<int> n_slices_sxt_opt,
     std::optional<double> chrom_set_x_opt,
@@ -7131,7 +7130,7 @@ RealAllocatable1D Bmad::srdt_lsq_solution(
     std::optional<FixedArray1D<Real, 10>> weight_in) {
   // intent=in allocatable general array
   // intent=out allocatable general array
-  auto ls_soln{RealAllocatable1D()};
+  auto ls_soln{RealAlloc1D()};
   int n_slices_gen_opt_lvalue;
   auto* _n_slices_gen_opt{&n_slices_gen_opt_lvalue};
   if (n_slices_gen_opt.has_value()) {
@@ -7174,8 +7173,8 @@ RealAllocatable1D Bmad::srdt_lsq_solution(
   return std::move(ls_soln);
 }
 void Bmad::multipole_kicks(
-    RealAllocatable1D& knl,
-    RealAllocatable1D& tilt,
+    RealAlloc1D& knl,
+    RealAlloc1D& tilt,
     EleProxy& ele,
     CoordProxy& orbit,
     std::optional<int> pole_type,
@@ -7205,8 +7204,8 @@ void Bmad::multipole_kicks(
       /* c_Bool* */ _ref_orb_offset);
 }
 void Bmad::ab_multipole_kicks(
-    RealAllocatable1D& an,
-    RealAllocatable1D& bn,
+    RealAlloc1D& an,
+    RealAlloc1D& bn,
     int ix_pole_max,
     EleProxy& ele,
     CoordProxy& orbit,
@@ -7334,7 +7333,7 @@ Bmad::AbMultipoleKick Bmad::ab_multipole_kick(
 Bmad::Emit6d Bmad::emit_6d(
     EleProxy& ele_ref,
     bool include_opening_angle,
-    optional_ref<CoordProxyAllocatable1D> closed_orbit) {
+    optional_ref<CoordProxyAlloc1D> closed_orbit) {
   NormalModesProxy _mode;
   FixedArray2D<Real, 6, 6> sigma_mat;
   double _sigma_mat_vec[6 * 6];
@@ -7357,7 +7356,7 @@ Bmad::RadDampAndStocMats Bmad::rad_damp_and_stoc_mats(
     EleProxy& ele1,
     EleProxy& ele2,
     bool include_opening_angle,
-    optional_ref<CoordProxyAllocatable1D> closed_orbit) {
+    optional_ref<CoordProxyAlloc1D> closed_orbit) {
   RadMapProxy _rmap;
   NormalModesProxy _mode;
   FixedArray2D<Real, 6, 6> xfer_nodamp_mat;
@@ -7438,7 +7437,7 @@ FixedArray1D<Real, 2> Bmad::rad_g_integrals(
   return _int_g;
 }
 void Bmad::re_allocate_wall3d_vertex_array(
-    Wall3dVertexProxyAllocatable1D& v,
+    Wall3dVertexProxyAlloc1D& v,
     int n,
     std::optional<bool> exact) {
   // intent=inout allocatable type array
@@ -7453,7 +7452,7 @@ void Bmad::re_allocate_wall3d_vertex_array(
       /* void* */ v.get_fortran_ptr(), /* c_Int& */ n, /* c_Bool* */ _exact);
 }
 void Bmad::re_allocate_wall3d_section_array(
-    Wall3dSectionProxyAllocatable1D& section,
+    Wall3dSectionProxyAlloc1D& section,
     int n,
     std::optional<bool> exact) {
   // intent=inout allocatable type array
@@ -7482,7 +7481,7 @@ bool Bmad::wall3d_section_initializer(Wall3dSectionProxy& section) {
   return _err;
 }
 Bmad::CalcWallRadius Bmad::calc_wall_radius(
-    Wall3dVertexProxyAllocatable1D& v,
+    Wall3dVertexProxyAlloc1D& v,
     double cos_ang,
     double sin_ang) {
   // intent=in allocatable type array
@@ -7499,7 +7498,7 @@ Bmad::CalcWallRadius Bmad::calc_wall_radius(
   return CalcWallRadius{_r_wall, _dr_dtheta, _ix_vertex};
 }
 Bmad::Wall3dDRadius Bmad::wall3d_d_radius(
-    RealAllocatable1D& position,
+    RealAlloc1D& position,
     EleProxy& ele,
     std::optional<int> ix_wall) {
   // intent=in allocatable general array
@@ -7629,7 +7628,7 @@ Bmad::BmadParser Bmad::bmad_parser(
 void Bmad::bmad_parser2(
     std::string lat_file,
     LatProxy& lat,
-    optional_ref<CoordProxyAllocatable1D> orbit,
+    optional_ref<CoordProxyAlloc1D> orbit,
     std::optional<bool> make_mats6,
     optional_ref<bool> err_flag,
     optional_ref<LatProxy> parse_lat) {
@@ -7665,7 +7664,7 @@ BunchProxy Bmad::remove_dead_from_bunch(BunchProxy& bunch_in) {
 }
 bool Bmad::check_controller_controls(
     int ele_key,
-    ControlProxyAllocatable1D& contrl,
+    ControlProxyAlloc1D& contrl,
     std::string name) {
   // intent=in allocatable type array
   auto _name = name.c_str();
@@ -7694,7 +7693,7 @@ bool Bmad::create_field_overlap(
 void Bmad::create_girder(
     LatProxy& lat,
     int ix_girder,
-    ControlProxyAllocatable1D& contrl,
+    ControlProxyAlloc1D& contrl,
     EleProxy& girder_info,
     bool err_flag) {
   // intent=in allocatable type array
@@ -7705,10 +7704,7 @@ void Bmad::create_girder(
       /* void* */ girder_info.get_fortran_ptr(),
       /* c_Bool& */ err_flag);
 }
-void Bmad::create_group(
-    EleProxy& lord,
-    ControlProxyAllocatable1D& contrl,
-    bool err) {
+void Bmad::create_group(EleProxy& lord, ControlProxyAlloc1D& contrl, bool err) {
   // intent=in allocatable type array
   fortran_create_group(
       /* void* */ lord.get_fortran_ptr(),
@@ -7717,7 +7713,7 @@ void Bmad::create_group(
 }
 void Bmad::create_overlay(
     EleProxy& lord,
-    ControlProxyAllocatable1D& contrl,
+    ControlProxyAlloc1D& contrl,
     bool err) {
   // intent=in allocatable type array
   fortran_create_overlay(
@@ -7727,7 +7723,7 @@ void Bmad::create_overlay(
 }
 void Bmad::create_ramper(
     EleProxy& lord,
-    ControlProxyAllocatable1D& contrl,
+    ControlProxyAlloc1D& contrl,
     bool err) {
   // intent=in allocatable type array
   fortran_create_ramper(
@@ -7795,7 +7791,7 @@ void Bmad::gradient_shift_sr_wake(
 }
 void Bmad::hdf5_write_beam(
     std::string file_name,
-    BunchProxyAllocatable1D& bunches,
+    BunchProxyAlloc1D& bunches,
     bool append,
     bool error,
     optional_ref<LatProxy> lat,
@@ -7817,7 +7813,7 @@ void Bmad::hdf5_write_beam(
 void Bmad::hdf5_write_grid_field(
     std::string file_name,
     EleProxy& ele,
-    GridFieldProxyAllocatable1D& g_field,
+    GridFieldProxyAlloc1D& g_field,
     bool err_flag) {
   auto _file_name = file_name.c_str(); // ptr, inout, required
   // intent=inout allocatable type array
@@ -8128,7 +8124,7 @@ void Bmad::rotate_spin_given_field(
 void Bmad::save_a_beam_step(
     EleProxy& ele,
     BeamProxy& beam,
-    optional_ref<BunchTrackProxyAllocatable1D> bunch_tracks,
+    optional_ref<BunchTrackProxyAlloc1D> bunch_tracks,
     std::optional<double> s_body,
     std::optional<bool> is_time_coords) {
   // intent=in allocatable type array
@@ -8463,7 +8459,7 @@ void Bmad::sprint_spin_taylor_map(
 }
 void Bmad::tilt_coords_photon(
     double tilt_val,
-    RealAllocatable1D& coord,
+    RealAlloc1D& coord,
     std::optional<FixedArray2D<Real, 3, 3>> w_mat) {
   // intent=inout allocatable general array
   double _w_mat_vec[3 * 3];
@@ -8501,8 +8497,8 @@ void Bmad::track_bunch_time(
     BranchProxy& branch,
     double t_end,
     double s_end,
-    optional_ref<RealAllocatable1D> dt_step,
-    optional_ref<EmFieldProxyAllocatable1D> extra_field) {
+    optional_ref<RealAlloc1D> dt_step,
+    optional_ref<EmFieldProxyAlloc1D> extra_field) {
   // intent=inout allocatable general array
   auto* _dt_step = dt_step.has_value() ? dt_step->get().get_fortran_ptr()
                                        : nullptr; // input, optional
@@ -8714,7 +8710,7 @@ bool Bmad::write_lattice_in_foreign_format(
     std::string out_type,
     std::string out_file_name,
     LatProxy& lat,
-    optional_ref<CoordProxyAllocatable1D> ref_orbit,
+    optional_ref<CoordProxyAlloc1D> ref_orbit,
     std::optional<bool> use_matrix_model,
     std::optional<bool> include_apertures,
     std::optional<double> dr12_drift_max,
@@ -8769,7 +8765,7 @@ bool Bmad::write_lattice_in_mad_format(
     std::string out_type,
     std::string out_file_name,
     LatProxy& lat,
-    optional_ref<CoordProxyAllocatable1D> ref_orbit,
+    optional_ref<CoordProxyAlloc1D> ref_orbit,
     std::optional<bool> use_matrix_model,
     std::optional<bool> include_apertures,
     std::optional<double> dr12_drift_max,
@@ -8823,7 +8819,7 @@ bool Bmad::write_lattice_in_mad_format(
 bool Bmad::write_lattice_in_elegant_format(
     std::string out_file_name,
     LatProxy& lat,
-    optional_ref<CoordProxyAllocatable1D> ref_orbit,
+    optional_ref<CoordProxyAlloc1D> ref_orbit,
     std::optional<bool> use_matrix_model,
     std::optional<bool> include_apertures,
     std::optional<double> dr12_drift_max,
@@ -8981,9 +8977,9 @@ EleProxy Bmad::ele_equals_ele(EleProxy& ele_in, bool update_nametable) {
       /* c_Bool& */ update_nametable);
   return std::move(_ele_out);
 }
-EleProxyAllocatable1D Bmad::ele_vec_equal_ele_vec(EleProxyAllocatable1D& ele2) {
+EleProxyAlloc1D Bmad::ele_vec_equal_ele_vec(EleProxyAlloc1D& ele2) {
   // intent=out allocatable type array
-  auto ele1{EleProxyAllocatable1D()};
+  auto ele1{EleProxyAlloc1D()};
   // intent=in allocatable type array
   fortran_ele_vec_equal_ele_vec(
       /* void* */ ele1.get_fortran_ptr(), /* void* */ ele2.get_fortran_ptr());
@@ -8996,9 +8992,9 @@ LatProxy Bmad::lat_equal_lat(LatProxy& lat_in) {
       /* void* */ lat_in.get_fortran_ptr());
   return std::move(_lat_out);
 }
-LatProxyAllocatable1D Bmad::lat_vec_equal_lat_vec(LatProxyAllocatable1D& lat2) {
+LatProxyAlloc1D Bmad::lat_vec_equal_lat_vec(LatProxyAlloc1D& lat2) {
   // intent=out allocatable type array
-  auto lat1{LatProxyAllocatable1D()};
+  auto lat1{LatProxyAlloc1D()};
   // intent=in allocatable type array
   fortran_lat_vec_equal_lat_vec(
       /* void* */ lat1.get_fortran_ptr(), /* void* */ lat2.get_fortran_ptr());
@@ -9025,10 +9021,9 @@ TaylorProxy Bmad::taylor_equal_taylor(TaylorProxy& taylor2) {
       /* void* */ taylor2.get_fortran_ptr());
   return std::move(_taylor1);
 }
-TaylorProxyAllocatable1D Bmad::taylors_equal_taylors(
-    TaylorProxyAllocatable1D& taylor2) {
+TaylorProxyAlloc1D Bmad::taylors_equal_taylors(TaylorProxyAlloc1D& taylor2) {
   // intent=out allocatable type array
-  auto taylor1{TaylorProxyAllocatable1D()};
+  auto taylor1{TaylorProxyAlloc1D()};
   // intent=in allocatable type array
   fortran_taylors_equal_taylors(
       /* void* */ taylor1.get_fortran_ptr(),
@@ -9042,10 +9037,10 @@ EmTaylorProxy Bmad::em_taylor_equal_em_taylor(EmTaylorProxy& em_taylor2) {
       /* void* */ em_taylor2.get_fortran_ptr());
   return std::move(_em_taylor1);
 }
-EmTaylorProxyAllocatable1D Bmad::em_taylors_equal_em_taylors(
-    EmTaylorProxyAllocatable1D& em_taylor2) {
+EmTaylorProxyAlloc1D Bmad::em_taylors_equal_em_taylors(
+    EmTaylorProxyAlloc1D& em_taylor2) {
   // intent=out allocatable type array
-  auto em_taylor1{EmTaylorProxyAllocatable1D()};
+  auto em_taylor1{EmTaylorProxyAlloc1D()};
   // intent=in allocatable type array
   fortran_em_taylors_equal_em_taylors(
       /* void* */ em_taylor1.get_fortran_ptr(),
@@ -9076,10 +9071,10 @@ ComplexTaylorProxy Bmad::complex_taylor_equal_complex_taylor(
       /* void* */ complex_taylor2.get_fortran_ptr());
   return std::move(_complex_taylor1);
 }
-ComplexTaylorProxyAllocatable1D Bmad::complex_taylors_equal_complex_taylors(
-    ComplexTaylorProxyAllocatable1D& complex_taylor2) {
+ComplexTaylorProxyAlloc1D Bmad::complex_taylors_equal_complex_taylors(
+    ComplexTaylorProxyAlloc1D& complex_taylor2) {
   // intent=out allocatable type array
-  auto complex_taylor1{ComplexTaylorProxyAllocatable1D()};
+  auto complex_taylor1{ComplexTaylorProxyAlloc1D()};
   // intent=in allocatable type array
   fortran_complex_taylors_equal_complex_taylors(
       /* void* */ complex_taylor1.get_fortran_ptr(),
@@ -9519,7 +9514,7 @@ Bmad::ExpressionStringToStack Bmad::expression_string_to_stack(
     std::string string) {
   auto _string = string.c_str();
   // intent=out allocatable type array
-  auto stack{ExpressionAtomProxyAllocatable1D()};
+  auto stack{ExpressionAtomProxyAlloc1D()};
   int _n_stack{};
   bool _err_flag{};
   char _err_str[4096];
@@ -9534,7 +9529,7 @@ Bmad::ExpressionStringToStack Bmad::expression_string_to_stack(
 }
 Bmad::ExpressionValue Bmad::expression_value(
     std::string expression,
-    optional_ref<ControlVar1ProxyAllocatable1D> var,
+    optional_ref<ControlVar1ProxyAlloc1D> var,
     std::optional<bool> use_old) {
   auto _expression = expression.c_str();
   bool _err_flag{};
@@ -9560,8 +9555,8 @@ Bmad::ExpressionValue Bmad::expression_value(
   return ExpressionValue{_err_flag, _err_str, _value};
 }
 Bmad::ExpressionStackValue Bmad::expression_stack_value(
-    ExpressionAtomProxyAllocatable1D& stack,
-    optional_ref<ControlVar1ProxyAllocatable1D> var,
+    ExpressionAtomProxyAlloc1D& stack,
+    optional_ref<ControlVar1ProxyAlloc1D> var,
     std::optional<bool> use_old) {
   // intent=in allocatable type array
   bool _err_flag{};
@@ -9587,7 +9582,7 @@ Bmad::ExpressionStackValue Bmad::expression_stack_value(
   return ExpressionStackValue{_err_flag, _err_str, _value};
 }
 std::string Bmad::expression_stack_to_string(
-    ExpressionAtomProxyAllocatable1D& stack,
+    ExpressionAtomProxyAlloc1D& stack,
     std::optional<bool> polish) {
   // intent=in allocatable type array
   bool polish_lvalue;
@@ -9604,7 +9599,7 @@ std::string Bmad::expression_stack_to_string(
       /* c_Char */ _str);
   return _str;
 }
-Bmad::LinearCoef Bmad::linear_coef(ExpressionAtomProxyAllocatable1D& stack) {
+Bmad::LinearCoef Bmad::linear_coef(ExpressionAtomProxyAlloc1D& stack) {
   // intent=in allocatable type array
   bool _err_flag{};
   double _coef{};
@@ -9739,7 +9734,7 @@ bool Bmad::twiss_and_track_at_s(
     LatProxy& lat,
     double s,
     optional_ref<EleProxy> ele_at_s,
-    optional_ref<CoordProxyAllocatable1D> orb,
+    optional_ref<CoordProxyAlloc1D> orb,
     optional_ref<CoordProxy> orb_at_s,
     std::optional<int> ix_branch,
     std::optional<bool> use_last,
@@ -10449,15 +10444,14 @@ bool Bmad::field_attribute_free(EleProxy& ele, std::string attrib_name) {
 void Bmad::complex_taylor_clean(ComplexTaylorProxy& complex_taylor) {
   fortran_complex_taylor_clean(/* void* */ complex_taylor.get_fortran_ptr());
 }
-ComplexTaylorProxyAllocatable1D Bmad::complex_taylor_make_unit() {
+ComplexTaylorProxyAlloc1D Bmad::complex_taylor_make_unit() {
   // intent=out allocatable type array
-  auto complex_taylor{ComplexTaylorProxyAllocatable1D()};
+  auto complex_taylor{ComplexTaylorProxyAlloc1D()};
   fortran_complex_taylor_make_unit(
       /* void* */ complex_taylor.get_fortran_ptr());
   return std::move(complex_taylor);
 }
-void Bmad::kill_complex_taylor(
-    ComplexTaylorProxyAllocatable1D& complex_taylor) {
+void Bmad::kill_complex_taylor(ComplexTaylorProxyAlloc1D& complex_taylor) {
   // intent=inout allocatable type array
   fortran_kill_complex_taylor(/* void* */ complex_taylor.get_fortran_ptr());
 }
@@ -10478,13 +10472,13 @@ int Bmad::complex_taylor_exponent_index(FixedArray1D<Int, 6> expn) {
 }
 Bmad::ComplexTaylorToMat6 Bmad::complex_taylor_to_mat6(
     FixedArray1D<ComplexTaylorProxy, 6> a_complex_taylor,
-    ComplexAllocatable1D& r_in) {
+    ComplexAlloc1D& r_in) {
   // intent=in allocatable general array
   FixedArray1D<Complex, 6> _vec0;
   FixedArray2D<Complex, 6, 6> mat6;
   std::complex<double> _mat6_vec[6 * 6];
   // intent=out allocatable general array
-  auto r_out{ComplexAllocatable1D()};
+  auto r_out{ComplexAlloc1D()};
   fortran_complex_taylor_to_mat6(
       /* void* */ a_complex_taylor.data(),
       /* void* */ r_in.get_fortran_ptr(),
@@ -10509,25 +10503,25 @@ ComplexTaylorProxyArray1D Bmad::mat6_to_complex_taylor(
       /* void* */ complex_taylor.get_fortran_ptr());
   return std::move(std::move(complex_taylor));
 }
-ComplexAllocatable1D Bmad::track_complex_taylor(
-    ComplexAllocatable1D& start_orb,
-    ComplexTaylorProxyAllocatable1D& complex_taylor) {
+ComplexAlloc1D Bmad::track_complex_taylor(
+    ComplexAlloc1D& start_orb,
+    ComplexTaylorProxyAlloc1D& complex_taylor) {
   // intent=in allocatable general array
   // intent=in allocatable type array
   // intent=out allocatable general array
-  auto end_orb{ComplexAllocatable1D()};
+  auto end_orb{ComplexAlloc1D()};
   fortran_track_complex_taylor(
       /* void* */ start_orb.get_fortran_ptr(),
       /* void* */ complex_taylor.get_fortran_ptr(),
       /* void* */ end_orb.get_fortran_ptr());
   return std::move(end_orb);
 }
-ComplexTaylorProxyAllocatable1D Bmad::truncate_complex_taylor_to_order(
-    ComplexTaylorProxyAllocatable1D& complex_taylor_in,
+ComplexTaylorProxyAlloc1D Bmad::truncate_complex_taylor_to_order(
+    ComplexTaylorProxyAlloc1D& complex_taylor_in,
     int order) {
   // intent=in allocatable type array
   // intent=out allocatable type array
-  auto complex_taylor_out{ComplexTaylorProxyAllocatable1D()};
+  auto complex_taylor_out{ComplexTaylorProxyAlloc1D()};
   fortran_truncate_complex_taylor_to_order(
       /* void* */ complex_taylor_in.get_fortran_ptr(),
       /* c_Int& */ order,
@@ -10782,8 +10776,8 @@ BunchParamsProxy Bmad::calc_spin_params(BunchProxy& bunch) {
   return std::move(_bunch_params);
 }
 BunchParamsProxy Bmad::calc_bunch_sigma_matrix_etc(
-    CoordProxyAllocatable1D& particle,
-    RealAllocatable1D& charge,
+    CoordProxyAlloc1D& particle,
+    RealAlloc1D& charge,
     optional_ref<bool> is_time_coords,
     optional_ref<EleProxy> ele) {
   // intent=in allocatable type array
@@ -10834,9 +10828,9 @@ Bmad::SolvePsiFixedSteps Bmad::solve_psi_fixed_steps(
     FixedArray1D<Real, 8> args) {
   auto* _args = args.data(); // CppWrapperGeneralArgument
   // intent=out allocatable general array
-  auto t{RealAllocatable1D()};
+  auto t{RealAlloc1D()};
   // intent=out allocatable general array
-  auto p{RealAllocatable1D()};
+  auto p{RealAlloc1D()};
   fortran_solve_psi_fixed_steps(
       /* c_Real& */ t0,
       /* c_Real& */ t1,
@@ -10964,8 +10958,8 @@ void Bmad::make_v(
   vec_to_matrix(_V_vec, V);
 }
 void Bmad::integrated_mats(
-    EleProxyAllocatable1D& eles,
-    CoordProxyAllocatable1D& coos,
+    EleProxyAlloc1D& eles,
+    CoordProxyAlloc1D& coos,
     FixedArray2D<Complex, 6, 6> Lambda,
     FixedArray2D<Complex, 6, 6> Theta,
     FixedArray2D<Complex, 6, 6> Iota,
@@ -10993,7 +10987,7 @@ Bmad::EnvelopeRadintsIbs Bmad::envelope_radints_ibs(
     FixedArray2D<Complex, 6, 6> Lambda,
     FixedArray2D<Complex, 6, 6> Theta,
     FixedArray2D<Complex, 6, 6> Iota,
-    EleProxyAllocatable1D& eles,
+    EleProxyAlloc1D& eles,
     NormalModesProxy& mode,
     bool tail_cut,
     double npart,
@@ -11176,10 +11170,7 @@ double Bmad::touschek_rate1(
       /* c_Real* */ _s);
   return _rate;
 }
-void Bmad::integrand_base(
-    double t,
-    RealAllocatable1D& args,
-    double func_retval__) {
+void Bmad::integrand_base(double t, RealAlloc1D& args, double func_retval__) {
   // intent=inout allocatable general array
   fortran_integrand_base(
       /* c_Real& */ t,
@@ -11226,9 +11217,9 @@ bool Bmad::track_beam(
     BeamProxy& beam,
     optional_ref<EleProxy> ele1,
     optional_ref<EleProxy> ele2,
-    optional_ref<CoordProxyAllocatable1D> centroid,
+    optional_ref<CoordProxyAlloc1D> centroid,
     std::optional<int> direction,
-    optional_ref<BunchTrackProxyAllocatable1D> bunch_tracks) {
+    optional_ref<BunchTrackProxyAlloc1D> bunch_tracks) {
   auto* _ele1 = ele1.has_value() ? ele1->get().get_fortran_ptr()
                                  : nullptr; // input, optional
   auto* _ele2 = ele2.has_value() ? ele2->get().get_fortran_ptr()
@@ -11264,7 +11255,7 @@ bool Bmad::track_bunch(
     BunchProxy& bunch,
     optional_ref<EleProxy> ele1,
     optional_ref<EleProxy> ele2,
-    optional_ref<CoordProxyAllocatable1D> centroid,
+    optional_ref<CoordProxyAlloc1D> centroid,
     std::optional<int> direction,
     optional_ref<BunchTrackProxy> bunch_track) {
   auto* _ele1 = ele1.has_value() ? ele1->get().get_fortran_ptr()
@@ -11299,7 +11290,7 @@ bool Bmad::track_bunch(
 bool Bmad::track1_beam(
     BeamProxy& beam,
     EleProxy& ele,
-    optional_ref<CoordProxyAllocatable1D> centroid,
+    optional_ref<CoordProxyAlloc1D> centroid,
     std::optional<int> direction) {
   bool _err{};
   // intent=in allocatable type array
@@ -11323,7 +11314,7 @@ bool Bmad::track1_beam(
 bool Bmad::track1_bunch(
     BunchProxy& bunch,
     EleProxy& ele,
-    optional_ref<CoordProxyAllocatable1D> centroid,
+    optional_ref<CoordProxyAlloc1D> centroid,
     std::optional<int> direction,
     optional_ref<BunchTrackProxy> bunch_track) {
   bool _err{};
@@ -11513,7 +11504,7 @@ void Bmad::re_str_qp(long double rel, std::string str_out) {
   fortran_re_str_qp(/* const long double& */ rel, /* c_Char */ _str_out);
 }
 void Bmad::array_re_str(
-    RealAllocatable1D& arr,
+    RealAlloc1D& arr,
     optional_ref<std::string> parens_in,
     std::string str_out) {
   // intent=inout allocatable general array
@@ -11918,7 +11909,7 @@ bool Bmad::verify_valid_name(
 }
 void Bmad::add_this_multipass(
     LatProxy& lat,
-    LatEleLocProxyAllocatable1D& m_slaves,
+    LatEleLocProxyAlloc1D& m_slaves,
     optional_ref<EleProxy> lord_in) {
   // intent=inout allocatable type array
   auto* _lord_in = lord_in.has_value() ? lord_in->get().get_fortran_ptr()
@@ -12046,7 +12037,7 @@ void Bmad::parse_gen_grad_map(
 void Bmad::parse_integer_list(
     std::string err_str,
     LatProxy& lat,
-    IntAllocatable1D& int_array,
+    IntAlloc1D& int_array,
     bool exact_size,
     std::string delim,
     bool delim_found,
@@ -12082,7 +12073,7 @@ void Bmad::parse_integer_list(
 Bmad::ParseIntegerList2 Bmad::parse_integer_list2(
     std::string err_str,
     LatProxy& lat,
-    IntAllocatable1D& int_array,
+    IntAlloc1D& int_array,
     optional_ref<int> num_expected,
     optional_ref<std::string> open_delim,
     optional_ref<std::string> separator,
@@ -12129,7 +12120,7 @@ Bmad::ParseRealList Bmad::parse_real_list(
     std::optional<double> default_value) {
   auto _err_str = err_str.c_str();
   // intent=out allocatable general array
-  auto real_array{RealAllocatable1D()};
+  auto real_array{RealAlloc1D()};
   char _delim[4096];
   bool _delim_found{};
   const char* _open_delim =
@@ -12165,7 +12156,7 @@ Bmad::ParseRealList Bmad::parse_real_list(
 Bmad::ParseRealList2 Bmad::parse_real_list2(
     LatProxy& lat,
     std::string err_str,
-    RealAllocatable1D& real_array,
+    RealAlloc1D& real_array,
     optional_ref<int> num_expected,
     optional_ref<std::string> open_brace,
     optional_ref<std::string> separator,
@@ -12318,7 +12309,7 @@ ControlProxy Bmad::parser_transfer_control_struct(
   return std::move(_con_out);
 }
 void Bmad::parser_fast_integer_read(
-    IntAllocatable1D& int_vec,
+    IntAlloc1D& int_vec,
     EleProxy& ele,
     std::string delim_wanted,
     std::string err_str,
@@ -12337,7 +12328,7 @@ Bmad::ParserFastComplexRead Bmad::parser_fast_complex_read(
     EleProxy& ele,
     std::string err_str) {
   // intent=out allocatable general array
-  auto cmplx_vec{ComplexAllocatable1D()};
+  auto cmplx_vec{ComplexAlloc1D()};
   char _delim[4096];
   auto _err_str = err_str.c_str();
   bool _is_ok{};
@@ -12355,7 +12346,7 @@ Bmad::ParserFastRealRead Bmad::parser_fast_real_read(
     std::string err_str,
     std::optional<bool> exact_size) {
   // intent=out allocatable general array
-  auto real_vec{RealAllocatable1D()};
+  auto real_vec{RealAlloc1D()};
   auto _end_delims = end_delims.c_str();
   char _delim[4096];
   auto _err_str = err_str.c_str();
@@ -13048,7 +13039,7 @@ Bmad::PtcSpinCalc Bmad::ptc_spin_calc(
 }
 Bmad::PtcTrackAll Bmad::ptc_track_all(
     BranchProxy& branch,
-    CoordProxyAllocatable1D& orbit) {
+    CoordProxyAlloc1D& orbit) {
   // intent=inout allocatable type array
   int _track_state{};
   bool _err_flag{};
@@ -13059,11 +13050,11 @@ Bmad::PtcTrackAll Bmad::ptc_track_all(
       /* c_Bool& */ _err_flag);
   return PtcTrackAll{_track_state, _err_flag};
 }
-CoordProxyAllocatable1D Bmad::ptc_closed_orbit_calc(
+CoordProxyAlloc1D Bmad::ptc_closed_orbit_calc(
     BranchProxy& branch,
     std::optional<bool> radiation_damping_on) {
   // intent=out allocatable type array
-  auto closed_orbit{CoordProxyAllocatable1D()};
+  auto closed_orbit{CoordProxyAlloc1D()};
   bool radiation_damping_on_lvalue;
   auto* _radiation_damping_on{&radiation_damping_on_lvalue};
   if (radiation_damping_on.has_value()) {
@@ -13196,13 +13187,13 @@ ComplexTaylorProxy Bmad::form_complex_taylor(
   return std::move(_complex_taylor);
 }
 Bmad::RemoveConstantTaylor Bmad::remove_constant_taylor(
-    TaylorProxyAllocatable1D& taylor_in,
+    TaylorProxyAlloc1D& taylor_in,
     bool remove_higher_order_terms) {
   // intent=in allocatable type array
   // intent=out allocatable type array
-  auto taylor_out{TaylorProxyAllocatable1D()};
+  auto taylor_out{TaylorProxyAlloc1D()};
   // intent=out allocatable general array
-  auto c0{RealAllocatable1D()};
+  auto c0{RealAlloc1D()};
   fortran_remove_constant_taylor(
       /* void* */ taylor_in.get_fortran_ptr(),
       /* void* */ taylor_out.get_fortran_ptr(),
@@ -13210,10 +13201,10 @@ Bmad::RemoveConstantTaylor Bmad::remove_constant_taylor(
       /* c_Bool& */ remove_higher_order_terms);
   return RemoveConstantTaylor{std::move(taylor_out), std::move(c0)};
 }
-Bmad::TaylorInverse Bmad::taylor_inverse(TaylorProxyAllocatable1D& taylor_in) {
+Bmad::TaylorInverse Bmad::taylor_inverse(TaylorProxyAlloc1D& taylor_in) {
   // intent=in allocatable type array
   // intent=out allocatable type array
-  auto taylor_inv{TaylorProxyAllocatable1D()};
+  auto taylor_inv{TaylorProxyAlloc1D()};
   bool _err{};
   fortran_taylor_inverse(
       /* void* */ taylor_in.get_fortran_ptr(),
@@ -13222,9 +13213,9 @@ Bmad::TaylorInverse Bmad::taylor_inverse(TaylorProxyAllocatable1D& taylor_in) {
   return TaylorInverse{std::move(taylor_inv), _err};
 }
 void Bmad::concat_taylor(
-    TaylorProxyAllocatable1D& taylor1,
-    TaylorProxyAllocatable1D& taylor2,
-    TaylorProxyAllocatable1D& taylor3) {
+    TaylorProxyAlloc1D& taylor1,
+    TaylorProxyAlloc1D& taylor2,
+    TaylorProxyAlloc1D& taylor3) {
   // intent=in allocatable type array
   // intent=in allocatable type array
   // intent=in allocatable type array
@@ -13234,10 +13225,10 @@ void Bmad::concat_taylor(
       /* void* */ taylor3.get_fortran_ptr());
 }
 void Bmad::concat_ele_taylor(
-    TaylorProxyAllocatable1D& orb_taylor,
+    TaylorProxyAlloc1D& orb_taylor,
     EleProxy& ele,
     bool err_flag,
-    optional_ref<TaylorProxyAllocatable1D> spin_taylor) {
+    optional_ref<TaylorProxyAlloc1D> spin_taylor) {
   // intent=in allocatable type array
   // intent=in allocatable type array
   auto* _spin_taylor = spin_taylor.has_value()
@@ -13250,11 +13241,11 @@ void Bmad::concat_ele_taylor(
       /* void* */ _spin_taylor);
 }
 bool Bmad::taylor_propagate1(
-    TaylorProxyAllocatable1D& orb_taylor,
+    TaylorProxyAlloc1D& orb_taylor,
     EleProxy& ele,
     LatParamProxy& param,
     optional_ref<CoordProxy> ref_in,
-    optional_ref<TaylorProxyAllocatable1D> spin_taylor) {
+    optional_ref<TaylorProxyAlloc1D> spin_taylor) {
   // intent=inout allocatable type array
   bool _err_flag{};
   auto* _ref_in = ref_in.has_value() ? ref_in->get().get_fortran_ptr()
@@ -13284,9 +13275,9 @@ void Bmad::bmad_patch_parameters_to_ptc(
 }
 Bmad::EleToPtcMagneticBnAn Bmad::ele_to_ptc_magnetic_bn_an(EleProxy& ele) {
   // intent=out allocatable general array
-  auto bn{RealAllocatable1D()};
+  auto bn{RealAlloc1D()};
   // intent=out allocatable general array
-  auto an{RealAllocatable1D()};
+  auto an{RealAlloc1D()};
   int _n_max{};
   fortran_ele_to_ptc_magnetic_bn_an(
       /* void* */ ele.get_fortran_ptr(),
@@ -13305,7 +13296,7 @@ void Bmad::set_ptc_quiet(int channel, bool set, int old_val) {
 bool Bmad::track1_bunch_csr(
     BunchProxy& bunch,
     EleProxy& ele,
-    CoordProxyAllocatable1D& centroid,
+    CoordProxyAlloc1D& centroid,
     std::optional<double> s_start,
     std::optional<double> s_end,
     optional_ref<BunchTrackProxy> bunch_track) {
@@ -13362,7 +13353,7 @@ double Bmad::dspline_len(
 bool Bmad::track1_bunch_csr3d(
     BunchProxy& bunch,
     EleProxy& ele,
-    CoordProxyAllocatable1D& centroid,
+    CoordProxyAlloc1D& centroid,
     std::optional<double> s_start,
     std::optional<double> s_end,
     optional_ref<BunchTrackProxy> bunch_track) {
@@ -13400,7 +13391,7 @@ void Bmad::setup_high_energy_space_charge_calc(
     BranchProxy& branch,
     double n_part,
     NormalModesProxy& mode,
-    optional_ref<CoordProxyAllocatable1D> closed_orb) {
+    optional_ref<CoordProxyAlloc1D> closed_orb) {
   // intent=in allocatable type array
   auto* _closed_orb = closed_orb.has_value()
       ? closed_orb->get().get_fortran_ptr()
@@ -13625,12 +13616,7 @@ void Bmad::osc_alloc_image_array(
   fortran_osc_alloc_image_array(
       /* c_IntArr */ _nlo, /* c_IntArr */ _nhi, /* c_IntArr */ _npad);
 }
-void Bmad::fft1(
-    RealAllocatable1D& a,
-    RealAllocatable1D& b,
-    int n,
-    int isn,
-    int ierr) {
+void Bmad::fft1(RealAlloc1D& a, RealAlloc1D& b, int n, int isn, int ierr) {
   // intent=inout allocatable general array
   // intent=inout allocatable general array
   fortran_fft1(
@@ -13641,9 +13627,9 @@ void Bmad::fft1(
       /* c_Int& */ ierr);
 }
 void Bmad::mfft1(
-    RealAllocatable1D& a,
-    RealAllocatable1D& b,
-    IntAllocatable1D& n,
+    RealAlloc1D& a,
+    RealAlloc1D& b,
+    IntAlloc1D& n,
     int ndim,
     int isn,
     int ierr) {
@@ -13666,7 +13652,7 @@ int Bmad::sc_step(
     EleProxy& ele,
     bool include_image,
     double t_end,
-    EmFieldProxyAllocatable1D& sc_field) {
+    EmFieldProxyAlloc1D& sc_field) {
   // intent=in allocatable type array
   int _n_emit{};
   fortran_sc_step(
@@ -13684,7 +13670,7 @@ double Bmad::sc_adaptive_step(
     bool include_image,
     double t_now,
     double dt_step,
-    EmFieldProxyAllocatable1D& sc_field) {
+    EmFieldProxyAlloc1D& sc_field) {
   double _dt_next{};
   // intent=in allocatable type array
   fortran_sc_adaptive_step(

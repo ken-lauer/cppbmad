@@ -100,7 +100,7 @@ class TypeInfo:
         The C++ type used specifically in the `extern "C"` declaration for the Fortran function,
         if different from the standard mapping.
     allocatable_container : str | None, optional
-        The C++ container type used for allocatable arrays of this type (e.g., 'RealAllocatable1D').
+        The C++ container type used for allocatable arrays of this type (e.g., 'RealAlloc1D').
     """
 
     name: ArgumentType
@@ -123,7 +123,7 @@ STANDARD_TYPES: dict[ArgumentType, TypeInfo] = {
         cpp_call_ref="c_Int&",
         cpp_call_arr="c_IntArr",
         fortran_native_type="integer",
-        allocatable_container="IntAllocatable1D",
+        allocatable_container="IntAlloc1D",
     ),
     "integer8": TypeInfo(
         name="integer8",
@@ -133,7 +133,7 @@ STANDARD_TYPES: dict[ArgumentType, TypeInfo] = {
         cpp_call_ref="c_Int8&",
         cpp_call_arr="c_Int8Arr",
         fortran_native_type="integer(8)",
-        allocatable_container="Int8Allocatable1D",
+        allocatable_container="Int8Alloc1D",
     ),
     "real": TypeInfo(
         name="real",
@@ -143,7 +143,7 @@ STANDARD_TYPES: dict[ArgumentType, TypeInfo] = {
         cpp_call_ref="c_Real&",
         cpp_call_arr="c_RealArr",
         fortran_native_type="real",
-        allocatable_container="RealAllocatable1D",
+        allocatable_container="RealAlloc1D",
     ),
     "real16": TypeInfo(
         name="real16",
@@ -162,7 +162,7 @@ STANDARD_TYPES: dict[ArgumentType, TypeInfo] = {
         cpp_call_ref="c_Complex&",
         cpp_call_arr="c_ComplexArr",
         fortran_native_type="complex",
-        allocatable_container="ComplexAllocatable1D",
+        allocatable_container="ComplexAlloc1D",
     ),
     "logical": TypeInfo(
         name="logical",
@@ -172,7 +172,7 @@ STANDARD_TYPES: dict[ArgumentType, TypeInfo] = {
         cpp_call_ref="c_Bool&",
         cpp_call_arr="c_BoolArr",
         fortran_native_type="logical",
-        allocatable_container="BoolAllocatable1D",
+        allocatable_container="BoolAlloc1D",
     ),
     "character": TypeInfo(
         name="character",

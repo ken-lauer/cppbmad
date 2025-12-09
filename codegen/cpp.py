@@ -92,7 +92,7 @@ class CppWrapperTypeArgumentAllocArray(CppWrapperArgument):
         lines = [f"// intent={self.arg.intent} allocatable type array"]
         argname = self.arg.c_name
         clsname = self.arg.kind_as_cpp_class
-        container_cls = f"{clsname}Allocatable1D"
+        container_cls = f"{clsname}Alloc1D"
 
         if self.arg.intent in {"in", "inout"}:
             if self.arg.is_optional:
@@ -127,7 +127,7 @@ class CppWrapperTypeArgumentAllocArray(CppWrapperArgument):
     def struct_decl(self) -> tuple[str, str] | None:
         if self.arg.intent == "out":
             clsname = self.arg.kind_as_cpp_class
-            container_cls = f"{clsname}Allocatable1D"
+            container_cls = f"{clsname}Alloc1D"
             return container_cls, self.arg.c_name
         return None
 
@@ -326,10 +326,10 @@ class CppWrapperStringArgument(CppWrapperArgument):
 
 
 _alloc_array_type_map = {
-    "real": "RealAllocatable1D",
-    "integer": "IntAllocatable1D",
-    "logical": "BoolAllocatable1D",
-    "complex": "ComplexAllocatable1D",
+    "real": "RealAlloc1D",
+    "integer": "IntAlloc1D",
+    "logical": "BoolAlloc1D",
+    "complex": "ComplexAlloc1D",
 }
 
 

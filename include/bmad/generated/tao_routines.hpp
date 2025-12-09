@@ -36,7 +36,7 @@ void integrate_max(
     double datum_value,
     int ix_m,
     BranchProxy& branch,
-    RealAllocatable1D& vec,
+    RealAlloc1D& vec,
     TaoDataProxy& datum);
 extern "C" void fortran_integrate_min(
     c_Int& ix_start /* 0D_NOT_integer */,
@@ -52,7 +52,7 @@ void integrate_min(
     double datum_value,
     int ix_m,
     BranchProxy& branch,
-    RealAllocatable1D& vec,
+    RealAlloc1D& vec,
     TaoDataProxy& datum);
 
 // Skipped unusable routine jacobian:
@@ -63,7 +63,7 @@ extern "C" void fortran_re_allocate_c_double(
     c_Bool* exact /* 0D_NOT_logical */,
     c_Real* init_val /* 0D_NOT_real */);
 void re_allocate_c_double(
-    RealAllocatable1D& re,
+    RealAlloc1D& re,
     int n,
     std::optional<bool> exact = std::nullopt,
     optional_ref<double> init_val = std::nullopt);
@@ -73,7 +73,7 @@ void tao_abort_command_file(std::optional<bool> force_abort = std::nullopt);
 extern "C" void fortran_tao_add_to_normal_mode_h_array(
     c_Char h_str /* 0D_NOT_character */,
     void* h_array /* 1D_ALLOC_type */);
-ResonanceHProxyAllocatable1D tao_add_to_normal_mode_h_array(std::string h_str);
+ResonanceHProxyAlloc1D tao_add_to_normal_mode_h_array(std::string h_str);
 extern "C" void fortran_tao_alias_cmd(
     c_Char alias /* 0D_NOT_character */,
     c_Char string /* 0D_NOT_character */);
@@ -456,8 +456,8 @@ struct TaoDatumIntegrate {
 TaoDatumIntegrate tao_datum_integrate(
     TaoDataProxy& datum,
     BranchProxy& branch,
-    RealAllocatable1D& s_pos,
-    RealAllocatable1D& values);
+    RealAlloc1D& s_pos,
+    RealAlloc1D& values);
 extern "C" bool fortran_tao_datum_name(
     void* datum /* 0D_NOT_type */,
     c_Bool* show_universe /* 0D_NOT_logical */,
@@ -475,7 +475,7 @@ extern "C" void fortran_tao_de_optimizer(c_Bool& abort /* 0D_NOT_logical */);
 bool tao_de_optimizer();
 extern "C" void fortran_tao_deallocate_plot_cache(
     void* plot_cache /* 1D_ALLOC_type */);
-void tao_deallocate_plot_cache(TaoPlotCacheProxyAllocatable1D& plot_cache);
+void tao_deallocate_plot_cache(TaoPlotCacheProxyAlloc1D& plot_cache);
 
 // Skipped unusable routine tao_deallocate_tree:
 // Untranslated type: TaoEvalNodeProxy (0D_NOT_type)
@@ -661,7 +661,7 @@ extern "C" void fortran_tao_evaluate_lat_or_beam_data(
     c_Real* dflt_s_offset /* 0D_NOT_real */);
 struct TaoEvaluateLatOrBeamData {
   bool err;
-  RealAllocatable1D values;
+  RealAlloc1D values;
 };
 TaoEvaluateLatOrBeamData tao_evaluate_lat_or_beam_data(
     std::string data_name,
@@ -756,10 +756,10 @@ extern "C" void fortran_tao_get_data(
     void* data_meas_value /* 1D_ALLOC_real */,
     void* data_ix_dModel /* 1D_ALLOC_integer */);
 struct TaoGetData {
-  RealAllocatable1D data_value;
-  RealAllocatable1D data_weight;
-  RealAllocatable1D data_meas_value;
-  IntAllocatable1D data_ix_dModel;
+  RealAlloc1D data_value;
+  RealAlloc1D data_weight;
+  RealAlloc1D data_meas_value;
+  IntAlloc1D data_ix_dModel;
 };
 TaoGetData tao_get_data();
 extern "C" void fortran_tao_get_opt_vars(
@@ -771,11 +771,11 @@ extern "C" void fortran_tao_get_opt_vars(
     c_Bool& ignore_if_weight_is_zero /* 0D_NOT_logical */,
     c_Bool& ignore_if_not_limited /* 0D_NOT_logical */);
 struct TaoGetOptVars {
-  RealAllocatable1D var_value;
-  RealAllocatable1D var_step;
-  RealAllocatable1D var_delta;
-  RealAllocatable1D var_weight;
-  IntAllocatable1D var_ix;
+  RealAlloc1D var_value;
+  RealAlloc1D var_step;
+  RealAlloc1D var_delta;
+  RealAlloc1D var_weight;
+  IntAlloc1D var_ix;
   bool ignore_if_weight_is_zero;
   bool ignore_if_not_limited;
 };
@@ -1070,8 +1070,8 @@ extern "C" void fortran_tao_lattice_branches_equal_tao_lattice_branches(
     void* tlb1 /* 1D_ALLOC_type */,
     void* tlb2 /* 1D_ALLOC_type */);
 void tao_lattice_branches_equal_tao_lattice_branches(
-    TaoLatticeBranchProxyAllocatable1D& tlb1,
-    TaoLatticeBranchProxyAllocatable1D& tlb2);
+    TaoLatticeBranchProxyAlloc1D& tlb1,
+    TaoLatticeBranchProxyAlloc1D& tlb2);
 extern "C" void fortran_tao_lattice_calc(
     c_Bool& calc_ok /* 0D_NOT_logical */,
     c_Bool& print_err /* 0D_NOT_logical */);
@@ -1107,7 +1107,7 @@ extern "C" void fortran_tao_load_this_datum(
     c_Char why_invalid /* 0D_NOT_character */,
     void* good /* 1D_ALLOC_logical */);
 void tao_load_this_datum(
-    RealAllocatable1D& vec,
+    RealAlloc1D& vec,
     EleProxy& ele_ref,
     EleProxy& ele_start,
     EleProxy& ele,
@@ -1116,7 +1116,7 @@ void tao_load_this_datum(
     TaoDataProxy& datum,
     BranchProxy& branch,
     optional_ref<std::string> why_invalid = std::nullopt,
-    optional_ref<BoolAllocatable1D> good = std::nullopt);
+    optional_ref<BoolAlloc1D> good = std::nullopt);
 
 // Skipped unusable routine tao_locate_all_elements:
 // Untranslated type: ElePointerProxy (1D_ALLOC_type)
@@ -1240,12 +1240,12 @@ extern "C" void fortran_tao_particle_data_value(
     void* ele /* 0D_NOT_type */,
     c_Int& ix_bunch /* 0D_NOT_integer */);
 struct TaoParticleDataValue {
-  RealAllocatable1D value;
+  RealAlloc1D value;
   bool err;
 };
 TaoParticleDataValue tao_particle_data_value(
     std::string data_type,
-    CoordProxyAllocatable1D& p,
+    CoordProxyAlloc1D& p,
     EleProxy& ele,
     int ix_bunch);
 extern "C" void fortran_tao_pause_cmd(c_Real& time /* 0D_NOT_real */);
@@ -1269,7 +1269,7 @@ extern "C" void fortran_tao_pick_universe(
     c_Bool* pure_uni /* 0D_NOT_logical */);
 struct TaoPickUniverse {
   std::string name_out;
-  BoolAllocatable1D picked;
+  BoolAlloc1D picked;
   bool err;
   int ix_uni;
   bool explicit_uni;
@@ -1528,7 +1528,7 @@ void tao_scratch_values_calc(
     EleProxy& ele,
     TaoDataProxy& datum,
     BranchProxy& branch,
-    CoordProxyAllocatable1D& orbit);
+    CoordProxyAlloc1D& orbit);
 extern "C" void fortran_tao_set_beam_cmd(
     c_Char who /* 0D_NOT_character */,
     c_Char value_str /* 0D_NOT_character */,
@@ -1581,7 +1581,7 @@ void tao_set_data_cmd(
     optional_ref<bool> silent = std::nullopt);
 extern "C" void fortran_tao_set_data_useit_opt(void* data /* 1D_ALLOC_type */);
 void tao_set_data_useit_opt(
-    optional_ref<TaoDataProxyAllocatable1D> data = std::nullopt);
+    optional_ref<TaoDataProxyAlloc1D> data = std::nullopt);
 extern "C" void fortran_tao_set_default_cmd(
     c_Char who_str /* 0D_NOT_character */,
     c_Char value_str /* 0D_NOT_character */);
@@ -1685,7 +1685,7 @@ extern "C" void fortran_tao_set_opt_vars(
     void* var_vec /* 1D_ALLOC_real */,
     c_Bool* print_limit_warning /* 0D_NOT_logical */);
 void tao_set_opt_vars(
-    RealAllocatable1D& var_vec,
+    RealAlloc1D& var_vec,
     std::optional<bool> print_limit_warning = std::nullopt);
 extern "C" void fortran_tao_set_opti_de_param_cmd(
     c_Char who /* 0D_NOT_character */,
@@ -1922,7 +1922,7 @@ extern "C" void fortran_tao_to_change_number(
 void tao_to_change_number(
     std::string num_str,
     int n_size,
-    RealAllocatable1D& change_number,
+    RealAlloc1D& change_number,
     std::string abs_or_rel,
     bool err);
 extern "C" void fortran_tao_to_int(

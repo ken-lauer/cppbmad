@@ -47,8 +47,8 @@ extern "C" void fortran_ab_multipole_kicks(
     c_RealArr mat6 /* 2D_NOT_real */,
     c_Bool* make_matrix /* 0D_NOT_logical */);
 void ab_multipole_kicks(
-    RealAllocatable1D& an,
-    RealAllocatable1D& bn,
+    RealAlloc1D& an,
+    RealAlloc1D& bn,
     int ix_pole_max,
     EleProxy& ele,
     CoordProxy& orbit,
@@ -142,7 +142,7 @@ extern "C" void fortran_add_this_multipass(
     void* lord_in /* 0D_NOT_type */);
 void add_this_multipass(
     LatProxy& lat,
-    LatEleLocProxyAllocatable1D& m_slaves,
+    LatEleLocProxyAlloc1D& m_slaves,
     optional_ref<EleProxy> lord_in = std::nullopt);
 
 // Skipped unusable routine add_this_name_to_list:
@@ -253,7 +253,7 @@ extern "C" bool fortran_array_re_str(
     c_Char parens_in /* 0D_NOT_character */,
     c_Char str_out /* 0D_NOT_character */);
 void array_re_str(
-    RealAllocatable1D& arr,
+    RealAlloc1D& arr,
     optional_ref<std::string> parens_in,
     std::string str_out);
 
@@ -403,7 +403,7 @@ std::string attribute_units(
 extern "C" void fortran_attributes_need_bookkeeping(
     void* ele /* 0D_NOT_type */,
     void* dval /* 1D_ALLOC_real */);
-RealAllocatable1D attributes_need_bookkeeping(EleProxy& ele);
+RealAlloc1D attributes_need_bookkeeping(EleProxy& ele);
 extern "C" void fortran_autoscale_phase_and_amp(
     void* ele /* 0D_NOT_type */,
     void* param /* 0D_NOT_type */,
@@ -448,7 +448,7 @@ extern "C" void fortran_bbi_slice_calc(
     void* ele /* 0D_NOT_type */,
     c_Int& n_slice /* 0D_NOT_integer */,
     void* z_slice /* 1D_ALLOC_real */);
-RealAllocatable1D bbi_slice_calc(EleProxy& ele, int n_slice);
+RealAlloc1D bbi_slice_calc(EleProxy& ele, int n_slice);
 extern "C" void fortran_beam_envelope_ibs(
     c_RealArr sigma_mat /* 2D_NOT_real */,
     c_RealArr ibs_mat /* 2D_NOT_real */,
@@ -680,7 +680,7 @@ extern "C" void fortran_bmad_parser2(
 void bmad_parser2(
     std::string lat_file,
     LatProxy& lat,
-    optional_ref<CoordProxyAllocatable1D> orbit = std::nullopt,
+    optional_ref<CoordProxyAlloc1D> orbit = std::nullopt,
     std::optional<bool> make_mats6 = std::nullopt,
     optional_ref<bool> err_flag = std::nullopt,
     optional_ref<LatProxy> parse_lat = std::nullopt);
@@ -817,8 +817,8 @@ extern "C" void fortran_calc_bunch_sigma_matrix_etc(
     c_Bool* is_time_coords /* 0D_NOT_logical */,
     void* ele /* 0D_NOT_type */);
 BunchParamsProxy calc_bunch_sigma_matrix_etc(
-    CoordProxyAllocatable1D& particle,
-    RealAllocatable1D& charge,
+    CoordProxyAlloc1D& particle,
+    RealAlloc1D& charge,
     optional_ref<bool> is_time_coords = std::nullopt,
     optional_ref<EleProxy> ele = std::nullopt);
 
@@ -869,7 +869,7 @@ struct CalcWallRadius {
   int ix_vertex;
 };
 CalcWallRadius calc_wall_radius(
-    Wall3dVertexProxyAllocatable1D& v,
+    Wall3dVertexProxyAlloc1D& v,
     double cos_ang,
     double sin_ang);
 
@@ -947,7 +947,7 @@ extern "C" void fortran_check_controller_controls(
     c_Bool& err /* 0D_NOT_logical */);
 bool check_controller_controls(
     int ele_key,
-    ControlProxyAllocatable1D& contrl,
+    ControlProxyAlloc1D& contrl,
     std::string name);
 extern "C" void fortran_check_for_superimpose_problem(
     void* branch /* 0D_NOT_type */,
@@ -997,8 +997,8 @@ struct ChromCalc {
   bool err_flag;
   LatProxy low_E_lat;
   LatProxy high_E_lat;
-  CoordProxyAllocatable1D low_E_orb;
-  CoordProxyAllocatable1D high_E_orb;
+  CoordProxyAlloc1D low_E_orb;
+  CoordProxyAlloc1D high_E_orb;
 };
 ChromCalc chrom_calc(
     LatProxy& lat,
@@ -1041,7 +1041,7 @@ extern "C" void fortran_closed_orbit_calc(
     c_Bool* print_err /* 0D_NOT_logical */);
 bool closed_orbit_calc(
     LatProxy& lat,
-    CoordProxyAllocatable1D& closed_orb,
+    CoordProxyAlloc1D& closed_orb,
     std::optional<int> i_dim = std::nullopt,
     std::optional<int> direction = std::nullopt,
     std::optional<int> ix_branch = std::nullopt,
@@ -1055,14 +1055,14 @@ extern "C" void fortran_closed_orbit_from_tracking(
     void* init_guess /* 0D_NOT_type */,
     c_Bool& err_flag /* 0D_NOT_logical */);
 struct ClosedOrbitFromTracking {
-  CoordProxyAllocatable1D closed_orb;
+  CoordProxyAlloc1D closed_orb;
   bool err_flag;
 };
 ClosedOrbitFromTracking closed_orbit_from_tracking(
     LatProxy& lat,
     int i_dim,
-    optional_ref<RealAllocatable1D> eps_rel = std::nullopt,
-    optional_ref<RealAllocatable1D> eps_abs = std::nullopt,
+    optional_ref<RealAlloc1D> eps_rel = std::nullopt,
+    optional_ref<RealAlloc1D> eps_abs = std::nullopt,
     optional_ref<CoordProxy> init_guess = std::nullopt);
 extern "C" bool fortran_cmplx_re_str(
     c_Complex& cmp /* 0D_NOT_complex */,
@@ -1089,7 +1089,7 @@ extern "C" bool fortran_complex_taylor_exponent_index(
 int complex_taylor_exponent_index(FixedArray1D<Int, 6> expn);
 extern "C" void fortran_complex_taylor_make_unit(
     void* complex_taylor /* 1D_ALLOC_type */);
-ComplexTaylorProxyAllocatable1D complex_taylor_make_unit();
+ComplexTaylorProxyAlloc1D complex_taylor_make_unit();
 
 // Skipped unusable routine complex_taylor_struct_to_json:
 // Routine module (bmad_json) in configuration skip list
@@ -1105,19 +1105,19 @@ extern "C" void fortran_complex_taylor_to_mat6(
 struct ComplexTaylorToMat6 {
   FixedArray1D<Complex, 6> vec0;
   FixedArray2D<Complex, 6, 6> mat6;
-  ComplexAllocatable1D r_out;
+  ComplexAlloc1D r_out;
 };
 ComplexTaylorToMat6 complex_taylor_to_mat6(
     FixedArray1D<ComplexTaylorProxy, 6> a_complex_taylor,
-    ComplexAllocatable1D& r_in);
+    ComplexAlloc1D& r_in);
 
 // Skipped unusable routine complex_taylors_equal_c_taylors:
 // Untranslated type: CTaylorProxy (1D_ALLOC_type)
 extern "C" void fortran_complex_taylors_equal_complex_taylors(
     void* complex_taylor1 /* 1D_ALLOC_type */,
     void* complex_taylor2 /* 1D_ALLOC_type */);
-ComplexTaylorProxyAllocatable1D complex_taylors_equal_complex_taylors(
-    ComplexTaylorProxyAllocatable1D& complex_taylor2);
+ComplexTaylorProxyAlloc1D complex_taylors_equal_complex_taylors(
+    ComplexTaylorProxyAlloc1D& complex_taylor2);
 
 // Skipped unusable routine complex_to_json:
 // Routine module (bmad_json) in configuration skip list
@@ -1135,10 +1135,10 @@ extern "C" void fortran_concat_ele_taylor(
     c_Bool& err_flag /* 0D_NOT_logical */,
     void* spin_taylor /* 1D_ALLOC_type */);
 void concat_ele_taylor(
-    TaylorProxyAllocatable1D& orb_taylor,
+    TaylorProxyAlloc1D& orb_taylor,
     EleProxy& ele,
     bool err_flag,
-    optional_ref<TaylorProxyAllocatable1D> spin_taylor = std::nullopt);
+    optional_ref<TaylorProxyAlloc1D> spin_taylor = std::nullopt);
 
 // Skipped unusable routine concat_real_8:
 // Untranslated type: Real8Proxy (1D_ALLOC_type)
@@ -1149,9 +1149,9 @@ extern "C" void fortran_concat_taylor(
     void* taylor2 /* 1D_ALLOC_type */,
     void* taylor3 /* 1D_ALLOC_type */);
 void concat_taylor(
-    TaylorProxyAllocatable1D& taylor1,
-    TaylorProxyAllocatable1D& taylor2,
-    TaylorProxyAllocatable1D& taylor3);
+    TaylorProxyAlloc1D& taylor1,
+    TaylorProxyAlloc1D& taylor2,
+    TaylorProxyAlloc1D& taylor3);
 extern "C" void fortran_concat_transfer_mat(
     c_RealArr mat_1 /* 2D_NOT_real */,
     c_RealArr vec_1 /* 1D_NOT_real */,
@@ -1543,14 +1543,14 @@ extern "C" void fortran_create_girder(
 void create_girder(
     LatProxy& lat,
     int ix_girder,
-    ControlProxyAllocatable1D& contrl,
+    ControlProxyAlloc1D& contrl,
     EleProxy& girder_info,
     bool err_flag);
 extern "C" void fortran_create_group(
     void* lord /* 0D_NOT_type */,
     void* contrl /* 1D_ALLOC_type */,
     c_Bool& err /* 0D_NOT_logical */);
-void create_group(EleProxy& lord, ControlProxyAllocatable1D& contrl, bool err);
+void create_group(EleProxy& lord, ControlProxyAlloc1D& contrl, bool err);
 
 // Skipped unusable routine create_lat_ele_nametable:
 // Untranslated type: NametableProxy (0D_NOT_type)
@@ -1558,10 +1558,7 @@ extern "C" void fortran_create_overlay(
     void* lord /* 0D_NOT_type */,
     void* contrl /* 1D_ALLOC_type */,
     c_Bool& err /* 0D_NOT_logical */);
-void create_overlay(
-    EleProxy& lord,
-    ControlProxyAllocatable1D& contrl,
-    bool err);
+void create_overlay(EleProxy& lord, ControlProxyAlloc1D& contrl, bool err);
 extern "C" void fortran_create_planar_wiggler_model(
     void* wiggler_in /* 0D_NOT_type */,
     void* lat /* 0D_NOT_type */,
@@ -1578,7 +1575,7 @@ extern "C" void fortran_create_ramper(
     void* lord /* 0D_NOT_type */,
     void* contrl /* 1D_ALLOC_type */,
     c_Bool& err /* 0D_NOT_logical */);
-void create_ramper(EleProxy& lord, ControlProxyAllocatable1D& contrl, bool err);
+void create_ramper(EleProxy& lord, ControlProxyAlloc1D& contrl, bool err);
 extern "C" void fortran_create_sol_quad_model(
     void* sol_quad /* 0D_NOT_type */,
     void* lat /* 0D_NOT_type */);
@@ -1819,9 +1816,9 @@ extern "C" void fortran_dynamic_aperture_scan(
     void* pz_start /* 1D_ALLOC_real */,
     void* lat /* 0D_NOT_type */,
     c_Bool* print_timing /* 0D_NOT_logical */);
-ApertureScanProxyAllocatable1D dynamic_aperture_scan(
+ApertureScanProxyAlloc1D dynamic_aperture_scan(
     ApertureParamProxy& aperture_param,
-    RealAllocatable1D& pz_start,
+    RealAlloc1D& pz_start,
     LatProxy& lat,
     std::optional<bool> print_timing = std::nullopt);
 extern "C" bool fortran_e_accel_field(
@@ -1995,8 +1992,8 @@ extern "C" void fortran_ele_to_ptc_magnetic_bn_an(
     void* an /* 1D_ALLOC_real */,
     c_Int& n_max /* 0D_NOT_integer */);
 struct EleToPtcMagneticBnAn {
-  RealAllocatable1D bn;
-  RealAllocatable1D an;
+  RealAlloc1D bn;
+  RealAlloc1D an;
   int n_max;
 };
 EleToPtcMagneticBnAn ele_to_ptc_magnetic_bn_an(EleProxy& ele);
@@ -2037,14 +2034,14 @@ extern "C" bool fortran_ele_value_has_changed(
     c_Bool& has_changed /* 0D_NOT_logical */);
 void ele_value_has_changed(
     EleProxy& ele,
-    IntAllocatable1D& list,
-    RealAllocatable1D& abs_tol,
+    IntAlloc1D& list,
+    RealAlloc1D& abs_tol,
     bool set_old,
     bool has_changed);
 extern "C" void fortran_ele_vec_equal_ele_vec(
     void* ele1 /* 1D_ALLOC_type */,
     void* ele2 /* 1D_ALLOC_type */);
-EleProxyAllocatable1D ele_vec_equal_ele_vec(EleProxyAllocatable1D& ele2);
+EleProxyAlloc1D ele_vec_equal_ele_vec(EleProxyAlloc1D& ele2);
 extern "C" void fortran_elec_multipole_field(
     c_Real& a /* 0D_NOT_real */,
     c_Real& b /* 0D_NOT_real */,
@@ -2147,8 +2144,8 @@ EmTaylorProxy em_taylor_equal_em_taylor(EmTaylorProxy& em_taylor2);
 extern "C" void fortran_em_taylors_equal_em_taylors(
     void* em_taylor1 /* 1D_ALLOC_type */,
     void* em_taylor2 /* 1D_ALLOC_type */);
-EmTaylorProxyAllocatable1D em_taylors_equal_em_taylors(
-    EmTaylorProxyAllocatable1D& em_taylor2);
+EmTaylorProxyAlloc1D em_taylors_equal_em_taylors(
+    EmTaylorProxyAlloc1D& em_taylor2);
 extern "C" void fortran_emit_6d(
     void* ele_ref /* 0D_NOT_type */,
     c_Bool& include_opening_angle /* 0D_NOT_logical */,
@@ -2164,7 +2161,7 @@ struct Emit6d {
 Emit6d emit_6d(
     EleProxy& ele_ref,
     bool include_opening_angle,
-    optional_ref<CoordProxyAllocatable1D> closed_orbit = std::nullopt);
+    optional_ref<CoordProxyAlloc1D> closed_orbit = std::nullopt);
 extern "C" bool fortran_entering_element(
     void* orbit /* 0D_NOT_type */,
     c_Int& particle_at /* 0D_NOT_integer */,
@@ -2201,7 +2198,7 @@ EnvelopeRadintsIbs envelope_radints_ibs(
     FixedArray2D<Complex, 6, 6> Lambda,
     FixedArray2D<Complex, 6, 6> Theta,
     FixedArray2D<Complex, 6, 6> Iota,
-    EleProxyAllocatable1D& eles,
+    EleProxyAlloc1D& eles,
     NormalModesProxy& mode,
     bool tail_cut,
     double npart,
@@ -2899,7 +2896,7 @@ extern "C" bool fortran_expression_stack_to_string(
     c_Bool* polish /* 0D_NOT_logical */,
     c_Char str /* 0D_ALLOC_character */);
 std::string expression_stack_to_string(
-    ExpressionAtomProxyAllocatable1D& stack,
+    ExpressionAtomProxyAlloc1D& stack,
     std::optional<bool> polish = std::nullopt);
 extern "C" bool fortran_expression_stack_value(
     void* stack /* 1D_ALLOC_type */,
@@ -2914,8 +2911,8 @@ struct ExpressionStackValue {
   double value;
 };
 ExpressionStackValue expression_stack_value(
-    ExpressionAtomProxyAllocatable1D& stack,
-    optional_ref<ControlVar1ProxyAllocatable1D> var = std::nullopt,
+    ExpressionAtomProxyAlloc1D& stack,
+    optional_ref<ControlVar1ProxyAlloc1D> var = std::nullopt,
     std::optional<bool> use_old = std::nullopt);
 extern "C" void fortran_expression_string_to_stack(
     c_Char string /* 0D_NOT_character */,
@@ -2924,7 +2921,7 @@ extern "C" void fortran_expression_string_to_stack(
     c_Bool& err_flag /* 0D_NOT_logical */,
     c_Char err_str /* 0D_NOT_character */);
 struct ExpressionStringToStack {
-  ExpressionAtomProxyAllocatable1D stack;
+  ExpressionAtomProxyAlloc1D stack;
   int n_stack;
   bool err_flag;
   std::string err_str;
@@ -2954,7 +2951,7 @@ struct ExpressionValue {
 };
 ExpressionValue expression_value(
     std::string expression,
-    optional_ref<ControlVar1ProxyAllocatable1D> var = std::nullopt,
+    optional_ref<ControlVar1ProxyAlloc1D> var = std::nullopt,
     std::optional<bool> use_old = std::nullopt);
 
 // Skipped unusable routine extra_parsing_info_struct_to_json:
@@ -2965,7 +2962,7 @@ extern "C" void fortran_fft1(
     c_Int& n /* 0D_NOT_integer */,
     c_Int& isn /* 0D_NOT_integer */,
     c_Int& ierr /* 0D_NOT_integer */);
-void fft1(RealAllocatable1D& a, RealAllocatable1D& b, int n, int isn, int ierr);
+void fft1(RealAlloc1D& a, RealAlloc1D& b, int n, int isn, int ierr);
 
 // Skipped unusable routine fftconvcorr3d:
 // Translated arg count mismatch (unsupported?)
@@ -3149,7 +3146,7 @@ extern "C" bool fortran_gen_grad_field(
     c_Real& theta /* 0D_NOT_real */,
     c_RealArr field /* 1D_NOT_real */);
 void gen_grad_field(
-    RealAllocatable1D& deriv,
+    RealAlloc1D& deriv,
     GenGrad1Proxy& gg,
     double rho,
     double theta,
@@ -3350,7 +3347,7 @@ extern "C" void fortran_hdf5_write_beam(
     c_Bool* alive_only /* 0D_NOT_logical */);
 void hdf5_write_beam(
     std::string file_name,
-    BunchProxyAllocatable1D& bunches,
+    BunchProxyAlloc1D& bunches,
     bool append,
     bool error,
     optional_ref<LatProxy> lat = std::nullopt,
@@ -3363,7 +3360,7 @@ extern "C" void fortran_hdf5_write_grid_field(
 void hdf5_write_grid_field(
     std::string file_name,
     EleProxy& ele,
-    GridFieldProxyAllocatable1D& g_field,
+    GridFieldProxyAlloc1D& g_field,
     bool err_flag);
 
 // Skipped unusable routine high_energy_space_charge_struct_to_json:
@@ -3772,7 +3769,7 @@ void insert_element(
     EleProxy& insert_ele,
     int ix_ele,
     std::optional<int> ix_branch = std::nullopt,
-    optional_ref<CoordProxyAllocatable1D> orbit = std::nullopt);
+    optional_ref<CoordProxyAlloc1D> orbit = std::nullopt);
 
 // Skipped unusable routine integrand:
 // Untranslated type: CPtrProxy (0D_NOT_type)
@@ -3780,7 +3777,7 @@ extern "C" bool fortran_integrand_base(
     c_Real& t /* 0D_NOT_real */,
     void* args /* 1D_ALLOC_real */,
     c_Real& func_retval__ /* 0D_NOT_real */);
-void integrand_base(double t, RealAllocatable1D& args, double func_retval__);
+void integrand_base(double t, RealAlloc1D& args, double func_retval__);
 
 // Skipped unusable routine integrand_base_cov:
 // Untranslated type: CPtrProxy (0D_NOT_type)
@@ -3801,8 +3798,8 @@ extern "C" void fortran_integrated_mats(
     c_ComplexArr Iota /* 2D_NOT_complex */,
     void* mode /* 0D_NOT_type */);
 void integrated_mats(
-    EleProxyAllocatable1D& eles,
-    CoordProxyAllocatable1D& coos,
+    EleProxyAlloc1D& eles,
+    CoordProxyAlloc1D& coos,
     FixedArray2D<Complex, 6, 6> Lambda,
     FixedArray2D<Complex, 6, 6> Theta,
     FixedArray2D<Complex, 6, 6> Iota,
@@ -3882,11 +3879,11 @@ KickVectorCalc kick_vector_calc(
     optional_ref<bool> print_err = std::nullopt);
 extern "C" void fortran_kill_complex_taylor(
     void* complex_taylor /* 1D_ALLOC_type */);
-void kill_complex_taylor(ComplexTaylorProxyAllocatable1D& complex_taylor);
+void kill_complex_taylor(ComplexTaylorProxyAlloc1D& complex_taylor);
 extern "C" void fortran_kill_ptc_layouts(void* lat /* 0D_NOT_type */);
 void kill_ptc_layouts(LatProxy& lat);
 extern "C" void fortran_kill_taylor(void* bmad_taylor /* 1D_ALLOC_type */);
-void kill_taylor(TaylorProxyAllocatable1D& bmad_taylor);
+void kill_taylor(TaylorProxyAlloc1D& bmad_taylor);
 extern "C" bool fortran_kind_name(
     c_IntArr this_kind /* 0D_PTR_integer */,
     c_Char kind_str /* 0D_NOT_character */);
@@ -3899,8 +3896,8 @@ extern "C" bool fortran_knot_interpolate(
     c_Bool& err_flag /* 0D_NOT_logical */,
     c_Real& y_pt /* 0D_NOT_real */);
 bool knot_interpolate(
-    RealAllocatable1D& x_knot,
-    RealAllocatable1D& y_knot,
+    RealAlloc1D& x_knot,
+    RealAlloc1D& y_knot,
     double x_pt,
     int interpolation,
     double y_pt);
@@ -3908,10 +3905,7 @@ extern "C" bool fortran_knots_to_string(
     void* x_knot /* 1D_ALLOC_real */,
     void* y_knot /* 1D_ALLOC_real */,
     c_Char str /* 0D_ALLOC_character */);
-void knots_to_string(
-    RealAllocatable1D& x_knot,
-    RealAllocatable1D& y_knot,
-    std::string str);
+void knots_to_string(RealAlloc1D& x_knot, RealAlloc1D& y_knot, std::string str);
 
 // Skipped unusable routine kubo_integrand:
 // Untranslated type: CPtrProxy (0D_NOT_type)
@@ -3958,7 +3952,7 @@ extern "C" void fortran_lat_make_mat6(
 bool lat_make_mat6(
     LatProxy& lat,
     std::optional<int> ix_ele = std::nullopt,
-    optional_ref<CoordProxyAllocatable1D> ref_orb = std::nullopt,
+    optional_ref<CoordProxyAlloc1D> ref_orb = std::nullopt,
     std::optional<int> ix_branch = std::nullopt);
 
 // Skipped unusable routine lat_make_mat6_hook_def:
@@ -3981,7 +3975,7 @@ void lat_to_ptc_layout(LatProxy& lat);
 extern "C" void fortran_lat_vec_equal_lat_vec(
     void* lat1 /* 1D_ALLOC_type */,
     void* lat2 /* 1D_ALLOC_type */);
-LatProxyAllocatable1D lat_vec_equal_lat_vec(LatProxyAllocatable1D& lat2);
+LatProxyAlloc1D lat_vec_equal_lat_vec(LatProxyAlloc1D& lat2);
 extern "C" void fortran_lattice_bookkeeper(
     void* lat /* 0D_NOT_type */,
     c_Bool& err_flag /* 0D_NOT_logical */);
@@ -4013,7 +4007,7 @@ struct LinearCoef {
   bool err_flag;
   double coef;
 };
-LinearCoef linear_coef(ExpressionAtomProxyAllocatable1D& stack);
+LinearCoef linear_coef(ExpressionAtomProxyAlloc1D& stack);
 
 // Skipped unusable routine linear_ele_isf_struct_to_json:
 // Routine module (bmad_json) in configuration skip list
@@ -4177,7 +4171,7 @@ extern "C" void fortran_make_hybrid_lat(
 LatProxy make_hybrid_lat(
     LatProxy& lat_in,
     std::optional<bool> use_taylor = std::nullopt,
-    optional_ref<CoordArrayProxyAllocatable1D> orb0_arr = std::nullopt);
+    optional_ref<CoordArrayProxyAlloc1D> orb0_arr = std::nullopt);
 
 // Skipped unusable routine make_mad_map:
 // Untranslated type: MadEnergyProxy (0D_NOT_type)
@@ -4506,9 +4500,9 @@ extern "C" void fortran_mfft1(
     c_Int& isn /* 0D_NOT_integer */,
     c_Int& ierr /* 0D_NOT_integer */);
 void mfft1(
-    RealAllocatable1D& a,
-    RealAllocatable1D& b,
-    IntAllocatable1D& n,
+    RealAlloc1D& a,
+    RealAlloc1D& b,
+    IntAlloc1D& n,
     int ndim,
     int isn,
     int ierr);
@@ -4558,7 +4552,7 @@ struct MultiTurnTrackingAnalysis {
   bool err_flag;
 };
 MultiTurnTrackingAnalysis multi_turn_tracking_analysis(
-    CoordProxyAllocatable1D& track,
+    CoordProxyAlloc1D& track,
     int i_dim);
 
 // Skipped unusable routine multi_turn_tracking_to_mat:
@@ -4627,12 +4621,10 @@ extern "C" void fortran_multipole_ab_to_kt(
     void* knl /* 1D_ALLOC_real */,
     void* tn /* 1D_ALLOC_real */);
 struct MultipoleAbToKt {
-  RealAllocatable1D knl;
-  RealAllocatable1D tn;
+  RealAlloc1D knl;
+  RealAlloc1D tn;
 };
-MultipoleAbToKt multipole_ab_to_kt(
-    RealAllocatable1D& an,
-    RealAllocatable1D& bn);
+MultipoleAbToKt multipole_ab_to_kt(RealAlloc1D& an, RealAlloc1D& bn);
 
 // Skipped unusable routine multipole_cache_struct_to_json:
 // Routine module (bmad_json) in configuration skip list
@@ -4668,8 +4660,8 @@ extern "C" void fortran_multipole_ele_to_kt(
     c_Int* include_kicks /* 0D_NOT_integer */);
 struct MultipoleEleToKt {
   int ix_pole_max;
-  RealAllocatable1D knl;
-  RealAllocatable1D tilt;
+  RealAlloc1D knl;
+  RealAlloc1D tilt;
 };
 MultipoleEleToKt multipole_ele_to_kt(
     EleProxy& ele,
@@ -4708,8 +4700,8 @@ extern "C" void fortran_multipole_kick_mat(
     c_Real& factor /* 0D_NOT_real */,
     c_RealArr mat6 /* 2D_NOT_real */);
 FixedArray2D<Real, 6, 6> multipole_kick_mat(
-    RealAllocatable1D& knl,
-    RealAllocatable1D& tilt,
+    RealAlloc1D& knl,
+    RealAlloc1D& tilt,
     int ref_species,
     EleProxy& ele,
     CoordProxy& orbit,
@@ -4722,8 +4714,8 @@ extern "C" void fortran_multipole_kicks(
     c_Int* pole_type /* 0D_NOT_integer */,
     c_Bool* ref_orb_offset /* 0D_NOT_logical */);
 void multipole_kicks(
-    RealAllocatable1D& knl,
-    RealAllocatable1D& tilt,
+    RealAlloc1D& knl,
+    RealAlloc1D& tilt,
     EleProxy& ele,
     CoordProxy& orbit,
     std::optional<int> pole_type = std::nullopt,
@@ -4735,13 +4727,13 @@ extern "C" void fortran_multipole_kt_to_ab(
     void* an /* 1D_ALLOC_real */,
     void* bn /* 1D_ALLOC_real */);
 struct MultipoleKtToAb {
-  RealAllocatable1D an;
-  RealAllocatable1D bn;
+  RealAlloc1D an;
+  RealAlloc1D bn;
 };
 MultipoleKtToAb multipole_kt_to_ab(
-    RealAllocatable1D& knl,
-    RealAllocatable1D& knsl,
-    RealAllocatable1D& tn);
+    RealAlloc1D& knl,
+    RealAlloc1D& knsl,
+    RealAlloc1D& tn);
 extern "C" void fortran_multipole_spin_tracking(
     void* ele /* 0D_NOT_type */,
     void* param /* 0D_NOT_type */,
@@ -5210,7 +5202,7 @@ extern "C" bool fortran_parse_integer_list(
 void parse_integer_list(
     std::string err_str,
     LatProxy& lat,
-    IntAllocatable1D& int_array,
+    IntAlloc1D& int_array,
     bool exact_size,
     std::string delim,
     bool delim_found,
@@ -5241,7 +5233,7 @@ struct ParseIntegerList2 {
 ParseIntegerList2 parse_integer_list2(
     std::string err_str,
     LatProxy& lat,
-    IntAllocatable1D& int_array,
+    IntAlloc1D& int_array,
     optional_ref<int> num_expected = std::nullopt,
     optional_ref<std::string> open_delim = std::nullopt,
     optional_ref<std::string> separator = std::nullopt,
@@ -5264,7 +5256,7 @@ extern "C" bool fortran_parse_real_list(
     c_Int& num_found /* 0D_NOT_integer */,
     c_Bool& is_ok /* 0D_NOT_logical */);
 struct ParseRealList {
-  RealAllocatable1D real_array;
+  RealAlloc1D real_array;
   std::string delim;
   bool delim_found;
   int num_found;
@@ -5301,7 +5293,7 @@ struct ParseRealList2 {
 ParseRealList2 parse_real_list2(
     LatProxy& lat,
     std::string err_str,
-    RealAllocatable1D& real_array,
+    RealAlloc1D& real_array,
     optional_ref<int> num_expected = std::nullopt,
     optional_ref<std::string> open_brace = std::nullopt,
     optional_ref<std::string> separator = std::nullopt,
@@ -5375,7 +5367,7 @@ extern "C" bool fortran_parser_fast_complex_read(
     c_Char err_str /* 0D_NOT_character */,
     c_Bool& is_ok /* 0D_NOT_logical */);
 struct ParserFastComplexRead {
-  ComplexAllocatable1D cmplx_vec;
+  ComplexAlloc1D cmplx_vec;
   std::string delim;
   bool is_ok;
 };
@@ -5389,7 +5381,7 @@ extern "C" bool fortran_parser_fast_integer_read(
     c_Char err_str /* 0D_NOT_character */,
     c_Bool& is_ok /* 0D_NOT_logical */);
 void parser_fast_integer_read(
-    IntAllocatable1D& int_vec,
+    IntAlloc1D& int_vec,
     EleProxy& ele,
     std::string delim_wanted,
     std::string err_str,
@@ -5404,7 +5396,7 @@ extern "C" bool fortran_parser_fast_real_read(
     c_Int& n_real /* 0D_NOT_integer */,
     c_Bool& is_ok /* 0D_NOT_logical */);
 struct ParserFastRealRead {
-  RealAllocatable1D real_vec;
+  RealAlloc1D real_vec;
   std::string delim;
   int n_real;
   bool is_ok;
@@ -6030,7 +6022,7 @@ extern "C" void fortran_ptc_closed_orbit_calc(
     void* branch /* 0D_NOT_type */,
     void* closed_orbit /* 1D_ALLOC_type */,
     c_Bool* radiation_damping_on /* 0D_NOT_logical */);
-CoordProxyAllocatable1D ptc_closed_orbit_calc(
+CoordProxyAlloc1D ptc_closed_orbit_calc(
     BranchProxy& branch,
     std::optional<bool> radiation_damping_on = std::nullopt);
 
@@ -6143,7 +6135,7 @@ struct PtcTrackAll {
   int track_state;
   bool err_flag;
 };
-PtcTrackAll ptc_track_all(BranchProxy& branch, CoordProxyAllocatable1D& orbit);
+PtcTrackAll ptc_track_all(BranchProxy& branch, CoordProxyAlloc1D& orbit);
 
 // Skipped unusable routine ptc_track_map_with_radiation:
 // Untranslated type: PtcRadMapProxy (0D_NOT_type)
@@ -6235,7 +6227,7 @@ RadDampAndStocMats rad_damp_and_stoc_mats(
     EleProxy& ele1,
     EleProxy& ele2,
     bool include_opening_angle,
-    optional_ref<CoordProxyAllocatable1D> closed_orbit = std::nullopt);
+    optional_ref<CoordProxyAlloc1D> closed_orbit = std::nullopt);
 extern "C" void fortran_rad_g_integrals(
     void* ele /* 0D_NOT_type */,
     c_Int& where /* 0D_NOT_integer */,
@@ -6297,7 +6289,7 @@ struct RadiationIntegrals {
 };
 RadiationIntegrals radiation_integrals(
     LatProxy& lat,
-    CoordProxyAllocatable1D& orbit,
+    CoordProxyAlloc1D& orbit,
     optional_ref<int> ix_cache = std::nullopt,
     std::optional<int> ix_branch = std::nullopt);
 
@@ -6345,7 +6337,7 @@ extern "C" void fortran_re_allocate_wall3d_section_array(
     c_Int& n /* 0D_NOT_integer */,
     c_Bool* exact /* 0D_NOT_logical */);
 void re_allocate_wall3d_section_array(
-    Wall3dSectionProxyAllocatable1D& section,
+    Wall3dSectionProxyAlloc1D& section,
     int n,
     std::optional<bool> exact = std::nullopt);
 extern "C" void fortran_re_allocate_wall3d_vertex_array(
@@ -6353,7 +6345,7 @@ extern "C" void fortran_re_allocate_wall3d_vertex_array(
     c_Int& n /* 0D_NOT_integer */,
     c_Bool* exact /* 0D_NOT_logical */);
 void re_allocate_wall3d_vertex_array(
-    Wall3dVertexProxyAllocatable1D& v,
+    Wall3dVertexProxyAlloc1D& v,
     int n,
     std::optional<bool> exact = std::nullopt);
 
@@ -6462,27 +6454,25 @@ void reallocate_control(LatProxy& lat, int n);
 extern "C" void fortran_reallocate_coord_array(
     void* coord_array /* 1D_ALLOC_type */,
     void* lat /* 0D_NOT_type */);
-void reallocate_coord_array(
-    CoordArrayProxyAllocatable1D& coord_array,
-    LatProxy& lat);
+void reallocate_coord_array(CoordArrayProxyAlloc1D& coord_array, LatProxy& lat);
 extern "C" void fortran_reallocate_coord_lat(
     void* coord /* 1D_ALLOC_type */,
     void* lat /* 0D_NOT_type */,
     c_Int* ix_branch /* 0D_NOT_integer */);
 void reallocate_coord_lat(
-    CoordProxyAllocatable1D& coord,
+    CoordProxyAlloc1D& coord,
     LatProxy& lat,
     std::optional<int> ix_branch = std::nullopt);
 extern "C" void fortran_reallocate_coord_n(
     void* coord /* 1D_ALLOC_type */,
     c_Int& n_coord /* 0D_NOT_integer */);
-void reallocate_coord_n(CoordProxyAllocatable1D& coord, int n_coord);
+void reallocate_coord_n(CoordProxyAlloc1D& coord, int n_coord);
 extern "C" void fortran_reallocate_expression_stack(
     void* stack /* 1D_ALLOC_type */,
     c_Int& n /* 0D_NOT_integer */,
     c_Bool* exact /* 0D_NOT_logical */);
 void reallocate_expression_stack(
-    ExpressionAtomProxyAllocatable1D& stack,
+    ExpressionAtomProxyAlloc1D& stack,
     int n,
     std::optional<bool> exact = std::nullopt);
 
@@ -6513,11 +6503,11 @@ extern "C" void fortran_remove_constant_taylor(
     void* c0 /* 1D_ALLOC_real */,
     c_Bool& remove_higher_order_terms /* 0D_NOT_logical */);
 struct RemoveConstantTaylor {
-  TaylorProxyAllocatable1D taylor_out;
-  RealAllocatable1D c0;
+  TaylorProxyAlloc1D taylor_out;
+  RealAlloc1D c0;
 };
 RemoveConstantTaylor remove_constant_taylor(
-    TaylorProxyAllocatable1D& taylor_in,
+    TaylorProxyAlloc1D& taylor_in,
     bool remove_higher_order_terms);
 extern "C" void fortran_remove_dead_from_bunch(
     void* bunch_in /* 0D_NOT_type */,
@@ -6765,7 +6755,7 @@ extern "C" void fortran_save_a_beam_step(
 void save_a_beam_step(
     EleProxy& ele,
     BeamProxy& beam,
-    optional_ref<BunchTrackProxyAllocatable1D> bunch_tracks = std::nullopt,
+    optional_ref<BunchTrackProxyAlloc1D> bunch_tracks = std::nullopt,
     std::optional<double> s_body = std::nullopt,
     std::optional<bool> is_time_coords = std::nullopt);
 extern "C" void fortran_save_a_bunch_step(
@@ -6836,7 +6826,7 @@ double sc_adaptive_step(
     bool include_image,
     double t_now,
     double dt_step,
-    EmFieldProxyAllocatable1D& sc_field);
+    EmFieldProxyAlloc1D& sc_field);
 extern "C" void fortran_sc_step(
     void* bunch /* 0D_NOT_type */,
     void* ele /* 0D_NOT_type */,
@@ -6849,7 +6839,7 @@ int sc_step(
     EleProxy& ele,
     bool include_image,
     double t_end,
-    EmFieldProxyAllocatable1D& sc_field);
+    EmFieldProxyAlloc1D& sc_field);
 
 // Skipped unusable routine seq_ele_struct_to_json:
 // Routine module (bmad_json) in configuration skip list
@@ -6996,10 +6986,10 @@ void set_on_off(
     int key,
     LatProxy& lat,
     int switch_,
-    optional_ref<CoordProxyAllocatable1D> orb = std::nullopt,
+    optional_ref<CoordProxyAlloc1D> orb = std::nullopt,
     std::optional<bool> use_ref_orb = std::nullopt,
     std::optional<int> ix_branch = std::nullopt,
-    optional_ref<RealAllocatable1D> saved_values = std::nullopt,
+    optional_ref<RealAlloc1D> saved_values = std::nullopt,
     std::optional<std::string> attribute = std::nullopt,
     std::optional<int> set_val = std::nullopt);
 extern "C" void fortran_set_orbit_to_zero(
@@ -7007,7 +6997,7 @@ extern "C" void fortran_set_orbit_to_zero(
     c_Int& n1 /* 0D_NOT_integer */,
     c_Int& n2 /* 0D_NOT_integer */,
     c_Int* ix_noset /* 0D_NOT_integer */);
-CoordProxyAllocatable1D set_orbit_to_zero(
+CoordProxyAlloc1D set_orbit_to_zero(
     int n1,
     int n2,
     std::optional<int> ix_noset = std::nullopt);
@@ -7093,7 +7083,7 @@ void setup_high_energy_space_charge_calc(
     BranchProxy& branch,
     double n_part,
     NormalModesProxy& mode,
-    optional_ref<CoordProxyAllocatable1D> closed_orb = std::nullopt);
+    optional_ref<CoordProxyAlloc1D> closed_orb = std::nullopt);
 
 // Skipped unusable routine sfft:
 // Routine in configuration skip list
@@ -7186,8 +7176,8 @@ extern "C" void fortran_solve_psi_fixed_steps(
     void* t /* 1D_ALLOC_real */,
     void* p /* 1D_ALLOC_real */);
 struct SolvePsiFixedSteps {
-  RealAllocatable1D t;
-  RealAllocatable1D p;
+  RealAlloc1D t;
+  RealAlloc1D p;
 };
 SolvePsiFixedSteps solve_psi_fixed_steps(
     double t0,
@@ -7411,7 +7401,7 @@ SummationRdtProxy srdt_calc(
     int order,
     std::optional<int> n_slices_gen_opt = std::nullopt,
     std::optional<int> n_slices_sxt_opt = std::nullopt,
-    optional_ref<SummationRdtProxyAllocatable1D> per_ele_out = std::nullopt);
+    optional_ref<SummationRdtProxyAlloc1D> per_ele_out = std::nullopt);
 
 // Skipped unusable routine srdt_calc_with_cache:
 // Variable inout sized array: cache(:,:,:) 3D_ALLOC_complex
@@ -7424,9 +7414,9 @@ extern "C" void fortran_srdt_lsq_solution(
     c_Real* chrom_set_x_opt /* 0D_NOT_real */,
     c_Real* chrom_set_y_opt /* 0D_NOT_real */,
     c_RealArr weight_in /* 1D_NOT_real */);
-RealAllocatable1D srdt_lsq_solution(
+RealAlloc1D srdt_lsq_solution(
     LatProxy& lat,
-    IntAllocatable1D& var_indexes,
+    IntAlloc1D& var_indexes,
     std::optional<int> n_slices_gen_opt = std::nullopt,
     std::optional<int> n_slices_sxt_opt = std::nullopt,
     std::optional<double> chrom_set_x_opt = std::nullopt,
@@ -7595,10 +7585,10 @@ extern "C" void fortran_taylor_inverse(
     void* taylor_inv /* 1D_ALLOC_type */,
     c_Bool& err /* 0D_NOT_logical */);
 struct TaylorInverse {
-  TaylorProxyAllocatable1D taylor_inv;
+  TaylorProxyAlloc1D taylor_inv;
   bool err;
 };
-TaylorInverse taylor_inverse(TaylorProxyAllocatable1D& taylor_in);
+TaylorInverse taylor_inverse(TaylorProxyAlloc1D& taylor_in);
 
 // Skipped unusable routine taylor_minus_taylor:
 // Routine in configuration skip list
@@ -7613,11 +7603,11 @@ extern "C" void fortran_taylor_propagate1(
     void* ref_in /* 0D_NOT_type */,
     void* spin_taylor /* 1D_ALLOC_type */);
 bool taylor_propagate1(
-    TaylorProxyAllocatable1D& orb_taylor,
+    TaylorProxyAlloc1D& orb_taylor,
     EleProxy& ele,
     LatParamProxy& param,
     optional_ref<CoordProxy> ref_in = std::nullopt,
-    optional_ref<TaylorProxyAllocatable1D> spin_taylor = std::nullopt);
+    optional_ref<TaylorProxyAlloc1D> spin_taylor = std::nullopt);
 
 // Skipped unusable routine taylor_struct_to_json:
 // Routine module (bmad_json) in configuration skip list
@@ -7637,8 +7627,7 @@ bool taylor_propagate1(
 extern "C" void fortran_taylors_equal_taylors(
     void* taylor1 /* 1D_ALLOC_type */,
     void* taylor2 /* 1D_ALLOC_type */);
-TaylorProxyAllocatable1D taylors_equal_taylors(
-    TaylorProxyAllocatable1D& taylor2);
+TaylorProxyAlloc1D taylors_equal_taylors(TaylorProxyAlloc1D& taylor2);
 extern "C" void fortran_tilt_coords(
     c_Real& tilt_val /* 0D_NOT_real */,
     void* coord /* 1D_ALLOC_real */,
@@ -7646,7 +7635,7 @@ extern "C" void fortran_tilt_coords(
     c_Bool* make_matrix /* 0D_NOT_logical */);
 void tilt_coords(
     double tilt_val,
-    RealAllocatable1D& coord,
+    RealAlloc1D& coord,
     std::optional<FixedArray2D<Real, 6, 6>> mat6 = std::nullopt,
     std::optional<bool> make_matrix = std::nullopt);
 extern "C" void fortran_tilt_coords_photon(
@@ -7655,7 +7644,7 @@ extern "C" void fortran_tilt_coords_photon(
     c_RealArr w_mat /* 2D_NOT_real */);
 void tilt_coords_photon(
     double tilt_val,
-    RealAllocatable1D& coord,
+    RealAlloc1D& coord,
     std::optional<FixedArray2D<Real, 3, 3>> w_mat = std::nullopt);
 extern "C" void fortran_tilt_mat6(
     c_RealArr mat6 /* 2D_NOT_real */,
@@ -7679,7 +7668,7 @@ struct ToEtaReading {
   bool err;
 };
 ToEtaReading to_eta_reading(
-    RealAllocatable1D& eta_actual,
+    RealAlloc1D& eta_actual,
     EleProxy& ele,
     int axis,
     bool add_noise);
@@ -7812,7 +7801,7 @@ extern "C" void fortran_track1_beam(
 bool track1_beam(
     BeamProxy& beam,
     EleProxy& ele,
-    optional_ref<CoordProxyAllocatable1D> centroid = std::nullopt,
+    optional_ref<CoordProxyAlloc1D> centroid = std::nullopt,
     std::optional<int> direction = std::nullopt);
 extern "C" void fortran_track1_bmad(
     void* orbit /* 0D_NOT_type */,
@@ -7848,7 +7837,7 @@ extern "C" void fortran_track1_bunch(
 bool track1_bunch(
     BunchProxy& bunch,
     EleProxy& ele,
-    optional_ref<CoordProxyAllocatable1D> centroid = std::nullopt,
+    optional_ref<CoordProxyAlloc1D> centroid = std::nullopt,
     std::optional<int> direction = std::nullopt,
     optional_ref<BunchTrackProxy> bunch_track = std::nullopt);
 extern "C" void fortran_track1_bunch_csr(
@@ -7862,7 +7851,7 @@ extern "C" void fortran_track1_bunch_csr(
 bool track1_bunch_csr(
     BunchProxy& bunch,
     EleProxy& ele,
-    CoordProxyAllocatable1D& centroid,
+    CoordProxyAlloc1D& centroid,
     std::optional<double> s_start = std::nullopt,
     std::optional<double> s_end = std::nullopt,
     optional_ref<BunchTrackProxy> bunch_track = std::nullopt);
@@ -7877,7 +7866,7 @@ extern "C" void fortran_track1_bunch_csr3d(
 bool track1_bunch_csr3d(
     BunchProxy& bunch,
     EleProxy& ele,
-    CoordProxyAllocatable1D& centroid,
+    CoordProxyAlloc1D& centroid,
     std::optional<double> s_start = std::nullopt,
     std::optional<double> s_end = std::nullopt,
     optional_ref<BunchTrackProxy> bunch_track = std::nullopt);
@@ -8385,11 +8374,11 @@ extern "C" void fortran_track_all(
 struct TrackAll {
   int track_state;
   bool err_flag;
-  CoordProxyAllocatable1D orbit0;
+  CoordProxyAlloc1D orbit0;
 };
 TrackAll track_all(
     LatProxy& lat,
-    CoordProxyAllocatable1D& orbit,
+    CoordProxyAlloc1D& orbit,
     std::optional<int> ix_branch = std::nullopt,
     std::optional<bool> init_lost = std::nullopt);
 extern "C" void fortran_track_beam(
@@ -8406,9 +8395,9 @@ bool track_beam(
     BeamProxy& beam,
     optional_ref<EleProxy> ele1 = std::nullopt,
     optional_ref<EleProxy> ele2 = std::nullopt,
-    optional_ref<CoordProxyAllocatable1D> centroid = std::nullopt,
+    optional_ref<CoordProxyAlloc1D> centroid = std::nullopt,
     std::optional<int> direction = std::nullopt,
-    optional_ref<BunchTrackProxyAllocatable1D> bunch_tracks = std::nullopt);
+    optional_ref<BunchTrackProxyAlloc1D> bunch_tracks = std::nullopt);
 extern "C" void fortran_track_bunch(
     void* lat /* 0D_NOT_type */,
     void* bunch /* 0D_NOT_type */,
@@ -8423,7 +8412,7 @@ bool track_bunch(
     BunchProxy& bunch,
     optional_ref<EleProxy> ele1 = std::nullopt,
     optional_ref<EleProxy> ele2 = std::nullopt,
-    optional_ref<CoordProxyAllocatable1D> centroid = std::nullopt,
+    optional_ref<CoordProxyAlloc1D> centroid = std::nullopt,
     std::optional<int> direction = std::nullopt,
     optional_ref<BunchTrackProxy> bunch_track = std::nullopt);
 extern "C" void fortran_track_bunch_time(
@@ -8438,8 +8427,8 @@ void track_bunch_time(
     BranchProxy& branch,
     double t_end,
     double s_end,
-    optional_ref<RealAllocatable1D> dt_step = std::nullopt,
-    optional_ref<EmFieldProxyAllocatable1D> extra_field = std::nullopt);
+    optional_ref<RealAlloc1D> dt_step = std::nullopt,
+    optional_ref<EmFieldProxyAlloc1D> extra_field = std::nullopt);
 extern "C" void fortran_track_bunch_to_s(
     void* bunch /* 0D_NOT_type */,
     c_Real& s /* 0D_NOT_real */,
@@ -8454,9 +8443,9 @@ extern "C" void fortran_track_complex_taylor(
     void* start_orb /* 1D_ALLOC_complex */,
     void* complex_taylor /* 1D_ALLOC_type */,
     void* end_orb /* 1D_ALLOC_complex */);
-ComplexAllocatable1D track_complex_taylor(
-    ComplexAllocatable1D& start_orb,
-    ComplexTaylorProxyAllocatable1D& complex_taylor);
+ComplexAlloc1D track_complex_taylor(
+    ComplexAlloc1D& start_orb,
+    ComplexTaylorProxyAlloc1D& complex_taylor);
 extern "C" void fortran_track_from_s_to_s(
     void* lat /* 0D_NOT_type */,
     c_Real& s_start /* 0D_NOT_real */,
@@ -8469,7 +8458,7 @@ extern "C" void fortran_track_from_s_to_s(
     c_Int* ix_ele_end /* 0D_NOT_integer */);
 struct TrackFromSToS {
   CoordProxy orbit_end;
-  CoordProxyAllocatable1D all_orb;
+  CoordProxyAlloc1D all_orb;
   int track_state;
 };
 TrackFromSToS track_from_s_to_s(
@@ -8489,7 +8478,7 @@ extern "C" void fortran_track_many(
     c_Int& track_state /* 0D_NOT_integer */);
 int track_many(
     LatProxy& lat,
-    CoordProxyAllocatable1D& orbit,
+    CoordProxyAlloc1D& orbit,
     int ix_start,
     int ix_end,
     int direction,
@@ -8551,7 +8540,7 @@ BranchProxy transfer_branch_parameters(BranchProxy& branch_in);
 extern "C" void fortran_transfer_branches(
     void* branch1 /* 1D_ALLOC_type */,
     void* branch2 /* 1D_ALLOC_type */);
-BranchProxyAllocatable1D transfer_branches(BranchProxyAllocatable1D& branch1);
+BranchProxyAlloc1D transfer_branches(BranchProxyAlloc1D& branch1);
 extern "C" void fortran_transfer_ele(
     void* ele1 /* 0D_NOT_type */,
     void* ele2 /* 0D_NOT_type */,
@@ -8569,7 +8558,7 @@ EleProxy transfer_ele_taylor(
 extern "C" void fortran_transfer_eles(
     void* ele1 /* 1D_ALLOC_type */,
     void* ele2 /* 1D_ALLOC_type */);
-EleProxyAllocatable1D transfer_eles(EleProxyAllocatable1D& ele1);
+EleProxyAlloc1D transfer_eles(EleProxyAlloc1D& ele1);
 extern "C" void fortran_transfer_fieldmap(
     void* ele_in /* 0D_NOT_type */,
     void* ele_out /* 0D_NOT_type */,
@@ -8608,7 +8597,7 @@ extern "C" void fortran_transfer_map_calc(
     void* spin_map /* 1D_ALLOC_type */);
 bool transfer_map_calc(
     LatProxy& lat,
-    TaylorProxyAllocatable1D& orb_map,
+    TaylorProxyAlloc1D& orb_map,
     std::optional<int> ix1 = std::nullopt,
     std::optional<int> ix2 = std::nullopt,
     optional_ref<CoordProxy> ref_orb = std::nullopt,
@@ -8616,7 +8605,7 @@ bool transfer_map_calc(
     std::optional<bool> one_turn = std::nullopt,
     std::optional<bool> unit_start = std::nullopt,
     std::optional<bool> concat_if_possible = std::nullopt,
-    optional_ref<TaylorProxyAllocatable1D> spin_map = std::nullopt);
+    optional_ref<TaylorProxyAlloc1D> spin_map = std::nullopt);
 extern "C" void fortran_transfer_map_from_s_to_s(
     void* lat /* 0D_NOT_type */,
     void* t_map /* 1D_ALLOC_type */,
@@ -8636,7 +8625,7 @@ struct TransferMapFromSToS {
 };
 TransferMapFromSToS transfer_map_from_s_to_s(
     LatProxy& lat,
-    TaylorProxyAllocatable1D& t_map,
+    TaylorProxyAlloc1D& t_map,
     std::optional<double> s1 = std::nullopt,
     std::optional<double> s2 = std::nullopt,
     optional_ref<CoordProxy> ref_orb_in = std::nullopt,
@@ -8644,7 +8633,7 @@ TransferMapFromSToS transfer_map_from_s_to_s(
     std::optional<bool> one_turn = std::nullopt,
     std::optional<bool> unit_start = std::nullopt,
     std::optional<bool> concat_if_possible = std::nullopt,
-    optional_ref<TaylorProxyAllocatable1D> spin_map = std::nullopt);
+    optional_ref<TaylorProxyAlloc1D> spin_map = std::nullopt);
 extern "C" void fortran_transfer_mat2_from_twiss(
     void* twiss1 /* 0D_NOT_type */,
     void* twiss2 /* 0D_NOT_type */,
@@ -8707,8 +8696,8 @@ extern "C" void fortran_truncate_complex_taylor_to_order(
     void* complex_taylor_in /* 1D_ALLOC_type */,
     c_Int& order /* 0D_NOT_integer */,
     void* complex_taylor_out /* 1D_ALLOC_type */);
-ComplexTaylorProxyAllocatable1D truncate_complex_taylor_to_order(
-    ComplexTaylorProxyAllocatable1D& complex_taylor_in,
+ComplexTaylorProxyAlloc1D truncate_complex_taylor_to_order(
+    ComplexTaylorProxyAlloc1D& complex_taylor_in,
     int order);
 extern "C" void fortran_twiss1_propagate(
     void* twiss1 /* 0D_NOT_type */,
@@ -8762,7 +8751,7 @@ bool twiss_and_track_at_s(
     LatProxy& lat,
     double s,
     optional_ref<EleProxy> ele_at_s = std::nullopt,
-    optional_ref<CoordProxyAllocatable1D> orb = std::nullopt,
+    optional_ref<CoordProxyAlloc1D> orb = std::nullopt,
     optional_ref<CoordProxy> orb_at_s = std::nullopt,
     std::optional<int> ix_branch = std::nullopt,
     std::optional<bool> use_last = std::nullopt,
@@ -8860,7 +8849,7 @@ struct TwissFromTracking {
 TwissFromTracking twiss_from_tracking(
     LatProxy& lat,
     CoordProxy& ref_orb0,
-    optional_ref<RealAllocatable1D> d_orb = std::nullopt);
+    optional_ref<RealAlloc1D> d_orb = std::nullopt);
 extern "C" void fortran_twiss_propagate1(
     void* ele1 /* 0D_NOT_type */,
     void* ele2 /* 0D_NOT_type */,
@@ -9127,7 +9116,7 @@ struct Wall3dDRadius {
   double d_radius;
 };
 Wall3dDRadius wall3d_d_radius(
-    RealAllocatable1D& position,
+    RealAlloc1D& position,
     EleProxy& ele,
     std::optional<int> ix_wall = std::nullopt);
 extern "C" void fortran_wall3d_initializer(
@@ -9397,7 +9386,7 @@ extern "C" void fortran_write_lattice_in_elegant_format(
 bool write_lattice_in_elegant_format(
     std::string out_file_name,
     LatProxy& lat,
-    optional_ref<CoordProxyAllocatable1D> ref_orbit = std::nullopt,
+    optional_ref<CoordProxyAlloc1D> ref_orbit = std::nullopt,
     std::optional<bool> use_matrix_model = std::nullopt,
     std::optional<bool> include_apertures = std::nullopt,
     std::optional<double> dr12_drift_max = std::nullopt,
@@ -9416,7 +9405,7 @@ bool write_lattice_in_foreign_format(
     std::string out_type,
     std::string out_file_name,
     LatProxy& lat,
-    optional_ref<CoordProxyAllocatable1D> ref_orbit = std::nullopt,
+    optional_ref<CoordProxyAlloc1D> ref_orbit = std::nullopt,
     std::optional<bool> use_matrix_model = std::nullopt,
     std::optional<bool> include_apertures = std::nullopt,
     std::optional<double> dr12_drift_max = std::nullopt,
@@ -9435,7 +9424,7 @@ bool write_lattice_in_mad_format(
     std::string out_type,
     std::string out_file_name,
     LatProxy& lat,
-    optional_ref<CoordProxyAllocatable1D> ref_orbit = std::nullopt,
+    optional_ref<CoordProxyAlloc1D> ref_orbit = std::nullopt,
     std::optional<bool> use_matrix_model = std::nullopt,
     std::optional<bool> include_apertures = std::nullopt,
     std::optional<double> dr12_drift_max = std::nullopt,

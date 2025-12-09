@@ -194,7 +194,7 @@ void SimUtils::asinc(double x, optional_ref<int> nd, double y) {
   fortran_asinc(/* c_Real& */ x, /* c_Int* */ _nd, /* c_Real& */ y);
 }
 void SimUtils::assert_equal(
-    IntAllocatable1D& int_arr,
+    IntAlloc1D& int_arr,
     std::string err_str,
     int ival) {
   // intent=inout allocatable general array
@@ -232,8 +232,8 @@ void SimUtils::complex_error_function(
       /* c_Real& */ wr, /* c_Real& */ wi, /* c_Real& */ zr, /* c_Real& */ zi);
 }
 void SimUtils::cross_product(
-    RealAllocatable1D& a,
-    RealAllocatable1D& b,
+    RealAlloc1D& a,
+    RealAlloc1D& b,
     FixedArray1D<Real, 3> c) {
   // intent=in allocatable general array
   // intent=inout allocatable general array
@@ -312,7 +312,7 @@ void SimUtils::faddeeva_function(
       /* c_RealArr */ _z, /* c_RealArr */ _w, /* c_RealArr */ _dw_vec);
   vec_to_matrix(_dw_vec, dw);
 }
-void SimUtils::fft_1d(ComplexAllocatable1D& arr, int isign) {
+void SimUtils::fft_1d(ComplexAlloc1D& arr, int isign) {
   // intent=inout allocatable general array
   fortran_fft_1d(/* void* */ arr.get_fortran_ptr(), /* c_Int& */ isign);
 }
@@ -455,7 +455,7 @@ void SimUtils::is_alphabetic(
       /* c_Char */ _string, /* c_Char */ _valid_chars, /* c_Bool& */ is_alpha);
 }
 void SimUtils::is_decreasing_sequence(
-    RealAllocatable1D& array,
+    RealAlloc1D& array,
     std::optional<bool> strict,
     bool is_decreasing) {
   // intent=in allocatable general array
@@ -472,7 +472,7 @@ void SimUtils::is_decreasing_sequence(
       /* c_Bool& */ is_decreasing);
 }
 void SimUtils::is_increasing_sequence(
-    RealAllocatable1D& array,
+    RealAlloc1D& array,
     std::optional<bool> strict,
     bool is_increasing) {
   // intent=in allocatable general array
@@ -536,8 +536,8 @@ void SimUtils::j_bessel(int m, double arg, double j_bes) {
   fortran_j_bessel(/* c_Int& */ m, /* c_Real& */ arg, /* c_Real& */ j_bes);
 }
 void SimUtils::linear_fit(
-    RealAllocatable1D& x,
-    RealAllocatable1D& y,
+    RealAlloc1D& x,
+    RealAlloc1D& y,
     int n_data,
     double a,
     double b,
@@ -555,9 +555,9 @@ void SimUtils::linear_fit(
       /* c_Real& */ sig_b);
 }
 FixedArray1D<Real, 3> SimUtils::linear_fit_2d(
-    RealAllocatable1D& x,
-    RealAllocatable1D& y,
-    RealAllocatable1D& z) {
+    RealAlloc1D& x,
+    RealAlloc1D& y,
+    RealAlloc1D& z) {
   // intent=in allocatable general array
   // intent=in allocatable general array
   // intent=in allocatable general array
@@ -607,14 +607,14 @@ void SimUtils::match_wild(
 void SimUtils::n_choose_k(int n, int k, double nck) {
   fortran_n_choose_k(/* c_Int& */ n, /* c_Int& */ k, /* c_Real& */ nck);
 }
-RealAllocatable1D SimUtils::n_spline_create(
-    RealAllocatable1D& deriv0,
-    RealAllocatable1D& deriv1,
+RealAlloc1D SimUtils::n_spline_create(
+    RealAlloc1D& deriv0,
+    RealAlloc1D& deriv1,
     double x1) {
   // intent=in allocatable general array
   // intent=in allocatable general array
   // intent=out allocatable general array
-  auto n_spline{RealAllocatable1D()};
+  auto n_spline{RealAlloc1D()};
   fortran_n_spline_create(
       /* void* */ deriv0.get_fortran_ptr(),
       /* void* */ deriv1.get_fortran_ptr(),
@@ -644,7 +644,7 @@ void SimUtils::parse_fortran_format(
       /* c_Int& */ digits);
 }
 void SimUtils::poly_eval(
-    RealAllocatable1D& poly,
+    RealAlloc1D& poly,
     double x,
     std::optional<bool> diff_coef,
     double y) {
@@ -755,8 +755,8 @@ void SimUtils::real_str(
       /* c_Char */ _str);
 }
 double SimUtils::rms_value(
-    RealAllocatable1D& val_arr,
-    optional_ref<BoolAllocatable1D> good_val,
+    RealAlloc1D& val_arr,
+    optional_ref<BoolAlloc1D> good_val,
     double rms_val) {
   // intent=in allocatable general array
   // intent=in allocatable general array
@@ -1016,7 +1016,7 @@ int SimUtils::virtual_memory_usage() {
   return _usage;
 }
 void SimUtils::find_location_real(
-    RealAllocatable1D& arr,
+    RealAlloc1D& arr,
     double value,
     int ix_match) {
   // intent=in allocatable general array
@@ -1025,20 +1025,14 @@ void SimUtils::find_location_real(
       /* c_Real& */ value,
       /* c_Int& */ ix_match);
 }
-void SimUtils::find_location_int(
-    IntAllocatable1D& arr,
-    int value,
-    int ix_match) {
+void SimUtils::find_location_int(IntAlloc1D& arr, int value, int ix_match) {
   // intent=inout allocatable general array
   fortran_find_location_int(
       /* void* */ arr.get_fortran_ptr(),
       /* c_Int& */ value,
       /* c_Int& */ ix_match);
 }
-void SimUtils::find_location_logic(
-    BoolAllocatable1D& arr,
-    bool value,
-    int ix_match) {
+void SimUtils::find_location_logic(BoolAlloc1D& arr, bool value, int ix_match) {
   // intent=inout allocatable general array
   fortran_find_location_logic(
       /* void* */ arr.get_fortran_ptr(),
@@ -1046,7 +1040,7 @@ void SimUtils::find_location_logic(
       /* c_Int& */ ix_match);
 }
 double SimUtils::coarse_frequency_estimate(
-    RealAllocatable1D& data,
+    RealAlloc1D& data,
     optional_ref<bool> error) {
   // intent=in allocatable general array
   auto* _error = error.has_value() ? &error->get() : nullptr; // inout, optional
@@ -1057,7 +1051,7 @@ double SimUtils::coarse_frequency_estimate(
       /* c_Real& */ _frequency);
   return _frequency;
 }
-double SimUtils::fine_frequency_estimate(RealAllocatable1D& data) {
+double SimUtils::fine_frequency_estimate(RealAlloc1D& data) {
   // intent=in allocatable general array
   double _frequency{};
   fortran_fine_frequency_estimate(
@@ -1065,7 +1059,7 @@ double SimUtils::fine_frequency_estimate(RealAllocatable1D& data) {
   return _frequency;
 }
 SimUtils::FourierAmplitude SimUtils::fourier_amplitude(
-    RealAllocatable1D& data,
+    RealAlloc1D& data,
     double frequency) {
   // intent=in allocatable general array
   double _cos_amp{};
@@ -1264,7 +1258,7 @@ FixedArray1D<Complex, 3> SimUtils::quat_rotate_complex(
 }
 FixedArray1D<Real, 3> SimUtils::rotate_vec_given_axis_angle(
     FixedArray1D<Real, 3> vec_in,
-    RealAllocatable1D& axis,
+    RealAlloc1D& axis,
     double angle) {
   auto* _vec_in = vec_in.data(); // CppWrapperGeneralArgument
   // intent=in allocatable general array
@@ -1276,7 +1270,7 @@ FixedArray1D<Real, 3> SimUtils::rotate_vec_given_axis_angle(
       /* c_RealArr */ _vec_out.data());
   return _vec_out;
 }
-void SimUtils::rotate_vec(RealAllocatable1D& vec, int axis, double angle) {
+void SimUtils::rotate_vec(RealAlloc1D& vec, int axis, double angle) {
   // intent=inout allocatable general array
   fortran_rotate_vec(
       /* void* */ vec.get_fortran_ptr(),
@@ -1284,9 +1278,9 @@ void SimUtils::rotate_vec(RealAllocatable1D& vec, int axis, double angle) {
       /* c_Real& */ angle);
 }
 void SimUtils::naff(
-    ComplexAllocatable1D& cdata,
-    RealAllocatable1D& freqs,
-    ComplexAllocatable1D& amps,
+    ComplexAlloc1D& cdata,
+    RealAlloc1D& freqs,
+    ComplexAlloc1D& amps,
     optional_ref<int> opt_dump_spectra,
     optional_ref<bool> opt_zero_first) {
   // intent=inout allocatable general array
@@ -1306,8 +1300,8 @@ void SimUtils::naff(
       /* c_Bool* */ _opt_zero_first);
 }
 void SimUtils::projdd(
-    ComplexAllocatable1D& a,
-    ComplexAllocatable1D& b,
+    ComplexAlloc1D& a,
+    ComplexAlloc1D& b,
     std::complex<double> func_retval__) {
   // intent=inout allocatable general array
   // intent=inout allocatable general array
@@ -1318,7 +1312,7 @@ void SimUtils::projdd(
 }
 void SimUtils::maximize_projection(
     double seed,
-    ComplexAllocatable1D& cdata,
+    ComplexAlloc1D& cdata,
     double func_retval__) {
   // intent=inout allocatable general array
   fortran_maximize_projection(
@@ -1327,7 +1321,7 @@ void SimUtils::maximize_projection(
       /* c_Real& */ func_retval__);
 }
 void SimUtils::interpolated_fft_gsl(
-    ComplexAllocatable1D& cdata,
+    ComplexAlloc1D& cdata,
     bool calc_ok,
     optional_ref<int> opt_dump_spectrum,
     optional_ref<int> opt_dump_index,
@@ -1347,7 +1341,7 @@ void SimUtils::interpolated_fft_gsl(
       /* c_Real& */ this_fft);
 }
 void SimUtils::interpolated_fft(
-    ComplexAllocatable1D& cdata,
+    ComplexAlloc1D& cdata,
     bool calc_ok,
     optional_ref<int> opt_dump_spectrum,
     optional_ref<int> opt_dump_index,
@@ -1440,13 +1434,13 @@ FixedArray2D<Real, 4, 4> SimUtils::super_bicubic_coef(
   vec_to_matrix(_c_vec, c);
   return c;
 }
-void SimUtils::super_sort(IntAllocatable1D& arr) {
+void SimUtils::super_sort(IntAlloc1D& arr) {
   // intent=inout allocatable general array
   fortran_super_sort(/* void* */ arr.get_fortran_ptr());
 }
 SimUtils::SuperPolint SimUtils::super_polint(
-    RealAllocatable1D& xa,
-    RealAllocatable1D& ya,
+    RealAlloc1D& xa,
+    RealAlloc1D& ya,
     double x) {
   // intent=in allocatable general array
   // intent=inout allocatable general array
@@ -1460,7 +1454,7 @@ SimUtils::SuperPolint SimUtils::super_polint(
       /* c_Real& */ _dy);
   return SuperPolint{_y, _dy};
 }
-double SimUtils::super_poly(double x, RealAllocatable1D& coeffs) {
+double SimUtils::super_poly(double x, RealAlloc1D& coeffs) {
   // intent=inout allocatable general array
   double _value{};
   fortran_super_poly(
@@ -1545,7 +1539,7 @@ void SimUtils::n_bins_automatic(int n_data, int n) {
   fortran_n_bins_automatic(/* c_Int& */ n_data, /* c_Int& */ n);
 }
 void SimUtils::reallocate_spline(
-    SplineProxyAllocatable1D& spline,
+    SplineProxyAlloc1D& spline,
     int n,
     std::optional<int> n_min,
     std::optional<bool> exact) {
@@ -1571,8 +1565,8 @@ void SimUtils::reallocate_spline(
       /* c_Bool* */ _exact);
 }
 SplineProxy SimUtils::create_a_spline(
-    RealAllocatable1D& r0,
-    RealAllocatable1D& r1,
+    RealAlloc1D& r0,
+    RealAlloc1D& r1,
     double slope0,
     double slope1) {
   // intent=in allocatable general array
@@ -1587,8 +1581,8 @@ SplineProxy SimUtils::create_a_spline(
   return std::move(_spline);
 }
 SimUtils::SplineAkimaInterpolate SimUtils::spline_akima_interpolate(
-    RealAllocatable1D& x_knot,
-    RealAllocatable1D& y_knot,
+    RealAlloc1D& x_knot,
+    RealAlloc1D& y_knot,
     double x) {
   // intent=in allocatable general array
   // intent=in allocatable general array
@@ -1605,7 +1599,7 @@ SimUtils::SplineAkimaInterpolate SimUtils::spline_akima_interpolate(
   return SplineAkimaInterpolate{_ok, _y, _dy};
 }
 SimUtils::SplineEvaluate SimUtils::spline_evaluate(
-    SplineProxyAllocatable1D& spline,
+    SplineProxyAlloc1D& spline,
     double x) {
   // intent=in allocatable type array
   bool _ok{};
@@ -1620,7 +1614,7 @@ SimUtils::SplineEvaluate SimUtils::spline_evaluate(
   return SplineEvaluate{_ok, _y, _dy};
 }
 SimUtils::BracketIndexForSpline SimUtils::bracket_index_for_spline(
-    RealAllocatable1D& x_knot,
+    RealAlloc1D& x_knot,
     double x,
     std::optional<bool> strict,
     std::optional<bool> print_err) {
@@ -1669,21 +1663,21 @@ double SimUtils::spline1(
       /* c_Real& */ _y);
   return _y;
 }
-bool SimUtils::spline_akima(SplineProxyAllocatable1D& spline) {
+bool SimUtils::spline_akima(SplineProxyAlloc1D& spline) {
   // intent=inout allocatable type array
   bool _ok{};
   fortran_spline_akima(/* void* */ spline.get_fortran_ptr(), /* c_Bool& */ _ok);
   return _ok;
 }
 void SimUtils::end_akima_spline_calc(
-    SplineProxyAllocatable1D& spline,
+    SplineProxyAlloc1D& spline,
     int which_end) {
   // intent=inout allocatable type array
   fortran_end_akima_spline_calc(
       /* void* */ spline.get_fortran_ptr(), /* c_Int& */ which_end);
 }
 SimUtils::ApfftCorr SimUtils::apfft_corr(
-    RealAllocatable1D& rdata_in,
+    RealAlloc1D& rdata_in,
     std::optional<FixedArray1D<Real, 2>> bounds,
     std::string window,
     std::optional<int> diag) {
@@ -1711,7 +1705,7 @@ SimUtils::ApfftCorr SimUtils::apfft_corr(
   return ApfftCorr{_phase, _amp, _freq};
 }
 void SimUtils::apfft(
-    RealAllocatable1D& rdata_in,
+    RealAlloc1D& rdata_in,
     FixedArray1D<Real, 2> bounds,
     std::string window,
     double phase,
@@ -1728,7 +1722,7 @@ void SimUtils::apfft(
       /* c_Int* */ _diag);
 }
 void SimUtils::apfft_ext(
-    RealAllocatable1D& rdata,
+    RealAlloc1D& rdata,
     FixedArray1D<Real, 2> bounds,
     std::string window,
     double phase,
@@ -1748,7 +1742,7 @@ void SimUtils::apfft_ext(
       /* c_Real& */ freq,
       /* c_Int* */ _diag);
 }
-void SimUtils::hanhan(int N, RealAllocatable1D& hh) {
+void SimUtils::hanhan(int N, RealAlloc1D& hh) {
   // intent=inout allocatable general array
   fortran_hanhan(/* c_Int& */ N, /* void* */ hh.get_fortran_ptr());
 }

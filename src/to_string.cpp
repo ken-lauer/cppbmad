@@ -5,7 +5,7 @@
 #include "bmad/to_string.hpp"
 
 namespace Bmad {
-std::string to_string(const Bmad::FortranCharArray1D& arr) {
+std::string to_string(const Bmad::FCharArray1D& arr) {
   auto vec = arr.to_vector();
   if (vec.empty())
     return "[]";

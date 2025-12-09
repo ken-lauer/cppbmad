@@ -390,7 +390,7 @@ CPP_CHAR_SCALAR_DYN_DECL = """
 
 CPP_CHAR_SCALAR_DYN_ACCESSOR = """
     std::string CATTRNAME() const {
-        return BmadProxyHelpers::get_string(fortran_ptr_, STRUCTNAME_get_FATTRNAME_info);
+        return ProxyHelpers::get_string(fortran_ptr_, STRUCTNAME_get_FATTRNAME_info);
     }
 """
 CPP_CHAR_ARRAY_1D_DECL = """
@@ -404,8 +404,8 @@ CPP_CHAR_ARRAY_1D_DECL = """
 """
 
 CPP_CHAR_ARRAY_1D_ACCESSOR = """
-    FortranCharArray1D CATTRNAME() const {
-        return BmadProxyHelpers::get_char_array_1d(fortran_ptr_, STRUCTNAME_get_FATTRNAME_info);
+    FCharArray1D CATTRNAME() const {
+        return ProxyHelpers::get_char_array_1d(fortran_ptr_, STRUCTNAME_get_FATTRNAME_info);
     }
 """
 
@@ -599,7 +599,7 @@ templates[FullType("character", 0, "NOT")] = TemplateEntry(
     cpp_get_accessors=[
         """
     std::string CATTRNAME() const {
-        FortranArray1D<char> arr = BmadProxyHelpers::get_array_1d<char>(fortran_ptr_, STRUCTNAME_get_FATTRNAME_info);
+        FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, STRUCTNAME_get_FATTRNAME_info);
         return std::string(arr.data(), arr.size());
     }
 """
@@ -621,20 +621,20 @@ CPP_ARRAY_1D_DECL = (
     "    void STRUCTNAME_get_FATTRNAME_info(const void* s, CTYPE** d, int* bounds, bool* is_alloc);"
 )
 CPP_ARRAY_1D_ACCESSOR = """
-    FortranArray1D<CTYPE> CATTRNAME() const {
-        return BmadProxyHelpers::get_array_1d<CTYPE>(fortran_ptr_, STRUCTNAME_get_FATTRNAME_info);
+    FArray1D<CTYPE> CATTRNAME() const {
+        return ProxyHelpers::get_array_1d<CTYPE>(fortran_ptr_, STRUCTNAME_get_FATTRNAME_info);
     }
 """
 CPP_ARRAY_2D_DECL = "    void STRUCTNAME_get_FATTRNAME_info(const void* s, CTYPE** d, int* bounds, int* strides, bool* is_alloc);"
 CPP_ARRAY_2D_ACCESSOR = """
-    FortranArray2D<CTYPE> CATTRNAME() const {
-        return BmadProxyHelpers::get_array_2d<CTYPE>(fortran_ptr_, STRUCTNAME_get_FATTRNAME_info);
+    FArray2D<CTYPE> CATTRNAME() const {
+        return ProxyHelpers::get_array_2d<CTYPE>(fortran_ptr_, STRUCTNAME_get_FATTRNAME_info);
     }
 """
 CPP_ARRAY_3D_DECL = "    void STRUCTNAME_get_FATTRNAME_info(const void* s, CTYPE** d, int* bounds, int* strides, bool* is_alloc);"
 CPP_ARRAY_3D_ACCESSOR = """
-    FortranArray3D<CTYPE> CATTRNAME() const {
-        return BmadProxyHelpers::get_array_3d<CTYPE>(fortran_ptr_, STRUCTNAME_get_FATTRNAME_info);
+    FArray3D<CTYPE> CATTRNAME() const {
+        return ProxyHelpers::get_array_3d<CTYPE>(fortran_ptr_, STRUCTNAME_get_FATTRNAME_info);
     }
 """
 
@@ -719,7 +719,7 @@ CPP_TYPE_ARRAY_1D_DECL = """
 """
 CPP_TYPE_ARRAY_1D_ACCESSOR = """
     ${return_proxy_name}Array1D CATTRNAME() const {
-        return BmadProxyHelpers::get_type_array_1d<${return_proxy_name}Array1D>(
+        return ProxyHelpers::get_type_array_1d<${return_proxy_name}Array1D>(
             fortran_ptr_,
             STRUCTNAME_get_FATTRNAME_info
         );
@@ -733,7 +733,7 @@ CPP_TYPE_ARRAY_2D_DECL = """
 
 CPP_TYPE_ARRAY_2D_ACCESSOR = """
     ${return_proxy_name}Array2D CATTRNAME() const {
-        return BmadProxyHelpers::get_type_array_2d<${return_proxy_name}Array2D>(
+        return ProxyHelpers::get_type_array_2d<${return_proxy_name}Array2D>(
             fortran_ptr_,
             STRUCTNAME_get_FATTRNAME_info
         );
@@ -746,7 +746,7 @@ CPP_TYPE_ARRAY_3D_DECL = """
 """
 CPP_TYPE_ARRAY_3D_ACCESSOR = """
     ${return_proxy_name}Array3D CATTRNAME() const {
-        return BmadProxyHelpers::get_type_array_3d<${return_proxy_name}Array3D>(
+        return ProxyHelpers::get_type_array_3d<${return_proxy_name}Array3D>(
             fortran_ptr_,
             STRUCTNAME_get_FATTRNAME_info
         );
@@ -1194,10 +1194,10 @@ class ${class_name} : public FortranProxy<${class_name}> {
 
     # Native types helpers
     native_types = [
-        ("real", "double", "RealAllocatable1D"),
-        ("integer", "int", "IntAllocatable1D"),
-        ("logical", "bool", "BoolAllocatable1D"),
-        ("complex", "std::complex<double>", "ComplexAllocatable1D"),
+        ("real", "double", "RealAlloc1D"),
+        ("integer", "int", "IntAlloc1D"),
+        ("logical", "bool", "BoolAlloc1D"),
+        ("complex", "std::complex<double>", "ComplexAlloc1D"),
     ]
 
     for name, _, _ in native_types:
@@ -1225,7 +1225,7 @@ class ${class_name} : public FortranProxy<${class_name}> {
     # Native types aliases
     for name, ctype, alias in native_types:
         class_forward_declarations.append(f"""
-using {alias} = FortranAllocatable1D<
+using {alias} = FAlloc1D<
     {ctype},
     allocate_{name}_container,
     deallocate_{name}_container,
@@ -1238,15 +1238,15 @@ using {alias} = FortranAllocatable1D<
         class_name = struct_to_proxy_class_name(struct_name)
         class_forward_declarations.append(f"class {class_name};")
         class_forward_declarations.append(f"""
-using {class_name}Array1D = FortranTypeArray1D<
+using {class_name}Array1D = FTypeArray1D<
     {class_name},
     allocate_fortran_{struct_name},
     deallocate_fortran_{struct_name}
 >;
-using {class_name}Array2D = FortranTypeArray2D<{class_name}>;
-using {class_name}Array3D = FortranTypeArray3D<{class_name}>;
+using {class_name}Array2D = FTypeArray2D<{class_name}>;
+using {class_name}Array3D = FTypeArray3D<{class_name}>;
 
-using {class_name}Allocatable1D = FortranTypeAllocatable1D<
+using {class_name}Alloc1D = FTypeAlloc1D<
     {class_name}Array1D,
     allocate_{struct_name}_container,
     deallocate_{struct_name}_container,

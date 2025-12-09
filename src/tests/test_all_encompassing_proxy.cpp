@@ -470,9 +470,9 @@ TEST_CASE("TestSubProxy standalone") {
   }
 }
 
-TEST_CASE("TestSubProxyAllocatable1D") {
+TEST_CASE("TestSubProxyAlloc1D") {
   SUBCASE("allocate and access") {
-    auto arr = TestSubProxyAllocatable1D();
+    auto arr = TestSubProxyAlloc1D();
     // resize(lbound, ubound) allocates array from lbound to ubound inclusive
     arr.resize(1, 5); // Fortran array(1:5)
     CHECK(arr.view().lower_bound() == 1);
@@ -491,7 +491,7 @@ TEST_CASE("TestSubProxyAllocatable1D") {
   }
 
   SUBCASE("resize with lbound 0") {
-    auto arr = TestSubProxyAllocatable1D();
+    auto arr = TestSubProxyAlloc1D();
     arr.resize(0, 2); // Fortran array(0:2)
     REQUIRE(arr.size() == 2);
     CHECK(arr.view().lower_bound() == 0);
@@ -506,7 +506,7 @@ TEST_CASE("TestSubProxyAllocatable1D") {
   }
 
   SUBCASE("resize and clear") {
-    auto arr = TestSubProxyAllocatable1D();
+    auto arr = TestSubProxyAlloc1D();
 
     // Initially empty
     CHECK(arr.empty());

@@ -14,7 +14,7 @@ extern "C" char* tao_c_out_io_buffer_get_line(int n);
 extern "C" int tao_c_out_io_buffer_num_lines();
 
 void test_allocatable() {
-  auto ctr{EleProxyAllocatable1D(0, 10)};
+  auto ctr{EleProxyAlloc1D(0, 10)};
 
   ctr.resize(0, 5);
   ctr[0].set_name("foo0");
@@ -29,8 +29,8 @@ void test_allocatable() {
 }
 
 void test_real_container() {
-  auto a{RealAllocatable1D()};
-  auto b{RealAllocatable1D()};
+  auto a{RealAlloc1D()};
+  auto b{RealAlloc1D()};
 
   a.resize(0, 20);
   b.resize(0, 20);
@@ -96,7 +96,7 @@ void track_test() {
     ave[i] = (n_particles > 0) ? (sum / n_particles) : 0.0;
   }
 
-  auto centroid{CoordProxyAllocatable1D()};
+  auto centroid{CoordProxyAlloc1D()};
   reallocate_coord_lat(centroid, lat, 0);
   auto centroid0{centroid[0]};
   init_coord1(centroid0, ave, ele0, Bmad::DOWNSTREAM_END);
