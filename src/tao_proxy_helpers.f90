@@ -31,6 +31,11 @@ contains
     ptr = c_loc(bmad_com)
   end function
 
+  function c_get_super_universe() result(ptr) bind(c, name="tao_get_super_universe_ptr")
+    type(c_ptr) :: ptr
+    ptr = c_loc(s)
+  end function
+
   ! Global accessor functions (only these use indices)
   function get_n_universes() result(n) bind(c, name='tao_get_n_universes')
     integer(c_int) :: n

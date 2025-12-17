@@ -16,5 +16,10 @@ if "ACC_ROOT_DIR" not in os.environ:
 ACC_ROOT_DIR = normalize(os.path.expandvars(os.environ["ACC_ROOT_DIR"]))
 CLANG_FORMAT_PATH = os.environ.get("CLANG_FORMAT_PATH", shutil.which("clang-format"))
 CODEGEN_ROOT = pathlib.Path(__file__).resolve().absolute().parent
-CPPBMAD_ROOT = CODEGEN_ROOT.parent
-CPPBMAD_INCLUDE = CODEGEN_ROOT.parent / "include"
+REPO_ROOT = CODEGEN_ROOT.parent
+CPPBMAD_ROOT = REPO_ROOT
+CPPBMAD_SRC = REPO_ROOT / "src"
+CPPBMAD_INCLUDE = REPO_ROOT / "include"
+PYBMAD_ROOT = REPO_ROOT / "python"
+PYBMAD_INCLUDE = REPO_ROOT / "python" / "include"
+PYBMAD_SRC = REPO_ROOT / "python" / "src"

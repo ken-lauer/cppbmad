@@ -7,8 +7,10 @@ import textwrap
 import typing
 from abc import ABC, abstractmethod
 
+from .arg import Argument, CodegenStructure
 from .context import get_params
-from .types import STANDARD_TYPES
+from .proxy import templates as proxy_templates
+from .types import STANDARD_TYPES, native_type_containers
 from .util import snake_to_camel
 
 if typing.TYPE_CHECKING:
@@ -81,7 +83,7 @@ class CppWrapperArgument(ABC):
             return self.fortran_call_arg_name
         return None
 
-    def struct_decl(self) -> tuple[str, str] | None:
+    def struct_decl(self, ignore_intent: bool = False) -> tuple[str, str] | None:  # noqa: ARG002
         """Return (type, name) for struct declaration if this is an output argument."""
         return None
 
@@ -124,8 +126,8 @@ class CppWrapperTypeArgumentAllocArray(CppWrapperArgument):
             return f"std::move({self.arg.c_name})"
         return super().output_arg_name
 
-    def struct_decl(self) -> tuple[str, str] | None:
-        if self.arg.intent == "out":
+    def struct_decl(self, ignore_intent: bool = False) -> tuple[str, str] | None:
+        if self.arg.intent == "out" or ignore_intent:
             clsname = self.arg.kind_as_cpp_class
             container_cls = f"{clsname}Alloc1D"
             return container_cls, self.arg.c_name
@@ -171,8 +173,8 @@ class CppWrapperTypeArgumentArray(CppWrapperArgument):
             return f"std::move({self.arg.c_name})"
         return super().output_arg_name
 
-    def struct_decl(self) -> tuple[str, str] | None:
-        if self.arg.intent == "out":
+    def struct_decl(self, ignore_intent: bool = False) -> tuple[str, str] | None:
+        if self.arg.intent == "out" or ignore_intent:
             clsname = self.arg.kind_as_cpp_class
             return f"{clsname}Array1D", self.arg.c_name
         return None
@@ -223,8 +225,8 @@ class CppWrapperTypeArgument(CppWrapperArgument):
             return self.arg.c_name
         return self.fortran_call_arg_name
 
-    def struct_decl(self) -> tuple[str, str] | None:
-        if self.arg.intent == "out":
+    def struct_decl(self, ignore_intent: bool = False) -> tuple[str, str] | None:
+        if self.arg.intent == "out" or ignore_intent:
             return self.arg.c_class, self.arg.c_name
         return None
 
@@ -284,8 +286,8 @@ class CppWrapperStringArgumentArray(CppWrapperArgument):
             return self.arg.c_name
         return super().output_arg_name
 
-    def struct_decl(self) -> tuple[str, str] | None:
-        if self.arg.intent == "out":
+    def struct_decl(self, ignore_intent: bool = False) -> tuple[str, str] | None:
+        if self.arg.intent == "out" or ignore_intent:
             return self.arg.transform.cpp_declare_type, self.arg.c_name
         return None
 
@@ -319,17 +321,21 @@ class CppWrapperStringArgument(CppWrapperArgument):
     def call_argument(self) -> str:
         return self.fortran_call_arg_name
 
-    def struct_decl(self) -> tuple[str, str] | None:
-        if self.arg.intent == "out":
+    def struct_decl(self, ignore_intent: bool = False) -> tuple[str, str] | None:
+        if self.arg.intent == "out" or ignore_intent:
             return "std::string", self.arg.c_name
         return None
 
 
 _alloc_array_type_map = {
-    "real": "RealAlloc1D",
-    "integer": "IntAlloc1D",
-    "logical": "BoolAlloc1D",
-    "complex": "ComplexAlloc1D",
+    ctr.name: ctr.cpp_container_name
+    for ctr in native_type_containers
+    # "real": "RealAlloc1D",
+    # "real8": "Real8Alloc1D",
+    # "integer": "IntAlloc1D",
+    # "integer8": "Int8Alloc1D",
+    # "logical": "BoolAlloc1D",
+    # "complex": "ComplexAlloc1D",
 }
 
 
@@ -374,8 +380,8 @@ class CppWrapperGeneralArgumentAllocArray(CppWrapperArgument):
             return f"std::move({self.arg.c_name})"
         return super().output_arg_name
 
-    def struct_decl(self) -> tuple[str, str] | None:
-        if self.arg.intent == "out":
+    def struct_decl(self, ignore_intent: bool = False) -> tuple[str, str] | None:
+        if self.arg.intent == "out" or ignore_intent:
             container_cls = _alloc_array_type_map[self.arg.type]
             return container_cls, self.arg.c_name
         return None
@@ -455,8 +461,8 @@ class CppWrapperGeneralArgumentArray(CppWrapperArgument):
             return self.arg.c_name
         return super().output_arg_name
 
-    def struct_decl(self) -> tuple[str, str] | None:
-        if self.arg.intent == "out":
+    def struct_decl(self, ignore_intent: bool = False) -> tuple[str, str] | None:
+        if self.arg.intent == "out" or ignore_intent:
             if len(self.arg.array) == 1:
                 return self.arg.transform.cpp_declare_type, self.arg.c_name
             if len(self.arg.array) in {2, 3}:
@@ -529,8 +535,8 @@ class CppWrapperGeneralArgument(CppWrapperArgument):
             return self.arg.c_name
         return super().output_arg_name
 
-    def struct_decl(self) -> tuple[str, str] | None:
-        if self.arg.intent == "out":
+    def struct_decl(self, ignore_intent: bool = False) -> tuple[str, str] | None:
+        if self.arg.intent == "out" or ignore_intent:
             return STANDARD_TYPES[self.arg.type].c_type, self.arg.c_name
         return None
 
@@ -538,7 +544,7 @@ class CppWrapperGeneralArgument(CppWrapperArgument):
 def generate_routine_return_value_struct(routine: FortranRoutine) -> list[str]:
     cpp_wrapper_args = [CppWrapperArgument.from_arg(arg) for arg in routine.args]
     outputs = [arg for arg in cpp_wrapper_args if arg.arg.intent == "out"]
-    if len(outputs) <= 1:
+    if not routine.usable or len(outputs) <= 1:
         return []
 
     name = snake_to_camel(routine.name)
@@ -554,11 +560,12 @@ def generate_routine_return_value_struct(routine: FortranRoutine) -> list[str]:
     return lines
 
 
-def generate_routine_cpp_wrapper(routine: FortranRoutine, namespace: str) -> list[str]:
+def generate_routine_cpp_wrapper(routine: FortranRoutine) -> list[str]:
     assert routine.docstring is not None
     lines = []
 
-    lines.append(routine.get_cpp_decl(defaults=False, namespace=namespace) + " {")
+    decl = routine.get_cpp_decl(defaults=False, namespace=True)
+    lines.append(decl + " {")
 
     cpp_wrapper_args = [CppWrapperArgument.from_arg(arg) for arg in routine.args]
 
@@ -620,11 +627,116 @@ def generate_routines_header(
         if not routine.usable:
             forward_decls.append(f"\n// Skipped unusable routine {routine.name}:")
             for reason in "\n".join(routine.unusable_reason).splitlines():
-                forward_decls.append(f"// {reason}")
+                forward_decls.append(f"// - {reason}")
         else:
             forward_decls.append(routine.fortran_forward_declaration)
             forward_decls.extend(generate_routine_return_value_struct(routine))
-            forward_decls.append(routine.get_cpp_decl(defaults=True) + ";")
+
+            decl = routine.get_cpp_decl(defaults=True, namespace=False)
+            forward_decls.append(decl + ";")
 
     tpl = string.Template(re.sub("^// ", "", template, flags=re.MULTILINE))
     return tpl.substitute(forward_declarations="\n".join(forward_decls), namespace=settings.cpp_namespace)
+
+
+def generate_to_string_header(
+    template: str, structs: list[CodegenStructure], routines: dict[str, FortranRoutine]
+) -> str:
+    decls = [f"  std::string to_string(const {struct.cpp_class}& self);" for struct in structs]
+    for routine in routines.values():
+        if routine.usable and len(routine.outputs) > 1:
+            decls.append(f"  std::string to_string(const {routine.cpp_return_type}& self);")
+
+    tpl = string.Template(template.replace("// ${", "${"))
+    return tpl.substitute(decls="\n".join(decls))
+
+
+repr_kwargs_by_struct = {
+    "lat_struct": {
+        "use_name": "self.use_name()",
+        "#branch": "to_string(self.branch().size())",
+    },
+    "ele_struct": {
+        "name": "self.name()",
+        "ix_branch": "to_string(self.ix_branch())",
+        "ix_ele": "to_string(self.ix_ele())",
+    },
+}
+
+
+def arg_to_cpp_string(arg: Argument, use_call: bool = True) -> str | None:
+    if arg.full_type not in proxy_templates:
+        # print("TODO:", arg.f_name, arg.full_type)
+        return None
+
+    if use_call:
+        arg_name = f"self.{arg.c_name}()"
+    else:
+        arg_name = f"self.{arg.c_name}"
+
+    # if arg.pointer_type != "NOT":
+    #     return f"to_string(self.{arg.c_name}())"
+    # elif arg.array:
+    #     return '"[...]"'
+    if arg.full_type.type == "type":
+        if len(arg.array) == 0:
+            return f"to_string({arg_name})"
+        return '"[...]"'
+    if arg.full_type.type == "character":
+        if arg.array:
+            return f"to_string({arg_name})"
+        return arg_name
+    # elif arg.full_type.type == "complex":
+    #     return '"cplxTODO"'
+    return f"to_string({arg_name})"
+
+
+def generate_cpp_to_string(ptr: str, cpp_class_name: str, kwarg_pairs: dict[str, str | None]) -> list[str]:
+    formatted_kwargs = ", ".join(
+        f'std::pair{{"{key}", {value}}}' for key, value in kwarg_pairs.items() if value is not None
+    )
+
+    return [
+        f"std::string to_string(const {cpp_class_name}& self) {{",
+        f'    return repr({ptr}, "{cpp_class_name}", {{ {formatted_kwargs} }});',
+        "}",
+    ]
+
+
+def generate_to_string_code(
+    template: str, structs: list[CodegenStructure], routines: dict[str, FortranRoutine]
+) -> str:
+    code_lines = []
+    for struct in structs:
+        if struct.f_name not in repr_kwargs_by_struct:
+            kw = {}
+            repr_kwargs_by_struct[struct.f_name] = kw
+            for arg in struct.arg:
+                if not arg.is_component:
+                    continue
+                as_str = arg_to_cpp_string(arg)
+                if as_str:
+                    kw[arg.c_name] = as_str
+
+        code_lines.extend(
+            generate_cpp_to_string(
+                ptr="self.get_fortran_ptr()",
+                cpp_class_name=struct.cpp_class,
+                kwarg_pairs=repr_kwargs_by_struct.get(struct.f_name, {}),
+            )
+        )
+
+    for routine in routines.values():
+        if routine.usable and len(routine.outputs) > 1:
+            code_lines.extend(
+                generate_cpp_to_string(
+                    ptr="&self",
+                    cpp_class_name=routine.cpp_return_type,
+                    kwarg_pairs={
+                        output.c_name: arg_to_cpp_string(output, use_call=False) for output in routine.outputs
+                    },
+                )
+            )
+
+    tpl = string.Template(template.replace("// ${", "${"))
+    return tpl.substitute(decls="\n".join(code_lines))

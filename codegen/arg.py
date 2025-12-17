@@ -5,6 +5,7 @@ import sys
 import typing
 from dataclasses import dataclass, field
 
+from .config import CodegenConfig
 from .context import get_params
 from .proxy import (
     struct_to_proxy_class_name,
@@ -13,7 +14,6 @@ from .structs import (
     ParsedStructure,
     StructureMember,
 )
-from .transforms import Transform, get_type_transform
 from .types import (
     ALLOC,
     INT8,
@@ -23,6 +23,8 @@ from .types import (
     ArgumentType,
     FullType,
     PointerType,
+    Transform,
+    get_type_transform,
 )
 
 if typing.TYPE_CHECKING:
@@ -86,7 +88,9 @@ class Argument:
         return ":" in self.array or "0:" in self.array or "*" in self.array
 
     @classmethod
-    def from_fstruct(cls, fstruct: ParsedStructure | FortranRoutine, member: StructureMember):
+    def from_fstruct(
+        cls, fstruct: ParsedStructure | FortranRoutine, member: StructureMember, params: CodegenConfig
+    ):
         if member.kind and member.type.lower() == "integer":
             type_ = INT8
         else:
@@ -102,7 +106,7 @@ class Argument:
         else:
             pointer_type = NOT
 
-        f_to_c_name = get_params().c_side_name_translation
+        f_to_c_name = params.c_side_name_translation
         if member.name in f_to_c_name:
             c_name = f_to_c_name[member.name]
         else:
@@ -201,8 +205,7 @@ class Argument:
     def dim3(self) -> int:
         return 1 + int(self.ubound[2]) - int(self.lbound[2])
 
-    def should_translate(self, struct_name: str) -> bool:
-        params = get_params()
+    def should_translate(self, struct_name: str, params: CodegenConfig) -> bool:
         return (
             self.kind not in params.component_no_translate_list
             and f"{struct_name}%{self.f_name}" not in params.component_no_translate_list
@@ -211,8 +214,6 @@ class Argument:
     def _replace_transform_placeholders(self, transform: Transform) -> Transform:
         if self.type == "type":
             kind = self.kind
-            if kind.lower().endswith("_struct"):
-                kind = kind[: -len("_struct")]
 
             if not kind:
                 raise RuntimeError("Kind is empty?")
@@ -242,7 +243,6 @@ class Argument:
 @dataclass
 class CodegenStructure:
     f_name: str = ""  # Struct name on Fortran side
-    short_name: str = ""  # Struct name without trailing '_struct'. Note: C++ name is 'CPP_<short_name>'
     cpp_class: str = ""  # C++ name.
     arg: list[Argument] = field(
         default_factory=list
@@ -275,4 +275,4 @@ class CodegenStructure:
         )
 
     def __str__(self) -> str:
-        return f"[name: {self.short_name}, #arg: {len(self.arg)}]"
+        return f"[name: {self.f_name}, #arg: {len(self.arg)}]"

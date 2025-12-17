@@ -5,10 +5,6 @@ equality_use_statements = [
 ]
 test_use_statements = ["use bmad_json", "use sim_utils_json", "use tao_json"]
 
-# List of structures to setup interfaces for.
-# List must be in ordered such that if struct A is a component of struct B,
-# then A must be before B in the list.
-
 struct_list = [
   "spline_struct",
   "spin_polar_struct",
@@ -108,6 +104,17 @@ struct_list = [
   "aperture_point_struct",
   "aperture_param_struct",
   "aperture_scan_struct",
+  # Some new ones:
+  "ele_pointer_struct",
+  "expression_tree_struct",
+  "nametable_struct",
+
+  # sim_utils
+  # "qp_axis_struct",
+  # "qp_plot_struct",
+  # "qp_rect_struct",
+  # "qp_state_struct",
+
   # Tao
   "tao_spin_dn_dpz_struct",
   # "probe_8",
@@ -122,6 +129,8 @@ struct_list = [
   "bmad_normal_form_struct",
   "bunch_track_struct",
   "summation_rdt_struct",
+  "tao_ele_shape_struct",
+  "tao_curve_struct",
   "lat_ele_order1_struct",
   "lat_ele_order_array_struct",
   "tao_lat_sigma_struct",
@@ -132,11 +141,19 @@ struct_list = [
   "tao_model_element_struct",
   "tao_beam_branch_struct",
   "tao_d1_data_struct",
+  "tao_d2_data_struct",
+  "tao_data_var_component_struct",
+  "tao_graph_struct",
+  "tao_plot_struct",
+  "tao_plot_region_struct",
+  "tao_universe_pointer_struct",
+  "tao_super_universe_struct",
+  "tao_var_struct",
+
   "tao_lattice_struct",
   "tao_beam_uni_struct",
   "tao_dynamic_aperture_struct",
   "tao_model_branch_struct",
-  "tao_d2_data_struct",
   "tao_spin_map_struct",
   "tao_data_struct",
   "tao_ping_scale_struct",
@@ -215,9 +232,13 @@ interface_ignore_list = [
 
 structs_defined_externally = []
 
-include_header_files = ['#include "bmad_enums.h"', '#include "bmad/types.h"']
+include_header_files = ['#include "bmad_enums.hpp"', '#include "bmad/types.h"']
 
 skips = [
+  "xraylib",
+  "xraylib_dummy",
+  "fortran_tao_evaluate_expression_old",
+
   # Optionally compiled in
   "fft_interface_mod",
   # JSON-related
@@ -243,6 +264,7 @@ skips = [
   "track1_wake_hook_def",
   "track_many_hook_def",
   "wall_hit_handler_custom_def",
+  "em_field_custom_def",
 
   # pointer handling
   "deallocate_ele_array_pointers",
@@ -295,22 +317,30 @@ skips = [
   # Tao hook functions
   "tao_hook_branch_calc_def",
   "tao_hook_command_def",
+  "tao_hook_curve_s_pt_def",
   "tao_hook_data_sanity_check_def",
+  "tao_hook_draw_floor_plan_def",
+  "tao_hook_draw_graph_def",
   "tao_hook_evaluate_a_datum_def",
+  "tao_hook_graph_postsetup_def",
+  "tao_hook_graph_setup_def",
   "tao_hook_init1_def",
   "tao_hook_init2_def",
   "tao_hook_init_beam_def",
   "tao_hook_init_data_def",
+  "tao_hook_init_global_def",
   "tao_hook_init_lattice_post_parse_def",
   "tao_hook_init_plotting_def",
   "tao_hook_init_read_lattice_info_def",
   "tao_hook_init_var_def",
   "tao_hook_lattice_calc_def",
   "tao_hook_merit_data_def",
+  "tao_hook_merit_var_def",
   "tao_hook_optimizer_def",
   "tao_hook_parse_command_args_def",
   "tao_hook_plot_setup_def",
   "tao_hook_post_process_data_def",
+  "tao_hook_show_cmd_def",
 ]
 
 # Translations on C++ side to avoid clash with reserved words
@@ -324,3 +354,4 @@ skips = [
 "char" = "char_"
 "float" = "float_"
 "double" = "double_"
+"const" = "const_"

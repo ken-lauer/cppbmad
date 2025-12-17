@@ -36,6 +36,7 @@ repos:
       - id: ruff
         args: ["--extend-select=I", "--fix"]
         types_or: [python, pyi]
+        exclude: "^(python/pybmad/_pybmad.pyi)$"
       - id: ruff-format
         types_or: [python, pyi]
-        exclude: "^(codegen/_version.py)$"
+        exclude: "^(python/pybmad/_pybmad.pyi)$"

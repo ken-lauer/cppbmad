@@ -1,7 +1,18 @@
 cmake_minimum_required(VERSION 3.15...3.27)
 
 set(LIBNAME cppbmad)
-set(BUILD_TYPE "debug" CACHE STRING "Build type for ACC_ROOT_DIR paths (e.g., production or debug)")
+set(PYBIND_LIBNAME _pybmad)
+
+string(TOUPPER "${CMAKE_BUILD_TYPE}" _uppercase_cmake_build_type)
+if(_uppercase_cmake_build_type STREQUAL "DEBUG")
+  set(_default_acc_build_type "debug")
+else()
+  set(_default_acc_build_type "production")
+endif()
+
+set(BUILD_TYPE "${_default_acc_build_type}"
+  CACHE STRING "Build type for ACC_ROOT_DIR paths (e.g., production or debug)"
+)
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 
 project(
@@ -19,12 +30,16 @@ add_library(${LIBNAME} SHARED
   src/generated/tao_routines.f90
   src/tao_proxy_helpers.f90
   src/test_struct_defs.f90
+  src/tests/routines/cppbmad_tests.f90
+  src/generated/cppbmad_test_routines.f90
 
   src/common_structs.cpp
   src/generated/proxy.cpp
+  src/generated/cppbmad_test_routines.cpp
   src/generated/routines.cpp
   src/generated/sim_utils_routines.cpp
   src/generated/tao_routines.cpp
+  src/generated/to_string.cpp
   src/tao_index.cpp
   src/proxy_base.cpp
   src/to_string.cpp
@@ -64,13 +79,13 @@ if (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
 
 endif()
 
-IF ("${CMAKE_SYSTEM_NAME}" MATCHES "Darwin")
+if("${CMAKE_SYSTEM_NAME}" MATCHES "Darwin")
   # No address sanitization options
-ELSE ()
+else()
   set(BASE_CXX_FLAGS "${BASE_CXX_FLAGS} -fsanitize=address,undefined")
   set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fsanitize=address,undefined")
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address,undefined")
-ENDIF()
+endif()
 
 
 target_include_directories(${LIBNAME} PRIVATE
@@ -97,23 +112,23 @@ if(APPLE)
   target_link_options(${LIBNAME} PRIVATE "-Wl,-no_compact_unwind")
 endif()
 
+
 set_property(TARGET ${LIBNAME} PROPERTY CXX_STANDARD 17)
 target_compile_definitions(${LIBNAME} PRIVATE VERSION_INFO="${PROJECT_VERSION}")
 
 install(TARGETS ${LIBNAME} DESTINATION lib)
 
-# Integration tests (original test1.cpp functionality)
-add_executable(test_integration src/tests/test_integration.cpp)
-target_include_directories(test_integration PRIVATE
-  "./include"
-)
-target_link_directories(
-  test_integration
-  PRIVATE
-  "$ENV{ACC_ROOT_DIR}/${BUILD_TYPE}/lib"
-)
-target_link_libraries(test_integration PRIVATE ${LIBNAME})
-set_property(TARGET test_integration PROPERTY CXX_STANDARD 17)
+foreach(TEST_NAME test_integration test_csr test_arrays)
+  add_executable(${TEST_NAME} src/tests/${TEST_NAME}.cpp)
+  target_include_directories(${TEST_NAME} PRIVATE "./include")
+  target_link_directories(
+    ${TEST_NAME}
+    PRIVATE
+    "$ENV{ACC_ROOT_DIR}/${BUILD_TYPE}/lib"
+  )
+  target_link_libraries(${TEST_NAME} PRIVATE ${LIBNAME})
+  set_property(TARGET ${TEST_NAME} PROPERTY CXX_STANDARD 17)
+endforeach()
 
 # Unit tests with doctest
 add_executable(test_all_encompassing
@@ -135,3 +150,9 @@ set_property(TARGET test_all_encompassing PROPERTY CXX_STANDARD 17)
 # Enable CTest
 enable_testing()
 add_test(NAME AllEncompassingProxyTests COMMAND test_all_encompassing)
+
+option(BUILD_PYBMAD "Build the Bmad Python bindings" ON)
+
+if(BUILD_PYBMAD OR SKBUILD)
+  add_subdirectory(python)
+endif()

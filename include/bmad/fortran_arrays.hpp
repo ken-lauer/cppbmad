@@ -1,13 +1,14 @@
 #pragma once
 
 #include <cstring>
-#include <sstream>
+#include <memory>
 #include <stdexcept>
 #include <string>
+#include <type_traits> // std::enable_if / std::is_same
 #include <utility>
 #include <vector>
 
-#include "to_string.hpp"
+// #include "to_string.hpp"
 
 namespace Bmad {
 
@@ -78,6 +79,10 @@ using std::to_string;
 
 template <typename T, std::size_t N>
 class FArrayND {
+ public:
+  // Standard container typedefs
+  using value_type = T;
+
  private:
   T* data_;
   std::array<int, N> sizes_;
@@ -253,7 +258,6 @@ class FArrayND {
       return {};
     std::vector<T> result;
     result.reserve(total_size());
-    // Simple flat iteration
     for (int i = 0; i < total_size(); ++i)
       result.push_back(data_[i]);
     return result;
@@ -262,22 +266,22 @@ class FArrayND {
   bool empty() const {
     return !valid_ || total_size() == 0;
   }
-
-  std::string to_string() const {
-    if (!valid_)
-      return "[]";
-    std::ostringstream oss;
-    oss << "[(N-dim array, total_size=" << total_size() << ")]";
-    return oss.str();
-  }
 };
 
 // =============================================================================
-// FArrayND<T, 1> - Explicit 1D specialization (simpler, more readable)
+// FArrayND<T, 1> - Explicit 1D specialization
 // =============================================================================
 
 template <typename T>
 class FArrayND<T, 1> {
+ public:
+  // Standard container typedefs for binding introspection
+  using value_type = T;
+  using iterator = T*;
+  using const_iterator = const T*;
+  using reference = T&;
+  using const_reference = const T&;
+
  private:
   T* data_;
   int size_;
@@ -401,23 +405,221 @@ class FArrayND<T, 1> {
   bool empty() const {
     return !valid_ || size_ == 0;
   }
-
-  std::string to_string() const {
-    using ::Bmad::to_string;
-    if (!valid_)
-      return "[]";
-    std::ostringstream oss;
-    oss << "[";
-    for (int i = 0; i < size_; ++i) {
-      if (i > 0)
-        oss << ", ";
-      oss << ::Bmad::to_string(data_[i]);
-    }
-    oss << "]";
-    return oss.str();
-  }
 };
 
+// =============================================================================
+// FArrayND<bool, 1> - Specialization for Fortran LOGICAL arrays
+// =============================================================================
+
+template <>
+class FArrayND<bool, 1> {
+ public:
+  // Fortran Logical is typically stored as a 4-byte integer (C_INT).
+  // We manage the storage as int*, but present the interface as bool.
+  using storage_type = int;
+  using value_type = bool;
+
+  // Custom proxy to handle conversion between int storage and bool value
+  class ReferenceProxy {
+    storage_type* ptr_;
+
+   public:
+    explicit ReferenceProxy(storage_type* p) : ptr_(p) {}
+
+    // Read: C++ bool from Fortran int (non-zero is true)
+    operator bool() const {
+      return *ptr_ != 0;
+    }
+
+    // Write: Fortran int from C++ bool (1 is true, 0 is false)
+    ReferenceProxy& operator=(bool v) {
+      *ptr_ = v ? 1 : 0;
+      return *this;
+    }
+    ReferenceProxy& operator=(const ReferenceProxy& other) {
+      *ptr_ = other.operator bool() ? 1 : 0;
+      return *this;
+    }
+  };
+
+  class ConstReferenceProxy {
+    const storage_type* ptr_;
+
+   public:
+    explicit ConstReferenceProxy(const storage_type* p) : ptr_(p) {}
+    operator bool() const {
+      return *ptr_ != 0;
+    }
+  };
+
+  // Iterator support
+  class iterator {
+    storage_type* ptr_;
+
+   public:
+    using difference_type = std::ptrdiff_t;
+    using value_type = bool;
+    using pointer = void; // No actual bool* exists
+    using reference = ReferenceProxy;
+    using iterator_category = std::random_access_iterator_tag;
+
+    iterator(storage_type* p) : ptr_(p) {}
+    reference operator*() const {
+      return ReferenceProxy(ptr_);
+    }
+    iterator& operator++() {
+      ++ptr_;
+      return *this;
+    }
+    iterator operator++(int) {
+      iterator tmp = *this;
+      ++ptr_;
+      return tmp;
+    }
+    iterator& operator--() {
+      --ptr_;
+      return *this;
+    }
+    iterator operator--(int) {
+      iterator tmp = *this;
+      --ptr_;
+      return tmp;
+    }
+    iterator operator+(int n) const {
+      return iterator(ptr_ + n);
+    }
+    iterator operator-(int n) const {
+      return iterator(ptr_ - n);
+    }
+    difference_type operator-(const iterator& other) const {
+      return ptr_ - other.ptr_;
+    }
+    bool operator==(const iterator& other) const {
+      return ptr_ == other.ptr_;
+    }
+    bool operator!=(const iterator& other) const {
+      return ptr_ != other.ptr_;
+    }
+  };
+
+ private:
+  storage_type* data_;
+  int size_;
+  int lower_bound_;
+  int upper_bound_;
+  bool valid_;
+
+ public:
+  FArrayND()
+      : data_(nullptr),
+        size_(0),
+        lower_bound_(0),
+        upper_bound_(-1),
+        valid_(false) {}
+
+  // The Constructor receives bool* because FAlloc1D logic casts void* to T* (bool*).
+  // We immediately reinterpret_cast it back to the correct storage type (int*).
+  FArrayND(bool* data, int size, int lower, int upper, bool valid)
+      : data_(reinterpret_cast<storage_type*>(data)),
+        size_(size),
+        lower_bound_(lower),
+        upper_bound_(upper),
+        valid_(valid) {}
+
+  // Fortran-style indexing
+  ReferenceProxy operator()(int i) {
+    if (!valid_)
+      throw std::runtime_error("Array not allocated");
+    if (i < lower_bound_ || i > upper_bound_)
+      throw std::out_of_range("Index " + std::to_string(i) + " out of bounds");
+    return ReferenceProxy(data_ + (i - lower_bound_));
+  }
+
+  ConstReferenceProxy operator()(int i) const {
+    if (!valid_)
+      throw std::runtime_error("Array not allocated");
+    if (i < lower_bound_ || i > upper_bound_)
+      throw std::out_of_range("Index " + std::to_string(i) + " out of bounds");
+    return ConstReferenceProxy(data_ + (i - lower_bound_));
+  }
+
+  // C-style indexing
+  ReferenceProxy operator[](int i) {
+    // Omitting validity check for speed in []
+    return ReferenceProxy(data_ + i);
+  }
+  ConstReferenceProxy operator[](int i) const {
+    return ConstReferenceProxy(data_ + i);
+  }
+
+  ReferenceProxy at(int i) {
+    if (!valid_)
+      throw std::runtime_error("Array not allocated");
+    if (i < 0 || i >= size_)
+      throw std::out_of_range("Index " + std::to_string(i) + " out of bounds");
+    return operator[](i);
+  }
+
+  ConstReferenceProxy at(int i) const {
+    if (!valid_)
+      throw std::runtime_error("Array not allocated");
+    if (i < 0 || i >= size_)
+      throw std::out_of_range("Index " + std::to_string(i) + " out of bounds");
+    return operator[](i);
+  }
+
+  bool is_valid() const {
+    return valid_;
+  }
+  int size() const {
+    return size_;
+  }
+  int total_size() const {
+    return size_;
+  }
+  std::pair<int, int> bounds() const {
+    return {lower_bound_, upper_bound_};
+  }
+  int lower_bound() const {
+    return lower_bound_;
+  }
+  int upper_bound() const {
+    return upper_bound_;
+  }
+
+  // Important: We cannot return bool* because the memory is int*.
+  // We explicitly delete this or return nullptr to avoid dangerous pointer math logic.
+  bool* data() = delete;
+
+  // Provide access to the raw storage if strictly necessary
+  storage_type* get_storage_ptr() {
+    return valid_ ? data_ : nullptr;
+  }
+  const storage_type* get_storage_ptr() const {
+    return valid_ ? data_ : nullptr;
+  }
+
+  iterator begin() {
+    return iterator(valid_ ? data_ : nullptr);
+  }
+  iterator end() {
+    return iterator(valid_ ? data_ + size_ : nullptr);
+  }
+
+  std::vector<bool> to_vector() const {
+    if (!valid_)
+      return {};
+    std::vector<bool> vec;
+    vec.reserve(size_);
+    for (int i = 0; i < size_; ++i)
+      vec.push_back((data_[i] != 0));
+    return vec;
+  }
+
+  bool empty() const {
+    return !valid_ || size_ == 0;
+  }
+};
 // =============================================================================
 // FTypeArrayND<ProxyType, N> - Primary template for N-D derived type arrays
 // =============================================================================
@@ -428,6 +630,9 @@ template <
     void* (*AllocFunc)(int, size_t*),
     void (*DeallocFunc)(void*, int)>
 class FTypeArrayND {
+ public:
+  using value_type = ProxyType;
+
  private:
   void* data_;
   std::array<int, N> sizes_;
@@ -581,8 +786,12 @@ class FTypeArrayND {
       ++idx_;
       return *this;
     }
-    bool operator!=(const iterator& o) const {
-      return idx_ != o.idx_;
+    bool operator==(const iterator& other) const {
+      return idx_ == other.idx_ && arr_ == other.arr_;
+    }
+
+    bool operator!=(const iterator& other) const {
+      return !(*this == other);
     }
   };
   iterator begin() {
@@ -602,17 +811,19 @@ template <
     void* (*AllocFunc)(int, size_t*),
     void (*DeallocFunc)(void*, int)>
 class FTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
+ public:
+  using value_type = ProxyType;
+
  private:
-  void* data_;
+  std::shared_ptr<void> data_;
   int size_;
   int lower_bound_;
   int upper_bound_;
   bool valid_;
   size_t element_size_;
-  bool owned_;
 
   void* element_ptr(int i) const {
-    return static_cast<char*>(data_) + i * element_size_;
+    return static_cast<char*>(data_.get()) + i * element_size_;
   }
 
  public:
@@ -623,8 +834,7 @@ class FTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
         lower_bound_(0),
         upper_bound_(-1),
         valid_(false),
-        element_size_(0),
-        owned_(false) {}
+        element_size_(0) {}
 
   FTypeArrayND(
       void* data,
@@ -633,113 +843,56 @@ class FTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
       int upper,
       bool valid,
       size_t elem_size)
-      : data_(data),
-        size_(size),
+      : size_(size),
         lower_bound_(lower),
         upper_bound_(upper),
         valid_(valid),
-        element_size_(elem_size),
-        owned_(false) {}
+        element_size_(elem_size) {
+    if (data) {
+      // Non-owning view: use no-op deleter
+      data_ = std::shared_ptr<void>(data, [](void*) {});
+    }
+  }
 
   // Static factory for owned arrays
-  template <
-      typename =
-          std::enable_if_t<AllocFunc != nullptr && DeallocFunc != nullptr>>
-  static FTypeArrayND allocate(int size, int lower_bound = 1) {
+  // NOTE: depends on 'U' to defer evaluation until the function is actually called.
+  template <typename U = void>
+  static std::enable_if_t<
+      std::is_same<U, void>::value && (AllocFunc != nullptr) &&
+          (DeallocFunc != nullptr),
+      FTypeArrayND>
+  allocate(int size, int lower_bound = 1) {
     if (size < 0)
       throw std::invalid_argument("Size must be non-negative");
+
     size_t elem_size = 0;
-    void* data = AllocFunc(size, &elem_size);
-    if (!data)
+    void* raw_ptr = AllocFunc(size, &elem_size);
+    if (!raw_ptr)
       throw std::runtime_error("Failed to allocate");
+
     FTypeArrayND arr;
-    arr.data_ = data;
     arr.size_ = size;
+    // Helper lambda to bridge C++ shared_ptr deleter to Fortran DeallocFunc
+    arr.data_ = std::shared_ptr<void>(
+        raw_ptr, [size](void* p) { DeallocFunc(p, size); });
     arr.lower_bound_ = lower_bound;
     arr.upper_bound_ = lower_bound + size - 1;
     arr.valid_ = true;
     arr.element_size_ = elem_size;
-    arr.owned_ = true;
     return arr;
   }
 
-  // Destructor
-  ~FTypeArrayND() {
-    if (owned_ && data_ && DeallocFunc) {
-      DeallocFunc(data_, size_);
-      data_ = nullptr;
-    }
-  }
+  // Destructor: Rule of Zero (handled by shared_ptr)
 
-  // Copy (non-owned only)
-  FTypeArrayND(const FTypeArrayND& o) {
-    if (o.owned_)
-      throw std::runtime_error("Cannot copy owned array");
-    data_ = o.data_;
-    size_ = o.size_;
-    lower_bound_ = o.lower_bound_;
-    upper_bound_ = o.upper_bound_;
-    valid_ = o.valid_;
-    element_size_ = o.element_size_;
-    owned_ = false;
-  }
-  FTypeArrayND& operator=(const FTypeArrayND& o) {
-    if (this != &o) {
-      if (o.owned_)
-        throw std::runtime_error("Cannot copy owned array");
-      if (owned_ && data_ && DeallocFunc)
-        DeallocFunc(data_, size_);
-      data_ = o.data_;
-      size_ = o.size_;
-      lower_bound_ = o.lower_bound_;
-      upper_bound_ = o.upper_bound_;
-      valid_ = o.valid_;
-      element_size_ = o.element_size_;
-      owned_ = false;
-    }
-    return *this;
-  }
+  // Copy: Rule of Zero (shared ownership enabled via shared_ptr)
 
-  // Move
-  FTypeArrayND(FTypeArrayND&& o) noexcept
-      : data_(o.data_),
-        size_(o.size_),
-        lower_bound_(o.lower_bound_),
-        upper_bound_(o.upper_bound_),
-        valid_(o.valid_),
-        element_size_(o.element_size_),
-        owned_(o.owned_) {
-    o.data_ = nullptr;
-    o.size_ = 0;
-    o.valid_ = false;
-    o.owned_ = false;
-  }
-  FTypeArrayND& operator=(FTypeArrayND&& o) noexcept {
-    if (this != &o) {
-      if (owned_ && data_ && DeallocFunc)
-        DeallocFunc(data_, size_);
-      data_ = o.data_;
-      size_ = o.size_;
-      lower_bound_ = o.lower_bound_;
-      upper_bound_ = o.upper_bound_;
-      valid_ = o.valid_;
-      element_size_ = o.element_size_;
-      owned_ = o.owned_;
-      o.data_ = nullptr;
-      o.size_ = 0;
-      o.valid_ = false;
-      o.owned_ = false;
-    }
-    return *this;
-  }
+  // Move: Rule of Zero (handled by shared_ptr)
 
   FTypeArrayND as_view() const {
-    return FTypeArrayND(
-        data_, size_, lower_bound_, upper_bound_, valid_, element_size_);
+    return *this; // shared_ptr enables implicit view semantics
   }
-  bool is_owned() const {
-    return owned_;
-  }
+
+  // is_owned() is conceptually removed as shared_ptr handles lifetime abstractly
 
   // Fortran-style indexing
   ProxyType operator()(int i) {
@@ -810,13 +963,13 @@ class FTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
   }
 
   void* data() {
-    return valid_ ? data_ : nullptr;
+    return valid_ ? data_.get() : nullptr;
   }
   const void* data() const {
-    return valid_ ? data_ : nullptr;
+    return valid_ ? data_.get() : nullptr;
   }
   void* get_fortran_ptr() const {
-    return data_;
+    return data_.get();
   }
   bool empty() const {
     return !valid_ || size_ == 0;
@@ -849,8 +1002,11 @@ class FTypeArrayND<ProxyType, 1, AllocFunc, DeallocFunc> {
       ++idx_;
       return *this;
     }
+    bool operator==(const iterator& o) const {
+      return idx_ == o.idx_ && arr_ == o.arr_;
+    }
     bool operator!=(const iterator& o) const {
-      return idx_ != o.idx_;
+      return !(*this == o);
     }
   };
   iterator begin() {
@@ -1028,6 +1184,13 @@ class FCharArray1D {
     FCharArray1D* p_;
     int i_;
 
+    friend bool operator==(const Iterator& a, const Iterator& b) {
+      return a.p_ == b.p_ && a.i_ == b.i_;
+    }
+    friend bool operator!=(const Iterator& a, const Iterator& b) {
+      return !(a == b);
+    }
+
    public:
     Iterator(FCharArray1D* p, int i) : p_(p), i_(i) {}
     StringProxy operator*() {
@@ -1060,8 +1223,11 @@ template <
     void (*ReallocFunc)(void*, int, size_t),
     void (*AccessFunc)(void*, void**, int*, int*, size_t*, bool*)>
 class FTypeAlloc1D {
+ public:
+  using view_type = ViewType;
+
  private:
-  void* handle_ = nullptr;
+  std::shared_ptr<void> handle_;
   mutable ViewType view_;
   mutable bool stale_ = true;
 
@@ -1070,7 +1236,7 @@ class FTypeAlloc1D {
     int lbound = 1, size = 0;
     size_t elem_size = 0;
     bool alloc = false;
-    AccessFunc(handle_, &data, &lbound, &size, &elem_size, &alloc);
+    AccessFunc(handle_.get(), &data, &lbound, &size, &elem_size, &alloc);
     view_ = (alloc && data && size > 0)
         ? ViewType(data, size, lbound, lbound + size - 1, true, elem_size)
         : ViewType();
@@ -1079,49 +1245,25 @@ class FTypeAlloc1D {
 
  public:
   FTypeAlloc1D() {
-    handle_ = AllocFunc();
+    handle_ = std::shared_ptr<void>(AllocFunc(), DeallocFunc);
   }
-  explicit FTypeAlloc1D(int lbound, int n) {
-    handle_ = AllocFunc();
+  explicit FTypeAlloc1D(int lbound, int n) : FTypeAlloc1D() {
     if (n > 0)
       resize(lbound, n);
   }
-  ~FTypeAlloc1D() {
-    if (handle_)
-      DeallocFunc(handle_);
-  }
-
-  FTypeAlloc1D(FTypeAlloc1D&& o) noexcept
-      : handle_(o.handle_), view_(std::move(o.view_)), stale_(o.stale_) {
-    o.handle_ = nullptr;
-    o.stale_ = true;
-  }
-  FTypeAlloc1D& operator=(FTypeAlloc1D&& o) noexcept {
-    if (this != &o) {
-      if (handle_)
-        DeallocFunc(handle_);
-      handle_ = o.handle_;
-      view_ = std::move(o.view_);
-      stale_ = o.stale_;
-      o.handle_ = nullptr;
-      o.stale_ = true;
-    }
-    return *this;
-  }
-  FTypeAlloc1D(const FTypeAlloc1D&) = delete;
-  FTypeAlloc1D& operator=(const FTypeAlloc1D&) = delete;
+  // Destructor: Rule of Zero (handled by shared_ptr + DeallocFunc)
 
   void resize(int lbound, int n) {
-    ReallocFunc(handle_, lbound, n);
+    ReallocFunc(handle_.get(), lbound, n);
     stale_ = true;
   }
   void clear() {
-    ReallocFunc(handle_, 0, 0);
+    ReallocFunc(handle_.get(), 0, 0);
     stale_ = true;
   }
 
   void* get_fortran_ptr() const {
-    return handle_;
+    return handle_.get();
   }
   ViewType& view() const {
     refresh();
@@ -1140,10 +1282,10 @@ class FTypeAlloc1D {
   auto end() {
     return view().end();
   }
-  auto operator[](int i) {
+  decltype(auto) operator[](int i) {
     return view()[i];
   }
-  const auto operator[](int i) const {
+  decltype(auto) operator[](int i) const {
     return view()[i];
   }
 };
@@ -1159,8 +1301,11 @@ template <
     void (*ReallocFunc)(void*, int, size_t),
     void (*AccessFunc)(void*, void**, int*, int*, size_t*, bool*)>
 class FAlloc1D {
+ public:
+  using view_type = FArray1D<T>;
+
  private:
-  void* handle_ = nullptr;
+  std::shared_ptr<void> handle_;
   mutable FArray1D<T> view_;
   mutable bool stale_ = true;
 
@@ -1169,7 +1314,7 @@ class FAlloc1D {
     int lbound = 1, size = 0;
     size_t elem_size = 0;
     bool alloc = false;
-    AccessFunc(handle_, &data_ptr, &lbound, &size, &elem_size, &alloc);
+    AccessFunc(handle_.get(), &data_ptr, &lbound, &size, &elem_size, &alloc);
     T* data = static_cast<T*>(data_ptr);
     view_ = (alloc && data && size > 0)
         ? FArray1D<T>(data, size, lbound, lbound + size - 1, true)
@@ -1179,49 +1324,25 @@ class FAlloc1D {
 
  public:
   FAlloc1D() {
-    handle_ = AllocFunc();
+    handle_ = std::shared_ptr<void>(AllocFunc(), DeallocFunc);
   }
-  explicit FAlloc1D(int lbound, int n) {
-    handle_ = AllocFunc();
+  explicit FAlloc1D(int lbound, int n) : FAlloc1D() {
     if (n > 0)
       resize(lbound, n);
   }
-  ~FAlloc1D() {
-    if (handle_)
-      DeallocFunc(handle_);
-  }
-
-  FAlloc1D(FAlloc1D&& o) noexcept
-      : handle_(o.handle_), view_(std::move(o.view_)), stale_(o.stale_) {
-    o.handle_ = nullptr;
-    o.stale_ = true;
-  }
-  FAlloc1D& operator=(FAlloc1D&& o) noexcept {
-    if (this != &o) {
-      if (handle_)
-        DeallocFunc(handle_);
-      handle_ = o.handle_;
-      view_ = std::move(o.view_);
-      stale_ = o.stale_;
-      o.handle_ = nullptr;
-      o.stale_ = true;
-    }
-    return *this;
-  }
-  FAlloc1D(const FAlloc1D&) = delete;
-  FAlloc1D& operator=(const FAlloc1D&) = delete;
+  // Destructor: Rule of Zero (handled by shared_ptr + DeallocFunc)
 
   void resize(int lbound, int n) {
-    ReallocFunc(handle_, lbound, n);
+    ReallocFunc(handle_.get(), lbound, n);
     stale_ = true;
   }
   void clear() {
-    ReallocFunc(handle_, 0, 0);
+    ReallocFunc(handle_.get(), 0, 0);
     stale_ = true;
   }
 
   void* get_fortran_ptr() const {
-    return handle_;
+    return handle_.get();
   }
   FArray1D<T>& view() const {
     refresh();
@@ -1243,50 +1364,19 @@ class FAlloc1D {
   auto end() {
     return view().end();
   }
-  auto operator[](int i) {
+  decltype(auto) operator[](int i) {
     return view()[i];
   }
-  const auto operator[](int i) const {
+  decltype(auto) operator[](int i) const {
     return view()[i];
   }
-  auto operator()(int i) {
+  decltype(auto) operator()(int i) {
     return view()(i);
   }
-  const auto operator()(int i) const {
+  decltype(auto) operator()(int i) const {
     return view()(i);
   }
 };
-
-// =============================================================================
-// to_string overloads
-// =============================================================================
-
-std::string to_string(const FCharArray1D& arr);
-
-template <typename T, std::size_t N>
-std::string to_string(const FArrayND<T, N>& arr) {
-  return arr.to_string();
-}
-
-template <typename ProxyType, std::size_t N, auto AllocFunc, auto DeallocFunc>
-std::string to_string(
-    const FTypeArrayND<ProxyType, N, AllocFunc, DeallocFunc>& arr) {
-  std::ostringstream oss;
-  oss << "[";
-  if constexpr (N == 1) {
-    for (int i = 0; i < arr.size(); ++i) {
-      if (i > 0)
-        oss << ", ";
-      oss << ::Bmad::to_string(arr[i]);
-    }
-  } else {
-    oss << "(N-dim type array, size=" << arr.total_size() << ")";
-  }
-  oss << "]";
-  return oss.str();
-}
-
-template std::string to_string(const FArray1D<std::complex<double>>&);
 
 // =============================================================================
 // ProxyHelpers - Helper functions for proxy generation

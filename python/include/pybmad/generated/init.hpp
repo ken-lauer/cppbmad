@@ -1,0 +1,166 @@
+#pragma once
+
+#include <functional>
+
+#include <pybind11/complex.h>
+#include <pybind11/numpy.h>
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/stl_bind.h>
+
+// #include "bmad_enums.h"
+// #include "bmad_proxy_routines.hpp"
+// #include "bmad_std_typedef.h"
+// #include "converter_templates.h"
+#include "bmad/routines.hpp"
+#include "pybmad/arrays.hpp"
+// #include "tao_proxies.hpp"
+
+// using namespace Bmad;
+// using namespace Tao;
+namespace py = pybind11;
+using namespace pybind11::literals;
+
+namespace Pybmad {
+void init_spline_struct(py::module&);
+void init_spin_polar_struct(py::module&);
+void init_ac_kicker_time_struct(py::module&);
+void init_ac_kicker_freq_struct(py::module&);
+void init_ac_kicker_struct(py::module&);
+void init_interval1_coef_struct(py::module&);
+void init_photon_reflect_table_struct(py::module&);
+void init_photon_reflect_surface_struct(py::module&);
+void init_coord_struct(py::module&);
+void init_coord_array_struct(py::module&);
+void init_bpm_phase_coupling_struct(py::module&);
+void init_expression_atom_struct(py::module&);
+void init_wake_sr_z_long_struct(py::module&);
+void init_wake_sr_mode_struct(py::module&);
+void init_wake_sr_struct(py::module&);
+void init_wake_lr_mode_struct(py::module&);
+void init_wake_lr_struct(py::module&);
+void init_lat_ele_loc_struct(py::module&);
+void init_wake_struct(py::module&);
+void init_taylor_term_struct(py::module&);
+void init_taylor_struct(py::module&);
+void init_em_taylor_term_struct(py::module&);
+void init_em_taylor_struct(py::module&);
+void init_cartesian_map_term1_struct(py::module&);
+void init_cartesian_map_term_struct(py::module&);
+void init_cartesian_map_struct(py::module&);
+void init_cylindrical_map_term1_struct(py::module&);
+void init_cylindrical_map_term_struct(py::module&);
+void init_cylindrical_map_struct(py::module&);
+void init_bicubic_cmplx_coef_struct(py::module&);
+void init_tricubic_cmplx_coef_struct(py::module&);
+void init_grid_field_pt1_struct(py::module&);
+void init_grid_field_pt_struct(py::module&);
+void init_grid_field_struct(py::module&);
+void init_floor_position_struct(py::module&);
+void init_high_energy_space_charge_struct(py::module&);
+void init_xy_disp_struct(py::module&);
+void init_twiss_struct(py::module&);
+void init_mode3_struct(py::module&);
+void init_bookkeeping_state_struct(py::module&);
+void init_rad_map_struct(py::module&);
+void init_rad_map_ele_struct(py::module&);
+void init_gen_grad1_struct(py::module&);
+void init_gen_grad_map_struct(py::module&);
+void init_surface_segmented_pt_struct(py::module&);
+void init_surface_segmented_struct(py::module&);
+void init_surface_h_misalign_pt_struct(py::module&);
+void init_surface_h_misalign_struct(py::module&);
+void init_surface_displacement_pt_struct(py::module&);
+void init_surface_displacement_struct(py::module&);
+void init_target_point_struct(py::module&);
+void init_surface_curvature_struct(py::module&);
+void init_photon_target_struct(py::module&);
+void init_photon_material_struct(py::module&);
+void init_pixel_pt_struct(py::module&);
+void init_pixel_detec_struct(py::module&);
+void init_photon_element_struct(py::module&);
+void init_wall3d_vertex_struct(py::module&);
+void init_wall3d_section_struct(py::module&);
+void init_wall3d_struct(py::module&);
+void init_ramper_lord_struct(py::module&);
+void init_control_struct(py::module&);
+void init_control_var1_struct(py::module&);
+void init_control_ramp1_struct(py::module&);
+void init_controller_struct(py::module&);
+void init_ellipse_beam_init_struct(py::module&);
+void init_kv_beam_init_struct(py::module&);
+void init_grid_beam_init_struct(py::module&);
+void init_beam_init_struct(py::module&);
+void init_lat_param_struct(py::module&);
+void init_mode_info_struct(py::module&);
+void init_pre_tracker_struct(py::module&);
+void init_anormal_mode_struct(py::module&);
+void init_linac_normal_mode_struct(py::module&);
+void init_normal_modes_struct(py::module&);
+void init_em_field_struct(py::module&);
+void init_strong_beam_struct(py::module&);
+void init_track_point_struct(py::module&);
+void init_track_struct(py::module&);
+void init_space_charge_common_struct(py::module&);
+void init_bmad_common_struct(py::module&);
+void init_rad_int1_struct(py::module&);
+void init_rad_int_branch_struct(py::module&);
+void init_rad_int_all_ele_struct(py::module&);
+void init_rf_stair_step_struct(py::module&);
+void init_rf_ele_struct(py::module&);
+void init_ele_struct(py::module&);
+void init_complex_taylor_term_struct(py::module&);
+void init_complex_taylor_struct(py::module&);
+void init_branch_struct(py::module&);
+void init_lat_struct(py::module&);
+void init_bunch_struct(py::module&);
+void init_bunch_params_struct(py::module&);
+void init_beam_struct(py::module&);
+void init_aperture_point_struct(py::module&);
+void init_aperture_param_struct(py::module&);
+void init_aperture_scan_struct(py::module&);
+void init_ele_pointer_struct(py::module&);
+void init_expression_tree_struct(py::module&);
+void init_nametable_struct(py::module&);
+void init_tao_spin_dn_dpz_struct(py::module&);
+void init_resonance_h_struct(py::module&);
+void init_spin_orbit_map1_struct(py::module&);
+void init_spin_axis_struct(py::module&);
+void init_ptc_normal_form_struct(py::module&);
+void init_bmad_normal_form_struct(py::module&);
+void init_bunch_track_struct(py::module&);
+void init_summation_rdt_struct(py::module&);
+void init_tao_ele_shape_struct(py::module&);
+void init_tao_curve_struct(py::module&);
+void init_lat_ele_order1_struct(py::module&);
+void init_lat_ele_order_array_struct(py::module&);
+void init_tao_lat_sigma_struct(py::module&);
+void init_tao_spin_ele_struct(py::module&);
+void init_tao_plot_cache_struct(py::module&);
+void init_tao_spin_polarization_struct(py::module&);
+void init_tao_lattice_branch_struct(py::module&);
+void init_tao_model_element_struct(py::module&);
+void init_tao_beam_branch_struct(py::module&);
+void init_tao_d1_data_struct(py::module&);
+void init_tao_d2_data_struct(py::module&);
+void init_tao_data_var_component_struct(py::module&);
+void init_tao_graph_struct(py::module&);
+void init_tao_plot_struct(py::module&);
+void init_tao_plot_region_struct(py::module&);
+void init_tao_universe_pointer_struct(py::module&);
+void init_tao_super_universe_struct(py::module&);
+void init_tao_var_struct(py::module&);
+void init_tao_lattice_struct(py::module&);
+void init_tao_beam_uni_struct(py::module&);
+void init_tao_dynamic_aperture_struct(py::module&);
+void init_tao_model_branch_struct(py::module&);
+void init_tao_spin_map_struct(py::module&);
+void init_tao_data_struct(py::module&);
+void init_tao_ping_scale_struct(py::module&);
+void init_tao_universe_calc_struct(py::module&);
+void init_lat_ele_order_struct(py::module&);
+void init_tao_universe_struct(py::module&);
+void init_all_encompassing_struct(py::module&);
+void init_test_sub_struct(py::module&);
+void init_test_sub_sub_struct(py::module&);
+} // namespace Pybmad

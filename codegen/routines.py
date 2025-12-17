@@ -12,22 +12,23 @@ from typing import Literal
 
 import pydantic
 
+from .config import CodegenConfig
 from .context import config_context, get_params
 from .cpp import CppWrapperArgument, generate_routine_cpp_wrapper
 from .docstring import DocstringParameter, RoutineDocstring, parse_routine_comment_block
 from .exceptions import RenameError, RoutineNotFoundError
 from .fortran import generate_fortran_routine_with_c_binding
 from .gen import Argument as InterfaceArgument
-from .paths import ACC_ROOT_DIR
+from .paths import ACC_ROOT_DIR, CPPBMAD_SRC
 from .structs import (
     FileLine,
     StructureMember,
+    TypeInformation,
     join_ampersand_lines,
     parse_declaration,
     split_comment,
 )
-from .transforms import get_type_transform
-from .types import Intent, RoutineType
+from .types import Intent, RoutineType, get_type_transform
 from .util import snake_to_camel, struct_to_proxy_class_name, wrap_line
 
 logger = logging.getLogger(__name__)
@@ -153,12 +154,36 @@ routine_settings = [
         skip_files=set(),
         skip_procedures=set(),
     ),
+    RoutineSettings(
+        fortran_output_filename="cppbmad_test_routines.f90",
+        cpp_output_filename="cppbmad_test_routines.cpp",
+        cpp_namespace="CppBmadTest",
+        interface_path=CPPBMAD_SRC / "tests" / "routines" / "cppbmad_tests.f90",
+        source_paths=[
+            CPPBMAD_SRC / "tests" / "routines",
+        ],
+        skip_files=set(),
+        skip_procedures=set(),
+    ),
 ]
+
+
+def normalize_intent(typ: TypeInformation, doc_intent: Intent | None = None) -> Intent:
+    if doc_intent:
+        intent = doc_intent
+    elif not typ.intent:
+        intent = "inout"
+    else:
+        intent = typ.intent.replace(" ", "").lower()
+
+    if intent not in ("in", "inout", "out"):
+        raise ValueError(f"Unsupported intent: {intent}")
+    return intent
 
 
 @dataclasses.dataclass
 class RoutineArg(InterfaceArgument):
-    intent: Intent = "in"
+    intent: Intent = "inout"
     description: str = ""
     doc_data_type: str | None = None
     doc_is_optional: bool = False
@@ -189,17 +214,45 @@ class RoutineArg(InterfaceArgument):
         return CppWrapperArgument.from_arg(self)
 
     @classmethod
-    def from_routine(cls, routine: FortranRoutine, member: StructureMember, doc: DocstringParameter):
+    def from_routine(
+        cls,
+        routine: FortranRoutine,
+        member: StructureMember,
+        doc: DocstringParameter,
+        params: CodegenConfig | None = None,
+    ):
+        if params is None:
+            params = get_params()
         # TODO this duplicates/tweaks some ugly stuff from the bmad-side translation layer
         if member.dimension in {":", "0:"}:
             # member.type_info = member.type_info.replace(pointer=True)
             # Well, this isn't strictly true; but we want a container type for this
             member.type_info = member.type_info.replace(allocatable=True)
 
-        arg = cls.from_fstruct(routine, member)
+        arg = cls.from_fstruct(routine, member, params)
 
         intent = (member.type_info.intent or doc.intent).lower()
         intent = intent.replace(" ", "")
+
+        if (
+            doc.guessed
+            and intent == "inout"
+            and len(arg.array) == 0
+            and arg.type
+            in (
+                "real",
+                "real16",
+                "complex",
+                "integer",
+                "integer8",
+                "logical",
+                "character",
+                # "type",
+            )
+        ):
+            # For scalar values, assume it's not by reference
+            intent = "in"
+
         assert intent in ("in", "inout", "out")
         # arg.transform = get_type_transform(
         #     arg.full_type,
@@ -214,13 +267,14 @@ class RoutineArg(InterfaceArgument):
         #     f_name then becomes what we use to call the original function
         arg.f_name = f"f_{member.name}"
 
-        f_to_c_name = get_params().c_side_name_translation
+        f_to_c_name = params.c_side_name_translation
         arg.c_name = f_to_c_name.get(member.name, member.name)
 
         arg.description = doc.description
         arg.doc_data_type = doc.data_type
-        arg.intent = doc.intent
         arg.doc_is_optional = doc.is_optional
+
+        arg.intent = normalize_intent(arg.member.type_info, None if doc.guessed else doc.intent)
         return arg
 
     @property
@@ -268,6 +322,13 @@ def _get_docstring_arg(lower_doc: dict[str, DocstringParameter], arg_name: str):
     )
 
 
+def is_python_immutable(arg: RoutineArg):
+    if arg.intent != "inout":
+        return False
+
+    return len(arg.array) == 0 and arg.type != "type"
+
+
 @dataclass
 class FortranRoutine:
     """Represents a Fortran procedure (subroutine or function)."""
@@ -286,6 +347,7 @@ class FortranRoutine:
     interface: str | None = None
     module: str | None = None
     private: bool = False
+    cpp_namespace: str = ""
     # Arguments - in order and including result value (if applicable)
     args: list[RoutineArg] = field(default_factory=list)
 
@@ -297,7 +359,7 @@ class FortranRoutine:
             result_arg = []
         return [*self.declared_argument_list, *result_arg]
 
-    def parse(self) -> None:
+    def parse(self, *, config: CodegenConfig) -> None:
         """
         Parses the docstring comment, matches up arguments, and creates all translated args.
         """
@@ -338,7 +400,7 @@ class FortranRoutine:
             self.result_name = "func_retval__"
             retval.name = "func_retval__"
 
-        self.args = self.translate_args()
+        self.args = self.translate_args(config)
 
         if self.proc_type == "function":
             assert self.result_name is not None
@@ -380,7 +442,7 @@ class FortranRoutine:
             assert arg.lower() in arguments, arg
         return arguments
 
-    def translate_args(self):
+    def translate_args(self, config: CodegenConfig):
         assert self.docstring is not None
         lower_members = {name.lower(): member for name, member in self.declarations.items()}
         lower_doc = {name.lower(): doc for name, doc in self.docstring.arguments_by_name.items()}
@@ -390,6 +452,7 @@ class FortranRoutine:
                 self,
                 lower_members[arg_name.lower()],
                 _get_docstring_arg(lower_doc, arg_name),
+                params=config,
             )
             for arg_name in self.arg_names_with_result
         ]
@@ -427,14 +490,9 @@ class FortranRoutine:
 
         return list(reversed(specs))
 
-    def get_cpp_decl(self, defaults: bool, namespace: str | None = None) -> str:
-        decl_args = ", ".join(self._get_cpp_decl_spec(defaults))
-        routine_and_args = f"{self.name}({decl_args})"
-
-        if namespace:
-            routine_and_args = "::".join((namespace, routine_and_args))
-
-        outputs = self.outputs_only
+    @property
+    def cpp_return_type(self) -> str:
+        outputs = self.outputs
         if len(outputs) == 1:
             (output,) = outputs
             return_type = output.transform.cpp_return_type
@@ -442,25 +500,22 @@ class FortranRoutine:
             return_type = "void"
         else:
             return_type = snake_to_camel(self.name)
-            if namespace:
-                return_type = "::".join((namespace, return_type))
+            if self.cpp_namespace:
+                return "::".join((self.cpp_namespace, return_type))
+        return return_type
 
-        return f"{return_type} {routine_and_args}"
+    def get_cpp_decl(self, defaults: bool, namespace: bool) -> str:
+        decl_args = ", ".join(self._get_cpp_decl_spec(defaults))
 
-    @property
-    def inputs(self) -> list[RoutineArg]:
-        return [arg for arg in self.args if arg.intent == "in"]
+        routine_and_args = f"{self.name}({decl_args})"
 
-    @property
-    def input_outputs(self) -> list[RoutineArg]:
-        return [arg for arg in self.args if arg.intent == "inout"]
+        if self.cpp_namespace and namespace:
+            routine_and_args = "::".join((self.cpp_namespace, routine_and_args))
+
+        return f"{self.cpp_return_type} {routine_and_args}"
 
     @property
     def outputs(self) -> list[RoutineArg]:
-        return [arg for arg in self.args if arg.intent == "out"]
-
-    @property
-    def outputs_only(self) -> list[RoutineArg]:
         return [arg for arg in self.args if arg.intent == "out"]
 
     @property
@@ -542,11 +597,24 @@ class FortranRoutine:
 
         if len(self.arg_names_with_result) != len(self.args):
             reasons.append("Translated arg count mismatch (unsupported?)")
+
+        optional_inputs = [arg for arg in self.args if arg.is_optional and arg.is_input]
+        if len(optional_inputs) > 10:
+            # I think if we're smarter about how we handle optional arguments (no big if blocks)
+            # -> use the properties of 'present()' (pass in unallocated pointers, etc)
+            # we should be able to get around this and greatly simplify the code.
+            # It'll take some reworking though...
+            reasons.append(f"Too many optional inputs (TODO) {len(optional_inputs)}")
+
         return reasons
 
     @property
+    def needs_python_wrapper(self) -> bool:
+        return any(is_python_immutable(arg) for arg in self.args)
+
+    @property
     def fortran_param_spec(self) -> list[str]:
-        return [f"{arg.c_to_fortran_decl} /* {arg.full_type} */" for arg in self.args]
+        return [f"{arg.c_to_fortran_decl} /* {arg.full_type} {arg.intent} */" for arg in self.args]
 
     @property
     def fortran_forward_declaration(self):
@@ -786,25 +854,27 @@ def procedures_from_source_directory(
     return procedures
 
 
-def parse_bmad_routines(settings: RoutineSettings):
+def parse_bmad_routines(settings: RoutineSettings, config: CodegenConfig):
     procedures: list[FortranRoutine] = []
     for source_path in settings.source_paths:
-        procedures.extend(
-            procedures_from_source_directory(
-                source_path, skip_files=settings.skip_files, skip_procedures=settings.skip_procedures
-            )
-        )
+        for proc in procedures_from_source_directory(
+            source_path,
+            skip_files=settings.skip_files,
+            skip_procedures=settings.skip_procedures,
+        ):
+            proc.cpp_namespace = settings.cpp_namespace
+            procedures.append(proc)
 
     for proc in procedures:
         try:
-            proc.parse()
+            proc.parse(config=config)
         except Exception:
             logger.exception("Parsing failed for routine: %s", proc.name)
 
     return procedures
 
 
-def prune_routines(procedures: list[FortranRoutine]):
+def prune_routines(procedures: list[FortranRoutine], config: CodegenConfig):
     unusable_procs = [proc for proc in procedures if not proc.usable]
     usable_procs = [proc for proc in procedures if proc.usable]
     usable_by_name: dict[str, FortranRoutine] = {proc.name: proc for proc in usable_procs}
@@ -895,7 +965,7 @@ def prune_routines(procedures: list[FortranRoutine]):
 
             if missing_arg_names:
                 try:
-                    best_option.args = best_option.translate_args()
+                    best_option.args = best_option.translate_args(config)
                 except Exception as ex:
                     logger.warning(
                         f"Reparse failed after docstring inclusion: {best_option.name} {missing_arg_names} {ex}"
@@ -1024,7 +1094,7 @@ def generate_cpp_routine_code(template: str, routines: dict[str, FortranRoutine]
     for routine in routines.values():
         if not routine.usable:
             continue
-        cpp_wrapper = generate_routine_cpp_wrapper(routine, namespace=settings.cpp_namespace)
+        cpp_wrapper = generate_routine_cpp_wrapper(routine)
         lines.extend(cpp_wrapper)
 
     tpl = string.Template(template.replace("// ${", "${"))

@@ -17,22 +17,23 @@ from __future__ import annotations
 import argparse
 import logging
 import pathlib
-import sys
-import tomllib
 import typing
+
+import tomllib
 
 from .arg import Argument, CodegenStructure
 from .config import CodegenConfig
 from .context import ConfigContext, config_context
-from .cpp import generate_routines_header
+from .cpp import generate_routines_header, generate_to_string_code, generate_to_string_header
 from .enums import ENUM_FILENAME, write_enums
-from .paths import CODEGEN_ROOT, CPPBMAD_ROOT
+from .paths import CODEGEN_ROOT, CPPBMAD_INCLUDE, CPPBMAD_ROOT, CPPBMAD_SRC
 from .proxy import (
     create_cpp_proxy_header,
     create_cpp_proxy_impl,
     create_fortran_proxy_code,
     struct_to_proxy_class_name,
 )
+from .py import generate_pybmad
 from .routines import (
     generate_cpp_routine_code,
     generate_fortran_routine_code,
@@ -41,9 +42,6 @@ from .routines import (
     routine_settings,
 )
 from .structs import ParsedStructure, load_bmad_parser_structures
-from .types import (
-    STRUCT,
-)
 from .util import write_contents_if_differs, write_if_differs
 
 if typing.TYPE_CHECKING:
@@ -59,17 +57,20 @@ DEBUG = False  # Change to True to enable more verbose printout
 def match_structure_definition(
     parsed_structures: list[ParsedStructure],
     struct: CodegenStructure,
+    params: CodegenConfig,
 ):
     for fstruct in parsed_structures:
-        if struct.f_name == fstruct.name:
+        if struct.f_name.lower() == fstruct.name.lower():
             break
     else:
         raise RuntimeError(f"Structure not found: {struct.f_name!r}")
 
     struct.f_name = fstruct.name
-    struct.short_name = fstruct.name.removesuffix("_struct")
+
     struct.cpp_class = struct_to_proxy_class_name(fstruct.name)
-    struct.arg = [Argument.from_fstruct(fstruct, member) for member in fstruct.members.values()]
+    struct.arg = [
+        Argument.from_fstruct(fstruct, member, params=params) for member in fstruct.members.values()
+    ]
     struct.module = fstruct.module
     struct.parsed = fstruct
 
@@ -87,38 +88,21 @@ def write_parsed_structures(structs, fn):
 
 
 def check_missing(structs: list[CodegenStructure]):
-    # Report any structs not found
-    missing_structs = [struct.f_name for struct in structs if struct.short_name == ""]
-    for name in missing_structs:
-        logger.error(f"NOT FOUND: {name}")
+    struct_names = {struct.f_name.lower() for struct in structs}
 
-    # Exit if any structs are missing
-    if missing_structs:
-        sys.exit("COULD NOT FIND ALL THE STRUCTS! STOPPING HERE!")
-
-    # Create set of defined struct names
-    defined_struct_names = {struct.f_name for struct in structs}
-    # Track all missing struct definitions
-    missing_struct_definitions = []
-
-    # Check that all referenced struct types have definitions
-    for parent_struct in structs:
-        for fld in parent_struct.arg:
-            # Skip non-struct fields and externally defined structs
-            if fld.type != STRUCT or fld.kind in params.structs_defined_externally:
+    for struct in structs:
+        to_remove = []
+        for idx, fld in enumerate(list(struct.arg)):
+            if fld.type != "type" or fld.kind in params.structs_defined_externally:
                 continue
 
-            # Check if the struct type is defined
-            if fld.kind not in defined_struct_names:
-                missing_struct_definitions.append(
-                    f"Missing definition for struct '{fld.kind}' which is used in '{parent_struct.short_name}'"
+            if fld.kind.lower() not in struct_names:
+                logger.warning(
+                    f"Missing definition for struct '{fld.kind}' which is used in '{struct.f_name}'"
                 )
-
-    # Exit with error if any struct definitions are missing
-    if missing_struct_definitions:
-        for error_message in missing_struct_definitions:
-            logger.error(error_message)
-        sys.exit(1)
+                to_remove.append(idx)
+        for remove in sorted(to_remove, reverse=True):
+            struct.arg.pop(remove)
 
 
 def filter_structs(
@@ -217,20 +201,20 @@ def filter_structs(
 
 
 def get_structure_definitions(
-    params: CodegenConfig, parsed_structures: list[ParsedStructure]
+    params: CodegenConfig,
+    parsed_structures: list[ParsedStructure],
 ) -> list[CodegenStructure]:
     structs: list[CodegenStructure] = []
 
     for name in params.struct_list:
         struct = CodegenStructure(name)
-        match_structure_definition(parsed_structures, struct)
-        struct.arg = [arg for arg in struct.arg if arg.should_translate(struct.f_name)]
-        logger.debug(f"Struct: {struct}")
         structs.append(struct)
+        match_structure_definition(parsed_structures, struct, params)
+        struct.arg = [arg for arg in struct.arg if arg.should_translate(struct.f_name, params)]
     return structs
 
 
-def generate_routines():
+def generate_routines(params: CodegenConfig):
     logger.info("Parsing routines")
 
     all_routines = []
@@ -238,10 +222,10 @@ def generate_routines():
     to_write = {}
     for settings in routine_settings:
         # Filter out private routines to start with:
-        routines = [routine for routine in parse_bmad_routines(settings) if not routine.private]
+        routines = [routine for routine in parse_bmad_routines(settings, params) if not routine.private]
         all_routines.extend(routines)
         logger.info(f"Pruning routines ({settings.fortran_output_filename})")
-        routines_by_name = prune_routines(routines)
+        routines_by_name = prune_routines(routines, params)
         all_routines_by_name.update(routines_by_name)
         logger.info("Generating code: routines Fortran side")
 
@@ -281,72 +265,11 @@ def generate_routines():
     return all_routines, all_routines_by_name
 
 
-def generate(config_file: pathlib.Path = CODEGEN_ROOT / "default.toml"):
-    # TODO refactor globals
-    global params  # noqa: PLW0603
-
-    with config_file.open("rb") as fp:
-        params = CodegenConfig(**tomllib.load(fp))
-
-    logger.info(f"Config file: {config_file}")
-
-    parsed_structs = load_bmad_parser_structures()
-    config_context.set(
-        ConfigContext(
-            params=params,
-            codegen_structs=[],
-            parsed_structs=parsed_structs,
-        )
-    )
-
-    # TODO this needs context.params for some reason
-    structs = get_structure_definitions(params, parsed_structs)
-
-    config_context.set(
-        ConfigContext(
-            params=params,
-            codegen_structs=structs,
-            parsed_structs=parsed_structs,
-        )
-    )
-    assert len(config_context.get().codegen_structs)
-
-    n_found = sum(1 for struct in structs if struct.short_name)
-
-    # Print diagnostics
-    logger.info(f"Number of structs in input list: {len(structs)}")
-    logger.info(f"Number of structs found:         {n_found}")
-
-    check_missing(structs)
-    write_output(params, structs)
-    write_if_differs(write_enums, ENUM_FILENAME)
-
-    routines, routines_by_name = generate_routines()
-    return structs, parsed_structs, routines, routines_by_name
-
-
-def write_output(params: CodegenConfig, structs: list[CodegenStructure]) -> None:
+def write_proxy_classes(params: CodegenConfig, structs: list[CodegenStructure]) -> None:
     if DEBUG:
         write_parsed_structures(structs, "f_structs.parsed")
 
     generated = CPPBMAD_ROOT / "src" / "generated"
-
-    # We aren't generating equality these now that it's moved out of bmad-ecosystem
-    # bmad_structs = [struct for struct in structs if struct.parsed.filename.parts[1].lower() not in {"tao"}]
-    # tao_structs = [struct for struct in structs if struct.parsed.filename.parts[1].lower() == "tao"]
-    # write_if_differs(
-    #     create_fortran_equality_check_code,
-    #     ACC_ROOT_DIR / "bmad" / "modules" / "equality_mod.f90",
-    #     bmad_structs,
-    #     module_name="equality_mod",
-    # )
-    # write_if_differs(
-    #     create_fortran_equality_check_code,
-    #     # ACC_ROOT_DIR / "tao" / "src" / "tao_equality_mod.f90",
-    #     generated / "tao_equality_mod.f90",
-    #     tao_structs,
-    #     module_name="tao_equality_mod",
-    # )
 
     write_if_differs(
         create_fortran_proxy_code,
@@ -374,6 +297,113 @@ def write_output(params: CodegenConfig, structs: list[CodegenStructure]) -> None
     )
 
 
+def load_routines(parsed_structs: list[ParsedStructure], config: CodegenConfig):
+    structs_seen = set()
+    settings_and_routines = []
+    for settings in routine_settings:
+        routines = parse_bmad_routines(settings, config)
+        settings_and_routines.append((settings, routines))
+        for routine in routines:
+            if routine.private:
+                continue
+
+            structs_seen |= {arg.kind.lower() for arg in routine.args if arg.type == "type"}
+
+    parsed_structs_by_name = {struct.name.lower(): struct for struct in parsed_structs}
+
+    structs_to_use = set()
+    structs_to_skip = set()
+    check = list(structs_seen)
+    while check:
+        typ = check.pop(0)
+        if typ not in parsed_structs_by_name:
+            logger.warning("Skipping %s as it's not in the bmad parsed struture list", typ)
+            structs_to_skip.add(typ)
+            continue
+
+        parsed_st = parsed_structs_by_name[typ]
+        if parsed_st.module in params.skips or typ in params.skips:
+            structs_to_skip.add(typ)
+            continue
+
+        structs_to_use.add(typ)
+        for member in parsed_st.members.values():
+            if member.type != "type":
+                continue
+            assert member.kind
+            kind = member.kind.lower()
+            if kind not in structs_to_skip and kind not in structs_to_use and kind not in check:
+                check.append(kind)
+
+    return settings_and_routines, structs_to_use
+
+
+def generate(
+    config_file: pathlib.Path = CODEGEN_ROOT / "default.toml",
+    pybmad: bool = True,
+):
+    # TODO refactor globals
+    global params  # noqa: PLW0603
+
+    with config_file.open("rb") as fp:
+        params = CodegenConfig(**tomllib.load(fp))
+
+    logger.info(f"Config file: {config_file}")
+
+    parsed_structs = load_bmad_parser_structures()
+    _settings_and_routines, _routine_structs = load_routines(parsed_structs, params)
+    # TODO
+    # params.struct_list = sorted(_routine_structs)
+
+    structs = get_structure_definitions(params, parsed_structs)
+
+    config_context.set(
+        ConfigContext(
+            params=params,
+            codegen_structs=structs,
+            parsed_structs=parsed_structs,
+        )
+    )
+    assert len(config_context.get().codegen_structs)
+
+    # Print diagnostics
+    logger.info(f"Number of structs in input list: {len(structs)}")
+    logger.info(f"Number of structs found:         {len(parsed_structs)}")
+
+    check_missing(structs)
+    write_proxy_classes(params, structs)
+    write_if_differs(write_enums, ENUM_FILENAME)
+
+    routines, routines_by_name = generate_routines(params)
+    to_string_header = generate_to_string_header(
+        template=(CODEGEN_ROOT / "to_string.tpl.hpp").read_text(),
+        structs=structs,
+        routines=routines_by_name,
+    )
+    write_contents_if_differs(
+        CPPBMAD_INCLUDE / "bmad" / "generated" / "to_string.hpp", contents=to_string_header
+    )
+
+    to_string_code = generate_to_string_code(
+        template=(CODEGEN_ROOT / "to_string.tpl.cpp").read_text(),
+        structs=structs,
+        routines=routines_by_name,
+    )
+    write_contents_if_differs(CPPBMAD_SRC / "generated" / "to_string.cpp", contents=to_string_code)
+
+    if pybmad:
+        pybmad_files = generate_pybmad(structs, routines_by_name)
+        # existing_files = set(OUTPUT_PATH.glob("*.cpp")) | set(OUTPUT_PATH.glob("*.hpp"))
+        # for fn in existing_files:
+        #     if fn.name not in module_file_to_source:
+        #         logger.warning(f"Removing stale file from previous generation: {fn}")
+        #         fn.unlink()
+        for fn, source in pybmad_files.items():
+            write_contents_if_differs(target_path=fn, contents=source)
+
+    return structs, parsed_structs, routines, routines_by_name
+
+
 def main():
     parser = argparse.ArgumentParser(description="Run the cppbmad code generator.")
     parser.add_argument(
@@ -389,6 +419,11 @@ def main():
         help="Path to the configuration file.",
     )
     parser.add_argument(
+        "--no-pybmad",
+        action="store_true",
+        help="Do not generate pybmad pybind11 bindings",
+    )
+    parser.add_argument(
         "--debug",
         action="store_true",
         help="Enable debug mode",
@@ -398,7 +433,7 @@ def main():
     logging.basicConfig(level=args.log_level)
     logging.getLogger("codegen").setLevel(args.log_level)
 
-    return generate(config_file=args.config_file)
+    return generate(config_file=args.config_file, pybmad=not args.no_pybmad)
 
 
 if __name__ == "__main__":

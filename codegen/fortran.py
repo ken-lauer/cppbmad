@@ -4,7 +4,6 @@ import dataclasses
 import textwrap
 import typing
 from abc import ABC, abstractmethod
-from itertools import combinations
 
 from .context import ctx, get_params
 from .structs import TypeInformation
@@ -31,6 +30,14 @@ class FortranWrapperArgument(ABC):
     lines: list[str]
     have_err_flag: bool = False
     custom_call_arg_name: str | None = None
+
+    @property
+    def f_ptr_name(self):
+        return f"{self.f_name}_ptr"
+
+    @property
+    def c_f_ptr_conversion(self):
+        return f"call c_f_pointer({self.c_name}, {self.f_ptr_name})"
 
     @staticmethod
     def from_arg(
@@ -100,6 +107,18 @@ class FortranWrapperArgument(ABC):
             "  endif",
         ]
 
+    @staticmethod
+    def if_associated(var: str, ptr: str, then: str) -> list[str]:
+        """Add an if-then-else block to the lines."""
+        then = textwrap.indent(then, " " * 4)
+        return [
+            f"  if (c_associated({var})) then",
+            then,
+            "  else",
+            f"    {ptr} => null()",
+            "  endif",
+        ]
+
     def error_if(self, cond: str, else_: str = "") -> list[str]:
         """Add error handling code to the lines."""
         else_lines = []
@@ -145,7 +164,7 @@ class FortranWrapperArgument(ABC):
         if self.custom_call_arg_name:
             return self.custom_call_arg_name
         if self.arg.member.type_info.pointer and self.arg.full_type.type != "type":
-            return f"{self.f_name}_ptr"
+            return f"{self.f_ptr_name}"
         return self.f_name
 
 
@@ -169,7 +188,7 @@ class FortranWrapperGeneralArrayAllocatableArgument(FortranWrapperArgument):
     def get_input_conversion(self) -> list[str]:
         result = [f"  !! container general array ({self.arg.full_type})"]
         code = f"  call c_f_pointer({self.c_name}, {self.f_name})"
-        result.extend(self.if_block(f"assc({self.c_name})", code))
+        result.extend(self.if_block(f"c_associated({self.c_name})", code))
         self.custom_call_arg_name = f"{self.f_name}%data"
         return result
 
@@ -191,8 +210,12 @@ class FortranWrapperGeneralArrayArgument(FortranWrapperArgument):
         return [
             f"  {arg_ctype} :: {self.c_name}",
             f"  {arg_ftype} :: {self.f_name}({dims})",
-            f"  {tf_type} :: {self.f_name}_ptr(:)",
+            f"  {tf_type} :: {self.f_ptr_name}(:)",
         ]
+
+    @property
+    def dimensions(self):
+        return "*".join(str(dim) for dim in self.arg.f_dims)
 
     def get_input_conversion(self) -> list[str]:
         if self.intent == "out" or self.is_function_result:
@@ -200,24 +223,24 @@ class FortranWrapperGeneralArrayArgument(FortranWrapperArgument):
 
         result = [f"  !! general array ({self.arg.full_type})"]
         arr = self.arg.array
-        dimensions = "*".join(str(dim) for dim in self.arg.f_dims)
-
         if len(arr) == 1:
             code = textwrap.dedent(f"""\
-                call c_f_pointer({self.c_name}, {self.f_name}_ptr, [{dimensions}])
-                {self.f_name} = {self.f_name}_ptr(:)""")
+                call c_f_pointer({self.c_name}, {self.f_ptr_name}, [{self.dimensions}])
+                {self.f_name} = {self.f_ptr_name}(:)""")
         elif len(arr) == 2:
             code = textwrap.dedent(f"""\
-                call c_f_pointer({self.c_name}, {self.f_name}_ptr, [{dimensions}])
-                call vec2mat({self.f_name}_ptr, {self.f_name})""")
+                call c_f_pointer({self.c_name}, {self.f_ptr_name}, [{self.dimensions}])
+                call vec2mat({self.f_ptr_name}, {self.f_name})""")
         elif len(arr) == 3:
             code = textwrap.dedent(f"""\
-                call c_f_pointer({self.c_name}, {self.f_name}_ptr, [{dimensions}])
-                call vec2tensor({self.f_name}_ptr, {self.f_name})""")
+                call c_f_pointer({self.c_name}, {self.f_ptr_name}, [{self.dimensions}])
+                call vec2tensor({self.f_ptr_name}, {self.f_name})""")
         else:
             raise NotImplementedError(len(arr))
 
-        result.extend(self.if_block(f"assc({self.c_name})", code))
+        result.extend(
+            self.if_then_else_block(f"c_associated({self.c_name})", code, f"{self.f_ptr_name} => null()")
+        )
         return result
 
     def get_output_conversion(self) -> list[str]:
@@ -228,11 +251,23 @@ class FortranWrapperGeneralArrayArgument(FortranWrapperArgument):
         arr = self.arg.array
 
         if len(arr) == 1:
-            result.append(f"  if (assc({self.c_name})) {self.f_name}_ptr = {self.f_name}")
-        elif len(arr) in {2, 3}:
-            result.append(f"! TODO: output {len(arr)}D array: {self.c_name}")
+            code = textwrap.dedent(f"""\
+                call c_f_pointer({self.c_name}, {self.f_ptr_name}, [{self.dimensions}])
+                {self.f_ptr_name} = {self.f_name}(:)""")
+            result.extend(self.if_block(f"c_associated({self.c_name})", code))
+        elif len(arr) == 2:
+            result.append(f"! TODO general output array 2D {self.arg}")
+            # code = textwrap.dedent(f"""\
+            #     call c_f_pointer({self.c_name}, {self.f_ptr_name}, [{self.dimensions}])
+            #     call mat2vec({self.f_name}, {self.f_ptr_name})""")
+        elif len(arr) == 3:
+            result.append(f"! TODO general output array 3D {self.arg}")
+            # code = textwrap.dedent(f"""\
+            #     call c_f_pointer({self.c_name}, {self.f_ptr_name}, [{self.dimensions}])
+            #     call tensor2vec({self.f_name}, {self.f_ptr_name})""")
         else:
             raise NotImplementedError(len(arr))
+
         return result
 
 
@@ -246,24 +281,26 @@ class FortranWrapperGeneralArgument(FortranWrapperArgument):
         arg_ftype = self.native_fortran_argument_type()
         arg_ctype = "type(c_ptr), intent(in), value"
         tf_type = self.arg.transform.fortran_type
-        pointer_declarations = []
+        extra_decls = []
 
         assert self.arg.member is not None
         pointer_type = change_attributes(tf_type, add=["pointer"], remove=["value", "target"])
 
         if self.intent == "out":
             arg_ftype = change_attributes(arg_ftype, add=[], remove=["value", "target", "pointer"])
-            pointer_declarations.append(f"  {pointer_type} :: {self.f_name}_ptr")
+            extra_decls.append(f"  {pointer_type} :: {self.f_ptr_name}")
         elif self.intent == "inout" or self.arg.member.type_info.optional:
             if self.arg.type in {"logical", "real16"}:
                 self.native_type_conversion = True
                 native_type = self.arg.transform.fortran_native_type
                 arg_ftype = f"{self.arg.transform.fortran_type}, pointer"
-                pointer_declarations.append(f"  {native_type} :: {self.f_name}_native")
-                self.custom_call_arg_name = f"{self.f_name}_native"
+                extra_decls.append(f"  {native_type}, target :: {self.f_name}_native")
+                extra_decls.append(f"  {native_type}, pointer :: {self.f_name}_native_ptr")
+                self.custom_call_arg_name = f"{self.f_name}_native_ptr"
             else:
+                self.custom_call_arg_name = self.f_ptr_name
                 arg_ftype = tf_type
-            pointer_declarations.append(f"  {pointer_type} :: {self.f_name}_ptr")
+            extra_decls.append(f"  {pointer_type} :: {self.f_ptr_name}")
         elif self.arg.member.type_info.pointer:
             self.custom_call_arg_name = self.f_name
             arg_ftype = change_attributes(arg_ftype, add=["pointer"], remove=["value", "target"])
@@ -275,7 +312,7 @@ class FortranWrapperGeneralArgument(FortranWrapperArgument):
         return [
             f"  {arg_ctype} :: {self.c_name}  ! {self.arg.full_type}",
             f"  {arg_ftype} :: {self.f_name}",
-            *pointer_declarations,
+            *extra_decls,
         ]
 
     def get_input_conversion(self) -> list[str]:
@@ -283,23 +320,35 @@ class FortranWrapperGeneralArgument(FortranWrapperArgument):
             return []
 
         result = [f"  ! {self.intent}: {self.f_name} {self.arg.full_type}"]
-
         if self.native_type_conversion:
-            code = textwrap.dedent(f"""\
-                call c_f_pointer({self.c_name}, {self.f_name}_ptr)
-                {self.f_name}_native = {self.f_name}_ptr""")
-            result.extend(self.if_then_else_block(f"assc({self.c_name})", code, f"! {self.c_name} unset"))
-
+            parts = [
+                self.c_f_ptr_conversion,
+                f"{self.f_name}_native = {self.f_ptr_name}",
+                f"{self.f_name}_native_ptr => {self.f_name}_native",
+            ]
+            result.extend(
+                self.if_associated(
+                    self.c_name,
+                    f"{self.f_name}_native_ptr",
+                    "\n".join(parts),
+                )
+            )
         elif self.arg.member.type_info.optional or self.intent == "inout":
-            code = textwrap.dedent(f"""\
-                call c_f_pointer({self.c_name}, {self.f_name}_ptr)
-                {self.f_name} = {self.f_name}_ptr""")
-            result.extend(self.if_then_else_block(f"assc({self.c_name})", code, f"! {self.c_name} unset"))
-
+            result.extend(
+                self.if_associated(
+                    self.c_name,
+                    self.f_ptr_name,
+                    self.c_f_ptr_conversion,
+                )
+            )
         elif self.arg.member.type_info.pointer:
-            code = f"call c_f_pointer({self.c_name}, {self.f_name}) ! new case"
-            result.extend(self.if_then_else_block(f"assc({self.c_name})", code, f"! {self.c_name} unset"))
-
+            result.extend(
+                self.if_associated(
+                    self.c_name,
+                    self.f_name,  # <--
+                    f"call c_f_pointer({self.c_name}, {self.f_name})",
+                )
+            )
         else:
             result.append(f"  {self.f_name} = {self.c_name}")
 
@@ -313,21 +362,24 @@ class FortranWrapperGeneralArgument(FortranWrapperArgument):
 
         if self.native_type_conversion:
             code = textwrap.dedent(f"""\
-                call c_f_pointer({self.c_name}, {self.f_name}_ptr)
-                {self.f_name}_ptr = {self.f_name}_native""")
-            result.extend(self.if_then_else_block(f"assc({self.c_name})", code, f"! {self.f_name} unset"))
+                {self.c_f_ptr_conversion}
+                {self.f_ptr_name} = {self.f_name}_native""")
+            result.extend(
+                self.if_then_else_block(f"c_associated({self.c_name})", code, f"! {self.f_name} unset")
+            )
 
         elif (
             self.arg.member.type_info.optional or self.intent == "inout" or self.arg.member.type_info.pointer
         ):
-            code = textwrap.dedent(f"""\
-                call c_f_pointer({self.c_name}, {self.f_name}_ptr)
-                {self.f_name}_ptr = {self.f_name}""")
-            result.extend(self.if_block(f"assc({self.c_name})", code))
+            result.append(f"  ! no output conversion for {self.f_name}")
+            # code = textwrap.dedent(f"""\
+            #     {self.c_f_ptr_conversion}
+            #     {self.f_ptr_name} = {self.f_name}""")
+            # result.extend(self.if_block(f"c_associated({self.c_name})", code))
 
         else:
-            result.append(f"  call c_f_pointer({self.c_name}, {self.f_name}_ptr)")
-            result.append(f"  {self.f_name}_ptr = {self.f_name}")
+            result.append(f"  {self.c_f_ptr_conversion}")
+            result.append(f"  {self.f_ptr_name} = {self.f_name}")
 
         return result
 
@@ -337,11 +389,17 @@ class FortranWrapperStringArgument(FortranWrapperArgument):
     """Handler for character/string arguments."""
 
     def get_declarations(self) -> list[str]:
-        return [
+        decls = [
             f"  type(c_ptr), intent(in), value :: {self.c_name}",
-            f"  character(len=4096) :: {self.f_name}",
-            f"  character(kind=c_char), pointer :: {self.f_name}_ptr(:)",
+            f"  character(len=4096), target :: {self.f_name}",
+            f"  character(kind=c_char), pointer :: {self.f_ptr_name}(:)",
+            # NOTE: cannot use '=> null()' here as it turns it into an implicit 'save'? Weird...
         ]
+        if self.arg.member.type_info.optional:
+            self.custom_call_arg_name = f"{self.f_name}_call_ptr"
+            decls.append(f"  character(len=4096), pointer :: {self.f_name}_call_ptr")
+
+        return decls
 
     def get_input_conversion(self) -> list[str]:
         if self.intent == "out" or self.is_function_result:
@@ -350,15 +408,23 @@ class FortranWrapperStringArgument(FortranWrapperArgument):
         result = [f"  ! {self.intent}: {self.f_name} {self.arg.full_type}"]
 
         code = textwrap.dedent(f"""\
-            call c_f_pointer({self.c_name}, {self.f_name}_ptr, [huge(0)])
-            call to_f_str({self.f_name}_ptr, {self.f_name})""")
+            call c_f_pointer({self.c_name}, {self.f_ptr_name}, [huge(0)])
+            call to_f_str({self.f_ptr_name}, {self.f_name})""")
 
         if self.arg.member.type_info.optional:
-            result.extend(self.if_block(f"assc({self.c_name})", code))
+            code = f"{code}\n{self.custom_call_arg_name} => {self.f_name}"
+            assert self.custom_call_arg_name is not None
+            result.extend(
+                self.if_associated(
+                    self.c_name,
+                    self.custom_call_arg_name,
+                    code,
+                )
+            )
         else:
-            result.extend(self.error_if(f".not. assc({self.c_name})"))
-            result.append(f"  call c_f_pointer({self.c_name}, {self.f_name}_ptr, [huge(0)])")
-            result.append(f"  call to_f_str({self.f_name}_ptr, {self.f_name})")
+            result.extend(self.error_if(f".not. c_associated({self.c_name})"))
+            result.append(f"  call c_f_pointer({self.c_name}, {self.f_ptr_name}, [huge(0)])")
+            result.append(f"  call to_f_str({self.f_ptr_name}, {self.f_name})")
 
         return result
 
@@ -371,9 +437,9 @@ class FortranWrapperStringArgument(FortranWrapperArgument):
             result.append("  ! TODO i/o string (max length issue; buffer overflow...)")
         else:
             result.append(
-                f"  call c_f_pointer({self.c_name}, {self.f_name}_ptr, [len_trim({self.f_name}) + 1]) ! output-only string"
+                f"  call c_f_pointer({self.c_name}, {self.f_ptr_name}, [len_trim({self.f_name}) + 1]) ! output-only string"
             )
-            result.append(f"  call to_c_str({self.f_name}, {self.f_name}_ptr)")
+            result.append(f"  call to_c_str({self.f_name}, {self.f_ptr_name})")
 
         return result
 
@@ -381,12 +447,6 @@ class FortranWrapperStringArgument(FortranWrapperArgument):
 @dataclasses.dataclass
 class FortranWrapperTypeArgument(FortranWrapperArgument):
     """Handler for TYPE arguments (derived types)."""
-
-    @property
-    def short_name(self) -> str:
-        """Get the shortened type name without '_struct'."""
-        assert self.arg.member.kind is not None
-        return self.arg.member.kind.removesuffix("_struct")
 
     def get_declarations(self) -> list[str]:
         arg_ctype = self.arg.transform.fortran_type
@@ -405,9 +465,9 @@ class FortranWrapperTypeArgument(FortranWrapperArgument):
         code = f"  call c_f_pointer({self.c_name}, {self.f_name})"
 
         if self.arg.is_optional:
-            result.extend(self.if_block(f"assc({self.c_name})", code))
+            result.extend(self.if_block(f"c_associated({self.c_name})", code))
         else:
-            result.extend(self.error_if(f".not. assc({self.c_name})"))
+            result.extend(self.error_if(f".not. c_associated({self.c_name})"))
             result.append(code)
 
         return result
@@ -439,7 +499,7 @@ class FortranWrapperTypeArrayAllocatableArgument(FortranWrapperTypeArgument):
     def get_input_conversion(self) -> list[str]:
         result = [f"  !! container type array ({self.arg.full_type})"]
         code = f"  call c_f_pointer({self.c_name}, {self.f_name})"
-        result.extend(self.if_block(f"assc({self.c_name})", code))
+        result.extend(self.if_block(f"c_associated({self.c_name})", code))
         self.custom_call_arg_name = f"{self.f_name}%data"
         return result
 
@@ -512,13 +572,14 @@ def generate_fortran_routine_with_c_binding(routine: FortranRoutine) -> str:
     for handler in handlers:
         lines.extend(handler.get_input_conversion())
 
-    required_args = [handler for handler in handlers if not handler.arg.is_optional]
-    optional_args = [handler for handler in handlers if handler.arg.is_optional]
-    optional_combinations = []
-    for i in range(len(optional_args), -1, -1):
-        optional_combinations.extend([list(combo) for combo in combinations(optional_args, i)])
-
+    # required_args = [handler for handler in handlers if not handler.arg.is_optional]
+    # optional_args = [handler for handler in handlers if handler.arg.is_optional]
+    # optional_combinations = []
+    # for i in range(len(optional_args), -1, -1):
+    #     optional_combinations.extend([list(combo) for combo in combinations(optional_args, i)])
+    #
     handlers_by_name = {handler.arg.c_name: handler for handler in handlers}
+
     bmad_arg_names = {
         arg.c_name: decl for decl, arg in zip(routine.arg_names_with_result, routine.args, strict=True)
     }
@@ -540,24 +601,28 @@ def generate_fortran_routine_with_c_binding(routine: FortranRoutine) -> str:
         else:
             lines.append(wrap_line(f"call {routine.name}({f_args})", indent=indent))
 
-    if len(optional_combinations) == 1 and not optional_combinations[0]:
-        f_args = ", ".join(get_f_args(required_args))
-        add_call(f_args, indent="  ")
-    else:
-        for idx, optional_combo in enumerate(optional_combinations):
-            assoc = " .and. ".join(f"assc({arg.c_name})" for arg in optional_combo)
-            call_args = get_f_args([*required_args, *optional_combo])
+    # TODO: if I restructure the conversions
+    f_args = ", ".join(get_f_args(handlers))
+    add_call(f_args, indent="  ")
 
-            if_ = "if" if idx == 0 else "elseif"
-            if not assoc:
-                lines.append("  else")
-            else:
-                lines.append(wrap_line(f"{if_} ({assoc}) then", indent="  "))
-
-            f_args = ", ".join(call_args)
-            add_call(f_args, indent="    ")
-
-        lines.append("  endif")
+    # if len(optional_combinations) == 1 and not optional_combinations[0]:
+    #     f_args = ", ".join(get_f_args(required_args))
+    #     add_call(f_args, indent="  ")
+    # else:
+    #     for idx, optional_combo in enumerate(optional_combinations):
+    #         assoc = " .and. ".join(f"c_associated({arg.c_name})" for arg in optional_combo)
+    #         call_args = get_f_args([*required_args, *optional_combo])
+    #
+    #         if_ = "if" if idx == 0 else "elseif"
+    #         if not assoc:
+    #             lines.append("  else")
+    #         else:
+    #             lines.append(wrap_line(f"{if_} ({assoc}) then", indent="  "))
+    #
+    #         f_args = ", ".join(call_args)
+    #         add_call(f_args, indent="    ")
+    #
+    #     lines.append("  endif")
 
     for handler in handlers:
         lines.extend(handler.get_output_conversion())

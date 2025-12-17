@@ -3,7 +3,7 @@
 #include <functional>
 
 #include "bmad/convert.h"
-#include "bmad/generated/enums.h"
+#include "bmad/generated/enums.hpp"
 #include "bmad/generated/proxy.hpp"
 #include "bmad/types.h"
 

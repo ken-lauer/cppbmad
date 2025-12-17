@@ -1,10 +1,9 @@
+#pragma once
+
 #include <array>
 #include <complex>
-#include <memory>
 #include <optional>
 #include <vector>
-
-#ifndef BMAD_STD_TYPEDEF
 
 using std::array;
 using std::complex;
@@ -55,6 +54,3 @@ template <typename T>
 using optional_ref = std::optional<std::reference_wrapper<T>>;
 
 } // namespace Bmad
-
-#define BMAD_STD_TYPEDEF
-#endif

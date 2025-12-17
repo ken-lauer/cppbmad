@@ -171,3 +171,7 @@ extern "C" void* bmad_get_space_charge_com();
 extern "C" void* bmad_get_bmad_com();
 
 } // namespace Bmad
+
+namespace Tao {
+extern "C" void* tao_get_super_universe_ptr();
+}

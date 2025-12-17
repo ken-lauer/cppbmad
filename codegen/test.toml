@@ -48,7 +48,7 @@ code_dir = "code"
 # Include header files for main header file
 
 include_header_files = [
-  '#include "bmad_enums.h"',
+  '#include "bmad_enums.hpp"',
   '#include "bmad/types.h"',
 ]
 

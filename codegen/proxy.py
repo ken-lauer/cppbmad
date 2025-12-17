@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from string import Template
 from typing import TYPE_CHECKING
 
-from .types import STANDARD_TYPES, ArgumentType, FullType, PointerType
+from .types import STANDARD_TYPES, ArgumentType, FullType, PointerType, native_type_containers
 from .util import struct_to_proxy_class_name
 
 if TYPE_CHECKING:
@@ -842,24 +842,27 @@ def create_fortran_proxy_code(fout, params: CodegenConfig, structs: list[Codegen
             """.rstrip()
         )
 
-    # Native types containers
-    native_types = [
-        ("real", "real(rp)"),
-        ("integer", "integer"),
-        ("logical", "logical"),
-        ("complex", "complex(rp)"),
-    ]
-
-    for name, ftype in native_types:
+    for typ in native_type_containers:
         container_types.append(
             f"""\
 
-  type :: {name}_container_alloc
-    {ftype}, allocatable :: data(:)
-  end type {name}_container_alloc
+  type :: {typ.name}_container_alloc
+    {typ.fortran_type}, allocatable :: data(:)
+  end type {typ.name}_container_alloc
             """.rstrip()
         )
 
+    imports = {}
+    for struct in structs:
+        module = struct.module
+        imports.setdefault(module, set())
+        imports[module].add(struct.f_name)
+
+    import_lines = []
+    for module, imps in imports.items():
+        import_lines.append(f"  use {module}, only: " + ", ".join(sorted(imps)))
+
+    imports = "\n".join(import_lines)
     containers = "\n".join(container_types)
     print(
         f"""\
@@ -869,6 +872,7 @@ module bmad_struct_proxy_mod
   use test_struct_defs
   use, intrinsic :: iso_c_binding
 
+  {imports}
   {containers}
 
 contains
@@ -876,9 +880,10 @@ contains
         file=fout,
     )
 
-    for name, _ in native_types:
+    for nt in native_type_containers:
+        name = nt.name
         struct_name = name
-        container_name = f"{name}_container_alloc"
+        container_name = nt.fortran_container_struct
         print(
             f"""
   function allocate_{struct_name}_container() result(ptr) bind(c)
@@ -1193,14 +1198,9 @@ class ${class_name} : public FortranProxy<${class_name}> {
     class_forward_declarations.append('extern "C" {')
 
     # Native types helpers
-    native_types = [
-        ("real", "double", "RealAlloc1D"),
-        ("integer", "int", "IntAlloc1D"),
-        ("logical", "bool", "BoolAlloc1D"),
-        ("complex", "std::complex<double>", "ComplexAlloc1D"),
-    ]
+    for nt in native_type_containers:
+        name = nt.name
 
-    for name, _, _ in native_types:
         class_forward_declarations.append(f"""
   void* allocate_{name}_container();
   void reallocate_{name}_container_data(void *, int, size_t) noexcept;
@@ -1223,10 +1223,11 @@ class ${class_name} : public FortranProxy<${class_name}> {
     class_forward_declarations.append("}")
 
     # Native types aliases
-    for name, ctype, alias in native_types:
+    for nt in native_type_containers:
+        name = nt.name
         class_forward_declarations.append(f"""
-using {alias} = FAlloc1D<
-    {ctype},
+using {nt.cpp_container_name} = FAlloc1D<
+    {nt.cpp_type},
     allocate_{name}_container,
     deallocate_{name}_container,
     reallocate_{name}_container_data,

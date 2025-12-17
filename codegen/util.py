@@ -123,11 +123,11 @@ def write_contents_if_differs(
                 input=contents.encode(),
                 capture_output=True,
                 check=True,
-            )
+            ).stdout.decode()
         except subprocess.SubprocessError as ex:
             logger.error("clang-format failed: %s", ex)
         else:
-            contents = formatted_content.stdout.decode()
+            contents = formatted_content
 
     if not target_path.exists():
         target_path.parent.mkdir(parents=True, exist_ok=True)
@@ -204,4 +204,6 @@ def snake_to_camel(snake_str: str) -> str:
 
 
 def struct_to_proxy_class_name(name: str) -> str:
-    return snake_to_camel(name.removesuffix("_struct") + "_proxy")
+    if name.endswith("_struct"):
+        return snake_to_camel(name.removesuffix("_struct") + "_proxy")
+    return snake_to_camel(f"{name}_raw_struct")
