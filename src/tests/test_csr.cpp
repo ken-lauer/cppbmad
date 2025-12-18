@@ -50,9 +50,9 @@ int main() {
   }
 
   auto centroid{CoordProxyAlloc1D()};
-  reallocate_coord_lat(centroid, lat, 0);
+  reallocate_coord(centroid, lat, 0);
   auto centroid0{centroid[0]};
-  init_coord1(centroid0, ave, ele0, Bmad::DOWNSTREAM_END);
+  init_coord(centroid0, ave, ele0, Bmad::DOWNSTREAM_END);
 
   track_all(lat, centroid);
 

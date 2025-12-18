@@ -4248,7 +4248,7 @@ AcKickerProxy Bmad::transfer_ac_kick(AcKickerProxy& ac_in) {
       /* void* */ &ac_in, /* void* */ _ac_out.get_fortran_ptr());
   return std::move(_ac_out);
 }
-BranchProxy Bmad::pointer_to_branch_given_name(
+BranchProxy Bmad::pointer_to_branch(
     std::string branch_name,
     LatProxy& lat,
     std::optional<bool> parameter_is_branch0,
@@ -4277,7 +4277,7 @@ BranchProxy Bmad::pointer_to_branch_given_name(
       /* void* */ _branch_ptr.get_fortran_ptr());
   return std::move(_branch_ptr);
 }
-BranchProxy Bmad::pointer_to_branch_given_ele(EleProxy& ele) {
+BranchProxy Bmad::pointer_to_branch(EleProxy& ele) {
   BranchProxy _branch_ptr;
   fortran_pointer_to_branch_given_ele(
       /* void* */ ele.get_fortran_ptr(),
@@ -4771,7 +4771,7 @@ void Bmad::tilt_mat6(FixedArray2D<Real, 6, 6> mat6, double tilt) {
   fortran_tilt_mat6(/* double* */ _mat6_vec, /* double& */ tilt);
   vec_to_matrix(_mat6_vec, mat6);
 }
-void Bmad::set_flags_for_changed_integer_attribute(
+void Bmad::set_flags_for_changed_attribute(
     EleProxy& ele,
     int& attrib,
     std::optional<bool> set_dependent) {
@@ -4787,7 +4787,7 @@ void Bmad::set_flags_for_changed_integer_attribute(
       /* int& */ attrib,
       /* bool* */ _set_dependent);
 }
-void Bmad::set_flags_for_changed_logical_attribute(
+void Bmad::set_flags_for_changed_attribute(
     EleProxy& ele,
     bool& attrib,
     std::optional<bool> set_dependent) {
@@ -4803,7 +4803,7 @@ void Bmad::set_flags_for_changed_logical_attribute(
       /* bool& */ attrib,
       /* bool* */ _set_dependent);
 }
-void Bmad::set_flags_for_changed_lat_attribute(
+void Bmad::set_flags_for_changed_attribute(
     LatProxy& lat,
     std::optional<bool> set_dependent) {
   bool set_dependent_lvalue;
@@ -4816,7 +4816,7 @@ void Bmad::set_flags_for_changed_lat_attribute(
   fortran_set_flags_for_changed_lat_attribute(
       /* void* */ lat.get_fortran_ptr(), /* bool* */ _set_dependent);
 }
-void Bmad::set_flags_for_changed_real_attribute(
+void Bmad::set_flags_for_changed_attribute(
     EleProxy& ele,
     optional_ref<double> attrib,
     std::optional<bool> set_dependent) {
@@ -5256,12 +5256,12 @@ void Bmad::mat6_add_offsets(EleProxy& ele, LatParamProxy& param) {
   fortran_mat6_add_offsets(
       /* void* */ ele.get_fortran_ptr(), /* void* */ param.get_fortran_ptr());
 }
-void Bmad::reallocate_coord_n(CoordProxyAlloc1D& coord, int n_coord) {
+void Bmad::reallocate_coord(CoordProxyAlloc1D& coord, int n_coord) {
   // intent=inout allocatable type array
   fortran_reallocate_coord_n(
       /* void* */ coord.get_fortran_ptr(), /* int& */ n_coord);
 }
-void Bmad::reallocate_coord_lat(
+void Bmad::reallocate_coord(
     CoordProxyAlloc1D& coord,
     LatProxy& lat,
     std::optional<int> ix_branch) {
@@ -5278,7 +5278,7 @@ void Bmad::reallocate_coord_lat(
       /* void* */ lat.get_fortran_ptr(),
       /* int* */ _ix_branch);
 }
-void Bmad::reallocate_coord_array(
+void Bmad::reallocate_coord(
     CoordArrayProxyAlloc1D& coord_array,
     LatProxy& lat) {
   // intent=inout allocatable type array
@@ -5422,7 +5422,7 @@ void Bmad::re_allocate_eles(
       /* bool* */ _save_old,
       /* bool* */ _exact);
 }
-void Bmad::init_coord1(
+void Bmad::init_coord(
     CoordProxy& orb,
     FixedArray1D<Real, 6> vec,
     optional_ref<EleProxy> ele,
@@ -5509,7 +5509,7 @@ void Bmad::init_coord1(
       /* double* */ _s_pos,
       /* bool* */ _random_on);
 }
-CoordProxy Bmad::init_coord2(
+CoordProxy Bmad::init_coord(
     CoordProxy& orb_in,
     optional_ref<EleProxy> ele,
     std::optional<int> element_end,
@@ -5596,7 +5596,7 @@ CoordProxy Bmad::init_coord2(
       /* bool* */ _random_on);
   return std::move(_orb_out);
 }
-void Bmad::init_coord3(
+void Bmad::init_coord(
     CoordProxy& orb,
     optional_ref<EleProxy> ele,
     std::optional<int> element_end,

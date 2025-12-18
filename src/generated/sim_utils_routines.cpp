@@ -164,21 +164,18 @@ double SimUtils::rp8(int int_in) {
   fortran_rp8(/* int& */ int_in, /* double& */ _re_out);
   return _re_out;
 }
-void SimUtils::set_parameter_real(
+void SimUtils::set_parameter(
     double& param_val,
     double& set_val,
     double& save_val) {
   fortran_set_parameter_real(
       /* double& */ param_val, /* double& */ set_val, /* double& */ save_val);
 }
-void SimUtils::set_parameter_int(int& param_val, int& set_val, int& save_val) {
+void SimUtils::set_parameter(int& param_val, int& set_val, int& save_val) {
   fortran_set_parameter_int(
       /* int& */ param_val, /* int& */ set_val, /* int& */ save_val);
 }
-void SimUtils::set_parameter_logic(
-    bool& param_val,
-    bool& set_val,
-    bool& save_val) {
+void SimUtils::set_parameter(bool& param_val, bool& set_val, bool& save_val) {
   fortran_set_parameter_logic(
       /* bool& */ param_val, /* bool& */ set_val, /* bool& */ save_val);
 }
@@ -1116,25 +1113,19 @@ int SimUtils::virtual_memory_usage() {
   fortran_virtual_memory_usage(/* int& */ _usage);
   return _usage;
 }
-void SimUtils::find_location_real(
-    RealAlloc1D& arr,
-    double value,
-    int& ix_match) {
+void SimUtils::find_location(RealAlloc1D& arr, double value, int& ix_match) {
   // intent=in allocatable general array
   fortran_find_location_real(
       /* void* */ arr.get_fortran_ptr(),
       /* double& */ value,
       /* int& */ ix_match);
 }
-void SimUtils::find_location_int(IntAlloc1D& arr, int& value, int& ix_match) {
+void SimUtils::find_location(IntAlloc1D& arr, int& value, int& ix_match) {
   // intent=inout allocatable general array
   fortran_find_location_int(
       /* void* */ arr.get_fortran_ptr(), /* int& */ value, /* int& */ ix_match);
 }
-void SimUtils::find_location_logic(
-    BoolAlloc1D& arr,
-    bool& value,
-    int& ix_match) {
+void SimUtils::find_location(BoolAlloc1D& arr, bool& value, int& ix_match) {
   // intent=inout allocatable general array
   fortran_find_location_logic(
       /* void* */ arr.get_fortran_ptr(),

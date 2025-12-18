@@ -12,15 +12,9 @@ from .cpp import CppWrapperArgument
 from .enums import EnumValue, get_ele_attributes, get_ele_keys, parse_all_enums
 from .paths import CODEGEN_ROOT, PYBMAD_INCLUDE, PYBMAD_SRC
 from .proxy import templates as proxy_templates
-from .routines import FortranRoutine, is_python_immutable
+from .routines import FortranRoutine, RoutineArg, is_python_immutable
 from .types import remove_optional
 from .util import snake_to_camel, struct_to_proxy_class_name
-
-overloaded_items = {
-    "init_coord1": "init_coord",
-    "init_coord2": "init_coord",
-    "init_coord3": "init_coord",
-}
 
 
 def is_struct_array_used(
@@ -175,54 +169,63 @@ def generate_py_routine_return_value_struct(routine: FortranRoutine) -> list[str
     return lines
 
 
+def _get_py_routine_arg_type(arg: RoutineArg) -> str:
+    cpp_type = arg.transform.cpp_type
+    if is_python_immutable(arg):
+        if cpp_type.startswith("optional_ref"):
+            # optional_ref<T> -> std::optional<T>
+            cpp_type = remove_optional(cpp_type)
+            cpp_type = f"std::optional<{cpp_type}>"
+        cpp_type = cpp_type.replace("&", "")
+    return cpp_type
+
+
+def _get_py_routine_decl_spec(routine: FortranRoutine, allow_defaults: bool) -> list[str]:
+    """py_ routine (wrapped due to immutable inout has its own definition)"""
+    specs = []
+
+    for arg in reversed(routine.args):
+        if not arg.is_input:
+            continue
+
+        if allow_defaults and arg.transform.cpp_default:
+            default_str = arg.transform.cpp_default
+        else:
+            default_str = ""
+            allow_defaults = False
+
+        cpp_type = _get_py_routine_arg_type(arg)
+        specs.append(f"{cpp_type} {arg.c_name}{default_str}")
+
+    return list(reversed(specs))
+
+
+def get_py_routine_decl(
+    routine: FortranRoutine, return_type: str, python_name: str, defaults: bool, namespace: bool
+):
+    """Declaration of special py_ routine (wrapped due to immutable inout has its own definition)"""
+
+    decl_args = ", ".join(_get_py_routine_decl_spec(routine, defaults))
+
+    routine_and_args = f"{python_name}({decl_args})"
+
+    if routine.cpp_namespace and namespace:
+        routine_and_args = "::".join((routine.cpp_namespace, routine_and_args))
+
+    return f"{return_type} {routine_and_args}"
+
+
 def generate_py_routine_wrapper(routine: FortranRoutine) -> list[str]:
     assert routine.docstring is not None
     lines = []
-
-    def _get_cpp_decl_spec(routine: FortranRoutine, allow_defaults: bool) -> list[str]:
-        specs = []
-
-        for arg in reversed(routine.args):
-            if not arg.is_input:
-                continue
-
-            if allow_defaults and arg.transform.cpp_default:
-                default_str = arg.transform.cpp_default
-            else:
-                default_str = ""
-                allow_defaults = False
-
-            cpp_type = arg.transform.cpp_type
-            if is_python_immutable(arg):
-                if cpp_type.startswith("optional_ref"):
-                    # optional_ref<T> -> std::optional<T>
-                    cpp_type = remove_optional(cpp_type)
-                    cpp_type = f"std::optional<{cpp_type}>"
-                cpp_type = cpp_type.replace("&", "")
-
-            decl = f"{cpp_type} {arg.c_name}"
-
-            spec = f"{decl}{default_str}"
-            specs.append(spec)
-
-        return list(reversed(specs))
-
-    def get_cpp_decl(return_type: str, python_name: str, defaults: bool, namespace: bool):
-        decl_args = ", ".join(_get_cpp_decl_spec(routine, defaults))
-
-        routine_and_args = f"{python_name}({decl_args})"
-
-        if routine.cpp_namespace and namespace:
-            routine_and_args = "::".join((routine.cpp_namespace, routine_and_args))
-
-        return f"{return_type} {routine_and_args}"
 
     name = snake_to_camel(routine.name)
     py_name = f"Py{name}"
 
     args = [CppWrapperArgument.from_arg(arg) for arg in routine.args]
     lines.append(
-        get_cpp_decl(
+        get_py_routine_decl(
+            routine,
             return_type=py_name,
             python_name=f"python_{routine.name}",
             defaults=True,
@@ -239,7 +242,7 @@ def generate_py_routine_wrapper(routine: FortranRoutine) -> list[str]:
     else:
         res = ""
 
-    lines.append(f"  {res}{routine.cpp_namespace}::{routine.name}(")
+    lines.append(f"  {res}{routine.cpp_namespace}::{routine.overloaded_name}(")
 
     def get_call_arg(arg: CppWrapperArgument):
         if arg.arg.transform.is_optional_ref and is_python_immutable(arg.arg):
@@ -269,17 +272,28 @@ def generate_py_routine_wrapper(routine: FortranRoutine) -> list[str]:
     return lines
 
 
-def generate_routine_pybind_def(routine: FortranRoutine) -> list[str]:
+def generate_routine_pybind_def(routine: FortranRoutine, overloads: list[FortranRoutine]) -> list[str]:
     assert routine.docstring is not None
     lines = []
 
     lines.append("m.def(")
-    lines.append(f'  "{routine.name}",')
+    lines.append(f'  "{routine.overloaded_name}",')
 
     if routine.needs_python_wrapper:
-        lines.append(f"  &python_{routine.name},")
+        routine_ref = f"&python_{routine.name}"
     else:
-        lines.append(f"  &{routine.cpp_namespace}::{routine.name},")
+        routine_ref = f"&{routine.cpp_namespace}::{routine.overloaded_name}"
+
+    if overloads:
+        if routine.needs_python_wrapper:
+            arg_types = [_get_py_routine_arg_type(arg) for arg in routine.args if arg.is_input]
+        else:
+            arg_types = [arg.transform.cpp_type for arg in routine.args if arg.is_input]
+        overload_args = ", ".join(arg_types)
+        lines.append(f"py::overload_cast<{overload_args}>({routine_ref}),")
+
+    else:
+        lines.append(f"{routine_ref},")
 
     for arg in routine.args:
         if arg.is_input:
@@ -297,20 +311,25 @@ def generate_routine_pybind_def(routine: FortranRoutine) -> list[str]:
 
 def generate_py_routine_wrappers(routines: dict[str, FortranRoutine]):
     code = []
-    for routine in routines.values():
-        if routine.usable and routine.needs_python_wrapper:
-            code.extend(generate_py_routine_return_value_struct(routine))
-            code.extend(generate_py_routine_wrapper(routine))
+
+    to_wrap = [routine for routine in routines.values() if routine.usable and routine.needs_python_wrapper]
+    for routine in to_wrap:
+        code.extend(generate_py_routine_return_value_struct(routine))
+        code.extend(generate_py_routine_wrapper(routine))
 
     return "\n".join(code)
 
 
 def generate_py_routine_defs(routines: dict[str, FortranRoutine]):
     code = []
-    for routine in routines.values():
-        if routine.usable:
-            code.extend(generate_routine_pybind_def(routine))
-            code.extend(generate_routine_return_value_wrapper(routine))
+
+    to_wrap = [routine for routine in routines.values() if routine.usable]
+    for routine in to_wrap:
+        overloads = [
+            rt for rt in to_wrap if rt.overloaded_name == routine.overloaded_name and rt is not routine
+        ]
+        code.extend(generate_routine_pybind_def(routine, overloads))
+        code.extend(generate_routine_return_value_wrapper(routine))
 
     return "\n".join(code)
 

@@ -33,6 +33,7 @@ from .util import snake_to_camel, struct_to_proxy_class_name, wrap_line
 
 logger = logging.getLogger(__name__)
 
+GLOBAL_INTERFACE = "(global)"
 TEST_BUILD = int(os.environ.get("PYBMAD_TEST_BUILD", "0"))
 TEST_ROUTINES = {"bmad_parser"}
 docstring_hotfixes = {}
@@ -352,6 +353,13 @@ class FortranRoutine:
     args: list[RoutineArg] = field(default_factory=list)
 
     @property
+    def overloaded_name(self) -> str:
+        """Some routines have interfaces which result in overloaded functions in C++"""
+        if not self.interface or self.interface == GLOBAL_INTERFACE:
+            return self.name
+        return self.interface
+
+    @property
     def arg_names_with_result(self) -> list[str]:
         if self.result_name:
             result_arg = [self.result_name.lower()]
@@ -507,7 +515,7 @@ class FortranRoutine:
     def get_cpp_decl(self, defaults: bool, namespace: bool) -> str:
         decl_args = ", ".join(self._get_cpp_decl_spec(defaults))
 
-        routine_and_args = f"{self.name}({decl_args})"
+        routine_and_args = f"{self.overloaded_name}({decl_args})"
 
         if self.cpp_namespace and namespace:
             routine_and_args = "::".join((self.cpp_namespace, routine_and_args))
@@ -723,7 +731,7 @@ class FortranParser:
                 if len(parts) > 1:
                     in_interface = parts[1]
                 else:
-                    in_interface = "(global)"
+                    in_interface = GLOBAL_INTERFACE
                 interface_doc = list(pending_comments)
                 pending_comments = []
             elif stripped_line.lower().startswith("end interface"):

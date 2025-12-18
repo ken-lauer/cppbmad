@@ -3689,7 +3689,7 @@ extern "C" void fortran_init_coord1(
     double* spin /* 1D_NOT_real in */,
     double* s_pos /* 0D_NOT_real in */,
     bool* random_on /* 0D_NOT_logical in */);
-void init_coord1(
+void init_coord(
     CoordProxy& orb,
     FixedArray1D<Real, 6> vec,
     optional_ref<EleProxy> ele = std::nullopt,
@@ -3715,7 +3715,7 @@ extern "C" void fortran_init_coord2(
     double* spin /* 1D_NOT_real in */,
     double* s_pos /* 0D_NOT_real in */,
     bool* random_on /* 0D_NOT_logical in */);
-CoordProxy init_coord2(
+CoordProxy init_coord(
     CoordProxy& orb_in,
     optional_ref<EleProxy> ele = std::nullopt,
     std::optional<int> element_end = std::nullopt,
@@ -3737,7 +3737,7 @@ extern "C" void fortran_init_coord3(
     double* t_offset /* 0D_NOT_real in */,
     bool* shift_vec6 /* 0D_NOT_logical in */,
     double* spin /* 1D_NOT_real in */);
-void init_coord3(
+void init_coord(
     CoordProxy& orb,
     optional_ref<EleProxy> ele = std::nullopt,
     std::optional<int> element_end = std::nullopt,
@@ -5856,14 +5856,14 @@ void point_photon_emission(
 extern "C" bool fortran_pointer_to_branch_given_ele(
     void* ele /* 0D_NOT_type in */,
     void* branch_ptr /* 0D_PTR_type out */);
-BranchProxy pointer_to_branch_given_ele(EleProxy& ele);
+BranchProxy pointer_to_branch(EleProxy& ele);
 extern "C" bool fortran_pointer_to_branch_given_name(
     const char* branch_name /* 0D_NOT_character in */,
     void* lat /* 0D_NOT_type in */,
     bool* parameter_is_branch0 /* 0D_NOT_logical in */,
     int* blank_branch /* 0D_NOT_integer in */,
     void* branch_ptr /* 0D_PTR_type out */);
-BranchProxy pointer_to_branch_given_name(
+BranchProxy pointer_to_branch(
     std::string branch_name,
     LatProxy& lat,
     std::optional<bool> parameter_is_branch0 = std::nullopt,
@@ -6595,19 +6595,19 @@ void reallocate_control(LatProxy& lat, int n);
 extern "C" void fortran_reallocate_coord_array(
     void* coord_array /* 1D_ALLOC_type inout */,
     void* lat /* 0D_NOT_type in */);
-void reallocate_coord_array(CoordArrayProxyAlloc1D& coord_array, LatProxy& lat);
+void reallocate_coord(CoordArrayProxyAlloc1D& coord_array, LatProxy& lat);
 extern "C" void fortran_reallocate_coord_lat(
     void* coord /* 1D_ALLOC_type inout */,
     void* lat /* 0D_NOT_type in */,
     int* ix_branch /* 0D_NOT_integer in */);
-void reallocate_coord_lat(
+void reallocate_coord(
     CoordProxyAlloc1D& coord,
     LatProxy& lat,
     std::optional<int> ix_branch = std::nullopt);
 extern "C" void fortran_reallocate_coord_n(
     void* coord /* 1D_ALLOC_type inout */,
     int& n_coord /* 0D_NOT_integer in */);
-void reallocate_coord_n(CoordProxyAlloc1D& coord, int n_coord);
+void reallocate_coord(CoordProxyAlloc1D& coord, int n_coord);
 extern "C" void fortran_reallocate_expression_stack(
     void* stack /* 1D_ALLOC_type inout */,
     int& n /* 0D_NOT_integer in */,
@@ -7071,21 +7071,21 @@ extern "C" void fortran_set_flags_for_changed_integer_attribute(
     void* ele /* 0D_NOT_type in */,
     int& attrib /* 0D_NOT_integer inout */,
     bool* set_dependent /* 0D_NOT_logical in */);
-void set_flags_for_changed_integer_attribute(
+void set_flags_for_changed_attribute(
     EleProxy& ele,
     int& attrib,
     std::optional<bool> set_dependent = std::nullopt);
 extern "C" void fortran_set_flags_for_changed_lat_attribute(
     void* lat /* 0D_NOT_type inout */,
     bool* set_dependent /* 0D_NOT_logical in */);
-void set_flags_for_changed_lat_attribute(
+void set_flags_for_changed_attribute(
     LatProxy& lat,
     std::optional<bool> set_dependent = std::nullopt);
 extern "C" void fortran_set_flags_for_changed_logical_attribute(
     void* ele /* 0D_NOT_type in */,
     bool& attrib /* 0D_NOT_logical inout */,
     bool* set_dependent /* 0D_NOT_logical in */);
-void set_flags_for_changed_logical_attribute(
+void set_flags_for_changed_attribute(
     EleProxy& ele,
     bool& attrib,
     std::optional<bool> set_dependent = std::nullopt);
@@ -7093,7 +7093,7 @@ extern "C" void fortran_set_flags_for_changed_real_attribute(
     void* ele /* 0D_NOT_type in */,
     double* attrib /* 0D_NOT_real inout */,
     bool* set_dependent /* 0D_NOT_logical in */);
-void set_flags_for_changed_real_attribute(
+void set_flags_for_changed_attribute(
     EleProxy& ele,
     optional_ref<double> attrib = std::nullopt,
     std::optional<bool> set_dependent = std::nullopt);

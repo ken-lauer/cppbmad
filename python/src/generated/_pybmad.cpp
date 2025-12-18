@@ -959,7 +959,7 @@ python_set_flags_for_changed_integer_attribute(
     EleProxy& ele,
     int attrib,
     std::optional<bool> set_dependent = std::nullopt) {
-  Bmad::set_flags_for_changed_integer_attribute(ele, attrib, set_dependent);
+  Bmad::set_flags_for_changed_attribute(ele, attrib, set_dependent);
   auto py_result{PySetFlagsForChangedIntegerAttribute{attrib}};
   return py_result;
 }
@@ -971,7 +971,7 @@ python_set_flags_for_changed_logical_attribute(
     EleProxy& ele,
     bool attrib,
     std::optional<bool> set_dependent = std::nullopt) {
-  Bmad::set_flags_for_changed_logical_attribute(ele, attrib, set_dependent);
+  Bmad::set_flags_for_changed_attribute(ele, attrib, set_dependent);
   auto py_result{PySetFlagsForChangedLogicalAttribute{attrib}};
   return py_result;
 }
@@ -982,7 +982,7 @@ PySetFlagsForChangedRealAttribute python_set_flags_for_changed_real_attribute(
     EleProxy& ele,
     std::optional<double> attrib = std::nullopt,
     std::optional<bool> set_dependent = std::nullopt) {
-  Bmad::set_flags_for_changed_real_attribute(
+  Bmad::set_flags_for_changed_attribute(
       ele, make_opt_ref(attrib), set_dependent);
   auto py_result{PySetFlagsForChangedRealAttribute{attrib}};
   return py_result;
@@ -4002,7 +4002,7 @@ PySetParameterReal python_set_parameter_real(
     double param_val,
     double set_val,
     double save_val) {
-  SimUtils::set_parameter_real(param_val, set_val, save_val);
+  SimUtils::set_parameter(param_val, set_val, save_val);
   auto py_result{PySetParameterReal{param_val, set_val, save_val}};
   return py_result;
 }
@@ -4015,7 +4015,7 @@ PySetParameterInt python_set_parameter_int(
     int param_val,
     int set_val,
     int save_val) {
-  SimUtils::set_parameter_int(param_val, set_val, save_val);
+  SimUtils::set_parameter(param_val, set_val, save_val);
   auto py_result{PySetParameterInt{param_val, set_val, save_val}};
   return py_result;
 }
@@ -4028,7 +4028,7 @@ PySetParameterLogic python_set_parameter_logic(
     bool param_val,
     bool set_val,
     bool save_val) {
-  SimUtils::set_parameter_logic(param_val, set_val, save_val);
+  SimUtils::set_parameter(param_val, set_val, save_val);
   auto py_result{PySetParameterLogic{param_val, set_val, save_val}};
   return py_result;
 }
@@ -5093,7 +5093,7 @@ PyFindLocationReal python_find_location_real(
     RealAlloc1D& arr,
     double value,
     int ix_match) {
-  SimUtils::find_location_real(arr, value, ix_match);
+  SimUtils::find_location(arr, value, ix_match);
   auto py_result{PyFindLocationReal{ix_match}};
   return py_result;
 }
@@ -5105,7 +5105,7 @@ PyFindLocationInt python_find_location_int(
     IntAlloc1D& arr,
     int value,
     int ix_match) {
-  SimUtils::find_location_int(arr, value, ix_match);
+  SimUtils::find_location(arr, value, ix_match);
   auto py_result{PyFindLocationInt{value, ix_match}};
   return py_result;
 }
@@ -5117,7 +5117,7 @@ PyFindLocationLogic python_find_location_logic(
     BoolAlloc1D& arr,
     bool value,
     int ix_match) {
-  SimUtils::find_location_logic(arr, value, ix_match);
+  SimUtils::find_location(arr, value, ix_match);
   auto py_result{PyFindLocationLogic{value, ix_match}};
   return py_result;
 }
@@ -15107,8 +15107,12 @@ ac_out : AcKickerStruct
     Gets set equal to ac_in
 )""");
   m.def(
-      "pointer_to_branch_given_name",
-      &Bmad::pointer_to_branch_given_name,
+      "pointer_to_branch",
+      py::overload_cast<
+          std::string,
+          LatProxy&,
+          std::optional<bool>,
+          std::optional<int>>(&Bmad::pointer_to_branch),
       py::arg("branch_name"),
       py::arg("lat"),
       py::arg("parameter_is_branch0") = py::none(),
@@ -15146,8 +15150,8 @@ Notes
 Overloaded versions:
 )""");
   m.def(
-      "pointer_to_branch_given_ele",
-      &Bmad::pointer_to_branch_given_ele,
+      "pointer_to_branch",
+      py::overload_cast<EleProxy&>(&Bmad::pointer_to_branch),
       py::arg("ele"),
       R"""(Routine to return a pointer to the lattice branch associated with a given name
 
@@ -15922,8 +15926,9 @@ tilt : float
     Tilt angle.
 )""");
   m.def(
-      "set_flags_for_changed_integer_attribute",
-      &python_set_flags_for_changed_integer_attribute,
+      "set_flags_for_changed_attribute",
+      py::overload_cast<EleProxy&, int, std::optional<bool>>(
+          &python_set_flags_for_changed_integer_attribute),
       py::arg("ele"),
       py::arg("attrib"),
       py::arg("set_dependent") = py::none(),
@@ -15991,8 +15996,9 @@ Overloaded versions:
             return py::none();
           });
   m.def(
-      "set_flags_for_changed_logical_attribute",
-      &python_set_flags_for_changed_logical_attribute,
+      "set_flags_for_changed_attribute",
+      py::overload_cast<EleProxy&, bool, std::optional<bool>>(
+          &python_set_flags_for_changed_logical_attribute),
       py::arg("ele"),
       py::arg("attrib"),
       py::arg("set_dependent") = py::none(),
@@ -16060,8 +16066,9 @@ Overloaded versions:
             return py::none();
           });
   m.def(
-      "set_flags_for_changed_lat_attribute",
-      &Bmad::set_flags_for_changed_lat_attribute,
+      "set_flags_for_changed_attribute",
+      py::overload_cast<LatProxy&, std::optional<bool>>(
+          &Bmad::set_flags_for_changed_attribute),
       py::arg("lat"),
       py::arg("set_dependent") = py::none(),
       R"""(Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
@@ -16108,8 +16115,9 @@ off_value call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
 Overloaded versions:
 )""");
   m.def(
-      "set_flags_for_changed_real_attribute",
-      &python_set_flags_for_changed_real_attribute,
+      "set_flags_for_changed_attribute",
+      py::overload_cast<EleProxy&, std::optional<double>, std::optional<bool>>(
+          &python_set_flags_for_changed_real_attribute),
       py::arg("ele"),
       py::arg("attrib") = py::none(),
       py::arg("set_dependent") = py::none(),
@@ -16839,8 +16847,8 @@ ele : EleStruct
 param : LatParamStruct
 )""");
   m.def(
-      "reallocate_coord_n",
-      &Bmad::reallocate_coord_n,
+      "reallocate_coord",
+      py::overload_cast<CoordProxyAlloc1D&, int>(&Bmad::reallocate_coord),
       py::arg("coord"),
       py::arg("n_coord"),
       R"""(Routine to allocate or reallocate at allocatable coord_struct array.
@@ -16871,8 +16879,9 @@ Notes
 Overloaded versions:
 )""");
   m.def(
-      "reallocate_coord_lat",
-      &Bmad::reallocate_coord_lat,
+      "reallocate_coord",
+      py::overload_cast<CoordProxyAlloc1D&, LatProxy&, std::optional<int>>(
+          &Bmad::reallocate_coord),
       py::arg("coord"),
       py::arg("lat"),
       py::arg("ix_branch") = py::none(),
@@ -16904,8 +16913,9 @@ Notes
 Overloaded versions:
 )""");
   m.def(
-      "reallocate_coord_array",
-      &Bmad::reallocate_coord_array,
+      "reallocate_coord",
+      py::overload_cast<CoordArrayProxyAlloc1D&, LatProxy&>(
+          &Bmad::reallocate_coord),
       py::arg("coord_array"),
       py::arg("lat"),
       R"""(Routine to allocate or reallocate at allocatable coord_struct array.
@@ -17103,8 +17113,20 @@ exact : bool, optional
     is already large enough
 )""");
   m.def(
-      "init_coord1",
-      &Bmad::init_coord1,
+      "init_coord",
+      py::overload_cast<
+          CoordProxy&,
+          FixedArray1D<Real, 6>,
+          optional_ref<EleProxy>,
+          std::optional<int>,
+          std::optional<int>,
+          std::optional<int>,
+          std::optional<double>,
+          std::optional<double>,
+          std::optional<bool>,
+          std::optional<FixedArray1D<Real, 3>>,
+          std::optional<double>,
+          std::optional<bool>>(&Bmad::init_coord),
       py::arg("orb"),
       py::arg("vec"),
       py::arg("ele") = py::none(),
@@ -17167,8 +17189,19 @@ Notes
 Overloaded versions:
 )""");
   m.def(
-      "init_coord2",
-      &Bmad::init_coord2,
+      "init_coord",
+      py::overload_cast<
+          CoordProxy&,
+          optional_ref<EleProxy>,
+          std::optional<int>,
+          std::optional<int>,
+          std::optional<int>,
+          std::optional<double>,
+          std::optional<double>,
+          std::optional<bool>,
+          std::optional<FixedArray1D<Real, 3>>,
+          std::optional<double>,
+          std::optional<bool>>(&Bmad::init_coord),
       py::arg("orb_in"),
       py::arg("ele") = py::none(),
       py::arg("element_end") = py::none(),
@@ -17236,8 +17269,17 @@ Notes
 Overloaded versions:
 )""");
   m.def(
-      "init_coord3",
-      &Bmad::init_coord3,
+      "init_coord",
+      py::overload_cast<
+          CoordProxy&,
+          optional_ref<EleProxy>,
+          std::optional<int>,
+          std::optional<int>,
+          std::optional<int>,
+          std::optional<double>,
+          std::optional<double>,
+          std::optional<bool>,
+          std::optional<FixedArray1D<Real, 3>>>(&Bmad::init_coord),
       py::arg("orb"),
       py::arg("ele") = py::none(),
       py::arg("element_end") = py::none(),
@@ -34614,8 +34656,8 @@ re_out : float
     Equiv real.
 )""");
   m.def(
-      "set_parameter_real",
-      &python_set_parameter_real,
+      "set_parameter",
+      py::overload_cast<double, double, double>(&python_set_parameter_real),
       py::arg("param_val"),
       py::arg("set_val"),
       py::arg("save_val"),
@@ -34647,8 +34689,8 @@ save_val :
             return py::none();
           });
   m.def(
-      "set_parameter_int",
-      &python_set_parameter_int,
+      "set_parameter",
+      py::overload_cast<int, int, int>(&python_set_parameter_int),
       py::arg("param_val"),
       py::arg("set_val"),
       py::arg("save_val"),
@@ -34680,8 +34722,8 @@ save_val :
             return py::none();
           });
   m.def(
-      "set_parameter_logic",
-      &python_set_parameter_logic,
+      "set_parameter",
+      py::overload_cast<bool, bool, bool>(&python_set_parameter_logic),
       py::arg("param_val"),
       py::arg("set_val"),
       py::arg("save_val"),
@@ -37497,8 +37539,8 @@ Parameters
 usage : 
 )""");
   m.def(
-      "find_location_real",
-      &python_find_location_real,
+      "find_location",
+      py::overload_cast<RealAlloc1D&, double, int>(&python_find_location_real),
       py::arg("arr"),
       py::arg("value"),
       py::arg("ix_match"),
@@ -37526,8 +37568,8 @@ ix_match :
             return py::none();
           });
   m.def(
-      "find_location_int",
-      &python_find_location_int,
+      "find_location",
+      py::overload_cast<IntAlloc1D&, int, int>(&python_find_location_int),
       py::arg("arr"),
       py::arg("value"),
       py::arg("ix_match"),
@@ -37556,8 +37598,8 @@ ix_match :
             return py::none();
           });
   m.def(
-      "find_location_logic",
-      &python_find_location_logic,
+      "find_location",
+      py::overload_cast<BoolAlloc1D&, bool, int>(&python_find_location_logic),
       py::arg("arr"),
       py::arg("value"),
       py::arg("ix_match"),

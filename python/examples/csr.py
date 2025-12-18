@@ -53,8 +53,8 @@ for i in range(6):
     ave[i] = (total / n_particles) if n_particles > 0 else 0.0
 
 centroid = pybmad.CoordProxyAlloc1D()
-pybmad.reallocate_coord_lat(centroid, lat, 0)
-pybmad.init_coord1(centroid[0], ave, ele0, pybmad.DOWNSTREAM_END)
+pybmad.reallocate_coord(centroid, lat, 0)
+pybmad.init_coord(centroid[0], ave, ele0, pybmad.DOWNSTREAM_END)
 
 pybmad.track_all(lat, centroid)
 

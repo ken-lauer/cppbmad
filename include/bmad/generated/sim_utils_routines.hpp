@@ -403,17 +403,17 @@ extern "C" bool fortran_find_location_int(
     void* arr /* 1D_ALLOC_integer inout */,
     int& value /* 0D_NOT_integer inout */,
     int& ix_match /* 0D_NOT_integer inout */);
-void find_location_int(IntAlloc1D& arr, int& value, int& ix_match);
+void find_location(IntAlloc1D& arr, int& value, int& ix_match);
 extern "C" bool fortran_find_location_logic(
     void* arr /* 1D_ALLOC_logical inout */,
     bool& value /* 0D_NOT_logical inout */,
     int& ix_match /* 0D_NOT_integer inout */);
-void find_location_logic(BoolAlloc1D& arr, bool& value, int& ix_match);
+void find_location(BoolAlloc1D& arr, bool& value, int& ix_match);
 extern "C" bool fortran_find_location_real(
     void* arr /* 1D_ALLOC_real in */,
     double& value /* 0D_NOT_real in */,
     int& ix_match /* 0D_NOT_integer inout */);
-void find_location_real(RealAlloc1D& arr, double value, int& ix_match);
+void find_location(RealAlloc1D& arr, double value, int& ix_match);
 
 // Skipped unusable routine find_location_str:
 // - Variable-sized inout character array: arr(:) 1D_ALLOC_character
@@ -1118,17 +1118,17 @@ extern "C" bool fortran_set_parameter_int(
     int& param_val /* 0D_NOT_integer inout */,
     int& set_val /* 0D_NOT_integer inout */,
     int& save_val /* 0D_NOT_integer inout */);
-void set_parameter_int(int& param_val, int& set_val, int& save_val);
+void set_parameter(int& param_val, int& set_val, int& save_val);
 extern "C" bool fortran_set_parameter_logic(
     bool& param_val /* 0D_NOT_logical inout */,
     bool& set_val /* 0D_NOT_logical inout */,
     bool& save_val /* 0D_NOT_logical inout */);
-void set_parameter_logic(bool& param_val, bool& set_val, bool& save_val);
+void set_parameter(bool& param_val, bool& set_val, bool& save_val);
 extern "C" bool fortran_set_parameter_real(
     double& param_val /* 0D_NOT_real inout */,
     double& set_val /* 0D_NOT_real inout */,
     double& save_val /* 0D_NOT_real inout */);
-void set_parameter_real(double& param_val, double& set_val, double& save_val);
+void set_parameter(double& param_val, double& set_val, double& save_val);
 extern "C" bool fortran_set_species_charge(
     int& species_in /* 0D_NOT_integer in */,
     int& charge /* 0D_NOT_integer in */,
