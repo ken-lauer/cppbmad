@@ -116,7 +116,11 @@ endif()
 set_property(TARGET ${LIBNAME} PROPERTY CXX_STANDARD 17)
 target_compile_definitions(${LIBNAME} PRIVATE VERSION_INFO="${PROJECT_VERSION}")
 
-install(TARGETS ${LIBNAME} DESTINATION lib)
+if(SKBUILD)
+  install(TARGETS ${LIBNAME} DESTINATION pybmad)
+else()
+  install(TARGETS ${LIBNAME} DESTINATION lib)
+endif()
 
 foreach(TEST_NAME test_integration test_csr test_arrays)
   add_executable(${TEST_NAME} src/tests/${TEST_NAME}.cpp)

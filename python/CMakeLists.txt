@@ -61,6 +61,17 @@ install(TARGETS ${PYBIND_LIBNAME} DESTINATION pybmad)
 #   endif()
 # endif()
 
+# Update RPATH so _pybmad.so finds libcppbmad.dylib/so in the same folder
+if (APPLE)
+  set_target_properties(${PYBIND_LIBNAME} PROPERTIES
+        INSTALL_RPATH "@loader_path"
+    )
+else()
+  set_target_properties(${PYBIND_LIBNAME} PROPERTIES
+        INSTALL_RPATH "$ORIGIN"
+    )
+endif()
+
 # Only run this if we have the pybind11-stubgen tool available
 find_program(STUBGEN pybind11-stubgen)
 

@@ -55,7 +55,7 @@ Use `-DBUILD_PYBMAD=OFF` to disable building the Python bindings.
 
 ```
 python -m codegen
-python -m pip install .
+CMAKE_BUILD_PARALLEL_LEVEL=8 python -m pip install .
 ```
 
 ### pybmad development
