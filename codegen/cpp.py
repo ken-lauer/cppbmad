@@ -11,7 +11,7 @@ from .arg import Argument, CodegenStructure
 from .context import get_params
 from .proxy import templates as proxy_templates
 from .types import STANDARD_TYPES, native_type_containers
-from .util import snake_to_camel
+from .util import snake_to_camel, sorted_routines
 
 if typing.TYPE_CHECKING:
     from .routines import FortranRoutine, RoutineArg, RoutineSettings
@@ -623,7 +623,7 @@ def generate_routines_header(
     settings: RoutineSettings,
 ) -> str:
     forward_decls = []
-    for routine in sorted(routines.values(), key=lambda r: r.name):
+    for routine in sorted_routines(routines):
         if not routine.usable:
             forward_decls.append(f"\n// Skipped unusable routine {routine.name}:")
             for reason in "\n".join(routine.unusable_reason).splitlines():
@@ -643,7 +643,7 @@ def generate_to_string_header(
     template: str, structs: list[CodegenStructure], routines: dict[str, FortranRoutine]
 ) -> str:
     decls = [f"  std::string to_string(const {struct.cpp_class}& self);" for struct in structs]
-    for routine in routines.values():
+    for routine in sorted_routines(routines):
         if routine.usable and len(routine.outputs) > 1:
             decls.append(f"  std::string to_string(const {routine.cpp_return_type}& self);")
 
@@ -726,7 +726,7 @@ def generate_to_string_code(
             )
         )
 
-    for routine in routines.values():
+    for routine in sorted_routines(routines):
         if routine.usable and len(routine.outputs) > 1:
             code_lines.extend(
                 generate_cpp_to_string(

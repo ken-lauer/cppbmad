@@ -29,7 +29,7 @@ from .structs import (
     split_comment,
 )
 from .types import Intent, RoutineType, get_type_transform
-from .util import snake_to_camel, struct_to_proxy_class_name, wrap_line
+from .util import snake_to_camel, sorted_routines, struct_to_proxy_class_name, wrap_line
 
 logger = logging.getLogger(__name__)
 
@@ -1099,7 +1099,7 @@ def fix_routine(routine: FortranRoutine, docstring: RoutineDocstring):
 
 def generate_cpp_routine_code(template: str, routines: dict[str, FortranRoutine], settings: RoutineSettings):
     lines = []
-    for routine in routines.values():
+    for routine in sorted_routines(routines):
         if not routine.usable:
             continue
         cpp_wrapper = generate_routine_cpp_wrapper(routine)
@@ -1117,7 +1117,7 @@ def generate_fortran_routine_code(
     using = {}
 
     tpl = string.Template(template.replace("! ${", "${"))
-    for routine in routines.values():
+    for routine in sorted_routines(routines):
         if not routine.usable:
             continue
 

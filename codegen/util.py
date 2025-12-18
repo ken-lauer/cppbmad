@@ -5,9 +5,13 @@ import pathlib
 import subprocess
 import tempfile
 import textwrap
+import typing
 from collections.abc import Callable
 
 from .paths import CLANG_FORMAT_PATH
+
+if typing.TYPE_CHECKING:
+    from .routines import FortranRoutine
 
 logger = logging.getLogger(__name__)
 
@@ -207,3 +211,9 @@ def struct_to_proxy_class_name(name: str) -> str:
     if name.endswith("_struct"):
         return snake_to_camel(name.removesuffix("_struct") + "_proxy")
     return snake_to_camel(f"{name}_raw_struct")
+
+
+def sorted_routines(routines: dict[str, FortranRoutine] | list[FortranRoutine]) -> list[FortranRoutine]:
+    if isinstance(routines, dict):
+        routines = list(routines.values())
+    return sorted(routines, key=lambda r: r.name)

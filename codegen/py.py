@@ -14,7 +14,7 @@ from .paths import CODEGEN_ROOT, PYBMAD_INCLUDE, PYBMAD_SRC
 from .proxy import templates as proxy_templates
 from .routines import FortranRoutine, RoutineArg, is_python_immutable
 from .types import remove_optional
-from .util import snake_to_camel, struct_to_proxy_class_name
+from .util import snake_to_camel, sorted_routines, struct_to_proxy_class_name
 
 
 def is_struct_array_used(
@@ -313,7 +313,7 @@ def generate_py_routine_wrappers(routines: dict[str, FortranRoutine]):
     code = []
 
     to_wrap = [routine for routine in routines.values() if routine.usable and routine.needs_python_wrapper]
-    for routine in to_wrap:
+    for routine in sorted_routines(to_wrap):
         code.extend(generate_py_routine_return_value_struct(routine))
         code.extend(generate_py_routine_wrapper(routine))
 
@@ -324,7 +324,7 @@ def generate_py_routine_defs(routines: dict[str, FortranRoutine]):
     code = []
 
     to_wrap = [routine for routine in routines.values() if routine.usable]
-    for routine in to_wrap:
+    for routine in sorted_routines(to_wrap):
         overloads = [
             rt for rt in to_wrap if rt.overloaded_name == routine.overloaded_name and rt is not routine
         ]
