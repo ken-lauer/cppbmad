@@ -30077,19 +30077,6 @@ def find_fwhm(bound: typing.SupportsFloat, args: typing.Annotated[collections.ab
         Full width at half max of psi(t)
     """
 @typing.overload
-def find_location(arr: RealAlloc1D, value: typing.SupportsFloat, ix_match: typing.SupportsInt) -> PyFindLocationReal:
-    """
-    No docstring available
-    
-    Parameters
-    ----------
-    arr : 
-        real(rp), logical, or integer
-    value : unknown
-        :).
-    ix_match : 
-    """
-@typing.overload
 def find_location(arr: IntAlloc1D, value: typing.SupportsInt, ix_match: typing.SupportsInt) -> PyFindLocationInt:
     """
     No docstring available
@@ -30109,6 +30096,19 @@ def find_location(arr: BoolAlloc1D, value: bool, ix_match: typing.SupportsInt) -
     ----------
     arr : 
     value : 
+    ix_match : 
+    """
+@typing.overload
+def find_location(arr: RealAlloc1D, value: typing.SupportsFloat, ix_match: typing.SupportsInt) -> PyFindLocationReal:
+    """
+    No docstring available
+    
+    Parameters
+    ----------
+    arr : 
+        real(rp), logical, or integer
+    value : unknown
+        :).
     ix_match : 
     """
 def find_matching_fieldmap(file_name: str, ele: EleStruct, fm_type: typing.SupportsInt, ignore_slaves: bool | None = None) -> ...:
@@ -34568,7 +34568,7 @@ def point_photon_emission(ele: EleStruct, param: LatParamStruct, orbit: CoordStr
         Rotation matrix for curved surface.
     """
 @typing.overload
-def pointer_to_branch(branch_name: str, lat: LatStruct, parameter_is_branch0: bool | None = None, blank_branch: typing.SupportsInt | None = None) -> BranchStruct:
+def pointer_to_branch(ele: EleStruct) -> BranchStruct:
     """
     Routine to return a pointer to the lattice branch associated with a given name
     
@@ -34603,7 +34603,7 @@ def pointer_to_branch(branch_name: str, lat: LatStruct, parameter_is_branch0: bo
     Overloaded versions:
     """
 @typing.overload
-def pointer_to_branch(ele: EleStruct) -> BranchStruct:
+def pointer_to_branch(branch_name: str, lat: LatStruct, parameter_is_branch0: bool | None = None, blank_branch: typing.SupportsInt | None = None) -> BranchStruct:
     """
     Routine to return a pointer to the lattice branch associated with a given name
     
@@ -36041,7 +36041,7 @@ def reallocate_control(lat: LatStruct, n: typing.SupportsInt) -> None:
         Array size for lat.control(:) and lat.ic(:).
     """
 @typing.overload
-def reallocate_coord(coord: CoordProxyAlloc1D, n_coord: typing.SupportsInt) -> None:
+def reallocate_coord(coord_array: CoordArrayProxyAlloc1D, lat: LatStruct) -> None:
     """
     Routine to allocate or reallocate at allocatable coord_struct array.
     
@@ -36101,7 +36101,7 @@ def reallocate_coord(coord: CoordProxyAlloc1D, lat: LatStruct, ix_branch: typing
     Overloaded versions:
     """
 @typing.overload
-def reallocate_coord(coord_array: CoordArrayProxyAlloc1D, lat: LatStruct) -> None:
+def reallocate_coord(coord: CoordProxyAlloc1D, n_coord: typing.SupportsInt) -> None:
     """
     Routine to allocate or reallocate at allocatable coord_struct array.
     
@@ -36984,7 +36984,7 @@ def set_flags_for_changed_attribute(ele: EleStruct, attrib: typing.SupportsInt, 
     Overloaded versions:
     """
 @typing.overload
-def set_flags_for_changed_attribute(ele: EleStruct, attrib: bool, set_dependent: bool | None = None) -> PySetFlagsForChangedLogicalAttribute:
+def set_flags_for_changed_attribute(lat: LatStruct, set_dependent: bool | None = None) -> None:
     """
     Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
     
@@ -37030,7 +37030,7 @@ def set_flags_for_changed_attribute(ele: EleStruct, attrib: bool, set_dependent:
     Overloaded versions:
     """
 @typing.overload
-def set_flags_for_changed_attribute(lat: LatStruct, set_dependent: bool | None = None) -> None:
+def set_flags_for_changed_attribute(ele: EleStruct, attrib: bool, set_dependent: bool | None = None) -> PySetFlagsForChangedLogicalAttribute:
     """
     Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
     
@@ -37201,17 +37201,6 @@ def set_orbit_to_zero(n1: typing.SupportsInt, n2: typing.SupportsInt, ix_noset: 
         If present then orbit(ix_noset) will not be zeroed.
     """
 @typing.overload
-def set_parameter(param_val: typing.SupportsFloat, set_val: typing.SupportsFloat, save_val: typing.SupportsFloat) -> PySetParameterReal:
-    """
-    No docstring available
-    
-    Parameters
-    ----------
-    param_val : 
-    set_val : 
-    save_val : 
-    """
-@typing.overload
 def set_parameter(param_val: typing.SupportsInt, set_val: typing.SupportsInt, save_val: typing.SupportsInt) -> PySetParameterInt:
     """
     No docstring available
@@ -37224,6 +37213,17 @@ def set_parameter(param_val: typing.SupportsInt, set_val: typing.SupportsInt, sa
     """
 @typing.overload
 def set_parameter(param_val: bool, set_val: bool, save_val: bool) -> PySetParameterLogic:
+    """
+    No docstring available
+    
+    Parameters
+    ----------
+    param_val : 
+    set_val : 
+    save_val : 
+    """
+@typing.overload
+def set_parameter(param_val: typing.SupportsFloat, set_val: typing.SupportsFloat, save_val: typing.SupportsFloat) -> PySetParameterReal:
     """
     No docstring available
     

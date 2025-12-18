@@ -1922,88 +1922,92 @@ std::string to_string(const TestSubSubProxy& self) {
        std::pair{"t_ref", to_string(self.t_ref())},
        std::pair{"freq_spread", to_string(self.freq_spread())}});
 }
-std::string to_string(const Bmad::TwissAtElement& self) {
+std::string to_string(const Bmad::AbMultipoleKick& self) {
   return repr(
       &self,
-      "Bmad::TwissAtElement",
-      {std::pair{"start", to_string(self.start)},
-       std::pair{"end", to_string(self.end)},
-       std::pair{"average", to_string(self.average)}});
+      "Bmad::AbMultipoleKick",
+      {std::pair{"kx", to_string(self.kx)},
+       std::pair{"ky", to_string(self.ky)},
+       std::pair{"dk", to_string(self.dk)}});
 }
-std::string to_string(const Bmad::MultipoleEleToKt& self) {
+std::string to_string(const Bmad::ActionToXyz& self) {
   return repr(
       &self,
-      "Bmad::MultipoleEleToKt",
-      {std::pair{"ix_pole_max", to_string(self.ix_pole_max)},
-       std::pair{"knl", to_string(self.knl)},
-       std::pair{"tilt", to_string(self.tilt)}});
-}
-std::string to_string(const Bmad::ClosedOrbitFromTracking& self) {
-  return repr(
-      &self,
-      "Bmad::ClosedOrbitFromTracking",
-      {std::pair{"closed_orb", "[...]"},
+      "Bmad::ActionToXyz",
+      {std::pair{"X", to_string(self.X)},
        std::pair{"err_flag", to_string(self.err_flag)}});
 }
-std::string to_string(const Bmad::FindElementEnds& self) {
+std::string to_string(const Bmad::AddSuperimpose& self) {
   return repr(
       &self,
-      "Bmad::FindElementEnds",
-      {std::pair{"ele1", to_string(self.ele1)},
-       std::pair{"ele2", to_string(self.ele2)}});
-}
-std::string to_string(const Bmad::PointerToSuperLord& self) {
-  return repr(
-      &self,
-      "Bmad::PointerToSuperLord",
-      {std::pair{"control", to_string(self.control)},
-       std::pair{"ix_slave_back", to_string(self.ix_slave_back)},
-       std::pair{"ix_control", to_string(self.ix_control)},
-       std::pair{"ix_ic", to_string(self.ix_ic)}});
-}
-std::string to_string(const Bmad::TrackAll& self) {
-  return repr(
-      &self,
-      "Bmad::TrackAll",
-      {std::pair{"track_state", to_string(self.track_state)},
-       std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"orbit0", "[...]"}});
-}
-std::string to_string(const Bmad::FindMatchingFieldmap& self) {
-  return repr(
-      &self,
-      "Bmad::FindMatchingFieldmap",
-      {std::pair{"match_ele", to_string(self.match_ele)},
-       std::pair{"ix_field", to_string(self.ix_field)}});
-}
-std::string to_string(const Bmad::SetEleStatusStale& self) {
-  return repr(
-      &self,
-      "Bmad::SetEleStatusStale",
-      {std::pair{"ele", to_string(self.ele)},
-       std::pair{"status_group", to_string(self.status_group)},
-       std::pair{"set_slaves", to_string(self.set_slaves)}});
-}
-std::string to_string(const Bmad::CreateElementSlice& self) {
-  return repr(
-      &self,
-      "Bmad::CreateElementSlice",
-      {std::pair{"sliced_ele", to_string(self.sliced_ele)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::SetEleAttribute& self) {
-  return repr(
-      &self,
-      "Bmad::SetEleAttribute",
+      "Bmad::AddSuperimpose",
       {std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"err_id", to_string(self.err_id)}});
+       std::pair{"super_ele_out", to_string(self.super_ele_out)}});
 }
-std::string to_string(const Bmad::TwissFromTracking& self) {
+std::string to_string(const SimUtils::ApfftCorr& self) {
   return repr(
       &self,
-      "Bmad::TwissFromTracking",
-      {std::pair{"symp_err", to_string(self.symp_err)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
+      "SimUtils::ApfftCorr",
+      {std::pair{"phase", to_string(self.phase)},
+       std::pair{"amp", to_string(self.amp)},
+       std::pair{"freq", to_string(self.freq)}});
+}
+std::string to_string(const Bmad::BbiKick& self) {
+  return repr(
+      &self,
+      "Bmad::BbiKick",
+      {std::pair{"nk", to_string(self.nk)},
+       std::pair{"dnk", to_string(self.dnk)}});
+}
+std::string to_string(const Bmad::BeamTilts& self) {
+  return repr(
+      &self,
+      "Bmad::BeamTilts",
+      {std::pair{"angle_xy", to_string(self.angle_xy)},
+       std::pair{"angle_xz", to_string(self.angle_xz)},
+       std::pair{"angle_yz", to_string(self.angle_yz)},
+       std::pair{"angle_xpz", to_string(self.angle_xpz)},
+       std::pair{"angle_ypz", to_string(self.angle_ypz)}});
+}
+std::string to_string(const SimUtils::BicubicCmplxEval& self) {
+  return repr(
+      &self,
+      "SimUtils::BicubicCmplxEval",
+      {std::pair{"df_dx", to_string(self.df_dx)},
+       std::pair{"df_dy", to_string(self.df_dy)},
+       std::pair{"f_val", to_string(self.f_val)}});
+}
+std::string to_string(const Bmad::BmadParser& self) {
+  return repr(
+      &self,
+      "Bmad::BmadParser",
+      {std::pair{"lat", to_string(self.lat)},
+       std::pair{"digested_read_ok", to_string(self.digested_read_ok)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"parse_lat", to_string(self.parse_lat)}});
+}
+std::string to_string(const SimUtils::BracketIndexForSpline& self) {
+  return repr(
+      &self,
+      "SimUtils::BracketIndexForSpline",
+      {std::pair{"ix0", to_string(self.ix0)},
+       std::pair{"ok", to_string(self.ok)}});
+}
+std::string to_string(const Bmad::CalcEmittancesAndTwissFromSigmaMatrix& self) {
+  return repr(
+      &self,
+      "Bmad::CalcEmittancesAndTwissFromSigmaMatrix",
+      {std::pair{"bunch_params", to_string(self.bunch_params)},
+       std::pair{"error", to_string(self.error)},
+       std::pair{"n_mat", to_string(self.n_mat)}});
+}
+std::string to_string(const Bmad::CalcWallRadius& self) {
+  return repr(
+      &self,
+      "Bmad::CalcWallRadius",
+      {std::pair{"r_wall", to_string(self.r_wall)},
+       std::pair{"dr_dtheta", to_string(self.dr_dtheta)},
+       std::pair{"ix_vertex", to_string(self.ix_vertex)}});
 }
 std::string to_string(const Bmad::CheckIfSInBounds& self) {
   return repr(
@@ -2012,54 +2016,13 @@ std::string to_string(const Bmad::CheckIfSInBounds& self) {
       {std::pair{"err_flag", to_string(self.err_flag)},
        std::pair{"translated_s", to_string(self.translated_s)}});
 }
-std::string to_string(const Bmad::TwissAndTrackIntraEle& self) {
+std::string to_string(const Bmad::ChooseQuadsForSetTune& self) {
   return repr(
       &self,
-      "Bmad::TwissAndTrackIntraEle",
-      {std::pair{"orbit_end", to_string(self.orbit_end)},
-       std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Bmad::ConvertTotalEnergyTo& self) {
-  return repr(
-      &self,
-      "Bmad::ConvertTotalEnergyTo",
-      {std::pair{"gamma", to_string(self.gamma)},
-       std::pair{"kinetic", to_string(self.kinetic)},
-       std::pair{"beta", to_string(self.beta)},
-       std::pair{"pc", to_string(self.pc)},
-       std::pair{"brho", to_string(self.brho)},
-       std::pair{"beta1", to_string(self.beta1)},
+      "Bmad::ChooseQuadsForSetTune",
+      {std::pair{"dk1", to_string(self.dk1)},
+       std::pair{"eles", "[...]"},
        std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::Track1& self) {
-  return repr(
-      &self,
-      "Bmad::Track1",
-      {std::pair{"end_orb", to_string(self.end_orb)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::MultipoleAbToKt& self) {
-  return repr(
-      &self,
-      "Bmad::MultipoleAbToKt",
-      {std::pair{"knl", to_string(self.knl)},
-       std::pair{"tn", to_string(self.tn)}});
-}
-std::string to_string(const Bmad::MultipoleEleToAb& self) {
-  return repr(
-      &self,
-      "Bmad::MultipoleEleToAb",
-      {std::pair{"ix_pole_max", to_string(self.ix_pole_max)},
-       std::pair{"a", to_string(self.a)},
-       std::pair{"b", to_string(self.b)},
-       std::pair{"b1", to_string(self.b1)}});
-}
-std::string to_string(const Bmad::PointerToMultipassLord& self) {
-  return repr(
-      &self,
-      "Bmad::PointerToMultipassLord",
-      {std::pair{"ix_pass", to_string(self.ix_pass)},
-       std::pair{"super_lord", to_string(self.super_lord)}});
 }
 std::string to_string(const Bmad::ChromCalc& self) {
   return repr(
@@ -2073,82 +2036,20 @@ std::string to_string(const Bmad::ChromCalc& self) {
        std::pair{"low_E_orb", "[...]"},
        std::pair{"high_E_orb", "[...]"}});
 }
-std::string to_string(const Bmad::EmFieldCalc& self) {
+std::string to_string(const Bmad::ClosedOrbitFromTracking& self) {
   return repr(
       &self,
-      "Bmad::EmFieldCalc",
-      {std::pair{"field", to_string(self.field)},
+      "Bmad::ClosedOrbitFromTracking",
+      {std::pair{"closed_orb", "[...]"},
        std::pair{"err_flag", to_string(self.err_flag)}});
 }
-std::string to_string(const Bmad::MakeMat6& self) {
+std::string to_string(const Bmad::ComplexTaylorToMat6& self) {
   return repr(
       &self,
-      "Bmad::MakeMat6",
-      {std::pair{"end_orb", to_string(self.end_orb)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::MakeVMats& self) {
-  return repr(
-      &self,
-      "Bmad::MakeVMats",
-      {std::pair{"v_mat", to_string(self.v_mat)},
-       std::pair{"v_inv_mat", to_string(self.v_inv_mat)}});
-}
-std::string to_string(const Bmad::OffsetParticle& self) {
-  return repr(
-      &self,
-      "Bmad::OffsetParticle",
-      {std::pair{"s_out", to_string(self.s_out)},
-       std::pair{"spin_qrot", to_string(self.spin_qrot)}});
-}
-std::string to_string(const Bmad::ChooseQuadsForSetTune& self) {
-  return repr(
-      &self,
-      "Bmad::ChooseQuadsForSetTune",
-      {std::pair{"dk1", to_string(self.dk1)},
-       std::pair{"eles", "[...]"},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::GBendingStrengthFromEmField& self) {
-  return repr(
-      &self,
-      "Bmad::GBendingStrengthFromEmField",
-      {std::pair{"g", to_string(self.g)}, std::pair{"dg", to_string(self.dg)}});
-}
-std::string to_string(const Bmad::MultiTurnTrackingAnalysis& self) {
-  return repr(
-      &self,
-      "Bmad::MultiTurnTrackingAnalysis",
-      {std::pair{"track0", to_string(self.track0)},
-       std::pair{"ele", to_string(self.ele)},
-       std::pair{"stable", to_string(self.stable)},
-       std::pair{"growth_rate", to_string(self.growth_rate)},
-       std::pair{"chi", to_string(self.chi)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::OrbitAmplitudeCalc& self) {
-  return repr(
-      &self,
-      "Bmad::OrbitAmplitudeCalc",
-      {std::pair{"amp_a", to_string(self.amp_a)},
-       std::pair{"amp_b", to_string(self.amp_b)},
-       std::pair{"amp_na", to_string(self.amp_na)},
-       std::pair{"amp_nb", to_string(self.amp_nb)}});
-}
-std::string to_string(const Bmad::SplitLat& self) {
-  return repr(
-      &self,
-      "Bmad::SplitLat",
-      {std::pair{"ix_split", to_string(self.ix_split)},
-       std::pair{"split_done", to_string(self.split_done)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::MakeGMats& self) {
-  return repr(
-      &self,
-      "Bmad::MakeGMats",
-      {std::pair{"g_mat", to_string(self.g_mat)},
-       std::pair{"g_inv_mat", to_string(self.g_inv_mat)}});
+      "Bmad::ComplexTaylorToMat6",
+      {std::pair{"vec0", to_string(self.vec0)},
+       std::pair{"mat6", to_string(self.mat6)},
+       std::pair{"r_out", to_string(self.r_out)}});
 }
 std::string to_string(const Bmad::ConvertCoords& self) {
   return repr(
@@ -2157,52 +2058,6 @@ std::string to_string(const Bmad::ConvertCoords& self) {
       {std::pair{"out_type_str", self.out_type_str},
        std::pair{"coord_out", to_string(self.coord_out)},
        std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::MultipoleKtToAb& self) {
-  return repr(
-      &self,
-      "Bmad::MultipoleKtToAb",
-      {std::pair{"an", to_string(self.an)},
-       std::pair{"bn", to_string(self.bn)}});
-}
-std::string to_string(const Bmad::TwissAndTrackFromSToS& self) {
-  return repr(
-      &self,
-      "Bmad::TwissAndTrackFromSToS",
-      {std::pair{"orbit_end", to_string(self.orbit_end)},
-       std::pair{"ele_end", to_string(self.ele_end)},
-       std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Bmad::TrackFromSToS& self) {
-  return repr(
-      &self,
-      "Bmad::TrackFromSToS",
-      {std::pair{"orbit_end", to_string(self.orbit_end)},
-       std::pair{"all_orb", "[...]"},
-       std::pair{"track_state", to_string(self.track_state)}});
-}
-std::string to_string(const Bmad::GetSlaveList& self) {
-  return repr(
-      &self,
-      "Bmad::GetSlaveList",
-      {std::pair{"slaves", "[...]"},
-       std::pair{"n_slave", to_string(self.n_slave)}});
-}
-std::string to_string(const Bmad::ElecMultipoleField& self) {
-  return repr(
-      &self,
-      "Bmad::ElecMultipoleField",
-      {std::pair{"Ex", to_string(self.Ex)},
-       std::pair{"Ey", to_string(self.Ey)},
-       std::pair{"dE", to_string(self.dE)},
-       std::pair{"compute_dE", to_string(self.compute_dE)}});
-}
-std::string to_string(const Bmad::Twiss1Propagate& self) {
-  return repr(
-      &self,
-      "Bmad::Twiss1Propagate",
-      {std::pair{"twiss2", to_string(self.twiss2)},
-       std::pair{"err", to_string(self.err)}});
 }
 std::string to_string(const Bmad::ConvertPcTo& self) {
   return repr(
@@ -2216,364 +2071,17 @@ std::string to_string(const Bmad::ConvertPcTo& self) {
        std::pair{"beta1", to_string(self.beta1)},
        std::pair{"err_flag", to_string(self.err_flag)}});
 }
-std::string to_string(const Bmad::RadiationIntegrals& self) {
+std::string to_string(const Bmad::ConvertTotalEnergyTo& self) {
   return repr(
       &self,
-      "Bmad::RadiationIntegrals",
-      {std::pair{"mode", to_string(self.mode)},
-       std::pair{"rad_int_by_ele", to_string(self.rad_int_by_ele)}});
-}
-std::string to_string(const Bmad::PointerToLord& self) {
-  return repr(
-      &self,
-      "Bmad::PointerToLord",
-      {std::pair{"control", to_string(self.control)},
-       std::pair{"ix_slave_back", to_string(self.ix_slave_back)},
-       std::pair{"ix_control", to_string(self.ix_control)},
-       std::pair{"ix_ic", to_string(self.ix_ic)}});
-}
-std::string to_string(const Bmad::EleMisalignmentLSCalc& self) {
-  return repr(
-      &self,
-      "Bmad::EleMisalignmentLSCalc",
-      {std::pair{"L_mis", to_string(self.L_mis)},
-       std::pair{"S_mis", to_string(self.S_mis)}});
-}
-std::string to_string(const Bmad::CoordsFloorToCurvilinear& self) {
-  return repr(
-      &self,
-      "Bmad::CoordsFloorToCurvilinear",
-      {std::pair{"ele1", to_string(self.ele1)},
-       std::pair{"status", to_string(self.status)},
-       std::pair{"w_mat", to_string(self.w_mat)}});
-}
-std::string to_string(const Bmad::FloorWMatToAngles& self) {
-  return repr(
-      &self,
-      "Bmad::FloorWMatToAngles",
-      {std::pair{"theta", to_string(self.theta)},
-       std::pair{"phi", to_string(self.phi)},
-       std::pair{"psi", to_string(self.psi)}});
-}
-std::string to_string(const Bmad::CoordsFloorToLocalCurvilinear& self) {
-  return repr(
-      &self,
-      "Bmad::CoordsFloorToLocalCurvilinear",
-      {std::pair{"status", to_string(self.status)},
-       std::pair{"w_mat", to_string(self.w_mat)}});
-}
-std::string to_string(const Bmad::FloorAnglesToWMat& self) {
-  return repr(
-      &self,
-      "Bmad::FloorAnglesToWMat",
-      {std::pair{"w_mat", to_string(self.w_mat)},
-       std::pair{"w_mat_inv", to_string(self.w_mat_inv)}});
-}
-std::string to_string(const Bmad::WriteAstraFieldGridFile& self) {
-  return repr(
-      &self,
-      "Bmad::WriteAstraFieldGridFile",
-      {std::pair{"maxfield", to_string(self.maxfield)},
-       std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Bmad::WriteAstraFieldGridFile3d& self) {
-  return repr(
-      &self,
-      "Bmad::WriteAstraFieldGridFile3d",
-      {std::pair{"maxfield", to_string(self.maxfield)},
-       std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Bmad::PhotonAbsorptionAndPhaseShift& self) {
-  return repr(
-      &self,
-      "Bmad::PhotonAbsorptionAndPhaseShift",
-      {std::pair{"absorption", to_string(self.absorption)},
-       std::pair{"phase_shift", to_string(self.phase_shift)},
+      "Bmad::ConvertTotalEnergyTo",
+      {std::pair{"gamma", to_string(self.gamma)},
+       std::pair{"kinetic", to_string(self.kinetic)},
+       std::pair{"beta", to_string(self.beta)},
+       std::pair{"pc", to_string(self.pc)},
+       std::pair{"brho", to_string(self.brho)},
+       std::pair{"beta1", to_string(self.beta1)},
        std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::WriteOpalFieldGridFile& self) {
-  return repr(
-      &self,
-      "Bmad::WriteOpalFieldGridFile",
-      {std::pair{"maxfield", to_string(self.maxfield)},
-       std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Bmad::GptToParticleBunch& self) {
-  return repr(
-      &self,
-      "Bmad::GptToParticleBunch",
-      {std::pair{"bunch", to_string(self.bunch)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::WriteGptFieldGridFile1d& self) {
-  return repr(
-      &self,
-      "Bmad::WriteGptFieldGridFile1d",
-      {std::pair{"maxfield", to_string(self.maxfield)},
-       std::pair{"ref_time", to_string(self.ref_time)},
-       std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Bmad::WriteGptFieldGridFile2d& self) {
-  return repr(
-      &self,
-      "Bmad::WriteGptFieldGridFile2d",
-      {std::pair{"maxfield", to_string(self.maxfield)},
-       std::pair{"ref_time", to_string(self.ref_time)},
-       std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Bmad::WriteGptFieldGridFile3d& self) {
-  return repr(
-      &self,
-      "Bmad::WriteGptFieldGridFile3d",
-      {std::pair{"maxfield", to_string(self.maxfield)},
-       std::pair{"ref_time", to_string(self.ref_time)},
-       std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Bmad::Multipole1AbToKt& self) {
-  return repr(
-      &self,
-      "Bmad::Multipole1AbToKt",
-      {std::pair{"knl", to_string(self.knl)},
-       std::pair{"tn", to_string(self.tn)}});
-}
-std::string to_string(const Bmad::StrongBeamSigmaCalc& self) {
-  return repr(
-      &self,
-      "Bmad::StrongBeamSigmaCalc",
-      {std::pair{"sigma", to_string(self.sigma)},
-       std::pair{"bbi_const", to_string(self.bbi_const)},
-       std::pair{"dsigma_ds", to_string(self.dsigma_ds)}});
-}
-std::string to_string(const Bmad::MakeMat6Bmad& self) {
-  return repr(
-      &self,
-      "Bmad::MakeMat6Bmad",
-      {std::pair{"end_orb", to_string(self.end_orb)},
-       std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Bmad::MatchEleToMat6& self) {
-  return repr(
-      &self,
-      "Bmad::MatchEleToMat6",
-      {std::pair{"mat6", to_string(self.mat6)},
-       std::pair{"vec0", to_string(self.vec0)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::Track1RungeKutta& self) {
-  return repr(
-      &self,
-      "Bmad::Track1RungeKutta",
-      {std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"track", to_string(self.track)}});
-}
-std::string to_string(const Bmad::TrackAZeroLengthElement& self) {
-  return repr(
-      &self,
-      "Bmad::TrackAZeroLengthElement",
-      {std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"track", to_string(self.track)}});
-}
-std::string to_string(const Bmad::Track1Bmad& self) {
-  return repr(
-      &self,
-      "Bmad::Track1Bmad",
-      {std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"track", to_string(self.track)}});
-}
-std::string to_string(const Bmad::TrackABeambeam& self) {
-  return repr(
-      &self,
-      "Bmad::TrackABeambeam",
-      {std::pair{"track", to_string(self.track)},
-       std::pair{"mat6", to_string(self.mat6)}});
-}
-std::string to_string(const Bmad::TrackingRadMapSetup& self) {
-  return repr(
-      &self,
-      "Bmad::TrackingRadMapSetup",
-      {std::pair{"rad_map", to_string(self.rad_map)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::Track1TimeRungeKutta& self) {
-  return repr(
-      &self,
-      "Bmad::Track1TimeRungeKutta",
-      {std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"track", to_string(self.track)}});
-}
-std::string to_string(const Bmad::MakeMat6Tracking& self) {
-  return repr(
-      &self,
-      "Bmad::MakeMat6Tracking",
-      {std::pair{"end_orb", to_string(self.end_orb)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::Multipole1KtToAb& self) {
-  return repr(
-      &self,
-      "Bmad::Multipole1KtToAb",
-      {std::pair{"an", to_string(self.an)},
-       std::pair{"bn", to_string(self.bn)}});
-}
-std::string to_string(const Bmad::MatSympDecouple& self) {
-  return repr(
-      &self,
-      "Bmad::MatSympDecouple",
-      {std::pair{"stat", to_string(self.stat)},
-       std::pair{"twiss1", to_string(self.twiss1)},
-       std::pair{"twiss2", to_string(self.twiss2)},
-       std::pair{"gamma", to_string(self.gamma)}});
-}
-std::string to_string(const Bmad::TrackAPatch& self) {
-  return repr(
-      &self,
-      "Bmad::TrackAPatch",
-      {std::pair{"s_ent", to_string(self.s_ent)},
-       std::pair{"ds_ref", to_string(self.ds_ref)},
-       std::pair{"mat6", to_string(self.mat6)}});
-}
-std::string to_string(const Bmad::ToOrbitReading& self) {
-  return repr(
-      &self,
-      "Bmad::ToOrbitReading",
-      {std::pair{"reading", to_string(self.reading)},
-       std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Bmad::ToEtaReading& self) {
-  return repr(
-      &self,
-      "Bmad::ToEtaReading",
-      {std::pair{"reading", to_string(self.reading)},
-       std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Bmad::ToPhaseAndCouplingReading& self) {
-  return repr(
-      &self,
-      "Bmad::ToPhaseAndCouplingReading",
-      {std::pair{"reading", to_string(self.reading)},
-       std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Bmad::OdeintBmadTime& self) {
-  return repr(
-      &self,
-      "Bmad::OdeintBmadTime",
-      {std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"dt_step", to_string(self.dt_step)}});
-}
-std::string to_string(const Bmad::TrackUntilDead& self) {
-  return repr(
-      &self,
-      "Bmad::TrackUntilDead",
-      {std::pair{"end_orb", to_string(self.end_orb)},
-       std::pair{"track", to_string(self.track)}});
-}
-std::string to_string(const Bmad::PointerToElementAtS& self) {
-  return repr(
-      &self,
-      "Bmad::PointerToElementAtS",
-      {std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"s_eff", to_string(self.s_eff)},
-       std::pair{"position", to_string(self.position)},
-       std::pair{"ele", to_string(self.ele)}});
-}
-std::string to_string(const Bmad::TransferMapFromSToS& self) {
-  return repr(
-      &self,
-      "Bmad::TransferMapFromSToS",
-      {std::pair{"ref_orb_out", to_string(self.ref_orb_out)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::AbMultipoleKick& self) {
-  return repr(
-      &self,
-      "Bmad::AbMultipoleKick",
-      {std::pair{"kx", to_string(self.kx)},
-       std::pair{"ky", to_string(self.ky)},
-       std::pair{"dk", to_string(self.dk)}});
-}
-std::string to_string(const Bmad::Emit6d& self) {
-  return repr(
-      &self,
-      "Bmad::Emit6d",
-      {std::pair{"mode", to_string(self.mode)},
-       std::pair{"sigma_mat", to_string(self.sigma_mat)},
-       std::pair{"rad_int_by_ele", to_string(self.rad_int_by_ele)}});
-}
-std::string to_string(const Bmad::RadDampAndStocMats& self) {
-  return repr(
-      &self,
-      "Bmad::RadDampAndStocMats",
-      {std::pair{"rmap", to_string(self.rmap)},
-       std::pair{"mode", to_string(self.mode)},
-       std::pair{"xfer_nodamp_mat", to_string(self.xfer_nodamp_mat)},
-       std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"rad_int_branch", to_string(self.rad_int_branch)}});
-}
-std::string to_string(const Bmad::Rad1DampAndStocMats& self) {
-  return repr(
-      &self,
-      "Bmad::Rad1DampAndStocMats",
-      {std::pair{"rad_map", to_string(self.rad_map)},
-       std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"rad_int1", to_string(self.rad_int1)}});
-}
-std::string to_string(const Bmad::CalcWallRadius& self) {
-  return repr(
-      &self,
-      "Bmad::CalcWallRadius",
-      {std::pair{"r_wall", to_string(self.r_wall)},
-       std::pair{"dr_dtheta", to_string(self.dr_dtheta)},
-       std::pair{"ix_vertex", to_string(self.ix_vertex)}});
-}
-std::string to_string(const Bmad::Wall3dDRadius& self) {
-  return repr(
-      &self,
-      "Bmad::Wall3dDRadius",
-      {std::pair{"perp", to_string(self.perp)},
-       std::pair{"ix_section", to_string(self.ix_section)},
-       std::pair{"no_wall_here", to_string(self.no_wall_here)},
-       std::pair{"origin", to_string(self.origin)},
-       std::pair{"radius_wall", to_string(self.radius_wall)},
-       std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"d_radius", to_string(self.d_radius)}});
-}
-std::string to_string(const Bmad::PointerToWall3d& self) {
-  return repr(
-      &self,
-      "Bmad::PointerToWall3d",
-      {std::pair{"ds_offset", to_string(self.ds_offset)},
-       std::pair{"is_branch_wall", to_string(self.is_branch_wall)},
-       std::pair{"wall3d", to_string(self.wall3d)}});
-}
-std::string to_string(const Bmad::BbiKick& self) {
-  return repr(
-      &self,
-      "Bmad::BbiKick",
-      {std::pair{"nk", to_string(self.nk)},
-       std::pair{"dnk", to_string(self.dnk)}});
-}
-std::string to_string(const Bmad::BmadParser& self) {
-  return repr(
-      &self,
-      "Bmad::BmadParser",
-      {std::pair{"lat", to_string(self.lat)},
-       std::pair{"digested_read_ok", to_string(self.digested_read_ok)},
-       std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"parse_lat", to_string(self.parse_lat)}});
-}
-std::string to_string(const Bmad::EleToTaylor& self) {
-  return repr(
-      &self,
-      "Bmad::EleToTaylor",
-      {std::pair{"orbital_taylor", "[...]"},
-       std::pair{"spin_taylor", "[...]"}});
-}
-std::string to_string(const Bmad::MakeMat6BmadPhoton& self) {
-  return repr(
-      &self,
-      "Bmad::MakeMat6BmadPhoton",
-      {std::pair{"end_orb", to_string(self.end_orb)},
-       std::pair{"err", to_string(self.err)}});
 }
 std::string to_string(const Bmad::ConverterDistributionParser& self) {
   return repr(
@@ -2583,162 +2091,33 @@ std::string to_string(const Bmad::ConverterDistributionParser& self) {
        std::pair{"delim_found", to_string(self.delim_found)},
        std::pair{"err_flag", to_string(self.err_flag)}});
 }
-std::string to_string(const Bmad::SpinMatToEigen& self) {
+std::string to_string(const Bmad::CoordsFloorToCurvilinear& self) {
   return repr(
       &self,
-      "Bmad::SpinMatToEigen",
-      {std::pair{"orb_eval", to_string(self.orb_eval)},
-       std::pair{"orb_evec", to_string(self.orb_evec)},
-       std::pair{"n0", to_string(self.n0)},
-       std::pair{"spin_evec", to_string(self.spin_evec)},
-       std::pair{"error", to_string(self.error)}});
+      "Bmad::CoordsFloorToCurvilinear",
+      {std::pair{"ele1", to_string(self.ele1)},
+       std::pair{"status", to_string(self.status)},
+       std::pair{"w_mat", to_string(self.w_mat)}});
 }
-std::string to_string(const Bmad::SpinMat8ResonanceStrengths& self) {
+std::string to_string(const Bmad::CoordsFloorToLocalCurvilinear& self) {
   return repr(
       &self,
-      "Bmad::SpinMat8ResonanceStrengths",
-      {std::pair{"xi_sum", to_string(self.xi_sum)},
-       std::pair{"xi_diff", to_string(self.xi_diff)}});
+      "Bmad::CoordsFloorToLocalCurvilinear",
+      {std::pair{"status", to_string(self.status)},
+       std::pair{"w_mat", to_string(self.w_mat)}});
 }
-std::string to_string(const Bmad::SpinQuatResonanceStrengths& self) {
+std::string to_string(const Bmad::CreateElementSlice& self) {
   return repr(
       &self,
-      "Bmad::SpinQuatResonanceStrengths",
-      {std::pair{"xi_sum", to_string(self.xi_sum)},
-       std::pair{"xi_diff", to_string(self.xi_diff)}});
-}
-std::string to_string(const Bmad::Track1Spin& self) {
-  return repr(
-      &self,
-      "Bmad::Track1Spin",
-      {std::pair{"ele", to_string(self.ele)},
-       std::pair{"end_orb", to_string(self.end_orb)}});
-}
-std::string to_string(const Bmad::WriteLatticeInScibmad& self) {
-  return repr(
-      &self,
-      "Bmad::WriteLatticeInScibmad",
-      {std::pair{"scibmad_file", self.scibmad_file},
+      "Bmad::CreateElementSlice",
+      {std::pair{"sliced_ele", to_string(self.sliced_ele)},
        std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::PointerToSlave& self) {
-  return repr(
-      &self,
-      "Bmad::PointerToSlave",
-      {std::pair{"control", to_string(self.control)},
-       std::pair{"ix_lord_back", to_string(self.ix_lord_back)},
-       std::pair{"ix_control", to_string(self.ix_control)},
-       std::pair{"ix_ic", to_string(self.ix_ic)},
-       std::pair{"slave_ptr", to_string(self.slave_ptr)}});
-}
-std::string to_string(const Bmad::OdeintBmad& self) {
-  return repr(
-      &self,
-      "Bmad::OdeintBmad",
-      {std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"track", to_string(self.track)}});
-}
-std::string to_string(const Bmad::KickVectorCalc& self) {
-  return repr(
-      &self,
-      "Bmad::KickVectorCalc",
-      {std::pair{"dr_ds", to_string(self.dr_ds)},
-       std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Bmad::ExpressionStringToTree& self) {
-  return repr(
-      &self,
-      "Bmad::ExpressionStringToTree",
-      {std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"err_str", self.err_str}});
-}
-std::string to_string(const Bmad::ExpressionStringToStack& self) {
-  return repr(
-      &self,
-      "Bmad::ExpressionStringToStack",
-      {std::pair{"stack", "[...]"},
-       std::pair{"n_stack", to_string(self.n_stack)},
-       std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"err_str", self.err_str}});
-}
-std::string to_string(const Bmad::ExpressionValue& self) {
-  return repr(
-      &self,
-      "Bmad::ExpressionValue",
-      {std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"err_str", self.err_str},
-       std::pair{"value", to_string(self.value)}});
-}
-std::string to_string(const Bmad::ExpressionStackValue& self) {
-  return repr(
-      &self,
-      "Bmad::ExpressionStackValue",
-      {std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"err_str", self.err_str},
-       std::pair{"value", to_string(self.value)}});
-}
-std::string to_string(const Bmad::LinearCoef& self) {
-  return repr(
-      &self,
-      "Bmad::LinearCoef",
-      {std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"coef", to_string(self.coef)}});
-}
-std::string to_string(const Bmad::AddSuperimpose& self) {
-  return repr(
-      &self,
-      "Bmad::AddSuperimpose",
-      {std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"super_ele_out", to_string(self.super_ele_out)}});
 }
 std::string to_string(const Bmad::CreatePlanarWigglerModel& self) {
   return repr(
       &self,
       "Bmad::CreatePlanarWigglerModel",
       {std::pair{"lat", to_string(self.lat)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::MadTmfoc& self) {
-  return repr(
-      &self,
-      "Bmad::MadTmfoc",
-      {std::pair{"c", to_string(self.c)},
-       std::pair{"s", to_string(self.s)},
-       std::pair{"d", to_string(self.d)},
-       std::pair{"f", to_string(self.f)}});
-}
-std::string to_string(const Bmad::T6ToB123& self) {
-  return repr(
-      &self,
-      "Bmad::T6ToB123",
-      {std::pair{"B1", to_string(self.B1)},
-       std::pair{"B2", to_string(self.B2)},
-       std::pair{"B3", to_string(self.B3)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::NormalMode3Calc& self) {
-  return repr(
-      &self,
-      "Bmad::NormalMode3Calc",
-      {std::pair{"tune", to_string(self.tune)},
-       std::pair{"B", to_string(self.B)},
-       std::pair{"HV", to_string(self.HV)}});
-}
-std::string to_string(const Bmad::MakeHvbp& self) {
-  return repr(
-      &self,
-      "Bmad::MakeHvbp",
-      {std::pair{"B", to_string(self.B)},
-       std::pair{"V", to_string(self.V)},
-       std::pair{"H", to_string(self.H)},
-       std::pair{"Vbar", to_string(self.Vbar)},
-       std::pair{"Hbar", to_string(self.Hbar)}});
-}
-std::string to_string(const Bmad::ActionToXyz& self) {
-  return repr(
-      &self,
-      "Bmad::ActionToXyz",
-      {std::pair{"X", to_string(self.X)},
        std::pair{"err_flag", to_string(self.err_flag)}});
 }
 std::string to_string(const Bmad::EigenDecomp6mat& self) {
@@ -2750,92 +2129,51 @@ std::string to_string(const Bmad::EigenDecomp6mat& self) {
        std::pair{"err_flag", to_string(self.err_flag)},
        std::pair{"tunes", to_string(self.tunes)}});
 }
-std::string to_string(const Bmad::OrderEvecsByNSimilarity& self) {
+std::string to_string(const Bmad::EleMisalignmentLSCalc& self) {
   return repr(
       &self,
-      "Bmad::OrderEvecsByNSimilarity",
-      {std::pair{"evec", to_string(self.evec)},
+      "Bmad::EleMisalignmentLSCalc",
+      {std::pair{"L_mis", to_string(self.L_mis)},
+       std::pair{"S_mis", to_string(self.S_mis)}});
+}
+std::string to_string(const Bmad::EleToPtcMagneticBnAn& self) {
+  return repr(
+      &self,
+      "Bmad::EleToPtcMagneticBnAn",
+      {std::pair{"bn", to_string(self.bn)},
+       std::pair{"an", to_string(self.an)},
+       std::pair{"n_max", to_string(self.n_max)}});
+}
+std::string to_string(const Bmad::EleToTaylor& self) {
+  return repr(
+      &self,
+      "Bmad::EleToTaylor",
+      {std::pair{"orbital_taylor", "[...]"},
+       std::pair{"spin_taylor", "[...]"}});
+}
+std::string to_string(const Bmad::ElecMultipoleField& self) {
+  return repr(
+      &self,
+      "Bmad::ElecMultipoleField",
+      {std::pair{"Ex", to_string(self.Ex)},
+       std::pair{"Ey", to_string(self.Ey)},
+       std::pair{"dE", to_string(self.dE)},
+       std::pair{"compute_dE", to_string(self.compute_dE)}});
+}
+std::string to_string(const Bmad::EmFieldCalc& self) {
+  return repr(
+      &self,
+      "Bmad::EmFieldCalc",
+      {std::pair{"field", to_string(self.field)},
        std::pair{"err_flag", to_string(self.err_flag)}});
 }
-std::string to_string(const Bmad::MakeN& self) {
+std::string to_string(const Bmad::Emit6d& self) {
   return repr(
       &self,
-      "Bmad::MakeN",
-      {std::pair{"N", to_string(self.N)},
-       std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"tunes_out", to_string(self.tunes_out)},
-       std::pair{"U", to_string(self.U)}});
-}
-std::string to_string(const Bmad::GetEmitFromSigmaMat& self) {
-  return repr(
-      &self,
-      "Bmad::GetEmitFromSigmaMat",
-      {std::pair{"normal", to_string(self.normal)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::BeamTilts& self) {
-  return repr(
-      &self,
-      "Bmad::BeamTilts",
-      {std::pair{"angle_xy", to_string(self.angle_xy)},
-       std::pair{"angle_xz", to_string(self.angle_xz)},
-       std::pair{"angle_yz", to_string(self.angle_yz)},
-       std::pair{"angle_xpz", to_string(self.angle_xpz)},
-       std::pair{"angle_ypz", to_string(self.angle_ypz)}});
-}
-std::string to_string(const Bmad::MakeSmatFromAbc& self) {
-  return repr(
-      &self,
-      "Bmad::MakeSmatFromAbc",
-      {std::pair{"sigma_mat", to_string(self.sigma_mat)},
-       std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"Nout", to_string(self.Nout)}});
-}
-std::string to_string(const Bmad::ProjectEmitToXyz& self) {
-  return repr(
-      &self,
-      "Bmad::ProjectEmitToXyz",
-      {std::pair{"sigma_x", to_string(self.sigma_x)},
-       std::pair{"sigma_y", to_string(self.sigma_y)},
-       std::pair{"sigma_z", to_string(self.sigma_z)}});
-}
-std::string to_string(const Bmad::ComplexTaylorToMat6& self) {
-  return repr(
-      &self,
-      "Bmad::ComplexTaylorToMat6",
-      {std::pair{"vec0", to_string(self.vec0)},
-       std::pair{"mat6", to_string(self.mat6)},
-       std::pair{"r_out", to_string(self.r_out)}});
-}
-std::string to_string(const Bmad::InitBeamDistribution& self) {
-  return repr(
-      &self,
-      "Bmad::InitBeamDistribution",
-      {std::pair{"beam", to_string(self.beam)},
-       std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"beam_init_set", to_string(self.beam_init_set)}});
-}
-std::string to_string(const Bmad::InitBunchDistribution& self) {
-  return repr(
-      &self,
-      "Bmad::InitBunchDistribution",
-      {std::pair{"bunch", to_string(self.bunch)},
-       std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"beam_init_used", to_string(self.beam_init_used)}});
-}
-std::string to_string(const Bmad::CalcEmittancesAndTwissFromSigmaMatrix& self) {
-  return repr(
-      &self,
-      "Bmad::CalcEmittancesAndTwissFromSigmaMatrix",
-      {std::pair{"bunch_params", to_string(self.bunch_params)},
-       std::pair{"error", to_string(self.error)},
-       std::pair{"n_mat", to_string(self.n_mat)}});
-}
-std::string to_string(const Bmad::SolvePsiFixedSteps& self) {
-  return repr(
-      &self,
-      "Bmad::SolvePsiFixedSteps",
-      {std::pair{"t", to_string(self.t)}, std::pair{"p", to_string(self.p)}});
+      "Bmad::Emit6d",
+      {std::pair{"mode", to_string(self.mode)},
+       std::pair{"sigma_mat", to_string(self.sigma_mat)},
+       std::pair{"rad_int_by_ele", to_string(self.rad_int_by_ele)}});
 }
 std::string to_string(const Bmad::EnvelopeRadintsIbs& self) {
   return repr(
@@ -2843,44 +2181,6 @@ std::string to_string(const Bmad::EnvelopeRadintsIbs& self) {
       "Bmad::EnvelopeRadintsIbs",
       {std::pair{"alpha", to_string(self.alpha)},
        std::pair{"emit", to_string(self.emit)}});
-}
-std::string to_string(const Bmad::MakePbrh& self) {
-  return repr(
-      &self,
-      "Bmad::MakePbrh",
-      {std::pair{"P", to_string(self.P)},
-       std::pair{"Bp", to_string(self.Bp)},
-       std::pair{"R", to_string(self.R)},
-       std::pair{"H", to_string(self.H)}});
-}
-std::string to_string(const Bmad::ReadBeamFile& self) {
-  return repr(
-      &self,
-      "Bmad::ReadBeamFile",
-      {std::pair{"beam", to_string(self.beam)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::ReadBeamAscii& self) {
-  return repr(
-      &self,
-      "Bmad::ReadBeamAscii",
-      {std::pair{"beam", to_string(self.beam)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::OpenBinaryFile& self) {
-  return repr(
-      &self,
-      "Bmad::OpenBinaryFile",
-      {std::pair{"iu", to_string(self.iu)},
-       std::pair{"iver", to_string(self.iver)},
-       std::pair{"is_ok", to_string(self.is_ok)}});
-}
-std::string to_string(const Bmad::LoadParseLine& self) {
-  return repr(
-      &self,
-      "Bmad::LoadParseLine",
-      {std::pair{"end_of_file", to_string(self.end_of_file)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
 }
 std::string to_string(const Bmad::EvaluateArrayIndex& self) {
   return repr(
@@ -2898,12 +2198,382 @@ std::string to_string(const Bmad::EvaluateLogical& self) {
       {std::pair{"iostat", to_string(self.iostat)},
        std::pair{"this_logic", to_string(self.this_logic)}});
 }
+std::string to_string(const Bmad::ExpectThis& self) {
+  return repr(
+      &self,
+      "Bmad::ExpectThis",
+      {std::pair{"delim", self.delim},
+       std::pair{"delim_found", to_string(self.delim_found)},
+       std::pair{"is_ok", to_string(self.is_ok)}});
+}
+std::string to_string(const Bmad::ExpressionStackValue& self) {
+  return repr(
+      &self,
+      "Bmad::ExpressionStackValue",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"err_str", self.err_str},
+       std::pair{"value", to_string(self.value)}});
+}
+std::string to_string(const Bmad::ExpressionStringToStack& self) {
+  return repr(
+      &self,
+      "Bmad::ExpressionStringToStack",
+      {std::pair{"stack", "[...]"},
+       std::pair{"n_stack", to_string(self.n_stack)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"err_str", self.err_str}});
+}
+std::string to_string(const Bmad::ExpressionStringToTree& self) {
+  return repr(
+      &self,
+      "Bmad::ExpressionStringToTree",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"err_str", self.err_str}});
+}
+std::string to_string(const Bmad::ExpressionValue& self) {
+  return repr(
+      &self,
+      "Bmad::ExpressionValue",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"err_str", self.err_str},
+       std::pair{"value", to_string(self.value)}});
+}
+std::string to_string(const Bmad::FindElementEnds& self) {
+  return repr(
+      &self,
+      "Bmad::FindElementEnds",
+      {std::pair{"ele1", to_string(self.ele1)},
+       std::pair{"ele2", to_string(self.ele2)}});
+}
+std::string to_string(const Bmad::FindMatchingFieldmap& self) {
+  return repr(
+      &self,
+      "Bmad::FindMatchingFieldmap",
+      {std::pair{"match_ele", to_string(self.match_ele)},
+       std::pair{"ix_field", to_string(self.ix_field)}});
+}
+std::string to_string(const Bmad::FloorAnglesToWMat& self) {
+  return repr(
+      &self,
+      "Bmad::FloorAnglesToWMat",
+      {std::pair{"w_mat", to_string(self.w_mat)},
+       std::pair{"w_mat_inv", to_string(self.w_mat_inv)}});
+}
+std::string to_string(const Bmad::FloorWMatToAngles& self) {
+  return repr(
+      &self,
+      "Bmad::FloorWMatToAngles",
+      {std::pair{"theta", to_string(self.theta)},
+       std::pair{"phi", to_string(self.phi)},
+       std::pair{"psi", to_string(self.psi)}});
+}
 std::string to_string(const Bmad::FormDigestedBmadFileName& self) {
   return repr(
       &self,
       "Bmad::FormDigestedBmadFileName",
       {std::pair{"digested_file", self.digested_file},
        std::pair{"full_lat_file", self.full_lat_file}});
+}
+std::string to_string(const SimUtils::FourierAmplitude& self) {
+  return repr(
+      &self,
+      "SimUtils::FourierAmplitude",
+      {std::pair{"cos_amp", to_string(self.cos_amp)},
+       std::pair{"sin_amp", to_string(self.sin_amp)},
+       std::pair{"dcos_amp", to_string(self.dcos_amp)},
+       std::pair{"dsin_amp", to_string(self.dsin_amp)}});
+}
+std::string to_string(const Bmad::GBendingStrengthFromEmField& self) {
+  return repr(
+      &self,
+      "Bmad::GBendingStrengthFromEmField",
+      {std::pair{"g", to_string(self.g)}, std::pair{"dg", to_string(self.dg)}});
+}
+std::string to_string(const Bmad::GetEmitFromSigmaMat& self) {
+  return repr(
+      &self,
+      "Bmad::GetEmitFromSigmaMat",
+      {std::pair{"normal", to_string(self.normal)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
+}
+std::string to_string(const Bmad::GetSlaveList& self) {
+  return repr(
+      &self,
+      "Bmad::GetSlaveList",
+      {std::pair{"slaves", "[...]"},
+       std::pair{"n_slave", to_string(self.n_slave)}});
+}
+std::string to_string(const Bmad::GptToParticleBunch& self) {
+  return repr(
+      &self,
+      "Bmad::GptToParticleBunch",
+      {std::pair{"bunch", to_string(self.bunch)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
+}
+std::string to_string(const Bmad::InitBeamDistribution& self) {
+  return repr(
+      &self,
+      "Bmad::InitBeamDistribution",
+      {std::pair{"beam", to_string(self.beam)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"beam_init_set", to_string(self.beam_init_set)}});
+}
+std::string to_string(const Bmad::InitBunchDistribution& self) {
+  return repr(
+      &self,
+      "Bmad::InitBunchDistribution",
+      {std::pair{"bunch", to_string(self.bunch)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"beam_init_used", to_string(self.beam_init_used)}});
+}
+std::string to_string(const Bmad::InitPhotonIntegProb& self) {
+  return repr(
+      &self,
+      "Bmad::InitPhotonIntegProb",
+      {std::pair{"E_photon", to_string(self.E_photon)},
+       std::pair{"integ_prob", to_string(self.integ_prob)}});
+}
+std::string to_string(const Bmad::KickVectorCalc& self) {
+  return repr(
+      &self,
+      "Bmad::KickVectorCalc",
+      {std::pair{"dr_ds", to_string(self.dr_ds)},
+       std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Bmad::LinearCoef& self) {
+  return repr(
+      &self,
+      "Bmad::LinearCoef",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"coef", to_string(self.coef)}});
+}
+std::string to_string(const Bmad::LoadParseLine& self) {
+  return repr(
+      &self,
+      "Bmad::LoadParseLine",
+      {std::pair{"end_of_file", to_string(self.end_of_file)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
+}
+std::string to_string(const Bmad::MadTmfoc& self) {
+  return repr(
+      &self,
+      "Bmad::MadTmfoc",
+      {std::pair{"c", to_string(self.c)},
+       std::pair{"s", to_string(self.s)},
+       std::pair{"d", to_string(self.d)},
+       std::pair{"f", to_string(self.f)}});
+}
+std::string to_string(const Bmad::MakeGMats& self) {
+  return repr(
+      &self,
+      "Bmad::MakeGMats",
+      {std::pair{"g_mat", to_string(self.g_mat)},
+       std::pair{"g_inv_mat", to_string(self.g_inv_mat)}});
+}
+std::string to_string(const Bmad::MakeHvbp& self) {
+  return repr(
+      &self,
+      "Bmad::MakeHvbp",
+      {std::pair{"B", to_string(self.B)},
+       std::pair{"V", to_string(self.V)},
+       std::pair{"H", to_string(self.H)},
+       std::pair{"Vbar", to_string(self.Vbar)},
+       std::pair{"Hbar", to_string(self.Hbar)}});
+}
+std::string to_string(const Bmad::MakeMat6& self) {
+  return repr(
+      &self,
+      "Bmad::MakeMat6",
+      {std::pair{"end_orb", to_string(self.end_orb)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
+}
+std::string to_string(const Bmad::MakeMat6Bmad& self) {
+  return repr(
+      &self,
+      "Bmad::MakeMat6Bmad",
+      {std::pair{"end_orb", to_string(self.end_orb)},
+       std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Bmad::MakeMat6BmadPhoton& self) {
+  return repr(
+      &self,
+      "Bmad::MakeMat6BmadPhoton",
+      {std::pair{"end_orb", to_string(self.end_orb)},
+       std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Bmad::MakeMat6Tracking& self) {
+  return repr(
+      &self,
+      "Bmad::MakeMat6Tracking",
+      {std::pair{"end_orb", to_string(self.end_orb)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
+}
+std::string to_string(const Bmad::MakeN& self) {
+  return repr(
+      &self,
+      "Bmad::MakeN",
+      {std::pair{"N", to_string(self.N)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"tunes_out", to_string(self.tunes_out)},
+       std::pair{"U", to_string(self.U)}});
+}
+std::string to_string(const Bmad::MakePbrh& self) {
+  return repr(
+      &self,
+      "Bmad::MakePbrh",
+      {std::pair{"P", to_string(self.P)},
+       std::pair{"Bp", to_string(self.Bp)},
+       std::pair{"R", to_string(self.R)},
+       std::pair{"H", to_string(self.H)}});
+}
+std::string to_string(const Bmad::MakeSmatFromAbc& self) {
+  return repr(
+      &self,
+      "Bmad::MakeSmatFromAbc",
+      {std::pair{"sigma_mat", to_string(self.sigma_mat)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"Nout", to_string(self.Nout)}});
+}
+std::string to_string(const Bmad::MakeVMats& self) {
+  return repr(
+      &self,
+      "Bmad::MakeVMats",
+      {std::pair{"v_mat", to_string(self.v_mat)},
+       std::pair{"v_inv_mat", to_string(self.v_inv_mat)}});
+}
+std::string to_string(const Bmad::MatSympDecouple& self) {
+  return repr(
+      &self,
+      "Bmad::MatSympDecouple",
+      {std::pair{"stat", to_string(self.stat)},
+       std::pair{"twiss1", to_string(self.twiss1)},
+       std::pair{"twiss2", to_string(self.twiss2)},
+       std::pair{"gamma", to_string(self.gamma)}});
+}
+std::string to_string(const Bmad::MatchEleToMat6& self) {
+  return repr(
+      &self,
+      "Bmad::MatchEleToMat6",
+      {std::pair{"mat6", to_string(self.mat6)},
+       std::pair{"vec0", to_string(self.vec0)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
+}
+std::string to_string(const Bmad::MultiTurnTrackingAnalysis& self) {
+  return repr(
+      &self,
+      "Bmad::MultiTurnTrackingAnalysis",
+      {std::pair{"track0", to_string(self.track0)},
+       std::pair{"ele", to_string(self.ele)},
+       std::pair{"stable", to_string(self.stable)},
+       std::pair{"growth_rate", to_string(self.growth_rate)},
+       std::pair{"chi", to_string(self.chi)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
+}
+std::string to_string(const Bmad::Multipole1AbToKt& self) {
+  return repr(
+      &self,
+      "Bmad::Multipole1AbToKt",
+      {std::pair{"knl", to_string(self.knl)},
+       std::pair{"tn", to_string(self.tn)}});
+}
+std::string to_string(const Bmad::Multipole1KtToAb& self) {
+  return repr(
+      &self,
+      "Bmad::Multipole1KtToAb",
+      {std::pair{"an", to_string(self.an)},
+       std::pair{"bn", to_string(self.bn)}});
+}
+std::string to_string(const Bmad::MultipoleAbToKt& self) {
+  return repr(
+      &self,
+      "Bmad::MultipoleAbToKt",
+      {std::pair{"knl", to_string(self.knl)},
+       std::pair{"tn", to_string(self.tn)}});
+}
+std::string to_string(const Bmad::MultipoleEleToAb& self) {
+  return repr(
+      &self,
+      "Bmad::MultipoleEleToAb",
+      {std::pair{"ix_pole_max", to_string(self.ix_pole_max)},
+       std::pair{"a", to_string(self.a)},
+       std::pair{"b", to_string(self.b)},
+       std::pair{"b1", to_string(self.b1)}});
+}
+std::string to_string(const Bmad::MultipoleEleToKt& self) {
+  return repr(
+      &self,
+      "Bmad::MultipoleEleToKt",
+      {std::pair{"ix_pole_max", to_string(self.ix_pole_max)},
+       std::pair{"knl", to_string(self.knl)},
+       std::pair{"tilt", to_string(self.tilt)}});
+}
+std::string to_string(const Bmad::MultipoleKtToAb& self) {
+  return repr(
+      &self,
+      "Bmad::MultipoleKtToAb",
+      {std::pair{"an", to_string(self.an)},
+       std::pair{"bn", to_string(self.bn)}});
+}
+std::string to_string(const Bmad::NormalFormTaylors& self) {
+  return repr(
+      &self,
+      "Bmad::NormalFormTaylors",
+      {std::pair{"dhdj", "[...]"},
+       std::pair{"A", "[...]"},
+       std::pair{"A_inverse", "[...]"}});
+}
+std::string to_string(const Bmad::NormalMode3Calc& self) {
+  return repr(
+      &self,
+      "Bmad::NormalMode3Calc",
+      {std::pair{"tune", to_string(self.tune)},
+       std::pair{"B", to_string(self.B)},
+       std::pair{"HV", to_string(self.HV)}});
+}
+std::string to_string(const Bmad::OdeintBmad& self) {
+  return repr(
+      &self,
+      "Bmad::OdeintBmad",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"track", to_string(self.track)}});
+}
+std::string to_string(const Bmad::OdeintBmadTime& self) {
+  return repr(
+      &self,
+      "Bmad::OdeintBmadTime",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"dt_step", to_string(self.dt_step)}});
+}
+std::string to_string(const Bmad::OffsetParticle& self) {
+  return repr(
+      &self,
+      "Bmad::OffsetParticle",
+      {std::pair{"s_out", to_string(self.s_out)},
+       std::pair{"spin_qrot", to_string(self.spin_qrot)}});
+}
+std::string to_string(const Bmad::OpenBinaryFile& self) {
+  return repr(
+      &self,
+      "Bmad::OpenBinaryFile",
+      {std::pair{"iu", to_string(self.iu)},
+       std::pair{"iver", to_string(self.iver)},
+       std::pair{"is_ok", to_string(self.is_ok)}});
+}
+std::string to_string(const Bmad::OrbitAmplitudeCalc& self) {
+  return repr(
+      &self,
+      "Bmad::OrbitAmplitudeCalc",
+      {std::pair{"amp_a", to_string(self.amp_a)},
+       std::pair{"amp_b", to_string(self.amp_b)},
+       std::pair{"amp_na", to_string(self.amp_na)},
+       std::pair{"amp_nb", to_string(self.amp_nb)}});
+}
+std::string to_string(const Bmad::OrderEvecsByNSimilarity& self) {
+  return repr(
+      &self,
+      "Bmad::OrderEvecsByNSimilarity",
+      {std::pair{"evec", to_string(self.evec)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
 }
 std::string to_string(const Bmad::ParseIntegerList2& self) {
   return repr(
@@ -2933,14 +2603,6 @@ std::string to_string(const Bmad::ParseRealList2& self) {
        std::pair{"delim_found", to_string(self.delim_found)},
        std::pair{"is_ok", to_string(self.is_ok)}});
 }
-std::string to_string(const Bmad::ExpectThis& self) {
-  return repr(
-      &self,
-      "Bmad::ExpectThis",
-      {std::pair{"delim", self.delim},
-       std::pair{"delim_found", to_string(self.delim_found)},
-       std::pair{"is_ok", to_string(self.is_ok)}});
-}
 std::string to_string(const Bmad::ParserFastComplexRead& self) {
   return repr(
       &self,
@@ -2958,12 +2620,13 @@ std::string to_string(const Bmad::ParserFastRealRead& self) {
        std::pair{"n_real", to_string(self.n_real)},
        std::pair{"is_ok", to_string(self.is_ok)}});
 }
-std::string to_string(const Bmad::PhotonReflectivity& self) {
+std::string to_string(const Bmad::PhotonAbsorptionAndPhaseShift& self) {
   return repr(
       &self,
-      "Bmad::PhotonReflectivity",
-      {std::pair{"p_reflect", to_string(self.p_reflect)},
-       std::pair{"rel_p_specular", to_string(self.rel_p_specular)}});
+      "Bmad::PhotonAbsorptionAndPhaseShift",
+      {std::pair{"absorption", to_string(self.absorption)},
+       std::pair{"phase_shift", to_string(self.phase_shift)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
 }
 std::string to_string(const Bmad::PhotonReflection& self) {
   return repr(
@@ -2972,27 +2635,72 @@ std::string to_string(const Bmad::PhotonReflection& self) {
       {std::pair{"graze_angle_out", to_string(self.graze_angle_out)},
        std::pair{"phi_out", to_string(self.phi_out)}});
 }
-std::string to_string(const Bmad::ZAtSurface& self) {
+std::string to_string(const Bmad::PhotonReflectivity& self) {
   return repr(
       &self,
-      "Bmad::ZAtSurface",
+      "Bmad::PhotonReflectivity",
+      {std::pair{"p_reflect", to_string(self.p_reflect)},
+       std::pair{"rel_p_specular", to_string(self.rel_p_specular)}});
+}
+std::string to_string(const Bmad::PointerToElementAtS& self) {
+  return repr(
+      &self,
+      "Bmad::PointerToElementAtS",
       {std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"dz_dxy", to_string(self.dz_dxy)},
-       std::pair{"z", to_string(self.z)}});
+       std::pair{"s_eff", to_string(self.s_eff)},
+       std::pair{"position", to_string(self.position)},
+       std::pair{"ele", to_string(self.ele)}});
 }
-std::string to_string(const Bmad::TargetRotMats& self) {
+std::string to_string(const Bmad::PointerToLord& self) {
   return repr(
       &self,
-      "Bmad::TargetRotMats",
-      {std::pair{"w_to_target", to_string(self.w_to_target)},
-       std::pair{"w_to_ele", to_string(self.w_to_ele)}});
+      "Bmad::PointerToLord",
+      {std::pair{"control", to_string(self.control)},
+       std::pair{"ix_slave_back", to_string(self.ix_slave_back)},
+       std::pair{"ix_control", to_string(self.ix_control)},
+       std::pair{"ix_ic", to_string(self.ix_ic)}});
 }
-std::string to_string(const Bmad::InitPhotonIntegProb& self) {
+std::string to_string(const Bmad::PointerToMultipassLord& self) {
   return repr(
       &self,
-      "Bmad::InitPhotonIntegProb",
-      {std::pair{"E_photon", to_string(self.E_photon)},
-       std::pair{"integ_prob", to_string(self.integ_prob)}});
+      "Bmad::PointerToMultipassLord",
+      {std::pair{"ix_pass", to_string(self.ix_pass)},
+       std::pair{"super_lord", to_string(self.super_lord)}});
+}
+std::string to_string(const Bmad::PointerToSlave& self) {
+  return repr(
+      &self,
+      "Bmad::PointerToSlave",
+      {std::pair{"control", to_string(self.control)},
+       std::pair{"ix_lord_back", to_string(self.ix_lord_back)},
+       std::pair{"ix_control", to_string(self.ix_control)},
+       std::pair{"ix_ic", to_string(self.ix_ic)},
+       std::pair{"slave_ptr", to_string(self.slave_ptr)}});
+}
+std::string to_string(const Bmad::PointerToSuperLord& self) {
+  return repr(
+      &self,
+      "Bmad::PointerToSuperLord",
+      {std::pair{"control", to_string(self.control)},
+       std::pair{"ix_slave_back", to_string(self.ix_slave_back)},
+       std::pair{"ix_control", to_string(self.ix_control)},
+       std::pair{"ix_ic", to_string(self.ix_ic)}});
+}
+std::string to_string(const Bmad::PointerToWall3d& self) {
+  return repr(
+      &self,
+      "Bmad::PointerToWall3d",
+      {std::pair{"ds_offset", to_string(self.ds_offset)},
+       std::pair{"is_branch_wall", to_string(self.is_branch_wall)},
+       std::pair{"wall3d", to_string(self.wall3d)}});
+}
+std::string to_string(const Bmad::ProjectEmitToXyz& self) {
+  return repr(
+      &self,
+      "Bmad::ProjectEmitToXyz",
+      {std::pair{"sigma_x", to_string(self.sigma_x)},
+       std::pair{"sigma_y", to_string(self.sigma_y)},
+       std::pair{"sigma_z", to_string(self.sigma_z)}});
 }
 std::string to_string(const Bmad::PtcEmitCalc& self) {
   return repr(
@@ -3015,51 +2723,6 @@ std::string to_string(const Bmad::PtcTrackAll& self) {
       {std::pair{"track_state", to_string(self.track_state)},
        std::pair{"err_flag", to_string(self.err_flag)}});
 }
-std::string to_string(const Bmad::NormalFormTaylors& self) {
-  return repr(
-      &self,
-      "Bmad::NormalFormTaylors",
-      {std::pair{"dhdj", "[...]"},
-       std::pair{"A", "[...]"},
-       std::pair{"A_inverse", "[...]"}});
-}
-std::string to_string(const Bmad::RemoveConstantTaylor& self) {
-  return repr(
-      &self,
-      "Bmad::RemoveConstantTaylor",
-      {std::pair{"taylor_out", "[...]"}, std::pair{"c0", to_string(self.c0)}});
-}
-std::string to_string(const Bmad::TaylorInverse& self) {
-  return repr(
-      &self,
-      "Bmad::TaylorInverse",
-      {std::pair{"taylor_inv", "[...]"},
-       std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Bmad::EleToPtcMagneticBnAn& self) {
-  return repr(
-      &self,
-      "Bmad::EleToPtcMagneticBnAn",
-      {std::pair{"bn", to_string(self.bn)},
-       std::pair{"an", to_string(self.an)},
-       std::pair{"n_max", to_string(self.n_max)}});
-}
-std::string to_string(const SimUtils::FourierAmplitude& self) {
-  return repr(
-      &self,
-      "SimUtils::FourierAmplitude",
-      {std::pair{"cos_amp", to_string(self.cos_amp)},
-       std::pair{"sin_amp", to_string(self.sin_amp)},
-       std::pair{"dcos_amp", to_string(self.dcos_amp)},
-       std::pair{"dsin_amp", to_string(self.dsin_amp)}});
-}
-std::string to_string(const SimUtils::WMatToAxisAngle& self) {
-  return repr(
-      &self,
-      "SimUtils::WMatToAxisAngle",
-      {std::pair{"axis", to_string(self.axis)},
-       std::pair{"angle", to_string(self.angle)}});
-}
 std::string to_string(const SimUtils::QuatToAxisAngle& self) {
   return repr(
       &self,
@@ -3067,36 +2730,95 @@ std::string to_string(const SimUtils::QuatToAxisAngle& self) {
       {std::pair{"axis", to_string(self.axis)},
        std::pair{"angle", to_string(self.angle)}});
 }
-std::string to_string(const SimUtils::SuperBicubicInterpolation& self) {
+std::string to_string(const Bmad::Rad1DampAndStocMats& self) {
   return repr(
       &self,
-      "SimUtils::SuperBicubicInterpolation",
-      {std::pair{"ansy", to_string(self.ansy)},
-       std::pair{"ansy1", to_string(self.ansy1)},
-       std::pair{"ansy2", to_string(self.ansy2)}});
+      "Bmad::Rad1DampAndStocMats",
+      {std::pair{"rad_map", to_string(self.rad_map)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"rad_int1", to_string(self.rad_int1)}});
 }
-std::string to_string(const SimUtils::SuperPolint& self) {
+std::string to_string(const Bmad::RadDampAndStocMats& self) {
   return repr(
       &self,
-      "SimUtils::SuperPolint",
-      {std::pair{"y", to_string(self.y)}, std::pair{"dy", to_string(self.dy)}});
+      "Bmad::RadDampAndStocMats",
+      {std::pair{"rmap", to_string(self.rmap)},
+       std::pair{"mode", to_string(self.mode)},
+       std::pair{"xfer_nodamp_mat", to_string(self.xfer_nodamp_mat)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"rad_int_branch", to_string(self.rad_int_branch)}});
 }
-std::string to_string(const SimUtils::BicubicCmplxEval& self) {
+std::string to_string(const Bmad::RadiationIntegrals& self) {
   return repr(
       &self,
-      "SimUtils::BicubicCmplxEval",
-      {std::pair{"df_dx", to_string(self.df_dx)},
-       std::pair{"df_dy", to_string(self.df_dy)},
-       std::pair{"f_val", to_string(self.f_val)}});
+      "Bmad::RadiationIntegrals",
+      {std::pair{"mode", to_string(self.mode)},
+       std::pair{"rad_int_by_ele", to_string(self.rad_int_by_ele)}});
 }
-std::string to_string(const SimUtils::TricubicCmplxEval& self) {
+std::string to_string(const Bmad::ReadBeamAscii& self) {
   return repr(
       &self,
-      "SimUtils::TricubicCmplxEval",
-      {std::pair{"df_dx", to_string(self.df_dx)},
-       std::pair{"df_dy", to_string(self.df_dy)},
-       std::pair{"df_dz", to_string(self.df_dz)},
-       std::pair{"f_val", to_string(self.f_val)}});
+      "Bmad::ReadBeamAscii",
+      {std::pair{"beam", to_string(self.beam)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
+}
+std::string to_string(const Bmad::ReadBeamFile& self) {
+  return repr(
+      &self,
+      "Bmad::ReadBeamFile",
+      {std::pair{"beam", to_string(self.beam)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
+}
+std::string to_string(const Bmad::RemoveConstantTaylor& self) {
+  return repr(
+      &self,
+      "Bmad::RemoveConstantTaylor",
+      {std::pair{"taylor_out", "[...]"}, std::pair{"c0", to_string(self.c0)}});
+}
+std::string to_string(const Bmad::SetEleAttribute& self) {
+  return repr(
+      &self,
+      "Bmad::SetEleAttribute",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"err_id", to_string(self.err_id)}});
+}
+std::string to_string(const Bmad::SetEleStatusStale& self) {
+  return repr(
+      &self,
+      "Bmad::SetEleStatusStale",
+      {std::pair{"ele", to_string(self.ele)},
+       std::pair{"status_group", to_string(self.status_group)},
+       std::pair{"set_slaves", to_string(self.set_slaves)}});
+}
+std::string to_string(const Bmad::SolvePsiFixedSteps& self) {
+  return repr(
+      &self,
+      "Bmad::SolvePsiFixedSteps",
+      {std::pair{"t", to_string(self.t)}, std::pair{"p", to_string(self.p)}});
+}
+std::string to_string(const Bmad::SpinMat8ResonanceStrengths& self) {
+  return repr(
+      &self,
+      "Bmad::SpinMat8ResonanceStrengths",
+      {std::pair{"xi_sum", to_string(self.xi_sum)},
+       std::pair{"xi_diff", to_string(self.xi_diff)}});
+}
+std::string to_string(const Bmad::SpinMatToEigen& self) {
+  return repr(
+      &self,
+      "Bmad::SpinMatToEigen",
+      {std::pair{"orb_eval", to_string(self.orb_eval)},
+       std::pair{"orb_evec", to_string(self.orb_evec)},
+       std::pair{"n0", to_string(self.n0)},
+       std::pair{"spin_evec", to_string(self.spin_evec)},
+       std::pair{"error", to_string(self.error)}});
+}
+std::string to_string(const Bmad::SpinQuatResonanceStrengths& self) {
+  return repr(
+      &self,
+      "Bmad::SpinQuatResonanceStrengths",
+      {std::pair{"xi_sum", to_string(self.xi_sum)},
+       std::pair{"xi_diff", to_string(self.xi_diff)}});
 }
 std::string to_string(const SimUtils::SplineAkimaInterpolate& self) {
   return repr(
@@ -3114,47 +2836,44 @@ std::string to_string(const SimUtils::SplineEvaluate& self) {
        std::pair{"y", to_string(self.y)},
        std::pair{"dy", to_string(self.dy)}});
 }
-std::string to_string(const SimUtils::BracketIndexForSpline& self) {
+std::string to_string(const Bmad::SplitLat& self) {
   return repr(
       &self,
-      "SimUtils::BracketIndexForSpline",
-      {std::pair{"ix0", to_string(self.ix0)},
-       std::pair{"ok", to_string(self.ok)}});
-}
-std::string to_string(const SimUtils::ApfftCorr& self) {
-  return repr(
-      &self,
-      "SimUtils::ApfftCorr",
-      {std::pair{"phase", to_string(self.phase)},
-       std::pair{"amp", to_string(self.amp)},
-       std::pair{"freq", to_string(self.freq)}});
-}
-std::string to_string(const Tao::TaoToReal& self) {
-  return repr(
-      &self,
-      "Tao::TaoToReal",
-      {std::pair{"value", to_string(self.value)},
+      "Bmad::SplitLat",
+      {std::pair{"ix_split", to_string(self.ix_split)},
+       std::pair{"split_done", to_string(self.split_done)},
        std::pair{"err_flag", to_string(self.err_flag)}});
 }
-std::string to_string(const Tao::TaoSplitComponent& self) {
+std::string to_string(const Bmad::StrongBeamSigmaCalc& self) {
   return repr(
       &self,
-      "Tao::TaoSplitComponent",
-      {std::pair{"comp", "[...]"}, std::pair{"err", to_string(self.err)}});
+      "Bmad::StrongBeamSigmaCalc",
+      {std::pair{"sigma", to_string(self.sigma)},
+       std::pair{"bbi_const", to_string(self.bbi_const)},
+       std::pair{"dsigma_ds", to_string(self.dsigma_ds)}});
 }
-std::string to_string(const Tao::TaoScaleGraph& self) {
+std::string to_string(const SimUtils::SuperBicubicInterpolation& self) {
   return repr(
       &self,
-      "Tao::TaoScaleGraph",
-      {std::pair{"y_range", to_string(self.y_range)},
-       std::pair{"y2_range", to_string(self.y2_range)}});
+      "SimUtils::SuperBicubicInterpolation",
+      {std::pair{"ansy", to_string(self.ansy)},
+       std::pair{"ansy1", to_string(self.ansy1)},
+       std::pair{"ansy2", to_string(self.ansy2)}});
 }
-std::string to_string(const Tao::TaoInjectBeam& self) {
+std::string to_string(const SimUtils::SuperPolint& self) {
   return repr(
       &self,
-      "Tao::TaoInjectBeam",
-      {std::pair{"beam", to_string(self.beam)},
-       std::pair{"init_ok", to_string(self.init_ok)}});
+      "SimUtils::SuperPolint",
+      {std::pair{"y", to_string(self.y)}, std::pair{"dy", to_string(self.dy)}});
+}
+std::string to_string(const Bmad::T6ToB123& self) {
+  return repr(
+      &self,
+      "Bmad::T6ToB123",
+      {std::pair{"B1", to_string(self.B1)},
+       std::pair{"B2", to_string(self.B2)},
+       std::pair{"B3", to_string(self.B3)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
 }
 std::string to_string(const Tao::TaoCurveRmsCalc& self) {
   return repr(
@@ -3163,49 +2882,12 @@ std::string to_string(const Tao::TaoCurveRmsCalc& self) {
       {std::pair{"rms", to_string(self.rms)},
        std::pair{"mean", to_string(self.mean)}});
 }
-std::string to_string(const Tao::TaoLocateElements& self) {
+std::string to_string(const Tao::TaoDataUseitPlotCalc& self) {
   return repr(
       &self,
-      "Tao::TaoLocateElements",
-      {std::pair{"eles", "[...]"}, std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Tao::TaoLatticeCalc& self) {
-  return repr(
-      &self,
-      "Tao::TaoLatticeCalc",
-      {std::pair{"calc_ok", to_string(self.calc_ok)},
-       std::pair{"print_err", to_string(self.print_err)}});
-}
-std::string to_string(const Tao::TaoEvaluateADatum& self) {
-  return repr(
-      &self,
-      "Tao::TaoEvaluateADatum",
-      {std::pair{"datum_value", to_string(self.datum_value)},
-       std::pair{"valid_value", to_string(self.valid_value)},
-       std::pair{"why_invalid", self.why_invalid}});
-}
-std::string to_string(const Tao::TaoEvaluateLatOrBeamData& self) {
-  return repr(
-      &self,
-      "Tao::TaoEvaluateLatOrBeamData",
-      {std::pair{"err", to_string(self.err)},
-       std::pair{"values", to_string(self.values)}});
-}
-std::string to_string(const Tao::TaoToPhaseAndCouplingReading& self) {
-  return repr(
-      &self,
-      "Tao::TaoToPhaseAndCouplingReading",
-      {std::pair{"bpm_data", to_string(self.bpm_data)},
-       std::pair{"valid_value", to_string(self.valid_value)}});
-}
-std::string to_string(const Tao::TaoGetData& self) {
-  return repr(
-      &self,
-      "Tao::TaoGetData",
-      {std::pair{"data_value", to_string(self.data_value)},
-       std::pair{"data_weight", to_string(self.data_weight)},
-       std::pair{"data_meas_value", to_string(self.data_meas_value)},
-       std::pair{"data_ix_dModel", to_string(self.data_ix_dModel)}});
+      "Tao::TaoDataUseitPlotCalc",
+      {std::pair{"data", "[...]"},
+       std::pair{"most_invalid", self.most_invalid}});
 }
 std::string to_string(const Tao::TaoDatumIntegrate& self) {
   return repr(
@@ -3215,29 +2897,6 @@ std::string to_string(const Tao::TaoDatumIntegrate& self) {
        std::pair{"why_invalid", self.why_invalid},
        std::pair{"result", to_string(self.result)}});
 }
-std::string to_string(const Tao::TaoTrackingEleIndex& self) {
-  return repr(
-      &self,
-      "Tao::TaoTrackingEleIndex",
-      {std::pair{"ix_branch", to_string(self.ix_branch)},
-       std::pair{"ix_ele", to_string(self.ix_ele)}});
-}
-std::string to_string(const Tao::TaoPointerToDatumEle& self) {
-  return repr(
-      &self,
-      "Tao::TaoPointerToDatumEle",
-      {std::pair{"valid", to_string(self.valid)},
-       std::pair{"why_invalid", self.why_invalid},
-       std::pair{"ele", to_string(self.ele)}});
-}
-std::string to_string(const Tao::TaoEvaluateDatumAtS& self) {
-  return repr(
-      &self,
-      "Tao::TaoEvaluateDatumAtS",
-      {std::pair{"err_str", self.err_str},
-       std::pair{"bad_datum", to_string(self.bad_datum)},
-       std::pair{"value", to_string(self.value)}});
-}
 std::string to_string(const Tao::TaoEleGeometryWithMisalignments& self) {
   return repr(
       &self,
@@ -3245,6 +2904,13 @@ std::string to_string(const Tao::TaoEleGeometryWithMisalignments& self) {
       {std::pair{"valid_value", to_string(self.valid_value)},
        std::pair{"why_invalid", self.why_invalid},
        std::pair{"value", to_string(self.value)}});
+}
+std::string to_string(const Tao::TaoEleShapeInfo& self) {
+  return repr(
+      &self,
+      "Tao::TaoEleShapeInfo",
+      {std::pair{"e_shape", to_string(self.e_shape)},
+       std::pair{"label_name", self.label_name}});
 }
 std::string to_string(const Tao::TaoEvalFloorOrbit& self) {
   return repr(
@@ -3254,34 +2920,35 @@ std::string to_string(const Tao::TaoEvalFloorOrbit& self) {
        std::pair{"why_invalid", self.why_invalid},
        std::pair{"value", to_string(self.value)}});
 }
-std::string to_string(const Tao::TaoParseElementParamStr& self) {
+std::string to_string(const Tao::TaoEvaluateADatum& self) {
   return repr(
       &self,
-      "Tao::TaoParseElementParamStr",
+      "Tao::TaoEvaluateADatum",
+      {std::pair{"datum_value", to_string(self.datum_value)},
+       std::pair{"valid_value", to_string(self.valid_value)},
+       std::pair{"why_invalid", self.why_invalid}});
+}
+std::string to_string(const Tao::TaoEvaluateDatumAtS& self) {
+  return repr(
+      &self,
+      "Tao::TaoEvaluateDatumAtS",
+      {std::pair{"err_str", self.err_str},
+       std::pair{"bad_datum", to_string(self.bad_datum)},
+       std::pair{"value", to_string(self.value)}});
+}
+std::string to_string(const Tao::TaoEvaluateLatOrBeamData& self) {
+  return repr(
+      &self,
+      "Tao::TaoEvaluateLatOrBeamData",
       {std::pair{"err", to_string(self.err)},
-       std::pair{"uni", self.uni},
-       std::pair{"element", self.element},
-       std::pair{"parameter", self.parameter},
-       std::pair{"where", to_string(self.where)},
-       std::pair{"component", self.component}});
+       std::pair{"values", to_string(self.values)}});
 }
-std::string to_string(const Tao::TaoParamValueAtS& self) {
+std::string to_string(const Tao::TaoFindPlotRegion& self) {
   return repr(
       &self,
-      "Tao::TaoParamValueAtS",
-      {std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"why_invalid", self.why_invalid},
-       std::pair{"print_err", to_string(self.print_err)},
-       std::pair{"bad_datum", to_string(self.bad_datum)}});
-}
-std::string to_string(const Tao::TaoPointerToUniverses& self) {
-  return repr(
-      &self,
-      "Tao::TaoPointerToUniverses",
-      {std::pair{"unis", "[...]"},
-       std::pair{"err", to_string(self.err)},
-       std::pair{"name_out", self.name_out},
-       std::pair{"explicit_uni", to_string(self.explicit_uni)}});
+      "Tao::TaoFindPlotRegion",
+      {std::pair{"err", to_string(self.err)},
+       std::pair{"region", to_string(self.region)}});
 }
 std::string to_string(const Tao::TaoFloorToScreen& self) {
   return repr(
@@ -3290,26 +2957,14 @@ std::string to_string(const Tao::TaoFloorToScreen& self) {
       {std::pair{"x_screen", to_string(self.x_screen)},
        std::pair{"y_screen", to_string(self.y_screen)}});
 }
-std::string to_string(const Tao::TaoParticleDataValue& self) {
+std::string to_string(const Tao::TaoGetData& self) {
   return repr(
       &self,
-      "Tao::TaoParticleDataValue",
-      {std::pair{"value", to_string(self.value)},
-       std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Tao::TaoDataUseitPlotCalc& self) {
-  return repr(
-      &self,
-      "Tao::TaoDataUseitPlotCalc",
-      {std::pair{"data", "[...]"},
-       std::pair{"most_invalid", self.most_invalid}});
-}
-std::string to_string(const Tao::TaoGraphSMinMaxCalc& self) {
-  return repr(
-      &self,
-      "Tao::TaoGraphSMinMaxCalc",
-      {std::pair{"s_min", to_string(self.s_min)},
-       std::pair{"s_max", to_string(self.s_max)}});
+      "Tao::TaoGetData",
+      {std::pair{"data_value", to_string(self.data_value)},
+       std::pair{"data_weight", to_string(self.data_weight)},
+       std::pair{"data_meas_value", to_string(self.data_meas_value)},
+       std::pair{"data_ix_dModel", to_string(self.data_ix_dModel)}});
 }
 std::string to_string(const Tao::TaoGetOptVars& self) {
   return repr(
@@ -3326,6 +2981,73 @@ std::string to_string(const Tao::TaoGetOptVars& self) {
        std::pair{
            "ignore_if_not_limited", to_string(self.ignore_if_not_limited)}});
 }
+std::string to_string(const Tao::TaoGraphSMinMaxCalc& self) {
+  return repr(
+      &self,
+      "Tao::TaoGraphSMinMaxCalc",
+      {std::pair{"s_min", to_string(self.s_min)},
+       std::pair{"s_max", to_string(self.s_max)}});
+}
+std::string to_string(const Tao::TaoInitFindElements& self) {
+  return repr(
+      &self,
+      "Tao::TaoInitFindElements",
+      {std::pair{"eles", "[...]"},
+       std::pair{"found_one", to_string(self.found_one)}});
+}
+std::string to_string(const Tao::TaoInjectBeam& self) {
+  return repr(
+      &self,
+      "Tao::TaoInjectBeam",
+      {std::pair{"beam", to_string(self.beam)},
+       std::pair{"init_ok", to_string(self.init_ok)}});
+}
+std::string to_string(const Tao::TaoLatticeCalc& self) {
+  return repr(
+      &self,
+      "Tao::TaoLatticeCalc",
+      {std::pair{"calc_ok", to_string(self.calc_ok)},
+       std::pair{"print_err", to_string(self.print_err)}});
+}
+std::string to_string(const Tao::TaoLocateAllElements& self) {
+  return repr(
+      &self,
+      "Tao::TaoLocateAllElements",
+      {std::pair{"eles", "[...]"}, std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Tao::TaoLocateElements& self) {
+  return repr(
+      &self,
+      "Tao::TaoLocateElements",
+      {std::pair{"eles", "[...]"}, std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Tao::TaoParamValueAtS& self) {
+  return repr(
+      &self,
+      "Tao::TaoParamValueAtS",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"why_invalid", self.why_invalid},
+       std::pair{"print_err", to_string(self.print_err)},
+       std::pair{"bad_datum", to_string(self.bad_datum)}});
+}
+std::string to_string(const Tao::TaoParseElementParamStr& self) {
+  return repr(
+      &self,
+      "Tao::TaoParseElementParamStr",
+      {std::pair{"err", to_string(self.err)},
+       std::pair{"uni", self.uni},
+       std::pair{"element", self.element},
+       std::pair{"parameter", self.parameter},
+       std::pair{"where", to_string(self.where)},
+       std::pair{"component", self.component}});
+}
+std::string to_string(const Tao::TaoParticleDataValue& self) {
+  return repr(
+      &self,
+      "Tao::TaoParticleDataValue",
+      {std::pair{"value", to_string(self.value)},
+       std::pair{"err", to_string(self.err)}});
+}
 std::string to_string(const Tao::TaoPickUniverse& self) {
   return repr(
       &self,
@@ -3335,39 +3057,13 @@ std::string to_string(const Tao::TaoPickUniverse& self) {
        std::pair{"ix_uni", to_string(self.ix_uni)},
        std::pair{"explicit_uni", to_string(self.explicit_uni)}});
 }
-std::string to_string(const Tao::TaoWaveFit& self) {
+std::string to_string(const Tao::TaoPointerToDatumEle& self) {
   return repr(
       &self,
-      "Tao::TaoWaveFit",
-      {std::pair{"coef", to_string(self.coef)},
-       std::pair{"rms", to_string(self.rms)}});
-}
-std::string to_string(const Tao::TaoInitFindElements& self) {
-  return repr(
-      &self,
-      "Tao::TaoInitFindElements",
-      {std::pair{"eles", "[...]"},
-       std::pair{"found_one", to_string(self.found_one)}});
-}
-std::string to_string(const Tao::TaoLocateAllElements& self) {
-  return repr(
-      &self,
-      "Tao::TaoLocateAllElements",
-      {std::pair{"eles", "[...]"}, std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Tao::TaoFindPlotRegion& self) {
-  return repr(
-      &self,
-      "Tao::TaoFindPlotRegion",
-      {std::pair{"err", to_string(self.err)},
-       std::pair{"region", to_string(self.region)}});
-}
-std::string to_string(const Tao::TaoEleShapeInfo& self) {
-  return repr(
-      &self,
-      "Tao::TaoEleShapeInfo",
-      {std::pair{"e_shape", to_string(self.e_shape)},
-       std::pair{"label_name", self.label_name}});
+      "Tao::TaoPointerToDatumEle",
+      {std::pair{"valid", to_string(self.valid)},
+       std::pair{"why_invalid", self.why_invalid},
+       std::pair{"ele", to_string(self.ele)}});
 }
 std::string to_string(const Tao::TaoPointerToEleShape& self) {
   return repr(
@@ -3376,17 +3072,33 @@ std::string to_string(const Tao::TaoPointerToEleShape& self) {
       {std::pair{"dat_var_name", self.dat_var_name},
        std::pair{"dat_var_value", to_string(self.dat_var_value)}});
 }
-std::string to_string(const Tao::TaoSetLogicalValue& self) {
+std::string to_string(const Tao::TaoPointerToUniverses& self) {
   return repr(
       &self,
-      "Tao::TaoSetLogicalValue",
-      {std::pair{"var", to_string(self.var)},
-       std::pair{"error", to_string(self.error)}});
+      "Tao::TaoPointerToUniverses",
+      {std::pair{"unis", "[...]"},
+       std::pair{"err", to_string(self.err)},
+       std::pair{"name_out", self.name_out},
+       std::pair{"explicit_uni", to_string(self.explicit_uni)}});
+}
+std::string to_string(const Tao::TaoScaleGraph& self) {
+  return repr(
+      &self,
+      "Tao::TaoScaleGraph",
+      {std::pair{"y_range", to_string(self.y_range)},
+       std::pair{"y2_range", to_string(self.y2_range)}});
 }
 std::string to_string(const Tao::TaoSetIntegerValue& self) {
   return repr(
       &self,
       "Tao::TaoSetIntegerValue",
+      {std::pair{"var", to_string(self.var)},
+       std::pair{"error", to_string(self.error)}});
+}
+std::string to_string(const Tao::TaoSetLogicalValue& self) {
+  return repr(
+      &self,
+      "Tao::TaoSetLogicalValue",
       {std::pair{"var", to_string(self.var)},
        std::pair{"error", to_string(self.error)}});
 }
@@ -3397,58 +3109,79 @@ std::string to_string(const Tao::TaoSetRealValue& self) {
       {std::pair{"var", to_string(self.var)},
        std::pair{"error", to_string(self.error)}});
 }
-std::string to_string(const CppBmadTest::TestIntegerScalar& self) {
+std::string to_string(const Tao::TaoSplitComponent& self) {
   return repr(
       &self,
-      "CppBmadTest::TestIntegerScalar",
+      "Tao::TaoSplitComponent",
+      {std::pair{"comp", "[...]"}, std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Tao::TaoToPhaseAndCouplingReading& self) {
+  return repr(
+      &self,
+      "Tao::TaoToPhaseAndCouplingReading",
+      {std::pair{"bpm_data", to_string(self.bpm_data)},
+       std::pair{"valid_value", to_string(self.valid_value)}});
+}
+std::string to_string(const Tao::TaoToReal& self) {
+  return repr(
+      &self,
+      "Tao::TaoToReal",
+      {std::pair{"value", to_string(self.value)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
+}
+std::string to_string(const Tao::TaoTrackingEleIndex& self) {
+  return repr(
+      &self,
+      "Tao::TaoTrackingEleIndex",
+      {std::pair{"ix_branch", to_string(self.ix_branch)},
+       std::pair{"ix_ele", to_string(self.ix_ele)}});
+}
+std::string to_string(const Tao::TaoWaveFit& self) {
+  return repr(
+      &self,
+      "Tao::TaoWaveFit",
+      {std::pair{"coef", to_string(self.coef)},
+       std::pair{"rms", to_string(self.rms)}});
+}
+std::string to_string(const Bmad::TargetRotMats& self) {
+  return repr(
+      &self,
+      "Bmad::TargetRotMats",
+      {std::pair{"w_to_target", to_string(self.w_to_target)},
+       std::pair{"w_to_ele", to_string(self.w_to_ele)}});
+}
+std::string to_string(const Bmad::TaylorInverse& self) {
+  return repr(
+      &self,
+      "Bmad::TaylorInverse",
+      {std::pair{"taylor_inv", "[...]"},
+       std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const CppBmadTest::TestBunchStructArray& self) {
+  return repr(
+      &self,
+      "CppBmadTest::TestBunchStructArray",
+      {std::pair{"arr_out", "[...]"},
+       std::pair{"opt_status", to_string(self.opt_status)}});
+}
+std::string to_string(const CppBmadTest::TestBunchStructScalar& self) {
+  return repr(
+      &self,
+      "CppBmadTest::TestBunchStructScalar",
       {std::pair{"val_out", to_string(self.val_out)},
        std::pair{"opt_status", to_string(self.opt_status)}});
 }
-std::string to_string(const CppBmadTest::TestIntegerArray& self) {
+std::string to_string(const CppBmadTest::TestCharacterScalar& self) {
   return repr(
       &self,
-      "CppBmadTest::TestIntegerArray",
-      {std::pair{"arr_out", to_string(self.arr_out)},
+      "CppBmadTest::TestCharacterScalar",
+      {std::pair{"val_out", self.val_out},
        std::pair{"opt_status", to_string(self.opt_status)}});
 }
-std::string to_string(const CppBmadTest::TestInteger8Scalar& self) {
+std::string to_string(const CppBmadTest::TestComplexArray& self) {
   return repr(
       &self,
-      "CppBmadTest::TestInteger8Scalar",
-      {std::pair{"val_out", to_string(self.val_out)},
-       std::pair{"opt_status", to_string(self.opt_status)}});
-}
-std::string to_string(const CppBmadTest::TestInteger8Array& self) {
-  return repr(
-      &self,
-      "CppBmadTest::TestInteger8Array",
-      {std::pair{"opt_status", to_string(self.opt_status)}});
-}
-std::string to_string(const CppBmadTest::TestRealScalar& self) {
-  return repr(
-      &self,
-      "CppBmadTest::TestRealScalar",
-      {std::pair{"val_out", to_string(self.val_out)},
-       std::pair{"opt_status", to_string(self.opt_status)}});
-}
-std::string to_string(const CppBmadTest::TestRealArray& self) {
-  return repr(
-      &self,
-      "CppBmadTest::TestRealArray",
-      {std::pair{"arr_out", to_string(self.arr_out)},
-       std::pair{"opt_status", to_string(self.opt_status)}});
-}
-std::string to_string(const CppBmadTest::TestReal16Scalar& self) {
-  return repr(
-      &self,
-      "CppBmadTest::TestReal16Scalar",
-      {std::pair{"val_out", to_string(self.val_out)},
-       std::pair{"opt_status", to_string(self.opt_status)}});
-}
-std::string to_string(const CppBmadTest::TestReal16Array& self) {
-  return repr(
-      &self,
-      "CppBmadTest::TestReal16Array",
+      "CppBmadTest::TestComplexArray",
       {std::pair{"arr_out", to_string(self.arr_out)},
        std::pair{"opt_status", to_string(self.opt_status)}});
 }
@@ -3459,17 +3192,30 @@ std::string to_string(const CppBmadTest::TestComplexScalar& self) {
       {std::pair{"val_out", to_string(self.val_out)},
        std::pair{"opt_status", to_string(self.opt_status)}});
 }
-std::string to_string(const CppBmadTest::TestComplexArray& self) {
+std::string to_string(const CppBmadTest::TestInteger8Array& self) {
   return repr(
       &self,
-      "CppBmadTest::TestComplexArray",
+      "CppBmadTest::TestInteger8Array",
+      {std::pair{"opt_status", to_string(self.opt_status)}});
+}
+std::string to_string(const CppBmadTest::TestInteger8Scalar& self) {
+  return repr(
+      &self,
+      "CppBmadTest::TestInteger8Scalar",
+      {std::pair{"val_out", to_string(self.val_out)},
+       std::pair{"opt_status", to_string(self.opt_status)}});
+}
+std::string to_string(const CppBmadTest::TestIntegerArray& self) {
+  return repr(
+      &self,
+      "CppBmadTest::TestIntegerArray",
       {std::pair{"arr_out", to_string(self.arr_out)},
        std::pair{"opt_status", to_string(self.opt_status)}});
 }
-std::string to_string(const CppBmadTest::TestLogicalScalar& self) {
+std::string to_string(const CppBmadTest::TestIntegerScalar& self) {
   return repr(
       &self,
-      "CppBmadTest::TestLogicalScalar",
+      "CppBmadTest::TestIntegerScalar",
       {std::pair{"val_out", to_string(self.val_out)},
        std::pair{"opt_status", to_string(self.opt_status)}});
 }
@@ -3479,25 +3225,279 @@ std::string to_string(const CppBmadTest::TestLogicalArray& self) {
       "CppBmadTest::TestLogicalArray",
       {std::pair{"opt_status", to_string(self.opt_status)}});
 }
-std::string to_string(const CppBmadTest::TestCharacterScalar& self) {
+std::string to_string(const CppBmadTest::TestLogicalScalar& self) {
   return repr(
       &self,
-      "CppBmadTest::TestCharacterScalar",
-      {std::pair{"val_out", self.val_out},
-       std::pair{"opt_status", to_string(self.opt_status)}});
-}
-std::string to_string(const CppBmadTest::TestBunchStructScalar& self) {
-  return repr(
-      &self,
-      "CppBmadTest::TestBunchStructScalar",
+      "CppBmadTest::TestLogicalScalar",
       {std::pair{"val_out", to_string(self.val_out)},
        std::pair{"opt_status", to_string(self.opt_status)}});
 }
-std::string to_string(const CppBmadTest::TestBunchStructArray& self) {
+std::string to_string(const CppBmadTest::TestReal16Array& self) {
   return repr(
       &self,
-      "CppBmadTest::TestBunchStructArray",
-      {std::pair{"arr_out", "[...]"},
+      "CppBmadTest::TestReal16Array",
+      {std::pair{"arr_out", to_string(self.arr_out)},
        std::pair{"opt_status", to_string(self.opt_status)}});
+}
+std::string to_string(const CppBmadTest::TestReal16Scalar& self) {
+  return repr(
+      &self,
+      "CppBmadTest::TestReal16Scalar",
+      {std::pair{"val_out", to_string(self.val_out)},
+       std::pair{"opt_status", to_string(self.opt_status)}});
+}
+std::string to_string(const CppBmadTest::TestRealArray& self) {
+  return repr(
+      &self,
+      "CppBmadTest::TestRealArray",
+      {std::pair{"arr_out", to_string(self.arr_out)},
+       std::pair{"opt_status", to_string(self.opt_status)}});
+}
+std::string to_string(const CppBmadTest::TestRealScalar& self) {
+  return repr(
+      &self,
+      "CppBmadTest::TestRealScalar",
+      {std::pair{"val_out", to_string(self.val_out)},
+       std::pair{"opt_status", to_string(self.opt_status)}});
+}
+std::string to_string(const Bmad::ToEtaReading& self) {
+  return repr(
+      &self,
+      "Bmad::ToEtaReading",
+      {std::pair{"reading", to_string(self.reading)},
+       std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Bmad::ToOrbitReading& self) {
+  return repr(
+      &self,
+      "Bmad::ToOrbitReading",
+      {std::pair{"reading", to_string(self.reading)},
+       std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Bmad::ToPhaseAndCouplingReading& self) {
+  return repr(
+      &self,
+      "Bmad::ToPhaseAndCouplingReading",
+      {std::pair{"reading", to_string(self.reading)},
+       std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Bmad::Track1& self) {
+  return repr(
+      &self,
+      "Bmad::Track1",
+      {std::pair{"end_orb", to_string(self.end_orb)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
+}
+std::string to_string(const Bmad::Track1Bmad& self) {
+  return repr(
+      &self,
+      "Bmad::Track1Bmad",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"track", to_string(self.track)}});
+}
+std::string to_string(const Bmad::Track1RungeKutta& self) {
+  return repr(
+      &self,
+      "Bmad::Track1RungeKutta",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"track", to_string(self.track)}});
+}
+std::string to_string(const Bmad::Track1Spin& self) {
+  return repr(
+      &self,
+      "Bmad::Track1Spin",
+      {std::pair{"ele", to_string(self.ele)},
+       std::pair{"end_orb", to_string(self.end_orb)}});
+}
+std::string to_string(const Bmad::Track1TimeRungeKutta& self) {
+  return repr(
+      &self,
+      "Bmad::Track1TimeRungeKutta",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"track", to_string(self.track)}});
+}
+std::string to_string(const Bmad::TrackABeambeam& self) {
+  return repr(
+      &self,
+      "Bmad::TrackABeambeam",
+      {std::pair{"track", to_string(self.track)},
+       std::pair{"mat6", to_string(self.mat6)}});
+}
+std::string to_string(const Bmad::TrackAPatch& self) {
+  return repr(
+      &self,
+      "Bmad::TrackAPatch",
+      {std::pair{"s_ent", to_string(self.s_ent)},
+       std::pair{"ds_ref", to_string(self.ds_ref)},
+       std::pair{"mat6", to_string(self.mat6)}});
+}
+std::string to_string(const Bmad::TrackAZeroLengthElement& self) {
+  return repr(
+      &self,
+      "Bmad::TrackAZeroLengthElement",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"track", to_string(self.track)}});
+}
+std::string to_string(const Bmad::TrackAll& self) {
+  return repr(
+      &self,
+      "Bmad::TrackAll",
+      {std::pair{"track_state", to_string(self.track_state)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"orbit0", "[...]"}});
+}
+std::string to_string(const Bmad::TrackFromSToS& self) {
+  return repr(
+      &self,
+      "Bmad::TrackFromSToS",
+      {std::pair{"orbit_end", to_string(self.orbit_end)},
+       std::pair{"all_orb", "[...]"},
+       std::pair{"track_state", to_string(self.track_state)}});
+}
+std::string to_string(const Bmad::TrackUntilDead& self) {
+  return repr(
+      &self,
+      "Bmad::TrackUntilDead",
+      {std::pair{"end_orb", to_string(self.end_orb)},
+       std::pair{"track", to_string(self.track)}});
+}
+std::string to_string(const Bmad::TrackingRadMapSetup& self) {
+  return repr(
+      &self,
+      "Bmad::TrackingRadMapSetup",
+      {std::pair{"rad_map", to_string(self.rad_map)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
+}
+std::string to_string(const Bmad::TransferMapFromSToS& self) {
+  return repr(
+      &self,
+      "Bmad::TransferMapFromSToS",
+      {std::pair{"ref_orb_out", to_string(self.ref_orb_out)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
+}
+std::string to_string(const SimUtils::TricubicCmplxEval& self) {
+  return repr(
+      &self,
+      "SimUtils::TricubicCmplxEval",
+      {std::pair{"df_dx", to_string(self.df_dx)},
+       std::pair{"df_dy", to_string(self.df_dy)},
+       std::pair{"df_dz", to_string(self.df_dz)},
+       std::pair{"f_val", to_string(self.f_val)}});
+}
+std::string to_string(const Bmad::Twiss1Propagate& self) {
+  return repr(
+      &self,
+      "Bmad::Twiss1Propagate",
+      {std::pair{"twiss2", to_string(self.twiss2)},
+       std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Bmad::TwissAndTrackFromSToS& self) {
+  return repr(
+      &self,
+      "Bmad::TwissAndTrackFromSToS",
+      {std::pair{"orbit_end", to_string(self.orbit_end)},
+       std::pair{"ele_end", to_string(self.ele_end)},
+       std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Bmad::TwissAndTrackIntraEle& self) {
+  return repr(
+      &self,
+      "Bmad::TwissAndTrackIntraEle",
+      {std::pair{"orbit_end", to_string(self.orbit_end)},
+       std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Bmad::TwissAtElement& self) {
+  return repr(
+      &self,
+      "Bmad::TwissAtElement",
+      {std::pair{"start", to_string(self.start)},
+       std::pair{"end", to_string(self.end)},
+       std::pair{"average", to_string(self.average)}});
+}
+std::string to_string(const Bmad::TwissFromTracking& self) {
+  return repr(
+      &self,
+      "Bmad::TwissFromTracking",
+      {std::pair{"symp_err", to_string(self.symp_err)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
+}
+std::string to_string(const SimUtils::WMatToAxisAngle& self) {
+  return repr(
+      &self,
+      "SimUtils::WMatToAxisAngle",
+      {std::pair{"axis", to_string(self.axis)},
+       std::pair{"angle", to_string(self.angle)}});
+}
+std::string to_string(const Bmad::Wall3dDRadius& self) {
+  return repr(
+      &self,
+      "Bmad::Wall3dDRadius",
+      {std::pair{"perp", to_string(self.perp)},
+       std::pair{"ix_section", to_string(self.ix_section)},
+       std::pair{"no_wall_here", to_string(self.no_wall_here)},
+       std::pair{"origin", to_string(self.origin)},
+       std::pair{"radius_wall", to_string(self.radius_wall)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"d_radius", to_string(self.d_radius)}});
+}
+std::string to_string(const Bmad::WriteAstraFieldGridFile& self) {
+  return repr(
+      &self,
+      "Bmad::WriteAstraFieldGridFile",
+      {std::pair{"maxfield", to_string(self.maxfield)},
+       std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Bmad::WriteAstraFieldGridFile3d& self) {
+  return repr(
+      &self,
+      "Bmad::WriteAstraFieldGridFile3d",
+      {std::pair{"maxfield", to_string(self.maxfield)},
+       std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Bmad::WriteGptFieldGridFile1d& self) {
+  return repr(
+      &self,
+      "Bmad::WriteGptFieldGridFile1d",
+      {std::pair{"maxfield", to_string(self.maxfield)},
+       std::pair{"ref_time", to_string(self.ref_time)},
+       std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Bmad::WriteGptFieldGridFile2d& self) {
+  return repr(
+      &self,
+      "Bmad::WriteGptFieldGridFile2d",
+      {std::pair{"maxfield", to_string(self.maxfield)},
+       std::pair{"ref_time", to_string(self.ref_time)},
+       std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Bmad::WriteGptFieldGridFile3d& self) {
+  return repr(
+      &self,
+      "Bmad::WriteGptFieldGridFile3d",
+      {std::pair{"maxfield", to_string(self.maxfield)},
+       std::pair{"ref_time", to_string(self.ref_time)},
+       std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Bmad::WriteLatticeInScibmad& self) {
+  return repr(
+      &self,
+      "Bmad::WriteLatticeInScibmad",
+      {std::pair{"scibmad_file", self.scibmad_file},
+       std::pair{"err_flag", to_string(self.err_flag)}});
+}
+std::string to_string(const Bmad::WriteOpalFieldGridFile& self) {
+  return repr(
+      &self,
+      "Bmad::WriteOpalFieldGridFile",
+      {std::pair{"maxfield", to_string(self.maxfield)},
+       std::pair{"err", to_string(self.err)}});
+}
+std::string to_string(const Bmad::ZAtSurface& self) {
+  return repr(
+      &self,
+      "Bmad::ZAtSurface",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"dz_dxy", to_string(self.dz_dxy)},
+       std::pair{"z", to_string(self.z)}});
 }
 } // namespace Bmad
