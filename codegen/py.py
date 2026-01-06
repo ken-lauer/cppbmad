@@ -348,7 +348,11 @@ def generate_pybmad_header(
     return tpl.substitute(forward_declarations="\n".join(forward_decls))
 
 
-def generate_pybmad_struct_code(struct: CodegenStructure) -> list[str]:
+def generate_pybmad_struct_code(
+    structs: list[CodegenStructure],
+    routines_by_name: dict[str, FortranRoutine],
+    struct: CodegenStructure,
+) -> list[str]:
     code_lines = [""]
     code_lines.append("// =============================================================================")
     code_lines.append(f"// {struct.f_name}")
@@ -399,13 +403,17 @@ def generate_pybmad_struct_code(struct: CodegenStructure) -> list[str]:
     code_lines.append("        ;")
     code_lines.append("")
 
-    # if is_struct_array_used(routines_by_name, structs, struct, 1):
-    code_lines.append(f'    bind_FTypeArrayND<{struct.cpp_class}Array1D>(m, "{struct.cpp_class}Array1D");')
-    code_lines.append(f'    bind_FTypeArrayND<{struct.cpp_class}Array2D>(m, "{struct.cpp_class}Array2D");')
-    code_lines.append(f'    bind_FTypeArrayND<{struct.cpp_class}Array3D>(m, "{struct.cpp_class}Array3D");')
-    code_lines.append(f'    bind_FTypeAlloc1D<{struct.cpp_class}Alloc1D>(m, "{struct.cpp_class}Alloc1D");')
-    # else:
-    #     code_lines.append(f"    // 1D {struct.cpp_class} arrays are not used in routines")
+    for n in [1, 2, 3]:
+        if is_struct_array_used(routines_by_name, structs, struct, n):
+            code_lines.append(
+                f'    bind_FTypeArrayND<{struct.cpp_class}Array{n}D>(m, "{struct.cpp_class}Array{n}D");'
+            )
+            if n == 1:
+                code_lines.append(
+                    f'    bind_FTypeAlloc1D<{struct.cpp_class}Alloc1D>(m, "{struct.cpp_class}Alloc1D");'
+                )
+        else:
+            code_lines.append(f"    // {n}D {struct.cpp_class} arrays are not used in structs/routines")
 
     code_lines.append("}")
 
@@ -444,7 +452,7 @@ def generate_pybmad(
         return (struct.module, struct.f_name)
 
     for struct in sorted(structs, key=by_module_and_name):
-        code_lines.extend(generate_pybmad_struct_code(struct))
+        code_lines.extend(generate_pybmad_struct_code(structs, routines_by_name, struct))
 
     code_lines.append("} // namespace Pybmad")
     filename = PYBMAD_SRC / "generated" / "structs.cpp"

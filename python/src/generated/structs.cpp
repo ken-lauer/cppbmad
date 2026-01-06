@@ -29,9 +29,9 @@ void init_ac_kicker_freq_struct(
       ;
 
   bind_FTypeArrayND<AcKickerFreqProxyArray1D>(m, "AcKickerFreqProxyArray1D");
-  bind_FTypeArrayND<AcKickerFreqProxyArray2D>(m, "AcKickerFreqProxyArray2D");
-  bind_FTypeArrayND<AcKickerFreqProxyArray3D>(m, "AcKickerFreqProxyArray3D");
   bind_FTypeAlloc1D<AcKickerFreqProxyAlloc1D>(m, "AcKickerFreqProxyAlloc1D");
+  // 2D AcKickerFreqProxy arrays are not used in structs/routines
+  // 3D AcKickerFreqProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -48,10 +48,9 @@ void init_ac_kicker_struct(py::module& m, py::class_<AcKickerProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<AcKickerProxyArray1D>(m, "AcKickerProxyArray1D");
-  bind_FTypeArrayND<AcKickerProxyArray2D>(m, "AcKickerProxyArray2D");
-  bind_FTypeArrayND<AcKickerProxyArray3D>(m, "AcKickerProxyArray3D");
-  bind_FTypeAlloc1D<AcKickerProxyAlloc1D>(m, "AcKickerProxyAlloc1D");
+  // 1D AcKickerProxy arrays are not used in structs/routines
+  // 2D AcKickerProxy arrays are not used in structs/routines
+  // 3D AcKickerProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -76,9 +75,9 @@ void init_ac_kicker_time_struct(
       ;
 
   bind_FTypeArrayND<AcKickerTimeProxyArray1D>(m, "AcKickerTimeProxyArray1D");
-  bind_FTypeArrayND<AcKickerTimeProxyArray2D>(m, "AcKickerTimeProxyArray2D");
-  bind_FTypeArrayND<AcKickerTimeProxyArray3D>(m, "AcKickerTimeProxyArray3D");
   bind_FTypeAlloc1D<AcKickerTimeProxyAlloc1D>(m, "AcKickerTimeProxyAlloc1D");
+  // 2D AcKickerTimeProxy arrays are not used in structs/routines
+  // 3D AcKickerTimeProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -120,10 +119,9 @@ void init_anormal_mode_struct(
 
       ;
 
-  bind_FTypeArrayND<AnormalModeProxyArray1D>(m, "AnormalModeProxyArray1D");
-  bind_FTypeArrayND<AnormalModeProxyArray2D>(m, "AnormalModeProxyArray2D");
-  bind_FTypeArrayND<AnormalModeProxyArray3D>(m, "AnormalModeProxyArray3D");
-  bind_FTypeAlloc1D<AnormalModeProxyAlloc1D>(m, "AnormalModeProxyAlloc1D");
+  // 1D AnormalModeProxy arrays are not used in structs/routines
+  // 2D AnormalModeProxy arrays are not used in structs/routines
+  // 3D AnormalModeProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -184,10 +182,9 @@ void init_aperture_param_struct(
 
       ;
 
-  bind_FTypeArrayND<ApertureParamProxyArray1D>(m, "ApertureParamProxyArray1D");
-  bind_FTypeArrayND<ApertureParamProxyArray2D>(m, "ApertureParamProxyArray2D");
-  bind_FTypeArrayND<ApertureParamProxyArray3D>(m, "ApertureParamProxyArray3D");
-  bind_FTypeAlloc1D<ApertureParamProxyAlloc1D>(m, "ApertureParamProxyAlloc1D");
+  // 1D ApertureParamProxy arrays are not used in structs/routines
+  // 2D ApertureParamProxy arrays are not used in structs/routines
+  // 3D ApertureParamProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -221,9 +218,9 @@ void init_aperture_point_struct(
       ;
 
   bind_FTypeArrayND<AperturePointProxyArray1D>(m, "AperturePointProxyArray1D");
-  bind_FTypeArrayND<AperturePointProxyArray2D>(m, "AperturePointProxyArray2D");
-  bind_FTypeArrayND<AperturePointProxyArray3D>(m, "AperturePointProxyArray3D");
   bind_FTypeAlloc1D<AperturePointProxyAlloc1D>(m, "AperturePointProxyAlloc1D");
+  // 2D AperturePointProxy arrays are not used in structs/routines
+  // 3D AperturePointProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -252,9 +249,9 @@ void init_aperture_scan_struct(
       ;
 
   bind_FTypeArrayND<ApertureScanProxyArray1D>(m, "ApertureScanProxyArray1D");
-  bind_FTypeArrayND<ApertureScanProxyArray2D>(m, "ApertureScanProxyArray2D");
-  bind_FTypeArrayND<ApertureScanProxyArray3D>(m, "ApertureScanProxyArray3D");
   bind_FTypeAlloc1D<ApertureScanProxyAlloc1D>(m, "ApertureScanProxyAlloc1D");
+  // 2D ApertureScanProxy arrays are not used in structs/routines
+  // 3D ApertureScanProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -396,10 +393,9 @@ void init_beam_init_struct(py::module& m, py::class_<BeamInitProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<BeamInitProxyArray1D>(m, "BeamInitProxyArray1D");
-  bind_FTypeArrayND<BeamInitProxyArray2D>(m, "BeamInitProxyArray2D");
-  bind_FTypeArrayND<BeamInitProxyArray3D>(m, "BeamInitProxyArray3D");
-  bind_FTypeAlloc1D<BeamInitProxyAlloc1D>(m, "BeamInitProxyAlloc1D");
+  // 1D BeamInitProxy arrays are not used in structs/routines
+  // 2D BeamInitProxy arrays are not used in structs/routines
+  // 3D BeamInitProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -413,10 +409,9 @@ void init_beam_struct(py::module& m, py::class_<BeamProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<BeamProxyArray1D>(m, "BeamProxyArray1D");
-  bind_FTypeArrayND<BeamProxyArray2D>(m, "BeamProxyArray2D");
-  bind_FTypeArrayND<BeamProxyArray3D>(m, "BeamProxyArray3D");
-  bind_FTypeAlloc1D<BeamProxyAlloc1D>(m, "BeamProxyAlloc1D");
+  // 1D BeamProxy arrays are not used in structs/routines
+  // 2D BeamProxy arrays are not used in structs/routines
+  // 3D BeamProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -635,10 +630,9 @@ void init_bmad_common_struct(py::module& m, py::class_<BmadCommonProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<BmadCommonProxyArray1D>(m, "BmadCommonProxyArray1D");
-  bind_FTypeArrayND<BmadCommonProxyArray2D>(m, "BmadCommonProxyArray2D");
-  bind_FTypeArrayND<BmadCommonProxyArray3D>(m, "BmadCommonProxyArray3D");
-  bind_FTypeAlloc1D<BmadCommonProxyAlloc1D>(m, "BmadCommonProxyAlloc1D");
+  // 1D BmadCommonProxy arrays are not used in structs/routines
+  // 2D BmadCommonProxy arrays are not used in structs/routines
+  // 3D BmadCommonProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -673,14 +667,9 @@ void init_bmad_normal_form_struct(
 
       ;
 
-  bind_FTypeArrayND<BmadNormalFormProxyArray1D>(
-      m, "BmadNormalFormProxyArray1D");
-  bind_FTypeArrayND<BmadNormalFormProxyArray2D>(
-      m, "BmadNormalFormProxyArray2D");
-  bind_FTypeArrayND<BmadNormalFormProxyArray3D>(
-      m, "BmadNormalFormProxyArray3D");
-  bind_FTypeAlloc1D<BmadNormalFormProxyAlloc1D>(
-      m, "BmadNormalFormProxyAlloc1D");
+  // 1D BmadNormalFormProxy arrays are not used in structs/routines
+  // 2D BmadNormalFormProxy arrays are not used in structs/routines
+  // 3D BmadNormalFormProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -739,14 +728,9 @@ void init_bookkeeping_state_struct(
 
       ;
 
-  bind_FTypeArrayND<BookkeepingStateProxyArray1D>(
-      m, "BookkeepingStateProxyArray1D");
-  bind_FTypeArrayND<BookkeepingStateProxyArray2D>(
-      m, "BookkeepingStateProxyArray2D");
-  bind_FTypeArrayND<BookkeepingStateProxyArray3D>(
-      m, "BookkeepingStateProxyArray3D");
-  bind_FTypeAlloc1D<BookkeepingStateProxyAlloc1D>(
-      m, "BookkeepingStateProxyAlloc1D");
+  // 1D BookkeepingStateProxy arrays are not used in structs/routines
+  // 2D BookkeepingStateProxy arrays are not used in structs/routines
+  // 3D BookkeepingStateProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -812,14 +796,9 @@ void init_bpm_phase_coupling_struct(
 
       ;
 
-  bind_FTypeArrayND<BpmPhaseCouplingProxyArray1D>(
-      m, "BpmPhaseCouplingProxyArray1D");
-  bind_FTypeArrayND<BpmPhaseCouplingProxyArray2D>(
-      m, "BpmPhaseCouplingProxyArray2D");
-  bind_FTypeArrayND<BpmPhaseCouplingProxyArray3D>(
-      m, "BpmPhaseCouplingProxyArray3D");
-  bind_FTypeAlloc1D<BpmPhaseCouplingProxyAlloc1D>(
-      m, "BpmPhaseCouplingProxyAlloc1D");
+  // 1D BpmPhaseCouplingProxy arrays are not used in structs/routines
+  // 2D BpmPhaseCouplingProxy arrays are not used in structs/routines
+  // 3D BpmPhaseCouplingProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -880,9 +859,9 @@ void init_branch_struct(py::module& m, py::class_<BranchProxy>& cls) {
       ;
 
   bind_FTypeArrayND<BranchProxyArray1D>(m, "BranchProxyArray1D");
-  bind_FTypeArrayND<BranchProxyArray2D>(m, "BranchProxyArray2D");
-  bind_FTypeArrayND<BranchProxyArray3D>(m, "BranchProxyArray3D");
   bind_FTypeAlloc1D<BranchProxyAlloc1D>(m, "BranchProxyAlloc1D");
+  // 2D BranchProxy arrays are not used in structs/routines
+  // 3D BranchProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -977,9 +956,9 @@ void init_bunch_params_struct(
       ;
 
   bind_FTypeArrayND<BunchParamsProxyArray1D>(m, "BunchParamsProxyArray1D");
-  bind_FTypeArrayND<BunchParamsProxyArray2D>(m, "BunchParamsProxyArray2D");
-  bind_FTypeArrayND<BunchParamsProxyArray3D>(m, "BunchParamsProxyArray3D");
   bind_FTypeAlloc1D<BunchParamsProxyAlloc1D>(m, "BunchParamsProxyAlloc1D");
+  // 2D BunchParamsProxy arrays are not used in structs/routines
+  // 3D BunchParamsProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1028,9 +1007,9 @@ void init_bunch_struct(py::module& m, py::class_<BunchProxy>& cls) {
       ;
 
   bind_FTypeArrayND<BunchProxyArray1D>(m, "BunchProxyArray1D");
-  bind_FTypeArrayND<BunchProxyArray2D>(m, "BunchProxyArray2D");
-  bind_FTypeArrayND<BunchProxyArray3D>(m, "BunchProxyArray3D");
   bind_FTypeAlloc1D<BunchProxyAlloc1D>(m, "BunchProxyAlloc1D");
+  // 2D BunchProxy arrays are not used in structs/routines
+  // 3D BunchProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1052,9 +1031,9 @@ void init_bunch_track_struct(py::module& m, py::class_<BunchTrackProxy>& cls) {
       ;
 
   bind_FTypeArrayND<BunchTrackProxyArray1D>(m, "BunchTrackProxyArray1D");
-  bind_FTypeArrayND<BunchTrackProxyArray2D>(m, "BunchTrackProxyArray2D");
-  bind_FTypeArrayND<BunchTrackProxyArray3D>(m, "BunchTrackProxyArray3D");
   bind_FTypeAlloc1D<BunchTrackProxyAlloc1D>(m, "BunchTrackProxyAlloc1D");
+  // 2D BunchTrackProxy arrays are not used in structs/routines
+  // 3D BunchTrackProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1095,9 +1074,9 @@ void init_cartesian_map_struct(
       ;
 
   bind_FTypeArrayND<CartesianMapProxyArray1D>(m, "CartesianMapProxyArray1D");
-  bind_FTypeArrayND<CartesianMapProxyArray2D>(m, "CartesianMapProxyArray2D");
-  bind_FTypeArrayND<CartesianMapProxyArray3D>(m, "CartesianMapProxyArray3D");
   bind_FTypeAlloc1D<CartesianMapProxyAlloc1D>(m, "CartesianMapProxyAlloc1D");
+  // 2D CartesianMapProxy arrays are not used in structs/routines
+  // 3D CartesianMapProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1150,12 +1129,10 @@ void init_cartesian_map_term1_struct(
 
   bind_FTypeArrayND<CartesianMapTerm1ProxyArray1D>(
       m, "CartesianMapTerm1ProxyArray1D");
-  bind_FTypeArrayND<CartesianMapTerm1ProxyArray2D>(
-      m, "CartesianMapTerm1ProxyArray2D");
-  bind_FTypeArrayND<CartesianMapTerm1ProxyArray3D>(
-      m, "CartesianMapTerm1ProxyArray3D");
   bind_FTypeAlloc1D<CartesianMapTerm1ProxyAlloc1D>(
       m, "CartesianMapTerm1ProxyAlloc1D");
+  // 2D CartesianMapTerm1Proxy arrays are not used in structs/routines
+  // 3D CartesianMapTerm1Proxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1183,14 +1160,9 @@ void init_cartesian_map_term_struct(
 
       ;
 
-  bind_FTypeArrayND<CartesianMapTermProxyArray1D>(
-      m, "CartesianMapTermProxyArray1D");
-  bind_FTypeArrayND<CartesianMapTermProxyArray2D>(
-      m, "CartesianMapTermProxyArray2D");
-  bind_FTypeArrayND<CartesianMapTermProxyArray3D>(
-      m, "CartesianMapTermProxyArray3D");
-  bind_FTypeAlloc1D<CartesianMapTermProxyAlloc1D>(
-      m, "CartesianMapTermProxyAlloc1D");
+  // 1D CartesianMapTermProxy arrays are not used in structs/routines
+  // 2D CartesianMapTermProxy arrays are not used in structs/routines
+  // 3D CartesianMapTermProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1212,9 +1184,9 @@ void init_complex_taylor_struct(
       ;
 
   bind_FTypeArrayND<ComplexTaylorProxyArray1D>(m, "ComplexTaylorProxyArray1D");
-  bind_FTypeArrayND<ComplexTaylorProxyArray2D>(m, "ComplexTaylorProxyArray2D");
-  bind_FTypeArrayND<ComplexTaylorProxyArray3D>(m, "ComplexTaylorProxyArray3D");
   bind_FTypeAlloc1D<ComplexTaylorProxyAlloc1D>(m, "ComplexTaylorProxyAlloc1D");
+  // 2D ComplexTaylorProxy arrays are not used in structs/routines
+  // 3D ComplexTaylorProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1239,12 +1211,10 @@ void init_complex_taylor_term_struct(
 
   bind_FTypeArrayND<ComplexTaylorTermProxyArray1D>(
       m, "ComplexTaylorTermProxyArray1D");
-  bind_FTypeArrayND<ComplexTaylorTermProxyArray2D>(
-      m, "ComplexTaylorTermProxyArray2D");
-  bind_FTypeArrayND<ComplexTaylorTermProxyArray3D>(
-      m, "ComplexTaylorTermProxyArray3D");
   bind_FTypeAlloc1D<ComplexTaylorTermProxyAlloc1D>(
       m, "ComplexTaylorTermProxyAlloc1D");
+  // 2D ComplexTaylorTermProxy arrays are not used in structs/routines
+  // 3D ComplexTaylorTermProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1280,9 +1250,9 @@ void init_control_ramp1_struct(
       ;
 
   bind_FTypeArrayND<ControlRamp1ProxyArray1D>(m, "ControlRamp1ProxyArray1D");
-  bind_FTypeArrayND<ControlRamp1ProxyArray2D>(m, "ControlRamp1ProxyArray2D");
-  bind_FTypeArrayND<ControlRamp1ProxyArray3D>(m, "ControlRamp1ProxyArray3D");
   bind_FTypeAlloc1D<ControlRamp1ProxyAlloc1D>(m, "ControlRamp1ProxyAlloc1D");
+  // 2D ControlRamp1Proxy arrays are not used in structs/routines
+  // 3D ControlRamp1Proxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1316,9 +1286,9 @@ void init_control_struct(py::module& m, py::class_<ControlProxy>& cls) {
       ;
 
   bind_FTypeArrayND<ControlProxyArray1D>(m, "ControlProxyArray1D");
-  bind_FTypeArrayND<ControlProxyArray2D>(m, "ControlProxyArray2D");
-  bind_FTypeArrayND<ControlProxyArray3D>(m, "ControlProxyArray3D");
   bind_FTypeAlloc1D<ControlProxyAlloc1D>(m, "ControlProxyAlloc1D");
+  // 2D ControlProxy arrays are not used in structs/routines
+  // 3D ControlProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1346,9 +1316,9 @@ void init_control_var1_struct(
       ;
 
   bind_FTypeArrayND<ControlVar1ProxyArray1D>(m, "ControlVar1ProxyArray1D");
-  bind_FTypeArrayND<ControlVar1ProxyArray2D>(m, "ControlVar1ProxyArray2D");
-  bind_FTypeArrayND<ControlVar1ProxyArray3D>(m, "ControlVar1ProxyArray3D");
   bind_FTypeAlloc1D<ControlVar1ProxyAlloc1D>(m, "ControlVar1ProxyAlloc1D");
+  // 2D ControlVar1Proxy arrays are not used in structs/routines
+  // 3D ControlVar1Proxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1370,10 +1340,9 @@ void init_controller_struct(py::module& m, py::class_<ControllerProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<ControllerProxyArray1D>(m, "ControllerProxyArray1D");
-  bind_FTypeArrayND<ControllerProxyArray2D>(m, "ControllerProxyArray2D");
-  bind_FTypeArrayND<ControllerProxyArray3D>(m, "ControllerProxyArray3D");
-  bind_FTypeAlloc1D<ControllerProxyAlloc1D>(m, "ControllerProxyAlloc1D");
+  // 1D ControllerProxy arrays are not used in structs/routines
+  // 2D ControllerProxy arrays are not used in structs/routines
+  // 3D ControllerProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1390,9 +1359,9 @@ void init_coord_array_struct(py::module& m, py::class_<CoordArrayProxy>& cls) {
       ;
 
   bind_FTypeArrayND<CoordArrayProxyArray1D>(m, "CoordArrayProxyArray1D");
-  bind_FTypeArrayND<CoordArrayProxyArray2D>(m, "CoordArrayProxyArray2D");
-  bind_FTypeArrayND<CoordArrayProxyArray3D>(m, "CoordArrayProxyArray3D");
   bind_FTypeAlloc1D<CoordArrayProxyAlloc1D>(m, "CoordArrayProxyAlloc1D");
+  // 2D CoordArrayProxy arrays are not used in structs/routines
+  // 3D CoordArrayProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1452,9 +1421,9 @@ void init_coord_struct(py::module& m, py::class_<CoordProxy>& cls) {
       ;
 
   bind_FTypeArrayND<CoordProxyArray1D>(m, "CoordProxyArray1D");
-  bind_FTypeArrayND<CoordProxyArray2D>(m, "CoordProxyArray2D");
-  bind_FTypeArrayND<CoordProxyArray3D>(m, "CoordProxyArray3D");
   bind_FTypeAlloc1D<CoordProxyAlloc1D>(m, "CoordProxyAlloc1D");
+  // 2D CoordProxy arrays are not used in structs/routines
+  // 3D CoordProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1512,12 +1481,10 @@ void init_cylindrical_map_struct(
 
   bind_FTypeArrayND<CylindricalMapProxyArray1D>(
       m, "CylindricalMapProxyArray1D");
-  bind_FTypeArrayND<CylindricalMapProxyArray2D>(
-      m, "CylindricalMapProxyArray2D");
-  bind_FTypeArrayND<CylindricalMapProxyArray3D>(
-      m, "CylindricalMapProxyArray3D");
   bind_FTypeAlloc1D<CylindricalMapProxyAlloc1D>(
       m, "CylindricalMapProxyAlloc1D");
+  // 2D CylindricalMapProxy arrays are not used in structs/routines
+  // 3D CylindricalMapProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1545,12 +1512,10 @@ void init_cylindrical_map_term1_struct(
 
   bind_FTypeArrayND<CylindricalMapTerm1ProxyArray1D>(
       m, "CylindricalMapTerm1ProxyArray1D");
-  bind_FTypeArrayND<CylindricalMapTerm1ProxyArray2D>(
-      m, "CylindricalMapTerm1ProxyArray2D");
-  bind_FTypeArrayND<CylindricalMapTerm1ProxyArray3D>(
-      m, "CylindricalMapTerm1ProxyArray3D");
   bind_FTypeAlloc1D<CylindricalMapTerm1ProxyAlloc1D>(
       m, "CylindricalMapTerm1ProxyAlloc1D");
+  // 2D CylindricalMapTerm1Proxy arrays are not used in structs/routines
+  // 3D CylindricalMapTerm1Proxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1578,14 +1543,9 @@ void init_cylindrical_map_term_struct(
 
       ;
 
-  bind_FTypeArrayND<CylindricalMapTermProxyArray1D>(
-      m, "CylindricalMapTermProxyArray1D");
-  bind_FTypeArrayND<CylindricalMapTermProxyArray2D>(
-      m, "CylindricalMapTermProxyArray2D");
-  bind_FTypeArrayND<CylindricalMapTermProxyArray3D>(
-      m, "CylindricalMapTermProxyArray3D");
-  bind_FTypeAlloc1D<CylindricalMapTermProxyAlloc1D>(
-      m, "CylindricalMapTermProxyAlloc1D");
+  // 1D CylindricalMapTermProxy arrays are not used in structs/routines
+  // 2D CylindricalMapTermProxy arrays are not used in structs/routines
+  // 3D CylindricalMapTermProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1606,9 +1566,9 @@ void init_ele_pointer_struct(py::module& m, py::class_<ElePointerProxy>& cls) {
       ;
 
   bind_FTypeArrayND<ElePointerProxyArray1D>(m, "ElePointerProxyArray1D");
-  bind_FTypeArrayND<ElePointerProxyArray2D>(m, "ElePointerProxyArray2D");
-  bind_FTypeArrayND<ElePointerProxyArray3D>(m, "ElePointerProxyArray3D");
   bind_FTypeAlloc1D<ElePointerProxyAlloc1D>(m, "ElePointerProxyAlloc1D");
+  // 2D ElePointerProxy arrays are not used in structs/routines
+  // 3D ElePointerProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1871,9 +1831,9 @@ void init_ele_struct(py::module& m, py::class_<EleProxy>& cls) {
       ;
 
   bind_FTypeArrayND<EleProxyArray1D>(m, "EleProxyArray1D");
-  bind_FTypeArrayND<EleProxyArray2D>(m, "EleProxyArray2D");
-  bind_FTypeArrayND<EleProxyArray3D>(m, "EleProxyArray3D");
   bind_FTypeAlloc1D<EleProxyAlloc1D>(m, "EleProxyAlloc1D");
+  // 2D EleProxy arrays are not used in structs/routines
+  // 3D EleProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1906,12 +1866,10 @@ void init_ellipse_beam_init_struct(
 
   bind_FTypeArrayND<EllipseBeamInitProxyArray1D>(
       m, "EllipseBeamInitProxyArray1D");
-  bind_FTypeArrayND<EllipseBeamInitProxyArray2D>(
-      m, "EllipseBeamInitProxyArray2D");
-  bind_FTypeArrayND<EllipseBeamInitProxyArray3D>(
-      m, "EllipseBeamInitProxyArray3D");
   bind_FTypeAlloc1D<EllipseBeamInitProxyAlloc1D>(
       m, "EllipseBeamInitProxyAlloc1D");
+  // 2D EllipseBeamInitProxy arrays are not used in structs/routines
+  // 3D EllipseBeamInitProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1938,9 +1896,9 @@ void init_em_field_struct(py::module& m, py::class_<EmFieldProxy>& cls) {
       ;
 
   bind_FTypeArrayND<EmFieldProxyArray1D>(m, "EmFieldProxyArray1D");
-  bind_FTypeArrayND<EmFieldProxyArray2D>(m, "EmFieldProxyArray2D");
-  bind_FTypeArrayND<EmFieldProxyArray3D>(m, "EmFieldProxyArray3D");
   bind_FTypeAlloc1D<EmFieldProxyAlloc1D>(m, "EmFieldProxyAlloc1D");
+  // 2D EmFieldProxy arrays are not used in structs/routines
+  // 3D EmFieldProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1958,9 +1916,9 @@ void init_em_taylor_struct(py::module& m, py::class_<EmTaylorProxy>& cls) {
       ;
 
   bind_FTypeArrayND<EmTaylorProxyArray1D>(m, "EmTaylorProxyArray1D");
-  bind_FTypeArrayND<EmTaylorProxyArray2D>(m, "EmTaylorProxyArray2D");
-  bind_FTypeArrayND<EmTaylorProxyArray3D>(m, "EmTaylorProxyArray3D");
   bind_FTypeAlloc1D<EmTaylorProxyAlloc1D>(m, "EmTaylorProxyAlloc1D");
+  // 2D EmTaylorProxy arrays are not used in structs/routines
+  // 3D EmTaylorProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1982,9 +1940,9 @@ void init_em_taylor_term_struct(
       ;
 
   bind_FTypeArrayND<EmTaylorTermProxyArray1D>(m, "EmTaylorTermProxyArray1D");
-  bind_FTypeArrayND<EmTaylorTermProxyArray2D>(m, "EmTaylorTermProxyArray2D");
-  bind_FTypeArrayND<EmTaylorTermProxyArray3D>(m, "EmTaylorTermProxyArray3D");
   bind_FTypeAlloc1D<EmTaylorTermProxyAlloc1D>(m, "EmTaylorTermProxyAlloc1D");
+  // 2D EmTaylorTermProxy arrays are not used in structs/routines
+  // 3D EmTaylorTermProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2011,12 +1969,10 @@ void init_expression_atom_struct(
 
   bind_FTypeArrayND<ExpressionAtomProxyArray1D>(
       m, "ExpressionAtomProxyArray1D");
-  bind_FTypeArrayND<ExpressionAtomProxyArray2D>(
-      m, "ExpressionAtomProxyArray2D");
-  bind_FTypeArrayND<ExpressionAtomProxyArray3D>(
-      m, "ExpressionAtomProxyArray3D");
   bind_FTypeAlloc1D<ExpressionAtomProxyAlloc1D>(
       m, "ExpressionAtomProxyAlloc1D");
+  // 2D ExpressionAtomProxy arrays are not used in structs/routines
+  // 3D ExpressionAtomProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2045,12 +2001,10 @@ void init_expression_tree_struct(
 
   bind_FTypeArrayND<ExpressionTreeProxyArray1D>(
       m, "ExpressionTreeProxyArray1D");
-  bind_FTypeArrayND<ExpressionTreeProxyArray2D>(
-      m, "ExpressionTreeProxyArray2D");
-  bind_FTypeArrayND<ExpressionTreeProxyArray3D>(
-      m, "ExpressionTreeProxyArray3D");
   bind_FTypeAlloc1D<ExpressionTreeProxyAlloc1D>(
       m, "ExpressionTreeProxyAlloc1D");
+  // 2D ExpressionTreeProxy arrays are not used in structs/routines
+  // 3D ExpressionTreeProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2079,10 +2033,9 @@ void init_floor_position_struct(
 
       ;
 
-  bind_FTypeArrayND<FloorPositionProxyArray1D>(m, "FloorPositionProxyArray1D");
-  bind_FTypeArrayND<FloorPositionProxyArray2D>(m, "FloorPositionProxyArray2D");
-  bind_FTypeArrayND<FloorPositionProxyArray3D>(m, "FloorPositionProxyArray3D");
-  bind_FTypeAlloc1D<FloorPositionProxyAlloc1D>(m, "FloorPositionProxyAlloc1D");
+  // 1D FloorPositionProxy arrays are not used in structs/routines
+  // 2D FloorPositionProxy arrays are not used in structs/routines
+  // 3D FloorPositionProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2108,9 +2061,9 @@ void init_gen_grad1_struct(py::module& m, py::class_<GenGrad1Proxy>& cls) {
       ;
 
   bind_FTypeArrayND<GenGrad1ProxyArray1D>(m, "GenGrad1ProxyArray1D");
-  bind_FTypeArrayND<GenGrad1ProxyArray2D>(m, "GenGrad1ProxyArray2D");
-  bind_FTypeArrayND<GenGrad1ProxyArray3D>(m, "GenGrad1ProxyArray3D");
   bind_FTypeAlloc1D<GenGrad1ProxyAlloc1D>(m, "GenGrad1ProxyAlloc1D");
+  // 2D GenGrad1Proxy arrays are not used in structs/routines
+  // 3D GenGrad1Proxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2162,9 +2115,9 @@ void init_gen_grad_map_struct(py::module& m, py::class_<GenGradMapProxy>& cls) {
       ;
 
   bind_FTypeArrayND<GenGradMapProxyArray1D>(m, "GenGradMapProxyArray1D");
-  bind_FTypeArrayND<GenGradMapProxyArray2D>(m, "GenGradMapProxyArray2D");
-  bind_FTypeArrayND<GenGradMapProxyArray3D>(m, "GenGradMapProxyArray3D");
   bind_FTypeAlloc1D<GenGradMapProxyAlloc1D>(m, "GenGradMapProxyAlloc1D");
+  // 2D GenGradMapProxy arrays are not used in structs/routines
+  // 3D GenGradMapProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2198,9 +2151,9 @@ void init_grid_beam_init_struct(
       ;
 
   bind_FTypeArrayND<GridBeamInitProxyArray1D>(m, "GridBeamInitProxyArray1D");
-  bind_FTypeArrayND<GridBeamInitProxyArray2D>(m, "GridBeamInitProxyArray2D");
-  bind_FTypeArrayND<GridBeamInitProxyArray3D>(m, "GridBeamInitProxyArray3D");
   bind_FTypeAlloc1D<GridBeamInitProxyAlloc1D>(m, "GridBeamInitProxyAlloc1D");
+  // 2D GridBeamInitProxy arrays are not used in structs/routines
+  // 3D GridBeamInitProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2220,10 +2173,9 @@ void init_grid_field_pt1_struct(
 
       ;
 
-  bind_FTypeArrayND<GridFieldPt1ProxyArray1D>(m, "GridFieldPt1ProxyArray1D");
-  bind_FTypeArrayND<GridFieldPt1ProxyArray2D>(m, "GridFieldPt1ProxyArray2D");
+  // 1D GridFieldPt1Proxy arrays are not used in structs/routines
+  // 2D GridFieldPt1Proxy arrays are not used in structs/routines
   bind_FTypeArrayND<GridFieldPt1ProxyArray3D>(m, "GridFieldPt1ProxyArray3D");
-  bind_FTypeAlloc1D<GridFieldPt1ProxyAlloc1D>(m, "GridFieldPt1ProxyAlloc1D");
 }
 
 // =============================================================================
@@ -2247,10 +2199,9 @@ void init_grid_field_pt_struct(
 
       ;
 
-  bind_FTypeArrayND<GridFieldPtProxyArray1D>(m, "GridFieldPtProxyArray1D");
-  bind_FTypeArrayND<GridFieldPtProxyArray2D>(m, "GridFieldPtProxyArray2D");
-  bind_FTypeArrayND<GridFieldPtProxyArray3D>(m, "GridFieldPtProxyArray3D");
-  bind_FTypeAlloc1D<GridFieldPtProxyAlloc1D>(m, "GridFieldPtProxyAlloc1D");
+  // 1D GridFieldPtProxy arrays are not used in structs/routines
+  // 2D GridFieldPtProxy arrays are not used in structs/routines
+  // 3D GridFieldPtProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2316,9 +2267,9 @@ void init_grid_field_struct(py::module& m, py::class_<GridFieldProxy>& cls) {
       ;
 
   bind_FTypeArrayND<GridFieldProxyArray1D>(m, "GridFieldProxyArray1D");
-  bind_FTypeArrayND<GridFieldProxyArray2D>(m, "GridFieldProxyArray2D");
-  bind_FTypeArrayND<GridFieldProxyArray3D>(m, "GridFieldProxyArray3D");
   bind_FTypeAlloc1D<GridFieldProxyAlloc1D>(m, "GridFieldProxyAlloc1D");
+  // 2D GridFieldProxy arrays are not used in structs/routines
+  // 3D GridFieldProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2376,14 +2327,9 @@ void init_high_energy_space_charge_struct(
 
       ;
 
-  bind_FTypeArrayND<HighEnergySpaceChargeProxyArray1D>(
-      m, "HighEnergySpaceChargeProxyArray1D");
-  bind_FTypeArrayND<HighEnergySpaceChargeProxyArray2D>(
-      m, "HighEnergySpaceChargeProxyArray2D");
-  bind_FTypeArrayND<HighEnergySpaceChargeProxyArray3D>(
-      m, "HighEnergySpaceChargeProxyArray3D");
-  bind_FTypeAlloc1D<HighEnergySpaceChargeProxyAlloc1D>(
-      m, "HighEnergySpaceChargeProxyAlloc1D");
+  // 1D HighEnergySpaceChargeProxy arrays are not used in structs/routines
+  // 2D HighEnergySpaceChargeProxy arrays are not used in structs/routines
+  // 3D HighEnergySpaceChargeProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2407,9 +2353,9 @@ void init_interval1_coef_struct(
       ;
 
   bind_FTypeArrayND<Interval1CoefProxyArray1D>(m, "Interval1CoefProxyArray1D");
-  bind_FTypeArrayND<Interval1CoefProxyArray2D>(m, "Interval1CoefProxyArray2D");
-  bind_FTypeArrayND<Interval1CoefProxyArray3D>(m, "Interval1CoefProxyArray3D");
   bind_FTypeAlloc1D<Interval1CoefProxyAlloc1D>(m, "Interval1CoefProxyAlloc1D");
+  // 2D Interval1CoefProxy arrays are not used in structs/routines
+  // 3D Interval1CoefProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2429,10 +2375,9 @@ void init_kv_beam_init_struct(py::module& m, py::class_<KvBeamInitProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<KvBeamInitProxyArray1D>(m, "KvBeamInitProxyArray1D");
-  bind_FTypeArrayND<KvBeamInitProxyArray2D>(m, "KvBeamInitProxyArray2D");
-  bind_FTypeArrayND<KvBeamInitProxyArray3D>(m, "KvBeamInitProxyArray3D");
-  bind_FTypeAlloc1D<KvBeamInitProxyAlloc1D>(m, "KvBeamInitProxyAlloc1D");
+  // 1D KvBeamInitProxy arrays are not used in structs/routines
+  // 2D KvBeamInitProxy arrays are not used in structs/routines
+  // 3D KvBeamInitProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2455,9 +2400,9 @@ void init_lat_ele_loc_struct(py::module& m, py::class_<LatEleLocProxy>& cls) {
       ;
 
   bind_FTypeArrayND<LatEleLocProxyArray1D>(m, "LatEleLocProxyArray1D");
-  bind_FTypeArrayND<LatEleLocProxyArray2D>(m, "LatEleLocProxyArray2D");
-  bind_FTypeArrayND<LatEleLocProxyArray3D>(m, "LatEleLocProxyArray3D");
   bind_FTypeAlloc1D<LatEleLocProxyAlloc1D>(m, "LatEleLocProxyAlloc1D");
+  // 2D LatEleLocProxy arrays are not used in structs/routines
+  // 3D LatEleLocProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2484,9 +2429,9 @@ void init_lat_ele_order1_struct(
       ;
 
   bind_FTypeArrayND<LatEleOrder1ProxyArray1D>(m, "LatEleOrder1ProxyArray1D");
-  bind_FTypeArrayND<LatEleOrder1ProxyArray2D>(m, "LatEleOrder1ProxyArray2D");
-  bind_FTypeArrayND<LatEleOrder1ProxyArray3D>(m, "LatEleOrder1ProxyArray3D");
   bind_FTypeAlloc1D<LatEleOrder1ProxyAlloc1D>(m, "LatEleOrder1ProxyAlloc1D");
+  // 2D LatEleOrder1Proxy arrays are not used in structs/routines
+  // 3D LatEleOrder1Proxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2506,12 +2451,10 @@ void init_lat_ele_order_array_struct(
 
   bind_FTypeArrayND<LatEleOrderArrayProxyArray1D>(
       m, "LatEleOrderArrayProxyArray1D");
-  bind_FTypeArrayND<LatEleOrderArrayProxyArray2D>(
-      m, "LatEleOrderArrayProxyArray2D");
-  bind_FTypeArrayND<LatEleOrderArrayProxyArray3D>(
-      m, "LatEleOrderArrayProxyArray3D");
   bind_FTypeAlloc1D<LatEleOrderArrayProxyAlloc1D>(
       m, "LatEleOrderArrayProxyAlloc1D");
+  // 2D LatEleOrderArrayProxy arrays are not used in structs/routines
+  // 3D LatEleOrderArrayProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2529,10 +2472,9 @@ void init_lat_ele_order_struct(
 
       ;
 
-  bind_FTypeArrayND<LatEleOrderProxyArray1D>(m, "LatEleOrderProxyArray1D");
-  bind_FTypeArrayND<LatEleOrderProxyArray2D>(m, "LatEleOrderProxyArray2D");
-  bind_FTypeArrayND<LatEleOrderProxyArray3D>(m, "LatEleOrderProxyArray3D");
-  bind_FTypeAlloc1D<LatEleOrderProxyAlloc1D>(m, "LatEleOrderProxyAlloc1D");
+  // 1D LatEleOrderProxy arrays are not used in structs/routines
+  // 2D LatEleOrderProxy arrays are not used in structs/routines
+  // 3D LatEleOrderProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2609,10 +2551,9 @@ void init_lat_param_struct(py::module& m, py::class_<LatParamProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<LatParamProxyArray1D>(m, "LatParamProxyArray1D");
-  bind_FTypeArrayND<LatParamProxyArray2D>(m, "LatParamProxyArray2D");
-  bind_FTypeArrayND<LatParamProxyArray3D>(m, "LatParamProxyArray3D");
-  bind_FTypeAlloc1D<LatParamProxyAlloc1D>(m, "LatParamProxyAlloc1D");
+  // 1D LatParamProxy arrays are not used in structs/routines
+  // 2D LatParamProxy arrays are not used in structs/routines
+  // 3D LatParamProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2707,9 +2648,9 @@ void init_lat_struct(py::module& m, py::class_<LatProxy>& cls) {
       ;
 
   bind_FTypeArrayND<LatProxyArray1D>(m, "LatProxyArray1D");
-  bind_FTypeArrayND<LatProxyArray2D>(m, "LatProxyArray2D");
-  bind_FTypeArrayND<LatProxyArray3D>(m, "LatProxyArray3D");
   bind_FTypeAlloc1D<LatProxyAlloc1D>(m, "LatProxyAlloc1D");
+  // 2D LatProxy arrays are not used in structs/routines
+  // 3D LatProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2760,14 +2701,9 @@ void init_linac_normal_mode_struct(
 
       ;
 
-  bind_FTypeArrayND<LinacNormalModeProxyArray1D>(
-      m, "LinacNormalModeProxyArray1D");
-  bind_FTypeArrayND<LinacNormalModeProxyArray2D>(
-      m, "LinacNormalModeProxyArray2D");
-  bind_FTypeArrayND<LinacNormalModeProxyArray3D>(
-      m, "LinacNormalModeProxyArray3D");
-  bind_FTypeAlloc1D<LinacNormalModeProxyAlloc1D>(
-      m, "LinacNormalModeProxyAlloc1D");
+  // 1D LinacNormalModeProxy arrays are not used in structs/routines
+  // 2D LinacNormalModeProxy arrays are not used in structs/routines
+  // 3D LinacNormalModeProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2791,10 +2727,9 @@ void init_mode3_struct(py::module& m, py::class_<Mode3Proxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<Mode3ProxyArray1D>(m, "Mode3ProxyArray1D");
-  bind_FTypeArrayND<Mode3ProxyArray2D>(m, "Mode3ProxyArray2D");
-  bind_FTypeArrayND<Mode3ProxyArray3D>(m, "Mode3ProxyArray3D");
-  bind_FTypeAlloc1D<Mode3ProxyAlloc1D>(m, "Mode3ProxyAlloc1D");
+  // 1D Mode3Proxy arrays are not used in structs/routines
+  // 2D Mode3Proxy arrays are not used in structs/routines
+  // 3D Mode3Proxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2821,10 +2756,9 @@ void init_mode_info_struct(py::module& m, py::class_<ModeInfoProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<ModeInfoProxyArray1D>(m, "ModeInfoProxyArray1D");
-  bind_FTypeArrayND<ModeInfoProxyArray2D>(m, "ModeInfoProxyArray2D");
-  bind_FTypeArrayND<ModeInfoProxyArray3D>(m, "ModeInfoProxyArray3D");
-  bind_FTypeAlloc1D<ModeInfoProxyAlloc1D>(m, "ModeInfoProxyAlloc1D");
+  // 1D ModeInfoProxy arrays are not used in structs/routines
+  // 2D ModeInfoProxy arrays are not used in structs/routines
+  // 3D ModeInfoProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2884,10 +2818,9 @@ void init_normal_modes_struct(
 
       ;
 
-  bind_FTypeArrayND<NormalModesProxyArray1D>(m, "NormalModesProxyArray1D");
-  bind_FTypeArrayND<NormalModesProxyArray2D>(m, "NormalModesProxyArray2D");
-  bind_FTypeArrayND<NormalModesProxyArray3D>(m, "NormalModesProxyArray3D");
-  bind_FTypeAlloc1D<NormalModesProxyAlloc1D>(m, "NormalModesProxyAlloc1D");
+  // 1D NormalModesProxy arrays are not used in structs/routines
+  // 2D NormalModesProxy arrays are not used in structs/routines
+  // 3D NormalModesProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2958,10 +2891,9 @@ void init_photon_element_struct(
 
       ;
 
-  bind_FTypeArrayND<PhotonElementProxyArray1D>(m, "PhotonElementProxyArray1D");
-  bind_FTypeArrayND<PhotonElementProxyArray2D>(m, "PhotonElementProxyArray2D");
-  bind_FTypeArrayND<PhotonElementProxyArray3D>(m, "PhotonElementProxyArray3D");
-  bind_FTypeAlloc1D<PhotonElementProxyAlloc1D>(m, "PhotonElementProxyAlloc1D");
+  // 1D PhotonElementProxy arrays are not used in structs/routines
+  // 2D PhotonElementProxy arrays are not used in structs/routines
+  // 3D PhotonElementProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3001,14 +2933,9 @@ void init_photon_material_struct(
 
       ;
 
-  bind_FTypeArrayND<PhotonMaterialProxyArray1D>(
-      m, "PhotonMaterialProxyArray1D");
-  bind_FTypeArrayND<PhotonMaterialProxyArray2D>(
-      m, "PhotonMaterialProxyArray2D");
-  bind_FTypeArrayND<PhotonMaterialProxyArray3D>(
-      m, "PhotonMaterialProxyArray3D");
-  bind_FTypeAlloc1D<PhotonMaterialProxyAlloc1D>(
-      m, "PhotonMaterialProxyAlloc1D");
+  // 1D PhotonMaterialProxy arrays are not used in structs/routines
+  // 2D PhotonMaterialProxy arrays are not used in structs/routines
+  // 3D PhotonMaterialProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3056,14 +2983,9 @@ void init_photon_reflect_surface_struct(
 
       ;
 
-  bind_FTypeArrayND<PhotonReflectSurfaceProxyArray1D>(
-      m, "PhotonReflectSurfaceProxyArray1D");
-  bind_FTypeArrayND<PhotonReflectSurfaceProxyArray2D>(
-      m, "PhotonReflectSurfaceProxyArray2D");
-  bind_FTypeArrayND<PhotonReflectSurfaceProxyArray3D>(
-      m, "PhotonReflectSurfaceProxyArray3D");
-  bind_FTypeAlloc1D<PhotonReflectSurfaceProxyAlloc1D>(
-      m, "PhotonReflectSurfaceProxyAlloc1D");
+  // 1D PhotonReflectSurfaceProxy arrays are not used in structs/routines
+  // 2D PhotonReflectSurfaceProxy arrays are not used in structs/routines
+  // 3D PhotonReflectSurfaceProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3100,12 +3022,10 @@ void init_photon_reflect_table_struct(
 
   bind_FTypeArrayND<PhotonReflectTableProxyArray1D>(
       m, "PhotonReflectTableProxyArray1D");
-  bind_FTypeArrayND<PhotonReflectTableProxyArray2D>(
-      m, "PhotonReflectTableProxyArray2D");
-  bind_FTypeArrayND<PhotonReflectTableProxyArray3D>(
-      m, "PhotonReflectTableProxyArray3D");
   bind_FTypeAlloc1D<PhotonReflectTableProxyAlloc1D>(
       m, "PhotonReflectTableProxyAlloc1D");
+  // 2D PhotonReflectTableProxy arrays are not used in structs/routines
+  // 3D PhotonReflectTableProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3139,10 +3059,9 @@ void init_photon_target_struct(
 
       ;
 
-  bind_FTypeArrayND<PhotonTargetProxyArray1D>(m, "PhotonTargetProxyArray1D");
-  bind_FTypeArrayND<PhotonTargetProxyArray2D>(m, "PhotonTargetProxyArray2D");
-  bind_FTypeArrayND<PhotonTargetProxyArray3D>(m, "PhotonTargetProxyArray3D");
-  bind_FTypeAlloc1D<PhotonTargetProxyAlloc1D>(m, "PhotonTargetProxyAlloc1D");
+  // 1D PhotonTargetProxy arrays are not used in structs/routines
+  // 2D PhotonTargetProxy arrays are not used in structs/routines
+  // 3D PhotonTargetProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3177,10 +3096,9 @@ void init_pixel_detec_struct(py::module& m, py::class_<PixelDetecProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<PixelDetecProxyArray1D>(m, "PixelDetecProxyArray1D");
-  bind_FTypeArrayND<PixelDetecProxyArray2D>(m, "PixelDetecProxyArray2D");
-  bind_FTypeArrayND<PixelDetecProxyArray3D>(m, "PixelDetecProxyArray3D");
-  bind_FTypeAlloc1D<PixelDetecProxyAlloc1D>(m, "PixelDetecProxyAlloc1D");
+  // 1D PixelDetecProxy arrays are not used in structs/routines
+  // 2D PixelDetecProxy arrays are not used in structs/routines
+  // 3D PixelDetecProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3220,10 +3138,9 @@ void init_pixel_pt_struct(py::module& m, py::class_<PixelPtProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<PixelPtProxyArray1D>(m, "PixelPtProxyArray1D");
+  // 1D PixelPtProxy arrays are not used in structs/routines
   bind_FTypeArrayND<PixelPtProxyArray2D>(m, "PixelPtProxyArray2D");
-  bind_FTypeArrayND<PixelPtProxyArray3D>(m, "PixelPtProxyArray3D");
-  bind_FTypeAlloc1D<PixelPtProxyAlloc1D>(m, "PixelPtProxyAlloc1D");
+  // 3D PixelPtProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3254,10 +3171,9 @@ void init_pre_tracker_struct(py::module& m, py::class_<PreTrackerProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<PreTrackerProxyArray1D>(m, "PreTrackerProxyArray1D");
-  bind_FTypeArrayND<PreTrackerProxyArray2D>(m, "PreTrackerProxyArray2D");
-  bind_FTypeArrayND<PreTrackerProxyArray3D>(m, "PreTrackerProxyArray3D");
-  bind_FTypeAlloc1D<PreTrackerProxyAlloc1D>(m, "PreTrackerProxyAlloc1D");
+  // 1D PreTrackerProxy arrays are not used in structs/routines
+  // 2D PreTrackerProxy arrays are not used in structs/routines
+  // 3D PreTrackerProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3285,10 +3201,9 @@ void init_ptc_normal_form_struct(
 
       ;
 
-  bind_FTypeArrayND<PtcNormalFormProxyArray1D>(m, "PtcNormalFormProxyArray1D");
-  bind_FTypeArrayND<PtcNormalFormProxyArray2D>(m, "PtcNormalFormProxyArray2D");
-  bind_FTypeArrayND<PtcNormalFormProxyArray3D>(m, "PtcNormalFormProxyArray3D");
-  bind_FTypeAlloc1D<PtcNormalFormProxyAlloc1D>(m, "PtcNormalFormProxyAlloc1D");
+  // 1D PtcNormalFormProxy arrays are not used in structs/routines
+  // 2D PtcNormalFormProxy arrays are not used in structs/routines
+  // 3D PtcNormalFormProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3353,9 +3268,9 @@ void init_rad_int1_struct(py::module& m, py::class_<RadInt1Proxy>& cls) {
       ;
 
   bind_FTypeArrayND<RadInt1ProxyArray1D>(m, "RadInt1ProxyArray1D");
-  bind_FTypeArrayND<RadInt1ProxyArray2D>(m, "RadInt1ProxyArray2D");
-  bind_FTypeArrayND<RadInt1ProxyArray3D>(m, "RadInt1ProxyArray3D");
   bind_FTypeAlloc1D<RadInt1ProxyAlloc1D>(m, "RadInt1ProxyAlloc1D");
+  // 2D RadInt1Proxy arrays are not used in structs/routines
+  // 3D RadInt1Proxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3373,10 +3288,9 @@ void init_rad_int_all_ele_struct(
 
       ;
 
-  bind_FTypeArrayND<RadIntAllEleProxyArray1D>(m, "RadIntAllEleProxyArray1D");
-  bind_FTypeArrayND<RadIntAllEleProxyArray2D>(m, "RadIntAllEleProxyArray2D");
-  bind_FTypeArrayND<RadIntAllEleProxyArray3D>(m, "RadIntAllEleProxyArray3D");
-  bind_FTypeAlloc1D<RadIntAllEleProxyAlloc1D>(m, "RadIntAllEleProxyAlloc1D");
+  // 1D RadIntAllEleProxy arrays are not used in structs/routines
+  // 2D RadIntAllEleProxy arrays are not used in structs/routines
+  // 3D RadIntAllEleProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3395,9 +3309,9 @@ void init_rad_int_branch_struct(
       ;
 
   bind_FTypeArrayND<RadIntBranchProxyArray1D>(m, "RadIntBranchProxyArray1D");
-  bind_FTypeArrayND<RadIntBranchProxyArray2D>(m, "RadIntBranchProxyArray2D");
-  bind_FTypeArrayND<RadIntBranchProxyArray3D>(m, "RadIntBranchProxyArray3D");
   bind_FTypeAlloc1D<RadIntBranchProxyAlloc1D>(m, "RadIntBranchProxyAlloc1D");
+  // 2D RadIntBranchProxy arrays are not used in structs/routines
+  // 3D RadIntBranchProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3417,10 +3331,9 @@ void init_rad_map_ele_struct(py::module& m, py::class_<RadMapEleProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<RadMapEleProxyArray1D>(m, "RadMapEleProxyArray1D");
-  bind_FTypeArrayND<RadMapEleProxyArray2D>(m, "RadMapEleProxyArray2D");
-  bind_FTypeArrayND<RadMapEleProxyArray3D>(m, "RadMapEleProxyArray3D");
-  bind_FTypeAlloc1D<RadMapEleProxyAlloc1D>(m, "RadMapEleProxyAlloc1D");
+  // 1D RadMapEleProxy arrays are not used in structs/routines
+  // 2D RadMapEleProxy arrays are not used in structs/routines
+  // 3D RadMapEleProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3442,10 +3355,9 @@ void init_rad_map_struct(py::module& m, py::class_<RadMapProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<RadMapProxyArray1D>(m, "RadMapProxyArray1D");
-  bind_FTypeArrayND<RadMapProxyArray2D>(m, "RadMapProxyArray2D");
-  bind_FTypeArrayND<RadMapProxyArray3D>(m, "RadMapProxyArray3D");
-  bind_FTypeAlloc1D<RadMapProxyAlloc1D>(m, "RadMapProxyAlloc1D");
+  // 1D RadMapProxy arrays are not used in structs/routines
+  // 2D RadMapProxy arrays are not used in structs/routines
+  // 3D RadMapProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3471,9 +3383,9 @@ void init_ramper_lord_struct(py::module& m, py::class_<RamperLordProxy>& cls) {
       ;
 
   bind_FTypeArrayND<RamperLordProxyArray1D>(m, "RamperLordProxyArray1D");
-  bind_FTypeArrayND<RamperLordProxyArray2D>(m, "RamperLordProxyArray2D");
-  bind_FTypeArrayND<RamperLordProxyArray3D>(m, "RamperLordProxyArray3D");
   bind_FTypeAlloc1D<RamperLordProxyAlloc1D>(m, "RamperLordProxyAlloc1D");
+  // 2D RamperLordProxy arrays are not used in structs/routines
+  // 3D RamperLordProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3493,9 +3405,9 @@ void init_resonance_h_struct(py::module& m, py::class_<ResonanceHProxy>& cls) {
       ;
 
   bind_FTypeArrayND<ResonanceHProxyArray1D>(m, "ResonanceHProxyArray1D");
-  bind_FTypeArrayND<ResonanceHProxyArray2D>(m, "ResonanceHProxyArray2D");
-  bind_FTypeArrayND<ResonanceHProxyArray3D>(m, "ResonanceHProxyArray3D");
   bind_FTypeAlloc1D<ResonanceHProxyAlloc1D>(m, "ResonanceHProxyAlloc1D");
+  // 2D ResonanceHProxy arrays are not used in structs/routines
+  // 3D ResonanceHProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3511,10 +3423,9 @@ void init_rf_ele_struct(py::module& m, py::class_<RfEleProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<RfEleProxyArray1D>(m, "RfEleProxyArray1D");
-  bind_FTypeArrayND<RfEleProxyArray2D>(m, "RfEleProxyArray2D");
-  bind_FTypeArrayND<RfEleProxyArray3D>(m, "RfEleProxyArray3D");
-  bind_FTypeAlloc1D<RfEleProxyAlloc1D>(m, "RfEleProxyAlloc1D");
+  // 1D RfEleProxy arrays are not used in structs/routines
+  // 2D RfEleProxy arrays are not used in structs/routines
+  // 3D RfEleProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3554,9 +3465,9 @@ void init_rf_stair_step_struct(
       ;
 
   bind_FTypeArrayND<RfStairStepProxyArray1D>(m, "RfStairStepProxyArray1D");
-  bind_FTypeArrayND<RfStairStepProxyArray2D>(m, "RfStairStepProxyArray2D");
-  bind_FTypeArrayND<RfStairStepProxyArray3D>(m, "RfStairStepProxyArray3D");
   bind_FTypeAlloc1D<RfStairStepProxyAlloc1D>(m, "RfStairStepProxyAlloc1D");
+  // 2D RfStairStepProxy arrays are not used in structs/routines
+  // 3D RfStairStepProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3654,14 +3565,9 @@ void init_space_charge_common_struct(
 
       ;
 
-  bind_FTypeArrayND<SpaceChargeCommonProxyArray1D>(
-      m, "SpaceChargeCommonProxyArray1D");
-  bind_FTypeArrayND<SpaceChargeCommonProxyArray2D>(
-      m, "SpaceChargeCommonProxyArray2D");
-  bind_FTypeArrayND<SpaceChargeCommonProxyArray3D>(
-      m, "SpaceChargeCommonProxyArray3D");
-  bind_FTypeAlloc1D<SpaceChargeCommonProxyAlloc1D>(
-      m, "SpaceChargeCommonProxyAlloc1D");
+  // 1D SpaceChargeCommonProxy arrays are not used in structs/routines
+  // 2D SpaceChargeCommonProxy arrays are not used in structs/routines
+  // 3D SpaceChargeCommonProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3680,10 +3586,9 @@ void init_spin_axis_struct(py::module& m, py::class_<SpinAxisProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<SpinAxisProxyArray1D>(m, "SpinAxisProxyArray1D");
-  bind_FTypeArrayND<SpinAxisProxyArray2D>(m, "SpinAxisProxyArray2D");
-  bind_FTypeArrayND<SpinAxisProxyArray3D>(m, "SpinAxisProxyArray3D");
-  bind_FTypeAlloc1D<SpinAxisProxyAlloc1D>(m, "SpinAxisProxyAlloc1D");
+  // 1D SpinAxisProxy arrays are not used in structs/routines
+  // 2D SpinAxisProxy arrays are not used in structs/routines
+  // 3D SpinAxisProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3706,9 +3611,9 @@ void init_spin_orbit_map1_struct(
       ;
 
   bind_FTypeArrayND<SpinOrbitMap1ProxyArray1D>(m, "SpinOrbitMap1ProxyArray1D");
-  bind_FTypeArrayND<SpinOrbitMap1ProxyArray2D>(m, "SpinOrbitMap1ProxyArray2D");
-  bind_FTypeArrayND<SpinOrbitMap1ProxyArray3D>(m, "SpinOrbitMap1ProxyArray3D");
   bind_FTypeAlloc1D<SpinOrbitMap1ProxyAlloc1D>(m, "SpinOrbitMap1ProxyAlloc1D");
+  // 2D SpinOrbitMap1Proxy arrays are not used in structs/routines
+  // 3D SpinOrbitMap1Proxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3733,10 +3638,9 @@ void init_spin_polar_struct(py::module& m, py::class_<SpinPolarProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<SpinPolarProxyArray1D>(m, "SpinPolarProxyArray1D");
-  bind_FTypeArrayND<SpinPolarProxyArray2D>(m, "SpinPolarProxyArray2D");
-  bind_FTypeArrayND<SpinPolarProxyArray3D>(m, "SpinPolarProxyArray3D");
-  bind_FTypeAlloc1D<SpinPolarProxyAlloc1D>(m, "SpinPolarProxyAlloc1D");
+  // 1D SpinPolarProxy arrays are not used in structs/routines
+  // 2D SpinPolarProxy arrays are not used in structs/routines
+  // 3D SpinPolarProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3775,10 +3679,9 @@ void init_strong_beam_struct(py::module& m, py::class_<StrongBeamProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<StrongBeamProxyArray1D>(m, "StrongBeamProxyArray1D");
-  bind_FTypeArrayND<StrongBeamProxyArray2D>(m, "StrongBeamProxyArray2D");
-  bind_FTypeArrayND<StrongBeamProxyArray3D>(m, "StrongBeamProxyArray3D");
-  bind_FTypeAlloc1D<StrongBeamProxyAlloc1D>(m, "StrongBeamProxyAlloc1D");
+  // 1D StrongBeamProxy arrays are not used in structs/routines
+  // 2D StrongBeamProxy arrays are not used in structs/routines
+  // 3D StrongBeamProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3808,14 +3711,9 @@ void init_surface_curvature_struct(
 
       ;
 
-  bind_FTypeArrayND<SurfaceCurvatureProxyArray1D>(
-      m, "SurfaceCurvatureProxyArray1D");
-  bind_FTypeArrayND<SurfaceCurvatureProxyArray2D>(
-      m, "SurfaceCurvatureProxyArray2D");
-  bind_FTypeArrayND<SurfaceCurvatureProxyArray3D>(
-      m, "SurfaceCurvatureProxyArray3D");
-  bind_FTypeAlloc1D<SurfaceCurvatureProxyAlloc1D>(
-      m, "SurfaceCurvatureProxyAlloc1D");
+  // 1D SurfaceCurvatureProxy arrays are not used in structs/routines
+  // 2D SurfaceCurvatureProxy arrays are not used in structs/routines
+  // 3D SurfaceCurvatureProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3863,14 +3761,10 @@ void init_surface_displacement_pt_struct(
 
       ;
 
-  bind_FTypeArrayND<SurfaceDisplacementPtProxyArray1D>(
-      m, "SurfaceDisplacementPtProxyArray1D");
+  // 1D SurfaceDisplacementPtProxy arrays are not used in structs/routines
   bind_FTypeArrayND<SurfaceDisplacementPtProxyArray2D>(
       m, "SurfaceDisplacementPtProxyArray2D");
-  bind_FTypeArrayND<SurfaceDisplacementPtProxyArray3D>(
-      m, "SurfaceDisplacementPtProxyArray3D");
-  bind_FTypeAlloc1D<SurfaceDisplacementPtProxyAlloc1D>(
-      m, "SurfaceDisplacementPtProxyAlloc1D");
+  // 3D SurfaceDisplacementPtProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3897,14 +3791,9 @@ void init_surface_displacement_struct(
 
       ;
 
-  bind_FTypeArrayND<SurfaceDisplacementProxyArray1D>(
-      m, "SurfaceDisplacementProxyArray1D");
-  bind_FTypeArrayND<SurfaceDisplacementProxyArray2D>(
-      m, "SurfaceDisplacementProxyArray2D");
-  bind_FTypeArrayND<SurfaceDisplacementProxyArray3D>(
-      m, "SurfaceDisplacementProxyArray3D");
-  bind_FTypeAlloc1D<SurfaceDisplacementProxyAlloc1D>(
-      m, "SurfaceDisplacementProxyAlloc1D");
+  // 1D SurfaceDisplacementProxy arrays are not used in structs/routines
+  // 2D SurfaceDisplacementProxy arrays are not used in structs/routines
+  // 3D SurfaceDisplacementProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3946,14 +3835,10 @@ void init_surface_h_misalign_pt_struct(
 
       ;
 
-  bind_FTypeArrayND<SurfaceHMisalignPtProxyArray1D>(
-      m, "SurfaceHMisalignPtProxyArray1D");
+  // 1D SurfaceHMisalignPtProxy arrays are not used in structs/routines
   bind_FTypeArrayND<SurfaceHMisalignPtProxyArray2D>(
       m, "SurfaceHMisalignPtProxyArray2D");
-  bind_FTypeArrayND<SurfaceHMisalignPtProxyArray3D>(
-      m, "SurfaceHMisalignPtProxyArray3D");
-  bind_FTypeAlloc1D<SurfaceHMisalignPtProxyAlloc1D>(
-      m, "SurfaceHMisalignPtProxyAlloc1D");
+  // 3D SurfaceHMisalignPtProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3980,14 +3865,9 @@ void init_surface_h_misalign_struct(
 
       ;
 
-  bind_FTypeArrayND<SurfaceHMisalignProxyArray1D>(
-      m, "SurfaceHMisalignProxyArray1D");
-  bind_FTypeArrayND<SurfaceHMisalignProxyArray2D>(
-      m, "SurfaceHMisalignProxyArray2D");
-  bind_FTypeArrayND<SurfaceHMisalignProxyArray3D>(
-      m, "SurfaceHMisalignProxyArray3D");
-  bind_FTypeAlloc1D<SurfaceHMisalignProxyAlloc1D>(
-      m, "SurfaceHMisalignProxyAlloc1D");
+  // 1D SurfaceHMisalignProxy arrays are not used in structs/routines
+  // 2D SurfaceHMisalignProxy arrays are not used in structs/routines
+  // 3D SurfaceHMisalignProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4022,14 +3902,10 @@ void init_surface_segmented_pt_struct(
 
       ;
 
-  bind_FTypeArrayND<SurfaceSegmentedPtProxyArray1D>(
-      m, "SurfaceSegmentedPtProxyArray1D");
+  // 1D SurfaceSegmentedPtProxy arrays are not used in structs/routines
   bind_FTypeArrayND<SurfaceSegmentedPtProxyArray2D>(
       m, "SurfaceSegmentedPtProxyArray2D");
-  bind_FTypeArrayND<SurfaceSegmentedPtProxyArray3D>(
-      m, "SurfaceSegmentedPtProxyArray3D");
-  bind_FTypeAlloc1D<SurfaceSegmentedPtProxyAlloc1D>(
-      m, "SurfaceSegmentedPtProxyAlloc1D");
+  // 3D SurfaceSegmentedPtProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4056,14 +3932,9 @@ void init_surface_segmented_struct(
 
       ;
 
-  bind_FTypeArrayND<SurfaceSegmentedProxyArray1D>(
-      m, "SurfaceSegmentedProxyArray1D");
-  bind_FTypeArrayND<SurfaceSegmentedProxyArray2D>(
-      m, "SurfaceSegmentedProxyArray2D");
-  bind_FTypeArrayND<SurfaceSegmentedProxyArray3D>(
-      m, "SurfaceSegmentedProxyArray3D");
-  bind_FTypeAlloc1D<SurfaceSegmentedProxyAlloc1D>(
-      m, "SurfaceSegmentedProxyAlloc1D");
+  // 1D SurfaceSegmentedProxy arrays are not used in structs/routines
+  // 2D SurfaceSegmentedProxy arrays are not used in structs/routines
+  // 3D SurfaceSegmentedProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4082,9 +3953,9 @@ void init_target_point_struct(
       ;
 
   bind_FTypeArrayND<TargetPointProxyArray1D>(m, "TargetPointProxyArray1D");
-  bind_FTypeArrayND<TargetPointProxyArray2D>(m, "TargetPointProxyArray2D");
-  bind_FTypeArrayND<TargetPointProxyArray3D>(m, "TargetPointProxyArray3D");
   bind_FTypeAlloc1D<TargetPointProxyAlloc1D>(m, "TargetPointProxyAlloc1D");
+  // 2D TargetPointProxy arrays are not used in structs/routines
+  // 3D TargetPointProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4101,9 +3972,9 @@ void init_taylor_struct(py::module& m, py::class_<TaylorProxy>& cls) {
       ;
 
   bind_FTypeArrayND<TaylorProxyArray1D>(m, "TaylorProxyArray1D");
-  bind_FTypeArrayND<TaylorProxyArray2D>(m, "TaylorProxyArray2D");
-  bind_FTypeArrayND<TaylorProxyArray3D>(m, "TaylorProxyArray3D");
   bind_FTypeAlloc1D<TaylorProxyAlloc1D>(m, "TaylorProxyAlloc1D");
+  // 2D TaylorProxy arrays are not used in structs/routines
+  // 3D TaylorProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4122,9 +3993,9 @@ void init_taylor_term_struct(py::module& m, py::class_<TaylorTermProxy>& cls) {
       ;
 
   bind_FTypeArrayND<TaylorTermProxyArray1D>(m, "TaylorTermProxyArray1D");
-  bind_FTypeArrayND<TaylorTermProxyArray2D>(m, "TaylorTermProxyArray2D");
-  bind_FTypeArrayND<TaylorTermProxyArray3D>(m, "TaylorTermProxyArray3D");
   bind_FTypeAlloc1D<TaylorTermProxyAlloc1D>(m, "TaylorTermProxyAlloc1D");
+  // 2D TaylorTermProxy arrays are not used in structs/routines
+  // 3D TaylorTermProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4159,9 +4030,9 @@ void init_track_point_struct(py::module& m, py::class_<TrackPointProxy>& cls) {
       ;
 
   bind_FTypeArrayND<TrackPointProxyArray1D>(m, "TrackPointProxyArray1D");
-  bind_FTypeArrayND<TrackPointProxyArray2D>(m, "TrackPointProxyArray2D");
-  bind_FTypeArrayND<TrackPointProxyArray3D>(m, "TrackPointProxyArray3D");
   bind_FTypeAlloc1D<TrackPointProxyAlloc1D>(m, "TrackPointProxyAlloc1D");
+  // 2D TrackPointProxy arrays are not used in structs/routines
+  // 3D TrackPointProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4183,10 +4054,9 @@ void init_track_struct(py::module& m, py::class_<TrackProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TrackProxyArray1D>(m, "TrackProxyArray1D");
-  bind_FTypeArrayND<TrackProxyArray2D>(m, "TrackProxyArray2D");
-  bind_FTypeArrayND<TrackProxyArray3D>(m, "TrackProxyArray3D");
-  bind_FTypeAlloc1D<TrackProxyAlloc1D>(m, "TrackProxyAlloc1D");
+  // 1D TrackProxy arrays are not used in structs/routines
+  // 2D TrackProxy arrays are not used in structs/routines
+  // 3D TrackProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4235,10 +4105,9 @@ void init_twiss_struct(py::module& m, py::class_<TwissProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TwissProxyArray1D>(m, "TwissProxyArray1D");
-  bind_FTypeArrayND<TwissProxyArray2D>(m, "TwissProxyArray2D");
-  bind_FTypeArrayND<TwissProxyArray3D>(m, "TwissProxyArray3D");
-  bind_FTypeAlloc1D<TwissProxyAlloc1D>(m, "TwissProxyAlloc1D");
+  // 1D TwissProxy arrays are not used in structs/routines
+  // 2D TwissProxy arrays are not used in structs/routines
+  // 3D TwissProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4291,9 +4160,9 @@ void init_wake_lr_mode_struct(py::module& m, py::class_<WakeLrModeProxy>& cls) {
       ;
 
   bind_FTypeArrayND<WakeLrModeProxyArray1D>(m, "WakeLrModeProxyArray1D");
-  bind_FTypeArrayND<WakeLrModeProxyArray2D>(m, "WakeLrModeProxyArray2D");
-  bind_FTypeArrayND<WakeLrModeProxyArray3D>(m, "WakeLrModeProxyArray3D");
   bind_FTypeAlloc1D<WakeLrModeProxyAlloc1D>(m, "WakeLrModeProxyAlloc1D");
+  // 2D WakeLrModeProxy arrays are not used in structs/routines
+  // 3D WakeLrModeProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4327,10 +4196,9 @@ void init_wake_lr_struct(py::module& m, py::class_<WakeLrProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<WakeLrProxyArray1D>(m, "WakeLrProxyArray1D");
-  bind_FTypeArrayND<WakeLrProxyArray2D>(m, "WakeLrProxyArray2D");
-  bind_FTypeArrayND<WakeLrProxyArray3D>(m, "WakeLrProxyArray3D");
-  bind_FTypeAlloc1D<WakeLrProxyAlloc1D>(m, "WakeLrProxyAlloc1D");
+  // 1D WakeLrProxy arrays are not used in structs/routines
+  // 2D WakeLrProxy arrays are not used in structs/routines
+  // 3D WakeLrProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4375,9 +4243,9 @@ void init_wake_sr_mode_struct(py::module& m, py::class_<WakeSrModeProxy>& cls) {
       ;
 
   bind_FTypeArrayND<WakeSrModeProxyArray1D>(m, "WakeSrModeProxyArray1D");
-  bind_FTypeArrayND<WakeSrModeProxyArray2D>(m, "WakeSrModeProxyArray2D");
-  bind_FTypeArrayND<WakeSrModeProxyArray3D>(m, "WakeSrModeProxyArray3D");
   bind_FTypeAlloc1D<WakeSrModeProxyAlloc1D>(m, "WakeSrModeProxyAlloc1D");
+  // 2D WakeSrModeProxy arrays are not used in structs/routines
+  // 3D WakeSrModeProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4417,10 +4285,9 @@ void init_wake_sr_struct(py::module& m, py::class_<WakeSrProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<WakeSrProxyArray1D>(m, "WakeSrProxyArray1D");
-  bind_FTypeArrayND<WakeSrProxyArray2D>(m, "WakeSrProxyArray2D");
-  bind_FTypeArrayND<WakeSrProxyArray3D>(m, "WakeSrProxyArray3D");
-  bind_FTypeAlloc1D<WakeSrProxyAlloc1D>(m, "WakeSrProxyAlloc1D");
+  // 1D WakeSrProxy arrays are not used in structs/routines
+  // 2D WakeSrProxy arrays are not used in structs/routines
+  // 3D WakeSrProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4463,10 +4330,9 @@ void init_wake_sr_z_long_struct(
 
       ;
 
-  bind_FTypeArrayND<WakeSrZLongProxyArray1D>(m, "WakeSrZLongProxyArray1D");
-  bind_FTypeArrayND<WakeSrZLongProxyArray2D>(m, "WakeSrZLongProxyArray2D");
-  bind_FTypeArrayND<WakeSrZLongProxyArray3D>(m, "WakeSrZLongProxyArray3D");
-  bind_FTypeAlloc1D<WakeSrZLongProxyAlloc1D>(m, "WakeSrZLongProxyAlloc1D");
+  // 1D WakeSrZLongProxy arrays are not used in structs/routines
+  // 2D WakeSrZLongProxy arrays are not used in structs/routines
+  // 3D WakeSrZLongProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4482,10 +4348,9 @@ void init_wake_struct(py::module& m, py::class_<WakeProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<WakeProxyArray1D>(m, "WakeProxyArray1D");
-  bind_FTypeArrayND<WakeProxyArray2D>(m, "WakeProxyArray2D");
-  bind_FTypeArrayND<WakeProxyArray3D>(m, "WakeProxyArray3D");
-  bind_FTypeAlloc1D<WakeProxyAlloc1D>(m, "WakeProxyAlloc1D");
+  // 1D WakeProxy arrays are not used in structs/routines
+  // 2D WakeProxy arrays are not used in structs/routines
+  // 3D WakeProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4575,9 +4440,9 @@ void init_wall3d_section_struct(
       ;
 
   bind_FTypeArrayND<Wall3dSectionProxyArray1D>(m, "Wall3dSectionProxyArray1D");
-  bind_FTypeArrayND<Wall3dSectionProxyArray2D>(m, "Wall3dSectionProxyArray2D");
-  bind_FTypeArrayND<Wall3dSectionProxyArray3D>(m, "Wall3dSectionProxyArray3D");
   bind_FTypeAlloc1D<Wall3dSectionProxyAlloc1D>(m, "Wall3dSectionProxyAlloc1D");
+  // 2D Wall3dSectionProxy arrays are not used in structs/routines
+  // 3D Wall3dSectionProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4624,9 +4489,9 @@ void init_wall3d_struct(py::module& m, py::class_<Wall3dProxy>& cls) {
       ;
 
   bind_FTypeArrayND<Wall3dProxyArray1D>(m, "Wall3dProxyArray1D");
-  bind_FTypeArrayND<Wall3dProxyArray2D>(m, "Wall3dProxyArray2D");
-  bind_FTypeArrayND<Wall3dProxyArray3D>(m, "Wall3dProxyArray3D");
   bind_FTypeAlloc1D<Wall3dProxyAlloc1D>(m, "Wall3dProxyAlloc1D");
+  // 2D Wall3dProxy arrays are not used in structs/routines
+  // 3D Wall3dProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4670,9 +4535,9 @@ void init_wall3d_vertex_struct(
       ;
 
   bind_FTypeArrayND<Wall3dVertexProxyArray1D>(m, "Wall3dVertexProxyArray1D");
-  bind_FTypeArrayND<Wall3dVertexProxyArray2D>(m, "Wall3dVertexProxyArray2D");
-  bind_FTypeArrayND<Wall3dVertexProxyArray3D>(m, "Wall3dVertexProxyArray3D");
   bind_FTypeAlloc1D<Wall3dVertexProxyAlloc1D>(m, "Wall3dVertexProxyAlloc1D");
+  // 2D Wall3dVertexProxy arrays are not used in structs/routines
+  // 3D Wall3dVertexProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4698,10 +4563,9 @@ void init_xy_disp_struct(py::module& m, py::class_<XyDispProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<XyDispProxyArray1D>(m, "XyDispProxyArray1D");
-  bind_FTypeArrayND<XyDispProxyArray2D>(m, "XyDispProxyArray2D");
-  bind_FTypeArrayND<XyDispProxyArray3D>(m, "XyDispProxyArray3D");
-  bind_FTypeAlloc1D<XyDispProxyAlloc1D>(m, "XyDispProxyAlloc1D");
+  // 1D XyDispProxy arrays are not used in structs/routines
+  // 2D XyDispProxy arrays are not used in structs/routines
+  // 3D XyDispProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4721,14 +4585,10 @@ void init_bicubic_cmplx_coef_struct(
 
       ;
 
-  bind_FTypeArrayND<BicubicCmplxCoefProxyArray1D>(
-      m, "BicubicCmplxCoefProxyArray1D");
-  bind_FTypeArrayND<BicubicCmplxCoefProxyArray2D>(
-      m, "BicubicCmplxCoefProxyArray2D");
+  // 1D BicubicCmplxCoefProxy arrays are not used in structs/routines
+  // 2D BicubicCmplxCoefProxy arrays are not used in structs/routines
   bind_FTypeArrayND<BicubicCmplxCoefProxyArray3D>(
       m, "BicubicCmplxCoefProxyArray3D");
-  bind_FTypeAlloc1D<BicubicCmplxCoefProxyAlloc1D>(
-      m, "BicubicCmplxCoefProxyAlloc1D");
 }
 
 // =============================================================================
@@ -4748,14 +4608,10 @@ void init_tricubic_cmplx_coef_struct(
 
       ;
 
-  bind_FTypeArrayND<TricubicCmplxCoefProxyArray1D>(
-      m, "TricubicCmplxCoefProxyArray1D");
-  bind_FTypeArrayND<TricubicCmplxCoefProxyArray2D>(
-      m, "TricubicCmplxCoefProxyArray2D");
+  // 1D TricubicCmplxCoefProxy arrays are not used in structs/routines
+  // 2D TricubicCmplxCoefProxy arrays are not used in structs/routines
   bind_FTypeArrayND<TricubicCmplxCoefProxyArray3D>(
       m, "TricubicCmplxCoefProxyArray3D");
-  bind_FTypeAlloc1D<TricubicCmplxCoefProxyAlloc1D>(
-      m, "TricubicCmplxCoefProxyAlloc1D");
 }
 
 // =============================================================================
@@ -4783,10 +4639,9 @@ void init_mad_energy_struct(py::module& m, py::class_<MadEnergyProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<MadEnergyProxyArray1D>(m, "MadEnergyProxyArray1D");
-  bind_FTypeArrayND<MadEnergyProxyArray2D>(m, "MadEnergyProxyArray2D");
-  bind_FTypeArrayND<MadEnergyProxyArray3D>(m, "MadEnergyProxyArray3D");
-  bind_FTypeAlloc1D<MadEnergyProxyAlloc1D>(m, "MadEnergyProxyAlloc1D");
+  // 1D MadEnergyProxy arrays are not used in structs/routines
+  // 2D MadEnergyProxy arrays are not used in structs/routines
+  // 3D MadEnergyProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4804,10 +4659,9 @@ void init_mad_map_struct(py::module& m, py::class_<MadMapProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<MadMapProxyArray1D>(m, "MadMapProxyArray1D");
-  bind_FTypeArrayND<MadMapProxyArray2D>(m, "MadMapProxyArray2D");
-  bind_FTypeArrayND<MadMapProxyArray3D>(m, "MadMapProxyArray3D");
-  bind_FTypeAlloc1D<MadMapProxyAlloc1D>(m, "MadMapProxyAlloc1D");
+  // 1D MadMapProxy arrays are not used in structs/routines
+  // 2D MadMapProxy arrays are not used in structs/routines
+  // 3D MadMapProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4902,10 +4756,9 @@ void init_qp_axis_struct(py::module& m, py::class_<QpAxisProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<QpAxisProxyArray1D>(m, "QpAxisProxyArray1D");
-  bind_FTypeArrayND<QpAxisProxyArray2D>(m, "QpAxisProxyArray2D");
-  bind_FTypeArrayND<QpAxisProxyArray3D>(m, "QpAxisProxyArray3D");
-  bind_FTypeAlloc1D<QpAxisProxyAlloc1D>(m, "QpAxisProxyAlloc1D");
+  // 1D QpAxisProxy arrays are not used in structs/routines
+  // 2D QpAxisProxy arrays are not used in structs/routines
+  // 3D QpAxisProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4944,10 +4797,9 @@ void init_qp_legend_struct(py::module& m, py::class_<QpLegendProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<QpLegendProxyArray1D>(m, "QpLegendProxyArray1D");
-  bind_FTypeArrayND<QpLegendProxyArray2D>(m, "QpLegendProxyArray2D");
-  bind_FTypeArrayND<QpLegendProxyArray3D>(m, "QpLegendProxyArray3D");
-  bind_FTypeAlloc1D<QpLegendProxyAlloc1D>(m, "QpLegendProxyAlloc1D");
+  // 1D QpLegendProxy arrays are not used in structs/routines
+  // 2D QpLegendProxy arrays are not used in structs/routines
+  // 3D QpLegendProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4965,10 +4817,9 @@ void init_qp_line_struct(py::module& m, py::class_<QpLineProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<QpLineProxyArray1D>(m, "QpLineProxyArray1D");
-  bind_FTypeArrayND<QpLineProxyArray2D>(m, "QpLineProxyArray2D");
-  bind_FTypeArrayND<QpLineProxyArray3D>(m, "QpLineProxyArray3D");
-  bind_FTypeAlloc1D<QpLineProxyAlloc1D>(m, "QpLineProxyAlloc1D");
+  // 1D QpLineProxy arrays are not used in structs/routines
+  // 2D QpLineProxy arrays are not used in structs/routines
+  // 3D QpLineProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -4986,10 +4837,9 @@ void init_qp_point_struct(py::module& m, py::class_<QpPointProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<QpPointProxyArray1D>(m, "QpPointProxyArray1D");
-  bind_FTypeArrayND<QpPointProxyArray2D>(m, "QpPointProxyArray2D");
-  bind_FTypeArrayND<QpPointProxyArray3D>(m, "QpPointProxyArray3D");
-  bind_FTypeAlloc1D<QpPointProxyAlloc1D>(m, "QpPointProxyAlloc1D");
+  // 1D QpPointProxy arrays are not used in structs/routines
+  // 2D QpPointProxy arrays are not used in structs/routines
+  // 3D QpPointProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5011,10 +4861,9 @@ void init_qp_rect_struct(py::module& m, py::class_<QpRectProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<QpRectProxyArray1D>(m, "QpRectProxyArray1D");
-  bind_FTypeArrayND<QpRectProxyArray2D>(m, "QpRectProxyArray2D");
-  bind_FTypeArrayND<QpRectProxyArray3D>(m, "QpRectProxyArray3D");
-  bind_FTypeAlloc1D<QpRectProxyAlloc1D>(m, "QpRectProxyAlloc1D");
+  // 1D QpRectProxy arrays are not used in structs/routines
+  // 2D QpRectProxy arrays are not used in structs/routines
+  // 3D QpRectProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5044,10 +4893,9 @@ void init_qp_symbol_struct(py::module& m, py::class_<QpSymbolProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<QpSymbolProxyArray1D>(m, "QpSymbolProxyArray1D");
-  bind_FTypeArrayND<QpSymbolProxyArray2D>(m, "QpSymbolProxyArray2D");
-  bind_FTypeArrayND<QpSymbolProxyArray3D>(m, "QpSymbolProxyArray3D");
-  bind_FTypeAlloc1D<QpSymbolProxyAlloc1D>(m, "QpSymbolProxyAlloc1D");
+  // 1D QpSymbolProxy arrays are not used in structs/routines
+  // 2D QpSymbolProxy arrays are not used in structs/routines
+  // 3D QpSymbolProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5069,10 +4917,9 @@ void init_nametable_struct(py::module& m, py::class_<NametableProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<NametableProxyArray1D>(m, "NametableProxyArray1D");
-  bind_FTypeArrayND<NametableProxyArray2D>(m, "NametableProxyArray2D");
-  bind_FTypeArrayND<NametableProxyArray3D>(m, "NametableProxyArray3D");
-  bind_FTypeAlloc1D<NametableProxyAlloc1D>(m, "NametableProxyAlloc1D");
+  // 1D NametableProxy arrays are not used in structs/routines
+  // 2D NametableProxy arrays are not used in structs/routines
+  // 3D NametableProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5093,9 +4940,9 @@ void init_spline_struct(py::module& m, py::class_<SplineProxy>& cls) {
       ;
 
   bind_FTypeArrayND<SplineProxyArray1D>(m, "SplineProxyArray1D");
-  bind_FTypeArrayND<SplineProxyArray2D>(m, "SplineProxyArray2D");
-  bind_FTypeArrayND<SplineProxyArray3D>(m, "SplineProxyArray3D");
   bind_FTypeAlloc1D<SplineProxyAlloc1D>(m, "SplineProxyAlloc1D");
+  // 2D SplineProxy arrays are not used in structs/routines
+  // 3D SplineProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5175,9 +5022,9 @@ void init_summation_rdt_struct(
       ;
 
   bind_FTypeArrayND<SummationRdtProxyArray1D>(m, "SummationRdtProxyArray1D");
-  bind_FTypeArrayND<SummationRdtProxyArray2D>(m, "SummationRdtProxyArray2D");
-  bind_FTypeArrayND<SummationRdtProxyArray3D>(m, "SummationRdtProxyArray3D");
   bind_FTypeAlloc1D<SummationRdtProxyAlloc1D>(m, "SummationRdtProxyAlloc1D");
+  // 2D SummationRdtProxy arrays are not used in structs/routines
+  // 3D SummationRdtProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5238,10 +5085,9 @@ void init_tao_beam_branch_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoBeamBranchProxyArray1D>(m, "TaoBeamBranchProxyArray1D");
-  bind_FTypeArrayND<TaoBeamBranchProxyArray2D>(m, "TaoBeamBranchProxyArray2D");
-  bind_FTypeArrayND<TaoBeamBranchProxyArray3D>(m, "TaoBeamBranchProxyArray3D");
-  bind_FTypeAlloc1D<TaoBeamBranchProxyAlloc1D>(m, "TaoBeamBranchProxyAlloc1D");
+  // 1D TaoBeamBranchProxy arrays are not used in structs/routines
+  // 2D TaoBeamBranchProxy arrays are not used in structs/routines
+  // 3D TaoBeamBranchProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5278,10 +5124,9 @@ void init_tao_beam_uni_struct(py::module& m, py::class_<TaoBeamUniProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoBeamUniProxyArray1D>(m, "TaoBeamUniProxyArray1D");
-  bind_FTypeArrayND<TaoBeamUniProxyArray2D>(m, "TaoBeamUniProxyArray2D");
-  bind_FTypeArrayND<TaoBeamUniProxyArray3D>(m, "TaoBeamUniProxyArray3D");
-  bind_FTypeAlloc1D<TaoBeamUniProxyAlloc1D>(m, "TaoBeamUniProxyAlloc1D");
+  // 1D TaoBeamUniProxy arrays are not used in structs/routines
+  // 2D TaoBeamUniProxy arrays are not used in structs/routines
+  // 3D TaoBeamUniProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5314,14 +5159,9 @@ void init_tao_building_wall_orientation_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoBuildingWallOrientationProxyArray1D>(
-      m, "TaoBuildingWallOrientationProxyArray1D");
-  bind_FTypeArrayND<TaoBuildingWallOrientationProxyArray2D>(
-      m, "TaoBuildingWallOrientationProxyArray2D");
-  bind_FTypeArrayND<TaoBuildingWallOrientationProxyArray3D>(
-      m, "TaoBuildingWallOrientationProxyArray3D");
-  bind_FTypeAlloc1D<TaoBuildingWallOrientationProxyAlloc1D>(
-      m, "TaoBuildingWallOrientationProxyAlloc1D");
+  // 1D TaoBuildingWallOrientationProxy arrays are not used in structs/routines
+  // 2D TaoBuildingWallOrientationProxy arrays are not used in structs/routines
+  // 3D TaoBuildingWallOrientationProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5360,12 +5200,10 @@ void init_tao_building_wall_point_struct(
 
   bind_FTypeArrayND<TaoBuildingWallPointProxyArray1D>(
       m, "TaoBuildingWallPointProxyArray1D");
-  bind_FTypeArrayND<TaoBuildingWallPointProxyArray2D>(
-      m, "TaoBuildingWallPointProxyArray2D");
-  bind_FTypeArrayND<TaoBuildingWallPointProxyArray3D>(
-      m, "TaoBuildingWallPointProxyArray3D");
   bind_FTypeAlloc1D<TaoBuildingWallPointProxyAlloc1D>(
       m, "TaoBuildingWallPointProxyAlloc1D");
+  // 2D TaoBuildingWallPointProxy arrays are not used in structs/routines
+  // 3D TaoBuildingWallPointProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5397,12 +5235,10 @@ void init_tao_building_wall_section_struct(
 
   bind_FTypeArrayND<TaoBuildingWallSectionProxyArray1D>(
       m, "TaoBuildingWallSectionProxyArray1D");
-  bind_FTypeArrayND<TaoBuildingWallSectionProxyArray2D>(
-      m, "TaoBuildingWallSectionProxyArray2D");
-  bind_FTypeArrayND<TaoBuildingWallSectionProxyArray3D>(
-      m, "TaoBuildingWallSectionProxyArray3D");
   bind_FTypeAlloc1D<TaoBuildingWallSectionProxyAlloc1D>(
       m, "TaoBuildingWallSectionProxyAlloc1D");
+  // 2D TaoBuildingWallSectionProxy arrays are not used in structs/routines
+  // 3D TaoBuildingWallSectionProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5425,14 +5261,9 @@ void init_tao_building_wall_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoBuildingWallProxyArray1D>(
-      m, "TaoBuildingWallProxyArray1D");
-  bind_FTypeArrayND<TaoBuildingWallProxyArray2D>(
-      m, "TaoBuildingWallProxyArray2D");
-  bind_FTypeArrayND<TaoBuildingWallProxyArray3D>(
-      m, "TaoBuildingWallProxyArray3D");
-  bind_FTypeAlloc1D<TaoBuildingWallProxyAlloc1D>(
-      m, "TaoBuildingWallProxyAlloc1D");
+  // 1D TaoBuildingWallProxy arrays are not used in structs/routines
+  // 2D TaoBuildingWallProxy arrays are not used in structs/routines
+  // 3D TaoBuildingWallProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5454,9 +5285,9 @@ void init_tao_cmd_history_struct(
       ;
 
   bind_FTypeArrayND<TaoCmdHistoryProxyArray1D>(m, "TaoCmdHistoryProxyArray1D");
-  bind_FTypeArrayND<TaoCmdHistoryProxyArray2D>(m, "TaoCmdHistoryProxyArray2D");
-  bind_FTypeArrayND<TaoCmdHistoryProxyArray3D>(m, "TaoCmdHistoryProxyArray3D");
   bind_FTypeAlloc1D<TaoCmdHistoryProxyAlloc1D>(m, "TaoCmdHistoryProxyAlloc1D");
+  // 2D TaoCmdHistoryProxy arrays are not used in structs/routines
+  // 3D TaoCmdHistoryProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5651,10 +5482,9 @@ void init_tao_common_struct(py::module& m, py::class_<TaoCommonProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoCommonProxyArray1D>(m, "TaoCommonProxyArray1D");
-  bind_FTypeArrayND<TaoCommonProxyArray2D>(m, "TaoCommonProxyArray2D");
-  bind_FTypeArrayND<TaoCommonProxyArray3D>(m, "TaoCommonProxyArray3D");
-  bind_FTypeAlloc1D<TaoCommonProxyAlloc1D>(m, "TaoCommonProxyAlloc1D");
+  // 1D TaoCommonProxy arrays are not used in structs/routines
+  // 2D TaoCommonProxy arrays are not used in structs/routines
+  // 3D TaoCommonProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5689,10 +5519,9 @@ void init_tao_curve_color_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoCurveColorProxyArray1D>(m, "TaoCurveColorProxyArray1D");
-  bind_FTypeArrayND<TaoCurveColorProxyArray2D>(m, "TaoCurveColorProxyArray2D");
-  bind_FTypeArrayND<TaoCurveColorProxyArray3D>(m, "TaoCurveColorProxyArray3D");
-  bind_FTypeAlloc1D<TaoCurveColorProxyAlloc1D>(m, "TaoCurveColorProxyAlloc1D");
+  // 1D TaoCurveColorProxy arrays are not used in structs/routines
+  // 2D TaoCurveColorProxy arrays are not used in structs/routines
+  // 3D TaoCurveColorProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5714,10 +5543,9 @@ void init_tao_curve_orbit_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoCurveOrbitProxyArray1D>(m, "TaoCurveOrbitProxyArray1D");
-  bind_FTypeArrayND<TaoCurveOrbitProxyArray2D>(m, "TaoCurveOrbitProxyArray2D");
-  bind_FTypeArrayND<TaoCurveOrbitProxyArray3D>(m, "TaoCurveOrbitProxyArray3D");
-  bind_FTypeAlloc1D<TaoCurveOrbitProxyAlloc1D>(m, "TaoCurveOrbitProxyAlloc1D");
+  // 1D TaoCurveOrbitProxy arrays are not used in structs/routines
+  // 2D TaoCurveOrbitProxy arrays are not used in structs/routines
+  // 3D TaoCurveOrbitProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5860,9 +5688,9 @@ void init_tao_curve_struct(py::module& m, py::class_<TaoCurveProxy>& cls) {
       ;
 
   bind_FTypeArrayND<TaoCurveProxyArray1D>(m, "TaoCurveProxyArray1D");
-  bind_FTypeArrayND<TaoCurveProxyArray2D>(m, "TaoCurveProxyArray2D");
-  bind_FTypeArrayND<TaoCurveProxyArray3D>(m, "TaoCurveProxyArray3D");
   bind_FTypeAlloc1D<TaoCurveProxyAlloc1D>(m, "TaoCurveProxyAlloc1D");
+  // 2D TaoCurveProxy arrays are not used in structs/routines
+  // 3D TaoCurveProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5883,9 +5711,9 @@ void init_tao_d1_data_struct(py::module& m, py::class_<TaoD1DataProxy>& cls) {
       ;
 
   bind_FTypeArrayND<TaoD1DataProxyArray1D>(m, "TaoD1DataProxyArray1D");
-  bind_FTypeArrayND<TaoD1DataProxyArray2D>(m, "TaoD1DataProxyArray2D");
-  bind_FTypeArrayND<TaoD1DataProxyArray3D>(m, "TaoD1DataProxyArray3D");
   bind_FTypeAlloc1D<TaoD1DataProxyAlloc1D>(m, "TaoD1DataProxyAlloc1D");
+  // 2D TaoD1DataProxy arrays are not used in structs/routines
+  // 3D TaoD1DataProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5947,9 +5775,9 @@ void init_tao_d2_data_struct(py::module& m, py::class_<TaoD2DataProxy>& cls) {
       ;
 
   bind_FTypeArrayND<TaoD2DataProxyArray1D>(m, "TaoD2DataProxyArray1D");
-  bind_FTypeArrayND<TaoD2DataProxyArray2D>(m, "TaoD2DataProxyArray2D");
-  bind_FTypeArrayND<TaoD2DataProxyArray3D>(m, "TaoD2DataProxyArray3D");
   bind_FTypeAlloc1D<TaoD2DataProxyAlloc1D>(m, "TaoD2DataProxyAlloc1D");
+  // 2D TaoD2DataProxy arrays are not used in structs/routines
+  // 3D TaoD2DataProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -6134,9 +5962,9 @@ void init_tao_data_struct(py::module& m, py::class_<TaoDataProxy>& cls) {
       ;
 
   bind_FTypeArrayND<TaoDataProxyArray1D>(m, "TaoDataProxyArray1D");
-  bind_FTypeArrayND<TaoDataProxyArray2D>(m, "TaoDataProxyArray2D");
-  bind_FTypeArrayND<TaoDataProxyArray3D>(m, "TaoDataProxyArray3D");
   bind_FTypeAlloc1D<TaoDataProxyAlloc1D>(m, "TaoDataProxyAlloc1D");
+  // 2D TaoDataProxy arrays are not used in structs/routines
+  // 3D TaoDataProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -6164,12 +5992,10 @@ void init_tao_data_var_component_struct(
 
   bind_FTypeArrayND<TaoDataVarComponentProxyArray1D>(
       m, "TaoDataVarComponentProxyArray1D");
-  bind_FTypeArrayND<TaoDataVarComponentProxyArray2D>(
-      m, "TaoDataVarComponentProxyArray2D");
-  bind_FTypeArrayND<TaoDataVarComponentProxyArray3D>(
-      m, "TaoDataVarComponentProxyArray3D");
   bind_FTypeAlloc1D<TaoDataVarComponentProxyAlloc1D>(
       m, "TaoDataVarComponentProxyAlloc1D");
+  // 2D TaoDataVarComponentProxy arrays are not used in structs/routines
+  // 3D TaoDataVarComponentProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -6185,10 +6011,9 @@ void init_tao_drawing_struct(py::module& m, py::class_<TaoDrawingProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoDrawingProxyArray1D>(m, "TaoDrawingProxyArray1D");
-  bind_FTypeArrayND<TaoDrawingProxyArray2D>(m, "TaoDrawingProxyArray2D");
-  bind_FTypeArrayND<TaoDrawingProxyArray3D>(m, "TaoDrawingProxyArray3D");
-  bind_FTypeAlloc1D<TaoDrawingProxyAlloc1D>(m, "TaoDrawingProxyAlloc1D");
+  // 1D TaoDrawingProxy arrays are not used in structs/routines
+  // 2D TaoDrawingProxy arrays are not used in structs/routines
+  // 3D TaoDrawingProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -6228,14 +6053,9 @@ void init_tao_dynamic_aperture_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoDynamicApertureProxyArray1D>(
-      m, "TaoDynamicApertureProxyArray1D");
-  bind_FTypeArrayND<TaoDynamicApertureProxyArray2D>(
-      m, "TaoDynamicApertureProxyArray2D");
-  bind_FTypeArrayND<TaoDynamicApertureProxyArray3D>(
-      m, "TaoDynamicApertureProxyArray3D");
-  bind_FTypeAlloc1D<TaoDynamicApertureProxyAlloc1D>(
-      m, "TaoDynamicApertureProxyAlloc1D");
+  // 1D TaoDynamicApertureProxy arrays are not used in structs/routines
+  // 2D TaoDynamicApertureProxy arrays are not used in structs/routines
+  // 3D TaoDynamicApertureProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -6257,9 +6077,9 @@ void init_tao_ele_pointer_struct(
       ;
 
   bind_FTypeArrayND<TaoElePointerProxyArray1D>(m, "TaoElePointerProxyArray1D");
-  bind_FTypeArrayND<TaoElePointerProxyArray2D>(m, "TaoElePointerProxyArray2D");
-  bind_FTypeArrayND<TaoElePointerProxyArray3D>(m, "TaoElePointerProxyArray3D");
   bind_FTypeAlloc1D<TaoElePointerProxyAlloc1D>(m, "TaoElePointerProxyAlloc1D");
+  // 2D TaoElePointerProxy arrays are not used in structs/routines
+  // 3D TaoElePointerProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -6315,9 +6135,9 @@ void init_tao_ele_shape_struct(
       ;
 
   bind_FTypeArrayND<TaoEleShapeProxyArray1D>(m, "TaoEleShapeProxyArray1D");
-  bind_FTypeArrayND<TaoEleShapeProxyArray2D>(m, "TaoEleShapeProxyArray2D");
-  bind_FTypeArrayND<TaoEleShapeProxyArray3D>(m, "TaoEleShapeProxyArray3D");
   bind_FTypeAlloc1D<TaoEleShapeProxyAlloc1D>(m, "TaoEleShapeProxyAlloc1D");
+  // 2D TaoEleShapeProxy arrays are not used in structs/routines
+  // 3D TaoEleShapeProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -6391,10 +6211,9 @@ void init_tao_floor_plan_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoFloorPlanProxyArray1D>(m, "TaoFloorPlanProxyArray1D");
-  bind_FTypeArrayND<TaoFloorPlanProxyArray2D>(m, "TaoFloorPlanProxyArray2D");
-  bind_FTypeArrayND<TaoFloorPlanProxyArray3D>(m, "TaoFloorPlanProxyArray3D");
-  bind_FTypeAlloc1D<TaoFloorPlanProxyAlloc1D>(m, "TaoFloorPlanProxyAlloc1D");
+  // 1D TaoFloorPlanProxy arrays are not used in structs/routines
+  // 2D TaoFloorPlanProxy arrays are not used in structs/routines
+  // 3D TaoFloorPlanProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -6743,10 +6562,9 @@ void init_tao_global_struct(py::module& m, py::class_<TaoGlobalProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoGlobalProxyArray1D>(m, "TaoGlobalProxyArray1D");
-  bind_FTypeArrayND<TaoGlobalProxyArray2D>(m, "TaoGlobalProxyArray2D");
-  bind_FTypeArrayND<TaoGlobalProxyArray3D>(m, "TaoGlobalProxyArray3D");
-  bind_FTypeAlloc1D<TaoGlobalProxyAlloc1D>(m, "TaoGlobalProxyAlloc1D");
+  // 1D TaoGlobalProxy arrays are not used in structs/routines
+  // 2D TaoGlobalProxy arrays are not used in structs/routines
+  // 3D TaoGlobalProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -6879,9 +6697,9 @@ void init_tao_graph_struct(py::module& m, py::class_<TaoGraphProxy>& cls) {
       ;
 
   bind_FTypeArrayND<TaoGraphProxyArray1D>(m, "TaoGraphProxyArray1D");
-  bind_FTypeArrayND<TaoGraphProxyArray2D>(m, "TaoGraphProxyArray2D");
-  bind_FTypeArrayND<TaoGraphProxyArray3D>(m, "TaoGraphProxyArray3D");
   bind_FTypeAlloc1D<TaoGraphProxyAlloc1D>(m, "TaoGraphProxyAlloc1D");
+  // 2D TaoGraphProxy arrays are not used in structs/routines
+  // 3D TaoGraphProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -6926,10 +6744,9 @@ void init_tao_histogram_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoHistogramProxyArray1D>(m, "TaoHistogramProxyArray1D");
-  bind_FTypeArrayND<TaoHistogramProxyArray2D>(m, "TaoHistogramProxyArray2D");
-  bind_FTypeArrayND<TaoHistogramProxyArray3D>(m, "TaoHistogramProxyArray3D");
-  bind_FTypeAlloc1D<TaoHistogramProxyAlloc1D>(m, "TaoHistogramProxyAlloc1D");
+  // 1D TaoHistogramProxy arrays are not used in structs/routines
+  // 2D TaoHistogramProxy arrays are not used in structs/routines
+  // 3D TaoHistogramProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7138,10 +6955,9 @@ void init_tao_init_struct(py::module& m, py::class_<TaoInitProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoInitProxyArray1D>(m, "TaoInitProxyArray1D");
-  bind_FTypeArrayND<TaoInitProxyArray2D>(m, "TaoInitProxyArray2D");
-  bind_FTypeArrayND<TaoInitProxyArray3D>(m, "TaoInitProxyArray3D");
-  bind_FTypeAlloc1D<TaoInitProxyAlloc1D>(m, "TaoInitProxyAlloc1D");
+  // 1D TaoInitProxy arrays are not used in structs/routines
+  // 2D TaoInitProxy arrays are not used in structs/routines
+  // 3D TaoInitProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7160,9 +6976,9 @@ void init_tao_lat_sigma_struct(
       ;
 
   bind_FTypeArrayND<TaoLatSigmaProxyArray1D>(m, "TaoLatSigmaProxyArray1D");
-  bind_FTypeArrayND<TaoLatSigmaProxyArray2D>(m, "TaoLatSigmaProxyArray2D");
-  bind_FTypeArrayND<TaoLatSigmaProxyArray3D>(m, "TaoLatSigmaProxyArray3D");
   bind_FTypeAlloc1D<TaoLatSigmaProxyAlloc1D>(m, "TaoLatSigmaProxyAlloc1D");
+  // 2D TaoLatSigmaProxy arrays are not used in structs/routines
+  // 3D TaoLatSigmaProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7325,12 +7141,10 @@ void init_tao_lattice_branch_struct(
 
   bind_FTypeArrayND<TaoLatticeBranchProxyArray1D>(
       m, "TaoLatticeBranchProxyArray1D");
-  bind_FTypeArrayND<TaoLatticeBranchProxyArray2D>(
-      m, "TaoLatticeBranchProxyArray2D");
-  bind_FTypeArrayND<TaoLatticeBranchProxyArray3D>(
-      m, "TaoLatticeBranchProxyArray3D");
   bind_FTypeAlloc1D<TaoLatticeBranchProxyAlloc1D>(
       m, "TaoLatticeBranchProxyAlloc1D");
+  // 2D TaoLatticeBranchProxy arrays are not used in structs/routines
+  // 3D TaoLatticeBranchProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7370,10 +7184,9 @@ void init_tao_lattice_struct(py::module& m, py::class_<TaoLatticeProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoLatticeProxyArray1D>(m, "TaoLatticeProxyArray1D");
-  bind_FTypeArrayND<TaoLatticeProxyArray2D>(m, "TaoLatticeProxyArray2D");
-  bind_FTypeArrayND<TaoLatticeProxyArray3D>(m, "TaoLatticeProxyArray3D");
-  bind_FTypeAlloc1D<TaoLatticeProxyAlloc1D>(m, "TaoLatticeProxyAlloc1D");
+  // 1D TaoLatticeProxy arrays are not used in structs/routines
+  // 2D TaoLatticeProxy arrays are not used in structs/routines
+  // 3D TaoLatticeProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7396,12 +7209,10 @@ void init_tao_model_branch_struct(
 
   bind_FTypeArrayND<TaoModelBranchProxyArray1D>(
       m, "TaoModelBranchProxyArray1D");
-  bind_FTypeArrayND<TaoModelBranchProxyArray2D>(
-      m, "TaoModelBranchProxyArray2D");
-  bind_FTypeArrayND<TaoModelBranchProxyArray3D>(
-      m, "TaoModelBranchProxyArray3D");
   bind_FTypeAlloc1D<TaoModelBranchProxyAlloc1D>(
       m, "TaoModelBranchProxyAlloc1D");
+  // 2D TaoModelBranchProxy arrays are not used in structs/routines
+  // 3D TaoModelBranchProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7432,12 +7243,10 @@ void init_tao_model_element_struct(
 
   bind_FTypeArrayND<TaoModelElementProxyArray1D>(
       m, "TaoModelElementProxyArray1D");
-  bind_FTypeArrayND<TaoModelElementProxyArray2D>(
-      m, "TaoModelElementProxyArray2D");
-  bind_FTypeArrayND<TaoModelElementProxyArray3D>(
-      m, "TaoModelElementProxyArray3D");
   bind_FTypeAlloc1D<TaoModelElementProxyAlloc1D>(
       m, "TaoModelElementProxyAlloc1D");
+  // 2D TaoModelElementProxy arrays are not used in structs/routines
+  // 3D TaoModelElementProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7473,10 +7282,9 @@ void init_tao_ping_scale_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoPingScaleProxyArray1D>(m, "TaoPingScaleProxyArray1D");
-  bind_FTypeArrayND<TaoPingScaleProxyArray2D>(m, "TaoPingScaleProxyArray2D");
-  bind_FTypeArrayND<TaoPingScaleProxyArray3D>(m, "TaoPingScaleProxyArray3D");
-  bind_FTypeAlloc1D<TaoPingScaleProxyAlloc1D>(m, "TaoPingScaleProxyAlloc1D");
+  // 1D TaoPingScaleProxy arrays are not used in structs/routines
+  // 2D TaoPingScaleProxy arrays are not used in structs/routines
+  // 3D TaoPingScaleProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7503,9 +7311,9 @@ void init_tao_plot_cache_struct(
       ;
 
   bind_FTypeArrayND<TaoPlotCacheProxyArray1D>(m, "TaoPlotCacheProxyArray1D");
-  bind_FTypeArrayND<TaoPlotCacheProxyArray2D>(m, "TaoPlotCacheProxyArray2D");
-  bind_FTypeArrayND<TaoPlotCacheProxyArray3D>(m, "TaoPlotCacheProxyArray3D");
   bind_FTypeAlloc1D<TaoPlotCacheProxyAlloc1D>(m, "TaoPlotCacheProxyAlloc1D");
+  // 2D TaoPlotCacheProxy arrays are not used in structs/routines
+  // 3D TaoPlotCacheProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7630,10 +7438,9 @@ void init_tao_plot_page_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoPlotPageProxyArray1D>(m, "TaoPlotPageProxyArray1D");
-  bind_FTypeArrayND<TaoPlotPageProxyArray2D>(m, "TaoPlotPageProxyArray2D");
-  bind_FTypeArrayND<TaoPlotPageProxyArray3D>(m, "TaoPlotPageProxyArray3D");
-  bind_FTypeAlloc1D<TaoPlotPageProxyAlloc1D>(m, "TaoPlotPageProxyAlloc1D");
+  // 1D TaoPlotPageProxy arrays are not used in structs/routines
+  // 2D TaoPlotPageProxy arrays are not used in structs/routines
+  // 3D TaoPlotPageProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7673,9 +7480,9 @@ void init_tao_plot_region_struct(
       ;
 
   bind_FTypeArrayND<TaoPlotRegionProxyArray1D>(m, "TaoPlotRegionProxyArray1D");
-  bind_FTypeArrayND<TaoPlotRegionProxyArray2D>(m, "TaoPlotRegionProxyArray2D");
-  bind_FTypeArrayND<TaoPlotRegionProxyArray3D>(m, "TaoPlotRegionProxyArray3D");
   bind_FTypeAlloc1D<TaoPlotRegionProxyAlloc1D>(m, "TaoPlotRegionProxyAlloc1D");
+  // 2D TaoPlotRegionProxy arrays are not used in structs/routines
+  // 3D TaoPlotRegionProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7747,9 +7554,9 @@ void init_tao_plot_struct(py::module& m, py::class_<TaoPlotProxy>& cls) {
       ;
 
   bind_FTypeArrayND<TaoPlotProxyArray1D>(m, "TaoPlotProxyArray1D");
-  bind_FTypeArrayND<TaoPlotProxyArray2D>(m, "TaoPlotProxyArray2D");
-  bind_FTypeArrayND<TaoPlotProxyArray3D>(m, "TaoPlotProxyArray3D");
   bind_FTypeAlloc1D<TaoPlotProxyAlloc1D>(m, "TaoPlotProxyAlloc1D");
+  // 2D TaoPlotProxy arrays are not used in structs/routines
+  // 3D TaoPlotProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7778,12 +7585,10 @@ void init_tao_shape_pattern_point_struct(
 
   bind_FTypeArrayND<TaoShapePatternPointProxyArray1D>(
       m, "TaoShapePatternPointProxyArray1D");
-  bind_FTypeArrayND<TaoShapePatternPointProxyArray2D>(
-      m, "TaoShapePatternPointProxyArray2D");
-  bind_FTypeArrayND<TaoShapePatternPointProxyArray3D>(
-      m, "TaoShapePatternPointProxyArray3D");
   bind_FTypeAlloc1D<TaoShapePatternPointProxyAlloc1D>(
       m, "TaoShapePatternPointProxyAlloc1D");
+  // 2D TaoShapePatternPointProxy arrays are not used in structs/routines
+  // 3D TaoShapePatternPointProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7809,12 +7614,10 @@ void init_tao_shape_pattern_struct(
 
   bind_FTypeArrayND<TaoShapePatternProxyArray1D>(
       m, "TaoShapePatternProxyArray1D");
-  bind_FTypeArrayND<TaoShapePatternProxyArray2D>(
-      m, "TaoShapePatternProxyArray2D");
-  bind_FTypeArrayND<TaoShapePatternProxyArray3D>(
-      m, "TaoShapePatternProxyArray3D");
   bind_FTypeAlloc1D<TaoShapePatternProxyAlloc1D>(
       m, "TaoShapePatternProxyAlloc1D");
+  // 2D TaoShapePatternProxy arrays are not used in structs/routines
+  // 3D TaoShapePatternProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7836,10 +7639,9 @@ void init_tao_spin_dn_dpz_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoSpinDnDpzProxyArray1D>(m, "TaoSpinDnDpzProxyArray1D");
-  bind_FTypeArrayND<TaoSpinDnDpzProxyArray2D>(m, "TaoSpinDnDpzProxyArray2D");
-  bind_FTypeArrayND<TaoSpinDnDpzProxyArray3D>(m, "TaoSpinDnDpzProxyArray3D");
-  bind_FTypeAlloc1D<TaoSpinDnDpzProxyAlloc1D>(m, "TaoSpinDnDpzProxyAlloc1D");
+  // 1D TaoSpinDnDpzProxy arrays are not used in structs/routines
+  // 2D TaoSpinDnDpzProxy arrays are not used in structs/routines
+  // 3D TaoSpinDnDpzProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7866,9 +7668,9 @@ void init_tao_spin_ele_struct(py::module& m, py::class_<TaoSpinEleProxy>& cls) {
       ;
 
   bind_FTypeArrayND<TaoSpinEleProxyArray1D>(m, "TaoSpinEleProxyArray1D");
-  bind_FTypeArrayND<TaoSpinEleProxyArray2D>(m, "TaoSpinEleProxyArray2D");
-  bind_FTypeArrayND<TaoSpinEleProxyArray3D>(m, "TaoSpinEleProxyArray3D");
   bind_FTypeAlloc1D<TaoSpinEleProxyAlloc1D>(m, "TaoSpinEleProxyAlloc1D");
+  // 2D TaoSpinEleProxy arrays are not used in structs/routines
+  // 3D TaoSpinEleProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7914,10 +7716,9 @@ void init_tao_spin_map_struct(py::module& m, py::class_<TaoSpinMapProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoSpinMapProxyArray1D>(m, "TaoSpinMapProxyArray1D");
-  bind_FTypeArrayND<TaoSpinMapProxyArray2D>(m, "TaoSpinMapProxyArray2D");
-  bind_FTypeArrayND<TaoSpinMapProxyArray3D>(m, "TaoSpinMapProxyArray3D");
-  bind_FTypeAlloc1D<TaoSpinMapProxyAlloc1D>(m, "TaoSpinMapProxyAlloc1D");
+  // 1D TaoSpinMapProxy arrays are not used in structs/routines
+  // 2D TaoSpinMapProxy arrays are not used in structs/routines
+  // 3D TaoSpinMapProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -8004,14 +7805,9 @@ void init_tao_spin_polarization_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoSpinPolarizationProxyArray1D>(
-      m, "TaoSpinPolarizationProxyArray1D");
-  bind_FTypeArrayND<TaoSpinPolarizationProxyArray2D>(
-      m, "TaoSpinPolarizationProxyArray2D");
-  bind_FTypeArrayND<TaoSpinPolarizationProxyArray3D>(
-      m, "TaoSpinPolarizationProxyArray3D");
-  bind_FTypeAlloc1D<TaoSpinPolarizationProxyAlloc1D>(
-      m, "TaoSpinPolarizationProxyAlloc1D");
+  // 1D TaoSpinPolarizationProxy arrays are not used in structs/routines
+  // 2D TaoSpinPolarizationProxy arrays are not used in structs/routines
+  // 3D TaoSpinPolarizationProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -8080,14 +7876,9 @@ void init_tao_super_universe_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoSuperUniverseProxyArray1D>(
-      m, "TaoSuperUniverseProxyArray1D");
-  bind_FTypeArrayND<TaoSuperUniverseProxyArray2D>(
-      m, "TaoSuperUniverseProxyArray2D");
-  bind_FTypeArrayND<TaoSuperUniverseProxyArray3D>(
-      m, "TaoSuperUniverseProxyArray3D");
-  bind_FTypeAlloc1D<TaoSuperUniverseProxyAlloc1D>(
-      m, "TaoSuperUniverseProxyAlloc1D");
+  // 1D TaoSuperUniverseProxy arrays are not used in structs/routines
+  // 2D TaoSuperUniverseProxy arrays are not used in structs/routines
+  // 3D TaoSuperUniverseProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -8115,10 +7906,9 @@ void init_tao_title_struct(py::module& m, py::class_<TaoTitleProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoTitleProxyArray1D>(m, "TaoTitleProxyArray1D");
-  bind_FTypeArrayND<TaoTitleProxyArray2D>(m, "TaoTitleProxyArray2D");
-  bind_FTypeArrayND<TaoTitleProxyArray3D>(m, "TaoTitleProxyArray3D");
-  bind_FTypeAlloc1D<TaoTitleProxyAlloc1D>(m, "TaoTitleProxyAlloc1D");
+  // 1D TaoTitleProxy arrays are not used in structs/routines
+  // 2D TaoTitleProxy arrays are not used in structs/routines
+  // 3D TaoTitleProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -8199,14 +7989,9 @@ void init_tao_universe_calc_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoUniverseCalcProxyArray1D>(
-      m, "TaoUniverseCalcProxyArray1D");
-  bind_FTypeArrayND<TaoUniverseCalcProxyArray2D>(
-      m, "TaoUniverseCalcProxyArray2D");
-  bind_FTypeArrayND<TaoUniverseCalcProxyArray3D>(
-      m, "TaoUniverseCalcProxyArray3D");
-  bind_FTypeAlloc1D<TaoUniverseCalcProxyAlloc1D>(
-      m, "TaoUniverseCalcProxyAlloc1D");
+  // 1D TaoUniverseCalcProxy arrays are not used in structs/routines
+  // 2D TaoUniverseCalcProxy arrays are not used in structs/routines
+  // 3D TaoUniverseCalcProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -8227,12 +8012,10 @@ void init_tao_universe_pointer_struct(
 
   bind_FTypeArrayND<TaoUniversePointerProxyArray1D>(
       m, "TaoUniversePointerProxyArray1D");
-  bind_FTypeArrayND<TaoUniversePointerProxyArray2D>(
-      m, "TaoUniversePointerProxyArray2D");
-  bind_FTypeArrayND<TaoUniversePointerProxyArray3D>(
-      m, "TaoUniversePointerProxyArray3D");
   bind_FTypeAlloc1D<TaoUniversePointerProxyAlloc1D>(
       m, "TaoUniversePointerProxyAlloc1D");
+  // 2D TaoUniversePointerProxy arrays are not used in structs/routines
+  // 3D TaoUniversePointerProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -8323,9 +8106,9 @@ void init_tao_universe_struct(
       ;
 
   bind_FTypeArrayND<TaoUniverseProxyArray1D>(m, "TaoUniverseProxyArray1D");
-  bind_FTypeArrayND<TaoUniverseProxyArray2D>(m, "TaoUniverseProxyArray2D");
-  bind_FTypeArrayND<TaoUniverseProxyArray3D>(m, "TaoUniverseProxyArray3D");
   bind_FTypeAlloc1D<TaoUniverseProxyAlloc1D>(m, "TaoUniverseProxyAlloc1D");
+  // 2D TaoUniverseProxy arrays are not used in structs/routines
+  // 3D TaoUniverseProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -8346,9 +8129,9 @@ void init_tao_v1_var_struct(py::module& m, py::class_<TaoV1VarProxy>& cls) {
       ;
 
   bind_FTypeArrayND<TaoV1VarProxyArray1D>(m, "TaoV1VarProxyArray1D");
-  bind_FTypeArrayND<TaoV1VarProxyArray2D>(m, "TaoV1VarProxyArray2D");
-  bind_FTypeArrayND<TaoV1VarProxyArray3D>(m, "TaoV1VarProxyArray3D");
   bind_FTypeAlloc1D<TaoV1VarProxyAlloc1D>(m, "TaoV1VarProxyAlloc1D");
+  // 2D TaoV1VarProxy arrays are not used in structs/routines
+  // 3D TaoV1VarProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -8386,9 +8169,9 @@ void init_tao_var_slave_struct(
       ;
 
   bind_FTypeArrayND<TaoVarSlaveProxyArray1D>(m, "TaoVarSlaveProxyArray1D");
-  bind_FTypeArrayND<TaoVarSlaveProxyArray2D>(m, "TaoVarSlaveProxyArray2D");
-  bind_FTypeArrayND<TaoVarSlaveProxyArray3D>(m, "TaoVarSlaveProxyArray3D");
   bind_FTypeAlloc1D<TaoVarSlaveProxyAlloc1D>(m, "TaoVarSlaveProxyAlloc1D");
+  // 2D TaoVarSlaveProxy arrays are not used in structs/routines
+  // 3D TaoVarSlaveProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -8519,9 +8302,9 @@ void init_tao_var_struct(py::module& m, py::class_<TaoVarProxy>& cls) {
       ;
 
   bind_FTypeArrayND<TaoVarProxyArray1D>(m, "TaoVarProxyArray1D");
-  bind_FTypeArrayND<TaoVarProxyArray2D>(m, "TaoVarProxyArray2D");
-  bind_FTypeArrayND<TaoVarProxyArray3D>(m, "TaoVarProxyArray3D");
   bind_FTypeAlloc1D<TaoVarProxyAlloc1D>(m, "TaoVarProxyAlloc1D");
+  // 2D TaoVarProxy arrays are not used in structs/routines
+  // 3D TaoVarProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -8560,9 +8343,9 @@ void init_tao_wave_kick_pt_struct(
       ;
 
   bind_FTypeArrayND<TaoWaveKickPtProxyArray1D>(m, "TaoWaveKickPtProxyArray1D");
-  bind_FTypeArrayND<TaoWaveKickPtProxyArray2D>(m, "TaoWaveKickPtProxyArray2D");
-  bind_FTypeArrayND<TaoWaveKickPtProxyArray3D>(m, "TaoWaveKickPtProxyArray3D");
   bind_FTypeAlloc1D<TaoWaveKickPtProxyAlloc1D>(m, "TaoWaveKickPtProxyAlloc1D");
+  // 2D TaoWaveKickPtProxy arrays are not used in structs/routines
+  // 3D TaoWaveKickPtProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -8691,10 +8474,9 @@ void init_tao_wave_struct(py::module& m, py::class_<TaoWaveProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoWaveProxyArray1D>(m, "TaoWaveProxyArray1D");
-  bind_FTypeArrayND<TaoWaveProxyArray2D>(m, "TaoWaveProxyArray2D");
-  bind_FTypeArrayND<TaoWaveProxyArray3D>(m, "TaoWaveProxyArray3D");
-  bind_FTypeAlloc1D<TaoWaveProxyAlloc1D>(m, "TaoWaveProxyAlloc1D");
+  // 1D TaoWaveProxy arrays are not used in structs/routines
+  // 2D TaoWaveProxy arrays are not used in structs/routines
+  // 3D TaoWaveProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -8904,14 +8686,9 @@ void init_all_encompassing_struct(
 
       ;
 
-  bind_FTypeArrayND<AllEncompassingProxyArray1D>(
-      m, "AllEncompassingProxyArray1D");
-  bind_FTypeArrayND<AllEncompassingProxyArray2D>(
-      m, "AllEncompassingProxyArray2D");
-  bind_FTypeArrayND<AllEncompassingProxyArray3D>(
-      m, "AllEncompassingProxyArray3D");
-  bind_FTypeAlloc1D<AllEncompassingProxyAlloc1D>(
-      m, "AllEncompassingProxyAlloc1D");
+  // 1D AllEncompassingProxy arrays are not used in structs/routines
+  // 2D AllEncompassingProxy arrays are not used in structs/routines
+  // 3D AllEncompassingProxy arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -8926,9 +8703,9 @@ void init_test_sub_struct(py::module& m, py::class_<TestSubProxy>& cls) {
       ;
 
   bind_FTypeArrayND<TestSubProxyArray1D>(m, "TestSubProxyArray1D");
+  bind_FTypeAlloc1D<TestSubProxyAlloc1D>(m, "TestSubProxyAlloc1D");
   bind_FTypeArrayND<TestSubProxyArray2D>(m, "TestSubProxyArray2D");
   bind_FTypeArrayND<TestSubProxyArray3D>(m, "TestSubProxyArray3D");
-  bind_FTypeAlloc1D<TestSubProxyAlloc1D>(m, "TestSubProxyAlloc1D");
 }
 
 // =============================================================================
@@ -8956,9 +8733,8 @@ void init_test_sub_sub_struct(py::module& m, py::class_<TestSubSubProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TestSubSubProxyArray1D>(m, "TestSubSubProxyArray1D");
-  bind_FTypeArrayND<TestSubSubProxyArray2D>(m, "TestSubSubProxyArray2D");
-  bind_FTypeArrayND<TestSubSubProxyArray3D>(m, "TestSubSubProxyArray3D");
-  bind_FTypeAlloc1D<TestSubSubProxyAlloc1D>(m, "TestSubSubProxyAlloc1D");
+  // 1D TestSubSubProxy arrays are not used in structs/routines
+  // 2D TestSubSubProxy arrays are not used in structs/routines
+  // 3D TestSubSubProxy arrays are not used in structs/routines
 }
 } // namespace Pybmad

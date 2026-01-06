@@ -5,3 +5,4 @@
 *.so
 .cache
 .vscode
+python/docs/site
