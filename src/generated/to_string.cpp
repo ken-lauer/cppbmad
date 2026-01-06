@@ -1376,7 +1376,7 @@ std::string to_string(const TaoCurveProxy& self) {
        std::pair{"message_text", self.message_text()},
        std::pair{"component", self.component()},
        std::pair{"why_invalid", self.why_invalid()},
-       std::pair{"g", to_string(self.g())},
+       std::pair{"g", "..."},
        std::pair{"hist", to_string(self.hist())},
        std::pair{"z_color", to_string(self.z_color())},
        std::pair{"x_line", to_string(self.x_line())},
@@ -1500,7 +1500,7 @@ std::string to_string(const TaoLatticeBranchProxy& self) {
   return repr(
       self.get_fortran_ptr(),
       "TaoLatticeBranchProxy",
-      {std::pair{"tao_lat", to_string(self.tao_lat())},
+      {std::pair{"tao_lat", "..."},
        std::pair{"lat_sigma", "[...]"},
        std::pair{"spin_ele", "[...]"},
        std::pair{"bunch_params", "[...]"},
@@ -1566,7 +1566,7 @@ std::string to_string(const TaoD1DataProxy& self) {
       self.get_fortran_ptr(),
       "TaoD1DataProxy",
       {std::pair{"name", self.name()},
-       std::pair{"d2", to_string(self.d2())},
+       std::pair{"d2", "..."},
        std::pair{"d", "[...]"}});
 }
 std::string to_string(const TaoD2DataProxy& self) {
@@ -1605,7 +1605,7 @@ std::string to_string(const TaoGraphProxy& self) {
        std::pair{"text_legend_out", to_string(self.text_legend_out())},
        std::pair{"why_invalid", self.why_invalid()},
        std::pair{"curve", "[...]"},
-       std::pair{"p", to_string(self.p())},
+       std::pair{"p", "..."},
        std::pair{"floor_plan", to_string(self.floor_plan())},
        std::pair{"text_legend_origin", to_string(self.text_legend_origin())},
        std::pair{"curve_legend_origin", to_string(self.curve_legend_origin())},
@@ -1641,7 +1641,7 @@ std::string to_string(const TaoPlotProxy& self) {
       {std::pair{"name", self.name()},
        std::pair{"description", self.description()},
        std::pair{"graph", "[...]"},
-       std::pair{"r", to_string(self.r())},
+       std::pair{"r", "..."},
        std::pair{"ix_plot", to_string(self.ix_plot())},
        std::pair{"n_curve_pts", to_string(self.n_curve_pts())},
        std::pair{"type", self.type()},
@@ -1735,7 +1735,7 @@ std::string to_string(const TaoVarProxy& self) {
        std::pair{"useit_opt", to_string(self.useit_opt())},
        std::pair{"useit_plot", to_string(self.useit_plot())},
        std::pair{"key_bound", to_string(self.key_bound())},
-       std::pair{"v1", to_string(self.v1())}});
+       std::pair{"v1", "..."}});
 }
 std::string to_string(const TaoVarSlaveProxy& self) {
   return repr(
@@ -1852,7 +1852,7 @@ std::string to_string(const TaoDataProxy& self) {
        std::pair{"useit_plot", to_string(self.useit_plot())},
        std::pair{"useit_opt", to_string(self.useit_opt())},
        std::pair{"spin_map", to_string(self.spin_map())},
-       std::pair{"d1", to_string(self.d1())}});
+       std::pair{"d1", "..."}});
 }
 std::string to_string(const TaoPingScaleProxy& self) {
   return repr(

@@ -669,6 +669,9 @@ def arg_to_cpp_string(arg: Argument, use_call: bool = True) -> str | None:
         # print("TODO:", arg.f_name, arg.full_type)
         return None
 
+    if "parent" in arg.comment.lower():
+        return '"..."'
+
     if use_call:
         arg_name = f"self.{arg.c_name}()"
     else:
@@ -688,6 +691,7 @@ def arg_to_cpp_string(arg: Argument, use_call: bool = True) -> str | None:
         return arg_name
     # elif arg.full_type.type == "complex":
     #     return '"cplxTODO"'
+
     return f"to_string({arg_name})"
 
 
