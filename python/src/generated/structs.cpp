@@ -21,6 +21,13 @@ void init_ac_kicker_freq_struct(
       .def_property("amp", &AcKickerFreqProxy::amp, &AcKickerFreqProxy::set_amp)
       // AcKickerFreqProxy.phi (0D_NOT_real -
       .def_property("phi", &AcKickerFreqProxy::phi, &AcKickerFreqProxy::set_phi)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return AcKickerFreqProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -28,8 +35,8 @@ void init_ac_kicker_freq_struct(
 
       ;
 
-  bind_FTypeArrayND<AcKickerFreqProxyArray1D>(m, "AcKickerFreqProxyArray1D");
-  bind_FTypeAlloc1D<AcKickerFreqProxyAlloc1D>(m, "AcKickerFreqProxyAlloc1D");
+  bind_FTypeArrayND<AcKickerFreqProxyArray1D>(m, "AcKickerFreqStructArray1D");
+  bind_FTypeAlloc1D<AcKickerFreqProxyAlloc1D>(m, "AcKickerFreqStructAlloc1D");
   // 2D AcKickerFreqProxy arrays are not used in structs/routines
   // 3D AcKickerFreqProxy arrays are not used in structs/routines
 }
@@ -67,6 +74,13 @@ void init_ac_kicker_time_struct(
       // AcKickerTimeProxy.spline (0D_NOT_type -
       .def_property(
           "spline", &AcKickerTimeProxy::spline, &AcKickerTimeProxy::set_spline)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return AcKickerTimeProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -74,8 +88,8 @@ void init_ac_kicker_time_struct(
 
       ;
 
-  bind_FTypeArrayND<AcKickerTimeProxyArray1D>(m, "AcKickerTimeProxyArray1D");
-  bind_FTypeAlloc1D<AcKickerTimeProxyAlloc1D>(m, "AcKickerTimeProxyAlloc1D");
+  bind_FTypeArrayND<AcKickerTimeProxyArray1D>(m, "AcKickerTimeStructArray1D");
+  bind_FTypeAlloc1D<AcKickerTimeProxyAlloc1D>(m, "AcKickerTimeStructAlloc1D");
   // 2D AcKickerTimeProxy arrays are not used in structs/routines
   // 3D AcKickerTimeProxy arrays are not used in structs/routines
 }
@@ -210,6 +224,13 @@ void init_aperture_point_struct(
           "i_turn",
           &AperturePointProxy::i_turn,
           &AperturePointProxy::set_i_turn)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return AperturePointProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -217,8 +238,8 @@ void init_aperture_point_struct(
 
       ;
 
-  bind_FTypeArrayND<AperturePointProxyArray1D>(m, "AperturePointProxyArray1D");
-  bind_FTypeAlloc1D<AperturePointProxyAlloc1D>(m, "AperturePointProxyAlloc1D");
+  bind_FTypeArrayND<AperturePointProxyArray1D>(m, "AperturePointStructArray1D");
+  bind_FTypeAlloc1D<AperturePointProxyAlloc1D>(m, "AperturePointStructAlloc1D");
   // 2D AperturePointProxy arrays are not used in structs/routines
   // 3D AperturePointProxy arrays are not used in structs/routines
 }
@@ -241,6 +262,13 @@ void init_aperture_scan_struct(
           "pz_start",
           &ApertureScanProxy::pz_start,
           &ApertureScanProxy::set_pz_start)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return ApertureScanProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -248,8 +276,8 @@ void init_aperture_scan_struct(
 
       ;
 
-  bind_FTypeArrayND<ApertureScanProxyArray1D>(m, "ApertureScanProxyArray1D");
-  bind_FTypeAlloc1D<ApertureScanProxyAlloc1D>(m, "ApertureScanProxyAlloc1D");
+  bind_FTypeArrayND<ApertureScanProxyArray1D>(m, "ApertureScanStructArray1D");
+  bind_FTypeAlloc1D<ApertureScanProxyAlloc1D>(m, "ApertureScanStructAlloc1D");
   // 2D ApertureScanProxy arrays are not used in structs/routines
   // 3D ApertureScanProxy arrays are not used in structs/routines
 }
@@ -853,13 +881,18 @@ void init_branch_struct(py::module& m, py::class_<BranchProxy>& cls) {
           &BranchProxy::set_particle_start)
       // BranchProxy.wall3d (1D_PTR_type -
       .def_property_readonly("wall3d", &BranchProxy::wall3d)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return BranchProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def("__repr__", [](const BranchProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<BranchProxyArray1D>(m, "BranchProxyArray1D");
-  bind_FTypeAlloc1D<BranchProxyAlloc1D>(m, "BranchProxyAlloc1D");
+  bind_FTypeArrayND<BranchProxyArray1D>(m, "BranchStructArray1D");
+  bind_FTypeAlloc1D<BranchProxyAlloc1D>(m, "BranchStructAlloc1D");
   // 2D BranchProxy arrays are not used in structs/routines
   // 3D BranchProxy arrays are not used in structs/routines
 }
@@ -948,6 +981,13 @@ void init_bunch_params_struct(
           "twiss_valid",
           &BunchParamsProxy::twiss_valid,
           &BunchParamsProxy::set_twiss_valid)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return BunchParamsProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -955,8 +995,8 @@ void init_bunch_params_struct(
 
       ;
 
-  bind_FTypeArrayND<BunchParamsProxyArray1D>(m, "BunchParamsProxyArray1D");
-  bind_FTypeAlloc1D<BunchParamsProxyAlloc1D>(m, "BunchParamsProxyAlloc1D");
+  bind_FTypeArrayND<BunchParamsProxyArray1D>(m, "BunchParamsStructArray1D");
+  bind_FTypeAlloc1D<BunchParamsProxyAlloc1D>(m, "BunchParamsStructAlloc1D");
   // 2D BunchParamsProxy arrays are not used in structs/routines
   // 3D BunchParamsProxy arrays are not used in structs/routines
 }
@@ -1001,13 +1041,18 @@ void init_bunch_struct(py::module& m, py::class_<BunchProxy>& cls) {
       .def_property("n_good", &BunchProxy::n_good, &BunchProxy::set_n_good)
       // BunchProxy.n_bad (0D_NOT_integer - Number of rejected steps when using adaptive step size control.
       .def_property("n_bad", &BunchProxy::n_bad, &BunchProxy::set_n_bad)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return BunchProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def("__repr__", [](const BunchProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<BunchProxyArray1D>(m, "BunchProxyArray1D");
-  bind_FTypeAlloc1D<BunchProxyAlloc1D>(m, "BunchProxyAlloc1D");
+  bind_FTypeArrayND<BunchProxyArray1D>(m, "BunchStructArray1D");
+  bind_FTypeAlloc1D<BunchProxyAlloc1D>(m, "BunchStructAlloc1D");
   // 2D BunchProxy arrays are not used in structs/routines
   // 3D BunchProxy arrays are not used in structs/routines
 }
@@ -1023,6 +1068,11 @@ void init_bunch_track_struct(py::module& m, py::class_<BunchTrackProxy>& cls) {
           "ds_save", &BunchTrackProxy::ds_save, &BunchTrackProxy::set_ds_save)
       // BunchTrackProxy.n_pt (0D_NOT_integer - Track upper bound
       .def_property("n_pt", &BunchTrackProxy::n_pt, &BunchTrackProxy::set_n_pt)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return BunchTrackProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -1030,8 +1080,8 @@ void init_bunch_track_struct(py::module& m, py::class_<BunchTrackProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<BunchTrackProxyArray1D>(m, "BunchTrackProxyArray1D");
-  bind_FTypeAlloc1D<BunchTrackProxyAlloc1D>(m, "BunchTrackProxyAlloc1D");
+  bind_FTypeArrayND<BunchTrackProxyArray1D>(m, "BunchTrackStructArray1D");
+  bind_FTypeAlloc1D<BunchTrackProxyAlloc1D>(m, "BunchTrackStructAlloc1D");
   // 2D BunchTrackProxy arrays are not used in structs/routines
   // 3D BunchTrackProxy arrays are not used in structs/routines
 }
@@ -1066,6 +1116,13 @@ void init_cartesian_map_struct(
           &CartesianMapProxy::set_field_type)
       // CartesianMapProxy.ptr (0D_PTR_type -
       .def_property("ptr", &CartesianMapProxy::ptr, &CartesianMapProxy::set_ptr)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return CartesianMapProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -1073,8 +1130,8 @@ void init_cartesian_map_struct(
 
       ;
 
-  bind_FTypeArrayND<CartesianMapProxyArray1D>(m, "CartesianMapProxyArray1D");
-  bind_FTypeAlloc1D<CartesianMapProxyAlloc1D>(m, "CartesianMapProxyAlloc1D");
+  bind_FTypeArrayND<CartesianMapProxyArray1D>(m, "CartesianMapStructArray1D");
+  bind_FTypeAlloc1D<CartesianMapProxyAlloc1D>(m, "CartesianMapStructAlloc1D");
   // 2D CartesianMapProxy arrays are not used in structs/routines
   // 3D CartesianMapProxy arrays are not used in structs/routines
 }
@@ -1120,6 +1177,13 @@ void init_cartesian_map_term1_struct(
           "form",
           &CartesianMapTerm1Proxy::form,
           &CartesianMapTerm1Proxy::set_form)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return CartesianMapTerm1ProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -1128,9 +1192,9 @@ void init_cartesian_map_term1_struct(
       ;
 
   bind_FTypeArrayND<CartesianMapTerm1ProxyArray1D>(
-      m, "CartesianMapTerm1ProxyArray1D");
+      m, "CartesianMapTerm1StructArray1D");
   bind_FTypeAlloc1D<CartesianMapTerm1ProxyAlloc1D>(
-      m, "CartesianMapTerm1ProxyAlloc1D");
+      m, "CartesianMapTerm1StructAlloc1D");
   // 2D CartesianMapTerm1Proxy arrays are not used in structs/routines
   // 3D CartesianMapTerm1Proxy arrays are not used in structs/routines
 }
@@ -1176,6 +1240,13 @@ void init_complex_taylor_struct(
           "ref", &ComplexTaylorProxy::ref, &ComplexTaylorProxy::set_ref)
       // ComplexTaylorProxy.term (1D_PTR_type -
       .def_property_readonly("term", &ComplexTaylorProxy::term)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return ComplexTaylorProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -1183,8 +1254,8 @@ void init_complex_taylor_struct(
 
       ;
 
-  bind_FTypeArrayND<ComplexTaylorProxyArray1D>(m, "ComplexTaylorProxyArray1D");
-  bind_FTypeAlloc1D<ComplexTaylorProxyAlloc1D>(m, "ComplexTaylorProxyAlloc1D");
+  bind_FTypeArrayND<ComplexTaylorProxyArray1D>(m, "ComplexTaylorStructArray1D");
+  bind_FTypeAlloc1D<ComplexTaylorProxyAlloc1D>(m, "ComplexTaylorStructAlloc1D");
   // 2D ComplexTaylorProxy arrays are not used in structs/routines
   // 3D ComplexTaylorProxy arrays are not used in structs/routines
 }
@@ -1202,6 +1273,13 @@ void init_complex_taylor_term_struct(
           &ComplexTaylorTermProxy::set_coef)
       // ComplexTaylorTermProxy.expn (1D_NOT_integer -
       .def_property_readonly("expn", &ComplexTaylorTermProxy::expn)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return ComplexTaylorTermProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -1210,9 +1288,9 @@ void init_complex_taylor_term_struct(
       ;
 
   bind_FTypeArrayND<ComplexTaylorTermProxyArray1D>(
-      m, "ComplexTaylorTermProxyArray1D");
+      m, "ComplexTaylorTermStructArray1D");
   bind_FTypeAlloc1D<ComplexTaylorTermProxyAlloc1D>(
-      m, "ComplexTaylorTermProxyAlloc1D");
+      m, "ComplexTaylorTermStructAlloc1D");
   // 2D ComplexTaylorTermProxy arrays are not used in structs/routines
   // 3D ComplexTaylorTermProxy arrays are not used in structs/routines
 }
@@ -1242,6 +1320,13 @@ void init_control_ramp1_struct(
           "is_controller",
           &ControlRamp1Proxy::is_controller,
           &ControlRamp1Proxy::set_is_controller)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return ControlRamp1ProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -1249,8 +1334,8 @@ void init_control_ramp1_struct(
 
       ;
 
-  bind_FTypeArrayND<ControlRamp1ProxyArray1D>(m, "ControlRamp1ProxyArray1D");
-  bind_FTypeAlloc1D<ControlRamp1ProxyAlloc1D>(m, "ControlRamp1ProxyAlloc1D");
+  bind_FTypeArrayND<ControlRamp1ProxyArray1D>(m, "ControlRamp1StructArray1D");
+  bind_FTypeAlloc1D<ControlRamp1ProxyAlloc1D>(m, "ControlRamp1StructAlloc1D");
   // 2D ControlRamp1Proxy arrays are not used in structs/routines
   // 3D ControlRamp1Proxy arrays are not used in structs/routines
 }
@@ -1280,13 +1365,18 @@ void init_control_struct(py::module& m, py::class_<ControlProxy>& cls) {
       // ControlProxy.ix_attrib (0D_NOT_integer - Index of attribute controlled. See note above!
       .def_property(
           "ix_attrib", &ControlProxy::ix_attrib, &ControlProxy::set_ix_attrib)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return ControlProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def("__repr__", [](const ControlProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<ControlProxyArray1D>(m, "ControlProxyArray1D");
-  bind_FTypeAlloc1D<ControlProxyAlloc1D>(m, "ControlProxyAlloc1D");
+  bind_FTypeArrayND<ControlProxyArray1D>(m, "ControlStructArray1D");
+  bind_FTypeAlloc1D<ControlProxyAlloc1D>(m, "ControlStructAlloc1D");
   // 2D ControlProxy arrays are not used in structs/routines
   // 3D ControlProxy arrays are not used in structs/routines
 }
@@ -1308,6 +1398,13 @@ void init_control_var1_struct(
           "old_value",
           &ControlVar1Proxy::old_value,
           &ControlVar1Proxy::set_old_value)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return ControlVar1ProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -1315,8 +1412,8 @@ void init_control_var1_struct(
 
       ;
 
-  bind_FTypeArrayND<ControlVar1ProxyArray1D>(m, "ControlVar1ProxyArray1D");
-  bind_FTypeAlloc1D<ControlVar1ProxyAlloc1D>(m, "ControlVar1ProxyAlloc1D");
+  bind_FTypeArrayND<ControlVar1ProxyArray1D>(m, "ControlVar1StructArray1D");
+  bind_FTypeAlloc1D<ControlVar1ProxyAlloc1D>(m, "ControlVar1StructAlloc1D");
   // 2D ControlVar1Proxy arrays are not used in structs/routines
   // 3D ControlVar1Proxy arrays are not used in structs/routines
 }
@@ -1351,6 +1448,11 @@ void init_coord_array_struct(py::module& m, py::class_<CoordArrayProxy>& cls) {
   cls.def(py::init<>())
       // CoordArrayProxy.orbit (1D_ALLOC_type -
       .def_property_readonly("orbit", &CoordArrayProxy::orbit)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return CoordArrayProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -1358,8 +1460,8 @@ void init_coord_array_struct(py::module& m, py::class_<CoordArrayProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<CoordArrayProxyArray1D>(m, "CoordArrayProxyArray1D");
-  bind_FTypeAlloc1D<CoordArrayProxyAlloc1D>(m, "CoordArrayProxyAlloc1D");
+  bind_FTypeArrayND<CoordArrayProxyArray1D>(m, "CoordArrayStructArray1D");
+  bind_FTypeAlloc1D<CoordArrayProxyAlloc1D>(m, "CoordArrayStructAlloc1D");
   // 2D CoordArrayProxy arrays are not used in structs/routines
   // 3D CoordArrayProxy arrays are not used in structs/routines
 }
@@ -1415,13 +1517,18 @@ void init_coord_struct(py::module& m, py::class_<CoordProxy>& cls) {
       // CoordProxy.location (0D_NOT_integer - upstream_end$, inside$, or downstream_end$
       .def_property(
           "location", &CoordProxy::location, &CoordProxy::set_location)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return CoordProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def("__repr__", [](const CoordProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<CoordProxyArray1D>(m, "CoordProxyArray1D");
-  bind_FTypeAlloc1D<CoordProxyAlloc1D>(m, "CoordProxyAlloc1D");
+  bind_FTypeArrayND<CoordProxyArray1D>(m, "CoordStructArray1D");
+  bind_FTypeAlloc1D<CoordProxyAlloc1D>(m, "CoordStructAlloc1D");
   // 2D CoordProxy arrays are not used in structs/routines
   // 3D CoordProxy arrays are not used in structs/routines
 }
@@ -1472,6 +1579,13 @@ void init_cylindrical_map_struct(
       // CylindricalMapProxy.ptr (0D_PTR_type -
       .def_property(
           "ptr", &CylindricalMapProxy::ptr, &CylindricalMapProxy::set_ptr)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return CylindricalMapProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -1480,9 +1594,9 @@ void init_cylindrical_map_struct(
       ;
 
   bind_FTypeArrayND<CylindricalMapProxyArray1D>(
-      m, "CylindricalMapProxyArray1D");
+      m, "CylindricalMapStructArray1D");
   bind_FTypeAlloc1D<CylindricalMapProxyAlloc1D>(
-      m, "CylindricalMapProxyAlloc1D");
+      m, "CylindricalMapStructAlloc1D");
   // 2D CylindricalMapProxy arrays are not used in structs/routines
   // 3D CylindricalMapProxy arrays are not used in structs/routines
 }
@@ -1503,6 +1617,13 @@ void init_cylindrical_map_term1_struct(
           "b_coef",
           &CylindricalMapTerm1Proxy::b_coef,
           &CylindricalMapTerm1Proxy::set_b_coef)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return CylindricalMapTerm1ProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -1511,9 +1632,9 @@ void init_cylindrical_map_term1_struct(
       ;
 
   bind_FTypeArrayND<CylindricalMapTerm1ProxyArray1D>(
-      m, "CylindricalMapTerm1ProxyArray1D");
+      m, "CylindricalMapTerm1StructArray1D");
   bind_FTypeAlloc1D<CylindricalMapTerm1ProxyAlloc1D>(
-      m, "CylindricalMapTerm1ProxyAlloc1D");
+      m, "CylindricalMapTerm1StructAlloc1D");
   // 2D CylindricalMapTerm1Proxy arrays are not used in structs/routines
   // 3D CylindricalMapTerm1Proxy arrays are not used in structs/routines
 }
@@ -1558,6 +1679,11 @@ void init_ele_pointer_struct(py::module& m, py::class_<ElePointerProxy>& cls) {
       .def_property("loc", &ElePointerProxy::loc, &ElePointerProxy::set_loc)
       // ElePointerProxy.id (0D_NOT_integer - For general use. Not used by Bmad. In particular, used by Tao to designate universe ele is in.
       .def_property("id", &ElePointerProxy::id, &ElePointerProxy::set_id)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return ElePointerProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -1565,8 +1691,8 @@ void init_ele_pointer_struct(py::module& m, py::class_<ElePointerProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<ElePointerProxyArray1D>(m, "ElePointerProxyArray1D");
-  bind_FTypeAlloc1D<ElePointerProxyAlloc1D>(m, "ElePointerProxyAlloc1D");
+  bind_FTypeArrayND<ElePointerProxyArray1D>(m, "ElePointerStructArray1D");
+  bind_FTypeAlloc1D<ElePointerProxyAlloc1D>(m, "ElePointerStructAlloc1D");
   // 2D ElePointerProxy arrays are not used in structs/routines
   // 3D ElePointerProxy arrays are not used in structs/routines
 }
@@ -1825,13 +1951,18 @@ void init_ele_struct(py::module& m, py::class_<EleProxy>& cls) {
           "offset_moves_aperture",
           &EleProxy::offset_moves_aperture,
           &EleProxy::set_offset_moves_aperture)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return EleProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def("__repr__", [](const EleProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<EleProxyArray1D>(m, "EleProxyArray1D");
-  bind_FTypeAlloc1D<EleProxyAlloc1D>(m, "EleProxyAlloc1D");
+  bind_FTypeArrayND<EleProxyArray1D>(m, "EleStructArray1D");
+  bind_FTypeAlloc1D<EleProxyAlloc1D>(m, "EleStructAlloc1D");
   // 2D EleProxy arrays are not used in structs/routines
   // 3D EleProxy arrays are not used in structs/routines
 }
@@ -1857,6 +1988,13 @@ void init_ellipse_beam_init_struct(
           "sigma_cutoff",
           &EllipseBeamInitProxy::sigma_cutoff,
           &EllipseBeamInitProxy::set_sigma_cutoff)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return EllipseBeamInitProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -1865,9 +2003,9 @@ void init_ellipse_beam_init_struct(
       ;
 
   bind_FTypeArrayND<EllipseBeamInitProxyArray1D>(
-      m, "EllipseBeamInitProxyArray1D");
+      m, "EllipseBeamInitStructArray1D");
   bind_FTypeAlloc1D<EllipseBeamInitProxyAlloc1D>(
-      m, "EllipseBeamInitProxyAlloc1D");
+      m, "EllipseBeamInitStructAlloc1D");
   // 2D EllipseBeamInitProxy arrays are not used in structs/routines
   // 3D EllipseBeamInitProxy arrays are not used in structs/routines
 }
@@ -1890,13 +2028,18 @@ void init_em_field_struct(py::module& m, py::class_<EmFieldProxy>& cls) {
       .def_property("phi_B", &EmFieldProxy::phi_B, &EmFieldProxy::set_phi_B)
       // EmFieldProxy.A (1D_NOT_real - Magnetic vector potential.
       .def_property_readonly("A", &EmFieldProxy::A)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return EmFieldProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def("__repr__", [](const EmFieldProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<EmFieldProxyArray1D>(m, "EmFieldProxyArray1D");
-  bind_FTypeAlloc1D<EmFieldProxyAlloc1D>(m, "EmFieldProxyAlloc1D");
+  bind_FTypeArrayND<EmFieldProxyArray1D>(m, "EmFieldStructArray1D");
+  bind_FTypeAlloc1D<EmFieldProxyAlloc1D>(m, "EmFieldStructAlloc1D");
   // 2D EmFieldProxy arrays are not used in structs/routines
   // 3D EmFieldProxy arrays are not used in structs/routines
 }
@@ -1909,14 +2052,19 @@ void init_em_taylor_struct(py::module& m, py::class_<EmTaylorProxy>& cls) {
       .def_property("ref", &EmTaylorProxy::ref, &EmTaylorProxy::set_ref)
       // EmTaylorProxy.term (1D_ALLOC_type -
       .def_property_readonly("term", &EmTaylorProxy::term)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return EmTaylorProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__", [](const EmTaylorProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<EmTaylorProxyArray1D>(m, "EmTaylorProxyArray1D");
-  bind_FTypeAlloc1D<EmTaylorProxyAlloc1D>(m, "EmTaylorProxyAlloc1D");
+  bind_FTypeArrayND<EmTaylorProxyArray1D>(m, "EmTaylorStructArray1D");
+  bind_FTypeAlloc1D<EmTaylorProxyAlloc1D>(m, "EmTaylorStructAlloc1D");
   // 2D EmTaylorProxy arrays are not used in structs/routines
   // 3D EmTaylorProxy arrays are not used in structs/routines
 }
@@ -1932,6 +2080,13 @@ void init_em_taylor_term_struct(
           "coef", &EmTaylorTermProxy::coef, &EmTaylorTermProxy::set_coef)
       // EmTaylorTermProxy.expn (1D_NOT_integer -
       .def_property_readonly("expn", &EmTaylorTermProxy::expn)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return EmTaylorTermProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -1939,8 +2094,8 @@ void init_em_taylor_term_struct(
 
       ;
 
-  bind_FTypeArrayND<EmTaylorTermProxyArray1D>(m, "EmTaylorTermProxyArray1D");
-  bind_FTypeAlloc1D<EmTaylorTermProxyAlloc1D>(m, "EmTaylorTermProxyAlloc1D");
+  bind_FTypeArrayND<EmTaylorTermProxyArray1D>(m, "EmTaylorTermStructArray1D");
+  bind_FTypeAlloc1D<EmTaylorTermProxyAlloc1D>(m, "EmTaylorTermStructAlloc1D");
   // 2D EmTaylorTermProxy arrays are not used in structs/routines
   // 3D EmTaylorTermProxy arrays are not used in structs/routines
 }
@@ -1960,6 +2115,13 @@ void init_expression_atom_struct(
       // ExpressionAtomProxy.value (0D_NOT_real -
       .def_property(
           "value", &ExpressionAtomProxy::value, &ExpressionAtomProxy::set_value)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return ExpressionAtomProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -1968,9 +2130,9 @@ void init_expression_atom_struct(
       ;
 
   bind_FTypeArrayND<ExpressionAtomProxyArray1D>(
-      m, "ExpressionAtomProxyArray1D");
+      m, "ExpressionAtomStructArray1D");
   bind_FTypeAlloc1D<ExpressionAtomProxyAlloc1D>(
-      m, "ExpressionAtomProxyAlloc1D");
+      m, "ExpressionAtomStructAlloc1D");
   // 2D ExpressionAtomProxy arrays are not used in structs/routines
   // 3D ExpressionAtomProxy arrays are not used in structs/routines
 }
@@ -1992,6 +2154,13 @@ void init_expression_tree_struct(
           "value", &ExpressionTreeProxy::value, &ExpressionTreeProxy::set_value)
       // ExpressionTreeProxy.node (1D_PTR_type - Child nodes. Note: Pointer used here since Ifort does not support allocatable.
       .def_property_readonly("node", &ExpressionTreeProxy::node)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return ExpressionTreeProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -2000,9 +2169,9 @@ void init_expression_tree_struct(
       ;
 
   bind_FTypeArrayND<ExpressionTreeProxyArray1D>(
-      m, "ExpressionTreeProxyArray1D");
+      m, "ExpressionTreeStructArray1D");
   bind_FTypeAlloc1D<ExpressionTreeProxyAlloc1D>(
-      m, "ExpressionTreeProxyAlloc1D");
+      m, "ExpressionTreeStructAlloc1D");
   // 2D ExpressionTreeProxy arrays are not used in structs/routines
   // 3D ExpressionTreeProxy arrays are not used in structs/routines
 }
@@ -2054,14 +2223,19 @@ void init_gen_grad1_struct(py::module& m, py::class_<GenGrad1Proxy>& cls) {
           &GenGrad1Proxy::set_n_deriv_max)
       // GenGrad1Proxy.deriv (2D_ALLOC_real - Range: (iz0:iz1, 0:2*n_deriv_max+1)
       .def_property_readonly("deriv", &GenGrad1Proxy::deriv)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return GenGrad1ProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__", [](const GenGrad1Proxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<GenGrad1ProxyArray1D>(m, "GenGrad1ProxyArray1D");
-  bind_FTypeAlloc1D<GenGrad1ProxyAlloc1D>(m, "GenGrad1ProxyAlloc1D");
+  bind_FTypeArrayND<GenGrad1ProxyArray1D>(m, "GenGrad1StructArray1D");
+  bind_FTypeAlloc1D<GenGrad1ProxyAlloc1D>(m, "GenGrad1StructAlloc1D");
   // 2D GenGrad1Proxy arrays are not used in structs/routines
   // 3D GenGrad1Proxy arrays are not used in structs/routines
 }
@@ -2107,6 +2281,11 @@ void init_gen_grad_map_struct(py::module& m, py::class_<GenGradMapProxy>& cls) {
           "curved_ref_frame",
           &GenGradMapProxy::curved_ref_frame,
           &GenGradMapProxy::set_curved_ref_frame)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return GenGradMapProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -2114,8 +2293,8 @@ void init_gen_grad_map_struct(py::module& m, py::class_<GenGradMapProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<GenGradMapProxyArray1D>(m, "GenGradMapProxyArray1D");
-  bind_FTypeAlloc1D<GenGradMapProxyAlloc1D>(m, "GenGradMapProxyAlloc1D");
+  bind_FTypeArrayND<GenGradMapProxyArray1D>(m, "GenGradMapStructArray1D");
+  bind_FTypeAlloc1D<GenGradMapProxyAlloc1D>(m, "GenGradMapStructAlloc1D");
   // 2D GenGradMapProxy arrays are not used in structs/routines
   // 3D GenGradMapProxy arrays are not used in structs/routines
 }
@@ -2143,6 +2322,13 @@ void init_grid_beam_init_struct(
       // GridBeamInitProxy.px_max (0D_NOT_real - Upper px limit.
       .def_property(
           "px_max", &GridBeamInitProxy::px_max, &GridBeamInitProxy::set_px_max)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return GridBeamInitProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -2150,8 +2336,8 @@ void init_grid_beam_init_struct(
 
       ;
 
-  bind_FTypeArrayND<GridBeamInitProxyArray1D>(m, "GridBeamInitProxyArray1D");
-  bind_FTypeAlloc1D<GridBeamInitProxyAlloc1D>(m, "GridBeamInitProxyAlloc1D");
+  bind_FTypeArrayND<GridBeamInitProxyArray1D>(m, "GridBeamInitStructArray1D");
+  bind_FTypeAlloc1D<GridBeamInitProxyAlloc1D>(m, "GridBeamInitStructAlloc1D");
   // 2D GridBeamInitProxy arrays are not used in structs/routines
   // 3D GridBeamInitProxy arrays are not used in structs/routines
 }
@@ -2175,7 +2361,7 @@ void init_grid_field_pt1_struct(
 
   // 1D GridFieldPt1Proxy arrays are not used in structs/routines
   // 2D GridFieldPt1Proxy arrays are not used in structs/routines
-  bind_FTypeArrayND<GridFieldPt1ProxyArray3D>(m, "GridFieldPt1ProxyArray3D");
+  bind_FTypeArrayND<GridFieldPt1ProxyArray3D>(m, "GridFieldPt1StructArray3D");
 }
 
 // =============================================================================
@@ -2259,6 +2445,11 @@ void init_grid_field_struct(py::module& m, py::class_<GridFieldProxy>& cls) {
       .def_property_readonly("bi_coef", &GridFieldProxy::bi_coef)
       // GridFieldProxy.tri_coef (3D_NOT_type - Save computed coefs for faster tracking
       .def_property_readonly("tri_coef", &GridFieldProxy::tri_coef)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return GridFieldProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -2266,8 +2457,8 @@ void init_grid_field_struct(py::module& m, py::class_<GridFieldProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<GridFieldProxyArray1D>(m, "GridFieldProxyArray1D");
-  bind_FTypeAlloc1D<GridFieldProxyAlloc1D>(m, "GridFieldProxyAlloc1D");
+  bind_FTypeArrayND<GridFieldProxyArray1D>(m, "GridFieldStructArray1D");
+  bind_FTypeAlloc1D<GridFieldProxyAlloc1D>(m, "GridFieldStructAlloc1D");
   // 2D GridFieldProxy arrays are not used in structs/routines
   // 3D GridFieldProxy arrays are not used in structs/routines
 }
@@ -2345,6 +2536,13 @@ void init_interval1_coef_struct(
       // Interval1CoefProxy.n_exp (0D_NOT_real -
       .def_property(
           "n_exp", &Interval1CoefProxy::n_exp, &Interval1CoefProxy::set_n_exp)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return Interval1CoefProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -2352,8 +2550,8 @@ void init_interval1_coef_struct(
 
       ;
 
-  bind_FTypeArrayND<Interval1CoefProxyArray1D>(m, "Interval1CoefProxyArray1D");
-  bind_FTypeAlloc1D<Interval1CoefProxyAlloc1D>(m, "Interval1CoefProxyAlloc1D");
+  bind_FTypeArrayND<Interval1CoefProxyArray1D>(m, "Interval1CoefStructArray1D");
+  bind_FTypeAlloc1D<Interval1CoefProxyAlloc1D>(m, "Interval1CoefStructAlloc1D");
   // 2D Interval1CoefProxy arrays are not used in structs/routines
   // 3D Interval1CoefProxy arrays are not used in structs/routines
 }
@@ -2392,6 +2590,11 @@ void init_lat_ele_loc_struct(py::module& m, py::class_<LatEleLocProxy>& cls) {
           "ix_branch",
           &LatEleLocProxy::ix_branch,
           &LatEleLocProxy::set_ix_branch)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return LatEleLocProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -2399,8 +2602,8 @@ void init_lat_ele_loc_struct(py::module& m, py::class_<LatEleLocProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<LatEleLocProxyArray1D>(m, "LatEleLocProxyArray1D");
-  bind_FTypeAlloc1D<LatEleLocProxyAlloc1D>(m, "LatEleLocProxyAlloc1D");
+  bind_FTypeArrayND<LatEleLocProxyArray1D>(m, "LatEleLocStructArray1D");
+  bind_FTypeAlloc1D<LatEleLocProxyAlloc1D>(m, "LatEleLocStructAlloc1D");
   // 2D LatEleLocProxy arrays are not used in structs/routines
   // 3D LatEleLocProxy arrays are not used in structs/routines
 }
@@ -2421,6 +2624,13 @@ void init_lat_ele_order1_struct(
           "ix_order",
           &LatEleOrder1Proxy::ix_order,
           &LatEleOrder1Proxy::set_ix_order)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return LatEleOrder1ProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -2428,8 +2638,8 @@ void init_lat_ele_order1_struct(
 
       ;
 
-  bind_FTypeArrayND<LatEleOrder1ProxyArray1D>(m, "LatEleOrder1ProxyArray1D");
-  bind_FTypeAlloc1D<LatEleOrder1ProxyAlloc1D>(m, "LatEleOrder1ProxyAlloc1D");
+  bind_FTypeArrayND<LatEleOrder1ProxyArray1D>(m, "LatEleOrder1StructArray1D");
+  bind_FTypeAlloc1D<LatEleOrder1ProxyAlloc1D>(m, "LatEleOrder1StructAlloc1D");
   // 2D LatEleOrder1Proxy arrays are not used in structs/routines
   // 3D LatEleOrder1Proxy arrays are not used in structs/routines
 }
@@ -2442,6 +2652,13 @@ void init_lat_ele_order_array_struct(
   cls.def(py::init<>())
       // LatEleOrderArrayProxy.ele (1D_ALLOC_type -
       .def_property_readonly("ele", &LatEleOrderArrayProxy::ele)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return LatEleOrderArrayProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -2450,9 +2667,9 @@ void init_lat_ele_order_array_struct(
       ;
 
   bind_FTypeArrayND<LatEleOrderArrayProxyArray1D>(
-      m, "LatEleOrderArrayProxyArray1D");
+      m, "LatEleOrderArrayStructArray1D");
   bind_FTypeAlloc1D<LatEleOrderArrayProxyAlloc1D>(
-      m, "LatEleOrderArrayProxyAlloc1D");
+      m, "LatEleOrderArrayStructAlloc1D");
   // 2D LatEleOrderArrayProxy arrays are not used in structs/routines
   // 3D LatEleOrderArrayProxy arrays are not used in structs/routines
 }
@@ -2642,13 +2859,18 @@ void init_lat_struct(py::module& m, py::class_<LatProxy>& cls) {
           "ramper_slave_bookkeeping",
           &LatProxy::ramper_slave_bookkeeping,
           &LatProxy::set_ramper_slave_bookkeeping)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return LatProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def("__repr__", [](const LatProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<LatProxyArray1D>(m, "LatProxyArray1D");
-  bind_FTypeAlloc1D<LatProxyAlloc1D>(m, "LatProxyAlloc1D");
+  bind_FTypeArrayND<LatProxyArray1D>(m, "LatStructArray1D");
+  bind_FTypeAlloc1D<LatProxyAlloc1D>(m, "LatStructAlloc1D");
   // 2D LatProxy arrays are not used in structs/routines
   // 3D LatProxy arrays are not used in structs/routines
 }
@@ -3013,6 +3235,13 @@ void init_photon_reflect_table_struct(
       // PhotonReflectTableProxy.bragg_angle (1D_ALLOC_real - Bragg angle at energy values.
       .def_property_readonly(
           "bragg_angle", &PhotonReflectTableProxy::bragg_angle)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return PhotonReflectTableProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -3021,9 +3250,9 @@ void init_photon_reflect_table_struct(
       ;
 
   bind_FTypeArrayND<PhotonReflectTableProxyArray1D>(
-      m, "PhotonReflectTableProxyArray1D");
+      m, "PhotonReflectTableStructArray1D");
   bind_FTypeAlloc1D<PhotonReflectTableProxyAlloc1D>(
-      m, "PhotonReflectTableProxyAlloc1D");
+      m, "PhotonReflectTableStructAlloc1D");
   // 2D PhotonReflectTableProxy arrays are not used in structs/routines
   // 3D PhotonReflectTableProxy arrays are not used in structs/routines
 }
@@ -3139,7 +3368,7 @@ void init_pixel_pt_struct(py::module& m, py::class_<PixelPtProxy>& cls) {
       ;
 
   // 1D PixelPtProxy arrays are not used in structs/routines
-  bind_FTypeArrayND<PixelPtProxyArray2D>(m, "PixelPtProxyArray2D");
+  bind_FTypeArrayND<PixelPtProxyArray2D>(m, "PixelPtStructArray2D");
   // 3D PixelPtProxy arrays are not used in structs/routines
 }
 
@@ -3262,13 +3491,18 @@ void init_rad_int1_struct(py::module& m, py::class_<RadInt1Proxy>& cls) {
       // RadInt1Proxy.n_steps (0D_NOT_real - number of qromb steps needed
       .def_property(
           "n_steps", &RadInt1Proxy::n_steps, &RadInt1Proxy::set_n_steps)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return RadInt1ProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def("__repr__", [](const RadInt1Proxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<RadInt1ProxyArray1D>(m, "RadInt1ProxyArray1D");
-  bind_FTypeAlloc1D<RadInt1ProxyAlloc1D>(m, "RadInt1ProxyAlloc1D");
+  bind_FTypeArrayND<RadInt1ProxyArray1D>(m, "RadInt1StructArray1D");
+  bind_FTypeAlloc1D<RadInt1ProxyAlloc1D>(m, "RadInt1StructAlloc1D");
   // 2D RadInt1Proxy arrays are not used in structs/routines
   // 3D RadInt1Proxy arrays are not used in structs/routines
 }
@@ -3301,6 +3535,13 @@ void init_rad_int_branch_struct(
   cls.def(py::init<>())
       // RadIntBranchProxy.ele (1D_ALLOC_type - Array is indexed from 0
       .def_property_readonly("ele", &RadIntBranchProxy::ele)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return RadIntBranchProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -3308,8 +3549,8 @@ void init_rad_int_branch_struct(
 
       ;
 
-  bind_FTypeArrayND<RadIntBranchProxyArray1D>(m, "RadIntBranchProxyArray1D");
-  bind_FTypeAlloc1D<RadIntBranchProxyAlloc1D>(m, "RadIntBranchProxyAlloc1D");
+  bind_FTypeArrayND<RadIntBranchProxyArray1D>(m, "RadIntBranchStructArray1D");
+  bind_FTypeAlloc1D<RadIntBranchProxyAlloc1D>(m, "RadIntBranchStructAlloc1D");
   // 2D RadIntBranchProxy arrays are not used in structs/routines
   // 3D RadIntBranchProxy arrays are not used in structs/routines
 }
@@ -3375,6 +3616,11 @@ void init_ramper_lord_struct(py::module& m, py::class_<RamperLordProxy>& cls) {
           "attrib_ptr",
           &RamperLordProxy::attrib_ptr,
           &RamperLordProxy::set_attrib_ptr)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return RamperLordProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -3382,8 +3628,8 @@ void init_ramper_lord_struct(py::module& m, py::class_<RamperLordProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<RamperLordProxyArray1D>(m, "RamperLordProxyArray1D");
-  bind_FTypeAlloc1D<RamperLordProxyAlloc1D>(m, "RamperLordProxyAlloc1D");
+  bind_FTypeArrayND<RamperLordProxyArray1D>(m, "RamperLordStructArray1D");
+  bind_FTypeAlloc1D<RamperLordProxyAlloc1D>(m, "RamperLordStructAlloc1D");
   // 2D RamperLordProxy arrays are not used in structs/routines
   // 3D RamperLordProxy arrays are not used in structs/routines
 }
@@ -3397,6 +3643,11 @@ void init_resonance_h_struct(py::module& m, py::class_<ResonanceHProxy>& cls) {
       // ResonanceHProxy.c_val (0D_NOT_complex - Resonance value
       .def_property(
           "c_val", &ResonanceHProxy::c_val, &ResonanceHProxy::set_c_val)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return ResonanceHProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -3404,8 +3655,8 @@ void init_resonance_h_struct(py::module& m, py::class_<ResonanceHProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<ResonanceHProxyArray1D>(m, "ResonanceHProxyArray1D");
-  bind_FTypeAlloc1D<ResonanceHProxyAlloc1D>(m, "ResonanceHProxyAlloc1D");
+  bind_FTypeArrayND<ResonanceHProxyArray1D>(m, "ResonanceHStructArray1D");
+  bind_FTypeAlloc1D<ResonanceHProxyAlloc1D>(m, "ResonanceHStructAlloc1D");
   // 2D ResonanceHProxy arrays are not used in structs/routines
   // 3D ResonanceHProxy arrays are not used in structs/routines
 }
@@ -3457,6 +3708,13 @@ void init_rf_stair_step_struct(
       // RfStairStepProxy.ix_step (0D_NOT_integer - Step index in ele%rf%steps(:) array
       .def_property(
           "ix_step", &RfStairStepProxy::ix_step, &RfStairStepProxy::set_ix_step)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return RfStairStepProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -3464,8 +3722,8 @@ void init_rf_stair_step_struct(
 
       ;
 
-  bind_FTypeArrayND<RfStairStepProxyArray1D>(m, "RfStairStepProxyArray1D");
-  bind_FTypeAlloc1D<RfStairStepProxyAlloc1D>(m, "RfStairStepProxyAlloc1D");
+  bind_FTypeArrayND<RfStairStepProxyArray1D>(m, "RfStairStepStructArray1D");
+  bind_FTypeAlloc1D<RfStairStepProxyAlloc1D>(m, "RfStairStepStructAlloc1D");
   // 2D RfStairStepProxy arrays are not used in structs/routines
   // 3D RfStairStepProxy arrays are not used in structs/routines
 }
@@ -3603,6 +3861,13 @@ void init_spin_orbit_map1_struct(
       .def_property_readonly("vec0", &SpinOrbitMap1Proxy::vec0)
       // SpinOrbitMap1Proxy.spin_q (2D_NOT_real - 0th and 1st order quaternion spin map
       .def_property_readonly("spin_q", &SpinOrbitMap1Proxy::spin_q)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return SpinOrbitMap1ProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -3610,8 +3875,8 @@ void init_spin_orbit_map1_struct(
 
       ;
 
-  bind_FTypeArrayND<SpinOrbitMap1ProxyArray1D>(m, "SpinOrbitMap1ProxyArray1D");
-  bind_FTypeAlloc1D<SpinOrbitMap1ProxyAlloc1D>(m, "SpinOrbitMap1ProxyAlloc1D");
+  bind_FTypeArrayND<SpinOrbitMap1ProxyArray1D>(m, "SpinOrbitMap1StructArray1D");
+  bind_FTypeAlloc1D<SpinOrbitMap1ProxyAlloc1D>(m, "SpinOrbitMap1StructAlloc1D");
   // 2D SpinOrbitMap1Proxy arrays are not used in structs/routines
   // 3D SpinOrbitMap1Proxy arrays are not used in structs/routines
 }
@@ -3763,7 +4028,7 @@ void init_surface_displacement_pt_struct(
 
   // 1D SurfaceDisplacementPtProxy arrays are not used in structs/routines
   bind_FTypeArrayND<SurfaceDisplacementPtProxyArray2D>(
-      m, "SurfaceDisplacementPtProxyArray2D");
+      m, "SurfaceDisplacementPtStructArray2D");
   // 3D SurfaceDisplacementPtProxy arrays are not used in structs/routines
 }
 
@@ -3837,7 +4102,7 @@ void init_surface_h_misalign_pt_struct(
 
   // 1D SurfaceHMisalignPtProxy arrays are not used in structs/routines
   bind_FTypeArrayND<SurfaceHMisalignPtProxyArray2D>(
-      m, "SurfaceHMisalignPtProxyArray2D");
+      m, "SurfaceHMisalignPtStructArray2D");
   // 3D SurfaceHMisalignPtProxy arrays are not used in structs/routines
 }
 
@@ -3904,7 +4169,7 @@ void init_surface_segmented_pt_struct(
 
   // 1D SurfaceSegmentedPtProxy arrays are not used in structs/routines
   bind_FTypeArrayND<SurfaceSegmentedPtProxyArray2D>(
-      m, "SurfaceSegmentedPtProxyArray2D");
+      m, "SurfaceSegmentedPtStructArray2D");
   // 3D SurfaceSegmentedPtProxy arrays are not used in structs/routines
 }
 
@@ -3945,6 +4210,13 @@ void init_target_point_struct(
   cls.def(py::init<>())
       // TargetPointProxy.r (1D_NOT_real - (x, y, z)
       .def_property_readonly("r", &TargetPointProxy::r)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TargetPointProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -3952,8 +4224,8 @@ void init_target_point_struct(
 
       ;
 
-  bind_FTypeArrayND<TargetPointProxyArray1D>(m, "TargetPointProxyArray1D");
-  bind_FTypeAlloc1D<TargetPointProxyAlloc1D>(m, "TargetPointProxyAlloc1D");
+  bind_FTypeArrayND<TargetPointProxyArray1D>(m, "TargetPointStructArray1D");
+  bind_FTypeAlloc1D<TargetPointProxyAlloc1D>(m, "TargetPointStructAlloc1D");
   // 2D TargetPointProxy arrays are not used in structs/routines
   // 3D TargetPointProxy arrays are not used in structs/routines
 }
@@ -3966,13 +4238,18 @@ void init_taylor_struct(py::module& m, py::class_<TaylorProxy>& cls) {
       .def_property("ref", &TaylorProxy::ref, &TaylorProxy::set_ref)
       // TaylorProxy.term (1D_PTR_type -
       .def_property_readonly("term", &TaylorProxy::term)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return TaylorProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def("__repr__", [](const TaylorProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<TaylorProxyArray1D>(m, "TaylorProxyArray1D");
-  bind_FTypeAlloc1D<TaylorProxyAlloc1D>(m, "TaylorProxyAlloc1D");
+  bind_FTypeArrayND<TaylorProxyArray1D>(m, "TaylorStructArray1D");
+  bind_FTypeAlloc1D<TaylorProxyAlloc1D>(m, "TaylorStructAlloc1D");
   // 2D TaylorProxy arrays are not used in structs/routines
   // 3D TaylorProxy arrays are not used in structs/routines
 }
@@ -3985,6 +4262,11 @@ void init_taylor_term_struct(py::module& m, py::class_<TaylorTermProxy>& cls) {
       .def_property("coef", &TaylorTermProxy::coef, &TaylorTermProxy::set_coef)
       // TaylorTermProxy.expn (1D_NOT_integer -
       .def_property_readonly("expn", &TaylorTermProxy::expn)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return TaylorTermProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -3992,8 +4274,8 @@ void init_taylor_term_struct(py::module& m, py::class_<TaylorTermProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TaylorTermProxyArray1D>(m, "TaylorTermProxyArray1D");
-  bind_FTypeAlloc1D<TaylorTermProxyAlloc1D>(m, "TaylorTermProxyAlloc1D");
+  bind_FTypeArrayND<TaylorTermProxyArray1D>(m, "TaylorTermStructArray1D");
+  bind_FTypeAlloc1D<TaylorTermProxyAlloc1D>(m, "TaylorTermStructAlloc1D");
   // 2D TaylorTermProxy arrays are not used in structs/routines
   // 3D TaylorTermProxy arrays are not used in structs/routines
 }
@@ -4022,6 +4304,11 @@ void init_track_point_struct(py::module& m, py::class_<TrackPointProxy>& cls) {
       .def_property_readonly("vec0", &TrackPointProxy::vec0)
       // TrackPointProxy.mat6 (2D_NOT_real - 1st order part of xfer map (transfer matrix).
       .def_property_readonly("mat6", &TrackPointProxy::mat6)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return TrackPointProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -4029,8 +4316,8 @@ void init_track_point_struct(py::module& m, py::class_<TrackPointProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TrackPointProxyArray1D>(m, "TrackPointProxyArray1D");
-  bind_FTypeAlloc1D<TrackPointProxyAlloc1D>(m, "TrackPointProxyAlloc1D");
+  bind_FTypeArrayND<TrackPointProxyArray1D>(m, "TrackPointStructArray1D");
+  bind_FTypeAlloc1D<TrackPointProxyAlloc1D>(m, "TrackPointStructAlloc1D");
   // 2D TrackPointProxy arrays are not used in structs/routines
   // 3D TrackPointProxy arrays are not used in structs/routines
 }
@@ -4152,6 +4439,11 @@ void init_wake_lr_mode_struct(py::module& m, py::class_<WakeLrModeProxy>& cls) {
           "polarized",
           &WakeLrModeProxy::polarized,
           &WakeLrModeProxy::set_polarized)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return WakeLrModeProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -4159,8 +4451,8 @@ void init_wake_lr_mode_struct(py::module& m, py::class_<WakeLrModeProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<WakeLrModeProxyArray1D>(m, "WakeLrModeProxyArray1D");
-  bind_FTypeAlloc1D<WakeLrModeProxyAlloc1D>(m, "WakeLrModeProxyAlloc1D");
+  bind_FTypeArrayND<WakeLrModeProxyArray1D>(m, "WakeLrModeStructArray1D");
+  bind_FTypeAlloc1D<WakeLrModeProxyAlloc1D>(m, "WakeLrModeStructAlloc1D");
   // 2D WakeLrModeProxy arrays are not used in structs/routines
   // 3D WakeLrModeProxy arrays are not used in structs/routines
 }
@@ -4235,6 +4527,11 @@ void init_wake_sr_mode_struct(py::module& m, py::class_<WakeSrModeProxy>& cls) {
           "position_dependence",
           &WakeSrModeProxy::position_dependence,
           &WakeSrModeProxy::set_position_dependence)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return WakeSrModeProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -4242,8 +4539,8 @@ void init_wake_sr_mode_struct(py::module& m, py::class_<WakeSrModeProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<WakeSrModeProxyArray1D>(m, "WakeSrModeProxyArray1D");
-  bind_FTypeAlloc1D<WakeSrModeProxyAlloc1D>(m, "WakeSrModeProxyAlloc1D");
+  bind_FTypeArrayND<WakeSrModeProxyArray1D>(m, "WakeSrModeStructArray1D");
+  bind_FTypeAlloc1D<WakeSrModeProxyAlloc1D>(m, "WakeSrModeStructAlloc1D");
   // 2D WakeSrModeProxy arrays are not used in structs/routines
   // 3D WakeSrModeProxy arrays are not used in structs/routines
 }
@@ -4432,6 +4729,13 @@ void init_wall3d_section_struct(
       .def_property_readonly("p1_coef", &Wall3dSectionProxy::p1_coef)
       // Wall3dSectionProxy.p2_coef (1D_NOT_real - Spline coefs for p1 function
       .def_property_readonly("p2_coef", &Wall3dSectionProxy::p2_coef)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return Wall3dSectionProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -4439,8 +4743,8 @@ void init_wall3d_section_struct(
 
       ;
 
-  bind_FTypeArrayND<Wall3dSectionProxyArray1D>(m, "Wall3dSectionProxyArray1D");
-  bind_FTypeAlloc1D<Wall3dSectionProxyAlloc1D>(m, "Wall3dSectionProxyAlloc1D");
+  bind_FTypeArrayND<Wall3dSectionProxyArray1D>(m, "Wall3DSectionStructArray1D");
+  bind_FTypeAlloc1D<Wall3dSectionProxyAlloc1D>(m, "Wall3DSectionStructAlloc1D");
   // 2D Wall3dSectionProxy arrays are not used in structs/routines
   // 3D Wall3dSectionProxy arrays are not used in structs/routines
 }
@@ -4483,13 +4787,18 @@ void init_wall3d_struct(py::module& m, py::class_<Wall3dProxy>& cls) {
           &Wall3dProxy::set_ele_anchor_pt)
       // Wall3dProxy.section (1D_ALLOC_type - Indexed from 1.
       .def_property_readonly("section", &Wall3dProxy::section)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return Wall3dProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def("__repr__", [](const Wall3dProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<Wall3dProxyArray1D>(m, "Wall3dProxyArray1D");
-  bind_FTypeAlloc1D<Wall3dProxyAlloc1D>(m, "Wall3dProxyAlloc1D");
+  bind_FTypeArrayND<Wall3dProxyArray1D>(m, "Wall3DStructArray1D");
+  bind_FTypeAlloc1D<Wall3dProxyAlloc1D>(m, "Wall3DStructAlloc1D");
   // 2D Wall3dProxy arrays are not used in structs/routines
   // 3D Wall3dProxy arrays are not used in structs/routines
 }
@@ -4527,6 +4836,13 @@ void init_wall3d_vertex_struct(
       // Wall3dVertexProxy.type (0D_NOT_integer - No longer used.
       .def_property(
           "type", &Wall3dVertexProxy::type, &Wall3dVertexProxy::set_type)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return Wall3dVertexProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -4534,8 +4850,8 @@ void init_wall3d_vertex_struct(
 
       ;
 
-  bind_FTypeArrayND<Wall3dVertexProxyArray1D>(m, "Wall3dVertexProxyArray1D");
-  bind_FTypeAlloc1D<Wall3dVertexProxyAlloc1D>(m, "Wall3dVertexProxyAlloc1D");
+  bind_FTypeArrayND<Wall3dVertexProxyArray1D>(m, "Wall3DVertexStructArray1D");
+  bind_FTypeAlloc1D<Wall3dVertexProxyAlloc1D>(m, "Wall3DVertexStructAlloc1D");
   // 2D Wall3dVertexProxy arrays are not used in structs/routines
   // 3D Wall3dVertexProxy arrays are not used in structs/routines
 }
@@ -4588,7 +4904,7 @@ void init_bicubic_cmplx_coef_struct(
   // 1D BicubicCmplxCoefProxy arrays are not used in structs/routines
   // 2D BicubicCmplxCoefProxy arrays are not used in structs/routines
   bind_FTypeArrayND<BicubicCmplxCoefProxyArray3D>(
-      m, "BicubicCmplxCoefProxyArray3D");
+      m, "BicubicCmplxCoefStructArray3D");
 }
 
 // =============================================================================
@@ -4611,7 +4927,7 @@ void init_tricubic_cmplx_coef_struct(
   // 1D TricubicCmplxCoefProxy arrays are not used in structs/routines
   // 2D TricubicCmplxCoefProxy arrays are not used in structs/routines
   bind_FTypeArrayND<TricubicCmplxCoefProxyArray3D>(
-      m, "TricubicCmplxCoefProxyArray3D");
+      m, "TricubicCmplxCoefStructArray3D");
 }
 
 // =============================================================================
@@ -4934,13 +5250,18 @@ void init_spline_struct(py::module& m, py::class_<SplineProxy>& cls) {
       .def_property("x1", &SplineProxy::x1, &SplineProxy::set_x1)
       // SplineProxy.coef (1D_NOT_real - coefficients for cubic spline
       .def_property_readonly("coef", &SplineProxy::coef)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return SplineProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def("__repr__", [](const SplineProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<SplineProxyArray1D>(m, "SplineProxyArray1D");
-  bind_FTypeAlloc1D<SplineProxyAlloc1D>(m, "SplineProxyAlloc1D");
+  bind_FTypeArrayND<SplineProxyArray1D>(m, "SplineStructArray1D");
+  bind_FTypeAlloc1D<SplineProxyAlloc1D>(m, "SplineStructAlloc1D");
   // 2D SplineProxy arrays are not used in structs/routines
   // 3D SplineProxy arrays are not used in structs/routines
 }
@@ -5014,6 +5335,13 @@ void init_summation_rdt_struct(
       // SummationRdtProxy.h11110 (0D_NOT_complex -
       .def_property(
           "h11110", &SummationRdtProxy::h11110, &SummationRdtProxy::set_h11110)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return SummationRdtProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -5021,8 +5349,8 @@ void init_summation_rdt_struct(
 
       ;
 
-  bind_FTypeArrayND<SummationRdtProxyArray1D>(m, "SummationRdtProxyArray1D");
-  bind_FTypeAlloc1D<SummationRdtProxyAlloc1D>(m, "SummationRdtProxyAlloc1D");
+  bind_FTypeArrayND<SummationRdtProxyArray1D>(m, "SummationRdtStructArray1D");
+  bind_FTypeAlloc1D<SummationRdtProxyAlloc1D>(m, "SummationRdtStructAlloc1D");
   // 2D SummationRdtProxy arrays are not used in structs/routines
   // 3D SummationRdtProxy arrays are not used in structs/routines
 }
@@ -5191,6 +5519,13 @@ void init_tao_building_wall_point_struct(
           "x_center",
           &TaoBuildingWallPointProxy::x_center,
           &TaoBuildingWallPointProxy::set_x_center)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoBuildingWallPointProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -5199,9 +5534,9 @@ void init_tao_building_wall_point_struct(
       ;
 
   bind_FTypeArrayND<TaoBuildingWallPointProxyArray1D>(
-      m, "TaoBuildingWallPointProxyArray1D");
+      m, "TaoBuildingWallPointStructArray1D");
   bind_FTypeAlloc1D<TaoBuildingWallPointProxyAlloc1D>(
-      m, "TaoBuildingWallPointProxyAlloc1D");
+      m, "TaoBuildingWallPointStructAlloc1D");
   // 2D TaoBuildingWallPointProxy arrays are not used in structs/routines
   // 3D TaoBuildingWallPointProxy arrays are not used in structs/routines
 }
@@ -5224,6 +5559,13 @@ void init_tao_building_wall_section_struct(
           &TaoBuildingWallSectionProxy::set_constraint)
       // TaoBuildingWallSectionProxy.point (1D_ALLOC_type -
       .def_property_readonly("point", &TaoBuildingWallSectionProxy::point)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoBuildingWallSectionProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -5234,9 +5576,9 @@ void init_tao_building_wall_section_struct(
       ;
 
   bind_FTypeArrayND<TaoBuildingWallSectionProxyArray1D>(
-      m, "TaoBuildingWallSectionProxyArray1D");
+      m, "TaoBuildingWallSectionStructArray1D");
   bind_FTypeAlloc1D<TaoBuildingWallSectionProxyAlloc1D>(
-      m, "TaoBuildingWallSectionProxyAlloc1D");
+      m, "TaoBuildingWallSectionStructAlloc1D");
   // 2D TaoBuildingWallSectionProxy arrays are not used in structs/routines
   // 3D TaoBuildingWallSectionProxy arrays are not used in structs/routines
 }
@@ -5277,6 +5619,13 @@ void init_tao_cmd_history_struct(
           "cmd", &TaoCmdHistoryProxy::cmd, &TaoCmdHistoryProxy::set_cmd)
       // TaoCmdHistoryProxy.ix (0D_NOT_integer - Command index (1st command has ix = 1, etc.) Note: Commands from command files will be assigned an index.
       .def_property("ix", &TaoCmdHistoryProxy::ix, &TaoCmdHistoryProxy::set_ix)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoCmdHistoryProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -5284,8 +5633,8 @@ void init_tao_cmd_history_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoCmdHistoryProxyArray1D>(m, "TaoCmdHistoryProxyArray1D");
-  bind_FTypeAlloc1D<TaoCmdHistoryProxyAlloc1D>(m, "TaoCmdHistoryProxyAlloc1D");
+  bind_FTypeArrayND<TaoCmdHistoryProxyArray1D>(m, "TaoCmdHistoryStructArray1D");
+  bind_FTypeAlloc1D<TaoCmdHistoryProxyAlloc1D>(m, "TaoCmdHistoryStructAlloc1D");
   // 2D TaoCmdHistoryProxy arrays are not used in structs/routines
   // 3D TaoCmdHistoryProxy arrays are not used in structs/routines
 }
@@ -5681,14 +6030,19 @@ void init_tao_curve_struct(py::module& m, py::class_<TaoCurveProxy>& cls) {
           &TaoCurveProxy::set_smooth_line_calc)
       // TaoCurveProxy.valid (0D_NOT_logical - valid data?
       .def_property("valid", &TaoCurveProxy::valid, &TaoCurveProxy::set_valid)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return TaoCurveProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__", [](const TaoCurveProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<TaoCurveProxyArray1D>(m, "TaoCurveProxyArray1D");
-  bind_FTypeAlloc1D<TaoCurveProxyAlloc1D>(m, "TaoCurveProxyAlloc1D");
+  bind_FTypeArrayND<TaoCurveProxyArray1D>(m, "TaoCurveStructArray1D");
+  bind_FTypeAlloc1D<TaoCurveProxyAlloc1D>(m, "TaoCurveStructAlloc1D");
   // 2D TaoCurveProxy arrays are not used in structs/routines
   // 3D TaoCurveProxy arrays are not used in structs/routines
 }
@@ -5703,6 +6057,11 @@ void init_tao_d1_data_struct(py::module& m, py::class_<TaoD1DataProxy>& cls) {
       .def_property("d2", &TaoD1DataProxy::d2, &TaoD1DataProxy::set_d2)
       // TaoD1DataProxy.d (1D_PTR_type - Pointer to the appropriate section in u%data
       .def_property_readonly("d", &TaoD1DataProxy::d)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return TaoD1DataProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -5710,8 +6069,8 @@ void init_tao_d1_data_struct(py::module& m, py::class_<TaoD1DataProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoD1DataProxyArray1D>(m, "TaoD1DataProxyArray1D");
-  bind_FTypeAlloc1D<TaoD1DataProxyAlloc1D>(m, "TaoD1DataProxyAlloc1D");
+  bind_FTypeArrayND<TaoD1DataProxyArray1D>(m, "TaoD1DataStructArray1D");
+  bind_FTypeAlloc1D<TaoD1DataProxyAlloc1D>(m, "TaoD1DataStructAlloc1D");
   // 2D TaoD1DataProxy arrays are not used in structs/routines
   // 3D TaoD1DataProxy arrays are not used in structs/routines
 }
@@ -5767,6 +6126,11 @@ void init_tao_d2_data_struct(py::module& m, py::class_<TaoD2DataProxy>& cls) {
           "ref_read_in",
           &TaoD2DataProxy::ref_read_in,
           &TaoD2DataProxy::set_ref_read_in)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return TaoD2DataProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -5774,8 +6138,8 @@ void init_tao_d2_data_struct(py::module& m, py::class_<TaoD2DataProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoD2DataProxyArray1D>(m, "TaoD2DataProxyArray1D");
-  bind_FTypeAlloc1D<TaoD2DataProxyAlloc1D>(m, "TaoD2DataProxyAlloc1D");
+  bind_FTypeArrayND<TaoD2DataProxyArray1D>(m, "TaoD2DataStructArray1D");
+  bind_FTypeAlloc1D<TaoD2DataProxyAlloc1D>(m, "TaoD2DataStructAlloc1D");
   // 2D TaoD2DataProxy arrays are not used in structs/routines
   // 3D TaoD2DataProxy arrays are not used in structs/routines
 }
@@ -5956,13 +6320,18 @@ void init_tao_data_struct(py::module& m, py::class_<TaoDataProxy>& cls) {
           "spin_map", &TaoDataProxy::spin_map, &TaoDataProxy::set_spin_map)
       // TaoDataProxy.d1 (0D_PTR_type - Pointer to the parent d1_data_struct
       .def_property("d1", &TaoDataProxy::d1, &TaoDataProxy::set_d1)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return TaoDataProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def("__repr__", [](const TaoDataProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<TaoDataProxyArray1D>(m, "TaoDataProxyArray1D");
-  bind_FTypeAlloc1D<TaoDataProxyAlloc1D>(m, "TaoDataProxyAlloc1D");
+  bind_FTypeArrayND<TaoDataProxyArray1D>(m, "TaoDataStructArray1D");
+  bind_FTypeAlloc1D<TaoDataProxyAlloc1D>(m, "TaoDataStructAlloc1D");
   // 2D TaoDataProxy arrays are not used in structs/routines
   // 3D TaoDataProxy arrays are not used in structs/routines
 }
@@ -5983,6 +6352,13 @@ void init_tao_data_var_component_struct(
           "sign",
           &TaoDataVarComponentProxy::sign,
           &TaoDataVarComponentProxy::set_sign)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoDataVarComponentProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -5991,9 +6367,9 @@ void init_tao_data_var_component_struct(
       ;
 
   bind_FTypeArrayND<TaoDataVarComponentProxyArray1D>(
-      m, "TaoDataVarComponentProxyArray1D");
+      m, "TaoDataVarComponentStructArray1D");
   bind_FTypeAlloc1D<TaoDataVarComponentProxyAlloc1D>(
-      m, "TaoDataVarComponentProxyAlloc1D");
+      m, "TaoDataVarComponentStructAlloc1D");
   // 2D TaoDataVarComponentProxy arrays are not used in structs/routines
   // 3D TaoDataVarComponentProxy arrays are not used in structs/routines
 }
@@ -6069,6 +6445,13 @@ void init_tao_ele_pointer_struct(
       // TaoElePointerProxy.n_loc (0D_NOT_integer -
       .def_property(
           "n_loc", &TaoElePointerProxy::n_loc, &TaoElePointerProxy::set_n_loc)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoElePointerProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -6076,8 +6459,8 @@ void init_tao_ele_pointer_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoElePointerProxyArray1D>(m, "TaoElePointerProxyArray1D");
-  bind_FTypeAlloc1D<TaoElePointerProxyAlloc1D>(m, "TaoElePointerProxyAlloc1D");
+  bind_FTypeArrayND<TaoElePointerProxyArray1D>(m, "TaoElePointerStructArray1D");
+  bind_FTypeAlloc1D<TaoElePointerProxyAlloc1D>(m, "TaoElePointerStructAlloc1D");
   // 2D TaoElePointerProxy arrays are not used in structs/routines
   // 3D TaoElePointerProxy arrays are not used in structs/routines
 }
@@ -6127,6 +6510,13 @@ void init_tao_ele_shape_struct(
           &TaoEleShapeProxy::set_name_ele)
       // TaoEleShapeProxy.uni (1D_ALLOC_type -
       .def_property_readonly("uni", &TaoEleShapeProxy::uni)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoEleShapeProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -6134,8 +6524,8 @@ void init_tao_ele_shape_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoEleShapeProxyArray1D>(m, "TaoEleShapeProxyArray1D");
-  bind_FTypeAlloc1D<TaoEleShapeProxyAlloc1D>(m, "TaoEleShapeProxyAlloc1D");
+  bind_FTypeArrayND<TaoEleShapeProxyArray1D>(m, "TaoEleShapeStructArray1D");
+  bind_FTypeAlloc1D<TaoEleShapeProxyAlloc1D>(m, "TaoEleShapeStructAlloc1D");
   // 2D TaoEleShapeProxy arrays are not used in structs/routines
   // 3D TaoEleShapeProxy arrays are not used in structs/routines
 }
@@ -6690,14 +7080,19 @@ void init_tao_graph_struct(py::module& m, py::class_<TaoGraphProxy>& cls) {
       // TaoGraphProxy.is_valid (0D_NOT_logical - EG: Bad x_axis_type.
       .def_property(
           "is_valid", &TaoGraphProxy::is_valid, &TaoGraphProxy::set_is_valid)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return TaoGraphProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__", [](const TaoGraphProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<TaoGraphProxyArray1D>(m, "TaoGraphProxyArray1D");
-  bind_FTypeAlloc1D<TaoGraphProxyAlloc1D>(m, "TaoGraphProxyAlloc1D");
+  bind_FTypeArrayND<TaoGraphProxyArray1D>(m, "TaoGraphStructArray1D");
+  bind_FTypeAlloc1D<TaoGraphProxyAlloc1D>(m, "TaoGraphStructAlloc1D");
   // 2D TaoGraphProxy arrays are not used in structs/routines
   // 3D TaoGraphProxy arrays are not used in structs/routines
 }
@@ -6968,6 +7363,13 @@ void init_tao_lat_sigma_struct(
   cls.def(py::init<>())
       // TaoLatSigmaProxy.mat (2D_NOT_real -
       .def_property_readonly("mat", &TaoLatSigmaProxy::mat)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoLatSigmaProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -6975,8 +7377,8 @@ void init_tao_lat_sigma_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoLatSigmaProxyArray1D>(m, "TaoLatSigmaProxyArray1D");
-  bind_FTypeAlloc1D<TaoLatSigmaProxyAlloc1D>(m, "TaoLatSigmaProxyAlloc1D");
+  bind_FTypeArrayND<TaoLatSigmaProxyArray1D>(m, "TaoLatSigmaStructArray1D");
+  bind_FTypeAlloc1D<TaoLatSigmaProxyAlloc1D>(m, "TaoLatSigmaStructAlloc1D");
   // 2D TaoLatSigmaProxy arrays are not used in structs/routines
   // 3D TaoLatSigmaProxy arrays are not used in structs/routines
 }
@@ -7132,6 +7534,13 @@ void init_tao_lattice_branch_struct(
           "sigma_track_ok",
           &TaoLatticeBranchProxy::sigma_track_ok,
           &TaoLatticeBranchProxy::set_sigma_track_ok)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoLatticeBranchProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -7140,9 +7549,9 @@ void init_tao_lattice_branch_struct(
       ;
 
   bind_FTypeArrayND<TaoLatticeBranchProxyArray1D>(
-      m, "TaoLatticeBranchProxyArray1D");
+      m, "TaoLatticeBranchStructArray1D");
   bind_FTypeAlloc1D<TaoLatticeBranchProxyAlloc1D>(
-      m, "TaoLatticeBranchProxyAlloc1D");
+      m, "TaoLatticeBranchStructAlloc1D");
   // 2D TaoLatticeBranchProxy arrays are not used in structs/routines
   // 3D TaoLatticeBranchProxy arrays are not used in structs/routines
 }
@@ -7200,6 +7609,13 @@ void init_tao_model_branch_struct(
       // TaoModelBranchProxy.beam (0D_NOT_type -
       .def_property(
           "beam", &TaoModelBranchProxy::beam, &TaoModelBranchProxy::set_beam)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoModelBranchProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -7208,9 +7624,9 @@ void init_tao_model_branch_struct(
       ;
 
   bind_FTypeArrayND<TaoModelBranchProxyArray1D>(
-      m, "TaoModelBranchProxyArray1D");
+      m, "TaoModelBranchStructArray1D");
   bind_FTypeAlloc1D<TaoModelBranchProxyAlloc1D>(
-      m, "TaoModelBranchProxyAlloc1D");
+      m, "TaoModelBranchStructAlloc1D");
   // 2D TaoModelBranchProxy arrays are not used in structs/routines
   // 3D TaoModelBranchProxy arrays are not used in structs/routines
 }
@@ -7234,6 +7650,13 @@ void init_tao_model_element_struct(
           "save_beam_to_file",
           &TaoModelElementProxy::save_beam_to_file,
           &TaoModelElementProxy::set_save_beam_to_file)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoModelElementProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -7242,9 +7665,9 @@ void init_tao_model_element_struct(
       ;
 
   bind_FTypeArrayND<TaoModelElementProxyArray1D>(
-      m, "TaoModelElementProxyArray1D");
+      m, "TaoModelElementStructArray1D");
   bind_FTypeAlloc1D<TaoModelElementProxyAlloc1D>(
-      m, "TaoModelElementProxyAlloc1D");
+      m, "TaoModelElementStructAlloc1D");
   // 2D TaoModelElementProxy arrays are not used in structs/routines
   // 3D TaoModelElementProxy arrays are not used in structs/routines
 }
@@ -7303,6 +7726,13 @@ void init_tao_plot_cache_struct(
           "orbit", &TaoPlotCacheProxy::orbit, &TaoPlotCacheProxy::set_orbit)
       // TaoPlotCacheProxy.err (0D_NOT_logical -
       .def_property("err", &TaoPlotCacheProxy::err, &TaoPlotCacheProxy::set_err)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoPlotCacheProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -7310,8 +7740,8 @@ void init_tao_plot_cache_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoPlotCacheProxyArray1D>(m, "TaoPlotCacheProxyArray1D");
-  bind_FTypeAlloc1D<TaoPlotCacheProxyAlloc1D>(m, "TaoPlotCacheProxyAlloc1D");
+  bind_FTypeArrayND<TaoPlotCacheProxyArray1D>(m, "TaoPlotCacheStructArray1D");
+  bind_FTypeAlloc1D<TaoPlotCacheProxyAlloc1D>(m, "TaoPlotCacheStructAlloc1D");
   // 2D TaoPlotCacheProxy arrays are not used in structs/routines
   // 3D TaoPlotCacheProxy arrays are not used in structs/routines
 }
@@ -7472,6 +7902,13 @@ void init_tao_plot_region_struct(
           "setup_done",
           &TaoPlotRegionProxy::setup_done,
           &TaoPlotRegionProxy::set_setup_done)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoPlotRegionProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -7479,8 +7916,8 @@ void init_tao_plot_region_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoPlotRegionProxyArray1D>(m, "TaoPlotRegionProxyArray1D");
-  bind_FTypeAlloc1D<TaoPlotRegionProxyAlloc1D>(m, "TaoPlotRegionProxyAlloc1D");
+  bind_FTypeArrayND<TaoPlotRegionProxyArray1D>(m, "TaoPlotRegionStructArray1D");
+  bind_FTypeAlloc1D<TaoPlotRegionProxyAlloc1D>(m, "TaoPlotRegionStructAlloc1D");
   // 2D TaoPlotRegionProxy arrays are not used in structs/routines
   // 3D TaoPlotRegionProxy arrays are not used in structs/routines
 }
@@ -7548,13 +7985,18 @@ void init_tao_plot_struct(py::module& m, py::class_<TaoPlotProxy>& cls) {
           "default_plot",
           &TaoPlotProxy::default_plot,
           &TaoPlotProxy::set_default_plot)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return TaoPlotProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def("__repr__", [](const TaoPlotProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<TaoPlotProxyArray1D>(m, "TaoPlotProxyArray1D");
-  bind_FTypeAlloc1D<TaoPlotProxyAlloc1D>(m, "TaoPlotProxyAlloc1D");
+  bind_FTypeArrayND<TaoPlotProxyArray1D>(m, "TaoPlotStructArray1D");
+  bind_FTypeAlloc1D<TaoPlotProxyAlloc1D>(m, "TaoPlotStructAlloc1D");
   // 2D TaoPlotProxy arrays are not used in structs/routines
   // 3D TaoPlotProxy arrays are not used in structs/routines
 }
@@ -7576,6 +8018,13 @@ void init_tao_shape_pattern_point_struct(
           "radius",
           &TaoShapePatternPointProxy::radius,
           &TaoShapePatternPointProxy::set_radius)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoShapePatternPointProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -7584,9 +8033,9 @@ void init_tao_shape_pattern_point_struct(
       ;
 
   bind_FTypeArrayND<TaoShapePatternPointProxyArray1D>(
-      m, "TaoShapePatternPointProxyArray1D");
+      m, "TaoShapePatternPointStructArray1D");
   bind_FTypeAlloc1D<TaoShapePatternPointProxyAlloc1D>(
-      m, "TaoShapePatternPointProxyAlloc1D");
+      m, "TaoShapePatternPointStructAlloc1D");
   // 2D TaoShapePatternPointProxy arrays are not used in structs/routines
   // 3D TaoShapePatternPointProxy arrays are not used in structs/routines
 }
@@ -7605,6 +8054,13 @@ void init_tao_shape_pattern_struct(
           "line", &TaoShapePatternProxy::line, &TaoShapePatternProxy::set_line)
       // TaoShapePatternProxy.pt (1D_ALLOC_type -
       .def_property_readonly("pt", &TaoShapePatternProxy::pt)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoShapePatternProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -7613,9 +8069,9 @@ void init_tao_shape_pattern_struct(
       ;
 
   bind_FTypeArrayND<TaoShapePatternProxyArray1D>(
-      m, "TaoShapePatternProxyArray1D");
+      m, "TaoShapePatternStructArray1D");
   bind_FTypeAlloc1D<TaoShapePatternProxyAlloc1D>(
-      m, "TaoShapePatternProxyAlloc1D");
+      m, "TaoShapePatternStructAlloc1D");
   // 2D TaoShapePatternProxy arrays are not used in structs/routines
   // 3D TaoShapePatternProxy arrays are not used in structs/routines
 }
@@ -7660,6 +8116,11 @@ void init_tao_spin_ele_struct(py::module& m, py::class_<TaoSpinEleProxy>& cls) {
       // TaoSpinEleProxy.valid (0D_NOT_logical -
       .def_property(
           "valid", &TaoSpinEleProxy::valid, &TaoSpinEleProxy::set_valid)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return TaoSpinEleProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -7667,8 +8128,8 @@ void init_tao_spin_ele_struct(py::module& m, py::class_<TaoSpinEleProxy>& cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoSpinEleProxyArray1D>(m, "TaoSpinEleProxyArray1D");
-  bind_FTypeAlloc1D<TaoSpinEleProxyAlloc1D>(m, "TaoSpinEleProxyAlloc1D");
+  bind_FTypeArrayND<TaoSpinEleProxyArray1D>(m, "TaoSpinEleStructArray1D");
+  bind_FTypeAlloc1D<TaoSpinEleProxyAlloc1D>(m, "TaoSpinEleStructAlloc1D");
   // 2D TaoSpinEleProxy arrays are not used in structs/routines
   // 3D TaoSpinEleProxy arrays are not used in structs/routines
 }
@@ -8003,6 +8464,13 @@ void init_tao_universe_pointer_struct(
       // TaoUniversePointerProxy.u (0D_PTR_type -
       .def_property(
           "u", &TaoUniversePointerProxy::u, &TaoUniversePointerProxy::set_u)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoUniversePointerProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -8011,9 +8479,9 @@ void init_tao_universe_pointer_struct(
       ;
 
   bind_FTypeArrayND<TaoUniversePointerProxyArray1D>(
-      m, "TaoUniversePointerProxyArray1D");
+      m, "TaoUniversePointerStructArray1D");
   bind_FTypeAlloc1D<TaoUniversePointerProxyAlloc1D>(
-      m, "TaoUniversePointerProxyAlloc1D");
+      m, "TaoUniversePointerStructAlloc1D");
   // 2D TaoUniversePointerProxy arrays are not used in structs/routines
   // 3D TaoUniversePointerProxy arrays are not used in structs/routines
 }
@@ -8098,6 +8566,13 @@ void init_tao_universe_struct(
           "picked_uni",
           &TaoUniverseProxy::picked_uni,
           &TaoUniverseProxy::set_picked_uni)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoUniverseProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -8105,8 +8580,8 @@ void init_tao_universe_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoUniverseProxyArray1D>(m, "TaoUniverseProxyArray1D");
-  bind_FTypeAlloc1D<TaoUniverseProxyAlloc1D>(m, "TaoUniverseProxyAlloc1D");
+  bind_FTypeArrayND<TaoUniverseProxyArray1D>(m, "TaoUniverseStructArray1D");
+  bind_FTypeAlloc1D<TaoUniverseProxyAlloc1D>(m, "TaoUniverseStructAlloc1D");
   // 2D TaoUniverseProxy arrays are not used in structs/routines
   // 3D TaoUniverseProxy arrays are not used in structs/routines
 }
@@ -8122,14 +8597,19 @@ void init_tao_v1_var_struct(py::module& m, py::class_<TaoV1VarProxy>& cls) {
           "ix_v1_var", &TaoV1VarProxy::ix_v1_var, &TaoV1VarProxy::set_ix_v1_var)
       // TaoV1VarProxy.v (1D_PTR_type - Pointer to the appropriate section in s%var.
       .def_property_readonly("v", &TaoV1VarProxy::v)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return TaoV1VarProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__", [](const TaoV1VarProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<TaoV1VarProxyArray1D>(m, "TaoV1VarProxyArray1D");
-  bind_FTypeAlloc1D<TaoV1VarProxyAlloc1D>(m, "TaoV1VarProxyAlloc1D");
+  bind_FTypeArrayND<TaoV1VarProxyArray1D>(m, "TaoV1VarStructArray1D");
+  bind_FTypeAlloc1D<TaoV1VarProxyAlloc1D>(m, "TaoV1VarStructAlloc1D");
   // 2D TaoV1VarProxy arrays are not used in structs/routines
   // 3D TaoV1VarProxy arrays are not used in structs/routines
 }
@@ -8161,6 +8641,13 @@ void init_tao_var_slave_struct(
           "base_value",
           &TaoVarSlaveProxy::base_value,
           &TaoVarSlaveProxy::set_base_value)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoVarSlaveProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -8168,8 +8655,8 @@ void init_tao_var_slave_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoVarSlaveProxyArray1D>(m, "TaoVarSlaveProxyArray1D");
-  bind_FTypeAlloc1D<TaoVarSlaveProxyAlloc1D>(m, "TaoVarSlaveProxyAlloc1D");
+  bind_FTypeArrayND<TaoVarSlaveProxyArray1D>(m, "TaoVarSlaveStructArray1D");
+  bind_FTypeAlloc1D<TaoVarSlaveProxyAlloc1D>(m, "TaoVarSlaveStructAlloc1D");
   // 2D TaoVarSlaveProxy arrays are not used in structs/routines
   // 3D TaoVarSlaveProxy arrays are not used in structs/routines
 }
@@ -8296,13 +8783,18 @@ void init_tao_var_struct(py::module& m, py::class_<TaoVarProxy>& cls) {
           "key_bound", &TaoVarProxy::key_bound, &TaoVarProxy::set_key_bound)
       // TaoVarProxy.v1 (0D_PTR_type - Pointer to the parent.
       .def_property("v1", &TaoVarProxy::v1, &TaoVarProxy::set_v1)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return TaoVarProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def("__repr__", [](const TaoVarProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<TaoVarProxyArray1D>(m, "TaoVarProxyArray1D");
-  bind_FTypeAlloc1D<TaoVarProxyAlloc1D>(m, "TaoVarProxyAlloc1D");
+  bind_FTypeArrayND<TaoVarProxyArray1D>(m, "TaoVarStructArray1D");
+  bind_FTypeAlloc1D<TaoVarProxyAlloc1D>(m, "TaoVarStructAlloc1D");
   // 2D TaoVarProxy arrays are not used in structs/routines
   // 3D TaoVarProxy arrays are not used in structs/routines
 }
@@ -8335,6 +8827,13 @@ void init_tao_wave_kick_pt_struct(
       // TaoWaveKickPtProxy.ele (0D_PTR_type - lattice element at position of kick.
       .def_property(
           "ele", &TaoWaveKickPtProxy::ele, &TaoWaveKickPtProxy::set_ele)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoWaveKickPtProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def(
           "__repr__",
@@ -8342,8 +8841,8 @@ void init_tao_wave_kick_pt_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoWaveKickPtProxyArray1D>(m, "TaoWaveKickPtProxyArray1D");
-  bind_FTypeAlloc1D<TaoWaveKickPtProxyAlloc1D>(m, "TaoWaveKickPtProxyAlloc1D");
+  bind_FTypeArrayND<TaoWaveKickPtProxyArray1D>(m, "TaoWaveKickPtStructArray1D");
+  bind_FTypeAlloc1D<TaoWaveKickPtProxyAlloc1D>(m, "TaoWaveKickPtStructAlloc1D");
   // 2D TaoWaveKickPtProxy arrays are not used in structs/routines
   // 3D TaoWaveKickPtProxy arrays are not used in structs/routines
 }
@@ -8697,15 +9196,20 @@ void init_test_sub_struct(py::module& m, py::class_<TestSubProxy>& cls) {
   cls.def(py::init<>())
       // TestSubProxy.sr (0D_NOT_type -
       .def_property("sr", &TestSubProxy::sr, &TestSubProxy::set_sr)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return TestSubProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
 
       .def("__repr__", [](const TestSubProxy& self) { return to_string(self); })
 
       ;
 
-  bind_FTypeArrayND<TestSubProxyArray1D>(m, "TestSubProxyArray1D");
-  bind_FTypeAlloc1D<TestSubProxyAlloc1D>(m, "TestSubProxyAlloc1D");
-  bind_FTypeArrayND<TestSubProxyArray2D>(m, "TestSubProxyArray2D");
-  bind_FTypeArrayND<TestSubProxyArray3D>(m, "TestSubProxyArray3D");
+  bind_FTypeArrayND<TestSubProxyArray1D>(m, "TestSubStructArray1D");
+  bind_FTypeAlloc1D<TestSubProxyAlloc1D>(m, "TestSubStructAlloc1D");
+  bind_FTypeArrayND<TestSubProxyArray2D>(m, "TestSubStructArray2D");
+  bind_FTypeArrayND<TestSubProxyArray3D>(m, "TestSubStructArray3D");
 }
 
 // =============================================================================

@@ -16,3 +16,6 @@ class CodegenConfig:
 
     equality_use_statements: list[str] = field(default_factory=list)  # TODO remove
     test_use_statements: list[str] = field(default_factory=list)  # TODO remove
+
+
+SUPPORTED_ARRAY_DIMS = (1, 2, 3)

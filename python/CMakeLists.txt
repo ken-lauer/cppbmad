@@ -81,7 +81,7 @@ if(STUBGEN)
       "PYTHONPATH=$<TARGET_FILE_DIR:${PYBIND_LIBNAME}>"
       "LD_LIBRARY_PATH=$<TARGET_FILE_DIR:cppbmad>:$ENV{LD_LIBRARY_PATH}" # Linux
       "DYLD_LIBRARY_PATH=$<TARGET_FILE_DIR:cppbmad>:$ENV{DYLD_LIBRARY_PATH}" # MacOS
-      ${STUBGEN} -o "${CMAKE_CURRENT_SOURCE_DIR}/pybmad" "${PYBIND_LIBNAME}"
+      ${STUBGEN} -o "${CMAKE_CURRENT_SOURCE_DIR}/pybmad" "${PYBIND_LIBNAME}" --ignore-all-errors
 
       COMMENT "Generating Python Stubs for ${PYBIND_LIBNAME}"
       VERBATIM

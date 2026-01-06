@@ -5,6 +5,7 @@ import string
 import textwrap
 
 from .arg import CodegenStructure
+from .config import SUPPORTED_ARRAY_DIMS
 from .cpp import CppWrapperArgument
 from .enums import EnumValue, get_ele_attributes, get_ele_keys, parse_all_enums
 from .paths import CODEGEN_ROOT, PYBMAD_INCLUDE, PYBMAD_SRC
@@ -353,6 +354,9 @@ def generate_pybmad_struct_code(
     routines_by_name: dict[str, FortranRoutine],
     struct: CodegenStructure,
 ) -> list[str]:
+    used_array_dims = [
+        n for n in SUPPORTED_ARRAY_DIMS if is_struct_array_used(routines_by_name, structs, struct, n)
+    ]
     code_lines = [""]
     code_lines.append("// =============================================================================")
     code_lines.append(f"// {struct.f_name}")
@@ -385,6 +389,13 @@ def generate_pybmad_struct_code(
                 f'        .def_property_readonly("{arg.python_name}", &{struct.cpp_class}::{arg.c_name})'
             )
 
+    if 1 in used_array_dims:
+        container_cls = f"{struct.cpp_class}Alloc1D"
+        code_lines.append(
+            f'      .def_static("new_array1d", [](int sz, int lbound) {{ return {container_cls}(lbound, sz); }}, '
+            f'py::arg("sz"), py::arg("lbound") = 1)'
+        )
+
     # TODO json
     # code.append(f'.def("to_json", &instance_to_json<{struct.cpp_class}>)')
     # code.append(
@@ -393,6 +404,7 @@ def generate_pybmad_struct_code(
     # code.append(
     #     f'.def("to_msgpack", [](const {struct.cpp_class} &self){{ json j; std::vector<std::uint8_t> v = json::to_msgpack(self); return v; }})'
     # )
+
     code_lines.append(
         textwrap.dedent(f"""
             .def("__repr__", [](const {struct.cpp_class} &self){{
@@ -403,14 +415,14 @@ def generate_pybmad_struct_code(
     code_lines.append("        ;")
     code_lines.append("")
 
-    for n in [1, 2, 3]:
-        if is_struct_array_used(routines_by_name, structs, struct, n):
+    for n in SUPPORTED_ARRAY_DIMS:
+        if n in used_array_dims:
             code_lines.append(
-                f'    bind_FTypeArrayND<{struct.cpp_class}Array{n}D>(m, "{struct.cpp_class}Array{n}D");'
+                f'    bind_FTypeArrayND<{struct.cpp_class}Array{n}D>(m, "{struct.python_class_name}Array{n}D");'
             )
             if n == 1:
                 code_lines.append(
-                    f'    bind_FTypeAlloc1D<{struct.cpp_class}Alloc1D>(m, "{struct.cpp_class}Alloc1D");'
+                    f'    bind_FTypeAlloc1D<{struct.cpp_class}Alloc1D>(m, "{struct.python_class_name}Alloc1D");'
                 )
         else:
             code_lines.append(f"    // {n}D {struct.cpp_class} arrays are not used in structs/routines")

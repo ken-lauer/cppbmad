@@ -52,7 +52,7 @@ for i in range(6):
     total = sum(p.vec[i] for p in particles)
     ave[i] = (total / n_particles) if n_particles > 0 else 0.0
 
-centroid = pybmad.CoordProxyAlloc1D()
+centroid = pybmad.CoordStruct.new_array1d(0)
 pybmad.reallocate_coord(centroid, lat, 0)
 pybmad.init_coord(centroid[0], ave, ele0, pybmad.DOWNSTREAM_END)
 
