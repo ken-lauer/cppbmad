@@ -98,7 +98,7 @@ def generate_routine_return_value_wrapper(routine: FortranRoutine) -> list[str]:
         f'    py::class_<{full_clsname}, std::unique_ptr<{full_clsname}>>(m, "{clsname}", "Fortran routine {routine.name} return value")'
     )
     for arg in outputs:
-        lines.append(f'        .def_readonly("{arg.c_name}", &{full_clsname}::{arg.c_name})')
+        lines.append(f'        .def_readonly("{arg.python_name}", &{full_clsname}::{arg.c_name})')
 
     lines.append(f'        .def("__len__", [](const {full_clsname} &) {{ return {len(outputs)}; }})')
     lines.append(f'        .def("__getitem__", [](const {full_clsname} &s, size_t i) -> py::object {{')
@@ -385,11 +385,11 @@ def generate_pybmad_struct_code(struct: CodegenStructure) -> list[str]:
         code_lines.append(f"        // {struct.cpp_class}.{arg.c_name} ({arg.full_type} - {comment}")
         if tpl.fortran_setter:
             code_lines.append(
-                f'        .def_property("{arg.c_name}", &{struct.cpp_class}::{arg.c_name}, &{struct.cpp_class}::set_{arg.c_name})'
+                f'        .def_property("{arg.python_name}", &{struct.cpp_class}::{arg.c_name}, &{struct.cpp_class}::set_{arg.c_name})'
             )
         else:
             code_lines.append(
-                f'        .def_property_readonly("{arg.c_name}", &{struct.cpp_class}::{arg.c_name})'
+                f'        .def_property_readonly("{arg.python_name}", &{struct.cpp_class}::{arg.c_name})'
             )
 
     # TODO json

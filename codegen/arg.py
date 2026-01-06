@@ -71,6 +71,7 @@ class Argument:
     is_component: bool = True
     f_name: str = ""
     c_name: str = ""
+    python_name: str = ""
     type: ArgumentType = "real"
     kind: str = ""
     pointer_type: PointerType = NOT
@@ -107,15 +108,14 @@ class Argument:
             pointer_type = NOT
 
         f_to_c_name = params.c_side_name_translation
-        if member.name in f_to_c_name:
-            c_name = f_to_c_name[member.name]
-        else:
-            c_name = f_to_c_name.get(f"{fstruct.name}%{member.name}", member.name)
+        c_name = f_to_c_name.get(member.name, f_to_c_name.get(f"{fstruct.name}%{member.name}", member.name))
+        python_name = params.c_to_python_name_translation.get(c_name, c_name)
 
         return cls(
             is_component=True,
             f_name=member.name,
             c_name=c_name,
+            python_name=python_name,
             type=type_.lower(),
             kind=member.kind or "",
             pointer_type=pointer_type,

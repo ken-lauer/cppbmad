@@ -8228,7 +8228,7 @@ void init_tao_super_universe_struct(py::module& m) {
       .def(py::init<>())
       // TaoSuperUniverseProxy.global (0D_NOT_type - User accessible global variables.
       .def_property(
-          "global",
+          "global_",
           &TaoSuperUniverseProxy::global,
           &TaoSuperUniverseProxy::set_global)
       // TaoSuperUniverseProxy.init (0D_NOT_type - Initialization parameters

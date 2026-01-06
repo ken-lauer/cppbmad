@@ -397,3 +397,6 @@ skips = [
 "float" = "float_"
 "double" = "double_"
 "const" = "const_"
+
+[c_to_python_name_translation]
+"global" = "global_"
