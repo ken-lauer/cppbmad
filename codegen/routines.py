@@ -1180,5 +1180,5 @@ def generate_routines(params: CodegenConfig):
 
     unique_routines = {rt.name: rt for rt in all_routines}
     usable = [rt for rt in unique_routines.values() if rt.usable]
-    logger.info("Procedures: %d usable / %d total unique", len(usable), len(routines_by_name))
+    logger.info("Procedures: %d usable / %d total unique", len(usable), len(all_routines_by_name))
     return all_routines, all_routines_by_name

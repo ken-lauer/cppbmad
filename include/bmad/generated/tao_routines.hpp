@@ -16,12 +16,6 @@ namespace Tao {
 
 // Skipped unusable routine callback:
 // - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine complex_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine do_loop_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_integrate_max(
     int& ix_start /* 0D_NOT_integer inout */,
     int& ix_ele /* 0D_NOT_integer inout */,
@@ -78,9 +72,6 @@ extern "C" void fortran_tao_alias_cmd(
     const char* alias /* 0D_NOT_character in */,
     const char* string /* 0D_NOT_character in */);
 void tao_alias_cmd(std::string alias, std::string string);
-
-// Skipped unusable routine tao_alias_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_allocate_data_array(
     void* u /* 0D_NOT_type inout */,
     int& n_data /* 0D_NOT_integer inout */,
@@ -97,9 +88,6 @@ extern "C" void fortran_tao_allocate_var_array(
     int& n_var /* 0D_NOT_integer in */,
     bool& default_good_user /* 0D_NOT_logical inout */);
 void tao_allocate_var_array(int n_var, bool& default_good_user);
-
-// Skipped unusable routine tao_beam_branch_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" bool fortran_tao_beam_emit_calc(
     int& plane /* 0D_NOT_integer in */,
     int& emit_type /* 0D_NOT_integer in */,
@@ -112,9 +100,6 @@ void tao_beam_emit_calc(
     EleProxy& ele,
     BunchParamsProxy& bunch_params,
     double& emit);
-
-// Skipped unusable routine tao_beam_shake_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_beam_track(
     void* u /* 0D_NOT_type in */,
     void* tao_lat /* 0D_NOT_type in */,
@@ -140,25 +125,10 @@ void tao_beam_track_endpoint(
     std::string where,
     TaoUniverseProxy& u,
     EleProxy& ele);
-
-// Skipped unusable routine tao_beam_uni_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" bool fortran_tao_branch_index(
     int& ix_branch /* 0D_NOT_integer in */,
     int& ix_this /* 0D_NOT_integer inout */);
 void tao_branch_index(int ix_branch, int& ix_this);
-
-// Skipped unusable routine tao_building_wall_orientation_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_building_wall_point_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_building_wall_section_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_building_wall_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 
 // Skipped unusable routine tao_c_command:
 // - Argument not defined: c_str (have: [])
@@ -177,13 +147,6 @@ void tao_branch_index(int ix_branch, int& ix_this);
 // - Argument not defined: tao_c_get_real_array (have: [])
 // - Translated arg count mismatch (unsupported?)
 
-// Skipped unusable routine tao_c_get_string_buffer:
-// - No matching docstring
-
-// Skipped unusable routine tao_c_get_string_buffer_length:
-// - Argument not defined: tao_c_get_string_buffer_length (have: [])
-// - Translated arg count mismatch (unsupported?)
-
 // Skipped unusable routine tao_c_init_tao:
 // - Argument not defined: c_str (have: [])
 // - Argument not defined: tao_c_init_tao (have: [])
@@ -192,9 +155,6 @@ void tao_branch_index(int ix_branch, int& ix_this);
 // Skipped unusable routine tao_c_integer_array_size:
 // - Argument not defined: tao_c_integer_array_size (have: [])
 // - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine tao_c_interface_common_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 
 // Skipped unusable routine tao_c_out_io_buffer_get_line:
 // - Argument not defined: n (have: [])
@@ -209,10 +169,6 @@ void tao_c_out_io_buffer_reset();
 
 // Skipped unusable routine tao_c_real_array_size:
 // - Argument not defined: tao_c_real_array_size (have: [])
-// - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine tao_c_string_size:
-// - Argument not defined: tao_c_string_size (have: [])
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_calc_data_at_s_pts(
     void* tao_lat /* 0D_NOT_type inout */,
@@ -291,9 +247,6 @@ extern "C" void fortran_tao_cmd_history_record(
     const char* cmd /* 0D_NOT_character inout */);
 void tao_cmd_history_record(std::string& cmd);
 
-// Skipped unusable routine tao_cmd_history_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
 // Skipped unusable routine tao_cmd_split:
 // - Variable-sized out character array: cmd_word(:) 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
@@ -302,12 +255,6 @@ extern "C" void fortran_tao_command(
     bool& err /* 0D_NOT_logical inout */,
     bool& err_is_fatal /* 0D_NOT_logical out */);
 bool tao_command(std::string command_line, bool& err);
-
-// Skipped unusable routine tao_command_file_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_common_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" bool fortran_tao_constraint_type_name(
     void* datum /* 0D_NOT_type in */,
     const char* datum_name /* 0D_NOT_character inout */);
@@ -323,9 +270,6 @@ extern "C" void fortran_tao_count_strings(
 int tao_count_strings(std::string string, std::string pattern);
 extern "C" void fortran_tao_create_plot_window();
 void tao_create_plot_window();
-
-// Skipped unusable routine tao_curve_array_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_curve_beam_ellipse_setup(
     void* curve /* 0D_NOT_type inout */);
 void tao_curve_beam_ellipse_setup(TaoCurveProxy& curve);
@@ -334,9 +278,6 @@ extern "C" bool fortran_tao_curve_check_universe(
     void* uni /* 0D_PTR_type in */,
     bool& is_ok /* 0D_NOT_logical out */);
 bool tao_curve_check_universe(TaoCurveProxy& curve, TaoUniverseProxy& uni);
-
-// Skipped unusable routine tao_curve_color_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_curve_data_setup(
     void* plot /* 0D_NOT_type inout */,
     void* graph /* 0D_NOT_type inout */,
@@ -363,9 +304,6 @@ void tao_curve_ele_ref(
     TaoCurveProxy& curve,
     bool& point_to_ele_ref,
     EleProxy& ele_track);
-
-// Skipped unusable routine tao_curve_input_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" bool fortran_tao_curve_ix_uni(
     void* curve /* 0D_NOT_type in */,
     int& ix_uni /* 0D_NOT_integer inout */);
@@ -378,9 +316,6 @@ void tao_curve_name(
     TaoCurveProxy& curve,
     std::optional<bool> use_region,
     std::string& curve_name);
-
-// Skipped unusable routine tao_curve_orbit_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_curve_rms_calc(
     void* curve /* 0D_NOT_type in */,
     const char* who /* 0D_NOT_character in */,
@@ -391,18 +326,6 @@ struct TaoCurveRmsCalc {
   double mean;
 };
 Tao::TaoCurveRmsCalc tao_curve_rms_calc(TaoCurveProxy& curve, std::string who);
-
-// Skipped unusable routine tao_curve_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_d1_data_array_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_d1_data_input_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_d1_data_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" bool fortran_tao_d2_d1_name(
     void* d1 /* 0D_NOT_type in */,
     bool* show_universe /* 0D_NOT_logical in */,
@@ -411,15 +334,6 @@ void tao_d2_d1_name(
     TaoD1DataProxy& d1,
     std::optional<bool> show_universe,
     std::string& d2_d1_name);
-
-// Skipped unusable routine tao_d2_data_array_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_d2_data_input_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_d2_data_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_d2_data_stuffit(
     void* u /* 0D_NOT_type inout */,
     const char* d2_name /* 0D_NOT_character inout */,
@@ -428,9 +342,6 @@ void tao_d2_data_stuffit(
     TaoUniverseProxy& u,
     std::string& d2_name,
     int& n_d1_data);
-
-// Skipped unusable routine tao_data_array_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_data_check(bool& err /* 0D_NOT_logical inout */);
 void tao_data_check(bool& err);
 extern "C" void fortran_tao_data_coupling_init(
@@ -452,9 +363,6 @@ void tao_data_sanity_check(
 // Skipped unusable routine tao_data_show_use:
 // - Variable-sized inout character array: lines(:) 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine tao_data_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_data_type_substitute(
     const char* template_ /* 0D_NOT_character in */,
     const char* str_out /* 0D_NOT_character out */,
@@ -478,9 +386,6 @@ Tao::TaoDataUseitPlotCalc tao_data_useit_plot_calc(
     TaoCurveProxy& curve,
     TaoGraphProxy& graph,
     bool check_s_position);
-
-// Skipped unusable routine tao_data_var_component_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" bool fortran_tao_datum_has_associated_ele(
     const char* data_type /* 0D_NOT_character in */,
     int* branch_geometry /* 0D_NOT_integer in */,
@@ -489,9 +394,6 @@ void tao_datum_has_associated_ele(
     std::string data_type,
     std::optional<int> branch_geometry,
     int& has_associated_ele);
-
-// Skipped unusable routine tao_datum_input_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" bool fortran_tao_datum_integrate(
     void* datum /* 0D_NOT_type in */,
     void* branch /* 0D_NOT_type in */,
@@ -531,9 +433,6 @@ void tao_deallocate_plot_cache(TaoPlotCacheProxyAlloc1D& plot_cache);
 
 // Skipped unusable routine tao_deallocate_tree:
 // - Untranslated type: tao_eval_node_struct (0D)
-
-// Skipped unusable routine tao_design_lat_input_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_destroy_plot_window();
 void tao_destroy_plot_window();
 extern "C" void fortran_tao_dmerit_calc();
@@ -604,12 +503,6 @@ extern "C" void fortran_tao_draw_lat_layout(
 void tao_draw_lat_layout(TaoPlotProxy& plot, TaoGraphProxy& graph);
 extern "C" void fortran_tao_draw_plots(bool* do_clear /* 0D_NOT_logical in */);
 void tao_draw_plots(std::optional<bool> do_clear = std::nullopt);
-
-// Skipped unusable routine tao_drawing_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_dynamic_aperture_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" bool fortran_tao_ele_geometry_with_misalignments(
     void* datum /* 0D_NOT_type in */,
     void* ele /* 0D_NOT_type in */,
@@ -624,9 +517,6 @@ struct TaoEleGeometryWithMisalignments {
 Tao::TaoEleGeometryWithMisalignments tao_ele_geometry_with_misalignments(
     TaoDataProxy& datum,
     EleProxy& ele);
-
-// Skipped unusable routine tao_ele_pointer_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_ele_shape_info(
     int& ix_uni /* 0D_NOT_integer in */,
     void* ele /* 0D_NOT_type in */,
@@ -648,17 +538,11 @@ Tao::TaoEleShapeInfo tao_ele_shape_info(
     double& y2,
     optional_ref<int> ix_shape_min = std::nullopt);
 
-// Skipped unusable routine tao_ele_shape_input_to_json:
-// - Routine module (tao_json) in configuration skip list
-
 // Skipped unusable routine tao_ele_shape_input_to_struct:
 // - Untranslated type: tao_ele_shape_input (0D)
 
 // Skipped unusable routine tao_ele_shape_struct_to_input:
 // - Untranslated type: tao_ele_shape_input (0D)
-
-// Skipped unusable routine tao_ele_shape_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" bool fortran_tao_eval_floor_orbit(
     void* datum /* 0D_NOT_type in */,
     void* ele /* 0D_NOT_type in */,
@@ -677,9 +561,6 @@ Tao::TaoEvalFloorOrbit tao_eval_floor_orbit(
     EleProxy& ele,
     CoordProxy& orbit,
     BunchParamsProxy& bunch_params);
-
-// Skipped unusable routine tao_eval_node_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_evaluate_a_datum(
     void* datum /* 0D_NOT_type inout */,
     void* u /* 0D_NOT_type in */,
@@ -789,9 +670,6 @@ std::string tao_expression_hash_substitute(
     std::string expression_in,
     optional_ref<EleProxy> eval_ele = std::nullopt);
 
-// Skipped unusable routine tao_expression_info_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
 // Skipped unusable routine tao_expression_tree_to_string:
 // - Untranslated type: tao_eval_node_struct (0D)
 // - Untranslated type: tao_eval_node_struct (0D)
@@ -833,9 +711,6 @@ extern "C" void fortran_tao_fixer(
     const char* word1 /* 0D_NOT_character in */,
     const char* word2 /* 0D_NOT_character in */);
 void tao_fixer(std::string switch_, std::string word1, std::string word2);
-
-// Skipped unusable routine tao_floor_plan_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_floor_to_screen(
     void* graph /* 0D_NOT_type in */,
     double* r_floor /* 1D_NOT_real inout */,
@@ -900,12 +775,6 @@ std::string tao_get_user_input(
     std::optional<std::string> prompt_str = std::nullopt,
     std::optional<bool> wait_flag = std::nullopt,
     std::optional<std::string> cmd_in = std::nullopt);
-
-// Skipped unusable routine tao_global_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_graph_array_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_graph_controller_setup(
     void* graph /* 0D_NOT_type inout */);
 void tao_graph_controller_setup(TaoGraphProxy& graph);
@@ -925,9 +794,6 @@ extern "C" void fortran_tao_graph_histogram_setup(
     void* plot /* 0D_NOT_type inout */,
     void* graph /* 0D_NOT_type inout */);
 void tao_graph_histogram_setup(TaoPlotProxy& plot, TaoGraphProxy& graph);
-
-// Skipped unusable routine tao_graph_input_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" bool fortran_tao_graph_name(
     void* graph /* 0D_NOT_type in */,
     bool* use_region /* 0D_NOT_logical in */,
@@ -957,15 +823,9 @@ extern "C" void fortran_tao_graph_setup(
     void* graph /* 0D_NOT_type inout */);
 void tao_graph_setup(TaoPlotProxy& plot, TaoGraphProxy& graph);
 
-// Skipped unusable routine tao_graph_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
 // Skipped unusable routine tao_help:
 // - Variable-sized out character array: lines(:) 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine tao_histogram_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 
 // Skipped unusable routine tao_hook_branch_calc_def:
 // - Routine in configuration skip list
@@ -1104,9 +964,6 @@ void tao_init_lattice(std::string& lat_file, bool& err_flag);
 extern "C" void fortran_tao_init_plotting(
     const char* plot_file /* 0D_NOT_character inout */);
 void tao_init_plotting(std::string& plot_file);
-
-// Skipped unusable routine tao_init_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_init_variables(
     const char* var_file /* 0D_NOT_character in */);
 void tao_init_variables(std::string var_file);
@@ -1132,17 +989,14 @@ void tao_inject_particle(
     TaoUniverseProxy& u,
     TaoLatticeProxy& model,
     int& ix_branch);
-
-// Skipped unusable routine tao_integer_array_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" bool fortran_tao_is_valid_name(
     const char* name /* 0D_NOT_character in */,
     const char* why_invalid /* 0D_NOT_character out */,
     bool& is_valid /* 0D_NOT_logical inout */);
 std::string tao_is_valid_name(std::string name, bool& is_valid);
 extern "C" void fortran_tao_json_cmd(
-    const char* input_str /* 0D_NOT_character inout */);
-void tao_json_cmd(std::string& input_str);
+    const char* input_str /* 0D_NOT_character in */);
+void tao_json_cmd(std::string input_str);
 extern "C" void fortran_tao_key_info_to_str(
     int& ix_key /* 0D_NOT_integer inout */,
     int& ix_min_key /* 0D_NOT_integer inout */,
@@ -1155,9 +1009,6 @@ void tao_key_info_to_str(
     int& ix_max_key,
     std::string& key_str,
     std::string& header_str);
-
-// Skipped unusable routine tao_key_input_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_lat_bookkeeper(
     void* u /* 0D_NOT_type in */,
     void* tao_lat /* 0D_NOT_type in */,
@@ -1183,9 +1034,6 @@ void tao_lat_sigma_calc_needed(
     std::string& data_type,
     std::string& data_source,
     bool& do_lat_sigma);
-
-// Skipped unusable routine tao_lat_sigma_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_lat_sigma_track(
     void* tao_lat /* 0D_NOT_type in */,
     bool& calc_ok /* 0D_NOT_logical out */,
@@ -1197,9 +1045,6 @@ bool tao_lat_sigma_track(
     int ix_branch,
     std::optional<bool> print_err = std::nullopt,
     std::optional<bool> force_calc = std::nullopt);
-
-// Skipped unusable routine tao_lattice_branch_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_lattice_branches_equal_tao_lattice_branches(
     void* tlb1 /* 1D_ALLOC_type inout */,
     void* tlb2 /* 1D_ALLOC_type in */);
@@ -1220,9 +1065,6 @@ extern "C" void fortran_tao_lattice_equal_tao_lattice(
 void tao_lattice_equal_tao_lattice(
     TaoLatticeProxy& lat1,
     TaoLatticeProxy& lat2);
-
-// Skipped unusable routine tao_lattice_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_limit_calc(bool& limited /* 0D_NOT_logical out */);
 bool tao_limit_calc();
 extern "C" void fortran_tao_lm_optimizer(bool& abort /* 0D_NOT_logical out */);
@@ -1288,24 +1130,12 @@ Tao::TaoLocateElements tao_locate_elements(
     optional_ref<bool> above_ubound_is_err = std::nullopt,
     std::optional<int> ix_branch = std::nullopt,
     std::optional<bool> multiple_eles_is_err = std::nullopt);
-
-// Skipped unusable routine tao_logical_array_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_mark_lattice_ele(void* lat /* 0D_NOT_type inout */);
 void tao_mark_lattice_ele(LatProxy& lat);
 extern "C" bool fortran_tao_merit(
     bool& calc_ok /* 0D_NOT_logical out */,
     double& this_merit /* 0D_NOT_real inout */);
 bool tao_merit(double& this_merit);
-
-// Skipped unusable routine tao_model_branch_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_model_element_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_mpi_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 
 // Skipped unusable routine tao_mrq_func:
 // - Variable out sized array: dy_da(:,:) 2D_NOT_real
@@ -1444,9 +1274,6 @@ Tao::TaoPickUniverse tao_pick_universe(
     std::string name_in,
     std::optional<int> dflt_uni = std::nullopt,
     std::optional<bool> pure_uni = std::nullopt);
-
-// Skipped unusable routine tao_ping_scale_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_pipe_cmd(
     const char* input_str /* 0D_NOT_character in */);
 void tao_pipe_cmd(std::string input_str);
@@ -1458,15 +1285,6 @@ void tao_place_cmd(
     std::string where,
     std::string who,
     std::optional<bool> no_buffer = std::nullopt);
-
-// Skipped unusable routine tao_place_input_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_plot_array_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_plot_cache_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_plot_cmd(
     const char* where /* 0D_NOT_character in */,
     const char* component /* 0D_NOT_character in */);
@@ -1479,27 +1297,12 @@ extern "C" void fortran_tao_plot_histogram(
     void* plot /* 0D_NOT_type in */,
     void* graph /* 0D_NOT_type in */);
 void tao_plot_histogram(TaoPlotProxy& plot, TaoGraphProxy& graph);
-
-// Skipped unusable routine tao_plot_input_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_plot_key_table(
     void* plot /* 0D_NOT_type in */,
     void* graph /* 0D_NOT_type in */);
 void tao_plot_key_table(TaoPlotProxy& plot, TaoGraphProxy& graph);
-
-// Skipped unusable routine tao_plot_page_input_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_plot_page_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_plot_region_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_plot_setup();
 void tao_plot_setup();
-
-// Skipped unusable routine tao_plot_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_plot_struct_transfer(
     void* plot_in /* 0D_NOT_type in */,
     void* plot_out /* 0D_NOT_type out */);
@@ -1669,15 +1472,6 @@ void tao_read_phase_space_index(
     int ixc,
     std::optional<bool> print_err,
     int& ix_ps);
-
-// Skipped unusable routine tao_real_pointer_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_region_array_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_region_input_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_regression_test();
 void tao_regression_test();
 extern "C" void fortran_tao_remove_blank_characters(
@@ -1741,9 +1535,6 @@ void tao_scale_plot(
     std::optional<bool> include_wall = std::nullopt,
     std::optional<std::string> gang = std::nullopt,
     std::optional<bool> skip_lat_layout = std::nullopt);
-
-// Skipped unusable routine tao_scratch_space_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_scratch_values_calc(
     void* ele_ref /* 0D_PTR_type inout */,
     void* ele_start /* 0D_PTR_type inout */,
@@ -2110,12 +1901,6 @@ extern "C" void fortran_tao_shape_init(
 bool tao_shape_init(
     TaoEleShapeProxy& shape,
     std::optional<bool> print_err = std::nullopt);
-
-// Skipped unusable routine tao_shape_pattern_point_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_shape_pattern_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_show_cmd(
     const char* what /* 0D_NOT_character in */);
 void tao_show_cmd(std::string what);
@@ -2139,15 +1924,6 @@ bool tao_single_track(
     TaoLatticeProxy& tao_lat,
     int ix_branch,
     std::optional<bool> print_err = std::nullopt);
-
-// Skipped unusable routine tao_spin_dn_dpz_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_spin_ele_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_spin_map_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" bool fortran_tao_spin_matrices_calc_needed(
     const char* data_type /* 0D_NOT_character inout */,
     const char* data_source /* 0D_NOT_character inout */,
@@ -2162,9 +1938,6 @@ void tao_spin_matrices_calc_needed(
 
 // Skipped unusable routine tao_spin_polarization_calc:
 // - Routine in configuration skip list
-
-// Skipped unusable routine tao_spin_polarization_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_spin_tracking_turn_on();
 void tao_spin_tracking_turn_on();
 extern "C" void fortran_tao_split_component(
@@ -2184,18 +1957,12 @@ void tao_srdt_calc_needed(
     std::string& data_type,
     std::string& data_source,
     int& do_srdt);
-
-// Skipped unusable routine tao_string_array_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" bool fortran_tao_subin_uni_number(
     const char* name_in /* 0D_NOT_character in */,
     int& ix_uni /* 0D_NOT_integer in */,
     const char* name_out /* 0D_NOT_character out */,
     bool& ok /* 0D_NOT_logical inout */);
 std::string tao_subin_uni_number(std::string name_in, int ix_uni, bool& ok);
-
-// Skipped unusable routine tao_super_universe_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 
 // Skipped unusable routine tao_svd_func:
 // - Variable out sized array: dy_da(:,:) 2D_NOT_real
@@ -2211,9 +1978,6 @@ void tao_taper_cmd(std::string except, std::string uni_names);
 
 // Skipped unusable routine tao_timer:
 // - Module name unset
-
-// Skipped unusable routine tao_title_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_to_change_number(
     const char* num_str /* 0D_NOT_character inout */,
     int& n_size /* 0D_NOT_integer inout */,
@@ -2266,9 +2030,6 @@ void tao_top10_derivative_print();
 extern "C" void fortran_tao_top10_merit_categories_print(
     int& iunit /* 0D_NOT_integer in */);
 void tao_top10_merit_categories_print(int iunit);
-
-// Skipped unusable routine tao_top10_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_top_level(
     const char* command /* 0D_NOT_character in */,
     int& errcode /* 0D_NOT_integer out */);
@@ -2294,9 +2055,6 @@ extern "C" bool fortran_tao_uni_atsign_index(
     const char* string /* 0D_NOT_character in */,
     int& ix_amp /* 0D_NOT_integer out */);
 int tao_uni_atsign_index(std::string string);
-
-// Skipped unusable routine tao_universe_calc_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" bool fortran_tao_universe_index(
     int& i_uni /* 0D_NOT_integer in */,
     bool* neg2_to_default /* 0D_NOT_logical in */,
@@ -2305,12 +2063,6 @@ void tao_universe_index(
     int i_uni,
     std::optional<bool> neg2_to_default,
     int& i_this_uni);
-
-// Skipped unusable routine tao_universe_pointer_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_universe_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_use_data(
     const char* action /* 0D_NOT_character in */,
     const char* data_name /* 0D_NOT_character in */);
@@ -2322,22 +2074,10 @@ void tao_use_var(std::string action, std::string var_name);
 extern "C" bool fortran_tao_user_is_terminating_optimization(
     bool& is_terminating /* 0D_NOT_logical out */);
 bool tao_user_is_terminating_optimization();
-
-// Skipped unusable routine tao_v1_var_array_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_v1_var_input_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_v1_var_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" bool fortran_tao_var1_name(
     void* var /* 0D_NOT_type in */,
     const char* var1_name /* 0D_NOT_character inout */);
 void tao_var1_name(TaoVarProxy& var, std::string& var1_name);
-
-// Skipped unusable routine tao_var_array_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" bool fortran_tao_var_attrib_name(
     void* var /* 0D_NOT_type in */,
     const char* var_attrib_name /* 0D_NOT_character inout */);
@@ -2350,21 +2090,12 @@ void tao_var_check(
     ElePointerProxyAlloc1D& eles,
     std::string attribute,
     bool silent);
-
-// Skipped unusable routine tao_var_input_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_var_repoint();
 void tao_var_repoint();
 
 // Skipped unusable routine tao_var_show_use:
 // - Variable-sized inout character array: lines(:) 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine tao_var_slave_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_var_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 
 // Skipped unusable routine tao_var_stuffit1:
 // - Untranslated type: tao_var_input (1D)
@@ -2421,12 +2152,6 @@ Tao::TaoWaveFit tao_wave_fit(
     optional_ref<RealAlloc1D> f2 = std::nullopt,
     optional_ref<RealAlloc1D> f3 = std::nullopt,
     optional_ref<RealAlloc1D> f4 = std::nullopt);
-
-// Skipped unusable routine tao_wave_kick_pt_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
-
-// Skipped unusable routine tao_wave_struct_to_json:
-// - Routine module (tao_json) in configuration skip list
 extern "C" void fortran_tao_write_cmd(
     const char* what /* 0D_NOT_character in */);
 void tao_write_cmd(std::string what);

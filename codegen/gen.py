@@ -28,12 +28,7 @@ from .coverage import generate_coverage_report
 from .cpp import generate_to_string_code, generate_to_string_header
 from .enums import ENUM_FILENAME, write_enums
 from .paths import CODEGEN_ROOT, CPPBMAD_INCLUDE, CPPBMAD_ROOT, CPPBMAD_SRC, REPO_ROOT
-from .proxy import (
-    create_cpp_proxy_header,
-    create_cpp_proxy_impl,
-    create_fortran_proxy_code,
-    struct_to_proxy_class_name,
-)
+from .proxy import create_cpp_proxy_header, create_cpp_proxy_impl, create_fortran_proxy_code
 from .py import generate_pybmad
 from .routines import generate_routines, parse_bmad_routines, routine_settings
 from .structs import ParsedStructure, load_bmad_parser_structures

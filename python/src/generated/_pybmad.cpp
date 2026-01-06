@@ -5250,14 +5250,6 @@ PyTaoIsValidName python_tao_is_valid_name(std::string name, bool is_valid) {
   auto py_result{PyTaoIsValidName{_result, is_valid}};
   return py_result;
 }
-struct PyTaoJsonCmd {
-  std::string input_str;
-};
-PyTaoJsonCmd python_tao_json_cmd(std::string input_str) {
-  Tao::tao_json_cmd(input_str);
-  auto py_result{PyTaoJsonCmd{input_str}};
-  return py_result;
-}
 struct PyTaoKeyInfoToStr {
   int ix_key;
   int ix_min_key;
@@ -8316,8 +8308,8 @@ PYBIND11_MODULE(_pybmad, m) {
   m.attr("IS_STRUCT") = py::int_(Bmad::IS_STRUCT);
   m.attr("UNKNOWN") = py::int_(Bmad::UNKNOWN);
   m.attr("PATCH_PROBLEM") = py::int_(Bmad::PATCH_PROBLEM);
-  m.attr("OUTSIDE") = py::int_(Bmad::OUTSIDE);
   m.attr("CANNOT_FIND") = py::int_(Bmad::CANNOT_FIND);
+  m.attr("OUTSIDE") = py::int_(Bmad::OUTSIDE);
   m.attr("SMALL_REL_CHANGE") = py::float_(Bmad::SMALL_REL_CHANGE);
   m.attr("END_STACK") = py::int_(Bmad::END_STACK);
   m.attr("PLUS") = py::int_(Bmad::PLUS);
@@ -8650,17 +8642,18 @@ dk : float
       py::arg("scale") = py::none(),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(Routine to put in the kick due to ab_multipole components.
+      R"""(Routine to put in the kick due to ab_multipole components in an element.
 
-Also see the multipole_kicks routine.
 The kick will be corrected for the orientation of the element and the particle direction of travel.
+Any difference between element p0c and orbit%p0c will be taken into account.
+Also see the multipole_kicks routine.
 
 Parameters
 ----------
 an : float
     Skew multipole strengths.
 bn : float
-    Normal multipole tilts.
+    Normal multipole strengths.
 ix_pole_max : int
     Maximum pole index.
 ele : EleStruct
@@ -24754,7 +24747,7 @@ mat6 : float
       py::arg("orbit"),
       py::arg("pole_type") = py::none(),
       py::arg("ref_orb_offset") = py::none(),
-      R"""(Subroutine to put in the kick due to a multipole.
+      R"""(Subroutine to put in the kick due to a multipole element.
 
 Also see the ab_multipole_kicks routine.
 
@@ -37144,25 +37137,15 @@ why_invalid : unknown
           });
   m.def(
       "tao_json_cmd",
-      &python_tao_json_cmd,
+      &Tao::tao_json_cmd,
       py::arg("input_str"),
       R"""(No docstring available
 
 Parameters
 ----------
-input_str : 
+input_str : unknown
+    What to show.
 )""");
-  py::class_<PyTaoJsonCmd, std::unique_ptr<PyTaoJsonCmd>>(
-      m, "TaoJsonCmd", "Fortran routine tao_json_cmd return value")
-      .def_readonly("input_str", &PyTaoJsonCmd::input_str)
-      .def("__len__", [](const PyTaoJsonCmd&) { return 1; })
-      .def("__getitem__", [](const PyTaoJsonCmd& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
-        if (i == 0)
-          return py::cast(s.input_str);
-        return py::none();
-      });
   m.def(
       "tao_key_info_to_str",
       &python_tao_key_info_to_str,

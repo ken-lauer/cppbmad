@@ -6,3 +6,6 @@
 .cache
 .vscode
 python/docs/site
+__pycache__
+*.rej
+*.digested*

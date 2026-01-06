@@ -1115,8 +1115,8 @@ std::string Tao::tao_is_valid_name(std::string name, bool& is_valid) {
       /* bool& */ is_valid);
   return _why_invalid;
 }
-void Tao::tao_json_cmd(std::string& input_str) {
-  auto _input_str = input_str.c_str(); // ptr, inout, required
+void Tao::tao_json_cmd(std::string input_str) {
+  auto _input_str = input_str.c_str();
   fortran_tao_json_cmd(/* const char* */ _input_str);
 }
 void Tao::tao_key_info_to_str(

@@ -46,3 +46,4 @@ repos:
     hooks:
       - id: clang-format
         files: ^.*\.(cpp|h|hpp|c|cc|cxx)$
+        exclude: "^(codegen/to_string.tpl.cpp)$"

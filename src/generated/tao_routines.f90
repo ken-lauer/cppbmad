@@ -3382,19 +3382,17 @@ end subroutine
 subroutine fortran_tao_json_cmd (input_str) bind(c)
 
   implicit none
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), intent(in), value :: input_str
   character(len=4096), target :: f_input_str
   character(kind=c_char), pointer :: f_input_str_ptr(:)
   ! ** End of parameters **
-  ! inout: f_input_str 0D_NOT_character
+  ! in: f_input_str 0D_NOT_character
   if (.not. c_associated(input_str)) return
   call c_f_pointer(input_str, f_input_str_ptr, [huge(0)])
   call to_f_str(f_input_str_ptr, f_input_str)
   call tao_json_cmd(input_str=f_input_str)
 
-  ! inout: f_input_str 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
 end subroutine
 subroutine fortran_tao_key_info_to_str (ix_key, ix_min_key, ix_max_key, key_str, header_str) &
     bind(c)
