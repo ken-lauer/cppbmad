@@ -3516,6 +3516,23 @@ void tao_ele_shape_struct_set_name_ele(
     void* struct_obj,
     const char* str_ptr,
     int str_len);
+
+void tao_ele_shape_struct_get_uni_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void tao_ele_pointer_struct_get_eles_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void tao_ele_pointer_struct_get_n_loc(const void* struct_obj, int* value_out);
+void tao_ele_pointer_struct_set_n_loc(void* struct_obj, int value_in);
 void tao_curve_struct_get_name_info(
     const void* s,
     char** d,
@@ -3610,6 +3627,10 @@ void tao_curve_struct_set_why_invalid(
     int str_len);
 void tao_curve_struct_get_g(const void* struct_obj, void** ptr_out);
 void tao_curve_struct_set_g(void* struct_obj, const void* src_ptr);
+void tao_curve_struct_get_hist(const void* struct_obj, void** ptr_out);
+void tao_curve_struct_set_hist(void* struct_obj, const void* src_ptr);
+void tao_curve_struct_get_z_color(const void* struct_obj, void** ptr_out);
+void tao_curve_struct_set_z_color(void* struct_obj, const void* src_ptr);
 void tao_curve_struct_get_x_line_info(
     const void* s,
     double** d,
@@ -3666,6 +3687,12 @@ void tao_curve_struct_get_y_axis_scale_factor(
 void tao_curve_struct_set_y_axis_scale_factor(
     void* struct_obj,
     double value_in);
+void tao_curve_struct_get_line(const void* struct_obj, void** ptr_out);
+void tao_curve_struct_set_line(void* struct_obj, const void* src_ptr);
+void tao_curve_struct_get_symbol(const void* struct_obj, void** ptr_out);
+void tao_curve_struct_set_symbol(void* struct_obj, const void* src_ptr);
+void tao_curve_struct_get_orbit(const void* struct_obj, void** ptr_out);
+void tao_curve_struct_set_orbit(void* struct_obj, const void* src_ptr);
 void tao_curve_struct_get_ix_universe(const void* struct_obj, int* value_out);
 void tao_curve_struct_set_ix_universe(void* struct_obj, int value_in);
 void tao_curve_struct_get_symbol_every(const void* struct_obj, int* value_out);
@@ -3696,6 +3723,55 @@ void tao_curve_struct_get_smooth_line_calc(
 void tao_curve_struct_set_smooth_line_calc(void* struct_obj, bool value_in);
 void tao_curve_struct_get_valid(const void* struct_obj, bool* value_out);
 void tao_curve_struct_set_valid(void* struct_obj, bool value_in);
+void tao_curve_color_struct_get_data_type_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_curve_color_struct_set_data_type(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_curve_color_struct_get_is_on(const void* struct_obj, bool* value_out);
+void tao_curve_color_struct_set_is_on(void* struct_obj, bool value_in);
+void tao_curve_color_struct_get_min(const void* struct_obj, double* value_out);
+void tao_curve_color_struct_set_min(void* struct_obj, double value_in);
+void tao_curve_color_struct_get_max(const void* struct_obj, double* value_out);
+void tao_curve_color_struct_set_max(void* struct_obj, double value_in);
+void tao_curve_color_struct_get_autoscale(
+    const void* struct_obj,
+    bool* value_out);
+void tao_curve_color_struct_set_autoscale(void* struct_obj, bool value_in);
+void tao_curve_orbit_struct_get_x(const void* struct_obj, double* value_out);
+void tao_curve_orbit_struct_set_x(void* struct_obj, double value_in);
+void tao_curve_orbit_struct_get_y(const void* struct_obj, double* value_out);
+void tao_curve_orbit_struct_set_y(void* struct_obj, double value_in);
+void tao_curve_orbit_struct_get_t(const void* struct_obj, double* value_out);
+void tao_curve_orbit_struct_set_t(void* struct_obj, double value_in);
+void tao_histogram_struct_get_density_normalized(
+    const void* struct_obj,
+    bool* value_out);
+void tao_histogram_struct_set_density_normalized(
+    void* struct_obj,
+    bool value_in);
+void tao_histogram_struct_get_weight_by_charge(
+    const void* struct_obj,
+    bool* value_out);
+void tao_histogram_struct_set_weight_by_charge(void* struct_obj, bool value_in);
+void tao_histogram_struct_get_minimum(
+    const void* struct_obj,
+    double* value_out);
+void tao_histogram_struct_set_minimum(void* struct_obj, double value_in);
+void tao_histogram_struct_get_maximum(
+    const void* struct_obj,
+    double* value_out);
+void tao_histogram_struct_set_maximum(void* struct_obj, double value_in);
+void tao_histogram_struct_get_width(const void* struct_obj, double* value_out);
+void tao_histogram_struct_set_width(void* struct_obj, double value_in);
+void tao_histogram_struct_get_center(const void* struct_obj, double* value_out);
+void tao_histogram_struct_set_center(void* struct_obj, double value_in);
+void tao_histogram_struct_get_number(const void* struct_obj, int* value_out);
+void tao_histogram_struct_set_number(void* struct_obj, int value_in);
 void lat_ele_order1_struct_get_ix_branch(
     const void* struct_obj,
     int* value_out);
@@ -4274,6 +4350,34 @@ void tao_graph_struct_get_curve_info(
 
 void tao_graph_struct_get_p(const void* struct_obj, void** ptr_out);
 void tao_graph_struct_set_p(void* struct_obj, const void* src_ptr);
+void tao_graph_struct_get_floor_plan(const void* struct_obj, void** ptr_out);
+void tao_graph_struct_set_floor_plan(void* struct_obj, const void* src_ptr);
+void tao_graph_struct_get_text_legend_origin(
+    const void* struct_obj,
+    void** ptr_out);
+void tao_graph_struct_set_text_legend_origin(
+    void* struct_obj,
+    const void* src_ptr);
+void tao_graph_struct_get_curve_legend_origin(
+    const void* struct_obj,
+    void** ptr_out);
+void tao_graph_struct_set_curve_legend_origin(
+    void* struct_obj,
+    const void* src_ptr);
+void tao_graph_struct_get_curve_legend(const void* struct_obj, void** ptr_out);
+void tao_graph_struct_set_curve_legend(void* struct_obj, const void* src_ptr);
+void tao_graph_struct_get_x(const void* struct_obj, void** ptr_out);
+void tao_graph_struct_set_x(void* struct_obj, const void* src_ptr);
+void tao_graph_struct_get_y(const void* struct_obj, void** ptr_out);
+void tao_graph_struct_set_y(void* struct_obj, const void* src_ptr);
+void tao_graph_struct_get_x2(const void* struct_obj, void** ptr_out);
+void tao_graph_struct_set_x2(void* struct_obj, const void* src_ptr);
+void tao_graph_struct_get_y2(const void* struct_obj, void** ptr_out);
+void tao_graph_struct_set_y2(void* struct_obj, const void* src_ptr);
+void tao_graph_struct_get_margin(const void* struct_obj, void** ptr_out);
+void tao_graph_struct_set_margin(void* struct_obj, const void* src_ptr);
+void tao_graph_struct_get_scale_margin(const void* struct_obj, void** ptr_out);
+void tao_graph_struct_set_scale_margin(void* struct_obj, const void* src_ptr);
 void tao_graph_struct_get_x_axis_scale_factor(
     const void* struct_obj,
     double* value_out);
@@ -4425,6 +4529,29 @@ void tao_plot_region_struct_get_setup_done(
 void tao_plot_region_struct_set_setup_done(void* struct_obj, bool value_in);
 void tao_universe_pointer_struct_get_u(const void* struct_obj, void** ptr_out);
 void tao_universe_pointer_struct_set_u(void* struct_obj, const void* src_ptr);
+void tao_super_universe_struct_get_global(
+    const void* struct_obj,
+    void** ptr_out);
+void tao_super_universe_struct_set_global(
+    void* struct_obj,
+    const void* src_ptr);
+void tao_super_universe_struct_get_init(const void* struct_obj, void** ptr_out);
+void tao_super_universe_struct_set_init(void* struct_obj, const void* src_ptr);
+void tao_super_universe_struct_get_com(const void* struct_obj, void** ptr_out);
+void tao_super_universe_struct_set_com(void* struct_obj, const void* src_ptr);
+void tao_super_universe_struct_get_plot_page(
+    const void* struct_obj,
+    void** ptr_out);
+void tao_super_universe_struct_set_plot_page(
+    void* struct_obj,
+    const void* src_ptr);
+
+void tao_super_universe_struct_get_v1_var_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
 
 void tao_super_universe_struct_get_var_info(
     const void* s,
@@ -4445,6 +4572,14 @@ void tao_super_universe_struct_get_key_info(
     int** d,
     int* bounds,
     bool* is_alloc);
+void tao_super_universe_struct_get_building_wall(
+    const void* struct_obj,
+    void** ptr_out);
+void tao_super_universe_struct_set_building_wall(
+    void* struct_obj,
+    const void* src_ptr);
+void tao_super_universe_struct_get_wave(const void* struct_obj, void** ptr_out);
+void tao_super_universe_struct_set_wave(void* struct_obj, const void* src_ptr);
 void tao_super_universe_struct_get_n_var_used(
     const void* struct_obj,
     int* value_out);
@@ -4455,6 +4590,14 @@ void tao_super_universe_struct_get_n_v1_var_used(
 void tao_super_universe_struct_set_n_v1_var_used(
     void* struct_obj,
     int value_in);
+
+void tao_super_universe_struct_get_history_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
 void tao_super_universe_struct_get_initialized(
     const void* struct_obj,
     bool* value_out);
@@ -4479,6 +4622,14 @@ void tao_var_struct_set_attrib_name(
     int str_len);
 void tao_var_struct_get_id_info(const void* s, char** d, int* bounds, bool* a);
 void tao_var_struct_set_id(void* struct_obj, const char* str_ptr, int str_len);
+
+void tao_var_struct_get_slave_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
 void tao_var_struct_get_ix_v1(const void* struct_obj, int* value_out);
 void tao_var_struct_set_ix_v1(void* struct_obj, int value_in);
 void tao_var_struct_get_ix_var(const void* struct_obj, int* value_out);
@@ -4556,6 +4707,22 @@ void tao_var_struct_get_useit_plot(const void* struct_obj, bool* value_out);
 void tao_var_struct_set_useit_plot(void* struct_obj, bool value_in);
 void tao_var_struct_get_key_bound(const void* struct_obj, bool* value_out);
 void tao_var_struct_set_key_bound(void* struct_obj, bool value_in);
+void tao_var_struct_get_v1(const void* struct_obj, void** ptr_out);
+void tao_var_struct_set_v1(void* struct_obj, const void* src_ptr);
+void tao_var_slave_struct_get_ix_uni(const void* struct_obj, int* value_out);
+void tao_var_slave_struct_set_ix_uni(void* struct_obj, int value_in);
+void tao_var_slave_struct_get_ix_branch(const void* struct_obj, int* value_out);
+void tao_var_slave_struct_set_ix_branch(void* struct_obj, int value_in);
+void tao_var_slave_struct_get_ix_ele(const void* struct_obj, int* value_out);
+void tao_var_slave_struct_set_ix_ele(void* struct_obj, int value_in);
+void tao_var_slave_struct_get_model_value(
+    const void* struct_obj,
+    double** ptr_out);
+void tao_var_slave_struct_set_model_value(void* struct_obj, double value_in);
+void tao_var_slave_struct_get_base_value(
+    const void* struct_obj,
+    double** ptr_out);
+void tao_var_slave_struct_set_base_value(void* struct_obj, double value_in);
 void tao_lattice_struct_get_name_info(
     const void* s,
     char** d,
@@ -4940,6 +5107,1611 @@ void lat_ele_order_struct_get_branch_info(
     bool* is_alloc,
     size_t* el_size);
 
+void tao_title_struct_get_string_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_title_struct_set_string(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_title_struct_get_x(const void* struct_obj, double* value_out);
+void tao_title_struct_set_x(void* struct_obj, double value_in);
+void tao_title_struct_get_y(const void* struct_obj, double* value_out);
+void tao_title_struct_set_y(void* struct_obj, double value_in);
+void tao_title_struct_get_units_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_title_struct_set_units(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_title_struct_get_justify_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_title_struct_set_justify(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_title_struct_get_draw_it(const void* struct_obj, bool* value_out);
+void tao_title_struct_set_draw_it(void* struct_obj, bool value_in);
+void qp_rect_struct_get_x1(const void* struct_obj, double* value_out);
+void qp_rect_struct_set_x1(void* struct_obj, double value_in);
+void qp_rect_struct_get_x2(const void* struct_obj, double* value_out);
+void qp_rect_struct_set_x2(void* struct_obj, double value_in);
+void qp_rect_struct_get_y1(const void* struct_obj, double* value_out);
+void qp_rect_struct_set_y1(void* struct_obj, double value_in);
+void qp_rect_struct_get_y2(const void* struct_obj, double* value_out);
+void qp_rect_struct_set_y2(void* struct_obj, double value_in);
+void qp_rect_struct_get_units_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void qp_rect_struct_set_units(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+
+void tao_drawing_struct_get_ele_shape_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void tao_shape_pattern_struct_get_name_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_shape_pattern_struct_set_name(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_shape_pattern_struct_get_line(const void* struct_obj, void** ptr_out);
+void tao_shape_pattern_struct_set_line(void* struct_obj, const void* src_ptr);
+
+void tao_shape_pattern_struct_get_pt_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void tao_shape_pattern_point_struct_get_s(
+    const void* struct_obj,
+    double* value_out);
+void tao_shape_pattern_point_struct_set_s(void* struct_obj, double value_in);
+void tao_shape_pattern_point_struct_get_y(
+    const void* struct_obj,
+    double* value_out);
+void tao_shape_pattern_point_struct_set_y(void* struct_obj, double value_in);
+void tao_shape_pattern_point_struct_get_radius(
+    const void* struct_obj,
+    double* value_out);
+void tao_shape_pattern_point_struct_set_radius(
+    void* struct_obj,
+    double value_in);
+void qp_axis_struct_get_label_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void qp_axis_struct_set_label(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void qp_axis_struct_get_min(const void* struct_obj, double* value_out);
+void qp_axis_struct_set_min(void* struct_obj, double value_in);
+void qp_axis_struct_get_max(const void* struct_obj, double* value_out);
+void qp_axis_struct_set_max(void* struct_obj, double value_in);
+void qp_axis_struct_get_tick_min(const void* struct_obj, double* value_out);
+void qp_axis_struct_set_tick_min(void* struct_obj, double value_in);
+void qp_axis_struct_get_tick_max(const void* struct_obj, double* value_out);
+void qp_axis_struct_set_tick_max(void* struct_obj, double value_in);
+void qp_axis_struct_get_eval_min(const void* struct_obj, double* value_out);
+void qp_axis_struct_set_eval_min(void* struct_obj, double value_in);
+void qp_axis_struct_get_eval_max(const void* struct_obj, double* value_out);
+void qp_axis_struct_set_eval_max(void* struct_obj, double value_in);
+void qp_axis_struct_get_dtick(const void* struct_obj, double* value_out);
+void qp_axis_struct_set_dtick(void* struct_obj, double value_in);
+void qp_axis_struct_get_number_offset(
+    const void* struct_obj,
+    double* value_out);
+void qp_axis_struct_set_number_offset(void* struct_obj, double value_in);
+void qp_axis_struct_get_label_offset(const void* struct_obj, double* value_out);
+void qp_axis_struct_set_label_offset(void* struct_obj, double value_in);
+void qp_axis_struct_get_major_tick_len(
+    const void* struct_obj,
+    double* value_out);
+void qp_axis_struct_set_major_tick_len(void* struct_obj, double value_in);
+void qp_axis_struct_get_minor_tick_len(
+    const void* struct_obj,
+    double* value_out);
+void qp_axis_struct_set_minor_tick_len(void* struct_obj, double value_in);
+void qp_axis_struct_get_label_color_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void qp_axis_struct_set_label_color(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void qp_axis_struct_get_major_div(const void* struct_obj, int* value_out);
+void qp_axis_struct_set_major_div(void* struct_obj, int value_in);
+void qp_axis_struct_get_major_div_nominal(
+    const void* struct_obj,
+    int* value_out);
+void qp_axis_struct_set_major_div_nominal(void* struct_obj, int value_in);
+void qp_axis_struct_get_minor_div(const void* struct_obj, int* value_out);
+void qp_axis_struct_set_minor_div(void* struct_obj, int value_in);
+void qp_axis_struct_get_minor_div_max(const void* struct_obj, int* value_out);
+void qp_axis_struct_set_minor_div_max(void* struct_obj, int value_in);
+void qp_axis_struct_get_places(const void* struct_obj, int* value_out);
+void qp_axis_struct_set_places(void* struct_obj, int value_in);
+void qp_axis_struct_get_type_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void qp_axis_struct_set_type(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void qp_axis_struct_get_bounds_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void qp_axis_struct_set_bounds(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void qp_axis_struct_get_tick_side(const void* struct_obj, int* value_out);
+void qp_axis_struct_set_tick_side(void* struct_obj, int value_in);
+void qp_axis_struct_get_number_side(const void* struct_obj, int* value_out);
+void qp_axis_struct_set_number_side(void* struct_obj, int value_in);
+void qp_axis_struct_get_draw_label(const void* struct_obj, bool* value_out);
+void qp_axis_struct_set_draw_label(void* struct_obj, bool value_in);
+void qp_axis_struct_get_draw_numbers(const void* struct_obj, bool* value_out);
+void qp_axis_struct_set_draw_numbers(void* struct_obj, bool value_in);
+void qp_legend_struct_get_row_spacing(
+    const void* struct_obj,
+    double* value_out);
+void qp_legend_struct_set_row_spacing(void* struct_obj, double value_in);
+void qp_legend_struct_get_line_length(
+    const void* struct_obj,
+    double* value_out);
+void qp_legend_struct_set_line_length(void* struct_obj, double value_in);
+void qp_legend_struct_get_text_offset(
+    const void* struct_obj,
+    double* value_out);
+void qp_legend_struct_set_text_offset(void* struct_obj, double value_in);
+void qp_legend_struct_get_draw_line(const void* struct_obj, bool* value_out);
+void qp_legend_struct_set_draw_line(void* struct_obj, bool value_in);
+void qp_legend_struct_get_draw_symbol(const void* struct_obj, bool* value_out);
+void qp_legend_struct_set_draw_symbol(void* struct_obj, bool value_in);
+void qp_legend_struct_get_draw_text(const void* struct_obj, bool* value_out);
+void qp_legend_struct_set_draw_text(void* struct_obj, bool value_in);
+void qp_point_struct_get_x(const void* struct_obj, double* value_out);
+void qp_point_struct_set_x(void* struct_obj, double value_in);
+void qp_point_struct_get_y(const void* struct_obj, double* value_out);
+void qp_point_struct_set_y(void* struct_obj, double value_in);
+void qp_point_struct_get_units_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void qp_point_struct_set_units(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void qp_line_struct_get_width(const void* struct_obj, int* value_out);
+void qp_line_struct_set_width(void* struct_obj, int value_in);
+void qp_line_struct_get_color_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void qp_line_struct_set_color(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void qp_line_struct_get_pattern_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void qp_line_struct_set_pattern(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void qp_symbol_struct_get_type_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void qp_symbol_struct_set_type(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void qp_symbol_struct_get_height(const void* struct_obj, double* value_out);
+void qp_symbol_struct_set_height(void* struct_obj, double value_in);
+void qp_symbol_struct_get_color_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void qp_symbol_struct_set_color(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void qp_symbol_struct_get_fill_pattern_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void qp_symbol_struct_set_fill_pattern(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void qp_symbol_struct_get_line_width(const void* struct_obj, int* value_out);
+void qp_symbol_struct_set_line_width(void* struct_obj, int value_in);
+void tao_floor_plan_struct_get_view_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_floor_plan_struct_set_view(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_floor_plan_struct_get_rotation(
+    const void* struct_obj,
+    double* value_out);
+void tao_floor_plan_struct_set_rotation(void* struct_obj, double value_in);
+void tao_floor_plan_struct_get_correct_distortion(
+    const void* struct_obj,
+    bool* value_out);
+void tao_floor_plan_struct_set_correct_distortion(
+    void* struct_obj,
+    bool value_in);
+void tao_floor_plan_struct_get_flip_label_side(
+    const void* struct_obj,
+    bool* value_out);
+void tao_floor_plan_struct_set_flip_label_side(void* struct_obj, bool value_in);
+void tao_floor_plan_struct_get_size_is_absolute(
+    const void* struct_obj,
+    bool* value_out);
+void tao_floor_plan_struct_set_size_is_absolute(
+    void* struct_obj,
+    bool value_in);
+void tao_floor_plan_struct_get_draw_only_first_pass(
+    const void* struct_obj,
+    bool* value_out);
+void tao_floor_plan_struct_set_draw_only_first_pass(
+    void* struct_obj,
+    bool value_in);
+void tao_floor_plan_struct_get_draw_building_wall(
+    const void* struct_obj,
+    bool* value_out);
+void tao_floor_plan_struct_set_draw_building_wall(
+    void* struct_obj,
+    bool value_in);
+void tao_floor_plan_struct_get_orbit_scale(
+    const void* struct_obj,
+    double* value_out);
+void tao_floor_plan_struct_set_orbit_scale(void* struct_obj, double value_in);
+void tao_floor_plan_struct_get_orbit_color_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_floor_plan_struct_set_orbit_color(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_floor_plan_struct_get_orbit_pattern_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_floor_plan_struct_set_orbit_pattern(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_floor_plan_struct_get_orbit_lattice_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_floor_plan_struct_set_orbit_lattice(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_floor_plan_struct_get_orbit_width(
+    const void* struct_obj,
+    int* value_out);
+void tao_floor_plan_struct_set_orbit_width(void* struct_obj, int value_in);
+void tao_v1_var_struct_get_name_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_v1_var_struct_set_name(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_v1_var_struct_get_ix_v1_var(const void* struct_obj, int* value_out);
+void tao_v1_var_struct_set_ix_v1_var(void* struct_obj, int value_in);
+
+void tao_v1_var_struct_get_v_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void tao_global_struct_get_beam_dead_cutoff(
+    const void* struct_obj,
+    double* value_out);
+void tao_global_struct_set_beam_dead_cutoff(void* struct_obj, double value_in);
+void tao_global_struct_get_lm_opt_deriv_reinit(
+    const void* struct_obj,
+    double* value_out);
+void tao_global_struct_set_lm_opt_deriv_reinit(
+    void* struct_obj,
+    double value_in);
+void tao_global_struct_get_de_lm_step_ratio(
+    const void* struct_obj,
+    double* value_out);
+void tao_global_struct_set_de_lm_step_ratio(void* struct_obj, double value_in);
+void tao_global_struct_get_de_var_to_population_factor(
+    const void* struct_obj,
+    double* value_out);
+void tao_global_struct_set_de_var_to_population_factor(
+    void* struct_obj,
+    double value_in);
+void tao_global_struct_get_lmdif_eps(const void* struct_obj, double* value_out);
+void tao_global_struct_set_lmdif_eps(void* struct_obj, double value_in);
+void tao_global_struct_get_lmdif_negligible_merit(
+    const void* struct_obj,
+    double* value_out);
+void tao_global_struct_set_lmdif_negligible_merit(
+    void* struct_obj,
+    double value_in);
+void tao_global_struct_get_svd_cutoff(
+    const void* struct_obj,
+    double* value_out);
+void tao_global_struct_set_svd_cutoff(void* struct_obj, double value_in);
+void tao_global_struct_get_unstable_penalty(
+    const void* struct_obj,
+    double* value_out);
+void tao_global_struct_set_unstable_penalty(void* struct_obj, double value_in);
+void tao_global_struct_get_merit_stop_value(
+    const void* struct_obj,
+    double* value_out);
+void tao_global_struct_set_merit_stop_value(void* struct_obj, double value_in);
+void tao_global_struct_get_dmerit_stop_value(
+    const void* struct_obj,
+    double* value_out);
+void tao_global_struct_set_dmerit_stop_value(void* struct_obj, double value_in);
+void tao_global_struct_get_random_sigma_cutoff(
+    const void* struct_obj,
+    double* value_out);
+void tao_global_struct_set_random_sigma_cutoff(
+    void* struct_obj,
+    double value_in);
+void tao_global_struct_get_delta_e_chrom(
+    const void* struct_obj,
+    double* value_out);
+void tao_global_struct_set_delta_e_chrom(void* struct_obj, double value_in);
+void tao_global_struct_get_max_plot_time(
+    const void* struct_obj,
+    double* value_out);
+void tao_global_struct_set_max_plot_time(void* struct_obj, double value_in);
+void tao_global_struct_get_default_universe(
+    const void* struct_obj,
+    int* value_out);
+void tao_global_struct_set_default_universe(void* struct_obj, int value_in);
+void tao_global_struct_get_default_branch(
+    const void* struct_obj,
+    int* value_out);
+void tao_global_struct_set_default_branch(void* struct_obj, int value_in);
+void tao_global_struct_get_n_opti_cycles(
+    const void* struct_obj,
+    int* value_out);
+void tao_global_struct_set_n_opti_cycles(void* struct_obj, int value_in);
+void tao_global_struct_get_n_opti_loops(const void* struct_obj, int* value_out);
+void tao_global_struct_set_n_opti_loops(void* struct_obj, int value_in);
+void tao_global_struct_get_n_threads(const void* struct_obj, int* value_out);
+void tao_global_struct_set_n_threads(void* struct_obj, int value_in);
+void tao_global_struct_get_phase_units(const void* struct_obj, int* value_out);
+void tao_global_struct_set_phase_units(void* struct_obj, int value_in);
+void tao_global_struct_get_bunch_to_plot(
+    const void* struct_obj,
+    int* value_out);
+void tao_global_struct_set_bunch_to_plot(void* struct_obj, int value_in);
+void tao_global_struct_get_random_seed(const void* struct_obj, int* value_out);
+void tao_global_struct_set_random_seed(void* struct_obj, int value_in);
+void tao_global_struct_get_n_top10_merit(
+    const void* struct_obj,
+    int* value_out);
+void tao_global_struct_set_n_top10_merit(void* struct_obj, int value_in);
+void tao_global_struct_get_srdt_gen_n_slices(
+    const void* struct_obj,
+    int* value_out);
+void tao_global_struct_set_srdt_gen_n_slices(void* struct_obj, int value_in);
+void tao_global_struct_get_datum_err_messages_max(
+    const void* struct_obj,
+    int* value_out);
+void tao_global_struct_set_datum_err_messages_max(
+    void* struct_obj,
+    int value_in);
+void tao_global_struct_get_srdt_sxt_n_slices(
+    const void* struct_obj,
+    int* value_out);
+void tao_global_struct_set_srdt_sxt_n_slices(void* struct_obj, int value_in);
+void tao_global_struct_get_srdt_use_cache(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_srdt_use_cache(void* struct_obj, bool value_in);
+void tao_global_struct_get_quiet_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_global_struct_set_quiet(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_global_struct_get_random_engine_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_global_struct_set_random_engine(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_global_struct_get_random_gauss_converter_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_global_struct_set_random_gauss_converter(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_global_struct_get_track_type_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_global_struct_set_track_type(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_global_struct_get_lat_sigma_calc_uses_emit_from_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_global_struct_set_lat_sigma_calc_uses_emit_from(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_global_struct_get_prompt_string_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_global_struct_set_prompt_string(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_global_struct_get_prompt_color_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_global_struct_set_prompt_color(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_global_struct_get_optimizer_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_global_struct_set_optimizer(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_global_struct_get_print_command_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_global_struct_set_print_command(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_global_struct_get_var_out_file_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_global_struct_set_var_out_file(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_global_struct_get_history_file_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_global_struct_set_history_file(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_global_struct_get_beam_timer_on(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_beam_timer_on(void* struct_obj, bool value_in);
+void tao_global_struct_get_box_plots(const void* struct_obj, bool* value_out);
+void tao_global_struct_set_box_plots(void* struct_obj, bool value_in);
+void tao_global_struct_get_blank_line_between_commands(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_blank_line_between_commands(
+    void* struct_obj,
+    bool value_in);
+void tao_global_struct_get_cmd_file_abort_on_error(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_cmd_file_abort_on_error(
+    void* struct_obj,
+    bool value_in);
+void tao_global_struct_get_concatenate_maps(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_concatenate_maps(void* struct_obj, bool value_in);
+void tao_global_struct_get_derivative_recalc(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_derivative_recalc(void* struct_obj, bool value_in);
+void tao_global_struct_get_derivative_uses_design(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_derivative_uses_design(
+    void* struct_obj,
+    bool value_in);
+void tao_global_struct_get_disable_smooth_line_calc(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_disable_smooth_line_calc(
+    void* struct_obj,
+    bool value_in);
+void tao_global_struct_get_draw_curve_off_scale_warn(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_draw_curve_off_scale_warn(
+    void* struct_obj,
+    bool value_in);
+void tao_global_struct_get_external_plotting(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_external_plotting(void* struct_obj, bool value_in);
+void tao_global_struct_get_label_lattice_elements(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_label_lattice_elements(
+    void* struct_obj,
+    bool value_in);
+void tao_global_struct_get_label_keys(const void* struct_obj, bool* value_out);
+void tao_global_struct_set_label_keys(void* struct_obj, bool value_in);
+void tao_global_struct_get_lattice_calc_on(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_lattice_calc_on(void* struct_obj, bool value_in);
+void tao_global_struct_get_only_limit_opt_vars(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_only_limit_opt_vars(void* struct_obj, bool value_in);
+void tao_global_struct_get_opt_with_ref(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_opt_with_ref(void* struct_obj, bool value_in);
+void tao_global_struct_get_opt_with_base(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_opt_with_base(void* struct_obj, bool value_in);
+void tao_global_struct_get_opt_match_auto_recalc(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_opt_match_auto_recalc(
+    void* struct_obj,
+    bool value_in);
+void tao_global_struct_get_opti_write_var_file(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_opti_write_var_file(void* struct_obj, bool value_in);
+void tao_global_struct_get_optimizer_allow_user_abort(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_optimizer_allow_user_abort(
+    void* struct_obj,
+    bool value_in);
+void tao_global_struct_get_optimizer_var_limit_warn(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_optimizer_var_limit_warn(
+    void* struct_obj,
+    bool value_in);
+void tao_global_struct_get_plot_on(const void* struct_obj, bool* value_out);
+void tao_global_struct_set_plot_on(void* struct_obj, bool value_in);
+void tao_global_struct_get_rad_int_user_calc_on(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_rad_int_user_calc_on(
+    void* struct_obj,
+    bool value_in);
+void tao_global_struct_get_rf_on(const void* struct_obj, bool* value_out);
+void tao_global_struct_set_rf_on(void* struct_obj, bool value_in);
+void tao_global_struct_get_single_step(const void* struct_obj, bool* value_out);
+void tao_global_struct_set_single_step(void* struct_obj, bool value_in);
+void tao_global_struct_get_stop_on_error(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_stop_on_error(void* struct_obj, bool value_in);
+void tao_global_struct_get_svd_retreat_on_merit_increase(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_svd_retreat_on_merit_increase(
+    void* struct_obj,
+    bool value_in);
+void tao_global_struct_get_var_limits_on(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_var_limits_on(void* struct_obj, bool value_in);
+void tao_global_struct_get_wait_for_CR_in_single_mode(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_wait_for_CR_in_single_mode(
+    void* struct_obj,
+    bool value_in);
+void tao_global_struct_get_symbol_import(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_symbol_import(void* struct_obj, bool value_in);
+void tao_global_struct_get_debug_on(const void* struct_obj, bool* value_out);
+void tao_global_struct_set_debug_on(void* struct_obj, bool value_in);
+void tao_global_struct_get_expression_tree_on(
+    const void* struct_obj,
+    bool* value_out);
+void tao_global_struct_set_expression_tree_on(void* struct_obj, bool value_in);
+void tao_global_struct_get_verbose_on(const void* struct_obj, bool* value_out);
+void tao_global_struct_set_verbose_on(void* struct_obj, bool value_in);
+void tao_init_struct_get_parse_cmd_args(
+    const void* struct_obj,
+    bool* value_out);
+void tao_init_struct_set_parse_cmd_args(void* struct_obj, bool value_in);
+void tao_init_struct_get_debug_switch(const void* struct_obj, bool* value_out);
+void tao_init_struct_set_debug_switch(void* struct_obj, bool value_in);
+void tao_init_struct_get_external_plotting_switch(
+    const void* struct_obj,
+    bool* value_out);
+void tao_init_struct_set_external_plotting_switch(
+    void* struct_obj,
+    bool value_in);
+void tao_init_struct_get_init_name_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_init_name(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_hook_init_file_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_hook_init_file(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_hook_lat_file_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_hook_lat_file(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_hook_beam_file_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_hook_beam_file(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_hook_data_file_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_hook_data_file(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_hook_plot_file_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_hook_plot_file(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_hook_startup_file_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_hook_startup_file(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_hook_var_file_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_hook_var_file(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_hook_building_wall_file_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_hook_building_wall_file(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_init_file_arg_path_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_init_file_arg_path(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_lattice_file_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_lattice_file_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_hook_init_file_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_hook_init_file_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_init_file_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_init_file_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_beam_file_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_beam_file_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_beam_init_position_file_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_beam_init_position_file_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_command_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_command_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_data_file_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_data_file_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_plot_file_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_plot_file_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_startup_file_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_startup_file_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_var_file_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_var_file_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_building_wall_file_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_building_wall_file_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_geometry_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_geometry_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_slice_lattice_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_slice_lattice_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_start_branch_at_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_start_branch_at_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_log_startup_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_log_startup_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_no_stopping_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_no_stopping_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_noplot_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_noplot_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_no_rad_int_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_no_rad_int_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_reverse_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_reverse_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_debug_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_debug_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_disable_smooth_line_calc_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_disable_smooth_line_calc_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_rf_on_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_rf_on_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_prompt_color_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_prompt_color_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_quiet_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_quiet_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_noinit_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_noinit_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_nostartup_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_nostartup_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_symbol_import_arg_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_symbol_import_arg(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_init_struct_get_unique_name_suffix_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_init_struct_set_unique_name_suffix(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+
+void tao_common_struct_get_plot_place_buffer_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void tao_common_struct_get_covar_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void tao_common_struct_get_alpha_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void tao_common_struct_get_dummy_target(
+    const void* struct_obj,
+    double* value_out);
+void tao_common_struct_set_dummy_target(void* struct_obj, double value_in);
+void tao_common_struct_get_n_alias(const void* struct_obj, int* value_out);
+void tao_common_struct_set_n_alias(void* struct_obj, int value_in);
+void tao_common_struct_get_cmd_file_level(
+    const void* struct_obj,
+    int* value_out);
+void tao_common_struct_set_cmd_file_level(void* struct_obj, int value_in);
+void tao_common_struct_get_ix_key_bank(const void* struct_obj, int* value_out);
+void tao_common_struct_set_ix_key_bank(void* struct_obj, int value_in);
+void tao_common_struct_get_ix_history(const void* struct_obj, int* value_out);
+void tao_common_struct_set_ix_history(void* struct_obj, int value_in);
+void tao_common_struct_get_n_history(const void* struct_obj, int* value_out);
+void tao_common_struct_set_n_history(void* struct_obj, int value_in);
+void tao_common_struct_get_lev_loop(const void* struct_obj, int* value_out);
+void tao_common_struct_set_lev_loop(void* struct_obj, int value_in);
+void tao_common_struct_get_n_err_messages_printed(
+    const void* struct_obj,
+    int* value_out);
+void tao_common_struct_set_n_err_messages_printed(
+    void* struct_obj,
+    int value_in);
+void tao_common_struct_get_n_universes(const void* struct_obj, int* value_out);
+void tao_common_struct_set_n_universes(void* struct_obj, int value_in);
+void tao_common_struct_get_ix_beam_track_active_element(
+    const void* struct_obj,
+    int* value_out);
+void tao_common_struct_set_ix_beam_track_active_element(
+    void* struct_obj,
+    int value_in);
+void tao_common_struct_get_cmd_file_paused(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_cmd_file_paused(void* struct_obj, bool value_in);
+void tao_common_struct_get_use_cmd_here(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_use_cmd_here(void* struct_obj, bool value_in);
+void tao_common_struct_get_cmd_from_cmd_file(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_cmd_from_cmd_file(void* struct_obj, bool value_in);
+void tao_common_struct_get_use_saved_beam_in_tracking(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_use_saved_beam_in_tracking(
+    void* struct_obj,
+    bool value_in);
+void tao_common_struct_get_single_mode(const void* struct_obj, bool* value_out);
+void tao_common_struct_set_single_mode(void* struct_obj, bool value_in);
+void tao_common_struct_get_combine_consecutive_elements_of_like_name(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_combine_consecutive_elements_of_like_name(
+    void* struct_obj,
+    bool value_in);
+void tao_common_struct_get_have_tracked_beam(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_have_tracked_beam(void* struct_obj, bool value_in);
+void tao_common_struct_get_init_plot_needed(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_init_plot_needed(void* struct_obj, bool value_in);
+void tao_common_struct_get_init_beam(const void* struct_obj, bool* value_out);
+void tao_common_struct_set_init_beam(void* struct_obj, bool value_in);
+void tao_common_struct_get_init_var(const void* struct_obj, bool* value_out);
+void tao_common_struct_set_init_var(void* struct_obj, bool value_in);
+void tao_common_struct_get_init_read_lat_info(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_init_read_lat_info(void* struct_obj, bool value_in);
+void tao_common_struct_get_optimizer_running(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_optimizer_running(void* struct_obj, bool value_in);
+void tao_common_struct_get_have_datums_using_expressions(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_have_datums_using_expressions(
+    void* struct_obj,
+    bool value_in);
+void tao_common_struct_get_print_to_terminal(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_print_to_terminal(void* struct_obj, bool value_in);
+void tao_common_struct_get_lattice_calc_done(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_lattice_calc_done(void* struct_obj, bool value_in);
+void tao_common_struct_get_add_measurement_noise(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_add_measurement_noise(
+    void* struct_obj,
+    bool value_in);
+void tao_common_struct_get_command_arg_has_been_executed(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_command_arg_has_been_executed(
+    void* struct_obj,
+    bool value_in);
+void tao_common_struct_get_all_merit_weights_positive(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_all_merit_weights_positive(
+    void* struct_obj,
+    bool value_in);
+void tao_common_struct_get_multi_turn_orbit_is_plotted(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_multi_turn_orbit_is_plotted(
+    void* struct_obj,
+    bool value_in);
+void tao_common_struct_get_force_chrom_calc(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_force_chrom_calc(void* struct_obj, bool value_in);
+void tao_common_struct_get_force_rad_int_calc(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_force_rad_int_calc(void* struct_obj, bool value_in);
+void tao_common_struct_get_rad_int_ri_calc_on(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_rad_int_ri_calc_on(void* struct_obj, bool value_in);
+void tao_common_struct_get_rad_int_6d_calc_on(
+    const void* struct_obj,
+    bool* value_out);
+void tao_common_struct_set_rad_int_6d_calc_on(void* struct_obj, bool value_in);
+
+void tao_common_struct_get_valid_plot_who_info(
+    const void* s,
+    char** d,
+    int* bounds, // [lower, upper]
+    int* str_len,
+    bool* is_alloc);
+
+void tao_common_struct_get_single_mode_buffer_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_common_struct_set_single_mode_buffer(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_common_struct_get_cmd_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_common_struct_set_cmd(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_common_struct_get_saved_cmd_line_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_common_struct_set_saved_cmd_line(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_plot_page_struct_get_title(const void* struct_obj, void** ptr_out);
+void tao_plot_page_struct_set_title(void* struct_obj, const void* src_ptr);
+void tao_plot_page_struct_get_subtitle(const void* struct_obj, void** ptr_out);
+void tao_plot_page_struct_set_subtitle(void* struct_obj, const void* src_ptr);
+void tao_plot_page_struct_get_border(const void* struct_obj, void** ptr_out);
+void tao_plot_page_struct_set_border(void* struct_obj, const void* src_ptr);
+void tao_plot_page_struct_get_floor_plan(
+    const void* struct_obj,
+    void** ptr_out);
+void tao_plot_page_struct_set_floor_plan(void* struct_obj, const void* src_ptr);
+void tao_plot_page_struct_get_lat_layout(
+    const void* struct_obj,
+    void** ptr_out);
+void tao_plot_page_struct_set_lat_layout(void* struct_obj, const void* src_ptr);
+
+void tao_plot_page_struct_get_pattern_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void tao_plot_page_struct_get_template_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void tao_plot_page_struct_get_region_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void tao_plot_page_struct_get_plot_display_type_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_plot_page_struct_set_plot_display_type(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_plot_page_struct_get_size_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void tao_plot_page_struct_get_text_height(
+    const void* struct_obj,
+    double* value_out);
+void tao_plot_page_struct_set_text_height(void* struct_obj, double value_in);
+void tao_plot_page_struct_get_main_title_text_scale(
+    const void* struct_obj,
+    double* value_out);
+void tao_plot_page_struct_set_main_title_text_scale(
+    void* struct_obj,
+    double value_in);
+void tao_plot_page_struct_get_graph_title_text_scale(
+    const void* struct_obj,
+    double* value_out);
+void tao_plot_page_struct_set_graph_title_text_scale(
+    void* struct_obj,
+    double value_in);
+void tao_plot_page_struct_get_axis_number_text_scale(
+    const void* struct_obj,
+    double* value_out);
+void tao_plot_page_struct_set_axis_number_text_scale(
+    void* struct_obj,
+    double value_in);
+void tao_plot_page_struct_get_axis_label_text_scale(
+    const void* struct_obj,
+    double* value_out);
+void tao_plot_page_struct_set_axis_label_text_scale(
+    void* struct_obj,
+    double value_in);
+void tao_plot_page_struct_get_legend_text_scale(
+    const void* struct_obj,
+    double* value_out);
+void tao_plot_page_struct_set_legend_text_scale(
+    void* struct_obj,
+    double value_in);
+void tao_plot_page_struct_get_key_table_text_scale(
+    const void* struct_obj,
+    double* value_out);
+void tao_plot_page_struct_set_key_table_text_scale(
+    void* struct_obj,
+    double value_in);
+void tao_plot_page_struct_get_floor_plan_shape_scale(
+    const void* struct_obj,
+    double* value_out);
+void tao_plot_page_struct_set_floor_plan_shape_scale(
+    void* struct_obj,
+    double value_in);
+void tao_plot_page_struct_get_floor_plan_text_scale(
+    const void* struct_obj,
+    double* value_out);
+void tao_plot_page_struct_set_floor_plan_text_scale(
+    void* struct_obj,
+    double value_in);
+void tao_plot_page_struct_get_lat_layout_shape_scale(
+    const void* struct_obj,
+    double* value_out);
+void tao_plot_page_struct_set_lat_layout_shape_scale(
+    void* struct_obj,
+    double value_in);
+void tao_plot_page_struct_get_lat_layout_text_scale(
+    const void* struct_obj,
+    double* value_out);
+void tao_plot_page_struct_set_lat_layout_text_scale(
+    void* struct_obj,
+    double value_in);
+void tao_plot_page_struct_get_n_curve_pts(
+    const void* struct_obj,
+    int* value_out);
+void tao_plot_page_struct_set_n_curve_pts(void* struct_obj, int value_in);
+void tao_plot_page_struct_get_id_window(const void* struct_obj, int* value_out);
+void tao_plot_page_struct_set_id_window(void* struct_obj, int value_in);
+void tao_plot_page_struct_get_delete_overlapping_plots(
+    const void* struct_obj,
+    bool* value_out);
+void tao_plot_page_struct_set_delete_overlapping_plots(
+    void* struct_obj,
+    bool value_in);
+void tao_plot_page_struct_get_draw_graph_title_suffix(
+    const void* struct_obj,
+    bool* value_out);
+void tao_plot_page_struct_set_draw_graph_title_suffix(
+    void* struct_obj,
+    bool value_in);
+void tao_building_wall_struct_get_orientation(
+    const void* struct_obj,
+    void** ptr_out);
+void tao_building_wall_struct_set_orientation(
+    void* struct_obj,
+    const void* src_ptr);
+
+void tao_building_wall_struct_get_section_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void tao_building_wall_orientation_struct_get_theta(
+    const void* struct_obj,
+    double* value_out);
+void tao_building_wall_orientation_struct_set_theta(
+    void* struct_obj,
+    double value_in);
+void tao_building_wall_orientation_struct_get_x_offset(
+    const void* struct_obj,
+    double* value_out);
+void tao_building_wall_orientation_struct_set_x_offset(
+    void* struct_obj,
+    double value_in);
+void tao_building_wall_orientation_struct_get_z_offset(
+    const void* struct_obj,
+    double* value_out);
+void tao_building_wall_orientation_struct_set_z_offset(
+    void* struct_obj,
+    double value_in);
+void tao_building_wall_section_struct_get_name_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_building_wall_section_struct_set_name(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_building_wall_section_struct_get_constraint_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_building_wall_section_struct_set_constraint(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+
+void tao_building_wall_section_struct_get_point_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void tao_building_wall_point_struct_get_z(
+    const void* struct_obj,
+    double* value_out);
+void tao_building_wall_point_struct_set_z(void* struct_obj, double value_in);
+void tao_building_wall_point_struct_get_x(
+    const void* struct_obj,
+    double* value_out);
+void tao_building_wall_point_struct_set_x(void* struct_obj, double value_in);
+void tao_building_wall_point_struct_get_radius(
+    const void* struct_obj,
+    double* value_out);
+void tao_building_wall_point_struct_set_radius(
+    void* struct_obj,
+    double value_in);
+void tao_building_wall_point_struct_get_z_center(
+    const void* struct_obj,
+    double* value_out);
+void tao_building_wall_point_struct_set_z_center(
+    void* struct_obj,
+    double value_in);
+void tao_building_wall_point_struct_get_x_center(
+    const void* struct_obj,
+    double* value_out);
+void tao_building_wall_point_struct_set_x_center(
+    void* struct_obj,
+    double value_in);
+void tao_wave_struct_get_data_type_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_wave_struct_set_data_type(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_wave_struct_get_rms_rel_a(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_rms_rel_a(void* struct_obj, double value_in);
+void tao_wave_struct_get_rms_rel_b(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_rms_rel_b(void* struct_obj, double value_in);
+void tao_wave_struct_get_rms_rel_as(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_rms_rel_as(void* struct_obj, double value_in);
+void tao_wave_struct_get_rms_rel_bs(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_rms_rel_bs(void* struct_obj, double value_in);
+void tao_wave_struct_get_rms_rel_ar(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_rms_rel_ar(void* struct_obj, double value_in);
+void tao_wave_struct_get_rms_rel_br(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_rms_rel_br(void* struct_obj, double value_in);
+void tao_wave_struct_get_rms_rel_k(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_rms_rel_k(void* struct_obj, double value_in);
+void tao_wave_struct_get_rms_rel_ks(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_rms_rel_ks(void* struct_obj, double value_in);
+void tao_wave_struct_get_rms_rel_kr(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_rms_rel_kr(void* struct_obj, double value_in);
+void tao_wave_struct_get_rms_phi(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_rms_phi(void* struct_obj, double value_in);
+void tao_wave_struct_get_rms_phi_s(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_rms_phi_s(void* struct_obj, double value_in);
+void tao_wave_struct_get_rms_phi_r(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_rms_phi_r(void* struct_obj, double value_in);
+void tao_wave_struct_get_amp_ba_s(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_amp_ba_s(void* struct_obj, double value_in);
+void tao_wave_struct_get_amp_ba_r(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_amp_ba_r(void* struct_obj, double value_in);
+void tao_wave_struct_get_chi_a(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_chi_a(void* struct_obj, double value_in);
+void tao_wave_struct_get_chi_c(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_chi_c(void* struct_obj, double value_in);
+void tao_wave_struct_get_chi_ba(const void* struct_obj, double* value_out);
+void tao_wave_struct_set_chi_ba(void* struct_obj, double value_in);
+void tao_wave_struct_get_amp_a_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void tao_wave_struct_get_amp_b_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void tao_wave_struct_get_amp_ba_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void tao_wave_struct_get_coef_a_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void tao_wave_struct_get_coef_b_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void tao_wave_struct_get_coef_ba_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void tao_wave_struct_get_n_func(const void* struct_obj, int* value_out);
+void tao_wave_struct_set_n_func(void* struct_obj, int value_in);
+void tao_wave_struct_get_ix_a1(const void* struct_obj, int* value_out);
+void tao_wave_struct_set_ix_a1(void* struct_obj, int value_in);
+void tao_wave_struct_get_ix_a2(const void* struct_obj, int* value_out);
+void tao_wave_struct_set_ix_a2(void* struct_obj, int value_in);
+void tao_wave_struct_get_ix_b1(const void* struct_obj, int* value_out);
+void tao_wave_struct_set_ix_b1(void* struct_obj, int value_in);
+void tao_wave_struct_get_ix_b2(const void* struct_obj, int* value_out);
+void tao_wave_struct_set_ix_b2(void* struct_obj, int value_in);
+void tao_wave_struct_get_i_a1(const void* struct_obj, int* value_out);
+void tao_wave_struct_set_i_a1(void* struct_obj, int value_in);
+void tao_wave_struct_get_i_a2(const void* struct_obj, int* value_out);
+void tao_wave_struct_set_i_a2(void* struct_obj, int value_in);
+void tao_wave_struct_get_i_b1(const void* struct_obj, int* value_out);
+void tao_wave_struct_set_i_b1(void* struct_obj, int value_in);
+void tao_wave_struct_get_i_b2(const void* struct_obj, int* value_out);
+void tao_wave_struct_set_i_b2(void* struct_obj, int value_in);
+void tao_wave_struct_get_n_a(const void* struct_obj, int* value_out);
+void tao_wave_struct_set_n_a(void* struct_obj, int value_in);
+void tao_wave_struct_get_n_b(const void* struct_obj, int* value_out);
+void tao_wave_struct_set_n_b(void* struct_obj, int value_in);
+void tao_wave_struct_get_i_curve_wrap_pt(
+    const void* struct_obj,
+    int* value_out);
+void tao_wave_struct_set_i_curve_wrap_pt(void* struct_obj, int value_in);
+void tao_wave_struct_get_ix_data_info(
+    const void* s,
+    int** d,
+    int* bounds,
+    bool* is_alloc);
+void tao_wave_struct_get_n_kick(const void* struct_obj, int* value_out);
+void tao_wave_struct_set_n_kick(void* struct_obj, int value_in);
+
+void tao_wave_struct_get_kick_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void tao_wave_struct_get_base_graph(const void* struct_obj, void** ptr_out);
+void tao_wave_struct_set_base_graph(void* struct_obj, const void* src_ptr);
+void tao_wave_struct_get_region(const void* struct_obj, void** ptr_out);
+void tao_wave_struct_set_region(void* struct_obj, const void* src_ptr);
+void tao_wave_struct_get_d1_dat(const void* struct_obj, void** ptr_out);
+void tao_wave_struct_set_d1_dat(void* struct_obj, const void* src_ptr);
+void tao_wave_kick_pt_struct_get_phi_s(
+    const void* struct_obj,
+    double* value_out);
+void tao_wave_kick_pt_struct_set_phi_s(void* struct_obj, double value_in);
+void tao_wave_kick_pt_struct_get_phi_r(
+    const void* struct_obj,
+    double* value_out);
+void tao_wave_kick_pt_struct_set_phi_r(void* struct_obj, double value_in);
+void tao_wave_kick_pt_struct_get_phi(const void* struct_obj, double* value_out);
+void tao_wave_kick_pt_struct_set_phi(void* struct_obj, double value_in);
+void tao_wave_kick_pt_struct_get_amp(const void* struct_obj, double* value_out);
+void tao_wave_kick_pt_struct_set_amp(void* struct_obj, double value_in);
+void tao_wave_kick_pt_struct_get_s(const void* struct_obj, double* value_out);
+void tao_wave_kick_pt_struct_set_s(void* struct_obj, double value_in);
+void tao_wave_kick_pt_struct_get_ix_dat_before_kick(
+    const void* struct_obj,
+    int* value_out);
+void tao_wave_kick_pt_struct_set_ix_dat_before_kick(
+    void* struct_obj,
+    int value_in);
+void tao_wave_kick_pt_struct_get_ele(const void* struct_obj, void** ptr_out);
+void tao_wave_kick_pt_struct_set_ele(void* struct_obj, const void* src_ptr);
+
+void tao_cmd_history_struct_get_cmd_info(
+    const void* s,
+    char** d,
+    int* len,
+    bool* is_alloc);
+
+void tao_cmd_history_struct_set_cmd(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_cmd_history_struct_get_ix(const void* struct_obj, int* value_out);
+void tao_cmd_history_struct_set_ix(void* struct_obj, int value_in);
 void tao_universe_struct_get_model(const void* struct_obj, void** ptr_out);
 void tao_universe_struct_set_model(void* struct_obj, const void* src_ptr);
 void tao_universe_struct_get_design(const void* struct_obj, void** ptr_out);
@@ -5016,6 +6788,35 @@ void tao_universe_struct_get_picked_uni(
     const void* struct_obj,
     bool* value_out);
 void tao_universe_struct_set_picked_uni(void* struct_obj, bool value_in);
+void mad_energy_struct_get_total(const void* struct_obj, double* value_out);
+void mad_energy_struct_set_total(void* struct_obj, double value_in);
+void mad_energy_struct_get_beta(const void* struct_obj, double* value_out);
+void mad_energy_struct_set_beta(void* struct_obj, double value_in);
+void mad_energy_struct_get_gamma(const void* struct_obj, double* value_out);
+void mad_energy_struct_set_gamma(void* struct_obj, double value_in);
+void mad_energy_struct_get_kinetic(const void* struct_obj, double* value_out);
+void mad_energy_struct_set_kinetic(void* struct_obj, double value_in);
+void mad_energy_struct_get_p0c(const void* struct_obj, double* value_out);
+void mad_energy_struct_set_p0c(void* struct_obj, double value_in);
+void mad_energy_struct_get_particle(const void* struct_obj, int* value_out);
+void mad_energy_struct_set_particle(void* struct_obj, int value_in);
+void mad_map_struct_get_k_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void mad_map_struct_get_r_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
+void mad_map_struct_get_t_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    int* strides,
+    bool* is_alloc);
 void all_encompassing_struct_get_real_rp_0d(
     const void* struct_obj,
     double* value_out);
@@ -7259,6 +9060,24 @@ void access_tao_ele_shape_struct_container(
     size_t* elem_size,
     bool* alloc);
 
+void* allocate_fortran_tao_ele_pointer_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_ele_pointer_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_ele_pointer_struct(const void* src, void* dst);
+
+void* allocate_tao_ele_pointer_struct_container();
+void reallocate_tao_ele_pointer_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_ele_pointer_struct_container(void*) noexcept;
+void access_tao_ele_pointer_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_tao_curve_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_curve_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_curve_struct(const void* src, void* dst);
@@ -7267,6 +9086,60 @@ void* allocate_tao_curve_struct_container();
 void reallocate_tao_curve_struct_container_data(void*, int, size_t) noexcept;
 void deallocate_tao_curve_struct_container(void*) noexcept;
 void access_tao_curve_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_curve_color_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_curve_color_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_curve_color_struct(const void* src, void* dst);
+
+void* allocate_tao_curve_color_struct_container();
+void reallocate_tao_curve_color_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_curve_color_struct_container(void*) noexcept;
+void access_tao_curve_color_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_curve_orbit_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_curve_orbit_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_curve_orbit_struct(const void* src, void* dst);
+
+void* allocate_tao_curve_orbit_struct_container();
+void reallocate_tao_curve_orbit_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_curve_orbit_struct_container(void*) noexcept;
+void access_tao_curve_orbit_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_histogram_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_histogram_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_histogram_struct(const void* src, void* dst);
+
+void* allocate_tao_histogram_struct_container();
+void reallocate_tao_histogram_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_histogram_struct_container(void*) noexcept;
+void access_tao_histogram_struct_container(
     void* handle,
     void** data,
     int* lbound,
@@ -7586,6 +9459,24 @@ void access_tao_var_struct_container(
     size_t* elem_size,
     bool* alloc);
 
+void* allocate_fortran_tao_var_slave_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_var_slave_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_var_slave_struct(const void* src, void* dst);
+
+void* allocate_tao_var_slave_struct_container();
+void reallocate_tao_var_slave_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_var_slave_struct_container(void*) noexcept;
+void access_tao_var_slave_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_tao_lattice_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_lattice_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_lattice_struct(const void* src, void* dst);
@@ -7736,6 +9627,399 @@ void access_lat_ele_order_struct_container(
     size_t* elem_size,
     bool* alloc);
 
+void* allocate_fortran_tao_title_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_title_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_title_struct(const void* src, void* dst);
+
+void* allocate_tao_title_struct_container();
+void reallocate_tao_title_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_tao_title_struct_container(void*) noexcept;
+void access_tao_title_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_qp_rect_struct(int n, size_t* element_size);
+void deallocate_fortran_qp_rect_struct(void* ptr, int n) noexcept;
+void copy_fortran_qp_rect_struct(const void* src, void* dst);
+
+void* allocate_qp_rect_struct_container();
+void reallocate_qp_rect_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_qp_rect_struct_container(void*) noexcept;
+void access_qp_rect_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_drawing_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_drawing_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_drawing_struct(const void* src, void* dst);
+
+void* allocate_tao_drawing_struct_container();
+void reallocate_tao_drawing_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_tao_drawing_struct_container(void*) noexcept;
+void access_tao_drawing_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_shape_pattern_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_shape_pattern_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_shape_pattern_struct(const void* src, void* dst);
+
+void* allocate_tao_shape_pattern_struct_container();
+void reallocate_tao_shape_pattern_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_shape_pattern_struct_container(void*) noexcept;
+void access_tao_shape_pattern_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_shape_pattern_point_struct(
+    int n,
+    size_t* element_size);
+void deallocate_fortran_tao_shape_pattern_point_struct(
+    void* ptr,
+    int n) noexcept;
+void copy_fortran_tao_shape_pattern_point_struct(const void* src, void* dst);
+
+void* allocate_tao_shape_pattern_point_struct_container();
+void reallocate_tao_shape_pattern_point_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_shape_pattern_point_struct_container(void*) noexcept;
+void access_tao_shape_pattern_point_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_qp_axis_struct(int n, size_t* element_size);
+void deallocate_fortran_qp_axis_struct(void* ptr, int n) noexcept;
+void copy_fortran_qp_axis_struct(const void* src, void* dst);
+
+void* allocate_qp_axis_struct_container();
+void reallocate_qp_axis_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_qp_axis_struct_container(void*) noexcept;
+void access_qp_axis_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_qp_legend_struct(int n, size_t* element_size);
+void deallocate_fortran_qp_legend_struct(void* ptr, int n) noexcept;
+void copy_fortran_qp_legend_struct(const void* src, void* dst);
+
+void* allocate_qp_legend_struct_container();
+void reallocate_qp_legend_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_qp_legend_struct_container(void*) noexcept;
+void access_qp_legend_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_qp_point_struct(int n, size_t* element_size);
+void deallocate_fortran_qp_point_struct(void* ptr, int n) noexcept;
+void copy_fortran_qp_point_struct(const void* src, void* dst);
+
+void* allocate_qp_point_struct_container();
+void reallocate_qp_point_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_qp_point_struct_container(void*) noexcept;
+void access_qp_point_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_qp_line_struct(int n, size_t* element_size);
+void deallocate_fortran_qp_line_struct(void* ptr, int n) noexcept;
+void copy_fortran_qp_line_struct(const void* src, void* dst);
+
+void* allocate_qp_line_struct_container();
+void reallocate_qp_line_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_qp_line_struct_container(void*) noexcept;
+void access_qp_line_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_qp_symbol_struct(int n, size_t* element_size);
+void deallocate_fortran_qp_symbol_struct(void* ptr, int n) noexcept;
+void copy_fortran_qp_symbol_struct(const void* src, void* dst);
+
+void* allocate_qp_symbol_struct_container();
+void reallocate_qp_symbol_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_qp_symbol_struct_container(void*) noexcept;
+void access_qp_symbol_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_floor_plan_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_floor_plan_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_floor_plan_struct(const void* src, void* dst);
+
+void* allocate_tao_floor_plan_struct_container();
+void reallocate_tao_floor_plan_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_floor_plan_struct_container(void*) noexcept;
+void access_tao_floor_plan_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_v1_var_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_v1_var_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_v1_var_struct(const void* src, void* dst);
+
+void* allocate_tao_v1_var_struct_container();
+void reallocate_tao_v1_var_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_tao_v1_var_struct_container(void*) noexcept;
+void access_tao_v1_var_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_global_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_global_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_global_struct(const void* src, void* dst);
+
+void* allocate_tao_global_struct_container();
+void reallocate_tao_global_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_tao_global_struct_container(void*) noexcept;
+void access_tao_global_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_init_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_init_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_init_struct(const void* src, void* dst);
+
+void* allocate_tao_init_struct_container();
+void reallocate_tao_init_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_tao_init_struct_container(void*) noexcept;
+void access_tao_init_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_common_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_common_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_common_struct(const void* src, void* dst);
+
+void* allocate_tao_common_struct_container();
+void reallocate_tao_common_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_tao_common_struct_container(void*) noexcept;
+void access_tao_common_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_plot_page_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_plot_page_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_plot_page_struct(const void* src, void* dst);
+
+void* allocate_tao_plot_page_struct_container();
+void reallocate_tao_plot_page_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_plot_page_struct_container(void*) noexcept;
+void access_tao_plot_page_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_building_wall_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_building_wall_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_building_wall_struct(const void* src, void* dst);
+
+void* allocate_tao_building_wall_struct_container();
+void reallocate_tao_building_wall_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_building_wall_struct_container(void*) noexcept;
+void access_tao_building_wall_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_building_wall_orientation_struct(
+    int n,
+    size_t* element_size);
+void deallocate_fortran_tao_building_wall_orientation_struct(
+    void* ptr,
+    int n) noexcept;
+void copy_fortran_tao_building_wall_orientation_struct(
+    const void* src,
+    void* dst);
+
+void* allocate_tao_building_wall_orientation_struct_container();
+void reallocate_tao_building_wall_orientation_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_building_wall_orientation_struct_container(void*) noexcept;
+void access_tao_building_wall_orientation_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_building_wall_section_struct(
+    int n,
+    size_t* element_size);
+void deallocate_fortran_tao_building_wall_section_struct(
+    void* ptr,
+    int n) noexcept;
+void copy_fortran_tao_building_wall_section_struct(const void* src, void* dst);
+
+void* allocate_tao_building_wall_section_struct_container();
+void reallocate_tao_building_wall_section_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_building_wall_section_struct_container(void*) noexcept;
+void access_tao_building_wall_section_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_building_wall_point_struct(
+    int n,
+    size_t* element_size);
+void deallocate_fortran_tao_building_wall_point_struct(
+    void* ptr,
+    int n) noexcept;
+void copy_fortran_tao_building_wall_point_struct(const void* src, void* dst);
+
+void* allocate_tao_building_wall_point_struct_container();
+void reallocate_tao_building_wall_point_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_building_wall_point_struct_container(void*) noexcept;
+void access_tao_building_wall_point_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_wave_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_wave_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_wave_struct(const void* src, void* dst);
+
+void* allocate_tao_wave_struct_container();
+void reallocate_tao_wave_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_tao_wave_struct_container(void*) noexcept;
+void access_tao_wave_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_wave_kick_pt_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_wave_kick_pt_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_wave_kick_pt_struct(const void* src, void* dst);
+
+void* allocate_tao_wave_kick_pt_struct_container();
+void reallocate_tao_wave_kick_pt_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_wave_kick_pt_struct_container(void*) noexcept;
+void access_tao_wave_kick_pt_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_cmd_history_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_cmd_history_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_cmd_history_struct(const void* src, void* dst);
+
+void* allocate_tao_cmd_history_struct_container();
+void reallocate_tao_cmd_history_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_cmd_history_struct_container(void*) noexcept;
+void access_tao_cmd_history_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_tao_universe_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_universe_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_universe_struct(const void* src, void* dst);
@@ -7744,6 +10028,36 @@ void* allocate_tao_universe_struct_container();
 void reallocate_tao_universe_struct_container_data(void*, int, size_t) noexcept;
 void deallocate_tao_universe_struct_container(void*) noexcept;
 void access_tao_universe_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_mad_energy_struct(int n, size_t* element_size);
+void deallocate_fortran_mad_energy_struct(void* ptr, int n) noexcept;
+void copy_fortran_mad_energy_struct(const void* src, void* dst);
+
+void* allocate_mad_energy_struct_container();
+void reallocate_mad_energy_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_mad_energy_struct_container(void*) noexcept;
+void access_mad_energy_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_mad_map_struct(int n, size_t* element_size);
+void deallocate_fortran_mad_map_struct(void* ptr, int n) noexcept;
+void copy_fortran_mad_map_struct(const void* src, void* dst);
+
+void* allocate_mad_map_struct_container();
+void reallocate_mad_map_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_mad_map_struct_container(void*) noexcept;
+void access_mad_map_struct_container(
     void* handle,
     void** data,
     int* lbound,
@@ -9592,6 +11906,22 @@ using TaoEleShapeProxyAlloc1D = FTypeAlloc1D<
     reallocate_tao_ele_shape_struct_container_data,
     access_tao_ele_shape_struct_container>;
 
+class TaoElePointerProxy;
+
+using TaoElePointerProxyArray1D = FTypeArray1D<
+    TaoElePointerProxy,
+    allocate_fortran_tao_ele_pointer_struct,
+    deallocate_fortran_tao_ele_pointer_struct>;
+using TaoElePointerProxyArray2D = FTypeArray2D<TaoElePointerProxy>;
+using TaoElePointerProxyArray3D = FTypeArray3D<TaoElePointerProxy>;
+
+using TaoElePointerProxyAlloc1D = FTypeAlloc1D<
+    TaoElePointerProxyArray1D,
+    allocate_tao_ele_pointer_struct_container,
+    deallocate_tao_ele_pointer_struct_container,
+    reallocate_tao_ele_pointer_struct_container_data,
+    access_tao_ele_pointer_struct_container>;
+
 class TaoCurveProxy;
 
 using TaoCurveProxyArray1D = FTypeArray1D<
@@ -9607,6 +11937,54 @@ using TaoCurveProxyAlloc1D = FTypeAlloc1D<
     deallocate_tao_curve_struct_container,
     reallocate_tao_curve_struct_container_data,
     access_tao_curve_struct_container>;
+
+class TaoCurveColorProxy;
+
+using TaoCurveColorProxyArray1D = FTypeArray1D<
+    TaoCurveColorProxy,
+    allocate_fortran_tao_curve_color_struct,
+    deallocate_fortran_tao_curve_color_struct>;
+using TaoCurveColorProxyArray2D = FTypeArray2D<TaoCurveColorProxy>;
+using TaoCurveColorProxyArray3D = FTypeArray3D<TaoCurveColorProxy>;
+
+using TaoCurveColorProxyAlloc1D = FTypeAlloc1D<
+    TaoCurveColorProxyArray1D,
+    allocate_tao_curve_color_struct_container,
+    deallocate_tao_curve_color_struct_container,
+    reallocate_tao_curve_color_struct_container_data,
+    access_tao_curve_color_struct_container>;
+
+class TaoCurveOrbitProxy;
+
+using TaoCurveOrbitProxyArray1D = FTypeArray1D<
+    TaoCurveOrbitProxy,
+    allocate_fortran_tao_curve_orbit_struct,
+    deallocate_fortran_tao_curve_orbit_struct>;
+using TaoCurveOrbitProxyArray2D = FTypeArray2D<TaoCurveOrbitProxy>;
+using TaoCurveOrbitProxyArray3D = FTypeArray3D<TaoCurveOrbitProxy>;
+
+using TaoCurveOrbitProxyAlloc1D = FTypeAlloc1D<
+    TaoCurveOrbitProxyArray1D,
+    allocate_tao_curve_orbit_struct_container,
+    deallocate_tao_curve_orbit_struct_container,
+    reallocate_tao_curve_orbit_struct_container_data,
+    access_tao_curve_orbit_struct_container>;
+
+class TaoHistogramProxy;
+
+using TaoHistogramProxyArray1D = FTypeArray1D<
+    TaoHistogramProxy,
+    allocate_fortran_tao_histogram_struct,
+    deallocate_fortran_tao_histogram_struct>;
+using TaoHistogramProxyArray2D = FTypeArray2D<TaoHistogramProxy>;
+using TaoHistogramProxyArray3D = FTypeArray3D<TaoHistogramProxy>;
+
+using TaoHistogramProxyAlloc1D = FTypeAlloc1D<
+    TaoHistogramProxyArray1D,
+    allocate_tao_histogram_struct_container,
+    deallocate_tao_histogram_struct_container,
+    reallocate_tao_histogram_struct_container_data,
+    access_tao_histogram_struct_container>;
 
 class LatEleOrder1Proxy;
 
@@ -9896,6 +12274,22 @@ using TaoVarProxyAlloc1D = FTypeAlloc1D<
     reallocate_tao_var_struct_container_data,
     access_tao_var_struct_container>;
 
+class TaoVarSlaveProxy;
+
+using TaoVarSlaveProxyArray1D = FTypeArray1D<
+    TaoVarSlaveProxy,
+    allocate_fortran_tao_var_slave_struct,
+    deallocate_fortran_tao_var_slave_struct>;
+using TaoVarSlaveProxyArray2D = FTypeArray2D<TaoVarSlaveProxy>;
+using TaoVarSlaveProxyArray3D = FTypeArray3D<TaoVarSlaveProxy>;
+
+using TaoVarSlaveProxyAlloc1D = FTypeAlloc1D<
+    TaoVarSlaveProxyArray1D,
+    allocate_tao_var_slave_struct_container,
+    deallocate_tao_var_slave_struct_container,
+    reallocate_tao_var_slave_struct_container_data,
+    access_tao_var_slave_struct_container>;
+
 class TaoLatticeProxy;
 
 using TaoLatticeProxyArray1D = FTypeArray1D<
@@ -10040,6 +12434,382 @@ using LatEleOrderProxyAlloc1D = FTypeAlloc1D<
     reallocate_lat_ele_order_struct_container_data,
     access_lat_ele_order_struct_container>;
 
+class TaoTitleProxy;
+
+using TaoTitleProxyArray1D = FTypeArray1D<
+    TaoTitleProxy,
+    allocate_fortran_tao_title_struct,
+    deallocate_fortran_tao_title_struct>;
+using TaoTitleProxyArray2D = FTypeArray2D<TaoTitleProxy>;
+using TaoTitleProxyArray3D = FTypeArray3D<TaoTitleProxy>;
+
+using TaoTitleProxyAlloc1D = FTypeAlloc1D<
+    TaoTitleProxyArray1D,
+    allocate_tao_title_struct_container,
+    deallocate_tao_title_struct_container,
+    reallocate_tao_title_struct_container_data,
+    access_tao_title_struct_container>;
+
+class QpRectProxy;
+
+using QpRectProxyArray1D = FTypeArray1D<
+    QpRectProxy,
+    allocate_fortran_qp_rect_struct,
+    deallocate_fortran_qp_rect_struct>;
+using QpRectProxyArray2D = FTypeArray2D<QpRectProxy>;
+using QpRectProxyArray3D = FTypeArray3D<QpRectProxy>;
+
+using QpRectProxyAlloc1D = FTypeAlloc1D<
+    QpRectProxyArray1D,
+    allocate_qp_rect_struct_container,
+    deallocate_qp_rect_struct_container,
+    reallocate_qp_rect_struct_container_data,
+    access_qp_rect_struct_container>;
+
+class TaoDrawingProxy;
+
+using TaoDrawingProxyArray1D = FTypeArray1D<
+    TaoDrawingProxy,
+    allocate_fortran_tao_drawing_struct,
+    deallocate_fortran_tao_drawing_struct>;
+using TaoDrawingProxyArray2D = FTypeArray2D<TaoDrawingProxy>;
+using TaoDrawingProxyArray3D = FTypeArray3D<TaoDrawingProxy>;
+
+using TaoDrawingProxyAlloc1D = FTypeAlloc1D<
+    TaoDrawingProxyArray1D,
+    allocate_tao_drawing_struct_container,
+    deallocate_tao_drawing_struct_container,
+    reallocate_tao_drawing_struct_container_data,
+    access_tao_drawing_struct_container>;
+
+class TaoShapePatternProxy;
+
+using TaoShapePatternProxyArray1D = FTypeArray1D<
+    TaoShapePatternProxy,
+    allocate_fortran_tao_shape_pattern_struct,
+    deallocate_fortran_tao_shape_pattern_struct>;
+using TaoShapePatternProxyArray2D = FTypeArray2D<TaoShapePatternProxy>;
+using TaoShapePatternProxyArray3D = FTypeArray3D<TaoShapePatternProxy>;
+
+using TaoShapePatternProxyAlloc1D = FTypeAlloc1D<
+    TaoShapePatternProxyArray1D,
+    allocate_tao_shape_pattern_struct_container,
+    deallocate_tao_shape_pattern_struct_container,
+    reallocate_tao_shape_pattern_struct_container_data,
+    access_tao_shape_pattern_struct_container>;
+
+class TaoShapePatternPointProxy;
+
+using TaoShapePatternPointProxyArray1D = FTypeArray1D<
+    TaoShapePatternPointProxy,
+    allocate_fortran_tao_shape_pattern_point_struct,
+    deallocate_fortran_tao_shape_pattern_point_struct>;
+using TaoShapePatternPointProxyArray2D =
+    FTypeArray2D<TaoShapePatternPointProxy>;
+using TaoShapePatternPointProxyArray3D =
+    FTypeArray3D<TaoShapePatternPointProxy>;
+
+using TaoShapePatternPointProxyAlloc1D = FTypeAlloc1D<
+    TaoShapePatternPointProxyArray1D,
+    allocate_tao_shape_pattern_point_struct_container,
+    deallocate_tao_shape_pattern_point_struct_container,
+    reallocate_tao_shape_pattern_point_struct_container_data,
+    access_tao_shape_pattern_point_struct_container>;
+
+class QpAxisProxy;
+
+using QpAxisProxyArray1D = FTypeArray1D<
+    QpAxisProxy,
+    allocate_fortran_qp_axis_struct,
+    deallocate_fortran_qp_axis_struct>;
+using QpAxisProxyArray2D = FTypeArray2D<QpAxisProxy>;
+using QpAxisProxyArray3D = FTypeArray3D<QpAxisProxy>;
+
+using QpAxisProxyAlloc1D = FTypeAlloc1D<
+    QpAxisProxyArray1D,
+    allocate_qp_axis_struct_container,
+    deallocate_qp_axis_struct_container,
+    reallocate_qp_axis_struct_container_data,
+    access_qp_axis_struct_container>;
+
+class QpLegendProxy;
+
+using QpLegendProxyArray1D = FTypeArray1D<
+    QpLegendProxy,
+    allocate_fortran_qp_legend_struct,
+    deallocate_fortran_qp_legend_struct>;
+using QpLegendProxyArray2D = FTypeArray2D<QpLegendProxy>;
+using QpLegendProxyArray3D = FTypeArray3D<QpLegendProxy>;
+
+using QpLegendProxyAlloc1D = FTypeAlloc1D<
+    QpLegendProxyArray1D,
+    allocate_qp_legend_struct_container,
+    deallocate_qp_legend_struct_container,
+    reallocate_qp_legend_struct_container_data,
+    access_qp_legend_struct_container>;
+
+class QpPointProxy;
+
+using QpPointProxyArray1D = FTypeArray1D<
+    QpPointProxy,
+    allocate_fortran_qp_point_struct,
+    deallocate_fortran_qp_point_struct>;
+using QpPointProxyArray2D = FTypeArray2D<QpPointProxy>;
+using QpPointProxyArray3D = FTypeArray3D<QpPointProxy>;
+
+using QpPointProxyAlloc1D = FTypeAlloc1D<
+    QpPointProxyArray1D,
+    allocate_qp_point_struct_container,
+    deallocate_qp_point_struct_container,
+    reallocate_qp_point_struct_container_data,
+    access_qp_point_struct_container>;
+
+class QpLineProxy;
+
+using QpLineProxyArray1D = FTypeArray1D<
+    QpLineProxy,
+    allocate_fortran_qp_line_struct,
+    deallocate_fortran_qp_line_struct>;
+using QpLineProxyArray2D = FTypeArray2D<QpLineProxy>;
+using QpLineProxyArray3D = FTypeArray3D<QpLineProxy>;
+
+using QpLineProxyAlloc1D = FTypeAlloc1D<
+    QpLineProxyArray1D,
+    allocate_qp_line_struct_container,
+    deallocate_qp_line_struct_container,
+    reallocate_qp_line_struct_container_data,
+    access_qp_line_struct_container>;
+
+class QpSymbolProxy;
+
+using QpSymbolProxyArray1D = FTypeArray1D<
+    QpSymbolProxy,
+    allocate_fortran_qp_symbol_struct,
+    deallocate_fortran_qp_symbol_struct>;
+using QpSymbolProxyArray2D = FTypeArray2D<QpSymbolProxy>;
+using QpSymbolProxyArray3D = FTypeArray3D<QpSymbolProxy>;
+
+using QpSymbolProxyAlloc1D = FTypeAlloc1D<
+    QpSymbolProxyArray1D,
+    allocate_qp_symbol_struct_container,
+    deallocate_qp_symbol_struct_container,
+    reallocate_qp_symbol_struct_container_data,
+    access_qp_symbol_struct_container>;
+
+class TaoFloorPlanProxy;
+
+using TaoFloorPlanProxyArray1D = FTypeArray1D<
+    TaoFloorPlanProxy,
+    allocate_fortran_tao_floor_plan_struct,
+    deallocate_fortran_tao_floor_plan_struct>;
+using TaoFloorPlanProxyArray2D = FTypeArray2D<TaoFloorPlanProxy>;
+using TaoFloorPlanProxyArray3D = FTypeArray3D<TaoFloorPlanProxy>;
+
+using TaoFloorPlanProxyAlloc1D = FTypeAlloc1D<
+    TaoFloorPlanProxyArray1D,
+    allocate_tao_floor_plan_struct_container,
+    deallocate_tao_floor_plan_struct_container,
+    reallocate_tao_floor_plan_struct_container_data,
+    access_tao_floor_plan_struct_container>;
+
+class TaoV1VarProxy;
+
+using TaoV1VarProxyArray1D = FTypeArray1D<
+    TaoV1VarProxy,
+    allocate_fortran_tao_v1_var_struct,
+    deallocate_fortran_tao_v1_var_struct>;
+using TaoV1VarProxyArray2D = FTypeArray2D<TaoV1VarProxy>;
+using TaoV1VarProxyArray3D = FTypeArray3D<TaoV1VarProxy>;
+
+using TaoV1VarProxyAlloc1D = FTypeAlloc1D<
+    TaoV1VarProxyArray1D,
+    allocate_tao_v1_var_struct_container,
+    deallocate_tao_v1_var_struct_container,
+    reallocate_tao_v1_var_struct_container_data,
+    access_tao_v1_var_struct_container>;
+
+class TaoGlobalProxy;
+
+using TaoGlobalProxyArray1D = FTypeArray1D<
+    TaoGlobalProxy,
+    allocate_fortran_tao_global_struct,
+    deallocate_fortran_tao_global_struct>;
+using TaoGlobalProxyArray2D = FTypeArray2D<TaoGlobalProxy>;
+using TaoGlobalProxyArray3D = FTypeArray3D<TaoGlobalProxy>;
+
+using TaoGlobalProxyAlloc1D = FTypeAlloc1D<
+    TaoGlobalProxyArray1D,
+    allocate_tao_global_struct_container,
+    deallocate_tao_global_struct_container,
+    reallocate_tao_global_struct_container_data,
+    access_tao_global_struct_container>;
+
+class TaoInitProxy;
+
+using TaoInitProxyArray1D = FTypeArray1D<
+    TaoInitProxy,
+    allocate_fortran_tao_init_struct,
+    deallocate_fortran_tao_init_struct>;
+using TaoInitProxyArray2D = FTypeArray2D<TaoInitProxy>;
+using TaoInitProxyArray3D = FTypeArray3D<TaoInitProxy>;
+
+using TaoInitProxyAlloc1D = FTypeAlloc1D<
+    TaoInitProxyArray1D,
+    allocate_tao_init_struct_container,
+    deallocate_tao_init_struct_container,
+    reallocate_tao_init_struct_container_data,
+    access_tao_init_struct_container>;
+
+class TaoCommonProxy;
+
+using TaoCommonProxyArray1D = FTypeArray1D<
+    TaoCommonProxy,
+    allocate_fortran_tao_common_struct,
+    deallocate_fortran_tao_common_struct>;
+using TaoCommonProxyArray2D = FTypeArray2D<TaoCommonProxy>;
+using TaoCommonProxyArray3D = FTypeArray3D<TaoCommonProxy>;
+
+using TaoCommonProxyAlloc1D = FTypeAlloc1D<
+    TaoCommonProxyArray1D,
+    allocate_tao_common_struct_container,
+    deallocate_tao_common_struct_container,
+    reallocate_tao_common_struct_container_data,
+    access_tao_common_struct_container>;
+
+class TaoPlotPageProxy;
+
+using TaoPlotPageProxyArray1D = FTypeArray1D<
+    TaoPlotPageProxy,
+    allocate_fortran_tao_plot_page_struct,
+    deallocate_fortran_tao_plot_page_struct>;
+using TaoPlotPageProxyArray2D = FTypeArray2D<TaoPlotPageProxy>;
+using TaoPlotPageProxyArray3D = FTypeArray3D<TaoPlotPageProxy>;
+
+using TaoPlotPageProxyAlloc1D = FTypeAlloc1D<
+    TaoPlotPageProxyArray1D,
+    allocate_tao_plot_page_struct_container,
+    deallocate_tao_plot_page_struct_container,
+    reallocate_tao_plot_page_struct_container_data,
+    access_tao_plot_page_struct_container>;
+
+class TaoBuildingWallProxy;
+
+using TaoBuildingWallProxyArray1D = FTypeArray1D<
+    TaoBuildingWallProxy,
+    allocate_fortran_tao_building_wall_struct,
+    deallocate_fortran_tao_building_wall_struct>;
+using TaoBuildingWallProxyArray2D = FTypeArray2D<TaoBuildingWallProxy>;
+using TaoBuildingWallProxyArray3D = FTypeArray3D<TaoBuildingWallProxy>;
+
+using TaoBuildingWallProxyAlloc1D = FTypeAlloc1D<
+    TaoBuildingWallProxyArray1D,
+    allocate_tao_building_wall_struct_container,
+    deallocate_tao_building_wall_struct_container,
+    reallocate_tao_building_wall_struct_container_data,
+    access_tao_building_wall_struct_container>;
+
+class TaoBuildingWallOrientationProxy;
+
+using TaoBuildingWallOrientationProxyArray1D = FTypeArray1D<
+    TaoBuildingWallOrientationProxy,
+    allocate_fortran_tao_building_wall_orientation_struct,
+    deallocate_fortran_tao_building_wall_orientation_struct>;
+using TaoBuildingWallOrientationProxyArray2D =
+    FTypeArray2D<TaoBuildingWallOrientationProxy>;
+using TaoBuildingWallOrientationProxyArray3D =
+    FTypeArray3D<TaoBuildingWallOrientationProxy>;
+
+using TaoBuildingWallOrientationProxyAlloc1D = FTypeAlloc1D<
+    TaoBuildingWallOrientationProxyArray1D,
+    allocate_tao_building_wall_orientation_struct_container,
+    deallocate_tao_building_wall_orientation_struct_container,
+    reallocate_tao_building_wall_orientation_struct_container_data,
+    access_tao_building_wall_orientation_struct_container>;
+
+class TaoBuildingWallSectionProxy;
+
+using TaoBuildingWallSectionProxyArray1D = FTypeArray1D<
+    TaoBuildingWallSectionProxy,
+    allocate_fortran_tao_building_wall_section_struct,
+    deallocate_fortran_tao_building_wall_section_struct>;
+using TaoBuildingWallSectionProxyArray2D =
+    FTypeArray2D<TaoBuildingWallSectionProxy>;
+using TaoBuildingWallSectionProxyArray3D =
+    FTypeArray3D<TaoBuildingWallSectionProxy>;
+
+using TaoBuildingWallSectionProxyAlloc1D = FTypeAlloc1D<
+    TaoBuildingWallSectionProxyArray1D,
+    allocate_tao_building_wall_section_struct_container,
+    deallocate_tao_building_wall_section_struct_container,
+    reallocate_tao_building_wall_section_struct_container_data,
+    access_tao_building_wall_section_struct_container>;
+
+class TaoBuildingWallPointProxy;
+
+using TaoBuildingWallPointProxyArray1D = FTypeArray1D<
+    TaoBuildingWallPointProxy,
+    allocate_fortran_tao_building_wall_point_struct,
+    deallocate_fortran_tao_building_wall_point_struct>;
+using TaoBuildingWallPointProxyArray2D =
+    FTypeArray2D<TaoBuildingWallPointProxy>;
+using TaoBuildingWallPointProxyArray3D =
+    FTypeArray3D<TaoBuildingWallPointProxy>;
+
+using TaoBuildingWallPointProxyAlloc1D = FTypeAlloc1D<
+    TaoBuildingWallPointProxyArray1D,
+    allocate_tao_building_wall_point_struct_container,
+    deallocate_tao_building_wall_point_struct_container,
+    reallocate_tao_building_wall_point_struct_container_data,
+    access_tao_building_wall_point_struct_container>;
+
+class TaoWaveProxy;
+
+using TaoWaveProxyArray1D = FTypeArray1D<
+    TaoWaveProxy,
+    allocate_fortran_tao_wave_struct,
+    deallocate_fortran_tao_wave_struct>;
+using TaoWaveProxyArray2D = FTypeArray2D<TaoWaveProxy>;
+using TaoWaveProxyArray3D = FTypeArray3D<TaoWaveProxy>;
+
+using TaoWaveProxyAlloc1D = FTypeAlloc1D<
+    TaoWaveProxyArray1D,
+    allocate_tao_wave_struct_container,
+    deallocate_tao_wave_struct_container,
+    reallocate_tao_wave_struct_container_data,
+    access_tao_wave_struct_container>;
+
+class TaoWaveKickPtProxy;
+
+using TaoWaveKickPtProxyArray1D = FTypeArray1D<
+    TaoWaveKickPtProxy,
+    allocate_fortran_tao_wave_kick_pt_struct,
+    deallocate_fortran_tao_wave_kick_pt_struct>;
+using TaoWaveKickPtProxyArray2D = FTypeArray2D<TaoWaveKickPtProxy>;
+using TaoWaveKickPtProxyArray3D = FTypeArray3D<TaoWaveKickPtProxy>;
+
+using TaoWaveKickPtProxyAlloc1D = FTypeAlloc1D<
+    TaoWaveKickPtProxyArray1D,
+    allocate_tao_wave_kick_pt_struct_container,
+    deallocate_tao_wave_kick_pt_struct_container,
+    reallocate_tao_wave_kick_pt_struct_container_data,
+    access_tao_wave_kick_pt_struct_container>;
+
+class TaoCmdHistoryProxy;
+
+using TaoCmdHistoryProxyArray1D = FTypeArray1D<
+    TaoCmdHistoryProxy,
+    allocate_fortran_tao_cmd_history_struct,
+    deallocate_fortran_tao_cmd_history_struct>;
+using TaoCmdHistoryProxyArray2D = FTypeArray2D<TaoCmdHistoryProxy>;
+using TaoCmdHistoryProxyArray3D = FTypeArray3D<TaoCmdHistoryProxy>;
+
+using TaoCmdHistoryProxyAlloc1D = FTypeAlloc1D<
+    TaoCmdHistoryProxyArray1D,
+    allocate_tao_cmd_history_struct_container,
+    deallocate_tao_cmd_history_struct_container,
+    reallocate_tao_cmd_history_struct_container_data,
+    access_tao_cmd_history_struct_container>;
+
 class TaoUniverseProxy;
 
 using TaoUniverseProxyArray1D = FTypeArray1D<
@@ -10055,6 +12825,38 @@ using TaoUniverseProxyAlloc1D = FTypeAlloc1D<
     deallocate_tao_universe_struct_container,
     reallocate_tao_universe_struct_container_data,
     access_tao_universe_struct_container>;
+
+class MadEnergyProxy;
+
+using MadEnergyProxyArray1D = FTypeArray1D<
+    MadEnergyProxy,
+    allocate_fortran_mad_energy_struct,
+    deallocate_fortran_mad_energy_struct>;
+using MadEnergyProxyArray2D = FTypeArray2D<MadEnergyProxy>;
+using MadEnergyProxyArray3D = FTypeArray3D<MadEnergyProxy>;
+
+using MadEnergyProxyAlloc1D = FTypeAlloc1D<
+    MadEnergyProxyArray1D,
+    allocate_mad_energy_struct_container,
+    deallocate_mad_energy_struct_container,
+    reallocate_mad_energy_struct_container_data,
+    access_mad_energy_struct_container>;
+
+class MadMapProxy;
+
+using MadMapProxyArray1D = FTypeArray1D<
+    MadMapProxy,
+    allocate_fortran_mad_map_struct,
+    deallocate_fortran_mad_map_struct>;
+using MadMapProxyArray2D = FTypeArray2D<MadMapProxy>;
+using MadMapProxyArray3D = FTypeArray3D<MadMapProxy>;
+
+using MadMapProxyAlloc1D = FTypeAlloc1D<
+    MadMapProxyArray1D,
+    allocate_mad_map_struct_container,
+    deallocate_mad_map_struct_container,
+    reallocate_mad_map_struct_container_data,
+    access_mad_map_struct_container>;
 
 class AllEncompassingProxy;
 
@@ -14295,6 +17097,34 @@ class TaoEleShapeProxy : public FortranProxy<TaoEleShapeProxy> {
   void set_ix_key(int value);
   std::string name_ele() const; // 0D_NOT_character
   void set_name_ele(const std::string& value);
+  TaoElePointerProxyArray1D uni() const; // 1D_ALLOC_type
+};
+
+template <>
+struct FortranTraits<TaoElePointerProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_ele_pointer_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_ele_pointer_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_ele_pointer_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_ele_pointer_struct";
+  }
+};
+
+class TaoElePointerProxy : public FortranProxy<TaoElePointerProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  ElePointerProxyArray1D eles() const; // 1D_ALLOC_type
+  int n_loc() const; // 0D_NOT_integer
+  void set_n_loc(int value);
 };
 
 template <>
@@ -14341,6 +17171,10 @@ class TaoCurveProxy : public FortranProxy<TaoCurveProxy> {
   void set_why_invalid(const std::string& value);
   std::optional<TaoGraphProxy> g() const; // 0D_PTR_type
   void set_g(const TaoGraphProxy& src);
+  TaoHistogramProxy hist() const; // 0D_NOT_type
+  void set_hist(const TaoHistogramProxy& src);
+  TaoCurveColorProxy z_color() const; // 0D_NOT_type
+  void set_z_color(const TaoCurveColorProxy& src);
   FArray1D<double> x_line() const; // 1D_ALLOC_real
   FArray1D<double> y_line() const; // 1D_ALLOC_real
   FArray1D<double> y2_line() const; // 1D_ALLOC_real
@@ -14353,6 +17187,12 @@ class TaoCurveProxy : public FortranProxy<TaoCurveProxy> {
   FArray1D<int> ix_symb() const; // 1D_ALLOC_integer
   double y_axis_scale_factor() const; // 0D_NOT_real
   void set_y_axis_scale_factor(double value);
+  QpLineProxy line() const; // 0D_NOT_type
+  void set_line(const QpLineProxy& src);
+  QpSymbolProxy symbol() const; // 0D_NOT_type
+  void set_symbol(const QpSymbolProxy& src);
+  TaoCurveOrbitProxy orbit() const; // 0D_NOT_type
+  void set_orbit(const TaoCurveOrbitProxy& src);
   int ix_universe() const; // 0D_NOT_integer
   void set_ix_universe(int value);
   int symbol_every() const; // 0D_NOT_integer
@@ -14377,6 +17217,108 @@ class TaoCurveProxy : public FortranProxy<TaoCurveProxy> {
   void set_smooth_line_calc(bool value);
   bool valid() const; // 0D_NOT_logical
   void set_valid(bool value);
+};
+
+template <>
+struct FortranTraits<TaoCurveColorProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_curve_color_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_curve_color_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_curve_color_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_curve_color_struct";
+  }
+};
+
+class TaoCurveColorProxy : public FortranProxy<TaoCurveColorProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  std::string data_type() const; // 0D_NOT_character
+  void set_data_type(const std::string& value);
+  bool is_on() const; // 0D_NOT_logical
+  void set_is_on(bool value);
+  double min() const; // 0D_NOT_real
+  void set_min(double value);
+  double max() const; // 0D_NOT_real
+  void set_max(double value);
+  bool autoscale() const; // 0D_NOT_logical
+  void set_autoscale(bool value);
+};
+
+template <>
+struct FortranTraits<TaoCurveOrbitProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_curve_orbit_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_curve_orbit_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_curve_orbit_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_curve_orbit_struct";
+  }
+};
+
+class TaoCurveOrbitProxy : public FortranProxy<TaoCurveOrbitProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  double x() const; // 0D_NOT_real
+  void set_x(double value);
+  double y() const; // 0D_NOT_real
+  void set_y(double value);
+  double t() const; // 0D_NOT_real
+  void set_t(double value);
+};
+
+template <>
+struct FortranTraits<TaoHistogramProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_histogram_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_histogram_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_histogram_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_histogram_struct";
+  }
+};
+
+class TaoHistogramProxy : public FortranProxy<TaoHistogramProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  bool density_normalized() const; // 0D_NOT_logical
+  void set_density_normalized(bool value);
+  bool weight_by_charge() const; // 0D_NOT_logical
+  void set_weight_by_charge(bool value);
+  double minimum() const; // 0D_NOT_real
+  void set_minimum(double value);
+  double maximum() const; // 0D_NOT_real
+  void set_maximum(double value);
+  double width() const; // 0D_NOT_real
+  void set_width(double value);
+  double center() const; // 0D_NOT_real
+  void set_center(double value);
+  int number() const; // 0D_NOT_integer
+  void set_number(int value);
 };
 
 template <>
@@ -14864,6 +17806,26 @@ class TaoGraphProxy : public FortranProxy<TaoGraphProxy> {
   TaoCurveProxyArray1D curve() const; // 1D_ALLOC_type
   std::optional<TaoPlotProxy> p() const; // 0D_PTR_type
   void set_p(const TaoPlotProxy& src);
+  TaoFloorPlanProxy floor_plan() const; // 0D_NOT_type
+  void set_floor_plan(const TaoFloorPlanProxy& src);
+  QpPointProxy text_legend_origin() const; // 0D_NOT_type
+  void set_text_legend_origin(const QpPointProxy& src);
+  QpPointProxy curve_legend_origin() const; // 0D_NOT_type
+  void set_curve_legend_origin(const QpPointProxy& src);
+  QpLegendProxy curve_legend() const; // 0D_NOT_type
+  void set_curve_legend(const QpLegendProxy& src);
+  QpAxisProxy x() const; // 0D_NOT_type
+  void set_x(const QpAxisProxy& src);
+  QpAxisProxy y() const; // 0D_NOT_type
+  void set_y(const QpAxisProxy& src);
+  QpAxisProxy x2() const; // 0D_NOT_type
+  void set_x2(const QpAxisProxy& src);
+  QpAxisProxy y2() const; // 0D_NOT_type
+  void set_y2(const QpAxisProxy& src);
+  QpRectProxy margin() const; // 0D_NOT_type
+  void set_margin(const QpRectProxy& src);
+  QpRectProxy scale_margin() const; // 0D_NOT_type
+  void set_scale_margin(const QpRectProxy& src);
   double x_axis_scale_factor() const; // 0D_NOT_real
   void set_x_axis_scale_factor(double value);
   double symbol_size_scale() const; // 0D_NOT_real
@@ -15031,13 +17993,27 @@ class TaoSuperUniverseProxy : public FortranProxy<TaoSuperUniverseProxy> {
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  TaoGlobalProxy global() const; // 0D_NOT_type
+  void set_global(const TaoGlobalProxy& src);
+  TaoInitProxy init() const; // 0D_NOT_type
+  void set_init(const TaoInitProxy& src);
+  TaoCommonProxy com() const; // 0D_NOT_type
+  void set_com(const TaoCommonProxy& src);
+  TaoPlotPageProxy plot_page() const; // 0D_NOT_type
+  void set_plot_page(const TaoPlotPageProxy& src);
+  TaoV1VarProxyArray1D v1_var() const; // 1D_ALLOC_type
   TaoVarProxyArray1D var() const; // 1D_ALLOC_type
   TaoUniverseProxyArray1D u() const; // 1D_ALLOC_type
   FArray1D<int> key() const; // 1D_ALLOC_integer
+  TaoBuildingWallProxy building_wall() const; // 0D_NOT_type
+  void set_building_wall(const TaoBuildingWallProxy& src);
+  TaoWaveProxy wave() const; // 0D_NOT_type
+  void set_wave(const TaoWaveProxy& src);
   int n_var_used() const; // 0D_NOT_integer
   void set_n_var_used(int value);
   int n_v1_var_used() const; // 0D_NOT_integer
   void set_n_v1_var_used(int value);
+  TaoCmdHistoryProxyArray1D history() const; // 1D_NOT_type
   bool initialized() const; // 0D_NOT_logical
   void set_initialized(bool value);
 };
@@ -15070,6 +18046,7 @@ class TaoVarProxy : public FortranProxy<TaoVarProxy> {
   void set_attrib_name(const std::string& value);
   std::string id() const; // 0D_NOT_character
   void set_id(const std::string& value);
+  TaoVarSlaveProxyArray1D slave() const; // 1D_ALLOC_type
   int ix_v1() const; // 0D_NOT_integer
   void set_ix_v1(int value);
   int ix_var() const; // 0D_NOT_integer
@@ -15136,6 +18113,42 @@ class TaoVarProxy : public FortranProxy<TaoVarProxy> {
   void set_useit_plot(bool value);
   bool key_bound() const; // 0D_NOT_logical
   void set_key_bound(bool value);
+  std::optional<TaoV1VarProxy> v1() const; // 0D_PTR_type
+  void set_v1(const TaoV1VarProxy& src);
+};
+
+template <>
+struct FortranTraits<TaoVarSlaveProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_var_slave_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_var_slave_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_var_slave_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_var_slave_struct";
+  }
+};
+
+class TaoVarSlaveProxy : public FortranProxy<TaoVarSlaveProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  int ix_uni() const; // 0D_NOT_integer
+  void set_ix_uni(int value);
+  int ix_branch() const; // 0D_NOT_integer
+  void set_ix_branch(int value);
+  int ix_ele() const; // 0D_NOT_integer
+  void set_ix_ele(int value);
+  double* model_value() const; // 0D_PTR_real
+  void set_model_value(double value);
+  double* base_value() const; // 0D_PTR_real
+  void set_base_value(double value);
 };
 
 template <>
@@ -15539,6 +18552,1167 @@ class LatEleOrderProxy : public FortranProxy<LatEleOrderProxy> {
 };
 
 template <>
+struct FortranTraits<TaoTitleProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_title_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_title_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_title_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_title_struct";
+  }
+};
+
+class TaoTitleProxy : public FortranProxy<TaoTitleProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  std::string string() const; // 0D_NOT_character
+  void set_string(const std::string& value);
+  double x() const; // 0D_NOT_real
+  void set_x(double value);
+  double y() const; // 0D_NOT_real
+  void set_y(double value);
+  std::string units() const; // 0D_NOT_character
+  void set_units(const std::string& value);
+  std::string justify() const; // 0D_NOT_character
+  void set_justify(const std::string& value);
+  bool draw_it() const; // 0D_NOT_logical
+  void set_draw_it(bool value);
+};
+
+template <>
+struct FortranTraits<QpRectProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_qp_rect_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_qp_rect_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_qp_rect_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "qp_rect_struct";
+  }
+};
+
+class QpRectProxy : public FortranProxy<QpRectProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  double x1() const; // 0D_NOT_real
+  void set_x1(double value);
+  double x2() const; // 0D_NOT_real
+  void set_x2(double value);
+  double y1() const; // 0D_NOT_real
+  void set_y1(double value);
+  double y2() const; // 0D_NOT_real
+  void set_y2(double value);
+  std::string units() const; // 0D_NOT_character
+  void set_units(const std::string& value);
+};
+
+template <>
+struct FortranTraits<TaoDrawingProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_drawing_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_drawing_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_drawing_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_drawing_struct";
+  }
+};
+
+class TaoDrawingProxy : public FortranProxy<TaoDrawingProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  TaoEleShapeProxyArray1D ele_shape() const; // 1D_ALLOC_type
+};
+
+template <>
+struct FortranTraits<TaoShapePatternProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_shape_pattern_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_shape_pattern_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_shape_pattern_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_shape_pattern_struct";
+  }
+};
+
+class TaoShapePatternProxy : public FortranProxy<TaoShapePatternProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  std::string name() const; // 0D_NOT_character
+  void set_name(const std::string& value);
+  QpLineProxy line() const; // 0D_NOT_type
+  void set_line(const QpLineProxy& src);
+  TaoShapePatternPointProxyArray1D pt() const; // 1D_ALLOC_type
+};
+
+template <>
+struct FortranTraits<TaoShapePatternPointProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_shape_pattern_point_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_shape_pattern_point_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_shape_pattern_point_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_shape_pattern_point_struct";
+  }
+};
+
+class TaoShapePatternPointProxy
+    : public FortranProxy<TaoShapePatternPointProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  double s() const; // 0D_NOT_real
+  void set_s(double value);
+  double y() const; // 0D_NOT_real
+  void set_y(double value);
+  double radius() const; // 0D_NOT_real
+  void set_radius(double value);
+};
+
+template <>
+struct FortranTraits<QpAxisProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_qp_axis_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_qp_axis_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_qp_axis_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "qp_axis_struct";
+  }
+};
+
+class QpAxisProxy : public FortranProxy<QpAxisProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  std::string label() const; // 0D_NOT_character
+  void set_label(const std::string& value);
+  double min() const; // 0D_NOT_real
+  void set_min(double value);
+  double max() const; // 0D_NOT_real
+  void set_max(double value);
+  double tick_min() const; // 0D_NOT_real
+  void set_tick_min(double value);
+  double tick_max() const; // 0D_NOT_real
+  void set_tick_max(double value);
+  double eval_min() const; // 0D_NOT_real
+  void set_eval_min(double value);
+  double eval_max() const; // 0D_NOT_real
+  void set_eval_max(double value);
+  double dtick() const; // 0D_NOT_real
+  void set_dtick(double value);
+  double number_offset() const; // 0D_NOT_real
+  void set_number_offset(double value);
+  double label_offset() const; // 0D_NOT_real
+  void set_label_offset(double value);
+  double major_tick_len() const; // 0D_NOT_real
+  void set_major_tick_len(double value);
+  double minor_tick_len() const; // 0D_NOT_real
+  void set_minor_tick_len(double value);
+  std::string label_color() const; // 0D_NOT_character
+  void set_label_color(const std::string& value);
+  int major_div() const; // 0D_NOT_integer
+  void set_major_div(int value);
+  int major_div_nominal() const; // 0D_NOT_integer
+  void set_major_div_nominal(int value);
+  int minor_div() const; // 0D_NOT_integer
+  void set_minor_div(int value);
+  int minor_div_max() const; // 0D_NOT_integer
+  void set_minor_div_max(int value);
+  int places() const; // 0D_NOT_integer
+  void set_places(int value);
+  std::string type() const; // 0D_NOT_character
+  void set_type(const std::string& value);
+  std::string bounds() const; // 0D_NOT_character
+  void set_bounds(const std::string& value);
+  int tick_side() const; // 0D_NOT_integer
+  void set_tick_side(int value);
+  int number_side() const; // 0D_NOT_integer
+  void set_number_side(int value);
+  bool draw_label() const; // 0D_NOT_logical
+  void set_draw_label(bool value);
+  bool draw_numbers() const; // 0D_NOT_logical
+  void set_draw_numbers(bool value);
+};
+
+template <>
+struct FortranTraits<QpLegendProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_qp_legend_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_qp_legend_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_qp_legend_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "qp_legend_struct";
+  }
+};
+
+class QpLegendProxy : public FortranProxy<QpLegendProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  double row_spacing() const; // 0D_NOT_real
+  void set_row_spacing(double value);
+  double line_length() const; // 0D_NOT_real
+  void set_line_length(double value);
+  double text_offset() const; // 0D_NOT_real
+  void set_text_offset(double value);
+  bool draw_line() const; // 0D_NOT_logical
+  void set_draw_line(bool value);
+  bool draw_symbol() const; // 0D_NOT_logical
+  void set_draw_symbol(bool value);
+  bool draw_text() const; // 0D_NOT_logical
+  void set_draw_text(bool value);
+};
+
+template <>
+struct FortranTraits<QpPointProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_qp_point_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_qp_point_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_qp_point_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "qp_point_struct";
+  }
+};
+
+class QpPointProxy : public FortranProxy<QpPointProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  double x() const; // 0D_NOT_real
+  void set_x(double value);
+  double y() const; // 0D_NOT_real
+  void set_y(double value);
+  std::string units() const; // 0D_NOT_character
+  void set_units(const std::string& value);
+};
+
+template <>
+struct FortranTraits<QpLineProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_qp_line_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_qp_line_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_qp_line_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "qp_line_struct";
+  }
+};
+
+class QpLineProxy : public FortranProxy<QpLineProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  int width() const; // 0D_NOT_integer
+  void set_width(int value);
+  std::string color() const; // 0D_NOT_character
+  void set_color(const std::string& value);
+  std::string pattern() const; // 0D_NOT_character
+  void set_pattern(const std::string& value);
+};
+
+template <>
+struct FortranTraits<QpSymbolProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_qp_symbol_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_qp_symbol_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_qp_symbol_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "qp_symbol_struct";
+  }
+};
+
+class QpSymbolProxy : public FortranProxy<QpSymbolProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  std::string type() const; // 0D_NOT_character
+  void set_type(const std::string& value);
+  double height() const; // 0D_NOT_real
+  void set_height(double value);
+  std::string color() const; // 0D_NOT_character
+  void set_color(const std::string& value);
+  std::string fill_pattern() const; // 0D_NOT_character
+  void set_fill_pattern(const std::string& value);
+  int line_width() const; // 0D_NOT_integer
+  void set_line_width(int value);
+};
+
+template <>
+struct FortranTraits<TaoFloorPlanProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_floor_plan_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_floor_plan_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_floor_plan_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_floor_plan_struct";
+  }
+};
+
+class TaoFloorPlanProxy : public FortranProxy<TaoFloorPlanProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  std::string view() const; // 0D_NOT_character
+  void set_view(const std::string& value);
+  double rotation() const; // 0D_NOT_real
+  void set_rotation(double value);
+  bool correct_distortion() const; // 0D_NOT_logical
+  void set_correct_distortion(bool value);
+  bool flip_label_side() const; // 0D_NOT_logical
+  void set_flip_label_side(bool value);
+  bool size_is_absolute() const; // 0D_NOT_logical
+  void set_size_is_absolute(bool value);
+  bool draw_only_first_pass() const; // 0D_NOT_logical
+  void set_draw_only_first_pass(bool value);
+  bool draw_building_wall() const; // 0D_NOT_logical
+  void set_draw_building_wall(bool value);
+  double orbit_scale() const; // 0D_NOT_real
+  void set_orbit_scale(double value);
+  std::string orbit_color() const; // 0D_NOT_character
+  void set_orbit_color(const std::string& value);
+  std::string orbit_pattern() const; // 0D_NOT_character
+  void set_orbit_pattern(const std::string& value);
+  std::string orbit_lattice() const; // 0D_NOT_character
+  void set_orbit_lattice(const std::string& value);
+  int orbit_width() const; // 0D_NOT_integer
+  void set_orbit_width(int value);
+};
+
+template <>
+struct FortranTraits<TaoV1VarProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_v1_var_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_v1_var_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_v1_var_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_v1_var_struct";
+  }
+};
+
+class TaoV1VarProxy : public FortranProxy<TaoV1VarProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  std::string name() const; // 0D_NOT_character
+  void set_name(const std::string& value);
+  int ix_v1_var() const; // 0D_NOT_integer
+  void set_ix_v1_var(int value);
+  TaoVarProxyArray1D v() const; // 1D_PTR_type
+};
+
+template <>
+struct FortranTraits<TaoGlobalProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_global_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_global_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_global_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_global_struct";
+  }
+};
+
+class TaoGlobalProxy : public FortranProxy<TaoGlobalProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  double beam_dead_cutoff() const; // 0D_NOT_real
+  void set_beam_dead_cutoff(double value);
+  double lm_opt_deriv_reinit() const; // 0D_NOT_real
+  void set_lm_opt_deriv_reinit(double value);
+  double de_lm_step_ratio() const; // 0D_NOT_real
+  void set_de_lm_step_ratio(double value);
+  double de_var_to_population_factor() const; // 0D_NOT_real
+  void set_de_var_to_population_factor(double value);
+  double lmdif_eps() const; // 0D_NOT_real
+  void set_lmdif_eps(double value);
+  double lmdif_negligible_merit() const; // 0D_NOT_real
+  void set_lmdif_negligible_merit(double value);
+  double svd_cutoff() const; // 0D_NOT_real
+  void set_svd_cutoff(double value);
+  double unstable_penalty() const; // 0D_NOT_real
+  void set_unstable_penalty(double value);
+  double merit_stop_value() const; // 0D_NOT_real
+  void set_merit_stop_value(double value);
+  double dmerit_stop_value() const; // 0D_NOT_real
+  void set_dmerit_stop_value(double value);
+  double random_sigma_cutoff() const; // 0D_NOT_real
+  void set_random_sigma_cutoff(double value);
+  double delta_e_chrom() const; // 0D_NOT_real
+  void set_delta_e_chrom(double value);
+  double max_plot_time() const; // 0D_NOT_real
+  void set_max_plot_time(double value);
+  int default_universe() const; // 0D_NOT_integer
+  void set_default_universe(int value);
+  int default_branch() const; // 0D_NOT_integer
+  void set_default_branch(int value);
+  int n_opti_cycles() const; // 0D_NOT_integer
+  void set_n_opti_cycles(int value);
+  int n_opti_loops() const; // 0D_NOT_integer
+  void set_n_opti_loops(int value);
+  int n_threads() const; // 0D_NOT_integer
+  void set_n_threads(int value);
+  int phase_units() const; // 0D_NOT_integer
+  void set_phase_units(int value);
+  int bunch_to_plot() const; // 0D_NOT_integer
+  void set_bunch_to_plot(int value);
+  int random_seed() const; // 0D_NOT_integer
+  void set_random_seed(int value);
+  int n_top10_merit() const; // 0D_NOT_integer
+  void set_n_top10_merit(int value);
+  int srdt_gen_n_slices() const; // 0D_NOT_integer
+  void set_srdt_gen_n_slices(int value);
+  int datum_err_messages_max() const; // 0D_NOT_integer
+  void set_datum_err_messages_max(int value);
+  int srdt_sxt_n_slices() const; // 0D_NOT_integer
+  void set_srdt_sxt_n_slices(int value);
+  bool srdt_use_cache() const; // 0D_NOT_logical
+  void set_srdt_use_cache(bool value);
+  std::string quiet() const; // 0D_NOT_character
+  void set_quiet(const std::string& value);
+  std::string random_engine() const; // 0D_NOT_character
+  void set_random_engine(const std::string& value);
+  std::string random_gauss_converter() const; // 0D_NOT_character
+  void set_random_gauss_converter(const std::string& value);
+  std::string track_type() const; // 0D_NOT_character
+  void set_track_type(const std::string& value);
+  std::string lat_sigma_calc_uses_emit_from() const; // 0D_NOT_character
+  void set_lat_sigma_calc_uses_emit_from(const std::string& value);
+  std::string prompt_string() const; // 0D_NOT_character
+  void set_prompt_string(const std::string& value);
+  std::string prompt_color() const; // 0D_NOT_character
+  void set_prompt_color(const std::string& value);
+  std::string optimizer() const; // 0D_NOT_character
+  void set_optimizer(const std::string& value);
+  std::string print_command() const; // 0D_NOT_character
+  void set_print_command(const std::string& value);
+  std::string var_out_file() const; // 0D_NOT_character
+  void set_var_out_file(const std::string& value);
+  std::string history_file() const; // 0D_NOT_character
+  void set_history_file(const std::string& value);
+  bool beam_timer_on() const; // 0D_NOT_logical
+  void set_beam_timer_on(bool value);
+  bool box_plots() const; // 0D_NOT_logical
+  void set_box_plots(bool value);
+  bool blank_line_between_commands() const; // 0D_NOT_logical
+  void set_blank_line_between_commands(bool value);
+  bool cmd_file_abort_on_error() const; // 0D_NOT_logical
+  void set_cmd_file_abort_on_error(bool value);
+  bool concatenate_maps() const; // 0D_NOT_logical
+  void set_concatenate_maps(bool value);
+  bool derivative_recalc() const; // 0D_NOT_logical
+  void set_derivative_recalc(bool value);
+  bool derivative_uses_design() const; // 0D_NOT_logical
+  void set_derivative_uses_design(bool value);
+  bool disable_smooth_line_calc() const; // 0D_NOT_logical
+  void set_disable_smooth_line_calc(bool value);
+  bool draw_curve_off_scale_warn() const; // 0D_NOT_logical
+  void set_draw_curve_off_scale_warn(bool value);
+  bool external_plotting() const; // 0D_NOT_logical
+  void set_external_plotting(bool value);
+  bool label_lattice_elements() const; // 0D_NOT_logical
+  void set_label_lattice_elements(bool value);
+  bool label_keys() const; // 0D_NOT_logical
+  void set_label_keys(bool value);
+  bool lattice_calc_on() const; // 0D_NOT_logical
+  void set_lattice_calc_on(bool value);
+  bool only_limit_opt_vars() const; // 0D_NOT_logical
+  void set_only_limit_opt_vars(bool value);
+  bool opt_with_ref() const; // 0D_NOT_logical
+  void set_opt_with_ref(bool value);
+  bool opt_with_base() const; // 0D_NOT_logical
+  void set_opt_with_base(bool value);
+  bool opt_match_auto_recalc() const; // 0D_NOT_logical
+  void set_opt_match_auto_recalc(bool value);
+  bool opti_write_var_file() const; // 0D_NOT_logical
+  void set_opti_write_var_file(bool value);
+  bool optimizer_allow_user_abort() const; // 0D_NOT_logical
+  void set_optimizer_allow_user_abort(bool value);
+  bool optimizer_var_limit_warn() const; // 0D_NOT_logical
+  void set_optimizer_var_limit_warn(bool value);
+  bool plot_on() const; // 0D_NOT_logical
+  void set_plot_on(bool value);
+  bool rad_int_user_calc_on() const; // 0D_NOT_logical
+  void set_rad_int_user_calc_on(bool value);
+  bool rf_on() const; // 0D_NOT_logical
+  void set_rf_on(bool value);
+  bool single_step() const; // 0D_NOT_logical
+  void set_single_step(bool value);
+  bool stop_on_error() const; // 0D_NOT_logical
+  void set_stop_on_error(bool value);
+  bool svd_retreat_on_merit_increase() const; // 0D_NOT_logical
+  void set_svd_retreat_on_merit_increase(bool value);
+  bool var_limits_on() const; // 0D_NOT_logical
+  void set_var_limits_on(bool value);
+  bool wait_for_CR_in_single_mode() const; // 0D_NOT_logical
+  void set_wait_for_CR_in_single_mode(bool value);
+  bool symbol_import() const; // 0D_NOT_logical
+  void set_symbol_import(bool value);
+  bool debug_on() const; // 0D_NOT_logical
+  void set_debug_on(bool value);
+  bool expression_tree_on() const; // 0D_NOT_logical
+  void set_expression_tree_on(bool value);
+  bool verbose_on() const; // 0D_NOT_logical
+  void set_verbose_on(bool value);
+};
+
+template <>
+struct FortranTraits<TaoInitProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_init_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_init_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_init_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_init_struct";
+  }
+};
+
+class TaoInitProxy : public FortranProxy<TaoInitProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  bool parse_cmd_args() const; // 0D_NOT_logical
+  void set_parse_cmd_args(bool value);
+  bool debug_switch() const; // 0D_NOT_logical
+  void set_debug_switch(bool value);
+  bool external_plotting_switch() const; // 0D_NOT_logical
+  void set_external_plotting_switch(bool value);
+  std::string init_name() const; // 0D_NOT_character
+  void set_init_name(const std::string& value);
+  std::string hook_init_file() const; // 0D_NOT_character
+  void set_hook_init_file(const std::string& value);
+  std::string hook_lat_file() const; // 0D_NOT_character
+  void set_hook_lat_file(const std::string& value);
+  std::string hook_beam_file() const; // 0D_NOT_character
+  void set_hook_beam_file(const std::string& value);
+  std::string hook_data_file() const; // 0D_NOT_character
+  void set_hook_data_file(const std::string& value);
+  std::string hook_plot_file() const; // 0D_NOT_character
+  void set_hook_plot_file(const std::string& value);
+  std::string hook_startup_file() const; // 0D_NOT_character
+  void set_hook_startup_file(const std::string& value);
+  std::string hook_var_file() const; // 0D_NOT_character
+  void set_hook_var_file(const std::string& value);
+  std::string hook_building_wall_file() const; // 0D_NOT_character
+  void set_hook_building_wall_file(const std::string& value);
+  std::string init_file_arg_path() const; // 0D_NOT_character
+  void set_init_file_arg_path(const std::string& value);
+  std::string lattice_file_arg() const; // 0D_NOT_character
+  void set_lattice_file_arg(const std::string& value);
+  std::string hook_init_file_arg() const; // 0D_NOT_character
+  void set_hook_init_file_arg(const std::string& value);
+  std::string init_file_arg() const; // 0D_NOT_character
+  void set_init_file_arg(const std::string& value);
+  std::string beam_file_arg() const; // 0D_NOT_character
+  void set_beam_file_arg(const std::string& value);
+  std::string beam_init_position_file_arg() const; // 0D_NOT_character
+  void set_beam_init_position_file_arg(const std::string& value);
+  std::string command_arg() const; // 0D_NOT_character
+  void set_command_arg(const std::string& value);
+  std::string data_file_arg() const; // 0D_NOT_character
+  void set_data_file_arg(const std::string& value);
+  std::string plot_file_arg() const; // 0D_NOT_character
+  void set_plot_file_arg(const std::string& value);
+  std::string startup_file_arg() const; // 0D_NOT_character
+  void set_startup_file_arg(const std::string& value);
+  std::string var_file_arg() const; // 0D_NOT_character
+  void set_var_file_arg(const std::string& value);
+  std::string building_wall_file_arg() const; // 0D_NOT_character
+  void set_building_wall_file_arg(const std::string& value);
+  std::string geometry_arg() const; // 0D_NOT_character
+  void set_geometry_arg(const std::string& value);
+  std::string slice_lattice_arg() const; // 0D_NOT_character
+  void set_slice_lattice_arg(const std::string& value);
+  std::string start_branch_at_arg() const; // 0D_NOT_character
+  void set_start_branch_at_arg(const std::string& value);
+  std::string log_startup_arg() const; // 0D_NOT_character
+  void set_log_startup_arg(const std::string& value);
+  std::string no_stopping_arg() const; // 0D_NOT_character
+  void set_no_stopping_arg(const std::string& value);
+  std::string noplot_arg() const; // 0D_NOT_character
+  void set_noplot_arg(const std::string& value);
+  std::string no_rad_int_arg() const; // 0D_NOT_character
+  void set_no_rad_int_arg(const std::string& value);
+  std::string reverse_arg() const; // 0D_NOT_character
+  void set_reverse_arg(const std::string& value);
+  std::string debug_arg() const; // 0D_NOT_character
+  void set_debug_arg(const std::string& value);
+  std::string disable_smooth_line_calc_arg() const; // 0D_NOT_character
+  void set_disable_smooth_line_calc_arg(const std::string& value);
+  std::string rf_on_arg() const; // 0D_NOT_character
+  void set_rf_on_arg(const std::string& value);
+  std::string prompt_color_arg() const; // 0D_NOT_character
+  void set_prompt_color_arg(const std::string& value);
+  std::string quiet_arg() const; // 0D_NOT_character
+  void set_quiet_arg(const std::string& value);
+  std::string noinit_arg() const; // 0D_NOT_character
+  void set_noinit_arg(const std::string& value);
+  std::string nostartup_arg() const; // 0D_NOT_character
+  void set_nostartup_arg(const std::string& value);
+  std::string symbol_import_arg() const; // 0D_NOT_character
+  void set_symbol_import_arg(const std::string& value);
+  std::string unique_name_suffix() const; // 0D_NOT_character
+  void set_unique_name_suffix(const std::string& value);
+};
+
+template <>
+struct FortranTraits<TaoCommonProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_common_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_common_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_common_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_common_struct";
+  }
+};
+
+class TaoCommonProxy : public FortranProxy<TaoCommonProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  TaoPlotRegionProxyArray1D plot_place_buffer() const; // 1D_ALLOC_type
+  FArray2D<double> covar() const; // 2D_ALLOC_real
+  FArray2D<double> alpha() const; // 2D_ALLOC_real
+  double dummy_target() const; // 0D_NOT_real
+  void set_dummy_target(double value);
+  int n_alias() const; // 0D_NOT_integer
+  void set_n_alias(int value);
+  int cmd_file_level() const; // 0D_NOT_integer
+  void set_cmd_file_level(int value);
+  int ix_key_bank() const; // 0D_NOT_integer
+  void set_ix_key_bank(int value);
+  int ix_history() const; // 0D_NOT_integer
+  void set_ix_history(int value);
+  int n_history() const; // 0D_NOT_integer
+  void set_n_history(int value);
+  int lev_loop() const; // 0D_NOT_integer
+  void set_lev_loop(int value);
+  int n_err_messages_printed() const; // 0D_NOT_integer
+  void set_n_err_messages_printed(int value);
+  int n_universes() const; // 0D_NOT_integer
+  void set_n_universes(int value);
+  int ix_beam_track_active_element() const; // 0D_NOT_integer
+  void set_ix_beam_track_active_element(int value);
+  bool cmd_file_paused() const; // 0D_NOT_logical
+  void set_cmd_file_paused(bool value);
+  bool use_cmd_here() const; // 0D_NOT_logical
+  void set_use_cmd_here(bool value);
+  bool cmd_from_cmd_file() const; // 0D_NOT_logical
+  void set_cmd_from_cmd_file(bool value);
+  bool use_saved_beam_in_tracking() const; // 0D_NOT_logical
+  void set_use_saved_beam_in_tracking(bool value);
+  bool single_mode() const; // 0D_NOT_logical
+  void set_single_mode(bool value);
+  bool combine_consecutive_elements_of_like_name() const; // 0D_NOT_logical
+  void set_combine_consecutive_elements_of_like_name(bool value);
+  bool have_tracked_beam() const; // 0D_NOT_logical
+  void set_have_tracked_beam(bool value);
+  bool init_plot_needed() const; // 0D_NOT_logical
+  void set_init_plot_needed(bool value);
+  bool init_beam() const; // 0D_NOT_logical
+  void set_init_beam(bool value);
+  bool init_var() const; // 0D_NOT_logical
+  void set_init_var(bool value);
+  bool init_read_lat_info() const; // 0D_NOT_logical
+  void set_init_read_lat_info(bool value);
+  bool optimizer_running() const; // 0D_NOT_logical
+  void set_optimizer_running(bool value);
+  bool have_datums_using_expressions() const; // 0D_NOT_logical
+  void set_have_datums_using_expressions(bool value);
+  bool print_to_terminal() const; // 0D_NOT_logical
+  void set_print_to_terminal(bool value);
+  bool lattice_calc_done() const; // 0D_NOT_logical
+  void set_lattice_calc_done(bool value);
+  bool add_measurement_noise() const; // 0D_NOT_logical
+  void set_add_measurement_noise(bool value);
+  bool command_arg_has_been_executed() const; // 0D_NOT_logical
+  void set_command_arg_has_been_executed(bool value);
+  bool all_merit_weights_positive() const; // 0D_NOT_logical
+  void set_all_merit_weights_positive(bool value);
+  bool multi_turn_orbit_is_plotted() const; // 0D_NOT_logical
+  void set_multi_turn_orbit_is_plotted(bool value);
+  bool force_chrom_calc() const; // 0D_NOT_logical
+  void set_force_chrom_calc(bool value);
+  bool force_rad_int_calc() const; // 0D_NOT_logical
+  void set_force_rad_int_calc(bool value);
+  bool rad_int_ri_calc_on() const; // 0D_NOT_logical
+  void set_rad_int_ri_calc_on(bool value);
+  bool rad_int_6d_calc_on() const; // 0D_NOT_logical
+  void set_rad_int_6d_calc_on(bool value);
+  FCharArray1D valid_plot_who() const; // 1D_NOT_character
+  std::string single_mode_buffer() const; // 0D_NOT_character
+  void set_single_mode_buffer(const std::string& value);
+  std::string cmd() const; // 0D_NOT_character
+  void set_cmd(const std::string& value);
+  std::string saved_cmd_line() const; // 0D_NOT_character
+  void set_saved_cmd_line(const std::string& value);
+};
+
+template <>
+struct FortranTraits<TaoPlotPageProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_plot_page_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_plot_page_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_plot_page_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_plot_page_struct";
+  }
+};
+
+class TaoPlotPageProxy : public FortranProxy<TaoPlotPageProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  TaoTitleProxy title() const; // 0D_NOT_type
+  void set_title(const TaoTitleProxy& src);
+  TaoTitleProxy subtitle() const; // 0D_NOT_type
+  void set_subtitle(const TaoTitleProxy& src);
+  QpRectProxy border() const; // 0D_NOT_type
+  void set_border(const QpRectProxy& src);
+  TaoDrawingProxy floor_plan() const; // 0D_NOT_type
+  void set_floor_plan(const TaoDrawingProxy& src);
+  TaoDrawingProxy lat_layout() const; // 0D_NOT_type
+  void set_lat_layout(const TaoDrawingProxy& src);
+  TaoShapePatternProxyArray1D pattern() const; // 1D_ALLOC_type
+  TaoPlotProxyArray1D template_() const; // 1D_ALLOC_type
+  TaoPlotRegionProxyArray1D region() const; // 1D_ALLOC_type
+  std::string plot_display_type() const; // 0D_NOT_character
+  void set_plot_display_type(const std::string& value);
+  FArray1D<double> size() const; // 1D_NOT_real
+  double text_height() const; // 0D_NOT_real
+  void set_text_height(double value);
+  double main_title_text_scale() const; // 0D_NOT_real
+  void set_main_title_text_scale(double value);
+  double graph_title_text_scale() const; // 0D_NOT_real
+  void set_graph_title_text_scale(double value);
+  double axis_number_text_scale() const; // 0D_NOT_real
+  void set_axis_number_text_scale(double value);
+  double axis_label_text_scale() const; // 0D_NOT_real
+  void set_axis_label_text_scale(double value);
+  double legend_text_scale() const; // 0D_NOT_real
+  void set_legend_text_scale(double value);
+  double key_table_text_scale() const; // 0D_NOT_real
+  void set_key_table_text_scale(double value);
+  double floor_plan_shape_scale() const; // 0D_NOT_real
+  void set_floor_plan_shape_scale(double value);
+  double floor_plan_text_scale() const; // 0D_NOT_real
+  void set_floor_plan_text_scale(double value);
+  double lat_layout_shape_scale() const; // 0D_NOT_real
+  void set_lat_layout_shape_scale(double value);
+  double lat_layout_text_scale() const; // 0D_NOT_real
+  void set_lat_layout_text_scale(double value);
+  int n_curve_pts() const; // 0D_NOT_integer
+  void set_n_curve_pts(int value);
+  int id_window() const; // 0D_NOT_integer
+  void set_id_window(int value);
+  bool delete_overlapping_plots() const; // 0D_NOT_logical
+  void set_delete_overlapping_plots(bool value);
+  bool draw_graph_title_suffix() const; // 0D_NOT_logical
+  void set_draw_graph_title_suffix(bool value);
+};
+
+template <>
+struct FortranTraits<TaoBuildingWallProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_building_wall_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_building_wall_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_building_wall_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_building_wall_struct";
+  }
+};
+
+class TaoBuildingWallProxy : public FortranProxy<TaoBuildingWallProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  TaoBuildingWallOrientationProxy orientation() const; // 0D_NOT_type
+  void set_orientation(const TaoBuildingWallOrientationProxy& src);
+  TaoBuildingWallSectionProxyArray1D section() const; // 1D_ALLOC_type
+};
+
+template <>
+struct FortranTraits<TaoBuildingWallOrientationProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_building_wall_orientation_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_building_wall_orientation_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_building_wall_orientation_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_building_wall_orientation_struct";
+  }
+};
+
+class TaoBuildingWallOrientationProxy
+    : public FortranProxy<TaoBuildingWallOrientationProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  double theta() const; // 0D_NOT_real
+  void set_theta(double value);
+  double x_offset() const; // 0D_NOT_real
+  void set_x_offset(double value);
+  double z_offset() const; // 0D_NOT_real
+  void set_z_offset(double value);
+};
+
+template <>
+struct FortranTraits<TaoBuildingWallSectionProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_building_wall_section_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_building_wall_section_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_building_wall_section_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_building_wall_section_struct";
+  }
+};
+
+class TaoBuildingWallSectionProxy
+    : public FortranProxy<TaoBuildingWallSectionProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  std::string name() const; // 0D_NOT_character
+  void set_name(const std::string& value);
+  std::string constraint() const; // 0D_NOT_character
+  void set_constraint(const std::string& value);
+  TaoBuildingWallPointProxyArray1D point() const; // 1D_ALLOC_type
+};
+
+template <>
+struct FortranTraits<TaoBuildingWallPointProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_building_wall_point_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_building_wall_point_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_building_wall_point_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_building_wall_point_struct";
+  }
+};
+
+class TaoBuildingWallPointProxy
+    : public FortranProxy<TaoBuildingWallPointProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  double z() const; // 0D_NOT_real
+  void set_z(double value);
+  double x() const; // 0D_NOT_real
+  void set_x(double value);
+  double radius() const; // 0D_NOT_real
+  void set_radius(double value);
+  double z_center() const; // 0D_NOT_real
+  void set_z_center(double value);
+  double x_center() const; // 0D_NOT_real
+  void set_x_center(double value);
+};
+
+template <>
+struct FortranTraits<TaoWaveProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_wave_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_wave_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_wave_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_wave_struct";
+  }
+};
+
+class TaoWaveProxy : public FortranProxy<TaoWaveProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  std::string data_type() const; // 0D_NOT_character
+  void set_data_type(const std::string& value);
+  double rms_rel_a() const; // 0D_NOT_real
+  void set_rms_rel_a(double value);
+  double rms_rel_b() const; // 0D_NOT_real
+  void set_rms_rel_b(double value);
+  double rms_rel_as() const; // 0D_NOT_real
+  void set_rms_rel_as(double value);
+  double rms_rel_bs() const; // 0D_NOT_real
+  void set_rms_rel_bs(double value);
+  double rms_rel_ar() const; // 0D_NOT_real
+  void set_rms_rel_ar(double value);
+  double rms_rel_br() const; // 0D_NOT_real
+  void set_rms_rel_br(double value);
+  double rms_rel_k() const; // 0D_NOT_real
+  void set_rms_rel_k(double value);
+  double rms_rel_ks() const; // 0D_NOT_real
+  void set_rms_rel_ks(double value);
+  double rms_rel_kr() const; // 0D_NOT_real
+  void set_rms_rel_kr(double value);
+  double rms_phi() const; // 0D_NOT_real
+  void set_rms_phi(double value);
+  double rms_phi_s() const; // 0D_NOT_real
+  void set_rms_phi_s(double value);
+  double rms_phi_r() const; // 0D_NOT_real
+  void set_rms_phi_r(double value);
+  double amp_ba_s() const; // 0D_NOT_real
+  void set_amp_ba_s(double value);
+  double amp_ba_r() const; // 0D_NOT_real
+  void set_amp_ba_r(double value);
+  double chi_a() const; // 0D_NOT_real
+  void set_chi_a(double value);
+  double chi_c() const; // 0D_NOT_real
+  void set_chi_c(double value);
+  double chi_ba() const; // 0D_NOT_real
+  void set_chi_ba(double value);
+  FArray1D<double> amp_a() const; // 1D_NOT_real
+  FArray1D<double> amp_b() const; // 1D_NOT_real
+  FArray1D<double> amp_ba() const; // 1D_NOT_real
+  FArray1D<double> coef_a() const; // 1D_NOT_real
+  FArray1D<double> coef_b() const; // 1D_NOT_real
+  FArray1D<double> coef_ba() const; // 1D_NOT_real
+  int n_func() const; // 0D_NOT_integer
+  void set_n_func(int value);
+  int ix_a1() const; // 0D_NOT_integer
+  void set_ix_a1(int value);
+  int ix_a2() const; // 0D_NOT_integer
+  void set_ix_a2(int value);
+  int ix_b1() const; // 0D_NOT_integer
+  void set_ix_b1(int value);
+  int ix_b2() const; // 0D_NOT_integer
+  void set_ix_b2(int value);
+  int i_a1() const; // 0D_NOT_integer
+  void set_i_a1(int value);
+  int i_a2() const; // 0D_NOT_integer
+  void set_i_a2(int value);
+  int i_b1() const; // 0D_NOT_integer
+  void set_i_b1(int value);
+  int i_b2() const; // 0D_NOT_integer
+  void set_i_b2(int value);
+  int n_a() const; // 0D_NOT_integer
+  void set_n_a(int value);
+  int n_b() const; // 0D_NOT_integer
+  void set_n_b(int value);
+  int i_curve_wrap_pt() const; // 0D_NOT_integer
+  void set_i_curve_wrap_pt(int value);
+  FArray1D<int> ix_data() const; // 1D_ALLOC_integer
+  int n_kick() const; // 0D_NOT_integer
+  void set_n_kick(int value);
+  TaoWaveKickPtProxyArray1D kick() const; // 1D_ALLOC_type
+  TaoGraphProxy base_graph() const; // 0D_NOT_type
+  void set_base_graph(const TaoGraphProxy& src);
+  std::optional<TaoPlotRegionProxy> region() const; // 0D_PTR_type
+  void set_region(const TaoPlotRegionProxy& src);
+  std::optional<TaoD1DataProxy> d1_dat() const; // 0D_PTR_type
+  void set_d1_dat(const TaoD1DataProxy& src);
+};
+
+template <>
+struct FortranTraits<TaoWaveKickPtProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_wave_kick_pt_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_wave_kick_pt_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_wave_kick_pt_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_wave_kick_pt_struct";
+  }
+};
+
+class TaoWaveKickPtProxy : public FortranProxy<TaoWaveKickPtProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  double phi_s() const; // 0D_NOT_real
+  void set_phi_s(double value);
+  double phi_r() const; // 0D_NOT_real
+  void set_phi_r(double value);
+  double phi() const; // 0D_NOT_real
+  void set_phi(double value);
+  double amp() const; // 0D_NOT_real
+  void set_amp(double value);
+  double s() const; // 0D_NOT_real
+  void set_s(double value);
+  int ix_dat_before_kick() const; // 0D_NOT_integer
+  void set_ix_dat_before_kick(int value);
+  std::optional<EleProxy> ele() const; // 0D_PTR_type
+  void set_ele(const EleProxy& src);
+};
+
+template <>
+struct FortranTraits<TaoCmdHistoryProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_cmd_history_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_cmd_history_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_cmd_history_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_cmd_history_struct";
+  }
+};
+
+class TaoCmdHistoryProxy : public FortranProxy<TaoCmdHistoryProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  std::string cmd() const; // 0D_ALLOC_character
+  void set_cmd(const std::string& value);
+  int ix() const; // 0D_NOT_integer
+  void set_ix(int value);
+};
+
+template <>
 struct FortranTraits<TaoUniverseProxy> {
   static void* allocate() {
     size_t sz;
@@ -15596,6 +19770,69 @@ class TaoUniverseProxy : public FortranProxy<TaoUniverseProxy> {
   void set_design_same_as_previous(bool value);
   bool picked_uni() const; // 0D_NOT_logical
   void set_picked_uni(bool value);
+};
+
+template <>
+struct FortranTraits<MadEnergyProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_mad_energy_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_mad_energy_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_mad_energy_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "mad_energy_struct";
+  }
+};
+
+class MadEnergyProxy : public FortranProxy<MadEnergyProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  double total() const; // 0D_NOT_real
+  void set_total(double value);
+  double beta() const; // 0D_NOT_real
+  void set_beta(double value);
+  double gamma() const; // 0D_NOT_real
+  void set_gamma(double value);
+  double kinetic() const; // 0D_NOT_real
+  void set_kinetic(double value);
+  double p0c() const; // 0D_NOT_real
+  void set_p0c(double value);
+  int particle() const; // 0D_NOT_integer
+  void set_particle(int value);
+};
+
+template <>
+struct FortranTraits<MadMapProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_mad_map_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_mad_map_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_mad_map_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "mad_map_struct";
+  }
+};
+
+class MadMapProxy : public FortranProxy<MadMapProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  FArray1D<double> k() const; // 1D_NOT_real
+  FArray2D<double> r() const; // 2D_NOT_real
+  FArray3D<double> t() const; // 3D_NOT_real
 };
 
 template <>

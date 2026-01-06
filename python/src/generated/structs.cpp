@@ -4891,6 +4891,314 @@ void init_tricubic_cmplx_coef_struct(py::module& m) {
 }
 
 // =============================================================================
+// mad_energy_struct
+void init_mad_energy_struct(py::module& m) {
+  py::class_<MadEnergyProxy, std::shared_ptr<MadEnergyProxy>>(
+      m, "MadEnergyStruct", "Fortran struct: mad_energy_struct")
+      .def(py::init<>())
+      // MadEnergyProxy.total (0D_NOT_real -
+      .def_property("total", &MadEnergyProxy::total, &MadEnergyProxy::set_total)
+      // MadEnergyProxy.beta (0D_NOT_real - normalized velocity: v/c
+      .def_property("beta", &MadEnergyProxy::beta, &MadEnergyProxy::set_beta)
+      // MadEnergyProxy.gamma (0D_NOT_real - relativistic factor: 1/sqrt(1-beta^2)
+      .def_property("gamma", &MadEnergyProxy::gamma, &MadEnergyProxy::set_gamma)
+      // MadEnergyProxy.kinetic (0D_NOT_real - kinetic energy
+      .def_property(
+          "kinetic", &MadEnergyProxy::kinetic, &MadEnergyProxy::set_kinetic)
+      // MadEnergyProxy.p0c (0D_NOT_real - particle momentum
+      .def_property("p0c", &MadEnergyProxy::p0c, &MadEnergyProxy::set_p0c)
+      // MadEnergyProxy.particle (0D_NOT_integer - particle species
+      .def_property(
+          "particle", &MadEnergyProxy::particle, &MadEnergyProxy::set_particle)
+
+      .def(
+          "__repr__",
+          [](const MadEnergyProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<MadEnergyProxyArray1D>(m, "MadEnergyProxyArray1D");
+  bind_FTypeArrayND<MadEnergyProxyArray2D>(m, "MadEnergyProxyArray2D");
+  bind_FTypeArrayND<MadEnergyProxyArray3D>(m, "MadEnergyProxyArray3D");
+  bind_FTypeAlloc1D<MadEnergyProxyAlloc1D>(m, "MadEnergyProxyAlloc1D");
+}
+
+// =============================================================================
+// mad_map_struct
+void init_mad_map_struct(py::module& m) {
+  py::class_<MadMapProxy, std::shared_ptr<MadMapProxy>>(
+      m, "MadMapStruct", "Fortran struct: mad_map_struct")
+      .def(py::init<>())
+      // MadMapProxy.k (1D_NOT_real - 0th order map.
+      .def_property_readonly("k", &MadMapProxy::k)
+      // MadMapProxy.r (2D_NOT_real - 1st order map.
+      .def_property_readonly("r", &MadMapProxy::r)
+      // MadMapProxy.t (3D_NOT_real - 2nd order map.
+      .def_property_readonly("t", &MadMapProxy::t)
+
+      .def("__repr__", [](const MadMapProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<MadMapProxyArray1D>(m, "MadMapProxyArray1D");
+  bind_FTypeArrayND<MadMapProxyArray2D>(m, "MadMapProxyArray2D");
+  bind_FTypeArrayND<MadMapProxyArray3D>(m, "MadMapProxyArray3D");
+  bind_FTypeAlloc1D<MadMapProxyAlloc1D>(m, "MadMapProxyAlloc1D");
+}
+
+// =============================================================================
+// qp_axis_struct
+void init_qp_axis_struct(py::module& m) {
+  py::class_<QpAxisProxy, std::shared_ptr<QpAxisProxy>>(
+      m, "QpAxisStruct", "Fortran struct: qp_axis_struct")
+      .def(py::init<>())
+      // QpAxisProxy.label (0D_NOT_character -
+      .def_property("label", &QpAxisProxy::label, &QpAxisProxy::set_label)
+      // QpAxisProxy.min (0D_NOT_real - Axis min/max in data units.
+      .def_property("min", &QpAxisProxy::min, &QpAxisProxy::set_min)
+      // QpAxisProxy.max (0D_NOT_real - Axis min/max in data units.
+      .def_property("max", &QpAxisProxy::max, &QpAxisProxy::set_max)
+      // QpAxisProxy.tick_min (0D_NOT_real - Min tick location along axis in data units.
+      .def_property(
+          "tick_min", &QpAxisProxy::tick_min, &QpAxisProxy::set_tick_min)
+      // QpAxisProxy.tick_max (0D_NOT_real - Max tick location along axis in data units.
+      .def_property(
+          "tick_max", &QpAxisProxy::tick_max, &QpAxisProxy::set_tick_max)
+      // QpAxisProxy.eval_min (0D_NOT_real - For general use. Not set by quick_plot.
+      .def_property(
+          "eval_min", &QpAxisProxy::eval_min, &QpAxisProxy::set_eval_min)
+      // QpAxisProxy.eval_max (0D_NOT_real - For general use. Not set by quick_plot.
+      .def_property(
+          "eval_max", &QpAxisProxy::eval_max, &QpAxisProxy::set_eval_max)
+      // QpAxisProxy.dtick (0D_NOT_real - Distance between ticks. In data units. Ticks will be drawn between %min and %max.
+      .def_property("dtick", &QpAxisProxy::dtick, &QpAxisProxy::set_dtick)
+      // QpAxisProxy.number_offset (0D_NOT_real - Offset from axis line in inches.
+      .def_property(
+          "number_offset",
+          &QpAxisProxy::number_offset,
+          &QpAxisProxy::set_number_offset)
+      // QpAxisProxy.label_offset (0D_NOT_real - Offset from numbers in inches.
+      .def_property(
+          "label_offset",
+          &QpAxisProxy::label_offset,
+          &QpAxisProxy::set_label_offset)
+      // QpAxisProxy.major_tick_len (0D_NOT_real - In inches.
+      .def_property(
+          "major_tick_len",
+          &QpAxisProxy::major_tick_len,
+          &QpAxisProxy::set_major_tick_len)
+      // QpAxisProxy.minor_tick_len (0D_NOT_real - In inches.
+      .def_property(
+          "minor_tick_len",
+          &QpAxisProxy::minor_tick_len,
+          &QpAxisProxy::set_minor_tick_len)
+      // QpAxisProxy.label_color (0D_NOT_character - Color of the label.
+      .def_property(
+          "label_color",
+          &QpAxisProxy::label_color,
+          &QpAxisProxy::set_label_color)
+      // QpAxisProxy.major_div (0D_NOT_integer - Actual numbrer of major divisions
+      .def_property(
+          "major_div", &QpAxisProxy::major_div, &QpAxisProxy::set_major_div)
+      // QpAxisProxy.major_div_nominal (0D_NOT_integer - Nominal value.
+      .def_property(
+          "major_div_nominal",
+          &QpAxisProxy::major_div_nominal,
+          &QpAxisProxy::set_major_div_nominal)
+      // QpAxisProxy.minor_div (0D_NOT_integer - 0 = auto choose.
+      .def_property(
+          "minor_div", &QpAxisProxy::minor_div, &QpAxisProxy::set_minor_div)
+      // QpAxisProxy.minor_div_max (0D_NOT_integer - Max number for auto choose.
+      .def_property(
+          "minor_div_max",
+          &QpAxisProxy::minor_div_max,
+          &QpAxisProxy::set_minor_div_max)
+      // QpAxisProxy.places (0D_NOT_integer - Number of places after the decimal point to print.
+      .def_property("places", &QpAxisProxy::places, &QpAxisProxy::set_places)
+      // QpAxisProxy.type (0D_NOT_character - Or 'LOG', or 'CUSTOM'
+      .def_property("type", &QpAxisProxy::type, &QpAxisProxy::set_type)
+      // QpAxisProxy.bounds (0D_NOT_character - Or 'ZERO_AT_END' or 'ZERO_SYMMETRIC'
+      .def_property("bounds", &QpAxisProxy::bounds, &QpAxisProxy::set_bounds)
+      // QpAxisProxy.tick_side (0D_NOT_integer - +1 = Draw on the side inside the graph, 0 = both (longer tick), -1 = outside.
+      .def_property(
+          "tick_side", &QpAxisProxy::tick_side, &QpAxisProxy::set_tick_side)
+      // QpAxisProxy.number_side (0D_NOT_integer - +1 = Draw to the side inside the graph, -1 = outside.
+      .def_property(
+          "number_side",
+          &QpAxisProxy::number_side,
+          &QpAxisProxy::set_number_side)
+      // QpAxisProxy.draw_label (0D_NOT_logical -
+      .def_property(
+          "draw_label", &QpAxisProxy::draw_label, &QpAxisProxy::set_draw_label)
+      // QpAxisProxy.draw_numbers (0D_NOT_logical -
+      .def_property(
+          "draw_numbers",
+          &QpAxisProxy::draw_numbers,
+          &QpAxisProxy::set_draw_numbers)
+
+      .def("__repr__", [](const QpAxisProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<QpAxisProxyArray1D>(m, "QpAxisProxyArray1D");
+  bind_FTypeArrayND<QpAxisProxyArray2D>(m, "QpAxisProxyArray2D");
+  bind_FTypeArrayND<QpAxisProxyArray3D>(m, "QpAxisProxyArray3D");
+  bind_FTypeAlloc1D<QpAxisProxyAlloc1D>(m, "QpAxisProxyAlloc1D");
+}
+
+// =============================================================================
+// qp_legend_struct
+void init_qp_legend_struct(py::module& m) {
+  py::class_<QpLegendProxy, std::shared_ptr<QpLegendProxy>>(
+      m, "QpLegendStruct", "Fortran struct: qp_legend_struct")
+      .def(py::init<>())
+      // QpLegendProxy.row_spacing (0D_NOT_real - Spacing between rows.
+      .def_property(
+          "row_spacing",
+          &QpLegendProxy::row_spacing,
+          &QpLegendProxy::set_row_spacing)
+      // QpLegendProxy.line_length (0D_NOT_real - Length of the line in points.
+      .def_property(
+          "line_length",
+          &QpLegendProxy::line_length,
+          &QpLegendProxy::set_line_length)
+      // QpLegendProxy.text_offset (0D_NOT_real - Horizontal offset in points between the line and the text.
+      .def_property(
+          "text_offset",
+          &QpLegendProxy::text_offset,
+          &QpLegendProxy::set_text_offset)
+      // QpLegendProxy.draw_line (0D_NOT_logical - Draw lines?
+      .def_property(
+          "draw_line", &QpLegendProxy::draw_line, &QpLegendProxy::set_draw_line)
+      // QpLegendProxy.draw_symbol (0D_NOT_logical - Draw symbols?
+      .def_property(
+          "draw_symbol",
+          &QpLegendProxy::draw_symbol,
+          &QpLegendProxy::set_draw_symbol)
+      // QpLegendProxy.draw_text (0D_NOT_logical - Draw text?
+      .def_property(
+          "draw_text", &QpLegendProxy::draw_text, &QpLegendProxy::set_draw_text)
+
+      .def(
+          "__repr__", [](const QpLegendProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<QpLegendProxyArray1D>(m, "QpLegendProxyArray1D");
+  bind_FTypeArrayND<QpLegendProxyArray2D>(m, "QpLegendProxyArray2D");
+  bind_FTypeArrayND<QpLegendProxyArray3D>(m, "QpLegendProxyArray3D");
+  bind_FTypeAlloc1D<QpLegendProxyAlloc1D>(m, "QpLegendProxyAlloc1D");
+}
+
+// =============================================================================
+// qp_line_struct
+void init_qp_line_struct(py::module& m) {
+  py::class_<QpLineProxy, std::shared_ptr<QpLineProxy>>(
+      m, "QpLineStruct", "Fortran struct: qp_line_struct")
+      .def(py::init<>())
+      // QpLineProxy.width (0D_NOT_integer -
+      .def_property("width", &QpLineProxy::width, &QpLineProxy::set_width)
+      // QpLineProxy.color (0D_NOT_character -
+      .def_property("color", &QpLineProxy::color, &QpLineProxy::set_color)
+      // QpLineProxy.pattern (0D_NOT_character -
+      .def_property("pattern", &QpLineProxy::pattern, &QpLineProxy::set_pattern)
+
+      .def("__repr__", [](const QpLineProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<QpLineProxyArray1D>(m, "QpLineProxyArray1D");
+  bind_FTypeArrayND<QpLineProxyArray2D>(m, "QpLineProxyArray2D");
+  bind_FTypeArrayND<QpLineProxyArray3D>(m, "QpLineProxyArray3D");
+  bind_FTypeAlloc1D<QpLineProxyAlloc1D>(m, "QpLineProxyAlloc1D");
+}
+
+// =============================================================================
+// qp_point_struct
+void init_qp_point_struct(py::module& m) {
+  py::class_<QpPointProxy, std::shared_ptr<QpPointProxy>>(
+      m, "QpPointStruct", "Fortran struct: qp_point_struct")
+      .def(py::init<>())
+      // QpPointProxy.x (0D_NOT_real -
+      .def_property("x", &QpPointProxy::x, &QpPointProxy::set_x)
+      // QpPointProxy.y (0D_NOT_real -
+      .def_property("y", &QpPointProxy::y, &QpPointProxy::set_y)
+      // QpPointProxy.units (0D_NOT_character -
+      .def_property("units", &QpPointProxy::units, &QpPointProxy::set_units)
+
+      .def("__repr__", [](const QpPointProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<QpPointProxyArray1D>(m, "QpPointProxyArray1D");
+  bind_FTypeArrayND<QpPointProxyArray2D>(m, "QpPointProxyArray2D");
+  bind_FTypeArrayND<QpPointProxyArray3D>(m, "QpPointProxyArray3D");
+  bind_FTypeAlloc1D<QpPointProxyAlloc1D>(m, "QpPointProxyAlloc1D");
+}
+
+// =============================================================================
+// qp_rect_struct
+void init_qp_rect_struct(py::module& m) {
+  py::class_<QpRectProxy, std::shared_ptr<QpRectProxy>>(
+      m, "QpRectStruct", "Fortran struct: qp_rect_struct")
+      .def(py::init<>())
+      // QpRectProxy.x1 (0D_NOT_real -
+      .def_property("x1", &QpRectProxy::x1, &QpRectProxy::set_x1)
+      // QpRectProxy.x2 (0D_NOT_real -
+      .def_property("x2", &QpRectProxy::x2, &QpRectProxy::set_x2)
+      // QpRectProxy.y1 (0D_NOT_real -
+      .def_property("y1", &QpRectProxy::y1, &QpRectProxy::set_y1)
+      // QpRectProxy.y2 (0D_NOT_real -
+      .def_property("y2", &QpRectProxy::y2, &QpRectProxy::set_y2)
+      // QpRectProxy.units (0D_NOT_character -
+      .def_property("units", &QpRectProxy::units, &QpRectProxy::set_units)
+
+      .def("__repr__", [](const QpRectProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<QpRectProxyArray1D>(m, "QpRectProxyArray1D");
+  bind_FTypeArrayND<QpRectProxyArray2D>(m, "QpRectProxyArray2D");
+  bind_FTypeArrayND<QpRectProxyArray3D>(m, "QpRectProxyArray3D");
+  bind_FTypeAlloc1D<QpRectProxyAlloc1D>(m, "QpRectProxyAlloc1D");
+}
+
+// =============================================================================
+// qp_symbol_struct
+void init_qp_symbol_struct(py::module& m) {
+  py::class_<QpSymbolProxy, std::shared_ptr<QpSymbolProxy>>(
+      m, "QpSymbolStruct", "Fortran struct: qp_symbol_struct")
+      .def(py::init<>())
+      // QpSymbolProxy.type (0D_NOT_character -
+      .def_property("type", &QpSymbolProxy::type, &QpSymbolProxy::set_type)
+      // QpSymbolProxy.height (0D_NOT_real - in points (same as text height)
+      .def_property(
+          "height", &QpSymbolProxy::height, &QpSymbolProxy::set_height)
+      // QpSymbolProxy.color (0D_NOT_character -
+      .def_property("color", &QpSymbolProxy::color, &QpSymbolProxy::set_color)
+      // QpSymbolProxy.fill_pattern (0D_NOT_character -
+      .def_property(
+          "fill_pattern",
+          &QpSymbolProxy::fill_pattern,
+          &QpSymbolProxy::set_fill_pattern)
+      // QpSymbolProxy.line_width (0D_NOT_integer -
+      .def_property(
+          "line_width",
+          &QpSymbolProxy::line_width,
+          &QpSymbolProxy::set_line_width)
+
+      .def(
+          "__repr__", [](const QpSymbolProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<QpSymbolProxyArray1D>(m, "QpSymbolProxyArray1D");
+  bind_FTypeArrayND<QpSymbolProxyArray2D>(m, "QpSymbolProxyArray2D");
+  bind_FTypeArrayND<QpSymbolProxyArray3D>(m, "QpSymbolProxyArray3D");
+  bind_FTypeAlloc1D<QpSymbolProxyAlloc1D>(m, "QpSymbolProxyAlloc1D");
+}
+
+// =============================================================================
 // nametable_struct
 void init_nametable_struct(py::module& m) {
   py::class_<NametableProxy, std::shared_ptr<NametableProxy>>(
@@ -5131,6 +5439,456 @@ void init_tao_beam_uni_struct(py::module& m) {
 }
 
 // =============================================================================
+// tao_building_wall_orientation_struct
+void init_tao_building_wall_orientation_struct(py::module& m) {
+  py::class_<
+      TaoBuildingWallOrientationProxy,
+      std::shared_ptr<TaoBuildingWallOrientationProxy>>(
+      m,
+      "TaoBuildingWallOrientationStruct",
+      "Fortran struct: tao_building_wall_orientation_struct")
+      .def(py::init<>())
+      // TaoBuildingWallOrientationProxy.theta (0D_NOT_real -
+      .def_property(
+          "theta",
+          &TaoBuildingWallOrientationProxy::theta,
+          &TaoBuildingWallOrientationProxy::set_theta)
+      // TaoBuildingWallOrientationProxy.x_offset (0D_NOT_real -
+      .def_property(
+          "x_offset",
+          &TaoBuildingWallOrientationProxy::x_offset,
+          &TaoBuildingWallOrientationProxy::set_x_offset)
+      // TaoBuildingWallOrientationProxy.z_offset (0D_NOT_real -
+      .def_property(
+          "z_offset",
+          &TaoBuildingWallOrientationProxy::z_offset,
+          &TaoBuildingWallOrientationProxy::set_z_offset)
+
+      .def(
+          "__repr__",
+          [](const TaoBuildingWallOrientationProxy& self) {
+            return to_string(self);
+          })
+
+      ;
+
+  bind_FTypeArrayND<TaoBuildingWallOrientationProxyArray1D>(
+      m, "TaoBuildingWallOrientationProxyArray1D");
+  bind_FTypeArrayND<TaoBuildingWallOrientationProxyArray2D>(
+      m, "TaoBuildingWallOrientationProxyArray2D");
+  bind_FTypeArrayND<TaoBuildingWallOrientationProxyArray3D>(
+      m, "TaoBuildingWallOrientationProxyArray3D");
+  bind_FTypeAlloc1D<TaoBuildingWallOrientationProxyAlloc1D>(
+      m, "TaoBuildingWallOrientationProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_building_wall_point_struct
+void init_tao_building_wall_point_struct(py::module& m) {
+  py::class_<
+      TaoBuildingWallPointProxy,
+      std::shared_ptr<TaoBuildingWallPointProxy>>(
+      m,
+      "TaoBuildingWallPointStruct",
+      "Fortran struct: tao_building_wall_point_struct")
+      .def(py::init<>())
+      // TaoBuildingWallPointProxy.z (0D_NOT_real - Global floor position
+      .def_property(
+          "z", &TaoBuildingWallPointProxy::z, &TaoBuildingWallPointProxy::set_z)
+      // TaoBuildingWallPointProxy.x (0D_NOT_real - Global floor position
+      .def_property(
+          "x", &TaoBuildingWallPointProxy::x, &TaoBuildingWallPointProxy::set_x)
+      // TaoBuildingWallPointProxy.radius (0D_NOT_real - Arc radius. +r -> CW rotation, same as bends.
+      .def_property(
+          "radius",
+          &TaoBuildingWallPointProxy::radius,
+          &TaoBuildingWallPointProxy::set_radius)
+      // TaoBuildingWallPointProxy.z_center (0D_NOT_real - Arc center.
+      .def_property(
+          "z_center",
+          &TaoBuildingWallPointProxy::z_center,
+          &TaoBuildingWallPointProxy::set_z_center)
+      // TaoBuildingWallPointProxy.x_center (0D_NOT_real - Arc center.
+      .def_property(
+          "x_center",
+          &TaoBuildingWallPointProxy::x_center,
+          &TaoBuildingWallPointProxy::set_x_center)
+
+      .def(
+          "__repr__",
+          [](const TaoBuildingWallPointProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoBuildingWallPointProxyArray1D>(
+      m, "TaoBuildingWallPointProxyArray1D");
+  bind_FTypeArrayND<TaoBuildingWallPointProxyArray2D>(
+      m, "TaoBuildingWallPointProxyArray2D");
+  bind_FTypeArrayND<TaoBuildingWallPointProxyArray3D>(
+      m, "TaoBuildingWallPointProxyArray3D");
+  bind_FTypeAlloc1D<TaoBuildingWallPointProxyAlloc1D>(
+      m, "TaoBuildingWallPointProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_building_wall_section_struct
+void init_tao_building_wall_section_struct(py::module& m) {
+  py::class_<
+      TaoBuildingWallSectionProxy,
+      std::shared_ptr<TaoBuildingWallSectionProxy>>(
+      m,
+      "TaoBuildingWallSectionStruct",
+      "Fortran struct: tao_building_wall_section_struct")
+      .def(py::init<>())
+      // TaoBuildingWallSectionProxy.name (0D_NOT_character -
+      .def_property(
+          "name",
+          &TaoBuildingWallSectionProxy::name,
+          &TaoBuildingWallSectionProxy::set_name)
+      // TaoBuildingWallSectionProxy.constraint (0D_NOT_character - 'left_side' or 'right_side' constraint.
+      .def_property(
+          "constraint",
+          &TaoBuildingWallSectionProxy::constraint,
+          &TaoBuildingWallSectionProxy::set_constraint)
+      // TaoBuildingWallSectionProxy.point (1D_ALLOC_type -
+      .def_property_readonly("point", &TaoBuildingWallSectionProxy::point)
+
+      .def(
+          "__repr__",
+          [](const TaoBuildingWallSectionProxy& self) {
+            return to_string(self);
+          })
+
+      ;
+
+  bind_FTypeArrayND<TaoBuildingWallSectionProxyArray1D>(
+      m, "TaoBuildingWallSectionProxyArray1D");
+  bind_FTypeArrayND<TaoBuildingWallSectionProxyArray2D>(
+      m, "TaoBuildingWallSectionProxyArray2D");
+  bind_FTypeArrayND<TaoBuildingWallSectionProxyArray3D>(
+      m, "TaoBuildingWallSectionProxyArray3D");
+  bind_FTypeAlloc1D<TaoBuildingWallSectionProxyAlloc1D>(
+      m, "TaoBuildingWallSectionProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_building_wall_struct
+void init_tao_building_wall_struct(py::module& m) {
+  py::class_<TaoBuildingWallProxy, std::shared_ptr<TaoBuildingWallProxy>>(
+      m, "TaoBuildingWallStruct", "Fortran struct: tao_building_wall_struct")
+      .def(py::init<>())
+      // TaoBuildingWallProxy.orientation (0D_NOT_type -
+      .def_property(
+          "orientation",
+          &TaoBuildingWallProxy::orientation,
+          &TaoBuildingWallProxy::set_orientation)
+      // TaoBuildingWallProxy.section (1D_ALLOC_type -
+      .def_property_readonly("section", &TaoBuildingWallProxy::section)
+
+      .def(
+          "__repr__",
+          [](const TaoBuildingWallProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoBuildingWallProxyArray1D>(
+      m, "TaoBuildingWallProxyArray1D");
+  bind_FTypeArrayND<TaoBuildingWallProxyArray2D>(
+      m, "TaoBuildingWallProxyArray2D");
+  bind_FTypeArrayND<TaoBuildingWallProxyArray3D>(
+      m, "TaoBuildingWallProxyArray3D");
+  bind_FTypeAlloc1D<TaoBuildingWallProxyAlloc1D>(
+      m, "TaoBuildingWallProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_cmd_history_struct
+void init_tao_cmd_history_struct(py::module& m) {
+  py::class_<TaoCmdHistoryProxy, std::shared_ptr<TaoCmdHistoryProxy>>(
+      m, "TaoCmdHistoryStruct", "Fortran struct: tao_cmd_history_struct")
+      .def(py::init<>())
+      // TaoCmdHistoryProxy.cmd (0D_ALLOC_character - The command
+      .def_property(
+          "cmd", &TaoCmdHistoryProxy::cmd, &TaoCmdHistoryProxy::set_cmd)
+      // TaoCmdHistoryProxy.ix (0D_NOT_integer - Command index (1st command has ix = 1, etc.) Note: Commands from command files will be assigned an index.
+      .def_property("ix", &TaoCmdHistoryProxy::ix, &TaoCmdHistoryProxy::set_ix)
+
+      .def(
+          "__repr__",
+          [](const TaoCmdHistoryProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoCmdHistoryProxyArray1D>(m, "TaoCmdHistoryProxyArray1D");
+  bind_FTypeArrayND<TaoCmdHistoryProxyArray2D>(m, "TaoCmdHistoryProxyArray2D");
+  bind_FTypeArrayND<TaoCmdHistoryProxyArray3D>(m, "TaoCmdHistoryProxyArray3D");
+  bind_FTypeAlloc1D<TaoCmdHistoryProxyAlloc1D>(m, "TaoCmdHistoryProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_common_struct
+void init_tao_common_struct(py::module& m) {
+  py::class_<TaoCommonProxy, std::shared_ptr<TaoCommonProxy>>(
+      m, "TaoCommonStruct", "Fortran struct: tao_common_struct")
+      .def(py::init<>())
+      // TaoCommonProxy.plot_place_buffer (1D_ALLOC_type - Used when %external_plotting is on.
+      .def_property_readonly(
+          "plot_place_buffer", &TaoCommonProxy::plot_place_buffer)
+      // TaoCommonProxy.covar (2D_ALLOC_real -
+      .def_property_readonly("covar", &TaoCommonProxy::covar)
+      // TaoCommonProxy.alpha (2D_ALLOC_real -
+      .def_property_readonly("alpha", &TaoCommonProxy::alpha)
+      // TaoCommonProxy.dummy_target (0D_NOT_real - Dummy varaible
+      .def_property(
+          "dummy_target",
+          &TaoCommonProxy::dummy_target,
+          &TaoCommonProxy::set_dummy_target)
+      // TaoCommonProxy.n_alias (0D_NOT_integer -
+      .def_property(
+          "n_alias", &TaoCommonProxy::n_alias, &TaoCommonProxy::set_n_alias)
+      // TaoCommonProxy.cmd_file_level (0D_NOT_integer - For nested command files. 0 -> no command file.
+      .def_property(
+          "cmd_file_level",
+          &TaoCommonProxy::cmd_file_level,
+          &TaoCommonProxy::set_cmd_file_level)
+      // TaoCommonProxy.ix_key_bank (0D_NOT_integer - For single mode.
+      .def_property(
+          "ix_key_bank",
+          &TaoCommonProxy::ix_key_bank,
+          &TaoCommonProxy::set_ix_key_bank)
+      // TaoCommonProxy.ix_history (0D_NOT_integer - Index to latest command in the history circular buffer.
+      .def_property(
+          "ix_history",
+          &TaoCommonProxy::ix_history,
+          &TaoCommonProxy::set_ix_history)
+      // TaoCommonProxy.n_history (0D_NOT_integer - Number of commands issued from beginning of starting Tao.
+      .def_property(
+          "n_history",
+          &TaoCommonProxy::n_history,
+          &TaoCommonProxy::set_n_history)
+      // TaoCommonProxy.lev_loop (0D_NOT_integer - in do loop nest level
+      .def_property(
+          "lev_loop", &TaoCommonProxy::lev_loop, &TaoCommonProxy::set_lev_loop)
+      // TaoCommonProxy.n_err_messages_printed (0D_NOT_integer - Used by tao_set_invalid to limit number of messages.
+      .def_property(
+          "n_err_messages_printed",
+          &TaoCommonProxy::n_err_messages_printed,
+          &TaoCommonProxy::set_n_err_messages_printed)
+      // TaoCommonProxy.n_universes (0D_NOT_integer -
+      .def_property(
+          "n_universes",
+          &TaoCommonProxy::n_universes,
+          &TaoCommonProxy::set_n_universes)
+      // TaoCommonProxy.ix_beam_track_active_element (0D_NOT_integer - Element being tracked through `tao_beam_track`.
+      .def_property(
+          "ix_beam_track_active_element",
+          &TaoCommonProxy::ix_beam_track_active_element,
+          &TaoCommonProxy::set_ix_beam_track_active_element)
+      // TaoCommonProxy.cmd_file_paused (0D_NOT_logical -
+      .def_property(
+          "cmd_file_paused",
+          &TaoCommonProxy::cmd_file_paused,
+          &TaoCommonProxy::set_cmd_file_paused)
+      // TaoCommonProxy.use_cmd_here (0D_NOT_logical - Used for commands recalled from the cmd history stack
+      .def_property(
+          "use_cmd_here",
+          &TaoCommonProxy::use_cmd_here,
+          &TaoCommonProxy::set_use_cmd_here)
+      // TaoCommonProxy.cmd_from_cmd_file (0D_NOT_logical - was command from a command file?
+      .def_property(
+          "cmd_from_cmd_file",
+          &TaoCommonProxy::cmd_from_cmd_file,
+          &TaoCommonProxy::set_cmd_from_cmd_file)
+      // TaoCommonProxy.use_saved_beam_in_tracking (0D_NOT_logical -
+      .def_property(
+          "use_saved_beam_in_tracking",
+          &TaoCommonProxy::use_saved_beam_in_tracking,
+          &TaoCommonProxy::set_use_saved_beam_in_tracking)
+      // TaoCommonProxy.single_mode (0D_NOT_logical -
+      .def_property(
+          "single_mode",
+          &TaoCommonProxy::single_mode,
+          &TaoCommonProxy::set_single_mode)
+      // TaoCommonProxy.combine_consecutive_elements_of_like_name (0D_NOT_logical -
+      .def_property(
+          "combine_consecutive_elements_of_like_name",
+          &TaoCommonProxy::combine_consecutive_elements_of_like_name,
+          &TaoCommonProxy::set_combine_consecutive_elements_of_like_name)
+      // TaoCommonProxy.have_tracked_beam (0D_NOT_logical - Used to catch error when beam plotting without having tracked a beam.
+      .def_property(
+          "have_tracked_beam",
+          &TaoCommonProxy::have_tracked_beam,
+          &TaoCommonProxy::set_have_tracked_beam)
+      // TaoCommonProxy.init_plot_needed (0D_NOT_logical - reinitialize plotting?
+      .def_property(
+          "init_plot_needed",
+          &TaoCommonProxy::init_plot_needed,
+          &TaoCommonProxy::set_init_plot_needed)
+      // TaoCommonProxy.init_beam (0D_NOT_logical - Used by custom programs to control Tao init
+      .def_property(
+          "init_beam",
+          &TaoCommonProxy::init_beam,
+          &TaoCommonProxy::set_init_beam)
+      // TaoCommonProxy.init_var (0D_NOT_logical - Used by custom programs to control Tao init
+      .def_property(
+          "init_var", &TaoCommonProxy::init_var, &TaoCommonProxy::set_init_var)
+      // TaoCommonProxy.init_read_lat_info (0D_NOT_logical - Used by custom programs to control Tao init
+      .def_property(
+          "init_read_lat_info",
+          &TaoCommonProxy::init_read_lat_info,
+          &TaoCommonProxy::set_init_read_lat_info)
+      // TaoCommonProxy.optimizer_running (0D_NOT_logical -
+      .def_property(
+          "optimizer_running",
+          &TaoCommonProxy::optimizer_running,
+          &TaoCommonProxy::set_optimizer_running)
+      // TaoCommonProxy.have_datums_using_expressions (0D_NOT_logical -
+      .def_property(
+          "have_datums_using_expressions",
+          &TaoCommonProxy::have_datums_using_expressions,
+          &TaoCommonProxy::set_have_datums_using_expressions)
+      // TaoCommonProxy.print_to_terminal (0D_NOT_logical - Print command prompt to the terminal? For use with GUIs.
+      .def_property(
+          "print_to_terminal",
+          &TaoCommonProxy::print_to_terminal,
+          &TaoCommonProxy::set_print_to_terminal)
+      // TaoCommonProxy.lattice_calc_done (0D_NOT_logical - Used by GUI for deciding when to refresh.
+      .def_property(
+          "lattice_calc_done",
+          &TaoCommonProxy::lattice_calc_done,
+          &TaoCommonProxy::set_lattice_calc_done)
+      // TaoCommonProxy.add_measurement_noise (0D_NOT_logical - Turn off to take data derivatives.
+      .def_property(
+          "add_measurement_noise",
+          &TaoCommonProxy::add_measurement_noise,
+          &TaoCommonProxy::set_add_measurement_noise)
+      // 1D_NOT_logical is_err_message_printed proxy support missing
+      // TaoCommonProxy.command_arg_has_been_executed (0D_NOT_logical - Has the -command command line argument been executed?
+      .def_property(
+          "command_arg_has_been_executed",
+          &TaoCommonProxy::command_arg_has_been_executed,
+          &TaoCommonProxy::set_command_arg_has_been_executed)
+      // TaoCommonProxy.all_merit_weights_positive (0D_NOT_logical -
+      .def_property(
+          "all_merit_weights_positive",
+          &TaoCommonProxy::all_merit_weights_positive,
+          &TaoCommonProxy::set_all_merit_weights_positive)
+      // TaoCommonProxy.multi_turn_orbit_is_plotted (0D_NOT_logical - Is a multi_turn_orbit being plotted?
+      .def_property(
+          "multi_turn_orbit_is_plotted",
+          &TaoCommonProxy::multi_turn_orbit_is_plotted,
+          &TaoCommonProxy::set_multi_turn_orbit_is_plotted)
+      // TaoCommonProxy.force_chrom_calc (0D_NOT_logical - Used by a routine to force a single chromaticity calculation.
+      .def_property(
+          "force_chrom_calc",
+          &TaoCommonProxy::force_chrom_calc,
+          &TaoCommonProxy::set_force_chrom_calc)
+      // TaoCommonProxy.force_rad_int_calc (0D_NOT_logical - Used by a routine to force a single radiation integrals calculation
+      .def_property(
+          "force_rad_int_calc",
+          &TaoCommonProxy::force_rad_int_calc,
+          &TaoCommonProxy::set_force_rad_int_calc)
+      // TaoCommonProxy.rad_int_ri_calc_on (0D_NOT_logical - 'Classical' radiation integrals calculation on/off.
+      .def_property(
+          "rad_int_ri_calc_on",
+          &TaoCommonProxy::rad_int_ri_calc_on,
+          &TaoCommonProxy::set_rad_int_ri_calc_on)
+      // TaoCommonProxy.rad_int_6d_calc_on (0D_NOT_logical - 6D Radiation integrals calculation on/off.
+      .def_property(
+          "rad_int_6d_calc_on",
+          &TaoCommonProxy::rad_int_6d_calc_on,
+          &TaoCommonProxy::set_rad_int_6d_calc_on)
+      // TaoCommonProxy.valid_plot_who (1D_NOT_character - model, base, ref etc...
+      .def_property_readonly("valid_plot_who", &TaoCommonProxy::valid_plot_who)
+      // TaoCommonProxy.single_mode_buffer (0D_NOT_character -
+      .def_property(
+          "single_mode_buffer",
+          &TaoCommonProxy::single_mode_buffer,
+          &TaoCommonProxy::set_single_mode_buffer)
+      // TaoCommonProxy.cmd (0D_NOT_character - Used for the cmd history
+      .def_property("cmd", &TaoCommonProxy::cmd, &TaoCommonProxy::set_cmd)
+      // TaoCommonProxy.saved_cmd_line (0D_NOT_character - Saved part of command line when there are mulitple commands on a line
+      .def_property(
+          "saved_cmd_line",
+          &TaoCommonProxy::saved_cmd_line,
+          &TaoCommonProxy::set_saved_cmd_line)
+
+      .def(
+          "__repr__",
+          [](const TaoCommonProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoCommonProxyArray1D>(m, "TaoCommonProxyArray1D");
+  bind_FTypeArrayND<TaoCommonProxyArray2D>(m, "TaoCommonProxyArray2D");
+  bind_FTypeArrayND<TaoCommonProxyArray3D>(m, "TaoCommonProxyArray3D");
+  bind_FTypeAlloc1D<TaoCommonProxyAlloc1D>(m, "TaoCommonProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_curve_color_struct
+void init_tao_curve_color_struct(py::module& m) {
+  py::class_<TaoCurveColorProxy, std::shared_ptr<TaoCurveColorProxy>>(
+      m, "TaoCurveColorStruct", "Fortran struct: tao_curve_color_struct")
+      .def(py::init<>())
+      // TaoCurveColorProxy.data_type (0D_NOT_character - Datum type to use for z-axis.
+      .def_property(
+          "data_type",
+          &TaoCurveColorProxy::data_type,
+          &TaoCurveColorProxy::set_data_type)
+      // TaoCurveColorProxy.is_on (0D_NOT_logical - On/Off
+      .def_property(
+          "is_on", &TaoCurveColorProxy::is_on, &TaoCurveColorProxy::set_is_on)
+      // TaoCurveColorProxy.min (0D_NOT_real - Min and max values for mapping z-axis to color.
+      .def_property(
+          "min", &TaoCurveColorProxy::min, &TaoCurveColorProxy::set_min)
+      // TaoCurveColorProxy.max (0D_NOT_real - Min and max values for mapping z-axis to color.
+      .def_property(
+          "max", &TaoCurveColorProxy::max, &TaoCurveColorProxy::set_max)
+      // TaoCurveColorProxy.autoscale (0D_NOT_logical - Set %min, %max automatically to the limits of %data_type
+      .def_property(
+          "autoscale",
+          &TaoCurveColorProxy::autoscale,
+          &TaoCurveColorProxy::set_autoscale)
+
+      .def(
+          "__repr__",
+          [](const TaoCurveColorProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoCurveColorProxyArray1D>(m, "TaoCurveColorProxyArray1D");
+  bind_FTypeArrayND<TaoCurveColorProxyArray2D>(m, "TaoCurveColorProxyArray2D");
+  bind_FTypeArrayND<TaoCurveColorProxyArray3D>(m, "TaoCurveColorProxyArray3D");
+  bind_FTypeAlloc1D<TaoCurveColorProxyAlloc1D>(m, "TaoCurveColorProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_curve_orbit_struct
+void init_tao_curve_orbit_struct(py::module& m) {
+  py::class_<TaoCurveOrbitProxy, std::shared_ptr<TaoCurveOrbitProxy>>(
+      m, "TaoCurveOrbitStruct", "Fortran struct: tao_curve_orbit_struct")
+      .def(py::init<>())
+      // TaoCurveOrbitProxy.x (0D_NOT_real - Transverse offset
+      .def_property("x", &TaoCurveOrbitProxy::x, &TaoCurveOrbitProxy::set_x)
+      // TaoCurveOrbitProxy.y (0D_NOT_real - Transverse offset
+      .def_property("y", &TaoCurveOrbitProxy::y, &TaoCurveOrbitProxy::set_y)
+      // TaoCurveOrbitProxy.t (0D_NOT_real - Time
+      .def_property("t", &TaoCurveOrbitProxy::t, &TaoCurveOrbitProxy::set_t)
+
+      .def(
+          "__repr__",
+          [](const TaoCurveOrbitProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoCurveOrbitProxyArray1D>(m, "TaoCurveOrbitProxyArray1D");
+  bind_FTypeArrayND<TaoCurveOrbitProxyArray2D>(m, "TaoCurveOrbitProxyArray2D");
+  bind_FTypeArrayND<TaoCurveOrbitProxyArray3D>(m, "TaoCurveOrbitProxyArray3D");
+  bind_FTypeAlloc1D<TaoCurveOrbitProxyAlloc1D>(m, "TaoCurveOrbitProxyAlloc1D");
+}
+
+// =============================================================================
 // tao_curve_struct
 void init_tao_curve_struct(py::module& m) {
   py::class_<TaoCurveProxy, std::shared_ptr<TaoCurveProxy>>(
@@ -5181,6 +5939,11 @@ void init_tao_curve_struct(py::module& m) {
           &TaoCurveProxy::set_why_invalid)
       // TaoCurveProxy.g (0D_PTR_type - pointer to parent graph
       .def_property("g", &TaoCurveProxy::g, &TaoCurveProxy::set_g)
+      // TaoCurveProxy.hist (0D_NOT_type -
+      .def_property("hist", &TaoCurveProxy::hist, &TaoCurveProxy::set_hist)
+      // TaoCurveProxy.z_color (0D_NOT_type -
+      .def_property(
+          "z_color", &TaoCurveProxy::z_color, &TaoCurveProxy::set_z_color)
       // TaoCurveProxy.x_line (1D_ALLOC_real - Coords for drawing a curve
       .def_property_readonly("x_line", &TaoCurveProxy::x_line)
       // TaoCurveProxy.y_line (1D_ALLOC_real -
@@ -5206,6 +5969,13 @@ void init_tao_curve_struct(py::module& m) {
           "y_axis_scale_factor",
           &TaoCurveProxy::y_axis_scale_factor,
           &TaoCurveProxy::set_y_axis_scale_factor)
+      // TaoCurveProxy.line (0D_NOT_type - Line attributes
+      .def_property("line", &TaoCurveProxy::line, &TaoCurveProxy::set_line)
+      // TaoCurveProxy.symbol (0D_NOT_type - Symbol attributes
+      .def_property(
+          "symbol", &TaoCurveProxy::symbol, &TaoCurveProxy::set_symbol)
+      // TaoCurveProxy.orbit (0D_NOT_type - Used for E/B field plotting.
+      .def_property("orbit", &TaoCurveProxy::orbit, &TaoCurveProxy::set_orbit)
       // TaoCurveProxy.ix_universe (0D_NOT_integer - Universe where data is. -1 => use s%global%default_universe
       .def_property(
           "ix_universe",
@@ -5583,6 +6353,27 @@ void init_tao_data_var_component_struct(py::module& m) {
 }
 
 // =============================================================================
+// tao_drawing_struct
+void init_tao_drawing_struct(py::module& m) {
+  py::class_<TaoDrawingProxy, std::shared_ptr<TaoDrawingProxy>>(
+      m, "TaoDrawingStruct", "Fortran struct: tao_drawing_struct")
+      .def(py::init<>())
+      // TaoDrawingProxy.ele_shape (1D_ALLOC_type -
+      .def_property_readonly("ele_shape", &TaoDrawingProxy::ele_shape)
+
+      .def(
+          "__repr__",
+          [](const TaoDrawingProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoDrawingProxyArray1D>(m, "TaoDrawingProxyArray1D");
+  bind_FTypeArrayND<TaoDrawingProxyArray2D>(m, "TaoDrawingProxyArray2D");
+  bind_FTypeArrayND<TaoDrawingProxyArray3D>(m, "TaoDrawingProxyArray3D");
+  bind_FTypeAlloc1D<TaoDrawingProxyAlloc1D>(m, "TaoDrawingProxyAlloc1D");
+}
+
+// =============================================================================
 // tao_dynamic_aperture_struct
 void init_tao_dynamic_aperture_struct(py::module& m) {
   py::class_<TaoDynamicApertureProxy, std::shared_ptr<TaoDynamicApertureProxy>>(
@@ -5632,6 +6423,30 @@ void init_tao_dynamic_aperture_struct(py::module& m) {
 }
 
 // =============================================================================
+// tao_ele_pointer_struct
+void init_tao_ele_pointer_struct(py::module& m) {
+  py::class_<TaoElePointerProxy, std::shared_ptr<TaoElePointerProxy>>(
+      m, "TaoElePointerStruct", "Fortran struct: tao_ele_pointer_struct")
+      .def(py::init<>())
+      // TaoElePointerProxy.eles (1D_ALLOC_type -
+      .def_property_readonly("eles", &TaoElePointerProxy::eles)
+      // TaoElePointerProxy.n_loc (0D_NOT_integer -
+      .def_property(
+          "n_loc", &TaoElePointerProxy::n_loc, &TaoElePointerProxy::set_n_loc)
+
+      .def(
+          "__repr__",
+          [](const TaoElePointerProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoElePointerProxyArray1D>(m, "TaoElePointerProxyArray1D");
+  bind_FTypeArrayND<TaoElePointerProxyArray2D>(m, "TaoElePointerProxyArray2D");
+  bind_FTypeArrayND<TaoElePointerProxyArray3D>(m, "TaoElePointerProxyArray3D");
+  bind_FTypeAlloc1D<TaoElePointerProxyAlloc1D>(m, "TaoElePointerProxyAlloc1D");
+}
+
+// =============================================================================
 // tao_ele_shape_struct
 void init_tao_ele_shape_struct(py::module& m) {
   py::class_<TaoEleShapeProxy, std::shared_ptr<TaoEleShapeProxy>>(
@@ -5674,6 +6489,8 @@ void init_tao_ele_shape_struct(py::module& m) {
           "name_ele",
           &TaoEleShapeProxy::name_ele,
           &TaoEleShapeProxy::set_name_ele)
+      // TaoEleShapeProxy.uni (1D_ALLOC_type -
+      .def_property_readonly("uni", &TaoEleShapeProxy::uni)
 
       .def(
           "__repr__",
@@ -5685,6 +6502,437 @@ void init_tao_ele_shape_struct(py::module& m) {
   bind_FTypeArrayND<TaoEleShapeProxyArray2D>(m, "TaoEleShapeProxyArray2D");
   bind_FTypeArrayND<TaoEleShapeProxyArray3D>(m, "TaoEleShapeProxyArray3D");
   bind_FTypeAlloc1D<TaoEleShapeProxyAlloc1D>(m, "TaoEleShapeProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_floor_plan_struct
+void init_tao_floor_plan_struct(py::module& m) {
+  py::class_<TaoFloorPlanProxy, std::shared_ptr<TaoFloorPlanProxy>>(
+      m, "TaoFloorPlanStruct", "Fortran struct: tao_floor_plan_struct")
+      .def(py::init<>())
+      // TaoFloorPlanProxy.view (0D_NOT_character - or 'xz'.
+      .def_property(
+          "view", &TaoFloorPlanProxy::view, &TaoFloorPlanProxy::set_view)
+      // TaoFloorPlanProxy.rotation (0D_NOT_real - Rotation of floor plan plot: 1.0 -> 360^deg
+      .def_property(
+          "rotation",
+          &TaoFloorPlanProxy::rotation,
+          &TaoFloorPlanProxy::set_rotation)
+      // TaoFloorPlanProxy.correct_distortion (0D_NOT_logical - T -> Shrink one axis so x-scale = y-scale.
+      .def_property(
+          "correct_distortion",
+          &TaoFloorPlanProxy::correct_distortion,
+          &TaoFloorPlanProxy::set_correct_distortion)
+      // TaoFloorPlanProxy.flip_label_side (0D_NOT_logical - Draw element label on other side of element?
+      .def_property(
+          "flip_label_side",
+          &TaoFloorPlanProxy::flip_label_side,
+          &TaoFloorPlanProxy::set_flip_label_side)
+      // TaoFloorPlanProxy.size_is_absolute (0D_NOT_logical - Are shape sizes in meters or window pixels?
+      .def_property(
+          "size_is_absolute",
+          &TaoFloorPlanProxy::size_is_absolute,
+          &TaoFloorPlanProxy::set_size_is_absolute)
+      // TaoFloorPlanProxy.draw_only_first_pass (0D_NOT_logical - Draw only first pass with multipass elements?
+      .def_property(
+          "draw_only_first_pass",
+          &TaoFloorPlanProxy::draw_only_first_pass,
+          &TaoFloorPlanProxy::set_draw_only_first_pass)
+      // TaoFloorPlanProxy.draw_building_wall (0D_NOT_logical - Draw the building wall?
+      .def_property(
+          "draw_building_wall",
+          &TaoFloorPlanProxy::draw_building_wall,
+          &TaoFloorPlanProxy::set_draw_building_wall)
+      // TaoFloorPlanProxy.orbit_scale (0D_NOT_real - Scale factor for drawing orbits. 0 -> Do not draw.
+      .def_property(
+          "orbit_scale",
+          &TaoFloorPlanProxy::orbit_scale,
+          &TaoFloorPlanProxy::set_orbit_scale)
+      // TaoFloorPlanProxy.orbit_color (0D_NOT_character -
+      .def_property(
+          "orbit_color",
+          &TaoFloorPlanProxy::orbit_color,
+          &TaoFloorPlanProxy::set_orbit_color)
+      // TaoFloorPlanProxy.orbit_pattern (0D_NOT_character -
+      .def_property(
+          "orbit_pattern",
+          &TaoFloorPlanProxy::orbit_pattern,
+          &TaoFloorPlanProxy::set_orbit_pattern)
+      // TaoFloorPlanProxy.orbit_lattice (0D_NOT_character - Or 'design' or 'base'
+      .def_property(
+          "orbit_lattice",
+          &TaoFloorPlanProxy::orbit_lattice,
+          &TaoFloorPlanProxy::set_orbit_lattice)
+      // TaoFloorPlanProxy.orbit_width (0D_NOT_integer -
+      .def_property(
+          "orbit_width",
+          &TaoFloorPlanProxy::orbit_width,
+          &TaoFloorPlanProxy::set_orbit_width)
+
+      .def(
+          "__repr__",
+          [](const TaoFloorPlanProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoFloorPlanProxyArray1D>(m, "TaoFloorPlanProxyArray1D");
+  bind_FTypeArrayND<TaoFloorPlanProxyArray2D>(m, "TaoFloorPlanProxyArray2D");
+  bind_FTypeArrayND<TaoFloorPlanProxyArray3D>(m, "TaoFloorPlanProxyArray3D");
+  bind_FTypeAlloc1D<TaoFloorPlanProxyAlloc1D>(m, "TaoFloorPlanProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_global_struct
+void init_tao_global_struct(py::module& m) {
+  py::class_<TaoGlobalProxy, std::shared_ptr<TaoGlobalProxy>>(
+      m, "TaoGlobalStruct", "Fortran struct: tao_global_struct")
+      .def(py::init<>())
+      // TaoGlobalProxy.beam_dead_cutoff (0D_NOT_real - Percentage of dead particles at which beam tracking is stopped.
+      .def_property(
+          "beam_dead_cutoff",
+          &TaoGlobalProxy::beam_dead_cutoff,
+          &TaoGlobalProxy::set_beam_dead_cutoff)
+      // TaoGlobalProxy.lm_opt_deriv_reinit (0D_NOT_real - Reinit derivative matrix cutoff
+      .def_property(
+          "lm_opt_deriv_reinit",
+          &TaoGlobalProxy::lm_opt_deriv_reinit,
+          &TaoGlobalProxy::set_lm_opt_deriv_reinit)
+      // TaoGlobalProxy.de_lm_step_ratio (0D_NOT_real - Scaling for step sizes between DE and LM optimizers.
+      .def_property(
+          "de_lm_step_ratio",
+          &TaoGlobalProxy::de_lm_step_ratio,
+          &TaoGlobalProxy::set_de_lm_step_ratio)
+      // TaoGlobalProxy.de_var_to_population_factor (0D_NOT_real - DE population = max(n_var*factor, 20)
+      .def_property(
+          "de_var_to_population_factor",
+          &TaoGlobalProxy::de_var_to_population_factor,
+          &TaoGlobalProxy::set_de_var_to_population_factor)
+      // TaoGlobalProxy.lmdif_eps (0D_NOT_real - Tollerance for lmdif optimizer.
+      .def_property(
+          "lmdif_eps",
+          &TaoGlobalProxy::lmdif_eps,
+          &TaoGlobalProxy::set_lmdif_eps)
+      // TaoGlobalProxy.lmdif_negligible_merit (0D_NOT_real -
+      .def_property(
+          "lmdif_negligible_merit",
+          &TaoGlobalProxy::lmdif_negligible_merit,
+          &TaoGlobalProxy::set_lmdif_negligible_merit)
+      // TaoGlobalProxy.svd_cutoff (0D_NOT_real - SVD singular value cutoff.
+      .def_property(
+          "svd_cutoff",
+          &TaoGlobalProxy::svd_cutoff,
+          &TaoGlobalProxy::set_svd_cutoff)
+      // TaoGlobalProxy.unstable_penalty (0D_NOT_real - Used in unstable_ring datum merit calculation.
+      .def_property(
+          "unstable_penalty",
+          &TaoGlobalProxy::unstable_penalty,
+          &TaoGlobalProxy::set_unstable_penalty)
+      // TaoGlobalProxy.merit_stop_value (0D_NOT_real - Merit value below which an optimizer will stop.
+      .def_property(
+          "merit_stop_value",
+          &TaoGlobalProxy::merit_stop_value,
+          &TaoGlobalProxy::set_merit_stop_value)
+      // TaoGlobalProxy.dmerit_stop_value (0D_NOT_real - Fractional Merit change below which an optimizer will stop.
+      .def_property(
+          "dmerit_stop_value",
+          &TaoGlobalProxy::dmerit_stop_value,
+          &TaoGlobalProxy::set_dmerit_stop_value)
+      // TaoGlobalProxy.random_sigma_cutoff (0D_NOT_real - Cut-off in sigmas.
+      .def_property(
+          "random_sigma_cutoff",
+          &TaoGlobalProxy::random_sigma_cutoff,
+          &TaoGlobalProxy::set_random_sigma_cutoff)
+      // TaoGlobalProxy.delta_e_chrom (0D_NOT_real - Delta E used from chrom calc.
+      .def_property(
+          "delta_e_chrom",
+          &TaoGlobalProxy::delta_e_chrom,
+          &TaoGlobalProxy::set_delta_e_chrom)
+      // TaoGlobalProxy.max_plot_time (0D_NOT_real - If plotting time (seconds) exceeds this than a message is generated.
+      .def_property(
+          "max_plot_time",
+          &TaoGlobalProxy::max_plot_time,
+          &TaoGlobalProxy::set_max_plot_time)
+      // TaoGlobalProxy.default_universe (0D_NOT_integer - Default universe to work with.
+      .def_property(
+          "default_universe",
+          &TaoGlobalProxy::default_universe,
+          &TaoGlobalProxy::set_default_universe)
+      // TaoGlobalProxy.default_branch (0D_NOT_integer - Default lattice branch to work with.
+      .def_property(
+          "default_branch",
+          &TaoGlobalProxy::default_branch,
+          &TaoGlobalProxy::set_default_branch)
+      // TaoGlobalProxy.n_opti_cycles (0D_NOT_integer - Number of optimization cycles
+      .def_property(
+          "n_opti_cycles",
+          &TaoGlobalProxy::n_opti_cycles,
+          &TaoGlobalProxy::set_n_opti_cycles)
+      // TaoGlobalProxy.n_opti_loops (0D_NOT_integer - Number of optimization loops
+      .def_property(
+          "n_opti_loops",
+          &TaoGlobalProxy::n_opti_loops,
+          &TaoGlobalProxy::set_n_opti_loops)
+      // TaoGlobalProxy.n_threads (0D_NOT_integer - Number of OpenMP threads for parallel calculations.
+      .def_property(
+          "n_threads",
+          &TaoGlobalProxy::n_threads,
+          &TaoGlobalProxy::set_n_threads)
+      // TaoGlobalProxy.phase_units (0D_NOT_integer - Phase units on output.
+      .def_property(
+          "phase_units",
+          &TaoGlobalProxy::phase_units,
+          &TaoGlobalProxy::set_phase_units)
+      // TaoGlobalProxy.bunch_to_plot (0D_NOT_integer - Which bunch to plot
+      .def_property(
+          "bunch_to_plot",
+          &TaoGlobalProxy::bunch_to_plot,
+          &TaoGlobalProxy::set_bunch_to_plot)
+      // TaoGlobalProxy.random_seed (0D_NOT_integer - Use system clock by default
+      .def_property(
+          "random_seed",
+          &TaoGlobalProxy::random_seed,
+          &TaoGlobalProxy::set_random_seed)
+      // TaoGlobalProxy.n_top10_merit (0D_NOT_integer - Number of top merit constraints to print.
+      .def_property(
+          "n_top10_merit",
+          &TaoGlobalProxy::n_top10_merit,
+          &TaoGlobalProxy::set_n_top10_merit)
+      // TaoGlobalProxy.srdt_gen_n_slices (0D_NOT_integer - Number times to slice elements for summation RDT calculation
+      .def_property(
+          "srdt_gen_n_slices",
+          &TaoGlobalProxy::srdt_gen_n_slices,
+          &TaoGlobalProxy::set_srdt_gen_n_slices)
+      // TaoGlobalProxy.datum_err_messages_max (0D_NOT_integer - Maximum number of error messages per call to lattice_calc.
+      .def_property(
+          "datum_err_messages_max",
+          &TaoGlobalProxy::datum_err_messages_max,
+          &TaoGlobalProxy::set_datum_err_messages_max)
+      // TaoGlobalProxy.srdt_sxt_n_slices (0D_NOT_integer - Number times to slice sextupoles for summation RDT calculation
+      .def_property(
+          "srdt_sxt_n_slices",
+          &TaoGlobalProxy::srdt_sxt_n_slices,
+          &TaoGlobalProxy::set_srdt_sxt_n_slices)
+      // TaoGlobalProxy.srdt_use_cache (0D_NOT_logical - Create cache for SRDT calculations.  Can use lots of memory if srdt_*_n_slices large.
+      .def_property(
+          "srdt_use_cache",
+          &TaoGlobalProxy::srdt_use_cache,
+          &TaoGlobalProxy::set_srdt_use_cache)
+      // TaoGlobalProxy.quiet (0D_NOT_character - Print I/O when running a command file?
+      .def_property("quiet", &TaoGlobalProxy::quiet, &TaoGlobalProxy::set_quiet)
+      // TaoGlobalProxy.random_engine (0D_NOT_character - Non-beam random number engine
+      .def_property(
+          "random_engine",
+          &TaoGlobalProxy::random_engine,
+          &TaoGlobalProxy::set_random_engine)
+      // TaoGlobalProxy.random_gauss_converter (0D_NOT_character - Non-beam
+      .def_property(
+          "random_gauss_converter",
+          &TaoGlobalProxy::random_gauss_converter,
+          &TaoGlobalProxy::set_random_gauss_converter)
+      // TaoGlobalProxy.track_type (0D_NOT_character - or 'beam'
+      .def_property(
+          "track_type",
+          &TaoGlobalProxy::track_type,
+          &TaoGlobalProxy::set_track_type)
+      // TaoGlobalProxy.lat_sigma_calc_uses_emit_from (0D_NOT_character - Lattice derived sigma matrix uses emit values from where? Other possibilities: 'beam', 'beam_init'.
+      .def_property(
+          "lat_sigma_calc_uses_emit_from",
+          &TaoGlobalProxy::lat_sigma_calc_uses_emit_from,
+          &TaoGlobalProxy::set_lat_sigma_calc_uses_emit_from)
+      // TaoGlobalProxy.prompt_string (0D_NOT_character -
+      .def_property(
+          "prompt_string",
+          &TaoGlobalProxy::prompt_string,
+          &TaoGlobalProxy::set_prompt_string)
+      // TaoGlobalProxy.prompt_color (0D_NOT_character - See read_a_line routine for possible settings.
+      .def_property(
+          "prompt_color",
+          &TaoGlobalProxy::prompt_color,
+          &TaoGlobalProxy::set_prompt_color)
+      // TaoGlobalProxy.optimizer (0D_NOT_character - optimizer to use.
+      .def_property(
+          "optimizer",
+          &TaoGlobalProxy::optimizer,
+          &TaoGlobalProxy::set_optimizer)
+      // TaoGlobalProxy.print_command (0D_NOT_character -
+      .def_property(
+          "print_command",
+          &TaoGlobalProxy::print_command,
+          &TaoGlobalProxy::set_print_command)
+      // TaoGlobalProxy.var_out_file (0D_NOT_character -
+      .def_property(
+          "var_out_file",
+          &TaoGlobalProxy::var_out_file,
+          &TaoGlobalProxy::set_var_out_file)
+      // TaoGlobalProxy.history_file (0D_NOT_character -
+      .def_property(
+          "history_file",
+          &TaoGlobalProxy::history_file,
+          &TaoGlobalProxy::set_history_file)
+      // TaoGlobalProxy.beam_timer_on (0D_NOT_logical - For timing the beam tracking calculation.
+      .def_property(
+          "beam_timer_on",
+          &TaoGlobalProxy::beam_timer_on,
+          &TaoGlobalProxy::set_beam_timer_on)
+      // TaoGlobalProxy.box_plots (0D_NOT_logical - For debugging plot layout issues.
+      .def_property(
+          "box_plots",
+          &TaoGlobalProxy::box_plots,
+          &TaoGlobalProxy::set_box_plots)
+      // TaoGlobalProxy.blank_line_between_commands (0D_NOT_logical - Add a blank line between command output?
+      .def_property(
+          "blank_line_between_commands",
+          &TaoGlobalProxy::blank_line_between_commands,
+          &TaoGlobalProxy::set_blank_line_between_commands)
+      // TaoGlobalProxy.cmd_file_abort_on_error (0D_NOT_logical - Abort open command files if there is an error?
+      .def_property(
+          "cmd_file_abort_on_error",
+          &TaoGlobalProxy::cmd_file_abort_on_error,
+          &TaoGlobalProxy::set_cmd_file_abort_on_error)
+      // TaoGlobalProxy.concatenate_maps (0D_NOT_logical - False => tracking using DA.
+      .def_property(
+          "concatenate_maps",
+          &TaoGlobalProxy::concatenate_maps,
+          &TaoGlobalProxy::set_concatenate_maps)
+      // TaoGlobalProxy.derivative_recalc (0D_NOT_logical - Recalc before each optimizer run?
+      .def_property(
+          "derivative_recalc",
+          &TaoGlobalProxy::derivative_recalc,
+          &TaoGlobalProxy::set_derivative_recalc)
+      // TaoGlobalProxy.derivative_uses_design (0D_NOT_logical - Derivative calc uses design lattice instead of model?
+      .def_property(
+          "derivative_uses_design",
+          &TaoGlobalProxy::derivative_uses_design,
+          &TaoGlobalProxy::set_derivative_uses_design)
+      // TaoGlobalProxy.disable_smooth_line_calc (0D_NOT_logical - Global disable of the smooth line calculation.
+      .def_property(
+          "disable_smooth_line_calc",
+          &TaoGlobalProxy::disable_smooth_line_calc,
+          &TaoGlobalProxy::set_disable_smooth_line_calc)
+      // TaoGlobalProxy.draw_curve_off_scale_warn (0D_NOT_logical - Display warning on graphs?
+      .def_property(
+          "draw_curve_off_scale_warn",
+          &TaoGlobalProxy::draw_curve_off_scale_warn,
+          &TaoGlobalProxy::set_draw_curve_off_scale_warn)
+      // TaoGlobalProxy.external_plotting (0D_NOT_logical - Used with matplotlib and gui.
+      .def_property(
+          "external_plotting",
+          &TaoGlobalProxy::external_plotting,
+          &TaoGlobalProxy::set_external_plotting)
+      // TaoGlobalProxy.label_lattice_elements (0D_NOT_logical - For lat_layout plots
+      .def_property(
+          "label_lattice_elements",
+          &TaoGlobalProxy::label_lattice_elements,
+          &TaoGlobalProxy::set_label_lattice_elements)
+      // TaoGlobalProxy.label_keys (0D_NOT_logical - For lat_layout plots
+      .def_property(
+          "label_keys",
+          &TaoGlobalProxy::label_keys,
+          &TaoGlobalProxy::set_label_keys)
+      // TaoGlobalProxy.lattice_calc_on (0D_NOT_logical - Turn on/off beam and single particle calculations.
+      .def_property(
+          "lattice_calc_on",
+          &TaoGlobalProxy::lattice_calc_on,
+          &TaoGlobalProxy::set_lattice_calc_on)
+      // TaoGlobalProxy.only_limit_opt_vars (0D_NOT_logical - Only apply limits to variables used in optimization.
+      .def_property(
+          "only_limit_opt_vars",
+          &TaoGlobalProxy::only_limit_opt_vars,
+          &TaoGlobalProxy::set_only_limit_opt_vars)
+      // TaoGlobalProxy.opt_with_ref (0D_NOT_logical - Use reference data in optimization?
+      .def_property(
+          "opt_with_ref",
+          &TaoGlobalProxy::opt_with_ref,
+          &TaoGlobalProxy::set_opt_with_ref)
+      // TaoGlobalProxy.opt_with_base (0D_NOT_logical - Use base data in optimization?
+      .def_property(
+          "opt_with_base",
+          &TaoGlobalProxy::opt_with_base,
+          &TaoGlobalProxy::set_opt_with_base)
+      // TaoGlobalProxy.opt_match_auto_recalc (0D_NOT_logical - Set recalc = True for match elements before each cycle?
+      .def_property(
+          "opt_match_auto_recalc",
+          &TaoGlobalProxy::opt_match_auto_recalc,
+          &TaoGlobalProxy::set_opt_match_auto_recalc)
+      // TaoGlobalProxy.opti_write_var_file (0D_NOT_logical - 'run' command writes var_out_file
+      .def_property(
+          "opti_write_var_file",
+          &TaoGlobalProxy::opti_write_var_file,
+          &TaoGlobalProxy::set_opti_write_var_file)
+      // TaoGlobalProxy.optimizer_allow_user_abort (0D_NOT_logical - See Tao manual for more details.
+      .def_property(
+          "optimizer_allow_user_abort",
+          &TaoGlobalProxy::optimizer_allow_user_abort,
+          &TaoGlobalProxy::set_optimizer_allow_user_abort)
+      // TaoGlobalProxy.optimizer_var_limit_warn (0D_NOT_logical - Warn when vars reach a limit with optimization.
+      .def_property(
+          "optimizer_var_limit_warn",
+          &TaoGlobalProxy::optimizer_var_limit_warn,
+          &TaoGlobalProxy::set_optimizer_var_limit_warn)
+      // TaoGlobalProxy.plot_on (0D_NOT_logical - Do plotting?
+      .def_property(
+          "plot_on", &TaoGlobalProxy::plot_on, &TaoGlobalProxy::set_plot_on)
+      // TaoGlobalProxy.rad_int_user_calc_on (0D_NOT_logical - User set radiation integrals calculation on/off.
+      .def_property(
+          "rad_int_user_calc_on",
+          &TaoGlobalProxy::rad_int_user_calc_on,
+          &TaoGlobalProxy::set_rad_int_user_calc_on)
+      // TaoGlobalProxy.rf_on (0D_NOT_logical - RFcavities on or off? Does not affect lcavities.
+      .def_property("rf_on", &TaoGlobalProxy::rf_on, &TaoGlobalProxy::set_rf_on)
+      // TaoGlobalProxy.single_step (0D_NOT_logical - For debugging and demonstrations: Single step through a command file?
+      .def_property(
+          "single_step",
+          &TaoGlobalProxy::single_step,
+          &TaoGlobalProxy::set_single_step)
+      // TaoGlobalProxy.stop_on_error (0D_NOT_logical - For debugging: False prevents tao from exiting on an error.
+      .def_property(
+          "stop_on_error",
+          &TaoGlobalProxy::stop_on_error,
+          &TaoGlobalProxy::set_stop_on_error)
+      // TaoGlobalProxy.svd_retreat_on_merit_increase (0D_NOT_logical -
+      .def_property(
+          "svd_retreat_on_merit_increase",
+          &TaoGlobalProxy::svd_retreat_on_merit_increase,
+          &TaoGlobalProxy::set_svd_retreat_on_merit_increase)
+      // TaoGlobalProxy.var_limits_on (0D_NOT_logical - Respect the variable limits?
+      .def_property(
+          "var_limits_on",
+          &TaoGlobalProxy::var_limits_on,
+          &TaoGlobalProxy::set_var_limits_on)
+      // TaoGlobalProxy.wait_for_CR_in_single_mode (0D_NOT_logical - For use with a python GUI.
+      .def_property(
+          "wait_for_CR_in_single_mode",
+          &TaoGlobalProxy::wait_for_CR_in_single_mode,
+          &TaoGlobalProxy::set_wait_for_CR_in_single_mode)
+      // TaoGlobalProxy.symbol_import (0D_NOT_logical - Import symbols from lattice file(s)? Internal stuff
+      .def_property(
+          "symbol_import",
+          &TaoGlobalProxy::symbol_import,
+          &TaoGlobalProxy::set_symbol_import)
+      // TaoGlobalProxy.debug_on (0D_NOT_logical - For debugging.
+      .def_property(
+          "debug_on", &TaoGlobalProxy::debug_on, &TaoGlobalProxy::set_debug_on)
+      // TaoGlobalProxy.expression_tree_on (0D_NOT_logical - Use an expression tree instead of a stack?
+      .def_property(
+          "expression_tree_on",
+          &TaoGlobalProxy::expression_tree_on,
+          &TaoGlobalProxy::set_expression_tree_on)
+      // TaoGlobalProxy.verbose_on (0D_NOT_logical - For verbose output. Used with debugging.
+      .def_property(
+          "verbose_on",
+          &TaoGlobalProxy::verbose_on,
+          &TaoGlobalProxy::set_verbose_on)
+
+      .def(
+          "__repr__",
+          [](const TaoGlobalProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoGlobalProxyArray1D>(m, "TaoGlobalProxyArray1D");
+  bind_FTypeArrayND<TaoGlobalProxyArray2D>(m, "TaoGlobalProxyArray2D");
+  bind_FTypeArrayND<TaoGlobalProxyArray3D>(m, "TaoGlobalProxyArray3D");
+  bind_FTypeAlloc1D<TaoGlobalProxyAlloc1D>(m, "TaoGlobalProxyAlloc1D");
 }
 
 // =============================================================================
@@ -5717,6 +6965,42 @@ void init_tao_graph_struct(py::module& m) {
       .def_property_readonly("curve", &TaoGraphProxy::curve)
       // TaoGraphProxy.p (0D_PTR_type - pointer to parent plot
       .def_property("p", &TaoGraphProxy::p, &TaoGraphProxy::set_p)
+      // TaoGraphProxy.floor_plan (0D_NOT_type -
+      .def_property(
+          "floor_plan",
+          &TaoGraphProxy::floor_plan,
+          &TaoGraphProxy::set_floor_plan)
+      // TaoGraphProxy.text_legend_origin (0D_NOT_type -
+      .def_property(
+          "text_legend_origin",
+          &TaoGraphProxy::text_legend_origin,
+          &TaoGraphProxy::set_text_legend_origin)
+      // TaoGraphProxy.curve_legend_origin (0D_NOT_type -
+      .def_property(
+          "curve_legend_origin",
+          &TaoGraphProxy::curve_legend_origin,
+          &TaoGraphProxy::set_curve_legend_origin)
+      // TaoGraphProxy.curve_legend (0D_NOT_type -
+      .def_property(
+          "curve_legend",
+          &TaoGraphProxy::curve_legend,
+          &TaoGraphProxy::set_curve_legend)
+      // TaoGraphProxy.x (0D_NOT_type - X-axis parameters.
+      .def_property("x", &TaoGraphProxy::x, &TaoGraphProxy::set_x)
+      // TaoGraphProxy.y (0D_NOT_type - Y-axis attributes.
+      .def_property("y", &TaoGraphProxy::y, &TaoGraphProxy::set_y)
+      // TaoGraphProxy.x2 (0D_NOT_type - X2-axis attributes (Not currently used).
+      .def_property("x2", &TaoGraphProxy::x2, &TaoGraphProxy::set_x2)
+      // TaoGraphProxy.y2 (0D_NOT_type - Y2-axis attributes.
+      .def_property("y2", &TaoGraphProxy::y2, &TaoGraphProxy::set_y2)
+      // TaoGraphProxy.margin (0D_NOT_type - Margin around the graph.
+      .def_property(
+          "margin", &TaoGraphProxy::margin, &TaoGraphProxy::set_margin)
+      // TaoGraphProxy.scale_margin (0D_NOT_type - Margin for scaling
+      .def_property(
+          "scale_margin",
+          &TaoGraphProxy::scale_margin,
+          &TaoGraphProxy::set_scale_margin)
       // TaoGraphProxy.x_axis_scale_factor (0D_NOT_real - x-axis conversion from internal to plotting units.
       .def_property(
           "x_axis_scale_factor",
@@ -5786,6 +7070,268 @@ void init_tao_graph_struct(py::module& m) {
   bind_FTypeArrayND<TaoGraphProxyArray2D>(m, "TaoGraphProxyArray2D");
   bind_FTypeArrayND<TaoGraphProxyArray3D>(m, "TaoGraphProxyArray3D");
   bind_FTypeAlloc1D<TaoGraphProxyAlloc1D>(m, "TaoGraphProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_histogram_struct
+void init_tao_histogram_struct(py::module& m) {
+  py::class_<TaoHistogramProxy, std::shared_ptr<TaoHistogramProxy>>(
+      m, "TaoHistogramStruct", "Fortran struct: tao_histogram_struct")
+      .def(py::init<>())
+      // TaoHistogramProxy.density_normalized (0D_NOT_logical -
+      .def_property(
+          "density_normalized",
+          &TaoHistogramProxy::density_normalized,
+          &TaoHistogramProxy::set_density_normalized)
+      // TaoHistogramProxy.weight_by_charge (0D_NOT_logical -
+      .def_property(
+          "weight_by_charge",
+          &TaoHistogramProxy::weight_by_charge,
+          &TaoHistogramProxy::set_weight_by_charge)
+      // TaoHistogramProxy.minimum (0D_NOT_real - Computed by Tao. Not User settable.
+      .def_property(
+          "minimum",
+          &TaoHistogramProxy::minimum,
+          &TaoHistogramProxy::set_minimum)
+      // TaoHistogramProxy.maximum (0D_NOT_real - Computed by Tao. Not User settable.
+      .def_property(
+          "maximum",
+          &TaoHistogramProxy::maximum,
+          &TaoHistogramProxy::set_maximum)
+      // TaoHistogramProxy.width (0D_NOT_real -
+      .def_property(
+          "width", &TaoHistogramProxy::width, &TaoHistogramProxy::set_width)
+      // TaoHistogramProxy.center (0D_NOT_real -
+      .def_property(
+          "center", &TaoHistogramProxy::center, &TaoHistogramProxy::set_center)
+      // TaoHistogramProxy.number (0D_NOT_integer -
+      .def_property(
+          "number", &TaoHistogramProxy::number, &TaoHistogramProxy::set_number)
+
+      .def(
+          "__repr__",
+          [](const TaoHistogramProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoHistogramProxyArray1D>(m, "TaoHistogramProxyArray1D");
+  bind_FTypeArrayND<TaoHistogramProxyArray2D>(m, "TaoHistogramProxyArray2D");
+  bind_FTypeArrayND<TaoHistogramProxyArray3D>(m, "TaoHistogramProxyArray3D");
+  bind_FTypeAlloc1D<TaoHistogramProxyAlloc1D>(m, "TaoHistogramProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_init_struct
+void init_tao_init_struct(py::module& m) {
+  py::class_<TaoInitProxy, std::shared_ptr<TaoInitProxy>>(
+      m, "TaoInitStruct", "Fortran struct: tao_init_struct")
+      .def(py::init<>())
+      // TaoInitProxy.parse_cmd_args (0D_NOT_logical - Used by custom programs to control Tao init
+      .def_property(
+          "parse_cmd_args",
+          &TaoInitProxy::parse_cmd_args,
+          &TaoInitProxy::set_parse_cmd_args)
+      // TaoInitProxy.debug_switch (0D_NOT_logical - Is the '-debug' switch present?
+      .def_property(
+          "debug_switch",
+          &TaoInitProxy::debug_switch,
+          &TaoInitProxy::set_debug_switch)
+      // TaoInitProxy.external_plotting_switch (0D_NOT_logical - Is '-external_plotting' switch present?
+      .def_property(
+          "external_plotting_switch",
+          &TaoInitProxy::external_plotting_switch,
+          &TaoInitProxy::set_external_plotting_switch)
+      // TaoInitProxy.init_name (0D_NOT_character - label for initialization
+      .def_property(
+          "init_name", &TaoInitProxy::init_name, &TaoInitProxy::set_init_name)
+      // TaoInitProxy.hook_init_file (0D_NOT_character -
+      .def_property(
+          "hook_init_file",
+          &TaoInitProxy::hook_init_file,
+          &TaoInitProxy::set_hook_init_file)
+      // TaoInitProxy.hook_lat_file (0D_NOT_character - To be set by tao_hook_parse_command_args
+      .def_property(
+          "hook_lat_file",
+          &TaoInitProxy::hook_lat_file,
+          &TaoInitProxy::set_hook_lat_file)
+      // TaoInitProxy.hook_beam_file (0D_NOT_character - To be set by tao_hook_parse_command_args
+      .def_property(
+          "hook_beam_file",
+          &TaoInitProxy::hook_beam_file,
+          &TaoInitProxy::set_hook_beam_file)
+      // TaoInitProxy.hook_data_file (0D_NOT_character - To be set by tao_hook_parse_command_args
+      .def_property(
+          "hook_data_file",
+          &TaoInitProxy::hook_data_file,
+          &TaoInitProxy::set_hook_data_file)
+      // TaoInitProxy.hook_plot_file (0D_NOT_character - To be set by tao_hook_parse_command_args
+      .def_property(
+          "hook_plot_file",
+          &TaoInitProxy::hook_plot_file,
+          &TaoInitProxy::set_hook_plot_file)
+      // TaoInitProxy.hook_startup_file (0D_NOT_character - To be set by tao_hook_parse_command_args
+      .def_property(
+          "hook_startup_file",
+          &TaoInitProxy::hook_startup_file,
+          &TaoInitProxy::set_hook_startup_file)
+      // TaoInitProxy.hook_var_file (0D_NOT_character - To be set by tao_hook_parse_command_args
+      .def_property(
+          "hook_var_file",
+          &TaoInitProxy::hook_var_file,
+          &TaoInitProxy::set_hook_var_file)
+      // TaoInitProxy.hook_building_wall_file (0D_NOT_character - To be set by tao_hook_parse_command_args
+      .def_property(
+          "hook_building_wall_file",
+          &TaoInitProxy::hook_building_wall_file,
+          &TaoInitProxy::set_hook_building_wall_file)
+      // TaoInitProxy.init_file_arg_path (0D_NOT_character - Path part of init_tao_file
+      .def_property(
+          "init_file_arg_path",
+          &TaoInitProxy::init_file_arg_path,
+          &TaoInitProxy::set_init_file_arg_path)
+      // TaoInitProxy.lattice_file_arg (0D_NOT_character - -lattice_file        command line argument.
+      .def_property(
+          "lattice_file_arg",
+          &TaoInitProxy::lattice_file_arg,
+          &TaoInitProxy::set_lattice_file_arg)
+      // TaoInitProxy.hook_init_file_arg (0D_NOT_character - -hook_init_file      command line argument
+      .def_property(
+          "hook_init_file_arg",
+          &TaoInitProxy::hook_init_file_arg,
+          &TaoInitProxy::set_hook_init_file_arg)
+      // TaoInitProxy.init_file_arg (0D_NOT_character - -init_file           command line argument.
+      .def_property(
+          "init_file_arg",
+          &TaoInitProxy::init_file_arg,
+          &TaoInitProxy::set_init_file_arg)
+      // TaoInitProxy.beam_file_arg (0D_NOT_character - -beam_file           command line argument.
+      .def_property(
+          "beam_file_arg",
+          &TaoInitProxy::beam_file_arg,
+          &TaoInitProxy::set_beam_file_arg)
+      // TaoInitProxy.beam_init_position_file_arg (0D_NOT_character - -beam_init_position_file command line argument.
+      .def_property(
+          "beam_init_position_file_arg",
+          &TaoInitProxy::beam_init_position_file_arg,
+          &TaoInitProxy::set_beam_init_position_file_arg)
+      // TaoInitProxy.command_arg (0D_NOT_character - -command             command line argument.
+      .def_property(
+          "command_arg",
+          &TaoInitProxy::command_arg,
+          &TaoInitProxy::set_command_arg)
+      // TaoInitProxy.data_file_arg (0D_NOT_character - -data_file           command line argument.
+      .def_property(
+          "data_file_arg",
+          &TaoInitProxy::data_file_arg,
+          &TaoInitProxy::set_data_file_arg)
+      // TaoInitProxy.plot_file_arg (0D_NOT_character - -plot_file           command line argument.
+      .def_property(
+          "plot_file_arg",
+          &TaoInitProxy::plot_file_arg,
+          &TaoInitProxy::set_plot_file_arg)
+      // TaoInitProxy.startup_file_arg (0D_NOT_character - -startup_file        command line argument.
+      .def_property(
+          "startup_file_arg",
+          &TaoInitProxy::startup_file_arg,
+          &TaoInitProxy::set_startup_file_arg)
+      // TaoInitProxy.var_file_arg (0D_NOT_character - -var_file            command line argument.
+      .def_property(
+          "var_file_arg",
+          &TaoInitProxy::var_file_arg,
+          &TaoInitProxy::set_var_file_arg)
+      // TaoInitProxy.building_wall_file_arg (0D_NOT_character - -building_wall_file  command line argument.
+      .def_property(
+          "building_wall_file_arg",
+          &TaoInitProxy::building_wall_file_arg,
+          &TaoInitProxy::set_building_wall_file_arg)
+      // TaoInitProxy.geometry_arg (0D_NOT_character - -geometry            command line argument.
+      .def_property(
+          "geometry_arg",
+          &TaoInitProxy::geometry_arg,
+          &TaoInitProxy::set_geometry_arg)
+      // TaoInitProxy.slice_lattice_arg (0D_NOT_character - -slice_lattice       command line argument.
+      .def_property(
+          "slice_lattice_arg",
+          &TaoInitProxy::slice_lattice_arg,
+          &TaoInitProxy::set_slice_lattice_arg)
+      // TaoInitProxy.start_branch_at_arg (0D_NOT_character - -start_branch_at     command line argument.
+      .def_property(
+          "start_branch_at_arg",
+          &TaoInitProxy::start_branch_at_arg,
+          &TaoInitProxy::set_start_branch_at_arg)
+      // TaoInitProxy.log_startup_arg (0D_NOT_character - -log_startup         command line argument
+      .def_property(
+          "log_startup_arg",
+          &TaoInitProxy::log_startup_arg,
+          &TaoInitProxy::set_log_startup_arg)
+      // TaoInitProxy.no_stopping_arg (0D_NOT_character - -no_stopping         command line argument
+      .def_property(
+          "no_stopping_arg",
+          &TaoInitProxy::no_stopping_arg,
+          &TaoInitProxy::set_no_stopping_arg)
+      // TaoInitProxy.noplot_arg (0D_NOT_character - -noplot              command line argument
+      .def_property(
+          "noplot_arg",
+          &TaoInitProxy::noplot_arg,
+          &TaoInitProxy::set_noplot_arg)
+      // TaoInitProxy.no_rad_int_arg (0D_NOT_character - -no_rad_int          command line argument
+      .def_property(
+          "no_rad_int_arg",
+          &TaoInitProxy::no_rad_int_arg,
+          &TaoInitProxy::set_no_rad_int_arg)
+      // TaoInitProxy.reverse_arg (0D_NOT_character - -reverse             command line argument
+      .def_property(
+          "reverse_arg",
+          &TaoInitProxy::reverse_arg,
+          &TaoInitProxy::set_reverse_arg)
+      // TaoInitProxy.debug_arg (0D_NOT_character - -debug               command line argument
+      .def_property(
+          "debug_arg", &TaoInitProxy::debug_arg, &TaoInitProxy::set_debug_arg)
+      // TaoInitProxy.disable_smooth_line_calc_arg (0D_NOT_character - -disable_smooth_line_calc
+      .def_property(
+          "disable_smooth_line_calc_arg",
+          &TaoInitProxy::disable_smooth_line_calc_arg,
+          &TaoInitProxy::set_disable_smooth_line_calc_arg)
+      // TaoInitProxy.rf_on_arg (0D_NOT_character - -rf_on               command line argument
+      .def_property(
+          "rf_on_arg", &TaoInitProxy::rf_on_arg, &TaoInitProxy::set_rf_on_arg)
+      // TaoInitProxy.prompt_color_arg (0D_NOT_character - -prompt_color        command line argument
+      .def_property(
+          "prompt_color_arg",
+          &TaoInitProxy::prompt_color_arg,
+          &TaoInitProxy::set_prompt_color_arg)
+      // TaoInitProxy.quiet_arg (0D_NOT_character - -quiet               command line argument
+      .def_property(
+          "quiet_arg", &TaoInitProxy::quiet_arg, &TaoInitProxy::set_quiet_arg)
+      // TaoInitProxy.noinit_arg (0D_NOT_character - -noinit              command line argument
+      .def_property(
+          "noinit_arg",
+          &TaoInitProxy::noinit_arg,
+          &TaoInitProxy::set_noinit_arg)
+      // TaoInitProxy.nostartup_arg (0D_NOT_character - -nostartup           command line argument
+      .def_property(
+          "nostartup_arg",
+          &TaoInitProxy::nostartup_arg,
+          &TaoInitProxy::set_nostartup_arg)
+      // TaoInitProxy.symbol_import_arg (0D_NOT_character - -symbol_import       command line argument
+      .def_property(
+          "symbol_import_arg",
+          &TaoInitProxy::symbol_import_arg,
+          &TaoInitProxy::set_symbol_import_arg)
+      // TaoInitProxy.unique_name_suffix (0D_NOT_character -
+      .def_property(
+          "unique_name_suffix",
+          &TaoInitProxy::unique_name_suffix,
+          &TaoInitProxy::set_unique_name_suffix)
+
+      .def("__repr__", [](const TaoInitProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoInitProxyArray1D>(m, "TaoInitProxyArray1D");
+  bind_FTypeArrayND<TaoInitProxyArray2D>(m, "TaoInitProxyArray2D");
+  bind_FTypeArrayND<TaoInitProxyArray3D>(m, "TaoInitProxyArray3D");
+  bind_FTypeAlloc1D<TaoInitProxyAlloc1D>(m, "TaoInitProxyAlloc1D");
 }
 
 // =============================================================================
@@ -6155,6 +7701,134 @@ void init_tao_plot_cache_struct(py::module& m) {
 }
 
 // =============================================================================
+// tao_plot_page_struct
+void init_tao_plot_page_struct(py::module& m) {
+  py::class_<TaoPlotPageProxy, std::shared_ptr<TaoPlotPageProxy>>(
+      m, "TaoPlotPageStruct", "Fortran struct: tao_plot_page_struct")
+      .def(py::init<>())
+      // TaoPlotPageProxy.title (0D_NOT_type - Title  at top of page.
+      .def_property(
+          "title", &TaoPlotPageProxy::title, &TaoPlotPageProxy::set_title)
+      // TaoPlotPageProxy.subtitle (0D_NOT_type - Subtitle below title at top of page.
+      .def_property(
+          "subtitle",
+          &TaoPlotPageProxy::subtitle,
+          &TaoPlotPageProxy::set_subtitle)
+      // TaoPlotPageProxy.border (0D_NOT_type - Border around plots edge of page.
+      .def_property(
+          "border", &TaoPlotPageProxy::border, &TaoPlotPageProxy::set_border)
+      // TaoPlotPageProxy.floor_plan (0D_NOT_type -
+      .def_property(
+          "floor_plan",
+          &TaoPlotPageProxy::floor_plan,
+          &TaoPlotPageProxy::set_floor_plan)
+      // TaoPlotPageProxy.lat_layout (0D_NOT_type -
+      .def_property(
+          "lat_layout",
+          &TaoPlotPageProxy::lat_layout,
+          &TaoPlotPageProxy::set_lat_layout)
+      // TaoPlotPageProxy.pattern (1D_ALLOC_type -
+      .def_property_readonly("pattern", &TaoPlotPageProxy::pattern)
+      // TaoPlotPageProxy.template_ (1D_ALLOC_type - Templates for the plots.
+      .def_property_readonly("template_", &TaoPlotPageProxy::template_)
+      // TaoPlotPageProxy.region (1D_ALLOC_type -
+      .def_property_readonly("region", &TaoPlotPageProxy::region)
+      // TaoPlotPageProxy.plot_display_type (0D_NOT_character - 'X' or 'TK'
+      .def_property(
+          "plot_display_type",
+          &TaoPlotPageProxy::plot_display_type,
+          &TaoPlotPageProxy::set_plot_display_type)
+      // TaoPlotPageProxy.size (1D_NOT_real - width and height of plot window in pixels.
+      .def_property_readonly("size", &TaoPlotPageProxy::size)
+      // TaoPlotPageProxy.text_height (0D_NOT_real - In points. Scales the height of all text
+      .def_property(
+          "text_height",
+          &TaoPlotPageProxy::text_height,
+          &TaoPlotPageProxy::set_text_height)
+      // TaoPlotPageProxy.main_title_text_scale (0D_NOT_real - Relative to text_height
+      .def_property(
+          "main_title_text_scale",
+          &TaoPlotPageProxy::main_title_text_scale,
+          &TaoPlotPageProxy::set_main_title_text_scale)
+      // TaoPlotPageProxy.graph_title_text_scale (0D_NOT_real - Relative to text_height
+      .def_property(
+          "graph_title_text_scale",
+          &TaoPlotPageProxy::graph_title_text_scale,
+          &TaoPlotPageProxy::set_graph_title_text_scale)
+      // TaoPlotPageProxy.axis_number_text_scale (0D_NOT_real - Relative to text_height
+      .def_property(
+          "axis_number_text_scale",
+          &TaoPlotPageProxy::axis_number_text_scale,
+          &TaoPlotPageProxy::set_axis_number_text_scale)
+      // TaoPlotPageProxy.axis_label_text_scale (0D_NOT_real - Relative to text_height
+      .def_property(
+          "axis_label_text_scale",
+          &TaoPlotPageProxy::axis_label_text_scale,
+          &TaoPlotPageProxy::set_axis_label_text_scale)
+      // TaoPlotPageProxy.legend_text_scale (0D_NOT_real - Relative to text_height. For legends, plot_page, and lat_layout
+      .def_property(
+          "legend_text_scale",
+          &TaoPlotPageProxy::legend_text_scale,
+          &TaoPlotPageProxy::set_legend_text_scale)
+      // TaoPlotPageProxy.key_table_text_scale (0D_NOT_real - Relative to text_height
+      .def_property(
+          "key_table_text_scale",
+          &TaoPlotPageProxy::key_table_text_scale,
+          &TaoPlotPageProxy::set_key_table_text_scale)
+      // TaoPlotPageProxy.floor_plan_shape_scale (0D_NOT_real -
+      .def_property(
+          "floor_plan_shape_scale",
+          &TaoPlotPageProxy::floor_plan_shape_scale,
+          &TaoPlotPageProxy::set_floor_plan_shape_scale)
+      // TaoPlotPageProxy.floor_plan_text_scale (0D_NOT_real - Scale used = floor_plan_text_scale * legend_text_scale
+      .def_property(
+          "floor_plan_text_scale",
+          &TaoPlotPageProxy::floor_plan_text_scale,
+          &TaoPlotPageProxy::set_floor_plan_text_scale)
+      // TaoPlotPageProxy.lat_layout_shape_scale (0D_NOT_real -
+      .def_property(
+          "lat_layout_shape_scale",
+          &TaoPlotPageProxy::lat_layout_shape_scale,
+          &TaoPlotPageProxy::set_lat_layout_shape_scale)
+      // TaoPlotPageProxy.lat_layout_text_scale (0D_NOT_real - Scale used = lat_layout_text_scale * legend_text_scale
+      .def_property(
+          "lat_layout_text_scale",
+          &TaoPlotPageProxy::lat_layout_text_scale,
+          &TaoPlotPageProxy::set_lat_layout_text_scale)
+      // TaoPlotPageProxy.n_curve_pts (0D_NOT_integer - Default number of points for plotting a smooth curve.
+      .def_property(
+          "n_curve_pts",
+          &TaoPlotPageProxy::n_curve_pts,
+          &TaoPlotPageProxy::set_n_curve_pts)
+      // TaoPlotPageProxy.id_window (0D_NOT_integer - X window id number.
+      .def_property(
+          "id_window",
+          &TaoPlotPageProxy::id_window,
+          &TaoPlotPageProxy::set_id_window)
+      // TaoPlotPageProxy.delete_overlapping_plots (0D_NOT_logical - Delete overlapping plots when a plot is placed?
+      .def_property(
+          "delete_overlapping_plots",
+          &TaoPlotPageProxy::delete_overlapping_plots,
+          &TaoPlotPageProxy::set_delete_overlapping_plots)
+      // TaoPlotPageProxy.draw_graph_title_suffix (0D_NOT_logical - Draw the graph title suffix?
+      .def_property(
+          "draw_graph_title_suffix",
+          &TaoPlotPageProxy::draw_graph_title_suffix,
+          &TaoPlotPageProxy::set_draw_graph_title_suffix)
+
+      .def(
+          "__repr__",
+          [](const TaoPlotPageProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoPlotPageProxyArray1D>(m, "TaoPlotPageProxyArray1D");
+  bind_FTypeArrayND<TaoPlotPageProxyArray2D>(m, "TaoPlotPageProxyArray2D");
+  bind_FTypeArrayND<TaoPlotPageProxyArray3D>(m, "TaoPlotPageProxyArray3D");
+  bind_FTypeAlloc1D<TaoPlotPageProxyAlloc1D>(m, "TaoPlotPageProxyAlloc1D");
+}
+
+// =============================================================================
 // tao_plot_region_struct
 void init_tao_plot_region_struct(py::module& m) {
   py::class_<TaoPlotRegionProxy, std::shared_ptr<TaoPlotRegionProxy>>(
@@ -6270,6 +7944,75 @@ void init_tao_plot_struct(py::module& m) {
   bind_FTypeArrayND<TaoPlotProxyArray2D>(m, "TaoPlotProxyArray2D");
   bind_FTypeArrayND<TaoPlotProxyArray3D>(m, "TaoPlotProxyArray3D");
   bind_FTypeAlloc1D<TaoPlotProxyAlloc1D>(m, "TaoPlotProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_shape_pattern_point_struct
+void init_tao_shape_pattern_point_struct(py::module& m) {
+  py::class_<
+      TaoShapePatternPointProxy,
+      std::shared_ptr<TaoShapePatternPointProxy>>(
+      m,
+      "TaoShapePatternPointStruct",
+      "Fortran struct: tao_shape_pattern_point_struct")
+      .def(py::init<>())
+      // TaoShapePatternPointProxy.s (0D_NOT_real -
+      .def_property(
+          "s", &TaoShapePatternPointProxy::s, &TaoShapePatternPointProxy::set_s)
+      // TaoShapePatternPointProxy.y (0D_NOT_real -
+      .def_property(
+          "y", &TaoShapePatternPointProxy::y, &TaoShapePatternPointProxy::set_y)
+      // TaoShapePatternPointProxy.radius (0D_NOT_real -
+      .def_property(
+          "radius",
+          &TaoShapePatternPointProxy::radius,
+          &TaoShapePatternPointProxy::set_radius)
+
+      .def(
+          "__repr__",
+          [](const TaoShapePatternPointProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoShapePatternPointProxyArray1D>(
+      m, "TaoShapePatternPointProxyArray1D");
+  bind_FTypeArrayND<TaoShapePatternPointProxyArray2D>(
+      m, "TaoShapePatternPointProxyArray2D");
+  bind_FTypeArrayND<TaoShapePatternPointProxyArray3D>(
+      m, "TaoShapePatternPointProxyArray3D");
+  bind_FTypeAlloc1D<TaoShapePatternPointProxyAlloc1D>(
+      m, "TaoShapePatternPointProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_shape_pattern_struct
+void init_tao_shape_pattern_struct(py::module& m) {
+  py::class_<TaoShapePatternProxy, std::shared_ptr<TaoShapePatternProxy>>(
+      m, "TaoShapePatternStruct", "Fortran struct: tao_shape_pattern_struct")
+      .def(py::init<>())
+      // TaoShapePatternProxy.name (0D_NOT_character -
+      .def_property(
+          "name", &TaoShapePatternProxy::name, &TaoShapePatternProxy::set_name)
+      // TaoShapePatternProxy.line (0D_NOT_type - Line color and pattern set by shape using this pattern.
+      .def_property(
+          "line", &TaoShapePatternProxy::line, &TaoShapePatternProxy::set_line)
+      // TaoShapePatternProxy.pt (1D_ALLOC_type -
+      .def_property_readonly("pt", &TaoShapePatternProxy::pt)
+
+      .def(
+          "__repr__",
+          [](const TaoShapePatternProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoShapePatternProxyArray1D>(
+      m, "TaoShapePatternProxyArray1D");
+  bind_FTypeArrayND<TaoShapePatternProxyArray2D>(
+      m, "TaoShapePatternProxyArray2D");
+  bind_FTypeArrayND<TaoShapePatternProxyArray3D>(
+      m, "TaoShapePatternProxyArray3D");
+  bind_FTypeAlloc1D<TaoShapePatternProxyAlloc1D>(
+      m, "TaoShapePatternProxyAlloc1D");
 }
 
 // =============================================================================
@@ -6483,12 +8226,42 @@ void init_tao_super_universe_struct(py::module& m) {
   py::class_<TaoSuperUniverseProxy, std::shared_ptr<TaoSuperUniverseProxy>>(
       m, "TaoSuperUniverseStruct", "Fortran struct: tao_super_universe_struct")
       .def(py::init<>())
+      // TaoSuperUniverseProxy.global (0D_NOT_type - User accessible global variables.
+      .def_property(
+          "global",
+          &TaoSuperUniverseProxy::global,
+          &TaoSuperUniverseProxy::set_global)
+      // TaoSuperUniverseProxy.init (0D_NOT_type - Initialization parameters
+      .def_property(
+          "init",
+          &TaoSuperUniverseProxy::init,
+          &TaoSuperUniverseProxy::set_init)
+      // TaoSuperUniverseProxy.com (0D_NOT_type - Non-initialization common parameters
+      .def_property(
+          "com", &TaoSuperUniverseProxy::com, &TaoSuperUniverseProxy::set_com)
+      // TaoSuperUniverseProxy.plot_page (0D_NOT_type - Defines the plot window.
+      .def_property(
+          "plot_page",
+          &TaoSuperUniverseProxy::plot_page,
+          &TaoSuperUniverseProxy::set_plot_page)
+      // TaoSuperUniverseProxy.v1_var (1D_ALLOC_type - The variable types
+      .def_property_readonly("v1_var", &TaoSuperUniverseProxy::v1_var)
       // TaoSuperUniverseProxy.var (1D_ALLOC_type - array of all variables.
       .def_property_readonly("var", &TaoSuperUniverseProxy::var)
       // TaoSuperUniverseProxy.u (1D_ALLOC_type - array of universes.
       .def_property_readonly("u", &TaoSuperUniverseProxy::u)
       // TaoSuperUniverseProxy.key (1D_ALLOC_integer -
       .def_property_readonly("key", &TaoSuperUniverseProxy::key)
+      // TaoSuperUniverseProxy.building_wall (0D_NOT_type -
+      .def_property(
+          "building_wall",
+          &TaoSuperUniverseProxy::building_wall,
+          &TaoSuperUniverseProxy::set_building_wall)
+      // TaoSuperUniverseProxy.wave (0D_NOT_type -
+      .def_property(
+          "wave",
+          &TaoSuperUniverseProxy::wave,
+          &TaoSuperUniverseProxy::set_wave)
       // TaoSuperUniverseProxy.n_var_used (0D_NOT_integer -
       .def_property(
           "n_var_used",
@@ -6499,6 +8272,8 @@ void init_tao_super_universe_struct(py::module& m) {
           "n_v1_var_used",
           &TaoSuperUniverseProxy::n_v1_var_used,
           &TaoSuperUniverseProxy::set_n_v1_var_used)
+      // TaoSuperUniverseProxy.history (1D_NOT_type - command history
+      .def_property_readonly("history", &TaoSuperUniverseProxy::history)
       // TaoSuperUniverseProxy.initialized (0D_NOT_logical - Does tao_init() need to be called?
       .def_property(
           "initialized",
@@ -6519,6 +8294,39 @@ void init_tao_super_universe_struct(py::module& m) {
       m, "TaoSuperUniverseProxyArray3D");
   bind_FTypeAlloc1D<TaoSuperUniverseProxyAlloc1D>(
       m, "TaoSuperUniverseProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_title_struct
+void init_tao_title_struct(py::module& m) {
+  py::class_<TaoTitleProxy, std::shared_ptr<TaoTitleProxy>>(
+      m, "TaoTitleStruct", "Fortran struct: tao_title_struct")
+      .def(py::init<>())
+      // TaoTitleProxy.string (0D_NOT_character - title character string.
+      .def_property(
+          "string", &TaoTitleProxy::string, &TaoTitleProxy::set_string)
+      // TaoTitleProxy.x (0D_NOT_real - x, y rwt lower left corner
+      .def_property("x", &TaoTitleProxy::x, &TaoTitleProxy::set_x)
+      // TaoTitleProxy.y (0D_NOT_real - x, y rwt lower left corner
+      .def_property("y", &TaoTitleProxy::y, &TaoTitleProxy::set_y)
+      // TaoTitleProxy.units (0D_NOT_character - %BOX, POINTS, etc...
+      .def_property("units", &TaoTitleProxy::units, &TaoTitleProxy::set_units)
+      // TaoTitleProxy.justify (0D_NOT_character - Left, Center, or Right justification.
+      .def_property(
+          "justify", &TaoTitleProxy::justify, &TaoTitleProxy::set_justify)
+      // TaoTitleProxy.draw_it (0D_NOT_logical - draw the title?
+      .def_property(
+          "draw_it", &TaoTitleProxy::draw_it, &TaoTitleProxy::set_draw_it)
+
+      .def(
+          "__repr__", [](const TaoTitleProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoTitleProxyArray1D>(m, "TaoTitleProxyArray1D");
+  bind_FTypeArrayND<TaoTitleProxyArray2D>(m, "TaoTitleProxyArray2D");
+  bind_FTypeArrayND<TaoTitleProxyArray3D>(m, "TaoTitleProxyArray3D");
+  bind_FTypeAlloc1D<TaoTitleProxyAlloc1D>(m, "TaoTitleProxyAlloc1D");
 }
 
 // =============================================================================
@@ -6731,6 +8539,71 @@ void init_tao_universe_struct(py::module& m) {
 }
 
 // =============================================================================
+// tao_v1_var_struct
+void init_tao_v1_var_struct(py::module& m) {
+  py::class_<TaoV1VarProxy, std::shared_ptr<TaoV1VarProxy>>(
+      m, "TaoV1VarStruct", "Fortran struct: tao_v1_var_struct")
+      .def(py::init<>())
+      // TaoV1VarProxy.name (0D_NOT_character - V1 variable name. Eg: 'quad_k1'.
+      .def_property("name", &TaoV1VarProxy::name, &TaoV1VarProxy::set_name)
+      // TaoV1VarProxy.ix_v1_var (0D_NOT_integer - Index to s%v1_var(:) array
+      .def_property(
+          "ix_v1_var", &TaoV1VarProxy::ix_v1_var, &TaoV1VarProxy::set_ix_v1_var)
+      // TaoV1VarProxy.v (1D_PTR_type - Pointer to the appropriate section in s%var.
+      .def_property_readonly("v", &TaoV1VarProxy::v)
+
+      .def(
+          "__repr__", [](const TaoV1VarProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoV1VarProxyArray1D>(m, "TaoV1VarProxyArray1D");
+  bind_FTypeArrayND<TaoV1VarProxyArray2D>(m, "TaoV1VarProxyArray2D");
+  bind_FTypeArrayND<TaoV1VarProxyArray3D>(m, "TaoV1VarProxyArray3D");
+  bind_FTypeAlloc1D<TaoV1VarProxyAlloc1D>(m, "TaoV1VarProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_var_slave_struct
+void init_tao_var_slave_struct(py::module& m) {
+  py::class_<TaoVarSlaveProxy, std::shared_ptr<TaoVarSlaveProxy>>(
+      m, "TaoVarSlaveStruct", "Fortran struct: tao_var_slave_struct")
+      .def(py::init<>())
+      // TaoVarSlaveProxy.ix_uni (0D_NOT_integer - universe index.
+      .def_property(
+          "ix_uni", &TaoVarSlaveProxy::ix_uni, &TaoVarSlaveProxy::set_ix_uni)
+      // TaoVarSlaveProxy.ix_branch (0D_NOT_integer -
+      .def_property(
+          "ix_branch",
+          &TaoVarSlaveProxy::ix_branch,
+          &TaoVarSlaveProxy::set_ix_branch)
+      // TaoVarSlaveProxy.ix_ele (0D_NOT_integer - Index of element in the u%lattice%ele(:) array.
+      .def_property(
+          "ix_ele", &TaoVarSlaveProxy::ix_ele, &TaoVarSlaveProxy::set_ix_ele)
+      // TaoVarSlaveProxy.model_value (0D_PTR_real - Pointer to the variable in the model lat.
+      .def_property(
+          "model_value",
+          &TaoVarSlaveProxy::model_value,
+          &TaoVarSlaveProxy::set_model_value)
+      // TaoVarSlaveProxy.base_value (0D_PTR_real - Pointer to the variable in the base lat.
+      .def_property(
+          "base_value",
+          &TaoVarSlaveProxy::base_value,
+          &TaoVarSlaveProxy::set_base_value)
+
+      .def(
+          "__repr__",
+          [](const TaoVarSlaveProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoVarSlaveProxyArray1D>(m, "TaoVarSlaveProxyArray1D");
+  bind_FTypeArrayND<TaoVarSlaveProxyArray2D>(m, "TaoVarSlaveProxyArray2D");
+  bind_FTypeArrayND<TaoVarSlaveProxyArray3D>(m, "TaoVarSlaveProxyArray3D");
+  bind_FTypeAlloc1D<TaoVarSlaveProxyAlloc1D>(m, "TaoVarSlaveProxyAlloc1D");
+}
+
+// =============================================================================
 // tao_var_struct
 void init_tao_var_struct(py::module& m) {
   py::class_<TaoVarProxy, std::shared_ptr<TaoVarProxy>>(
@@ -6746,6 +8619,8 @@ void init_tao_var_struct(py::module& m) {
           &TaoVarProxy::set_attrib_name)
       // TaoVarProxy.id (0D_NOT_character - Used by Tao extension code. Not used by Tao directly.
       .def_property("id", &TaoVarProxy::id, &TaoVarProxy::set_id)
+      // TaoVarProxy.slave (1D_ALLOC_type -
+      .def_property_readonly("slave", &TaoVarProxy::slave)
       // TaoVarProxy.ix_v1 (0D_NOT_integer - Index of this var in the s%v1_var(i)%v(:) array.
       .def_property("ix_v1", &TaoVarProxy::ix_v1, &TaoVarProxy::set_ix_v1)
       // TaoVarProxy.ix_var (0D_NOT_integer - Index number of this var in the s%var(:) array.
@@ -6850,6 +8725,8 @@ void init_tao_var_struct(py::module& m) {
       // TaoVarProxy.key_bound (0D_NOT_logical - Variable bound to keyboard key?
       .def_property(
           "key_bound", &TaoVarProxy::key_bound, &TaoVarProxy::set_key_bound)
+      // TaoVarProxy.v1 (0D_PTR_type - Pointer to the parent.
+      .def_property("v1", &TaoVarProxy::v1, &TaoVarProxy::set_v1)
 
       .def("__repr__", [](const TaoVarProxy& self) { return to_string(self); })
 
@@ -6859,6 +8736,181 @@ void init_tao_var_struct(py::module& m) {
   bind_FTypeArrayND<TaoVarProxyArray2D>(m, "TaoVarProxyArray2D");
   bind_FTypeArrayND<TaoVarProxyArray3D>(m, "TaoVarProxyArray3D");
   bind_FTypeAlloc1D<TaoVarProxyAlloc1D>(m, "TaoVarProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_wave_kick_pt_struct
+void init_tao_wave_kick_pt_struct(py::module& m) {
+  py::class_<TaoWaveKickPtProxy, std::shared_ptr<TaoWaveKickPtProxy>>(
+      m, "TaoWaveKickPtStruct", "Fortran struct: tao_wave_kick_pt_struct")
+      .def(py::init<>())
+      // TaoWaveKickPtProxy.phi_s (0D_NOT_real -
+      .def_property(
+          "phi_s", &TaoWaveKickPtProxy::phi_s, &TaoWaveKickPtProxy::set_phi_s)
+      // TaoWaveKickPtProxy.phi_r (0D_NOT_real -
+      .def_property(
+          "phi_r", &TaoWaveKickPtProxy::phi_r, &TaoWaveKickPtProxy::set_phi_r)
+      // TaoWaveKickPtProxy.phi (0D_NOT_real -
+      .def_property(
+          "phi", &TaoWaveKickPtProxy::phi, &TaoWaveKickPtProxy::set_phi)
+      // TaoWaveKickPtProxy.amp (0D_NOT_real -
+      .def_property(
+          "amp", &TaoWaveKickPtProxy::amp, &TaoWaveKickPtProxy::set_amp)
+      // TaoWaveKickPtProxy.s (0D_NOT_real - s-position of kick
+      .def_property("s", &TaoWaveKickPtProxy::s, &TaoWaveKickPtProxy::set_s)
+      // TaoWaveKickPtProxy.ix_dat_before_kick (0D_NOT_integer - Index of datum in data array just before the kick.
+      .def_property(
+          "ix_dat_before_kick",
+          &TaoWaveKickPtProxy::ix_dat_before_kick,
+          &TaoWaveKickPtProxy::set_ix_dat_before_kick)
+      // TaoWaveKickPtProxy.ele (0D_PTR_type - lattice element at position of kick.
+      .def_property(
+          "ele", &TaoWaveKickPtProxy::ele, &TaoWaveKickPtProxy::set_ele)
+
+      .def(
+          "__repr__",
+          [](const TaoWaveKickPtProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoWaveKickPtProxyArray1D>(m, "TaoWaveKickPtProxyArray1D");
+  bind_FTypeArrayND<TaoWaveKickPtProxyArray2D>(m, "TaoWaveKickPtProxyArray2D");
+  bind_FTypeArrayND<TaoWaveKickPtProxyArray3D>(m, "TaoWaveKickPtProxyArray3D");
+  bind_FTypeAlloc1D<TaoWaveKickPtProxyAlloc1D>(m, "TaoWaveKickPtProxyAlloc1D");
+}
+
+// =============================================================================
+// tao_wave_struct
+void init_tao_wave_struct(py::module& m) {
+  py::class_<TaoWaveProxy, std::shared_ptr<TaoWaveProxy>>(
+      m, "TaoWaveStruct", "Fortran struct: tao_wave_struct")
+      .def(py::init<>())
+      // TaoWaveProxy.data_type (0D_NOT_character -
+      .def_property(
+          "data_type", &TaoWaveProxy::data_type, &TaoWaveProxy::set_data_type)
+      // TaoWaveProxy.rms_rel_a (0D_NOT_real -
+      .def_property(
+          "rms_rel_a", &TaoWaveProxy::rms_rel_a, &TaoWaveProxy::set_rms_rel_a)
+      // TaoWaveProxy.rms_rel_b (0D_NOT_real -
+      .def_property(
+          "rms_rel_b", &TaoWaveProxy::rms_rel_b, &TaoWaveProxy::set_rms_rel_b)
+      // TaoWaveProxy.rms_rel_as (0D_NOT_real -
+      .def_property(
+          "rms_rel_as",
+          &TaoWaveProxy::rms_rel_as,
+          &TaoWaveProxy::set_rms_rel_as)
+      // TaoWaveProxy.rms_rel_bs (0D_NOT_real -
+      .def_property(
+          "rms_rel_bs",
+          &TaoWaveProxy::rms_rel_bs,
+          &TaoWaveProxy::set_rms_rel_bs)
+      // TaoWaveProxy.rms_rel_ar (0D_NOT_real -
+      .def_property(
+          "rms_rel_ar",
+          &TaoWaveProxy::rms_rel_ar,
+          &TaoWaveProxy::set_rms_rel_ar)
+      // TaoWaveProxy.rms_rel_br (0D_NOT_real -
+      .def_property(
+          "rms_rel_br",
+          &TaoWaveProxy::rms_rel_br,
+          &TaoWaveProxy::set_rms_rel_br)
+      // TaoWaveProxy.rms_rel_k (0D_NOT_real -
+      .def_property(
+          "rms_rel_k", &TaoWaveProxy::rms_rel_k, &TaoWaveProxy::set_rms_rel_k)
+      // TaoWaveProxy.rms_rel_ks (0D_NOT_real -
+      .def_property(
+          "rms_rel_ks",
+          &TaoWaveProxy::rms_rel_ks,
+          &TaoWaveProxy::set_rms_rel_ks)
+      // TaoWaveProxy.rms_rel_kr (0D_NOT_real -
+      .def_property(
+          "rms_rel_kr",
+          &TaoWaveProxy::rms_rel_kr,
+          &TaoWaveProxy::set_rms_rel_kr)
+      // TaoWaveProxy.rms_phi (0D_NOT_real -
+      .def_property(
+          "rms_phi", &TaoWaveProxy::rms_phi, &TaoWaveProxy::set_rms_phi)
+      // TaoWaveProxy.rms_phi_s (0D_NOT_real -
+      .def_property(
+          "rms_phi_s", &TaoWaveProxy::rms_phi_s, &TaoWaveProxy::set_rms_phi_s)
+      // TaoWaveProxy.rms_phi_r (0D_NOT_real -
+      .def_property(
+          "rms_phi_r", &TaoWaveProxy::rms_phi_r, &TaoWaveProxy::set_rms_phi_r)
+      // TaoWaveProxy.amp_ba_s (0D_NOT_real -
+      .def_property(
+          "amp_ba_s", &TaoWaveProxy::amp_ba_s, &TaoWaveProxy::set_amp_ba_s)
+      // TaoWaveProxy.amp_ba_r (0D_NOT_real -
+      .def_property(
+          "amp_ba_r", &TaoWaveProxy::amp_ba_r, &TaoWaveProxy::set_amp_ba_r)
+      // TaoWaveProxy.chi_a (0D_NOT_real -
+      .def_property("chi_a", &TaoWaveProxy::chi_a, &TaoWaveProxy::set_chi_a)
+      // TaoWaveProxy.chi_c (0D_NOT_real -
+      .def_property("chi_c", &TaoWaveProxy::chi_c, &TaoWaveProxy::set_chi_c)
+      // TaoWaveProxy.chi_ba (0D_NOT_real -
+      .def_property("chi_ba", &TaoWaveProxy::chi_ba, &TaoWaveProxy::set_chi_ba)
+      // TaoWaveProxy.amp_a (1D_NOT_real -
+      .def_property_readonly("amp_a", &TaoWaveProxy::amp_a)
+      // TaoWaveProxy.amp_b (1D_NOT_real -
+      .def_property_readonly("amp_b", &TaoWaveProxy::amp_b)
+      // TaoWaveProxy.amp_ba (1D_NOT_real -
+      .def_property_readonly("amp_ba", &TaoWaveProxy::amp_ba)
+      // TaoWaveProxy.coef_a (1D_NOT_real -
+      .def_property_readonly("coef_a", &TaoWaveProxy::coef_a)
+      // TaoWaveProxy.coef_b (1D_NOT_real -
+      .def_property_readonly("coef_b", &TaoWaveProxy::coef_b)
+      // TaoWaveProxy.coef_ba (1D_NOT_real -
+      .def_property_readonly("coef_ba", &TaoWaveProxy::coef_ba)
+      // TaoWaveProxy.n_func (0D_NOT_integer - Number of functions used in the fit.
+      .def_property("n_func", &TaoWaveProxy::n_func, &TaoWaveProxy::set_n_func)
+      // TaoWaveProxy.ix_a1 (0D_NOT_integer -
+      .def_property("ix_a1", &TaoWaveProxy::ix_a1, &TaoWaveProxy::set_ix_a1)
+      // TaoWaveProxy.ix_a2 (0D_NOT_integer -
+      .def_property("ix_a2", &TaoWaveProxy::ix_a2, &TaoWaveProxy::set_ix_a2)
+      // TaoWaveProxy.ix_b1 (0D_NOT_integer -
+      .def_property("ix_b1", &TaoWaveProxy::ix_b1, &TaoWaveProxy::set_ix_b1)
+      // TaoWaveProxy.ix_b2 (0D_NOT_integer -
+      .def_property("ix_b2", &TaoWaveProxy::ix_b2, &TaoWaveProxy::set_ix_b2)
+      // TaoWaveProxy.i_a1 (0D_NOT_integer -
+      .def_property("i_a1", &TaoWaveProxy::i_a1, &TaoWaveProxy::set_i_a1)
+      // TaoWaveProxy.i_a2 (0D_NOT_integer -
+      .def_property("i_a2", &TaoWaveProxy::i_a2, &TaoWaveProxy::set_i_a2)
+      // TaoWaveProxy.i_b1 (0D_NOT_integer -
+      .def_property("i_b1", &TaoWaveProxy::i_b1, &TaoWaveProxy::set_i_b1)
+      // TaoWaveProxy.i_b2 (0D_NOT_integer -
+      .def_property("i_b2", &TaoWaveProxy::i_b2, &TaoWaveProxy::set_i_b2)
+      // TaoWaveProxy.n_a (0D_NOT_integer -
+      .def_property("n_a", &TaoWaveProxy::n_a, &TaoWaveProxy::set_n_a)
+      // TaoWaveProxy.n_b (0D_NOT_integer -
+      .def_property("n_b", &TaoWaveProxy::n_b, &TaoWaveProxy::set_n_b)
+      // TaoWaveProxy.i_curve_wrap_pt (0D_NOT_integer - Index of last point before wrap in curve array.
+      .def_property(
+          "i_curve_wrap_pt",
+          &TaoWaveProxy::i_curve_wrap_pt,
+          &TaoWaveProxy::set_i_curve_wrap_pt)
+      // TaoWaveProxy.ix_data (1D_ALLOC_integer - Translates from plot point to datum index
+      .def_property_readonly("ix_data", &TaoWaveProxy::ix_data)
+      // TaoWaveProxy.n_kick (0D_NOT_integer -
+      .def_property("n_kick", &TaoWaveProxy::n_kick, &TaoWaveProxy::set_n_kick)
+      // TaoWaveProxy.kick (1D_ALLOC_type -
+      .def_property_readonly("kick", &TaoWaveProxy::kick)
+      // TaoWaveProxy.base_graph (0D_NOT_type - Graph before curves extended to 1.5 periods.
+      .def_property(
+          "base_graph",
+          &TaoWaveProxy::base_graph,
+          &TaoWaveProxy::set_base_graph)
+      // TaoWaveProxy.region (0D_PTR_type - Where the wave plot is
+      .def_property("region", &TaoWaveProxy::region, &TaoWaveProxy::set_region)
+      // TaoWaveProxy.d1_dat (0D_PTR_type - D1 data for analysis
+      .def_property("d1_dat", &TaoWaveProxy::d1_dat, &TaoWaveProxy::set_d1_dat)
+
+      .def("__repr__", [](const TaoWaveProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<TaoWaveProxyArray1D>(m, "TaoWaveProxyArray1D");
+  bind_FTypeArrayND<TaoWaveProxyArray2D>(m, "TaoWaveProxyArray2D");
+  bind_FTypeArrayND<TaoWaveProxyArray3D>(m, "TaoWaveProxyArray3D");
+  bind_FTypeAlloc1D<TaoWaveProxyAlloc1D>(m, "TaoWaveProxyAlloc1D");
 }
 
 // =============================================================================

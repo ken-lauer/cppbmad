@@ -25,6 +25,8 @@ def _classify_failure_reason(reason: str) -> str:
             return "Arg string defined in docstring/interface but missing in struct"
         return "Argument definition missing"
     if "untranslated type" in lower_r:
+        if lower_r.split()[-2] == "c_ptr":
+            return "C pointer usage"
         return "Untranslated Fortran structure"
     # if "variable" in lower_r and "array" in lower_r:
     #     return "Unsupported Variable/Pointer Array dimension"

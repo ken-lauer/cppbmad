@@ -1347,10 +1347,12 @@ void tao_optimization_status(TaoDataProxy& datum, std::string& why_str);
 extern "C" void fortran_tao_orbit_beta_wave_anal(
     void* plot /* 0D_NOT_type inout */);
 void tao_orbit_beta_wave_anal(TaoPlotProxy& plot);
-
-// Skipped unusable routine tao_oreint_building_wall_pt:
-// - Untranslated type: tao_building_wall_point_struct (0D)
-// - Untranslated type: tao_building_wall_point_struct (0D)
+extern "C" bool fortran_tao_oreint_building_wall_pt(
+    void* pt_in /* 0D_NOT_type in */,
+    void* pt_out /* 0D_NOT_type inout */);
+void tao_oreint_building_wall_pt(
+    TaoBuildingWallPointProxy& pt_in,
+    TaoBuildingWallPointProxy& pt_out);
 extern "C" bool fortran_tao_param_value_at_s(
     const char* dat_name /* 0D_NOT_character inout */,
     void* ele_to_s /* 0D_NOT_type in */,
@@ -1511,7 +1513,6 @@ void tao_plot_wave(TaoPlotProxy& plot, TaoGraphProxy& graph);
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine tao_point_v1_to_var:
-// - Untranslated type: tao_v1_var_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine tao_pointer_to_branches:
@@ -1820,9 +1821,14 @@ extern "C" void fortran_tao_set_default_cmd(
     const char* who_str /* 0D_NOT_character in */,
     const char* value_str /* 0D_NOT_character in */);
 void tao_set_default_cmd(std::string who_str, std::string value_str);
-
-// Skipped unusable routine tao_set_drawing_cmd:
-// - Untranslated type: tao_drawing_struct (0D)
+extern "C" void fortran_tao_set_drawing_cmd(
+    void* drawing /* 0D_NOT_type in */,
+    const char* component /* 0D_NOT_character in */,
+    const char* value_str /* 0D_NOT_character in */);
+void tao_set_drawing_cmd(
+    TaoDrawingProxy& drawing,
+    std::string component,
+    std::string value_str);
 extern "C" void fortran_tao_set_dynamic_aperture_cmd(
     const char* who /* 0D_NOT_character in */,
     const char* value_str /* 0D_NOT_character in */);
@@ -1840,10 +1846,16 @@ void tao_set_elements_cmd(
 
 // Skipped unusable routine tao_set_flags_for_changed_attribute:
 // - Untranslated type: all_pointer_struct (0D)
-
-// Skipped unusable routine tao_set_floor_plan_axis_label:
-// - Untranslated type: qp_axis_struct (0D)
-// - Untranslated type: qp_axis_struct (0D)
+extern "C" void fortran_tao_set_floor_plan_axis_label(
+    void* graph /* 0D_NOT_type inout */,
+    void* axis_in /* 0D_NOT_type inout */,
+    void* axis_out /* 0D_NOT_type inout */,
+    const char* which /* 0D_NOT_character inout */);
+void tao_set_floor_plan_axis_label(
+    TaoGraphProxy& graph,
+    QpAxisProxy& axis_in,
+    QpAxisProxy& axis_out,
+    std::string& which);
 extern "C" void fortran_tao_set_geodesic_lm_cmd(
     const char* who /* 0D_NOT_character in */,
     const char* value_str /* 0D_NOT_character in */);
@@ -1947,20 +1959,58 @@ void tao_set_plot_page_cmd(
 
 // Skipped unusable routine tao_set_plotting:
 // - Untranslated type: tao_plot_page_input (0D)
-// - Untranslated type: tao_plot_page_struct (0D)
 extern "C" void fortran_tao_set_ptc_com_cmd(
     const char* who /* 0D_NOT_character in */,
     const char* value_str /* 0D_NOT_character in */);
 void tao_set_ptc_com_cmd(std::string who, std::string value_str);
-
-// Skipped unusable routine tao_set_qp_axis_struct:
-// - Untranslated type: qp_axis_struct (0D)
-
-// Skipped unusable routine tao_set_qp_point_struct:
-// - Untranslated type: qp_point_struct (0D)
-
-// Skipped unusable routine tao_set_qp_rect_struct:
-// - Untranslated type: qp_rect_struct (0D)
+extern "C" void fortran_tao_set_qp_axis_struct(
+    const char* qp_axis_name /* 0D_NOT_character in */,
+    const char* component /* 0D_NOT_character in */,
+    void* qp_axis /* 0D_NOT_type inout */,
+    const char* value /* 0D_NOT_character in */,
+    bool& error /* 0D_NOT_logical out */,
+    int& ix_uni /* 0D_NOT_integer out */);
+struct TaoSetQpAxisStruct {
+  bool error;
+  int ix_uni;
+};
+Tao::TaoSetQpAxisStruct tao_set_qp_axis_struct(
+    std::string qp_axis_name,
+    std::string component,
+    QpAxisProxy& qp_axis,
+    std::string value);
+extern "C" void fortran_tao_set_qp_point_struct(
+    const char* qp_point_name /* 0D_NOT_character in */,
+    const char* component /* 0D_NOT_character in */,
+    void* qp_point /* 0D_NOT_type inout */,
+    const char* value /* 0D_NOT_character in */,
+    bool& error /* 0D_NOT_logical out */,
+    int& ix_uni /* 0D_NOT_integer out */);
+struct TaoSetQpPointStruct {
+  bool error;
+  int ix_uni;
+};
+Tao::TaoSetQpPointStruct tao_set_qp_point_struct(
+    std::string qp_point_name,
+    std::string component,
+    QpPointProxy& qp_point,
+    std::string value);
+extern "C" void fortran_tao_set_qp_rect_struct(
+    const char* qp_rect_name /* 0D_NOT_character in */,
+    const char* component /* 0D_NOT_character in */,
+    void* qp_rect /* 0D_NOT_type inout */,
+    const char* value /* 0D_NOT_character in */,
+    bool& error /* 0D_NOT_logical out */,
+    int& ix_uni /* 0D_NOT_integer out */);
+struct TaoSetQpRectStruct {
+  bool error;
+  int ix_uni;
+};
+Tao::TaoSetQpRectStruct tao_set_qp_rect_struct(
+    std::string qp_rect_name,
+    std::string component,
+    QpRectProxy& qp_rect,
+    std::string value);
 extern "C" void fortran_tao_set_ran_state_cmd(
     const char* state_string /* 0D_NOT_character in */);
 void tao_set_ran_state_cmd(std::string state_string);
@@ -2307,7 +2357,6 @@ extern "C" void fortran_tao_var_repoint();
 void tao_var_repoint();
 
 // Skipped unusable routine tao_var_show_use:
-// - Untranslated type: tao_v1_var_struct (0D)
 // - Variable-sized inout character array: lines(:) 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
@@ -2319,7 +2368,6 @@ void tao_var_repoint();
 
 // Skipped unusable routine tao_var_stuffit1:
 // - Untranslated type: tao_var_input (1D)
-// - Untranslated type: tao_v1_var_struct (0D)
 // - Untranslated type: tao_v1_var_input (0D)
 // - Translated arg count mismatch (unsupported?)
 

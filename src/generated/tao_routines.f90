@@ -29,22 +29,22 @@ use tao_interface, only: tao_abort_command_file, tao_alias_cmd, tao_beam_emit_ca
     tao_lat_emit_calc, tao_lat_sigma_calc_needed, tao_lattice_calc, tao_limit_calc, &
     tao_lmdif_optimizer, tao_locate_all_elements, tao_locate_elements, tao_mark_lattice_ele, &
     tao_merit, tao_one_turn_map_calc_needed, tao_open_file, tao_open_scratch_file, &
-    tao_optimization_status, tao_param_value_at_s, tao_parse_command_args, &
-    tao_parse_element_param_str, tao_pause_cmd, tao_pick_universe, tao_pipe_cmd, tao_place_cmd, &
-    tao_plot_cmd, tao_plot_setup, tao_plot_struct_transfer, tao_pointer_to_building_wall_shape, &
-    tao_pointer_to_datum, tao_pointer_to_ele_shape, tao_pointer_to_tao_lat, &
-    tao_pointer_to_universes, tao_print_command_line_info, tao_ptc_normal_form, tao_python_cmd, &
-    tao_quiet_set, tao_rad_int_calc_needed, tao_read_cmd, tao_read_phase_space_index, &
-    tao_regression_test, tao_remove_blank_characters, tao_run_cmd, tao_scale_ping_data, &
-    tao_set_data_useit_opt, tao_set_invalid, tao_set_opt_vars, tao_set_var_model_value, &
-    tao_set_var_useit_opt, tao_setup_key_table, tao_shape_init, tao_show_cmd, tao_single_mode, &
-    tao_spin_matrices_calc_needed, tao_spin_tracking_turn_on, tao_split_component, &
-    tao_srdt_calc_needed, tao_subin_uni_number, tao_symbol_import_from_lat, tao_taper_cmd, &
-    tao_to_real, tao_top_level, tao_turn_on_special_calcs_if_needed_for_plotting, &
-    tao_uni_atsign_index, tao_universe_index, tao_use_data, tao_use_var, &
-    tao_user_is_terminating_optimization, tao_var1_name, tao_var_attrib_name, tao_var_check, &
-    tao_var_repoint, tao_var_target_calc, tao_var_useit_plot_calc, tao_write_cmd, &
-    tao_x_axis_cmd
+    tao_optimization_status, tao_oreint_building_wall_pt, tao_param_value_at_s, &
+    tao_parse_command_args, tao_parse_element_param_str, tao_pause_cmd, tao_pick_universe, &
+    tao_pipe_cmd, tao_place_cmd, tao_plot_cmd, tao_plot_setup, tao_plot_struct_transfer, &
+    tao_pointer_to_building_wall_shape, tao_pointer_to_datum, tao_pointer_to_ele_shape, &
+    tao_pointer_to_tao_lat, tao_pointer_to_universes, tao_print_command_line_info, &
+    tao_ptc_normal_form, tao_python_cmd, tao_quiet_set, tao_rad_int_calc_needed, tao_read_cmd, &
+    tao_read_phase_space_index, tao_regression_test, tao_remove_blank_characters, tao_run_cmd, &
+    tao_scale_ping_data, tao_set_data_useit_opt, tao_set_invalid, tao_set_opt_vars, &
+    tao_set_var_model_value, tao_set_var_useit_opt, tao_setup_key_table, tao_shape_init, &
+    tao_show_cmd, tao_single_mode, tao_spin_matrices_calc_needed, tao_spin_tracking_turn_on, &
+    tao_split_component, tao_srdt_calc_needed, tao_subin_uni_number, &
+    tao_symbol_import_from_lat, tao_taper_cmd, tao_to_real, tao_top_level, &
+    tao_turn_on_special_calcs_if_needed_for_plotting, tao_uni_atsign_index, tao_universe_index, &
+    tao_use_data, tao_use_var, tao_user_is_terminating_optimization, tao_var1_name, &
+    tao_var_attrib_name, tao_var_check, tao_var_repoint, tao_var_target_calc, &
+    tao_var_useit_plot_calc, tao_write_cmd, tao_x_axis_cmd
 
 use tao_init_data_mod, only: tao_add_to_normal_mode_h_array, tao_allocate_data_array, &
     tao_d2_data_stuffit, tao_init_data, tao_init_data_end_stuff, tao_init_data_in_universe
@@ -80,7 +80,7 @@ use tao_dmerit_mod, only: tao_dmerit_calc, tao_dmodel_dvar_calc, tao_veto_vars_w
 use tao_plot_mod, only: tao_draw_beam_chamber_wall, tao_draw_curve_data, &
     tao_draw_ele_for_floor_plan, tao_draw_floor_plan, tao_draw_graph_axes, &
     tao_draw_histogram_data, tao_draw_lat_layout, tao_draw_plots, tao_plot_data, &
-    tao_plot_histogram, tao_plot_key_table, tao_plot_wave
+    tao_plot_histogram, tao_plot_key_table, tao_plot_wave, tao_set_floor_plan_axis_label
 
 use tao_geodesic_lm_optimizer_mod, only: tao_geodesic_lm_optimizer
 
@@ -95,11 +95,12 @@ use tao_scale_mod, only: tao_scale_cmd, tao_scale_graph, tao_scale_plot
 
 use tao_set_mod, only: tao_set_beam_cmd, tao_set_beam_init_cmd, tao_set_bmad_com_cmd, &
     tao_set_branch_cmd, tao_set_calculate_cmd, tao_set_curve_cmd, tao_set_data_cmd, &
-    tao_set_default_cmd, tao_set_dynamic_aperture_cmd, tao_set_elements_cmd, &
-    tao_set_geodesic_lm_cmd, tao_set_global_cmd, tao_set_graph_cmd, tao_set_integer_value, &
-    tao_set_key_cmd, tao_set_lattice_cmd, tao_set_logical_value, tao_set_openmp_n_threads, &
-    tao_set_opti_de_param_cmd, tao_set_particle_start_cmd, tao_set_plot_cmd, &
-    tao_set_plot_page_cmd, tao_set_ptc_com_cmd, tao_set_ran_state_cmd, tao_set_real_value, &
+    tao_set_default_cmd, tao_set_drawing_cmd, tao_set_dynamic_aperture_cmd, &
+    tao_set_elements_cmd, tao_set_geodesic_lm_cmd, tao_set_global_cmd, tao_set_graph_cmd, &
+    tao_set_integer_value, tao_set_key_cmd, tao_set_lattice_cmd, tao_set_logical_value, &
+    tao_set_openmp_n_threads, tao_set_opti_de_param_cmd, tao_set_particle_start_cmd, &
+    tao_set_plot_cmd, tao_set_plot_page_cmd, tao_set_ptc_com_cmd, tao_set_qp_axis_struct, &
+    tao_set_qp_point_struct, tao_set_qp_rect_struct, tao_set_ran_state_cmd, tao_set_real_value, &
     tao_set_region_cmd, tao_set_space_charge_com_cmd, tao_set_symbolic_number_cmd, &
     tao_set_tune_cmd, tao_set_universe_cmd, tao_set_var_cmd, tao_set_wave_cmd, &
     tao_set_z_tune_cmd
@@ -4148,6 +4149,25 @@ subroutine fortran_tao_orbit_beta_wave_anal (plot) bind(c)
   call tao_orbit_beta_wave_anal(plot=f_plot)
 
 end subroutine
+subroutine fortran_tao_oreint_building_wall_pt (pt_in, pt_out) bind(c)
+
+  use tao_struct, only: tao_building_wall_point_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: pt_in  ! 0D_NOT_type
+  type(tao_building_wall_point_struct), pointer :: f_pt_in
+  ! ** Out parameters **
+  type(c_ptr), value :: pt_out  ! 0D_NOT_type
+  type(tao_building_wall_point_struct), pointer :: f_pt_out
+  ! ** End of parameters **
+  ! in: f_pt_in 0D_NOT_type
+  if (.not. c_associated(pt_in)) return
+  call c_f_pointer(pt_in, f_pt_in)
+  f_pt_out = tao_oreint_building_wall_pt(pt_in=f_pt_in)
+
+  ! out: f_pt_out 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
 subroutine fortran_tao_param_value_at_s (dat_name, ele_to_s, ele_here, orbit, err_flag, &
     why_invalid, print_err, bad_datum, value) bind(c)
 
@@ -5781,6 +5801,34 @@ subroutine fortran_tao_set_default_cmd (who_str, value_str) bind(c)
   call tao_set_default_cmd(who_str=f_who_str, value_str=f_value_str)
 
 end subroutine
+subroutine fortran_tao_set_drawing_cmd (drawing, component, value_str) bind(c)
+
+  use tao_struct, only: tao_drawing_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: drawing  ! 0D_NOT_type
+  type(tao_drawing_struct), pointer :: f_drawing
+  type(c_ptr), intent(in), value :: component
+  character(len=4096), target :: f_component
+  character(kind=c_char), pointer :: f_component_ptr(:)
+  type(c_ptr), intent(in), value :: value_str
+  character(len=4096), target :: f_value_str
+  character(kind=c_char), pointer :: f_value_str_ptr(:)
+  ! ** End of parameters **
+  ! in: f_drawing 0D_NOT_type
+  if (.not. c_associated(drawing)) return
+  call c_f_pointer(drawing, f_drawing)
+  ! in: f_component 0D_NOT_character
+  if (.not. c_associated(component)) return
+  call c_f_pointer(component, f_component_ptr, [huge(0)])
+  call to_f_str(f_component_ptr, f_component)
+  ! in: f_value_str 0D_NOT_character
+  if (.not. c_associated(value_str)) return
+  call c_f_pointer(value_str, f_value_str_ptr, [huge(0)])
+  call to_f_str(f_value_str_ptr, f_value_str)
+  call tao_set_drawing_cmd(drawing=f_drawing, component=f_component, value_str=f_value_str)
+
+end subroutine
 subroutine fortran_tao_set_dynamic_aperture_cmd (who, value_str) bind(c)
 
   implicit none
@@ -5853,6 +5901,41 @@ subroutine fortran_tao_set_elements_cmd (ele_list, attribute, value, update) bin
   else
     ! f_update unset
   endif
+end subroutine
+subroutine fortran_tao_set_floor_plan_axis_label (graph, axis_in, axis_out, which) bind(c)
+
+  use tao_struct, only: tao_graph_struct
+  use quick_plot_struct, only: qp_axis_struct
+  implicit none
+  ! ** Inout parameters **
+  type(c_ptr), value :: graph  ! 0D_NOT_type
+  type(tao_graph_struct), pointer :: f_graph
+  type(c_ptr), value :: axis_in  ! 0D_NOT_type
+  type(qp_axis_struct), pointer :: f_axis_in
+  type(c_ptr), value :: axis_out  ! 0D_NOT_type
+  type(qp_axis_struct), pointer :: f_axis_out
+  type(c_ptr), intent(in), value :: which
+  character(len=4096), target :: f_which
+  character(kind=c_char), pointer :: f_which_ptr(:)
+  ! ** End of parameters **
+  ! inout: f_graph 0D_NOT_type
+  if (.not. c_associated(graph)) return
+  call c_f_pointer(graph, f_graph)
+  ! inout: f_axis_in 0D_NOT_type
+  if (.not. c_associated(axis_in)) return
+  call c_f_pointer(axis_in, f_axis_in)
+  ! inout: f_axis_out 0D_NOT_type
+  if (.not. c_associated(axis_out)) return
+  call c_f_pointer(axis_out, f_axis_out)
+  ! inout: f_which 0D_NOT_character
+  if (.not. c_associated(which)) return
+  call c_f_pointer(which, f_which_ptr, [huge(0)])
+  call to_f_str(f_which_ptr, f_which)
+  call tao_set_floor_plan_axis_label(graph=f_graph, axis_in=f_axis_in, axis_out=f_axis_out, &
+      which=f_which)
+
+  ! inout: f_which 0D_NOT_character
+  ! TODO i/o string (max length issue; buffer overflow...)
 end subroutine
 subroutine fortran_tao_set_geodesic_lm_cmd (who, value_str) bind(c)
 
@@ -6310,6 +6393,156 @@ subroutine fortran_tao_set_ptc_com_cmd (who, value_str) bind(c)
   call to_f_str(f_value_str_ptr, f_value_str)
   call tao_set_ptc_com_cmd(who=f_who, value_str=f_value_str)
 
+end subroutine
+subroutine fortran_tao_set_qp_axis_struct (qp_axis_name, component, qp_axis, value, error, &
+    ix_uni) bind(c)
+
+  use quick_plot_struct, only: qp_axis_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: qp_axis_name
+  character(len=4096), target :: f_qp_axis_name
+  character(kind=c_char), pointer :: f_qp_axis_name_ptr(:)
+  type(c_ptr), intent(in), value :: component
+  character(len=4096), target :: f_component
+  character(kind=c_char), pointer :: f_component_ptr(:)
+  type(c_ptr), intent(in), value :: value
+  character(len=4096), target :: f_value
+  character(kind=c_char), pointer :: f_value_ptr(:)
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: error  ! 0D_NOT_logical
+  logical :: f_error
+  logical(c_bool), pointer :: f_error_ptr
+  type(c_ptr), intent(in), value :: ix_uni  ! 0D_NOT_integer
+  integer :: f_ix_uni
+  integer(c_int), pointer :: f_ix_uni_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: qp_axis  ! 0D_NOT_type
+  type(qp_axis_struct), pointer :: f_qp_axis
+  ! ** End of parameters **
+  ! in: f_qp_axis_name 0D_NOT_character
+  if (.not. c_associated(qp_axis_name)) return
+  call c_f_pointer(qp_axis_name, f_qp_axis_name_ptr, [huge(0)])
+  call to_f_str(f_qp_axis_name_ptr, f_qp_axis_name)
+  ! in: f_component 0D_NOT_character
+  if (.not. c_associated(component)) return
+  call c_f_pointer(component, f_component_ptr, [huge(0)])
+  call to_f_str(f_component_ptr, f_component)
+  ! inout: f_qp_axis 0D_NOT_type
+  if (.not. c_associated(qp_axis)) return
+  call c_f_pointer(qp_axis, f_qp_axis)
+  ! in: f_value 0D_NOT_character
+  if (.not. c_associated(value)) return
+  call c_f_pointer(value, f_value_ptr, [huge(0)])
+  call to_f_str(f_value_ptr, f_value)
+  call tao_set_qp_axis_struct(qp_axis_name=f_qp_axis_name, component=f_component, &
+      qp_axis=f_qp_axis, value=f_value, error=f_error, ix_uni=f_ix_uni)
+
+  ! out: f_error 0D_NOT_logical
+  call c_f_pointer(error, f_error_ptr)
+  f_error_ptr = f_error
+  ! out: f_ix_uni 0D_NOT_integer
+  ! no output conversion for f_ix_uni
+end subroutine
+subroutine fortran_tao_set_qp_point_struct (qp_point_name, component, qp_point, value, error, &
+    ix_uni) bind(c)
+
+  use quick_plot_struct, only: qp_point_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: qp_point_name
+  character(len=4096), target :: f_qp_point_name
+  character(kind=c_char), pointer :: f_qp_point_name_ptr(:)
+  type(c_ptr), intent(in), value :: component
+  character(len=4096), target :: f_component
+  character(kind=c_char), pointer :: f_component_ptr(:)
+  type(c_ptr), intent(in), value :: value
+  character(len=4096), target :: f_value
+  character(kind=c_char), pointer :: f_value_ptr(:)
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: error  ! 0D_NOT_logical
+  logical :: f_error
+  logical(c_bool), pointer :: f_error_ptr
+  type(c_ptr), intent(in), value :: ix_uni  ! 0D_NOT_integer
+  integer :: f_ix_uni
+  integer(c_int), pointer :: f_ix_uni_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: qp_point  ! 0D_NOT_type
+  type(qp_point_struct), pointer :: f_qp_point
+  ! ** End of parameters **
+  ! in: f_qp_point_name 0D_NOT_character
+  if (.not. c_associated(qp_point_name)) return
+  call c_f_pointer(qp_point_name, f_qp_point_name_ptr, [huge(0)])
+  call to_f_str(f_qp_point_name_ptr, f_qp_point_name)
+  ! in: f_component 0D_NOT_character
+  if (.not. c_associated(component)) return
+  call c_f_pointer(component, f_component_ptr, [huge(0)])
+  call to_f_str(f_component_ptr, f_component)
+  ! inout: f_qp_point 0D_NOT_type
+  if (.not. c_associated(qp_point)) return
+  call c_f_pointer(qp_point, f_qp_point)
+  ! in: f_value 0D_NOT_character
+  if (.not. c_associated(value)) return
+  call c_f_pointer(value, f_value_ptr, [huge(0)])
+  call to_f_str(f_value_ptr, f_value)
+  call tao_set_qp_point_struct(qp_point_name=f_qp_point_name, component=f_component, &
+      qp_point=f_qp_point, value=f_value, error=f_error, ix_uni=f_ix_uni)
+
+  ! out: f_error 0D_NOT_logical
+  call c_f_pointer(error, f_error_ptr)
+  f_error_ptr = f_error
+  ! out: f_ix_uni 0D_NOT_integer
+  ! no output conversion for f_ix_uni
+end subroutine
+subroutine fortran_tao_set_qp_rect_struct (qp_rect_name, component, qp_rect, value, error, &
+    ix_uni) bind(c)
+
+  use quick_plot_struct, only: qp_rect_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: qp_rect_name
+  character(len=4096), target :: f_qp_rect_name
+  character(kind=c_char), pointer :: f_qp_rect_name_ptr(:)
+  type(c_ptr), intent(in), value :: component
+  character(len=4096), target :: f_component
+  character(kind=c_char), pointer :: f_component_ptr(:)
+  type(c_ptr), intent(in), value :: value
+  character(len=4096), target :: f_value
+  character(kind=c_char), pointer :: f_value_ptr(:)
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: error  ! 0D_NOT_logical
+  logical :: f_error
+  logical(c_bool), pointer :: f_error_ptr
+  type(c_ptr), intent(in), value :: ix_uni  ! 0D_NOT_integer
+  integer :: f_ix_uni
+  integer(c_int), pointer :: f_ix_uni_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: qp_rect  ! 0D_NOT_type
+  type(qp_rect_struct), pointer :: f_qp_rect
+  ! ** End of parameters **
+  ! in: f_qp_rect_name 0D_NOT_character
+  if (.not. c_associated(qp_rect_name)) return
+  call c_f_pointer(qp_rect_name, f_qp_rect_name_ptr, [huge(0)])
+  call to_f_str(f_qp_rect_name_ptr, f_qp_rect_name)
+  ! in: f_component 0D_NOT_character
+  if (.not. c_associated(component)) return
+  call c_f_pointer(component, f_component_ptr, [huge(0)])
+  call to_f_str(f_component_ptr, f_component)
+  ! inout: f_qp_rect 0D_NOT_type
+  if (.not. c_associated(qp_rect)) return
+  call c_f_pointer(qp_rect, f_qp_rect)
+  ! in: f_value 0D_NOT_character
+  if (.not. c_associated(value)) return
+  call c_f_pointer(value, f_value_ptr, [huge(0)])
+  call to_f_str(f_value_ptr, f_value)
+  call tao_set_qp_rect_struct(qp_rect_name=f_qp_rect_name, component=f_component, &
+      qp_rect=f_qp_rect, value=f_value, error=f_error, ix_uni=f_ix_uni)
+
+  ! out: f_error 0D_NOT_logical
+  call c_f_pointer(error, f_error_ptr)
+  f_error_ptr = f_error
+  ! out: f_ix_uni 0D_NOT_integer
+  ! no output conversion for f_ix_uni
 end subroutine
 subroutine fortran_tao_set_ran_state_cmd (state_string) bind(c)
 

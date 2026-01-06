@@ -4159,60 +4159,72 @@ void low_energy_z_correction(
 
 // Skipped unusable routine lsc_kick_params_calc:
 // - Untranslated type: csr_struct (0D)
-
-// Skipped unusable routine mad_add_offsets_and_multipoles:
-// - Untranslated type: mad_map_struct (0D)
-
-// Skipped unusable routine mad_concat_map2:
-// - Untranslated type: mad_map_struct (0D)
-// - Untranslated type: mad_map_struct (0D)
-// - Untranslated type: mad_map_struct (0D)
-
-// Skipped unusable routine mad_drift:
-// - Untranslated type: mad_energy_struct (0D)
-// - Untranslated type: mad_map_struct (0D)
-
-// Skipped unusable routine mad_elsep:
-// - Untranslated type: mad_energy_struct (0D)
-// - Untranslated type: mad_map_struct (0D)
+extern "C" void fortran_mad_add_offsets_and_multipoles(
+    void* ele /* 0D_NOT_type in */,
+    void* map /* 0D_NOT_type out */);
+MadMapProxy mad_add_offsets_and_multipoles(EleProxy& ele);
+extern "C" void fortran_mad_concat_map2(
+    void* map1 /* 0D_NOT_type in */,
+    void* map2 /* 0D_NOT_type in */,
+    void* map3 /* 0D_NOT_type out */);
+MadMapProxy mad_concat_map2(MadMapProxy& map1, MadMapProxy& map2);
+extern "C" void fortran_mad_drift(
+    void* ele /* 0D_NOT_type in */,
+    void* energy /* 0D_NOT_type in */,
+    void* map /* 0D_NOT_type out */);
+MadMapProxy mad_drift(EleProxy& ele, MadEnergyProxy& energy);
+extern "C" void fortran_mad_elsep(
+    void* ele /* 0D_NOT_type in */,
+    void* energy /* 0D_NOT_type in */,
+    void* map /* 0D_NOT_type out */);
+MadMapProxy mad_elsep(EleProxy& ele, MadEnergyProxy& energy);
 
 // Skipped unusable routine mad_energy_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine mad_map_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
-
-// Skipped unusable routine mad_map_to_taylor:
-// - Untranslated type: mad_map_struct (0D)
-// - Untranslated type: mad_energy_struct (0D)
-
-// Skipped unusable routine mad_quadrupole:
-// - Untranslated type: mad_energy_struct (0D)
-// - Untranslated type: mad_map_struct (0D)
-
-// Skipped unusable routine mad_rfcavity:
-// - Untranslated type: mad_energy_struct (0D)
-// - Untranslated type: mad_map_struct (0D)
-
-// Skipped unusable routine mad_sbend:
-// - Untranslated type: mad_energy_struct (0D)
-// - Untranslated type: mad_map_struct (0D)
-
-// Skipped unusable routine mad_sbend_body:
-// - Untranslated type: mad_energy_struct (0D)
-// - Untranslated type: mad_map_struct (0D)
-
-// Skipped unusable routine mad_sbend_fringe:
-// - Untranslated type: mad_energy_struct (0D)
-// - Untranslated type: mad_map_struct (0D)
-
-// Skipped unusable routine mad_sextupole:
-// - Untranslated type: mad_energy_struct (0D)
-// - Untranslated type: mad_map_struct (0D)
-
-// Skipped unusable routine mad_solenoid:
-// - Untranslated type: mad_energy_struct (0D)
-// - Untranslated type: mad_map_struct (0D)
+extern "C" void fortran_mad_map_to_taylor(
+    void* map /* 0D_NOT_type in */,
+    void* energy /* 0D_NOT_type in */,
+    void* taylor /* 1D_ALLOC_type out */);
+TaylorProxyAlloc1D mad_map_to_taylor(MadMapProxy& map, MadEnergyProxy& energy);
+extern "C" void fortran_mad_quadrupole(
+    void* ele /* 0D_NOT_type in */,
+    void* energy /* 0D_NOT_type in */,
+    void* map /* 0D_NOT_type out */);
+MadMapProxy mad_quadrupole(EleProxy& ele, MadEnergyProxy& energy);
+extern "C" void fortran_mad_rfcavity(
+    void* ele /* 0D_NOT_type in */,
+    void* energy /* 0D_NOT_type in */,
+    void* map /* 0D_NOT_type out */);
+MadMapProxy mad_rfcavity(EleProxy& ele, MadEnergyProxy& energy);
+extern "C" void fortran_mad_sbend(
+    void* ele /* 0D_NOT_type in */,
+    void* energy /* 0D_NOT_type in */,
+    void* map /* 0D_NOT_type out */);
+MadMapProxy mad_sbend(EleProxy& ele, MadEnergyProxy& energy);
+extern "C" void fortran_mad_sbend_body(
+    void* ele /* 0D_NOT_type in */,
+    void* energy /* 0D_NOT_type in */,
+    void* map /* 0D_NOT_type out */);
+MadMapProxy mad_sbend_body(EleProxy& ele, MadEnergyProxy& energy);
+extern "C" void fortran_mad_sbend_fringe(
+    void* ele /* 0D_NOT_type in */,
+    void* energy /* 0D_NOT_type in */,
+    bool& into /* 0D_NOT_logical in */,
+    void* map /* 0D_NOT_type out */);
+MadMapProxy mad_sbend_fringe(EleProxy& ele, MadEnergyProxy& energy, bool into);
+extern "C" void fortran_mad_sextupole(
+    void* ele /* 0D_NOT_type in */,
+    void* energy /* 0D_NOT_type in */,
+    void* map /* 0D_NOT_type out */);
+MadMapProxy mad_sextupole(EleProxy& ele, MadEnergyProxy& energy);
+extern "C" void fortran_mad_solenoid(
+    void* ele /* 0D_NOT_type in */,
+    void* energy /* 0D_NOT_type in */,
+    void* map /* 0D_NOT_type out */);
+MadMapProxy mad_solenoid(EleProxy& ele, MadEnergyProxy& energy);
 extern "C" void fortran_mad_tmfoc(
     double& el /* 0D_NOT_real in */,
     double& sk1 /* 0D_NOT_real in */,
@@ -4229,12 +4241,15 @@ struct MadTmfoc {
 Bmad::MadTmfoc mad_tmfoc(double el, double sk1);
 extern "C" void fortran_mad_tmsymm(double* te /* 3D_NOT_real inout */);
 void mad_tmsymm(FixedArray3D<Real, 6, 6, 6> te);
-
-// Skipped unusable routine mad_tmtilt:
-// - Untranslated type: mad_map_struct (0D)
-
-// Skipped unusable routine mad_track1:
-// - Untranslated type: mad_map_struct (0D)
+extern "C" void fortran_mad_tmtilt(
+    void* map /* 0D_NOT_type inout */,
+    double& tilt /* 0D_NOT_real in */);
+void mad_tmtilt(MadMapProxy& map, double tilt);
+extern "C" void fortran_mad_track1(
+    void* c0 /* 0D_NOT_type in */,
+    void* map /* 0D_NOT_type in */,
+    void* c1 /* 0D_NOT_type out */);
+CoordProxy mad_track1(CoordProxy& c0, MadMapProxy& map);
 extern "C" void fortran_make_g2_mats(
     void* twiss /* 0D_NOT_type in */,
     double* g2_mat /* 2D_NOT_real inout */,
@@ -4276,10 +4291,16 @@ LatProxy make_hybrid_lat(
     LatProxy& lat_in,
     std::optional<bool> use_taylor = std::nullopt,
     optional_ref<CoordArrayProxyAlloc1D> orb0_arr = std::nullopt);
-
-// Skipped unusable routine make_mad_map:
-// - Untranslated type: mad_energy_struct (0D)
-// - Untranslated type: mad_map_struct (0D)
+extern "C" void fortran_make_mad_map(
+    void* ele /* 0D_NOT_type in */,
+    void* param /* 0D_NOT_type in */,
+    void* energy /* 0D_NOT_type out */,
+    void* map /* 0D_NOT_type out */);
+struct MakeMadMap {
+  MadEnergyProxy energy;
+  MadMapProxy map;
+};
+Bmad::MakeMadMap make_mad_map(EleProxy& ele, LatParamProxy& param);
 extern "C" void fortran_make_mat6(
     void* ele /* 0D_NOT_type inout */,
     void* param /* 0D_NOT_type in */,
@@ -4420,9 +4441,8 @@ Bmad::MakeSmatFromAbc make_smat_from_abc(
 // Skipped unusable routine make_srdt_cache:
 // - Untranslated type: sliced_eles_struct (1D)
 // - Variable inout sized array: cache(:,:,:) 3D_ALLOC_complex
-
-// Skipped unusable routine make_unit_mad_map:
-// - Untranslated type: mad_map_struct (0D)
+extern "C" void fortran_make_unit_mad_map(void* map /* 0D_NOT_type inout */);
+void make_unit_mad_map(MadMapProxy& map);
 extern "C" void fortran_make_v(
     double* M /* 2D_NOT_real inout */,
     std::complex<double>* V /* 2D_NOT_complex inout */,
@@ -7767,10 +7787,13 @@ bool taylor_propagate1(
 
 // Skipped unusable routine taylor_to_genfield:
 // - Untranslated type: genfield (0D)
-
-// Skipped unusable routine taylor_to_mad_map:
-// - Untranslated type: mad_energy_struct (0D)
-// - Untranslated type: mad_map_struct (0D)
+extern "C" void fortran_taylor_to_mad_map(
+    void* taylor /* 1D_ALLOC_type in */,
+    void* energy /* 0D_NOT_type in */,
+    void* map /* 0D_NOT_type out */);
+MadMapProxy taylor_to_mad_map(
+    TaylorProxyAlloc1D& taylor,
+    MadEnergyProxy& energy);
 
 // Skipped unusable routine taylor_to_real_8:
 // - Untranslated type: real_8 (1D)

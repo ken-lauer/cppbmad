@@ -1,5 +1,5 @@
-#include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
+#include "bmad/generated/proxy.hpp"
 
 namespace Bmad {
 std::string to_string(const SplineProxy& self) {
@@ -1352,7 +1352,15 @@ std::string to_string(const TaoEleShapeProxy& self) {
        std::pair{"line_width", to_string(self.line_width())},
        std::pair{"offset", to_string(self.offset())},
        std::pair{"ix_key", to_string(self.ix_key())},
-       std::pair{"name_ele", self.name_ele()}});
+       std::pair{"name_ele", self.name_ele()},
+       std::pair{"uni", "[...]"}});
+}
+std::string to_string(const TaoElePointerProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoElePointerProxy",
+      {std::pair{"eles", "[...]"},
+       std::pair{"n_loc", to_string(self.n_loc())}});
 }
 std::string to_string(const TaoCurveProxy& self) {
   return repr(
@@ -1369,6 +1377,8 @@ std::string to_string(const TaoCurveProxy& self) {
        std::pair{"component", self.component()},
        std::pair{"why_invalid", self.why_invalid()},
        std::pair{"g", to_string(self.g())},
+       std::pair{"hist", to_string(self.hist())},
+       std::pair{"z_color", to_string(self.z_color())},
        std::pair{"x_line", to_string(self.x_line())},
        std::pair{"y_line", to_string(self.y_line())},
        std::pair{"y2_line", to_string(self.y2_line())},
@@ -1380,6 +1390,9 @@ std::string to_string(const TaoCurveProxy& self) {
        std::pair{"symb_size", to_string(self.symb_size())},
        std::pair{"ix_symb", to_string(self.ix_symb())},
        std::pair{"y_axis_scale_factor", to_string(self.y_axis_scale_factor())},
+       std::pair{"line", to_string(self.line())},
+       std::pair{"symbol", to_string(self.symbol())},
+       std::pair{"orbit", to_string(self.orbit())},
        std::pair{"ix_universe", to_string(self.ix_universe())},
        std::pair{"symbol_every", to_string(self.symbol_every())},
        std::pair{"ix_branch", to_string(self.ix_branch())},
@@ -1392,6 +1405,36 @@ std::string to_string(const TaoCurveProxy& self) {
        std::pair{"draw_error_bars", to_string(self.draw_error_bars())},
        std::pair{"smooth_line_calc", to_string(self.smooth_line_calc())},
        std::pair{"valid", to_string(self.valid())}});
+}
+std::string to_string(const TaoCurveColorProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoCurveColorProxy",
+      {std::pair{"data_type", self.data_type()},
+       std::pair{"is_on", to_string(self.is_on())},
+       std::pair{"min", to_string(self.min())},
+       std::pair{"max", to_string(self.max())},
+       std::pair{"autoscale", to_string(self.autoscale())}});
+}
+std::string to_string(const TaoCurveOrbitProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoCurveOrbitProxy",
+      {std::pair{"x", to_string(self.x())},
+       std::pair{"y", to_string(self.y())},
+       std::pair{"t", to_string(self.t())}});
+}
+std::string to_string(const TaoHistogramProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoHistogramProxy",
+      {std::pair{"density_normalized", to_string(self.density_normalized())},
+       std::pair{"weight_by_charge", to_string(self.weight_by_charge())},
+       std::pair{"minimum", to_string(self.minimum())},
+       std::pair{"maximum", to_string(self.maximum())},
+       std::pair{"width", to_string(self.width())},
+       std::pair{"center", to_string(self.center())},
+       std::pair{"number", to_string(self.number())}});
 }
 std::string to_string(const LatEleOrder1Proxy& self) {
   return repr(
@@ -1563,6 +1606,16 @@ std::string to_string(const TaoGraphProxy& self) {
        std::pair{"why_invalid", self.why_invalid()},
        std::pair{"curve", "[...]"},
        std::pair{"p", to_string(self.p())},
+       std::pair{"floor_plan", to_string(self.floor_plan())},
+       std::pair{"text_legend_origin", to_string(self.text_legend_origin())},
+       std::pair{"curve_legend_origin", to_string(self.curve_legend_origin())},
+       std::pair{"curve_legend", to_string(self.curve_legend())},
+       std::pair{"x", to_string(self.x())},
+       std::pair{"y", to_string(self.y())},
+       std::pair{"x2", to_string(self.x2())},
+       std::pair{"y2", to_string(self.y2())},
+       std::pair{"margin", to_string(self.margin())},
+       std::pair{"scale_margin", to_string(self.scale_margin())},
        std::pair{"x_axis_scale_factor", to_string(self.x_axis_scale_factor())},
        std::pair{"symbol_size_scale", to_string(self.symbol_size_scale())},
        std::pair{"box", to_string(self.box())},
@@ -1626,11 +1679,19 @@ std::string to_string(const TaoSuperUniverseProxy& self) {
   return repr(
       self.get_fortran_ptr(),
       "TaoSuperUniverseProxy",
-      {std::pair{"var", "[...]"},
+      {std::pair{"global", to_string(self.global())},
+       std::pair{"init", to_string(self.init())},
+       std::pair{"com", to_string(self.com())},
+       std::pair{"plot_page", to_string(self.plot_page())},
+       std::pair{"v1_var", "[...]"},
+       std::pair{"var", "[...]"},
        std::pair{"u", "[...]"},
        std::pair{"key", to_string(self.key())},
+       std::pair{"building_wall", to_string(self.building_wall())},
+       std::pair{"wave", to_string(self.wave())},
        std::pair{"n_var_used", to_string(self.n_var_used())},
        std::pair{"n_v1_var_used", to_string(self.n_v1_var_used())},
+       std::pair{"history", "[...]"},
        std::pair{"initialized", to_string(self.initialized())}});
 }
 std::string to_string(const TaoVarProxy& self) {
@@ -1640,6 +1701,7 @@ std::string to_string(const TaoVarProxy& self) {
       {std::pair{"ele_name", self.ele_name()},
        std::pair{"attrib_name", self.attrib_name()},
        std::pair{"id", self.id()},
+       std::pair{"slave", "[...]"},
        std::pair{"ix_v1", to_string(self.ix_v1())},
        std::pair{"ix_var", to_string(self.ix_var())},
        std::pair{"ix_dvar", to_string(self.ix_dvar())},
@@ -1672,7 +1734,18 @@ std::string to_string(const TaoVarProxy& self) {
        std::pair{"good_plot", to_string(self.good_plot())},
        std::pair{"useit_opt", to_string(self.useit_opt())},
        std::pair{"useit_plot", to_string(self.useit_plot())},
-       std::pair{"key_bound", to_string(self.key_bound())}});
+       std::pair{"key_bound", to_string(self.key_bound())},
+       std::pair{"v1", to_string(self.v1())}});
+}
+std::string to_string(const TaoVarSlaveProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoVarSlaveProxy",
+      {std::pair{"ix_uni", to_string(self.ix_uni())},
+       std::pair{"ix_branch", to_string(self.ix_branch())},
+       std::pair{"ix_ele", to_string(self.ix_ele())},
+       std::pair{"model_value", to_string(self.model_value())},
+       std::pair{"base_value", to_string(self.base_value())}});
 }
 std::string to_string(const TaoLatticeProxy& self) {
   return repr(
@@ -1816,6 +1889,493 @@ std::string to_string(const LatEleOrderProxy& self) {
       "LatEleOrderProxy",
       {std::pair{"branch", "[...]"}});
 }
+std::string to_string(const TaoTitleProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoTitleProxy",
+      {std::pair{"string", self.string()},
+       std::pair{"x", to_string(self.x())},
+       std::pair{"y", to_string(self.y())},
+       std::pair{"units", self.units()},
+       std::pair{"justify", self.justify()},
+       std::pair{"draw_it", to_string(self.draw_it())}});
+}
+std::string to_string(const QpRectProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "QpRectProxy",
+      {std::pair{"x1", to_string(self.x1())},
+       std::pair{"x2", to_string(self.x2())},
+       std::pair{"y1", to_string(self.y1())},
+       std::pair{"y2", to_string(self.y2())},
+       std::pair{"units", self.units()}});
+}
+std::string to_string(const TaoDrawingProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoDrawingProxy",
+      {std::pair{"ele_shape", "[...]"}});
+}
+std::string to_string(const TaoShapePatternProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoShapePatternProxy",
+      {std::pair{"name", self.name()},
+       std::pair{"line", to_string(self.line())},
+       std::pair{"pt", "[...]"}});
+}
+std::string to_string(const TaoShapePatternPointProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoShapePatternPointProxy",
+      {std::pair{"s", to_string(self.s())},
+       std::pair{"y", to_string(self.y())},
+       std::pair{"radius", to_string(self.radius())}});
+}
+std::string to_string(const QpAxisProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "QpAxisProxy",
+      {std::pair{"label", self.label()},
+       std::pair{"min", to_string(self.min())},
+       std::pair{"max", to_string(self.max())},
+       std::pair{"tick_min", to_string(self.tick_min())},
+       std::pair{"tick_max", to_string(self.tick_max())},
+       std::pair{"eval_min", to_string(self.eval_min())},
+       std::pair{"eval_max", to_string(self.eval_max())},
+       std::pair{"dtick", to_string(self.dtick())},
+       std::pair{"number_offset", to_string(self.number_offset())},
+       std::pair{"label_offset", to_string(self.label_offset())},
+       std::pair{"major_tick_len", to_string(self.major_tick_len())},
+       std::pair{"minor_tick_len", to_string(self.minor_tick_len())},
+       std::pair{"label_color", self.label_color()},
+       std::pair{"major_div", to_string(self.major_div())},
+       std::pair{"major_div_nominal", to_string(self.major_div_nominal())},
+       std::pair{"minor_div", to_string(self.minor_div())},
+       std::pair{"minor_div_max", to_string(self.minor_div_max())},
+       std::pair{"places", to_string(self.places())},
+       std::pair{"type", self.type()},
+       std::pair{"bounds", self.bounds()},
+       std::pair{"tick_side", to_string(self.tick_side())},
+       std::pair{"number_side", to_string(self.number_side())},
+       std::pair{"draw_label", to_string(self.draw_label())},
+       std::pair{"draw_numbers", to_string(self.draw_numbers())}});
+}
+std::string to_string(const QpLegendProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "QpLegendProxy",
+      {std::pair{"row_spacing", to_string(self.row_spacing())},
+       std::pair{"line_length", to_string(self.line_length())},
+       std::pair{"text_offset", to_string(self.text_offset())},
+       std::pair{"draw_line", to_string(self.draw_line())},
+       std::pair{"draw_symbol", to_string(self.draw_symbol())},
+       std::pair{"draw_text", to_string(self.draw_text())}});
+}
+std::string to_string(const QpPointProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "QpPointProxy",
+      {std::pair{"x", to_string(self.x())},
+       std::pair{"y", to_string(self.y())},
+       std::pair{"units", self.units()}});
+}
+std::string to_string(const QpLineProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "QpLineProxy",
+      {std::pair{"width", to_string(self.width())},
+       std::pair{"color", self.color()},
+       std::pair{"pattern", self.pattern()}});
+}
+std::string to_string(const QpSymbolProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "QpSymbolProxy",
+      {std::pair{"type", self.type()},
+       std::pair{"height", to_string(self.height())},
+       std::pair{"color", self.color()},
+       std::pair{"fill_pattern", self.fill_pattern()},
+       std::pair{"line_width", to_string(self.line_width())}});
+}
+std::string to_string(const TaoFloorPlanProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoFloorPlanProxy",
+      {std::pair{"view", self.view()},
+       std::pair{"rotation", to_string(self.rotation())},
+       std::pair{"correct_distortion", to_string(self.correct_distortion())},
+       std::pair{"flip_label_side", to_string(self.flip_label_side())},
+       std::pair{"size_is_absolute", to_string(self.size_is_absolute())},
+       std::pair{
+           "draw_only_first_pass", to_string(self.draw_only_first_pass())},
+       std::pair{"draw_building_wall", to_string(self.draw_building_wall())},
+       std::pair{"orbit_scale", to_string(self.orbit_scale())},
+       std::pair{"orbit_color", self.orbit_color()},
+       std::pair{"orbit_pattern", self.orbit_pattern()},
+       std::pair{"orbit_lattice", self.orbit_lattice()},
+       std::pair{"orbit_width", to_string(self.orbit_width())}});
+}
+std::string to_string(const TaoV1VarProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoV1VarProxy",
+      {std::pair{"name", self.name()},
+       std::pair{"ix_v1_var", to_string(self.ix_v1_var())},
+       std::pair{"v", "[...]"}});
+}
+std::string to_string(const TaoGlobalProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoGlobalProxy",
+      {std::pair{"beam_dead_cutoff", to_string(self.beam_dead_cutoff())},
+       std::pair{"lm_opt_deriv_reinit", to_string(self.lm_opt_deriv_reinit())},
+       std::pair{"de_lm_step_ratio", to_string(self.de_lm_step_ratio())},
+       std::pair{
+           "de_var_to_population_factor",
+           to_string(self.de_var_to_population_factor())},
+       std::pair{"lmdif_eps", to_string(self.lmdif_eps())},
+       std::pair{
+           "lmdif_negligible_merit", to_string(self.lmdif_negligible_merit())},
+       std::pair{"svd_cutoff", to_string(self.svd_cutoff())},
+       std::pair{"unstable_penalty", to_string(self.unstable_penalty())},
+       std::pair{"merit_stop_value", to_string(self.merit_stop_value())},
+       std::pair{"dmerit_stop_value", to_string(self.dmerit_stop_value())},
+       std::pair{"random_sigma_cutoff", to_string(self.random_sigma_cutoff())},
+       std::pair{"delta_e_chrom", to_string(self.delta_e_chrom())},
+       std::pair{"max_plot_time", to_string(self.max_plot_time())},
+       std::pair{"default_universe", to_string(self.default_universe())},
+       std::pair{"default_branch", to_string(self.default_branch())},
+       std::pair{"n_opti_cycles", to_string(self.n_opti_cycles())},
+       std::pair{"n_opti_loops", to_string(self.n_opti_loops())},
+       std::pair{"n_threads", to_string(self.n_threads())},
+       std::pair{"phase_units", to_string(self.phase_units())},
+       std::pair{"bunch_to_plot", to_string(self.bunch_to_plot())},
+       std::pair{"random_seed", to_string(self.random_seed())},
+       std::pair{"n_top10_merit", to_string(self.n_top10_merit())},
+       std::pair{"srdt_gen_n_slices", to_string(self.srdt_gen_n_slices())},
+       std::pair{
+           "datum_err_messages_max", to_string(self.datum_err_messages_max())},
+       std::pair{"srdt_sxt_n_slices", to_string(self.srdt_sxt_n_slices())},
+       std::pair{"srdt_use_cache", to_string(self.srdt_use_cache())},
+       std::pair{"quiet", self.quiet()},
+       std::pair{"random_engine", self.random_engine()},
+       std::pair{"random_gauss_converter", self.random_gauss_converter()},
+       std::pair{"track_type", self.track_type()},
+       std::pair{
+           "lat_sigma_calc_uses_emit_from",
+           self.lat_sigma_calc_uses_emit_from()},
+       std::pair{"prompt_string", self.prompt_string()},
+       std::pair{"prompt_color", self.prompt_color()},
+       std::pair{"optimizer", self.optimizer()},
+       std::pair{"print_command", self.print_command()},
+       std::pair{"var_out_file", self.var_out_file()},
+       std::pair{"history_file", self.history_file()},
+       std::pair{"beam_timer_on", to_string(self.beam_timer_on())},
+       std::pair{"box_plots", to_string(self.box_plots())},
+       std::pair{
+           "blank_line_between_commands",
+           to_string(self.blank_line_between_commands())},
+       std::pair{
+           "cmd_file_abort_on_error",
+           to_string(self.cmd_file_abort_on_error())},
+       std::pair{"concatenate_maps", to_string(self.concatenate_maps())},
+       std::pair{"derivative_recalc", to_string(self.derivative_recalc())},
+       std::pair{
+           "derivative_uses_design", to_string(self.derivative_uses_design())},
+       std::pair{
+           "disable_smooth_line_calc",
+           to_string(self.disable_smooth_line_calc())},
+       std::pair{
+           "draw_curve_off_scale_warn",
+           to_string(self.draw_curve_off_scale_warn())},
+       std::pair{"external_plotting", to_string(self.external_plotting())},
+       std::pair{
+           "label_lattice_elements", to_string(self.label_lattice_elements())},
+       std::pair{"label_keys", to_string(self.label_keys())},
+       std::pair{"lattice_calc_on", to_string(self.lattice_calc_on())},
+       std::pair{"only_limit_opt_vars", to_string(self.only_limit_opt_vars())},
+       std::pair{"opt_with_ref", to_string(self.opt_with_ref())},
+       std::pair{"opt_with_base", to_string(self.opt_with_base())},
+       std::pair{
+           "opt_match_auto_recalc", to_string(self.opt_match_auto_recalc())},
+       std::pair{"opti_write_var_file", to_string(self.opti_write_var_file())},
+       std::pair{
+           "optimizer_allow_user_abort",
+           to_string(self.optimizer_allow_user_abort())},
+       std::pair{
+           "optimizer_var_limit_warn",
+           to_string(self.optimizer_var_limit_warn())},
+       std::pair{"plot_on", to_string(self.plot_on())},
+       std::pair{
+           "rad_int_user_calc_on", to_string(self.rad_int_user_calc_on())},
+       std::pair{"rf_on", to_string(self.rf_on())},
+       std::pair{"single_step", to_string(self.single_step())},
+       std::pair{"stop_on_error", to_string(self.stop_on_error())},
+       std::pair{
+           "svd_retreat_on_merit_increase",
+           to_string(self.svd_retreat_on_merit_increase())},
+       std::pair{"var_limits_on", to_string(self.var_limits_on())},
+       std::pair{
+           "wait_for_CR_in_single_mode",
+           to_string(self.wait_for_CR_in_single_mode())},
+       std::pair{"symbol_import", to_string(self.symbol_import())},
+       std::pair{"debug_on", to_string(self.debug_on())},
+       std::pair{"expression_tree_on", to_string(self.expression_tree_on())},
+       std::pair{"verbose_on", to_string(self.verbose_on())}});
+}
+std::string to_string(const TaoInitProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoInitProxy",
+      {std::pair{"parse_cmd_args", to_string(self.parse_cmd_args())},
+       std::pair{"debug_switch", to_string(self.debug_switch())},
+       std::pair{
+           "external_plotting_switch",
+           to_string(self.external_plotting_switch())},
+       std::pair{"init_name", self.init_name()},
+       std::pair{"hook_init_file", self.hook_init_file()},
+       std::pair{"hook_lat_file", self.hook_lat_file()},
+       std::pair{"hook_beam_file", self.hook_beam_file()},
+       std::pair{"hook_data_file", self.hook_data_file()},
+       std::pair{"hook_plot_file", self.hook_plot_file()},
+       std::pair{"hook_startup_file", self.hook_startup_file()},
+       std::pair{"hook_var_file", self.hook_var_file()},
+       std::pair{"hook_building_wall_file", self.hook_building_wall_file()},
+       std::pair{"init_file_arg_path", self.init_file_arg_path()},
+       std::pair{"lattice_file_arg", self.lattice_file_arg()},
+       std::pair{"hook_init_file_arg", self.hook_init_file_arg()},
+       std::pair{"init_file_arg", self.init_file_arg()},
+       std::pair{"beam_file_arg", self.beam_file_arg()},
+       std::pair{
+           "beam_init_position_file_arg", self.beam_init_position_file_arg()},
+       std::pair{"command_arg", self.command_arg()},
+       std::pair{"data_file_arg", self.data_file_arg()},
+       std::pair{"plot_file_arg", self.plot_file_arg()},
+       std::pair{"startup_file_arg", self.startup_file_arg()},
+       std::pair{"var_file_arg", self.var_file_arg()},
+       std::pair{"building_wall_file_arg", self.building_wall_file_arg()},
+       std::pair{"geometry_arg", self.geometry_arg()},
+       std::pair{"slice_lattice_arg", self.slice_lattice_arg()},
+       std::pair{"start_branch_at_arg", self.start_branch_at_arg()},
+       std::pair{"log_startup_arg", self.log_startup_arg()},
+       std::pair{"no_stopping_arg", self.no_stopping_arg()},
+       std::pair{"noplot_arg", self.noplot_arg()},
+       std::pair{"no_rad_int_arg", self.no_rad_int_arg()},
+       std::pair{"reverse_arg", self.reverse_arg()},
+       std::pair{"debug_arg", self.debug_arg()},
+       std::pair{
+           "disable_smooth_line_calc_arg", self.disable_smooth_line_calc_arg()},
+       std::pair{"rf_on_arg", self.rf_on_arg()},
+       std::pair{"prompt_color_arg", self.prompt_color_arg()},
+       std::pair{"quiet_arg", self.quiet_arg()},
+       std::pair{"noinit_arg", self.noinit_arg()},
+       std::pair{"nostartup_arg", self.nostartup_arg()},
+       std::pair{"symbol_import_arg", self.symbol_import_arg()},
+       std::pair{"unique_name_suffix", self.unique_name_suffix()}});
+}
+std::string to_string(const TaoCommonProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoCommonProxy",
+      {std::pair{"plot_place_buffer", "[...]"},
+       std::pair{"covar", to_string(self.covar())},
+       std::pair{"alpha", to_string(self.alpha())},
+       std::pair{"dummy_target", to_string(self.dummy_target())},
+       std::pair{"n_alias", to_string(self.n_alias())},
+       std::pair{"cmd_file_level", to_string(self.cmd_file_level())},
+       std::pair{"ix_key_bank", to_string(self.ix_key_bank())},
+       std::pair{"ix_history", to_string(self.ix_history())},
+       std::pair{"n_history", to_string(self.n_history())},
+       std::pair{"lev_loop", to_string(self.lev_loop())},
+       std::pair{
+           "n_err_messages_printed", to_string(self.n_err_messages_printed())},
+       std::pair{"n_universes", to_string(self.n_universes())},
+       std::pair{
+           "ix_beam_track_active_element",
+           to_string(self.ix_beam_track_active_element())},
+       std::pair{"cmd_file_paused", to_string(self.cmd_file_paused())},
+       std::pair{"use_cmd_here", to_string(self.use_cmd_here())},
+       std::pair{"cmd_from_cmd_file", to_string(self.cmd_from_cmd_file())},
+       std::pair{
+           "use_saved_beam_in_tracking",
+           to_string(self.use_saved_beam_in_tracking())},
+       std::pair{"single_mode", to_string(self.single_mode())},
+       std::pair{
+           "combine_consecutive_elements_of_like_name",
+           to_string(self.combine_consecutive_elements_of_like_name())},
+       std::pair{"have_tracked_beam", to_string(self.have_tracked_beam())},
+       std::pair{"init_plot_needed", to_string(self.init_plot_needed())},
+       std::pair{"init_beam", to_string(self.init_beam())},
+       std::pair{"init_var", to_string(self.init_var())},
+       std::pair{"init_read_lat_info", to_string(self.init_read_lat_info())},
+       std::pair{"optimizer_running", to_string(self.optimizer_running())},
+       std::pair{
+           "have_datums_using_expressions",
+           to_string(self.have_datums_using_expressions())},
+       std::pair{"print_to_terminal", to_string(self.print_to_terminal())},
+       std::pair{"lattice_calc_done", to_string(self.lattice_calc_done())},
+       std::pair{
+           "add_measurement_noise", to_string(self.add_measurement_noise())},
+       std::pair{
+           "command_arg_has_been_executed",
+           to_string(self.command_arg_has_been_executed())},
+       std::pair{
+           "all_merit_weights_positive",
+           to_string(self.all_merit_weights_positive())},
+       std::pair{
+           "multi_turn_orbit_is_plotted",
+           to_string(self.multi_turn_orbit_is_plotted())},
+       std::pair{"force_chrom_calc", to_string(self.force_chrom_calc())},
+       std::pair{"force_rad_int_calc", to_string(self.force_rad_int_calc())},
+       std::pair{"rad_int_ri_calc_on", to_string(self.rad_int_ri_calc_on())},
+       std::pair{"rad_int_6d_calc_on", to_string(self.rad_int_6d_calc_on())},
+       std::pair{"valid_plot_who", to_string(self.valid_plot_who())},
+       std::pair{"single_mode_buffer", self.single_mode_buffer()},
+       std::pair{"cmd", self.cmd()},
+       std::pair{"saved_cmd_line", self.saved_cmd_line()}});
+}
+std::string to_string(const TaoPlotPageProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoPlotPageProxy",
+      {std::pair{"title", to_string(self.title())},
+       std::pair{"subtitle", to_string(self.subtitle())},
+       std::pair{"border", to_string(self.border())},
+       std::pair{"floor_plan", to_string(self.floor_plan())},
+       std::pair{"lat_layout", to_string(self.lat_layout())},
+       std::pair{"pattern", "[...]"},
+       std::pair{"template_", "[...]"},
+       std::pair{"region", "[...]"},
+       std::pair{"plot_display_type", self.plot_display_type()},
+       std::pair{"size", to_string(self.size())},
+       std::pair{"text_height", to_string(self.text_height())},
+       std::pair{
+           "main_title_text_scale", to_string(self.main_title_text_scale())},
+       std::pair{
+           "graph_title_text_scale", to_string(self.graph_title_text_scale())},
+       std::pair{
+           "axis_number_text_scale", to_string(self.axis_number_text_scale())},
+       std::pair{
+           "axis_label_text_scale", to_string(self.axis_label_text_scale())},
+       std::pair{"legend_text_scale", to_string(self.legend_text_scale())},
+       std::pair{
+           "key_table_text_scale", to_string(self.key_table_text_scale())},
+       std::pair{
+           "floor_plan_shape_scale", to_string(self.floor_plan_shape_scale())},
+       std::pair{
+           "floor_plan_text_scale", to_string(self.floor_plan_text_scale())},
+       std::pair{
+           "lat_layout_shape_scale", to_string(self.lat_layout_shape_scale())},
+       std::pair{
+           "lat_layout_text_scale", to_string(self.lat_layout_text_scale())},
+       std::pair{"n_curve_pts", to_string(self.n_curve_pts())},
+       std::pair{"id_window", to_string(self.id_window())},
+       std::pair{
+           "delete_overlapping_plots",
+           to_string(self.delete_overlapping_plots())},
+       std::pair{
+           "draw_graph_title_suffix",
+           to_string(self.draw_graph_title_suffix())}});
+}
+std::string to_string(const TaoBuildingWallProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoBuildingWallProxy",
+      {std::pair{"orientation", to_string(self.orientation())},
+       std::pair{"section", "[...]"}});
+}
+std::string to_string(const TaoBuildingWallOrientationProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoBuildingWallOrientationProxy",
+      {std::pair{"theta", to_string(self.theta())},
+       std::pair{"x_offset", to_string(self.x_offset())},
+       std::pair{"z_offset", to_string(self.z_offset())}});
+}
+std::string to_string(const TaoBuildingWallSectionProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoBuildingWallSectionProxy",
+      {std::pair{"name", self.name()},
+       std::pair{"constraint", self.constraint()},
+       std::pair{"point", "[...]"}});
+}
+std::string to_string(const TaoBuildingWallPointProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoBuildingWallPointProxy",
+      {std::pair{"z", to_string(self.z())},
+       std::pair{"x", to_string(self.x())},
+       std::pair{"radius", to_string(self.radius())},
+       std::pair{"z_center", to_string(self.z_center())},
+       std::pair{"x_center", to_string(self.x_center())}});
+}
+std::string to_string(const TaoWaveProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoWaveProxy",
+      {std::pair{"data_type", self.data_type()},
+       std::pair{"rms_rel_a", to_string(self.rms_rel_a())},
+       std::pair{"rms_rel_b", to_string(self.rms_rel_b())},
+       std::pair{"rms_rel_as", to_string(self.rms_rel_as())},
+       std::pair{"rms_rel_bs", to_string(self.rms_rel_bs())},
+       std::pair{"rms_rel_ar", to_string(self.rms_rel_ar())},
+       std::pair{"rms_rel_br", to_string(self.rms_rel_br())},
+       std::pair{"rms_rel_k", to_string(self.rms_rel_k())},
+       std::pair{"rms_rel_ks", to_string(self.rms_rel_ks())},
+       std::pair{"rms_rel_kr", to_string(self.rms_rel_kr())},
+       std::pair{"rms_phi", to_string(self.rms_phi())},
+       std::pair{"rms_phi_s", to_string(self.rms_phi_s())},
+       std::pair{"rms_phi_r", to_string(self.rms_phi_r())},
+       std::pair{"amp_ba_s", to_string(self.amp_ba_s())},
+       std::pair{"amp_ba_r", to_string(self.amp_ba_r())},
+       std::pair{"chi_a", to_string(self.chi_a())},
+       std::pair{"chi_c", to_string(self.chi_c())},
+       std::pair{"chi_ba", to_string(self.chi_ba())},
+       std::pair{"amp_a", to_string(self.amp_a())},
+       std::pair{"amp_b", to_string(self.amp_b())},
+       std::pair{"amp_ba", to_string(self.amp_ba())},
+       std::pair{"coef_a", to_string(self.coef_a())},
+       std::pair{"coef_b", to_string(self.coef_b())},
+       std::pair{"coef_ba", to_string(self.coef_ba())},
+       std::pair{"n_func", to_string(self.n_func())},
+       std::pair{"ix_a1", to_string(self.ix_a1())},
+       std::pair{"ix_a2", to_string(self.ix_a2())},
+       std::pair{"ix_b1", to_string(self.ix_b1())},
+       std::pair{"ix_b2", to_string(self.ix_b2())},
+       std::pair{"i_a1", to_string(self.i_a1())},
+       std::pair{"i_a2", to_string(self.i_a2())},
+       std::pair{"i_b1", to_string(self.i_b1())},
+       std::pair{"i_b2", to_string(self.i_b2())},
+       std::pair{"n_a", to_string(self.n_a())},
+       std::pair{"n_b", to_string(self.n_b())},
+       std::pair{"i_curve_wrap_pt", to_string(self.i_curve_wrap_pt())},
+       std::pair{"ix_data", to_string(self.ix_data())},
+       std::pair{"n_kick", to_string(self.n_kick())},
+       std::pair{"kick", "[...]"},
+       std::pair{"base_graph", to_string(self.base_graph())},
+       std::pair{"region", to_string(self.region())},
+       std::pair{"d1_dat", to_string(self.d1_dat())}});
+}
+std::string to_string(const TaoWaveKickPtProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoWaveKickPtProxy",
+      {std::pair{"phi_s", to_string(self.phi_s())},
+       std::pair{"phi_r", to_string(self.phi_r())},
+       std::pair{"phi", to_string(self.phi())},
+       std::pair{"amp", to_string(self.amp())},
+       std::pair{"s", to_string(self.s())},
+       std::pair{"ix_dat_before_kick", to_string(self.ix_dat_before_kick())},
+       std::pair{"ele", to_string(self.ele())}});
+}
+std::string to_string(const TaoCmdHistoryProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoCmdHistoryProxy",
+      {std::pair{"cmd", self.cmd()}, std::pair{"ix", to_string(self.ix())}});
+}
 std::string to_string(const TaoUniverseProxy& self) {
   return repr(
       self.get_fortran_ptr(),
@@ -1842,6 +2402,25 @@ std::string to_string(const TaoUniverseProxy& self) {
            "design_same_as_previous",
            to_string(self.design_same_as_previous())},
        std::pair{"picked_uni", to_string(self.picked_uni())}});
+}
+std::string to_string(const MadEnergyProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "MadEnergyProxy",
+      {std::pair{"total", to_string(self.total())},
+       std::pair{"beta", to_string(self.beta())},
+       std::pair{"gamma", to_string(self.gamma())},
+       std::pair{"kinetic", to_string(self.kinetic())},
+       std::pair{"p0c", to_string(self.p0c())},
+       std::pair{"particle", to_string(self.particle())}});
+}
+std::string to_string(const MadMapProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "MadMapProxy",
+      {std::pair{"k", to_string(self.k())},
+       std::pair{"r", to_string(self.r())},
+       std::pair{"t", to_string(self.t())}});
 }
 std::string to_string(const AllEncompassingProxy& self) {
   return repr(
@@ -2379,6 +2958,13 @@ std::string to_string(const Bmad::MakeHvbp& self) {
        std::pair{"H", to_string(self.H)},
        std::pair{"Vbar", to_string(self.Vbar)},
        std::pair{"Hbar", to_string(self.Hbar)}});
+}
+std::string to_string(const Bmad::MakeMadMap& self) {
+  return repr(
+      &self,
+      "Bmad::MakeMadMap",
+      {std::pair{"energy", to_string(self.energy)},
+       std::pair{"map", to_string(self.map)}});
 }
 std::string to_string(const Bmad::MakeMat6& self) {
   return repr(
@@ -3101,6 +3687,27 @@ std::string to_string(const Tao::TaoSetLogicalValue& self) {
       "Tao::TaoSetLogicalValue",
       {std::pair{"var", to_string(self.var)},
        std::pair{"error", to_string(self.error)}});
+}
+std::string to_string(const Tao::TaoSetQpAxisStruct& self) {
+  return repr(
+      &self,
+      "Tao::TaoSetQpAxisStruct",
+      {std::pair{"error", to_string(self.error)},
+       std::pair{"ix_uni", to_string(self.ix_uni)}});
+}
+std::string to_string(const Tao::TaoSetQpPointStruct& self) {
+  return repr(
+      &self,
+      "Tao::TaoSetQpPointStruct",
+      {std::pair{"error", to_string(self.error)},
+       std::pair{"ix_uni", to_string(self.ix_uni)}});
+}
+std::string to_string(const Tao::TaoSetQpRectStruct& self) {
+  return repr(
+      &self,
+      "Tao::TaoSetQpRectStruct",
+      {std::pair{"error", to_string(self.error)},
+       std::pair{"ix_uni", to_string(self.ix_uni)}});
 }
 std::string to_string(const Tao::TaoSetRealValue& self) {
   return repr(

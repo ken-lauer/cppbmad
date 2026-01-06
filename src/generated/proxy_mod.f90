@@ -8,8 +8,10 @@ module bmad_struct_proxy_mod
   use bmad_struct, only: ac_kicker_freq_struct, ac_kicker_struct, ac_kicker_time_struct, anormal_mode_struct, aperture_param_struct, aperture_point_struct, aperture_scan_struct, beam_init_struct, beam_struct, bmad_common_struct, bmad_normal_form_struct, bookkeeping_state_struct, bpm_phase_coupling_struct, branch_struct, bunch_params_struct, bunch_struct, bunch_track_struct, cartesian_map_struct, cartesian_map_term1_struct, cartesian_map_term_struct, complex_taylor_struct, complex_taylor_term_struct, control_ramp1_struct, control_struct, control_var1_struct, controller_struct, coord_array_struct, coord_struct, cylindrical_map_struct, cylindrical_map_term1_struct, cylindrical_map_term_struct, ele_pointer_struct, ele_struct, ellipse_beam_init_struct, em_field_struct, em_taylor_struct, em_taylor_term_struct, expression_atom_struct, expression_tree_struct, floor_position_struct, gen_grad1_struct, gen_grad_map_struct, grid_beam_init_struct, grid_field_pt1_struct, grid_field_pt_struct, grid_field_struct, high_energy_space_charge_struct, interval1_coef_struct, kv_beam_init_struct, lat_ele_loc_struct, lat_ele_order1_struct, lat_ele_order_array_struct, lat_ele_order_struct, lat_param_struct, lat_struct, linac_normal_mode_struct, mode3_struct, mode_info_struct, normal_modes_struct, photon_element_struct, photon_material_struct, photon_reflect_surface_struct, photon_reflect_table_struct, photon_target_struct, pixel_detec_struct, pixel_pt_struct, pre_tracker_struct, ptc_normal_form_struct, rad_int1_struct, rad_int_all_ele_struct, rad_int_branch_struct, rad_map_ele_struct, rad_map_struct, ramper_lord_struct, resonance_h_struct, rf_ele_struct, rf_stair_step_struct, space_charge_common_struct, spin_axis_struct, spin_orbit_map1_struct, spin_polar_struct, strong_beam_struct, surface_curvature_struct, surface_displacement_pt_struct, surface_displacement_struct, surface_h_misalign_pt_struct, surface_h_misalign_struct, surface_segmented_pt_struct, surface_segmented_struct, target_point_struct, taylor_struct, taylor_term_struct, track_point_struct, track_struct, twiss_struct, wake_lr_mode_struct, wake_lr_struct, wake_sr_mode_struct, wake_sr_struct, wake_sr_z_long_struct, wake_struct, wall3d_section_struct, wall3d_struct, wall3d_vertex_struct, xy_disp_struct
   use cubic_interpolation_mod, only: bicubic_cmplx_coef_struct, tricubic_cmplx_coef_struct
   use sim_utils_struct, only: nametable_struct
-  use tao_struct, only: tao_beam_branch_struct, tao_beam_uni_struct, tao_curve_struct, tao_d1_data_struct, tao_d2_data_struct, tao_data_struct, tao_data_var_component_struct, tao_dynamic_aperture_struct, tao_ele_shape_struct, tao_graph_struct, tao_lat_sigma_struct, tao_lattice_branch_struct, tao_lattice_struct, tao_model_branch_struct, tao_model_element_struct, tao_ping_scale_struct, tao_plot_cache_struct, tao_plot_region_struct, tao_plot_struct, tao_spin_dn_dpz_struct, tao_spin_ele_struct, tao_spin_map_struct, tao_spin_polarization_struct, tao_super_universe_struct, tao_universe_calc_struct, tao_universe_pointer_struct, tao_universe_struct, tao_var_struct
+  use tao_struct, only: tao_beam_branch_struct, tao_beam_uni_struct, tao_building_wall_orientation_struct, tao_building_wall_point_struct, tao_building_wall_section_struct, tao_building_wall_struct, tao_cmd_history_struct, tao_common_struct, tao_curve_color_struct, tao_curve_orbit_struct, tao_curve_struct, tao_d1_data_struct, tao_d2_data_struct, tao_data_struct, tao_data_var_component_struct, tao_drawing_struct, tao_dynamic_aperture_struct, tao_ele_pointer_struct, tao_ele_shape_struct, tao_floor_plan_struct, tao_global_struct, tao_graph_struct, tao_histogram_struct, tao_init_struct, tao_lat_sigma_struct, tao_lattice_branch_struct, tao_lattice_struct, tao_model_branch_struct, tao_model_element_struct, tao_ping_scale_struct, tao_plot_cache_struct, tao_plot_page_struct, tao_plot_region_struct, tao_plot_struct, tao_shape_pattern_point_struct, tao_shape_pattern_struct, tao_spin_dn_dpz_struct, tao_spin_ele_struct, tao_spin_map_struct, tao_spin_polarization_struct, tao_super_universe_struct, tao_title_struct, tao_universe_calc_struct, tao_universe_pointer_struct, tao_universe_struct, tao_v1_var_struct, tao_var_slave_struct, tao_var_struct, tao_wave_kick_pt_struct, tao_wave_struct
   use srdt_mod, only: summation_rdt_struct
+  use quick_plot_struct, only: qp_axis_struct, qp_legend_struct, qp_line_struct, qp_point_struct, qp_rect_struct, qp_symbol_struct
+  use mad_mod, only: mad_energy_struct, mad_map_struct
   use test_struct_defs, only: all_encompassing_struct, test_sub_struct, test_sub_sub_struct
   
   type :: spline_struct_container_alloc
@@ -448,9 +450,25 @@ module bmad_struct_proxy_mod
     type(tao_ele_shape_struct), allocatable :: data(:)
   end type tao_ele_shape_struct_container_alloc
 
+  type :: tao_ele_pointer_struct_container_alloc
+    type(tao_ele_pointer_struct), allocatable :: data(:)
+  end type tao_ele_pointer_struct_container_alloc
+
   type :: tao_curve_struct_container_alloc
     type(tao_curve_struct), allocatable :: data(:)
   end type tao_curve_struct_container_alloc
+
+  type :: tao_curve_color_struct_container_alloc
+    type(tao_curve_color_struct), allocatable :: data(:)
+  end type tao_curve_color_struct_container_alloc
+
+  type :: tao_curve_orbit_struct_container_alloc
+    type(tao_curve_orbit_struct), allocatable :: data(:)
+  end type tao_curve_orbit_struct_container_alloc
+
+  type :: tao_histogram_struct_container_alloc
+    type(tao_histogram_struct), allocatable :: data(:)
+  end type tao_histogram_struct_container_alloc
 
   type :: lat_ele_order1_struct_container_alloc
     type(lat_ele_order1_struct), allocatable :: data(:)
@@ -524,6 +542,10 @@ module bmad_struct_proxy_mod
     type(tao_var_struct), allocatable :: data(:)
   end type tao_var_struct_container_alloc
 
+  type :: tao_var_slave_struct_container_alloc
+    type(tao_var_slave_struct), allocatable :: data(:)
+  end type tao_var_slave_struct_container_alloc
+
   type :: tao_lattice_struct_container_alloc
     type(tao_lattice_struct), allocatable :: data(:)
   end type tao_lattice_struct_container_alloc
@@ -560,9 +582,109 @@ module bmad_struct_proxy_mod
     type(lat_ele_order_struct), allocatable :: data(:)
   end type lat_ele_order_struct_container_alloc
 
+  type :: tao_title_struct_container_alloc
+    type(tao_title_struct), allocatable :: data(:)
+  end type tao_title_struct_container_alloc
+
+  type :: qp_rect_struct_container_alloc
+    type(qp_rect_struct), allocatable :: data(:)
+  end type qp_rect_struct_container_alloc
+
+  type :: tao_drawing_struct_container_alloc
+    type(tao_drawing_struct), allocatable :: data(:)
+  end type tao_drawing_struct_container_alloc
+
+  type :: tao_shape_pattern_struct_container_alloc
+    type(tao_shape_pattern_struct), allocatable :: data(:)
+  end type tao_shape_pattern_struct_container_alloc
+
+  type :: tao_shape_pattern_point_struct_container_alloc
+    type(tao_shape_pattern_point_struct), allocatable :: data(:)
+  end type tao_shape_pattern_point_struct_container_alloc
+
+  type :: qp_axis_struct_container_alloc
+    type(qp_axis_struct), allocatable :: data(:)
+  end type qp_axis_struct_container_alloc
+
+  type :: qp_legend_struct_container_alloc
+    type(qp_legend_struct), allocatable :: data(:)
+  end type qp_legend_struct_container_alloc
+
+  type :: qp_point_struct_container_alloc
+    type(qp_point_struct), allocatable :: data(:)
+  end type qp_point_struct_container_alloc
+
+  type :: qp_line_struct_container_alloc
+    type(qp_line_struct), allocatable :: data(:)
+  end type qp_line_struct_container_alloc
+
+  type :: qp_symbol_struct_container_alloc
+    type(qp_symbol_struct), allocatable :: data(:)
+  end type qp_symbol_struct_container_alloc
+
+  type :: tao_floor_plan_struct_container_alloc
+    type(tao_floor_plan_struct), allocatable :: data(:)
+  end type tao_floor_plan_struct_container_alloc
+
+  type :: tao_v1_var_struct_container_alloc
+    type(tao_v1_var_struct), allocatable :: data(:)
+  end type tao_v1_var_struct_container_alloc
+
+  type :: tao_global_struct_container_alloc
+    type(tao_global_struct), allocatable :: data(:)
+  end type tao_global_struct_container_alloc
+
+  type :: tao_init_struct_container_alloc
+    type(tao_init_struct), allocatable :: data(:)
+  end type tao_init_struct_container_alloc
+
+  type :: tao_common_struct_container_alloc
+    type(tao_common_struct), allocatable :: data(:)
+  end type tao_common_struct_container_alloc
+
+  type :: tao_plot_page_struct_container_alloc
+    type(tao_plot_page_struct), allocatable :: data(:)
+  end type tao_plot_page_struct_container_alloc
+
+  type :: tao_building_wall_struct_container_alloc
+    type(tao_building_wall_struct), allocatable :: data(:)
+  end type tao_building_wall_struct_container_alloc
+
+  type :: tao_building_wall_orientation_struct_container_alloc
+    type(tao_building_wall_orientation_struct), allocatable :: data(:)
+  end type tao_building_wall_orientation_struct_container_alloc
+
+  type :: tao_building_wall_section_struct_container_alloc
+    type(tao_building_wall_section_struct), allocatable :: data(:)
+  end type tao_building_wall_section_struct_container_alloc
+
+  type :: tao_building_wall_point_struct_container_alloc
+    type(tao_building_wall_point_struct), allocatable :: data(:)
+  end type tao_building_wall_point_struct_container_alloc
+
+  type :: tao_wave_struct_container_alloc
+    type(tao_wave_struct), allocatable :: data(:)
+  end type tao_wave_struct_container_alloc
+
+  type :: tao_wave_kick_pt_struct_container_alloc
+    type(tao_wave_kick_pt_struct), allocatable :: data(:)
+  end type tao_wave_kick_pt_struct_container_alloc
+
+  type :: tao_cmd_history_struct_container_alloc
+    type(tao_cmd_history_struct), allocatable :: data(:)
+  end type tao_cmd_history_struct_container_alloc
+
   type :: tao_universe_struct_container_alloc
     type(tao_universe_struct), allocatable :: data(:)
   end type tao_universe_struct_container_alloc
+
+  type :: mad_energy_struct_container_alloc
+    type(mad_energy_struct), allocatable :: data(:)
+  end type mad_energy_struct_container_alloc
+
+  type :: mad_map_struct_container_alloc
+    type(mad_map_struct), allocatable :: data(:)
+  end type mad_map_struct_container_alloc
 
   type :: all_encompassing_struct_container_alloc
     type(all_encompassing_struct), allocatable :: data(:)
@@ -33314,6 +33436,203 @@ contains
     struct_obj%name_ele = str_in ! implicitly handles padding
   end subroutine
 
+  ! tao_ele_shape_struct%uni: 1D_ALLOC_type
+
+  subroutine tao_ele_shape_struct_get_uni_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_ele_shape_struct_get_uni_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_ele_shape_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%uni) .and. is_contiguous(struct_obj%uni)) then
+      data_ptr = c_loc(struct_obj%uni(lbound(struct_obj%uni, 1)))
+      bounds(1) = int(lbound(struct_obj%uni, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%uni, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%uni(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  !! tao_ele_pointer_struct
+
+    function allocate_fortran_tao_ele_pointer_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_ele_pointer_struct), pointer :: fptr
+      type(tao_ele_pointer_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_ele_pointer_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_ele_pointer_struct), pointer :: fptr
+      type(tao_ele_pointer_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_ele_pointer_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_ele_pointer_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_ele_pointer_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_ele_pointer_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_ele_pointer_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_ele_pointer_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_ele_pointer_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_ele_pointer_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_ele_pointer_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_ele_pointer_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_ele_pointer_struct%eles: 1D_ALLOC_type
+
+  subroutine tao_ele_pointer_struct_get_eles_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_ele_pointer_struct_get_eles_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_ele_pointer_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%eles) .and. is_contiguous(struct_obj%eles)) then
+      data_ptr = c_loc(struct_obj%eles(lbound(struct_obj%eles, 1)))
+      bounds(1) = int(lbound(struct_obj%eles, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%eles, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%eles(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_ele_pointer_struct%n_loc: 0D_NOT_integer
+
+  subroutine tao_ele_pointer_struct_get_n_loc(struct_obj_ptr, value_out) bind(c, name='tao_ele_pointer_struct_get_n_loc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_ele_pointer_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_loc
+  end subroutine
+
+
+  subroutine tao_ele_pointer_struct_set_n_loc(struct_obj_ptr, value_in) bind(c, name='tao_ele_pointer_struct_set_n_loc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_ele_pointer_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_loc = value_in
+  end subroutine
+
   !! tao_curve_struct
 
     function allocate_fortran_tao_curve_struct(n, element_size) result(ptr) bind(c)
@@ -33756,6 +34075,48 @@ contains
     endif
   end subroutine
 
+  ! tao_curve_struct%hist: 0D_NOT_type
+
+  subroutine tao_curve_struct_get_hist(struct_obj_ptr, ptr_out) bind(c, name='tao_curve_struct_get_hist')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_curve_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%hist)
+  end subroutine
+
+
+  subroutine tao_curve_struct_set_hist(struct_obj_ptr, src_ptr) bind(c, name='tao_curve_struct_set_hist')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_curve_struct), pointer :: struct_obj
+    type(tao_histogram_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%hist = src_obj
+  end subroutine
+
+  ! tao_curve_struct%z_color: 0D_NOT_type
+
+  subroutine tao_curve_struct_get_z_color(struct_obj_ptr, ptr_out) bind(c, name='tao_curve_struct_get_z_color')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_curve_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%z_color)
+  end subroutine
+
+
+  subroutine tao_curve_struct_set_z_color(struct_obj_ptr, src_ptr) bind(c, name='tao_curve_struct_set_z_color')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_curve_struct), pointer :: struct_obj
+    type(tao_curve_color_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%z_color = src_obj
+  end subroutine
+
   ! tao_curve_struct%x_line: 1D_ALLOC_real
 
   subroutine tao_curve_struct_get_x_line_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -34035,6 +34396,69 @@ contains
     struct_obj%y_axis_scale_factor = value_in
   end subroutine
 
+  ! tao_curve_struct%line: 0D_NOT_type
+
+  subroutine tao_curve_struct_get_line(struct_obj_ptr, ptr_out) bind(c, name='tao_curve_struct_get_line')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_curve_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%line)
+  end subroutine
+
+
+  subroutine tao_curve_struct_set_line(struct_obj_ptr, src_ptr) bind(c, name='tao_curve_struct_set_line')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_curve_struct), pointer :: struct_obj
+    type(qp_line_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%line = src_obj
+  end subroutine
+
+  ! tao_curve_struct%symbol: 0D_NOT_type
+
+  subroutine tao_curve_struct_get_symbol(struct_obj_ptr, ptr_out) bind(c, name='tao_curve_struct_get_symbol')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_curve_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%symbol)
+  end subroutine
+
+
+  subroutine tao_curve_struct_set_symbol(struct_obj_ptr, src_ptr) bind(c, name='tao_curve_struct_set_symbol')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_curve_struct), pointer :: struct_obj
+    type(qp_symbol_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%symbol = src_obj
+  end subroutine
+
+  ! tao_curve_struct%orbit: 0D_NOT_type
+
+  subroutine tao_curve_struct_get_orbit(struct_obj_ptr, ptr_out) bind(c, name='tao_curve_struct_get_orbit')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_curve_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%orbit)
+  end subroutine
+
+
+  subroutine tao_curve_struct_set_orbit(struct_obj_ptr, src_ptr) bind(c, name='tao_curve_struct_set_orbit')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_curve_struct), pointer :: struct_obj
+    type(tao_curve_orbit_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%orbit = src_obj
+  end subroutine
+
   ! tao_curve_struct%ix_universe: 0D_NOT_integer
 
   subroutine tao_curve_struct_get_ix_universe(struct_obj_ptr, value_out) bind(c, name='tao_curve_struct_get_ix_universe')
@@ -34261,6 +34685,666 @@ contains
     type(tao_curve_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     struct_obj%valid = value_in
+  end subroutine
+
+  !! tao_curve_color_struct
+
+    function allocate_fortran_tao_curve_color_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_curve_color_struct), pointer :: fptr
+      type(tao_curve_color_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_curve_color_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_curve_color_struct), pointer :: fptr
+      type(tao_curve_color_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_curve_color_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_curve_color_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_curve_color_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_curve_color_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_curve_color_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_curve_color_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_curve_color_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_curve_color_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_curve_color_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_curve_color_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_curve_color_struct%data_type: 0D_NOT_character
+
+  subroutine tao_curve_color_struct_get_data_type_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_curve_color_struct_get_data_type_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_curve_color_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%data_type)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%data_type), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_curve_color_struct_set_data_type(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_curve_color_struct_set_data_type')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_curve_color_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%data_type = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_curve_color_struct%is_on: 0D_NOT_logical
+
+  subroutine tao_curve_color_struct_get_is_on(struct_obj_ptr, value_out) bind(c, name='tao_curve_color_struct_get_is_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_curve_color_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%is_on
+  end subroutine
+
+
+  subroutine tao_curve_color_struct_set_is_on(struct_obj_ptr, value_in) bind(c, name='tao_curve_color_struct_set_is_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_curve_color_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%is_on = value_in
+  end subroutine
+
+  ! tao_curve_color_struct%min: 0D_NOT_real
+
+  subroutine tao_curve_color_struct_get_min(struct_obj_ptr, value_out) bind(c, name='tao_curve_color_struct_get_min')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_curve_color_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%min
+  end subroutine
+
+
+  subroutine tao_curve_color_struct_set_min(struct_obj_ptr, value_in) bind(c, name='tao_curve_color_struct_set_min')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_curve_color_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%min = value_in
+  end subroutine
+
+  ! tao_curve_color_struct%max: 0D_NOT_real
+
+  subroutine tao_curve_color_struct_get_max(struct_obj_ptr, value_out) bind(c, name='tao_curve_color_struct_get_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_curve_color_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%max
+  end subroutine
+
+
+  subroutine tao_curve_color_struct_set_max(struct_obj_ptr, value_in) bind(c, name='tao_curve_color_struct_set_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_curve_color_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%max = value_in
+  end subroutine
+
+  ! tao_curve_color_struct%autoscale: 0D_NOT_logical
+
+  subroutine tao_curve_color_struct_get_autoscale(struct_obj_ptr, value_out) bind(c, name='tao_curve_color_struct_get_autoscale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_curve_color_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%autoscale
+  end subroutine
+
+
+  subroutine tao_curve_color_struct_set_autoscale(struct_obj_ptr, value_in) bind(c, name='tao_curve_color_struct_set_autoscale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_curve_color_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%autoscale = value_in
+  end subroutine
+
+  !! tao_curve_orbit_struct
+
+    function allocate_fortran_tao_curve_orbit_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_curve_orbit_struct), pointer :: fptr
+      type(tao_curve_orbit_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_curve_orbit_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_curve_orbit_struct), pointer :: fptr
+      type(tao_curve_orbit_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_curve_orbit_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_curve_orbit_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_curve_orbit_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_curve_orbit_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_curve_orbit_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_curve_orbit_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_curve_orbit_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_curve_orbit_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_curve_orbit_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_curve_orbit_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_curve_orbit_struct%x: 0D_NOT_real
+
+  subroutine tao_curve_orbit_struct_get_x(struct_obj_ptr, value_out) bind(c, name='tao_curve_orbit_struct_get_x')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_curve_orbit_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%x
+  end subroutine
+
+
+  subroutine tao_curve_orbit_struct_set_x(struct_obj_ptr, value_in) bind(c, name='tao_curve_orbit_struct_set_x')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_curve_orbit_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%x = value_in
+  end subroutine
+
+  ! tao_curve_orbit_struct%y: 0D_NOT_real
+
+  subroutine tao_curve_orbit_struct_get_y(struct_obj_ptr, value_out) bind(c, name='tao_curve_orbit_struct_get_y')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_curve_orbit_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%y
+  end subroutine
+
+
+  subroutine tao_curve_orbit_struct_set_y(struct_obj_ptr, value_in) bind(c, name='tao_curve_orbit_struct_set_y')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_curve_orbit_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%y = value_in
+  end subroutine
+
+  ! tao_curve_orbit_struct%t: 0D_NOT_real
+
+  subroutine tao_curve_orbit_struct_get_t(struct_obj_ptr, value_out) bind(c, name='tao_curve_orbit_struct_get_t')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_curve_orbit_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%t
+  end subroutine
+
+
+  subroutine tao_curve_orbit_struct_set_t(struct_obj_ptr, value_in) bind(c, name='tao_curve_orbit_struct_set_t')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_curve_orbit_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%t = value_in
+  end subroutine
+
+  !! tao_histogram_struct
+
+    function allocate_fortran_tao_histogram_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_histogram_struct), pointer :: fptr
+      type(tao_histogram_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_histogram_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_histogram_struct), pointer :: fptr
+      type(tao_histogram_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_histogram_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_histogram_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_histogram_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_histogram_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_histogram_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_histogram_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_histogram_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_histogram_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_histogram_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_histogram_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_histogram_struct%density_normalized: 0D_NOT_logical
+
+  subroutine tao_histogram_struct_get_density_normalized(struct_obj_ptr, value_out) bind(c, name='tao_histogram_struct_get_density_normalized')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_histogram_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%density_normalized
+  end subroutine
+
+
+  subroutine tao_histogram_struct_set_density_normalized(struct_obj_ptr, value_in) bind(c, name='tao_histogram_struct_set_density_normalized')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_histogram_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%density_normalized = value_in
+  end subroutine
+
+  ! tao_histogram_struct%weight_by_charge: 0D_NOT_logical
+
+  subroutine tao_histogram_struct_get_weight_by_charge(struct_obj_ptr, value_out) bind(c, name='tao_histogram_struct_get_weight_by_charge')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_histogram_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%weight_by_charge
+  end subroutine
+
+
+  subroutine tao_histogram_struct_set_weight_by_charge(struct_obj_ptr, value_in) bind(c, name='tao_histogram_struct_set_weight_by_charge')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_histogram_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%weight_by_charge = value_in
+  end subroutine
+
+  ! tao_histogram_struct%minimum: 0D_NOT_real
+
+  subroutine tao_histogram_struct_get_minimum(struct_obj_ptr, value_out) bind(c, name='tao_histogram_struct_get_minimum')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_histogram_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%minimum
+  end subroutine
+
+
+  subroutine tao_histogram_struct_set_minimum(struct_obj_ptr, value_in) bind(c, name='tao_histogram_struct_set_minimum')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_histogram_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%minimum = value_in
+  end subroutine
+
+  ! tao_histogram_struct%maximum: 0D_NOT_real
+
+  subroutine tao_histogram_struct_get_maximum(struct_obj_ptr, value_out) bind(c, name='tao_histogram_struct_get_maximum')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_histogram_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%maximum
+  end subroutine
+
+
+  subroutine tao_histogram_struct_set_maximum(struct_obj_ptr, value_in) bind(c, name='tao_histogram_struct_set_maximum')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_histogram_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%maximum = value_in
+  end subroutine
+
+  ! tao_histogram_struct%width: 0D_NOT_real
+
+  subroutine tao_histogram_struct_get_width(struct_obj_ptr, value_out) bind(c, name='tao_histogram_struct_get_width')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_histogram_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%width
+  end subroutine
+
+
+  subroutine tao_histogram_struct_set_width(struct_obj_ptr, value_in) bind(c, name='tao_histogram_struct_set_width')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_histogram_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%width = value_in
+  end subroutine
+
+  ! tao_histogram_struct%center: 0D_NOT_real
+
+  subroutine tao_histogram_struct_get_center(struct_obj_ptr, value_out) bind(c, name='tao_histogram_struct_get_center')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_histogram_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%center
+  end subroutine
+
+
+  subroutine tao_histogram_struct_set_center(struct_obj_ptr, value_in) bind(c, name='tao_histogram_struct_set_center')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_histogram_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%center = value_in
+  end subroutine
+
+  ! tao_histogram_struct%number: 0D_NOT_integer
+
+  subroutine tao_histogram_struct_get_number(struct_obj_ptr, value_out) bind(c, name='tao_histogram_struct_get_number')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_histogram_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%number
+  end subroutine
+
+
+  subroutine tao_histogram_struct_set_number(struct_obj_ptr, value_in) bind(c, name='tao_histogram_struct_set_number')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_histogram_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%number = value_in
   end subroutine
 
   !! lat_ele_order1_struct
@@ -38153,6 +39237,216 @@ contains
     endif
   end subroutine
 
+  ! tao_graph_struct%floor_plan: 0D_NOT_type
+
+  subroutine tao_graph_struct_get_floor_plan(struct_obj_ptr, ptr_out) bind(c, name='tao_graph_struct_get_floor_plan')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_graph_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%floor_plan)
+  end subroutine
+
+
+  subroutine tao_graph_struct_set_floor_plan(struct_obj_ptr, src_ptr) bind(c, name='tao_graph_struct_set_floor_plan')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_graph_struct), pointer :: struct_obj
+    type(tao_floor_plan_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%floor_plan = src_obj
+  end subroutine
+
+  ! tao_graph_struct%text_legend_origin: 0D_NOT_type
+
+  subroutine tao_graph_struct_get_text_legend_origin(struct_obj_ptr, ptr_out) bind(c, name='tao_graph_struct_get_text_legend_origin')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_graph_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%text_legend_origin)
+  end subroutine
+
+
+  subroutine tao_graph_struct_set_text_legend_origin(struct_obj_ptr, src_ptr) bind(c, name='tao_graph_struct_set_text_legend_origin')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_graph_struct), pointer :: struct_obj
+    type(qp_point_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%text_legend_origin = src_obj
+  end subroutine
+
+  ! tao_graph_struct%curve_legend_origin: 0D_NOT_type
+
+  subroutine tao_graph_struct_get_curve_legend_origin(struct_obj_ptr, ptr_out) bind(c, name='tao_graph_struct_get_curve_legend_origin')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_graph_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%curve_legend_origin)
+  end subroutine
+
+
+  subroutine tao_graph_struct_set_curve_legend_origin(struct_obj_ptr, src_ptr) bind(c, name='tao_graph_struct_set_curve_legend_origin')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_graph_struct), pointer :: struct_obj
+    type(qp_point_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%curve_legend_origin = src_obj
+  end subroutine
+
+  ! tao_graph_struct%curve_legend: 0D_NOT_type
+
+  subroutine tao_graph_struct_get_curve_legend(struct_obj_ptr, ptr_out) bind(c, name='tao_graph_struct_get_curve_legend')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_graph_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%curve_legend)
+  end subroutine
+
+
+  subroutine tao_graph_struct_set_curve_legend(struct_obj_ptr, src_ptr) bind(c, name='tao_graph_struct_set_curve_legend')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_graph_struct), pointer :: struct_obj
+    type(qp_legend_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%curve_legend = src_obj
+  end subroutine
+
+  ! tao_graph_struct%x: 0D_NOT_type
+
+  subroutine tao_graph_struct_get_x(struct_obj_ptr, ptr_out) bind(c, name='tao_graph_struct_get_x')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_graph_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%x)
+  end subroutine
+
+
+  subroutine tao_graph_struct_set_x(struct_obj_ptr, src_ptr) bind(c, name='tao_graph_struct_set_x')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_graph_struct), pointer :: struct_obj
+    type(qp_axis_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%x = src_obj
+  end subroutine
+
+  ! tao_graph_struct%y: 0D_NOT_type
+
+  subroutine tao_graph_struct_get_y(struct_obj_ptr, ptr_out) bind(c, name='tao_graph_struct_get_y')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_graph_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%y)
+  end subroutine
+
+
+  subroutine tao_graph_struct_set_y(struct_obj_ptr, src_ptr) bind(c, name='tao_graph_struct_set_y')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_graph_struct), pointer :: struct_obj
+    type(qp_axis_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%y = src_obj
+  end subroutine
+
+  ! tao_graph_struct%x2: 0D_NOT_type
+
+  subroutine tao_graph_struct_get_x2(struct_obj_ptr, ptr_out) bind(c, name='tao_graph_struct_get_x2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_graph_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%x2)
+  end subroutine
+
+
+  subroutine tao_graph_struct_set_x2(struct_obj_ptr, src_ptr) bind(c, name='tao_graph_struct_set_x2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_graph_struct), pointer :: struct_obj
+    type(qp_axis_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%x2 = src_obj
+  end subroutine
+
+  ! tao_graph_struct%y2: 0D_NOT_type
+
+  subroutine tao_graph_struct_get_y2(struct_obj_ptr, ptr_out) bind(c, name='tao_graph_struct_get_y2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_graph_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%y2)
+  end subroutine
+
+
+  subroutine tao_graph_struct_set_y2(struct_obj_ptr, src_ptr) bind(c, name='tao_graph_struct_set_y2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_graph_struct), pointer :: struct_obj
+    type(qp_axis_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%y2 = src_obj
+  end subroutine
+
+  ! tao_graph_struct%margin: 0D_NOT_type
+
+  subroutine tao_graph_struct_get_margin(struct_obj_ptr, ptr_out) bind(c, name='tao_graph_struct_get_margin')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_graph_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%margin)
+  end subroutine
+
+
+  subroutine tao_graph_struct_set_margin(struct_obj_ptr, src_ptr) bind(c, name='tao_graph_struct_set_margin')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_graph_struct), pointer :: struct_obj
+    type(qp_rect_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%margin = src_obj
+  end subroutine
+
+  ! tao_graph_struct%scale_margin: 0D_NOT_type
+
+  subroutine tao_graph_struct_get_scale_margin(struct_obj_ptr, ptr_out) bind(c, name='tao_graph_struct_get_scale_margin')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_graph_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%scale_margin)
+  end subroutine
+
+
+  subroutine tao_graph_struct_set_scale_margin(struct_obj_ptr, src_ptr) bind(c, name='tao_graph_struct_set_scale_margin')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_graph_struct), pointer :: struct_obj
+    type(qp_rect_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%scale_margin = src_obj
+  end subroutine
+
   ! tao_graph_struct%x_axis_scale_factor: 0D_NOT_real
 
   subroutine tao_graph_struct_get_x_axis_scale_factor(struct_obj_ptr, value_out) bind(c, name='tao_graph_struct_get_x_axis_scale_factor')
@@ -39430,6 +40724,118 @@ contains
     endif
   end subroutine
     
+  ! tao_super_universe_struct%global: 0D_NOT_type
+
+  subroutine tao_super_universe_struct_get_global(struct_obj_ptr, ptr_out) bind(c, name='tao_super_universe_struct_get_global')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_super_universe_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%global)
+  end subroutine
+
+
+  subroutine tao_super_universe_struct_set_global(struct_obj_ptr, src_ptr) bind(c, name='tao_super_universe_struct_set_global')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_super_universe_struct), pointer :: struct_obj
+    type(tao_global_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%global = src_obj
+  end subroutine
+
+  ! tao_super_universe_struct%init: 0D_NOT_type
+
+  subroutine tao_super_universe_struct_get_init(struct_obj_ptr, ptr_out) bind(c, name='tao_super_universe_struct_get_init')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_super_universe_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%init)
+  end subroutine
+
+
+  subroutine tao_super_universe_struct_set_init(struct_obj_ptr, src_ptr) bind(c, name='tao_super_universe_struct_set_init')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_super_universe_struct), pointer :: struct_obj
+    type(tao_init_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%init = src_obj
+  end subroutine
+
+  ! tao_super_universe_struct%com: 0D_NOT_type
+
+  subroutine tao_super_universe_struct_get_com(struct_obj_ptr, ptr_out) bind(c, name='tao_super_universe_struct_get_com')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_super_universe_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%com)
+  end subroutine
+
+
+  subroutine tao_super_universe_struct_set_com(struct_obj_ptr, src_ptr) bind(c, name='tao_super_universe_struct_set_com')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_super_universe_struct), pointer :: struct_obj
+    type(tao_common_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%com = src_obj
+  end subroutine
+
+  ! tao_super_universe_struct%plot_page: 0D_NOT_type
+
+  subroutine tao_super_universe_struct_get_plot_page(struct_obj_ptr, ptr_out) bind(c, name='tao_super_universe_struct_get_plot_page')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_super_universe_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%plot_page)
+  end subroutine
+
+
+  subroutine tao_super_universe_struct_set_plot_page(struct_obj_ptr, src_ptr) bind(c, name='tao_super_universe_struct_set_plot_page')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_super_universe_struct), pointer :: struct_obj
+    type(tao_plot_page_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%plot_page = src_obj
+  end subroutine
+
+  ! tao_super_universe_struct%v1_var: 1D_ALLOC_type
+
+  subroutine tao_super_universe_struct_get_v1_var_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_super_universe_struct_get_v1_var_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_super_universe_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%v1_var) .and. is_contiguous(struct_obj%v1_var)) then
+      data_ptr = c_loc(struct_obj%v1_var(lbound(struct_obj%v1_var, 1)))
+      bounds(1) = int(lbound(struct_obj%v1_var, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%v1_var, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%v1_var(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
   ! tao_super_universe_struct%var: 1D_ALLOC_type
 
   subroutine tao_super_universe_struct_get_var_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -39512,6 +40918,48 @@ contains
     endif
   end subroutine
 
+  ! tao_super_universe_struct%building_wall: 0D_NOT_type
+
+  subroutine tao_super_universe_struct_get_building_wall(struct_obj_ptr, ptr_out) bind(c, name='tao_super_universe_struct_get_building_wall')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_super_universe_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%building_wall)
+  end subroutine
+
+
+  subroutine tao_super_universe_struct_set_building_wall(struct_obj_ptr, src_ptr) bind(c, name='tao_super_universe_struct_set_building_wall')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_super_universe_struct), pointer :: struct_obj
+    type(tao_building_wall_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%building_wall = src_obj
+  end subroutine
+
+  ! tao_super_universe_struct%wave: 0D_NOT_type
+
+  subroutine tao_super_universe_struct_get_wave(struct_obj_ptr, ptr_out) bind(c, name='tao_super_universe_struct_get_wave')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_super_universe_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%wave)
+  end subroutine
+
+
+  subroutine tao_super_universe_struct_set_wave(struct_obj_ptr, src_ptr) bind(c, name='tao_super_universe_struct_set_wave')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_super_universe_struct), pointer :: struct_obj
+    type(tao_wave_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%wave = src_obj
+  end subroutine
+
   ! tao_super_universe_struct%n_var_used: 0D_NOT_integer
 
   subroutine tao_super_universe_struct_get_n_var_used(struct_obj_ptr, value_out) bind(c, name='tao_super_universe_struct_get_n_var_used')
@@ -39548,6 +40996,34 @@ contains
     type(tao_super_universe_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     struct_obj%n_v1_var_used = value_in
+  end subroutine
+
+  ! tao_super_universe_struct%history: 1D_NOT_type
+
+  subroutine tao_super_universe_struct_get_history_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_super_universe_struct_get_history_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_super_universe_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%history)) then
+      data_ptr = c_loc(struct_obj%history(lbound(struct_obj%history, 1)))
+      bounds(1) = int(lbound(struct_obj%history, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%history, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%history(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
   end subroutine
 
   ! tao_super_universe_struct%initialized: 0D_NOT_logical
@@ -39773,6 +41249,34 @@ contains
     call c_f_pointer(struct_obj_ptr, struct_obj)
     call c_f_pointer(str_ptr, str_in)
     struct_obj%id = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_var_struct%slave: 1D_ALLOC_type
+
+  subroutine tao_var_struct_get_slave_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_var_struct_get_slave_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_var_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%slave) .and. is_contiguous(struct_obj%slave)) then
+      data_ptr = c_loc(struct_obj%slave(lbound(struct_obj%slave, 1)))
+      bounds(1) = int(lbound(struct_obj%slave, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%slave, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%slave(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
   end subroutine
 
   ! tao_var_struct%ix_v1: 0D_NOT_integer
@@ -40421,6 +41925,262 @@ contains
     type(tao_var_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     struct_obj%key_bound = value_in
+  end subroutine
+
+  ! tao_var_struct%v1: 0D_PTR_type
+
+  subroutine tao_var_struct_get_v1(struct_obj_ptr, ptr_out) bind(c, name='tao_var_struct_get_v1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_var_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%v1)) then
+      ptr_out = c_loc(struct_obj%v1)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine tao_var_struct_set_v1(struct_obj_ptr, src_ptr) bind(c, name='tao_var_struct_set_v1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_var_struct), pointer :: struct_obj
+    type(tao_v1_var_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%v1)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%v1 = src_obj
+    endif
+  end subroutine
+
+  !! tao_var_slave_struct
+
+    function allocate_fortran_tao_var_slave_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_var_slave_struct), pointer :: fptr
+      type(tao_var_slave_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_var_slave_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_var_slave_struct), pointer :: fptr
+      type(tao_var_slave_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_var_slave_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_var_slave_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_var_slave_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_var_slave_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_var_slave_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_var_slave_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_var_slave_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_var_slave_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_var_slave_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_var_slave_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_var_slave_struct%ix_uni: 0D_NOT_integer
+
+  subroutine tao_var_slave_struct_get_ix_uni(struct_obj_ptr, value_out) bind(c, name='tao_var_slave_struct_get_ix_uni')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_var_slave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_uni
+  end subroutine
+
+
+  subroutine tao_var_slave_struct_set_ix_uni(struct_obj_ptr, value_in) bind(c, name='tao_var_slave_struct_set_ix_uni')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_var_slave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_uni = value_in
+  end subroutine
+
+  ! tao_var_slave_struct%ix_branch: 0D_NOT_integer
+
+  subroutine tao_var_slave_struct_get_ix_branch(struct_obj_ptr, value_out) bind(c, name='tao_var_slave_struct_get_ix_branch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_var_slave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_branch
+  end subroutine
+
+
+  subroutine tao_var_slave_struct_set_ix_branch(struct_obj_ptr, value_in) bind(c, name='tao_var_slave_struct_set_ix_branch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_var_slave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_branch = value_in
+  end subroutine
+
+  ! tao_var_slave_struct%ix_ele: 0D_NOT_integer
+
+  subroutine tao_var_slave_struct_get_ix_ele(struct_obj_ptr, value_out) bind(c, name='tao_var_slave_struct_get_ix_ele')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_var_slave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_ele
+  end subroutine
+
+
+  subroutine tao_var_slave_struct_set_ix_ele(struct_obj_ptr, value_in) bind(c, name='tao_var_slave_struct_set_ix_ele')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_var_slave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_ele = value_in
+  end subroutine
+
+  ! tao_var_slave_struct%model_value: 0D_PTR_real
+
+  subroutine tao_var_slave_struct_get_model_value(struct_obj_ptr, ptr_out) bind(c, name='tao_var_slave_struct_get_model_value')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_var_slave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%model_value)) then
+      ptr_out = c_loc(struct_obj%model_value)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine tao_var_slave_struct_set_model_value(struct_obj_ptr, value_in) bind(c, name='tao_var_slave_struct_set_model_value')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_var_slave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%model_value)) then
+      struct_obj%model_value = value_in
+    endif
+  end subroutine
+
+  ! tao_var_slave_struct%base_value: 0D_PTR_real
+
+  subroutine tao_var_slave_struct_get_base_value(struct_obj_ptr, ptr_out) bind(c, name='tao_var_slave_struct_get_base_value')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_var_slave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%base_value)) then
+      ptr_out = c_loc(struct_obj%base_value)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine tao_var_slave_struct_set_base_value(struct_obj_ptr, value_in) bind(c, name='tao_var_slave_struct_set_base_value')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_var_slave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%base_value)) then
+      struct_obj%base_value = value_in
+    endif
   end subroutine
 
   !! tao_lattice_struct
@@ -43536,6 +45296,9687 @@ contains
     endif
   end subroutine
 
+  !! tao_title_struct
+
+    function allocate_fortran_tao_title_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_title_struct), pointer :: fptr
+      type(tao_title_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_title_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_title_struct), pointer :: fptr
+      type(tao_title_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_title_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_title_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_title_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_title_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_title_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_title_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_title_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_title_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_title_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_title_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_title_struct%string: 0D_NOT_character
+
+  subroutine tao_title_struct_get_string_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_title_struct_get_string_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_title_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%string)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%string), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_title_struct_set_string(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_title_struct_set_string')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_title_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%string = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_title_struct%x: 0D_NOT_real
+
+  subroutine tao_title_struct_get_x(struct_obj_ptr, value_out) bind(c, name='tao_title_struct_get_x')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_title_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%x
+  end subroutine
+
+
+  subroutine tao_title_struct_set_x(struct_obj_ptr, value_in) bind(c, name='tao_title_struct_set_x')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_title_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%x = value_in
+  end subroutine
+
+  ! tao_title_struct%y: 0D_NOT_real
+
+  subroutine tao_title_struct_get_y(struct_obj_ptr, value_out) bind(c, name='tao_title_struct_get_y')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_title_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%y
+  end subroutine
+
+
+  subroutine tao_title_struct_set_y(struct_obj_ptr, value_in) bind(c, name='tao_title_struct_set_y')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_title_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%y = value_in
+  end subroutine
+
+  ! tao_title_struct%units: 0D_NOT_character
+
+  subroutine tao_title_struct_get_units_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_title_struct_get_units_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_title_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%units)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%units), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_title_struct_set_units(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_title_struct_set_units')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_title_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%units = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_title_struct%justify: 0D_NOT_character
+
+  subroutine tao_title_struct_get_justify_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_title_struct_get_justify_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_title_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%justify)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%justify), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_title_struct_set_justify(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_title_struct_set_justify')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_title_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%justify = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_title_struct%draw_it: 0D_NOT_logical
+
+  subroutine tao_title_struct_get_draw_it(struct_obj_ptr, value_out) bind(c, name='tao_title_struct_get_draw_it')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_title_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%draw_it
+  end subroutine
+
+
+  subroutine tao_title_struct_set_draw_it(struct_obj_ptr, value_in) bind(c, name='tao_title_struct_set_draw_it')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_title_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%draw_it = value_in
+  end subroutine
+
+  !! qp_rect_struct
+
+    function allocate_fortran_qp_rect_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(qp_rect_struct), pointer :: fptr
+      type(qp_rect_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_qp_rect_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(qp_rect_struct), pointer :: fptr
+      type(qp_rect_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_qp_rect_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(qp_rect_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_qp_rect_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(qp_rect_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_qp_rect_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(qp_rect_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_qp_rect_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(qp_rect_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_qp_rect_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(qp_rect_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! qp_rect_struct%x1: 0D_NOT_real
+
+  subroutine qp_rect_struct_get_x1(struct_obj_ptr, value_out) bind(c, name='qp_rect_struct_get_x1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_rect_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%x1
+  end subroutine
+
+
+  subroutine qp_rect_struct_set_x1(struct_obj_ptr, value_in) bind(c, name='qp_rect_struct_set_x1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_rect_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%x1 = value_in
+  end subroutine
+
+  ! qp_rect_struct%x2: 0D_NOT_real
+
+  subroutine qp_rect_struct_get_x2(struct_obj_ptr, value_out) bind(c, name='qp_rect_struct_get_x2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_rect_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%x2
+  end subroutine
+
+
+  subroutine qp_rect_struct_set_x2(struct_obj_ptr, value_in) bind(c, name='qp_rect_struct_set_x2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_rect_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%x2 = value_in
+  end subroutine
+
+  ! qp_rect_struct%y1: 0D_NOT_real
+
+  subroutine qp_rect_struct_get_y1(struct_obj_ptr, value_out) bind(c, name='qp_rect_struct_get_y1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_rect_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%y1
+  end subroutine
+
+
+  subroutine qp_rect_struct_set_y1(struct_obj_ptr, value_in) bind(c, name='qp_rect_struct_set_y1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_rect_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%y1 = value_in
+  end subroutine
+
+  ! qp_rect_struct%y2: 0D_NOT_real
+
+  subroutine qp_rect_struct_get_y2(struct_obj_ptr, value_out) bind(c, name='qp_rect_struct_get_y2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_rect_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%y2
+  end subroutine
+
+
+  subroutine qp_rect_struct_set_y2(struct_obj_ptr, value_in) bind(c, name='qp_rect_struct_set_y2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_rect_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%y2 = value_in
+  end subroutine
+
+  ! qp_rect_struct%units: 0D_NOT_character
+
+  subroutine qp_rect_struct_get_units_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='qp_rect_struct_get_units_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(qp_rect_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%units)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%units), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine qp_rect_struct_set_units(struct_obj_ptr, str_ptr, str_len) bind(c, name='qp_rect_struct_set_units')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(qp_rect_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%units = str_in ! implicitly handles padding
+  end subroutine
+
+  !! tao_drawing_struct
+
+    function allocate_fortran_tao_drawing_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_drawing_struct), pointer :: fptr
+      type(tao_drawing_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_drawing_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_drawing_struct), pointer :: fptr
+      type(tao_drawing_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_drawing_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_drawing_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_drawing_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_drawing_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_drawing_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_drawing_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_drawing_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_drawing_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_drawing_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_drawing_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_drawing_struct%ele_shape: 1D_ALLOC_type
+
+  subroutine tao_drawing_struct_get_ele_shape_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_drawing_struct_get_ele_shape_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_drawing_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%ele_shape) .and. is_contiguous(struct_obj%ele_shape)) then
+      data_ptr = c_loc(struct_obj%ele_shape(lbound(struct_obj%ele_shape, 1)))
+      bounds(1) = int(lbound(struct_obj%ele_shape, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%ele_shape, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%ele_shape(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  !! tao_shape_pattern_struct
+
+    function allocate_fortran_tao_shape_pattern_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_shape_pattern_struct), pointer :: fptr
+      type(tao_shape_pattern_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_shape_pattern_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_shape_pattern_struct), pointer :: fptr
+      type(tao_shape_pattern_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_shape_pattern_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_shape_pattern_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_shape_pattern_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_shape_pattern_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_shape_pattern_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_shape_pattern_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_shape_pattern_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_shape_pattern_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_shape_pattern_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_shape_pattern_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_shape_pattern_struct%name: 0D_NOT_character
+
+  subroutine tao_shape_pattern_struct_get_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_shape_pattern_struct_get_name_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_shape_pattern_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%name)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%name), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_shape_pattern_struct_set_name(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_shape_pattern_struct_set_name')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_shape_pattern_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%name = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_shape_pattern_struct%line: 0D_NOT_type
+
+  subroutine tao_shape_pattern_struct_get_line(struct_obj_ptr, ptr_out) bind(c, name='tao_shape_pattern_struct_get_line')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_shape_pattern_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%line)
+  end subroutine
+
+
+  subroutine tao_shape_pattern_struct_set_line(struct_obj_ptr, src_ptr) bind(c, name='tao_shape_pattern_struct_set_line')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_shape_pattern_struct), pointer :: struct_obj
+    type(qp_line_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%line = src_obj
+  end subroutine
+
+  ! tao_shape_pattern_struct%pt: 1D_ALLOC_type
+
+  subroutine tao_shape_pattern_struct_get_pt_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_shape_pattern_struct_get_pt_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_shape_pattern_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%pt) .and. is_contiguous(struct_obj%pt)) then
+      data_ptr = c_loc(struct_obj%pt(lbound(struct_obj%pt, 1)))
+      bounds(1) = int(lbound(struct_obj%pt, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%pt, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%pt(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  !! tao_shape_pattern_point_struct
+
+    function allocate_fortran_tao_shape_pattern_point_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_shape_pattern_point_struct), pointer :: fptr
+      type(tao_shape_pattern_point_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_shape_pattern_point_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_shape_pattern_point_struct), pointer :: fptr
+      type(tao_shape_pattern_point_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_shape_pattern_point_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_shape_pattern_point_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_shape_pattern_point_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_shape_pattern_point_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_shape_pattern_point_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_shape_pattern_point_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_shape_pattern_point_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_shape_pattern_point_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_shape_pattern_point_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_shape_pattern_point_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_shape_pattern_point_struct%s: 0D_NOT_real
+
+  subroutine tao_shape_pattern_point_struct_get_s(struct_obj_ptr, value_out) bind(c, name='tao_shape_pattern_point_struct_get_s')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_shape_pattern_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%s
+  end subroutine
+
+
+  subroutine tao_shape_pattern_point_struct_set_s(struct_obj_ptr, value_in) bind(c, name='tao_shape_pattern_point_struct_set_s')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_shape_pattern_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%s = value_in
+  end subroutine
+
+  ! tao_shape_pattern_point_struct%y: 0D_NOT_real
+
+  subroutine tao_shape_pattern_point_struct_get_y(struct_obj_ptr, value_out) bind(c, name='tao_shape_pattern_point_struct_get_y')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_shape_pattern_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%y
+  end subroutine
+
+
+  subroutine tao_shape_pattern_point_struct_set_y(struct_obj_ptr, value_in) bind(c, name='tao_shape_pattern_point_struct_set_y')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_shape_pattern_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%y = value_in
+  end subroutine
+
+  ! tao_shape_pattern_point_struct%radius: 0D_NOT_real
+
+  subroutine tao_shape_pattern_point_struct_get_radius(struct_obj_ptr, value_out) bind(c, name='tao_shape_pattern_point_struct_get_radius')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_shape_pattern_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%radius
+  end subroutine
+
+
+  subroutine tao_shape_pattern_point_struct_set_radius(struct_obj_ptr, value_in) bind(c, name='tao_shape_pattern_point_struct_set_radius')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_shape_pattern_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%radius = value_in
+  end subroutine
+
+  !! qp_axis_struct
+
+    function allocate_fortran_qp_axis_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(qp_axis_struct), pointer :: fptr
+      type(qp_axis_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_qp_axis_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(qp_axis_struct), pointer :: fptr
+      type(qp_axis_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_qp_axis_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(qp_axis_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_qp_axis_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(qp_axis_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_qp_axis_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(qp_axis_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_qp_axis_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(qp_axis_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_qp_axis_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(qp_axis_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! qp_axis_struct%label: 0D_NOT_character
+
+  subroutine qp_axis_struct_get_label_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='qp_axis_struct_get_label_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%label)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%label), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_label(struct_obj_ptr, str_ptr, str_len) bind(c, name='qp_axis_struct_set_label')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(qp_axis_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%label = str_in ! implicitly handles padding
+  end subroutine
+
+  ! qp_axis_struct%min: 0D_NOT_real
+
+  subroutine qp_axis_struct_get_min(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_min')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%min
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_min(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_min')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%min = value_in
+  end subroutine
+
+  ! qp_axis_struct%max: 0D_NOT_real
+
+  subroutine qp_axis_struct_get_max(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%max
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_max(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%max = value_in
+  end subroutine
+
+  ! qp_axis_struct%tick_min: 0D_NOT_real
+
+  subroutine qp_axis_struct_get_tick_min(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_tick_min')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%tick_min
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_tick_min(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_tick_min')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%tick_min = value_in
+  end subroutine
+
+  ! qp_axis_struct%tick_max: 0D_NOT_real
+
+  subroutine qp_axis_struct_get_tick_max(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_tick_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%tick_max
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_tick_max(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_tick_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%tick_max = value_in
+  end subroutine
+
+  ! qp_axis_struct%eval_min: 0D_NOT_real
+
+  subroutine qp_axis_struct_get_eval_min(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_eval_min')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%eval_min
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_eval_min(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_eval_min')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%eval_min = value_in
+  end subroutine
+
+  ! qp_axis_struct%eval_max: 0D_NOT_real
+
+  subroutine qp_axis_struct_get_eval_max(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_eval_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%eval_max
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_eval_max(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_eval_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%eval_max = value_in
+  end subroutine
+
+  ! qp_axis_struct%dtick: 0D_NOT_real
+
+  subroutine qp_axis_struct_get_dtick(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_dtick')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%dtick
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_dtick(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_dtick')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%dtick = value_in
+  end subroutine
+
+  ! qp_axis_struct%number_offset: 0D_NOT_real
+
+  subroutine qp_axis_struct_get_number_offset(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_number_offset')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%number_offset
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_number_offset(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_number_offset')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%number_offset = value_in
+  end subroutine
+
+  ! qp_axis_struct%label_offset: 0D_NOT_real
+
+  subroutine qp_axis_struct_get_label_offset(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_label_offset')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%label_offset
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_label_offset(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_label_offset')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%label_offset = value_in
+  end subroutine
+
+  ! qp_axis_struct%major_tick_len: 0D_NOT_real
+
+  subroutine qp_axis_struct_get_major_tick_len(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_major_tick_len')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%major_tick_len
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_major_tick_len(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_major_tick_len')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%major_tick_len = value_in
+  end subroutine
+
+  ! qp_axis_struct%minor_tick_len: 0D_NOT_real
+
+  subroutine qp_axis_struct_get_minor_tick_len(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_minor_tick_len')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%minor_tick_len
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_minor_tick_len(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_minor_tick_len')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%minor_tick_len = value_in
+  end subroutine
+
+  ! qp_axis_struct%label_color: 0D_NOT_character
+
+  subroutine qp_axis_struct_get_label_color_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='qp_axis_struct_get_label_color_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%label_color)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%label_color), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_label_color(struct_obj_ptr, str_ptr, str_len) bind(c, name='qp_axis_struct_set_label_color')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(qp_axis_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%label_color = str_in ! implicitly handles padding
+  end subroutine
+
+  ! qp_axis_struct%major_div: 0D_NOT_integer
+
+  subroutine qp_axis_struct_get_major_div(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_major_div')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%major_div
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_major_div(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_major_div')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%major_div = value_in
+  end subroutine
+
+  ! qp_axis_struct%major_div_nominal: 0D_NOT_integer
+
+  subroutine qp_axis_struct_get_major_div_nominal(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_major_div_nominal')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%major_div_nominal
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_major_div_nominal(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_major_div_nominal')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%major_div_nominal = value_in
+  end subroutine
+
+  ! qp_axis_struct%minor_div: 0D_NOT_integer
+
+  subroutine qp_axis_struct_get_minor_div(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_minor_div')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%minor_div
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_minor_div(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_minor_div')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%minor_div = value_in
+  end subroutine
+
+  ! qp_axis_struct%minor_div_max: 0D_NOT_integer
+
+  subroutine qp_axis_struct_get_minor_div_max(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_minor_div_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%minor_div_max
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_minor_div_max(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_minor_div_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%minor_div_max = value_in
+  end subroutine
+
+  ! qp_axis_struct%places: 0D_NOT_integer
+
+  subroutine qp_axis_struct_get_places(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_places')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%places
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_places(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_places')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%places = value_in
+  end subroutine
+
+  ! qp_axis_struct%type: 0D_NOT_character
+
+  subroutine qp_axis_struct_get_type_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='qp_axis_struct_get_type_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%type)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%type), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_type(struct_obj_ptr, str_ptr, str_len) bind(c, name='qp_axis_struct_set_type')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(qp_axis_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%type = str_in ! implicitly handles padding
+  end subroutine
+
+  ! qp_axis_struct%bounds: 0D_NOT_character
+
+  subroutine qp_axis_struct_get_bounds_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='qp_axis_struct_get_bounds_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%bounds)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%bounds), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_bounds(struct_obj_ptr, str_ptr, str_len) bind(c, name='qp_axis_struct_set_bounds')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(qp_axis_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%bounds = str_in ! implicitly handles padding
+  end subroutine
+
+  ! qp_axis_struct%tick_side: 0D_NOT_integer
+
+  subroutine qp_axis_struct_get_tick_side(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_tick_side')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%tick_side
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_tick_side(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_tick_side')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%tick_side = value_in
+  end subroutine
+
+  ! qp_axis_struct%number_side: 0D_NOT_integer
+
+  subroutine qp_axis_struct_get_number_side(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_number_side')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%number_side
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_number_side(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_number_side')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%number_side = value_in
+  end subroutine
+
+  ! qp_axis_struct%draw_label: 0D_NOT_logical
+
+  subroutine qp_axis_struct_get_draw_label(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_draw_label')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%draw_label
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_draw_label(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_draw_label')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%draw_label = value_in
+  end subroutine
+
+  ! qp_axis_struct%draw_numbers: 0D_NOT_logical
+
+  subroutine qp_axis_struct_get_draw_numbers(struct_obj_ptr, value_out) bind(c, name='qp_axis_struct_get_draw_numbers')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%draw_numbers
+  end subroutine
+
+
+  subroutine qp_axis_struct_set_draw_numbers(struct_obj_ptr, value_in) bind(c, name='qp_axis_struct_set_draw_numbers')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(qp_axis_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%draw_numbers = value_in
+  end subroutine
+
+  !! qp_legend_struct
+
+    function allocate_fortran_qp_legend_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(qp_legend_struct), pointer :: fptr
+      type(qp_legend_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_qp_legend_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(qp_legend_struct), pointer :: fptr
+      type(qp_legend_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_qp_legend_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(qp_legend_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_qp_legend_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(qp_legend_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_qp_legend_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(qp_legend_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_qp_legend_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(qp_legend_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_qp_legend_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(qp_legend_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! qp_legend_struct%row_spacing: 0D_NOT_real
+
+  subroutine qp_legend_struct_get_row_spacing(struct_obj_ptr, value_out) bind(c, name='qp_legend_struct_get_row_spacing')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_legend_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%row_spacing
+  end subroutine
+
+
+  subroutine qp_legend_struct_set_row_spacing(struct_obj_ptr, value_in) bind(c, name='qp_legend_struct_set_row_spacing')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_legend_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%row_spacing = value_in
+  end subroutine
+
+  ! qp_legend_struct%line_length: 0D_NOT_real
+
+  subroutine qp_legend_struct_get_line_length(struct_obj_ptr, value_out) bind(c, name='qp_legend_struct_get_line_length')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_legend_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%line_length
+  end subroutine
+
+
+  subroutine qp_legend_struct_set_line_length(struct_obj_ptr, value_in) bind(c, name='qp_legend_struct_set_line_length')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_legend_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%line_length = value_in
+  end subroutine
+
+  ! qp_legend_struct%text_offset: 0D_NOT_real
+
+  subroutine qp_legend_struct_get_text_offset(struct_obj_ptr, value_out) bind(c, name='qp_legend_struct_get_text_offset')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_legend_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%text_offset
+  end subroutine
+
+
+  subroutine qp_legend_struct_set_text_offset(struct_obj_ptr, value_in) bind(c, name='qp_legend_struct_set_text_offset')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_legend_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%text_offset = value_in
+  end subroutine
+
+  ! qp_legend_struct%draw_line: 0D_NOT_logical
+
+  subroutine qp_legend_struct_get_draw_line(struct_obj_ptr, value_out) bind(c, name='qp_legend_struct_get_draw_line')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(qp_legend_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%draw_line
+  end subroutine
+
+
+  subroutine qp_legend_struct_set_draw_line(struct_obj_ptr, value_in) bind(c, name='qp_legend_struct_set_draw_line')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(qp_legend_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%draw_line = value_in
+  end subroutine
+
+  ! qp_legend_struct%draw_symbol: 0D_NOT_logical
+
+  subroutine qp_legend_struct_get_draw_symbol(struct_obj_ptr, value_out) bind(c, name='qp_legend_struct_get_draw_symbol')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(qp_legend_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%draw_symbol
+  end subroutine
+
+
+  subroutine qp_legend_struct_set_draw_symbol(struct_obj_ptr, value_in) bind(c, name='qp_legend_struct_set_draw_symbol')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(qp_legend_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%draw_symbol = value_in
+  end subroutine
+
+  ! qp_legend_struct%draw_text: 0D_NOT_logical
+
+  subroutine qp_legend_struct_get_draw_text(struct_obj_ptr, value_out) bind(c, name='qp_legend_struct_get_draw_text')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(qp_legend_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%draw_text
+  end subroutine
+
+
+  subroutine qp_legend_struct_set_draw_text(struct_obj_ptr, value_in) bind(c, name='qp_legend_struct_set_draw_text')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(qp_legend_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%draw_text = value_in
+  end subroutine
+
+  !! qp_point_struct
+
+    function allocate_fortran_qp_point_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(qp_point_struct), pointer :: fptr
+      type(qp_point_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_qp_point_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(qp_point_struct), pointer :: fptr
+      type(qp_point_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_qp_point_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(qp_point_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_qp_point_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(qp_point_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_qp_point_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(qp_point_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_qp_point_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(qp_point_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_qp_point_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(qp_point_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! qp_point_struct%x: 0D_NOT_real
+
+  subroutine qp_point_struct_get_x(struct_obj_ptr, value_out) bind(c, name='qp_point_struct_get_x')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%x
+  end subroutine
+
+
+  subroutine qp_point_struct_set_x(struct_obj_ptr, value_in) bind(c, name='qp_point_struct_set_x')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%x = value_in
+  end subroutine
+
+  ! qp_point_struct%y: 0D_NOT_real
+
+  subroutine qp_point_struct_get_y(struct_obj_ptr, value_out) bind(c, name='qp_point_struct_get_y')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%y
+  end subroutine
+
+
+  subroutine qp_point_struct_set_y(struct_obj_ptr, value_in) bind(c, name='qp_point_struct_set_y')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%y = value_in
+  end subroutine
+
+  ! qp_point_struct%units: 0D_NOT_character
+
+  subroutine qp_point_struct_get_units_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='qp_point_struct_get_units_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(qp_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%units)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%units), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine qp_point_struct_set_units(struct_obj_ptr, str_ptr, str_len) bind(c, name='qp_point_struct_set_units')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(qp_point_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%units = str_in ! implicitly handles padding
+  end subroutine
+
+  !! qp_line_struct
+
+    function allocate_fortran_qp_line_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(qp_line_struct), pointer :: fptr
+      type(qp_line_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_qp_line_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(qp_line_struct), pointer :: fptr
+      type(qp_line_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_qp_line_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(qp_line_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_qp_line_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(qp_line_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_qp_line_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(qp_line_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_qp_line_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(qp_line_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_qp_line_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(qp_line_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! qp_line_struct%width: 0D_NOT_integer
+
+  subroutine qp_line_struct_get_width(struct_obj_ptr, value_out) bind(c, name='qp_line_struct_get_width')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(qp_line_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%width
+  end subroutine
+
+
+  subroutine qp_line_struct_set_width(struct_obj_ptr, value_in) bind(c, name='qp_line_struct_set_width')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(qp_line_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%width = value_in
+  end subroutine
+
+  ! qp_line_struct%color: 0D_NOT_character
+
+  subroutine qp_line_struct_get_color_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='qp_line_struct_get_color_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(qp_line_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%color)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%color), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine qp_line_struct_set_color(struct_obj_ptr, str_ptr, str_len) bind(c, name='qp_line_struct_set_color')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(qp_line_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%color = str_in ! implicitly handles padding
+  end subroutine
+
+  ! qp_line_struct%pattern: 0D_NOT_character
+
+  subroutine qp_line_struct_get_pattern_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='qp_line_struct_get_pattern_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(qp_line_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%pattern)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%pattern), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine qp_line_struct_set_pattern(struct_obj_ptr, str_ptr, str_len) bind(c, name='qp_line_struct_set_pattern')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(qp_line_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%pattern = str_in ! implicitly handles padding
+  end subroutine
+
+  !! qp_symbol_struct
+
+    function allocate_fortran_qp_symbol_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(qp_symbol_struct), pointer :: fptr
+      type(qp_symbol_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_qp_symbol_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(qp_symbol_struct), pointer :: fptr
+      type(qp_symbol_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_qp_symbol_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(qp_symbol_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_qp_symbol_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(qp_symbol_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_qp_symbol_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(qp_symbol_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_qp_symbol_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(qp_symbol_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_qp_symbol_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(qp_symbol_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! qp_symbol_struct%type: 0D_NOT_character
+
+  subroutine qp_symbol_struct_get_type_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='qp_symbol_struct_get_type_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(qp_symbol_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%type)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%type), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine qp_symbol_struct_set_type(struct_obj_ptr, str_ptr, str_len) bind(c, name='qp_symbol_struct_set_type')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(qp_symbol_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%type = str_in ! implicitly handles padding
+  end subroutine
+
+  ! qp_symbol_struct%height: 0D_NOT_real
+
+  subroutine qp_symbol_struct_get_height(struct_obj_ptr, value_out) bind(c, name='qp_symbol_struct_get_height')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(qp_symbol_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%height
+  end subroutine
+
+
+  subroutine qp_symbol_struct_set_height(struct_obj_ptr, value_in) bind(c, name='qp_symbol_struct_set_height')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(qp_symbol_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%height = value_in
+  end subroutine
+
+  ! qp_symbol_struct%color: 0D_NOT_character
+
+  subroutine qp_symbol_struct_get_color_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='qp_symbol_struct_get_color_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(qp_symbol_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%color)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%color), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine qp_symbol_struct_set_color(struct_obj_ptr, str_ptr, str_len) bind(c, name='qp_symbol_struct_set_color')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(qp_symbol_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%color = str_in ! implicitly handles padding
+  end subroutine
+
+  ! qp_symbol_struct%fill_pattern: 0D_NOT_character
+
+  subroutine qp_symbol_struct_get_fill_pattern_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='qp_symbol_struct_get_fill_pattern_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(qp_symbol_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%fill_pattern)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%fill_pattern), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine qp_symbol_struct_set_fill_pattern(struct_obj_ptr, str_ptr, str_len) bind(c, name='qp_symbol_struct_set_fill_pattern')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(qp_symbol_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%fill_pattern = str_in ! implicitly handles padding
+  end subroutine
+
+  ! qp_symbol_struct%line_width: 0D_NOT_integer
+
+  subroutine qp_symbol_struct_get_line_width(struct_obj_ptr, value_out) bind(c, name='qp_symbol_struct_get_line_width')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(qp_symbol_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%line_width
+  end subroutine
+
+
+  subroutine qp_symbol_struct_set_line_width(struct_obj_ptr, value_in) bind(c, name='qp_symbol_struct_set_line_width')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(qp_symbol_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%line_width = value_in
+  end subroutine
+
+  !! tao_floor_plan_struct
+
+    function allocate_fortran_tao_floor_plan_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_floor_plan_struct), pointer :: fptr
+      type(tao_floor_plan_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_floor_plan_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_floor_plan_struct), pointer :: fptr
+      type(tao_floor_plan_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_floor_plan_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_floor_plan_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_floor_plan_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_floor_plan_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_floor_plan_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_floor_plan_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_floor_plan_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_floor_plan_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_floor_plan_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_floor_plan_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_floor_plan_struct%view: 0D_NOT_character
+
+  subroutine tao_floor_plan_struct_get_view_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_floor_plan_struct_get_view_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%view)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%view), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_floor_plan_struct_set_view(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_floor_plan_struct_set_view')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%view = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_floor_plan_struct%rotation: 0D_NOT_real
+
+  subroutine tao_floor_plan_struct_get_rotation(struct_obj_ptr, value_out) bind(c, name='tao_floor_plan_struct_get_rotation')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rotation
+  end subroutine
+
+
+  subroutine tao_floor_plan_struct_set_rotation(struct_obj_ptr, value_in) bind(c, name='tao_floor_plan_struct_set_rotation')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rotation = value_in
+  end subroutine
+
+  ! tao_floor_plan_struct%correct_distortion: 0D_NOT_logical
+
+  subroutine tao_floor_plan_struct_get_correct_distortion(struct_obj_ptr, value_out) bind(c, name='tao_floor_plan_struct_get_correct_distortion')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%correct_distortion
+  end subroutine
+
+
+  subroutine tao_floor_plan_struct_set_correct_distortion(struct_obj_ptr, value_in) bind(c, name='tao_floor_plan_struct_set_correct_distortion')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%correct_distortion = value_in
+  end subroutine
+
+  ! tao_floor_plan_struct%flip_label_side: 0D_NOT_logical
+
+  subroutine tao_floor_plan_struct_get_flip_label_side(struct_obj_ptr, value_out) bind(c, name='tao_floor_plan_struct_get_flip_label_side')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%flip_label_side
+  end subroutine
+
+
+  subroutine tao_floor_plan_struct_set_flip_label_side(struct_obj_ptr, value_in) bind(c, name='tao_floor_plan_struct_set_flip_label_side')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%flip_label_side = value_in
+  end subroutine
+
+  ! tao_floor_plan_struct%size_is_absolute: 0D_NOT_logical
+
+  subroutine tao_floor_plan_struct_get_size_is_absolute(struct_obj_ptr, value_out) bind(c, name='tao_floor_plan_struct_get_size_is_absolute')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%size_is_absolute
+  end subroutine
+
+
+  subroutine tao_floor_plan_struct_set_size_is_absolute(struct_obj_ptr, value_in) bind(c, name='tao_floor_plan_struct_set_size_is_absolute')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%size_is_absolute = value_in
+  end subroutine
+
+  ! tao_floor_plan_struct%draw_only_first_pass: 0D_NOT_logical
+
+  subroutine tao_floor_plan_struct_get_draw_only_first_pass(struct_obj_ptr, value_out) bind(c, name='tao_floor_plan_struct_get_draw_only_first_pass')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%draw_only_first_pass
+  end subroutine
+
+
+  subroutine tao_floor_plan_struct_set_draw_only_first_pass(struct_obj_ptr, value_in) bind(c, name='tao_floor_plan_struct_set_draw_only_first_pass')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%draw_only_first_pass = value_in
+  end subroutine
+
+  ! tao_floor_plan_struct%draw_building_wall: 0D_NOT_logical
+
+  subroutine tao_floor_plan_struct_get_draw_building_wall(struct_obj_ptr, value_out) bind(c, name='tao_floor_plan_struct_get_draw_building_wall')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%draw_building_wall
+  end subroutine
+
+
+  subroutine tao_floor_plan_struct_set_draw_building_wall(struct_obj_ptr, value_in) bind(c, name='tao_floor_plan_struct_set_draw_building_wall')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%draw_building_wall = value_in
+  end subroutine
+
+  ! tao_floor_plan_struct%orbit_scale: 0D_NOT_real
+
+  subroutine tao_floor_plan_struct_get_orbit_scale(struct_obj_ptr, value_out) bind(c, name='tao_floor_plan_struct_get_orbit_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%orbit_scale
+  end subroutine
+
+
+  subroutine tao_floor_plan_struct_set_orbit_scale(struct_obj_ptr, value_in) bind(c, name='tao_floor_plan_struct_set_orbit_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%orbit_scale = value_in
+  end subroutine
+
+  ! tao_floor_plan_struct%orbit_color: 0D_NOT_character
+
+  subroutine tao_floor_plan_struct_get_orbit_color_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_floor_plan_struct_get_orbit_color_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%orbit_color)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%orbit_color), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_floor_plan_struct_set_orbit_color(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_floor_plan_struct_set_orbit_color')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%orbit_color = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_floor_plan_struct%orbit_pattern: 0D_NOT_character
+
+  subroutine tao_floor_plan_struct_get_orbit_pattern_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_floor_plan_struct_get_orbit_pattern_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%orbit_pattern)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%orbit_pattern), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_floor_plan_struct_set_orbit_pattern(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_floor_plan_struct_set_orbit_pattern')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%orbit_pattern = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_floor_plan_struct%orbit_lattice: 0D_NOT_character
+
+  subroutine tao_floor_plan_struct_get_orbit_lattice_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_floor_plan_struct_get_orbit_lattice_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%orbit_lattice)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%orbit_lattice), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_floor_plan_struct_set_orbit_lattice(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_floor_plan_struct_set_orbit_lattice')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%orbit_lattice = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_floor_plan_struct%orbit_width: 0D_NOT_integer
+
+  subroutine tao_floor_plan_struct_get_orbit_width(struct_obj_ptr, value_out) bind(c, name='tao_floor_plan_struct_get_orbit_width')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%orbit_width
+  end subroutine
+
+
+  subroutine tao_floor_plan_struct_set_orbit_width(struct_obj_ptr, value_in) bind(c, name='tao_floor_plan_struct_set_orbit_width')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_floor_plan_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%orbit_width = value_in
+  end subroutine
+
+  !! tao_v1_var_struct
+
+    function allocate_fortran_tao_v1_var_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_v1_var_struct), pointer :: fptr
+      type(tao_v1_var_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_v1_var_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_v1_var_struct), pointer :: fptr
+      type(tao_v1_var_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_v1_var_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_v1_var_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_v1_var_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_v1_var_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_v1_var_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_v1_var_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_v1_var_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_v1_var_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_v1_var_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_v1_var_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_v1_var_struct%name: 0D_NOT_character
+
+  subroutine tao_v1_var_struct_get_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_v1_var_struct_get_name_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_v1_var_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%name)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%name), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_v1_var_struct_set_name(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_v1_var_struct_set_name')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_v1_var_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%name = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_v1_var_struct%ix_v1_var: 0D_NOT_integer
+
+  subroutine tao_v1_var_struct_get_ix_v1_var(struct_obj_ptr, value_out) bind(c, name='tao_v1_var_struct_get_ix_v1_var')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_v1_var_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_v1_var
+  end subroutine
+
+
+  subroutine tao_v1_var_struct_set_ix_v1_var(struct_obj_ptr, value_in) bind(c, name='tao_v1_var_struct_set_ix_v1_var')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_v1_var_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_v1_var = value_in
+  end subroutine
+
+  ! tao_v1_var_struct%v: 1D_PTR_type
+
+  subroutine tao_v1_var_struct_get_v_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_v1_var_struct_get_v_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_v1_var_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%v) .and. is_contiguous(struct_obj%v)) then
+      data_ptr = c_loc(struct_obj%v(lbound(struct_obj%v, 1)))
+      bounds(1) = int(lbound(struct_obj%v, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%v, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%v(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  !! tao_global_struct
+
+    function allocate_fortran_tao_global_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_global_struct), pointer :: fptr
+      type(tao_global_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_global_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_global_struct), pointer :: fptr
+      type(tao_global_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_global_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_global_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_global_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_global_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_global_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_global_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_global_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_global_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_global_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_global_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_global_struct%beam_dead_cutoff: 0D_NOT_real
+
+  subroutine tao_global_struct_get_beam_dead_cutoff(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_beam_dead_cutoff')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%beam_dead_cutoff
+  end subroutine
+
+
+  subroutine tao_global_struct_set_beam_dead_cutoff(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_beam_dead_cutoff')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%beam_dead_cutoff = value_in
+  end subroutine
+
+  ! tao_global_struct%lm_opt_deriv_reinit: 0D_NOT_real
+
+  subroutine tao_global_struct_get_lm_opt_deriv_reinit(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_lm_opt_deriv_reinit')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%lm_opt_deriv_reinit
+  end subroutine
+
+
+  subroutine tao_global_struct_set_lm_opt_deriv_reinit(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_lm_opt_deriv_reinit')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%lm_opt_deriv_reinit = value_in
+  end subroutine
+
+  ! tao_global_struct%de_lm_step_ratio: 0D_NOT_real
+
+  subroutine tao_global_struct_get_de_lm_step_ratio(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_de_lm_step_ratio')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%de_lm_step_ratio
+  end subroutine
+
+
+  subroutine tao_global_struct_set_de_lm_step_ratio(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_de_lm_step_ratio')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%de_lm_step_ratio = value_in
+  end subroutine
+
+  ! tao_global_struct%de_var_to_population_factor: 0D_NOT_real
+
+  subroutine tao_global_struct_get_de_var_to_population_factor(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_de_var_to_population_factor')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%de_var_to_population_factor
+  end subroutine
+
+
+  subroutine tao_global_struct_set_de_var_to_population_factor(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_de_var_to_population_factor')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%de_var_to_population_factor = value_in
+  end subroutine
+
+  ! tao_global_struct%lmdif_eps: 0D_NOT_real
+
+  subroutine tao_global_struct_get_lmdif_eps(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_lmdif_eps')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%lmdif_eps
+  end subroutine
+
+
+  subroutine tao_global_struct_set_lmdif_eps(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_lmdif_eps')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%lmdif_eps = value_in
+  end subroutine
+
+  ! tao_global_struct%lmdif_negligible_merit: 0D_NOT_real
+
+  subroutine tao_global_struct_get_lmdif_negligible_merit(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_lmdif_negligible_merit')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%lmdif_negligible_merit
+  end subroutine
+
+
+  subroutine tao_global_struct_set_lmdif_negligible_merit(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_lmdif_negligible_merit')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%lmdif_negligible_merit = value_in
+  end subroutine
+
+  ! tao_global_struct%svd_cutoff: 0D_NOT_real
+
+  subroutine tao_global_struct_get_svd_cutoff(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_svd_cutoff')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%svd_cutoff
+  end subroutine
+
+
+  subroutine tao_global_struct_set_svd_cutoff(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_svd_cutoff')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%svd_cutoff = value_in
+  end subroutine
+
+  ! tao_global_struct%unstable_penalty: 0D_NOT_real
+
+  subroutine tao_global_struct_get_unstable_penalty(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_unstable_penalty')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%unstable_penalty
+  end subroutine
+
+
+  subroutine tao_global_struct_set_unstable_penalty(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_unstable_penalty')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%unstable_penalty = value_in
+  end subroutine
+
+  ! tao_global_struct%merit_stop_value: 0D_NOT_real
+
+  subroutine tao_global_struct_get_merit_stop_value(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_merit_stop_value')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%merit_stop_value
+  end subroutine
+
+
+  subroutine tao_global_struct_set_merit_stop_value(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_merit_stop_value')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%merit_stop_value = value_in
+  end subroutine
+
+  ! tao_global_struct%dmerit_stop_value: 0D_NOT_real
+
+  subroutine tao_global_struct_get_dmerit_stop_value(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_dmerit_stop_value')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%dmerit_stop_value
+  end subroutine
+
+
+  subroutine tao_global_struct_set_dmerit_stop_value(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_dmerit_stop_value')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%dmerit_stop_value = value_in
+  end subroutine
+
+  ! tao_global_struct%random_sigma_cutoff: 0D_NOT_real
+
+  subroutine tao_global_struct_get_random_sigma_cutoff(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_random_sigma_cutoff')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%random_sigma_cutoff
+  end subroutine
+
+
+  subroutine tao_global_struct_set_random_sigma_cutoff(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_random_sigma_cutoff')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%random_sigma_cutoff = value_in
+  end subroutine
+
+  ! tao_global_struct%delta_e_chrom: 0D_NOT_real
+
+  subroutine tao_global_struct_get_delta_e_chrom(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_delta_e_chrom')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%delta_e_chrom
+  end subroutine
+
+
+  subroutine tao_global_struct_set_delta_e_chrom(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_delta_e_chrom')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%delta_e_chrom = value_in
+  end subroutine
+
+  ! tao_global_struct%max_plot_time: 0D_NOT_real
+
+  subroutine tao_global_struct_get_max_plot_time(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_max_plot_time')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%max_plot_time
+  end subroutine
+
+
+  subroutine tao_global_struct_set_max_plot_time(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_max_plot_time')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%max_plot_time = value_in
+  end subroutine
+
+  ! tao_global_struct%default_universe: 0D_NOT_integer
+
+  subroutine tao_global_struct_get_default_universe(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_default_universe')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%default_universe
+  end subroutine
+
+
+  subroutine tao_global_struct_set_default_universe(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_default_universe')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%default_universe = value_in
+  end subroutine
+
+  ! tao_global_struct%default_branch: 0D_NOT_integer
+
+  subroutine tao_global_struct_get_default_branch(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_default_branch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%default_branch
+  end subroutine
+
+
+  subroutine tao_global_struct_set_default_branch(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_default_branch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%default_branch = value_in
+  end subroutine
+
+  ! tao_global_struct%n_opti_cycles: 0D_NOT_integer
+
+  subroutine tao_global_struct_get_n_opti_cycles(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_n_opti_cycles')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_opti_cycles
+  end subroutine
+
+
+  subroutine tao_global_struct_set_n_opti_cycles(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_n_opti_cycles')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_opti_cycles = value_in
+  end subroutine
+
+  ! tao_global_struct%n_opti_loops: 0D_NOT_integer
+
+  subroutine tao_global_struct_get_n_opti_loops(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_n_opti_loops')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_opti_loops
+  end subroutine
+
+
+  subroutine tao_global_struct_set_n_opti_loops(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_n_opti_loops')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_opti_loops = value_in
+  end subroutine
+
+  ! tao_global_struct%n_threads: 0D_NOT_integer
+
+  subroutine tao_global_struct_get_n_threads(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_n_threads')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_threads
+  end subroutine
+
+
+  subroutine tao_global_struct_set_n_threads(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_n_threads')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_threads = value_in
+  end subroutine
+
+  ! tao_global_struct%phase_units: 0D_NOT_integer
+
+  subroutine tao_global_struct_get_phase_units(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_phase_units')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%phase_units
+  end subroutine
+
+
+  subroutine tao_global_struct_set_phase_units(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_phase_units')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%phase_units = value_in
+  end subroutine
+
+  ! tao_global_struct%bunch_to_plot: 0D_NOT_integer
+
+  subroutine tao_global_struct_get_bunch_to_plot(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_bunch_to_plot')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%bunch_to_plot
+  end subroutine
+
+
+  subroutine tao_global_struct_set_bunch_to_plot(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_bunch_to_plot')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%bunch_to_plot = value_in
+  end subroutine
+
+  ! tao_global_struct%random_seed: 0D_NOT_integer
+
+  subroutine tao_global_struct_get_random_seed(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_random_seed')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%random_seed
+  end subroutine
+
+
+  subroutine tao_global_struct_set_random_seed(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_random_seed')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%random_seed = value_in
+  end subroutine
+
+  ! tao_global_struct%n_top10_merit: 0D_NOT_integer
+
+  subroutine tao_global_struct_get_n_top10_merit(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_n_top10_merit')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_top10_merit
+  end subroutine
+
+
+  subroutine tao_global_struct_set_n_top10_merit(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_n_top10_merit')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_top10_merit = value_in
+  end subroutine
+
+  ! tao_global_struct%srdt_gen_n_slices: 0D_NOT_integer
+
+  subroutine tao_global_struct_get_srdt_gen_n_slices(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_srdt_gen_n_slices')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%srdt_gen_n_slices
+  end subroutine
+
+
+  subroutine tao_global_struct_set_srdt_gen_n_slices(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_srdt_gen_n_slices')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%srdt_gen_n_slices = value_in
+  end subroutine
+
+  ! tao_global_struct%datum_err_messages_max: 0D_NOT_integer
+
+  subroutine tao_global_struct_get_datum_err_messages_max(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_datum_err_messages_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%datum_err_messages_max
+  end subroutine
+
+
+  subroutine tao_global_struct_set_datum_err_messages_max(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_datum_err_messages_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%datum_err_messages_max = value_in
+  end subroutine
+
+  ! tao_global_struct%srdt_sxt_n_slices: 0D_NOT_integer
+
+  subroutine tao_global_struct_get_srdt_sxt_n_slices(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_srdt_sxt_n_slices')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%srdt_sxt_n_slices
+  end subroutine
+
+
+  subroutine tao_global_struct_set_srdt_sxt_n_slices(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_srdt_sxt_n_slices')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%srdt_sxt_n_slices = value_in
+  end subroutine
+
+  ! tao_global_struct%srdt_use_cache: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_srdt_use_cache(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_srdt_use_cache')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%srdt_use_cache
+  end subroutine
+
+
+  subroutine tao_global_struct_set_srdt_use_cache(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_srdt_use_cache')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%srdt_use_cache = value_in
+  end subroutine
+
+  ! tao_global_struct%quiet: 0D_NOT_character
+
+  subroutine tao_global_struct_get_quiet_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_global_struct_get_quiet_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%quiet)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%quiet), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_global_struct_set_quiet(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_global_struct_set_quiet')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_global_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%quiet = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_global_struct%random_engine: 0D_NOT_character
+
+  subroutine tao_global_struct_get_random_engine_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_global_struct_get_random_engine_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%random_engine)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%random_engine), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_global_struct_set_random_engine(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_global_struct_set_random_engine')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_global_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%random_engine = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_global_struct%random_gauss_converter: 0D_NOT_character
+
+  subroutine tao_global_struct_get_random_gauss_converter_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_global_struct_get_random_gauss_converter_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%random_gauss_converter)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%random_gauss_converter), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_global_struct_set_random_gauss_converter(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_global_struct_set_random_gauss_converter')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_global_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%random_gauss_converter = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_global_struct%track_type: 0D_NOT_character
+
+  subroutine tao_global_struct_get_track_type_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_global_struct_get_track_type_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%track_type)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%track_type), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_global_struct_set_track_type(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_global_struct_set_track_type')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_global_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%track_type = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_global_struct%lat_sigma_calc_uses_emit_from: 0D_NOT_character
+
+  subroutine tao_global_struct_get_lat_sigma_calc_uses_emit_from_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_global_struct_get_lat_sigma_calc_uses_emit_from_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%lat_sigma_calc_uses_emit_from)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%lat_sigma_calc_uses_emit_from), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_global_struct_set_lat_sigma_calc_uses_emit_from(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_global_struct_set_lat_sigma_calc_uses_emit_from')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_global_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%lat_sigma_calc_uses_emit_from = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_global_struct%prompt_string: 0D_NOT_character
+
+  subroutine tao_global_struct_get_prompt_string_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_global_struct_get_prompt_string_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%prompt_string)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%prompt_string), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_global_struct_set_prompt_string(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_global_struct_set_prompt_string')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_global_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%prompt_string = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_global_struct%prompt_color: 0D_NOT_character
+
+  subroutine tao_global_struct_get_prompt_color_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_global_struct_get_prompt_color_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%prompt_color)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%prompt_color), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_global_struct_set_prompt_color(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_global_struct_set_prompt_color')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_global_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%prompt_color = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_global_struct%optimizer: 0D_NOT_character
+
+  subroutine tao_global_struct_get_optimizer_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_global_struct_get_optimizer_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%optimizer)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%optimizer), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_global_struct_set_optimizer(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_global_struct_set_optimizer')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_global_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%optimizer = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_global_struct%print_command: 0D_NOT_character
+
+  subroutine tao_global_struct_get_print_command_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_global_struct_get_print_command_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%print_command)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%print_command), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_global_struct_set_print_command(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_global_struct_set_print_command')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_global_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%print_command = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_global_struct%var_out_file: 0D_NOT_character
+
+  subroutine tao_global_struct_get_var_out_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_global_struct_get_var_out_file_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%var_out_file)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%var_out_file), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_global_struct_set_var_out_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_global_struct_set_var_out_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_global_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%var_out_file = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_global_struct%history_file: 0D_NOT_character
+
+  subroutine tao_global_struct_get_history_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_global_struct_get_history_file_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%history_file)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%history_file), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_global_struct_set_history_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_global_struct_set_history_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_global_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%history_file = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_global_struct%beam_timer_on: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_beam_timer_on(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_beam_timer_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%beam_timer_on
+  end subroutine
+
+
+  subroutine tao_global_struct_set_beam_timer_on(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_beam_timer_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%beam_timer_on = value_in
+  end subroutine
+
+  ! tao_global_struct%box_plots: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_box_plots(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_box_plots')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%box_plots
+  end subroutine
+
+
+  subroutine tao_global_struct_set_box_plots(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_box_plots')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%box_plots = value_in
+  end subroutine
+
+  ! tao_global_struct%blank_line_between_commands: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_blank_line_between_commands(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_blank_line_between_commands')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%blank_line_between_commands
+  end subroutine
+
+
+  subroutine tao_global_struct_set_blank_line_between_commands(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_blank_line_between_commands')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%blank_line_between_commands = value_in
+  end subroutine
+
+  ! tao_global_struct%cmd_file_abort_on_error: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_cmd_file_abort_on_error(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_cmd_file_abort_on_error')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%cmd_file_abort_on_error
+  end subroutine
+
+
+  subroutine tao_global_struct_set_cmd_file_abort_on_error(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_cmd_file_abort_on_error')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%cmd_file_abort_on_error = value_in
+  end subroutine
+
+  ! tao_global_struct%concatenate_maps: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_concatenate_maps(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_concatenate_maps')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%concatenate_maps
+  end subroutine
+
+
+  subroutine tao_global_struct_set_concatenate_maps(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_concatenate_maps')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%concatenate_maps = value_in
+  end subroutine
+
+  ! tao_global_struct%derivative_recalc: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_derivative_recalc(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_derivative_recalc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%derivative_recalc
+  end subroutine
+
+
+  subroutine tao_global_struct_set_derivative_recalc(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_derivative_recalc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%derivative_recalc = value_in
+  end subroutine
+
+  ! tao_global_struct%derivative_uses_design: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_derivative_uses_design(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_derivative_uses_design')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%derivative_uses_design
+  end subroutine
+
+
+  subroutine tao_global_struct_set_derivative_uses_design(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_derivative_uses_design')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%derivative_uses_design = value_in
+  end subroutine
+
+  ! tao_global_struct%disable_smooth_line_calc: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_disable_smooth_line_calc(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_disable_smooth_line_calc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%disable_smooth_line_calc
+  end subroutine
+
+
+  subroutine tao_global_struct_set_disable_smooth_line_calc(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_disable_smooth_line_calc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%disable_smooth_line_calc = value_in
+  end subroutine
+
+  ! tao_global_struct%draw_curve_off_scale_warn: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_draw_curve_off_scale_warn(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_draw_curve_off_scale_warn')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%draw_curve_off_scale_warn
+  end subroutine
+
+
+  subroutine tao_global_struct_set_draw_curve_off_scale_warn(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_draw_curve_off_scale_warn')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%draw_curve_off_scale_warn = value_in
+  end subroutine
+
+  ! tao_global_struct%external_plotting: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_external_plotting(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_external_plotting')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%external_plotting
+  end subroutine
+
+
+  subroutine tao_global_struct_set_external_plotting(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_external_plotting')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%external_plotting = value_in
+  end subroutine
+
+  ! tao_global_struct%label_lattice_elements: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_label_lattice_elements(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_label_lattice_elements')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%label_lattice_elements
+  end subroutine
+
+
+  subroutine tao_global_struct_set_label_lattice_elements(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_label_lattice_elements')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%label_lattice_elements = value_in
+  end subroutine
+
+  ! tao_global_struct%label_keys: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_label_keys(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_label_keys')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%label_keys
+  end subroutine
+
+
+  subroutine tao_global_struct_set_label_keys(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_label_keys')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%label_keys = value_in
+  end subroutine
+
+  ! tao_global_struct%lattice_calc_on: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_lattice_calc_on(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_lattice_calc_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%lattice_calc_on
+  end subroutine
+
+
+  subroutine tao_global_struct_set_lattice_calc_on(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_lattice_calc_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%lattice_calc_on = value_in
+  end subroutine
+
+  ! tao_global_struct%only_limit_opt_vars: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_only_limit_opt_vars(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_only_limit_opt_vars')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%only_limit_opt_vars
+  end subroutine
+
+
+  subroutine tao_global_struct_set_only_limit_opt_vars(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_only_limit_opt_vars')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%only_limit_opt_vars = value_in
+  end subroutine
+
+  ! tao_global_struct%opt_with_ref: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_opt_with_ref(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_opt_with_ref')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%opt_with_ref
+  end subroutine
+
+
+  subroutine tao_global_struct_set_opt_with_ref(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_opt_with_ref')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%opt_with_ref = value_in
+  end subroutine
+
+  ! tao_global_struct%opt_with_base: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_opt_with_base(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_opt_with_base')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%opt_with_base
+  end subroutine
+
+
+  subroutine tao_global_struct_set_opt_with_base(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_opt_with_base')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%opt_with_base = value_in
+  end subroutine
+
+  ! tao_global_struct%opt_match_auto_recalc: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_opt_match_auto_recalc(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_opt_match_auto_recalc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%opt_match_auto_recalc
+  end subroutine
+
+
+  subroutine tao_global_struct_set_opt_match_auto_recalc(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_opt_match_auto_recalc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%opt_match_auto_recalc = value_in
+  end subroutine
+
+  ! tao_global_struct%opti_write_var_file: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_opti_write_var_file(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_opti_write_var_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%opti_write_var_file
+  end subroutine
+
+
+  subroutine tao_global_struct_set_opti_write_var_file(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_opti_write_var_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%opti_write_var_file = value_in
+  end subroutine
+
+  ! tao_global_struct%optimizer_allow_user_abort: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_optimizer_allow_user_abort(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_optimizer_allow_user_abort')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%optimizer_allow_user_abort
+  end subroutine
+
+
+  subroutine tao_global_struct_set_optimizer_allow_user_abort(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_optimizer_allow_user_abort')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%optimizer_allow_user_abort = value_in
+  end subroutine
+
+  ! tao_global_struct%optimizer_var_limit_warn: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_optimizer_var_limit_warn(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_optimizer_var_limit_warn')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%optimizer_var_limit_warn
+  end subroutine
+
+
+  subroutine tao_global_struct_set_optimizer_var_limit_warn(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_optimizer_var_limit_warn')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%optimizer_var_limit_warn = value_in
+  end subroutine
+
+  ! tao_global_struct%plot_on: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_plot_on(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_plot_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%plot_on
+  end subroutine
+
+
+  subroutine tao_global_struct_set_plot_on(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_plot_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%plot_on = value_in
+  end subroutine
+
+  ! tao_global_struct%rad_int_user_calc_on: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_rad_int_user_calc_on(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_rad_int_user_calc_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rad_int_user_calc_on
+  end subroutine
+
+
+  subroutine tao_global_struct_set_rad_int_user_calc_on(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_rad_int_user_calc_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rad_int_user_calc_on = value_in
+  end subroutine
+
+  ! tao_global_struct%rf_on: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_rf_on(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_rf_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rf_on
+  end subroutine
+
+
+  subroutine tao_global_struct_set_rf_on(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_rf_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rf_on = value_in
+  end subroutine
+
+  ! tao_global_struct%single_step: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_single_step(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_single_step')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%single_step
+  end subroutine
+
+
+  subroutine tao_global_struct_set_single_step(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_single_step')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%single_step = value_in
+  end subroutine
+
+  ! tao_global_struct%stop_on_error: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_stop_on_error(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_stop_on_error')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%stop_on_error
+  end subroutine
+
+
+  subroutine tao_global_struct_set_stop_on_error(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_stop_on_error')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%stop_on_error = value_in
+  end subroutine
+
+  ! tao_global_struct%svd_retreat_on_merit_increase: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_svd_retreat_on_merit_increase(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_svd_retreat_on_merit_increase')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%svd_retreat_on_merit_increase
+  end subroutine
+
+
+  subroutine tao_global_struct_set_svd_retreat_on_merit_increase(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_svd_retreat_on_merit_increase')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%svd_retreat_on_merit_increase = value_in
+  end subroutine
+
+  ! tao_global_struct%var_limits_on: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_var_limits_on(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_var_limits_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%var_limits_on
+  end subroutine
+
+
+  subroutine tao_global_struct_set_var_limits_on(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_var_limits_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%var_limits_on = value_in
+  end subroutine
+
+  ! tao_global_struct%wait_for_CR_in_single_mode: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_wait_for_CR_in_single_mode(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_wait_for_CR_in_single_mode')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%wait_for_CR_in_single_mode
+  end subroutine
+
+
+  subroutine tao_global_struct_set_wait_for_CR_in_single_mode(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_wait_for_CR_in_single_mode')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%wait_for_CR_in_single_mode = value_in
+  end subroutine
+
+  ! tao_global_struct%symbol_import: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_symbol_import(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_symbol_import')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%symbol_import
+  end subroutine
+
+
+  subroutine tao_global_struct_set_symbol_import(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_symbol_import')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%symbol_import = value_in
+  end subroutine
+
+  ! tao_global_struct%debug_on: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_debug_on(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_debug_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%debug_on
+  end subroutine
+
+
+  subroutine tao_global_struct_set_debug_on(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_debug_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%debug_on = value_in
+  end subroutine
+
+  ! tao_global_struct%expression_tree_on: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_expression_tree_on(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_expression_tree_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%expression_tree_on
+  end subroutine
+
+
+  subroutine tao_global_struct_set_expression_tree_on(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_expression_tree_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%expression_tree_on = value_in
+  end subroutine
+
+  ! tao_global_struct%verbose_on: 0D_NOT_logical
+
+  subroutine tao_global_struct_get_verbose_on(struct_obj_ptr, value_out) bind(c, name='tao_global_struct_get_verbose_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%verbose_on
+  end subroutine
+
+
+  subroutine tao_global_struct_set_verbose_on(struct_obj_ptr, value_in) bind(c, name='tao_global_struct_set_verbose_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_global_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%verbose_on = value_in
+  end subroutine
+
+  !! tao_init_struct
+
+    function allocate_fortran_tao_init_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_init_struct), pointer :: fptr
+      type(tao_init_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_init_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_init_struct), pointer :: fptr
+      type(tao_init_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_init_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_init_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_init_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_init_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_init_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_init_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_init_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_init_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_init_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_init_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_init_struct%parse_cmd_args: 0D_NOT_logical
+
+  subroutine tao_init_struct_get_parse_cmd_args(struct_obj_ptr, value_out) bind(c, name='tao_init_struct_get_parse_cmd_args')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%parse_cmd_args
+  end subroutine
+
+
+  subroutine tao_init_struct_set_parse_cmd_args(struct_obj_ptr, value_in) bind(c, name='tao_init_struct_set_parse_cmd_args')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%parse_cmd_args = value_in
+  end subroutine
+
+  ! tao_init_struct%debug_switch: 0D_NOT_logical
+
+  subroutine tao_init_struct_get_debug_switch(struct_obj_ptr, value_out) bind(c, name='tao_init_struct_get_debug_switch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%debug_switch
+  end subroutine
+
+
+  subroutine tao_init_struct_set_debug_switch(struct_obj_ptr, value_in) bind(c, name='tao_init_struct_set_debug_switch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%debug_switch = value_in
+  end subroutine
+
+  ! tao_init_struct%external_plotting_switch: 0D_NOT_logical
+
+  subroutine tao_init_struct_get_external_plotting_switch(struct_obj_ptr, value_out) bind(c, name='tao_init_struct_get_external_plotting_switch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%external_plotting_switch
+  end subroutine
+
+
+  subroutine tao_init_struct_set_external_plotting_switch(struct_obj_ptr, value_in) bind(c, name='tao_init_struct_set_external_plotting_switch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%external_plotting_switch = value_in
+  end subroutine
+
+  ! tao_init_struct%init_name: 0D_NOT_character
+
+  subroutine tao_init_struct_get_init_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_init_name_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%init_name)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%init_name), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_init_name(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_init_name')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%init_name = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%hook_init_file: 0D_NOT_character
+
+  subroutine tao_init_struct_get_hook_init_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_hook_init_file_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%hook_init_file)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%hook_init_file), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_hook_init_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_hook_init_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%hook_init_file = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%hook_lat_file: 0D_NOT_character
+
+  subroutine tao_init_struct_get_hook_lat_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_hook_lat_file_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%hook_lat_file)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%hook_lat_file), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_hook_lat_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_hook_lat_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%hook_lat_file = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%hook_beam_file: 0D_NOT_character
+
+  subroutine tao_init_struct_get_hook_beam_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_hook_beam_file_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%hook_beam_file)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%hook_beam_file), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_hook_beam_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_hook_beam_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%hook_beam_file = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%hook_data_file: 0D_NOT_character
+
+  subroutine tao_init_struct_get_hook_data_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_hook_data_file_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%hook_data_file)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%hook_data_file), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_hook_data_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_hook_data_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%hook_data_file = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%hook_plot_file: 0D_NOT_character
+
+  subroutine tao_init_struct_get_hook_plot_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_hook_plot_file_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%hook_plot_file)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%hook_plot_file), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_hook_plot_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_hook_plot_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%hook_plot_file = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%hook_startup_file: 0D_NOT_character
+
+  subroutine tao_init_struct_get_hook_startup_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_hook_startup_file_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%hook_startup_file)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%hook_startup_file), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_hook_startup_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_hook_startup_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%hook_startup_file = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%hook_var_file: 0D_NOT_character
+
+  subroutine tao_init_struct_get_hook_var_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_hook_var_file_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%hook_var_file)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%hook_var_file), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_hook_var_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_hook_var_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%hook_var_file = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%hook_building_wall_file: 0D_NOT_character
+
+  subroutine tao_init_struct_get_hook_building_wall_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_hook_building_wall_file_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%hook_building_wall_file)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%hook_building_wall_file), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_hook_building_wall_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_hook_building_wall_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%hook_building_wall_file = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%init_file_arg_path: 0D_NOT_character
+
+  subroutine tao_init_struct_get_init_file_arg_path_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_init_file_arg_path_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%init_file_arg_path)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%init_file_arg_path), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_init_file_arg_path(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_init_file_arg_path')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%init_file_arg_path = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%lattice_file_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_lattice_file_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_lattice_file_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%lattice_file_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%lattice_file_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_lattice_file_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_lattice_file_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%lattice_file_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%hook_init_file_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_hook_init_file_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_hook_init_file_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%hook_init_file_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%hook_init_file_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_hook_init_file_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_hook_init_file_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%hook_init_file_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%init_file_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_init_file_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_init_file_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%init_file_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%init_file_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_init_file_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_init_file_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%init_file_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%beam_file_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_beam_file_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_beam_file_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%beam_file_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%beam_file_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_beam_file_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_beam_file_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%beam_file_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%beam_init_position_file_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_beam_init_position_file_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_beam_init_position_file_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%beam_init_position_file_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%beam_init_position_file_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_beam_init_position_file_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_beam_init_position_file_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%beam_init_position_file_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%command_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_command_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_command_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%command_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%command_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_command_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_command_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%command_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%data_file_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_data_file_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_data_file_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%data_file_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%data_file_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_data_file_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_data_file_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%data_file_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%plot_file_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_plot_file_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_plot_file_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%plot_file_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%plot_file_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_plot_file_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_plot_file_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%plot_file_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%startup_file_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_startup_file_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_startup_file_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%startup_file_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%startup_file_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_startup_file_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_startup_file_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%startup_file_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%var_file_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_var_file_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_var_file_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%var_file_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%var_file_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_var_file_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_var_file_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%var_file_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%building_wall_file_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_building_wall_file_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_building_wall_file_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%building_wall_file_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%building_wall_file_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_building_wall_file_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_building_wall_file_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%building_wall_file_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%geometry_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_geometry_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_geometry_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%geometry_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%geometry_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_geometry_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_geometry_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%geometry_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%slice_lattice_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_slice_lattice_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_slice_lattice_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%slice_lattice_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%slice_lattice_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_slice_lattice_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_slice_lattice_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%slice_lattice_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%start_branch_at_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_start_branch_at_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_start_branch_at_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%start_branch_at_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%start_branch_at_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_start_branch_at_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_start_branch_at_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%start_branch_at_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%log_startup_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_log_startup_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_log_startup_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%log_startup_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%log_startup_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_log_startup_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_log_startup_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%log_startup_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%no_stopping_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_no_stopping_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_no_stopping_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%no_stopping_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%no_stopping_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_no_stopping_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_no_stopping_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%no_stopping_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%noplot_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_noplot_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_noplot_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%noplot_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%noplot_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_noplot_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_noplot_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%noplot_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%no_rad_int_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_no_rad_int_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_no_rad_int_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%no_rad_int_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%no_rad_int_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_no_rad_int_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_no_rad_int_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%no_rad_int_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%reverse_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_reverse_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_reverse_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%reverse_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%reverse_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_reverse_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_reverse_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%reverse_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%debug_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_debug_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_debug_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%debug_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%debug_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_debug_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_debug_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%debug_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%disable_smooth_line_calc_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_disable_smooth_line_calc_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_disable_smooth_line_calc_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%disable_smooth_line_calc_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%disable_smooth_line_calc_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_disable_smooth_line_calc_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_disable_smooth_line_calc_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%disable_smooth_line_calc_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%rf_on_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_rf_on_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_rf_on_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%rf_on_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%rf_on_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_rf_on_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_rf_on_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%rf_on_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%prompt_color_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_prompt_color_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_prompt_color_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%prompt_color_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%prompt_color_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_prompt_color_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_prompt_color_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%prompt_color_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%quiet_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_quiet_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_quiet_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%quiet_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%quiet_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_quiet_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_quiet_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%quiet_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%noinit_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_noinit_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_noinit_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%noinit_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%noinit_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_noinit_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_noinit_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%noinit_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%nostartup_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_nostartup_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_nostartup_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%nostartup_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%nostartup_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_nostartup_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_nostartup_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%nostartup_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%symbol_import_arg: 0D_NOT_character
+
+  subroutine tao_init_struct_get_symbol_import_arg_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_symbol_import_arg_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%symbol_import_arg)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%symbol_import_arg), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_symbol_import_arg(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_symbol_import_arg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%symbol_import_arg = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_init_struct%unique_name_suffix: 0D_NOT_character
+
+  subroutine tao_init_struct_get_unique_name_suffix_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_init_struct_get_unique_name_suffix_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_init_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%unique_name_suffix)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%unique_name_suffix), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_init_struct_set_unique_name_suffix(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_init_struct_set_unique_name_suffix')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_init_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%unique_name_suffix = str_in ! implicitly handles padding
+  end subroutine
+
+  !! tao_common_struct
+
+    function allocate_fortran_tao_common_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_common_struct), pointer :: fptr
+      type(tao_common_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_common_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_common_struct), pointer :: fptr
+      type(tao_common_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_common_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_common_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_common_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_common_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_common_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_common_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_common_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_common_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_common_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_common_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_common_struct%plot_place_buffer: 1D_ALLOC_type
+
+  subroutine tao_common_struct_get_plot_place_buffer_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_common_struct_get_plot_place_buffer_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_common_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%plot_place_buffer) .and. is_contiguous(struct_obj%plot_place_buffer)) then
+      data_ptr = c_loc(struct_obj%plot_place_buffer(lbound(struct_obj%plot_place_buffer, 1)))
+      bounds(1) = int(lbound(struct_obj%plot_place_buffer, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%plot_place_buffer, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%plot_place_buffer(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_common_struct%covar: 2D_ALLOC_real
+
+  subroutine tao_common_struct_get_covar_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='tao_common_struct_get_covar_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_common_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%covar) .and. is_contiguous(struct_obj%covar)) then
+      data_ptr = c_loc(struct_obj%covar(lbound(struct_obj%covar, 1), lbound(struct_obj%covar, 2)))
+      bounds(1) = int(lbound(struct_obj%covar, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%covar, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%covar, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%covar, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_common_struct%alpha: 2D_ALLOC_real
+
+  subroutine tao_common_struct_get_alpha_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='tao_common_struct_get_alpha_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_common_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%alpha) .and. is_contiguous(struct_obj%alpha)) then
+      data_ptr = c_loc(struct_obj%alpha(lbound(struct_obj%alpha, 1), lbound(struct_obj%alpha, 2)))
+      bounds(1) = int(lbound(struct_obj%alpha, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%alpha, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%alpha, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%alpha, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_common_struct%dummy_target: 0D_NOT_real
+
+  subroutine tao_common_struct_get_dummy_target(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_dummy_target')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%dummy_target
+  end subroutine
+
+
+  subroutine tao_common_struct_set_dummy_target(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_dummy_target')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%dummy_target = value_in
+  end subroutine
+
+  ! tao_common_struct%n_alias: 0D_NOT_integer
+
+  subroutine tao_common_struct_get_n_alias(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_n_alias')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_alias
+  end subroutine
+
+
+  subroutine tao_common_struct_set_n_alias(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_n_alias')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_alias = value_in
+  end subroutine
+
+  ! tao_common_struct%cmd_file_level: 0D_NOT_integer
+
+  subroutine tao_common_struct_get_cmd_file_level(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_cmd_file_level')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%cmd_file_level
+  end subroutine
+
+
+  subroutine tao_common_struct_set_cmd_file_level(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_cmd_file_level')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%cmd_file_level = value_in
+  end subroutine
+
+  ! tao_common_struct%ix_key_bank: 0D_NOT_integer
+
+  subroutine tao_common_struct_get_ix_key_bank(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_ix_key_bank')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_key_bank
+  end subroutine
+
+
+  subroutine tao_common_struct_set_ix_key_bank(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_ix_key_bank')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_key_bank = value_in
+  end subroutine
+
+  ! tao_common_struct%ix_history: 0D_NOT_integer
+
+  subroutine tao_common_struct_get_ix_history(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_ix_history')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_history
+  end subroutine
+
+
+  subroutine tao_common_struct_set_ix_history(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_ix_history')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_history = value_in
+  end subroutine
+
+  ! tao_common_struct%n_history: 0D_NOT_integer
+
+  subroutine tao_common_struct_get_n_history(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_n_history')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_history
+  end subroutine
+
+
+  subroutine tao_common_struct_set_n_history(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_n_history')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_history = value_in
+  end subroutine
+
+  ! tao_common_struct%lev_loop: 0D_NOT_integer
+
+  subroutine tao_common_struct_get_lev_loop(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_lev_loop')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%lev_loop
+  end subroutine
+
+
+  subroutine tao_common_struct_set_lev_loop(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_lev_loop')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%lev_loop = value_in
+  end subroutine
+
+  ! tao_common_struct%n_err_messages_printed: 0D_NOT_integer
+
+  subroutine tao_common_struct_get_n_err_messages_printed(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_n_err_messages_printed')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_err_messages_printed
+  end subroutine
+
+
+  subroutine tao_common_struct_set_n_err_messages_printed(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_n_err_messages_printed')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_err_messages_printed = value_in
+  end subroutine
+
+  ! tao_common_struct%n_universes: 0D_NOT_integer
+
+  subroutine tao_common_struct_get_n_universes(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_n_universes')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_universes
+  end subroutine
+
+
+  subroutine tao_common_struct_set_n_universes(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_n_universes')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_universes = value_in
+  end subroutine
+
+  ! tao_common_struct%ix_beam_track_active_element: 0D_NOT_integer
+
+  subroutine tao_common_struct_get_ix_beam_track_active_element(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_ix_beam_track_active_element')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_beam_track_active_element
+  end subroutine
+
+
+  subroutine tao_common_struct_set_ix_beam_track_active_element(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_ix_beam_track_active_element')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_beam_track_active_element = value_in
+  end subroutine
+
+  ! tao_common_struct%cmd_file_paused: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_cmd_file_paused(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_cmd_file_paused')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%cmd_file_paused
+  end subroutine
+
+
+  subroutine tao_common_struct_set_cmd_file_paused(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_cmd_file_paused')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%cmd_file_paused = value_in
+  end subroutine
+
+  ! tao_common_struct%use_cmd_here: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_use_cmd_here(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_use_cmd_here')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%use_cmd_here
+  end subroutine
+
+
+  subroutine tao_common_struct_set_use_cmd_here(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_use_cmd_here')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%use_cmd_here = value_in
+  end subroutine
+
+  ! tao_common_struct%cmd_from_cmd_file: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_cmd_from_cmd_file(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_cmd_from_cmd_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%cmd_from_cmd_file
+  end subroutine
+
+
+  subroutine tao_common_struct_set_cmd_from_cmd_file(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_cmd_from_cmd_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%cmd_from_cmd_file = value_in
+  end subroutine
+
+  ! tao_common_struct%use_saved_beam_in_tracking: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_use_saved_beam_in_tracking(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_use_saved_beam_in_tracking')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%use_saved_beam_in_tracking
+  end subroutine
+
+
+  subroutine tao_common_struct_set_use_saved_beam_in_tracking(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_use_saved_beam_in_tracking')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%use_saved_beam_in_tracking = value_in
+  end subroutine
+
+  ! tao_common_struct%single_mode: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_single_mode(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_single_mode')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%single_mode
+  end subroutine
+
+
+  subroutine tao_common_struct_set_single_mode(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_single_mode')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%single_mode = value_in
+  end subroutine
+
+  ! tao_common_struct%combine_consecutive_elements_of_like_name: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_combine_consecutive_elements_of_like_name(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_combine_consecutive_elements_of_like_name')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%combine_consecutive_elements_of_like_name
+  end subroutine
+
+
+  subroutine tao_common_struct_set_combine_consecutive_elements_of_like_name(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_combine_consecutive_elements_of_like_name')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%combine_consecutive_elements_of_like_name = value_in
+  end subroutine
+
+  ! tao_common_struct%have_tracked_beam: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_have_tracked_beam(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_have_tracked_beam')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%have_tracked_beam
+  end subroutine
+
+
+  subroutine tao_common_struct_set_have_tracked_beam(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_have_tracked_beam')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%have_tracked_beam = value_in
+  end subroutine
+
+  ! tao_common_struct%init_plot_needed: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_init_plot_needed(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_init_plot_needed')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%init_plot_needed
+  end subroutine
+
+
+  subroutine tao_common_struct_set_init_plot_needed(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_init_plot_needed')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%init_plot_needed = value_in
+  end subroutine
+
+  ! tao_common_struct%init_beam: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_init_beam(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_init_beam')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%init_beam
+  end subroutine
+
+
+  subroutine tao_common_struct_set_init_beam(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_init_beam')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%init_beam = value_in
+  end subroutine
+
+  ! tao_common_struct%init_var: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_init_var(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_init_var')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%init_var
+  end subroutine
+
+
+  subroutine tao_common_struct_set_init_var(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_init_var')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%init_var = value_in
+  end subroutine
+
+  ! tao_common_struct%init_read_lat_info: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_init_read_lat_info(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_init_read_lat_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%init_read_lat_info
+  end subroutine
+
+
+  subroutine tao_common_struct_set_init_read_lat_info(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_init_read_lat_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%init_read_lat_info = value_in
+  end subroutine
+
+  ! tao_common_struct%optimizer_running: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_optimizer_running(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_optimizer_running')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%optimizer_running
+  end subroutine
+
+
+  subroutine tao_common_struct_set_optimizer_running(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_optimizer_running')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%optimizer_running = value_in
+  end subroutine
+
+  ! tao_common_struct%have_datums_using_expressions: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_have_datums_using_expressions(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_have_datums_using_expressions')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%have_datums_using_expressions
+  end subroutine
+
+
+  subroutine tao_common_struct_set_have_datums_using_expressions(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_have_datums_using_expressions')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%have_datums_using_expressions = value_in
+  end subroutine
+
+  ! tao_common_struct%print_to_terminal: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_print_to_terminal(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_print_to_terminal')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%print_to_terminal
+  end subroutine
+
+
+  subroutine tao_common_struct_set_print_to_terminal(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_print_to_terminal')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%print_to_terminal = value_in
+  end subroutine
+
+  ! tao_common_struct%lattice_calc_done: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_lattice_calc_done(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_lattice_calc_done')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%lattice_calc_done
+  end subroutine
+
+
+  subroutine tao_common_struct_set_lattice_calc_done(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_lattice_calc_done')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%lattice_calc_done = value_in
+  end subroutine
+
+  ! tao_common_struct%add_measurement_noise: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_add_measurement_noise(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_add_measurement_noise')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%add_measurement_noise
+  end subroutine
+
+
+  subroutine tao_common_struct_set_add_measurement_noise(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_add_measurement_noise')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%add_measurement_noise = value_in
+  end subroutine
+
+  ! skipped tao_common_struct%is_err_message_printed: Unsupported type: 1D_NOT_logical
+  ! tao_common_struct%command_arg_has_been_executed: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_command_arg_has_been_executed(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_command_arg_has_been_executed')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%command_arg_has_been_executed
+  end subroutine
+
+
+  subroutine tao_common_struct_set_command_arg_has_been_executed(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_command_arg_has_been_executed')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%command_arg_has_been_executed = value_in
+  end subroutine
+
+  ! tao_common_struct%all_merit_weights_positive: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_all_merit_weights_positive(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_all_merit_weights_positive')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%all_merit_weights_positive
+  end subroutine
+
+
+  subroutine tao_common_struct_set_all_merit_weights_positive(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_all_merit_weights_positive')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%all_merit_weights_positive = value_in
+  end subroutine
+
+  ! tao_common_struct%multi_turn_orbit_is_plotted: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_multi_turn_orbit_is_plotted(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_multi_turn_orbit_is_plotted')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%multi_turn_orbit_is_plotted
+  end subroutine
+
+
+  subroutine tao_common_struct_set_multi_turn_orbit_is_plotted(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_multi_turn_orbit_is_plotted')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%multi_turn_orbit_is_plotted = value_in
+  end subroutine
+
+  ! tao_common_struct%force_chrom_calc: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_force_chrom_calc(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_force_chrom_calc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%force_chrom_calc
+  end subroutine
+
+
+  subroutine tao_common_struct_set_force_chrom_calc(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_force_chrom_calc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%force_chrom_calc = value_in
+  end subroutine
+
+  ! tao_common_struct%force_rad_int_calc: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_force_rad_int_calc(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_force_rad_int_calc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%force_rad_int_calc
+  end subroutine
+
+
+  subroutine tao_common_struct_set_force_rad_int_calc(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_force_rad_int_calc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%force_rad_int_calc = value_in
+  end subroutine
+
+  ! tao_common_struct%rad_int_ri_calc_on: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_rad_int_ri_calc_on(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_rad_int_ri_calc_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rad_int_ri_calc_on
+  end subroutine
+
+
+  subroutine tao_common_struct_set_rad_int_ri_calc_on(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_rad_int_ri_calc_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rad_int_ri_calc_on = value_in
+  end subroutine
+
+  ! tao_common_struct%rad_int_6d_calc_on: 0D_NOT_logical
+
+  subroutine tao_common_struct_get_rad_int_6d_calc_on(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_rad_int_6d_calc_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rad_int_6d_calc_on
+  end subroutine
+
+
+  subroutine tao_common_struct_set_rad_int_6d_calc_on(struct_obj_ptr, value_in) bind(c, name='tao_common_struct_set_rad_int_6d_calc_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rad_int_6d_calc_on = value_in
+  end subroutine
+
+  ! tao_common_struct%valid_plot_who: 1D_NOT_character
+
+  subroutine tao_common_struct_get_valid_plot_who_info(struct_obj_ptr, data_ptr, bounds, str_len, is_allocated) &
+      bind(c, name='tao_common_struct_get_valid_plot_who_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    integer(c_int), intent(out) :: str_len
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true.) then
+      data_ptr = c_loc(struct_obj%valid_plot_who(lbound(struct_obj%valid_plot_who, 1)))
+      bounds(1) = int(lbound(struct_obj%valid_plot_who, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%valid_plot_who, 1), c_int)
+      str_len = int(len(struct_obj%valid_plot_who), c_int)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0
+      str_len = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_common_struct%single_mode_buffer: 0D_NOT_character
+
+  subroutine tao_common_struct_get_single_mode_buffer_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_common_struct_get_single_mode_buffer_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%single_mode_buffer)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%single_mode_buffer), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_common_struct_set_single_mode_buffer(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_common_struct_set_single_mode_buffer')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_common_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%single_mode_buffer = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_common_struct%cmd: 0D_NOT_character
+
+  subroutine tao_common_struct_get_cmd_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_common_struct_get_cmd_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%cmd)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%cmd), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_common_struct_set_cmd(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_common_struct_set_cmd')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_common_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%cmd = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_common_struct%saved_cmd_line: 0D_NOT_character
+
+  subroutine tao_common_struct_get_saved_cmd_line_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_common_struct_get_saved_cmd_line_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%saved_cmd_line)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%saved_cmd_line), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_common_struct_set_saved_cmd_line(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_common_struct_set_saved_cmd_line')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_common_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%saved_cmd_line = str_in ! implicitly handles padding
+  end subroutine
+
+  !! tao_plot_page_struct
+
+    function allocate_fortran_tao_plot_page_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_plot_page_struct), pointer :: fptr
+      type(tao_plot_page_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_plot_page_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_plot_page_struct), pointer :: fptr
+      type(tao_plot_page_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_plot_page_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_plot_page_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_plot_page_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_plot_page_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_plot_page_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_plot_page_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_plot_page_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_plot_page_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_plot_page_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_plot_page_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_plot_page_struct%title: 0D_NOT_type
+
+  subroutine tao_plot_page_struct_get_title(struct_obj_ptr, ptr_out) bind(c, name='tao_plot_page_struct_get_title')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%title)
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_title(struct_obj_ptr, src_ptr) bind(c, name='tao_plot_page_struct_set_title')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_plot_page_struct), pointer :: struct_obj
+    type(tao_title_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%title = src_obj
+  end subroutine
+
+  ! tao_plot_page_struct%subtitle: 0D_NOT_type
+
+  subroutine tao_plot_page_struct_get_subtitle(struct_obj_ptr, ptr_out) bind(c, name='tao_plot_page_struct_get_subtitle')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%subtitle)
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_subtitle(struct_obj_ptr, src_ptr) bind(c, name='tao_plot_page_struct_set_subtitle')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_plot_page_struct), pointer :: struct_obj
+    type(tao_title_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%subtitle = src_obj
+  end subroutine
+
+  ! tao_plot_page_struct%border: 0D_NOT_type
+
+  subroutine tao_plot_page_struct_get_border(struct_obj_ptr, ptr_out) bind(c, name='tao_plot_page_struct_get_border')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%border)
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_border(struct_obj_ptr, src_ptr) bind(c, name='tao_plot_page_struct_set_border')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_plot_page_struct), pointer :: struct_obj
+    type(qp_rect_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%border = src_obj
+  end subroutine
+
+  ! tao_plot_page_struct%floor_plan: 0D_NOT_type
+
+  subroutine tao_plot_page_struct_get_floor_plan(struct_obj_ptr, ptr_out) bind(c, name='tao_plot_page_struct_get_floor_plan')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%floor_plan)
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_floor_plan(struct_obj_ptr, src_ptr) bind(c, name='tao_plot_page_struct_set_floor_plan')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_plot_page_struct), pointer :: struct_obj
+    type(tao_drawing_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%floor_plan = src_obj
+  end subroutine
+
+  ! tao_plot_page_struct%lat_layout: 0D_NOT_type
+
+  subroutine tao_plot_page_struct_get_lat_layout(struct_obj_ptr, ptr_out) bind(c, name='tao_plot_page_struct_get_lat_layout')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%lat_layout)
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_lat_layout(struct_obj_ptr, src_ptr) bind(c, name='tao_plot_page_struct_set_lat_layout')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_plot_page_struct), pointer :: struct_obj
+    type(tao_drawing_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%lat_layout = src_obj
+  end subroutine
+
+  ! tao_plot_page_struct%pattern: 1D_ALLOC_type
+
+  subroutine tao_plot_page_struct_get_pattern_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_plot_page_struct_get_pattern_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_plot_page_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%pattern) .and. is_contiguous(struct_obj%pattern)) then
+      data_ptr = c_loc(struct_obj%pattern(lbound(struct_obj%pattern, 1)))
+      bounds(1) = int(lbound(struct_obj%pattern, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%pattern, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%pattern(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_plot_page_struct%template: 1D_ALLOC_type
+
+  subroutine tao_plot_page_struct_get_template_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_plot_page_struct_get_template_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_plot_page_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%template) .and. is_contiguous(struct_obj%template)) then
+      data_ptr = c_loc(struct_obj%template(lbound(struct_obj%template, 1)))
+      bounds(1) = int(lbound(struct_obj%template, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%template, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%template(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_plot_page_struct%region: 1D_ALLOC_type
+
+  subroutine tao_plot_page_struct_get_region_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_plot_page_struct_get_region_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_plot_page_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%region) .and. is_contiguous(struct_obj%region)) then
+      data_ptr = c_loc(struct_obj%region(lbound(struct_obj%region, 1)))
+      bounds(1) = int(lbound(struct_obj%region, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%region, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%region(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_plot_page_struct%plot_display_type: 0D_NOT_character
+
+  subroutine tao_plot_page_struct_get_plot_display_type_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_plot_page_struct_get_plot_display_type_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%plot_display_type)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%plot_display_type), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_plot_display_type(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_plot_page_struct_set_plot_display_type')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_plot_page_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%plot_display_type = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_plot_page_struct%size: 1D_NOT_real
+
+  subroutine tao_plot_page_struct_get_size_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='tao_plot_page_struct_get_size_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_plot_page_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%size)) then
+      data_ptr = c_loc(struct_obj%size(lbound(struct_obj%size, 1)))
+      bounds(1) = int(lbound(struct_obj%size, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%size, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_plot_page_struct%text_height: 0D_NOT_real
+
+  subroutine tao_plot_page_struct_get_text_height(struct_obj_ptr, value_out) bind(c, name='tao_plot_page_struct_get_text_height')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%text_height
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_text_height(struct_obj_ptr, value_in) bind(c, name='tao_plot_page_struct_set_text_height')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%text_height = value_in
+  end subroutine
+
+  ! tao_plot_page_struct%main_title_text_scale: 0D_NOT_real
+
+  subroutine tao_plot_page_struct_get_main_title_text_scale(struct_obj_ptr, value_out) bind(c, name='tao_plot_page_struct_get_main_title_text_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%main_title_text_scale
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_main_title_text_scale(struct_obj_ptr, value_in) bind(c, name='tao_plot_page_struct_set_main_title_text_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%main_title_text_scale = value_in
+  end subroutine
+
+  ! tao_plot_page_struct%graph_title_text_scale: 0D_NOT_real
+
+  subroutine tao_plot_page_struct_get_graph_title_text_scale(struct_obj_ptr, value_out) bind(c, name='tao_plot_page_struct_get_graph_title_text_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%graph_title_text_scale
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_graph_title_text_scale(struct_obj_ptr, value_in) bind(c, name='tao_plot_page_struct_set_graph_title_text_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%graph_title_text_scale = value_in
+  end subroutine
+
+  ! tao_plot_page_struct%axis_number_text_scale: 0D_NOT_real
+
+  subroutine tao_plot_page_struct_get_axis_number_text_scale(struct_obj_ptr, value_out) bind(c, name='tao_plot_page_struct_get_axis_number_text_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%axis_number_text_scale
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_axis_number_text_scale(struct_obj_ptr, value_in) bind(c, name='tao_plot_page_struct_set_axis_number_text_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%axis_number_text_scale = value_in
+  end subroutine
+
+  ! tao_plot_page_struct%axis_label_text_scale: 0D_NOT_real
+
+  subroutine tao_plot_page_struct_get_axis_label_text_scale(struct_obj_ptr, value_out) bind(c, name='tao_plot_page_struct_get_axis_label_text_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%axis_label_text_scale
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_axis_label_text_scale(struct_obj_ptr, value_in) bind(c, name='tao_plot_page_struct_set_axis_label_text_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%axis_label_text_scale = value_in
+  end subroutine
+
+  ! tao_plot_page_struct%legend_text_scale: 0D_NOT_real
+
+  subroutine tao_plot_page_struct_get_legend_text_scale(struct_obj_ptr, value_out) bind(c, name='tao_plot_page_struct_get_legend_text_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%legend_text_scale
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_legend_text_scale(struct_obj_ptr, value_in) bind(c, name='tao_plot_page_struct_set_legend_text_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%legend_text_scale = value_in
+  end subroutine
+
+  ! tao_plot_page_struct%key_table_text_scale: 0D_NOT_real
+
+  subroutine tao_plot_page_struct_get_key_table_text_scale(struct_obj_ptr, value_out) bind(c, name='tao_plot_page_struct_get_key_table_text_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%key_table_text_scale
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_key_table_text_scale(struct_obj_ptr, value_in) bind(c, name='tao_plot_page_struct_set_key_table_text_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%key_table_text_scale = value_in
+  end subroutine
+
+  ! tao_plot_page_struct%floor_plan_shape_scale: 0D_NOT_real
+
+  subroutine tao_plot_page_struct_get_floor_plan_shape_scale(struct_obj_ptr, value_out) bind(c, name='tao_plot_page_struct_get_floor_plan_shape_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%floor_plan_shape_scale
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_floor_plan_shape_scale(struct_obj_ptr, value_in) bind(c, name='tao_plot_page_struct_set_floor_plan_shape_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%floor_plan_shape_scale = value_in
+  end subroutine
+
+  ! tao_plot_page_struct%floor_plan_text_scale: 0D_NOT_real
+
+  subroutine tao_plot_page_struct_get_floor_plan_text_scale(struct_obj_ptr, value_out) bind(c, name='tao_plot_page_struct_get_floor_plan_text_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%floor_plan_text_scale
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_floor_plan_text_scale(struct_obj_ptr, value_in) bind(c, name='tao_plot_page_struct_set_floor_plan_text_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%floor_plan_text_scale = value_in
+  end subroutine
+
+  ! tao_plot_page_struct%lat_layout_shape_scale: 0D_NOT_real
+
+  subroutine tao_plot_page_struct_get_lat_layout_shape_scale(struct_obj_ptr, value_out) bind(c, name='tao_plot_page_struct_get_lat_layout_shape_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%lat_layout_shape_scale
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_lat_layout_shape_scale(struct_obj_ptr, value_in) bind(c, name='tao_plot_page_struct_set_lat_layout_shape_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%lat_layout_shape_scale = value_in
+  end subroutine
+
+  ! tao_plot_page_struct%lat_layout_text_scale: 0D_NOT_real
+
+  subroutine tao_plot_page_struct_get_lat_layout_text_scale(struct_obj_ptr, value_out) bind(c, name='tao_plot_page_struct_get_lat_layout_text_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%lat_layout_text_scale
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_lat_layout_text_scale(struct_obj_ptr, value_in) bind(c, name='tao_plot_page_struct_set_lat_layout_text_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%lat_layout_text_scale = value_in
+  end subroutine
+
+  ! tao_plot_page_struct%n_curve_pts: 0D_NOT_integer
+
+  subroutine tao_plot_page_struct_get_n_curve_pts(struct_obj_ptr, value_out) bind(c, name='tao_plot_page_struct_get_n_curve_pts')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_curve_pts
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_n_curve_pts(struct_obj_ptr, value_in) bind(c, name='tao_plot_page_struct_set_n_curve_pts')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_curve_pts = value_in
+  end subroutine
+
+  ! tao_plot_page_struct%id_window: 0D_NOT_integer
+
+  subroutine tao_plot_page_struct_get_id_window(struct_obj_ptr, value_out) bind(c, name='tao_plot_page_struct_get_id_window')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%id_window
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_id_window(struct_obj_ptr, value_in) bind(c, name='tao_plot_page_struct_set_id_window')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%id_window = value_in
+  end subroutine
+
+  ! tao_plot_page_struct%delete_overlapping_plots: 0D_NOT_logical
+
+  subroutine tao_plot_page_struct_get_delete_overlapping_plots(struct_obj_ptr, value_out) bind(c, name='tao_plot_page_struct_get_delete_overlapping_plots')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%delete_overlapping_plots
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_delete_overlapping_plots(struct_obj_ptr, value_in) bind(c, name='tao_plot_page_struct_set_delete_overlapping_plots')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%delete_overlapping_plots = value_in
+  end subroutine
+
+  ! tao_plot_page_struct%draw_graph_title_suffix: 0D_NOT_logical
+
+  subroutine tao_plot_page_struct_get_draw_graph_title_suffix(struct_obj_ptr, value_out) bind(c, name='tao_plot_page_struct_get_draw_graph_title_suffix')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%draw_graph_title_suffix
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_draw_graph_title_suffix(struct_obj_ptr, value_in) bind(c, name='tao_plot_page_struct_set_draw_graph_title_suffix')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_plot_page_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%draw_graph_title_suffix = value_in
+  end subroutine
+
+  !! tao_building_wall_struct
+
+    function allocate_fortran_tao_building_wall_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_building_wall_struct), pointer :: fptr
+      type(tao_building_wall_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_building_wall_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_building_wall_struct), pointer :: fptr
+      type(tao_building_wall_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_building_wall_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_building_wall_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_building_wall_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_building_wall_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_building_wall_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_building_wall_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_building_wall_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_building_wall_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_building_wall_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_building_wall_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_building_wall_struct%orientation: 0D_NOT_type
+
+  subroutine tao_building_wall_struct_get_orientation(struct_obj_ptr, ptr_out) bind(c, name='tao_building_wall_struct_get_orientation')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_building_wall_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%orientation)
+  end subroutine
+
+
+  subroutine tao_building_wall_struct_set_orientation(struct_obj_ptr, src_ptr) bind(c, name='tao_building_wall_struct_set_orientation')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_building_wall_struct), pointer :: struct_obj
+    type(tao_building_wall_orientation_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%orientation = src_obj
+  end subroutine
+
+  ! tao_building_wall_struct%section: 1D_ALLOC_type
+
+  subroutine tao_building_wall_struct_get_section_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_building_wall_struct_get_section_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_building_wall_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%section) .and. is_contiguous(struct_obj%section)) then
+      data_ptr = c_loc(struct_obj%section(lbound(struct_obj%section, 1)))
+      bounds(1) = int(lbound(struct_obj%section, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%section, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%section(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  !! tao_building_wall_orientation_struct
+
+    function allocate_fortran_tao_building_wall_orientation_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_building_wall_orientation_struct), pointer :: fptr
+      type(tao_building_wall_orientation_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_building_wall_orientation_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_building_wall_orientation_struct), pointer :: fptr
+      type(tao_building_wall_orientation_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_building_wall_orientation_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_building_wall_orientation_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_building_wall_orientation_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_building_wall_orientation_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_building_wall_orientation_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_building_wall_orientation_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_building_wall_orientation_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_building_wall_orientation_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_building_wall_orientation_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_building_wall_orientation_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_building_wall_orientation_struct%theta: 0D_NOT_real
+
+  subroutine tao_building_wall_orientation_struct_get_theta(struct_obj_ptr, value_out) bind(c, name='tao_building_wall_orientation_struct_get_theta')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_building_wall_orientation_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%theta
+  end subroutine
+
+
+  subroutine tao_building_wall_orientation_struct_set_theta(struct_obj_ptr, value_in) bind(c, name='tao_building_wall_orientation_struct_set_theta')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_building_wall_orientation_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%theta = value_in
+  end subroutine
+
+  ! tao_building_wall_orientation_struct%x_offset: 0D_NOT_real
+
+  subroutine tao_building_wall_orientation_struct_get_x_offset(struct_obj_ptr, value_out) bind(c, name='tao_building_wall_orientation_struct_get_x_offset')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_building_wall_orientation_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%x_offset
+  end subroutine
+
+
+  subroutine tao_building_wall_orientation_struct_set_x_offset(struct_obj_ptr, value_in) bind(c, name='tao_building_wall_orientation_struct_set_x_offset')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_building_wall_orientation_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%x_offset = value_in
+  end subroutine
+
+  ! tao_building_wall_orientation_struct%z_offset: 0D_NOT_real
+
+  subroutine tao_building_wall_orientation_struct_get_z_offset(struct_obj_ptr, value_out) bind(c, name='tao_building_wall_orientation_struct_get_z_offset')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_building_wall_orientation_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%z_offset
+  end subroutine
+
+
+  subroutine tao_building_wall_orientation_struct_set_z_offset(struct_obj_ptr, value_in) bind(c, name='tao_building_wall_orientation_struct_set_z_offset')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_building_wall_orientation_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%z_offset = value_in
+  end subroutine
+
+  !! tao_building_wall_section_struct
+
+    function allocate_fortran_tao_building_wall_section_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_building_wall_section_struct), pointer :: fptr
+      type(tao_building_wall_section_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_building_wall_section_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_building_wall_section_struct), pointer :: fptr
+      type(tao_building_wall_section_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_building_wall_section_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_building_wall_section_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_building_wall_section_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_building_wall_section_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_building_wall_section_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_building_wall_section_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_building_wall_section_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_building_wall_section_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_building_wall_section_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_building_wall_section_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_building_wall_section_struct%name: 0D_NOT_character
+
+  subroutine tao_building_wall_section_struct_get_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_building_wall_section_struct_get_name_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_building_wall_section_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%name)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%name), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_building_wall_section_struct_set_name(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_building_wall_section_struct_set_name')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_building_wall_section_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%name = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_building_wall_section_struct%constraint: 0D_NOT_character
+
+  subroutine tao_building_wall_section_struct_get_constraint_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_building_wall_section_struct_get_constraint_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_building_wall_section_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%constraint)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%constraint), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_building_wall_section_struct_set_constraint(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_building_wall_section_struct_set_constraint')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_building_wall_section_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%constraint = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_building_wall_section_struct%point: 1D_ALLOC_type
+
+  subroutine tao_building_wall_section_struct_get_point_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_building_wall_section_struct_get_point_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_building_wall_section_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%point) .and. is_contiguous(struct_obj%point)) then
+      data_ptr = c_loc(struct_obj%point(lbound(struct_obj%point, 1)))
+      bounds(1) = int(lbound(struct_obj%point, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%point, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%point(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  !! tao_building_wall_point_struct
+
+    function allocate_fortran_tao_building_wall_point_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_building_wall_point_struct), pointer :: fptr
+      type(tao_building_wall_point_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_building_wall_point_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_building_wall_point_struct), pointer :: fptr
+      type(tao_building_wall_point_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_building_wall_point_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_building_wall_point_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_building_wall_point_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_building_wall_point_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_building_wall_point_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_building_wall_point_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_building_wall_point_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_building_wall_point_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_building_wall_point_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_building_wall_point_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_building_wall_point_struct%z: 0D_NOT_real
+
+  subroutine tao_building_wall_point_struct_get_z(struct_obj_ptr, value_out) bind(c, name='tao_building_wall_point_struct_get_z')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_building_wall_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%z
+  end subroutine
+
+
+  subroutine tao_building_wall_point_struct_set_z(struct_obj_ptr, value_in) bind(c, name='tao_building_wall_point_struct_set_z')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_building_wall_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%z = value_in
+  end subroutine
+
+  ! tao_building_wall_point_struct%x: 0D_NOT_real
+
+  subroutine tao_building_wall_point_struct_get_x(struct_obj_ptr, value_out) bind(c, name='tao_building_wall_point_struct_get_x')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_building_wall_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%x
+  end subroutine
+
+
+  subroutine tao_building_wall_point_struct_set_x(struct_obj_ptr, value_in) bind(c, name='tao_building_wall_point_struct_set_x')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_building_wall_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%x = value_in
+  end subroutine
+
+  ! tao_building_wall_point_struct%radius: 0D_NOT_real
+
+  subroutine tao_building_wall_point_struct_get_radius(struct_obj_ptr, value_out) bind(c, name='tao_building_wall_point_struct_get_radius')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_building_wall_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%radius
+  end subroutine
+
+
+  subroutine tao_building_wall_point_struct_set_radius(struct_obj_ptr, value_in) bind(c, name='tao_building_wall_point_struct_set_radius')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_building_wall_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%radius = value_in
+  end subroutine
+
+  ! tao_building_wall_point_struct%z_center: 0D_NOT_real
+
+  subroutine tao_building_wall_point_struct_get_z_center(struct_obj_ptr, value_out) bind(c, name='tao_building_wall_point_struct_get_z_center')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_building_wall_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%z_center
+  end subroutine
+
+
+  subroutine tao_building_wall_point_struct_set_z_center(struct_obj_ptr, value_in) bind(c, name='tao_building_wall_point_struct_set_z_center')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_building_wall_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%z_center = value_in
+  end subroutine
+
+  ! tao_building_wall_point_struct%x_center: 0D_NOT_real
+
+  subroutine tao_building_wall_point_struct_get_x_center(struct_obj_ptr, value_out) bind(c, name='tao_building_wall_point_struct_get_x_center')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_building_wall_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%x_center
+  end subroutine
+
+
+  subroutine tao_building_wall_point_struct_set_x_center(struct_obj_ptr, value_in) bind(c, name='tao_building_wall_point_struct_set_x_center')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_building_wall_point_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%x_center = value_in
+  end subroutine
+
+  !! tao_wave_struct
+
+    function allocate_fortran_tao_wave_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_wave_struct), pointer :: fptr
+      type(tao_wave_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_wave_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_wave_struct), pointer :: fptr
+      type(tao_wave_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_wave_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_wave_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_wave_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_wave_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_wave_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_wave_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_wave_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_wave_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_wave_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_wave_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_wave_struct%data_type: 0D_NOT_character
+
+  subroutine tao_wave_struct_get_data_type_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_wave_struct_get_data_type_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%data_type)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%data_type), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_data_type(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_wave_struct_set_data_type')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_wave_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%data_type = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_wave_struct%rms_rel_a: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_rms_rel_a(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_rms_rel_a')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rms_rel_a
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_rms_rel_a(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_rms_rel_a')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rms_rel_a = value_in
+  end subroutine
+
+  ! tao_wave_struct%rms_rel_b: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_rms_rel_b(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_rms_rel_b')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rms_rel_b
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_rms_rel_b(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_rms_rel_b')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rms_rel_b = value_in
+  end subroutine
+
+  ! tao_wave_struct%rms_rel_as: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_rms_rel_as(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_rms_rel_as')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rms_rel_as
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_rms_rel_as(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_rms_rel_as')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rms_rel_as = value_in
+  end subroutine
+
+  ! tao_wave_struct%rms_rel_bs: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_rms_rel_bs(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_rms_rel_bs')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rms_rel_bs
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_rms_rel_bs(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_rms_rel_bs')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rms_rel_bs = value_in
+  end subroutine
+
+  ! tao_wave_struct%rms_rel_ar: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_rms_rel_ar(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_rms_rel_ar')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rms_rel_ar
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_rms_rel_ar(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_rms_rel_ar')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rms_rel_ar = value_in
+  end subroutine
+
+  ! tao_wave_struct%rms_rel_br: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_rms_rel_br(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_rms_rel_br')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rms_rel_br
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_rms_rel_br(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_rms_rel_br')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rms_rel_br = value_in
+  end subroutine
+
+  ! tao_wave_struct%rms_rel_k: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_rms_rel_k(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_rms_rel_k')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rms_rel_k
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_rms_rel_k(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_rms_rel_k')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rms_rel_k = value_in
+  end subroutine
+
+  ! tao_wave_struct%rms_rel_ks: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_rms_rel_ks(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_rms_rel_ks')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rms_rel_ks
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_rms_rel_ks(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_rms_rel_ks')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rms_rel_ks = value_in
+  end subroutine
+
+  ! tao_wave_struct%rms_rel_kr: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_rms_rel_kr(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_rms_rel_kr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rms_rel_kr
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_rms_rel_kr(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_rms_rel_kr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rms_rel_kr = value_in
+  end subroutine
+
+  ! tao_wave_struct%rms_phi: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_rms_phi(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_rms_phi')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rms_phi
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_rms_phi(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_rms_phi')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rms_phi = value_in
+  end subroutine
+
+  ! tao_wave_struct%rms_phi_s: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_rms_phi_s(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_rms_phi_s')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rms_phi_s
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_rms_phi_s(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_rms_phi_s')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rms_phi_s = value_in
+  end subroutine
+
+  ! tao_wave_struct%rms_phi_r: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_rms_phi_r(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_rms_phi_r')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rms_phi_r
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_rms_phi_r(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_rms_phi_r')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rms_phi_r = value_in
+  end subroutine
+
+  ! tao_wave_struct%amp_ba_s: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_amp_ba_s(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_amp_ba_s')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%amp_ba_s
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_amp_ba_s(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_amp_ba_s')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%amp_ba_s = value_in
+  end subroutine
+
+  ! tao_wave_struct%amp_ba_r: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_amp_ba_r(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_amp_ba_r')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%amp_ba_r
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_amp_ba_r(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_amp_ba_r')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%amp_ba_r = value_in
+  end subroutine
+
+  ! tao_wave_struct%chi_a: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_chi_a(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_chi_a')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%chi_a
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_chi_a(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_chi_a')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%chi_a = value_in
+  end subroutine
+
+  ! tao_wave_struct%chi_c: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_chi_c(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_chi_c')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%chi_c
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_chi_c(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_chi_c')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%chi_c = value_in
+  end subroutine
+
+  ! tao_wave_struct%chi_ba: 0D_NOT_real
+
+  subroutine tao_wave_struct_get_chi_ba(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_chi_ba')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%chi_ba
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_chi_ba(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_chi_ba')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%chi_ba = value_in
+  end subroutine
+
+  ! tao_wave_struct%amp_a: 1D_NOT_real
+
+  subroutine tao_wave_struct_get_amp_a_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='tao_wave_struct_get_amp_a_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_wave_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%amp_a)) then
+      data_ptr = c_loc(struct_obj%amp_a(lbound(struct_obj%amp_a, 1)))
+      bounds(1) = int(lbound(struct_obj%amp_a, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%amp_a, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_wave_struct%amp_b: 1D_NOT_real
+
+  subroutine tao_wave_struct_get_amp_b_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='tao_wave_struct_get_amp_b_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_wave_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%amp_b)) then
+      data_ptr = c_loc(struct_obj%amp_b(lbound(struct_obj%amp_b, 1)))
+      bounds(1) = int(lbound(struct_obj%amp_b, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%amp_b, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_wave_struct%amp_ba: 1D_NOT_real
+
+  subroutine tao_wave_struct_get_amp_ba_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='tao_wave_struct_get_amp_ba_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_wave_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%amp_ba)) then
+      data_ptr = c_loc(struct_obj%amp_ba(lbound(struct_obj%amp_ba, 1)))
+      bounds(1) = int(lbound(struct_obj%amp_ba, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%amp_ba, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_wave_struct%coef_a: 1D_NOT_real
+
+  subroutine tao_wave_struct_get_coef_a_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='tao_wave_struct_get_coef_a_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_wave_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%coef_a)) then
+      data_ptr = c_loc(struct_obj%coef_a(lbound(struct_obj%coef_a, 1)))
+      bounds(1) = int(lbound(struct_obj%coef_a, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%coef_a, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_wave_struct%coef_b: 1D_NOT_real
+
+  subroutine tao_wave_struct_get_coef_b_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='tao_wave_struct_get_coef_b_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_wave_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%coef_b)) then
+      data_ptr = c_loc(struct_obj%coef_b(lbound(struct_obj%coef_b, 1)))
+      bounds(1) = int(lbound(struct_obj%coef_b, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%coef_b, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_wave_struct%coef_ba: 1D_NOT_real
+
+  subroutine tao_wave_struct_get_coef_ba_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='tao_wave_struct_get_coef_ba_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_wave_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%coef_ba)) then
+      data_ptr = c_loc(struct_obj%coef_ba(lbound(struct_obj%coef_ba, 1)))
+      bounds(1) = int(lbound(struct_obj%coef_ba, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%coef_ba, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_wave_struct%n_func: 0D_NOT_integer
+
+  subroutine tao_wave_struct_get_n_func(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_n_func')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_func
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_n_func(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_n_func')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_func = value_in
+  end subroutine
+
+  ! tao_wave_struct%ix_a1: 0D_NOT_integer
+
+  subroutine tao_wave_struct_get_ix_a1(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_ix_a1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_a1
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_ix_a1(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_ix_a1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_a1 = value_in
+  end subroutine
+
+  ! tao_wave_struct%ix_a2: 0D_NOT_integer
+
+  subroutine tao_wave_struct_get_ix_a2(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_ix_a2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_a2
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_ix_a2(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_ix_a2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_a2 = value_in
+  end subroutine
+
+  ! tao_wave_struct%ix_b1: 0D_NOT_integer
+
+  subroutine tao_wave_struct_get_ix_b1(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_ix_b1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_b1
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_ix_b1(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_ix_b1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_b1 = value_in
+  end subroutine
+
+  ! tao_wave_struct%ix_b2: 0D_NOT_integer
+
+  subroutine tao_wave_struct_get_ix_b2(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_ix_b2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_b2
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_ix_b2(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_ix_b2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_b2 = value_in
+  end subroutine
+
+  ! tao_wave_struct%i_a1: 0D_NOT_integer
+
+  subroutine tao_wave_struct_get_i_a1(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_i_a1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%i_a1
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_i_a1(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_i_a1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%i_a1 = value_in
+  end subroutine
+
+  ! tao_wave_struct%i_a2: 0D_NOT_integer
+
+  subroutine tao_wave_struct_get_i_a2(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_i_a2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%i_a2
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_i_a2(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_i_a2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%i_a2 = value_in
+  end subroutine
+
+  ! tao_wave_struct%i_b1: 0D_NOT_integer
+
+  subroutine tao_wave_struct_get_i_b1(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_i_b1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%i_b1
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_i_b1(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_i_b1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%i_b1 = value_in
+  end subroutine
+
+  ! tao_wave_struct%i_b2: 0D_NOT_integer
+
+  subroutine tao_wave_struct_get_i_b2(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_i_b2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%i_b2
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_i_b2(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_i_b2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%i_b2 = value_in
+  end subroutine
+
+  ! tao_wave_struct%n_a: 0D_NOT_integer
+
+  subroutine tao_wave_struct_get_n_a(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_n_a')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_a
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_n_a(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_n_a')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_a = value_in
+  end subroutine
+
+  ! tao_wave_struct%n_b: 0D_NOT_integer
+
+  subroutine tao_wave_struct_get_n_b(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_n_b')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_b
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_n_b(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_n_b')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_b = value_in
+  end subroutine
+
+  ! tao_wave_struct%i_curve_wrap_pt: 0D_NOT_integer
+
+  subroutine tao_wave_struct_get_i_curve_wrap_pt(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_i_curve_wrap_pt')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%i_curve_wrap_pt
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_i_curve_wrap_pt(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_i_curve_wrap_pt')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%i_curve_wrap_pt = value_in
+  end subroutine
+
+  ! tao_wave_struct%ix_data: 1D_ALLOC_integer
+
+  subroutine tao_wave_struct_get_ix_data_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='tao_wave_struct_get_ix_data_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_wave_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%ix_data) .and. is_contiguous(struct_obj%ix_data)) then
+      data_ptr = c_loc(struct_obj%ix_data(lbound(struct_obj%ix_data, 1)))
+      bounds(1) = int(lbound(struct_obj%ix_data, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%ix_data, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_wave_struct%n_kick: 0D_NOT_integer
+
+  subroutine tao_wave_struct_get_n_kick(struct_obj_ptr, value_out) bind(c, name='tao_wave_struct_get_n_kick')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_kick
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_n_kick(struct_obj_ptr, value_in) bind(c, name='tao_wave_struct_set_n_kick')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_kick = value_in
+  end subroutine
+
+  ! tao_wave_struct%kick: 1D_ALLOC_type
+
+  subroutine tao_wave_struct_get_kick_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_wave_struct_get_kick_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_wave_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%kick) .and. is_contiguous(struct_obj%kick)) then
+      data_ptr = c_loc(struct_obj%kick(lbound(struct_obj%kick, 1)))
+      bounds(1) = int(lbound(struct_obj%kick, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%kick, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%kick(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_wave_struct%base_graph: 0D_NOT_type
+
+  subroutine tao_wave_struct_get_base_graph(struct_obj_ptr, ptr_out) bind(c, name='tao_wave_struct_get_base_graph')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    ptr_out = c_loc(struct_obj%base_graph)
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_base_graph(struct_obj_ptr, src_ptr) bind(c, name='tao_wave_struct_set_base_graph')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_wave_struct), pointer :: struct_obj
+    type(tao_graph_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(src_ptr, src_obj)
+    struct_obj%base_graph = src_obj
+  end subroutine
+
+  ! tao_wave_struct%region: 0D_PTR_type
+
+  subroutine tao_wave_struct_get_region(struct_obj_ptr, ptr_out) bind(c, name='tao_wave_struct_get_region')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%region)) then
+      ptr_out = c_loc(struct_obj%region)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_region(struct_obj_ptr, src_ptr) bind(c, name='tao_wave_struct_set_region')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_wave_struct), pointer :: struct_obj
+    type(tao_plot_region_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%region)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%region = src_obj
+    endif
+  end subroutine
+
+  ! tao_wave_struct%d1_dat: 0D_PTR_type
+
+  subroutine tao_wave_struct_get_d1_dat(struct_obj_ptr, ptr_out) bind(c, name='tao_wave_struct_get_d1_dat')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_wave_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%d1_dat)) then
+      ptr_out = c_loc(struct_obj%d1_dat)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_d1_dat(struct_obj_ptr, src_ptr) bind(c, name='tao_wave_struct_set_d1_dat')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_wave_struct), pointer :: struct_obj
+    type(tao_d1_data_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%d1_dat)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%d1_dat = src_obj
+    endif
+  end subroutine
+
+  !! tao_wave_kick_pt_struct
+
+    function allocate_fortran_tao_wave_kick_pt_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_wave_kick_pt_struct), pointer :: fptr
+      type(tao_wave_kick_pt_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_wave_kick_pt_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_wave_kick_pt_struct), pointer :: fptr
+      type(tao_wave_kick_pt_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_wave_kick_pt_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_wave_kick_pt_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_wave_kick_pt_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_wave_kick_pt_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_wave_kick_pt_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_wave_kick_pt_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_wave_kick_pt_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_wave_kick_pt_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_wave_kick_pt_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_wave_kick_pt_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_wave_kick_pt_struct%phi_s: 0D_NOT_real
+
+  subroutine tao_wave_kick_pt_struct_get_phi_s(struct_obj_ptr, value_out) bind(c, name='tao_wave_kick_pt_struct_get_phi_s')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_kick_pt_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%phi_s
+  end subroutine
+
+
+  subroutine tao_wave_kick_pt_struct_set_phi_s(struct_obj_ptr, value_in) bind(c, name='tao_wave_kick_pt_struct_set_phi_s')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_kick_pt_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%phi_s = value_in
+  end subroutine
+
+  ! tao_wave_kick_pt_struct%phi_r: 0D_NOT_real
+
+  subroutine tao_wave_kick_pt_struct_get_phi_r(struct_obj_ptr, value_out) bind(c, name='tao_wave_kick_pt_struct_get_phi_r')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_kick_pt_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%phi_r
+  end subroutine
+
+
+  subroutine tao_wave_kick_pt_struct_set_phi_r(struct_obj_ptr, value_in) bind(c, name='tao_wave_kick_pt_struct_set_phi_r')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_kick_pt_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%phi_r = value_in
+  end subroutine
+
+  ! tao_wave_kick_pt_struct%phi: 0D_NOT_real
+
+  subroutine tao_wave_kick_pt_struct_get_phi(struct_obj_ptr, value_out) bind(c, name='tao_wave_kick_pt_struct_get_phi')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_kick_pt_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%phi
+  end subroutine
+
+
+  subroutine tao_wave_kick_pt_struct_set_phi(struct_obj_ptr, value_in) bind(c, name='tao_wave_kick_pt_struct_set_phi')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_kick_pt_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%phi = value_in
+  end subroutine
+
+  ! tao_wave_kick_pt_struct%amp: 0D_NOT_real
+
+  subroutine tao_wave_kick_pt_struct_get_amp(struct_obj_ptr, value_out) bind(c, name='tao_wave_kick_pt_struct_get_amp')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_kick_pt_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%amp
+  end subroutine
+
+
+  subroutine tao_wave_kick_pt_struct_set_amp(struct_obj_ptr, value_in) bind(c, name='tao_wave_kick_pt_struct_set_amp')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_kick_pt_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%amp = value_in
+  end subroutine
+
+  ! tao_wave_kick_pt_struct%s: 0D_NOT_real
+
+  subroutine tao_wave_kick_pt_struct_get_s(struct_obj_ptr, value_out) bind(c, name='tao_wave_kick_pt_struct_get_s')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_wave_kick_pt_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%s
+  end subroutine
+
+
+  subroutine tao_wave_kick_pt_struct_set_s(struct_obj_ptr, value_in) bind(c, name='tao_wave_kick_pt_struct_set_s')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_wave_kick_pt_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%s = value_in
+  end subroutine
+
+  ! tao_wave_kick_pt_struct%ix_dat_before_kick: 0D_NOT_integer
+
+  subroutine tao_wave_kick_pt_struct_get_ix_dat_before_kick(struct_obj_ptr, value_out) bind(c, name='tao_wave_kick_pt_struct_get_ix_dat_before_kick')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_wave_kick_pt_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_dat_before_kick
+  end subroutine
+
+
+  subroutine tao_wave_kick_pt_struct_set_ix_dat_before_kick(struct_obj_ptr, value_in) bind(c, name='tao_wave_kick_pt_struct_set_ix_dat_before_kick')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_wave_kick_pt_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_dat_before_kick = value_in
+  end subroutine
+
+  ! tao_wave_kick_pt_struct%ele: 0D_PTR_type
+
+  subroutine tao_wave_kick_pt_struct_get_ele(struct_obj_ptr, ptr_out) bind(c, name='tao_wave_kick_pt_struct_get_ele')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_wave_kick_pt_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%ele)) then
+      ptr_out = c_loc(struct_obj%ele)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine tao_wave_kick_pt_struct_set_ele(struct_obj_ptr, src_ptr) bind(c, name='tao_wave_kick_pt_struct_set_ele')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_wave_kick_pt_struct), pointer :: struct_obj
+    type(ele_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%ele)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%ele = src_obj
+    endif
+  end subroutine
+
+  !! tao_cmd_history_struct
+
+    function allocate_fortran_tao_cmd_history_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_cmd_history_struct), pointer :: fptr
+      type(tao_cmd_history_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_cmd_history_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_cmd_history_struct), pointer :: fptr
+      type(tao_cmd_history_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_cmd_history_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_cmd_history_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_cmd_history_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_cmd_history_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_cmd_history_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_cmd_history_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_cmd_history_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_cmd_history_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_cmd_history_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_cmd_history_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_cmd_history_struct%cmd: 0D_ALLOC_character
+
+  subroutine tao_cmd_history_struct_get_cmd_info(struct_obj_ptr, data_ptr, str_len, is_allocated) &
+    bind(c, name='tao_cmd_history_struct_get_cmd_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), intent(out) :: str_len
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_cmd_history_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%cmd)) then
+      data_ptr = c_loc(struct_obj%cmd)
+      str_len = int(len(struct_obj%cmd), c_int)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      str_len = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_cmd_history_struct_set_cmd(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_cmd_history_struct_set_cmd')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_cmd_history_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: temp_str
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%cmd)) deallocate(struct_obj%cmd)
+
+    if (str_len > 0) then
+       call c_f_pointer(str_ptr, temp_str)
+       allocate(struct_obj%cmd, source=temp_str)
+       struct_obj%cmd = temp_str(1:str_len)
+    endif
+  end subroutine
+
+  ! tao_cmd_history_struct%ix: 0D_NOT_integer
+
+  subroutine tao_cmd_history_struct_get_ix(struct_obj_ptr, value_out) bind(c, name='tao_cmd_history_struct_get_ix')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_cmd_history_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix
+  end subroutine
+
+
+  subroutine tao_cmd_history_struct_set_ix(struct_obj_ptr, value_in) bind(c, name='tao_cmd_history_struct_set_ix')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_cmd_history_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix = value_in
+  end subroutine
+
   !! tao_universe_struct
 
     function allocate_fortran_tao_universe_struct(n, element_size) result(ptr) bind(c)
@@ -44115,6 +55556,460 @@ contains
     type(tao_universe_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     struct_obj%picked_uni = value_in
+  end subroutine
+
+  !! mad_energy_struct
+
+    function allocate_fortran_mad_energy_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(mad_energy_struct), pointer :: fptr
+      type(mad_energy_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_mad_energy_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(mad_energy_struct), pointer :: fptr
+      type(mad_energy_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_mad_energy_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(mad_energy_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_mad_energy_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(mad_energy_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_mad_energy_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(mad_energy_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_mad_energy_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(mad_energy_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_mad_energy_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(mad_energy_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! mad_energy_struct%total: 0D_NOT_real
+
+  subroutine mad_energy_struct_get_total(struct_obj_ptr, value_out) bind(c, name='mad_energy_struct_get_total')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(mad_energy_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%total
+  end subroutine
+
+
+  subroutine mad_energy_struct_set_total(struct_obj_ptr, value_in) bind(c, name='mad_energy_struct_set_total')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(mad_energy_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%total = value_in
+  end subroutine
+
+  ! mad_energy_struct%beta: 0D_NOT_real
+
+  subroutine mad_energy_struct_get_beta(struct_obj_ptr, value_out) bind(c, name='mad_energy_struct_get_beta')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(mad_energy_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%beta
+  end subroutine
+
+
+  subroutine mad_energy_struct_set_beta(struct_obj_ptr, value_in) bind(c, name='mad_energy_struct_set_beta')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(mad_energy_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%beta = value_in
+  end subroutine
+
+  ! mad_energy_struct%gamma: 0D_NOT_real
+
+  subroutine mad_energy_struct_get_gamma(struct_obj_ptr, value_out) bind(c, name='mad_energy_struct_get_gamma')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(mad_energy_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%gamma
+  end subroutine
+
+
+  subroutine mad_energy_struct_set_gamma(struct_obj_ptr, value_in) bind(c, name='mad_energy_struct_set_gamma')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(mad_energy_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%gamma = value_in
+  end subroutine
+
+  ! mad_energy_struct%kinetic: 0D_NOT_real
+
+  subroutine mad_energy_struct_get_kinetic(struct_obj_ptr, value_out) bind(c, name='mad_energy_struct_get_kinetic')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(mad_energy_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%kinetic
+  end subroutine
+
+
+  subroutine mad_energy_struct_set_kinetic(struct_obj_ptr, value_in) bind(c, name='mad_energy_struct_set_kinetic')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(mad_energy_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%kinetic = value_in
+  end subroutine
+
+  ! mad_energy_struct%p0c: 0D_NOT_real
+
+  subroutine mad_energy_struct_get_p0c(struct_obj_ptr, value_out) bind(c, name='mad_energy_struct_get_p0c')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(mad_energy_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%p0c
+  end subroutine
+
+
+  subroutine mad_energy_struct_set_p0c(struct_obj_ptr, value_in) bind(c, name='mad_energy_struct_set_p0c')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(mad_energy_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%p0c = value_in
+  end subroutine
+
+  ! mad_energy_struct%particle: 0D_NOT_integer
+
+  subroutine mad_energy_struct_get_particle(struct_obj_ptr, value_out) bind(c, name='mad_energy_struct_get_particle')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(mad_energy_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%particle
+  end subroutine
+
+
+  subroutine mad_energy_struct_set_particle(struct_obj_ptr, value_in) bind(c, name='mad_energy_struct_set_particle')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(mad_energy_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%particle = value_in
+  end subroutine
+
+  !! mad_map_struct
+
+    function allocate_fortran_mad_map_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(mad_map_struct), pointer :: fptr
+      type(mad_map_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_mad_map_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(mad_map_struct), pointer :: fptr
+      type(mad_map_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_mad_map_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(mad_map_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_mad_map_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(mad_map_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_mad_map_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(mad_map_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_mad_map_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(mad_map_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_mad_map_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(mad_map_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! mad_map_struct%k: 1D_NOT_real
+
+  subroutine mad_map_struct_get_k_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='mad_map_struct_get_k_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(mad_map_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%k)) then
+      data_ptr = c_loc(struct_obj%k(lbound(struct_obj%k, 1)))
+      bounds(1) = int(lbound(struct_obj%k, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%k, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! mad_map_struct%r: 2D_NOT_real
+
+  subroutine mad_map_struct_get_r_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='mad_map_struct_get_r_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(mad_map_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%r)) then
+      data_ptr = c_loc(struct_obj%r(lbound(struct_obj%r, 1), lbound(struct_obj%r, 2)))
+      bounds(1) = int(lbound(struct_obj%r, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%r, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%r, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%r, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! mad_map_struct%t: 3D_NOT_real
+
+  subroutine mad_map_struct_get_t_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='mad_map_struct_get_t_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(mad_map_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%t)) then
+      data_ptr = c_loc(struct_obj%t(lbound(struct_obj%t, 1), lbound(struct_obj%t, 2), lbound(struct_obj%t, 3)))
+      bounds(1) = int(lbound(struct_obj%t, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%t, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%t, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%t, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%t, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%t, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
   end subroutine
 
   !! all_encompassing_struct

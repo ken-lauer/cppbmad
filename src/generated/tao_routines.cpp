@@ -1407,6 +1407,13 @@ void Tao::tao_optimization_status(TaoDataProxy& datum, std::string& why_str) {
 void Tao::tao_orbit_beta_wave_anal(TaoPlotProxy& plot) {
   fortran_tao_orbit_beta_wave_anal(/* void* */ plot.get_fortran_ptr());
 }
+void Tao::tao_oreint_building_wall_pt(
+    TaoBuildingWallPointProxy& pt_in,
+    TaoBuildingWallPointProxy& pt_out) {
+  fortran_tao_oreint_building_wall_pt(
+      /* void* */ pt_in.get_fortran_ptr(),
+      /* void* */ pt_out.get_fortran_ptr());
+}
 Tao::TaoParamValueAtS Tao::tao_param_value_at_s(
     std::string& dat_name,
     EleProxy& ele_to_s,
@@ -2021,6 +2028,17 @@ void Tao::tao_set_default_cmd(std::string who_str, std::string value_str) {
   fortran_tao_set_default_cmd(
       /* const char* */ _who_str, /* const char* */ _value_str);
 }
+void Tao::tao_set_drawing_cmd(
+    TaoDrawingProxy& drawing,
+    std::string component,
+    std::string value_str) {
+  auto _component = component.c_str();
+  auto _value_str = value_str.c_str();
+  fortran_tao_set_drawing_cmd(
+      /* void* */ drawing.get_fortran_ptr(),
+      /* const char* */ _component,
+      /* const char* */ _value_str);
+}
 void Tao::tao_set_dynamic_aperture_cmd(std::string who, std::string value_str) {
   auto _who = who.c_str();
   auto _value_str = value_str.c_str();
@@ -2040,6 +2058,18 @@ void Tao::tao_set_elements_cmd(
       /* const char* */ _attribute,
       /* const char* */ _value,
       /* bool& */ update);
+}
+void Tao::tao_set_floor_plan_axis_label(
+    TaoGraphProxy& graph,
+    QpAxisProxy& axis_in,
+    QpAxisProxy& axis_out,
+    std::string& which) {
+  auto _which = which.c_str(); // ptr, inout, required
+  fortran_tao_set_floor_plan_axis_label(
+      /* void* */ graph.get_fortran_ptr(),
+      /* void* */ axis_in.get_fortran_ptr(),
+      /* void* */ axis_out.get_fortran_ptr(),
+      /* const char* */ _which);
 }
 void Tao::tao_set_geodesic_lm_cmd(std::string who, std::string value_str) {
   auto _who = who.c_str();
@@ -2229,6 +2259,63 @@ void Tao::tao_set_ptc_com_cmd(std::string who, std::string value_str) {
   auto _value_str = value_str.c_str();
   fortran_tao_set_ptc_com_cmd(
       /* const char* */ _who, /* const char* */ _value_str);
+}
+Tao::TaoSetQpAxisStruct Tao::tao_set_qp_axis_struct(
+    std::string qp_axis_name,
+    std::string component,
+    QpAxisProxy& qp_axis,
+    std::string value) {
+  auto _qp_axis_name = qp_axis_name.c_str();
+  auto _component = component.c_str();
+  auto _value = value.c_str();
+  bool _error{};
+  int _ix_uni{};
+  fortran_tao_set_qp_axis_struct(
+      /* const char* */ _qp_axis_name,
+      /* const char* */ _component,
+      /* void* */ qp_axis.get_fortran_ptr(),
+      /* const char* */ _value,
+      /* bool& */ _error,
+      /* int& */ _ix_uni);
+  return TaoSetQpAxisStruct{_error, _ix_uni};
+}
+Tao::TaoSetQpPointStruct Tao::tao_set_qp_point_struct(
+    std::string qp_point_name,
+    std::string component,
+    QpPointProxy& qp_point,
+    std::string value) {
+  auto _qp_point_name = qp_point_name.c_str();
+  auto _component = component.c_str();
+  auto _value = value.c_str();
+  bool _error{};
+  int _ix_uni{};
+  fortran_tao_set_qp_point_struct(
+      /* const char* */ _qp_point_name,
+      /* const char* */ _component,
+      /* void* */ qp_point.get_fortran_ptr(),
+      /* const char* */ _value,
+      /* bool& */ _error,
+      /* int& */ _ix_uni);
+  return TaoSetQpPointStruct{_error, _ix_uni};
+}
+Tao::TaoSetQpRectStruct Tao::tao_set_qp_rect_struct(
+    std::string qp_rect_name,
+    std::string component,
+    QpRectProxy& qp_rect,
+    std::string value) {
+  auto _qp_rect_name = qp_rect_name.c_str();
+  auto _component = component.c_str();
+  auto _value = value.c_str();
+  bool _error{};
+  int _ix_uni{};
+  fortran_tao_set_qp_rect_struct(
+      /* const char* */ _qp_rect_name,
+      /* const char* */ _component,
+      /* void* */ qp_rect.get_fortran_ptr(),
+      /* const char* */ _value,
+      /* bool& */ _error,
+      /* int& */ _ix_uni);
+  return TaoSetQpRectStruct{_error, _ix_uni};
 }
 void Tao::tao_set_ran_state_cmd(std::string state_string) {
   auto _state_string = state_string.c_str();

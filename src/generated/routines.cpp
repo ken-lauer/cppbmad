@@ -5835,6 +5835,107 @@ void Bmad::low_energy_z_correction(
   if (mat6.has_value())
     vec_to_matrix(_mat6_vec, mat6.value());
 }
+MadMapProxy Bmad::mad_add_offsets_and_multipoles(EleProxy& ele) {
+  MadMapProxy _map;
+  fortran_mad_add_offsets_and_multipoles(
+      /* void* */ ele.get_fortran_ptr(), /* void* */ _map.get_fortran_ptr());
+  return std::move(_map);
+}
+MadMapProxy Bmad::mad_concat_map2(MadMapProxy& map1, MadMapProxy& map2) {
+  MadMapProxy _map3;
+  fortran_mad_concat_map2(
+      /* void* */ map1.get_fortran_ptr(),
+      /* void* */ map2.get_fortran_ptr(),
+      /* void* */ _map3.get_fortran_ptr());
+  return std::move(_map3);
+}
+MadMapProxy Bmad::mad_drift(EleProxy& ele, MadEnergyProxy& energy) {
+  MadMapProxy _map;
+  fortran_mad_drift(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ energy.get_fortran_ptr(),
+      /* void* */ _map.get_fortran_ptr());
+  return std::move(_map);
+}
+MadMapProxy Bmad::mad_elsep(EleProxy& ele, MadEnergyProxy& energy) {
+  MadMapProxy _map;
+  fortran_mad_elsep(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ energy.get_fortran_ptr(),
+      /* void* */ _map.get_fortran_ptr());
+  return std::move(_map);
+}
+TaylorProxyAlloc1D Bmad::mad_map_to_taylor(
+    MadMapProxy& map,
+    MadEnergyProxy& energy) {
+  // intent=out allocatable type array
+  auto taylor{TaylorProxyAlloc1D()};
+  fortran_mad_map_to_taylor(
+      /* void* */ map.get_fortran_ptr(),
+      /* void* */ energy.get_fortran_ptr(),
+      /* void* */ taylor.get_fortran_ptr());
+  return std::move(taylor);
+}
+MadMapProxy Bmad::mad_quadrupole(EleProxy& ele, MadEnergyProxy& energy) {
+  MadMapProxy _map;
+  fortran_mad_quadrupole(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ energy.get_fortran_ptr(),
+      /* void* */ _map.get_fortran_ptr());
+  return std::move(_map);
+}
+MadMapProxy Bmad::mad_rfcavity(EleProxy& ele, MadEnergyProxy& energy) {
+  MadMapProxy _map;
+  fortran_mad_rfcavity(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ energy.get_fortran_ptr(),
+      /* void* */ _map.get_fortran_ptr());
+  return std::move(_map);
+}
+MadMapProxy Bmad::mad_sbend(EleProxy& ele, MadEnergyProxy& energy) {
+  MadMapProxy _map;
+  fortran_mad_sbend(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ energy.get_fortran_ptr(),
+      /* void* */ _map.get_fortran_ptr());
+  return std::move(_map);
+}
+MadMapProxy Bmad::mad_sbend_body(EleProxy& ele, MadEnergyProxy& energy) {
+  MadMapProxy _map;
+  fortran_mad_sbend_body(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ energy.get_fortran_ptr(),
+      /* void* */ _map.get_fortran_ptr());
+  return std::move(_map);
+}
+MadMapProxy Bmad::mad_sbend_fringe(
+    EleProxy& ele,
+    MadEnergyProxy& energy,
+    bool into) {
+  MadMapProxy _map;
+  fortran_mad_sbend_fringe(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ energy.get_fortran_ptr(),
+      /* bool& */ into,
+      /* void* */ _map.get_fortran_ptr());
+  return std::move(_map);
+}
+MadMapProxy Bmad::mad_sextupole(EleProxy& ele, MadEnergyProxy& energy) {
+  MadMapProxy _map;
+  fortran_mad_sextupole(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ energy.get_fortran_ptr(),
+      /* void* */ _map.get_fortran_ptr());
+  return std::move(_map);
+}
+MadMapProxy Bmad::mad_solenoid(EleProxy& ele, MadEnergyProxy& energy) {
+  MadMapProxy _map;
+  fortran_mad_solenoid(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ energy.get_fortran_ptr(),
+      /* void* */ _map.get_fortran_ptr());
+  return std::move(_map);
+}
 Bmad::MadTmfoc Bmad::mad_tmfoc(double el, double sk1) {
   double _c{};
   double _s{};
@@ -5854,6 +5955,17 @@ void Bmad::mad_tmsymm(FixedArray3D<Real, 6, 6, 6> te) {
   tensor_to_vec(te, _te_vec);
   fortran_mad_tmsymm(/* double* */ _te_vec);
   vec_to_tensor(_te_vec, te);
+}
+void Bmad::mad_tmtilt(MadMapProxy& map, double tilt) {
+  fortran_mad_tmtilt(/* void* */ map.get_fortran_ptr(), /* double& */ tilt);
+}
+CoordProxy Bmad::mad_track1(CoordProxy& c0, MadMapProxy& map) {
+  CoordProxy _c1;
+  fortran_mad_track1(
+      /* void* */ c0.get_fortran_ptr(),
+      /* void* */ map.get_fortran_ptr(),
+      /* void* */ _c1.get_fortran_ptr());
+  return std::move(_c1);
 }
 void Bmad::make_g2_mats(
     TwissProxy& twiss,
@@ -5931,6 +6043,16 @@ LatProxy Bmad::make_hybrid_lat(
       /* bool* */ _use_taylor,
       /* void* */ _orb0_arr);
   return std::move(_lat_out);
+}
+Bmad::MakeMadMap Bmad::make_mad_map(EleProxy& ele, LatParamProxy& param) {
+  MadEnergyProxy _energy;
+  MadMapProxy _map;
+  fortran_make_mad_map(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ param.get_fortran_ptr(),
+      /* void* */ _energy.get_fortran_ptr(),
+      /* void* */ _map.get_fortran_ptr());
+  return MakeMadMap{std::move(_energy), std::move(_map)};
 }
 Bmad::MakeMat6 Bmad::make_mat6(
     EleProxy& ele,
@@ -6109,6 +6231,9 @@ Bmad::MakeSmatFromAbc Bmad::make_smat_from_abc(
   vec_to_matrix(_sigma_mat_vec, sigma_mat);
   vec_to_matrix(_Nout_vec, Nout);
   return MakeSmatFromAbc{sigma_mat, _err_flag, Nout};
+}
+void Bmad::make_unit_mad_map(MadMapProxy& map) {
+  fortran_make_unit_mad_map(/* void* */ map.get_fortran_ptr());
 }
 void Bmad::make_v(
     FixedArray2D<Real, 6, 6> M,
@@ -10791,6 +10916,17 @@ bool Bmad::taylor_propagate1(
       /* void* */ _ref_in,
       /* void* */ _spin_taylor);
   return _err_flag;
+}
+MadMapProxy Bmad::taylor_to_mad_map(
+    TaylorProxyAlloc1D& taylor,
+    MadEnergyProxy& energy) {
+  // intent=in allocatable type array
+  MadMapProxy _map;
+  fortran_taylor_to_mad_map(
+      /* void* */ taylor.get_fortran_ptr(),
+      /* void* */ energy.get_fortran_ptr(),
+      /* void* */ _map.get_fortran_ptr());
+  return std::move(_map);
 }
 TaylorProxyAlloc1D Bmad::taylors_equal_taylors(TaylorProxyAlloc1D& taylor2) {
   // intent=out allocatable type array

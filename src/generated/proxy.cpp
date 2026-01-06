@@ -6395,6 +6395,22 @@ void TaoEleShapeProxy::set_name_ele(const std::string& value) {
   tao_ele_shape_struct_set_name_ele(
       fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
 }
+TaoElePointerProxyArray1D TaoEleShapeProxy::uni() const {
+  return ProxyHelpers::get_type_array_1d<TaoElePointerProxyArray1D>(
+      fortran_ptr_, tao_ele_shape_struct_get_uni_info);
+}
+ElePointerProxyArray1D TaoElePointerProxy::eles() const {
+  return ProxyHelpers::get_type_array_1d<ElePointerProxyArray1D>(
+      fortran_ptr_, tao_ele_pointer_struct_get_eles_info);
+}
+int TaoElePointerProxy::n_loc() const {
+  int value;
+  tao_ele_pointer_struct_get_n_loc(fortran_ptr_, &value);
+  return value;
+}
+void TaoElePointerProxy::set_n_loc(int value) {
+  tao_ele_pointer_struct_set_n_loc(fortran_ptr_, value);
+}
 std::string TaoCurveProxy::name() const {
   FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
       fortran_ptr_, tao_curve_struct_get_name_info);
@@ -6494,6 +6510,22 @@ std::optional<TaoGraphProxy> TaoCurveProxy::g() const {
 void TaoCurveProxy::set_g(const TaoGraphProxy& src) {
   tao_curve_struct_set_g(fortran_ptr_, src.get_fortran_ptr());
 }
+TaoHistogramProxy TaoCurveProxy::hist() const {
+  void* ptr;
+  tao_curve_struct_get_hist(fortran_ptr_, &ptr);
+  return TaoHistogramProxy(ptr);
+}
+void TaoCurveProxy::set_hist(const TaoHistogramProxy& src) {
+  tao_curve_struct_set_hist(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoCurveColorProxy TaoCurveProxy::z_color() const {
+  void* ptr;
+  tao_curve_struct_get_z_color(fortran_ptr_, &ptr);
+  return TaoCurveColorProxy(ptr);
+}
+void TaoCurveProxy::set_z_color(const TaoCurveColorProxy& src) {
+  tao_curve_struct_set_z_color(fortran_ptr_, src.get_fortran_ptr());
+}
 FArray1D<double> TaoCurveProxy::x_line() const {
   return ProxyHelpers::get_array_1d<double>(
       fortran_ptr_, tao_curve_struct_get_x_line_info);
@@ -6541,6 +6573,30 @@ double TaoCurveProxy::y_axis_scale_factor() const {
 }
 void TaoCurveProxy::set_y_axis_scale_factor(double value) {
   tao_curve_struct_set_y_axis_scale_factor(fortran_ptr_, value);
+}
+QpLineProxy TaoCurveProxy::line() const {
+  void* ptr;
+  tao_curve_struct_get_line(fortran_ptr_, &ptr);
+  return QpLineProxy(ptr);
+}
+void TaoCurveProxy::set_line(const QpLineProxy& src) {
+  tao_curve_struct_set_line(fortran_ptr_, src.get_fortran_ptr());
+}
+QpSymbolProxy TaoCurveProxy::symbol() const {
+  void* ptr;
+  tao_curve_struct_get_symbol(fortran_ptr_, &ptr);
+  return QpSymbolProxy(ptr);
+}
+void TaoCurveProxy::set_symbol(const QpSymbolProxy& src) {
+  tao_curve_struct_set_symbol(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoCurveOrbitProxy TaoCurveProxy::orbit() const {
+  void* ptr;
+  tao_curve_struct_get_orbit(fortran_ptr_, &ptr);
+  return TaoCurveOrbitProxy(ptr);
+}
+void TaoCurveProxy::set_orbit(const TaoCurveOrbitProxy& src) {
+  tao_curve_struct_set_orbit(fortran_ptr_, src.get_fortran_ptr());
 }
 int TaoCurveProxy::ix_universe() const {
   int value;
@@ -6637,6 +6693,127 @@ bool TaoCurveProxy::valid() const {
 }
 void TaoCurveProxy::set_valid(bool value) {
   tao_curve_struct_set_valid(fortran_ptr_, value);
+}
+std::string TaoCurveColorProxy::data_type() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_curve_color_struct_get_data_type_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoCurveColorProxy::set_data_type(const std::string& value) {
+  tao_curve_color_struct_set_data_type(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+bool TaoCurveColorProxy::is_on() const {
+  bool value;
+  tao_curve_color_struct_get_is_on(fortran_ptr_, &value);
+  return value;
+}
+void TaoCurveColorProxy::set_is_on(bool value) {
+  tao_curve_color_struct_set_is_on(fortran_ptr_, value);
+}
+double TaoCurveColorProxy::min() const {
+  double value;
+  tao_curve_color_struct_get_min(fortran_ptr_, &value);
+  return value;
+}
+void TaoCurveColorProxy::set_min(double value) {
+  tao_curve_color_struct_set_min(fortran_ptr_, value);
+}
+double TaoCurveColorProxy::max() const {
+  double value;
+  tao_curve_color_struct_get_max(fortran_ptr_, &value);
+  return value;
+}
+void TaoCurveColorProxy::set_max(double value) {
+  tao_curve_color_struct_set_max(fortran_ptr_, value);
+}
+bool TaoCurveColorProxy::autoscale() const {
+  bool value;
+  tao_curve_color_struct_get_autoscale(fortran_ptr_, &value);
+  return value;
+}
+void TaoCurveColorProxy::set_autoscale(bool value) {
+  tao_curve_color_struct_set_autoscale(fortran_ptr_, value);
+}
+double TaoCurveOrbitProxy::x() const {
+  double value;
+  tao_curve_orbit_struct_get_x(fortran_ptr_, &value);
+  return value;
+}
+void TaoCurveOrbitProxy::set_x(double value) {
+  tao_curve_orbit_struct_set_x(fortran_ptr_, value);
+}
+double TaoCurveOrbitProxy::y() const {
+  double value;
+  tao_curve_orbit_struct_get_y(fortran_ptr_, &value);
+  return value;
+}
+void TaoCurveOrbitProxy::set_y(double value) {
+  tao_curve_orbit_struct_set_y(fortran_ptr_, value);
+}
+double TaoCurveOrbitProxy::t() const {
+  double value;
+  tao_curve_orbit_struct_get_t(fortran_ptr_, &value);
+  return value;
+}
+void TaoCurveOrbitProxy::set_t(double value) {
+  tao_curve_orbit_struct_set_t(fortran_ptr_, value);
+}
+bool TaoHistogramProxy::density_normalized() const {
+  bool value;
+  tao_histogram_struct_get_density_normalized(fortran_ptr_, &value);
+  return value;
+}
+void TaoHistogramProxy::set_density_normalized(bool value) {
+  tao_histogram_struct_set_density_normalized(fortran_ptr_, value);
+}
+bool TaoHistogramProxy::weight_by_charge() const {
+  bool value;
+  tao_histogram_struct_get_weight_by_charge(fortran_ptr_, &value);
+  return value;
+}
+void TaoHistogramProxy::set_weight_by_charge(bool value) {
+  tao_histogram_struct_set_weight_by_charge(fortran_ptr_, value);
+}
+double TaoHistogramProxy::minimum() const {
+  double value;
+  tao_histogram_struct_get_minimum(fortran_ptr_, &value);
+  return value;
+}
+void TaoHistogramProxy::set_minimum(double value) {
+  tao_histogram_struct_set_minimum(fortran_ptr_, value);
+}
+double TaoHistogramProxy::maximum() const {
+  double value;
+  tao_histogram_struct_get_maximum(fortran_ptr_, &value);
+  return value;
+}
+void TaoHistogramProxy::set_maximum(double value) {
+  tao_histogram_struct_set_maximum(fortran_ptr_, value);
+}
+double TaoHistogramProxy::width() const {
+  double value;
+  tao_histogram_struct_get_width(fortran_ptr_, &value);
+  return value;
+}
+void TaoHistogramProxy::set_width(double value) {
+  tao_histogram_struct_set_width(fortran_ptr_, value);
+}
+double TaoHistogramProxy::center() const {
+  double value;
+  tao_histogram_struct_get_center(fortran_ptr_, &value);
+  return value;
+}
+void TaoHistogramProxy::set_center(double value) {
+  tao_histogram_struct_set_center(fortran_ptr_, value);
+}
+int TaoHistogramProxy::number() const {
+  int value;
+  tao_histogram_struct_get_number(fortran_ptr_, &value);
+  return value;
+}
+void TaoHistogramProxy::set_number(int value) {
+  tao_histogram_struct_set_number(fortran_ptr_, value);
 }
 int LatEleOrder1Proxy::ix_branch() const {
   int value;
@@ -7363,6 +7540,86 @@ std::optional<TaoPlotProxy> TaoGraphProxy::p() const {
 void TaoGraphProxy::set_p(const TaoPlotProxy& src) {
   tao_graph_struct_set_p(fortran_ptr_, src.get_fortran_ptr());
 }
+TaoFloorPlanProxy TaoGraphProxy::floor_plan() const {
+  void* ptr;
+  tao_graph_struct_get_floor_plan(fortran_ptr_, &ptr);
+  return TaoFloorPlanProxy(ptr);
+}
+void TaoGraphProxy::set_floor_plan(const TaoFloorPlanProxy& src) {
+  tao_graph_struct_set_floor_plan(fortran_ptr_, src.get_fortran_ptr());
+}
+QpPointProxy TaoGraphProxy::text_legend_origin() const {
+  void* ptr;
+  tao_graph_struct_get_text_legend_origin(fortran_ptr_, &ptr);
+  return QpPointProxy(ptr);
+}
+void TaoGraphProxy::set_text_legend_origin(const QpPointProxy& src) {
+  tao_graph_struct_set_text_legend_origin(fortran_ptr_, src.get_fortran_ptr());
+}
+QpPointProxy TaoGraphProxy::curve_legend_origin() const {
+  void* ptr;
+  tao_graph_struct_get_curve_legend_origin(fortran_ptr_, &ptr);
+  return QpPointProxy(ptr);
+}
+void TaoGraphProxy::set_curve_legend_origin(const QpPointProxy& src) {
+  tao_graph_struct_set_curve_legend_origin(fortran_ptr_, src.get_fortran_ptr());
+}
+QpLegendProxy TaoGraphProxy::curve_legend() const {
+  void* ptr;
+  tao_graph_struct_get_curve_legend(fortran_ptr_, &ptr);
+  return QpLegendProxy(ptr);
+}
+void TaoGraphProxy::set_curve_legend(const QpLegendProxy& src) {
+  tao_graph_struct_set_curve_legend(fortran_ptr_, src.get_fortran_ptr());
+}
+QpAxisProxy TaoGraphProxy::x() const {
+  void* ptr;
+  tao_graph_struct_get_x(fortran_ptr_, &ptr);
+  return QpAxisProxy(ptr);
+}
+void TaoGraphProxy::set_x(const QpAxisProxy& src) {
+  tao_graph_struct_set_x(fortran_ptr_, src.get_fortran_ptr());
+}
+QpAxisProxy TaoGraphProxy::y() const {
+  void* ptr;
+  tao_graph_struct_get_y(fortran_ptr_, &ptr);
+  return QpAxisProxy(ptr);
+}
+void TaoGraphProxy::set_y(const QpAxisProxy& src) {
+  tao_graph_struct_set_y(fortran_ptr_, src.get_fortran_ptr());
+}
+QpAxisProxy TaoGraphProxy::x2() const {
+  void* ptr;
+  tao_graph_struct_get_x2(fortran_ptr_, &ptr);
+  return QpAxisProxy(ptr);
+}
+void TaoGraphProxy::set_x2(const QpAxisProxy& src) {
+  tao_graph_struct_set_x2(fortran_ptr_, src.get_fortran_ptr());
+}
+QpAxisProxy TaoGraphProxy::y2() const {
+  void* ptr;
+  tao_graph_struct_get_y2(fortran_ptr_, &ptr);
+  return QpAxisProxy(ptr);
+}
+void TaoGraphProxy::set_y2(const QpAxisProxy& src) {
+  tao_graph_struct_set_y2(fortran_ptr_, src.get_fortran_ptr());
+}
+QpRectProxy TaoGraphProxy::margin() const {
+  void* ptr;
+  tao_graph_struct_get_margin(fortran_ptr_, &ptr);
+  return QpRectProxy(ptr);
+}
+void TaoGraphProxy::set_margin(const QpRectProxy& src) {
+  tao_graph_struct_set_margin(fortran_ptr_, src.get_fortran_ptr());
+}
+QpRectProxy TaoGraphProxy::scale_margin() const {
+  void* ptr;
+  tao_graph_struct_get_scale_margin(fortran_ptr_, &ptr);
+  return QpRectProxy(ptr);
+}
+void TaoGraphProxy::set_scale_margin(const QpRectProxy& src) {
+  tao_graph_struct_set_scale_margin(fortran_ptr_, src.get_fortran_ptr());
+}
 double TaoGraphProxy::x_axis_scale_factor() const {
   double value;
   tao_graph_struct_get_x_axis_scale_factor(fortran_ptr_, &value);
@@ -7656,6 +7913,42 @@ std::optional<TaoUniverseProxy> TaoUniversePointerProxy::u() const {
 void TaoUniversePointerProxy::set_u(const TaoUniverseProxy& src) {
   tao_universe_pointer_struct_set_u(fortran_ptr_, src.get_fortran_ptr());
 }
+TaoGlobalProxy TaoSuperUniverseProxy::global() const {
+  void* ptr;
+  tao_super_universe_struct_get_global(fortran_ptr_, &ptr);
+  return TaoGlobalProxy(ptr);
+}
+void TaoSuperUniverseProxy::set_global(const TaoGlobalProxy& src) {
+  tao_super_universe_struct_set_global(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoInitProxy TaoSuperUniverseProxy::init() const {
+  void* ptr;
+  tao_super_universe_struct_get_init(fortran_ptr_, &ptr);
+  return TaoInitProxy(ptr);
+}
+void TaoSuperUniverseProxy::set_init(const TaoInitProxy& src) {
+  tao_super_universe_struct_set_init(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoCommonProxy TaoSuperUniverseProxy::com() const {
+  void* ptr;
+  tao_super_universe_struct_get_com(fortran_ptr_, &ptr);
+  return TaoCommonProxy(ptr);
+}
+void TaoSuperUniverseProxy::set_com(const TaoCommonProxy& src) {
+  tao_super_universe_struct_set_com(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoPlotPageProxy TaoSuperUniverseProxy::plot_page() const {
+  void* ptr;
+  tao_super_universe_struct_get_plot_page(fortran_ptr_, &ptr);
+  return TaoPlotPageProxy(ptr);
+}
+void TaoSuperUniverseProxy::set_plot_page(const TaoPlotPageProxy& src) {
+  tao_super_universe_struct_set_plot_page(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoV1VarProxyArray1D TaoSuperUniverseProxy::v1_var() const {
+  return ProxyHelpers::get_type_array_1d<TaoV1VarProxyArray1D>(
+      fortran_ptr_, tao_super_universe_struct_get_v1_var_info);
+}
 TaoVarProxyArray1D TaoSuperUniverseProxy::var() const {
   return ProxyHelpers::get_type_array_1d<TaoVarProxyArray1D>(
       fortran_ptr_, tao_super_universe_struct_get_var_info);
@@ -7667,6 +7960,23 @@ TaoUniverseProxyArray1D TaoSuperUniverseProxy::u() const {
 FArray1D<int> TaoSuperUniverseProxy::key() const {
   return ProxyHelpers::get_array_1d<int>(
       fortran_ptr_, tao_super_universe_struct_get_key_info);
+}
+TaoBuildingWallProxy TaoSuperUniverseProxy::building_wall() const {
+  void* ptr;
+  tao_super_universe_struct_get_building_wall(fortran_ptr_, &ptr);
+  return TaoBuildingWallProxy(ptr);
+}
+void TaoSuperUniverseProxy::set_building_wall(const TaoBuildingWallProxy& src) {
+  tao_super_universe_struct_set_building_wall(
+      fortran_ptr_, src.get_fortran_ptr());
+}
+TaoWaveProxy TaoSuperUniverseProxy::wave() const {
+  void* ptr;
+  tao_super_universe_struct_get_wave(fortran_ptr_, &ptr);
+  return TaoWaveProxy(ptr);
+}
+void TaoSuperUniverseProxy::set_wave(const TaoWaveProxy& src) {
+  tao_super_universe_struct_set_wave(fortran_ptr_, src.get_fortran_ptr());
 }
 int TaoSuperUniverseProxy::n_var_used() const {
   int value;
@@ -7683,6 +7993,10 @@ int TaoSuperUniverseProxy::n_v1_var_used() const {
 }
 void TaoSuperUniverseProxy::set_n_v1_var_used(int value) {
   tao_super_universe_struct_set_n_v1_var_used(fortran_ptr_, value);
+}
+TaoCmdHistoryProxyArray1D TaoSuperUniverseProxy::history() const {
+  return ProxyHelpers::get_type_array_1d<TaoCmdHistoryProxyArray1D>(
+      fortran_ptr_, tao_super_universe_struct_get_history_info);
 }
 bool TaoSuperUniverseProxy::initialized() const {
   bool value;
@@ -7718,6 +8032,10 @@ std::string TaoVarProxy::id() const {
 void TaoVarProxy::set_id(const std::string& value) {
   tao_var_struct_set_id(
       fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+TaoVarSlaveProxyArray1D TaoVarProxy::slave() const {
+  return ProxyHelpers::get_type_array_1d<TaoVarSlaveProxyArray1D>(
+      fortran_ptr_, tao_var_struct_get_slave_info);
 }
 int TaoVarProxy::ix_v1() const {
   int value;
@@ -7983,6 +8301,56 @@ bool TaoVarProxy::key_bound() const {
 }
 void TaoVarProxy::set_key_bound(bool value) {
   tao_var_struct_set_key_bound(fortran_ptr_, value);
+}
+std::optional<TaoV1VarProxy> TaoVarProxy::v1() const {
+  void* ptr;
+  tao_var_struct_get_v1(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoV1VarProxy(ptr);
+}
+void TaoVarProxy::set_v1(const TaoV1VarProxy& src) {
+  tao_var_struct_set_v1(fortran_ptr_, src.get_fortran_ptr());
+}
+int TaoVarSlaveProxy::ix_uni() const {
+  int value;
+  tao_var_slave_struct_get_ix_uni(fortran_ptr_, &value);
+  return value;
+}
+void TaoVarSlaveProxy::set_ix_uni(int value) {
+  tao_var_slave_struct_set_ix_uni(fortran_ptr_, value);
+}
+int TaoVarSlaveProxy::ix_branch() const {
+  int value;
+  tao_var_slave_struct_get_ix_branch(fortran_ptr_, &value);
+  return value;
+}
+void TaoVarSlaveProxy::set_ix_branch(int value) {
+  tao_var_slave_struct_set_ix_branch(fortran_ptr_, value);
+}
+int TaoVarSlaveProxy::ix_ele() const {
+  int value;
+  tao_var_slave_struct_get_ix_ele(fortran_ptr_, &value);
+  return value;
+}
+void TaoVarSlaveProxy::set_ix_ele(int value) {
+  tao_var_slave_struct_set_ix_ele(fortran_ptr_, value);
+}
+double* TaoVarSlaveProxy::model_value() const {
+  double* ptr;
+  tao_var_slave_struct_get_model_value(fortran_ptr_, &ptr);
+  return ptr;
+}
+void TaoVarSlaveProxy::set_model_value(double value) {
+  tao_var_slave_struct_set_model_value(fortran_ptr_, value);
+}
+double* TaoVarSlaveProxy::base_value() const {
+  double* ptr;
+  tao_var_slave_struct_get_base_value(fortran_ptr_, &ptr);
+  return ptr;
+}
+void TaoVarSlaveProxy::set_base_value(double value) {
+  tao_var_slave_struct_set_base_value(fortran_ptr_, value);
 }
 std::string TaoLatticeProxy::name() const {
   FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
@@ -8733,6 +9101,2512 @@ LatEleOrderArrayProxyArray1D LatEleOrderProxy::branch() const {
   return ProxyHelpers::get_type_array_1d<LatEleOrderArrayProxyArray1D>(
       fortran_ptr_, lat_ele_order_struct_get_branch_info);
 }
+std::string TaoTitleProxy::string() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_title_struct_get_string_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoTitleProxy::set_string(const std::string& value) {
+  tao_title_struct_set_string(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double TaoTitleProxy::x() const {
+  double value;
+  tao_title_struct_get_x(fortran_ptr_, &value);
+  return value;
+}
+void TaoTitleProxy::set_x(double value) {
+  tao_title_struct_set_x(fortran_ptr_, value);
+}
+double TaoTitleProxy::y() const {
+  double value;
+  tao_title_struct_get_y(fortran_ptr_, &value);
+  return value;
+}
+void TaoTitleProxy::set_y(double value) {
+  tao_title_struct_set_y(fortran_ptr_, value);
+}
+std::string TaoTitleProxy::units() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_title_struct_get_units_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoTitleProxy::set_units(const std::string& value) {
+  tao_title_struct_set_units(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoTitleProxy::justify() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_title_struct_get_justify_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoTitleProxy::set_justify(const std::string& value) {
+  tao_title_struct_set_justify(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+bool TaoTitleProxy::draw_it() const {
+  bool value;
+  tao_title_struct_get_draw_it(fortran_ptr_, &value);
+  return value;
+}
+void TaoTitleProxy::set_draw_it(bool value) {
+  tao_title_struct_set_draw_it(fortran_ptr_, value);
+}
+double QpRectProxy::x1() const {
+  double value;
+  qp_rect_struct_get_x1(fortran_ptr_, &value);
+  return value;
+}
+void QpRectProxy::set_x1(double value) {
+  qp_rect_struct_set_x1(fortran_ptr_, value);
+}
+double QpRectProxy::x2() const {
+  double value;
+  qp_rect_struct_get_x2(fortran_ptr_, &value);
+  return value;
+}
+void QpRectProxy::set_x2(double value) {
+  qp_rect_struct_set_x2(fortran_ptr_, value);
+}
+double QpRectProxy::y1() const {
+  double value;
+  qp_rect_struct_get_y1(fortran_ptr_, &value);
+  return value;
+}
+void QpRectProxy::set_y1(double value) {
+  qp_rect_struct_set_y1(fortran_ptr_, value);
+}
+double QpRectProxy::y2() const {
+  double value;
+  qp_rect_struct_get_y2(fortran_ptr_, &value);
+  return value;
+}
+void QpRectProxy::set_y2(double value) {
+  qp_rect_struct_set_y2(fortran_ptr_, value);
+}
+std::string QpRectProxy::units() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, qp_rect_struct_get_units_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpRectProxy::set_units(const std::string& value) {
+  qp_rect_struct_set_units(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+TaoEleShapeProxyArray1D TaoDrawingProxy::ele_shape() const {
+  return ProxyHelpers::get_type_array_1d<TaoEleShapeProxyArray1D>(
+      fortran_ptr_, tao_drawing_struct_get_ele_shape_info);
+}
+std::string TaoShapePatternProxy::name() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_shape_pattern_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoShapePatternProxy::set_name(const std::string& value) {
+  tao_shape_pattern_struct_set_name(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+QpLineProxy TaoShapePatternProxy::line() const {
+  void* ptr;
+  tao_shape_pattern_struct_get_line(fortran_ptr_, &ptr);
+  return QpLineProxy(ptr);
+}
+void TaoShapePatternProxy::set_line(const QpLineProxy& src) {
+  tao_shape_pattern_struct_set_line(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoShapePatternPointProxyArray1D TaoShapePatternProxy::pt() const {
+  return ProxyHelpers::get_type_array_1d<TaoShapePatternPointProxyArray1D>(
+      fortran_ptr_, tao_shape_pattern_struct_get_pt_info);
+}
+double TaoShapePatternPointProxy::s() const {
+  double value;
+  tao_shape_pattern_point_struct_get_s(fortran_ptr_, &value);
+  return value;
+}
+void TaoShapePatternPointProxy::set_s(double value) {
+  tao_shape_pattern_point_struct_set_s(fortran_ptr_, value);
+}
+double TaoShapePatternPointProxy::y() const {
+  double value;
+  tao_shape_pattern_point_struct_get_y(fortran_ptr_, &value);
+  return value;
+}
+void TaoShapePatternPointProxy::set_y(double value) {
+  tao_shape_pattern_point_struct_set_y(fortran_ptr_, value);
+}
+double TaoShapePatternPointProxy::radius() const {
+  double value;
+  tao_shape_pattern_point_struct_get_radius(fortran_ptr_, &value);
+  return value;
+}
+void TaoShapePatternPointProxy::set_radius(double value) {
+  tao_shape_pattern_point_struct_set_radius(fortran_ptr_, value);
+}
+std::string QpAxisProxy::label() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, qp_axis_struct_get_label_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpAxisProxy::set_label(const std::string& value) {
+  qp_axis_struct_set_label(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double QpAxisProxy::min() const {
+  double value;
+  qp_axis_struct_get_min(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_min(double value) {
+  qp_axis_struct_set_min(fortran_ptr_, value);
+}
+double QpAxisProxy::max() const {
+  double value;
+  qp_axis_struct_get_max(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_max(double value) {
+  qp_axis_struct_set_max(fortran_ptr_, value);
+}
+double QpAxisProxy::tick_min() const {
+  double value;
+  qp_axis_struct_get_tick_min(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_tick_min(double value) {
+  qp_axis_struct_set_tick_min(fortran_ptr_, value);
+}
+double QpAxisProxy::tick_max() const {
+  double value;
+  qp_axis_struct_get_tick_max(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_tick_max(double value) {
+  qp_axis_struct_set_tick_max(fortran_ptr_, value);
+}
+double QpAxisProxy::eval_min() const {
+  double value;
+  qp_axis_struct_get_eval_min(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_eval_min(double value) {
+  qp_axis_struct_set_eval_min(fortran_ptr_, value);
+}
+double QpAxisProxy::eval_max() const {
+  double value;
+  qp_axis_struct_get_eval_max(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_eval_max(double value) {
+  qp_axis_struct_set_eval_max(fortran_ptr_, value);
+}
+double QpAxisProxy::dtick() const {
+  double value;
+  qp_axis_struct_get_dtick(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_dtick(double value) {
+  qp_axis_struct_set_dtick(fortran_ptr_, value);
+}
+double QpAxisProxy::number_offset() const {
+  double value;
+  qp_axis_struct_get_number_offset(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_number_offset(double value) {
+  qp_axis_struct_set_number_offset(fortran_ptr_, value);
+}
+double QpAxisProxy::label_offset() const {
+  double value;
+  qp_axis_struct_get_label_offset(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_label_offset(double value) {
+  qp_axis_struct_set_label_offset(fortran_ptr_, value);
+}
+double QpAxisProxy::major_tick_len() const {
+  double value;
+  qp_axis_struct_get_major_tick_len(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_major_tick_len(double value) {
+  qp_axis_struct_set_major_tick_len(fortran_ptr_, value);
+}
+double QpAxisProxy::minor_tick_len() const {
+  double value;
+  qp_axis_struct_get_minor_tick_len(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_minor_tick_len(double value) {
+  qp_axis_struct_set_minor_tick_len(fortran_ptr_, value);
+}
+std::string QpAxisProxy::label_color() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, qp_axis_struct_get_label_color_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpAxisProxy::set_label_color(const std::string& value) {
+  qp_axis_struct_set_label_color(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int QpAxisProxy::major_div() const {
+  int value;
+  qp_axis_struct_get_major_div(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_major_div(int value) {
+  qp_axis_struct_set_major_div(fortran_ptr_, value);
+}
+int QpAxisProxy::major_div_nominal() const {
+  int value;
+  qp_axis_struct_get_major_div_nominal(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_major_div_nominal(int value) {
+  qp_axis_struct_set_major_div_nominal(fortran_ptr_, value);
+}
+int QpAxisProxy::minor_div() const {
+  int value;
+  qp_axis_struct_get_minor_div(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_minor_div(int value) {
+  qp_axis_struct_set_minor_div(fortran_ptr_, value);
+}
+int QpAxisProxy::minor_div_max() const {
+  int value;
+  qp_axis_struct_get_minor_div_max(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_minor_div_max(int value) {
+  qp_axis_struct_set_minor_div_max(fortran_ptr_, value);
+}
+int QpAxisProxy::places() const {
+  int value;
+  qp_axis_struct_get_places(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_places(int value) {
+  qp_axis_struct_set_places(fortran_ptr_, value);
+}
+std::string QpAxisProxy::type() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, qp_axis_struct_get_type_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpAxisProxy::set_type(const std::string& value) {
+  qp_axis_struct_set_type(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string QpAxisProxy::bounds() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, qp_axis_struct_get_bounds_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpAxisProxy::set_bounds(const std::string& value) {
+  qp_axis_struct_set_bounds(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int QpAxisProxy::tick_side() const {
+  int value;
+  qp_axis_struct_get_tick_side(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_tick_side(int value) {
+  qp_axis_struct_set_tick_side(fortran_ptr_, value);
+}
+int QpAxisProxy::number_side() const {
+  int value;
+  qp_axis_struct_get_number_side(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_number_side(int value) {
+  qp_axis_struct_set_number_side(fortran_ptr_, value);
+}
+bool QpAxisProxy::draw_label() const {
+  bool value;
+  qp_axis_struct_get_draw_label(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_draw_label(bool value) {
+  qp_axis_struct_set_draw_label(fortran_ptr_, value);
+}
+bool QpAxisProxy::draw_numbers() const {
+  bool value;
+  qp_axis_struct_get_draw_numbers(fortran_ptr_, &value);
+  return value;
+}
+void QpAxisProxy::set_draw_numbers(bool value) {
+  qp_axis_struct_set_draw_numbers(fortran_ptr_, value);
+}
+double QpLegendProxy::row_spacing() const {
+  double value;
+  qp_legend_struct_get_row_spacing(fortran_ptr_, &value);
+  return value;
+}
+void QpLegendProxy::set_row_spacing(double value) {
+  qp_legend_struct_set_row_spacing(fortran_ptr_, value);
+}
+double QpLegendProxy::line_length() const {
+  double value;
+  qp_legend_struct_get_line_length(fortran_ptr_, &value);
+  return value;
+}
+void QpLegendProxy::set_line_length(double value) {
+  qp_legend_struct_set_line_length(fortran_ptr_, value);
+}
+double QpLegendProxy::text_offset() const {
+  double value;
+  qp_legend_struct_get_text_offset(fortran_ptr_, &value);
+  return value;
+}
+void QpLegendProxy::set_text_offset(double value) {
+  qp_legend_struct_set_text_offset(fortran_ptr_, value);
+}
+bool QpLegendProxy::draw_line() const {
+  bool value;
+  qp_legend_struct_get_draw_line(fortran_ptr_, &value);
+  return value;
+}
+void QpLegendProxy::set_draw_line(bool value) {
+  qp_legend_struct_set_draw_line(fortran_ptr_, value);
+}
+bool QpLegendProxy::draw_symbol() const {
+  bool value;
+  qp_legend_struct_get_draw_symbol(fortran_ptr_, &value);
+  return value;
+}
+void QpLegendProxy::set_draw_symbol(bool value) {
+  qp_legend_struct_set_draw_symbol(fortran_ptr_, value);
+}
+bool QpLegendProxy::draw_text() const {
+  bool value;
+  qp_legend_struct_get_draw_text(fortran_ptr_, &value);
+  return value;
+}
+void QpLegendProxy::set_draw_text(bool value) {
+  qp_legend_struct_set_draw_text(fortran_ptr_, value);
+}
+double QpPointProxy::x() const {
+  double value;
+  qp_point_struct_get_x(fortran_ptr_, &value);
+  return value;
+}
+void QpPointProxy::set_x(double value) {
+  qp_point_struct_set_x(fortran_ptr_, value);
+}
+double QpPointProxy::y() const {
+  double value;
+  qp_point_struct_get_y(fortran_ptr_, &value);
+  return value;
+}
+void QpPointProxy::set_y(double value) {
+  qp_point_struct_set_y(fortran_ptr_, value);
+}
+std::string QpPointProxy::units() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, qp_point_struct_get_units_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpPointProxy::set_units(const std::string& value) {
+  qp_point_struct_set_units(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int QpLineProxy::width() const {
+  int value;
+  qp_line_struct_get_width(fortran_ptr_, &value);
+  return value;
+}
+void QpLineProxy::set_width(int value) {
+  qp_line_struct_set_width(fortran_ptr_, value);
+}
+std::string QpLineProxy::color() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, qp_line_struct_get_color_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpLineProxy::set_color(const std::string& value) {
+  qp_line_struct_set_color(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string QpLineProxy::pattern() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, qp_line_struct_get_pattern_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpLineProxy::set_pattern(const std::string& value) {
+  qp_line_struct_set_pattern(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string QpSymbolProxy::type() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, qp_symbol_struct_get_type_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpSymbolProxy::set_type(const std::string& value) {
+  qp_symbol_struct_set_type(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double QpSymbolProxy::height() const {
+  double value;
+  qp_symbol_struct_get_height(fortran_ptr_, &value);
+  return value;
+}
+void QpSymbolProxy::set_height(double value) {
+  qp_symbol_struct_set_height(fortran_ptr_, value);
+}
+std::string QpSymbolProxy::color() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, qp_symbol_struct_get_color_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpSymbolProxy::set_color(const std::string& value) {
+  qp_symbol_struct_set_color(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string QpSymbolProxy::fill_pattern() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, qp_symbol_struct_get_fill_pattern_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpSymbolProxy::set_fill_pattern(const std::string& value) {
+  qp_symbol_struct_set_fill_pattern(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int QpSymbolProxy::line_width() const {
+  int value;
+  qp_symbol_struct_get_line_width(fortran_ptr_, &value);
+  return value;
+}
+void QpSymbolProxy::set_line_width(int value) {
+  qp_symbol_struct_set_line_width(fortran_ptr_, value);
+}
+std::string TaoFloorPlanProxy::view() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_floor_plan_struct_get_view_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoFloorPlanProxy::set_view(const std::string& value) {
+  tao_floor_plan_struct_set_view(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double TaoFloorPlanProxy::rotation() const {
+  double value;
+  tao_floor_plan_struct_get_rotation(fortran_ptr_, &value);
+  return value;
+}
+void TaoFloorPlanProxy::set_rotation(double value) {
+  tao_floor_plan_struct_set_rotation(fortran_ptr_, value);
+}
+bool TaoFloorPlanProxy::correct_distortion() const {
+  bool value;
+  tao_floor_plan_struct_get_correct_distortion(fortran_ptr_, &value);
+  return value;
+}
+void TaoFloorPlanProxy::set_correct_distortion(bool value) {
+  tao_floor_plan_struct_set_correct_distortion(fortran_ptr_, value);
+}
+bool TaoFloorPlanProxy::flip_label_side() const {
+  bool value;
+  tao_floor_plan_struct_get_flip_label_side(fortran_ptr_, &value);
+  return value;
+}
+void TaoFloorPlanProxy::set_flip_label_side(bool value) {
+  tao_floor_plan_struct_set_flip_label_side(fortran_ptr_, value);
+}
+bool TaoFloorPlanProxy::size_is_absolute() const {
+  bool value;
+  tao_floor_plan_struct_get_size_is_absolute(fortran_ptr_, &value);
+  return value;
+}
+void TaoFloorPlanProxy::set_size_is_absolute(bool value) {
+  tao_floor_plan_struct_set_size_is_absolute(fortran_ptr_, value);
+}
+bool TaoFloorPlanProxy::draw_only_first_pass() const {
+  bool value;
+  tao_floor_plan_struct_get_draw_only_first_pass(fortran_ptr_, &value);
+  return value;
+}
+void TaoFloorPlanProxy::set_draw_only_first_pass(bool value) {
+  tao_floor_plan_struct_set_draw_only_first_pass(fortran_ptr_, value);
+}
+bool TaoFloorPlanProxy::draw_building_wall() const {
+  bool value;
+  tao_floor_plan_struct_get_draw_building_wall(fortran_ptr_, &value);
+  return value;
+}
+void TaoFloorPlanProxy::set_draw_building_wall(bool value) {
+  tao_floor_plan_struct_set_draw_building_wall(fortran_ptr_, value);
+}
+double TaoFloorPlanProxy::orbit_scale() const {
+  double value;
+  tao_floor_plan_struct_get_orbit_scale(fortran_ptr_, &value);
+  return value;
+}
+void TaoFloorPlanProxy::set_orbit_scale(double value) {
+  tao_floor_plan_struct_set_orbit_scale(fortran_ptr_, value);
+}
+std::string TaoFloorPlanProxy::orbit_color() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_floor_plan_struct_get_orbit_color_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoFloorPlanProxy::set_orbit_color(const std::string& value) {
+  tao_floor_plan_struct_set_orbit_color(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoFloorPlanProxy::orbit_pattern() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_floor_plan_struct_get_orbit_pattern_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoFloorPlanProxy::set_orbit_pattern(const std::string& value) {
+  tao_floor_plan_struct_set_orbit_pattern(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoFloorPlanProxy::orbit_lattice() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_floor_plan_struct_get_orbit_lattice_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoFloorPlanProxy::set_orbit_lattice(const std::string& value) {
+  tao_floor_plan_struct_set_orbit_lattice(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int TaoFloorPlanProxy::orbit_width() const {
+  int value;
+  tao_floor_plan_struct_get_orbit_width(fortran_ptr_, &value);
+  return value;
+}
+void TaoFloorPlanProxy::set_orbit_width(int value) {
+  tao_floor_plan_struct_set_orbit_width(fortran_ptr_, value);
+}
+std::string TaoV1VarProxy::name() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_v1_var_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoV1VarProxy::set_name(const std::string& value) {
+  tao_v1_var_struct_set_name(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int TaoV1VarProxy::ix_v1_var() const {
+  int value;
+  tao_v1_var_struct_get_ix_v1_var(fortran_ptr_, &value);
+  return value;
+}
+void TaoV1VarProxy::set_ix_v1_var(int value) {
+  tao_v1_var_struct_set_ix_v1_var(fortran_ptr_, value);
+}
+TaoVarProxyArray1D TaoV1VarProxy::v() const {
+  return ProxyHelpers::get_type_array_1d<TaoVarProxyArray1D>(
+      fortran_ptr_, tao_v1_var_struct_get_v_info);
+}
+double TaoGlobalProxy::beam_dead_cutoff() const {
+  double value;
+  tao_global_struct_get_beam_dead_cutoff(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_beam_dead_cutoff(double value) {
+  tao_global_struct_set_beam_dead_cutoff(fortran_ptr_, value);
+}
+double TaoGlobalProxy::lm_opt_deriv_reinit() const {
+  double value;
+  tao_global_struct_get_lm_opt_deriv_reinit(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_lm_opt_deriv_reinit(double value) {
+  tao_global_struct_set_lm_opt_deriv_reinit(fortran_ptr_, value);
+}
+double TaoGlobalProxy::de_lm_step_ratio() const {
+  double value;
+  tao_global_struct_get_de_lm_step_ratio(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_de_lm_step_ratio(double value) {
+  tao_global_struct_set_de_lm_step_ratio(fortran_ptr_, value);
+}
+double TaoGlobalProxy::de_var_to_population_factor() const {
+  double value;
+  tao_global_struct_get_de_var_to_population_factor(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_de_var_to_population_factor(double value) {
+  tao_global_struct_set_de_var_to_population_factor(fortran_ptr_, value);
+}
+double TaoGlobalProxy::lmdif_eps() const {
+  double value;
+  tao_global_struct_get_lmdif_eps(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_lmdif_eps(double value) {
+  tao_global_struct_set_lmdif_eps(fortran_ptr_, value);
+}
+double TaoGlobalProxy::lmdif_negligible_merit() const {
+  double value;
+  tao_global_struct_get_lmdif_negligible_merit(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_lmdif_negligible_merit(double value) {
+  tao_global_struct_set_lmdif_negligible_merit(fortran_ptr_, value);
+}
+double TaoGlobalProxy::svd_cutoff() const {
+  double value;
+  tao_global_struct_get_svd_cutoff(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_svd_cutoff(double value) {
+  tao_global_struct_set_svd_cutoff(fortran_ptr_, value);
+}
+double TaoGlobalProxy::unstable_penalty() const {
+  double value;
+  tao_global_struct_get_unstable_penalty(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_unstable_penalty(double value) {
+  tao_global_struct_set_unstable_penalty(fortran_ptr_, value);
+}
+double TaoGlobalProxy::merit_stop_value() const {
+  double value;
+  tao_global_struct_get_merit_stop_value(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_merit_stop_value(double value) {
+  tao_global_struct_set_merit_stop_value(fortran_ptr_, value);
+}
+double TaoGlobalProxy::dmerit_stop_value() const {
+  double value;
+  tao_global_struct_get_dmerit_stop_value(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_dmerit_stop_value(double value) {
+  tao_global_struct_set_dmerit_stop_value(fortran_ptr_, value);
+}
+double TaoGlobalProxy::random_sigma_cutoff() const {
+  double value;
+  tao_global_struct_get_random_sigma_cutoff(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_random_sigma_cutoff(double value) {
+  tao_global_struct_set_random_sigma_cutoff(fortran_ptr_, value);
+}
+double TaoGlobalProxy::delta_e_chrom() const {
+  double value;
+  tao_global_struct_get_delta_e_chrom(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_delta_e_chrom(double value) {
+  tao_global_struct_set_delta_e_chrom(fortran_ptr_, value);
+}
+double TaoGlobalProxy::max_plot_time() const {
+  double value;
+  tao_global_struct_get_max_plot_time(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_max_plot_time(double value) {
+  tao_global_struct_set_max_plot_time(fortran_ptr_, value);
+}
+int TaoGlobalProxy::default_universe() const {
+  int value;
+  tao_global_struct_get_default_universe(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_default_universe(int value) {
+  tao_global_struct_set_default_universe(fortran_ptr_, value);
+}
+int TaoGlobalProxy::default_branch() const {
+  int value;
+  tao_global_struct_get_default_branch(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_default_branch(int value) {
+  tao_global_struct_set_default_branch(fortran_ptr_, value);
+}
+int TaoGlobalProxy::n_opti_cycles() const {
+  int value;
+  tao_global_struct_get_n_opti_cycles(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_n_opti_cycles(int value) {
+  tao_global_struct_set_n_opti_cycles(fortran_ptr_, value);
+}
+int TaoGlobalProxy::n_opti_loops() const {
+  int value;
+  tao_global_struct_get_n_opti_loops(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_n_opti_loops(int value) {
+  tao_global_struct_set_n_opti_loops(fortran_ptr_, value);
+}
+int TaoGlobalProxy::n_threads() const {
+  int value;
+  tao_global_struct_get_n_threads(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_n_threads(int value) {
+  tao_global_struct_set_n_threads(fortran_ptr_, value);
+}
+int TaoGlobalProxy::phase_units() const {
+  int value;
+  tao_global_struct_get_phase_units(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_phase_units(int value) {
+  tao_global_struct_set_phase_units(fortran_ptr_, value);
+}
+int TaoGlobalProxy::bunch_to_plot() const {
+  int value;
+  tao_global_struct_get_bunch_to_plot(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_bunch_to_plot(int value) {
+  tao_global_struct_set_bunch_to_plot(fortran_ptr_, value);
+}
+int TaoGlobalProxy::random_seed() const {
+  int value;
+  tao_global_struct_get_random_seed(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_random_seed(int value) {
+  tao_global_struct_set_random_seed(fortran_ptr_, value);
+}
+int TaoGlobalProxy::n_top10_merit() const {
+  int value;
+  tao_global_struct_get_n_top10_merit(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_n_top10_merit(int value) {
+  tao_global_struct_set_n_top10_merit(fortran_ptr_, value);
+}
+int TaoGlobalProxy::srdt_gen_n_slices() const {
+  int value;
+  tao_global_struct_get_srdt_gen_n_slices(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_srdt_gen_n_slices(int value) {
+  tao_global_struct_set_srdt_gen_n_slices(fortran_ptr_, value);
+}
+int TaoGlobalProxy::datum_err_messages_max() const {
+  int value;
+  tao_global_struct_get_datum_err_messages_max(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_datum_err_messages_max(int value) {
+  tao_global_struct_set_datum_err_messages_max(fortran_ptr_, value);
+}
+int TaoGlobalProxy::srdt_sxt_n_slices() const {
+  int value;
+  tao_global_struct_get_srdt_sxt_n_slices(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_srdt_sxt_n_slices(int value) {
+  tao_global_struct_set_srdt_sxt_n_slices(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::srdt_use_cache() const {
+  bool value;
+  tao_global_struct_get_srdt_use_cache(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_srdt_use_cache(bool value) {
+  tao_global_struct_set_srdt_use_cache(fortran_ptr_, value);
+}
+std::string TaoGlobalProxy::quiet() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_global_struct_get_quiet_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoGlobalProxy::set_quiet(const std::string& value) {
+  tao_global_struct_set_quiet(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoGlobalProxy::random_engine() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_global_struct_get_random_engine_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoGlobalProxy::set_random_engine(const std::string& value) {
+  tao_global_struct_set_random_engine(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoGlobalProxy::random_gauss_converter() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_global_struct_get_random_gauss_converter_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoGlobalProxy::set_random_gauss_converter(const std::string& value) {
+  tao_global_struct_set_random_gauss_converter(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoGlobalProxy::track_type() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_global_struct_get_track_type_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoGlobalProxy::set_track_type(const std::string& value) {
+  tao_global_struct_set_track_type(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoGlobalProxy::lat_sigma_calc_uses_emit_from() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_global_struct_get_lat_sigma_calc_uses_emit_from_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoGlobalProxy::set_lat_sigma_calc_uses_emit_from(
+    const std::string& value) {
+  tao_global_struct_set_lat_sigma_calc_uses_emit_from(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoGlobalProxy::prompt_string() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_global_struct_get_prompt_string_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoGlobalProxy::set_prompt_string(const std::string& value) {
+  tao_global_struct_set_prompt_string(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoGlobalProxy::prompt_color() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_global_struct_get_prompt_color_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoGlobalProxy::set_prompt_color(const std::string& value) {
+  tao_global_struct_set_prompt_color(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoGlobalProxy::optimizer() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_global_struct_get_optimizer_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoGlobalProxy::set_optimizer(const std::string& value) {
+  tao_global_struct_set_optimizer(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoGlobalProxy::print_command() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_global_struct_get_print_command_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoGlobalProxy::set_print_command(const std::string& value) {
+  tao_global_struct_set_print_command(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoGlobalProxy::var_out_file() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_global_struct_get_var_out_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoGlobalProxy::set_var_out_file(const std::string& value) {
+  tao_global_struct_set_var_out_file(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoGlobalProxy::history_file() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_global_struct_get_history_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoGlobalProxy::set_history_file(const std::string& value) {
+  tao_global_struct_set_history_file(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+bool TaoGlobalProxy::beam_timer_on() const {
+  bool value;
+  tao_global_struct_get_beam_timer_on(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_beam_timer_on(bool value) {
+  tao_global_struct_set_beam_timer_on(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::box_plots() const {
+  bool value;
+  tao_global_struct_get_box_plots(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_box_plots(bool value) {
+  tao_global_struct_set_box_plots(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::blank_line_between_commands() const {
+  bool value;
+  tao_global_struct_get_blank_line_between_commands(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_blank_line_between_commands(bool value) {
+  tao_global_struct_set_blank_line_between_commands(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::cmd_file_abort_on_error() const {
+  bool value;
+  tao_global_struct_get_cmd_file_abort_on_error(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_cmd_file_abort_on_error(bool value) {
+  tao_global_struct_set_cmd_file_abort_on_error(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::concatenate_maps() const {
+  bool value;
+  tao_global_struct_get_concatenate_maps(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_concatenate_maps(bool value) {
+  tao_global_struct_set_concatenate_maps(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::derivative_recalc() const {
+  bool value;
+  tao_global_struct_get_derivative_recalc(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_derivative_recalc(bool value) {
+  tao_global_struct_set_derivative_recalc(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::derivative_uses_design() const {
+  bool value;
+  tao_global_struct_get_derivative_uses_design(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_derivative_uses_design(bool value) {
+  tao_global_struct_set_derivative_uses_design(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::disable_smooth_line_calc() const {
+  bool value;
+  tao_global_struct_get_disable_smooth_line_calc(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_disable_smooth_line_calc(bool value) {
+  tao_global_struct_set_disable_smooth_line_calc(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::draw_curve_off_scale_warn() const {
+  bool value;
+  tao_global_struct_get_draw_curve_off_scale_warn(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_draw_curve_off_scale_warn(bool value) {
+  tao_global_struct_set_draw_curve_off_scale_warn(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::external_plotting() const {
+  bool value;
+  tao_global_struct_get_external_plotting(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_external_plotting(bool value) {
+  tao_global_struct_set_external_plotting(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::label_lattice_elements() const {
+  bool value;
+  tao_global_struct_get_label_lattice_elements(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_label_lattice_elements(bool value) {
+  tao_global_struct_set_label_lattice_elements(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::label_keys() const {
+  bool value;
+  tao_global_struct_get_label_keys(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_label_keys(bool value) {
+  tao_global_struct_set_label_keys(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::lattice_calc_on() const {
+  bool value;
+  tao_global_struct_get_lattice_calc_on(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_lattice_calc_on(bool value) {
+  tao_global_struct_set_lattice_calc_on(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::only_limit_opt_vars() const {
+  bool value;
+  tao_global_struct_get_only_limit_opt_vars(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_only_limit_opt_vars(bool value) {
+  tao_global_struct_set_only_limit_opt_vars(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::opt_with_ref() const {
+  bool value;
+  tao_global_struct_get_opt_with_ref(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_opt_with_ref(bool value) {
+  tao_global_struct_set_opt_with_ref(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::opt_with_base() const {
+  bool value;
+  tao_global_struct_get_opt_with_base(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_opt_with_base(bool value) {
+  tao_global_struct_set_opt_with_base(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::opt_match_auto_recalc() const {
+  bool value;
+  tao_global_struct_get_opt_match_auto_recalc(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_opt_match_auto_recalc(bool value) {
+  tao_global_struct_set_opt_match_auto_recalc(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::opti_write_var_file() const {
+  bool value;
+  tao_global_struct_get_opti_write_var_file(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_opti_write_var_file(bool value) {
+  tao_global_struct_set_opti_write_var_file(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::optimizer_allow_user_abort() const {
+  bool value;
+  tao_global_struct_get_optimizer_allow_user_abort(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_optimizer_allow_user_abort(bool value) {
+  tao_global_struct_set_optimizer_allow_user_abort(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::optimizer_var_limit_warn() const {
+  bool value;
+  tao_global_struct_get_optimizer_var_limit_warn(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_optimizer_var_limit_warn(bool value) {
+  tao_global_struct_set_optimizer_var_limit_warn(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::plot_on() const {
+  bool value;
+  tao_global_struct_get_plot_on(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_plot_on(bool value) {
+  tao_global_struct_set_plot_on(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::rad_int_user_calc_on() const {
+  bool value;
+  tao_global_struct_get_rad_int_user_calc_on(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_rad_int_user_calc_on(bool value) {
+  tao_global_struct_set_rad_int_user_calc_on(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::rf_on() const {
+  bool value;
+  tao_global_struct_get_rf_on(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_rf_on(bool value) {
+  tao_global_struct_set_rf_on(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::single_step() const {
+  bool value;
+  tao_global_struct_get_single_step(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_single_step(bool value) {
+  tao_global_struct_set_single_step(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::stop_on_error() const {
+  bool value;
+  tao_global_struct_get_stop_on_error(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_stop_on_error(bool value) {
+  tao_global_struct_set_stop_on_error(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::svd_retreat_on_merit_increase() const {
+  bool value;
+  tao_global_struct_get_svd_retreat_on_merit_increase(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_svd_retreat_on_merit_increase(bool value) {
+  tao_global_struct_set_svd_retreat_on_merit_increase(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::var_limits_on() const {
+  bool value;
+  tao_global_struct_get_var_limits_on(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_var_limits_on(bool value) {
+  tao_global_struct_set_var_limits_on(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::wait_for_CR_in_single_mode() const {
+  bool value;
+  tao_global_struct_get_wait_for_CR_in_single_mode(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_wait_for_CR_in_single_mode(bool value) {
+  tao_global_struct_set_wait_for_CR_in_single_mode(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::symbol_import() const {
+  bool value;
+  tao_global_struct_get_symbol_import(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_symbol_import(bool value) {
+  tao_global_struct_set_symbol_import(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::debug_on() const {
+  bool value;
+  tao_global_struct_get_debug_on(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_debug_on(bool value) {
+  tao_global_struct_set_debug_on(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::expression_tree_on() const {
+  bool value;
+  tao_global_struct_get_expression_tree_on(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_expression_tree_on(bool value) {
+  tao_global_struct_set_expression_tree_on(fortran_ptr_, value);
+}
+bool TaoGlobalProxy::verbose_on() const {
+  bool value;
+  tao_global_struct_get_verbose_on(fortran_ptr_, &value);
+  return value;
+}
+void TaoGlobalProxy::set_verbose_on(bool value) {
+  tao_global_struct_set_verbose_on(fortran_ptr_, value);
+}
+bool TaoInitProxy::parse_cmd_args() const {
+  bool value;
+  tao_init_struct_get_parse_cmd_args(fortran_ptr_, &value);
+  return value;
+}
+void TaoInitProxy::set_parse_cmd_args(bool value) {
+  tao_init_struct_set_parse_cmd_args(fortran_ptr_, value);
+}
+bool TaoInitProxy::debug_switch() const {
+  bool value;
+  tao_init_struct_get_debug_switch(fortran_ptr_, &value);
+  return value;
+}
+void TaoInitProxy::set_debug_switch(bool value) {
+  tao_init_struct_set_debug_switch(fortran_ptr_, value);
+}
+bool TaoInitProxy::external_plotting_switch() const {
+  bool value;
+  tao_init_struct_get_external_plotting_switch(fortran_ptr_, &value);
+  return value;
+}
+void TaoInitProxy::set_external_plotting_switch(bool value) {
+  tao_init_struct_set_external_plotting_switch(fortran_ptr_, value);
+}
+std::string TaoInitProxy::init_name() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_init_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_init_name(const std::string& value) {
+  tao_init_struct_set_init_name(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::hook_init_file() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_hook_init_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_hook_init_file(const std::string& value) {
+  tao_init_struct_set_hook_init_file(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::hook_lat_file() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_hook_lat_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_hook_lat_file(const std::string& value) {
+  tao_init_struct_set_hook_lat_file(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::hook_beam_file() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_hook_beam_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_hook_beam_file(const std::string& value) {
+  tao_init_struct_set_hook_beam_file(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::hook_data_file() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_hook_data_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_hook_data_file(const std::string& value) {
+  tao_init_struct_set_hook_data_file(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::hook_plot_file() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_hook_plot_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_hook_plot_file(const std::string& value) {
+  tao_init_struct_set_hook_plot_file(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::hook_startup_file() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_hook_startup_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_hook_startup_file(const std::string& value) {
+  tao_init_struct_set_hook_startup_file(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::hook_var_file() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_hook_var_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_hook_var_file(const std::string& value) {
+  tao_init_struct_set_hook_var_file(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::hook_building_wall_file() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_hook_building_wall_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_hook_building_wall_file(const std::string& value) {
+  tao_init_struct_set_hook_building_wall_file(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::init_file_arg_path() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_init_file_arg_path_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_init_file_arg_path(const std::string& value) {
+  tao_init_struct_set_init_file_arg_path(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::lattice_file_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_lattice_file_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_lattice_file_arg(const std::string& value) {
+  tao_init_struct_set_lattice_file_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::hook_init_file_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_hook_init_file_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_hook_init_file_arg(const std::string& value) {
+  tao_init_struct_set_hook_init_file_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::init_file_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_init_file_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_init_file_arg(const std::string& value) {
+  tao_init_struct_set_init_file_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::beam_file_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_beam_file_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_beam_file_arg(const std::string& value) {
+  tao_init_struct_set_beam_file_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::beam_init_position_file_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_beam_init_position_file_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_beam_init_position_file_arg(const std::string& value) {
+  tao_init_struct_set_beam_init_position_file_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::command_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_command_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_command_arg(const std::string& value) {
+  tao_init_struct_set_command_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::data_file_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_data_file_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_data_file_arg(const std::string& value) {
+  tao_init_struct_set_data_file_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::plot_file_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_plot_file_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_plot_file_arg(const std::string& value) {
+  tao_init_struct_set_plot_file_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::startup_file_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_startup_file_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_startup_file_arg(const std::string& value) {
+  tao_init_struct_set_startup_file_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::var_file_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_var_file_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_var_file_arg(const std::string& value) {
+  tao_init_struct_set_var_file_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::building_wall_file_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_building_wall_file_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_building_wall_file_arg(const std::string& value) {
+  tao_init_struct_set_building_wall_file_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::geometry_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_geometry_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_geometry_arg(const std::string& value) {
+  tao_init_struct_set_geometry_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::slice_lattice_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_slice_lattice_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_slice_lattice_arg(const std::string& value) {
+  tao_init_struct_set_slice_lattice_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::start_branch_at_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_start_branch_at_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_start_branch_at_arg(const std::string& value) {
+  tao_init_struct_set_start_branch_at_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::log_startup_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_log_startup_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_log_startup_arg(const std::string& value) {
+  tao_init_struct_set_log_startup_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::no_stopping_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_no_stopping_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_no_stopping_arg(const std::string& value) {
+  tao_init_struct_set_no_stopping_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::noplot_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_noplot_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_noplot_arg(const std::string& value) {
+  tao_init_struct_set_noplot_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::no_rad_int_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_no_rad_int_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_no_rad_int_arg(const std::string& value) {
+  tao_init_struct_set_no_rad_int_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::reverse_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_reverse_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_reverse_arg(const std::string& value) {
+  tao_init_struct_set_reverse_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::debug_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_debug_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_debug_arg(const std::string& value) {
+  tao_init_struct_set_debug_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::disable_smooth_line_calc_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_disable_smooth_line_calc_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_disable_smooth_line_calc_arg(const std::string& value) {
+  tao_init_struct_set_disable_smooth_line_calc_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::rf_on_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_rf_on_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_rf_on_arg(const std::string& value) {
+  tao_init_struct_set_rf_on_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::prompt_color_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_prompt_color_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_prompt_color_arg(const std::string& value) {
+  tao_init_struct_set_prompt_color_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::quiet_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_quiet_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_quiet_arg(const std::string& value) {
+  tao_init_struct_set_quiet_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::noinit_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_noinit_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_noinit_arg(const std::string& value) {
+  tao_init_struct_set_noinit_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::nostartup_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_nostartup_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_nostartup_arg(const std::string& value) {
+  tao_init_struct_set_nostartup_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::symbol_import_arg() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_symbol_import_arg_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_symbol_import_arg(const std::string& value) {
+  tao_init_struct_set_symbol_import_arg(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoInitProxy::unique_name_suffix() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_init_struct_get_unique_name_suffix_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoInitProxy::set_unique_name_suffix(const std::string& value) {
+  tao_init_struct_set_unique_name_suffix(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+TaoPlotRegionProxyArray1D TaoCommonProxy::plot_place_buffer() const {
+  return ProxyHelpers::get_type_array_1d<TaoPlotRegionProxyArray1D>(
+      fortran_ptr_, tao_common_struct_get_plot_place_buffer_info);
+}
+FArray2D<double> TaoCommonProxy::covar() const {
+  return ProxyHelpers::get_array_2d<double>(
+      fortran_ptr_, tao_common_struct_get_covar_info);
+}
+FArray2D<double> TaoCommonProxy::alpha() const {
+  return ProxyHelpers::get_array_2d<double>(
+      fortran_ptr_, tao_common_struct_get_alpha_info);
+}
+double TaoCommonProxy::dummy_target() const {
+  double value;
+  tao_common_struct_get_dummy_target(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_dummy_target(double value) {
+  tao_common_struct_set_dummy_target(fortran_ptr_, value);
+}
+int TaoCommonProxy::n_alias() const {
+  int value;
+  tao_common_struct_get_n_alias(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_n_alias(int value) {
+  tao_common_struct_set_n_alias(fortran_ptr_, value);
+}
+int TaoCommonProxy::cmd_file_level() const {
+  int value;
+  tao_common_struct_get_cmd_file_level(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_cmd_file_level(int value) {
+  tao_common_struct_set_cmd_file_level(fortran_ptr_, value);
+}
+int TaoCommonProxy::ix_key_bank() const {
+  int value;
+  tao_common_struct_get_ix_key_bank(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_ix_key_bank(int value) {
+  tao_common_struct_set_ix_key_bank(fortran_ptr_, value);
+}
+int TaoCommonProxy::ix_history() const {
+  int value;
+  tao_common_struct_get_ix_history(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_ix_history(int value) {
+  tao_common_struct_set_ix_history(fortran_ptr_, value);
+}
+int TaoCommonProxy::n_history() const {
+  int value;
+  tao_common_struct_get_n_history(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_n_history(int value) {
+  tao_common_struct_set_n_history(fortran_ptr_, value);
+}
+int TaoCommonProxy::lev_loop() const {
+  int value;
+  tao_common_struct_get_lev_loop(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_lev_loop(int value) {
+  tao_common_struct_set_lev_loop(fortran_ptr_, value);
+}
+int TaoCommonProxy::n_err_messages_printed() const {
+  int value;
+  tao_common_struct_get_n_err_messages_printed(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_n_err_messages_printed(int value) {
+  tao_common_struct_set_n_err_messages_printed(fortran_ptr_, value);
+}
+int TaoCommonProxy::n_universes() const {
+  int value;
+  tao_common_struct_get_n_universes(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_n_universes(int value) {
+  tao_common_struct_set_n_universes(fortran_ptr_, value);
+}
+int TaoCommonProxy::ix_beam_track_active_element() const {
+  int value;
+  tao_common_struct_get_ix_beam_track_active_element(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_ix_beam_track_active_element(int value) {
+  tao_common_struct_set_ix_beam_track_active_element(fortran_ptr_, value);
+}
+bool TaoCommonProxy::cmd_file_paused() const {
+  bool value;
+  tao_common_struct_get_cmd_file_paused(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_cmd_file_paused(bool value) {
+  tao_common_struct_set_cmd_file_paused(fortran_ptr_, value);
+}
+bool TaoCommonProxy::use_cmd_here() const {
+  bool value;
+  tao_common_struct_get_use_cmd_here(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_use_cmd_here(bool value) {
+  tao_common_struct_set_use_cmd_here(fortran_ptr_, value);
+}
+bool TaoCommonProxy::cmd_from_cmd_file() const {
+  bool value;
+  tao_common_struct_get_cmd_from_cmd_file(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_cmd_from_cmd_file(bool value) {
+  tao_common_struct_set_cmd_from_cmd_file(fortran_ptr_, value);
+}
+bool TaoCommonProxy::use_saved_beam_in_tracking() const {
+  bool value;
+  tao_common_struct_get_use_saved_beam_in_tracking(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_use_saved_beam_in_tracking(bool value) {
+  tao_common_struct_set_use_saved_beam_in_tracking(fortran_ptr_, value);
+}
+bool TaoCommonProxy::single_mode() const {
+  bool value;
+  tao_common_struct_get_single_mode(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_single_mode(bool value) {
+  tao_common_struct_set_single_mode(fortran_ptr_, value);
+}
+bool TaoCommonProxy::combine_consecutive_elements_of_like_name() const {
+  bool value;
+  tao_common_struct_get_combine_consecutive_elements_of_like_name(
+      fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_combine_consecutive_elements_of_like_name(bool value) {
+  tao_common_struct_set_combine_consecutive_elements_of_like_name(
+      fortran_ptr_, value);
+}
+bool TaoCommonProxy::have_tracked_beam() const {
+  bool value;
+  tao_common_struct_get_have_tracked_beam(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_have_tracked_beam(bool value) {
+  tao_common_struct_set_have_tracked_beam(fortran_ptr_, value);
+}
+bool TaoCommonProxy::init_plot_needed() const {
+  bool value;
+  tao_common_struct_get_init_plot_needed(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_init_plot_needed(bool value) {
+  tao_common_struct_set_init_plot_needed(fortran_ptr_, value);
+}
+bool TaoCommonProxy::init_beam() const {
+  bool value;
+  tao_common_struct_get_init_beam(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_init_beam(bool value) {
+  tao_common_struct_set_init_beam(fortran_ptr_, value);
+}
+bool TaoCommonProxy::init_var() const {
+  bool value;
+  tao_common_struct_get_init_var(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_init_var(bool value) {
+  tao_common_struct_set_init_var(fortran_ptr_, value);
+}
+bool TaoCommonProxy::init_read_lat_info() const {
+  bool value;
+  tao_common_struct_get_init_read_lat_info(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_init_read_lat_info(bool value) {
+  tao_common_struct_set_init_read_lat_info(fortran_ptr_, value);
+}
+bool TaoCommonProxy::optimizer_running() const {
+  bool value;
+  tao_common_struct_get_optimizer_running(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_optimizer_running(bool value) {
+  tao_common_struct_set_optimizer_running(fortran_ptr_, value);
+}
+bool TaoCommonProxy::have_datums_using_expressions() const {
+  bool value;
+  tao_common_struct_get_have_datums_using_expressions(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_have_datums_using_expressions(bool value) {
+  tao_common_struct_set_have_datums_using_expressions(fortran_ptr_, value);
+}
+bool TaoCommonProxy::print_to_terminal() const {
+  bool value;
+  tao_common_struct_get_print_to_terminal(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_print_to_terminal(bool value) {
+  tao_common_struct_set_print_to_terminal(fortran_ptr_, value);
+}
+bool TaoCommonProxy::lattice_calc_done() const {
+  bool value;
+  tao_common_struct_get_lattice_calc_done(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_lattice_calc_done(bool value) {
+  tao_common_struct_set_lattice_calc_done(fortran_ptr_, value);
+}
+bool TaoCommonProxy::add_measurement_noise() const {
+  bool value;
+  tao_common_struct_get_add_measurement_noise(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_add_measurement_noise(bool value) {
+  tao_common_struct_set_add_measurement_noise(fortran_ptr_, value);
+}
+bool TaoCommonProxy::command_arg_has_been_executed() const {
+  bool value;
+  tao_common_struct_get_command_arg_has_been_executed(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_command_arg_has_been_executed(bool value) {
+  tao_common_struct_set_command_arg_has_been_executed(fortran_ptr_, value);
+}
+bool TaoCommonProxy::all_merit_weights_positive() const {
+  bool value;
+  tao_common_struct_get_all_merit_weights_positive(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_all_merit_weights_positive(bool value) {
+  tao_common_struct_set_all_merit_weights_positive(fortran_ptr_, value);
+}
+bool TaoCommonProxy::multi_turn_orbit_is_plotted() const {
+  bool value;
+  tao_common_struct_get_multi_turn_orbit_is_plotted(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_multi_turn_orbit_is_plotted(bool value) {
+  tao_common_struct_set_multi_turn_orbit_is_plotted(fortran_ptr_, value);
+}
+bool TaoCommonProxy::force_chrom_calc() const {
+  bool value;
+  tao_common_struct_get_force_chrom_calc(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_force_chrom_calc(bool value) {
+  tao_common_struct_set_force_chrom_calc(fortran_ptr_, value);
+}
+bool TaoCommonProxy::force_rad_int_calc() const {
+  bool value;
+  tao_common_struct_get_force_rad_int_calc(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_force_rad_int_calc(bool value) {
+  tao_common_struct_set_force_rad_int_calc(fortran_ptr_, value);
+}
+bool TaoCommonProxy::rad_int_ri_calc_on() const {
+  bool value;
+  tao_common_struct_get_rad_int_ri_calc_on(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_rad_int_ri_calc_on(bool value) {
+  tao_common_struct_set_rad_int_ri_calc_on(fortran_ptr_, value);
+}
+bool TaoCommonProxy::rad_int_6d_calc_on() const {
+  bool value;
+  tao_common_struct_get_rad_int_6d_calc_on(fortran_ptr_, &value);
+  return value;
+}
+void TaoCommonProxy::set_rad_int_6d_calc_on(bool value) {
+  tao_common_struct_set_rad_int_6d_calc_on(fortran_ptr_, value);
+}
+FCharArray1D TaoCommonProxy::valid_plot_who() const {
+  return ProxyHelpers::get_char_array_1d(
+      fortran_ptr_, tao_common_struct_get_valid_plot_who_info);
+}
+std::string TaoCommonProxy::single_mode_buffer() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_common_struct_get_single_mode_buffer_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoCommonProxy::set_single_mode_buffer(const std::string& value) {
+  tao_common_struct_set_single_mode_buffer(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoCommonProxy::cmd() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_common_struct_get_cmd_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoCommonProxy::set_cmd(const std::string& value) {
+  tao_common_struct_set_cmd(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoCommonProxy::saved_cmd_line() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_common_struct_get_saved_cmd_line_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoCommonProxy::set_saved_cmd_line(const std::string& value) {
+  tao_common_struct_set_saved_cmd_line(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+TaoTitleProxy TaoPlotPageProxy::title() const {
+  void* ptr;
+  tao_plot_page_struct_get_title(fortran_ptr_, &ptr);
+  return TaoTitleProxy(ptr);
+}
+void TaoPlotPageProxy::set_title(const TaoTitleProxy& src) {
+  tao_plot_page_struct_set_title(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoTitleProxy TaoPlotPageProxy::subtitle() const {
+  void* ptr;
+  tao_plot_page_struct_get_subtitle(fortran_ptr_, &ptr);
+  return TaoTitleProxy(ptr);
+}
+void TaoPlotPageProxy::set_subtitle(const TaoTitleProxy& src) {
+  tao_plot_page_struct_set_subtitle(fortran_ptr_, src.get_fortran_ptr());
+}
+QpRectProxy TaoPlotPageProxy::border() const {
+  void* ptr;
+  tao_plot_page_struct_get_border(fortran_ptr_, &ptr);
+  return QpRectProxy(ptr);
+}
+void TaoPlotPageProxy::set_border(const QpRectProxy& src) {
+  tao_plot_page_struct_set_border(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoDrawingProxy TaoPlotPageProxy::floor_plan() const {
+  void* ptr;
+  tao_plot_page_struct_get_floor_plan(fortran_ptr_, &ptr);
+  return TaoDrawingProxy(ptr);
+}
+void TaoPlotPageProxy::set_floor_plan(const TaoDrawingProxy& src) {
+  tao_plot_page_struct_set_floor_plan(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoDrawingProxy TaoPlotPageProxy::lat_layout() const {
+  void* ptr;
+  tao_plot_page_struct_get_lat_layout(fortran_ptr_, &ptr);
+  return TaoDrawingProxy(ptr);
+}
+void TaoPlotPageProxy::set_lat_layout(const TaoDrawingProxy& src) {
+  tao_plot_page_struct_set_lat_layout(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoShapePatternProxyArray1D TaoPlotPageProxy::pattern() const {
+  return ProxyHelpers::get_type_array_1d<TaoShapePatternProxyArray1D>(
+      fortran_ptr_, tao_plot_page_struct_get_pattern_info);
+}
+TaoPlotProxyArray1D TaoPlotPageProxy::template_() const {
+  return ProxyHelpers::get_type_array_1d<TaoPlotProxyArray1D>(
+      fortran_ptr_, tao_plot_page_struct_get_template_info);
+}
+TaoPlotRegionProxyArray1D TaoPlotPageProxy::region() const {
+  return ProxyHelpers::get_type_array_1d<TaoPlotRegionProxyArray1D>(
+      fortran_ptr_, tao_plot_page_struct_get_region_info);
+}
+std::string TaoPlotPageProxy::plot_display_type() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_plot_page_struct_get_plot_display_type_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoPlotPageProxy::set_plot_display_type(const std::string& value) {
+  tao_plot_page_struct_set_plot_display_type(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+FArray1D<double> TaoPlotPageProxy::size() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_, tao_plot_page_struct_get_size_info);
+}
+double TaoPlotPageProxy::text_height() const {
+  double value;
+  tao_plot_page_struct_get_text_height(fortran_ptr_, &value);
+  return value;
+}
+void TaoPlotPageProxy::set_text_height(double value) {
+  tao_plot_page_struct_set_text_height(fortran_ptr_, value);
+}
+double TaoPlotPageProxy::main_title_text_scale() const {
+  double value;
+  tao_plot_page_struct_get_main_title_text_scale(fortran_ptr_, &value);
+  return value;
+}
+void TaoPlotPageProxy::set_main_title_text_scale(double value) {
+  tao_plot_page_struct_set_main_title_text_scale(fortran_ptr_, value);
+}
+double TaoPlotPageProxy::graph_title_text_scale() const {
+  double value;
+  tao_plot_page_struct_get_graph_title_text_scale(fortran_ptr_, &value);
+  return value;
+}
+void TaoPlotPageProxy::set_graph_title_text_scale(double value) {
+  tao_plot_page_struct_set_graph_title_text_scale(fortran_ptr_, value);
+}
+double TaoPlotPageProxy::axis_number_text_scale() const {
+  double value;
+  tao_plot_page_struct_get_axis_number_text_scale(fortran_ptr_, &value);
+  return value;
+}
+void TaoPlotPageProxy::set_axis_number_text_scale(double value) {
+  tao_plot_page_struct_set_axis_number_text_scale(fortran_ptr_, value);
+}
+double TaoPlotPageProxy::axis_label_text_scale() const {
+  double value;
+  tao_plot_page_struct_get_axis_label_text_scale(fortran_ptr_, &value);
+  return value;
+}
+void TaoPlotPageProxy::set_axis_label_text_scale(double value) {
+  tao_plot_page_struct_set_axis_label_text_scale(fortran_ptr_, value);
+}
+double TaoPlotPageProxy::legend_text_scale() const {
+  double value;
+  tao_plot_page_struct_get_legend_text_scale(fortran_ptr_, &value);
+  return value;
+}
+void TaoPlotPageProxy::set_legend_text_scale(double value) {
+  tao_plot_page_struct_set_legend_text_scale(fortran_ptr_, value);
+}
+double TaoPlotPageProxy::key_table_text_scale() const {
+  double value;
+  tao_plot_page_struct_get_key_table_text_scale(fortran_ptr_, &value);
+  return value;
+}
+void TaoPlotPageProxy::set_key_table_text_scale(double value) {
+  tao_plot_page_struct_set_key_table_text_scale(fortran_ptr_, value);
+}
+double TaoPlotPageProxy::floor_plan_shape_scale() const {
+  double value;
+  tao_plot_page_struct_get_floor_plan_shape_scale(fortran_ptr_, &value);
+  return value;
+}
+void TaoPlotPageProxy::set_floor_plan_shape_scale(double value) {
+  tao_plot_page_struct_set_floor_plan_shape_scale(fortran_ptr_, value);
+}
+double TaoPlotPageProxy::floor_plan_text_scale() const {
+  double value;
+  tao_plot_page_struct_get_floor_plan_text_scale(fortran_ptr_, &value);
+  return value;
+}
+void TaoPlotPageProxy::set_floor_plan_text_scale(double value) {
+  tao_plot_page_struct_set_floor_plan_text_scale(fortran_ptr_, value);
+}
+double TaoPlotPageProxy::lat_layout_shape_scale() const {
+  double value;
+  tao_plot_page_struct_get_lat_layout_shape_scale(fortran_ptr_, &value);
+  return value;
+}
+void TaoPlotPageProxy::set_lat_layout_shape_scale(double value) {
+  tao_plot_page_struct_set_lat_layout_shape_scale(fortran_ptr_, value);
+}
+double TaoPlotPageProxy::lat_layout_text_scale() const {
+  double value;
+  tao_plot_page_struct_get_lat_layout_text_scale(fortran_ptr_, &value);
+  return value;
+}
+void TaoPlotPageProxy::set_lat_layout_text_scale(double value) {
+  tao_plot_page_struct_set_lat_layout_text_scale(fortran_ptr_, value);
+}
+int TaoPlotPageProxy::n_curve_pts() const {
+  int value;
+  tao_plot_page_struct_get_n_curve_pts(fortran_ptr_, &value);
+  return value;
+}
+void TaoPlotPageProxy::set_n_curve_pts(int value) {
+  tao_plot_page_struct_set_n_curve_pts(fortran_ptr_, value);
+}
+int TaoPlotPageProxy::id_window() const {
+  int value;
+  tao_plot_page_struct_get_id_window(fortran_ptr_, &value);
+  return value;
+}
+void TaoPlotPageProxy::set_id_window(int value) {
+  tao_plot_page_struct_set_id_window(fortran_ptr_, value);
+}
+bool TaoPlotPageProxy::delete_overlapping_plots() const {
+  bool value;
+  tao_plot_page_struct_get_delete_overlapping_plots(fortran_ptr_, &value);
+  return value;
+}
+void TaoPlotPageProxy::set_delete_overlapping_plots(bool value) {
+  tao_plot_page_struct_set_delete_overlapping_plots(fortran_ptr_, value);
+}
+bool TaoPlotPageProxy::draw_graph_title_suffix() const {
+  bool value;
+  tao_plot_page_struct_get_draw_graph_title_suffix(fortran_ptr_, &value);
+  return value;
+}
+void TaoPlotPageProxy::set_draw_graph_title_suffix(bool value) {
+  tao_plot_page_struct_set_draw_graph_title_suffix(fortran_ptr_, value);
+}
+TaoBuildingWallOrientationProxy TaoBuildingWallProxy::orientation() const {
+  void* ptr;
+  tao_building_wall_struct_get_orientation(fortran_ptr_, &ptr);
+  return TaoBuildingWallOrientationProxy(ptr);
+}
+void TaoBuildingWallProxy::set_orientation(
+    const TaoBuildingWallOrientationProxy& src) {
+  tao_building_wall_struct_set_orientation(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoBuildingWallSectionProxyArray1D TaoBuildingWallProxy::section() const {
+  return ProxyHelpers::get_type_array_1d<TaoBuildingWallSectionProxyArray1D>(
+      fortran_ptr_, tao_building_wall_struct_get_section_info);
+}
+double TaoBuildingWallOrientationProxy::theta() const {
+  double value;
+  tao_building_wall_orientation_struct_get_theta(fortran_ptr_, &value);
+  return value;
+}
+void TaoBuildingWallOrientationProxy::set_theta(double value) {
+  tao_building_wall_orientation_struct_set_theta(fortran_ptr_, value);
+}
+double TaoBuildingWallOrientationProxy::x_offset() const {
+  double value;
+  tao_building_wall_orientation_struct_get_x_offset(fortran_ptr_, &value);
+  return value;
+}
+void TaoBuildingWallOrientationProxy::set_x_offset(double value) {
+  tao_building_wall_orientation_struct_set_x_offset(fortran_ptr_, value);
+}
+double TaoBuildingWallOrientationProxy::z_offset() const {
+  double value;
+  tao_building_wall_orientation_struct_get_z_offset(fortran_ptr_, &value);
+  return value;
+}
+void TaoBuildingWallOrientationProxy::set_z_offset(double value) {
+  tao_building_wall_orientation_struct_set_z_offset(fortran_ptr_, value);
+}
+std::string TaoBuildingWallSectionProxy::name() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_building_wall_section_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoBuildingWallSectionProxy::set_name(const std::string& value) {
+  tao_building_wall_section_struct_set_name(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoBuildingWallSectionProxy::constraint() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_building_wall_section_struct_get_constraint_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoBuildingWallSectionProxy::set_constraint(const std::string& value) {
+  tao_building_wall_section_struct_set_constraint(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+TaoBuildingWallPointProxyArray1D TaoBuildingWallSectionProxy::point() const {
+  return ProxyHelpers::get_type_array_1d<TaoBuildingWallPointProxyArray1D>(
+      fortran_ptr_, tao_building_wall_section_struct_get_point_info);
+}
+double TaoBuildingWallPointProxy::z() const {
+  double value;
+  tao_building_wall_point_struct_get_z(fortran_ptr_, &value);
+  return value;
+}
+void TaoBuildingWallPointProxy::set_z(double value) {
+  tao_building_wall_point_struct_set_z(fortran_ptr_, value);
+}
+double TaoBuildingWallPointProxy::x() const {
+  double value;
+  tao_building_wall_point_struct_get_x(fortran_ptr_, &value);
+  return value;
+}
+void TaoBuildingWallPointProxy::set_x(double value) {
+  tao_building_wall_point_struct_set_x(fortran_ptr_, value);
+}
+double TaoBuildingWallPointProxy::radius() const {
+  double value;
+  tao_building_wall_point_struct_get_radius(fortran_ptr_, &value);
+  return value;
+}
+void TaoBuildingWallPointProxy::set_radius(double value) {
+  tao_building_wall_point_struct_set_radius(fortran_ptr_, value);
+}
+double TaoBuildingWallPointProxy::z_center() const {
+  double value;
+  tao_building_wall_point_struct_get_z_center(fortran_ptr_, &value);
+  return value;
+}
+void TaoBuildingWallPointProxy::set_z_center(double value) {
+  tao_building_wall_point_struct_set_z_center(fortran_ptr_, value);
+}
+double TaoBuildingWallPointProxy::x_center() const {
+  double value;
+  tao_building_wall_point_struct_get_x_center(fortran_ptr_, &value);
+  return value;
+}
+void TaoBuildingWallPointProxy::set_x_center(double value) {
+  tao_building_wall_point_struct_set_x_center(fortran_ptr_, value);
+}
+std::string TaoWaveProxy::data_type() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_wave_struct_get_data_type_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoWaveProxy::set_data_type(const std::string& value) {
+  tao_wave_struct_set_data_type(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double TaoWaveProxy::rms_rel_a() const {
+  double value;
+  tao_wave_struct_get_rms_rel_a(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_rms_rel_a(double value) {
+  tao_wave_struct_set_rms_rel_a(fortran_ptr_, value);
+}
+double TaoWaveProxy::rms_rel_b() const {
+  double value;
+  tao_wave_struct_get_rms_rel_b(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_rms_rel_b(double value) {
+  tao_wave_struct_set_rms_rel_b(fortran_ptr_, value);
+}
+double TaoWaveProxy::rms_rel_as() const {
+  double value;
+  tao_wave_struct_get_rms_rel_as(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_rms_rel_as(double value) {
+  tao_wave_struct_set_rms_rel_as(fortran_ptr_, value);
+}
+double TaoWaveProxy::rms_rel_bs() const {
+  double value;
+  tao_wave_struct_get_rms_rel_bs(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_rms_rel_bs(double value) {
+  tao_wave_struct_set_rms_rel_bs(fortran_ptr_, value);
+}
+double TaoWaveProxy::rms_rel_ar() const {
+  double value;
+  tao_wave_struct_get_rms_rel_ar(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_rms_rel_ar(double value) {
+  tao_wave_struct_set_rms_rel_ar(fortran_ptr_, value);
+}
+double TaoWaveProxy::rms_rel_br() const {
+  double value;
+  tao_wave_struct_get_rms_rel_br(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_rms_rel_br(double value) {
+  tao_wave_struct_set_rms_rel_br(fortran_ptr_, value);
+}
+double TaoWaveProxy::rms_rel_k() const {
+  double value;
+  tao_wave_struct_get_rms_rel_k(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_rms_rel_k(double value) {
+  tao_wave_struct_set_rms_rel_k(fortran_ptr_, value);
+}
+double TaoWaveProxy::rms_rel_ks() const {
+  double value;
+  tao_wave_struct_get_rms_rel_ks(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_rms_rel_ks(double value) {
+  tao_wave_struct_set_rms_rel_ks(fortran_ptr_, value);
+}
+double TaoWaveProxy::rms_rel_kr() const {
+  double value;
+  tao_wave_struct_get_rms_rel_kr(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_rms_rel_kr(double value) {
+  tao_wave_struct_set_rms_rel_kr(fortran_ptr_, value);
+}
+double TaoWaveProxy::rms_phi() const {
+  double value;
+  tao_wave_struct_get_rms_phi(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_rms_phi(double value) {
+  tao_wave_struct_set_rms_phi(fortran_ptr_, value);
+}
+double TaoWaveProxy::rms_phi_s() const {
+  double value;
+  tao_wave_struct_get_rms_phi_s(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_rms_phi_s(double value) {
+  tao_wave_struct_set_rms_phi_s(fortran_ptr_, value);
+}
+double TaoWaveProxy::rms_phi_r() const {
+  double value;
+  tao_wave_struct_get_rms_phi_r(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_rms_phi_r(double value) {
+  tao_wave_struct_set_rms_phi_r(fortran_ptr_, value);
+}
+double TaoWaveProxy::amp_ba_s() const {
+  double value;
+  tao_wave_struct_get_amp_ba_s(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_amp_ba_s(double value) {
+  tao_wave_struct_set_amp_ba_s(fortran_ptr_, value);
+}
+double TaoWaveProxy::amp_ba_r() const {
+  double value;
+  tao_wave_struct_get_amp_ba_r(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_amp_ba_r(double value) {
+  tao_wave_struct_set_amp_ba_r(fortran_ptr_, value);
+}
+double TaoWaveProxy::chi_a() const {
+  double value;
+  tao_wave_struct_get_chi_a(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_chi_a(double value) {
+  tao_wave_struct_set_chi_a(fortran_ptr_, value);
+}
+double TaoWaveProxy::chi_c() const {
+  double value;
+  tao_wave_struct_get_chi_c(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_chi_c(double value) {
+  tao_wave_struct_set_chi_c(fortran_ptr_, value);
+}
+double TaoWaveProxy::chi_ba() const {
+  double value;
+  tao_wave_struct_get_chi_ba(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_chi_ba(double value) {
+  tao_wave_struct_set_chi_ba(fortran_ptr_, value);
+}
+FArray1D<double> TaoWaveProxy::amp_a() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_, tao_wave_struct_get_amp_a_info);
+}
+FArray1D<double> TaoWaveProxy::amp_b() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_, tao_wave_struct_get_amp_b_info);
+}
+FArray1D<double> TaoWaveProxy::amp_ba() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_, tao_wave_struct_get_amp_ba_info);
+}
+FArray1D<double> TaoWaveProxy::coef_a() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_, tao_wave_struct_get_coef_a_info);
+}
+FArray1D<double> TaoWaveProxy::coef_b() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_, tao_wave_struct_get_coef_b_info);
+}
+FArray1D<double> TaoWaveProxy::coef_ba() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_, tao_wave_struct_get_coef_ba_info);
+}
+int TaoWaveProxy::n_func() const {
+  int value;
+  tao_wave_struct_get_n_func(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_n_func(int value) {
+  tao_wave_struct_set_n_func(fortran_ptr_, value);
+}
+int TaoWaveProxy::ix_a1() const {
+  int value;
+  tao_wave_struct_get_ix_a1(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_ix_a1(int value) {
+  tao_wave_struct_set_ix_a1(fortran_ptr_, value);
+}
+int TaoWaveProxy::ix_a2() const {
+  int value;
+  tao_wave_struct_get_ix_a2(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_ix_a2(int value) {
+  tao_wave_struct_set_ix_a2(fortran_ptr_, value);
+}
+int TaoWaveProxy::ix_b1() const {
+  int value;
+  tao_wave_struct_get_ix_b1(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_ix_b1(int value) {
+  tao_wave_struct_set_ix_b1(fortran_ptr_, value);
+}
+int TaoWaveProxy::ix_b2() const {
+  int value;
+  tao_wave_struct_get_ix_b2(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_ix_b2(int value) {
+  tao_wave_struct_set_ix_b2(fortran_ptr_, value);
+}
+int TaoWaveProxy::i_a1() const {
+  int value;
+  tao_wave_struct_get_i_a1(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_i_a1(int value) {
+  tao_wave_struct_set_i_a1(fortran_ptr_, value);
+}
+int TaoWaveProxy::i_a2() const {
+  int value;
+  tao_wave_struct_get_i_a2(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_i_a2(int value) {
+  tao_wave_struct_set_i_a2(fortran_ptr_, value);
+}
+int TaoWaveProxy::i_b1() const {
+  int value;
+  tao_wave_struct_get_i_b1(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_i_b1(int value) {
+  tao_wave_struct_set_i_b1(fortran_ptr_, value);
+}
+int TaoWaveProxy::i_b2() const {
+  int value;
+  tao_wave_struct_get_i_b2(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_i_b2(int value) {
+  tao_wave_struct_set_i_b2(fortran_ptr_, value);
+}
+int TaoWaveProxy::n_a() const {
+  int value;
+  tao_wave_struct_get_n_a(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_n_a(int value) {
+  tao_wave_struct_set_n_a(fortran_ptr_, value);
+}
+int TaoWaveProxy::n_b() const {
+  int value;
+  tao_wave_struct_get_n_b(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_n_b(int value) {
+  tao_wave_struct_set_n_b(fortran_ptr_, value);
+}
+int TaoWaveProxy::i_curve_wrap_pt() const {
+  int value;
+  tao_wave_struct_get_i_curve_wrap_pt(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_i_curve_wrap_pt(int value) {
+  tao_wave_struct_set_i_curve_wrap_pt(fortran_ptr_, value);
+}
+FArray1D<int> TaoWaveProxy::ix_data() const {
+  return ProxyHelpers::get_array_1d<int>(
+      fortran_ptr_, tao_wave_struct_get_ix_data_info);
+}
+int TaoWaveProxy::n_kick() const {
+  int value;
+  tao_wave_struct_get_n_kick(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveProxy::set_n_kick(int value) {
+  tao_wave_struct_set_n_kick(fortran_ptr_, value);
+}
+TaoWaveKickPtProxyArray1D TaoWaveProxy::kick() const {
+  return ProxyHelpers::get_type_array_1d<TaoWaveKickPtProxyArray1D>(
+      fortran_ptr_, tao_wave_struct_get_kick_info);
+}
+TaoGraphProxy TaoWaveProxy::base_graph() const {
+  void* ptr;
+  tao_wave_struct_get_base_graph(fortran_ptr_, &ptr);
+  return TaoGraphProxy(ptr);
+}
+void TaoWaveProxy::set_base_graph(const TaoGraphProxy& src) {
+  tao_wave_struct_set_base_graph(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<TaoPlotRegionProxy> TaoWaveProxy::region() const {
+  void* ptr;
+  tao_wave_struct_get_region(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoPlotRegionProxy(ptr);
+}
+void TaoWaveProxy::set_region(const TaoPlotRegionProxy& src) {
+  tao_wave_struct_set_region(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<TaoD1DataProxy> TaoWaveProxy::d1_dat() const {
+  void* ptr;
+  tao_wave_struct_get_d1_dat(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoD1DataProxy(ptr);
+}
+void TaoWaveProxy::set_d1_dat(const TaoD1DataProxy& src) {
+  tao_wave_struct_set_d1_dat(fortran_ptr_, src.get_fortran_ptr());
+}
+double TaoWaveKickPtProxy::phi_s() const {
+  double value;
+  tao_wave_kick_pt_struct_get_phi_s(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveKickPtProxy::set_phi_s(double value) {
+  tao_wave_kick_pt_struct_set_phi_s(fortran_ptr_, value);
+}
+double TaoWaveKickPtProxy::phi_r() const {
+  double value;
+  tao_wave_kick_pt_struct_get_phi_r(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveKickPtProxy::set_phi_r(double value) {
+  tao_wave_kick_pt_struct_set_phi_r(fortran_ptr_, value);
+}
+double TaoWaveKickPtProxy::phi() const {
+  double value;
+  tao_wave_kick_pt_struct_get_phi(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveKickPtProxy::set_phi(double value) {
+  tao_wave_kick_pt_struct_set_phi(fortran_ptr_, value);
+}
+double TaoWaveKickPtProxy::amp() const {
+  double value;
+  tao_wave_kick_pt_struct_get_amp(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveKickPtProxy::set_amp(double value) {
+  tao_wave_kick_pt_struct_set_amp(fortran_ptr_, value);
+}
+double TaoWaveKickPtProxy::s() const {
+  double value;
+  tao_wave_kick_pt_struct_get_s(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveKickPtProxy::set_s(double value) {
+  tao_wave_kick_pt_struct_set_s(fortran_ptr_, value);
+}
+int TaoWaveKickPtProxy::ix_dat_before_kick() const {
+  int value;
+  tao_wave_kick_pt_struct_get_ix_dat_before_kick(fortran_ptr_, &value);
+  return value;
+}
+void TaoWaveKickPtProxy::set_ix_dat_before_kick(int value) {
+  tao_wave_kick_pt_struct_set_ix_dat_before_kick(fortran_ptr_, value);
+}
+std::optional<EleProxy> TaoWaveKickPtProxy::ele() const {
+  void* ptr;
+  tao_wave_kick_pt_struct_get_ele(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return EleProxy(ptr);
+}
+void TaoWaveKickPtProxy::set_ele(const EleProxy& src) {
+  tao_wave_kick_pt_struct_set_ele(fortran_ptr_, src.get_fortran_ptr());
+}
+std::string TaoCmdHistoryProxy::cmd() const {
+  return ProxyHelpers::get_string(
+      fortran_ptr_, tao_cmd_history_struct_get_cmd_info);
+}
+void TaoCmdHistoryProxy::set_cmd(const std::string& value) {
+  tao_cmd_history_struct_set_cmd(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int TaoCmdHistoryProxy::ix() const {
+  int value;
+  tao_cmd_history_struct_get_ix(fortran_ptr_, &value);
+  return value;
+}
+void TaoCmdHistoryProxy::set_ix(int value) {
+  tao_cmd_history_struct_set_ix(fortran_ptr_, value);
+}
 std::optional<TaoLatticeProxy> TaoUniverseProxy::model() const {
   void* ptr;
   tao_universe_struct_get_model(fortran_ptr_, &ptr);
@@ -8883,6 +11757,66 @@ bool TaoUniverseProxy::picked_uni() const {
 }
 void TaoUniverseProxy::set_picked_uni(bool value) {
   tao_universe_struct_set_picked_uni(fortran_ptr_, value);
+}
+double MadEnergyProxy::total() const {
+  double value;
+  mad_energy_struct_get_total(fortran_ptr_, &value);
+  return value;
+}
+void MadEnergyProxy::set_total(double value) {
+  mad_energy_struct_set_total(fortran_ptr_, value);
+}
+double MadEnergyProxy::beta() const {
+  double value;
+  mad_energy_struct_get_beta(fortran_ptr_, &value);
+  return value;
+}
+void MadEnergyProxy::set_beta(double value) {
+  mad_energy_struct_set_beta(fortran_ptr_, value);
+}
+double MadEnergyProxy::gamma() const {
+  double value;
+  mad_energy_struct_get_gamma(fortran_ptr_, &value);
+  return value;
+}
+void MadEnergyProxy::set_gamma(double value) {
+  mad_energy_struct_set_gamma(fortran_ptr_, value);
+}
+double MadEnergyProxy::kinetic() const {
+  double value;
+  mad_energy_struct_get_kinetic(fortran_ptr_, &value);
+  return value;
+}
+void MadEnergyProxy::set_kinetic(double value) {
+  mad_energy_struct_set_kinetic(fortran_ptr_, value);
+}
+double MadEnergyProxy::p0c() const {
+  double value;
+  mad_energy_struct_get_p0c(fortran_ptr_, &value);
+  return value;
+}
+void MadEnergyProxy::set_p0c(double value) {
+  mad_energy_struct_set_p0c(fortran_ptr_, value);
+}
+int MadEnergyProxy::particle() const {
+  int value;
+  mad_energy_struct_get_particle(fortran_ptr_, &value);
+  return value;
+}
+void MadEnergyProxy::set_particle(int value) {
+  mad_energy_struct_set_particle(fortran_ptr_, value);
+}
+FArray1D<double> MadMapProxy::k() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_, mad_map_struct_get_k_info);
+}
+FArray2D<double> MadMapProxy::r() const {
+  return ProxyHelpers::get_array_2d<double>(
+      fortran_ptr_, mad_map_struct_get_r_info);
+}
+FArray3D<double> MadMapProxy::t() const {
+  return ProxyHelpers::get_array_3d<double>(
+      fortran_ptr_, mad_map_struct_get_t_info);
 }
 double AllEncompassingProxy::real_rp_0d() const {
   double value;

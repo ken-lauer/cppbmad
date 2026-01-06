@@ -279,7 +279,10 @@ use integration_timer_mod, only: integration_timer_ele
 
 use runge_kutta_mod, only: kick_vector_calc, odeint_bmad
 
-use mad_mod, only: mad_tmfoc, mad_tmsymm, make_mat6_mad, track1_mad
+use mad_mod, only: mad_add_offsets_and_multipoles, mad_concat_map2, mad_drift, mad_elsep, &
+    mad_map_to_taylor, mad_quadrupole, mad_rfcavity, mad_sbend, mad_sbend_body, &
+    mad_sbend_fringe, mad_sextupole, mad_solenoid, mad_tmfoc, mad_tmsymm, mad_tmtilt, &
+    mad_track1, make_mad_map, make_mat6_mad, make_unit_mad_map, taylor_to_mad_map, track1_mad
 
 use high_energy_space_charge_mod, only: make_mat6_high_energy_space_charge, &
     setup_high_energy_space_charge_calc, track1_high_energy_space_charge
@@ -15307,6 +15310,337 @@ subroutine fortran_low_energy_z_correction (orbit, ele, ds, mat6, make_matrix, d
   call c_f_pointer(dz, f_dz_ptr)
   f_dz_ptr = f_dz
 end subroutine
+subroutine fortran_mad_add_offsets_and_multipoles (ele, map) bind(c)
+
+  use bmad_struct, only: ele_struct
+  use mad_mod, only: mad_map_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  ! ** Out parameters **
+  type(c_ptr), value :: map  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! out: f_map 0D_NOT_type
+  if (.not. c_associated(map)) return
+  call c_f_pointer(map, f_map)
+  call mad_add_offsets_and_multipoles(ele=f_ele, map=f_map)
+
+  ! out: f_map 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_mad_concat_map2 (map1, map2, map3) bind(c)
+
+  use mad_mod, only: mad_map_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: map1  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map1
+  type(c_ptr), value :: map2  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map2
+  ! ** Out parameters **
+  type(c_ptr), value :: map3  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map3
+  ! ** End of parameters **
+  ! in: f_map1 0D_NOT_type
+  if (.not. c_associated(map1)) return
+  call c_f_pointer(map1, f_map1)
+  ! in: f_map2 0D_NOT_type
+  if (.not. c_associated(map2)) return
+  call c_f_pointer(map2, f_map2)
+  ! out: f_map3 0D_NOT_type
+  if (.not. c_associated(map3)) return
+  call c_f_pointer(map3, f_map3)
+  call mad_concat_map2(map1=f_map1, map2=f_map2, map3=f_map3)
+
+  ! out: f_map3 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_mad_drift (ele, energy, map) bind(c)
+
+  use bmad_struct, only: ele_struct
+  use mad_mod, only: mad_energy_struct, mad_map_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: energy  ! 0D_NOT_type
+  type(mad_energy_struct), pointer :: f_energy
+  ! ** Out parameters **
+  type(c_ptr), value :: map  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_energy 0D_NOT_type
+  if (.not. c_associated(energy)) return
+  call c_f_pointer(energy, f_energy)
+  ! out: f_map 0D_NOT_type
+  if (.not. c_associated(map)) return
+  call c_f_pointer(map, f_map)
+  call mad_drift(ele=f_ele, energy=f_energy, map=f_map)
+
+  ! out: f_map 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_mad_elsep (ele, energy, map) bind(c)
+
+  use bmad_struct, only: ele_struct
+  use mad_mod, only: mad_energy_struct, mad_map_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: energy  ! 0D_NOT_type
+  type(mad_energy_struct), pointer :: f_energy
+  ! ** Out parameters **
+  type(c_ptr), value :: map  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_energy 0D_NOT_type
+  if (.not. c_associated(energy)) return
+  call c_f_pointer(energy, f_energy)
+  ! out: f_map 0D_NOT_type
+  if (.not. c_associated(map)) return
+  call c_f_pointer(map, f_map)
+  call mad_elsep(ele=f_ele, energy=f_energy, map=f_map)
+
+  ! out: f_map 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_mad_map_to_taylor (map, energy, taylor) bind(c)
+
+  use mad_mod, only: mad_energy_struct, mad_map_struct
+  use bmad_struct, only: taylor_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: map  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map
+  type(c_ptr), value :: energy  ! 0D_NOT_type
+  type(mad_energy_struct), pointer :: f_energy
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: taylor
+  type(taylor_struct_container_alloc), pointer :: f_taylor
+  ! ** End of parameters **
+  ! in: f_map 0D_NOT_type
+  if (.not. c_associated(map)) return
+  call c_f_pointer(map, f_map)
+  ! in: f_energy 0D_NOT_type
+  if (.not. c_associated(energy)) return
+  call c_f_pointer(energy, f_energy)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(taylor))   call c_f_pointer(taylor, f_taylor)
+  call mad_map_to_taylor(map=f_map, energy=f_energy, taylor=f_taylor%data)
+
+end subroutine
+subroutine fortran_mad_quadrupole (ele, energy, map) bind(c)
+
+  use bmad_struct, only: ele_struct
+  use mad_mod, only: mad_energy_struct, mad_map_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: energy  ! 0D_NOT_type
+  type(mad_energy_struct), pointer :: f_energy
+  ! ** Out parameters **
+  type(c_ptr), value :: map  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_energy 0D_NOT_type
+  if (.not. c_associated(energy)) return
+  call c_f_pointer(energy, f_energy)
+  ! out: f_map 0D_NOT_type
+  if (.not. c_associated(map)) return
+  call c_f_pointer(map, f_map)
+  call mad_quadrupole(ele=f_ele, energy=f_energy, map=f_map)
+
+  ! out: f_map 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_mad_rfcavity (ele, energy, map) bind(c)
+
+  use bmad_struct, only: ele_struct
+  use mad_mod, only: mad_energy_struct, mad_map_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: energy  ! 0D_NOT_type
+  type(mad_energy_struct), pointer :: f_energy
+  ! ** Out parameters **
+  type(c_ptr), value :: map  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_energy 0D_NOT_type
+  if (.not. c_associated(energy)) return
+  call c_f_pointer(energy, f_energy)
+  ! out: f_map 0D_NOT_type
+  if (.not. c_associated(map)) return
+  call c_f_pointer(map, f_map)
+  call mad_rfcavity(ele=f_ele, energy=f_energy, map=f_map)
+
+  ! out: f_map 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_mad_sbend (ele, energy, map) bind(c)
+
+  use bmad_struct, only: ele_struct
+  use mad_mod, only: mad_energy_struct, mad_map_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: energy  ! 0D_NOT_type
+  type(mad_energy_struct), pointer :: f_energy
+  ! ** Out parameters **
+  type(c_ptr), value :: map  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_energy 0D_NOT_type
+  if (.not. c_associated(energy)) return
+  call c_f_pointer(energy, f_energy)
+  ! out: f_map 0D_NOT_type
+  if (.not. c_associated(map)) return
+  call c_f_pointer(map, f_map)
+  call mad_sbend(ele=f_ele, energy=f_energy, map=f_map)
+
+  ! out: f_map 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_mad_sbend_body (ele, energy, map) bind(c)
+
+  use bmad_struct, only: ele_struct
+  use mad_mod, only: mad_energy_struct, mad_map_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: energy  ! 0D_NOT_type
+  type(mad_energy_struct), pointer :: f_energy
+  ! ** Out parameters **
+  type(c_ptr), value :: map  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_energy 0D_NOT_type
+  if (.not. c_associated(energy)) return
+  call c_f_pointer(energy, f_energy)
+  ! out: f_map 0D_NOT_type
+  if (.not. c_associated(map)) return
+  call c_f_pointer(map, f_map)
+  call mad_sbend_body(ele=f_ele, energy=f_energy, map=f_map)
+
+  ! out: f_map 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_mad_sbend_fringe (ele, energy, into, map) bind(c)
+
+  use bmad_struct, only: ele_struct
+  use mad_mod, only: mad_energy_struct, mad_map_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: energy  ! 0D_NOT_type
+  type(mad_energy_struct), pointer :: f_energy
+  logical(c_bool) :: into  ! 0D_NOT_logical
+  logical :: f_into
+  ! ** Out parameters **
+  type(c_ptr), value :: map  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_energy 0D_NOT_type
+  if (.not. c_associated(energy)) return
+  call c_f_pointer(energy, f_energy)
+  ! in: f_into 0D_NOT_logical
+  f_into = into
+  ! out: f_map 0D_NOT_type
+  if (.not. c_associated(map)) return
+  call c_f_pointer(map, f_map)
+  call mad_sbend_fringe(ele=f_ele, energy=f_energy, into=f_into, map=f_map)
+
+  ! out: f_map 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_mad_sextupole (ele, energy, map) bind(c)
+
+  use bmad_struct, only: ele_struct
+  use mad_mod, only: mad_energy_struct, mad_map_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: energy  ! 0D_NOT_type
+  type(mad_energy_struct), pointer :: f_energy
+  ! ** Out parameters **
+  type(c_ptr), value :: map  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_energy 0D_NOT_type
+  if (.not. c_associated(energy)) return
+  call c_f_pointer(energy, f_energy)
+  ! out: f_map 0D_NOT_type
+  if (.not. c_associated(map)) return
+  call c_f_pointer(map, f_map)
+  call mad_sextupole(ele=f_ele, energy=f_energy, map=f_map)
+
+  ! out: f_map 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_mad_solenoid (ele, energy, map) bind(c)
+
+  use bmad_struct, only: ele_struct
+  use mad_mod, only: mad_energy_struct, mad_map_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: energy  ! 0D_NOT_type
+  type(mad_energy_struct), pointer :: f_energy
+  ! ** Out parameters **
+  type(c_ptr), value :: map  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_energy 0D_NOT_type
+  if (.not. c_associated(energy)) return
+  call c_f_pointer(energy, f_energy)
+  ! out: f_map 0D_NOT_type
+  if (.not. c_associated(map)) return
+  call c_f_pointer(map, f_map)
+  call mad_solenoid(ele=f_ele, energy=f_energy, map=f_map)
+
+  ! out: f_map 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
 subroutine fortran_mad_tmfoc (el, sk1, c, s, d, f) bind(c)
 
   implicit none
@@ -15365,6 +15699,53 @@ subroutine fortran_mad_tmsymm (te) bind(c)
   endif
   call mad_tmsymm(te=f_te)
 
+end subroutine
+subroutine fortran_mad_tmtilt (map, tilt) bind(c)
+
+  use mad_mod, only: mad_map_struct
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: tilt  ! 0D_NOT_real
+  real(rp) :: f_tilt
+  ! ** Inout parameters **
+  type(c_ptr), value :: map  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map
+  ! ** End of parameters **
+  ! inout: f_map 0D_NOT_type
+  if (.not. c_associated(map)) return
+  call c_f_pointer(map, f_map)
+  ! in: f_tilt 0D_NOT_real
+  f_tilt = tilt
+  call mad_tmtilt(map=f_map, tilt=f_tilt)
+
+end subroutine
+subroutine fortran_mad_track1 (c0, map, c1) bind(c)
+
+  use bmad_struct, only: coord_struct
+  use mad_mod, only: mad_map_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: c0  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_c0
+  type(c_ptr), value :: map  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map
+  ! ** Out parameters **
+  type(c_ptr), value :: c1  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_c1
+  ! ** End of parameters **
+  ! in: f_c0 0D_NOT_type
+  if (.not. c_associated(c0)) return
+  call c_f_pointer(c0, f_c0)
+  ! in: f_map 0D_NOT_type
+  if (.not. c_associated(map)) return
+  call c_f_pointer(map, f_map)
+  ! out: f_c1 0D_NOT_type
+  if (.not. c_associated(c1)) return
+  call c_f_pointer(c1, f_c1)
+  call mad_track1(c0=f_c0, map=f_map, c1=f_c1)
+
+  ! out: f_c1 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_make_g2_mats (twiss, g2_mat, g2_inv_mat) bind(c)
 
@@ -15508,6 +15889,41 @@ subroutine fortran_make_hybrid_lat (lat_in, lat_out, use_taylor, orb0_arr) bind(
       orb0_arr=f_orb0_arr%data)
 
   ! out: f_lat_out 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_make_mad_map (ele, param, energy, map) bind(c)
+
+  use bmad_struct, only: ele_struct, lat_param_struct
+  use mad_mod, only: mad_energy_struct, mad_map_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: param  ! 0D_NOT_type
+  type(lat_param_struct), pointer :: f_param
+  ! ** Out parameters **
+  type(c_ptr), value :: energy  ! 0D_NOT_type
+  type(mad_energy_struct), pointer :: f_energy
+  type(c_ptr), value :: map  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_param 0D_NOT_type
+  if (.not. c_associated(param)) return
+  call c_f_pointer(param, f_param)
+  ! out: f_energy 0D_NOT_type
+  if (.not. c_associated(energy)) return
+  call c_f_pointer(energy, f_energy)
+  ! out: f_map 0D_NOT_type
+  if (.not. c_associated(map)) return
+  call c_f_pointer(map, f_map)
+  call make_mad_map(ele=f_ele, param=f_param, energy=f_energy, map=f_map)
+
+  ! out: f_energy 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+  ! out: f_map 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_make_mat6 (ele, param, start_orb, end_orb, err_flag) bind(c)
@@ -15980,6 +16396,20 @@ subroutine fortran_make_smat_from_abc (t6, mode, sigma_mat, err_flag, Nout) bind
   f_err_flag_ptr = f_err_flag
   ! out: f_Nout 2D_NOT_real
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_Nout', c_name='Nout', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=1072, definition='real(rp), optional :: Nout(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='Nout', comment='', default=None), intent='out', description='Contains the normalized eigenvectors that were used to make the sigma matrix.', doc_data_type='float', doc_is_optional=False)
+end subroutine
+subroutine fortran_make_unit_mad_map (map) bind(c)
+
+  use mad_mod, only: mad_map_struct
+  implicit none
+  ! ** Inout parameters **
+  type(c_ptr), value :: map  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map
+  ! ** End of parameters **
+  ! inout: f_map 0D_NOT_type
+  if (.not. c_associated(map)) return
+  call c_f_pointer(map, f_map)
+  call make_unit_mad_map(map=f_map)
+
 end subroutine
 subroutine fortran_make_v (M, V, abz_tunes) bind(c)
 
@@ -27865,6 +28295,33 @@ subroutine fortran_taylor_propagate1 (orb_taylor, ele, param, err_flag, ref_in, 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
+end subroutine
+subroutine fortran_taylor_to_mad_map (taylor, energy, map) bind(c)
+
+  use bmad_struct, only: taylor_struct
+  use mad_mod, only: mad_energy_struct, mad_map_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: taylor
+  type(taylor_struct_container_alloc), pointer :: f_taylor
+  type(c_ptr), value :: energy  ! 0D_NOT_type
+  type(mad_energy_struct), pointer :: f_energy
+  ! ** Out parameters **
+  type(c_ptr), value :: map  ! 0D_NOT_type
+  type(mad_map_struct), pointer :: f_map
+  ! ** End of parameters **
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(taylor))   call c_f_pointer(taylor, f_taylor)
+  ! in: f_energy 0D_NOT_type
+  if (.not. c_associated(energy)) return
+  call c_f_pointer(energy, f_energy)
+  ! out: f_map 0D_NOT_type
+  if (.not. c_associated(map)) return
+  call c_f_pointer(map, f_map)
+  call taylor_to_mad_map(taylor=f_taylor%data, energy=f_energy, map=f_map)
+
+  ! out: f_map 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_taylors_equal_taylors (taylor1, taylor2) bind(c)
 

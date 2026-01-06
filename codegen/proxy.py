@@ -808,9 +808,12 @@ def generate_accessor_code(
     except KeyError as ex:
         raise ValueError(f"Unsupported type: {full_type}") from ex
 
-    cattr_name = params.c_side_name_translation.get(f"{struct_name}%{attr_name}", attr_name)
+    cattr_name = params.c_side_name_translation.get(
+        f"{struct_name}%{attr_name}", params.c_side_name_translation.get(attr_name, attr_name)
+    )
 
     to_replace = {"structname": struct_name, "fattrname": attr_name, "cattrname": cattr_name}
+
     if attr_kind:
         to_replace["attrtype"] = attr_kind
 

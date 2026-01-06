@@ -47,8 +47,6 @@ logger = logging.getLogger(__name__)
 DEBUG = False  # Change to True to enable more verbose printout
 
 
-##################################################################################
-##################################################################################
 def match_structure_definition(
     parsed_structures: list[ParsedStructure],
     struct: CodegenStructure,

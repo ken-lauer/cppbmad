@@ -5584,6 +5584,18 @@ PyTaoSetElementsCmd python_tao_set_elements_cmd(
   auto py_result{PyTaoSetElementsCmd{update}};
   return py_result;
 }
+struct PyTaoSetFloorPlanAxisLabel {
+  std::string which;
+};
+PyTaoSetFloorPlanAxisLabel python_tao_set_floor_plan_axis_label(
+    TaoGraphProxy& graph,
+    QpAxisProxy& axis_in,
+    QpAxisProxy& axis_out,
+    std::string which) {
+  Tao::tao_set_floor_plan_axis_label(graph, axis_in, axis_out, which);
+  auto py_result{PyTaoSetFloorPlanAxisLabel{which}};
+  return py_result;
+}
 struct PyTaoSpinMatricesCalcNeeded {
   std::string data_type;
   std::string data_source;
@@ -6519,7 +6531,11 @@ PYBIND11_MODULE(_pybmad, m) {
   init_bunch_track_struct(m);
   init_summation_rdt_struct(m);
   init_tao_ele_shape_struct(m);
+  init_tao_ele_pointer_struct(m);
   init_tao_curve_struct(m);
+  init_tao_curve_color_struct(m);
+  init_tao_curve_orbit_struct(m);
+  init_tao_histogram_struct(m);
   init_lat_ele_order1_struct(m);
   init_lat_ele_order_array_struct(m);
   init_tao_lat_sigma_struct(m);
@@ -6538,6 +6554,7 @@ PYBIND11_MODULE(_pybmad, m) {
   init_tao_universe_pointer_struct(m);
   init_tao_super_universe_struct(m);
   init_tao_var_struct(m);
+  init_tao_var_slave_struct(m);
   init_tao_lattice_struct(m);
   init_tao_beam_uni_struct(m);
   init_tao_dynamic_aperture_struct(m);
@@ -6547,7 +6564,32 @@ PYBIND11_MODULE(_pybmad, m) {
   init_tao_ping_scale_struct(m);
   init_tao_universe_calc_struct(m);
   init_lat_ele_order_struct(m);
+  init_tao_title_struct(m);
+  init_qp_rect_struct(m);
+  init_tao_drawing_struct(m);
+  init_tao_shape_pattern_struct(m);
+  init_tao_shape_pattern_point_struct(m);
+  init_qp_axis_struct(m);
+  init_qp_legend_struct(m);
+  init_qp_point_struct(m);
+  init_qp_line_struct(m);
+  init_qp_symbol_struct(m);
+  init_tao_floor_plan_struct(m);
+  init_tao_v1_var_struct(m);
+  init_tao_global_struct(m);
+  init_tao_init_struct(m);
+  init_tao_common_struct(m);
+  init_tao_plot_page_struct(m);
+  init_tao_building_wall_struct(m);
+  init_tao_building_wall_orientation_struct(m);
+  init_tao_building_wall_section_struct(m);
+  init_tao_building_wall_point_struct(m);
+  init_tao_wave_struct(m);
+  init_tao_wave_kick_pt_struct(m);
+  init_tao_cmd_history_struct(m);
   init_tao_universe_struct(m);
+  init_mad_energy_struct(m);
+  init_mad_map_struct(m);
   init_all_encompassing_struct(m);
   init_test_sub_struct(m);
   init_test_sub_sub_struct(m);
@@ -22231,6 +22273,263 @@ Parameters
 lunget : 
 )""");
   m.def(
+      "mad_add_offsets_and_multipoles",
+      &Bmad::mad_add_offsets_and_multipoles,
+      py::arg("ele"),
+      R"""(Subroutine to add in the effect of element offsets and/or multipoles
+
+on the 2nd order transport map for the element.
+
+Parameters
+----------
+ele : EleStruct
+    Drift element.
+energy : MadEnergyStruct
+    particle energy structure.
+
+Returns
+-------
+map : MadMapStruct
+    Structure holding the transfer map.
+)""");
+  m.def(
+      "mad_concat_map2",
+      &Bmad::mad_concat_map2,
+      py::arg("map1"),
+      py::arg("map2"),
+      R"""(Subroutine to concatinate two 2nd order transport maps.
+
+map3 = map2(map1)
+The equivalent MAD-8 routine is: TMCAT1
+
+Parameters
+----------
+map1 : MadMapStruct
+    First map in the beam line.
+map2 : MadMapStruct
+    Second map in the beam line.
+
+Returns
+-------
+map3 : MadMapStruct
+    Concatinated map.
+)""");
+  m.def(
+      "mad_drift",
+      &Bmad::mad_drift,
+      py::arg("ele"),
+      py::arg("energy"),
+      R"""(Subroutine to make a transport map for a drift space.
+
+The equivalent MAD-8 routine is: TMDRF
+
+Parameters
+----------
+ele : EleStruct
+    Drift element.
+energy : MadEnergyStruct
+    particle energy structure.
+
+Returns
+-------
+map : MadMapStruct
+    Structure holding the transfer map.
+)""");
+  m.def(
+      "mad_elsep",
+      &Bmad::mad_elsep,
+      py::arg("ele"),
+      py::arg("energy"),
+      R"""(Subroutine to make a transport map for an electric separator.
+
+The equivalent MAD-8 routine is: TMSEP
+
+Parameters
+----------
+ele : EleStruct
+    Electric seperator element.
+energy : MadEnergyStruct
+    particle energy structure.
+
+Returns
+-------
+map : MadMapStruct
+    Structure holding the transfer map.
+)""");
+  m.def(
+      "mad_map_to_taylor",
+      &Bmad::mad_map_to_taylor,
+      py::arg("map"),
+      py::arg("energy"),
+      R"""(Subroutine to convert a MAD order 2 map to a Bmad taylor map.
+
+The conversion will also convert between MAD's (t, dE) and Bmad's (beta*t, dP) coords.
+
+Parameters
+----------
+map : MadMapStruct
+    Order 2 map.
+energy : MadEnergyStruct
+    Energy numbers.
+
+Returns
+-------
+taylor : TaylorStruct
+    Taylor map.
+)""");
+  m.def(
+      "mad_quadrupole",
+      &Bmad::mad_quadrupole,
+      py::arg("ele"),
+      py::arg("energy"),
+      R"""(Subroutine to make a transport map for an quadrupole element.
+
+The equivalent MAD-8 routine is: TMSEXT
+
+Parameters
+----------
+ele : EleStruct
+    Quadrupole element.
+energy : MadEnergyStruct
+    particle energy structure.
+
+Returns
+-------
+map : MadMapStruct
+    Structure holding the transfer map.
+)""");
+  m.def(
+      "mad_rfcavity",
+      &Bmad::mad_rfcavity,
+      py::arg("ele"),
+      py::arg("energy"),
+      R"""(Subroutine to make a transport map for an rfcavity element.
+
+The equivalent MAD-8 routine is: TMRF
+
+Parameters
+----------
+ele : EleStruct
+    Rfcavity element.
+energy : MadEnergyStruct
+    particle energy structure.
+
+Returns
+-------
+map : MadMapStruct
+    Structure holding the transfer map.
+)""");
+  m.def(
+      "mad_sbend",
+      &Bmad::mad_sbend,
+      py::arg("ele"),
+      py::arg("energy"),
+      R"""(Subroutine to make a transport map for a sector bend element.
+
+The equivalent MAD-8 routine is: TMBEND
+
+Parameters
+----------
+ele : EleStruct
+    Sbend element.
+energy : MadEnergyStruct
+    particle energy structure.
+
+Returns
+-------
+map : MadMapStruct
+    Structure holding the transfer map.
+)""");
+  m.def(
+      "mad_sbend_body",
+      &Bmad::mad_sbend_body,
+      py::arg("ele"),
+      py::arg("energy"),
+      R"""(Subroutine to make a transport map for the body of a sector dipole.
+
+The equivalent MAD-8 routine is: TMSECT
+
+Parameters
+----------
+ele : EleStruct
+    Solenoid element.
+energy : MadEnergyStruct
+    particle energy structure.
+into : bool
+    If True then map is for particle entering a dipole
+
+Returns
+-------
+map : MadMapStruct
+    Structure holding the transfer map.
+)""");
+  m.def(
+      "mad_sbend_fringe",
+      &Bmad::mad_sbend_fringe,
+      py::arg("ele"),
+      py::arg("energy"),
+      py::arg("into"),
+      R"""(Subroutine to make a transport map for the fringe field of a dipole.
+
+The equivalent MAD-8 routine is: TMFRNG
+
+Parameters
+----------
+ele : EleStruct
+    Solenoid element.
+energy : MadEnergyStruct
+    particle energy structure.
+into : bool
+    If True then map is for particle entering a dipole
+
+Returns
+-------
+map : MadMapStruct
+    Fringe dipole map. .k(6)     -- 0th order map. .r(6,6)   -- 1st order map. .t(6,6,6) -- 2nd order map.
+)""");
+  m.def(
+      "mad_sextupole",
+      &Bmad::mad_sextupole,
+      py::arg("ele"),
+      py::arg("energy"),
+      R"""(Subroutine to make a transport map for an sextupole.
+
+The equivalent MAD-8 routine is: TMSEXT
+
+Parameters
+----------
+ele : EleStruct
+    Sextupole element.
+energy : MadEnergyStruct
+    particle energy structure.
+
+Returns
+-------
+map : MadMapStruct
+    Structure holding the transfer map.
+)""");
+  m.def(
+      "mad_solenoid",
+      &Bmad::mad_solenoid,
+      py::arg("ele"),
+      py::arg("energy"),
+      R"""(Subroutine to make a transport map for an solenoid.
+
+The equivalent MAD-8 routine is: TMSEXT
+
+Parameters
+----------
+ele : EleStruct
+    Solenoid element.
+energy : MadEnergyStruct
+    particle energy structure.
+
+Returns
+-------
+map : MadMapStruct
+    Structure holding the transfer map.
+)""");
+  m.def(
       "mad_tmfoc",
       &Bmad::mad_tmfoc,
       py::arg("el"),
@@ -22293,6 +22592,45 @@ Parameters
 te : float
     array to be symmertrized.
     This parameter is an input/output and is modified in-place. As an output: symmetrized array.
+)""");
+  m.def(
+      "mad_tmtilt",
+      &Bmad::mad_tmtilt,
+      py::arg("map"),
+      py::arg("tilt"),
+      R"""(Subroutine to apply a tilt to a transport map.
+
+The equivalent MAD-8 routine is: TMTILT
+
+Parameters
+----------
+map : MadMapStruct
+    Unrotated transport map. .k(6)     -- 0th order map. .r(6,6)   -- 1st order map. .t(6,6,6) -- 2nd order
+    map.
+    This parameter is an input/output and is modified in-place. As an output: Rotated transport map.
+tilt : float
+    Tilt
+)""");
+  m.def(
+      "mad_track1",
+      &Bmad::mad_track1,
+      py::arg("c0"),
+      py::arg("map"),
+      R"""(Subroutine to track through a 2nd order transfer map.
+
+The equivalent MAD-8 routine is: TMTRAK
+
+Parameters
+----------
+c0 : CoordStruct
+    Starting coords.
+map : MadMapStruct
+    2nd order map.
+
+Returns
+-------
+c1 : CoordStruct
+    Ending coords.
 )""");
   m.def(
       "make_g2_mats",
@@ -22449,6 +22787,45 @@ comment_out :
               return py::cast(s.comment_in);
             if (i == 1)
               return py::cast(s.comment_out);
+            return py::none();
+          });
+  m.def(
+      "make_mad_map",
+      &Bmad::make_mad_map,
+      py::arg("ele"),
+      py::arg("param"),
+      R"""(Subroutine to make a 2nd order transport map a la MAD.
+
+Parameters
+----------
+ele : EleStruct
+    Element
+param : LatParamStruct
+    particle id
+
+Return value is a dictionary containing values below.
+
+
+Returns
+-------
+energy : MadEnergyStruct
+    Energy of the particle
+map : MadMapStruct
+    Structure holding the transfer map.
+)""");
+  py::class_<Bmad::MakeMadMap, std::unique_ptr<Bmad::MakeMadMap>>(
+      m, "MakeMadMap", "Fortran routine make_mad_map return value")
+      .def_readonly("energy", &Bmad::MakeMadMap::energy)
+      .def_readonly("map", &Bmad::MakeMadMap::map)
+      .def("__len__", [](const Bmad::MakeMadMap&) { return 2; })
+      .def(
+          "__getitem__", [](const Bmad::MakeMadMap& s, size_t i) -> py::object {
+            if (i >= 2)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.energy);
+            if (i == 1)
+              return py::cast(s.map);
             return py::none();
           });
   m.def(
@@ -22881,6 +23258,18 @@ Nout : float
               return py::cast(s.Nout);
             return py::none();
           });
+  m.def(
+      "make_unit_mad_map",
+      &Bmad::make_unit_mad_map,
+      py::arg("map"),
+      R"""(Subroutine to initialize a 2nd order transport map to unity.
+
+Parameters
+----------
+map : MadMapStruct
+    2nd order transport map.
+    This parameter is an input/output and is modified in-place. As an output: Unity 2nd order map.
+)""");
   m.def(
       "make_v",
       &Bmad::make_v,
@@ -36981,6 +37370,19 @@ why_str :
       py::arg("plot"),
       R"""()""");
   m.def(
+      "tao_oreint_building_wall_pt",
+      &Tao::tao_oreint_building_wall_pt,
+      py::arg("pt_in"),
+      py::arg("pt_out"),
+      R"""(No docstring available
+
+Parameters
+----------
+pt_in : TaoBuildingWallPointStruct
+    Building wall point.
+pt_out : 
+)""");
+  m.def(
       "tao_param_value_at_s",
       &python_tao_param_value_at_s,
       py::arg("dat_name"),
@@ -38182,6 +38584,23 @@ value_str : unknown
     What value to set it to.
 )""");
   m.def(
+      "tao_set_drawing_cmd",
+      &Tao::tao_set_drawing_cmd,
+      py::arg("drawing"),
+      py::arg("component"),
+      py::arg("value_str"),
+      R"""(Routine to set floor_plan and lat_layout parameters.
+
+Parameters
+----------
+drawing : TaoDrawingStruct
+    s.plot_page.floor_plan or s.plot_page.lat_layout.
+component : unknown
+    Which shape component to set.
+value_str : unknown
+    Value to set to. s.shape  -- Shape variables structure.
+)""");
+  m.def(
       "tao_set_dynamic_aperture_cmd",
       &Tao::tao_set_dynamic_aperture_cmd,
       py::arg("who"),
@@ -38226,6 +38645,39 @@ value : unknown
               throw py::index_error();
             if (i == 0)
               return py::cast(s.update);
+            return py::none();
+          });
+  m.def(
+      "tao_set_floor_plan_axis_label",
+      &python_tao_set_floor_plan_axis_label,
+      py::arg("graph"),
+      py::arg("axis_in"),
+      py::arg("axis_out"),
+      py::arg("which"),
+      R"""(No docstring available
+
+Parameters
+----------
+graph : 
+axis_in : 
+axis_out : 
+which : 
+)""");
+  py::class_<
+      PyTaoSetFloorPlanAxisLabel,
+      std::unique_ptr<PyTaoSetFloorPlanAxisLabel>>(
+      m,
+      "TaoSetFloorPlanAxisLabel",
+      "Fortran routine tao_set_floor_plan_axis_label return value")
+      .def_readonly("which", &PyTaoSetFloorPlanAxisLabel::which)
+      .def("__len__", [](const PyTaoSetFloorPlanAxisLabel&) { return 1; })
+      .def(
+          "__getitem__",
+          [](const PyTaoSetFloorPlanAxisLabel& s, size_t i) -> py::object {
+            if (i >= 1)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.which);
             return py::none();
           });
   m.def(
@@ -38527,6 +38979,158 @@ who : unknown
 value_str : unknown
     Value to set to.
 )""");
+  m.def(
+      "tao_set_qp_axis_struct",
+      &Tao::tao_set_qp_axis_struct,
+      py::arg("qp_axis_name"),
+      py::arg("component"),
+      py::arg("qp_axis"),
+      py::arg("value"),
+      R"""(Routine to set qp_axis_names of a qp_axis_struct.
+
+Parameters
+----------
+qp_axis_name : unknown
+    qp_axis name. Used for error messages.
+component : unknown
+    qp_axis component name.
+qp_axis : QpAxisStruct
+    qp_axis_struct with component to modify
+    This parameter is an input/output and is modified in-place. As an output: qp_axis_struct with changed
+    component value.
+value : unknown
+    Component value.
+
+Return value is a dictionary containing values below.
+
+
+Returns
+-------
+error : bool
+    Set true if there is an error. False otherwise.
+ix_uni : int
+    Tao universe number in case the value depends upon a parameter of a particular universe.
+)""");
+  py::class_<Tao::TaoSetQpAxisStruct, std::unique_ptr<Tao::TaoSetQpAxisStruct>>(
+      m,
+      "TaoSetQpAxisStruct",
+      "Fortran routine tao_set_qp_axis_struct return value")
+      .def_readonly("error", &Tao::TaoSetQpAxisStruct::error)
+      .def_readonly("ix_uni", &Tao::TaoSetQpAxisStruct::ix_uni)
+      .def("__len__", [](const Tao::TaoSetQpAxisStruct&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Tao::TaoSetQpAxisStruct& s, size_t i) -> py::object {
+            if (i >= 2)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.error);
+            if (i == 1)
+              return py::cast(s.ix_uni);
+            return py::none();
+          });
+  m.def(
+      "tao_set_qp_point_struct",
+      &Tao::tao_set_qp_point_struct,
+      py::arg("qp_point_name"),
+      py::arg("component"),
+      py::arg("qp_point"),
+      py::arg("value"),
+      R"""(Routine to set qp_point_names of a qp_point_struct.
+
+Parameters
+----------
+qp_point_name : unknown
+    qp_point name. Used for error messages.
+component : unknown
+    qp_point component name.
+qp_point : QpPointStruct
+    qp_point_struct with component to modify
+    This parameter is an input/output and is modified in-place. As an output: qp_point_struct with changed
+    component value.
+value : unknown
+    Component value.
+
+Return value is a dictionary containing values below.
+
+
+Returns
+-------
+error : bool
+    Set true if there is an error. False otherwise.
+ix_uni : int
+    Tao universe number in case the value depends upon a parameter of a particular universe.
+)""");
+  py::class_<
+      Tao::TaoSetQpPointStruct,
+      std::unique_ptr<Tao::TaoSetQpPointStruct>>(
+      m,
+      "TaoSetQpPointStruct",
+      "Fortran routine tao_set_qp_point_struct return value")
+      .def_readonly("error", &Tao::TaoSetQpPointStruct::error)
+      .def_readonly("ix_uni", &Tao::TaoSetQpPointStruct::ix_uni)
+      .def("__len__", [](const Tao::TaoSetQpPointStruct&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Tao::TaoSetQpPointStruct& s, size_t i) -> py::object {
+            if (i >= 2)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.error);
+            if (i == 1)
+              return py::cast(s.ix_uni);
+            return py::none();
+          });
+  m.def(
+      "tao_set_qp_rect_struct",
+      &Tao::tao_set_qp_rect_struct,
+      py::arg("qp_rect_name"),
+      py::arg("component"),
+      py::arg("qp_rect"),
+      py::arg("value"),
+      R"""(Routine to set qp_rect_names of a qp_rect_struct.
+
+Parameters
+----------
+qp_rect_name : unknown
+    qp_rect name. Used for error messages.
+component : unknown
+    qp_rect component name.
+qp_rect : QpRectStruct
+    qp_rect_struct with component to modify
+    This parameter is an input/output and is modified in-place. As an output: qp_rect_struct with changed
+    component value.
+value : unknown
+    Component value.
+
+Return value is a dictionary containing values below.
+
+
+Returns
+-------
+error : bool
+    Set true if there is an error. False otherwise.
+ix_uni : int
+    Tao universe number in case the value depends upon a parameter of a particular universe.
+)""");
+  py::class_<Tao::TaoSetQpRectStruct, std::unique_ptr<Tao::TaoSetQpRectStruct>>(
+      m,
+      "TaoSetQpRectStruct",
+      "Fortran routine tao_set_qp_rect_struct return value")
+      .def_readonly("error", &Tao::TaoSetQpRectStruct::error)
+      .def_readonly("ix_uni", &Tao::TaoSetQpRectStruct::ix_uni)
+      .def("__len__", [](const Tao::TaoSetQpRectStruct&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Tao::TaoSetQpRectStruct& s, size_t i) -> py::object {
+            if (i >= 2)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.error);
+            if (i == 1)
+              return py::cast(s.ix_uni);
+            return py::none();
+          });
   m.def(
       "tao_set_ran_state_cmd",
       &Tao::tao_set_ran_state_cmd,
@@ -39931,6 +40535,27 @@ Returns
 -------
 err_flag : bool
     Set True if there is an error. False otherwise.
+)""");
+  m.def(
+      "taylor_to_mad_map",
+      &Bmad::taylor_to_mad_map,
+      py::arg("taylor"),
+      py::arg("energy"),
+      R"""(Subroutine to convert a Taylor map to a mad order 2 map.
+
+If any of the Taylor terms have order greater than 2 they are ignored.
+
+Parameters
+----------
+taylor : TaylorStruct
+    Taylor map.
+energy : MadEnergyStruct
+    Energy numbers.
+
+Returns
+-------
+map : MadMapStruct
+    Order 2 map.
 )""");
   m.def(
       "taylors_equal_taylors",

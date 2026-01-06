@@ -130,7 +130,12 @@ struct_list = [
   "bunch_track_struct",
   "summation_rdt_struct",
   "tao_ele_shape_struct",
+  "tao_ele_pointer_struct",
   "tao_curve_struct",
+  "tao_curve_color_struct",
+  "tao_curve_orbit_struct",
+  "tao_histogram_struct",
+
   "lat_ele_order1_struct",
   "lat_ele_order_array_struct",
   "tao_lat_sigma_struct",
@@ -149,6 +154,7 @@ struct_list = [
   "tao_universe_pointer_struct",
   "tao_super_universe_struct",
   "tao_var_struct",
+  "tao_var_slave_struct",
 
   "tao_lattice_struct",
   "tao_beam_uni_struct",
@@ -159,7 +165,43 @@ struct_list = [
   "tao_ping_scale_struct",
   "tao_universe_calc_struct",
   "lat_ele_order_struct",
+
+  # plot page
+  "tao_title_struct",
+  "qp_rect_struct",
+  "tao_drawing_struct",
+  "tao_shape_pattern_struct",
+  "tao_shape_pattern_point_struct",
+
+  # quickplot
+  "qp_axis_struct",
+  "qp_legend_struct",
+  "qp_point_struct",
+  "qp_line_struct",
+  "qp_symbol_struct",
+  "tao_floor_plan_struct",
+
+  # superuniverse
+  "tao_v1_var_struct",
+  "tao_global_struct",
+  "tao_init_struct",
+  "tao_common_struct",
+  "tao_plot_page_struct",
+  "tao_building_wall_struct",
+
+  "tao_building_wall_orientation_struct",
+  "tao_building_wall_section_struct",
+  "tao_building_wall_point_struct",
+
+  "tao_wave_struct",
+  "tao_wave_kick_pt_struct",
+  "tao_cmd_history_struct",
+
   "tao_universe_struct",
+
+  # mad
+  "mad_energy_struct",
+  "mad_map_struct",
 
   # Testing
   "all_encompassing_struct",
