@@ -109,8 +109,8 @@ class RoutineSettings(pydantic.BaseModel):
 
 routine_settings = [
     RoutineSettings(
-        fortran_output_filename="routines.f90",
-        cpp_output_filename="routines.cpp",
+        fortran_output_filename="bmad_routines.f90",
+        cpp_output_filename="bmad_routines.cpp",
         cpp_namespace="Bmad",
         interface_path=ACC_ROOT_DIR / "bmad/modules/bmad_routine_interface.f90",
         source_paths=[

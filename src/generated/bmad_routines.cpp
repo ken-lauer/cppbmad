@@ -5,8 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "bmad/generated/bmad_routines.hpp"
 #include "bmad/generated/proxy.hpp"
-#include "bmad/generated/routines.hpp"
 #include "bmad/types.h"
 #include "json.hpp"
 

@@ -1,4 +1,4 @@
-module cppbmad_routines
+module cppbmad_bmad_routines
 
 use bmad_interface
 use bmad_struct
@@ -35466,4 +35466,4 @@ subroutine fortran_zlafun (x, y, z, res) bind(c)
   f_res_ptr = f_res
 end subroutine
 
-end module cppbmad_routines
+end module cppbmad_bmad_routines

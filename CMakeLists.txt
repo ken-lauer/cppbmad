@@ -25,7 +25,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 add_library(${LIBNAME} SHARED
   src/generated/proxy_mod.f90
-  src/generated/routines.f90
+  src/generated/bmad_routines.f90
   src/generated/sim_utils_routines.f90
   src/generated/tao_routines.f90
   src/tao_proxy_helpers.f90
@@ -36,7 +36,7 @@ add_library(${LIBNAME} SHARED
   src/common_structs.cpp
   src/generated/proxy.cpp
   src/generated/cppbmad_test_routines.cpp
-  src/generated/routines.cpp
+  src/generated/bmad_routines.cpp
   src/generated/sim_utils_routines.cpp
   src/generated/tao_routines.cpp
   src/generated/to_string.cpp
