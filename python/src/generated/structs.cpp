@@ -558,7 +558,7 @@ void init_bmad_common_struct(py::module& m) {
           "lr_wakes_on",
           &BmadCommonProxy::lr_wakes_on,
           &BmadCommonProxy::set_lr_wakes_on)
-      // BmadCommonProxy.auto_bookkeeper (0D_NOT_logical - Automatic bookkeeping?
+      // BmadCommonProxy.auto_bookkeeper (0D_NOT_logical - Deprecated and no longer used.
       .def_property(
           "auto_bookkeeper",
           &BmadCommonProxy::auto_bookkeeper,

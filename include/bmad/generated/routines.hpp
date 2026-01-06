@@ -403,10 +403,6 @@ extern "C" bool fortran_attribute_units(
 std::string attribute_units(
     std::string attrib_name,
     std::optional<std::string> unrecognized_units = std::nullopt);
-extern "C" void fortran_attributes_need_bookkeeping(
-    void* ele /* 0D_NOT_type in */,
-    void* dval /* 1D_ALLOC_real out */);
-RealAlloc1D attributes_need_bookkeeping(EleProxy& ele);
 extern "C" void fortran_autoscale_phase_and_amp(
     void* ele /* 0D_NOT_type inout */,
     void* param /* 0D_NOT_type in */,
@@ -1712,8 +1708,6 @@ void deallocate_expression_tree(ExpressionTreeProxy& tree);
 extern "C" void fortran_deallocate_lat_pointers(
     void* lat /* 0D_NOT_type inout */);
 void deallocate_lat_pointers(LatProxy& lat);
-extern "C" void fortran_deallocate_tree(void* tree /* 0D_NOT_type inout */);
-void deallocate_tree(ExpressionTreeProxy& tree);
 extern "C" bool fortran_default_tracking_species(
     void* param /* 0D_NOT_type in */,
     int& species /* 0D_NOT_integer inout */);
@@ -6988,11 +6982,11 @@ int sc_step(
 // - Routine module (bmad_json) in configuration skip list
 extern "C" void fortran_set_active_fixer(
     void* fixer /* 0D_NOT_type inout */,
-    bool* is_on /* 0D_NOT_logical in */,
+    bool* turn_on /* 0D_NOT_logical in */,
     void* orbit /* 0D_NOT_type out */);
 CoordProxy set_active_fixer(
     EleProxy& fixer,
-    std::optional<bool> is_on = std::nullopt);
+    std::optional<bool> turn_on = std::nullopt);
 
 // Skipped unusable routine set_branch_and_ele_for_omp:
 // - Untranslated type: LatPointerProxy (1D_ALLOC_type)

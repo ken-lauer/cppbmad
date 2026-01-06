@@ -9431,29 +9431,6 @@ attrib_units : unknown
     Units associated with the attribute.
 )""");
   m.def(
-      "attributes_need_bookkeeping",
-      &Bmad::attributes_need_bookkeeping,
-      py::arg("ele"),
-      R"""(Routine, when bmad_com%auto_bookkeeper = True, to decide if attribute
-
-bookkeeping needs to be done for an element.
-
-Parameters
-----------
-ele : EleStruct
-    Element under consideration.
-
-Return value is a dictionary containing values below.
-
-
-Returns
--------
-dval : float
-    Array of differences between old and new ele.value(:) values.
-ele%bookkeeping_state%attributes : !
-    Set ok$ if not needed, stale$ otherwise -- Set ok$ if not needed, stale$ otherwise
-)""");
-  m.def(
       "autoscale_phase_and_amp",
       &Bmad::autoscale_phase_and_amp,
       py::arg("ele"),
@@ -13114,18 +13091,6 @@ Parameters
 lat : LatStruct
     Lat with pointers.
     This parameter is an input/output and is modified in-place. As an output: Lat with deallocated pointers.
-)""");
-  m.def(
-      "deallocate_tree",
-      &Bmad::deallocate_tree,
-      py::arg("tree"),
-      R"""(Routine to deallocate tree%node(:) and everything below it
-
-Parameters
-----------
-tree : ExpressionTreeStruct
-    Root of tree to deallocate.
-    This parameter is an input/output and is modified in-place. As an output: Deallocated tree.
 )""");
   m.def(
       "default_tracking_species",
@@ -30781,20 +30746,20 @@ n_emit : int
       "set_active_fixer",
       &Bmad::set_active_fixer,
       py::arg("fixer"),
-      py::arg("is_on") = py::none(),
+      py::arg("turn_on") = py::none(),
       R"""(Set the acvitive fixer element.
 
 All other fixer/beginning_ele elements in the branch will be deactivated.
-If is_on is True (default), the fixer argument becomes the active fixer.
-If is_on is False, and fixer%is_on is also False, there is nothing to be done.
-If is_on is False, and fixer%is_on is True, turn this fixer off and turn on the beginning element.
+If turn_on is True (default), the fixer argument becomes the active fixer.
+If turn_on is False, and fixer%is_on is also False, there is nothing to be done.
+If turn_on is False, and fixer%is_on is True, turn this fixer off and turn on the beginning element.
 
 Parameters
 ----------
 fixer : EleStruct
     Fixer element to make active.
     This parameter is an input/output and is modified in-place. As an output: Element is now active.
-is_on : bool, optional
+turn_on : bool, optional
     If True (default), make this fixer the active element. If False, make the beginning element active.
 
 Returns

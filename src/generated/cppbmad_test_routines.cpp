@@ -31,12 +31,13 @@ CppBmadTest::TestBunchStructArray CppBmadTest::test_bunch_struct_array(
   auto* _arr_inout_opt = arr_inout_opt.has_value()
       ? arr_inout_opt->get().get_fortran_ptr()
       : nullptr; // input, optional
-  fortran_test_bunch_struct_array(/* void* */ arr_in.get_fortran_ptr(),
-                                  /* void* */ arr_inout.get_fortran_ptr(),
-                                  /* void* */ arr_out.get_fortran_ptr(),
-                                  /* int* */ _opt_status.data(),
-                                  /* void* */ _arr_in_opt,
-                                  /* void* */ _arr_inout_opt);
+  fortran_test_bunch_struct_array(
+      /* void* */ arr_in.get_fortran_ptr(),
+      /* void* */ arr_inout.get_fortran_ptr(),
+      /* void* */ arr_out.get_fortran_ptr(),
+      /* int* */ _opt_status.data(),
+      /* void* */ _arr_in_opt,
+      /* void* */ _arr_inout_opt);
   return TestBunchStructArray{std::move(arr_out), _opt_status};
 }
 CppBmadTest::TestBunchStructScalar CppBmadTest::test_bunch_struct_scalar(
@@ -52,12 +53,13 @@ CppBmadTest::TestBunchStructScalar CppBmadTest::test_bunch_struct_scalar(
   auto* _val_inout_opt = val_inout_opt.has_value()
       ? val_inout_opt->get().get_fortran_ptr()
       : nullptr; // input, optional
-  fortran_test_bunch_struct_scalar(/* void* */ val_in.get_fortran_ptr(),
-                                   /* void* */ val_inout.get_fortran_ptr(),
-                                   /* void* */ _val_out.get_fortran_ptr(),
-                                   /* int* */ _opt_status.data(),
-                                   /* void* */ _val_in_opt,
-                                   /* void* */ _val_inout_opt);
+  fortran_test_bunch_struct_scalar(
+      /* void* */ val_in.get_fortran_ptr(),
+      /* void* */ val_inout.get_fortran_ptr(),
+      /* void* */ _val_out.get_fortran_ptr(),
+      /* int* */ _opt_status.data(),
+      /* void* */ _val_in_opt,
+      /* void* */ _val_inout_opt);
   return TestBunchStructScalar{std::move(_val_out), _opt_status};
 }
 CppBmadTest::TestCharacterScalar CppBmadTest::test_character_scalar(
@@ -73,12 +75,13 @@ CppBmadTest::TestCharacterScalar CppBmadTest::test_character_scalar(
       val_in_opt.has_value() ? val_in_opt->c_str() : nullptr;
   const char* _val_inout_opt =
       val_inout_opt.has_value() ? val_inout_opt->get().c_str() : nullptr;
-  fortran_test_character_scalar(/* const char* */ _val_in,
-                                /* const char* */ _val_inout,
-                                /* const char* */ _val_out,
-                                /* int* */ _opt_status.data(),
-                                /* const char* */ _val_in_opt,
-                                /* const char* */ _val_inout_opt);
+  fortran_test_character_scalar(
+      /* const char* */ _val_in,
+      /* const char* */ _val_inout,
+      /* const char* */ _val_out,
+      /* int* */ _opt_status.data(),
+      /* const char* */ _val_in_opt,
+      /* const char* */ _val_inout_opt);
   return TestCharacterScalar{_val_out, _opt_status};
 }
 CppBmadTest::TestComplexArray CppBmadTest::test_complex_array(
@@ -99,12 +102,13 @@ CppBmadTest::TestComplexArray CppBmadTest::test_complex_array(
   auto* _arr_inout_opt = arr_inout_opt.has_value()
       ? arr_inout_opt->get().get_fortran_ptr()
       : nullptr; // input, optional
-  fortran_test_complex_array(/* void* */ arr_in.get_fortran_ptr(),
-                             /* void* */ arr_inout.get_fortran_ptr(),
-                             /* void* */ arr_out.get_fortran_ptr(),
-                             /* int* */ _opt_status.data(),
-                             /* void* */ _arr_in_opt,
-                             /* void* */ _arr_inout_opt);
+  fortran_test_complex_array(
+      /* void* */ arr_in.get_fortran_ptr(),
+      /* void* */ arr_inout.get_fortran_ptr(),
+      /* void* */ arr_out.get_fortran_ptr(),
+      /* int* */ _opt_status.data(),
+      /* void* */ _arr_in_opt,
+      /* void* */ _arr_inout_opt);
   return TestComplexArray{std::move(arr_out), _opt_status};
 }
 CppBmadTest::TestComplexScalar CppBmadTest::test_complex_scalar(
@@ -123,12 +127,13 @@ CppBmadTest::TestComplexScalar CppBmadTest::test_complex_scalar(
   }
   auto* _val_inout_opt = val_inout_opt.has_value() ? &val_inout_opt->get()
                                                    : nullptr; // inout, optional
-  fortran_test_complex_scalar(/* std::complex<double>& */ val_in,
-                              /* std::complex<double>& */ val_inout,
-                              /* std::complex<double>& */ _val_out,
-                              /* int* */ _opt_status.data(),
-                              /* std::complex<double>* */ _val_in_opt,
-                              /* std::complex<double>* */ _val_inout_opt);
+  fortran_test_complex_scalar(
+      /* std::complex<double>& */ val_in,
+      /* std::complex<double>& */ val_inout,
+      /* std::complex<double>& */ _val_out,
+      /* int* */ _opt_status.data(),
+      /* std::complex<double>* */ _val_in_opt,
+      /* std::complex<double>* */ _val_inout_opt);
   return TestComplexScalar{_val_out, _opt_status};
 }
 CppBmadTest::TestInteger8Array CppBmadTest::test_integer8_array(
@@ -149,12 +154,13 @@ CppBmadTest::TestInteger8Array CppBmadTest::test_integer8_array(
   auto* _arr_inout_opt = arr_inout_opt.has_value()
       ? arr_inout_opt->get().get_fortran_ptr()
       : nullptr; // input, optional
-  fortran_test_integer8_array(/* void* */ arr_in.get_fortran_ptr(),
-                              /* void* */ arr_inout.get_fortran_ptr(),
-                              /* void* */ arr_out.get_fortran_ptr(),
-                              /* int* */ _opt_status.data(),
-                              /* void* */ _arr_in_opt,
-                              /* void* */ _arr_inout_opt);
+  fortran_test_integer8_array(
+      /* void* */ arr_in.get_fortran_ptr(),
+      /* void* */ arr_inout.get_fortran_ptr(),
+      /* void* */ arr_out.get_fortran_ptr(),
+      /* int* */ _opt_status.data(),
+      /* void* */ _arr_in_opt,
+      /* void* */ _arr_inout_opt);
   return TestInteger8Array{std::move(arr_out), _opt_status};
 }
 CppBmadTest::TestInteger8Scalar CppBmadTest::test_integer8_scalar(
@@ -173,12 +179,13 @@ CppBmadTest::TestInteger8Scalar CppBmadTest::test_integer8_scalar(
   }
   auto* _val_inout_opt = val_inout_opt.has_value() ? &val_inout_opt->get()
                                                    : nullptr; // inout, optional
-  fortran_test_integer8_scalar(/* int64_t& */ val_in,
-                               /* int64_t& */ val_inout,
-                               /* int64_t& */ _val_out,
-                               /* int* */ _opt_status.data(),
-                               /* int64_t* */ _val_in_opt,
-                               /* int64_t* */ _val_inout_opt);
+  fortran_test_integer8_scalar(
+      /* int64_t& */ val_in,
+      /* int64_t& */ val_inout,
+      /* int64_t& */ _val_out,
+      /* int* */ _opt_status.data(),
+      /* int64_t* */ _val_in_opt,
+      /* int64_t* */ _val_inout_opt);
   return TestInteger8Scalar{_val_out, _opt_status};
 }
 CppBmadTest::TestIntegerArray CppBmadTest::test_integer_array(
@@ -199,12 +206,13 @@ CppBmadTest::TestIntegerArray CppBmadTest::test_integer_array(
   auto* _arr_inout_opt = arr_inout_opt.has_value()
       ? arr_inout_opt->get().get_fortran_ptr()
       : nullptr; // input, optional
-  fortran_test_integer_array(/* void* */ arr_in.get_fortran_ptr(),
-                             /* void* */ arr_inout.get_fortran_ptr(),
-                             /* void* */ arr_out.get_fortran_ptr(),
-                             /* int* */ _opt_status.data(),
-                             /* void* */ _arr_in_opt,
-                             /* void* */ _arr_inout_opt);
+  fortran_test_integer_array(
+      /* void* */ arr_in.get_fortran_ptr(),
+      /* void* */ arr_inout.get_fortran_ptr(),
+      /* void* */ arr_out.get_fortran_ptr(),
+      /* int* */ _opt_status.data(),
+      /* void* */ _arr_in_opt,
+      /* void* */ _arr_inout_opt);
   return TestIntegerArray{std::move(arr_out), _opt_status};
 }
 CppBmadTest::TestIntegerScalar CppBmadTest::test_integer_scalar(
@@ -223,12 +231,13 @@ CppBmadTest::TestIntegerScalar CppBmadTest::test_integer_scalar(
   }
   auto* _val_inout_opt = val_inout_opt.has_value() ? &val_inout_opt->get()
                                                    : nullptr; // inout, optional
-  fortran_test_integer_scalar(/* int& */ val_in,
-                              /* int& */ val_inout,
-                              /* int& */ _val_out,
-                              /* int* */ _opt_status.data(),
-                              /* int* */ _val_in_opt,
-                              /* int* */ _val_inout_opt);
+  fortran_test_integer_scalar(
+      /* int& */ val_in,
+      /* int& */ val_inout,
+      /* int& */ _val_out,
+      /* int* */ _opt_status.data(),
+      /* int* */ _val_in_opt,
+      /* int* */ _val_inout_opt);
   return TestIntegerScalar{_val_out, _opt_status};
 }
 CppBmadTest::TestLogicalArray CppBmadTest::test_logical_array(
@@ -249,12 +258,13 @@ CppBmadTest::TestLogicalArray CppBmadTest::test_logical_array(
   auto* _arr_inout_opt = arr_inout_opt.has_value()
       ? arr_inout_opt->get().get_fortran_ptr()
       : nullptr; // input, optional
-  fortran_test_logical_array(/* void* */ arr_in.get_fortran_ptr(),
-                             /* void* */ arr_inout.get_fortran_ptr(),
-                             /* void* */ arr_out.get_fortran_ptr(),
-                             /* int* */ _opt_status.data(),
-                             /* void* */ _arr_in_opt,
-                             /* void* */ _arr_inout_opt);
+  fortran_test_logical_array(
+      /* void* */ arr_in.get_fortran_ptr(),
+      /* void* */ arr_inout.get_fortran_ptr(),
+      /* void* */ arr_out.get_fortran_ptr(),
+      /* int* */ _opt_status.data(),
+      /* void* */ _arr_in_opt,
+      /* void* */ _arr_inout_opt);
   return TestLogicalArray{std::move(arr_out), _opt_status};
 }
 CppBmadTest::TestLogicalScalar CppBmadTest::test_logical_scalar(
@@ -273,12 +283,13 @@ CppBmadTest::TestLogicalScalar CppBmadTest::test_logical_scalar(
   }
   auto* _val_inout_opt = val_inout_opt.has_value() ? &val_inout_opt->get()
                                                    : nullptr; // inout, optional
-  fortran_test_logical_scalar(/* bool& */ val_in,
-                              /* bool& */ val_inout,
-                              /* bool& */ _val_out,
-                              /* int* */ _opt_status.data(),
-                              /* bool* */ _val_in_opt,
-                              /* bool* */ _val_inout_opt);
+  fortran_test_logical_scalar(
+      /* bool& */ val_in,
+      /* bool& */ val_inout,
+      /* bool& */ _val_out,
+      /* int* */ _opt_status.data(),
+      /* bool* */ _val_in_opt,
+      /* bool* */ _val_inout_opt);
   return TestLogicalScalar{_val_out, _opt_status};
 }
 CppBmadTest::TestReal16Array CppBmadTest::test_real16_array(
@@ -299,12 +310,13 @@ CppBmadTest::TestReal16Array CppBmadTest::test_real16_array(
   auto* _arr_inout_opt = arr_inout_opt.has_value()
       ? arr_inout_opt->get().get_fortran_ptr()
       : nullptr; // input, optional
-  fortran_test_real16_array(/* void* */ arr_in.get_fortran_ptr(),
-                            /* void* */ arr_inout.get_fortran_ptr(),
-                            /* void* */ arr_out.get_fortran_ptr(),
-                            /* int* */ _opt_status.data(),
-                            /* void* */ _arr_in_opt,
-                            /* void* */ _arr_inout_opt);
+  fortran_test_real16_array(
+      /* void* */ arr_in.get_fortran_ptr(),
+      /* void* */ arr_inout.get_fortran_ptr(),
+      /* void* */ arr_out.get_fortran_ptr(),
+      /* int* */ _opt_status.data(),
+      /* void* */ _arr_in_opt,
+      /* void* */ _arr_inout_opt);
   return TestReal16Array{std::move(arr_out), _opt_status};
 }
 CppBmadTest::TestReal16Scalar CppBmadTest::test_real16_scalar(
@@ -323,12 +335,13 @@ CppBmadTest::TestReal16Scalar CppBmadTest::test_real16_scalar(
   }
   auto* _val_inout_opt = val_inout_opt.has_value() ? &val_inout_opt->get()
                                                    : nullptr; // inout, optional
-  fortran_test_real16_scalar(/* long double& */ val_in,
-                             /* long double& */ val_inout,
-                             /* long double& */ _val_out,
-                             /* int* */ _opt_status.data(),
-                             /* long double* */ _val_in_opt,
-                             /* long double* */ _val_inout_opt);
+  fortran_test_real16_scalar(
+      /* long double& */ val_in,
+      /* long double& */ val_inout,
+      /* long double& */ _val_out,
+      /* int* */ _opt_status.data(),
+      /* long double* */ _val_in_opt,
+      /* long double* */ _val_inout_opt);
   return TestReal16Scalar{_val_out, _opt_status};
 }
 CppBmadTest::TestRealArray CppBmadTest::test_real_array(
@@ -349,12 +362,13 @@ CppBmadTest::TestRealArray CppBmadTest::test_real_array(
   auto* _arr_inout_opt = arr_inout_opt.has_value()
       ? arr_inout_opt->get().get_fortran_ptr()
       : nullptr; // input, optional
-  fortran_test_real_array(/* void* */ arr_in.get_fortran_ptr(),
-                          /* void* */ arr_inout.get_fortran_ptr(),
-                          /* void* */ arr_out.get_fortran_ptr(),
-                          /* int* */ _opt_status.data(),
-                          /* void* */ _arr_in_opt,
-                          /* void* */ _arr_inout_opt);
+  fortran_test_real_array(
+      /* void* */ arr_in.get_fortran_ptr(),
+      /* void* */ arr_inout.get_fortran_ptr(),
+      /* void* */ arr_out.get_fortran_ptr(),
+      /* int* */ _opt_status.data(),
+      /* void* */ _arr_in_opt,
+      /* void* */ _arr_inout_opt);
   return TestRealArray{std::move(arr_out), _opt_status};
 }
 CppBmadTest::TestRealScalar CppBmadTest::test_real_scalar(
@@ -373,11 +387,12 @@ CppBmadTest::TestRealScalar CppBmadTest::test_real_scalar(
   }
   auto* _val_inout_opt = val_inout_opt.has_value() ? &val_inout_opt->get()
                                                    : nullptr; // inout, optional
-  fortran_test_real_scalar(/* double& */ val_in,
-                           /* double& */ val_inout,
-                           /* double& */ _val_out,
-                           /* int* */ _opt_status.data(),
-                           /* double* */ _val_in_opt,
-                           /* double* */ _val_inout_opt);
+  fortran_test_real_scalar(
+      /* double& */ val_in,
+      /* double& */ val_inout,
+      /* double& */ _val_out,
+      /* int* */ _opt_status.data(),
+      /* double* */ _val_in_opt,
+      /* double* */ _val_inout_opt);
   return TestRealScalar{_val_out, _opt_status};
 }

@@ -138,9 +138,8 @@ use bmad_parser_mod, only: add_this_multipass, add_this_taylor_term, bp_set_ran_
     parser_read_sr_wake, parser_transfer_control_struct, reallocate_bp_com_const, &
     settable_dep_var_bookkeeping, verify_valid_name, word_to_value
 
-use bookkeeper_mod, only: aperture_bookkeeper, attributes_need_bookkeeping, &
-    compute_slave_coupler, makeup_control_slave, makeup_group_lord, makeup_multipass_slave, &
-    makeup_super_slave, makeup_super_slave1
+use bookkeeper_mod, only: aperture_bookkeeper, compute_slave_coupler, makeup_control_slave, &
+    makeup_group_lord, makeup_multipass_slave, makeup_super_slave, makeup_super_slave1
 
 use ptc_interface_mod, only: apply_patch_to_ptc_fibre, bmad_patch_parameters_to_ptc, &
     concat_ele_taylor, concat_taylor, ele_to_ptc_magnetic_bn_an, form_complex_taylor, &
@@ -214,10 +213,10 @@ use xraylib_interface, only: crystal_type_to_crystal_params, &
     multilayer_type_to_multilayer_params, photon_absorption_and_phase_shift, &
     xraylib_nist_compound
 
-use expression_mod, only: deallocate_expression_tree, deallocate_tree, &
-    expression_stack_to_string, expression_stack_value, expression_string_to_stack, &
-    expression_string_to_tree, expression_tree_to_string, expression_value, linear_coef, &
-    re_associate_node_array, type_expression_tree
+use expression_mod, only: deallocate_expression_tree, expression_stack_to_string, &
+    expression_stack_value, expression_string_to_stack, expression_string_to_tree, &
+    expression_tree_to_string, expression_value, linear_coef, re_associate_node_array, &
+    type_expression_tree
 
 use photon_target_mod, only: detector_pixel_pt, photon_add_to_detector_statistics, &
     photon_target_corner_calc, photon_target_setup, to_photon_angle_coords
@@ -1960,25 +1959,6 @@ subroutine fortran_attribute_units (attrib_name, unrecognized_units, attrib_unit
   ! out: f_attrib_units 0D_NOT_character
   call c_f_pointer(attrib_units, f_attrib_units_ptr, [len_trim(f_attrib_units) + 1]) ! output-only string
   call to_c_str(f_attrib_units, f_attrib_units_ptr)
-end subroutine
-subroutine fortran_attributes_need_bookkeeping (ele, dval) bind(c)
-
-  use bmad_struct, only: ele_struct
-  implicit none
-  ! ** In parameters **
-  type(c_ptr), value :: ele  ! 0D_NOT_type
-  type(ele_struct), pointer :: f_ele
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: dval
-  type(real_container_alloc), pointer :: f_dval
-  ! ** End of parameters **
-  ! in: f_ele 0D_NOT_type
-  if (.not. c_associated(ele)) return
-  call c_f_pointer(ele, f_ele)
-  !! container general array (1D_ALLOC_real)
-  if (c_associated(dval))   call c_f_pointer(dval, f_dval)
-  call attributes_need_bookkeeping(ele=f_ele, dval=f_dval%data)
-
 end subroutine
 subroutine fortran_autoscale_phase_and_amp (ele, param, err_flag, scale_phase, scale_amp, &
     call_bookkeeper) bind(c)
@@ -6200,20 +6180,6 @@ subroutine fortran_deallocate_lat_pointers (lat) bind(c)
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
   call deallocate_lat_pointers(lat=f_lat)
-
-end subroutine
-subroutine fortran_deallocate_tree (tree) bind(c)
-
-  use bmad_struct, only: expression_tree_struct
-  implicit none
-  ! ** Inout parameters **
-  type(c_ptr), value :: tree  ! 0D_NOT_type
-  type(expression_tree_struct), pointer :: f_tree
-  ! ** End of parameters **
-  ! inout: f_tree 0D_NOT_type
-  if (.not. c_associated(tree)) return
-  call c_f_pointer(tree, f_tree)
-  call deallocate_tree(tree=f_tree)
 
 end subroutine
 subroutine fortran_default_tracking_species (param, species) bind(c)
@@ -25077,16 +25043,16 @@ subroutine fortran_sc_step (bunch, ele, include_image, t_end, sc_field, n_emit) 
   ! out: f_n_emit 0D_NOT_integer
   ! no output conversion for f_n_emit
 end subroutine
-subroutine fortran_set_active_fixer (fixer, is_on, orbit) bind(c)
+subroutine fortran_set_active_fixer (fixer, turn_on, orbit) bind(c)
 
   use bmad_struct, only: coord_struct, ele_struct
   implicit none
   ! ** In parameters **
-  type(c_ptr), intent(in), value :: is_on  ! 0D_NOT_logical
-  logical(c_bool), pointer :: f_is_on
-  logical, target :: f_is_on_native
-  logical, pointer :: f_is_on_native_ptr
-  logical(c_bool), pointer :: f_is_on_ptr
+  type(c_ptr), intent(in), value :: turn_on  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_turn_on
+  logical, target :: f_turn_on_native
+  logical, pointer :: f_turn_on_native_ptr
+  logical(c_bool), pointer :: f_turn_on_ptr
   ! ** Out parameters **
   type(c_ptr), value :: orbit  ! 0D_NOT_type
   type(coord_struct), pointer :: f_orbit
@@ -25097,17 +25063,17 @@ subroutine fortran_set_active_fixer (fixer, is_on, orbit) bind(c)
   ! inout: f_fixer 0D_NOT_type
   if (.not. c_associated(fixer)) return
   call c_f_pointer(fixer, f_fixer)
-  ! in: f_is_on 0D_NOT_logical
-  if (c_associated(is_on)) then
-    call c_f_pointer(is_on, f_is_on_ptr)
-    f_is_on_native = f_is_on_ptr
-    f_is_on_native_ptr => f_is_on_native
+  ! in: f_turn_on 0D_NOT_logical
+  if (c_associated(turn_on)) then
+    call c_f_pointer(turn_on, f_turn_on_ptr)
+    f_turn_on_native = f_turn_on_ptr
+    f_turn_on_native_ptr => f_turn_on_native
   else
-    f_is_on_native_ptr => null()
+    f_turn_on_native_ptr => null()
   endif
   ! out: f_orbit 0D_NOT_type
   if (c_associated(orbit))   call c_f_pointer(orbit, f_orbit)
-  call set_active_fixer(fixer=f_fixer, is_on=f_is_on_native_ptr, orbit=f_orbit)
+  call set_active_fixer(fixer=f_fixer, turn_on=f_turn_on_native_ptr, orbit=f_orbit)
 
   ! out: f_orbit 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
