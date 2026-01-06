@@ -25,7 +25,7 @@ from .arg import Argument, CodegenStructure
 from .config import CodegenConfig
 from .context import ConfigContext, config_context
 from .coverage import generate_coverage_report
-from .cpp import generate_routines_header, generate_to_string_code, generate_to_string_header
+from .cpp import generate_to_string_code, generate_to_string_header
 from .enums import ENUM_FILENAME, write_enums
 from .paths import CODEGEN_ROOT, CPPBMAD_INCLUDE, CPPBMAD_ROOT, CPPBMAD_SRC, REPO_ROOT
 from .proxy import (
@@ -35,13 +35,7 @@ from .proxy import (
     struct_to_proxy_class_name,
 )
 from .py import generate_pybmad
-from .routines import (
-    generate_cpp_routine_code,
-    generate_fortran_routine_code,
-    parse_bmad_routines,
-    prune_routines,
-    routine_settings,
-)
+from .routines import generate_routines, parse_bmad_routines, routine_settings
 from .structs import ParsedStructure, load_bmad_parser_structures
 from .util import write_contents_if_differs, write_if_differs
 
@@ -219,57 +213,6 @@ def get_structure_definitions(
         match_structure_definition(parsed_structures, struct, params)
         struct.arg = [arg for arg in struct.arg if arg.should_translate(struct.f_name, params)]
     return structs
-
-
-def generate_routines(params: CodegenConfig):
-    logger.info("Parsing routines")
-
-    all_routines = []
-    all_routines_by_name = {}
-    to_write = {}
-    for settings in routine_settings:
-        # Filter out private routines to start with:
-        routines = [routine for routine in parse_bmad_routines(settings, params) if not routine.private]
-        all_routines.extend(routines)
-        logger.info(f"Pruning routines ({settings.fortran_output_filename})")
-        routines_by_name = prune_routines(routines, params)
-        all_routines_by_name.update(routines_by_name)
-        logger.info("Generating code: routines Fortran side")
-
-        routines_header = generate_routines_header(
-            template=(CODEGEN_ROOT / "routines.tpl.hpp").read_text(),
-            routines=routines_by_name,
-            settings=settings,
-        )
-        logger.info("Generating code: routines C++ side")
-        cpp_routine_code = generate_cpp_routine_code(
-            template=(CODEGEN_ROOT / "routines.tpl.cpp").read_text(),
-            routines=routines_by_name,
-            settings=settings,
-        )
-        fortran_routine_code = generate_fortran_routine_code(
-            template=(CODEGEN_ROOT / "routines.tpl.f90").read_text(),
-            routines=routines_by_name,
-            settings=settings,
-        )
-
-        generated = CPPBMAD_ROOT / "src" / "generated"
-        header_path = CPPBMAD_ROOT / "include" / "bmad" / "generated" / settings.cpp_header_filename
-        to_write[header_path] = routines_header
-        to_write[generated / settings.fortran_output_filename] = fortran_routine_code
-        to_write[generated / settings.cpp_output_filename] = cpp_routine_code
-
-    for fn, contents in to_write.items():
-        write_contents_if_differs(
-            target_path=fn,
-            contents=contents,
-        )
-
-    unique_routines = {rt.name: rt for rt in all_routines}
-    usable = [rt for rt in unique_routines.values() if rt.usable]
-    logger.info("Usable procedures: %d / %d total", len(usable), len(all_routines))
-    logger.info("Done")
-    return all_routines, all_routines_by_name
 
 
 def write_proxy_classes(params: CodegenConfig, structs: list[CodegenStructure]) -> None:

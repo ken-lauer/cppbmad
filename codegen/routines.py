@@ -14,12 +14,12 @@ import pydantic
 
 from .config import CodegenConfig
 from .context import config_context, get_params
-from .cpp import CppWrapperArgument, generate_routine_cpp_wrapper
+from .cpp import CppWrapperArgument, generate_routine_cpp_wrapper, generate_routines_header
 from .docstring import DocstringParameter, RoutineDocstring, parse_routine_comment_block
 from .exceptions import RenameError, RoutineNotFoundError
 from .fortran import generate_fortran_routine_with_c_binding
 from .gen import Argument as InterfaceArgument
-from .paths import ACC_ROOT_DIR, CPPBMAD_SRC
+from .paths import ACC_ROOT_DIR, CODEGEN_ROOT, CPPBMAD_ROOT, CPPBMAD_SRC
 from .structs import (
     FileLine,
     StructureMember,
@@ -29,7 +29,13 @@ from .structs import (
     split_comment,
 )
 from .types import Intent, RoutineType, get_type_transform
-from .util import snake_to_camel, sorted_routines, struct_to_proxy_class_name, wrap_line
+from .util import (
+    snake_to_camel,
+    sorted_routines,
+    struct_to_proxy_class_name,
+    wrap_line,
+    write_contents_if_differs,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -1126,3 +1132,54 @@ def generate_fortran_routine_code(
         use_lines="\n".join(use_lines),
         routines="\n".join(lines),
     )
+
+
+def generate_routines(params: CodegenConfig):
+    logger.info("Parsing routines")
+
+    all_routines = []
+    all_routines_by_name = {}
+    to_write = {}
+    for settings in routine_settings:
+        # Filter out private routines to start with:
+        routines = [routine for routine in parse_bmad_routines(settings, params) if not routine.private]
+        all_routines.extend(routines)
+        logger.info(f"Pruning routines ({settings.fortran_output_filename})")
+        routines_by_name = prune_routines(routines, params)
+        all_routines_by_name.update(routines_by_name)
+        logger.info("Generating code: routines Fortran side")
+
+        routines_header = generate_routines_header(
+            template=(CODEGEN_ROOT / "routines.tpl.hpp").read_text(),
+            routines=routines_by_name,
+            settings=settings,
+        )
+        logger.info("Generating code: routines C++ side")
+        cpp_routine_code = generate_cpp_routine_code(
+            template=(CODEGEN_ROOT / "routines.tpl.cpp").read_text(),
+            routines=routines_by_name,
+            settings=settings,
+        )
+        fortran_routine_code = generate_fortran_routine_code(
+            template=(CODEGEN_ROOT / "routines.tpl.f90").read_text(),
+            routines=routines_by_name,
+            settings=settings,
+        )
+
+        generated = CPPBMAD_ROOT / "src" / "generated"
+        header_path = CPPBMAD_ROOT / "include" / "bmad" / "generated" / settings.cpp_header_filename
+        to_write[header_path] = routines_header
+        to_write[generated / settings.fortran_output_filename] = fortran_routine_code
+        to_write[generated / settings.cpp_output_filename] = cpp_routine_code
+
+    for fn, contents in to_write.items():
+        write_contents_if_differs(
+            target_path=fn,
+            contents=contents,
+        )
+
+    unique_routines = {rt.name: rt for rt in all_routines}
+    usable = [rt for rt in unique_routines.values() if rt.usable]
+    logger.info("Usable procedures: %d / %d total", len(usable), len(all_routines))
+    logger.info("Done")
+    return all_routines, all_routines_by_name
