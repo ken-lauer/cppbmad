@@ -12,7 +12,7 @@ using namespace Bmad;
 namespace SimUtils {
 
 // Skipped unusable routine all_pointer_to_string:
-// - Untranslated type: AllPointerProxy (0D_NOT_type)
+// - Untranslated type: all_pointer_struct (0D)
 extern "C" void fortran_allocate_thread_states();
 void allocate_thread_states();
 extern "C" bool fortran_anomalous_moment_of(
@@ -122,34 +122,34 @@ SimUtils::BicubicCmplxEval bicubic_cmplx_eval(
     BicubicCmplxCoefProxy& bi_coef);
 
 // Skipped unusable routine bicubic_compute_cmplx_field_at_2d_box:
-// - Untranslated type: CmplxFieldAt2dBoxProxy (0D_NOT_type)
+// - Untranslated type: cmplx_field_at_2d_box_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine bicubic_compute_field_at_2d_box:
-// - Untranslated type: FieldAt2dBoxProxy (0D_NOT_type)
+// - Untranslated type: field_at_2d_box_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine bicubic_eval:
-// - Untranslated type: BicubicCoefProxy (0D_NOT_type)
+// - Untranslated type: bicubic_coef_struct (0D)
 
 // Skipped unusable routine bicubic_interpolation_cmplx_coefs:
-// - Untranslated type: CmplxFieldAt2dBoxProxy (0D_NOT_type)
+// - Untranslated type: cmplx_field_at_2d_box_struct (0D)
 
 // Skipped unusable routine bicubic_interpolation_coefs:
-// - Untranslated type: FieldAt2dBoxProxy (0D_NOT_type)
-// - Untranslated type: BicubicCoefProxy (0D_NOT_type)
+// - Untranslated type: field_at_2d_box_struct (0D)
+// - Untranslated type: bicubic_coef_struct (0D)
 
 // Skipped unusable routine bin_2d:
-// - Untranslated type: GeneralBinProxy (0D_NOT_type)
+// - Untranslated type: general_bin_struct (0D)
 
 // Skipped unusable routine bin_data:
-// - Untranslated type: BinProxy (0D_NOT_type)
+// - Untranslated type: bin_struct (0D)
 
 // Skipped unusable routine bin_data_density:
-// - Untranslated type: BinProxy (0D_NOT_type)
+// - Untranslated type: bin_struct (0D)
 
 // Skipped unusable routine bin_data_density_2d:
-// - Untranslated type: GeneralBinProxy (0D_NOT_type)
+// - Untranslated type: general_bin_struct (0D)
 extern "C" bool fortran_bin_index(
     double& x /* 0D_NOT_real in */,
     double& bin1_x_min /* 0D_NOT_real in */,
@@ -239,7 +239,7 @@ extern "C" bool fortran_cosc(
 void cosc(double x, std::optional<int> nd, double& y);
 
 // Skipped unusable routine count_at_index:
-// - Untranslated type: BinProxy (0D_NOT_type)
+// - Untranslated type: bin_struct (0D)
 
 // Skipped unusable routine covar_expand:
 // - Variable inout sized array: covar(:,:) 2D_NOT_real
@@ -459,13 +459,13 @@ void gen_complete_elliptic(
     double& value);
 
 // Skipped unusable routine general_bin_count:
-// - Untranslated type: GeneralBinProxy (0D_NOT_type)
+// - Untranslated type: general_bin_struct (0D)
 
 // Skipped unusable routine general_bin_index:
-// - Untranslated type: GeneralBinProxy (0D_NOT_type)
+// - Untranslated type: general_bin_struct (0D)
 
 // Skipped unusable routine general_bin_index_in_bounds:
-// - Untranslated type: GeneralBinProxy (0D_NOT_type)
+// - Untranslated type: general_bin_struct (0D)
 extern "C" void fortran_get_file_number(
     const char* file_name /* 0D_NOT_character inout */,
     const char* cnum_in /* 0D_NOT_character inout */,
@@ -732,7 +732,7 @@ void match_wild(std::string& string, std::string& template_, bool& is_match);
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine max_nonzero:
-// - Module name unset? Internal error
+// - Module name unset
 extern "C" bool fortran_maximize_projection(
     double& seed /* 0D_NOT_real inout */,
     void* cdata /* 1D_ALLOC_complex inout */,
@@ -745,7 +745,7 @@ extern "C" void fortran_milli_sleep(int& milli_sec /* 0D_NOT_integer inout */);
 void milli_sleep(int& milli_sec);
 
 // Skipped unusable routine molecular_components:
-// - Untranslated type: MolecularComponentProxy (1D_ALLOC_type)
+// - Untranslated type: molecular_component_struct (1D)
 extern "C" bool fortran_n_bins_automatic(
     int& n_data /* 0D_NOT_integer inout */,
     int& n /* 0D_NOT_integer inout */);
@@ -828,7 +828,7 @@ extern "C" bool fortran_ordinal_str(
 void ordinal_str(int& n, std::string& str);
 
 // Skipped unusable routine outer_product:
-// - Module name unset? Internal error
+// - Module name unset
 extern "C" void fortran_parse_fortran_format(
     const char* format_str /* 0D_NOT_character inout */,
     int& n_repeat /* 0D_NOT_integer inout */,
@@ -849,8 +849,8 @@ void parse_fortran_format(
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine pointer_to_ran_state:
-// - Untranslated type: RandomStateProxy (0D_NOT_type)
-// - Untranslated type: RandomStateProxy (0D_PTR_type)
+// - Untranslated type: random_state_struct (0D)
+// - Untranslated type: random_state_struct (0D)
 extern "C" bool fortran_poly_eval(
     void* poly /* 1D_ALLOC_real in */,
     double& x /* 0D_NOT_real in */,
@@ -986,20 +986,20 @@ void quote(std::string& str, std::string& q_str);
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine ran_default_state:
-// - Untranslated type: RandomStateProxy (0D_NOT_type)
-// - Untranslated type: RandomStateProxy (0D_NOT_type)
+// - Untranslated type: random_state_struct (0D)
+// - Untranslated type: random_state_struct (0D)
 
 // Skipped unusable routine ran_engine:
-// - Untranslated type: RandomStateProxy (0D_NOT_type)
+// - Untranslated type: random_state_struct (0D)
 
 // Skipped unusable routine ran_gauss_converter:
-// - Untranslated type: RandomStateProxy (0D_NOT_type)
+// - Untranslated type: random_state_struct (0D)
 
 // Skipped unusable routine ran_gauss_scalar:
-// - Untranslated type: RandomStateProxy (0D_NOT_type)
+// - Untranslated type: random_state_struct (0D)
 
 // Skipped unusable routine ran_gauss_vector:
-// - Untranslated type: RandomStateProxy (0D_NOT_type)
+// - Untranslated type: random_state_struct (0D)
 extern "C" void fortran_ran_seed_get(int& seed /* 0D_NOT_integer out */);
 int ran_seed_get();
 extern "C" void fortran_ran_seed_put(
@@ -1008,10 +1008,10 @@ extern "C" void fortran_ran_seed_put(
 void ran_seed_put(int seed, std::optional<int> mpi_offset = std::nullopt);
 
 // Skipped unusable routine ran_uniform_scalar:
-// - Untranslated type: RandomStateProxy (0D_NOT_type)
+// - Untranslated type: random_state_struct (0D)
 
 // Skipped unusable routine ran_uniform_vector:
-// - Untranslated type: RandomStateProxy (0D_NOT_type)
+// - Untranslated type: random_state_struct (0D)
 extern "C" bool fortran_real_num_fortran_format(
     double& number /* 0D_NOT_real inout */,
     int& width /* 0D_NOT_integer inout */,
@@ -1113,7 +1113,7 @@ void run_timer(
     optional_ref<double> time0 = std::nullopt);
 
 // Skipped unusable routine set_all_ptr:
-// - Untranslated type: AllPointerProxy (0D_NOT_type)
+// - Untranslated type: all_pointer_struct (0D)
 extern "C" bool fortran_set_parameter_int(
     int& param_val /* 0D_NOT_integer inout */,
     int& set_val /* 0D_NOT_integer inout */,
@@ -1440,7 +1440,7 @@ SimUtils::SuperBicubicInterpolation super_bicubic_interpolation(
 
 // Skipped unusable routine super_mrqcof:
 // - Variable inout sized array: co_alpha(:,:) 2D_NOT_real
-// - Untranslated type: SuperMrqminStorageProxy (0D_NOT_type)
+// - Untranslated type: super_mrqmin_storage_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine super_mrqmin:
@@ -1500,7 +1500,7 @@ double super_poly(double x, RealAlloc1D& coeffs);
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine super_sobseq:
-// - Untranslated type: RandomStateProxy (0D_NOT_type)
+// - Untranslated type: random_state_struct (0D)
 extern "C" void fortran_super_sort(void* arr /* 1D_ALLOC_integer inout */);
 void super_sort(IntAlloc1D& arr);
 
@@ -1559,22 +1559,22 @@ SimUtils::TricubicCmplxEval tricubic_cmplx_eval(
     TricubicCmplxCoefProxy& tri_coef);
 
 // Skipped unusable routine tricubic_compute_cmplx_field_at_3d_box:
-// - Untranslated type: CmplxFieldAt3dBoxProxy (0D_NOT_type)
+// - Untranslated type: cmplx_field_at_3d_box_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine tricubic_compute_field_at_3d_box:
-// - Untranslated type: FieldAt3dBoxProxy (0D_NOT_type)
+// - Untranslated type: field_at_3d_box_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine tricubic_eval:
-// - Untranslated type: TricubicCoefProxy (0D_NOT_type)
+// - Untranslated type: tricubic_coef_struct (0D)
 
 // Skipped unusable routine tricubic_interpolation_cmplx_coefs:
-// - Untranslated type: CmplxFieldAt3dBoxProxy (0D_NOT_type)
+// - Untranslated type: cmplx_field_at_3d_box_struct (0D)
 
 // Skipped unusable routine tricubic_interpolation_coefs:
-// - Untranslated type: FieldAt3dBoxProxy (0D_NOT_type)
-// - Untranslated type: TricubicCoefProxy (0D_NOT_type)
+// - Untranslated type: field_at_3d_box_struct (0D)
+// - Untranslated type: tricubic_coef_struct (0D)
 extern "C" void fortran_type_this_file(
     const char* filename /* 0D_NOT_character inout */);
 void type_this_file(std::string& filename);
@@ -1589,7 +1589,7 @@ extern "C" void fortran_upcase_string(
 void upcase_string(std::string& string);
 
 // Skipped unusable routine value_of_all_ptr:
-// - Untranslated type: AllPointerProxy (0D_NOT_type)
+// - Untranslated type: all_pointer_struct (0D)
 extern "C" bool fortran_virtual_memory_usage(
     int& usage /* 0D_NOT_integer out */);
 int virtual_memory_usage();

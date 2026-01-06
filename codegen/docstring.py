@@ -565,7 +565,7 @@ def parse_routine_comment_block(
             # Is there actual meaning in the fortran version for this?
             arg.is_optional = False
 
-        logger.warning(
+        logger.debug(
             f"Optional output annotations for: {docstring.name} ({docstring.filename}:{docstring.lineno})"
         )
     return docstring

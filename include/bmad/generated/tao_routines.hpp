@@ -286,7 +286,7 @@ extern "C" void fortran_tao_close_command_file();
 void tao_close_command_file();
 
 // Skipped unusable routine tao_cmd_end_calc:
-// - Module name unset? Internal error
+// - Module name unset
 extern "C" void fortran_tao_cmd_history_record(
     const char* cmd /* 0D_NOT_character inout */);
 void tao_cmd_history_record(std::string& cmd);
@@ -530,7 +530,7 @@ extern "C" void fortran_tao_deallocate_plot_cache(
 void tao_deallocate_plot_cache(TaoPlotCacheProxyAlloc1D& plot_cache);
 
 // Skipped unusable routine tao_deallocate_tree:
-// - Untranslated type: TaoEvalNodeProxy (0D_NOT_type)
+// - Untranslated type: tao_eval_node_struct (0D)
 
 // Skipped unusable routine tao_design_lat_input_to_json:
 // - Routine module (tao_json) in configuration skip list
@@ -652,10 +652,10 @@ Tao::TaoEleShapeInfo tao_ele_shape_info(
 // - Routine module (tao_json) in configuration skip list
 
 // Skipped unusable routine tao_ele_shape_input_to_struct:
-// - Untranslated type: TaoEleShapeInputRawStruct (0D_NOT_type)
+// - Untranslated type: tao_ele_shape_input (0D)
 
 // Skipped unusable routine tao_ele_shape_struct_to_input:
-// - Untranslated type: TaoEleShapeInputRawStruct (0D_NOT_type)
+// - Untranslated type: tao_ele_shape_input (0D)
 
 // Skipped unusable routine tao_ele_shape_struct_to_json:
 // - Routine module (tao_json) in configuration skip list
@@ -722,22 +722,19 @@ Tao::TaoEvaluateDatumAtS tao_evaluate_datum_at_s(
     bool valid_value);
 
 // Skipped unusable routine tao_evaluate_element_parameters:
-// - Untranslated type: TaoExpressionInfoProxy (1D_ALLOC_type)
+// - Untranslated type: tao_expression_info_struct (1D)
 
 // Skipped unusable routine tao_evaluate_expression:
-// - Untranslated type: TaoExpressionInfoProxy (1D_ALLOC_type)
-// - Untranslated type: TaoEvalNodeProxy (1D_ALLOC_type)
-// - Too many optional inputs (TODO) 12
+// - Untranslated type: tao_expression_info_struct (1D)
+// - Untranslated type: tao_eval_node_struct (1D)
 
 // Skipped unusable routine tao_evaluate_expression_new:
-// - Untranslated type: TaoExpressionInfoProxy (1D_ALLOC_type)
-// - Untranslated type: TaoEvalNodeProxy (1D_ALLOC_type)
-// - Too many optional inputs (TODO) 12
+// - Untranslated type: tao_expression_info_struct (1D)
+// - Untranslated type: tao_eval_node_struct (1D)
 
 // Skipped unusable routine tao_evaluate_expression_old:
-// - Untranslated type: TaoExpressionInfoProxy (1D_ALLOC_type)
-// - Untranslated type: TaoEvalNodeProxy (1D_ALLOC_type)
-// - Too many optional inputs (TODO) 12
+// - Untranslated type: tao_expression_info_struct (1D)
+// - Untranslated type: tao_eval_node_struct (1D)
 extern "C" void fortran_tao_evaluate_lat_or_beam_data(
     bool& err /* 0D_NOT_logical out */,
     const char* data_name /* 0D_NOT_character in */,
@@ -768,12 +765,12 @@ Tao::TaoEvaluateLatOrBeamData tao_evaluate_lat_or_beam_data(
     std::optional<double> dflt_s_offset = std::nullopt);
 
 // Skipped unusable routine tao_evaluate_stack_old:
-// - Untranslated type: TaoEvalNodeProxy (1D_ALLOC_type)
-// - Untranslated type: TaoExpressionInfoProxy (1D_ALLOC_type)
+// - Untranslated type: tao_eval_node_struct (1D)
+// - Untranslated type: tao_expression_info_struct (1D)
 
 // Skipped unusable routine tao_evaluate_tree:
-// - Untranslated type: TaoEvalNodeProxy (0D_NOT_type)
-// - Untranslated type: TaoExpressionInfoProxy (1D_ALLOC_type)
+// - Untranslated type: tao_eval_node_struct (0D)
+// - Untranslated type: tao_expression_info_struct (1D)
 extern "C" bool fortran_tao_evaluate_tune(
     const char* q_str /* 0D_NOT_character in */,
     double& q0 /* 0D_NOT_real in */,
@@ -796,17 +793,17 @@ std::string tao_expression_hash_substitute(
 // - Routine module (tao_json) in configuration skip list
 
 // Skipped unusable routine tao_expression_tree_to_string:
-// - Untranslated type: TaoEvalNodeProxy (0D_NOT_type)
-// - Untranslated type: TaoEvalNodeProxy (0D_NOT_type)
+// - Untranslated type: tao_eval_node_struct (0D)
+// - Untranslated type: tao_eval_node_struct (0D)
 
 // Skipped unusable routine tao_find_data:
-// - Untranslated type: TaoD2DataArrayProxy (1D_ALLOC_type)
-// - Untranslated type: TaoD1DataArrayProxy (1D_ALLOC_type)
-// - Untranslated type: TaoDataArrayProxy (1D_ALLOC_type)
-// - Untranslated type: TaoRealPointerProxy (1D_ALLOC_type)
-// - Untranslated type: TaoLogicalArrayProxy (1D_ALLOC_type)
-// - Untranslated type: TaoStringArrayProxy (1D_ALLOC_type)
-// - Untranslated type: TaoIntegerArrayProxy (1D_ALLOC_type)
+// - Untranslated type: tao_d2_data_array_struct (1D)
+// - Untranslated type: tao_d1_data_array_struct (1D)
+// - Untranslated type: tao_data_array_struct (1D)
+// - Untranslated type: tao_real_pointer_struct (1D)
+// - Untranslated type: tao_logical_array_struct (1D)
+// - Untranslated type: tao_string_array_struct (1D)
+// - Untranslated type: tao_integer_array_struct (1D)
 extern "C" void fortran_tao_find_plot_region(
     bool& err /* 0D_NOT_logical out */,
     const char* where /* 0D_NOT_character in */,
@@ -821,16 +818,16 @@ Tao::TaoFindPlotRegion tao_find_plot_region(
     std::optional<bool> print_flag = std::nullopt);
 
 // Skipped unusable routine tao_find_plots:
-// - Untranslated type: TaoPlotArrayProxy (1D_ALLOC_type)
-// - Untranslated type: TaoGraphArrayProxy (1D_ALLOC_type)
-// - Untranslated type: TaoCurveArrayProxy (1D_ALLOC_type)
+// - Untranslated type: tao_plot_array_struct (1D)
+// - Untranslated type: tao_graph_array_struct (1D)
+// - Untranslated type: tao_curve_array_struct (1D)
 
 // Skipped unusable routine tao_find_var:
-// - Untranslated type: TaoV1VarArrayProxy (1D_ALLOC_type)
-// - Untranslated type: TaoVarArrayProxy (1D_ALLOC_type)
-// - Untranslated type: TaoRealPointerProxy (1D_ALLOC_type)
-// - Untranslated type: TaoLogicalArrayProxy (1D_ALLOC_type)
-// - Untranslated type: TaoStringArrayProxy (1D_ALLOC_type)
+// - Untranslated type: tao_v1_var_array_struct (1D)
+// - Untranslated type: tao_var_array_struct (1D)
+// - Untranslated type: tao_real_pointer_struct (1D)
+// - Untranslated type: tao_logical_array_struct (1D)
+// - Untranslated type: tao_string_array_struct (1D)
 extern "C" void fortran_tao_fixer(
     const char* switch_ /* 0D_NOT_character in */,
     const char* word1 /* 0D_NOT_character in */,
@@ -1066,7 +1063,7 @@ extern "C" void fortran_tao_init_beams(
 void tao_init_beams(std::string init_file);
 
 // Skipped unusable routine tao_init_building_wall:
-// - Module name unset? Internal error
+// - Module name unset
 extern "C" void fortran_tao_init_data(
     const char* data_file /* 0D_NOT_character in */);
 void tao_init_data(std::string data_file);
@@ -1352,8 +1349,8 @@ extern "C" void fortran_tao_orbit_beta_wave_anal(
 void tao_orbit_beta_wave_anal(TaoPlotProxy& plot);
 
 // Skipped unusable routine tao_oreint_building_wall_pt:
-// - Untranslated type: TaoBuildingWallPointProxy (0D_NOT_type)
-// - Untranslated type: TaoBuildingWallPointProxy (0D_NOT_type)
+// - Untranslated type: tao_building_wall_point_struct (0D)
+// - Untranslated type: tao_building_wall_point_struct (0D)
 extern "C" bool fortran_tao_param_value_at_s(
     const char* dat_name /* 0D_NOT_character inout */,
     void* ele_to_s /* 0D_NOT_type in */,
@@ -1378,8 +1375,7 @@ Tao::TaoParamValueAtS tao_param_value_at_s(
     double& value);
 
 // Skipped unusable routine tao_param_value_routine:
-// - Untranslated type: TaoEvalNodeProxy (0D_NOT_type)
-// - Too many optional inputs (TODO) 11
+// - Untranslated type: tao_eval_node_struct (0D)
 extern "C" void fortran_tao_parse_command_args(
     bool& error /* 0D_NOT_logical out */,
     const char* cmd_line /* 0D_NOT_character inout */);
@@ -1515,11 +1511,11 @@ void tao_plot_wave(TaoPlotProxy& plot, TaoGraphProxy& graph);
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine tao_point_v1_to_var:
-// - Untranslated type: TaoV1VarProxy (0D_NOT_type)
+// - Untranslated type: tao_v1_var_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine tao_pointer_to_branches:
-// - Untranslated type: BranchPointerProxy (1D_ALLOC_type)
+// - Untranslated type: branch_pointer_struct (1D)
 extern "C" bool fortran_tao_pointer_to_building_wall_shape(
     const char* wall_name /* 0D_NOT_character in */,
     void* e_shape /* 0D_PTR_type inout */);
@@ -1611,10 +1607,10 @@ extern "C" void fortran_tao_print_command_line_info();
 void tao_print_command_line_info();
 
 // Skipped unusable routine tao_print_vars:
-// - Untranslated type: TaoVarArrayProxy (1D_ALLOC_type)
+// - Untranslated type: tao_var_array_struct (1D)
 
 // Skipped unusable routine tao_ptc_cmd:
-// - Module name unset? Internal error
+// - Module name unset
 extern "C" void fortran_tao_ptc_normal_form(
     bool& do_calc /* 0D_NOT_logical in */,
     void* tao_lat /* 0D_NOT_type in */,
@@ -1641,10 +1637,10 @@ void tao_rad_int_calc_needed(
     bool& do_rad_int);
 
 // Skipped unusable routine tao_re_allocate_expression_info:
-// - Untranslated type: TaoExpressionInfoProxy (1D_ALLOC_type)
+// - Untranslated type: tao_expression_info_struct (1D)
 
 // Skipped unusable routine tao_re_associate_node_array:
-// - Untranslated type: TaoEvalNodeProxy (0D_NOT_type)
+// - Untranslated type: tao_eval_node_struct (0D)
 extern "C" void fortran_tao_re_execute(
     const char* string /* 0D_NOT_character inout */,
     bool& err /* 0D_NOT_logical inout */);
@@ -1661,7 +1657,7 @@ void tao_read_cmd(
     bool silent);
 
 // Skipped unusable routine tao_read_in_patterns:
-// - Module name unset? Internal error
+// - Module name unset
 extern "C" bool fortran_tao_read_phase_space_index(
     const char* name /* 0D_NOT_character in */,
     int& ixc /* 0D_NOT_integer in */,
@@ -1826,7 +1822,7 @@ extern "C" void fortran_tao_set_default_cmd(
 void tao_set_default_cmd(std::string who_str, std::string value_str);
 
 // Skipped unusable routine tao_set_drawing_cmd:
-// - Untranslated type: TaoDrawingProxy (0D_NOT_type)
+// - Untranslated type: tao_drawing_struct (0D)
 extern "C" void fortran_tao_set_dynamic_aperture_cmd(
     const char* who /* 0D_NOT_character in */,
     const char* value_str /* 0D_NOT_character in */);
@@ -1843,11 +1839,11 @@ void tao_set_elements_cmd(
     bool& update);
 
 // Skipped unusable routine tao_set_flags_for_changed_attribute:
-// - Untranslated type: AllPointerProxy (0D_NOT_type)
+// - Untranslated type: all_pointer_struct (0D)
 
 // Skipped unusable routine tao_set_floor_plan_axis_label:
-// - Untranslated type: QpAxisProxy (0D_NOT_type)
-// - Untranslated type: QpAxisProxy (0D_NOT_type)
+// - Untranslated type: qp_axis_struct (0D)
+// - Untranslated type: qp_axis_struct (0D)
 extern "C" void fortran_tao_set_geodesic_lm_cmd(
     const char* who /* 0D_NOT_character in */,
     const char* value_str /* 0D_NOT_character in */);
@@ -1950,21 +1946,21 @@ void tao_set_plot_page_cmd(
     std::optional<std::string> value_str2 = std::nullopt);
 
 // Skipped unusable routine tao_set_plotting:
-// - Untranslated type: TaoPlotPageInputRawStruct (0D_NOT_type)
-// - Untranslated type: TaoPlotPageProxy (0D_NOT_type)
+// - Untranslated type: tao_plot_page_input (0D)
+// - Untranslated type: tao_plot_page_struct (0D)
 extern "C" void fortran_tao_set_ptc_com_cmd(
     const char* who /* 0D_NOT_character in */,
     const char* value_str /* 0D_NOT_character in */);
 void tao_set_ptc_com_cmd(std::string who, std::string value_str);
 
 // Skipped unusable routine tao_set_qp_axis_struct:
-// - Untranslated type: QpAxisProxy (0D_NOT_type)
+// - Untranslated type: qp_axis_struct (0D)
 
 // Skipped unusable routine tao_set_qp_point_struct:
-// - Untranslated type: QpPointProxy (0D_NOT_type)
+// - Untranslated type: qp_point_struct (0D)
 
 // Skipped unusable routine tao_set_qp_rect_struct:
-// - Untranslated type: QpRectProxy (0D_NOT_type)
+// - Untranslated type: qp_rect_struct (0D)
 extern "C" void fortran_tao_set_ran_state_cmd(
     const char* state_string /* 0D_NOT_character in */);
 void tao_set_ran_state_cmd(std::string state_string);
@@ -2164,7 +2160,7 @@ extern "C" void fortran_tao_taper_cmd(
 void tao_taper_cmd(std::string except, std::string uni_names);
 
 // Skipped unusable routine tao_timer:
-// - Module name unset? Internal error
+// - Module name unset
 
 // Skipped unusable routine tao_title_struct_to_json:
 // - Routine module (tao_json) in configuration skip list
@@ -2210,7 +2206,7 @@ struct TaoToReal {
 Tao::TaoToReal tao_to_real(std::string expression);
 
 // Skipped unusable routine tao_to_top10:
-// - Untranslated type: TaoTop10Proxy (1D_ALLOC_type)
+// - Untranslated type: tao_top10_struct (1D)
 extern "C" bool fortran_tao_too_many_particles_lost(
     void* beam /* 0D_NOT_type inout */,
     bool& no_beam /* 0D_NOT_logical inout */);
@@ -2243,7 +2239,7 @@ extern "C" void fortran_tao_turn_on_special_calcs_if_needed_for_plotting();
 void tao_turn_on_special_calcs_if_needed_for_plotting();
 
 // Skipped unusable routine tao_type_expression_tree:
-// - Untranslated type: TaoEvalNodeProxy (0D_NOT_type)
+// - Untranslated type: tao_eval_node_struct (0D)
 extern "C" bool fortran_tao_uni_atsign_index(
     const char* string /* 0D_NOT_character in */,
     int& ix_amp /* 0D_NOT_integer out */);
@@ -2311,7 +2307,7 @@ extern "C" void fortran_tao_var_repoint();
 void tao_var_repoint();
 
 // Skipped unusable routine tao_var_show_use:
-// - Untranslated type: TaoV1VarProxy (0D_NOT_type)
+// - Untranslated type: tao_v1_var_struct (0D)
 // - Variable-sized inout character array: lines(:) 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
@@ -2322,9 +2318,9 @@ void tao_var_repoint();
 // - Routine module (tao_json) in configuration skip list
 
 // Skipped unusable routine tao_var_stuffit1:
-// - Untranslated type: TaoVarInputRawStruct (1D_NOT_type)
-// - Untranslated type: TaoV1VarProxy (0D_PTR_type)
-// - Untranslated type: TaoV1VarInputRawStruct (0D_NOT_type)
+// - Untranslated type: tao_var_input (1D)
+// - Untranslated type: tao_v1_var_struct (0D)
+// - Untranslated type: tao_v1_var_input (0D)
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine tao_var_stuffit2:
@@ -2438,5 +2434,5 @@ bool tao_x_scale_plot(
     std::optional<std::string> gang = std::nullopt);
 
 // Skipped unusable routine user_signal:
-// - Module name unset? Internal error
+// - Module name unset
 } // namespace Tao

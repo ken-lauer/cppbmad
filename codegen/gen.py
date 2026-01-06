@@ -24,9 +24,10 @@ import tomllib
 from .arg import Argument, CodegenStructure
 from .config import CodegenConfig
 from .context import ConfigContext, config_context
+from .coverage import generate_coverage_report
 from .cpp import generate_routines_header, generate_to_string_code, generate_to_string_header
 from .enums import ENUM_FILENAME, write_enums
-from .paths import CODEGEN_ROOT, CPPBMAD_INCLUDE, CPPBMAD_ROOT, CPPBMAD_SRC
+from .paths import CODEGEN_ROOT, CPPBMAD_INCLUDE, CPPBMAD_ROOT, CPPBMAD_SRC, REPO_ROOT
 from .proxy import (
     create_cpp_proxy_header,
     create_cpp_proxy_impl,
@@ -90,6 +91,7 @@ def write_parsed_structures(structs, fn):
 def check_missing(structs: list[CodegenStructure]):
     struct_names = {struct.f_name.lower() for struct in structs}
 
+    missing_by_struct = {}
     for struct in structs:
         to_remove = []
         for idx, fld in enumerate(list(struct.arg)):
@@ -100,9 +102,14 @@ def check_missing(structs: list[CodegenStructure]):
                 logger.warning(
                     f"Missing definition for struct '{fld.kind}' which is used in '{struct.f_name}'"
                 )
+                missing_by_struct.setdefault(struct.f_name, {})
+                missing_by_struct[struct.f_name][fld.f_name] = fld.kind
+
                 to_remove.append(idx)
         for remove in sorted(to_remove, reverse=True):
             struct.arg.pop(remove)
+
+    return missing_by_struct
 
 
 def filter_structs(
@@ -370,11 +377,15 @@ def generate(
     logger.info(f"Number of structs in input list: {len(structs)}")
     logger.info(f"Number of structs found:         {len(parsed_structs)}")
 
-    check_missing(structs)
+    missing_struct_attrs = check_missing(structs)
     write_proxy_classes(params, structs)
     write_if_differs(write_enums, ENUM_FILENAME)
 
     routines, routines_by_name = generate_routines(params)
+
+    report_html = generate_coverage_report(routines, structs, missing_struct_attrs)
+    write_contents_if_differs(REPO_ROOT / "coverage.html", report_html)
+
     to_string_header = generate_to_string_header(
         template=(CODEGEN_ROOT / "to_string.tpl.hpp").read_text(),
         structs=structs,

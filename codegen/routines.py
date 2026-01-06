@@ -527,13 +527,13 @@ class FortranRoutine:
         return [arg for arg in self.args if arg.intent == "out"]
 
     @property
+    def args_by_c_name(self):
+        return {arg.c_name: arg for arg in self.args}
+
+    @property
     def usable(self) -> bool:
         """Usable routine for pybmad?"""
         return not self.unusable_reason
-
-    @property
-    def args_by_c_name(self):
-        return {arg.c_name: arg for arg in self.args}
 
     @property
     def unusable_reason(self) -> list[str]:
@@ -542,7 +542,7 @@ class FortranRoutine:
         if self.private:
             return ["Marked as private"]
         if self.module is None:
-            return ["Module name unset? Internal error"]
+            return ["Module name unset"]
         if self.docstring is None:
             return ["No matching docstring"]
         if TEST_BUILD and self.name not in TEST_ROUTINES:
@@ -579,7 +579,7 @@ class FortranRoutine:
                 logger.warning("RoutineArg.from_routine failed", exc_info=True)
             else:
                 if arg.type == "type" and arg.kind.lower() not in structs_by_name:
-                    reasons.append(f"Untranslated type: {arg.c_class} ({arg.full_type})")
+                    reasons.append(f"Untranslated type: {arg.kind.lower()} ({len(arg.array)}D)")
                 if arg.type == "type" and len(arg.array) > 1:
                     reasons.append(f"TODO type arrays: {arg.c_class} {arg.intent=} {arg.full_type}")
                 if len(arg.array) > 1 and arg.type in {"character"}:
@@ -605,14 +605,6 @@ class FortranRoutine:
 
         if len(self.arg_names_with_result) != len(self.args):
             reasons.append("Translated arg count mismatch (unsupported?)")
-
-        optional_inputs = [arg for arg in self.args if arg.is_optional and arg.is_input]
-        if len(optional_inputs) > 10:
-            # I think if we're smarter about how we handle optional arguments (no big if blocks)
-            # -> use the properties of 'present()' (pass in unallocated pointers, etc)
-            # we should be able to get around this and greatly simplify the code.
-            # It'll take some reworking though...
-            reasons.append(f"Too many optional inputs (TODO) {len(optional_inputs)}")
 
         return reasons
 
@@ -890,7 +882,7 @@ def prune_routines(procedures: list[FortranRoutine], config: CodegenConfig):
     for unusable in unusable_procs:
         others = [other for other in unusable_procs if other.name == unusable.name and other is not unusable]
         usable = [other for other in usable_procs if other.name == unusable.name]
-        logger.warning(
+        logger.debug(
             "%d instance(s) of procedure %s found. %d unusable and %d usable",
             len(others) + len(usable) + 1,
             unusable.name,
@@ -898,7 +890,7 @@ def prune_routines(procedures: list[FortranRoutine], config: CodegenConfig):
             len(usable),
         )
         for idx, option in enumerate([unusable, *others, *usable], start=1):
-            logger.warning(
+            logger.debug(
                 "%s option #%d %s:%d: %s\n%s",
                 option.name,
                 idx,
@@ -940,7 +932,7 @@ def prune_routines(procedures: list[FortranRoutine], config: CodegenConfig):
 
         best_option = sorted(options, key=usability_metric)[-1]
         if len(options) > 1:
-            logger.warning(
+            logger.debug(
                 "Choosing %s option %s:%d with usability metric %d",
                 best_option.name,
                 best_option.filename.name,

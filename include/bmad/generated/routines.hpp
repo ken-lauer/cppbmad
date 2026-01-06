@@ -113,8 +113,8 @@ void add_lattice_control_structs(
     std::optional<bool> add_at_end = std::nullopt);
 
 // Skipped unusable routine add_ptc_layout_to_list:
-// - Untranslated type: PtcBranch1Proxy (0D_NOT_type)
-// - Untranslated type: LayoutRawStruct (0D_NOT_type)
+// - Untranslated type: ptc_branch1_struct (0D)
+// - Untranslated type: layout (0D)
 extern "C" void fortran_add_superimpose(
     void* lat /* 0D_NOT_type inout */,
     void* super_ele_in /* 0D_NOT_type in */,
@@ -190,7 +190,7 @@ void allocate_lat_ele_array(
     std::optional<bool> do_ramper_slave_setup = std::nullopt);
 
 // Skipped unusable routine allocate_plat:
-// - Untranslated type: ParserLatProxy (0D_NOT_type)
+// - Untranslated type: parser_lat_struct (0D)
 
 // Skipped unusable routine aml_parser:
 // - Routine in configuration skip list
@@ -228,10 +228,10 @@ extern "C" void fortran_apply_all_rampers(
 bool apply_all_rampers(LatProxy& lat);
 
 // Skipped unusable routine apply_element_edge_kick:
-// - Untranslated type: FringeFieldInfoProxy (0D_NOT_type)
+// - Untranslated type: fringe_field_info_struct (0D)
 
 // Skipped unusable routine apply_element_edge_kick_hook_def:
-// - Untranslated type: FringeFieldInfoProxy (0D_NOT_type)
+// - Untranslated type: fringe_field_info_struct (0D)
 extern "C" void fortran_apply_energy_kick(
     double& dE /* 0D_NOT_real in */,
     void* orbit /* 0D_NOT_type inout */,
@@ -365,7 +365,7 @@ void attribute_index2(
     int& attrib_index);
 
 // Skipped unusable routine attribute_info:
-// - Untranslated type: EleAttributeProxy (0D_NOT_type)
+// - Untranslated type: ele_attribute_struct (0D)
 extern "C" bool fortran_attribute_name1(
     int& key /* 0D_NOT_integer inout */,
     int& ix_att /* 0D_NOT_integer inout */,
@@ -388,7 +388,7 @@ void attribute_name2(
     std::string& attrib_name);
 
 // Skipped unusable routine attribute_set_bookkeeping:
-// - Untranslated type: AllPointerProxy (0D_NOT_type)
+// - Untranslated type: all_pointer_struct (0D)
 extern "C" bool fortran_attribute_type(
     const char* attrib_name /* 0D_NOT_character in */,
     void* ele /* 0D_NOT_type in */,
@@ -428,7 +428,7 @@ void average_twiss(
     TwissProxy& ave_twiss);
 
 // Skipped unusable routine bane1:
-// - Untranslated type: IbsProxy (0D_NOT_type)
+// - Untranslated type: ibs_struct (0D)
 
 // Skipped unusable routine base_line_ele_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
@@ -490,7 +490,7 @@ struct BeamTilts {
 Bmad::BeamTilts beam_tilts(FixedArray2D<Real, 6, 6> S);
 
 // Skipped unusable routine beambeam_fibre_setup:
-// - Untranslated type: FibreRawStruct (0D_NOT_type)
+// - Untranslated type: fibre (0D)
 extern "C" void fortran_bend_edge_kick(
     void* ele /* 0D_NOT_type in */,
     void* param /* 0D_NOT_type in */,
@@ -612,13 +612,13 @@ double bend_vert_angle_integ_prob(
     double gamma);
 
 // Skipped unusable routine bjmt1:
-// - Untranslated type: IbsProxy (0D_NOT_type)
+// - Untranslated type: ibs_struct (0D)
 
 // Skipped unusable routine bjmt_integrand:
-// - Untranslated type: CPtrRawStruct (0D_NOT_type)
+// - Untranslated type: c_ptr (0D)
 
 // Skipped unusable routine bl_via_mat:
-// - Untranslated type: IbsSimParamProxy (0D_NOT_type)
+// - Untranslated type: ibs_sim_param_struct (0D)
 extern "C" void fortran_bl_via_vlassov(
     double& current /* 0D_NOT_real in */,
     double& alpha /* 0D_NOT_real in */,
@@ -685,7 +685,7 @@ void bmad_parser2(
     optional_ref<LatProxy> parse_lat = std::nullopt);
 
 // Skipped unusable routine bmad_parser_string_attribute_set:
-// - Untranslated type: ParserEleProxy (0D_NOT_type)
+// - Untranslated type: parser_ele_struct (0D)
 extern "C" void fortran_bmad_patch_parameters_to_ptc(
     double* ang /* 1D_NOT_real inout */,
     double* exi /* 2D_NOT_real inout */);
@@ -697,13 +697,13 @@ void bmad_patch_parameters_to_ptc(
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine bmad_taylor_equal_damap:
-// - Untranslated type: DamapRawStruct (0D_NOT_type)
+// - Untranslated type: damap (0D)
 
 // Skipped unusable routine bmad_taylors_equal_ptc_taylors:
-// - Untranslated type: TaylorRawStruct (1D_ALLOC_type)
+// - Untranslated type: taylor (1D)
 
 // Skipped unusable routine bmad_taylors_equal_reals_8:
-// - Untranslated type: Real8RawStruct (1D_ALLOC_type)
+// - Untranslated type: real_8 (1D)
 
 // Skipped unusable routine bookkeeping_state_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
@@ -841,7 +841,7 @@ calc_emittances_and_twiss_from_sigma_matrix(
     std::optional<bool> print_err = std::nullopt);
 
 // Skipped unusable routine calc_next_fringe_edge:
-// - Untranslated type: FringeFieldInfoProxy (0D_NOT_type)
+// - Untranslated type: fringe_field_info_struct (0D)
 extern "C" void fortran_calc_spin_params(
     void* bunch /* 0D_NOT_type in */,
     void* bunch_params /* 0D_NOT_type out */);
@@ -873,8 +873,8 @@ Bmad::CalcWallRadius calc_wall_radius(
     double sin_ang);
 
 // Skipped unusable routine calc_wiggler_g_params:
-// - Untranslated type: RadIntTrackPointProxy (0D_NOT_type)
-// - Untranslated type: RadIntInfoProxy (0D_NOT_type)
+// - Untranslated type: rad_int_track_point_struct (0D)
+// - Untranslated type: rad_int_info_struct (0D)
 extern "C" void fortran_calc_z_tune(void* branch /* 0D_NOT_type inout */);
 void calc_z_tune(BranchProxy& branch);
 extern "C" void fortran_canonical_to_angle_coords(
@@ -885,16 +885,16 @@ void canonical_to_angle_coords(
     std::optional<std::string> coord_type = std::nullopt);
 
 // Skipped unusable routine capillary_photon_hit_spot_calc:
-// - Untranslated type: PhotonTrackProxy (0D_NOT_type)
+// - Untranslated type: photon_track_struct (0D)
 
 // Skipped unusable routine capillary_propagate_photon_a_step:
-// - Untranslated type: PhotonTrackProxy (0D_NOT_type)
+// - Untranslated type: photon_track_struct (0D)
 
 // Skipped unusable routine capillary_reflect_photon:
-// - Untranslated type: PhotonTrackProxy (0D_NOT_type)
+// - Untranslated type: photon_track_struct (0D)
 
 // Skipped unusable routine capillary_track_photon_to_wall:
-// - Untranslated type: PhotonTrackProxy (0D_NOT_type)
+// - Untranslated type: photon_track_struct (0D)
 
 // Skipped unusable routine cartesian_map_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
@@ -1031,7 +1031,7 @@ bool chrom_tune(
     double err_tol);
 
 // Skipped unusable routine cimp1:
-// - Untranslated type: IbsProxy (0D_NOT_type)
+// - Untranslated type: ibs_struct (0D)
 extern "C" bool fortran_classical_radius(
     int& species /* 0D_NOT_integer in */,
     double& radius /* 0D_NOT_real inout */);
@@ -1087,7 +1087,7 @@ extern "C" void fortran_complex_taylor_clean(
 void complex_taylor_clean(ComplexTaylorProxy& complex_taylor);
 
 // Skipped unusable routine complex_taylor_equal_c_taylor:
-// - Untranslated type: CTaylorRawStruct (0D_NOT_type)
+// - Untranslated type: c_taylor (0D)
 extern "C" void fortran_complex_taylor_equal_complex_taylor(
     void* complex_taylor1 /* 0D_NOT_type out */,
     void* complex_taylor2 /* 0D_NOT_type in */);
@@ -1122,7 +1122,7 @@ Bmad::ComplexTaylorToMat6 complex_taylor_to_mat6(
     ComplexAlloc1D& r_in);
 
 // Skipped unusable routine complex_taylors_equal_c_taylors:
-// - Untranslated type: CTaylorRawStruct (1D_ALLOC_type)
+// - Untranslated type: c_taylor (1D)
 extern "C" void fortran_complex_taylors_equal_complex_taylors(
     void* complex_taylor1 /* 1D_ALLOC_type out */,
     void* complex_taylor2 /* 1D_ALLOC_type in */);
@@ -1139,7 +1139,7 @@ extern "C" void fortran_compute_slave_coupler(
 void compute_slave_coupler(EleProxy& slave);
 
 // Skipped unusable routine compute_super_lord_s:
-// - Untranslated type: ParserEleProxy (0D_NOT_type)
+// - Untranslated type: parser_ele_struct (0D)
 extern "C" void fortran_concat_ele_taylor(
     void* orb_taylor /* 1D_ALLOC_type in */,
     void* ele /* 0D_NOT_type in */,
@@ -1152,9 +1152,9 @@ void concat_ele_taylor(
     optional_ref<TaylorProxyAlloc1D> spin_taylor = std::nullopt);
 
 // Skipped unusable routine concat_real_8:
-// - Untranslated type: Real8RawStruct (1D_ALLOC_type)
-// - Untranslated type: Real8RawStruct (1D_ALLOC_type)
-// - Untranslated type: Real8RawStruct (1D_ALLOC_type)
+// - Untranslated type: real_8 (1D)
+// - Untranslated type: real_8 (1D)
+// - Untranslated type: real_8 (1D)
 extern "C" void fortran_concat_taylor(
     void* taylor1 /* 1D_ALLOC_type in */,
     void* taylor2 /* 1D_ALLOC_type in */,
@@ -1495,7 +1495,7 @@ void coords_relative_to_floor(
     FloorPositionProxy& floor1);
 
 // Skipped unusable routine cos_phi:
-// - Untranslated type: DiffuseParamProxy (0D_NOT_type)
+// - Untranslated type: diffuse_param_struct (0D)
 extern "C" bool fortran_coulombfun(
     double& u /* 0D_NOT_real inout */,
     double& v /* 0D_NOT_real inout */,
@@ -1606,7 +1606,7 @@ extern "C" void fortran_crystal_attribute_bookkeeper(
 void crystal_attribute_bookkeeper(EleProxy& ele);
 
 // Skipped unusable routine crystal_diffraction_field_calc:
-// - Untranslated type: CrystalParamProxy (0D_NOT_type)
+// - Untranslated type: crystal_param_struct (0D)
 extern "C" void fortran_crystal_h_misalign(
     void* ele /* 0D_NOT_type in */,
     void* orbit /* 0D_NOT_type in */,
@@ -1631,13 +1631,13 @@ bool crystal_type_to_crystal_params(EleProxy& ele);
 // - Variable inout sized array: wake(:,:,:,:) 4D_NOT_real
 
 // Skipped unusable routine csr_and_sc_apply_kicks:
-// - Untranslated type: CsrProxy (0D_NOT_type)
+// - Untranslated type: csr_struct (0D)
 
 // Skipped unusable routine csr_bin_kicks:
-// - Untranslated type: CsrProxy (0D_NOT_type)
+// - Untranslated type: csr_struct (0D)
 
 // Skipped unusable routine csr_bin_particles:
-// - Untranslated type: CsrProxy (0D_NOT_type)
+// - Untranslated type: csr_struct (0D)
 
 // Skipped unusable routine csr_bunch_slice_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
@@ -1672,7 +1672,7 @@ int custom_attribute_ubound_index(int ele_class);
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine damap_equal_bmad_taylor:
-// - Untranslated type: DamapRawStruct (0D_NOT_type)
+// - Untranslated type: damap (0D)
 extern "C" bool fortran_damping_matrix_d(
     double& gamma /* 0D_NOT_real inout */,
     double& g_tot /* 0D_NOT_real inout */,
@@ -1714,7 +1714,7 @@ extern "C" bool fortran_default_tracking_species(
 void default_tracking_species(LatParamProxy& param, int& species);
 
 // Skipped unusable routine deposit_particles:
-// - Untranslated type: Mesh3dProxy (0D_NOT_type)
+// - Untranslated type: mesh3d_struct (0D)
 extern "C" bool fortran_detector_pixel_pt(
     void* orbit /* 0D_NOT_type in */,
     void* ele /* 0D_NOT_type in */,
@@ -1992,10 +1992,10 @@ void ele_rf_step_index(double E_ref, double s_rel, EleProxy& ele, int& ix_step);
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine ele_to_fibre:
-// - Untranslated type: FibreRawStruct (0D_PTR_type)
+// - Untranslated type: fibre (0D)
 
 // Skipped unusable routine ele_to_fibre_hook_def:
-// - Untranslated type: FibreRawStruct (0D_NOT_type)
+// - Untranslated type: fibre (0D)
 extern "C" void fortran_ele_to_ptc_magnetic_bn_an(
     void* ele /* 0D_NOT_type in */,
     void* bn /* 1D_ALLOC_real out */,
@@ -3040,7 +3040,7 @@ int fft1(RealAlloc1D& a, RealAlloc1D& b, int n, int isn);
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine fibre_to_ele:
-// - Untranslated type: FibreRawStruct (0D_NOT_type)
+// - Untranslated type: fibre (0D)
 extern "C" bool fortran_field_attribute_free(
     void* ele /* 0D_NOT_type in */,
     const char* attrib_name /* 0D_NOT_character in */,
@@ -3231,7 +3231,7 @@ void gen_grad_field(
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine get_astra_fieldgrid_name_and_scaling:
-// - Untranslated type: StrIndexProxy (0D_NOT_type)
+// - Untranslated type: str_index_struct (0D)
 extern "C" void fortran_get_bl_from_fwhm(
     double& bound /* 0D_NOT_real in */,
     double* args /* 1D_NOT_real in */,
@@ -3259,7 +3259,7 @@ Bmad::GetEmitFromSigmaMat get_emit_from_sigma_mat(
     std::optional<FixedArray2D<Real, 6, 6>> Nmat = std::nullopt);
 
 // Skipped unusable routine get_gpt_fieldgrid_name_and_scaling:
-// - Untranslated type: StrIndexProxy (0D_NOT_type)
+// - Untranslated type: str_index_struct (0D)
 
 // Skipped unusable routine get_list_of_names:
 // - Variable-sized inout character array: name_list(:) 1D_ALLOC_character
@@ -3284,10 +3284,10 @@ void get_next_word(
     std::optional<bool> err_flag = std::nullopt);
 
 // Skipped unusable routine get_opal_fieldgrid_name_and_scaling:
-// - Untranslated type: StrIndexProxy (0D_NOT_type)
+// - Untranslated type: str_index_struct (0D)
 
 // Skipped unusable routine get_overlay_group_names:
-// - Untranslated type: ParserEleProxy (0D_NOT_type)
+// - Untranslated type: parser_ele_struct (0D)
 // - Variable-sized inout character array: names_out(:) 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
@@ -3416,10 +3416,10 @@ bool has_orientation_attributes(EleProxy& ele);
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine hdf5_read_beam:
-// - Untranslated type: PmdHeaderProxy (0D_NOT_type)
+// - Untranslated type: pmd_header_struct (0D)
 
 // Skipped unusable routine hdf5_read_grid_field:
-// - Untranslated type: PmdHeaderProxy (0D_NOT_type)
+// - Untranslated type: pmd_header_struct (0D)
 extern "C" void fortran_hdf5_write_beam(
     const char* file_name /* 0D_NOT_character inout */,
     void* bunches /* 1D_ALLOC_type inout */,
@@ -3463,29 +3463,29 @@ void hwang_bend_edge_kick(
     std::optional<bool> make_matrix = std::nullopt);
 
 // Skipped unusable routine i_csr:
-// - Untranslated type: CsrKick1Proxy (0D_NOT_type)
-// - Untranslated type: CsrProxy (0D_NOT_type)
+// - Untranslated type: csr_kick1_struct (0D)
+// - Untranslated type: csr_struct (0D)
 
 // Skipped unusable routine ibs1:
-// - Untranslated type: IbsSimParamProxy (0D_NOT_type)
-// - Untranslated type: IbsProxy (0D_NOT_type)
+// - Untranslated type: ibs_sim_param_struct (0D)
+// - Untranslated type: ibs_struct (0D)
 
 // Skipped unusable routine ibs_blowup1turn:
-// - Untranslated type: IbsSimParamProxy (0D_NOT_type)
+// - Untranslated type: ibs_sim_param_struct (0D)
 
 // Skipped unusable routine ibs_delta_calc:
-// - Untranslated type: IbsSimParamProxy (0D_NOT_type)
+// - Untranslated type: ibs_sim_param_struct (0D)
 
 // Skipped unusable routine ibs_equib_der:
-// - Untranslated type: IbsSimParamProxy (0D_NOT_type)
+// - Untranslated type: ibs_sim_param_struct (0D)
 
 // Skipped unusable routine ibs_equib_rlx:
-// - Untranslated type: IbsSimParamProxy (0D_NOT_type)
+// - Untranslated type: ibs_sim_param_struct (0D)
 
 // Skipped unusable routine ibs_lifetime:
-// - Untranslated type: IbsSimParamProxy (0D_NOT_type)
-// - Untranslated type: IbsMaxratioProxy (0D_NOT_type)
-// - Untranslated type: IbsLifetimeProxy (0D_NOT_type)
+// - Untranslated type: ibs_sim_param_struct (0D)
+// - Untranslated type: ibs_maxratio_struct (0D)
+// - Untranslated type: ibs_lifetime_struct (0D)
 
 // Skipped unusable routine ibs_lifetime_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
@@ -3510,8 +3510,8 @@ void ibs_matrix_c(
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine ibs_rates1turn:
-// - Untranslated type: IbsSimParamProxy (0D_NOT_type)
-// - Untranslated type: IbsProxy (0D_NOT_type)
+// - Untranslated type: ibs_sim_param_struct (0D)
+// - Untranslated type: ibs_struct (0D)
 
 // Skipped unusable routine ibs_sim_param_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
@@ -3592,8 +3592,8 @@ void igfezfun(
     double& res);
 
 // Skipped unusable routine image_charge_kick_calc:
-// - Untranslated type: CsrKick1Proxy (0D_NOT_type)
-// - Untranslated type: CsrProxy (0D_NOT_type)
+// - Untranslated type: csr_kick1_struct (0D)
+// - Untranslated type: csr_struct (0D)
 
 // Skipped unusable routine imageconvcorr3d:
 // - Translated arg count mismatch (unsupported?)
@@ -3767,7 +3767,7 @@ void init_em_taylor_series(
     std::optional<bool> save_old = std::nullopt);
 
 // Skipped unusable routine init_fringe_info:
-// - Untranslated type: FringeFieldInfoProxy (0D_NOT_type)
+// - Untranslated type: fringe_field_info_struct (0D)
 extern "C" void fortran_init_lat(
     void* lat /* 0D_NOT_type out */,
     int* n /* 0D_NOT_integer in */,
@@ -3855,7 +3855,7 @@ void insert_element(
     optional_ref<CoordProxyAlloc1D> orbit = std::nullopt);
 
 // Skipped unusable routine integrand:
-// - Untranslated type: CPtrRawStruct (0D_NOT_type)
+// - Untranslated type: c_ptr (0D)
 extern "C" bool fortran_integrand_base(
     double& t /* 0D_NOT_real in */,
     void* args /* 1D_ALLOC_real inout */,
@@ -3863,10 +3863,10 @@ extern "C" bool fortran_integrand_base(
 void integrand_base(double t, RealAlloc1D& args, double& func_retval__);
 
 // Skipped unusable routine integrand_base_cov:
-// - Untranslated type: CPtrRawStruct (0D_NOT_type)
+// - Untranslated type: c_ptr (0D)
 
 // Skipped unusable routine integrand_zap:
-// - Untranslated type: CPtrRawStruct (0D_NOT_type)
+// - Untranslated type: c_ptr (0D)
 extern "C" void fortran_integrate_psi(
     double& bound /* 0D_NOT_real in */,
     double& p0 /* 0D_NOT_real in */,
@@ -3901,10 +3901,10 @@ void integration_timer_ele(
     double& tol);
 
 // Skipped unusable routine integration_timer_fibre:
-// - Untranslated type: FibreRawStruct (0D_NOT_type)
+// - Untranslated type: fibre (0D)
 
 // Skipped unusable routine interpolate_field:
-// - Untranslated type: Mesh3dProxy (0D_NOT_type)
+// - Untranslated type: mesh3d_struct (0D)
 
 // Skipped unusable routine interval1_coef_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
@@ -3930,10 +3930,10 @@ extern "C" bool fortran_is_attribute(
 bool is_attribute(int ix_attrib, int which);
 
 // Skipped unusable routine jac:
-// - Untranslated type: CPtrRawStruct (0D_NOT_type)
-// - Untranslated type: CPtrRawStruct (0D_NOT_type)
-// - Untranslated type: CPtrRawStruct (0D_NOT_type)
-// - Untranslated type: CPtrRawStruct (0D_NOT_type)
+// - Untranslated type: c_ptr (0D)
+// - Untranslated type: c_ptr (0D)
+// - Untranslated type: c_ptr (0D)
+// - Untranslated type: c_ptr (0D)
 extern "C" bool fortran_key_name_to_key_index(
     const char* key_str /* 0D_NOT_character in */,
     bool* abbrev_allowed /* 0D_NOT_logical in */,
@@ -3995,7 +3995,7 @@ void knots_to_string(
     std::string& str);
 
 // Skipped unusable routine kubo_integrand:
-// - Untranslated type: CPtrRawStruct (0D_NOT_type)
+// - Untranslated type: c_ptr (0D)
 
 // Skipped unusable routine kv_beam_init_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
@@ -4158,23 +4158,23 @@ void low_energy_z_correction(
     double& dz);
 
 // Skipped unusable routine lsc_kick_params_calc:
-// - Untranslated type: CsrProxy (0D_NOT_type)
+// - Untranslated type: csr_struct (0D)
 
 // Skipped unusable routine mad_add_offsets_and_multipoles:
-// - Untranslated type: MadMapProxy (0D_NOT_type)
+// - Untranslated type: mad_map_struct (0D)
 
 // Skipped unusable routine mad_concat_map2:
-// - Untranslated type: MadMapProxy (0D_NOT_type)
-// - Untranslated type: MadMapProxy (0D_NOT_type)
-// - Untranslated type: MadMapProxy (0D_NOT_type)
+// - Untranslated type: mad_map_struct (0D)
+// - Untranslated type: mad_map_struct (0D)
+// - Untranslated type: mad_map_struct (0D)
 
 // Skipped unusable routine mad_drift:
-// - Untranslated type: MadEnergyProxy (0D_NOT_type)
-// - Untranslated type: MadMapProxy (0D_NOT_type)
+// - Untranslated type: mad_energy_struct (0D)
+// - Untranslated type: mad_map_struct (0D)
 
 // Skipped unusable routine mad_elsep:
-// - Untranslated type: MadEnergyProxy (0D_NOT_type)
-// - Untranslated type: MadMapProxy (0D_NOT_type)
+// - Untranslated type: mad_energy_struct (0D)
+// - Untranslated type: mad_map_struct (0D)
 
 // Skipped unusable routine mad_energy_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
@@ -4183,36 +4183,36 @@ void low_energy_z_correction(
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine mad_map_to_taylor:
-// - Untranslated type: MadMapProxy (0D_NOT_type)
-// - Untranslated type: MadEnergyProxy (0D_NOT_type)
+// - Untranslated type: mad_map_struct (0D)
+// - Untranslated type: mad_energy_struct (0D)
 
 // Skipped unusable routine mad_quadrupole:
-// - Untranslated type: MadEnergyProxy (0D_NOT_type)
-// - Untranslated type: MadMapProxy (0D_NOT_type)
+// - Untranslated type: mad_energy_struct (0D)
+// - Untranslated type: mad_map_struct (0D)
 
 // Skipped unusable routine mad_rfcavity:
-// - Untranslated type: MadEnergyProxy (0D_NOT_type)
-// - Untranslated type: MadMapProxy (0D_NOT_type)
+// - Untranslated type: mad_energy_struct (0D)
+// - Untranslated type: mad_map_struct (0D)
 
 // Skipped unusable routine mad_sbend:
-// - Untranslated type: MadEnergyProxy (0D_NOT_type)
-// - Untranslated type: MadMapProxy (0D_NOT_type)
+// - Untranslated type: mad_energy_struct (0D)
+// - Untranslated type: mad_map_struct (0D)
 
 // Skipped unusable routine mad_sbend_body:
-// - Untranslated type: MadEnergyProxy (0D_NOT_type)
-// - Untranslated type: MadMapProxy (0D_NOT_type)
+// - Untranslated type: mad_energy_struct (0D)
+// - Untranslated type: mad_map_struct (0D)
 
 // Skipped unusable routine mad_sbend_fringe:
-// - Untranslated type: MadEnergyProxy (0D_NOT_type)
-// - Untranslated type: MadMapProxy (0D_NOT_type)
+// - Untranslated type: mad_energy_struct (0D)
+// - Untranslated type: mad_map_struct (0D)
 
 // Skipped unusable routine mad_sextupole:
-// - Untranslated type: MadEnergyProxy (0D_NOT_type)
-// - Untranslated type: MadMapProxy (0D_NOT_type)
+// - Untranslated type: mad_energy_struct (0D)
+// - Untranslated type: mad_map_struct (0D)
 
 // Skipped unusable routine mad_solenoid:
-// - Untranslated type: MadEnergyProxy (0D_NOT_type)
-// - Untranslated type: MadMapProxy (0D_NOT_type)
+// - Untranslated type: mad_energy_struct (0D)
+// - Untranslated type: mad_map_struct (0D)
 extern "C" void fortran_mad_tmfoc(
     double& el /* 0D_NOT_real in */,
     double& sk1 /* 0D_NOT_real in */,
@@ -4231,10 +4231,10 @@ extern "C" void fortran_mad_tmsymm(double* te /* 3D_NOT_real inout */);
 void mad_tmsymm(FixedArray3D<Real, 6, 6, 6> te);
 
 // Skipped unusable routine mad_tmtilt:
-// - Untranslated type: MadMapProxy (0D_NOT_type)
+// - Untranslated type: mad_map_struct (0D)
 
 // Skipped unusable routine mad_track1:
-// - Untranslated type: MadMapProxy (0D_NOT_type)
+// - Untranslated type: mad_map_struct (0D)
 extern "C" void fortran_make_g2_mats(
     void* twiss /* 0D_NOT_type in */,
     double* g2_mat /* 2D_NOT_real inout */,
@@ -4278,8 +4278,8 @@ LatProxy make_hybrid_lat(
     optional_ref<CoordArrayProxyAlloc1D> orb0_arr = std::nullopt);
 
 // Skipped unusable routine make_mad_map:
-// - Untranslated type: MadEnergyProxy (0D_NOT_type)
-// - Untranslated type: MadMapProxy (0D_NOT_type)
+// - Untranslated type: mad_energy_struct (0D)
+// - Untranslated type: mad_map_struct (0D)
 extern "C" void fortran_make_mat6(
     void* ele /* 0D_NOT_type inout */,
     void* param /* 0D_NOT_type in */,
@@ -4418,11 +4418,11 @@ Bmad::MakeSmatFromAbc make_smat_from_abc(
 // - Variable out sized array: Done(:,:) 2D_NOT_real
 
 // Skipped unusable routine make_srdt_cache:
-// - Untranslated type: SlicedElesProxy (1D_ALLOC_type)
+// - Untranslated type: sliced_eles_struct (1D)
 // - Variable inout sized array: cache(:,:,:) 3D_ALLOC_complex
 
 // Skipped unusable routine make_unit_mad_map:
-// - Untranslated type: MadMapProxy (0D_NOT_type)
+// - Untranslated type: mad_map_struct (0D)
 extern "C" void fortran_make_v(
     double* M /* 2D_NOT_real inout */,
     std::complex<double>* V /* 2D_NOT_complex inout */,
@@ -4493,7 +4493,7 @@ SpinOrbitMap1Proxy map1_times_map1(
     SpinOrbitMap1Proxy& map1);
 
 // Skipped unusable routine map_coef:
-// - Untranslated type: Real8RawStruct (1D_ALLOC_type)
+// - Untranslated type: real_8 (1D)
 extern "C" void fortran_map_to_angle_coords(
     void* t_canon /* 1D_NOT_type in */,
     void* t_angle /* 1D_NOT_type out */);
@@ -4609,7 +4609,7 @@ extern "C" void fortran_mfft1(
 int mfft1(RealAlloc1D& a, RealAlloc1D& b, IntAlloc1D& n, int ndim, int isn);
 
 // Skipped unusable routine misalign_ptc_fibre:
-// - Untranslated type: FibreRawStruct (0D_PTR_type)
+// - Untranslated type: fibre (0D)
 
 // Skipped unusable routine mode3_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
@@ -4625,16 +4625,16 @@ extern "C" bool fortran_momentum_compaction(
 void momentum_compaction(BranchProxy& branch, double& mom_comp);
 
 // Skipped unusable routine mpxx1:
-// - Untranslated type: IbsProxy (0D_NOT_type)
+// - Untranslated type: ibs_struct (0D)
 
 // Skipped unusable routine mpxx_integrand:
-// - Untranslated type: CPtrRawStruct (0D_NOT_type)
+// - Untranslated type: c_ptr (0D)
 
 // Skipped unusable routine mpzt1:
-// - Untranslated type: IbsProxy (0D_NOT_type)
+// - Untranslated type: ibs_struct (0D)
 
 // Skipped unusable routine multi_coulomb_log:
-// - Untranslated type: IbsSimParamProxy (0D_NOT_type)
+// - Untranslated type: ibs_sim_param_struct (0D)
 extern "C" void fortran_multi_turn_tracking_analysis(
     void* track /* 1D_ALLOC_type in */,
     int& i_dim /* 0D_NOT_integer in */,
@@ -4664,7 +4664,7 @@ extern "C" void fortran_multilayer_type_to_multilayer_params(
 bool multilayer_type_to_multilayer_params(EleProxy& ele);
 
 // Skipped unusable routine multipass_all_info:
-// - Untranslated type: MultipassAllInfoProxy (0D_NOT_type)
+// - Untranslated type: multipass_all_info_struct (0D)
 
 // Skipped unusable routine multipass_all_info_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
@@ -4697,8 +4697,8 @@ void multipass_chain(
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine multipass_region_info:
-// - Untranslated type: MultipassRegionLatProxy (0D_NOT_type)
-// - Untranslated type: MultipassAllInfoProxy (0D_NOT_type)
+// - Untranslated type: multipass_region_lat_struct (0D)
+// - Untranslated type: multipass_all_info_struct (0D)
 
 // Skipped unusable routine multipass_region_lat_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
@@ -4894,7 +4894,7 @@ void normal_form_complex_taylors(
     optional_ref<int> order = std::nullopt);
 
 // Skipped unusable routine normal_form_rd_terms:
-// - Untranslated type: Probe8RawStruct (0D_NOT_type)
+// - Untranslated type: probe_8 (0D)
 extern "C" void fortran_normal_form_taylors(
     void* one_turn_taylor /* 1D_NOT_type in */,
     bool& rf_on /* 0D_NOT_logical in */,
@@ -5356,7 +5356,7 @@ Bmad::ParseIntegerList2 parse_integer_list2(
     optional_ref<int> default_value = std::nullopt);
 
 // Skipped unusable routine parse_line_or_list:
-// - Untranslated type: SeqProxy (1D_ALLOC_type)
+// - Untranslated type: seq_struct (1D)
 extern "C" bool fortran_parse_real_list(
     void* lat /* 0D_NOT_type in */,
     const char* err_str /* 0D_NOT_character in */,
@@ -5420,15 +5420,15 @@ Bmad::ParseRealList2 parse_real_list2(
 // - Variable in sized array: table(:,:) 2D_ALLOC_real
 
 // Skipped unusable routine parse_superimpose_command:
-// - Untranslated type: ParserEleProxy (0D_NOT_type)
+// - Untranslated type: parser_ele_struct (0D)
 
 // Skipped unusable routine parser2_add_superimpose:
-// - Untranslated type: ParserEleProxy (0D_NOT_type)
+// - Untranslated type: parser_ele_struct (0D)
 
 // Skipped unusable routine parser_add_branch:
-// - Untranslated type: SeqProxy (1D_ALLOC_type)
+// - Untranslated type: seq_struct (1D)
 // - Variable-sized inout character array: seq_name(:) 1D_ALLOC_character
-// - Untranslated type: ParserLatProxy (0D_NOT_type)
+// - Untranslated type: parser_lat_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_parser_add_constant(
     const char* word /* 0D_NOT_character inout */,
@@ -5440,11 +5440,11 @@ void parser_add_constant(
     bool& redef_is_error);
 
 // Skipped unusable routine parser_add_lords:
-// - Untranslated type: ParserLatProxy (0D_NOT_type)
+// - Untranslated type: parser_lat_struct (0D)
 
 // Skipped unusable routine parser_add_superimpose:
-// - Untranslated type: ParserEleProxy (0D_NOT_type)
-// - Untranslated type: ParserLatProxy (0D_NOT_type)
+// - Untranslated type: parser_ele_struct (0D)
+// - Untranslated type: parser_lat_struct (0D)
 extern "C" void fortran_parser_call_check(
     const char* word /* 0D_NOT_character inout */,
     int& ix_word /* 0D_NOT_integer inout */,
@@ -5464,19 +5464,19 @@ void parser_call_check(
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine parser_debug_print_info:
-// - Untranslated type: SeqProxy (1D_ALLOC_type)
+// - Untranslated type: seq_struct (1D)
 
 // Skipped unusable routine parser_ele_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine parser_error:
-// - Untranslated type: SeqProxy (0D_NOT_type)
-// - Untranslated type: ParserEleProxy (0D_NOT_type)
+// - Untranslated type: seq_struct (0D)
+// - Untranslated type: parser_ele_struct (0D)
 
 // Skipped unusable routine parser_expand_line:
-// - Untranslated type: SeqProxy (1D_ALLOC_type)
+// - Untranslated type: seq_struct (1D)
 // - Variable-sized in character array: seq_name(:) 1D_ALLOC_character
-// - Untranslated type: BaseLineEleProxy (1D_ALLOC_type)
+// - Untranslated type: base_line_ele_struct (1D)
 // - Translated arg count mismatch (unsupported?)
 extern "C" bool fortran_parser_fast_complex_read(
     void* cmplx_vec /* 1D_ALLOC_complex out */,
@@ -5613,7 +5613,7 @@ void parser_read_sr_wake(
     bool& err_flag);
 
 // Skipped unusable routine parser_set_attribute:
-// - Untranslated type: ParserEleProxy (0D_NOT_type)
+// - Untranslated type: parser_ele_struct (0D)
 extern "C" void fortran_parser_transfer_control_struct(
     void* con_in /* 0D_NOT_type in */,
     void* con_out /* 0D_NOT_type out */,
@@ -5719,7 +5719,7 @@ void photon_add_to_detector_statistics(
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine photon_diffuse_scattering:
-// - Untranslated type: DiffuseParamProxy (0D_NOT_type)
+// - Untranslated type: diffuse_param_struct (0D)
 
 // Skipped unusable routine photon_element_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
@@ -5743,7 +5743,7 @@ void photon_add_to_detector_statistics(
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine photon_read_spline:
-// - Untranslated type: PhotonInitSplinesProxy (0D_NOT_type)
+// - Untranslated type: photon_init_splines_struct (0D)
 
 // Skipped unusable routine photon_reflect_surface_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
@@ -5846,7 +5846,7 @@ void point_photon_emission(
     std::optional<FixedArray2D<Real, 3, 3>> w_to_surface = std::nullopt);
 
 // Skipped unusable routine pointer_to_attribute:
-// - Untranslated type: AllPointerProxy (0D_NOT_type)
+// - Untranslated type: all_pointer_struct (0D)
 extern "C" bool fortran_pointer_to_branch_given_ele(
     void* ele /* 0D_NOT_type in */,
     void* branch_ptr /* 0D_PTR_type out */);
@@ -5912,7 +5912,7 @@ Bmad::PointerToElementAtS pointer_to_element_at_s(
     std::optional<bool> print_err = std::nullopt);
 
 // Skipped unusable routine pointer_to_fibre:
-// - Untranslated type: FibreRawStruct (0D_PTR_type)
+// - Untranslated type: fibre (0D)
 extern "C" bool fortran_pointer_to_field_ele(
     void* ele /* 0D_NOT_type in */,
     int& ix_field_ele /* 0D_NOT_integer in */,
@@ -5929,7 +5929,7 @@ extern "C" bool fortran_pointer_to_girder(
 int pointer_to_girder(EleProxy& ele, EleProxy& girder);
 
 // Skipped unusable routine pointer_to_indexed_attribute:
-// - Untranslated type: AllPointerProxy (0D_NOT_type)
+// - Untranslated type: all_pointer_struct (0D)
 extern "C" bool fortran_pointer_to_lord(
     void* slave /* 0D_NOT_type in */,
     int& ix_lord /* 0D_NOT_integer in */,
@@ -6075,7 +6075,7 @@ Bmad::PointerToWall3d pointer_to_wall3d(
     std::optional<int> ix_wall = std::nullopt);
 
 // Skipped unusable routine pointers_to_attribute:
-// - Untranslated type: AllPointerProxy (1D_ALLOC_type)
+// - Untranslated type: all_pointer_struct (1D)
 extern "C" bool fortran_polar_to_spinor(
     void* polar /* 0D_NOT_type in */,
     std::complex<double>* spinor /* 1D_NOT_complex inout */);
@@ -6089,10 +6089,10 @@ void polar_to_vec(SpinPolarProxy& polar, FixedArray1D<Real, 3> vec);
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine print_mesh3d:
-// - Untranslated type: Mesh3dProxy (0D_NOT_type)
+// - Untranslated type: mesh3d_struct (0D)
 
 // Skipped unusable routine prob_x_diffuse:
-// - Untranslated type: DiffuseParamProxy (0D_NOT_type)
+// - Untranslated type: diffuse_param_struct (0D)
 extern "C" void fortran_project_emit_to_xyz(
     void* ring /* 0D_NOT_type in */,
     int& ix /* 0D_NOT_integer in */,
@@ -6111,13 +6111,13 @@ Bmad::ProjectEmitToXyz project_emit_to_xyz(
     NormalModesProxy& mode);
 
 // Skipped unusable routine propagate_part_way:
-// - Untranslated type: RadIntTrackPointProxy (0D_NOT_type)
-// - Untranslated type: RadIntInfoProxy (0D_NOT_type)
+// - Untranslated type: rad_int_track_point_struct (0D)
+// - Untranslated type: rad_int_info_struct (0D)
 
 // Skipped unusable routine psi_prime:
-// - Untranslated type: CPtrRawStruct (0D_NOT_type)
-// - Untranslated type: CPtrRawStruct (0D_NOT_type)
-// - Untranslated type: CPtrRawStruct (0D_NOT_type)
+// - Untranslated type: c_ptr (0D)
+// - Untranslated type: c_ptr (0D)
+// - Untranslated type: c_ptr (0D)
 extern "C" void fortran_psi_prime_sca(
     double& t /* 0D_NOT_real in */,
     double& p /* 0D_NOT_real in */,
@@ -6131,10 +6131,10 @@ void ptc_bookkeeper(LatProxy& lat);
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine ptc_calculate_tracking_step_size:
-// - Untranslated type: LayoutRawStruct (0D_NOT_type)
+// - Untranslated type: layout (0D)
 
 // Skipped unusable routine ptc_check_for_lost_particle:
-// - Untranslated type: FibreRawStruct (0D_PTR_type)
+// - Untranslated type: fibre (0D)
 extern "C" void fortran_ptc_closed_orbit_calc(
     void* branch /* 0D_NOT_type in */,
     void* closed_orbit /* 1D_ALLOC_type out */,
@@ -6159,7 +6159,7 @@ Bmad::PtcEmitCalc ptc_emit_calc(
     FixedArray2D<Real, 6, 6> sigma_mat);
 
 // Skipped unusable routine ptc_kill_map_with_radiation:
-// - Untranslated type: PtcRadMapProxy (0D_NOT_type)
+// - Untranslated type: ptc_rad_map_struct (0D)
 
 // Skipped unusable routine ptc_layout_pointer_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
@@ -6183,20 +6183,20 @@ void ptc_layouts_resplit(
     std::optional<FixedArray1D<Int, 2>> crossover_wiggler = std::nullopt);
 
 // Skipped unusable routine ptc_linear_isf_calc:
-// - Untranslated type: LinearEleIsfProxy (1D_ALLOC_type)
+// - Untranslated type: linear_ele_isf_struct (1D)
 
 // Skipped unusable routine ptc_map_to_normal_form:
-// - Untranslated type: Probe8RawStruct (0D_NOT_type)
-// - Untranslated type: CNormalFormRawStruct (0D_NOT_type)
-// - Untranslated type: CTaylorRawStruct (1D_NOT_type)
-// - Untranslated type: CTaylorRawStruct (0D_NOT_type)
+// - Untranslated type: probe_8 (0D)
+// - Untranslated type: c_normal_form (0D)
+// - Untranslated type: c_taylor (1D)
+// - Untranslated type: c_taylor (0D)
 
 // Skipped unusable routine ptc_normal_form_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine ptc_one_turn_map_at_ele:
-// - Untranslated type: Probe8RawStruct (0D_NOT_type)
-// - Untranslated type: InternalStateRawStruct (0D_NOT_type)
+// - Untranslated type: probe_8 (0D)
+// - Untranslated type: internal_state (0D)
 extern "C" void fortran_ptc_one_turn_mat_and_closed_orbit_calc(
     void* branch /* 0D_NOT_type inout */,
     double* pz /* 0D_NOT_real in */);
@@ -6217,7 +6217,7 @@ void ptc_ran_seed_put(int iseed);
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine ptc_read_map_with_radiation:
-// - Untranslated type: PtcRadMapProxy (0D_NOT_type)
+// - Untranslated type: ptc_rad_map_struct (0D)
 extern "C" void fortran_ptc_set_rf_state_for_c_normal(
     bool& nocavity /* 0D_NOT_logical in */);
 void ptc_set_rf_state_for_c_normal(bool nocavity);
@@ -6225,10 +6225,10 @@ extern "C" void fortran_ptc_set_taylor_order_if_needed();
 void ptc_set_taylor_order_if_needed();
 
 // Skipped unusable routine ptc_setup_map_with_radiation:
-// - Untranslated type: PtcRadMapProxy (0D_NOT_type)
+// - Untranslated type: ptc_rad_map_struct (0D)
 
 // Skipped unusable routine ptc_setup_tracking_with_damping_and_excitation:
-// - Untranslated type: InternalStateRawStruct (0D_NOT_type)
+// - Untranslated type: internal_state (0D)
 extern "C" void fortran_ptc_spin_calc(
     void* ele /* 0D_NOT_type in */,
     void* norm_mode /* 0D_NOT_type out */,
@@ -6243,10 +6243,10 @@ Bmad::PtcSpinCalc ptc_spin_calc(
     FixedArray2D<Real, 6, 6> sigma_mat);
 
 // Skipped unusable routine ptc_spin_matching_calc:
-// - Untranslated type: SpinMatchingProxy (1D_ALLOC_type)
+// - Untranslated type: spin_matching_struct (1D)
 
 // Skipped unusable routine ptc_taylors_equal_bmad_taylors:
-// - Untranslated type: TaylorRawStruct (1D_ALLOC_type)
+// - Untranslated type: taylor (1D)
 extern "C" void fortran_ptc_track_all(
     void* branch /* 0D_NOT_type in */,
     void* orbit /* 1D_ALLOC_type inout */,
@@ -6259,7 +6259,7 @@ struct PtcTrackAll {
 Bmad::PtcTrackAll ptc_track_all(BranchProxy& branch, CoordProxyAlloc1D& orbit);
 
 // Skipped unusable routine ptc_track_map_with_radiation:
-// - Untranslated type: PtcRadMapProxy (0D_NOT_type)
+// - Untranslated type: ptc_rad_map_struct (0D)
 extern "C" void fortran_ptc_transfer_map_with_spin(
     void* branch /* 0D_NOT_type in */,
     void* t_map /* 1D_NOT_type inout */,
@@ -6281,10 +6281,10 @@ bool ptc_transfer_map_with_spin(
     std::optional<bool> unit_start = std::nullopt);
 
 // Skipped unusable routine ptc_write_map_with_radiation:
-// - Untranslated type: PtcRadMapProxy (0D_NOT_type)
+// - Untranslated type: ptc_rad_map_struct (0D)
 
 // Skipped unusable routine ptwo:
-// - Untranslated type: DiffuseParamProxy (0D_NOT_type)
+// - Untranslated type: diffuse_param_struct (0D)
 extern "C" bool fortran_pwd_mat(
     void* lat /* 0D_NOT_type in */,
     double* t6 /* 2D_NOT_real in */,
@@ -6298,8 +6298,8 @@ FixedArray2D<Real, 6, 6> pwd_mat(
     double sig_z);
 
 // Skipped unusable routine qromb_rad_int:
-// - Untranslated type: RadIntTrackPointProxy (0D_NOT_type)
-// - Untranslated type: RadIntInfoProxy (0D_NOT_type)
+// - Untranslated type: rad_int_track_point_struct (0D)
+// - Untranslated type: rad_int_info_struct (0D)
 
 // Skipped unusable routine quad_mat2_calc:
 // - Variable out sized array: mat2(:,:) 2D_NOT_real
@@ -6449,7 +6449,7 @@ extern "C" bool fortran_rchomp(
 void rchomp(double& rel, int& plc, std::string& out);
 
 // Skipped unusable routine rclog_integrand:
-// - Untranslated type: CPtrRawStruct (0D_NOT_type)
+// - Untranslated type: c_ptr (0D)
 extern "C" void fortran_re_allocate_eles(
     void* eles /* 1D_ALLOC_type inout */,
     int& n /* 0D_NOT_integer in */,
@@ -6562,7 +6562,7 @@ extern "C" void fortran_read_surface_reflection_file(
 PhotonReflectSurfaceProxy read_surface_reflection_file(std::string file_name);
 
 // Skipped unusable routine real_8_to_taylor:
-// - Untranslated type: Real8RawStruct (1D_ALLOC_type)
+// - Untranslated type: real_8 (1D)
 extern "C" void fortran_reallocate_beam(
     void* beam /* 0D_NOT_type inout */,
     int& n_bunch /* 0D_NOT_integer in */,
@@ -6612,10 +6612,10 @@ void reallocate_expression_stack(
     std::optional<bool> exact = std::nullopt);
 
 // Skipped unusable routine reallocate_sequence:
-// - Untranslated type: SeqProxy (1D_ALLOC_type)
+// - Untranslated type: seq_struct (1D)
 
 // Skipped unusable routine reals_8_equal_bmad_taylors:
-// - Untranslated type: Real8RawStruct (1D_ALLOC_type)
+// - Untranslated type: real_8 (1D)
 extern "C" bool fortran_rel_tracking_charge_to_mass(
     void* orbit /* 0D_NOT_type in */,
     int& ref_species /* 0D_NOT_integer in */,
@@ -6847,11 +6847,11 @@ extern "C" void fortran_s_calc(void* lat /* 0D_NOT_type inout */);
 void s_calc(LatProxy& lat);
 
 // Skipped unusable routine s_ref_to_s_chord:
-// - Untranslated type: CsrEleInfoProxy (0D_NOT_type)
+// - Untranslated type: csr_ele_info_struct (0D)
 
 // Skipped unusable routine s_source_calc:
-// - Untranslated type: CsrKick1Proxy (0D_NOT_type)
-// - Untranslated type: CsrProxy (0D_NOT_type)
+// - Untranslated type: csr_kick1_struct (0D)
+// - Untranslated type: csr_struct (0D)
 extern "C" void fortran_sad_mult_hard_bend_edge_kick(
     void* ele /* 0D_NOT_type in */,
     void* param /* 0D_NOT_type in */,
@@ -6989,7 +6989,7 @@ CoordProxy set_active_fixer(
     std::optional<bool> turn_on = std::nullopt);
 
 // Skipped unusable routine set_branch_and_ele_for_omp:
-// - Untranslated type: LatPointerProxy (1D_ALLOC_type)
+// - Untranslated type: lat_pointer_struct (1D)
 extern "C" void fortran_set_custom_attribute_name(
     const char* custom_name /* 0D_NOT_character in */,
     bool& err_flag /* 0D_NOT_logical out */,
@@ -7060,7 +7060,7 @@ void set_emit_from_beam_init(
     BeamInitProxy& beam_init_set);
 
 // Skipped unusable routine set_flags_for_changed_all_attribute:
-// - Untranslated type: AllPointerProxy (0D_NOT_type)
+// - Untranslated type: all_pointer_struct (0D)
 extern "C" void fortran_set_flags_for_changed_integer_attribute(
     void* ele /* 0D_NOT_type in */,
     int& attrib /* 0D_NOT_integer inout */,
@@ -7340,24 +7340,24 @@ ComplexTaylorProxy sort_complex_taylor_terms(
     ComplexTaylorProxy& complex_taylor_in);
 
 // Skipped unusable routine sort_universal_terms:
-// - Untranslated type: UniversalTaylorRawStruct (0D_NOT_type)
-// - Untranslated type: UniversalTaylorRawStruct (0D_NOT_type)
+// - Untranslated type: universal_taylor (0D)
+// - Untranslated type: universal_taylor (0D)
 
 // Skipped unusable routine space_charge_3d:
-// - Untranslated type: Mesh3dProxy (0D_NOT_type)
+// - Untranslated type: mesh3d_struct (0D)
 // - Variable in sized array: image_efield(:,:,:,:) 4D_ALLOC_real
 
 // Skipped unusable routine space_charge_cathodeimages:
-// - Untranslated type: Mesh3dProxy (0D_NOT_type)
+// - Untranslated type: mesh3d_struct (0D)
 
 // Skipped unusable routine space_charge_common_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine space_charge_freespace:
-// - Untranslated type: Mesh3dProxy (0D_NOT_type)
+// - Untranslated type: mesh3d_struct (0D)
 
 // Skipped unusable routine space_charge_rectpipe:
-// - Untranslated type: Mesh3dProxy (0D_NOT_type)
+// - Untranslated type: mesh3d_struct (0D)
 
 // Skipped unusable routine spin_axis_struct_to_json:
 // - Routine module (bmad_json) in configuration skip list
@@ -7366,7 +7366,7 @@ ComplexTaylorProxy sort_complex_taylor_terms(
 // - Routine in configuration skip list
 
 // Skipped unusable routine spin_depolarization_rate:
-// - Untranslated type: SpinMatchingProxy (1D_ALLOC_type)
+// - Untranslated type: spin_matching_struct (1D)
 extern "C" bool fortran_spin_dn_dpz_from_mat8(
     double* mat_1turn /* 2D_NOT_real in */,
     double* dn_dpz_partial /* 2D_NOT_real in */,
@@ -7766,14 +7766,14 @@ bool taylor_propagate1(
 // - Routine module (bmad_json) in configuration skip list
 
 // Skipped unusable routine taylor_to_genfield:
-// - Untranslated type: GenfieldRawStruct (0D_NOT_type)
+// - Untranslated type: genfield (0D)
 
 // Skipped unusable routine taylor_to_mad_map:
-// - Untranslated type: MadEnergyProxy (0D_NOT_type)
-// - Untranslated type: MadMapProxy (0D_NOT_type)
+// - Untranslated type: mad_energy_struct (0D)
+// - Untranslated type: mad_map_struct (0D)
 
 // Skipped unusable routine taylor_to_real_8:
-// - Untranslated type: Real8RawStruct (1D_NOT_type)
+// - Untranslated type: real_8 (1D)
 extern "C" void fortran_taylors_equal_taylors(
     void* taylor1 /* 1D_ALLOC_type out */,
     void* taylor2 /* 1D_ALLOC_type in */);
@@ -7893,10 +7893,10 @@ extern "C" void fortran_touschek_lifetime(
 double touschek_lifetime(NormalModesProxy& mode, LatProxy& lat);
 
 // Skipped unusable routine touschek_lifetime_ele_by_ele:
-// - Untranslated type: MomentumApertureProxy (1D_ALLOC_type)
+// - Untranslated type: momentum_aperture_struct (1D)
 
 // Skipped unusable routine touschek_lifetime_with_aperture:
-// - Untranslated type: MomentumApertureProxy (1D_ALLOC_type)
+// - Untranslated type: momentum_aperture_struct (1D)
 extern "C" void fortran_touschek_rate1(
     void* mode /* 0D_NOT_type in */,
     double& rate /* 0D_NOT_real out */,
@@ -9051,26 +9051,26 @@ void type_expression_tree(
     std::optional<int> indent = std::nullopt);
 
 // Skipped unusable routine type_map:
-// - Untranslated type: Real8RawStruct (1D_ALLOC_type)
+// - Untranslated type: real_8 (1D)
 
 // Skipped unusable routine type_map1:
-// - Untranslated type: Real8RawStruct (1D_ALLOC_type)
+// - Untranslated type: real_8 (1D)
 
 // Skipped unusable routine type_ptc_fibre:
-// - Untranslated type: FibreRawStruct (0D_PTR_type)
+// - Untranslated type: fibre (0D)
 // - Variable-sized out character array: lines(:) 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine type_ptc_internal_state:
-// - Untranslated type: InternalStateRawStruct (0D_NOT_type)
+// - Untranslated type: internal_state (0D)
 // - Variable-sized out character array: lines(:) 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine type_ptc_layout:
-// - Untranslated type: LayoutRawStruct (0D_NOT_type)
+// - Untranslated type: layout (0D)
 
 // Skipped unusable routine type_real_8_taylors:
-// - Untranslated type: Real8RawStruct (1D_ALLOC_type)
+// - Untranslated type: real_8 (1D)
 
 // Skipped unusable routine type_taylors:
 // - Variable-sized inout character array: lines(:) 1D_ALLOC_character
@@ -9081,11 +9081,11 @@ void type_expression_tree(
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine universal_equal_universal:
-// - Untranslated type: UniversalTaylorRawStruct (0D_NOT_type)
-// - Untranslated type: UniversalTaylorRawStruct (0D_NOT_type)
+// - Untranslated type: universal_taylor (0D)
+// - Untranslated type: universal_taylor (0D)
 
 // Skipped unusable routine universal_to_bmad_taylor:
-// - Untranslated type: UniversalTaylorRawStruct (0D_NOT_type)
+// - Untranslated type: universal_taylor (0D)
 
 // Skipped unusable routine unlink_fieldmap:
 // - Routine in configuration skip list
@@ -9344,7 +9344,7 @@ void write_astra_bend(
     FixedArray1D<Real, 2> d4);
 
 // Skipped unusable routine write_astra_ele:
-// - Untranslated type: StrIndexProxy (0D_NOT_type)
+// - Untranslated type: str_index_struct (0D)
 extern "C" void fortran_write_astra_field_grid_file(
     int& astra_file_unit /* 0D_NOT_integer in */,
     void* ele /* 0D_NOT_type in */,
@@ -9375,7 +9375,7 @@ Bmad::WriteAstraFieldGridFile3d write_astra_field_grid_file_3d(
     std::optional<double> dz = std::nullopt);
 
 // Skipped unusable routine write_astra_lattice_file:
-// - Untranslated type: AstraLatticeParamProxy (0D_NOT_type)
+// - Untranslated type: astra_lattice_param_struct (0D)
 extern "C" void fortran_write_beam_file(
     const char* file_name /* 0D_NOT_character in */,
     void* beam /* 0D_NOT_type in */,
@@ -9456,11 +9456,11 @@ bool write_bmad_lattice_file(
 
 // Skipped unusable routine write_digested_bmad_file:
 // - Variable-sized in character array: file_names(:) 1D_ALLOC_character
-// - Untranslated type: ExtraParsingInfoProxy (0D_NOT_type)
+// - Untranslated type: extra_parsing_info_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine write_gpt_ele:
-// - Untranslated type: StrIndexProxy (0D_NOT_type)
+// - Untranslated type: str_index_struct (0D)
 extern "C" void fortran_write_gpt_field_grid_file_1d(
     int& gpt_file_unit /* 0D_NOT_integer in */,
     void* ele /* 0D_NOT_type in */,
@@ -9515,7 +9515,7 @@ Bmad::WriteGptFieldGridFile3d write_gpt_field_grid_file_3d(
     std::optional<double> dz = std::nullopt);
 
 // Skipped unusable routine write_gpt_lattice_file:
-// - Untranslated type: GptLatParamProxy (0D_NOT_type)
+// - Untranslated type: gpt_lat_param_struct (0D)
 extern "C" void fortran_write_lat_line(
     const char* line /* 0D_NOT_character inout */,
     int& iu /* 0D_NOT_integer in */,
@@ -9708,5 +9708,5 @@ extern "C" bool fortran_zlafun(
 void zlafun(double& x, double& y, double& z, double& res);
 
 // Skipped unusable routine zot_integrand:
-// - Untranslated type: CPtrRawStruct (0D_NOT_type)
+// - Untranslated type: c_ptr (0D)
 } // namespace Bmad
