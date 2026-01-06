@@ -4,9 +4,6 @@ import pathlib
 import string
 import textwrap
 
-import pydantic
-import pydantic.alias_generators
-
 from .arg import CodegenStructure
 from .cpp import CppWrapperArgument
 from .enums import EnumValue, get_ele_attributes, get_ele_keys, parse_all_enums
@@ -14,7 +11,7 @@ from .paths import CODEGEN_ROOT, PYBMAD_INCLUDE, PYBMAD_SRC
 from .proxy import templates as proxy_templates
 from .routines import FortranRoutine, RoutineArg, is_python_immutable
 from .types import remove_optional
-from .util import snake_to_camel, sorted_routines, struct_to_proxy_class_name
+from .util import snake_to_camel, sorted_routines
 
 
 def is_struct_array_used(
@@ -342,7 +339,7 @@ def generate_pybmad_header(
     forward_decls = ["namespace Pybmad {"]
 
     for struct in structs:
-        forward_decls.append(f"void init_{struct.f_name}(py::module &);")
+        forward_decls.append(f"void init_{struct.f_name}(py::module &, py::class_<{struct.cpp_class}> &);")
 
     # for struct in structs:
     #     forward_decls.append(f"std::string to_string(const {struct.cpp_class}& self);")
@@ -352,24 +349,16 @@ def generate_pybmad_header(
 
 
 def generate_pybmad_struct_code(struct: CodegenStructure) -> list[str]:
-    code_lines = []
-    cpp_class_name = struct.cpp_class if struct.cpp_class else struct_to_proxy_class_name(struct.f_name)
-    py_class_name = pydantic.alias_generators.to_pascal(struct.f_name)
-
-    code_lines.append("")
+    code_lines = [""]
     code_lines.append("// =============================================================================")
     code_lines.append(f"// {struct.f_name}")
-    code_lines.append(f"void init_{struct.f_name}(py::module &m) {{")
+    code_lines.append(f"void init_{struct.f_name}(py::module &m, py::class_<{struct.cpp_class}> &cls) {{")
 
-    code_lines.append(
-        f'    py::class_<{cpp_class_name}, std::shared_ptr<{cpp_class_name}>>(m, "{py_class_name}", "Fortran struct: {struct.f_name}")'
-    )
-
-    if struct.c_constructor_arg_list:
-        code_lines.append("        // TODO: add proper constructor with arguments")
-        code_lines.append("        .def(py::init<>())")
-    else:
-        code_lines.append("        .def(py::init<>())")
+    # if struct.c_constructor_arg_list:
+    #     code_lines.append("        // TODO: add proper constructor with arguments")
+    #     code_lines.append("        .def(py::init<>())")
+    # else:
+    code_lines.append("        cls.def(py::init<>())")
 
     for arg in struct.arg:
         if not arg.is_component:
@@ -411,12 +400,12 @@ def generate_pybmad_struct_code(struct: CodegenStructure) -> list[str]:
     code_lines.append("")
 
     # if is_struct_array_used(routines_by_name, structs, struct, 1):
-    code_lines.append(f'    bind_FTypeArrayND<{cpp_class_name}Array1D>(m, "{cpp_class_name}Array1D");')
-    code_lines.append(f'    bind_FTypeArrayND<{cpp_class_name}Array2D>(m, "{cpp_class_name}Array2D");')
-    code_lines.append(f'    bind_FTypeArrayND<{cpp_class_name}Array3D>(m, "{cpp_class_name}Array3D");')
-    code_lines.append(f'    bind_FTypeAlloc1D<{cpp_class_name}Alloc1D>(m, "{cpp_class_name}Alloc1D");')
+    code_lines.append(f'    bind_FTypeArrayND<{struct.cpp_class}Array1D>(m, "{struct.cpp_class}Array1D");')
+    code_lines.append(f'    bind_FTypeArrayND<{struct.cpp_class}Array2D>(m, "{struct.cpp_class}Array2D");')
+    code_lines.append(f'    bind_FTypeArrayND<{struct.cpp_class}Array3D>(m, "{struct.cpp_class}Array3D");')
+    code_lines.append(f'    bind_FTypeAlloc1D<{struct.cpp_class}Alloc1D>(m, "{struct.cpp_class}Alloc1D");')
     # else:
-    #     code_lines.append(f"    // 1D {cpp_class_name} arrays are not used in routines")
+    #     code_lines.append(f"    // 1D {struct.cpp_class} arrays are not used in routines")
 
     code_lines.append("}")
 
@@ -474,7 +463,16 @@ def generate_pybmad(
     template_text = template_text.replace("// ${", "${")
     template = string.Template(template_text)
 
-    init_calls = "\n".join(f"    init_{struct.f_name}(m);" for struct in structs)
+    struct_init_lines = []
+    for struct in structs:
+        struct_init_lines.append(
+            f'    auto py_{struct.python_class_name} = py::class_<{struct.cpp_class}>(m, "{struct.python_class_name}", "Fortran struct: {struct.f_name}");'
+        )
+
+    for struct in structs:
+        struct_init_lines.append(f"    init_{struct.f_name}(m, py_{struct.python_class_name});")
+
+    init_calls = "\n".join(struct_init_lines)
 
     routine_block = generate_py_routine_defs(routines_by_name)
     routine_wrappers = generate_py_routine_wrappers(routines_by_name)

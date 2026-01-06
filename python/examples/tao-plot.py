@@ -12,8 +12,6 @@ print("\n".join(tao.cmd("show uni")))
 
 s = pybmad.get_super_universe()
 
-plot_page: pybmad.TaoPlotPageStruct = s.plot_page
-
 regions = [r for r in s.plot_page.region if r.plot.description and r.plot.graph.is_valid()]
 
 plt.ion()

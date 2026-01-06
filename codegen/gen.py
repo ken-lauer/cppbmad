@@ -59,8 +59,6 @@ def match_structure_definition(
         raise RuntimeError(f"Structure not found: {struct.f_name!r}")
 
     struct.f_name = fstruct.name
-
-    struct.cpp_class = struct_to_proxy_class_name(fstruct.name)
     struct.arg = [
         Argument.from_fstruct(fstruct, member, params=params) for member in fstruct.members.values()
     ]

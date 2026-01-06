@@ -11,10 +11,10 @@ namespace Pybmad {
 
 // =============================================================================
 // ac_kicker_freq_struct
-void init_ac_kicker_freq_struct(py::module& m) {
-  py::class_<AcKickerFreqProxy, std::shared_ptr<AcKickerFreqProxy>>(
-      m, "AcKickerFreqStruct", "Fortran struct: ac_kicker_freq_struct")
-      .def(py::init<>())
+void init_ac_kicker_freq_struct(
+    py::module& m,
+    py::class_<AcKickerFreqProxy>& cls) {
+  cls.def(py::init<>())
       // AcKickerFreqProxy.f (0D_NOT_real -
       .def_property("f", &AcKickerFreqProxy::f, &AcKickerFreqProxy::set_f)
       // AcKickerFreqProxy.amp (0D_NOT_real -
@@ -36,10 +36,8 @@ void init_ac_kicker_freq_struct(py::module& m) {
 
 // =============================================================================
 // ac_kicker_struct
-void init_ac_kicker_struct(py::module& m) {
-  py::class_<AcKickerProxy, std::shared_ptr<AcKickerProxy>>(
-      m, "AcKickerStruct", "Fortran struct: ac_kicker_struct")
-      .def(py::init<>())
+void init_ac_kicker_struct(py::module& m, py::class_<AcKickerProxy>& cls) {
+  cls.def(py::init<>())
       // AcKickerProxy.amp_vs_time (1D_ALLOC_type -
       .def_property_readonly("amp_vs_time", &AcKickerProxy::amp_vs_time)
       // AcKickerProxy.frequency (1D_ALLOC_type -
@@ -58,10 +56,10 @@ void init_ac_kicker_struct(py::module& m) {
 
 // =============================================================================
 // ac_kicker_time_struct
-void init_ac_kicker_time_struct(py::module& m) {
-  py::class_<AcKickerTimeProxy, std::shared_ptr<AcKickerTimeProxy>>(
-      m, "AcKickerTimeStruct", "Fortran struct: ac_kicker_time_struct")
-      .def(py::init<>())
+void init_ac_kicker_time_struct(
+    py::module& m,
+    py::class_<AcKickerTimeProxy>& cls) {
+  cls.def(py::init<>())
       // AcKickerTimeProxy.amp (0D_NOT_real -
       .def_property("amp", &AcKickerTimeProxy::amp, &AcKickerTimeProxy::set_amp)
       // AcKickerTimeProxy.time (0D_NOT_real -
@@ -85,10 +83,10 @@ void init_ac_kicker_time_struct(py::module& m) {
 
 // =============================================================================
 // anormal_mode_struct
-void init_anormal_mode_struct(py::module& m) {
-  py::class_<AnormalModeProxy, std::shared_ptr<AnormalModeProxy>>(
-      m, "AnormalModeStruct", "Fortran struct: anormal_mode_struct")
-      .def(py::init<>())
+void init_anormal_mode_struct(
+    py::module& m,
+    py::class_<AnormalModeProxy>& cls) {
+  cls.def(py::init<>())
       // AnormalModeProxy.emittance (0D_NOT_real - Beam emittance (unnormalized). Includes vertical photon opening angle.
       .def_property(
           "emittance",
@@ -130,10 +128,10 @@ void init_anormal_mode_struct(py::module& m) {
 
 // =============================================================================
 // aperture_param_struct
-void init_aperture_param_struct(py::module& m) {
-  py::class_<ApertureParamProxy, std::shared_ptr<ApertureParamProxy>>(
-      m, "ApertureParamStruct", "Fortran struct: aperture_param_struct")
-      .def(py::init<>())
+void init_aperture_param_struct(
+    py::module& m,
+    py::class_<ApertureParamProxy>& cls) {
+  cls.def(py::init<>())
       // ApertureParamProxy.min_angle (0D_NOT_real -
       .def_property(
           "min_angle",
@@ -194,10 +192,10 @@ void init_aperture_param_struct(py::module& m) {
 
 // =============================================================================
 // aperture_point_struct
-void init_aperture_point_struct(py::module& m) {
-  py::class_<AperturePointProxy, std::shared_ptr<AperturePointProxy>>(
-      m, "AperturePointStruct", "Fortran struct: aperture_point_struct")
-      .def(py::init<>())
+void init_aperture_point_struct(
+    py::module& m,
+    py::class_<AperturePointProxy>& cls) {
+  cls.def(py::init<>())
       // AperturePointProxy.x (0D_NOT_real - (x,y) aperture point with respect to the reference orbit.
       .def_property("x", &AperturePointProxy::x, &AperturePointProxy::set_x)
       // AperturePointProxy.y (0D_NOT_real - (x,y) aperture point with respect to the reference orbit.
@@ -230,10 +228,10 @@ void init_aperture_point_struct(py::module& m) {
 
 // =============================================================================
 // aperture_scan_struct
-void init_aperture_scan_struct(py::module& m) {
-  py::class_<ApertureScanProxy, std::shared_ptr<ApertureScanProxy>>(
-      m, "ApertureScanStruct", "Fortran struct: aperture_scan_struct")
-      .def(py::init<>())
+void init_aperture_scan_struct(
+    py::module& m,
+    py::class_<ApertureScanProxy>& cls) {
+  cls.def(py::init<>())
       // ApertureScanProxy.point (1D_ALLOC_type - Set of aperture points at different angles.
       .def_property_readonly("point", &ApertureScanProxy::point)
       // ApertureScanProxy.ref_orb (0D_NOT_type - Ref orbit around which the scan is made.
@@ -261,10 +259,8 @@ void init_aperture_scan_struct(py::module& m) {
 
 // =============================================================================
 // beam_init_struct
-void init_beam_init_struct(py::module& m) {
-  py::class_<BeamInitProxy, std::shared_ptr<BeamInitProxy>>(
-      m, "BeamInitStruct", "Fortran struct: beam_init_struct")
-      .def(py::init<>())
+void init_beam_init_struct(py::module& m, py::class_<BeamInitProxy>& cls) {
+  cls.def(py::init<>())
       // BeamInitProxy.position_file (0D_NOT_character - File with particle positions.
       .def_property(
           "position_file",
@@ -408,10 +404,8 @@ void init_beam_init_struct(py::module& m) {
 
 // =============================================================================
 // beam_struct
-void init_beam_struct(py::module& m) {
-  py::class_<BeamProxy, std::shared_ptr<BeamProxy>>(
-      m, "BeamStruct", "Fortran struct: beam_struct")
-      .def(py::init<>())
+void init_beam_struct(py::module& m, py::class_<BeamProxy>& cls) {
+  cls.def(py::init<>())
       // BeamProxy.bunch (1D_ALLOC_type -
       .def_property_readonly("bunch", &BeamProxy::bunch)
 
@@ -427,10 +421,8 @@ void init_beam_struct(py::module& m) {
 
 // =============================================================================
 // bmad_common_struct
-void init_bmad_common_struct(py::module& m) {
-  py::class_<BmadCommonProxy, std::shared_ptr<BmadCommonProxy>>(
-      m, "BmadCommonStruct", "Fortran struct: bmad_common_struct")
-      .def(py::init<>())
+void init_bmad_common_struct(py::module& m, py::class_<BmadCommonProxy>& cls) {
+  cls.def(py::init<>())
       // BmadCommonProxy.max_aperture_limit (0D_NOT_real - Max Aperture.
       .def_property(
           "max_aperture_limit",
@@ -651,10 +643,10 @@ void init_bmad_common_struct(py::module& m) {
 
 // =============================================================================
 // bmad_normal_form_struct
-void init_bmad_normal_form_struct(py::module& m) {
-  py::class_<BmadNormalFormProxy, std::shared_ptr<BmadNormalFormProxy>>(
-      m, "BmadNormalFormStruct", "Fortran struct: bmad_normal_form_struct")
-      .def(py::init<>())
+void init_bmad_normal_form_struct(
+    py::module& m,
+    py::class_<BmadNormalFormProxy>& cls) {
+  cls.def(py::init<>())
       // BmadNormalFormProxy.ele_origin (0D_PTR_type - Element at which the on-turn map was created.
       .def_property(
           "ele_origin",
@@ -693,10 +685,10 @@ void init_bmad_normal_form_struct(py::module& m) {
 
 // =============================================================================
 // bookkeeping_state_struct
-void init_bookkeeping_state_struct(py::module& m) {
-  py::class_<BookkeepingStateProxy, std::shared_ptr<BookkeepingStateProxy>>(
-      m, "BookkeepingStateStruct", "Fortran struct: bookkeeping_state_struct")
-      .def(py::init<>())
+void init_bookkeeping_state_struct(
+    py::module& m,
+    py::class_<BookkeepingStateProxy>& cls) {
+  cls.def(py::init<>())
       // BookkeepingStateProxy.attributes (0D_NOT_integer - Element dependent attributes: super_ok$, ok$ or stale$
       .def_property(
           "attributes",
@@ -759,10 +751,10 @@ void init_bookkeeping_state_struct(py::module& m) {
 
 // =============================================================================
 // bpm_phase_coupling_struct
-void init_bpm_phase_coupling_struct(py::module& m) {
-  py::class_<BpmPhaseCouplingProxy, std::shared_ptr<BpmPhaseCouplingProxy>>(
-      m, "BpmPhaseCouplingStruct", "Fortran struct: bpm_phase_coupling_struct")
-      .def(py::init<>())
+void init_bpm_phase_coupling_struct(
+    py::module& m,
+    py::class_<BpmPhaseCouplingProxy>& cls) {
+  cls.def(py::init<>())
       // BpmPhaseCouplingProxy.K_22a (0D_NOT_real - In-phase y/x for a-mode oscillations.
       .def_property(
           "K_22a",
@@ -832,10 +824,8 @@ void init_bpm_phase_coupling_struct(py::module& m) {
 
 // =============================================================================
 // branch_struct
-void init_branch_struct(py::module& m) {
-  py::class_<BranchProxy, std::shared_ptr<BranchProxy>>(
-      m, "BranchStruct", "Fortran struct: branch_struct")
-      .def(py::init<>())
+void init_branch_struct(py::module& m, py::class_<BranchProxy>& cls) {
+  cls.def(py::init<>())
       // BranchProxy.name (0D_NOT_character - Name of line that defines the branch.
       .def_property("name", &BranchProxy::name, &BranchProxy::set_name)
       // BranchProxy.ix_branch (0D_NOT_integer - Index of this branch. 0 => Main branch
@@ -897,10 +887,10 @@ void init_branch_struct(py::module& m) {
 
 // =============================================================================
 // bunch_params_struct
-void init_bunch_params_struct(py::module& m) {
-  py::class_<BunchParamsProxy, std::shared_ptr<BunchParamsProxy>>(
-      m, "BunchParamsStruct", "Fortran struct: bunch_params_struct")
-      .def(py::init<>())
+void init_bunch_params_struct(
+    py::module& m,
+    py::class_<BunchParamsProxy>& cls) {
+  cls.def(py::init<>())
       // BunchParamsProxy.centroid (0D_NOT_type - Lab frame
       .def_property(
           "centroid",
@@ -994,10 +984,8 @@ void init_bunch_params_struct(py::module& m) {
 
 // =============================================================================
 // bunch_struct
-void init_bunch_struct(py::module& m) {
-  py::class_<BunchProxy, std::shared_ptr<BunchProxy>>(
-      m, "BunchStruct", "Fortran struct: bunch_struct")
-      .def(py::init<>())
+void init_bunch_struct(py::module& m, py::class_<BunchProxy>& cls) {
+  cls.def(py::init<>())
       // BunchProxy.particle (1D_ALLOC_type -
       .def_property_readonly("particle", &BunchProxy::particle)
       // BunchProxy.ix_z (1D_ALLOC_integer - bunch%ix_z(1) is index of head particle, etc.
@@ -1047,10 +1035,8 @@ void init_bunch_struct(py::module& m) {
 
 // =============================================================================
 // bunch_track_struct
-void init_bunch_track_struct(py::module& m) {
-  py::class_<BunchTrackProxy, std::shared_ptr<BunchTrackProxy>>(
-      m, "BunchTrackStruct", "Fortran struct: bunch_track_struct")
-      .def(py::init<>())
+void init_bunch_track_struct(py::module& m, py::class_<BunchTrackProxy>& cls) {
+  cls.def(py::init<>())
       // BunchTrackProxy.pt (1D_ALLOC_type - Array indexed from 0
       .def_property_readonly("pt", &BunchTrackProxy::pt)
       // BunchTrackProxy.ds_save (0D_NOT_real - Min distance between points.
@@ -1073,10 +1059,10 @@ void init_bunch_track_struct(py::module& m) {
 
 // =============================================================================
 // cartesian_map_struct
-void init_cartesian_map_struct(py::module& m) {
-  py::class_<CartesianMapProxy, std::shared_ptr<CartesianMapProxy>>(
-      m, "CartesianMapStruct", "Fortran struct: cartesian_map_struct")
-      .def(py::init<>())
+void init_cartesian_map_struct(
+    py::module& m,
+    py::class_<CartesianMapProxy>& cls) {
+  cls.def(py::init<>())
       // CartesianMapProxy.field_scale (0D_NOT_real - Factor to scale the fields by
       .def_property(
           "field_scale",
@@ -1116,12 +1102,10 @@ void init_cartesian_map_struct(py::module& m) {
 
 // =============================================================================
 // cartesian_map_term1_struct
-void init_cartesian_map_term1_struct(py::module& m) {
-  py::class_<CartesianMapTerm1Proxy, std::shared_ptr<CartesianMapTerm1Proxy>>(
-      m,
-      "CartesianMapTerm1Struct",
-      "Fortran struct: cartesian_map_term1_struct")
-      .def(py::init<>())
+void init_cartesian_map_term1_struct(
+    py::module& m,
+    py::class_<CartesianMapTerm1Proxy>& cls) {
+  cls.def(py::init<>())
       // CartesianMapTerm1Proxy.coef (0D_NOT_real -
       .def_property(
           "coef",
@@ -1176,10 +1160,10 @@ void init_cartesian_map_term1_struct(py::module& m) {
 
 // =============================================================================
 // cartesian_map_term_struct
-void init_cartesian_map_term_struct(py::module& m) {
-  py::class_<CartesianMapTermProxy, std::shared_ptr<CartesianMapTermProxy>>(
-      m, "CartesianMapTermStruct", "Fortran struct: cartesian_map_term_struct")
-      .def(py::init<>())
+void init_cartesian_map_term_struct(
+    py::module& m,
+    py::class_<CartesianMapTermProxy>& cls) {
+  cls.def(py::init<>())
       // CartesianMapTermProxy.file (0D_NOT_character - Input file name. Used also as ID for instances.
       .def_property(
           "file",
@@ -1211,10 +1195,10 @@ void init_cartesian_map_term_struct(py::module& m) {
 
 // =============================================================================
 // complex_taylor_struct
-void init_complex_taylor_struct(py::module& m) {
-  py::class_<ComplexTaylorProxy, std::shared_ptr<ComplexTaylorProxy>>(
-      m, "ComplexTaylorStruct", "Fortran struct: complex_taylor_struct")
-      .def(py::init<>())
+void init_complex_taylor_struct(
+    py::module& m,
+    py::class_<ComplexTaylorProxy>& cls) {
+  cls.def(py::init<>())
       // ComplexTaylorProxy.ref (0D_NOT_complex -
       .def_property(
           "ref", &ComplexTaylorProxy::ref, &ComplexTaylorProxy::set_ref)
@@ -1235,12 +1219,10 @@ void init_complex_taylor_struct(py::module& m) {
 
 // =============================================================================
 // complex_taylor_term_struct
-void init_complex_taylor_term_struct(py::module& m) {
-  py::class_<ComplexTaylorTermProxy, std::shared_ptr<ComplexTaylorTermProxy>>(
-      m,
-      "ComplexTaylorTermStruct",
-      "Fortran struct: complex_taylor_term_struct")
-      .def(py::init<>())
+void init_complex_taylor_term_struct(
+    py::module& m,
+    py::class_<ComplexTaylorTermProxy>& cls) {
+  cls.def(py::init<>())
       // ComplexTaylorTermProxy.coef (0D_NOT_complex -
       .def_property(
           "coef",
@@ -1267,10 +1249,10 @@ void init_complex_taylor_term_struct(py::module& m) {
 
 // =============================================================================
 // control_ramp1_struct
-void init_control_ramp1_struct(py::module& m) {
-  py::class_<ControlRamp1Proxy, std::shared_ptr<ControlRamp1Proxy>>(
-      m, "ControlRamp1Struct", "Fortran struct: control_ramp1_struct")
-      .def(py::init<>())
+void init_control_ramp1_struct(
+    py::module& m,
+    py::class_<ControlRamp1Proxy>& cls) {
+  cls.def(py::init<>())
       // ControlRamp1Proxy.y_knot (1D_ALLOC_real -
       .def_property_readonly("y_knot", &ControlRamp1Proxy::y_knot)
       // ControlRamp1Proxy.stack (1D_ALLOC_type - Evaluation stack
@@ -1305,10 +1287,8 @@ void init_control_ramp1_struct(py::module& m) {
 
 // =============================================================================
 // control_struct
-void init_control_struct(py::module& m) {
-  py::class_<ControlProxy, std::shared_ptr<ControlProxy>>(
-      m, "ControlStruct", "Fortran struct: control_struct")
-      .def(py::init<>())
+void init_control_struct(py::module& m, py::class_<ControlProxy>& cls) {
+  cls.def(py::init<>())
       // ControlProxy.value (0D_NOT_real - Used by group, and overlay elements.
       .def_property("value", &ControlProxy::value, &ControlProxy::set_value)
       // ControlProxy.y_knot (1D_ALLOC_real -
@@ -1343,10 +1323,10 @@ void init_control_struct(py::module& m) {
 
 // =============================================================================
 // control_var1_struct
-void init_control_var1_struct(py::module& m) {
-  py::class_<ControlVar1Proxy, std::shared_ptr<ControlVar1Proxy>>(
-      m, "ControlVar1Struct", "Fortran struct: control_var1_struct")
-      .def(py::init<>())
+void init_control_var1_struct(
+    py::module& m,
+    py::class_<ControlVar1Proxy>& cls) {
+  cls.def(py::init<>())
       // ControlVar1Proxy.name (0D_NOT_character -
       .def_property(
           "name", &ControlVar1Proxy::name, &ControlVar1Proxy::set_name)
@@ -1373,10 +1353,8 @@ void init_control_var1_struct(py::module& m) {
 
 // =============================================================================
 // controller_struct
-void init_controller_struct(py::module& m) {
-  py::class_<ControllerProxy, std::shared_ptr<ControllerProxy>>(
-      m, "ControllerStruct", "Fortran struct: controller_struct")
-      .def(py::init<>())
+void init_controller_struct(py::module& m, py::class_<ControllerProxy>& cls) {
+  cls.def(py::init<>())
       // ControllerProxy.var (1D_ALLOC_type -
       .def_property_readonly("var", &ControllerProxy::var)
       // ControllerProxy.ramp (1D_ALLOC_type - For ramper lord elements
@@ -1400,10 +1378,8 @@ void init_controller_struct(py::module& m) {
 
 // =============================================================================
 // coord_array_struct
-void init_coord_array_struct(py::module& m) {
-  py::class_<CoordArrayProxy, std::shared_ptr<CoordArrayProxy>>(
-      m, "CoordArrayStruct", "Fortran struct: coord_array_struct")
-      .def(py::init<>())
+void init_coord_array_struct(py::module& m, py::class_<CoordArrayProxy>& cls) {
+  cls.def(py::init<>())
       // CoordArrayProxy.orbit (1D_ALLOC_type -
       .def_property_readonly("orbit", &CoordArrayProxy::orbit)
 
@@ -1421,10 +1397,8 @@ void init_coord_array_struct(py::module& m) {
 
 // =============================================================================
 // coord_struct
-void init_coord_struct(py::module& m) {
-  py::class_<CoordProxy, std::shared_ptr<CoordProxy>>(
-      m, "CoordStruct", "Fortran struct: coord_struct")
-      .def(py::init<>())
+void init_coord_struct(py::module& m, py::class_<CoordProxy>& cls) {
+  cls.def(py::init<>())
       // CoordProxy.vec (1D_NOT_real - (x, px, y, py, z, pz). Generally phase space for charged particles. See Bmad manual.
       .def_property_readonly("vec", &CoordProxy::vec)
       // CoordProxy.s (0D_NOT_real - Longitudinal position
@@ -1485,10 +1459,10 @@ void init_coord_struct(py::module& m) {
 
 // =============================================================================
 // cylindrical_map_struct
-void init_cylindrical_map_struct(py::module& m) {
-  py::class_<CylindricalMapProxy, std::shared_ptr<CylindricalMapProxy>>(
-      m, "CylindricalMapStruct", "Fortran struct: cylindrical_map_struct")
-      .def(py::init<>())
+void init_cylindrical_map_struct(
+    py::module& m,
+    py::class_<CylindricalMapProxy>& cls) {
+  cls.def(py::init<>())
       // CylindricalMapProxy.m (0D_NOT_integer - Azimuthal Mode: varies as cos(m*phi - theta0_azimuth)
       .def_property("m", &CylindricalMapProxy::m, &CylindricalMapProxy::set_m)
       // CylindricalMapProxy.harmonic (0D_NOT_integer - Harmonic of fundamental
@@ -1548,14 +1522,10 @@ void init_cylindrical_map_struct(py::module& m) {
 
 // =============================================================================
 // cylindrical_map_term1_struct
-void init_cylindrical_map_term1_struct(py::module& m) {
-  py::class_<
-      CylindricalMapTerm1Proxy,
-      std::shared_ptr<CylindricalMapTerm1Proxy>>(
-      m,
-      "CylindricalMapTerm1Struct",
-      "Fortran struct: cylindrical_map_term1_struct")
-      .def(py::init<>())
+void init_cylindrical_map_term1_struct(
+    py::module& m,
+    py::class_<CylindricalMapTerm1Proxy>& cls) {
+  cls.def(py::init<>())
       // CylindricalMapTerm1Proxy.e_coef (0D_NOT_complex -
       .def_property(
           "e_coef",
@@ -1585,12 +1555,10 @@ void init_cylindrical_map_term1_struct(py::module& m) {
 
 // =============================================================================
 // cylindrical_map_term_struct
-void init_cylindrical_map_term_struct(py::module& m) {
-  py::class_<CylindricalMapTermProxy, std::shared_ptr<CylindricalMapTermProxy>>(
-      m,
-      "CylindricalMapTermStruct",
-      "Fortran struct: cylindrical_map_term_struct")
-      .def(py::init<>())
+void init_cylindrical_map_term_struct(
+    py::module& m,
+    py::class_<CylindricalMapTermProxy>& cls) {
+  cls.def(py::init<>())
       // CylindricalMapTermProxy.file (0D_NOT_character - Input file name. Used also as ID for instances.
       .def_property(
           "file",
@@ -1622,10 +1590,8 @@ void init_cylindrical_map_term_struct(py::module& m) {
 
 // =============================================================================
 // ele_pointer_struct
-void init_ele_pointer_struct(py::module& m) {
-  py::class_<ElePointerProxy, std::shared_ptr<ElePointerProxy>>(
-      m, "ElePointerStruct", "Fortran struct: ele_pointer_struct")
-      .def(py::init<>())
+void init_ele_pointer_struct(py::module& m, py::class_<ElePointerProxy>& cls) {
+  cls.def(py::init<>())
       // ElePointerProxy.ele (0D_PTR_type -
       .def_property("ele", &ElePointerProxy::ele, &ElePointerProxy::set_ele)
       // ElePointerProxy.loc (0D_NOT_type -
@@ -1647,10 +1613,8 @@ void init_ele_pointer_struct(py::module& m) {
 
 // =============================================================================
 // ele_struct
-void init_ele_struct(py::module& m) {
-  py::class_<EleProxy, std::shared_ptr<EleProxy>>(
-      m, "EleStruct", "Fortran struct: ele_struct")
-      .def(py::init<>())
+void init_ele_struct(py::module& m, py::class_<EleProxy>& cls) {
+  cls.def(py::init<>())
       // EleProxy.name (0D_NOT_character - name of element.
       .def_property("name", &EleProxy::name, &EleProxy::set_name)
       // EleProxy.type (0D_NOT_character - type name.
@@ -1914,10 +1878,10 @@ void init_ele_struct(py::module& m) {
 
 // =============================================================================
 // ellipse_beam_init_struct
-void init_ellipse_beam_init_struct(py::module& m) {
-  py::class_<EllipseBeamInitProxy, std::shared_ptr<EllipseBeamInitProxy>>(
-      m, "EllipseBeamInitStruct", "Fortran struct: ellipse_beam_init_struct")
-      .def(py::init<>())
+void init_ellipse_beam_init_struct(
+    py::module& m,
+    py::class_<EllipseBeamInitProxy>& cls) {
+  cls.def(py::init<>())
       // EllipseBeamInitProxy.part_per_ellipse (0D_NOT_integer - number of particles per ellipse
       .def_property(
           "part_per_ellipse",
@@ -1952,10 +1916,8 @@ void init_ellipse_beam_init_struct(py::module& m) {
 
 // =============================================================================
 // em_field_struct
-void init_em_field_struct(py::module& m) {
-  py::class_<EmFieldProxy, std::shared_ptr<EmFieldProxy>>(
-      m, "EmFieldStruct", "Fortran struct: em_field_struct")
-      .def(py::init<>())
+void init_em_field_struct(py::module& m, py::class_<EmFieldProxy>& cls) {
+  cls.def(py::init<>())
       // EmFieldProxy.E (1D_NOT_real - electric field.
       .def_property_readonly("E", &EmFieldProxy::E)
       // EmFieldProxy.B (1D_NOT_real - magnetic field.
@@ -1983,10 +1945,8 @@ void init_em_field_struct(py::module& m) {
 
 // =============================================================================
 // em_taylor_struct
-void init_em_taylor_struct(py::module& m) {
-  py::class_<EmTaylorProxy, std::shared_ptr<EmTaylorProxy>>(
-      m, "EmTaylorStruct", "Fortran struct: em_taylor_struct")
-      .def(py::init<>())
+void init_em_taylor_struct(py::module& m, py::class_<EmTaylorProxy>& cls) {
+  cls.def(py::init<>())
       // EmTaylorProxy.ref (0D_NOT_real -
       .def_property("ref", &EmTaylorProxy::ref, &EmTaylorProxy::set_ref)
       // EmTaylorProxy.term (1D_ALLOC_type -
@@ -2005,10 +1965,10 @@ void init_em_taylor_struct(py::module& m) {
 
 // =============================================================================
 // em_taylor_term_struct
-void init_em_taylor_term_struct(py::module& m) {
-  py::class_<EmTaylorTermProxy, std::shared_ptr<EmTaylorTermProxy>>(
-      m, "EmTaylorTermStruct", "Fortran struct: em_taylor_term_struct")
-      .def(py::init<>())
+void init_em_taylor_term_struct(
+    py::module& m,
+    py::class_<EmTaylorTermProxy>& cls) {
+  cls.def(py::init<>())
       // EmTaylorTermProxy.coef (0D_NOT_real -
       .def_property(
           "coef", &EmTaylorTermProxy::coef, &EmTaylorTermProxy::set_coef)
@@ -2029,10 +1989,10 @@ void init_em_taylor_term_struct(py::module& m) {
 
 // =============================================================================
 // expression_atom_struct
-void init_expression_atom_struct(py::module& m) {
-  py::class_<ExpressionAtomProxy, std::shared_ptr<ExpressionAtomProxy>>(
-      m, "ExpressionAtomStruct", "Fortran struct: expression_atom_struct")
-      .def(py::init<>())
+void init_expression_atom_struct(
+    py::module& m,
+    py::class_<ExpressionAtomProxy>& cls) {
+  cls.def(py::init<>())
       // ExpressionAtomProxy.name (0D_NOT_character -
       .def_property(
           "name", &ExpressionAtomProxy::name, &ExpressionAtomProxy::set_name)
@@ -2061,10 +2021,10 @@ void init_expression_atom_struct(py::module& m) {
 
 // =============================================================================
 // expression_tree_struct
-void init_expression_tree_struct(py::module& m) {
-  py::class_<ExpressionTreeProxy, std::shared_ptr<ExpressionTreeProxy>>(
-      m, "ExpressionTreeStruct", "Fortran struct: expression_tree_struct")
-      .def(py::init<>())
+void init_expression_tree_struct(
+    py::module& m,
+    py::class_<ExpressionTreeProxy>& cls) {
+  cls.def(py::init<>())
       // ExpressionTreeProxy.name (0D_NOT_character -
       .def_property(
           "name", &ExpressionTreeProxy::name, &ExpressionTreeProxy::set_name)
@@ -2095,10 +2055,10 @@ void init_expression_tree_struct(py::module& m) {
 
 // =============================================================================
 // floor_position_struct
-void init_floor_position_struct(py::module& m) {
-  py::class_<FloorPositionProxy, std::shared_ptr<FloorPositionProxy>>(
-      m, "FloorPositionStruct", "Fortran struct: floor_position_struct")
-      .def(py::init<>())
+void init_floor_position_struct(
+    py::module& m,
+    py::class_<FloorPositionProxy>& cls) {
+  cls.def(py::init<>())
       // FloorPositionProxy.r (1D_NOT_real - (x, y, z) offset from origin
       .def_property_readonly("r", &FloorPositionProxy::r)
       // FloorPositionProxy.w (2D_NOT_real - W matrix. Columns are unit vectors of the frame axes.
@@ -2127,10 +2087,8 @@ void init_floor_position_struct(py::module& m) {
 
 // =============================================================================
 // gen_grad1_struct
-void init_gen_grad1_struct(py::module& m) {
-  py::class_<GenGrad1Proxy, std::shared_ptr<GenGrad1Proxy>>(
-      m, "GenGrad1Struct", "Fortran struct: gen_grad1_struct")
-      .def(py::init<>())
+void init_gen_grad1_struct(py::module& m, py::class_<GenGrad1Proxy>& cls) {
+  cls.def(py::init<>())
       // GenGrad1Proxy.m (0D_NOT_integer - Azimuthal index
       .def_property("m", &GenGrad1Proxy::m, &GenGrad1Proxy::set_m)
       // GenGrad1Proxy.sincos (0D_NOT_integer - sin$ or cos$
@@ -2157,10 +2115,8 @@ void init_gen_grad1_struct(py::module& m) {
 
 // =============================================================================
 // gen_grad_map_struct
-void init_gen_grad_map_struct(py::module& m) {
-  py::class_<GenGradMapProxy, std::shared_ptr<GenGradMapProxy>>(
-      m, "GenGradMapStruct", "Fortran struct: gen_grad_map_struct")
-      .def(py::init<>())
+void init_gen_grad_map_struct(py::module& m, py::class_<GenGradMapProxy>& cls) {
+  cls.def(py::init<>())
       // GenGradMapProxy.file (0D_NOT_character - Input file name. Used also as ID for instances.
       .def_property("file", &GenGradMapProxy::file, &GenGradMapProxy::set_file)
       // GenGradMapProxy.gg (1D_ALLOC_type -
@@ -2213,10 +2169,10 @@ void init_gen_grad_map_struct(py::module& m) {
 
 // =============================================================================
 // grid_beam_init_struct
-void init_grid_beam_init_struct(py::module& m) {
-  py::class_<GridBeamInitProxy, std::shared_ptr<GridBeamInitProxy>>(
-      m, "GridBeamInitStruct", "Fortran struct: grid_beam_init_struct")
-      .def(py::init<>())
+void init_grid_beam_init_struct(
+    py::module& m,
+    py::class_<GridBeamInitProxy>& cls) {
+  cls.def(py::init<>())
       // GridBeamInitProxy.n_x (0D_NOT_integer - Number of columns.
       .def_property("n_x", &GridBeamInitProxy::n_x, &GridBeamInitProxy::set_n_x)
       // GridBeamInitProxy.n_px (0D_NOT_integer - Number of rows.
@@ -2249,10 +2205,10 @@ void init_grid_beam_init_struct(py::module& m) {
 
 // =============================================================================
 // grid_field_pt1_struct
-void init_grid_field_pt1_struct(py::module& m) {
-  py::class_<GridFieldPt1Proxy, std::shared_ptr<GridFieldPt1Proxy>>(
-      m, "GridFieldPt1Struct", "Fortran struct: grid_field_pt1_struct")
-      .def(py::init<>())
+void init_grid_field_pt1_struct(
+    py::module& m,
+    py::class_<GridFieldPt1Proxy>& cls) {
+  cls.def(py::init<>())
       // GridFieldPt1Proxy.E (1D_NOT_complex -
       .def_property_readonly("E", &GridFieldPt1Proxy::E)
       // GridFieldPt1Proxy.B (1D_NOT_complex -
@@ -2272,10 +2228,10 @@ void init_grid_field_pt1_struct(py::module& m) {
 
 // =============================================================================
 // grid_field_pt_struct
-void init_grid_field_pt_struct(py::module& m) {
-  py::class_<GridFieldPtProxy, std::shared_ptr<GridFieldPtProxy>>(
-      m, "GridFieldPtStruct", "Fortran struct: grid_field_pt_struct")
-      .def(py::init<>())
+void init_grid_field_pt_struct(
+    py::module& m,
+    py::class_<GridFieldPtProxy>& cls) {
+  cls.def(py::init<>())
       // GridFieldPtProxy.file (0D_NOT_character - Input file name. Used also as ID for instances.
       .def_property(
           "file", &GridFieldPtProxy::file, &GridFieldPtProxy::set_file)
@@ -2299,10 +2255,8 @@ void init_grid_field_pt_struct(py::module& m) {
 
 // =============================================================================
 // grid_field_struct
-void init_grid_field_struct(py::module& m) {
-  py::class_<GridFieldProxy, std::shared_ptr<GridFieldProxy>>(
-      m, "GridFieldStruct", "Fortran struct: grid_field_struct")
-      .def(py::init<>())
+void init_grid_field_struct(py::module& m, py::class_<GridFieldProxy>& cls) {
+  cls.def(py::init<>())
       // GridFieldProxy.geometry (0D_NOT_integer - Type of grid: xyz$, or rotationally_symmetric_rz$
       .def_property(
           "geometry", &GridFieldProxy::geometry, &GridFieldProxy::set_geometry)
@@ -2369,14 +2323,10 @@ void init_grid_field_struct(py::module& m) {
 
 // =============================================================================
 // high_energy_space_charge_struct
-void init_high_energy_space_charge_struct(py::module& m) {
-  py::class_<
-      HighEnergySpaceChargeProxy,
-      std::shared_ptr<HighEnergySpaceChargeProxy>>(
-      m,
-      "HighEnergySpaceChargeStruct",
-      "Fortran struct: high_energy_space_charge_struct")
-      .def(py::init<>())
+void init_high_energy_space_charge_struct(
+    py::module& m,
+    py::class_<HighEnergySpaceChargeProxy>& cls) {
+  cls.def(py::init<>())
       // HighEnergySpaceChargeProxy.closed_orb (0D_NOT_type - beam orbit
       .def_property(
           "closed_orb",
@@ -2438,10 +2388,10 @@ void init_high_energy_space_charge_struct(py::module& m) {
 
 // =============================================================================
 // interval1_coef_struct
-void init_interval1_coef_struct(py::module& m) {
-  py::class_<Interval1CoefProxy, std::shared_ptr<Interval1CoefProxy>>(
-      m, "Interval1CoefStruct", "Fortran struct: interval1_coef_struct")
-      .def(py::init<>())
+void init_interval1_coef_struct(
+    py::module& m,
+    py::class_<Interval1CoefProxy>& cls) {
+  cls.def(py::init<>())
       // Interval1CoefProxy.c0 (0D_NOT_real -
       .def_property("c0", &Interval1CoefProxy::c0, &Interval1CoefProxy::set_c0)
       // Interval1CoefProxy.c1 (0D_NOT_real -
@@ -2464,10 +2414,8 @@ void init_interval1_coef_struct(py::module& m) {
 
 // =============================================================================
 // kv_beam_init_struct
-void init_kv_beam_init_struct(py::module& m) {
-  py::class_<KvBeamInitProxy, std::shared_ptr<KvBeamInitProxy>>(
-      m, "KvBeamInitStruct", "Fortran struct: kv_beam_init_struct")
-      .def(py::init<>())
+void init_kv_beam_init_struct(py::module& m, py::class_<KvBeamInitProxy>& cls) {
+  cls.def(py::init<>())
       // KvBeamInitProxy.part_per_phi (1D_NOT_integer - number of particles per angle variable.
       .def_property_readonly("part_per_phi", &KvBeamInitProxy::part_per_phi)
       // KvBeamInitProxy.n_I2 (0D_NOT_integer - number of I2
@@ -2489,10 +2437,8 @@ void init_kv_beam_init_struct(py::module& m) {
 
 // =============================================================================
 // lat_ele_loc_struct
-void init_lat_ele_loc_struct(py::module& m) {
-  py::class_<LatEleLocProxy, std::shared_ptr<LatEleLocProxy>>(
-      m, "LatEleLocStruct", "Fortran struct: lat_ele_loc_struct")
-      .def(py::init<>())
+void init_lat_ele_loc_struct(py::module& m, py::class_<LatEleLocProxy>& cls) {
+  cls.def(py::init<>())
       // LatEleLocProxy.ix_ele (0D_NOT_integer -
       .def_property(
           "ix_ele", &LatEleLocProxy::ix_ele, &LatEleLocProxy::set_ix_ele)
@@ -2516,10 +2462,10 @@ void init_lat_ele_loc_struct(py::module& m) {
 
 // =============================================================================
 // lat_ele_order1_struct
-void init_lat_ele_order1_struct(py::module& m) {
-  py::class_<LatEleOrder1Proxy, std::shared_ptr<LatEleOrder1Proxy>>(
-      m, "LatEleOrder1Struct", "Fortran struct: lat_ele_order1_struct")
-      .def(py::init<>())
+void init_lat_ele_order1_struct(
+    py::module& m,
+    py::class_<LatEleOrder1Proxy>& cls) {
+  cls.def(py::init<>())
       // LatEleOrder1Proxy.ix_branch (0D_NOT_integer - Branch index
       .def_property(
           "ix_branch",
@@ -2545,10 +2491,10 @@ void init_lat_ele_order1_struct(py::module& m) {
 
 // =============================================================================
 // lat_ele_order_array_struct
-void init_lat_ele_order_array_struct(py::module& m) {
-  py::class_<LatEleOrderArrayProxy, std::shared_ptr<LatEleOrderArrayProxy>>(
-      m, "LatEleOrderArrayStruct", "Fortran struct: lat_ele_order_array_struct")
-      .def(py::init<>())
+void init_lat_ele_order_array_struct(
+    py::module& m,
+    py::class_<LatEleOrderArrayProxy>& cls) {
+  cls.def(py::init<>())
       // LatEleOrderArrayProxy.ele (1D_ALLOC_type -
       .def_property_readonly("ele", &LatEleOrderArrayProxy::ele)
 
@@ -2570,10 +2516,10 @@ void init_lat_ele_order_array_struct(py::module& m) {
 
 // =============================================================================
 // lat_ele_order_struct
-void init_lat_ele_order_struct(py::module& m) {
-  py::class_<LatEleOrderProxy, std::shared_ptr<LatEleOrderProxy>>(
-      m, "LatEleOrderStruct", "Fortran struct: lat_ele_order_struct")
-      .def(py::init<>())
+void init_lat_ele_order_struct(
+    py::module& m,
+    py::class_<LatEleOrderProxy>& cls) {
+  cls.def(py::init<>())
       // LatEleOrderProxy.branch (1D_ALLOC_type -
       .def_property_readonly("branch", &LatEleOrderProxy::branch)
 
@@ -2591,10 +2537,8 @@ void init_lat_ele_order_struct(py::module& m) {
 
 // =============================================================================
 // lat_param_struct
-void init_lat_param_struct(py::module& m) {
-  py::class_<LatParamProxy, std::shared_ptr<LatParamProxy>>(
-      m, "LatParamStruct", "Fortran struct: lat_param_struct")
-      .def(py::init<>())
+void init_lat_param_struct(py::module& m, py::class_<LatParamProxy>& cls) {
+  cls.def(py::init<>())
       // LatParamProxy.n_part (0D_NOT_real - Particles/bunch (for BeamBeam elements).
       .def_property(
           "n_part", &LatParamProxy::n_part, &LatParamProxy::set_n_part)
@@ -2673,10 +2617,8 @@ void init_lat_param_struct(py::module& m) {
 
 // =============================================================================
 // lat_struct
-void init_lat_struct(py::module& m) {
-  py::class_<LatProxy, std::shared_ptr<LatProxy>>(
-      m, "LatStruct", "Fortran struct: lat_struct")
-      .def(py::init<>())
+void init_lat_struct(py::module& m, py::class_<LatProxy>& cls) {
+  cls.def(py::init<>())
       // LatProxy.use_name (0D_NOT_character - Name of lat given by USE statement
       .def_property("use_name", &LatProxy::use_name, &LatProxy::set_use_name)
       // LatProxy.lattice (0D_NOT_character - Lattice
@@ -2772,10 +2714,10 @@ void init_lat_struct(py::module& m) {
 
 // =============================================================================
 // linac_normal_mode_struct
-void init_linac_normal_mode_struct(py::module& m) {
-  py::class_<LinacNormalModeProxy, std::shared_ptr<LinacNormalModeProxy>>(
-      m, "LinacNormalModeStruct", "Fortran struct: linac_normal_mode_struct")
-      .def(py::init<>())
+void init_linac_normal_mode_struct(
+    py::module& m,
+    py::class_<LinacNormalModeProxy>& cls) {
+  cls.def(py::init<>())
       // LinacNormalModeProxy.i2_E4 (0D_NOT_real - Integral: g^2 * gamma^4
       .def_property(
           "i2_E4",
@@ -2830,10 +2772,8 @@ void init_linac_normal_mode_struct(py::module& m) {
 
 // =============================================================================
 // mode3_struct
-void init_mode3_struct(py::module& m) {
-  py::class_<Mode3Proxy, std::shared_ptr<Mode3Proxy>>(
-      m, "Mode3Struct", "Fortran struct: mode3_struct")
-      .def(py::init<>())
+void init_mode3_struct(py::module& m, py::class_<Mode3Proxy>& cls) {
+  cls.def(py::init<>())
       // Mode3Proxy.v (2D_NOT_real -
       .def_property_readonly("v", &Mode3Proxy::v)
       // Mode3Proxy.a (0D_NOT_type -
@@ -2859,10 +2799,8 @@ void init_mode3_struct(py::module& m) {
 
 // =============================================================================
 // mode_info_struct
-void init_mode_info_struct(py::module& m) {
-  py::class_<ModeInfoProxy, std::shared_ptr<ModeInfoProxy>>(
-      m, "ModeInfoStruct", "Fortran struct: mode_info_struct")
-      .def(py::init<>())
+void init_mode_info_struct(py::module& m, py::class_<ModeInfoProxy>& cls) {
+  cls.def(py::init<>())
       // ModeInfoProxy.stable (0D_NOT_logical - Is the mode stable?
       .def_property(
           "stable", &ModeInfoProxy::stable, &ModeInfoProxy::set_stable)
@@ -2891,10 +2829,10 @@ void init_mode_info_struct(py::module& m) {
 
 // =============================================================================
 // normal_modes_struct
-void init_normal_modes_struct(py::module& m) {
-  py::class_<NormalModesProxy, std::shared_ptr<NormalModesProxy>>(
-      m, "NormalModesStruct", "Fortran struct: normal_modes_struct")
-      .def(py::init<>())
+void init_normal_modes_struct(
+    py::module& m,
+    py::class_<NormalModesProxy>& cls) {
+  cls.def(py::init<>())
       // NormalModesProxy.synch_int (1D_NOT_real - Synchrotron integrals I0, I1, I2, and I3
       .def_property_readonly("synch_int", &NormalModesProxy::synch_int)
       // NormalModesProxy.sigE_E (0D_NOT_real - SigmaE/E
@@ -2954,10 +2892,10 @@ void init_normal_modes_struct(py::module& m) {
 
 // =============================================================================
 // photon_element_struct
-void init_photon_element_struct(py::module& m) {
-  py::class_<PhotonElementProxy, std::shared_ptr<PhotonElementProxy>>(
-      m, "PhotonElementStruct", "Fortran struct: photon_element_struct")
-      .def(py::init<>())
+void init_photon_element_struct(
+    py::module& m,
+    py::class_<PhotonElementProxy>& cls) {
+  cls.def(py::init<>())
       // PhotonElementProxy.curvature (0D_NOT_type -
       .def_property(
           "curvature",
@@ -3028,10 +2966,10 @@ void init_photon_element_struct(py::module& m) {
 
 // =============================================================================
 // photon_material_struct
-void init_photon_material_struct(py::module& m) {
-  py::class_<PhotonMaterialProxy, std::shared_ptr<PhotonMaterialProxy>>(
-      m, "PhotonMaterialStruct", "Fortran struct: photon_material_struct")
-      .def(py::init<>())
+void init_photon_material_struct(
+    py::module& m,
+    py::class_<PhotonMaterialProxy>& cls) {
+  cls.def(py::init<>())
       // PhotonMaterialProxy.f0_m1 (0D_NOT_complex - For multilayer_mirror only.
       .def_property(
           "f0_m1", &PhotonMaterialProxy::f0_m1, &PhotonMaterialProxy::set_f0_m1)
@@ -3075,14 +3013,10 @@ void init_photon_material_struct(py::module& m) {
 
 // =============================================================================
 // photon_reflect_surface_struct
-void init_photon_reflect_surface_struct(py::module& m) {
-  py::class_<
-      PhotonReflectSurfaceProxy,
-      std::shared_ptr<PhotonReflectSurfaceProxy>>(
-      m,
-      "PhotonReflectSurfaceStruct",
-      "Fortran struct: photon_reflect_surface_struct")
-      .def(py::init<>())
+void init_photon_reflect_surface_struct(
+    py::module& m,
+    py::class_<PhotonReflectSurfaceProxy>& cls) {
+  cls.def(py::init<>())
       // PhotonReflectSurfaceProxy.name (0D_NOT_character -
       .def_property(
           "name",
@@ -3134,12 +3068,10 @@ void init_photon_reflect_surface_struct(py::module& m) {
 
 // =============================================================================
 // photon_reflect_table_struct
-void init_photon_reflect_table_struct(py::module& m) {
-  py::class_<PhotonReflectTableProxy, std::shared_ptr<PhotonReflectTableProxy>>(
-      m,
-      "PhotonReflectTableStruct",
-      "Fortran struct: photon_reflect_table_struct")
-      .def(py::init<>())
+void init_photon_reflect_table_struct(
+    py::module& m,
+    py::class_<PhotonReflectTableProxy>& cls) {
+  cls.def(py::init<>())
       // PhotonReflectTableProxy.angle (1D_ALLOC_real - Vector of angle values for %p_reflect
       .def_property_readonly("angle", &PhotonReflectTableProxy::angle)
       // PhotonReflectTableProxy.energy (1D_ALLOC_real - Vector of energy values for %p_reflect
@@ -3178,10 +3110,10 @@ void init_photon_reflect_table_struct(py::module& m) {
 
 // =============================================================================
 // photon_target_struct
-void init_photon_target_struct(py::module& m) {
-  py::class_<PhotonTargetProxy, std::shared_ptr<PhotonTargetProxy>>(
-      m, "PhotonTargetStruct", "Fortran struct: photon_target_struct")
-      .def(py::init<>())
+void init_photon_target_struct(
+    py::module& m,
+    py::class_<PhotonTargetProxy>& cls) {
+  cls.def(py::init<>())
       // PhotonTargetProxy.type (0D_NOT_integer - or rectangular$
       .def_property(
           "type", &PhotonTargetProxy::type, &PhotonTargetProxy::set_type)
@@ -3215,10 +3147,8 @@ void init_photon_target_struct(py::module& m) {
 
 // =============================================================================
 // pixel_detec_struct
-void init_pixel_detec_struct(py::module& m) {
-  py::class_<PixelDetecProxy, std::shared_ptr<PixelDetecProxy>>(
-      m, "PixelDetecStruct", "Fortran struct: pixel_detec_struct")
-      .def(py::init<>())
+void init_pixel_detec_struct(py::module& m, py::class_<PixelDetecProxy>& cls) {
+  cls.def(py::init<>())
       // PixelDetecProxy.dr (1D_NOT_real -
       .def_property_readonly("dr", &PixelDetecProxy::dr)
       // PixelDetecProxy.r0 (1D_NOT_real -
@@ -3255,10 +3185,8 @@ void init_pixel_detec_struct(py::module& m) {
 
 // =============================================================================
 // pixel_pt_struct
-void init_pixel_pt_struct(py::module& m) {
-  py::class_<PixelPtProxy, std::shared_ptr<PixelPtProxy>>(
-      m, "PixelPtStruct", "Fortran struct: pixel_pt_struct")
-      .def(py::init<>())
+void init_pixel_pt_struct(py::module& m, py::class_<PixelPtProxy>& cls) {
+  cls.def(py::init<>())
       // PixelPtProxy.n_photon (0D_NOT_integer8 -
       .def_property(
           "n_photon", &PixelPtProxy::n_photon, &PixelPtProxy::set_n_photon)
@@ -3300,10 +3228,8 @@ void init_pixel_pt_struct(py::module& m) {
 
 // =============================================================================
 // pre_tracker_struct
-void init_pre_tracker_struct(py::module& m) {
-  py::class_<PreTrackerProxy, std::shared_ptr<PreTrackerProxy>>(
-      m, "PreTrackerStruct", "Fortran struct: pre_tracker_struct")
-      .def(py::init<>())
+void init_pre_tracker_struct(py::module& m, py::class_<PreTrackerProxy>& cls) {
+  cls.def(py::init<>())
       // PreTrackerProxy.who (0D_NOT_integer - Can be opal$, or impactt$
       .def_property("who", &PreTrackerProxy::who, &PreTrackerProxy::set_who)
       // PreTrackerProxy.ix_ele_start (0D_NOT_integer -
@@ -3336,10 +3262,10 @@ void init_pre_tracker_struct(py::module& m) {
 
 // =============================================================================
 // ptc_normal_form_struct
-void init_ptc_normal_form_struct(py::module& m) {
-  py::class_<PtcNormalFormProxy, std::shared_ptr<PtcNormalFormProxy>>(
-      m, "PtcNormalFormStruct", "Fortran struct: ptc_normal_form_struct")
-      .def(py::init<>())
+void init_ptc_normal_form_struct(
+    py::module& m,
+    py::class_<PtcNormalFormProxy>& cls) {
+  cls.def(py::init<>())
       // PtcNormalFormProxy.ele_origin (0D_PTR_type - Element at which the on-turn map was created.
       .def_property(
           "ele_origin",
@@ -3367,10 +3293,8 @@ void init_ptc_normal_form_struct(py::module& m) {
 
 // =============================================================================
 // rad_int1_struct
-void init_rad_int1_struct(py::module& m) {
-  py::class_<RadInt1Proxy, std::shared_ptr<RadInt1Proxy>>(
-      m, "RadInt1Struct", "Fortran struct: rad_int1_struct")
-      .def(py::init<>())
+void init_rad_int1_struct(py::module& m, py::class_<RadInt1Proxy>& cls) {
+  cls.def(py::init<>())
       // RadInt1Proxy.i0 (0D_NOT_real -
       .def_property("i0", &RadInt1Proxy::i0, &RadInt1Proxy::set_i0)
       // RadInt1Proxy.i1 (0D_NOT_real -
@@ -3436,10 +3360,10 @@ void init_rad_int1_struct(py::module& m) {
 
 // =============================================================================
 // rad_int_all_ele_struct
-void init_rad_int_all_ele_struct(py::module& m) {
-  py::class_<RadIntAllEleProxy, std::shared_ptr<RadIntAllEleProxy>>(
-      m, "RadIntAllEleStruct", "Fortran struct: rad_int_all_ele_struct")
-      .def(py::init<>())
+void init_rad_int_all_ele_struct(
+    py::module& m,
+    py::class_<RadIntAllEleProxy>& cls) {
+  cls.def(py::init<>())
       // RadIntAllEleProxy.branch (1D_ALLOC_type - Array is indexed from 0
       .def_property_readonly("branch", &RadIntAllEleProxy::branch)
 
@@ -3457,10 +3381,10 @@ void init_rad_int_all_ele_struct(py::module& m) {
 
 // =============================================================================
 // rad_int_branch_struct
-void init_rad_int_branch_struct(py::module& m) {
-  py::class_<RadIntBranchProxy, std::shared_ptr<RadIntBranchProxy>>(
-      m, "RadIntBranchStruct", "Fortran struct: rad_int_branch_struct")
-      .def(py::init<>())
+void init_rad_int_branch_struct(
+    py::module& m,
+    py::class_<RadIntBranchProxy>& cls) {
+  cls.def(py::init<>())
       // RadIntBranchProxy.ele (1D_ALLOC_type - Array is indexed from 0
       .def_property_readonly("ele", &RadIntBranchProxy::ele)
 
@@ -3478,10 +3402,8 @@ void init_rad_int_branch_struct(py::module& m) {
 
 // =============================================================================
 // rad_map_ele_struct
-void init_rad_map_ele_struct(py::module& m) {
-  py::class_<RadMapEleProxy, std::shared_ptr<RadMapEleProxy>>(
-      m, "RadMapEleStruct", "Fortran struct: rad_map_ele_struct")
-      .def(py::init<>())
+void init_rad_map_ele_struct(py::module& m, py::class_<RadMapEleProxy>& cls) {
+  cls.def(py::init<>())
       // RadMapEleProxy.rm0 (0D_NOT_type - Upstream half and downstream half matrices for an element.
       .def_property("rm0", &RadMapEleProxy::rm0, &RadMapEleProxy::set_rm0)
       // RadMapEleProxy.rm1 (0D_NOT_type - Upstream half and downstream half matrices for an element.
@@ -3503,10 +3425,8 @@ void init_rad_map_ele_struct(py::module& m) {
 
 // =============================================================================
 // rad_map_struct
-void init_rad_map_struct(py::module& m) {
-  py::class_<RadMapProxy, std::shared_ptr<RadMapProxy>>(
-      m, "RadMapStruct", "Fortran struct: rad_map_struct")
-      .def(py::init<>())
+void init_rad_map_struct(py::module& m, py::class_<RadMapProxy>& cls) {
+  cls.def(py::init<>())
       // RadMapProxy.ref_orb (1D_NOT_real - Reference point around which damp_mat is calculated.
       .def_property_readonly("ref_orb", &RadMapProxy::ref_orb)
       // RadMapProxy.damp_dmat (2D_NOT_real - damp_correction = xfer_mat_with_damping - xfer_mat_without_damping.
@@ -3530,10 +3450,8 @@ void init_rad_map_struct(py::module& m) {
 
 // =============================================================================
 // ramper_lord_struct
-void init_ramper_lord_struct(py::module& m) {
-  py::class_<RamperLordProxy, std::shared_ptr<RamperLordProxy>>(
-      m, "RamperLordStruct", "Fortran struct: ramper_lord_struct")
-      .def(py::init<>())
+void init_ramper_lord_struct(py::module& m, py::class_<RamperLordProxy>& cls) {
+  cls.def(py::init<>())
       // RamperLordProxy.ix_ele (0D_NOT_integer - Lord index
       .def_property(
           "ix_ele", &RamperLordProxy::ix_ele, &RamperLordProxy::set_ix_ele)
@@ -3560,10 +3478,8 @@ void init_ramper_lord_struct(py::module& m) {
 
 // =============================================================================
 // resonance_h_struct
-void init_resonance_h_struct(py::module& m) {
-  py::class_<ResonanceHProxy, std::shared_ptr<ResonanceHProxy>>(
-      m, "ResonanceHStruct", "Fortran struct: resonance_h_struct")
-      .def(py::init<>())
+void init_resonance_h_struct(py::module& m, py::class_<ResonanceHProxy>& cls) {
+  cls.def(py::init<>())
       // ResonanceHProxy.id (0D_NOT_character - 6 digit ID. EG: '003100'
       .def_property("id", &ResonanceHProxy::id, &ResonanceHProxy::set_id)
       // ResonanceHProxy.c_val (0D_NOT_complex - Resonance value
@@ -3584,10 +3500,8 @@ void init_resonance_h_struct(py::module& m) {
 
 // =============================================================================
 // rf_ele_struct
-void init_rf_ele_struct(py::module& m) {
-  py::class_<RfEleProxy, std::shared_ptr<RfEleProxy>>(
-      m, "RfEleStruct", "Fortran struct: rf_ele_struct")
-      .def(py::init<>())
+void init_rf_ele_struct(py::module& m, py::class_<RfEleProxy>& cls) {
+  cls.def(py::init<>())
       // RfEleProxy.steps (1D_ALLOC_type - Energy stair step array indexed from zero.
       .def_property_readonly("steps", &RfEleProxy::steps)
       // RfEleProxy.ds_step (0D_NOT_real - length of a stair step.
@@ -3605,10 +3519,10 @@ void init_rf_ele_struct(py::module& m) {
 
 // =============================================================================
 // rf_stair_step_struct
-void init_rf_stair_step_struct(py::module& m) {
-  py::class_<RfStairStepProxy, std::shared_ptr<RfStairStepProxy>>(
-      m, "RfStairStepStruct", "Fortran struct: rf_stair_step_struct")
-      .def(py::init<>())
+void init_rf_stair_step_struct(
+    py::module& m,
+    py::class_<RfStairStepProxy>& cls) {
+  cls.def(py::init<>())
       // RfStairStepProxy.E_tot0 (0D_NOT_real - Reference energy in the drift region (before the kick point).
       .def_property(
           "E_tot0", &RfStairStepProxy::E_tot0, &RfStairStepProxy::set_E_tot0)
@@ -3647,12 +3561,10 @@ void init_rf_stair_step_struct(py::module& m) {
 
 // =============================================================================
 // space_charge_common_struct
-void init_space_charge_common_struct(py::module& m) {
-  py::class_<SpaceChargeCommonProxy, std::shared_ptr<SpaceChargeCommonProxy>>(
-      m,
-      "SpaceChargeCommonStruct",
-      "Fortran struct: space_charge_common_struct")
-      .def(py::init<>())
+void init_space_charge_common_struct(
+    py::module& m,
+    py::class_<SpaceChargeCommonProxy>& cls) {
+  cls.def(py::init<>())
       // SpaceChargeCommonProxy.ds_track_step (0D_NOT_real - CSR tracking step size
       .def_property(
           "ds_track_step",
@@ -3754,10 +3666,8 @@ void init_space_charge_common_struct(py::module& m) {
 
 // =============================================================================
 // spin_axis_struct
-void init_spin_axis_struct(py::module& m) {
-  py::class_<SpinAxisProxy, std::shared_ptr<SpinAxisProxy>>(
-      m, "SpinAxisStruct", "Fortran struct: spin_axis_struct")
-      .def(py::init<>())
+void init_spin_axis_struct(py::module& m, py::class_<SpinAxisProxy>& cls) {
+  cls.def(py::init<>())
       // SpinAxisProxy.l (1D_NOT_real - Transverse axis.
       .def_property_readonly("l", &SpinAxisProxy::l)
       // SpinAxisProxy.n0 (1D_NOT_real - Invariant spin axis on closed orbit.
@@ -3778,10 +3688,10 @@ void init_spin_axis_struct(py::module& m) {
 
 // =============================================================================
 // spin_orbit_map1_struct
-void init_spin_orbit_map1_struct(py::module& m) {
-  py::class_<SpinOrbitMap1Proxy, std::shared_ptr<SpinOrbitMap1Proxy>>(
-      m, "SpinOrbitMap1Struct", "Fortran struct: spin_orbit_map1_struct")
-      .def(py::init<>())
+void init_spin_orbit_map1_struct(
+    py::module& m,
+    py::class_<SpinOrbitMap1Proxy>& cls) {
+  cls.def(py::init<>())
       // SpinOrbitMap1Proxy.orb_mat (2D_NOT_real - Orbital matrix
       .def_property_readonly("orb_mat", &SpinOrbitMap1Proxy::orb_mat)
       // SpinOrbitMap1Proxy.vec0 (1D_NOT_real - Orbital 0th order map: r_out = mat6 * r_in + vec0
@@ -3803,10 +3713,8 @@ void init_spin_orbit_map1_struct(py::module& m) {
 
 // =============================================================================
 // spin_polar_struct
-void init_spin_polar_struct(py::module& m) {
-  py::class_<SpinPolarProxy, std::shared_ptr<SpinPolarProxy>>(
-      m, "SpinPolarStruct", "Fortran struct: spin_polar_struct")
-      .def(py::init<>())
+void init_spin_polar_struct(py::module& m, py::class_<SpinPolarProxy>& cls) {
+  cls.def(py::init<>())
       // SpinPolarProxy.polarization (0D_NOT_real -
       .def_property(
           "polarization",
@@ -3833,10 +3741,8 @@ void init_spin_polar_struct(py::module& m) {
 
 // =============================================================================
 // strong_beam_struct
-void init_strong_beam_struct(py::module& m) {
-  py::class_<StrongBeamProxy, std::shared_ptr<StrongBeamProxy>>(
-      m, "StrongBeamStruct", "Fortran struct: strong_beam_struct")
-      .def(py::init<>())
+void init_strong_beam_struct(py::module& m, py::class_<StrongBeamProxy>& cls) {
+  cls.def(py::init<>())
       // StrongBeamProxy.ix_slice (0D_NOT_integer - 0 -> at element center and not at slice.
       .def_property(
           "ix_slice",
@@ -3877,10 +3783,10 @@ void init_strong_beam_struct(py::module& m) {
 
 // =============================================================================
 // surface_curvature_struct
-void init_surface_curvature_struct(py::module& m) {
-  py::class_<SurfaceCurvatureProxy, std::shared_ptr<SurfaceCurvatureProxy>>(
-      m, "SurfaceCurvatureStruct", "Fortran struct: surface_curvature_struct")
-      .def(py::init<>())
+void init_surface_curvature_struct(
+    py::module& m,
+    py::class_<SurfaceCurvatureProxy>& cls) {
+  cls.def(py::init<>())
       // SurfaceCurvatureProxy.xy (2D_NOT_real -
       .def_property_readonly("xy", &SurfaceCurvatureProxy::xy)
       // SurfaceCurvatureProxy.spherical (0D_NOT_real -
@@ -3914,14 +3820,10 @@ void init_surface_curvature_struct(py::module& m) {
 
 // =============================================================================
 // surface_displacement_pt_struct
-void init_surface_displacement_pt_struct(py::module& m) {
-  py::class_<
-      SurfaceDisplacementPtProxy,
-      std::shared_ptr<SurfaceDisplacementPtProxy>>(
-      m,
-      "SurfaceDisplacementPtStruct",
-      "Fortran struct: surface_displacement_pt_struct")
-      .def(py::init<>())
+void init_surface_displacement_pt_struct(
+    py::module& m,
+    py::class_<SurfaceDisplacementPtProxy>& cls) {
+  cls.def(py::init<>())
       // SurfaceDisplacementPtProxy.x0 (0D_NOT_real - Position at center
       .def_property(
           "x0",
@@ -3973,14 +3875,10 @@ void init_surface_displacement_pt_struct(py::module& m) {
 
 // =============================================================================
 // surface_displacement_struct
-void init_surface_displacement_struct(py::module& m) {
-  py::class_<
-      SurfaceDisplacementProxy,
-      std::shared_ptr<SurfaceDisplacementProxy>>(
-      m,
-      "SurfaceDisplacementStruct",
-      "Fortran struct: surface_displacement_struct")
-      .def(py::init<>())
+void init_surface_displacement_struct(
+    py::module& m,
+    py::class_<SurfaceDisplacementProxy>& cls) {
+  cls.def(py::init<>())
       // SurfaceDisplacementProxy.active (0D_NOT_logical -
       .def_property(
           "active",
@@ -4011,12 +3909,10 @@ void init_surface_displacement_struct(py::module& m) {
 
 // =============================================================================
 // surface_h_misalign_pt_struct
-void init_surface_h_misalign_pt_struct(py::module& m) {
-  py::class_<SurfaceHMisalignPtProxy, std::shared_ptr<SurfaceHMisalignPtProxy>>(
-      m,
-      "SurfaceHMisalignPtStruct",
-      "Fortran struct: surface_h_misalign_pt_struct")
-      .def(py::init<>())
+void init_surface_h_misalign_pt_struct(
+    py::module& m,
+    py::class_<SurfaceHMisalignPtProxy>& cls) {
+  cls.def(py::init<>())
       // SurfaceHMisalignPtProxy.x0 (0D_NOT_real - Position at center
       .def_property(
           "x0", &SurfaceHMisalignPtProxy::x0, &SurfaceHMisalignPtProxy::set_x0)
@@ -4062,10 +3958,10 @@ void init_surface_h_misalign_pt_struct(py::module& m) {
 
 // =============================================================================
 // surface_h_misalign_struct
-void init_surface_h_misalign_struct(py::module& m) {
-  py::class_<SurfaceHMisalignProxy, std::shared_ptr<SurfaceHMisalignProxy>>(
-      m, "SurfaceHMisalignStruct", "Fortran struct: surface_h_misalign_struct")
-      .def(py::init<>())
+void init_surface_h_misalign_struct(
+    py::module& m,
+    py::class_<SurfaceHMisalignProxy>& cls) {
+  cls.def(py::init<>())
       // SurfaceHMisalignProxy.active (0D_NOT_logical -
       .def_property(
           "active",
@@ -4096,12 +3992,10 @@ void init_surface_h_misalign_struct(py::module& m) {
 
 // =============================================================================
 // surface_segmented_pt_struct
-void init_surface_segmented_pt_struct(py::module& m) {
-  py::class_<SurfaceSegmentedPtProxy, std::shared_ptr<SurfaceSegmentedPtProxy>>(
-      m,
-      "SurfaceSegmentedPtStruct",
-      "Fortran struct: surface_segmented_pt_struct")
-      .def(py::init<>())
+void init_surface_segmented_pt_struct(
+    py::module& m,
+    py::class_<SurfaceSegmentedPtProxy>& cls) {
+  cls.def(py::init<>())
       // SurfaceSegmentedPtProxy.x0 (0D_NOT_real - Position at center
       .def_property(
           "x0", &SurfaceSegmentedPtProxy::x0, &SurfaceSegmentedPtProxy::set_x0)
@@ -4140,10 +4034,10 @@ void init_surface_segmented_pt_struct(py::module& m) {
 
 // =============================================================================
 // surface_segmented_struct
-void init_surface_segmented_struct(py::module& m) {
-  py::class_<SurfaceSegmentedProxy, std::shared_ptr<SurfaceSegmentedProxy>>(
-      m, "SurfaceSegmentedStruct", "Fortran struct: surface_segmented_struct")
-      .def(py::init<>())
+void init_surface_segmented_struct(
+    py::module& m,
+    py::class_<SurfaceSegmentedProxy>& cls) {
+  cls.def(py::init<>())
       // SurfaceSegmentedProxy.active (0D_NOT_logical -
       .def_property(
           "active",
@@ -4174,10 +4068,10 @@ void init_surface_segmented_struct(py::module& m) {
 
 // =============================================================================
 // target_point_struct
-void init_target_point_struct(py::module& m) {
-  py::class_<TargetPointProxy, std::shared_ptr<TargetPointProxy>>(
-      m, "TargetPointStruct", "Fortran struct: target_point_struct")
-      .def(py::init<>())
+void init_target_point_struct(
+    py::module& m,
+    py::class_<TargetPointProxy>& cls) {
+  cls.def(py::init<>())
       // TargetPointProxy.r (1D_NOT_real - (x, y, z)
       .def_property_readonly("r", &TargetPointProxy::r)
 
@@ -4195,10 +4089,8 @@ void init_target_point_struct(py::module& m) {
 
 // =============================================================================
 // taylor_struct
-void init_taylor_struct(py::module& m) {
-  py::class_<TaylorProxy, std::shared_ptr<TaylorProxy>>(
-      m, "TaylorStruct", "Fortran struct: taylor_struct")
-      .def(py::init<>())
+void init_taylor_struct(py::module& m, py::class_<TaylorProxy>& cls) {
+  cls.def(py::init<>())
       // TaylorProxy.ref (0D_NOT_real -
       .def_property("ref", &TaylorProxy::ref, &TaylorProxy::set_ref)
       // TaylorProxy.term (1D_PTR_type -
@@ -4216,10 +4108,8 @@ void init_taylor_struct(py::module& m) {
 
 // =============================================================================
 // taylor_term_struct
-void init_taylor_term_struct(py::module& m) {
-  py::class_<TaylorTermProxy, std::shared_ptr<TaylorTermProxy>>(
-      m, "TaylorTermStruct", "Fortran struct: taylor_term_struct")
-      .def(py::init<>())
+void init_taylor_term_struct(py::module& m, py::class_<TaylorTermProxy>& cls) {
+  cls.def(py::init<>())
       // TaylorTermProxy.coef (0D_NOT_real -
       .def_property("coef", &TaylorTermProxy::coef, &TaylorTermProxy::set_coef)
       // TaylorTermProxy.expn (1D_NOT_integer -
@@ -4239,10 +4129,8 @@ void init_taylor_term_struct(py::module& m) {
 
 // =============================================================================
 // track_point_struct
-void init_track_point_struct(py::module& m) {
-  py::class_<TrackPointProxy, std::shared_ptr<TrackPointProxy>>(
-      m, "TrackPointStruct", "Fortran struct: track_point_struct")
-      .def(py::init<>())
+void init_track_point_struct(py::module& m, py::class_<TrackPointProxy>& cls) {
+  cls.def(py::init<>())
       // TrackPointProxy.s_lab (0D_NOT_real - Longitudinal lab coord with respect to the upstream end.
       .def_property(
           "s_lab", &TrackPointProxy::s_lab, &TrackPointProxy::set_s_lab)
@@ -4278,10 +4166,8 @@ void init_track_point_struct(py::module& m) {
 
 // =============================================================================
 // track_struct
-void init_track_struct(py::module& m) {
-  py::class_<TrackProxy, std::shared_ptr<TrackProxy>>(
-      m, "TrackStruct", "Fortran struct: track_struct")
-      .def(py::init<>())
+void init_track_struct(py::module& m, py::class_<TrackProxy>& cls) {
+  cls.def(py::init<>())
       // TrackProxy.pt (1D_ALLOC_type - Array of track points indexed from 0.
       .def_property_readonly("pt", &TrackProxy::pt)
       // TrackProxy.ds_save (0D_NOT_real - Min distance between points. Not positive => Save at all points.
@@ -4305,10 +4191,8 @@ void init_track_struct(py::module& m) {
 
 // =============================================================================
 // twiss_struct
-void init_twiss_struct(py::module& m) {
-  py::class_<TwissProxy, std::shared_ptr<TwissProxy>>(
-      m, "TwissStruct", "Fortran struct: twiss_struct")
-      .def(py::init<>())
+void init_twiss_struct(py::module& m, py::class_<TwissProxy>& cls) {
+  cls.def(py::init<>())
       // TwissProxy.beta (0D_NOT_real -
       .def_property("beta", &TwissProxy::beta, &TwissProxy::set_beta)
       // TwissProxy.alpha (0D_NOT_real -
@@ -4359,10 +4243,8 @@ void init_twiss_struct(py::module& m) {
 
 // =============================================================================
 // wake_lr_mode_struct
-void init_wake_lr_mode_struct(py::module& m) {
-  py::class_<WakeLrModeProxy, std::shared_ptr<WakeLrModeProxy>>(
-      m, "WakeLrModeStruct", "Fortran struct: wake_lr_mode_struct")
-      .def(py::init<>())
+void init_wake_lr_mode_struct(py::module& m, py::class_<WakeLrModeProxy>& cls) {
+  cls.def(py::init<>())
       // WakeLrModeProxy.freq (0D_NOT_real - Actual Frequency in Hz.
       .def_property("freq", &WakeLrModeProxy::freq, &WakeLrModeProxy::set_freq)
       // WakeLrModeProxy.freq_in (0D_NOT_real - Input frequency in Hz.
@@ -4416,10 +4298,8 @@ void init_wake_lr_mode_struct(py::module& m) {
 
 // =============================================================================
 // wake_lr_struct
-void init_wake_lr_struct(py::module& m) {
-  py::class_<WakeLrProxy, std::shared_ptr<WakeLrProxy>>(
-      m, "WakeLrStruct", "Fortran struct: wake_lr_struct")
-      .def(py::init<>())
+void init_wake_lr_struct(py::module& m, py::class_<WakeLrProxy>& cls) {
+  cls.def(py::init<>())
       // WakeLrProxy.file (0D_NOT_character -
       .def_property("file", &WakeLrProxy::file, &WakeLrProxy::set_file)
       // WakeLrProxy.mode (1D_ALLOC_type -
@@ -4455,10 +4335,8 @@ void init_wake_lr_struct(py::module& m) {
 
 // =============================================================================
 // wake_sr_mode_struct
-void init_wake_sr_mode_struct(py::module& m) {
-  py::class_<WakeSrModeProxy, std::shared_ptr<WakeSrModeProxy>>(
-      m, "WakeSrModeStruct", "Fortran struct: wake_sr_mode_struct")
-      .def(py::init<>())
+void init_wake_sr_mode_struct(py::module& m, py::class_<WakeSrModeProxy>& cls) {
+  cls.def(py::init<>())
       // WakeSrModeProxy.amp (0D_NOT_real - Amplitude
       .def_property("amp", &WakeSrModeProxy::amp, &WakeSrModeProxy::set_amp)
       // WakeSrModeProxy.damp (0D_NOT_real - Dampling factor.
@@ -4504,10 +4382,8 @@ void init_wake_sr_mode_struct(py::module& m) {
 
 // =============================================================================
 // wake_sr_struct
-void init_wake_sr_struct(py::module& m) {
-  py::class_<WakeSrProxy, std::shared_ptr<WakeSrProxy>>(
-      m, "WakeSrStruct", "Fortran struct: wake_sr_struct")
-      .def(py::init<>())
+void init_wake_sr_struct(py::module& m, py::class_<WakeSrProxy>& cls) {
+  cls.def(py::init<>())
       // WakeSrProxy.file (0D_NOT_character -
       .def_property("file", &WakeSrProxy::file, &WakeSrProxy::set_file)
       // WakeSrProxy.z_long (0D_NOT_type -
@@ -4549,10 +4425,10 @@ void init_wake_sr_struct(py::module& m) {
 
 // =============================================================================
 // wake_sr_z_long_struct
-void init_wake_sr_z_long_struct(py::module& m) {
-  py::class_<WakeSrZLongProxy, std::shared_ptr<WakeSrZLongProxy>>(
-      m, "WakeSrZLongStruct", "Fortran struct: wake_sr_z_long_struct")
-      .def(py::init<>())
+void init_wake_sr_z_long_struct(
+    py::module& m,
+    py::class_<WakeSrZLongProxy>& cls) {
+  cls.def(py::init<>())
       // WakeSrZLongProxy.w (1D_ALLOC_real - Input single particle Wake. Indexed from 1.
       .def_property_readonly("w", &WakeSrZLongProxy::w)
       // WakeSrZLongProxy.fw (1D_ALLOC_complex - Fourier transform of w.
@@ -4595,10 +4471,8 @@ void init_wake_sr_z_long_struct(py::module& m) {
 
 // =============================================================================
 // wake_struct
-void init_wake_struct(py::module& m) {
-  py::class_<WakeProxy, std::shared_ptr<WakeProxy>>(
-      m, "WakeStruct", "Fortran struct: wake_struct")
-      .def(py::init<>())
+void init_wake_struct(py::module& m, py::class_<WakeProxy>& cls) {
+  cls.def(py::init<>())
       // WakeProxy.sr (0D_NOT_type - Short-range wake
       .def_property("sr", &WakeProxy::sr, &WakeProxy::set_sr)
       // WakeProxy.lr (0D_NOT_type - Long-range wake
@@ -4616,10 +4490,10 @@ void init_wake_struct(py::module& m) {
 
 // =============================================================================
 // wall3d_section_struct
-void init_wall3d_section_struct(py::module& m) {
-  py::class_<Wall3dSectionProxy, std::shared_ptr<Wall3dSectionProxy>>(
-      m, "Wall3DSectionStruct", "Fortran struct: wall3d_section_struct")
-      .def(py::init<>())
+void init_wall3d_section_struct(
+    py::module& m,
+    py::class_<Wall3dSectionProxy>& cls) {
+  cls.def(py::init<>())
       // Wall3dSectionProxy.name (0D_NOT_character - Identifying name
       .def_property(
           "name", &Wall3dSectionProxy::name, &Wall3dSectionProxy::set_name)
@@ -4708,10 +4582,8 @@ void init_wall3d_section_struct(py::module& m) {
 
 // =============================================================================
 // wall3d_struct
-void init_wall3d_struct(py::module& m) {
-  py::class_<Wall3dProxy, std::shared_ptr<Wall3dProxy>>(
-      m, "Wall3DStruct", "Fortran struct: wall3d_struct")
-      .def(py::init<>())
+void init_wall3d_struct(py::module& m, py::class_<Wall3dProxy>& cls) {
+  cls.def(py::init<>())
       // Wall3dProxy.name (0D_NOT_character -
       .def_property("name", &Wall3dProxy::name, &Wall3dProxy::set_name)
       // Wall3dProxy.type (0D_NOT_integer - or mask_plate$
@@ -4759,10 +4631,10 @@ void init_wall3d_struct(py::module& m) {
 
 // =============================================================================
 // wall3d_vertex_struct
-void init_wall3d_vertex_struct(py::module& m) {
-  py::class_<Wall3dVertexProxy, std::shared_ptr<Wall3dVertexProxy>>(
-      m, "Wall3DVertexStruct", "Fortran struct: wall3d_vertex_struct")
-      .def(py::init<>())
+void init_wall3d_vertex_struct(
+    py::module& m,
+    py::class_<Wall3dVertexProxy>& cls) {
+  cls.def(py::init<>())
       // Wall3dVertexProxy.x (0D_NOT_real - Coordinates of the vertex.
       .def_property("x", &Wall3dVertexProxy::x, &Wall3dVertexProxy::set_x)
       // Wall3dVertexProxy.y (0D_NOT_real - Coordinates of the vertex.
@@ -4805,10 +4677,8 @@ void init_wall3d_vertex_struct(py::module& m) {
 
 // =============================================================================
 // xy_disp_struct
-void init_xy_disp_struct(py::module& m) {
-  py::class_<XyDispProxy, std::shared_ptr<XyDispProxy>>(
-      m, "XyDispStruct", "Fortran struct: xy_disp_struct")
-      .def(py::init<>())
+void init_xy_disp_struct(py::module& m, py::class_<XyDispProxy>& cls) {
+  cls.def(py::init<>())
       // XyDispProxy.eta (0D_NOT_real -
       .def_property("eta", &XyDispProxy::eta, &XyDispProxy::set_eta)
       // XyDispProxy.etap (0D_NOT_real -
@@ -4836,10 +4706,10 @@ void init_xy_disp_struct(py::module& m) {
 
 // =============================================================================
 // bicubic_cmplx_coef_struct
-void init_bicubic_cmplx_coef_struct(py::module& m) {
-  py::class_<BicubicCmplxCoefProxy, std::shared_ptr<BicubicCmplxCoefProxy>>(
-      m, "BicubicCmplxCoefStruct", "Fortran struct: bicubic_cmplx_coef_struct")
-      .def(py::init<>())
+void init_bicubic_cmplx_coef_struct(
+    py::module& m,
+    py::class_<BicubicCmplxCoefProxy>& cls) {
+  cls.def(py::init<>())
       // BicubicCmplxCoefProxy.coef (2D_NOT_complex - Coefs
       .def_property_readonly("coef", &BicubicCmplxCoefProxy::coef)
       // BicubicCmplxCoefProxy.i_box (1D_NOT_integer - index at lower box corner.
@@ -4863,12 +4733,10 @@ void init_bicubic_cmplx_coef_struct(py::module& m) {
 
 // =============================================================================
 // tricubic_cmplx_coef_struct
-void init_tricubic_cmplx_coef_struct(py::module& m) {
-  py::class_<TricubicCmplxCoefProxy, std::shared_ptr<TricubicCmplxCoefProxy>>(
-      m,
-      "TricubicCmplxCoefStruct",
-      "Fortran struct: tricubic_cmplx_coef_struct")
-      .def(py::init<>())
+void init_tricubic_cmplx_coef_struct(
+    py::module& m,
+    py::class_<TricubicCmplxCoefProxy>& cls) {
+  cls.def(py::init<>())
       // TricubicCmplxCoefProxy.coef (3D_NOT_complex - Coefs
       .def_property_readonly("coef", &TricubicCmplxCoefProxy::coef)
       // TricubicCmplxCoefProxy.i_box (1D_NOT_integer - index at lower box corner.
@@ -4892,10 +4760,8 @@ void init_tricubic_cmplx_coef_struct(py::module& m) {
 
 // =============================================================================
 // mad_energy_struct
-void init_mad_energy_struct(py::module& m) {
-  py::class_<MadEnergyProxy, std::shared_ptr<MadEnergyProxy>>(
-      m, "MadEnergyStruct", "Fortran struct: mad_energy_struct")
-      .def(py::init<>())
+void init_mad_energy_struct(py::module& m, py::class_<MadEnergyProxy>& cls) {
+  cls.def(py::init<>())
       // MadEnergyProxy.total (0D_NOT_real -
       .def_property("total", &MadEnergyProxy::total, &MadEnergyProxy::set_total)
       // MadEnergyProxy.beta (0D_NOT_real - normalized velocity: v/c
@@ -4925,10 +4791,8 @@ void init_mad_energy_struct(py::module& m) {
 
 // =============================================================================
 // mad_map_struct
-void init_mad_map_struct(py::module& m) {
-  py::class_<MadMapProxy, std::shared_ptr<MadMapProxy>>(
-      m, "MadMapStruct", "Fortran struct: mad_map_struct")
-      .def(py::init<>())
+void init_mad_map_struct(py::module& m, py::class_<MadMapProxy>& cls) {
+  cls.def(py::init<>())
       // MadMapProxy.k (1D_NOT_real - 0th order map.
       .def_property_readonly("k", &MadMapProxy::k)
       // MadMapProxy.r (2D_NOT_real - 1st order map.
@@ -4948,10 +4812,8 @@ void init_mad_map_struct(py::module& m) {
 
 // =============================================================================
 // qp_axis_struct
-void init_qp_axis_struct(py::module& m) {
-  py::class_<QpAxisProxy, std::shared_ptr<QpAxisProxy>>(
-      m, "QpAxisStruct", "Fortran struct: qp_axis_struct")
-      .def(py::init<>())
+void init_qp_axis_struct(py::module& m, py::class_<QpAxisProxy>& cls) {
+  cls.def(py::init<>())
       // QpAxisProxy.label (0D_NOT_character -
       .def_property("label", &QpAxisProxy::label, &QpAxisProxy::set_label)
       // QpAxisProxy.min (0D_NOT_real - Axis min/max in data units.
@@ -5048,10 +4910,8 @@ void init_qp_axis_struct(py::module& m) {
 
 // =============================================================================
 // qp_legend_struct
-void init_qp_legend_struct(py::module& m) {
-  py::class_<QpLegendProxy, std::shared_ptr<QpLegendProxy>>(
-      m, "QpLegendStruct", "Fortran struct: qp_legend_struct")
-      .def(py::init<>())
+void init_qp_legend_struct(py::module& m, py::class_<QpLegendProxy>& cls) {
+  cls.def(py::init<>())
       // QpLegendProxy.row_spacing (0D_NOT_real - Spacing between rows.
       .def_property(
           "row_spacing",
@@ -5092,10 +4952,8 @@ void init_qp_legend_struct(py::module& m) {
 
 // =============================================================================
 // qp_line_struct
-void init_qp_line_struct(py::module& m) {
-  py::class_<QpLineProxy, std::shared_ptr<QpLineProxy>>(
-      m, "QpLineStruct", "Fortran struct: qp_line_struct")
-      .def(py::init<>())
+void init_qp_line_struct(py::module& m, py::class_<QpLineProxy>& cls) {
+  cls.def(py::init<>())
       // QpLineProxy.width (0D_NOT_integer -
       .def_property("width", &QpLineProxy::width, &QpLineProxy::set_width)
       // QpLineProxy.color (0D_NOT_character -
@@ -5115,10 +4973,8 @@ void init_qp_line_struct(py::module& m) {
 
 // =============================================================================
 // qp_point_struct
-void init_qp_point_struct(py::module& m) {
-  py::class_<QpPointProxy, std::shared_ptr<QpPointProxy>>(
-      m, "QpPointStruct", "Fortran struct: qp_point_struct")
-      .def(py::init<>())
+void init_qp_point_struct(py::module& m, py::class_<QpPointProxy>& cls) {
+  cls.def(py::init<>())
       // QpPointProxy.x (0D_NOT_real -
       .def_property("x", &QpPointProxy::x, &QpPointProxy::set_x)
       // QpPointProxy.y (0D_NOT_real -
@@ -5138,10 +4994,8 @@ void init_qp_point_struct(py::module& m) {
 
 // =============================================================================
 // qp_rect_struct
-void init_qp_rect_struct(py::module& m) {
-  py::class_<QpRectProxy, std::shared_ptr<QpRectProxy>>(
-      m, "QpRectStruct", "Fortran struct: qp_rect_struct")
-      .def(py::init<>())
+void init_qp_rect_struct(py::module& m, py::class_<QpRectProxy>& cls) {
+  cls.def(py::init<>())
       // QpRectProxy.x1 (0D_NOT_real -
       .def_property("x1", &QpRectProxy::x1, &QpRectProxy::set_x1)
       // QpRectProxy.x2 (0D_NOT_real -
@@ -5165,10 +5019,8 @@ void init_qp_rect_struct(py::module& m) {
 
 // =============================================================================
 // qp_symbol_struct
-void init_qp_symbol_struct(py::module& m) {
-  py::class_<QpSymbolProxy, std::shared_ptr<QpSymbolProxy>>(
-      m, "QpSymbolStruct", "Fortran struct: qp_symbol_struct")
-      .def(py::init<>())
+void init_qp_symbol_struct(py::module& m, py::class_<QpSymbolProxy>& cls) {
+  cls.def(py::init<>())
       // QpSymbolProxy.type (0D_NOT_character -
       .def_property("type", &QpSymbolProxy::type, &QpSymbolProxy::set_type)
       // QpSymbolProxy.height (0D_NOT_real - in points (same as text height)
@@ -5200,10 +5052,8 @@ void init_qp_symbol_struct(py::module& m) {
 
 // =============================================================================
 // nametable_struct
-void init_nametable_struct(py::module& m) {
-  py::class_<NametableProxy, std::shared_ptr<NametableProxy>>(
-      m, "NametableStruct", "Fortran struct: nametable_struct")
-      .def(py::init<>())
+void init_nametable_struct(py::module& m, py::class_<NametableProxy>& cls) {
+  cls.def(py::init<>())
       // NametableProxy.name (1D_ALLOC_character - Array of names.
       .def_property_readonly("name", &NametableProxy::name)
       // NametableProxy.index (1D_ALLOC_integer - Sorted index for names(:) array. names(an_index(i)) is in alphabetical order.
@@ -5227,10 +5077,8 @@ void init_nametable_struct(py::module& m) {
 
 // =============================================================================
 // spline_struct
-void init_spline_struct(py::module& m) {
-  py::class_<SplineProxy, std::shared_ptr<SplineProxy>>(
-      m, "SplineStruct", "Fortran struct: spline_struct")
-      .def(py::init<>())
+void init_spline_struct(py::module& m, py::class_<SplineProxy>& cls) {
+  cls.def(py::init<>())
       // SplineProxy.x0 (0D_NOT_real - Point at start of spline
       .def_property("x0", &SplineProxy::x0, &SplineProxy::set_x0)
       // SplineProxy.y0 (0D_NOT_real - Point at start of spline
@@ -5252,10 +5100,10 @@ void init_spline_struct(py::module& m) {
 
 // =============================================================================
 // summation_rdt_struct
-void init_summation_rdt_struct(py::module& m) {
-  py::class_<SummationRdtProxy, std::shared_ptr<SummationRdtProxy>>(
-      m, "SummationRdtStruct", "Fortran struct: summation_rdt_struct")
-      .def(py::init<>())
+void init_summation_rdt_struct(
+    py::module& m,
+    py::class_<SummationRdtProxy>& cls) {
+  cls.def(py::init<>())
       // SummationRdtProxy.h11001 (0D_NOT_complex -
       .def_property(
           "h11001", &SummationRdtProxy::h11001, &SummationRdtProxy::set_h11001)
@@ -5334,10 +5182,10 @@ void init_summation_rdt_struct(py::module& m) {
 
 // =============================================================================
 // tao_beam_branch_struct
-void init_tao_beam_branch_struct(py::module& m) {
-  py::class_<TaoBeamBranchProxy, std::shared_ptr<TaoBeamBranchProxy>>(
-      m, "TaoBeamBranchStruct", "Fortran struct: tao_beam_branch_struct")
-      .def(py::init<>())
+void init_tao_beam_branch_struct(
+    py::module& m,
+    py::class_<TaoBeamBranchProxy>& cls) {
+  cls.def(py::init<>())
       // TaoBeamBranchProxy.beam_at_start (0D_NOT_type - Initial beam
       .def_property(
           "beam_at_start",
@@ -5398,10 +5246,8 @@ void init_tao_beam_branch_struct(py::module& m) {
 
 // =============================================================================
 // tao_beam_uni_struct
-void init_tao_beam_uni_struct(py::module& m) {
-  py::class_<TaoBeamUniProxy, std::shared_ptr<TaoBeamUniProxy>>(
-      m, "TaoBeamUniStruct", "Fortran struct: tao_beam_uni_struct")
-      .def(py::init<>())
+void init_tao_beam_uni_struct(py::module& m, py::class_<TaoBeamUniProxy>& cls) {
+  cls.def(py::init<>())
       // TaoBeamUniProxy.saved_at (0D_NOT_character -
       .def_property(
           "saved_at",
@@ -5440,14 +5286,10 @@ void init_tao_beam_uni_struct(py::module& m) {
 
 // =============================================================================
 // tao_building_wall_orientation_struct
-void init_tao_building_wall_orientation_struct(py::module& m) {
-  py::class_<
-      TaoBuildingWallOrientationProxy,
-      std::shared_ptr<TaoBuildingWallOrientationProxy>>(
-      m,
-      "TaoBuildingWallOrientationStruct",
-      "Fortran struct: tao_building_wall_orientation_struct")
-      .def(py::init<>())
+void init_tao_building_wall_orientation_struct(
+    py::module& m,
+    py::class_<TaoBuildingWallOrientationProxy>& cls) {
+  cls.def(py::init<>())
       // TaoBuildingWallOrientationProxy.theta (0D_NOT_real -
       .def_property(
           "theta",
@@ -5484,14 +5326,10 @@ void init_tao_building_wall_orientation_struct(py::module& m) {
 
 // =============================================================================
 // tao_building_wall_point_struct
-void init_tao_building_wall_point_struct(py::module& m) {
-  py::class_<
-      TaoBuildingWallPointProxy,
-      std::shared_ptr<TaoBuildingWallPointProxy>>(
-      m,
-      "TaoBuildingWallPointStruct",
-      "Fortran struct: tao_building_wall_point_struct")
-      .def(py::init<>())
+void init_tao_building_wall_point_struct(
+    py::module& m,
+    py::class_<TaoBuildingWallPointProxy>& cls) {
+  cls.def(py::init<>())
       // TaoBuildingWallPointProxy.z (0D_NOT_real - Global floor position
       .def_property(
           "z", &TaoBuildingWallPointProxy::z, &TaoBuildingWallPointProxy::set_z)
@@ -5532,14 +5370,10 @@ void init_tao_building_wall_point_struct(py::module& m) {
 
 // =============================================================================
 // tao_building_wall_section_struct
-void init_tao_building_wall_section_struct(py::module& m) {
-  py::class_<
-      TaoBuildingWallSectionProxy,
-      std::shared_ptr<TaoBuildingWallSectionProxy>>(
-      m,
-      "TaoBuildingWallSectionStruct",
-      "Fortran struct: tao_building_wall_section_struct")
-      .def(py::init<>())
+void init_tao_building_wall_section_struct(
+    py::module& m,
+    py::class_<TaoBuildingWallSectionProxy>& cls) {
+  cls.def(py::init<>())
       // TaoBuildingWallSectionProxy.name (0D_NOT_character -
       .def_property(
           "name",
@@ -5573,10 +5407,10 @@ void init_tao_building_wall_section_struct(py::module& m) {
 
 // =============================================================================
 // tao_building_wall_struct
-void init_tao_building_wall_struct(py::module& m) {
-  py::class_<TaoBuildingWallProxy, std::shared_ptr<TaoBuildingWallProxy>>(
-      m, "TaoBuildingWallStruct", "Fortran struct: tao_building_wall_struct")
-      .def(py::init<>())
+void init_tao_building_wall_struct(
+    py::module& m,
+    py::class_<TaoBuildingWallProxy>& cls) {
+  cls.def(py::init<>())
       // TaoBuildingWallProxy.orientation (0D_NOT_type -
       .def_property(
           "orientation",
@@ -5603,10 +5437,10 @@ void init_tao_building_wall_struct(py::module& m) {
 
 // =============================================================================
 // tao_cmd_history_struct
-void init_tao_cmd_history_struct(py::module& m) {
-  py::class_<TaoCmdHistoryProxy, std::shared_ptr<TaoCmdHistoryProxy>>(
-      m, "TaoCmdHistoryStruct", "Fortran struct: tao_cmd_history_struct")
-      .def(py::init<>())
+void init_tao_cmd_history_struct(
+    py::module& m,
+    py::class_<TaoCmdHistoryProxy>& cls) {
+  cls.def(py::init<>())
       // TaoCmdHistoryProxy.cmd (0D_ALLOC_character - The command
       .def_property(
           "cmd", &TaoCmdHistoryProxy::cmd, &TaoCmdHistoryProxy::set_cmd)
@@ -5627,10 +5461,8 @@ void init_tao_cmd_history_struct(py::module& m) {
 
 // =============================================================================
 // tao_common_struct
-void init_tao_common_struct(py::module& m) {
-  py::class_<TaoCommonProxy, std::shared_ptr<TaoCommonProxy>>(
-      m, "TaoCommonStruct", "Fortran struct: tao_common_struct")
-      .def(py::init<>())
+void init_tao_common_struct(py::module& m, py::class_<TaoCommonProxy>& cls) {
+  cls.def(py::init<>())
       // TaoCommonProxy.plot_place_buffer (1D_ALLOC_type - Used when %external_plotting is on.
       .def_property_readonly(
           "plot_place_buffer", &TaoCommonProxy::plot_place_buffer)
@@ -5827,10 +5659,10 @@ void init_tao_common_struct(py::module& m) {
 
 // =============================================================================
 // tao_curve_color_struct
-void init_tao_curve_color_struct(py::module& m) {
-  py::class_<TaoCurveColorProxy, std::shared_ptr<TaoCurveColorProxy>>(
-      m, "TaoCurveColorStruct", "Fortran struct: tao_curve_color_struct")
-      .def(py::init<>())
+void init_tao_curve_color_struct(
+    py::module& m,
+    py::class_<TaoCurveColorProxy>& cls) {
+  cls.def(py::init<>())
       // TaoCurveColorProxy.data_type (0D_NOT_character - Datum type to use for z-axis.
       .def_property(
           "data_type",
@@ -5865,10 +5697,10 @@ void init_tao_curve_color_struct(py::module& m) {
 
 // =============================================================================
 // tao_curve_orbit_struct
-void init_tao_curve_orbit_struct(py::module& m) {
-  py::class_<TaoCurveOrbitProxy, std::shared_ptr<TaoCurveOrbitProxy>>(
-      m, "TaoCurveOrbitStruct", "Fortran struct: tao_curve_orbit_struct")
-      .def(py::init<>())
+void init_tao_curve_orbit_struct(
+    py::module& m,
+    py::class_<TaoCurveOrbitProxy>& cls) {
+  cls.def(py::init<>())
       // TaoCurveOrbitProxy.x (0D_NOT_real - Transverse offset
       .def_property("x", &TaoCurveOrbitProxy::x, &TaoCurveOrbitProxy::set_x)
       // TaoCurveOrbitProxy.y (0D_NOT_real - Transverse offset
@@ -5890,10 +5722,8 @@ void init_tao_curve_orbit_struct(py::module& m) {
 
 // =============================================================================
 // tao_curve_struct
-void init_tao_curve_struct(py::module& m) {
-  py::class_<TaoCurveProxy, std::shared_ptr<TaoCurveProxy>>(
-      m, "TaoCurveStruct", "Fortran struct: tao_curve_struct")
-      .def(py::init<>())
+void init_tao_curve_struct(py::module& m, py::class_<TaoCurveProxy>& cls) {
+  cls.def(py::init<>())
       // TaoCurveProxy.name (0D_NOT_character - Name identifying the curve.
       .def_property("name", &TaoCurveProxy::name, &TaoCurveProxy::set_name)
       // TaoCurveProxy.data_source (0D_NOT_character - 'lat', 'beam', 'data' (deprecated: 'dat'), 'var', 'multi_turn_orbit'
@@ -6037,10 +5867,8 @@ void init_tao_curve_struct(py::module& m) {
 
 // =============================================================================
 // tao_d1_data_struct
-void init_tao_d1_data_struct(py::module& m) {
-  py::class_<TaoD1DataProxy, std::shared_ptr<TaoD1DataProxy>>(
-      m, "TaoD1DataStruct", "Fortran struct: tao_d1_data_struct")
-      .def(py::init<>())
+void init_tao_d1_data_struct(py::module& m, py::class_<TaoD1DataProxy>& cls) {
+  cls.def(py::init<>())
       // TaoD1DataProxy.name (0D_NOT_character - Eg: 'x', etc.
       .def_property("name", &TaoD1DataProxy::name, &TaoD1DataProxy::set_name)
       // TaoD1DataProxy.d2 (0D_PTR_type - ptr to parent d2_data
@@ -6062,10 +5890,8 @@ void init_tao_d1_data_struct(py::module& m) {
 
 // =============================================================================
 // tao_d2_data_struct
-void init_tao_d2_data_struct(py::module& m) {
-  py::class_<TaoD2DataProxy, std::shared_ptr<TaoD2DataProxy>>(
-      m, "TaoD2DataStruct", "Fortran struct: tao_d2_data_struct")
-      .def(py::init<>())
+void init_tao_d2_data_struct(py::module& m, py::class_<TaoD2DataProxy>& cls) {
+  cls.def(py::init<>())
       // TaoD2DataProxy.name (0D_NOT_character - Name to be used with commands.
       .def_property("name", &TaoD2DataProxy::name, &TaoD2DataProxy::set_name)
       // TaoD2DataProxy.data_file_name (0D_NOT_character - Data file name .
@@ -6128,10 +5954,8 @@ void init_tao_d2_data_struct(py::module& m) {
 
 // =============================================================================
 // tao_data_struct
-void init_tao_data_struct(py::module& m) {
-  py::class_<TaoDataProxy, std::shared_ptr<TaoDataProxy>>(
-      m, "TaoDataStruct", "Fortran struct: tao_data_struct")
-      .def(py::init<>())
+void init_tao_data_struct(py::module& m, py::class_<TaoDataProxy>& cls) {
+  cls.def(py::init<>())
       // TaoDataProxy.ele_name (0D_NOT_character - Name of the lattice element where datum is evaluated.
       .def_property(
           "ele_name", &TaoDataProxy::ele_name, &TaoDataProxy::set_ele_name)
@@ -6317,14 +6141,10 @@ void init_tao_data_struct(py::module& m) {
 
 // =============================================================================
 // tao_data_var_component_struct
-void init_tao_data_var_component_struct(py::module& m) {
-  py::class_<
-      TaoDataVarComponentProxy,
-      std::shared_ptr<TaoDataVarComponentProxy>>(
-      m,
-      "TaoDataVarComponentStruct",
-      "Fortran struct: tao_data_var_component_struct")
-      .def(py::init<>())
+void init_tao_data_var_component_struct(
+    py::module& m,
+    py::class_<TaoDataVarComponentProxy>& cls) {
+  cls.def(py::init<>())
       // TaoDataVarComponentProxy.name (0D_NOT_character - Eg: 'meas', 'ref', 'model', etc.
       .def_property(
           "name",
@@ -6354,10 +6174,8 @@ void init_tao_data_var_component_struct(py::module& m) {
 
 // =============================================================================
 // tao_drawing_struct
-void init_tao_drawing_struct(py::module& m) {
-  py::class_<TaoDrawingProxy, std::shared_ptr<TaoDrawingProxy>>(
-      m, "TaoDrawingStruct", "Fortran struct: tao_drawing_struct")
-      .def(py::init<>())
+void init_tao_drawing_struct(py::module& m, py::class_<TaoDrawingProxy>& cls) {
+  cls.def(py::init<>())
       // TaoDrawingProxy.ele_shape (1D_ALLOC_type -
       .def_property_readonly("ele_shape", &TaoDrawingProxy::ele_shape)
 
@@ -6375,12 +6193,10 @@ void init_tao_drawing_struct(py::module& m) {
 
 // =============================================================================
 // tao_dynamic_aperture_struct
-void init_tao_dynamic_aperture_struct(py::module& m) {
-  py::class_<TaoDynamicApertureProxy, std::shared_ptr<TaoDynamicApertureProxy>>(
-      m,
-      "TaoDynamicApertureStruct",
-      "Fortran struct: tao_dynamic_aperture_struct")
-      .def(py::init<>())
+void init_tao_dynamic_aperture_struct(
+    py::module& m,
+    py::class_<TaoDynamicApertureProxy>& cls) {
+  cls.def(py::init<>())
       // TaoDynamicApertureProxy.param (0D_NOT_type -
       .def_property(
           "param",
@@ -6424,10 +6240,10 @@ void init_tao_dynamic_aperture_struct(py::module& m) {
 
 // =============================================================================
 // tao_ele_pointer_struct
-void init_tao_ele_pointer_struct(py::module& m) {
-  py::class_<TaoElePointerProxy, std::shared_ptr<TaoElePointerProxy>>(
-      m, "TaoElePointerStruct", "Fortran struct: tao_ele_pointer_struct")
-      .def(py::init<>())
+void init_tao_ele_pointer_struct(
+    py::module& m,
+    py::class_<TaoElePointerProxy>& cls) {
+  cls.def(py::init<>())
       // TaoElePointerProxy.eles (1D_ALLOC_type -
       .def_property_readonly("eles", &TaoElePointerProxy::eles)
       // TaoElePointerProxy.n_loc (0D_NOT_integer -
@@ -6448,10 +6264,10 @@ void init_tao_ele_pointer_struct(py::module& m) {
 
 // =============================================================================
 // tao_ele_shape_struct
-void init_tao_ele_shape_struct(py::module& m) {
-  py::class_<TaoEleShapeProxy, std::shared_ptr<TaoEleShapeProxy>>(
-      m, "TaoEleShapeStruct", "Fortran struct: tao_ele_shape_struct")
-      .def(py::init<>())
+void init_tao_ele_shape_struct(
+    py::module& m,
+    py::class_<TaoEleShapeProxy>& cls) {
+  cls.def(py::init<>())
       // TaoEleShapeProxy.ele_id (0D_NOT_character - element 'key::name' to match to.
       .def_property(
           "ele_id", &TaoEleShapeProxy::ele_id, &TaoEleShapeProxy::set_ele_id)
@@ -6506,10 +6322,10 @@ void init_tao_ele_shape_struct(py::module& m) {
 
 // =============================================================================
 // tao_floor_plan_struct
-void init_tao_floor_plan_struct(py::module& m) {
-  py::class_<TaoFloorPlanProxy, std::shared_ptr<TaoFloorPlanProxy>>(
-      m, "TaoFloorPlanStruct", "Fortran struct: tao_floor_plan_struct")
-      .def(py::init<>())
+void init_tao_floor_plan_struct(
+    py::module& m,
+    py::class_<TaoFloorPlanProxy>& cls) {
+  cls.def(py::init<>())
       // TaoFloorPlanProxy.view (0D_NOT_character - or 'xz'.
       .def_property(
           "view", &TaoFloorPlanProxy::view, &TaoFloorPlanProxy::set_view)
@@ -6583,10 +6399,8 @@ void init_tao_floor_plan_struct(py::module& m) {
 
 // =============================================================================
 // tao_global_struct
-void init_tao_global_struct(py::module& m) {
-  py::class_<TaoGlobalProxy, std::shared_ptr<TaoGlobalProxy>>(
-      m, "TaoGlobalStruct", "Fortran struct: tao_global_struct")
-      .def(py::init<>())
+void init_tao_global_struct(py::module& m, py::class_<TaoGlobalProxy>& cls) {
+  cls.def(py::init<>())
       // TaoGlobalProxy.beam_dead_cutoff (0D_NOT_real - Percentage of dead particles at which beam tracking is stopped.
       .def_property(
           "beam_dead_cutoff",
@@ -6937,10 +6751,8 @@ void init_tao_global_struct(py::module& m) {
 
 // =============================================================================
 // tao_graph_struct
-void init_tao_graph_struct(py::module& m) {
-  py::class_<TaoGraphProxy, std::shared_ptr<TaoGraphProxy>>(
-      m, "TaoGraphStruct", "Fortran struct: tao_graph_struct")
-      .def(py::init<>())
+void init_tao_graph_struct(py::module& m, py::class_<TaoGraphProxy>& cls) {
+  cls.def(py::init<>())
       // TaoGraphProxy.name (0D_NOT_character - Name identifying the graph
       .def_property("name", &TaoGraphProxy::name, &TaoGraphProxy::set_name)
       // TaoGraphProxy.type (0D_NOT_character - 'data', 'lat_layout', 'phase_space', 'histogram', 'dynamic_aperture'
@@ -7074,10 +6886,10 @@ void init_tao_graph_struct(py::module& m) {
 
 // =============================================================================
 // tao_histogram_struct
-void init_tao_histogram_struct(py::module& m) {
-  py::class_<TaoHistogramProxy, std::shared_ptr<TaoHistogramProxy>>(
-      m, "TaoHistogramStruct", "Fortran struct: tao_histogram_struct")
-      .def(py::init<>())
+void init_tao_histogram_struct(
+    py::module& m,
+    py::class_<TaoHistogramProxy>& cls) {
+  cls.def(py::init<>())
       // TaoHistogramProxy.density_normalized (0D_NOT_logical -
       .def_property(
           "density_normalized",
@@ -7122,10 +6934,8 @@ void init_tao_histogram_struct(py::module& m) {
 
 // =============================================================================
 // tao_init_struct
-void init_tao_init_struct(py::module& m) {
-  py::class_<TaoInitProxy, std::shared_ptr<TaoInitProxy>>(
-      m, "TaoInitStruct", "Fortran struct: tao_init_struct")
-      .def(py::init<>())
+void init_tao_init_struct(py::module& m, py::class_<TaoInitProxy>& cls) {
+  cls.def(py::init<>())
       // TaoInitProxy.parse_cmd_args (0D_NOT_logical - Used by custom programs to control Tao init
       .def_property(
           "parse_cmd_args",
@@ -7336,10 +7146,10 @@ void init_tao_init_struct(py::module& m) {
 
 // =============================================================================
 // tao_lat_sigma_struct
-void init_tao_lat_sigma_struct(py::module& m) {
-  py::class_<TaoLatSigmaProxy, std::shared_ptr<TaoLatSigmaProxy>>(
-      m, "TaoLatSigmaStruct", "Fortran struct: tao_lat_sigma_struct")
-      .def(py::init<>())
+void init_tao_lat_sigma_struct(
+    py::module& m,
+    py::class_<TaoLatSigmaProxy>& cls) {
+  cls.def(py::init<>())
       // TaoLatSigmaProxy.mat (2D_NOT_real -
       .def_property_readonly("mat", &TaoLatSigmaProxy::mat)
 
@@ -7357,10 +7167,10 @@ void init_tao_lat_sigma_struct(py::module& m) {
 
 // =============================================================================
 // tao_lattice_branch_struct
-void init_tao_lattice_branch_struct(py::module& m) {
-  py::class_<TaoLatticeBranchProxy, std::shared_ptr<TaoLatticeBranchProxy>>(
-      m, "TaoLatticeBranchStruct", "Fortran struct: tao_lattice_branch_struct")
-      .def(py::init<>())
+void init_tao_lattice_branch_struct(
+    py::module& m,
+    py::class_<TaoLatticeBranchProxy>& cls) {
+  cls.def(py::init<>())
       // TaoLatticeBranchProxy.tao_lat (0D_PTR_type - Parent tao_lat
       .def_property(
           "tao_lat",
@@ -7525,10 +7335,8 @@ void init_tao_lattice_branch_struct(py::module& m) {
 
 // =============================================================================
 // tao_lattice_struct
-void init_tao_lattice_struct(py::module& m) {
-  py::class_<TaoLatticeProxy, std::shared_ptr<TaoLatticeProxy>>(
-      m, "TaoLatticeStruct", "Fortran struct: tao_lattice_struct")
-      .def(py::init<>())
+void init_tao_lattice_struct(py::module& m, py::class_<TaoLatticeProxy>& cls) {
+  cls.def(py::init<>())
       // TaoLatticeProxy.name (0D_NOT_character - 'model', 'base', or 'design'.
       .def_property("name", &TaoLatticeProxy::name, &TaoLatticeProxy::set_name)
       // TaoLatticeProxy.lat (0D_NOT_type - lattice structures
@@ -7570,10 +7378,10 @@ void init_tao_lattice_struct(py::module& m) {
 
 // =============================================================================
 // tao_model_branch_struct
-void init_tao_model_branch_struct(py::module& m) {
-  py::class_<TaoModelBranchProxy, std::shared_ptr<TaoModelBranchProxy>>(
-      m, "TaoModelBranchStruct", "Fortran struct: tao_model_branch_struct")
-      .def(py::init<>())
+void init_tao_model_branch_struct(
+    py::module& m,
+    py::class_<TaoModelBranchProxy>& cls) {
+  cls.def(py::init<>())
       // TaoModelBranchProxy.ele (1D_ALLOC_type - Per element information
       .def_property_readonly("ele", &TaoModelBranchProxy::ele)
       // TaoModelBranchProxy.beam (0D_NOT_type -
@@ -7598,10 +7406,10 @@ void init_tao_model_branch_struct(py::module& m) {
 
 // =============================================================================
 // tao_model_element_struct
-void init_tao_model_element_struct(py::module& m) {
-  py::class_<TaoModelElementProxy, std::shared_ptr<TaoModelElementProxy>>(
-      m, "TaoModelElementStruct", "Fortran struct: tao_model_element_struct")
-      .def(py::init<>())
+void init_tao_model_element_struct(
+    py::module& m,
+    py::class_<TaoModelElementProxy>& cls) {
+  cls.def(py::init<>())
       // TaoModelElementProxy.beam (0D_NOT_type - Beam distribution at element.
       .def_property(
           "beam", &TaoModelElementProxy::beam, &TaoModelElementProxy::set_beam)
@@ -7634,10 +7442,10 @@ void init_tao_model_element_struct(py::module& m) {
 
 // =============================================================================
 // tao_ping_scale_struct
-void init_tao_ping_scale_struct(py::module& m) {
-  py::class_<TaoPingScaleProxy, std::shared_ptr<TaoPingScaleProxy>>(
-      m, "TaoPingScaleStruct", "Fortran struct: tao_ping_scale_struct")
-      .def(py::init<>())
+void init_tao_ping_scale_struct(
+    py::module& m,
+    py::class_<TaoPingScaleProxy>& cls) {
+  cls.def(py::init<>())
       // TaoPingScaleProxy.a_mode_meas (0D_NOT_real -
       .def_property(
           "a_mode_meas",
@@ -7673,10 +7481,10 @@ void init_tao_ping_scale_struct(py::module& m) {
 
 // =============================================================================
 // tao_plot_cache_struct
-void init_tao_plot_cache_struct(py::module& m) {
-  py::class_<TaoPlotCacheProxy, std::shared_ptr<TaoPlotCacheProxy>>(
-      m, "TaoPlotCacheStruct", "Fortran struct: tao_plot_cache_struct")
-      .def(py::init<>())
+void init_tao_plot_cache_struct(
+    py::module& m,
+    py::class_<TaoPlotCacheProxy>& cls) {
+  cls.def(py::init<>())
       // TaoPlotCacheProxy.ele_to_s (0D_NOT_type - Integrated element from branch beginning. Will be marked as a hybrid element.
       .def_property(
           "ele_to_s",
@@ -7702,10 +7510,10 @@ void init_tao_plot_cache_struct(py::module& m) {
 
 // =============================================================================
 // tao_plot_page_struct
-void init_tao_plot_page_struct(py::module& m) {
-  py::class_<TaoPlotPageProxy, std::shared_ptr<TaoPlotPageProxy>>(
-      m, "TaoPlotPageStruct", "Fortran struct: tao_plot_page_struct")
-      .def(py::init<>())
+void init_tao_plot_page_struct(
+    py::module& m,
+    py::class_<TaoPlotPageProxy>& cls) {
+  cls.def(py::init<>())
       // TaoPlotPageProxy.title (0D_NOT_type - Title  at top of page.
       .def_property(
           "title", &TaoPlotPageProxy::title, &TaoPlotPageProxy::set_title)
@@ -7830,10 +7638,10 @@ void init_tao_plot_page_struct(py::module& m) {
 
 // =============================================================================
 // tao_plot_region_struct
-void init_tao_plot_region_struct(py::module& m) {
-  py::class_<TaoPlotRegionProxy, std::shared_ptr<TaoPlotRegionProxy>>(
-      m, "TaoPlotRegionStruct", "Fortran struct: tao_plot_region_struct")
-      .def(py::init<>())
+void init_tao_plot_region_struct(
+    py::module& m,
+    py::class_<TaoPlotRegionProxy>& cls) {
+  cls.def(py::init<>())
       // TaoPlotRegionProxy.name (0D_NOT_character - Region name. Eg: 'r13', etc.
       .def_property(
           "name", &TaoPlotRegionProxy::name, &TaoPlotRegionProxy::set_name)
@@ -7872,10 +7680,8 @@ void init_tao_plot_region_struct(py::module& m) {
 
 // =============================================================================
 // tao_plot_struct
-void init_tao_plot_struct(py::module& m) {
-  py::class_<TaoPlotProxy, std::shared_ptr<TaoPlotProxy>>(
-      m, "TaoPlotStruct", "Fortran struct: tao_plot_struct")
-      .def(py::init<>())
+void init_tao_plot_struct(py::module& m, py::class_<TaoPlotProxy>& cls) {
+  cls.def(py::init<>())
       // TaoPlotProxy.name (0D_NOT_character - Identifying name. Rule: If name is blank, plot is not valid.
       .def_property("name", &TaoPlotProxy::name, &TaoPlotProxy::set_name)
       // TaoPlotProxy.description (0D_NOT_character - Descriptive string.
@@ -7948,14 +7754,10 @@ void init_tao_plot_struct(py::module& m) {
 
 // =============================================================================
 // tao_shape_pattern_point_struct
-void init_tao_shape_pattern_point_struct(py::module& m) {
-  py::class_<
-      TaoShapePatternPointProxy,
-      std::shared_ptr<TaoShapePatternPointProxy>>(
-      m,
-      "TaoShapePatternPointStruct",
-      "Fortran struct: tao_shape_pattern_point_struct")
-      .def(py::init<>())
+void init_tao_shape_pattern_point_struct(
+    py::module& m,
+    py::class_<TaoShapePatternPointProxy>& cls) {
+  cls.def(py::init<>())
       // TaoShapePatternPointProxy.s (0D_NOT_real -
       .def_property(
           "s", &TaoShapePatternPointProxy::s, &TaoShapePatternPointProxy::set_s)
@@ -7986,10 +7788,10 @@ void init_tao_shape_pattern_point_struct(py::module& m) {
 
 // =============================================================================
 // tao_shape_pattern_struct
-void init_tao_shape_pattern_struct(py::module& m) {
-  py::class_<TaoShapePatternProxy, std::shared_ptr<TaoShapePatternProxy>>(
-      m, "TaoShapePatternStruct", "Fortran struct: tao_shape_pattern_struct")
-      .def(py::init<>())
+void init_tao_shape_pattern_struct(
+    py::module& m,
+    py::class_<TaoShapePatternProxy>& cls) {
+  cls.def(py::init<>())
       // TaoShapePatternProxy.name (0D_NOT_character -
       .def_property(
           "name", &TaoShapePatternProxy::name, &TaoShapePatternProxy::set_name)
@@ -8017,10 +7819,10 @@ void init_tao_shape_pattern_struct(py::module& m) {
 
 // =============================================================================
 // tao_spin_dn_dpz_struct
-void init_tao_spin_dn_dpz_struct(py::module& m) {
-  py::class_<TaoSpinDnDpzProxy, std::shared_ptr<TaoSpinDnDpzProxy>>(
-      m, "TaoSpinDnDpzStruct", "Fortran struct: tao_spin_dn_dpz_struct")
-      .def(py::init<>())
+void init_tao_spin_dn_dpz_struct(
+    py::module& m,
+    py::class_<TaoSpinDnDpzProxy>& cls) {
+  cls.def(py::init<>())
       // TaoSpinDnDpzProxy.vec (1D_NOT_real - n0 derivative wrt pz.
       .def_property_readonly("vec", &TaoSpinDnDpzProxy::vec)
       // TaoSpinDnDpzProxy.partial (2D_NOT_real - partial(i:) is spin n0 derivative wrt pz for i^th oscillation mode (1 => a-mode, etc.)
@@ -8042,10 +7844,8 @@ void init_tao_spin_dn_dpz_struct(py::module& m) {
 
 // =============================================================================
 // tao_spin_ele_struct
-void init_tao_spin_ele_struct(py::module& m) {
-  py::class_<TaoSpinEleProxy, std::shared_ptr<TaoSpinEleProxy>>(
-      m, "TaoSpinEleStruct", "Fortran struct: tao_spin_ele_struct")
-      .def(py::init<>())
+void init_tao_spin_ele_struct(py::module& m, py::class_<TaoSpinEleProxy>& cls) {
+  cls.def(py::init<>())
       // TaoSpinEleProxy.dn_dpz (0D_NOT_type -
       .def_property(
           "dn_dpz", &TaoSpinEleProxy::dn_dpz, &TaoSpinEleProxy::set_dn_dpz)
@@ -8073,10 +7873,8 @@ void init_tao_spin_ele_struct(py::module& m) {
 
 // =============================================================================
 // tao_spin_map_struct
-void init_tao_spin_map_struct(py::module& m) {
-  py::class_<TaoSpinMapProxy, std::shared_ptr<TaoSpinMapProxy>>(
-      m, "TaoSpinMapStruct", "Fortran struct: tao_spin_map_struct")
-      .def(py::init<>())
+void init_tao_spin_map_struct(py::module& m, py::class_<TaoSpinMapProxy>& cls) {
+  cls.def(py::init<>())
       // TaoSpinMapProxy.valid (0D_NOT_logical -
       .def_property(
           "valid", &TaoSpinMapProxy::valid, &TaoSpinMapProxy::set_valid)
@@ -8124,14 +7922,10 @@ void init_tao_spin_map_struct(py::module& m) {
 
 // =============================================================================
 // tao_spin_polarization_struct
-void init_tao_spin_polarization_struct(py::module& m) {
-  py::class_<
-      TaoSpinPolarizationProxy,
-      std::shared_ptr<TaoSpinPolarizationProxy>>(
-      m,
-      "TaoSpinPolarizationStruct",
-      "Fortran struct: tao_spin_polarization_struct")
-      .def(py::init<>())
+void init_tao_spin_polarization_struct(
+    py::module& m,
+    py::class_<TaoSpinPolarizationProxy>& cls) {
+  cls.def(py::init<>())
       // TaoSpinPolarizationProxy.tune (0D_NOT_real -
       .def_property(
           "tune",
@@ -8222,10 +8016,10 @@ void init_tao_spin_polarization_struct(py::module& m) {
 
 // =============================================================================
 // tao_super_universe_struct
-void init_tao_super_universe_struct(py::module& m) {
-  py::class_<TaoSuperUniverseProxy, std::shared_ptr<TaoSuperUniverseProxy>>(
-      m, "TaoSuperUniverseStruct", "Fortran struct: tao_super_universe_struct")
-      .def(py::init<>())
+void init_tao_super_universe_struct(
+    py::module& m,
+    py::class_<TaoSuperUniverseProxy>& cls) {
+  cls.def(py::init<>())
       // TaoSuperUniverseProxy.global (0D_NOT_type - User accessible global variables.
       .def_property(
           "global_",
@@ -8298,10 +8092,8 @@ void init_tao_super_universe_struct(py::module& m) {
 
 // =============================================================================
 // tao_title_struct
-void init_tao_title_struct(py::module& m) {
-  py::class_<TaoTitleProxy, std::shared_ptr<TaoTitleProxy>>(
-      m, "TaoTitleStruct", "Fortran struct: tao_title_struct")
-      .def(py::init<>())
+void init_tao_title_struct(py::module& m, py::class_<TaoTitleProxy>& cls) {
+  cls.def(py::init<>())
       // TaoTitleProxy.string (0D_NOT_character - title character string.
       .def_property(
           "string", &TaoTitleProxy::string, &TaoTitleProxy::set_string)
@@ -8331,10 +8123,10 @@ void init_tao_title_struct(py::module& m) {
 
 // =============================================================================
 // tao_universe_calc_struct
-void init_tao_universe_calc_struct(py::module& m) {
-  py::class_<TaoUniverseCalcProxy, std::shared_ptr<TaoUniverseCalcProxy>>(
-      m, "TaoUniverseCalcStruct", "Fortran struct: tao_universe_calc_struct")
-      .def(py::init<>())
+void init_tao_universe_calc_struct(
+    py::module& m,
+    py::class_<TaoUniverseCalcProxy>& cls) {
+  cls.def(py::init<>())
       // TaoUniverseCalcProxy.srdt_for_data (0D_NOT_integer - 0 = false, 1 = 1st order, 2 = 1st & 2nd order
       .def_property(
           "srdt_for_data",
@@ -8419,12 +8211,10 @@ void init_tao_universe_calc_struct(py::module& m) {
 
 // =============================================================================
 // tao_universe_pointer_struct
-void init_tao_universe_pointer_struct(py::module& m) {
-  py::class_<TaoUniversePointerProxy, std::shared_ptr<TaoUniversePointerProxy>>(
-      m,
-      "TaoUniversePointerStruct",
-      "Fortran struct: tao_universe_pointer_struct")
-      .def(py::init<>())
+void init_tao_universe_pointer_struct(
+    py::module& m,
+    py::class_<TaoUniversePointerProxy>& cls) {
+  cls.def(py::init<>())
       // TaoUniversePointerProxy.u (0D_PTR_type -
       .def_property(
           "u", &TaoUniversePointerProxy::u, &TaoUniversePointerProxy::set_u)
@@ -8447,10 +8237,10 @@ void init_tao_universe_pointer_struct(py::module& m) {
 
 // =============================================================================
 // tao_universe_struct
-void init_tao_universe_struct(py::module& m) {
-  py::class_<TaoUniverseProxy, std::shared_ptr<TaoUniverseProxy>>(
-      m, "TaoUniverseStruct", "Fortran struct: tao_universe_struct")
-      .def(py::init<>())
+void init_tao_universe_struct(
+    py::module& m,
+    py::class_<TaoUniverseProxy>& cls) {
+  cls.def(py::init<>())
       // TaoUniverseProxy.model (0D_PTR_type -
       .def_property(
           "model", &TaoUniverseProxy::model, &TaoUniverseProxy::set_model)
@@ -8540,10 +8330,8 @@ void init_tao_universe_struct(py::module& m) {
 
 // =============================================================================
 // tao_v1_var_struct
-void init_tao_v1_var_struct(py::module& m) {
-  py::class_<TaoV1VarProxy, std::shared_ptr<TaoV1VarProxy>>(
-      m, "TaoV1VarStruct", "Fortran struct: tao_v1_var_struct")
-      .def(py::init<>())
+void init_tao_v1_var_struct(py::module& m, py::class_<TaoV1VarProxy>& cls) {
+  cls.def(py::init<>())
       // TaoV1VarProxy.name (0D_NOT_character - V1 variable name. Eg: 'quad_k1'.
       .def_property("name", &TaoV1VarProxy::name, &TaoV1VarProxy::set_name)
       // TaoV1VarProxy.ix_v1_var (0D_NOT_integer - Index to s%v1_var(:) array
@@ -8565,10 +8353,10 @@ void init_tao_v1_var_struct(py::module& m) {
 
 // =============================================================================
 // tao_var_slave_struct
-void init_tao_var_slave_struct(py::module& m) {
-  py::class_<TaoVarSlaveProxy, std::shared_ptr<TaoVarSlaveProxy>>(
-      m, "TaoVarSlaveStruct", "Fortran struct: tao_var_slave_struct")
-      .def(py::init<>())
+void init_tao_var_slave_struct(
+    py::module& m,
+    py::class_<TaoVarSlaveProxy>& cls) {
+  cls.def(py::init<>())
       // TaoVarSlaveProxy.ix_uni (0D_NOT_integer - universe index.
       .def_property(
           "ix_uni", &TaoVarSlaveProxy::ix_uni, &TaoVarSlaveProxy::set_ix_uni)
@@ -8605,10 +8393,8 @@ void init_tao_var_slave_struct(py::module& m) {
 
 // =============================================================================
 // tao_var_struct
-void init_tao_var_struct(py::module& m) {
-  py::class_<TaoVarProxy, std::shared_ptr<TaoVarProxy>>(
-      m, "TaoVarStruct", "Fortran struct: tao_var_struct")
-      .def(py::init<>())
+void init_tao_var_struct(py::module& m, py::class_<TaoVarProxy>& cls) {
+  cls.def(py::init<>())
       // TaoVarProxy.ele_name (0D_NOT_character - Associated lattice element name.
       .def_property(
           "ele_name", &TaoVarProxy::ele_name, &TaoVarProxy::set_ele_name)
@@ -8740,10 +8526,10 @@ void init_tao_var_struct(py::module& m) {
 
 // =============================================================================
 // tao_wave_kick_pt_struct
-void init_tao_wave_kick_pt_struct(py::module& m) {
-  py::class_<TaoWaveKickPtProxy, std::shared_ptr<TaoWaveKickPtProxy>>(
-      m, "TaoWaveKickPtStruct", "Fortran struct: tao_wave_kick_pt_struct")
-      .def(py::init<>())
+void init_tao_wave_kick_pt_struct(
+    py::module& m,
+    py::class_<TaoWaveKickPtProxy>& cls) {
+  cls.def(py::init<>())
       // TaoWaveKickPtProxy.phi_s (0D_NOT_real -
       .def_property(
           "phi_s", &TaoWaveKickPtProxy::phi_s, &TaoWaveKickPtProxy::set_phi_s)
@@ -8781,10 +8567,8 @@ void init_tao_wave_kick_pt_struct(py::module& m) {
 
 // =============================================================================
 // tao_wave_struct
-void init_tao_wave_struct(py::module& m) {
-  py::class_<TaoWaveProxy, std::shared_ptr<TaoWaveProxy>>(
-      m, "TaoWaveStruct", "Fortran struct: tao_wave_struct")
-      .def(py::init<>())
+void init_tao_wave_struct(py::module& m, py::class_<TaoWaveProxy>& cls) {
+  cls.def(py::init<>())
       // TaoWaveProxy.data_type (0D_NOT_character -
       .def_property(
           "data_type", &TaoWaveProxy::data_type, &TaoWaveProxy::set_data_type)
@@ -8915,10 +8699,10 @@ void init_tao_wave_struct(py::module& m) {
 
 // =============================================================================
 // all_encompassing_struct
-void init_all_encompassing_struct(py::module& m) {
-  py::class_<AllEncompassingProxy, std::shared_ptr<AllEncompassingProxy>>(
-      m, "AllEncompassingStruct", "Fortran struct: all_encompassing_struct")
-      .def(py::init<>())
+void init_all_encompassing_struct(
+    py::module& m,
+    py::class_<AllEncompassingProxy>& cls) {
+  cls.def(py::init<>())
       // AllEncompassingProxy.real_rp_0d (0D_NOT_real -
       .def_property(
           "real_rp_0d",
@@ -9132,10 +8916,8 @@ void init_all_encompassing_struct(py::module& m) {
 
 // =============================================================================
 // test_sub_struct
-void init_test_sub_struct(py::module& m) {
-  py::class_<TestSubProxy, std::shared_ptr<TestSubProxy>>(
-      m, "TestSubStruct", "Fortran struct: test_sub_struct")
-      .def(py::init<>())
+void init_test_sub_struct(py::module& m, py::class_<TestSubProxy>& cls) {
+  cls.def(py::init<>())
       // TestSubProxy.sr (0D_NOT_type -
       .def_property("sr", &TestSubProxy::sr, &TestSubProxy::set_sr)
 
@@ -9151,10 +8933,8 @@ void init_test_sub_struct(py::module& m) {
 
 // =============================================================================
 // test_sub_sub_struct
-void init_test_sub_sub_struct(py::module& m) {
-  py::class_<TestSubSubProxy, std::shared_ptr<TestSubSubProxy>>(
-      m, "TestSubSubStruct", "Fortran struct: test_sub_sub_struct")
-      .def(py::init<>())
+void init_test_sub_sub_struct(py::module& m, py::class_<TestSubSubProxy>& cls) {
+  cls.def(py::init<>())
       // TestSubSubProxy.aaa (0D_NOT_integer8 -
       .def_property("aaa", &TestSubSubProxy::aaa, &TestSubSubProxy::set_aaa)
       // TestSubSubProxy.bbb (0D_NOT_integer -

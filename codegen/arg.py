@@ -5,6 +5,8 @@ import sys
 import typing
 from dataclasses import dataclass, field
 
+import pydantic.alias_generators
+
 from .config import CodegenConfig
 from .context import get_params
 from .proxy import (
@@ -243,16 +245,21 @@ class Argument:
 @dataclass
 class CodegenStructure:
     f_name: str = ""  # Struct name on Fortran side
-    cpp_class: str = ""  # C++ name.
-    arg: list[Argument] = field(
-        default_factory=list
-    )  # List of structrure components + array bound dimensions.
+    arg: list[Argument] = field(default_factory=list)
     c_constructor_arg_list: str = ""
     c_constructor_body: str = ""  # Body of the C++ class_initializer
     c_extra_methods: str = ""  # Additional custom methods
 
     module: str = "unknown_module"
     parsed: ParsedStructure | None = None
+
+    @property
+    def cpp_class(self) -> str:
+        return struct_to_proxy_class_name(self.f_name)
+
+    @property
+    def python_class_name(self) -> str:
+        return pydantic.alias_generators.to_pascal(self.f_name)
 
     @property
     def container_alloc_name(self):
