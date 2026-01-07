@@ -15,33 +15,29 @@ from .types import remove_optional
 from .util import snake_to_camel, sorted_routines
 
 
-def is_struct_array_used(
+def struct_array_usage_dimensions(
     routines_by_name: dict[str, FortranRoutine],
     structs: list[CodegenStructure],
-    struct: CodegenStructure,
-    dimension: int,
-) -> bool:
+) -> dict[str, set[int]]:
+    by_kind = {}
+
+    args = []
     for routine in routines_by_name.values():
-        if not routine.usable:
-            continue
-        for arg in routine.args:
-            if (
-                arg.full_type.type == "type"
-                and arg.full_type.dim == dimension
-                and arg.kind.lower() == struct.f_name.lower()
-            ):
-                return True
+        if routine.usable:
+            for arg in routine.args:
+                args.append(arg)
 
     for st in structs:
         for arg in st.arg:
-            if (
-                arg.full_type.type == "type"
-                and arg.full_type.dim == dimension
-                and arg.kind.lower() == struct.f_name.lower()
-            ):
-                return True
+            args.append(arg)
 
-    return False
+    for arg in args:
+        if arg.full_type.type == "type":
+            kind = arg.kind.lower()
+            by_kind.setdefault(kind, set())
+            by_kind[kind].add(arg.full_type.dim)
+
+    return by_kind
 
 
 def generate_enum_wrapper(clsname: str, enums: list[EnumValue]) -> str:
@@ -350,13 +346,11 @@ def generate_pybmad_header(
 
 
 def generate_pybmad_struct_code(
-    structs: list[CodegenStructure],
-    routines_by_name: dict[str, FortranRoutine],
+    structs: list[CodegenStructure],  # noqa: ARG001
+    routines_by_name: dict[str, FortranRoutine],  # noqa: ARG001
     struct: CodegenStructure,
+    used_array_dims: set[int],
 ) -> list[str]:
-    used_array_dims = [
-        n for n in SUPPORTED_ARRAY_DIMS if is_struct_array_used(routines_by_name, structs, struct, n)
-    ]
     code_lines = [""]
     code_lines.append("// =============================================================================")
     code_lines.append(f"// {struct.f_name}")
@@ -463,8 +457,11 @@ def generate_pybmad(
     def by_module_and_name(struct: CodegenStructure):
         return (struct.module, struct.f_name)
 
+    array_usage = struct_array_usage_dimensions(routines_by_name, structs)
     for struct in sorted(structs, key=by_module_and_name):
-        code_lines.extend(generate_pybmad_struct_code(structs, routines_by_name, struct))
+        code_lines.extend(
+            generate_pybmad_struct_code(structs, routines_by_name, struct, array_usage[struct.f_name])
+        )
 
     code_lines.append("} // namespace Pybmad")
     filename = PYBMAD_SRC / "generated" / "structs.cpp"

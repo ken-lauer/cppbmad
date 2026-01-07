@@ -266,6 +266,7 @@ class FortranRoutine:
     module: str | None = None
     private: bool = False
     cpp_namespace: str = ""
+    overload_disabled: bool = False
     # Arguments - in order and including result value (if applicable)
     args: list[RoutineArg] = field(default_factory=list)
 
@@ -273,6 +274,8 @@ class FortranRoutine:
     def overloaded_name(self) -> str:
         """Some routines have interfaces which result in overloaded functions in C++"""
         if not self.interface or self.interface == GLOBAL_INTERFACE:
+            return self.name
+        if self.overload_disabled:
             return self.name
         return self.interface
 
@@ -432,6 +435,7 @@ class FortranRoutine:
     def get_cpp_decl(self, defaults: bool, namespace: bool) -> str:
         decl_args = ", ".join(self._get_cpp_decl_spec(defaults))
 
+        # name = self.overloaded_name if not self.overload_disabled else self.name
         routine_and_args = f"{self.overloaded_name}({decl_args})"
 
         if self.cpp_namespace and namespace:
@@ -606,6 +610,7 @@ class FortranParser:
         in_interface: str | None = None
         in_module: str | None = None
         interface_doc: list[str] = []
+        interface_overloads = {}
 
         # Track nesting level and procedure stack
         nesting_level = 0
@@ -631,7 +636,7 @@ class FortranParser:
 
             if stripped_line.lower().startswith("interface"):
                 parts = stripped_line.lower().split()
-                if len(parts) > 1:
+                if len(parts) > 1 and parts[1] not in {"assignment", "operator"}:
                     in_interface = parts[1]
                 else:
                     in_interface = GLOBAL_INTERFACE
@@ -654,6 +659,9 @@ class FortranParser:
                 if pre_comment_parts[0] == "private":
                     for name in pre_comment_parts[1:]:
                         marked_private.add(name.strip(", "))
+
+                if in_interface and pre_comment_parts[:2] == ["module", "procedure"]:
+                    interface_overloads[pre_comment_parts[2].lower()] = in_interface
 
             # Handle the "contains" keyword
             if stripped_line.lower() == "contains" and current_procedure:
@@ -738,7 +746,11 @@ class FortranParser:
             pending_comments = []
 
         for proc in self.procedures:
-            if proc.name.lower() in marked_private:
+            if proc.name.lower() in interface_overloads:
+                overloaded_name = interface_overloads[proc.name.lower()]
+                proc.interface = overloaded_name
+                proc.private = overloaded_name in marked_private  # is this a thing?
+            elif proc.name.lower() in marked_private:
                 proc.private = True
 
         return self.procedures
@@ -774,6 +786,9 @@ def parse_bmad_routines(settings: RoutineSettings, config: CodegenConfig):
             skip_procedures=settings.skip_procedures,
         ):
             proc.cpp_namespace = settings.cpp_namespace
+            proc.overload_disabled = bool(
+                proc.interface and proc.interface.lower() in settings.do_not_overload
+            )
             procedures.append(proc)
 
     for proc in procedures:
@@ -1027,7 +1042,7 @@ def generate_fortran_routine_code(
             continue
 
         using.setdefault(routine.module, set())
-        using[routine.module].add(routine.name)
+        using[routine.module].add(routine.overloaded_name)
 
         lines.append(generate_fortran_routine_with_c_binding(routine))
 

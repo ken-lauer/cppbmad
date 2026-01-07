@@ -155,24 +155,23 @@ document.addEventListener('DOMContentLoaded', function() {
 def struct_usage_count(
     routines: list[FortranRoutine],
     structs: list[CodegenStructure],
-) -> dict[str, int]:
+) -> dict[str, tuple[int, int]]:
     struct_names = {struct.f_name.lower() for struct in structs}
-    usage = dict.fromkeys(struct_names, 0)
+    usage = {name: [0, 0] for name in struct_names}
+
+    for st in structs:
+        for arg in st.arg:
+            if arg.full_type.type == "type" and arg.kind.lower() in struct_names:
+                usage[arg.kind.lower()][0] += 1
+
     for routine in routines:
         if not routine.usable:
             continue
         for arg in routine.args:
             if arg.full_type.type == "type" and arg.kind.lower() in struct_names:
-                usage[arg.kind.lower()] += 1
-                break
+                usage[arg.kind.lower()][1] += 1
 
-    for st in structs:
-        for arg in st.arg:
-            if arg.full_type.type == "type" and arg.kind.lower() in struct_names:
-                usage[arg.kind.lower()] += 1
-                break
-
-    return usage
+    return {name: (num_field, num_routine) for name, (num_field, num_routine) in usage.items()}
 
 
 def generate_coverage_report(
@@ -280,15 +279,18 @@ def generate_coverage_report(
         # Create search text for data-search to allow easy filtering
         search_txt = f"{s.f_name} {loc_str}".lower()
 
-        usage_c = usage_counts.get(s.f_name.lower(), 0)
+        usage_fld, usage_routine = usage_counts.get(s.f_name.lower(), (0, 0))
         # Visual style: Dim '0' usages to reduce visual noise
-        usage_html = str(usage_c) if usage_c > 0 else '<span style="color:#d4d4d4">0</span>'
+        field_usage_html = str(usage_fld) if usage_fld > 0 else '<span style="color:#d4d4d4">0</span>'
+        routine_usage_html = (
+            str(usage_routine) if usage_routine > 0 else '<span style="color:#d4d4d4">0</span>'
+        )
 
         row = [
             _tag("td", html.escape(s.f_name), "col-mono"),
             _tag("td", loc_str, "col-loc"),
-            _tag("td", str(len(s.arg))),
-            _tag("td", usage_html),  # New Column
+            _tag("td", field_usage_html),
+            _tag("td", routine_usage_html),  # New Column
             _tag("td", status_html, "col-stat"),
             _tag("td", dropped_html),
         ]
@@ -351,9 +353,13 @@ def generate_coverage_report(
             # we embed the name in the data-search attribute.
             search_terms = f"{r.name} {mod} {fname} {loc_txt}"
 
+            if r.overloaded_name != r.name:
+                name = f"{r.name} ({r.overloaded_name})"
+            else:
+                name = r.name
             row = [
                 # Only show Name in the first row of the group
-                _tag("td", html.escape(r.name) if i == 0 else "", "col-mono"),
+                _tag("td", html.escape(name) if i == 0 else "", "col-mono"),
                 _tag("td", loc_txt, "col-loc"),
                 _tag("td", status_html, "col-stat"),
                 _tag("td", reason_html),

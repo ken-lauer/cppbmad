@@ -197,6 +197,7 @@ struct_list = [
   "mad_map_struct",
 
   # BBU 
+  "random_state_struct", # required for ran_gauss_converter call
   "bbu_stage_struct",
   "bbu_beam_struct",
   "bbu_param_struct",
@@ -399,7 +400,6 @@ skips = [
 [c_to_python_name_translation]
 "global" = "global_"
 
-
 [[routines]]
 fortran_output_filename = "bmad_routines.f90"
 cpp_output_filename = "bmad_routines.cpp"
@@ -438,6 +438,7 @@ source_paths = [
 ]
 skip_files = []
 skip_procedures = []
+do_not_overload = ["ran_gauss"]
 
 [[routines]]
 fortran_output_filename = "tao_routines.f90"

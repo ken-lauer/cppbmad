@@ -580,26 +580,31 @@ def generate_fortran_routine_with_c_binding(routine: FortranRoutine) -> str:
     #
     handlers_by_name = {handler.arg.c_name: handler for handler in handlers}
 
-    bmad_arg_names = {
-        arg.c_name: decl for decl, arg in zip(routine.arg_names_with_result, routine.args, strict=True)
-    }
+    # bmad_arg_names = {
+    #     arg.c_name: decl for decl, arg in zip(routine.arg_names_with_result, routine.args, strict=True)
+    # }
 
     def get_f_args(arg_handlers: list[FortranWrapperArgument]):
         for handler in arg_handlers:
             name = handler.c_name
             if name == routine.result_name:
                 continue
-            decl = bmad_arg_names[name]
-            yield f"{decl}=" + handler.get_call_arg_name()
+            # TODO: note, we used to call using 'kwarg=value' syntax,
+            # but it can be problematic when using overloads.
+            # is there a reason to go back?
+            #
+            # decl = bmad_arg_names[name]
+            # yield f"{decl}=" + handler.get_call_arg_name()
+            yield handler.get_call_arg_name()
 
     def add_call(f_args: str, indent: str = "  "):
         if routine.result_name:
             f_to_c_name = get_params().c_side_name_translation
             res_name = f_to_c_name.get(routine.result_name, routine.result_name)
             res = handlers_by_name[res_name].custom_call_arg_name or f"f_{routine.result_name}"
-            lines.append(wrap_line(f"{res} = {routine.name}({f_args})", indent=indent))
+            lines.append(wrap_line(f"{res} = {routine.overloaded_name}({f_args})", indent=indent))
         else:
-            lines.append(wrap_line(f"call {routine.name}({f_args})", indent=indent))
+            lines.append(wrap_line(f"call {routine.overloaded_name}({f_args})", indent=indent))
 
     # TODO: if I restructure the conversions
     f_args = ", ".join(get_f_args(handlers))

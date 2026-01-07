@@ -19,6 +19,7 @@ class RoutineSettings(pydantic.BaseModel):
     source_paths: list[NormalizedPath]
     skip_files: set[str]
     skip_procedures: set[str]
+    do_not_overload: set[str] = set()
 
     @property
     def fortran_module_name(self):
