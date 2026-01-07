@@ -952,6 +952,25 @@ void SimUtils::parse_fortran_format(
       /* int& */ width,
       /* int& */ digits);
 }
+RandomStateProxy SimUtils::pointer_to_ran_state(
+    optional_ref<RandomStateProxy> ran_state,
+    std::optional<int> ix_thread) {
+  auto* _ran_state = ran_state.has_value() ? ran_state->get().get_fortran_ptr()
+                                           : nullptr; // input, optional
+  int ix_thread_lvalue;
+  auto* _ix_thread{&ix_thread_lvalue};
+  if (ix_thread.has_value()) {
+    ix_thread_lvalue = ix_thread.value();
+  } else {
+    _ix_thread = nullptr;
+  }
+  RandomStateProxy _ran_state_ptr;
+  fortran_pointer_to_ran_state(
+      /* void* */ _ran_state,
+      /* int* */ _ix_thread,
+      /* void* */ _ran_state_ptr.get_fortran_ptr());
+  return std::move(_ran_state_ptr);
+}
 void SimUtils::poly_eval(
     RealAlloc1D& poly,
     double x,
@@ -993,8 +1012,7 @@ void SimUtils::quadratic_roots(
   fortran_quadratic_roots(
       /* double* */ _coefs, /* std::complex<double>* */ _root);
 }
-FixedArray1D<Complex, 4> SimUtils::quat_conj_complex(
-    FixedArray1D<Complex, 4> q_in) {
+FixedArray1D<Complex, 4> SimUtils::quat_conj(FixedArray1D<Complex, 4> q_in) {
   auto* _q_in = q_in.data(); // CppWrapperGeneralArgument
   FixedArray1D<Complex, 4> _q_out;
   fortran_quat_conj_complex(
@@ -1002,7 +1020,7 @@ FixedArray1D<Complex, 4> SimUtils::quat_conj_complex(
       /* std::complex<double>* */ _q_out.data());
   return _q_out;
 }
-FixedArray1D<Real, 4> SimUtils::quat_conj_real(FixedArray1D<Real, 4> q_in) {
+FixedArray1D<Real, 4> SimUtils::quat_conj(FixedArray1D<Real, 4> q_in) {
   auto* _q_in = q_in.data(); // CppWrapperGeneralArgument
   FixedArray1D<Real, 4> _q_out;
   fortran_quat_conj_real(/* double* */ _q_in, /* double* */ _q_out.data());
@@ -1014,7 +1032,7 @@ FixedArray1D<Real, 4> SimUtils::quat_inverse(FixedArray1D<Real, 4> q_in) {
   fortran_quat_inverse(/* double* */ _q_in, /* double* */ _q_out.data());
   return _q_out;
 }
-FixedArray1D<Complex, 4> SimUtils::quat_mul_complex(
+FixedArray1D<Complex, 4> SimUtils::quat_mul(
     FixedArray1D<Complex, 4> q1,
     FixedArray1D<Complex, 4> q2,
     std::optional<FixedArray1D<Complex, 4>> q3,
@@ -1047,7 +1065,7 @@ FixedArray1D<Complex, 4> SimUtils::quat_mul_complex(
       /* std::complex<double>* */ _q_out.data());
   return _q_out;
 }
-FixedArray1D<Real, 4> SimUtils::quat_mul_real(
+FixedArray1D<Real, 4> SimUtils::quat_mul(
     FixedArray1D<Real, 4> q1,
     FixedArray1D<Real, 4> q2,
     std::optional<FixedArray1D<Real, 4>> q3,
@@ -1080,7 +1098,7 @@ FixedArray1D<Real, 4> SimUtils::quat_mul_real(
       /* double* */ _q_out.data());
   return _q_out;
 }
-FixedArray1D<Complex, 3> SimUtils::quat_rotate_complex(
+FixedArray1D<Complex, 3> SimUtils::quat_rotate(
     FixedArray1D<Complex, 4> quat,
     FixedArray1D<Complex, 3> vec_in) {
   auto* _quat = quat.data(); // CppWrapperGeneralArgument
@@ -1092,7 +1110,7 @@ FixedArray1D<Complex, 3> SimUtils::quat_rotate_complex(
       /* std::complex<double>* */ _vec_out.data());
   return _vec_out;
 }
-FixedArray1D<Real, 3> SimUtils::quat_rotate_real(
+FixedArray1D<Real, 3> SimUtils::quat_rotate(
     FixedArray1D<Real, 4> quat,
     FixedArray1D<Real, 3> vec_in) {
   auto* _quat = quat.data(); // CppWrapperGeneralArgument
@@ -1147,6 +1165,83 @@ void SimUtils::quote(std::string& str, std::string& q_str) {
   auto _q_str = q_str.c_str(); // ptr, inout, required
   fortran_quote(/* const char* */ _str, /* const char* */ _q_str);
 }
+RandomStateProxy SimUtils::ran_default_state(
+    optional_ref<RandomStateProxy> set_state) {
+  auto* _set_state = set_state.has_value() ? set_state->get().get_fortran_ptr()
+                                           : nullptr; // input, optional
+  RandomStateProxy _get_state;
+  fortran_ran_default_state(
+      /* void* */ _set_state, /* void* */ _get_state.get_fortran_ptr());
+  return std::move(_get_state);
+}
+void SimUtils::ran_engine(
+    std::optional<std::string> set,
+    std::optional<std::string> get,
+    optional_ref<RandomStateProxy> ran_state) {
+  const char* _set = set.has_value() ? set->c_str() : nullptr;
+  const char* _get = get.has_value() ? get->c_str() : nullptr;
+  auto* _ran_state = ran_state.has_value() ? ran_state->get().get_fortran_ptr()
+                                           : nullptr; // input, optional
+  fortran_ran_engine(
+      /* const char* */ _set, /* const char* */ _get, /* void* */ _ran_state);
+}
+SimUtils::RanGaussConverter SimUtils::ran_gauss_converter(
+    std::optional<std::string> set,
+    std::optional<double> set_sigma_cut,
+    optional_ref<RandomStateProxy> ran_state) {
+  const char* _set = set.has_value() ? set->c_str() : nullptr;
+  double set_sigma_cut_lvalue;
+  auto* _set_sigma_cut{&set_sigma_cut_lvalue};
+  if (set_sigma_cut.has_value()) {
+    set_sigma_cut_lvalue = set_sigma_cut.value();
+  } else {
+    _set_sigma_cut = nullptr;
+  }
+  char _get[4096];
+  double _get_sigma_cut{};
+  auto* _ran_state = ran_state.has_value() ? ran_state->get().get_fortran_ptr()
+                                           : nullptr; // input, optional
+  fortran_ran_gauss_converter(
+      /* const char* */ _set,
+      /* double* */ _set_sigma_cut,
+      /* const char* */ _get,
+      /* double& */ _get_sigma_cut,
+      /* void* */ _ran_state);
+  return RanGaussConverter{_get, _get_sigma_cut};
+}
+double SimUtils::ran_gauss_scalar(
+    optional_ref<RandomStateProxy> ran_state,
+    optional_ref<double> sigma_cut,
+    optional_ref<int> index_quasi) {
+  double _harvest{};
+  auto* _ran_state = ran_state.has_value() ? ran_state->get().get_fortran_ptr()
+                                           : nullptr; // input, optional
+  auto* _sigma_cut =
+      sigma_cut.has_value() ? &sigma_cut->get() : nullptr; // inout, optional
+  auto* _index_quasi = index_quasi.has_value() ? &index_quasi->get()
+                                               : nullptr; // inout, optional
+  fortran_ran_gauss_scalar(
+      /* double& */ _harvest,
+      /* void* */ _ran_state,
+      /* double* */ _sigma_cut,
+      /* int* */ _index_quasi);
+  return _harvest;
+}
+RealAlloc1D SimUtils::ran_gauss_vector(
+    optional_ref<RandomStateProxy> ran_state,
+    optional_ref<double> sigma_cut) {
+  // intent=out allocatable general array
+  auto harvest{RealAlloc1D()};
+  auto* _ran_state = ran_state.has_value() ? ran_state->get().get_fortran_ptr()
+                                           : nullptr; // input, optional
+  auto* _sigma_cut =
+      sigma_cut.has_value() ? &sigma_cut->get() : nullptr; // inout, optional
+  fortran_ran_gauss_vector(
+      /* void* */ harvest.get_fortran_ptr(),
+      /* void* */ _ran_state,
+      /* double* */ _sigma_cut);
+  return std::move(harvest);
+}
 int SimUtils::ran_seed_get() {
   int _seed{};
   fortran_ran_seed_get(/* int& */ _seed);
@@ -1161,6 +1256,27 @@ void SimUtils::ran_seed_put(int seed, std::optional<int> mpi_offset) {
     _mpi_offset = nullptr;
   }
   fortran_ran_seed_put(/* int& */ seed, /* int* */ _mpi_offset);
+}
+double SimUtils::ran_uniform(
+    optional_ref<RandomStateProxy> ran_state,
+    optional_ref<int> index_quasi) {
+  double _harvest{};
+  auto* _ran_state = ran_state.has_value() ? ran_state->get().get_fortran_ptr()
+                                           : nullptr; // input, optional
+  auto* _index_quasi = index_quasi.has_value() ? &index_quasi->get()
+                                               : nullptr; // inout, optional
+  fortran_ran_uniform_scalar(
+      /* double& */ _harvest, /* void* */ _ran_state, /* int* */ _index_quasi);
+  return _harvest;
+}
+RealAlloc1D SimUtils::ran_uniform(optional_ref<RandomStateProxy> ran_state) {
+  // intent=out allocatable general array
+  auto harvest{RealAlloc1D()};
+  auto* _ran_state = ran_state.has_value() ? ran_state->get().get_fortran_ptr()
+                                           : nullptr; // input, optional
+  fortran_ran_uniform_vector(
+      /* void* */ harvest.get_fortran_ptr(), /* void* */ _ran_state);
+  return std::move(harvest);
 }
 void SimUtils::real_num_fortran_format(
     double& number,
@@ -1732,6 +1848,14 @@ double SimUtils::super_poly(double x, RealAlloc1D& coeffs) {
       /* void* */ coeffs.get_fortran_ptr(),
       /* double& */ _value);
   return _value;
+}
+RealAlloc1D SimUtils::super_sobseq(optional_ref<RandomStateProxy> ran_state) {
+  // intent=out allocatable general array
+  auto x{RealAlloc1D()};
+  auto* _ran_state = ran_state.has_value() ? ran_state->get().get_fortran_ptr()
+                                           : nullptr; // input, optional
+  fortran_super_sobseq(/* void* */ x.get_fortran_ptr(), /* void* */ _ran_state);
+  return std::move(x);
 }
 void SimUtils::super_sort(IntAlloc1D& arr) {
   // intent=inout allocatable general array

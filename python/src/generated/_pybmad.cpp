@@ -202,7 +202,7 @@ PyAttributeFree1 python_attribute_free1(
     std::optional<bool> dependent_attribs_free,
     std::optional<int> why_not_free,
     bool free) {
-  Bmad::attribute_free1(
+  Bmad::attribute_free(
       ix_ele,
       attrib_name,
       lat,
@@ -237,7 +237,7 @@ PyAttributeFree2 python_attribute_free2(
     std::optional<bool> dependent_attribs_free,
     std::optional<int> why_not_free,
     bool free) {
-  Bmad::attribute_free2(
+  Bmad::attribute_free(
       ele,
       attrib_name,
       make_opt_ref(err_print_flag),
@@ -274,7 +274,7 @@ PyAttributeFree3 python_attribute_free3(
     std::optional<bool> dependent_attribs_free,
     std::optional<int> why_not_free,
     bool free) {
-  Bmad::attribute_free3(
+  Bmad::attribute_free(
       ix_ele,
       ix_branch,
       attrib_name,
@@ -309,7 +309,7 @@ PyAttributeIndex1 python_attribute_index1(
     std::optional<bool> can_abbreviate,
     std::optional<bool> print_error,
     int attrib_index) {
-  Bmad::attribute_index1(
+  Bmad::attribute_index(
       ele,
       name,
       make_opt_ref(full_name),
@@ -335,7 +335,7 @@ PyAttributeIndex2 python_attribute_index2(
     std::optional<bool> can_abbreviate,
     std::optional<bool> print_error,
     int attrib_index) {
-  Bmad::attribute_index2(
+  Bmad::attribute_index(
       key,
       name,
       make_opt_ref(full_name),
@@ -357,7 +357,7 @@ PyAttributeName1 python_attribute_name1(
     int ix_att,
     std::optional<bool> show_private,
     std::string attrib_name) {
-  Bmad::attribute_name1(key, ix_att, make_opt_ref(show_private), attrib_name);
+  Bmad::attribute_name(key, ix_att, make_opt_ref(show_private), attrib_name);
   auto py_result{PyAttributeName1{key, ix_att, show_private, attrib_name}};
   return py_result;
 }
@@ -371,7 +371,7 @@ PyAttributeName2 python_attribute_name2(
     int ix_att,
     std::optional<bool> show_private,
     std::string attrib_name) {
-  Bmad::attribute_name2(ele, ix_att, make_opt_ref(show_private), attrib_name);
+  Bmad::attribute_name(ele, ix_att, make_opt_ref(show_private), attrib_name);
   auto py_result{PyAttributeName2{ix_att, show_private, attrib_name}};
   return py_result;
 }
@@ -634,6 +634,37 @@ PyComplexErrorFunction python_complex_error_function(
     double zi) {
   SimUtils::complex_error_function(wr, wi, zr, zi);
   auto py_result{PyComplexErrorFunction{wr, wi, zr, zi}};
+  return py_result;
+}
+struct PyComplexTaylorCoef1 {
+  std::complex<double> coef;
+};
+PyComplexTaylorCoef1 python_complex_taylor_coef1(
+    ComplexTaylorProxy& complex_taylor,
+    IntAlloc1D& exp,
+    std::complex<double> coef) {
+  Bmad::complex_taylor_coef(complex_taylor, exp, coef);
+  auto py_result{PyComplexTaylorCoef1{coef}};
+  return py_result;
+}
+struct PyComplexTaylorCoef2 {
+  std::complex<double> coef;
+};
+PyComplexTaylorCoef2 python_complex_taylor_coef2(
+    ComplexTaylorProxy& complex_taylor,
+    std::optional<int> i1,
+    std::optional<int> i2,
+    std::optional<int> i3,
+    std::optional<int> i4,
+    std::optional<int> i5,
+    std::optional<int> i6,
+    std::optional<int> i7,
+    std::optional<int> i8,
+    std::optional<int> i9,
+    std::complex<double> coef) {
+  Bmad::complex_taylor_coef(
+      complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9, coef);
+  auto py_result{PyComplexTaylorCoef2{coef}};
   return py_result;
 }
 struct PyConvertLocalCartesianToLocalCurvilinear {
@@ -1036,6 +1067,69 @@ PyEleValueHasChanged python_ele_value_has_changed(
     bool has_changed) {
   Bmad::ele_value_has_changed(ele, list, abs_tol, set_old, has_changed);
   auto py_result{PyEleValueHasChanged{has_changed}};
+  return py_result;
+}
+struct PyElementAtSBranch {
+  double s;
+  bool choose_max;
+  std::optional<bool> err_flag;
+  std::optional<double> s_eff;
+  std::optional<bool> print_err;
+  int ix_ele;
+};
+PyElementAtSBranch python_element_at_s_branch(
+    BranchProxy& branch,
+    double s,
+    bool choose_max,
+    std::optional<bool> err_flag,
+    std::optional<double> s_eff,
+    optional_ref<CoordProxy> position,
+    std::optional<bool> print_err,
+    int ix_ele) {
+  Bmad::element_at_s(
+      branch,
+      s,
+      choose_max,
+      make_opt_ref(err_flag),
+      make_opt_ref(s_eff),
+      position,
+      make_opt_ref(print_err),
+      ix_ele);
+  auto py_result{
+      PyElementAtSBranch{s, choose_max, err_flag, s_eff, print_err, ix_ele}};
+  return py_result;
+}
+struct PyElementAtSLat {
+  double s;
+  bool choose_max;
+  std::optional<int> ix_branch;
+  std::optional<bool> err_flag;
+  std::optional<double> s_eff;
+  std::optional<bool> print_err;
+  int ix_ele;
+};
+PyElementAtSLat python_element_at_s_lat(
+    LatProxy& lat,
+    double s,
+    bool choose_max,
+    std::optional<int> ix_branch,
+    std::optional<bool> err_flag,
+    std::optional<double> s_eff,
+    optional_ref<CoordProxy> position,
+    std::optional<bool> print_err,
+    int ix_ele) {
+  Bmad::element_at_s(
+      lat,
+      s,
+      choose_max,
+      make_opt_ref(ix_branch),
+      make_opt_ref(err_flag),
+      make_opt_ref(s_eff),
+      position,
+      make_opt_ref(print_err),
+      ix_ele);
+  auto py_result{PyElementAtSLat{
+      s, choose_max, ix_branch, err_flag, s_eff, print_err, ix_ele}};
   return py_result;
 }
 
@@ -2699,7 +2793,7 @@ PyIntegrationTimerEle python_integration_timer_ele(
     CoordProxy& start,
     CoordProxy& orb_max,
     double tol) {
-  Bmad::integration_timer_ele(ele, param, start, orb_max, tol);
+  Bmad::integration_timer(ele, param, start, orb_max, tol);
   auto py_result{PyIntegrationTimerEle{tol}};
   return py_result;
 }
@@ -3920,7 +4014,7 @@ PyPointerToEle1 python_pointer_to_ele1(
     int ix_ele,
     std::optional<int> ix_branch,
     EleProxy& ele_ptr) {
-  Bmad::pointer_to_ele1(lat, ix_ele, make_opt_ref(ix_branch), ele_ptr);
+  Bmad::pointer_to_ele(lat, ix_ele, make_opt_ref(ix_branch), ele_ptr);
   auto py_result{PyPointerToEle1{ix_ele, ix_branch}};
   return py_result;
 }
@@ -3931,7 +4025,7 @@ PyPointerToEle3 python_pointer_to_ele3(
     LatProxy& lat,
     std::string ele_name,
     EleProxy& ele_ptr) {
-  Bmad::pointer_to_ele3(lat, ele_name, ele_ptr);
+  Bmad::pointer_to_ele(lat, ele_name, ele_ptr);
   auto py_result{PyPointerToEle3{ele_name}};
   return py_result;
 }
@@ -4110,6 +4204,45 @@ PyRamperValue python_ramper_value(
   auto py_result{PyRamperValue{_result, value}};
   return py_result;
 }
+
+struct PyRanGaussScalar {
+  double harvest;
+  std::optional<double> sigma_cut;
+  std::optional<int> index_quasi;
+};
+PyRanGaussScalar python_ran_gauss_scalar(
+    optional_ref<RandomStateProxy> ran_state = std::nullopt,
+    std::optional<double> sigma_cut = std::nullopt,
+    std::optional<int> index_quasi = std::nullopt) {
+  auto _result = SimUtils::ran_gauss_scalar(
+      ran_state, make_opt_ref(sigma_cut), make_opt_ref(index_quasi));
+  auto py_result{PyRanGaussScalar{_result, sigma_cut, index_quasi}};
+  return py_result;
+}
+
+struct PyRanGaussVector {
+  RealAlloc1D harvest;
+  std::optional<double> sigma_cut;
+};
+PyRanGaussVector python_ran_gauss_vector(
+    optional_ref<RandomStateProxy> ran_state = std::nullopt,
+    std::optional<double> sigma_cut = std::nullopt) {
+  auto _result = SimUtils::ran_gauss_vector(ran_state, make_opt_ref(sigma_cut));
+  auto py_result{PyRanGaussVector{_result, sigma_cut}};
+  return py_result;
+}
+
+struct PyRanUniformScalar {
+  double harvest;
+  std::optional<int> index_quasi;
+};
+PyRanUniformScalar python_ran_uniform_scalar(
+    optional_ref<RandomStateProxy> ran_state = std::nullopt,
+    std::optional<int> index_quasi = std::nullopt) {
+  auto _result = SimUtils::ran_uniform(ran_state, make_opt_ref(index_quasi));
+  auto py_result{PyRanUniformScalar{_result, index_quasi}};
+  return py_result;
+}
 struct PyRchomp {
   double rel;
   int plc;
@@ -4137,7 +4270,7 @@ struct PyReStrQp {
   std::string str_out;
 };
 PyReStrQp python_re_str_qp(long double rel, std::string str_out) {
-  Bmad::re_str_qp(rel, str_out);
+  Bmad::re_str(rel, str_out);
   auto py_result{PyReStrQp{rel, str_out}};
   return py_result;
 }
@@ -4146,7 +4279,7 @@ struct PyReStrRp {
   std::string str_out;
 };
 PyReStrRp python_re_str_rp(double rel, std::string str_out) {
-  Bmad::re_str_rp(rel, str_out);
+  Bmad::re_str(rel, str_out);
   auto py_result{PyReStrRp{rel, str_out}};
   return py_result;
 }
@@ -5606,6 +5739,30 @@ PyTaoPointerToEleShape python_tao_pointer_to_ele_shape(
   auto py_result{PyTaoPointerToEleShape{_result, ix_shape_min}};
   return py_result;
 }
+struct PyTaoPointerToUniverseInt {
+  int ix_uni;
+  std::optional<bool> neg2_to_default;
+};
+PyTaoPointerToUniverseInt python_tao_pointer_to_universe_int(
+    int ix_uni,
+    std::optional<bool> neg2_to_default,
+    TaoUniverseProxy& u) {
+  Tao::tao_pointer_to_universe(ix_uni, make_opt_ref(neg2_to_default), u);
+  auto py_result{PyTaoPointerToUniverseInt{ix_uni, neg2_to_default}};
+  return py_result;
+}
+struct PyTaoPointerToUniverseStr {
+  std::string string;
+  std::optional<bool> neg2_to_default;
+};
+PyTaoPointerToUniverseStr python_tao_pointer_to_universe_str(
+    std::string string,
+    std::optional<bool> neg2_to_default,
+    TaoUniverseProxy& u) {
+  Tao::tao_pointer_to_universe(string, make_opt_ref(neg2_to_default), u);
+  auto py_result{PyTaoPointerToUniverseStr{string, neg2_to_default}};
+  return py_result;
+}
 struct PyTaoRadIntCalcNeeded {
   std::string data_type;
   std::string data_source;
@@ -6209,6 +6366,52 @@ PyTwiss3Propagate1 python_twiss3_propagate1(
     bool err_flag) {
   Bmad::twiss3_propagate1(ele1, ele2, err_flag);
   auto py_result{PyTwiss3Propagate1{err_flag}};
+  return py_result;
+}
+struct PyTwissAndTrackAll {
+  std::optional<int> status;
+  std::optional<bool> print_err;
+  std::optional<bool> calc_chrom;
+};
+PyTwissAndTrackAll python_twiss_and_track_all(
+    LatProxy& lat,
+    CoordArrayProxyAlloc1D& orb_array,
+    std::optional<int> status = std::nullopt,
+    std::optional<bool> print_err = std::nullopt,
+    std::optional<bool> calc_chrom = std::nullopt) {
+  Bmad::twiss_and_track(
+      lat,
+      orb_array,
+      make_opt_ref(status),
+      make_opt_ref(print_err),
+      make_opt_ref(calc_chrom));
+  auto py_result{PyTwissAndTrackAll{status, print_err, calc_chrom}};
+  return py_result;
+}
+struct PyTwissAndTrackBranch {
+  std::optional<int> status;
+  std::optional<int> ix_branch;
+  std::optional<bool> print_err;
+  std::optional<bool> calc_chrom;
+};
+PyTwissAndTrackBranch python_twiss_and_track_branch(
+    LatProxy& lat,
+    CoordProxyAlloc1D& orb,
+    std::optional<int> status = std::nullopt,
+    std::optional<int> ix_branch = std::nullopt,
+    std::optional<bool> print_err = std::nullopt,
+    std::optional<bool> calc_chrom = std::nullopt,
+    optional_ref<CoordProxy> orb_start = std::nullopt) {
+  Bmad::twiss_and_track(
+      lat,
+      orb,
+      make_opt_ref(status),
+      make_opt_ref(ix_branch),
+      make_opt_ref(print_err),
+      make_opt_ref(calc_chrom),
+      orb_start);
+  auto py_result{
+      PyTwissAndTrackBranch{status, ix_branch, print_err, calc_chrom}};
   return py_result;
 }
 struct PyTypeThisFile {
@@ -6913,6 +7116,8 @@ PYBIND11_MODULE(_pybmad, m) {
       m, "MadEnergyStruct", "Fortran struct: mad_energy_struct");
   auto py_MadMapStruct = py::class_<MadMapProxy>(
       m, "MadMapStruct", "Fortran struct: mad_map_struct");
+  auto py_RandomStateStruct = py::class_<RandomStateProxy>(
+      m, "RandomStateStruct", "Fortran struct: random_state_struct");
   auto py_BbuStageStruct = py::class_<BbuStageProxy>(
       m, "BbuStageStruct", "Fortran struct: bbu_stage_struct");
   auto py_BbuBeamStruct = py::class_<BbuBeamProxy>(
@@ -7094,6 +7299,7 @@ PYBIND11_MODULE(_pybmad, m) {
   init_tao_universe_struct(m, py_TaoUniverseStruct);
   init_mad_energy_struct(m, py_MadEnergyStruct);
   init_mad_map_struct(m, py_MadMapStruct);
+  init_random_state_struct(m, py_RandomStateStruct);
   init_bbu_stage_struct(m, py_BbuStageStruct);
   init_bbu_beam_struct(m, py_BbuBeamStruct);
   init_bbu_param_struct(m, py_BbuParamStruct);
@@ -9634,8 +9840,16 @@ force_bookkeeping : bool, optional
     attribute_bookkeeper to assume intelligent bookkeeping.
 )""");
   m.def(
-      "attribute_free1",
-      &python_attribute_free1,
+      "attribute_free",
+      py::overload_cast<
+          int,
+          std::string,
+          LatProxy&,
+          std::optional<bool>,
+          std::optional<bool>,
+          std::optional<bool>,
+          std::optional<int>,
+          bool>(&python_attribute_free1),
       py::arg("ix_ele"),
       py::arg("attrib_name"),
       py::arg("lat"),
@@ -9683,8 +9897,15 @@ free
             return py::none();
           });
   m.def(
-      "attribute_free2",
-      &python_attribute_free2,
+      "attribute_free",
+      py::overload_cast<
+          EleProxy&,
+          std::string,
+          std::optional<bool>,
+          std::optional<bool>,
+          std::optional<bool>,
+          std::optional<int>,
+          bool>(&python_attribute_free2),
       py::arg("ele"),
       py::arg("attrib_name"),
       py::arg("err_print_flag") = py::none(),
@@ -9728,8 +9949,17 @@ free
             return py::none();
           });
   m.def(
-      "attribute_free3",
-      &python_attribute_free3,
+      "attribute_free",
+      py::overload_cast<
+          int,
+          int,
+          std::string,
+          LatProxy&,
+          std::optional<bool>,
+          std::optional<bool>,
+          std::optional<bool>,
+          std::optional<int>,
+          bool>(&python_attribute_free3),
       py::arg("ix_ele"),
       py::arg("ix_branch"),
       py::arg("attrib_name"),
@@ -9779,8 +10009,14 @@ This function overloaded by attribute_free. See attribute_free for more details.
             return py::none();
           });
   m.def(
-      "attribute_index1",
-      &python_attribute_index1,
+      "attribute_index",
+      py::overload_cast<
+          EleProxy&,
+          std::string,
+          std::optional<std::string>,
+          std::optional<bool>,
+          std::optional<bool>,
+          int>(&python_attribute_index1),
       py::arg("ele"),
       py::arg("name"),
       py::arg("full_name") = py::none(),
@@ -9820,8 +10056,14 @@ attrib_index
             return py::none();
           });
   m.def(
-      "attribute_index2",
-      &python_attribute_index2,
+      "attribute_index",
+      py::overload_cast<
+          int,
+          std::string,
+          std::optional<std::string>,
+          std::optional<bool>,
+          std::optional<bool>,
+          int>(&python_attribute_index2),
       py::arg("key"),
       py::arg("name"),
       py::arg("full_name") = py::none(),
@@ -9864,8 +10106,9 @@ attrib_index
             return py::none();
           });
   m.def(
-      "attribute_name1",
-      &python_attribute_name1,
+      "attribute_name",
+      py::overload_cast<int, int, std::optional<bool>, std::string>(
+          &python_attribute_name1),
       py::arg("key"),
       py::arg("ix_att"),
       py::arg("show_private") = py::none(),
@@ -9899,8 +10142,9 @@ attrib_name
             return py::none();
           });
   m.def(
-      "attribute_name2",
-      &python_attribute_name2,
+      "attribute_name",
+      py::overload_cast<EleProxy&, int, std::optional<bool>, std::string>(
+          &python_attribute_name2),
       py::arg("ele"),
       py::arg("ix_att"),
       py::arg("show_private") = py::none(),
@@ -12202,6 +12446,80 @@ Parameters
 ----------
 complex_taylor : 
 )""");
+  m.def(
+      "complex_taylor_coef",
+      py::overload_cast<ComplexTaylorProxy&, IntAlloc1D&, std::complex<double>>(
+          &python_complex_taylor_coef1),
+      py::arg("complex_taylor"),
+      py::arg("exp"),
+      py::arg("coef"),
+      R"""(Function to return the coefficient for a particular complex_taylor term
+
+from a complex_taylor Series. This routine is used by the overloaded function
+complex_taylor_coef. See complex_taylor_coef for more details.
+
+)""");
+  py::class_<PyComplexTaylorCoef1, std::unique_ptr<PyComplexTaylorCoef1>>(
+      m,
+      "ComplexTaylorCoef1",
+      "Fortran routine complex_taylor_coef1 return value")
+      .def_readonly("coef", &PyComplexTaylorCoef1::coef)
+      .def("__len__", [](const PyComplexTaylorCoef1&) { return 1; })
+      .def(
+          "__getitem__",
+          [](const PyComplexTaylorCoef1& s, size_t i) -> py::object {
+            if (i >= 1)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.coef);
+            return py::none();
+          });
+  m.def(
+      "complex_taylor_coef",
+      py::overload_cast<
+          ComplexTaylorProxy&,
+          std::optional<int>,
+          std::optional<int>,
+          std::optional<int>,
+          std::optional<int>,
+          std::optional<int>,
+          std::optional<int>,
+          std::optional<int>,
+          std::optional<int>,
+          std::optional<int>,
+          std::complex<double>>(&python_complex_taylor_coef2),
+      py::arg("complex_taylor"),
+      py::arg("i1") = py::none(),
+      py::arg("i2") = py::none(),
+      py::arg("i3") = py::none(),
+      py::arg("i4") = py::none(),
+      py::arg("i5") = py::none(),
+      py::arg("i6") = py::none(),
+      py::arg("i7") = py::none(),
+      py::arg("i8") = py::none(),
+      py::arg("i9") = py::none(),
+      py::arg("coef"),
+      R"""(Function to return the coefficient for a particular complex_taylor term
+
+from a complex_taylor Series. This routine is used by the overloaded function
+complex_taylor_coef. See complex_taylor_coef for more details.
+
+)""");
+  py::class_<PyComplexTaylorCoef2, std::unique_ptr<PyComplexTaylorCoef2>>(
+      m,
+      "ComplexTaylorCoef2",
+      "Fortran routine complex_taylor_coef2 return value")
+      .def_readonly("coef", &PyComplexTaylorCoef2::coef)
+      .def("__len__", [](const PyComplexTaylorCoef2&) { return 1; })
+      .def(
+          "__getitem__",
+          [](const PyComplexTaylorCoef2& s, size_t i) -> py::object {
+            if (i >= 1)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.coef);
+            return py::none();
+          });
   m.def(
       "complex_taylor_equal_complex_taylor",
       &Bmad::complex_taylor_equal_complex_taylor,
@@ -15190,6 +15508,117 @@ compute_dE : bool
               return py::cast(s.compute_dE);
             return py::none();
           });
+  m.def(
+      "element_at_s",
+      py::overload_cast<
+          BranchProxy&,
+          double,
+          bool,
+          std::optional<bool>,
+          std::optional<double>,
+          optional_ref<CoordProxy>,
+          std::optional<bool>,
+          int>(&python_element_at_s_branch),
+      py::arg("branch"),
+      py::arg("s"),
+      py::arg("choose_max"),
+      py::arg("err_flag") = py::none(),
+      py::arg("s_eff") = py::none(),
+      py::arg("position") = py::none(),
+      py::arg("print_err") = py::none(),
+      py::arg("ix_ele"),
+      R"""(Overloaded routine. See element_at_s for more details.
+
+
+Returns
+-------
+ix_ele
+)""");
+  py::class_<PyElementAtSBranch, std::unique_ptr<PyElementAtSBranch>>(
+      m, "ElementAtSBranch", "Fortran routine element_at_s_branch return value")
+      .def_readonly("s", &PyElementAtSBranch::s)
+      .def_readonly("choose_max", &PyElementAtSBranch::choose_max)
+      .def_readonly("err_flag", &PyElementAtSBranch::err_flag)
+      .def_readonly("s_eff", &PyElementAtSBranch::s_eff)
+      .def_readonly("print_err", &PyElementAtSBranch::print_err)
+      .def_readonly("ix_ele", &PyElementAtSBranch::ix_ele)
+      .def("__len__", [](const PyElementAtSBranch&) { return 6; })
+      .def(
+          "__getitem__",
+          [](const PyElementAtSBranch& s, size_t i) -> py::object {
+            if (i >= 6)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.s);
+            if (i == 1)
+              return py::cast(s.choose_max);
+            if (i == 2)
+              return py::cast(s.err_flag);
+            if (i == 3)
+              return py::cast(s.s_eff);
+            if (i == 4)
+              return py::cast(s.print_err);
+            if (i == 5)
+              return py::cast(s.ix_ele);
+            return py::none();
+          });
+  m.def(
+      "element_at_s",
+      py::overload_cast<
+          LatProxy&,
+          double,
+          bool,
+          std::optional<int>,
+          std::optional<bool>,
+          std::optional<double>,
+          optional_ref<CoordProxy>,
+          std::optional<bool>,
+          int>(&python_element_at_s_lat),
+      py::arg("lat"),
+      py::arg("s"),
+      py::arg("choose_max"),
+      py::arg("ix_branch") = py::none(),
+      py::arg("err_flag") = py::none(),
+      py::arg("s_eff") = py::none(),
+      py::arg("position") = py::none(),
+      py::arg("print_err") = py::none(),
+      py::arg("ix_ele"),
+      R"""(Overloaded routine. See element_at_s for more details.
+
+
+Returns
+-------
+ix_ele
+)""");
+  py::class_<PyElementAtSLat, std::unique_ptr<PyElementAtSLat>>(
+      m, "ElementAtSLat", "Fortran routine element_at_s_lat return value")
+      .def_readonly("s", &PyElementAtSLat::s)
+      .def_readonly("choose_max", &PyElementAtSLat::choose_max)
+      .def_readonly("ix_branch", &PyElementAtSLat::ix_branch)
+      .def_readonly("err_flag", &PyElementAtSLat::err_flag)
+      .def_readonly("s_eff", &PyElementAtSLat::s_eff)
+      .def_readonly("print_err", &PyElementAtSLat::print_err)
+      .def_readonly("ix_ele", &PyElementAtSLat::ix_ele)
+      .def("__len__", [](const PyElementAtSLat&) { return 7; })
+      .def("__getitem__", [](const PyElementAtSLat& s, size_t i) -> py::object {
+        if (i >= 7)
+          throw py::index_error();
+        if (i == 0)
+          return py::cast(s.s);
+        if (i == 1)
+          return py::cast(s.choose_max);
+        if (i == 2)
+          return py::cast(s.ix_branch);
+        if (i == 3)
+          return py::cast(s.err_flag);
+        if (i == 4)
+          return py::cast(s.s_eff);
+        if (i == 5)
+          return py::cast(s.print_err);
+        if (i == 6)
+          return py::cast(s.ix_ele);
+        return py::none();
+      });
   m.def(
       "element_slice_iterator",
       &Bmad::element_slice_iterator,
@@ -21792,7 +22221,7 @@ result : float
       py::arg("mode"),
       R"""()""");
   m.def(
-      "integration_timer_ele",
+      "integration_timer",
       &python_integration_timer_ele,
       py::arg("ele"),
       py::arg("param"),
@@ -28244,8 +28673,9 @@ Notes
 Overloaded versions:
 )""");
   m.def(
-      "pointer_to_ele1",
-      &python_pointer_to_ele1,
+      "pointer_to_ele",
+      py::overload_cast<LatProxy&, int, std::optional<int>, EleProxy&>(
+          &python_pointer_to_ele1),
       py::arg("lat"),
       py::arg("ix_ele"),
       py::arg("ix_branch") = py::none(),
@@ -28275,8 +28705,9 @@ ele_ptr
         return py::none();
       });
   m.def(
-      "pointer_to_ele2",
-      &Bmad::pointer_to_ele2,
+      "pointer_to_ele",
+      py::overload_cast<LatProxy&, LatEleLocProxy&, EleProxy&>(
+          &Bmad::pointer_to_ele),
       py::arg("lat"),
       py::arg("ele_loc"),
       py::arg("ele_ptr"),
@@ -28291,8 +28722,9 @@ Returns
 ele_ptr
 )""");
   m.def(
-      "pointer_to_ele3",
-      &python_pointer_to_ele3,
+      "pointer_to_ele",
+      py::overload_cast<LatProxy&, std::string, EleProxy&>(
+          &python_pointer_to_ele3),
       py::arg("lat"),
       py::arg("ele_name"),
       py::arg("ele_ptr"),
@@ -28318,8 +28750,8 @@ ele_ptr
         return py::none();
       });
   m.def(
-      "pointer_to_ele4",
-      &Bmad::pointer_to_ele4,
+      "pointer_to_ele",
+      py::overload_cast<LatProxy&, EleProxy&, EleProxy&>(&Bmad::pointer_to_ele),
       py::arg("lat"),
       py::arg("foreign_ele"),
       py::arg("ele_ptr"),
@@ -28558,6 +28990,25 @@ skip_beginning : bool, optional
 follow_fork : bool, optional
     If True then fork at any fork element. Default is False.
 next_ele : 
+)""");
+  m.def(
+      "pointer_to_ran_state",
+      &SimUtils::pointer_to_ran_state,
+      py::arg("ran_state") = py::none(),
+      py::arg("ix_thread") = py::none(),
+      R"""(Routine to point to the appropriate state structure for generating random numbers
+
+Parameters
+----------
+ran_state : RandomStateStruct, optional
+    Point to this if present. Otherwise point to the global saved state.
+ix_thread : int, optional
+    Thread index.
+
+Returns
+-------
+ran_state_ptr : RandomStateStruct
+    Pointer to the appropriate state.
 )""");
   m.def(
       "pointer_to_slave",
@@ -29394,8 +29845,8 @@ coefs : float
 root : 
 )""");
   m.def(
-      "quat_conj_complex",
-      &SimUtils::quat_conj_complex,
+      "quat_conj",
+      py::overload_cast<FixedArray1D<Complex, 4>>(&SimUtils::quat_conj),
       py::arg("q_in"),
       R"""(Routine to create the conjugate of a quaternian.
 
@@ -29412,8 +29863,8 @@ q_out : float
     Conjugate quaternion.
 )""");
   m.def(
-      "quat_conj_real",
-      &SimUtils::quat_conj_real,
+      "quat_conj",
+      py::overload_cast<FixedArray1D<Real, 4>>(&SimUtils::quat_conj),
       py::arg("q_in"),
       R"""(Routine to create the conjugate of a quaternian.
 
@@ -29446,8 +29897,17 @@ q_out : float
     Inverse quaternion.
 )""");
   m.def(
-      "quat_mul_complex",
-      &SimUtils::quat_mul_complex,
+      "quat_mul",
+      py::overload_cast<
+          FixedArray1D<Complex, 4>,
+          FixedArray1D<Complex, 4>,
+          std::optional<FixedArray1D<Complex, 4>>,
+          std::optional<FixedArray1D<Complex, 4>>,
+          std::optional<FixedArray1D<Complex, 4>>,
+          std::optional<FixedArray1D<Complex, 4>>,
+          std::optional<FixedArray1D<Complex, 4>>,
+          std::optional<FixedArray1D<Complex, 4>>,
+          std::optional<FixedArray1D<Complex, 4>>>(&SimUtils::quat_mul),
       py::arg("q1"),
       py::arg("q2"),
       py::arg("q3") = py::none(),
@@ -29474,8 +29934,17 @@ q_out : complex
     Resultant q1 * q2
 )""");
   m.def(
-      "quat_mul_real",
-      &SimUtils::quat_mul_real,
+      "quat_mul",
+      py::overload_cast<
+          FixedArray1D<Real, 4>,
+          FixedArray1D<Real, 4>,
+          std::optional<FixedArray1D<Real, 4>>,
+          std::optional<FixedArray1D<Real, 4>>,
+          std::optional<FixedArray1D<Real, 4>>,
+          std::optional<FixedArray1D<Real, 4>>,
+          std::optional<FixedArray1D<Real, 4>>,
+          std::optional<FixedArray1D<Real, 4>>,
+          std::optional<FixedArray1D<Real, 4>>>(&SimUtils::quat_mul),
       py::arg("q1"),
       py::arg("q2"),
       py::arg("q3") = py::none(),
@@ -29502,8 +29971,9 @@ q_out : float
     Resultant q1 * q2
 )""");
   m.def(
-      "quat_rotate_complex",
-      &SimUtils::quat_rotate_complex,
+      "quat_rotate",
+      py::overload_cast<FixedArray1D<Complex, 4>, FixedArray1D<Complex, 3>>(
+          &SimUtils::quat_rotate),
       py::arg("quat"),
       py::arg("vec_in"),
       R"""(Routine to rotate a vector using a quaternion..
@@ -29521,8 +29991,9 @@ vec_out : complex
     Final vector.
 )""");
   m.def(
-      "quat_rotate_real",
-      &SimUtils::quat_rotate_real,
+      "quat_rotate",
+      py::overload_cast<FixedArray1D<Real, 4>, FixedArray1D<Real, 3>>(
+          &SimUtils::quat_rotate),
       py::arg("quat"),
       py::arg("vec_in"),
       R"""(Routine to rotate a vector using a quaternion..
@@ -30003,6 +30474,160 @@ value :
         return py::none();
       });
   m.def(
+      "ran_default_state",
+      &SimUtils::ran_default_state,
+      py::arg("set_state") = py::none(),
+      R"""(Routine to set or get the state of the default random number generator.
+
+See the ran_seed_put documentation for more details
+
+Parameters
+----------
+set_state : RandomStateStruct, optional
+    State to set the default generator to.
+
+Returns
+-------
+get_state : RandomStateStruct
+    Returns the state of the default generator.
+)""");
+  m.def(
+      "ran_engine",
+      &SimUtils::ran_engine,
+      py::arg("set") = py::none(),
+      py::arg("get") = py::none(),
+      py::arg("ran_state") = py::none(),
+      R"""(Routine to set what random number generator algorithm is used.
+
+If this routine is never called then pseudo_random$ is used.
+With sobseq quasi-random numbers the maximum dimension is 6.
+
+Parameters
+----------
+set : unknown, optional
+    Set the random number engine. Possibilities are: 'pseudo' -> Uses ran from Numerical Recipies (F90).
+    'quasi'  -> Uses sobseq from Numerical Recipes. ''       -> Do nothing.
+get : unknown, optional
+    Get the current (before any set) random number engine.
+ran_state : RandomStateStruct, optional
+    Internal state. See the ran_seed_put documentation for more details.
+)""");
+  m.def(
+      "ran_gauss_converter",
+      &SimUtils::ran_gauss_converter,
+      py::arg("set") = py::none(),
+      py::arg("set_sigma_cut") = py::none(),
+      py::arg("ran_state") = py::none(),
+      R"""(Routine to set what conversion routine is used for converting
+
+uniformly distributed random numbers to Gaussian distributed random numbers.
+If this routine is not called then exact_gaussian$ is used.
+exact_gaussian$ is a straight forward converter as explained in Numerical recipes.
+quick_gaussian$ is a quick a dirty approximation with a cutoff so that no
+numbers will be generated beyound what is set for sigma_cut.
+A negative sigma_cut means that the exact_gaussian$ will not be limited
+and the quick_gaussian$ will use a default of 10.0
+
+Parameters
+----------
+set : unknown, optional
+    Set the random number engine. Possibilities are: 'exact' 'quick'  ! Old deprecated: 'limited' ''       !
+    Do nothing
+set_sigma_cut : float, optional
+    Sigma cutoff. Initially: sigma_cut = -1.
+ran_state : RandomStateStruct, optional
+    Internal state. See the ran_seed_put documentation for more details.
+
+Return value is a dictionary containing values below.
+
+
+Returns
+-------
+get : unknown
+    Get the current (before any set) gaussian converter.
+get_sigma_cut : float
+    Get the current (before any set) sigma cutoff.
+)""");
+  py::class_<
+      SimUtils::RanGaussConverter,
+      std::unique_ptr<SimUtils::RanGaussConverter>>(
+      m,
+      "RanGaussConverter",
+      "Fortran routine ran_gauss_converter return value")
+      .def_readonly("get", &SimUtils::RanGaussConverter::get)
+      .def_readonly(
+          "get_sigma_cut", &SimUtils::RanGaussConverter::get_sigma_cut)
+      .def("__len__", [](const SimUtils::RanGaussConverter&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const SimUtils::RanGaussConverter& s, size_t i) -> py::object {
+            if (i >= 2)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.get);
+            if (i == 1)
+              return py::cast(s.get_sigma_cut);
+            return py::none();
+          });
+  m.def(
+      "ran_gauss_scalar",
+      &python_ran_gauss_scalar,
+      py::arg("ran_state") = py::none(),
+      py::arg("sigma_cut") = py::none(),
+      py::arg("index_quasi") = py::none(),
+      R"""(Routine to return a gaussian distributed random number with unit sigma.
+
+See ran_gauss for more details.
+
+
+Notes
+-----
+Note: The index_quasi argument is used internally for the quasi-random number generator.
+)""");
+  py::class_<PyRanGaussScalar, std::unique_ptr<PyRanGaussScalar>>(
+      m, "RanGaussScalar", "Fortran routine ran_gauss_scalar return value")
+      .def_readonly("harvest", &PyRanGaussScalar::harvest)
+      .def_readonly("sigma_cut", &PyRanGaussScalar::sigma_cut)
+      .def_readonly("index_quasi", &PyRanGaussScalar::index_quasi)
+      .def("__len__", [](const PyRanGaussScalar&) { return 3; })
+      .def(
+          "__getitem__", [](const PyRanGaussScalar& s, size_t i) -> py::object {
+            if (i >= 3)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.harvest);
+            if (i == 1)
+              return py::cast(s.sigma_cut);
+            if (i == 2)
+              return py::cast(s.index_quasi);
+            return py::none();
+          });
+  m.def(
+      "ran_gauss_vector",
+      &python_ran_gauss_vector,
+      py::arg("ran_state") = py::none(),
+      py::arg("sigma_cut") = py::none(),
+      R"""(Routine to return a gaussian distributed random number with unit sigma.
+
+See ran_gauss for more details.
+
+)""");
+  py::class_<PyRanGaussVector, std::unique_ptr<PyRanGaussVector>>(
+      m, "RanGaussVector", "Fortran routine ran_gauss_vector return value")
+      .def_readonly("harvest", &PyRanGaussVector::harvest)
+      .def_readonly("sigma_cut", &PyRanGaussVector::sigma_cut)
+      .def("__len__", [](const PyRanGaussVector&) { return 2; })
+      .def(
+          "__getitem__", [](const PyRanGaussVector& s, size_t i) -> py::object {
+            if (i >= 2)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.harvest);
+            if (i == 1)
+              return py::cast(s.sigma_cut);
+            return py::none();
+          });
+  m.def(
       "ran_seed_get",
       &SimUtils::ran_seed_get,
       R"""(Routine to return the seed used for the random number generator.
@@ -30039,6 +30664,48 @@ Notes
 -----
 Note: The seed is only used with the pseudo_random$ engine.
 Note: Use the subroutine ran_seed_get(seed) to get the seed used.
+)""");
+  m.def(
+      "ran_uniform",
+      py::overload_cast<optional_ref<RandomStateProxy>, std::optional<int>>(
+          &python_ran_uniform_scalar),
+      py::arg("ran_state") = py::none(),
+      py::arg("index_quasi") = py::none(),
+      R"""(Routine to return a random number uniformly distributed in the
+
+interval [0, 1].
+See ran_uniform for more details.
+
+
+Notes
+-----
+Note: The index_quasi argument is used internally for the quasi-random number generator.
+)""");
+  py::class_<PyRanUniformScalar, std::unique_ptr<PyRanUniformScalar>>(
+      m, "RanUniformScalar", "Fortran routine ran_uniform_scalar return value")
+      .def_readonly("harvest", &PyRanUniformScalar::harvest)
+      .def_readonly("index_quasi", &PyRanUniformScalar::index_quasi)
+      .def("__len__", [](const PyRanUniformScalar&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const PyRanUniformScalar& s, size_t i) -> py::object {
+            if (i >= 2)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.harvest);
+            if (i == 1)
+              return py::cast(s.index_quasi);
+            return py::none();
+          });
+  m.def(
+      "ran_uniform",
+      py::overload_cast<optional_ref<RandomStateProxy>>(&SimUtils::ran_uniform),
+      py::arg("ran_state") = py::none(),
+      R"""(Routine to return a vector of random numbers uniformly distributed in the
+
+interval [0, 1].
+See ran_uniform for more details.
+
 )""");
   m.def(
       "randomize_lr_wake_frequencies",
@@ -30152,8 +30819,9 @@ exact : bool, optional
     is already large enough
 )""");
   m.def(
-      "re_allocate_wall3d_section_array",
-      &Bmad::re_allocate_wall3d_section_array,
+      "re_allocate",
+      py::overload_cast<Wall3dSectionProxyAlloc1D&, int, std::optional<bool>>(
+          &Bmad::re_allocate),
       py::arg("section"),
       py::arg("n"),
       py::arg("exact") = py::none(),
@@ -30172,8 +30840,9 @@ exact : bool, optional
     If present and False then the size of the output array is permitted to be larger than n. Default is True.
 )""");
   m.def(
-      "re_allocate_wall3d_vertex_array",
-      &Bmad::re_allocate_wall3d_vertex_array,
+      "re_allocate",
+      py::overload_cast<Wall3dVertexProxyAlloc1D&, int, std::optional<bool>>(
+          &Bmad::re_allocate),
       py::arg("v"),
       py::arg("n"),
       py::arg("exact") = py::none(),
@@ -30208,8 +30877,8 @@ exact : bool, optional
     Default is False. If False, the size of the output array is permitted to be larger than n.
 )""");
   m.def(
-      "re_str_qp",
-      &python_re_str_qp,
+      "re_str",
+      py::overload_cast<long double, std::string>(&python_re_str_qp),
       py::arg("rel"),
       py::arg("str_out"),
       R"""(No docstring available
@@ -30234,8 +30903,8 @@ str_out :
         return py::none();
       });
   m.def(
-      "re_str_rp",
-      &python_re_str_rp,
+      "re_str",
+      py::overload_cast<double, std::string>(&python_re_str_rp),
       py::arg("rel"),
       py::arg("str_out"),
       R"""(No docstring available
@@ -34887,6 +35556,24 @@ value : float
     Polynomial value.
 )""");
   m.def(
+      "super_sobseq",
+      &SimUtils::super_sobseq,
+      py::arg("ran_state") = py::none(),
+      R"""(Routine patterened after sobseq in Numerical Recipes.
+
+Difference is that this version has an argument for the internal state.
+
+Parameters
+----------
+ran_state : RandomStateStruct, optional
+    Generator state. See the ran_seed_put documentation for more details.
+
+Returns
+-------
+x : float
+    Random vector.
+)""");
+  m.def(
       "super_sort",
       &SimUtils::super_sort,
       py::arg("arr"),
@@ -38755,6 +39442,76 @@ lat_type : int, optional
     model$ (default), design$, or base$.
 tao_lat : 
 )""");
+  m.def(
+      "tao_pointer_to_universe",
+      py::overload_cast<int, std::optional<bool>, TaoUniverseProxy&>(
+          &python_tao_pointer_to_universe_int),
+      py::arg("ix_uni"),
+      py::arg("neg2_to_default") = py::none(),
+      py::arg("u"),
+      R"""(Overloaded by tao_pointer_to_universe. See this routine for more details.
+
+
+Returns
+-------
+u
+)""");
+  py::class_<
+      PyTaoPointerToUniverseInt,
+      std::unique_ptr<PyTaoPointerToUniverseInt>>(
+      m,
+      "TaoPointerToUniverseInt",
+      "Fortran routine tao_pointer_to_universe_int return value")
+      .def_readonly("ix_uni", &PyTaoPointerToUniverseInt::ix_uni)
+      .def_readonly(
+          "neg2_to_default", &PyTaoPointerToUniverseInt::neg2_to_default)
+      .def("__len__", [](const PyTaoPointerToUniverseInt&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const PyTaoPointerToUniverseInt& s, size_t i) -> py::object {
+            if (i >= 2)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.ix_uni);
+            if (i == 1)
+              return py::cast(s.neg2_to_default);
+            return py::none();
+          });
+  m.def(
+      "tao_pointer_to_universe",
+      py::overload_cast<std::string, std::optional<bool>, TaoUniverseProxy&>(
+          &python_tao_pointer_to_universe_str),
+      py::arg("string"),
+      py::arg("neg2_to_default") = py::none(),
+      py::arg("u"),
+      R"""(Overloaded by tao_pointer_to_universe. See this routine for more details.
+
+
+Returns
+-------
+u
+)""");
+  py::class_<
+      PyTaoPointerToUniverseStr,
+      std::unique_ptr<PyTaoPointerToUniverseStr>>(
+      m,
+      "TaoPointerToUniverseStr",
+      "Fortran routine tao_pointer_to_universe_str return value")
+      .def_readonly("string", &PyTaoPointerToUniverseStr::string)
+      .def_readonly(
+          "neg2_to_default", &PyTaoPointerToUniverseStr::neg2_to_default)
+      .def("__len__", [](const PyTaoPointerToUniverseStr&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const PyTaoPointerToUniverseStr& s, size_t i) -> py::object {
+            if (i >= 2)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.string);
+            if (i == 1)
+              return py::cast(s.neg2_to_default);
+            return py::none();
+          });
   m.def(
       "tao_pointer_to_universes",
       &Tao::tao_pointer_to_universes,
@@ -44931,6 +45688,46 @@ ix_branch : int, optional
     : Branch index. 0 = default.
 )""");
   m.def(
+      "twiss_and_track",
+      py::overload_cast<
+          LatProxy&,
+          CoordArrayProxyAlloc1D&,
+          std::optional<int>,
+          std::optional<bool>,
+          std::optional<bool>>(&python_twiss_and_track_all),
+      py::arg("lat"),
+      py::arg("orb_array"),
+      py::arg("status") = py::none(),
+      py::arg("print_err") = py::none(),
+      py::arg("calc_chrom") = py::none(),
+      R"""(Subroutine to calculate the twiss parameters, transport matrices and orbit.
+
+
+Notes
+-----
+Note: photon branches are currently ignored. This routine is overloaded by twiss_and_track. See
+twiss_and_track for more details.
+)""");
+  py::class_<PyTwissAndTrackAll, std::unique_ptr<PyTwissAndTrackAll>>(
+      m, "TwissAndTrackAll", "Fortran routine twiss_and_track_all return value")
+      .def_readonly("status", &PyTwissAndTrackAll::status)
+      .def_readonly("print_err", &PyTwissAndTrackAll::print_err)
+      .def_readonly("calc_chrom", &PyTwissAndTrackAll::calc_chrom)
+      .def("__len__", [](const PyTwissAndTrackAll&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const PyTwissAndTrackAll& s, size_t i) -> py::object {
+            if (i >= 3)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.status);
+            if (i == 1)
+              return py::cast(s.print_err);
+            if (i == 2)
+              return py::cast(s.calc_chrom);
+            return py::none();
+          });
+  m.def(
       "twiss_and_track_at_s",
       &Bmad::twiss_and_track_at_s,
       py::arg("lat"),
@@ -44987,6 +45784,53 @@ Returns
 err : bool
     Set True if there is a problem in the calculation, False otherwise.
 )""");
+  m.def(
+      "twiss_and_track",
+      py::overload_cast<
+          LatProxy&,
+          CoordProxyAlloc1D&,
+          std::optional<int>,
+          std::optional<int>,
+          std::optional<bool>,
+          std::optional<bool>,
+          optional_ref<CoordProxy>>(&python_twiss_and_track_branch),
+      py::arg("lat"),
+      py::arg("orb"),
+      py::arg("status") = py::none(),
+      py::arg("ix_branch") = py::none(),
+      py::arg("print_err") = py::none(),
+      py::arg("calc_chrom") = py::none(),
+      py::arg("orb_start") = py::none(),
+      R"""(Subroutine to calculate the twiss parameters, transport matrices and orbit.
+
+This routine is overloaded by twiss_and_track.
+See twiss_and_track for more details.
+
+)""");
+  py::class_<PyTwissAndTrackBranch, std::unique_ptr<PyTwissAndTrackBranch>>(
+      m,
+      "TwissAndTrackBranch",
+      "Fortran routine twiss_and_track_branch return value")
+      .def_readonly("status", &PyTwissAndTrackBranch::status)
+      .def_readonly("ix_branch", &PyTwissAndTrackBranch::ix_branch)
+      .def_readonly("print_err", &PyTwissAndTrackBranch::print_err)
+      .def_readonly("calc_chrom", &PyTwissAndTrackBranch::calc_chrom)
+      .def("__len__", [](const PyTwissAndTrackBranch&) { return 4; })
+      .def(
+          "__getitem__",
+          [](const PyTwissAndTrackBranch& s, size_t i) -> py::object {
+            if (i >= 4)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.status);
+            if (i == 1)
+              return py::cast(s.ix_branch);
+            if (i == 2)
+              return py::cast(s.print_err);
+            if (i == 3)
+              return py::cast(s.calc_chrom);
+            return py::none();
+          });
   m.def(
       "twiss_and_track_from_s_to_s",
       &Bmad::twiss_and_track_from_s_to_s,

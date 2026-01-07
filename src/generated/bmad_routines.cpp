@@ -434,7 +434,7 @@ void Bmad::attribute_bookkeeper(
   fortran_attribute_bookkeeper(
       /* void* */ ele.get_fortran_ptr(), /* bool* */ _force_bookkeeping);
 }
-void Bmad::attribute_free1(
+void Bmad::attribute_free(
     int& ix_ele,
     std::string& attrib_name,
     LatProxy& lat,
@@ -465,7 +465,7 @@ void Bmad::attribute_free1(
       /* int* */ _why_not_free,
       /* bool& */ free);
 }
-void Bmad::attribute_free2(
+void Bmad::attribute_free(
     EleProxy& ele,
     std::string& attrib_name,
     optional_ref<bool> err_print_flag,
@@ -494,7 +494,7 @@ void Bmad::attribute_free2(
       /* int* */ _why_not_free,
       /* bool& */ free);
 }
-void Bmad::attribute_free3(
+void Bmad::attribute_free(
     int& ix_ele,
     int& ix_branch,
     std::string& attrib_name,
@@ -527,7 +527,7 @@ void Bmad::attribute_free3(
       /* int* */ _why_not_free,
       /* bool& */ free);
 }
-void Bmad::attribute_index1(
+void Bmad::attribute_index(
     EleProxy& ele,
     std::string& name,
     optional_ref<std::string> full_name,
@@ -550,7 +550,7 @@ void Bmad::attribute_index1(
       /* bool* */ _print_error,
       /* int& */ attrib_index);
 }
-void Bmad::attribute_index2(
+void Bmad::attribute_index(
     int& key,
     std::string& name,
     optional_ref<std::string> full_name,
@@ -573,7 +573,7 @@ void Bmad::attribute_index2(
       /* bool* */ _print_error,
       /* int& */ attrib_index);
 }
-void Bmad::attribute_name1(
+void Bmad::attribute_name(
     int& key,
     int& ix_att,
     optional_ref<bool> show_private,
@@ -587,7 +587,7 @@ void Bmad::attribute_name1(
       /* bool* */ _show_private,
       /* const char* */ _attrib_name);
 }
-void Bmad::attribute_name2(
+void Bmad::attribute_name(
     EleProxy& ele,
     int& ix_att,
     optional_ref<bool> show_private,
@@ -1610,6 +1610,104 @@ bool Bmad::combine_consecutive_elements(LatProxy& lat) {
 }
 void Bmad::complex_taylor_clean(ComplexTaylorProxy& complex_taylor) {
   fortran_complex_taylor_clean(/* void* */ complex_taylor.get_fortran_ptr());
+}
+void Bmad::complex_taylor_coef(
+    ComplexTaylorProxy& complex_taylor,
+    IntAlloc1D& exp,
+    std::complex<double>& coef) {
+  // intent=in allocatable general array
+  fortran_complex_taylor_coef1(
+      /* void* */ complex_taylor.get_fortran_ptr(),
+      /* void* */ exp.get_fortran_ptr(),
+      /* std::complex<double>& */ coef);
+}
+void Bmad::complex_taylor_coef(
+    ComplexTaylorProxy& complex_taylor,
+    std::optional<int> i1,
+    std::optional<int> i2,
+    std::optional<int> i3,
+    std::optional<int> i4,
+    std::optional<int> i5,
+    std::optional<int> i6,
+    std::optional<int> i7,
+    std::optional<int> i8,
+    std::optional<int> i9,
+    std::complex<double>& coef) {
+  int i1_lvalue;
+  auto* _i1{&i1_lvalue};
+  if (i1.has_value()) {
+    i1_lvalue = i1.value();
+  } else {
+    _i1 = nullptr;
+  }
+  int i2_lvalue;
+  auto* _i2{&i2_lvalue};
+  if (i2.has_value()) {
+    i2_lvalue = i2.value();
+  } else {
+    _i2 = nullptr;
+  }
+  int i3_lvalue;
+  auto* _i3{&i3_lvalue};
+  if (i3.has_value()) {
+    i3_lvalue = i3.value();
+  } else {
+    _i3 = nullptr;
+  }
+  int i4_lvalue;
+  auto* _i4{&i4_lvalue};
+  if (i4.has_value()) {
+    i4_lvalue = i4.value();
+  } else {
+    _i4 = nullptr;
+  }
+  int i5_lvalue;
+  auto* _i5{&i5_lvalue};
+  if (i5.has_value()) {
+    i5_lvalue = i5.value();
+  } else {
+    _i5 = nullptr;
+  }
+  int i6_lvalue;
+  auto* _i6{&i6_lvalue};
+  if (i6.has_value()) {
+    i6_lvalue = i6.value();
+  } else {
+    _i6 = nullptr;
+  }
+  int i7_lvalue;
+  auto* _i7{&i7_lvalue};
+  if (i7.has_value()) {
+    i7_lvalue = i7.value();
+  } else {
+    _i7 = nullptr;
+  }
+  int i8_lvalue;
+  auto* _i8{&i8_lvalue};
+  if (i8.has_value()) {
+    i8_lvalue = i8.value();
+  } else {
+    _i8 = nullptr;
+  }
+  int i9_lvalue;
+  auto* _i9{&i9_lvalue};
+  if (i9.has_value()) {
+    i9_lvalue = i9.value();
+  } else {
+    _i9 = nullptr;
+  }
+  fortran_complex_taylor_coef2(
+      /* void* */ complex_taylor.get_fortran_ptr(),
+      /* int* */ _i1,
+      /* int* */ _i2,
+      /* int* */ _i3,
+      /* int* */ _i4,
+      /* int* */ _i5,
+      /* int* */ _i6,
+      /* int* */ _i7,
+      /* int* */ _i8,
+      /* int* */ _i9,
+      /* std::complex<double>& */ coef);
 }
 ComplexTaylorProxy Bmad::complex_taylor_equal_complex_taylor(
     ComplexTaylorProxy& complex_taylor2) {
@@ -2904,6 +3002,62 @@ Bmad::ElecMultipoleField Bmad::elec_multipole_field(
       /* bool& */ _compute_dE);
   vec_to_matrix(_dE_vec, dE);
   return ElecMultipoleField{_Ex, _Ey, dE, _compute_dE};
+}
+void Bmad::element_at_s(
+    BranchProxy& branch,
+    double& s,
+    bool& choose_max,
+    optional_ref<bool> err_flag,
+    optional_ref<double> s_eff,
+    optional_ref<CoordProxy> position,
+    optional_ref<bool> print_err,
+    int& ix_ele) {
+  auto* _err_flag =
+      err_flag.has_value() ? &err_flag->get() : nullptr; // inout, optional
+  auto* _s_eff = s_eff.has_value() ? &s_eff->get() : nullptr; // inout, optional
+  auto* _position = position.has_value() ? position->get().get_fortran_ptr()
+                                         : nullptr; // input, optional
+  auto* _print_err =
+      print_err.has_value() ? &print_err->get() : nullptr; // inout, optional
+  fortran_element_at_s_branch(
+      /* void* */ branch.get_fortran_ptr(),
+      /* double& */ s,
+      /* bool& */ choose_max,
+      /* bool* */ _err_flag,
+      /* double* */ _s_eff,
+      /* void* */ _position,
+      /* bool* */ _print_err,
+      /* int& */ ix_ele);
+}
+void Bmad::element_at_s(
+    LatProxy& lat,
+    double& s,
+    bool& choose_max,
+    optional_ref<int> ix_branch,
+    optional_ref<bool> err_flag,
+    optional_ref<double> s_eff,
+    optional_ref<CoordProxy> position,
+    optional_ref<bool> print_err,
+    int& ix_ele) {
+  auto* _ix_branch =
+      ix_branch.has_value() ? &ix_branch->get() : nullptr; // inout, optional
+  auto* _err_flag =
+      err_flag.has_value() ? &err_flag->get() : nullptr; // inout, optional
+  auto* _s_eff = s_eff.has_value() ? &s_eff->get() : nullptr; // inout, optional
+  auto* _position = position.has_value() ? position->get().get_fortran_ptr()
+                                         : nullptr; // input, optional
+  auto* _print_err =
+      print_err.has_value() ? &print_err->get() : nullptr; // inout, optional
+  fortran_element_at_s_lat(
+      /* void* */ lat.get_fortran_ptr(),
+      /* double& */ s,
+      /* bool& */ choose_max,
+      /* int* */ _ix_branch,
+      /* bool* */ _err_flag,
+      /* double* */ _s_eff,
+      /* void* */ _position,
+      /* bool* */ _print_err,
+      /* int& */ ix_ele);
 }
 void Bmad::element_slice_iterator(
     EleProxy& ele,
@@ -5483,7 +5637,7 @@ void Bmad::integrated_mats(
   vec_to_matrix(_Theta_vec, Theta);
   vec_to_matrix(_Iota_vec, Iota);
 }
-void Bmad::integration_timer_ele(
+void Bmad::integration_timer(
     EleProxy& ele,
     LatParamProxy& param,
     CoordProxy& start,
@@ -8143,7 +8297,7 @@ BranchProxy Bmad::pointer_to_branch(
       /* void* */ _branch_ptr.get_fortran_ptr());
   return std::move(_branch_ptr);
 }
-void Bmad::pointer_to_ele1(
+void Bmad::pointer_to_ele(
     LatProxy& lat,
     int& ix_ele,
     optional_ref<int> ix_branch,
@@ -8157,7 +8311,7 @@ void Bmad::pointer_to_ele1(
       /* int* */ _ix_branch,
       /* void* */ &ele_ptr);
 }
-void Bmad::pointer_to_ele2(
+void Bmad::pointer_to_ele(
     LatProxy& lat,
     LatEleLocProxy& ele_loc,
     EleProxy& ele_ptr) {
@@ -8167,7 +8321,7 @@ void Bmad::pointer_to_ele2(
       /* void* */ ele_loc.get_fortran_ptr(),
       /* void* */ &ele_ptr);
 }
-void Bmad::pointer_to_ele3(
+void Bmad::pointer_to_ele(
     LatProxy& lat,
     std::string& ele_name,
     EleProxy& ele_ptr) {
@@ -8178,7 +8332,7 @@ void Bmad::pointer_to_ele3(
       /* const char* */ _ele_name,
       /* void* */ &ele_ptr);
 }
-void Bmad::pointer_to_ele4(
+void Bmad::pointer_to_ele(
     LatProxy& lat,
     EleProxy& foreign_ele,
     EleProxy& ele_ptr) {
@@ -8877,7 +9031,7 @@ void Bmad::re_allocate_eles(
       /* bool* */ _save_old,
       /* bool* */ _exact);
 }
-void Bmad::re_allocate_wall3d_section_array(
+void Bmad::re_allocate(
     Wall3dSectionProxyAlloc1D& section,
     int n,
     std::optional<bool> exact) {
@@ -8892,7 +9046,7 @@ void Bmad::re_allocate_wall3d_section_array(
   fortran_re_allocate_wall3d_section_array(
       /* void* */ section.get_fortran_ptr(), /* int& */ n, /* bool* */ _exact);
 }
-void Bmad::re_allocate_wall3d_vertex_array(
+void Bmad::re_allocate(
     Wall3dVertexProxyAlloc1D& v,
     int n,
     std::optional<bool> exact) {
@@ -8921,11 +9075,11 @@ void Bmad::re_associate_node_array(
   fortran_re_associate_node_array(
       /* void* */ tree.get_fortran_ptr(), /* int& */ n, /* bool* */ _exact);
 }
-void Bmad::re_str_qp(long double& rel, std::string& str_out) {
+void Bmad::re_str(long double& rel, std::string& str_out) {
   auto _str_out = str_out.c_str(); // ptr, inout, required
   fortran_re_str_qp(/* long double& */ rel, /* const char* */ _str_out);
 }
-void Bmad::re_str_rp(double& rel, std::string& str_out) {
+void Bmad::re_str(double& rel, std::string& str_out) {
   auto _str_out = str_out.c_str(); // ptr, inout, required
   fortran_re_str_rp(/* double& */ rel, /* const char* */ _str_out);
 }
@@ -12923,6 +13077,26 @@ void Bmad::twiss3_propagate_all(LatProxy& lat, std::optional<int> ix_branch) {
   fortran_twiss3_propagate_all(
       /* void* */ lat.get_fortran_ptr(), /* int* */ _ix_branch);
 }
+void Bmad::twiss_and_track(
+    LatProxy& lat,
+    CoordArrayProxyAlloc1D& orb_array,
+    optional_ref<int> status,
+    optional_ref<bool> print_err,
+    optional_ref<bool> calc_chrom) {
+  // intent=inout allocatable type array
+  auto* _status =
+      status.has_value() ? &status->get() : nullptr; // inout, optional
+  auto* _print_err =
+      print_err.has_value() ? &print_err->get() : nullptr; // inout, optional
+  auto* _calc_chrom =
+      calc_chrom.has_value() ? &calc_chrom->get() : nullptr; // inout, optional
+  fortran_twiss_and_track_all(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ orb_array.get_fortran_ptr(),
+      /* int* */ _status,
+      /* bool* */ _print_err,
+      /* bool* */ _calc_chrom);
+}
 bool Bmad::twiss_and_track_at_s(
     LatProxy& lat,
     double s,
@@ -12972,6 +13146,34 @@ bool Bmad::twiss_and_track_at_s(
       /* bool* */ _use_last,
       /* bool* */ _compute_floor_coords);
   return _err;
+}
+void Bmad::twiss_and_track(
+    LatProxy& lat,
+    CoordProxyAlloc1D& orb,
+    optional_ref<int> status,
+    optional_ref<int> ix_branch,
+    optional_ref<bool> print_err,
+    optional_ref<bool> calc_chrom,
+    optional_ref<CoordProxy> orb_start) {
+  // intent=inout allocatable type array
+  auto* _status =
+      status.has_value() ? &status->get() : nullptr; // inout, optional
+  auto* _ix_branch =
+      ix_branch.has_value() ? &ix_branch->get() : nullptr; // inout, optional
+  auto* _print_err =
+      print_err.has_value() ? &print_err->get() : nullptr; // inout, optional
+  auto* _calc_chrom =
+      calc_chrom.has_value() ? &calc_chrom->get() : nullptr; // inout, optional
+  auto* _orb_start = orb_start.has_value() ? orb_start->get().get_fortran_ptr()
+                                           : nullptr; // input, optional
+  fortran_twiss_and_track_branch(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ orb.get_fortran_ptr(),
+      /* int* */ _status,
+      /* int* */ _ix_branch,
+      /* bool* */ _print_err,
+      /* bool* */ _calc_chrom,
+      /* void* */ _orb_start);
 }
 Bmad::TwissAndTrackFromSToS Bmad::twiss_and_track_from_s_to_s(
     BranchProxy& branch,

@@ -7,7 +7,9 @@ use precision_def ! , only: global_com, rp
 
 use bmad_struct_proxy_mod
 
-use random_mod, only: allocate_thread_states, ran_seed_get, ran_seed_put
+use random_mod, only: allocate_thread_states, pointer_to_ran_state, ran_default_state, &
+    ran_engine, ran_gauss_converter, ran_gauss_scalar, ran_gauss_vector, ran_seed_get, &
+    ran_seed_put, ran_uniform, super_sobseq
 
 use particle_species_mod, only: anomalous_moment_of, antiparticle, atomic_number, &
     atomic_species_id, charge_of, charge_to_mass_of, is_subatomic_species, mass_of, &
@@ -20,24 +22,22 @@ use sim_utils_interface, only: asinc, assert_equal, calc_file_number, change_fil
     complex_error_function, cos_one, cosc, cross_product, date_and_time_stamp, detab, &
     display_size_and_resolution, dj_bessel, djb_hash, djb_str_hash, downcase_string, err_exit, &
     factorial, faddeeva_function, fft_1d, file_directorizer, file_get, file_get_open, &
-    file_suffixer, find_location_int, find_location_logic, find_location_real, &
-    gen_complete_elliptic, get_file_number, get_file_time_stamp, i_bessel, i_bessel_extended, &
-    increment_file_number, index_nocase, int_str, is_alphabetic, is_decreasing_sequence, &
-    is_increasing_sequence, is_integer, is_logical, is_real, j_bessel, linear_fit, &
-    linear_fit_2d, logic_str, lunget, make_legal_comment, match_reg, match_wild, milli_sleep, &
-    n_choose_k, n_spline_create, nametable_add, nametable_bracket_indexx, nametable_change1, &
-    nametable_init, nametable_remove, ordinal_str, parse_fortran_format, poly_eval, &
-    probability_funct, quadratic_roots, query_string, quote, real_num_fortran_format, &
-    real_path, real_str, real_to_string, rms_value, rot_2d, run_timer, set_parameter_int, &
-    set_parameter_logic, set_parameter_real, sinc, sincc, sinhx_x, skip_header, sqrt_alpha, &
-    sqrt_one, str_count, str_downcase, str_first_in_set, str_first_not_in_set, str_last_in_set, &
-    str_last_not_in_set, str_match_wild, str_substitute, str_upcase, string_to_int, &
-    string_to_real, string_trim, string_trim2, system_command, to_str, type_this_file, &
-    upcase_string, virtual_memory_usage, word_len, word_read
+    file_suffixer, find_location, gen_complete_elliptic, get_file_number, get_file_time_stamp, &
+    i_bessel, i_bessel_extended, increment_file_number, index_nocase, int_str, is_alphabetic, &
+    is_decreasing_sequence, is_increasing_sequence, is_integer, is_logical, is_real, j_bessel, &
+    linear_fit, linear_fit_2d, logic_str, lunget, make_legal_comment, match_reg, match_wild, &
+    milli_sleep, n_choose_k, n_spline_create, nametable_add, nametable_bracket_indexx, &
+    nametable_change1, nametable_init, nametable_remove, ordinal_str, parse_fortran_format, &
+    poly_eval, probability_funct, quadratic_roots, query_string, quote, &
+    real_num_fortran_format, real_path, real_str, real_to_string, rms_value, rot_2d, run_timer, &
+    set_parameter, sinc, sincc, sinhx_x, skip_header, sqrt_alpha, sqrt_one, str_count, &
+    str_downcase, str_first_in_set, str_first_not_in_set, str_last_in_set, str_last_not_in_set, &
+    str_match_wild, str_substitute, str_upcase, string_to_int, string_to_real, string_trim, &
+    string_trim2, system_command, to_str, type_this_file, upcase_string, virtual_memory_usage, &
+    word_len, word_read
 
-use rotation_3d_mod, only: axis_angle_to_quat, axis_angle_to_w_mat, omega_to_quat, &
-    quat_conj_complex, quat_conj_real, quat_inverse, quat_mul_complex, quat_mul_real, &
-    quat_rotate_complex, quat_rotate_real, quat_to_axis_angle, quat_to_omega, quat_to_w_mat, &
+use rotation_3d_mod, only: axis_angle_to_quat, axis_angle_to_w_mat, omega_to_quat, quat_conj, &
+    quat_inverse, quat_mul, quat_rotate, quat_to_axis_angle, quat_to_omega, quat_to_w_mat, &
     rotate_vec, rotate_vec_given_axis_angle, w_mat_to_axis_angle, w_mat_to_quat
 
 use cubic_interpolation_mod, only: bicubic_cmplx_eval, tricubic_cmplx_eval
@@ -95,7 +95,7 @@ subroutine fortran_anomalous_moment_of (species, moment) bind(c)
   ! ** End of parameters **
   ! in: f_species 0D_NOT_integer
   f_species = species
-  f_moment = anomalous_moment_of(species=f_species)
+  f_moment = anomalous_moment_of(f_species)
 
   ! out: f_moment 0D_NOT_real
   call c_f_pointer(moment, f_moment_ptr)
@@ -114,7 +114,7 @@ subroutine fortran_antiparticle (species, anti_species) bind(c)
   ! ** End of parameters **
   ! in: f_species 0D_NOT_integer
   f_species = species
-  f_anti_species = antiparticle(species=f_species)
+  f_anti_species = antiparticle(f_species)
 
   ! out: f_anti_species 0D_NOT_integer
   call c_f_pointer(anti_species, f_anti_species_ptr)
@@ -164,8 +164,7 @@ subroutine fortran_apfft (rdata_in, bounds, window, phase, diag) bind(c)
   else
     f_diag_ptr => null()
   endif
-  call apfft(rdata_in=f_rdata_in%data, bounds=f_bounds, window=f_window, phase=f_phase_ptr, &
-      diag=f_diag_ptr)
+  call apfft(f_rdata_in%data, f_bounds, f_window, f_phase_ptr, f_diag_ptr)
 
   ! inout: f_window 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -219,8 +218,7 @@ subroutine fortran_apfft_corr (rdata_in, bounds, window, phase, amp, freq, diag)
   else
     f_diag_ptr => null()
   endif
-  call apfft_corr(rdata_in=f_rdata_in%data, bounds=f_bounds, window=f_window, phase=f_phase, &
-      amp=f_amp, freq=f_freq, diag=f_diag_ptr)
+  call apfft_corr(f_rdata_in%data, f_bounds, f_window, f_phase, f_amp, f_freq, f_diag_ptr)
 
   ! out: f_phase 0D_NOT_real
   call c_f_pointer(phase, f_phase_ptr)
@@ -294,8 +292,8 @@ subroutine fortran_apfft_ext (rdata, bounds, window, phase, amp, freq, diag) bin
   else
     f_diag_ptr => null()
   endif
-  call apfft_ext(rdata=f_rdata%data, bounds=f_bounds, window=f_window, phase=f_phase_ptr, &
-      amp=f_amp_ptr, freq=f_freq_ptr, diag=f_diag_ptr)
+  call apfft_ext(f_rdata%data, f_bounds, f_window, f_phase_ptr, f_amp_ptr, f_freq_ptr, &
+      f_diag_ptr)
 
   ! inout: f_window 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -330,7 +328,7 @@ subroutine fortran_asinc (x, nd, y) bind(c)
   else
     f_nd_ptr => null()
   endif
-  f_y = asinc(x=f_x, nd=f_nd_ptr)
+  f_y = asinc(f_x, f_nd_ptr)
 
   ! out: f_y 0D_NOT_real
   call c_f_pointer(y, f_y_ptr)
@@ -357,7 +355,7 @@ subroutine fortran_assert_equal (int_arr, err_str, ival) bind(c)
   if (.not. c_associated(err_str)) return
   call c_f_pointer(err_str, f_err_str_ptr, [huge(0)])
   call to_f_str(f_err_str_ptr, f_err_str)
-  f_ival = assert_equal(int_arr=f_int_arr%data, err_str=f_err_str)
+  f_ival = assert_equal(f_int_arr%data, f_err_str)
 
   ! inout: f_err_str 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -378,7 +376,7 @@ subroutine fortran_atomic_number (species, atomic_num) bind(c)
   ! ** End of parameters **
   ! in: f_species 0D_NOT_integer
   f_species = species
-  f_atomic_num = atomic_number(species=f_species)
+  f_atomic_num = atomic_number(f_species)
 
   ! out: f_atomic_num 0D_NOT_integer
   call c_f_pointer(atomic_num, f_atomic_num_ptr)
@@ -409,8 +407,7 @@ subroutine fortran_atomic_species_id (charge, is_anti, atomic_num, n_nuc, specie
   f_atomic_num = atomic_num
   ! in: f_n_nuc 0D_NOT_integer
   f_n_nuc = n_nuc
-  f_species_id = atomic_species_id(charge=f_charge, is_anti=f_is_anti, atomic_num=f_atomic_num, &
-      n_nuc=f_n_nuc)
+  f_species_id = atomic_species_id(f_charge, f_is_anti, f_atomic_num, f_n_nuc)
 
   ! out: f_species_id 0D_NOT_integer
   call c_f_pointer(species_id, f_species_id_ptr)
@@ -439,7 +436,7 @@ subroutine fortran_axis_angle_to_quat (axis, angle, quat) bind(c)
   endif
   ! in: f_angle 0D_NOT_real
   f_angle = angle
-  f_quat = axis_angle_to_quat(axis=f_axis, angle=f_angle)
+  f_quat = axis_angle_to_quat(f_axis, f_angle)
 
   ! out: f_quat 1D_NOT_real
   if (c_associated(quat)) then
@@ -470,7 +467,7 @@ subroutine fortran_axis_angle_to_w_mat (axis, angle, w_mat) bind(c)
   endif
   ! in: f_angle 0D_NOT_real
   f_angle = angle
-  call axis_angle_to_w_mat(axis=f_axis, angle=f_angle, w_mat=f_w_mat)
+  call axis_angle_to_w_mat(f_axis, f_angle, f_w_mat)
 
   ! out: f_w_mat 2D_NOT_real
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=236, definition='real(rp) w_mat(3,3), axis(3), angle', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='Rotation matrix', doc_data_type='float', doc_is_optional=False)
@@ -504,8 +501,7 @@ subroutine fortran_bicubic_cmplx_eval (x_norm, y_norm, bi_coef, df_dx, df_dy, f_
   ! in: f_bi_coef 0D_NOT_type
   if (.not. c_associated(bi_coef)) return
   call c_f_pointer(bi_coef, f_bi_coef)
-  f_f_val = bicubic_cmplx_eval(x_norm=f_x_norm, y_norm=f_y_norm, bi_coef=f_bi_coef, &
-      df_dx=f_df_dx, df_dy=f_df_dy)
+  f_f_val = bicubic_cmplx_eval(f_x_norm, f_y_norm, f_bi_coef, f_df_dx, f_df_dy)
 
   ! out: f_df_dx 0D_NOT_complex
   ! no output conversion for f_df_dx
@@ -536,7 +532,7 @@ subroutine fortran_bin_index (x, bin1_x_min, bin_delta, ix_bin) bind(c)
   f_bin1_x_min = bin1_x_min
   ! in: f_bin_delta 0D_NOT_real
   f_bin_delta = bin_delta
-  f_ix_bin = bin_index(x=f_x, bin1_x_min=f_bin1_x_min, bin_delta=f_bin_delta)
+  f_ix_bin = bin_index(f_x, f_bin1_x_min, f_bin_delta)
 
   ! out: f_ix_bin 0D_NOT_integer
   call c_f_pointer(ix_bin, f_ix_bin_ptr)
@@ -569,8 +565,7 @@ subroutine fortran_bin_x_center (ix_bin, bin1_x_min, bin_delta, x_center) bind(c
   f_bin1_x_min = bin1_x_min
   ! in: f_bin_delta 0D_NOT_real
   f_bin_delta = bin_delta
-  f_x_center = bin_x_center(ix_bin=f_ix_bin_ptr, bin1_x_min=f_bin1_x_min, &
-      bin_delta=f_bin_delta)
+  f_x_center = bin_x_center(f_ix_bin_ptr, f_bin1_x_min, f_bin_delta)
 
   ! inout: f_ix_bin 0D_NOT_integer
   ! no output conversion for f_ix_bin
@@ -601,7 +596,7 @@ subroutine fortran_bit_set (word, pos, set_to_1) bind(c)
   f_pos = pos
   ! in: f_set_to_1 0D_NOT_logical
   f_set_to_1 = set_to_1
-  call bit_set(word=f_word_ptr, pos=f_pos, set_to_1=f_set_to_1)
+  call bit_set(f_word_ptr, f_pos, f_set_to_1)
 
   ! inout: f_word 0D_NOT_integer
   ! no output conversion for f_word
@@ -652,8 +647,8 @@ subroutine fortran_bracket_index_for_spline (x_knot, x, ix0, strict, print_err, 
   else
     f_print_err_native_ptr => null()
   endif
-  f_ok = bracket_index_for_spline(x_knot=f_x_knot%data, x=f_x, ix0=f_ix0, &
-      strict=f_strict_native_ptr, print_err=f_print_err_native_ptr)
+  f_ok = bracket_index_for_spline(f_x_knot%data, f_x, f_ix0, f_strict_native_ptr, &
+      f_print_err_native_ptr)
 
   ! out: f_ix0 0D_NOT_integer
   call c_f_pointer(ix0, f_ix0_ptr)
@@ -705,8 +700,7 @@ subroutine fortran_calc_file_number (file_name, num_in, num_out, err_flag) bind(
   else
     f_err_flag_native_ptr => null()
   endif
-  call calc_file_number(file_name=f_file_name, num_in=f_num_in_ptr, num_out=f_num_out_ptr, &
-      err_flag=f_err_flag_native_ptr)
+  call calc_file_number(f_file_name, f_num_in_ptr, f_num_out_ptr, f_err_flag_native_ptr)
 
   ! inout: f_file_name 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -743,7 +737,7 @@ subroutine fortran_change_file_number (file_name, change) bind(c)
   else
     f_change_ptr => null()
   endif
-  call change_file_number(file_name=f_file_name, change=f_change_ptr)
+  call change_file_number(f_file_name, f_change_ptr)
 
   ! inout: f_file_name 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -772,7 +766,7 @@ subroutine fortran_charge_of (species, default_, charge) bind(c)
   else
     f_default_ptr => null()
   endif
-  f_charge = charge_of(species=f_species, default=f_default_ptr)
+  f_charge = charge_of(f_species, f_default_ptr)
 
   ! out: f_charge 0D_NOT_integer
   call c_f_pointer(charge, f_charge_ptr)
@@ -791,7 +785,7 @@ subroutine fortran_charge_to_mass_of (species, charge_mass_ratio) bind(c)
   ! ** End of parameters **
   ! in: f_species 0D_NOT_integer
   f_species = species
-  f_charge_mass_ratio = charge_to_mass_of(species=f_species)
+  f_charge_mass_ratio = charge_to_mass_of(f_species)
 
   ! out: f_charge_mass_ratio 0D_NOT_real
   call c_f_pointer(charge_mass_ratio, f_charge_mass_ratio_ptr)
@@ -824,7 +818,7 @@ subroutine fortran_coarse_frequency_estimate (data, error, frequency) bind(c)
   else
     f_error_native_ptr => null()
   endif
-  f_frequency = coarse_frequency_estimate(data=f_data%data, error=f_error_native_ptr)
+  f_frequency = coarse_frequency_estimate(f_data%data, f_error_native_ptr)
 
   ! inout: f_error 0D_NOT_logical
   if (c_associated(error)) then
@@ -878,7 +872,7 @@ subroutine fortran_complex_error_function (wr, wi, zr, zi) bind(c)
   else
     f_zi_ptr => null()
   endif
-  call complex_error_function(wr=f_wr_ptr, wi=f_wi_ptr, zr=f_zr_ptr, zi=f_zi_ptr)
+  call complex_error_function(f_wr_ptr, f_wi_ptr, f_zr_ptr, f_zi_ptr)
 
   ! inout: f_wr 0D_NOT_real
   ! no output conversion for f_wr
@@ -902,7 +896,7 @@ subroutine fortran_cos_one (angle, cos1) bind(c)
   ! ** End of parameters **
   ! in: f_angle 0D_NOT_real
   f_angle = angle
-  f_cos1 = cos_one(angle=f_angle)
+  f_cos1 = cos_one(f_angle)
 
   ! out: f_cos1 0D_NOT_real
   call c_f_pointer(cos1, f_cos1_ptr)
@@ -930,7 +924,7 @@ subroutine fortran_cosc (x, nd, y) bind(c)
   else
     f_nd_ptr => null()
   endif
-  f_y = cosc(x=f_x, nd=f_nd_ptr)
+  f_y = cosc(f_x, f_nd_ptr)
 
   ! out: f_y 0D_NOT_real
   call c_f_pointer(y, f_y_ptr)
@@ -961,7 +955,7 @@ subroutine fortran_create_a_spline (r0, r1, slope0, slope1, spline) bind(c)
   f_slope0 = slope0
   ! in: f_slope1 0D_NOT_real
   f_slope1 = slope1
-  f_spline = create_a_spline(r0=f_r0%data, r1=f_r1%data, slope0=f_slope0, slope1=f_slope1)
+  f_spline = create_a_spline(f_r0%data, f_r1%data, f_slope0, f_slope1)
 
   ! out: f_spline 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -984,7 +978,7 @@ subroutine fortran_cross_product (a, b, c) bind(c)
   if (c_associated(a))   call c_f_pointer(a, f_a)
   !! container general array (1D_ALLOC_real)
   if (c_associated(b))   call c_f_pointer(b, f_b)
-  f_c = cross_product(a=f_a%data, b=f_b%data)
+  f_c = cross_product(f_a%data, f_b%data)
 
   ! out: f_c 1D_NOT_real
   if (c_associated(c)) then
@@ -1030,8 +1024,7 @@ subroutine fortran_date_and_time_stamp (string, numeric_month, include_zone) bin
   else
     f_include_zone_native_ptr => null()
   endif
-  call date_and_time_stamp(string=f_string, numeric_month=f_numeric_month_native_ptr, &
-      include_zone=f_include_zone_native_ptr)
+  call date_and_time_stamp(f_string, f_numeric_month_native_ptr, f_include_zone_native_ptr)
 
   ! inout: f_string 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -1059,7 +1052,7 @@ subroutine fortran_destfixedwindowls (id) bind(c)
   ! ** End of parameters **
   ! in: f_id 0D_NOT_integer
   f_id = id
-  call destfixedwindowls(id=f_id)
+  call destfixedwindowls(f_id)
 
 end subroutine
 subroutine fortran_detab (str) bind(c)
@@ -1074,7 +1067,7 @@ subroutine fortran_detab (str) bind(c)
   if (.not. c_associated(str)) return
   call c_f_pointer(str, f_str_ptr, [huge(0)])
   call to_f_str(f_str_ptr, f_str)
-  call detab(str=f_str)
+  call detab(f_str)
 
   ! inout: f_str 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -1130,8 +1123,8 @@ subroutine fortran_display_size_and_resolution (ix_screen, x_size, y_size, x_res
   else
     f_y_res_ptr => null()
   endif
-  call display_size_and_resolution(ix_screen=f_ix_screen_ptr, x_size=f_x_size_ptr, &
-      y_size=f_y_size_ptr, x_res=f_x_res_ptr, y_res=f_y_res_ptr)
+  call display_size_and_resolution(f_ix_screen_ptr, f_x_size_ptr, f_y_size_ptr, f_x_res_ptr, &
+      f_y_res_ptr)
 
   ! inout: f_ix_screen 0D_NOT_integer
   ! no output conversion for f_ix_screen
@@ -1171,7 +1164,7 @@ subroutine fortran_dj_bessel (m, arg, dj_bes) bind(c)
   else
     f_arg_ptr => null()
   endif
-  f_dj_bes = dj_bessel(m=f_m_ptr, arg=f_arg_ptr)
+  f_dj_bes = dj_bessel(f_m_ptr, f_arg_ptr)
 
   ! inout: f_m 0D_NOT_integer
   ! no output conversion for f_m
@@ -1206,7 +1199,7 @@ subroutine fortran_djb_hash (str, old_hash, hash) bind(c)
   else
     f_old_hash_ptr => null()
   endif
-  f_hash = djb_hash(str=f_str, old_hash=f_old_hash_ptr)
+  f_hash = djb_hash(f_str, f_old_hash_ptr)
 
   ! inout: f_str 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -1232,7 +1225,7 @@ subroutine fortran_djb_str_hash (in_str, hash_str) bind(c)
   if (.not. c_associated(in_str)) return
   call c_f_pointer(in_str, f_in_str_ptr, [huge(0)])
   call to_f_str(f_in_str_ptr, f_in_str)
-  f_hash_str = djb_str_hash(in_str=f_in_str)
+  f_hash_str = djb_str_hash(f_in_str)
 
   ! inout: f_in_str 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -1252,7 +1245,7 @@ subroutine fortran_downcase_string (string) bind(c)
   if (.not. c_associated(string)) return
   call c_f_pointer(string, f_string_ptr, [huge(0)])
   call to_f_str(f_string_ptr, f_string)
-  call downcase_string(string=f_string)
+  call downcase_string(f_string)
 
   ! inout: f_string 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -1272,7 +1265,7 @@ subroutine fortran_end_akima_spline_calc (spline, which_end) bind(c)
   if (c_associated(spline))   call c_f_pointer(spline, f_spline)
   ! in: f_which_end 0D_NOT_integer
   f_which_end = which_end
-  call end_akima_spline_calc(spline=f_spline%data, which_end=f_which_end)
+  call end_akima_spline_calc(f_spline%data, f_which_end)
 
 end subroutine
 subroutine fortran_err_exit (err_str) bind(c)
@@ -1292,7 +1285,7 @@ subroutine fortran_err_exit (err_str) bind(c)
   else
     f_err_str_call_ptr => null()
   endif
-  call err_exit(err_str=f_err_str_call_ptr)
+  call err_exit(f_err_str_call_ptr)
 
   ! inout: f_err_str 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -1315,7 +1308,7 @@ subroutine fortran_factorial (n, fact) bind(c)
   else
     f_n_ptr => null()
   endif
-  f_fact = factorial(n=f_n_ptr)
+  f_fact = factorial(f_n_ptr)
 
   ! inout: f_n 0D_NOT_integer
   ! no output conversion for f_n
@@ -1358,7 +1351,7 @@ subroutine fortran_faddeeva_function (z, w, dw) bind(c)
   else
     f_dw_ptr => null()
   endif
-  call faddeeva_function(z=f_z, w=f_w, dw=f_dw)
+  call faddeeva_function(f_z, f_w, f_dw)
 
 end subroutine
 subroutine fortran_fft_1d (arr, isign) bind(c)
@@ -1375,7 +1368,7 @@ subroutine fortran_fft_1d (arr, isign) bind(c)
   if (c_associated(arr))   call c_f_pointer(arr, f_arr)
   ! in: f_isign 0D_NOT_integer
   f_isign = isign
-  call fft_1d(arr=f_arr%data, isign=f_isign)
+  call fft_1d(f_arr%data, f_isign)
 
 end subroutine
 subroutine fortran_file_directorizer (in_file, out_file, directory, add_switch) bind(c)
@@ -1417,8 +1410,7 @@ subroutine fortran_file_directorizer (in_file, out_file, directory, add_switch) 
   else
     f_add_switch_native_ptr => null()
   endif
-  call file_directorizer(in_file=f_in_file, out_file=f_out_file, directory=f_directory, &
-      add_switch=f_add_switch_native_ptr)
+  call file_directorizer(f_in_file, f_out_file, f_directory, f_add_switch_native_ptr)
 
   ! inout: f_in_file 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -1460,7 +1452,7 @@ subroutine fortran_file_get (string, dflt_file_name, file_name) bind(c)
   if (.not. c_associated(file_name)) return
   call c_f_pointer(file_name, f_file_name_ptr, [huge(0)])
   call to_f_str(f_file_name_ptr, f_file_name)
-  call file_get(string=f_string, dflt_file_name=f_dflt_file_name, file_name=f_file_name)
+  call file_get(f_string, f_dflt_file_name, f_file_name)
 
   ! inout: f_string 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -1518,8 +1510,8 @@ subroutine fortran_file_get_open (string, dflt_file_name, file_name, file_unit, 
   else
     f_readonly_native_ptr => null()
   endif
-  call file_get_open(string=f_string, dflt_file_name=f_dflt_file_name, file_name=f_file_name, &
-      file_unit=f_file_unit_ptr, readonly=f_readonly_native_ptr)
+  call file_get_open(f_string, f_dflt_file_name, f_file_name, f_file_unit_ptr, &
+      f_readonly_native_ptr)
 
   ! inout: f_string 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -1576,8 +1568,7 @@ subroutine fortran_file_suffixer (in_file_name, out_file_name, suffix, add_switc
   else
     f_add_switch_native_ptr => null()
   endif
-  call file_suffixer(in_file_name=f_in_file_name, out_file_name=f_out_file_name, &
-      suffix=f_suffix, add_switch=f_add_switch_native_ptr)
+  call file_suffixer(f_in_file_name, f_out_file_name, f_suffix, f_add_switch_native_ptr)
 
   ! inout: f_in_file_name 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -1615,7 +1606,7 @@ subroutine fortran_find_location_int (arr, value, ix_match) bind(c)
   else
     f_value_ptr => null()
   endif
-  f_ix_match = find_location_int(arr=f_arr%data, value=f_value_ptr)
+  f_ix_match = find_location(f_arr%data, f_value_ptr)
 
   ! inout: f_value 0D_NOT_integer
   ! no output conversion for f_value
@@ -1649,7 +1640,7 @@ subroutine fortran_find_location_logic (arr, value, ix_match) bind(c)
   else
     f_value_native_ptr => null()
   endif
-  f_ix_match = find_location_logic(arr=f_arr%data, value=f_value_native_ptr)
+  f_ix_match = find_location(f_arr%data, f_value_native_ptr)
 
   ! inout: f_value 0D_NOT_logical
   if (c_associated(value)) then
@@ -1679,7 +1670,7 @@ subroutine fortran_find_location_real (arr, value, ix_match) bind(c)
   if (c_associated(arr))   call c_f_pointer(arr, f_arr)
   ! in: f_value 0D_NOT_real
   f_value = value
-  f_ix_match = find_location_real(arr=f_arr%data, value=f_value)
+  f_ix_match = find_location(f_arr%data, f_value)
 
   ! out: f_ix_match 0D_NOT_integer
   call c_f_pointer(ix_match, f_ix_match_ptr)
@@ -1698,7 +1689,7 @@ subroutine fortran_fine_frequency_estimate (data, frequency) bind(c)
   ! ** End of parameters **
   !! container general array (1D_ALLOC_real)
   if (c_associated(data))   call c_f_pointer(data, f_data)
-  f_frequency = fine_frequency_estimate(data=f_data%data)
+  f_frequency = fine_frequency_estimate(f_data%data)
 
   ! out: f_frequency 0D_NOT_real
   call c_f_pointer(frequency, f_frequency_ptr)
@@ -1721,7 +1712,7 @@ subroutine fortran_fixedwindowls (ynew, id, z) bind(c)
   f_ynew = ynew
   ! in: f_id 0D_NOT_integer
   f_id = id
-  f_z = fixedwindowls(ynew=f_ynew, id=f_id)
+  f_z = fixedwindowls(f_ynew, f_id)
 
   ! out: f_z 0D_NOT_real
   call c_f_pointer(z, f_z_ptr)
@@ -1754,8 +1745,8 @@ subroutine fortran_fourier_amplitude (data, frequency, cos_amp, sin_amp, dcos_am
   if (c_associated(data))   call c_f_pointer(data, f_data)
   ! in: f_frequency 0D_NOT_real
   f_frequency = frequency
-  call fourier_amplitude(data=f_data%data, frequency=f_frequency, cos_amp=f_cos_amp, &
-      sin_amp=f_sin_amp, dcos_amp=f_dcos_amp, dsin_amp=f_dsin_amp)
+  call fourier_amplitude(f_data%data, f_frequency, f_cos_amp, f_sin_amp, f_dcos_amp, &
+      f_dsin_amp)
 
   ! out: f_cos_amp 0D_NOT_real
   call c_f_pointer(cos_amp, f_cos_amp_ptr)
@@ -1822,8 +1813,7 @@ subroutine fortran_gen_complete_elliptic (kc, p, c, s, err_tol, value) bind(c)
   else
     f_err_tol_ptr => null()
   endif
-  f_value = gen_complete_elliptic(kc=f_kc_ptr, p=f_p_ptr, c=f_c_ptr, s=f_s_ptr, &
-      err_tol=f_err_tol_ptr)
+  f_value = gen_complete_elliptic(f_kc_ptr, f_p_ptr, f_c_ptr, f_s_ptr, f_err_tol_ptr)
 
   ! inout: f_kc 0D_NOT_real
   ! no output conversion for f_kc
@@ -1880,8 +1870,7 @@ subroutine fortran_get_file_number (file_name, cnum_in, num_out, err_flag) bind(
   else
     f_err_flag_native_ptr => null()
   endif
-  call get_file_number(file_name=f_file_name, cnum_in=f_cnum_in, num_out=f_num_out_ptr, &
-      err_flag=f_err_flag_native_ptr)
+  call get_file_number(f_file_name, f_cnum_in, f_num_out_ptr, f_err_flag_native_ptr)
 
   ! inout: f_file_name 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -1916,7 +1905,7 @@ subroutine fortran_get_file_time_stamp (file, time_stamp) bind(c)
   if (.not. c_associated(time_stamp)) return
   call c_f_pointer(time_stamp, f_time_stamp_ptr, [huge(0)])
   call to_f_str(f_time_stamp_ptr, f_time_stamp)
-  call get_file_time_stamp(file=f_file, time_stamp=f_time_stamp)
+  call get_file_time_stamp(f_file, f_time_stamp)
 
   ! inout: f_file 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -1941,7 +1930,7 @@ subroutine fortran_hanhan (N, hh) bind(c)
   endif
   !! container general array (1D_ALLOC_real)
   if (c_associated(hh))   call c_f_pointer(hh, f_hh)
-  call hanhan(N=f_N_ptr, hh=f_hh%data)
+  call hanhan(f_N_ptr, f_hh%data)
 
   ! inout: f_N 0D_NOT_integer
   ! no output conversion for f_N
@@ -1973,7 +1962,7 @@ subroutine fortran_i_bessel (m, arg, i_bes) bind(c)
   else
     f_arg_ptr => null()
   endif
-  f_i_bes = i_bessel(m=f_m_ptr, arg=f_arg_ptr)
+  f_i_bes = i_bessel(f_m_ptr, f_arg_ptr)
 
   ! inout: f_m 0D_NOT_integer
   ! no output conversion for f_m
@@ -2010,7 +1999,7 @@ subroutine fortran_i_bessel_extended (m, arg, i_bes) bind(c)
   else
     f_arg_ptr => null()
   endif
-  f_i_bes = i_bessel_extended(m=f_m_ptr, arg=f_arg_ptr)
+  f_i_bes = i_bessel_extended(f_m_ptr, f_arg_ptr)
 
   ! inout: f_m 0D_NOT_integer
   ! no output conversion for f_m
@@ -2057,8 +2046,7 @@ subroutine fortran_increment_file_number (file_name, digits, number, cnumber) bi
   if (.not. c_associated(cnumber)) return
   call c_f_pointer(cnumber, f_cnumber_ptr, [huge(0)])
   call to_f_str(f_cnumber_ptr, f_cnumber)
-  call increment_file_number(file_name=f_file_name, digits=f_digits_ptr, number=f_number_ptr, &
-      cnumber=f_cnumber)
+  call increment_file_number(f_file_name, f_digits_ptr, f_number_ptr, f_cnumber)
 
   ! inout: f_file_name 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -2092,7 +2080,7 @@ subroutine fortran_index_nocase (string1, string2, indx) bind(c)
   if (.not. c_associated(string2)) return
   call c_f_pointer(string2, f_string2_ptr, [huge(0)])
   call to_f_str(f_string2_ptr, f_string2)
-  f_indx = index_nocase(string1=f_string1, string2=f_string2)
+  f_indx = index_nocase(f_string1, f_string2)
 
   ! inout: f_string1 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -2127,7 +2115,7 @@ subroutine fortran_initfixedwindowls (N, dt, order, der, id) bind(c)
   f_order = order
   ! in: f_der 0D_NOT_integer
   f_der = der
-  f_id = initfixedwindowls(N=f_N, dt=f_dt, order=f_order, der=f_der)
+  f_id = initfixedwindowls(f_N, f_dt, f_order, f_der)
 
   ! out: f_id 0D_NOT_integer
   call c_f_pointer(id, f_id_ptr)
@@ -2160,7 +2148,7 @@ subroutine fortran_int_str (int_, width, str) bind(c)
   else
     f_width_ptr => null()
   endif
-  f_str = int_str(int=f_int_ptr, width=f_width_ptr)
+  f_str = int_str(f_int_ptr, f_width_ptr)
 
   ! inout: f_int 0D_NOT_integer
   ! no output conversion for f_int
@@ -2215,8 +2203,8 @@ subroutine fortran_interpolated_fft (cdata, calc_ok, opt_dump_spectrum, opt_dump
   else
     f_opt_dump_index_ptr => null()
   endif
-  f_this_fft = interpolated_fft(cdata=f_cdata%data, calc_ok=f_calc_ok_native_ptr, &
-      opt_dump_spectrum=f_opt_dump_spectrum_ptr, opt_dump_index=f_opt_dump_index_ptr)
+  f_this_fft = interpolated_fft(f_cdata%data, f_calc_ok_native_ptr, f_opt_dump_spectrum_ptr, &
+      f_opt_dump_index_ptr)
 
   ! inout: f_calc_ok 0D_NOT_logical
   if (c_associated(calc_ok)) then
@@ -2278,8 +2266,8 @@ subroutine fortran_interpolated_fft_gsl (cdata, calc_ok, opt_dump_spectrum, opt_
   else
     f_opt_dump_index_ptr => null()
   endif
-  f_this_fft = interpolated_fft_gsl(cdata=f_cdata%data, calc_ok=f_calc_ok_native_ptr, &
-      opt_dump_spectrum=f_opt_dump_spectrum_ptr, opt_dump_index=f_opt_dump_index_ptr)
+  f_this_fft = interpolated_fft_gsl(f_cdata%data, f_calc_ok_native_ptr, &
+      f_opt_dump_spectrum_ptr, f_opt_dump_index_ptr)
 
   ! inout: f_calc_ok 0D_NOT_logical
   if (c_associated(calc_ok)) then
@@ -2324,7 +2312,7 @@ subroutine fortran_is_alphabetic (string, valid_chars, is_alpha) bind(c)
   else
     f_valid_chars_call_ptr => null()
   endif
-  f_is_alpha = is_alphabetic(string=f_string, valid_chars=f_valid_chars_call_ptr)
+  f_is_alpha = is_alphabetic(f_string, f_valid_chars_call_ptr)
 
   ! inout: f_string 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -2360,7 +2348,7 @@ subroutine fortran_is_decreasing_sequence (array, strict, is_decreasing) bind(c)
   else
     f_strict_native_ptr => null()
   endif
-  f_is_decreasing = is_decreasing_sequence(array=f_array%data, strict=f_strict_native_ptr)
+  f_is_decreasing = is_decreasing_sequence(f_array%data, f_strict_native_ptr)
 
   ! out: f_is_decreasing 0D_NOT_logical
   call c_f_pointer(is_decreasing, f_is_decreasing_ptr)
@@ -2379,7 +2367,7 @@ subroutine fortran_is_false (param, this_false) bind(c)
   ! ** End of parameters **
   ! in: f_param 0D_NOT_real
   f_param = param
-  f_this_false = is_false(param=f_param)
+  f_this_false = is_false(f_param)
 
   ! out: f_this_false 0D_NOT_logical
   call c_f_pointer(this_false, f_this_false_ptr)
@@ -2411,7 +2399,7 @@ subroutine fortran_is_increasing_sequence (array, strict, is_increasing) bind(c)
   else
     f_strict_native_ptr => null()
   endif
-  f_is_increasing = is_increasing_sequence(array=f_array%data, strict=f_strict_native_ptr)
+  f_is_increasing = is_increasing_sequence(f_array%data, f_strict_native_ptr)
 
   ! out: f_is_increasing 0D_NOT_logical
   call c_f_pointer(is_increasing, f_is_increasing_ptr)
@@ -2463,8 +2451,7 @@ subroutine fortran_is_integer (string, int_, delims, ix_word, valid) bind(c)
   else
     f_ix_word_ptr => null()
   endif
-  f_valid = is_integer(string=f_string, int=f_int_ptr, delims=f_delims_call_ptr, &
-      ix_word=f_ix_word_ptr)
+  f_valid = is_integer(f_string, f_int_ptr, f_delims_call_ptr, f_ix_word_ptr)
 
   ! inout: f_string 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -2507,7 +2494,7 @@ subroutine fortran_is_logical (string, ignore, valid) bind(c)
   else
     f_ignore_native_ptr => null()
   endif
-  f_valid = is_logical(string=f_string, ignore=f_ignore_native_ptr)
+  f_valid = is_logical(f_string, f_ignore_native_ptr)
 
   ! inout: f_string 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -2560,7 +2547,7 @@ subroutine fortran_is_real (string, ignore, real_num, valid) bind(c)
   else
     f_real_num_ptr => null()
   endif
-  f_valid = is_real(string=f_string, ignore=f_ignore_native_ptr, real_num=f_real_num_ptr)
+  f_valid = is_real(f_string, f_ignore_native_ptr, f_real_num_ptr)
 
   ! inout: f_string 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -2590,7 +2577,7 @@ subroutine fortran_is_subatomic_species (species, is_subatomic) bind(c)
   ! ** End of parameters **
   ! in: f_species 0D_NOT_integer
   f_species = species
-  f_is_subatomic = is_subatomic_species(species=f_species)
+  f_is_subatomic = is_subatomic_species(f_species)
 
   ! out: f_is_subatomic 0D_NOT_logical
   call c_f_pointer(is_subatomic, f_is_subatomic_ptr)
@@ -2609,7 +2596,7 @@ subroutine fortran_is_true (param, this_true) bind(c)
   ! ** End of parameters **
   ! in: f_param 0D_NOT_real
   f_param = param
-  f_this_true = is_true(param=f_param)
+  f_this_true = is_true(f_param)
 
   ! out: f_this_true 0D_NOT_logical
   call c_f_pointer(this_true, f_this_true_ptr)
@@ -2642,7 +2629,7 @@ subroutine fortran_j_bessel (m, arg, j_bes) bind(c)
   else
     f_arg_ptr => null()
   endif
-  f_j_bes = j_bessel(m=f_m_ptr, arg=f_arg_ptr)
+  f_j_bes = j_bessel(f_m_ptr, f_arg_ptr)
 
   ! inout: f_m 0D_NOT_integer
   ! no output conversion for f_m
@@ -2710,8 +2697,7 @@ subroutine fortran_linear_fit (x, y, n_data, a, b, sig_a, sig_b) bind(c)
   else
     f_sig_b_ptr => null()
   endif
-  call linear_fit(x=f_x%data, y=f_y%data, n_data=f_n_data_ptr, a=f_a_ptr, b=f_b_ptr, &
-      sig_a=f_sig_a_ptr, sig_b=f_sig_b_ptr)
+  call linear_fit(f_x%data, f_y%data, f_n_data_ptr, f_a_ptr, f_b_ptr, f_sig_a_ptr, f_sig_b_ptr)
 
   ! inout: f_n_data 0D_NOT_integer
   ! no output conversion for f_n_data
@@ -2745,7 +2731,7 @@ subroutine fortran_linear_fit_2d (x, y, z, coef) bind(c)
   if (c_associated(y))   call c_f_pointer(y, f_y)
   !! container general array (1D_ALLOC_real)
   if (c_associated(z))   call c_f_pointer(z, f_z)
-  call linear_fit_2d(x=f_x%data, y=f_y%data, z=f_z%data, coef=f_coef)
+  call linear_fit_2d(f_x%data, f_y%data, f_z%data, f_coef)
 
   ! out: f_coef 1D_NOT_real
   if (c_associated(coef)) then
@@ -2775,7 +2761,7 @@ subroutine fortran_logic_str (logic, str) bind(c)
   else
     f_logic_native_ptr => null()
   endif
-  f_str = logic_str(logic=f_logic_native_ptr)
+  f_str = logic_str(f_logic_native_ptr)
 
   ! inout: f_logic 0D_NOT_logical
   if (c_associated(logic)) then
@@ -2821,7 +2807,7 @@ subroutine fortran_make_legal_comment (comment_in, comment_out) bind(c)
   if (.not. c_associated(comment_out)) return
   call c_f_pointer(comment_out, f_comment_out_ptr, [huge(0)])
   call to_f_str(f_comment_out_ptr, f_comment_out)
-  call make_legal_comment(comment_in=f_comment_in, comment_out=f_comment_out)
+  call make_legal_comment(f_comment_in, f_comment_out)
 
   ! inout: f_comment_in 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -2841,7 +2827,7 @@ subroutine fortran_mass_of (species, mass) bind(c)
   ! ** End of parameters **
   ! in: f_species 0D_NOT_integer
   f_species = species
-  f_mass = mass_of(species=f_species)
+  f_mass = mass_of(f_species)
 
   ! out: f_mass 0D_NOT_real
   call c_f_pointer(mass, f_mass_ptr)
@@ -2870,7 +2856,7 @@ subroutine fortran_match_reg (str, pat, is_match) bind(c)
   if (.not. c_associated(pat)) return
   call c_f_pointer(pat, f_pat_ptr, [huge(0)])
   call to_f_str(f_pat_ptr, f_pat)
-  f_is_match = match_reg(str=f_str, pat=f_pat)
+  f_is_match = match_reg(f_str, f_pat)
 
   ! inout: f_str 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -2903,7 +2889,7 @@ subroutine fortran_match_wild (string, template_, is_match) bind(c)
   if (.not. c_associated(template_)) return
   call c_f_pointer(template_, f_template_ptr, [huge(0)])
   call to_f_str(f_template_ptr, f_template)
-  f_is_match = match_wild(string=f_string, template=f_template)
+  f_is_match = match_wild(f_string, f_template)
 
   ! inout: f_string 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -2935,7 +2921,7 @@ subroutine fortran_maximize_projection (seed, cdata, func_retval__) bind(c)
   endif
   !! container general array (1D_ALLOC_complex)
   if (c_associated(cdata))   call c_f_pointer(cdata, f_cdata)
-  f_func_retval__ = maximize_projection(seed=f_seed_ptr, cdata=f_cdata%data)
+  f_func_retval__ = maximize_projection(f_seed_ptr, f_cdata%data)
 
   ! inout: f_seed 0D_NOT_real
   ! no output conversion for f_seed
@@ -2957,7 +2943,7 @@ subroutine fortran_milli_sleep (milli_sec) bind(c)
   else
     f_milli_sec_ptr => null()
   endif
-  call milli_sleep(milli_sec=f_milli_sec_ptr)
+  call milli_sleep(f_milli_sec_ptr)
 
   ! inout: f_milli_sec 0D_NOT_integer
   ! no output conversion for f_milli_sec
@@ -2980,7 +2966,7 @@ subroutine fortran_n_bins_automatic (n_data, n) bind(c)
   else
     f_n_data_ptr => null()
   endif
-  f_n = n_bins_automatic(n_data=f_n_data_ptr)
+  f_n = n_bins_automatic(f_n_data_ptr)
 
   ! inout: f_n_data 0D_NOT_integer
   ! no output conversion for f_n_data
@@ -3015,7 +3001,7 @@ subroutine fortran_n_choose_k (n, k, nck) bind(c)
   else
     f_k_ptr => null()
   endif
-  f_nck = n_choose_k(n=f_n_ptr, k=f_k_ptr)
+  f_nck = n_choose_k(f_n_ptr, f_k_ptr)
 
   ! inout: f_n 0D_NOT_integer
   ! no output conversion for f_n
@@ -3047,8 +3033,7 @@ subroutine fortran_n_spline_create (deriv0, deriv1, x1, n_spline) bind(c)
   f_x1 = x1
   !! container general array (1D_ALLOC_real)
   if (c_associated(n_spline))   call c_f_pointer(n_spline, f_n_spline)
-  call n_spline_create(deriv0=f_deriv0%data, deriv1=f_deriv1%data, x1=f_x1, &
-      n_spline=f_n_spline%data)
+  call n_spline_create(f_deriv0%data, f_deriv1%data, f_x1, f_n_spline%data)
 
 end subroutine
 subroutine fortran_naff (cdata, freqs, amps, opt_dump_spectra, opt_zero_first) bind(c)
@@ -3090,8 +3075,8 @@ subroutine fortran_naff (cdata, freqs, amps, opt_dump_spectra, opt_zero_first) b
   else
     f_opt_zero_first_native_ptr => null()
   endif
-  call naff(cdata=f_cdata%data, freqs=f_freqs%data, amps=f_amps%data, &
-      opt_dump_spectra=f_opt_dump_spectra_ptr, opt_zero_first=f_opt_zero_first_native_ptr)
+  call naff(f_cdata%data, f_freqs%data, f_amps%data, f_opt_dump_spectra_ptr, &
+      f_opt_zero_first_native_ptr)
 
   ! inout: f_opt_dump_spectra 0D_NOT_integer
   ! no output conversion for f_opt_dump_spectra
@@ -3130,7 +3115,7 @@ subroutine fortran_nametable_add (nametable, name, ix_name) bind(c)
   else
     f_ix_name_ptr => null()
   endif
-  call nametable_add(nametable=f_nametable, name=f_name, ix_name=f_ix_name_ptr)
+  call nametable_add(f_nametable, f_name, f_ix_name_ptr)
 
   ! inout: f_name 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -3168,8 +3153,7 @@ subroutine fortran_nametable_bracket_indexx (nametable, name, n_match, ix_max) b
   else
     f_n_match_ptr => null()
   endif
-  f_ix_max = nametable_bracket_indexx(nametable=f_nametable, name=f_name, &
-      n_match=f_n_match_ptr)
+  f_ix_max = nametable_bracket_indexx(f_nametable, f_name, f_n_match_ptr)
 
   ! inout: f_name 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -3206,7 +3190,7 @@ subroutine fortran_nametable_change1 (nametable, name, ix_name) bind(c)
   else
     f_ix_name_ptr => null()
   endif
-  call nametable_change1(nametable=f_nametable, name=f_name, ix_name=f_ix_name_ptr)
+  call nametable_change1(f_nametable, f_name, f_ix_name_ptr)
 
   ! inout: f_name 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -3242,7 +3226,7 @@ subroutine fortran_nametable_init (nametable, n_min, n_max) bind(c)
   else
     f_n_max_ptr => null()
   endif
-  call nametable_init(nametable=f_nametable, n_min=f_n_min_ptr, n_max=f_n_max_ptr)
+  call nametable_init(f_nametable, f_n_min_ptr, f_n_max_ptr)
 
   ! inout: f_n_min 0D_NOT_integer
   ! no output conversion for f_n_min
@@ -3269,7 +3253,7 @@ subroutine fortran_nametable_remove (nametable, ix_name) bind(c)
   else
     f_ix_name_ptr => null()
   endif
-  call nametable_remove(nametable=f_nametable, ix_name=f_ix_name_ptr)
+  call nametable_remove(f_nametable, f_ix_name_ptr)
 
   ! inout: f_ix_name 0D_NOT_integer
   ! no output conversion for f_ix_name
@@ -3293,7 +3277,7 @@ subroutine fortran_omega_to_quat (omega, quat) bind(c)
   else
     f_omega_ptr => null()
   endif
-  f_quat = omega_to_quat(omega=f_omega)
+  f_quat = omega_to_quat(f_omega)
 
   ! out: f_quat 1D_NOT_real
   if (c_associated(quat)) then
@@ -3314,7 +3298,7 @@ subroutine fortran_openpmd_species_name (species, pmd_name) bind(c)
   ! ** End of parameters **
   ! in: f_species 0D_NOT_integer
   f_species = species
-  f_pmd_name = openpmd_species_name(species=f_species)
+  f_pmd_name = openpmd_species_name(f_species)
 
   ! out: f_pmd_name 0D_NOT_character
   call c_f_pointer(pmd_name, f_pmd_name_ptr, [len_trim(f_pmd_name) + 1]) ! output-only string
@@ -3338,7 +3322,7 @@ subroutine fortran_ordinal_str (n, str) bind(c)
   else
     f_n_ptr => null()
   endif
-  f_str = ordinal_str(n=f_n_ptr)
+  f_str = ordinal_str(f_n_ptr)
 
   ! inout: f_n 0D_NOT_integer
   ! no output conversion for f_n
@@ -3402,8 +3386,8 @@ subroutine fortran_parse_fortran_format (format_str, n_repeat, power, descrip, w
   else
     f_digits_ptr => null()
   endif
-  call parse_fortran_format(format_str=f_format_str, n_repeat=f_n_repeat_ptr, &
-      power=f_power_ptr, descrip=f_descrip, width=f_width_ptr, digits=f_digits_ptr)
+  call parse_fortran_format(f_format_str, f_n_repeat_ptr, f_power_ptr, f_descrip, f_width_ptr, &
+      f_digits_ptr)
 
   ! inout: f_format_str 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -3417,6 +3401,33 @@ subroutine fortran_parse_fortran_format (format_str, n_repeat, power, descrip, w
   ! no output conversion for f_width
   ! inout: f_digits 0D_NOT_integer
   ! no output conversion for f_digits
+end subroutine
+subroutine fortran_pointer_to_ran_state (ran_state, ix_thread, ran_state_ptr) bind(c)
+
+  use random_mod, only: random_state_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ran_state  ! 0D_NOT_type
+  type(random_state_struct), pointer :: f_ran_state
+  type(c_ptr), intent(in), value :: ix_thread  ! 0D_NOT_integer
+  integer(c_int) :: f_ix_thread
+  integer(c_int), pointer :: f_ix_thread_ptr
+  ! ** Out parameters **
+  type(c_ptr), value :: ran_state_ptr  ! 0D_PTR_type
+  type(random_state_struct), pointer :: f_ran_state_ptr
+  ! ** End of parameters **
+  ! in: f_ran_state 0D_NOT_type
+  if (c_associated(ran_state))   call c_f_pointer(ran_state, f_ran_state)
+  ! in: f_ix_thread 0D_NOT_integer
+  if (c_associated(ix_thread)) then
+    call c_f_pointer(ix_thread, f_ix_thread_ptr)
+  else
+    f_ix_thread_ptr => null()
+  endif
+  f_ran_state_ptr = pointer_to_ran_state(f_ran_state, f_ix_thread_ptr)
+
+  ! out: f_ran_state_ptr 0D_PTR_type
+  ! TODO may require output conversion? 0D_PTR_type
 end subroutine
 subroutine fortran_poly_eval (poly, x, diff_coef, y) bind(c)
 
@@ -3448,7 +3459,7 @@ subroutine fortran_poly_eval (poly, x, diff_coef, y) bind(c)
   else
     f_diff_coef_native_ptr => null()
   endif
-  f_y = poly_eval(poly=f_poly%data, x=f_x, diff_coef=f_diff_coef_native_ptr)
+  f_y = poly_eval(f_poly%data, f_x, f_diff_coef_native_ptr)
 
   ! out: f_y 0D_NOT_real
   call c_f_pointer(y, f_y_ptr)
@@ -3467,7 +3478,7 @@ subroutine fortran_probability_funct (x, prob) bind(c)
   ! ** End of parameters **
   ! in: f_x 0D_NOT_real
   f_x = x
-  f_prob = probability_funct(x=f_x)
+  f_prob = probability_funct(f_x)
 
   ! out: f_prob 0D_NOT_real
   call c_f_pointer(prob, f_prob_ptr)
@@ -3490,7 +3501,7 @@ subroutine fortran_projdd (a, b, func_retval__) bind(c)
   if (c_associated(a))   call c_f_pointer(a, f_a)
   !! container general array (1D_ALLOC_complex)
   if (c_associated(b))   call c_f_pointer(b, f_b)
-  f_func_retval__ = projdd(a=f_a%data, b=f_b%data)
+  f_func_retval__ = projdd(f_a%data, f_b%data)
 
   ! out: f_func_retval__ 0D_NOT_complex
   call c_f_pointer(func_retval__, f_func_retval___ptr)
@@ -3515,7 +3526,7 @@ subroutine fortran_quadratic_roots (coefs, root) bind(c)
   else
     f_coefs_ptr => null()
   endif
-  f_root = quadratic_roots(coefs=f_coefs)
+  f_root = quadratic_roots(f_coefs)
 
   ! out: f_root 1D_NOT_complex
   if (c_associated(root)) then
@@ -3542,7 +3553,7 @@ subroutine fortran_quat_conj_complex (q_in, q_out) bind(c)
   else
     f_q_in_ptr => null()
   endif
-  f_q_out = quat_conj_complex(q_in=f_q_in)
+  f_q_out = quat_conj(f_q_in)
 
   ! out: f_q_out 1D_NOT_complex
   if (c_associated(q_out)) then
@@ -3569,7 +3580,7 @@ subroutine fortran_quat_conj_real (q_in, q_out) bind(c)
   else
     f_q_in_ptr => null()
   endif
-  f_q_out = quat_conj_real(q_in=f_q_in)
+  f_q_out = quat_conj(f_q_in)
 
   ! out: f_q_out 1D_NOT_real
   if (c_associated(q_out)) then
@@ -3596,7 +3607,7 @@ subroutine fortran_quat_inverse (q_in, q_out) bind(c)
   else
     f_q_in_ptr => null()
   endif
-  f_q_out = quat_inverse(q_in=f_q_in)
+  f_q_out = quat_inverse(f_q_in)
 
   ! out: f_q_out 1D_NOT_real
   if (c_associated(q_out)) then
@@ -3704,8 +3715,7 @@ subroutine fortran_quat_mul_complex (q1, q2, q3, q4, q5, q6, q7, q8, q9, q_out) 
   else
     f_q9_ptr => null()
   endif
-  f_q_out = quat_mul_complex(q1=f_q1, q2=f_q2, q3=f_q3, q4=f_q4, q5=f_q5, q6=f_q6, q7=f_q7, &
-      q8=f_q8, q9=f_q9)
+  f_q_out = quat_mul(f_q1, f_q2, f_q3, f_q4, f_q5, f_q6, f_q7, f_q8, f_q9)
 
   ! out: f_q_out 1D_NOT_complex
   if (c_associated(q_out)) then
@@ -3813,8 +3823,7 @@ subroutine fortran_quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9, q_out) bin
   else
     f_q9_ptr => null()
   endif
-  f_q_out = quat_mul_real(q1=f_q1, q2=f_q2, q3=f_q3, q4=f_q4, q5=f_q5, q6=f_q6, q7=f_q7, &
-      q8=f_q8, q9=f_q9)
+  f_q_out = quat_mul(f_q1, f_q2, f_q3, f_q4, f_q5, f_q6, f_q7, f_q8, f_q9)
 
   ! out: f_q_out 1D_NOT_real
   if (c_associated(q_out)) then
@@ -3851,7 +3860,7 @@ subroutine fortran_quat_rotate_complex (quat, vec_in, vec_out) bind(c)
   else
     f_vec_in_ptr => null()
   endif
-  f_vec_out = quat_rotate_complex(quat=f_quat, vec_in=f_vec_in)
+  f_vec_out = quat_rotate(f_quat, f_vec_in)
 
   ! out: f_vec_out 1D_NOT_complex
   if (c_associated(vec_out)) then
@@ -3888,7 +3897,7 @@ subroutine fortran_quat_rotate_real (quat, vec_in, vec_out) bind(c)
   else
     f_vec_in_ptr => null()
   endif
-  f_vec_out = quat_rotate_real(quat=f_quat, vec_in=f_vec_in)
+  f_vec_out = quat_rotate(f_quat, f_vec_in)
 
   ! out: f_vec_out 1D_NOT_real
   if (c_associated(vec_out)) then
@@ -3918,7 +3927,7 @@ subroutine fortran_quat_to_axis_angle (quat, axis, angle) bind(c)
   else
     f_quat_ptr => null()
   endif
-  call quat_to_axis_angle(quat=f_quat, axis=f_axis, angle=f_angle)
+  call quat_to_axis_angle(f_quat, f_axis, f_angle)
 
   ! out: f_axis 1D_NOT_real
   if (c_associated(axis)) then
@@ -3948,7 +3957,7 @@ subroutine fortran_quat_to_omega (quat, omega) bind(c)
   else
     f_quat_ptr => null()
   endif
-  f_omega = quat_to_omega(quat=f_quat)
+  f_omega = quat_to_omega(f_quat)
 
   ! out: f_omega 1D_NOT_real
   if (c_associated(omega)) then
@@ -3975,7 +3984,7 @@ subroutine fortran_quat_to_w_mat (quat, w_mat) bind(c)
   else
     f_quat_ptr => null()
   endif
-  f_w_mat = quat_to_w_mat(quat=f_quat)
+  f_w_mat = quat_to_w_mat(f_quat)
 
   ! out: f_w_mat 2D_NOT_real
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=186, definition='real(rp) quat(0:3), w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='Rotation matrix', doc_data_type='float', doc_is_optional=False)
@@ -4030,8 +4039,7 @@ subroutine fortran_query_string (query_str, upcase, return_str, ix, ios) bind(c)
   else
     f_ios_ptr => null()
   endif
-  call query_string(query_str=f_query_str, upcase=f_upcase_native_ptr, return_str=f_return_str, &
-      ix=f_ix_ptr, ios=f_ios_ptr)
+  call query_string(f_query_str, f_upcase_native_ptr, f_return_str, f_ix_ptr, f_ios_ptr)
 
   ! inout: f_query_str 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -4065,13 +4073,190 @@ subroutine fortran_quote (str, q_str) bind(c)
   if (.not. c_associated(str)) return
   call c_f_pointer(str, f_str_ptr, [huge(0)])
   call to_f_str(f_str_ptr, f_str)
-  f_q_str = quote(str=f_str)
+  f_q_str = quote(f_str)
 
   ! inout: f_str 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
   ! out: f_q_str 0D_ALLOC_character
   call c_f_pointer(q_str, f_q_str_ptr, [len_trim(f_q_str) + 1]) ! output-only string
   call to_c_str(f_q_str, f_q_str_ptr)
+end subroutine
+subroutine fortran_ran_default_state (set_state, get_state) bind(c)
+
+  use random_mod, only: random_state_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: set_state  ! 0D_NOT_type
+  type(random_state_struct), pointer :: f_set_state
+  ! ** Out parameters **
+  type(c_ptr), value :: get_state  ! 0D_NOT_type
+  type(random_state_struct), pointer :: f_get_state
+  ! ** End of parameters **
+  ! in: f_set_state 0D_NOT_type
+  if (c_associated(set_state))   call c_f_pointer(set_state, f_set_state)
+  ! out: f_get_state 0D_NOT_type
+  if (c_associated(get_state))   call c_f_pointer(get_state, f_get_state)
+  call ran_default_state(f_set_state, f_get_state)
+
+  ! out: f_get_state 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_ran_engine (set, get, ran_state) bind(c)
+
+  use random_mod, only: random_state_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: set
+  character(len=4096), target :: f_set
+  character(kind=c_char), pointer :: f_set_ptr(:)
+  character(len=4096), pointer :: f_set_call_ptr
+  type(c_ptr), intent(in), value :: get
+  character(len=4096), target :: f_get
+  character(kind=c_char), pointer :: f_get_ptr(:)
+  character(len=4096), pointer :: f_get_call_ptr
+  type(c_ptr), value :: ran_state  ! 0D_NOT_type
+  type(random_state_struct), pointer :: f_ran_state
+  ! ** End of parameters **
+  ! in: f_set 0D_NOT_character
+  if (c_associated(set)) then
+    call c_f_pointer(set, f_set_ptr, [huge(0)])
+    call to_f_str(f_set_ptr, f_set)
+    f_set_call_ptr => f_set
+  else
+    f_set_call_ptr => null()
+  endif
+  ! in: f_get 0D_NOT_character
+  if (c_associated(get)) then
+    call c_f_pointer(get, f_get_ptr, [huge(0)])
+    call to_f_str(f_get_ptr, f_get)
+    f_get_call_ptr => f_get
+  else
+    f_get_call_ptr => null()
+  endif
+  ! in: f_ran_state 0D_NOT_type
+  if (c_associated(ran_state))   call c_f_pointer(ran_state, f_ran_state)
+  call ran_engine(f_set_call_ptr, f_get_call_ptr, f_ran_state)
+
+end subroutine
+subroutine fortran_ran_gauss_converter (set, set_sigma_cut, get, get_sigma_cut, ran_state) &
+    bind(c)
+
+  use random_mod, only: random_state_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: set
+  character(len=4096), target :: f_set
+  character(kind=c_char), pointer :: f_set_ptr(:)
+  character(len=4096), pointer :: f_set_call_ptr
+  type(c_ptr), intent(in), value :: set_sigma_cut  ! 0D_NOT_real
+  real(c_double) :: f_set_sigma_cut
+  real(c_double), pointer :: f_set_sigma_cut_ptr
+  type(c_ptr), value :: ran_state  ! 0D_NOT_type
+  type(random_state_struct), pointer :: f_ran_state
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: get
+  character(len=4096), target :: f_get
+  character(kind=c_char), pointer :: f_get_ptr(:)
+  character(len=4096), pointer :: f_get_call_ptr
+  type(c_ptr), intent(in), value :: get_sigma_cut  ! 0D_NOT_real
+  real(rp) :: f_get_sigma_cut
+  real(c_double), pointer :: f_get_sigma_cut_ptr
+  ! ** End of parameters **
+  ! in: f_set 0D_NOT_character
+  if (c_associated(set)) then
+    call c_f_pointer(set, f_set_ptr, [huge(0)])
+    call to_f_str(f_set_ptr, f_set)
+    f_set_call_ptr => f_set
+  else
+    f_set_call_ptr => null()
+  endif
+  ! in: f_set_sigma_cut 0D_NOT_real
+  if (c_associated(set_sigma_cut)) then
+    call c_f_pointer(set_sigma_cut, f_set_sigma_cut_ptr)
+  else
+    f_set_sigma_cut_ptr => null()
+  endif
+  ! in: f_ran_state 0D_NOT_type
+  if (c_associated(ran_state))   call c_f_pointer(ran_state, f_ran_state)
+  call ran_gauss_converter(f_set_call_ptr, f_set_sigma_cut_ptr, f_get_call_ptr, &
+      f_get_sigma_cut, f_ran_state)
+
+  ! out: f_get 0D_NOT_character
+  call c_f_pointer(get, f_get_ptr, [len_trim(f_get) + 1]) ! output-only string
+  call to_c_str(f_get, f_get_ptr)
+  ! out: f_get_sigma_cut 0D_NOT_real
+  ! no output conversion for f_get_sigma_cut
+end subroutine
+subroutine fortran_ran_gauss_scalar (harvest, ran_state, sigma_cut, index_quasi) bind(c)
+
+  use random_mod, only: random_state_struct
+  implicit none
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: harvest  ! 0D_NOT_real
+  real(rp) :: f_harvest
+  real(c_double), pointer :: f_harvest_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: ran_state  ! 0D_NOT_type
+  type(random_state_struct), pointer :: f_ran_state
+  type(c_ptr), intent(in), value :: sigma_cut  ! 0D_NOT_real
+  real(c_double) :: f_sigma_cut
+  real(c_double), pointer :: f_sigma_cut_ptr
+  type(c_ptr), intent(in), value :: index_quasi  ! 0D_NOT_integer
+  integer(c_int) :: f_index_quasi
+  integer(c_int), pointer :: f_index_quasi_ptr
+  ! ** End of parameters **
+  ! inout: f_ran_state 0D_NOT_type
+  if (c_associated(ran_state))   call c_f_pointer(ran_state, f_ran_state)
+  ! inout: f_sigma_cut 0D_NOT_real
+  if (c_associated(sigma_cut)) then
+    call c_f_pointer(sigma_cut, f_sigma_cut_ptr)
+  else
+    f_sigma_cut_ptr => null()
+  endif
+  ! inout: f_index_quasi 0D_NOT_integer
+  if (c_associated(index_quasi)) then
+    call c_f_pointer(index_quasi, f_index_quasi_ptr)
+  else
+    f_index_quasi_ptr => null()
+  endif
+  call ran_gauss_scalar(f_harvest, f_ran_state, f_sigma_cut_ptr, f_index_quasi_ptr)
+
+  ! out: f_harvest 0D_NOT_real
+  call c_f_pointer(harvest, f_harvest_ptr)
+  f_harvest_ptr = f_harvest
+  ! inout: f_sigma_cut 0D_NOT_real
+  ! no output conversion for f_sigma_cut
+  ! inout: f_index_quasi 0D_NOT_integer
+  ! no output conversion for f_index_quasi
+end subroutine
+subroutine fortran_ran_gauss_vector (harvest, ran_state, sigma_cut) bind(c)
+
+  use random_mod, only: random_state_struct
+  implicit none
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: harvest
+  type(real_container_alloc), pointer :: f_harvest
+  ! ** Inout parameters **
+  type(c_ptr), value :: ran_state  ! 0D_NOT_type
+  type(random_state_struct), pointer :: f_ran_state
+  type(c_ptr), intent(in), value :: sigma_cut  ! 0D_NOT_real
+  real(c_double) :: f_sigma_cut
+  real(c_double), pointer :: f_sigma_cut_ptr
+  ! ** End of parameters **
+  !! container general array (1D_ALLOC_real)
+  if (c_associated(harvest))   call c_f_pointer(harvest, f_harvest)
+  ! inout: f_ran_state 0D_NOT_type
+  if (c_associated(ran_state))   call c_f_pointer(ran_state, f_ran_state)
+  ! inout: f_sigma_cut 0D_NOT_real
+  if (c_associated(sigma_cut)) then
+    call c_f_pointer(sigma_cut, f_sigma_cut_ptr)
+  else
+    f_sigma_cut_ptr => null()
+  endif
+  call ran_gauss_vector(f_harvest%data, f_ran_state, f_sigma_cut_ptr)
+
+  ! inout: f_sigma_cut 0D_NOT_real
+  ! no output conversion for f_sigma_cut
 end subroutine
 subroutine fortran_ran_seed_get (seed) bind(c)
 
@@ -4081,7 +4266,7 @@ subroutine fortran_ran_seed_get (seed) bind(c)
   integer :: f_seed
   integer(c_int), pointer :: f_seed_ptr
   ! ** End of parameters **
-  call ran_seed_get(seed=f_seed)
+  call ran_seed_get(f_seed)
 
   ! out: f_seed 0D_NOT_integer
   call c_f_pointer(seed, f_seed_ptr)
@@ -4105,7 +4290,56 @@ subroutine fortran_ran_seed_put (seed, mpi_offset) bind(c)
   else
     f_mpi_offset_ptr => null()
   endif
-  call ran_seed_put(seed=f_seed, mpi_offset=f_mpi_offset_ptr)
+  call ran_seed_put(f_seed, f_mpi_offset_ptr)
+
+end subroutine
+subroutine fortran_ran_uniform_scalar (harvest, ran_state, index_quasi) bind(c)
+
+  use random_mod, only: random_state_struct
+  implicit none
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: harvest  ! 0D_NOT_real
+  real(rp) :: f_harvest
+  real(c_double), pointer :: f_harvest_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: ran_state  ! 0D_NOT_type
+  type(random_state_struct), pointer :: f_ran_state
+  type(c_ptr), intent(in), value :: index_quasi  ! 0D_NOT_integer
+  integer(c_int) :: f_index_quasi
+  integer(c_int), pointer :: f_index_quasi_ptr
+  ! ** End of parameters **
+  ! inout: f_ran_state 0D_NOT_type
+  if (c_associated(ran_state))   call c_f_pointer(ran_state, f_ran_state)
+  ! inout: f_index_quasi 0D_NOT_integer
+  if (c_associated(index_quasi)) then
+    call c_f_pointer(index_quasi, f_index_quasi_ptr)
+  else
+    f_index_quasi_ptr => null()
+  endif
+  call ran_uniform(f_harvest, f_ran_state, f_index_quasi_ptr)
+
+  ! out: f_harvest 0D_NOT_real
+  call c_f_pointer(harvest, f_harvest_ptr)
+  f_harvest_ptr = f_harvest
+  ! inout: f_index_quasi 0D_NOT_integer
+  ! no output conversion for f_index_quasi
+end subroutine
+subroutine fortran_ran_uniform_vector (harvest, ran_state) bind(c)
+
+  use random_mod, only: random_state_struct
+  implicit none
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: harvest
+  type(real_container_alloc), pointer :: f_harvest
+  ! ** Inout parameters **
+  type(c_ptr), value :: ran_state  ! 0D_NOT_type
+  type(random_state_struct), pointer :: f_ran_state
+  ! ** End of parameters **
+  !! container general array (1D_ALLOC_real)
+  if (c_associated(harvest))   call c_f_pointer(harvest, f_harvest)
+  ! inout: f_ran_state 0D_NOT_type
+  if (c_associated(ran_state))   call c_f_pointer(ran_state, f_ran_state)
+  call ran_uniform(f_harvest%data, f_ran_state)
 
 end subroutine
 subroutine fortran_real_num_fortran_format (number, width, n_blanks, fmt_str) bind(c)
@@ -4144,8 +4378,7 @@ subroutine fortran_real_num_fortran_format (number, width, n_blanks, fmt_str) bi
   else
     f_n_blanks_ptr => null()
   endif
-  f_fmt_str = real_num_fortran_format(number=f_number_ptr, width=f_width_ptr, &
-      n_blanks=f_n_blanks_ptr)
+  f_fmt_str = real_num_fortran_format(f_number_ptr, f_width_ptr, f_n_blanks_ptr)
 
   ! inout: f_number 0D_NOT_real
   ! no output conversion for f_number
@@ -4180,7 +4413,7 @@ subroutine fortran_real_path (path_in, path_out, is_ok) bind(c)
   if (.not. c_associated(path_out)) return
   call c_f_pointer(path_out, f_path_out_ptr, [huge(0)])
   call to_f_str(f_path_out_ptr, f_path_out)
-  f_is_ok = real_path(path_in=f_path_in, path_out=f_path_out)
+  f_is_ok = real_path(f_path_in, f_path_out)
 
   ! inout: f_path_in 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -4226,7 +4459,7 @@ subroutine fortran_real_str (r_num, n_signif, n_decimal, str) bind(c)
   else
     f_n_decimal_ptr => null()
   endif
-  f_str = real_str(r_num=f_r_num_ptr, n_signif=f_n_signif_ptr, n_decimal=f_n_decimal_ptr)
+  f_str = real_str(f_r_num_ptr, f_n_signif_ptr, f_n_decimal_ptr)
 
   ! inout: f_r_num 0D_NOT_real
   ! no output conversion for f_r_num
@@ -4283,8 +4516,7 @@ subroutine fortran_real_to_string (real_num, width, n_signif, n_decimal, str) bi
   else
     f_n_decimal_ptr => null()
   endif
-  f_str = real_to_string(real_num=f_real_num_ptr, width=f_width_ptr, n_signif=f_n_signif_ptr, &
-      n_decimal=f_n_decimal_ptr)
+  f_str = real_to_string(f_real_num_ptr, f_width_ptr, f_n_signif_ptr, f_n_decimal_ptr)
 
   ! inout: f_real_num 0D_NOT_real
   ! no output conversion for f_real_num
@@ -4335,8 +4567,7 @@ subroutine fortran_reallocate_spline (spline, n, n_min, exact) bind(c)
   else
     f_exact_native_ptr => null()
   endif
-  call reallocate_spline(spline=f_spline%data, n=f_n, n_min=f_n_min_ptr, &
-      exact=f_exact_native_ptr)
+  call reallocate_spline(f_spline%data, f_n, f_n_min_ptr, f_exact_native_ptr)
 
 end subroutine
 subroutine fortran_rms_value (val_arr, good_val, ave_val, rms_val) bind(c)
@@ -4359,7 +4590,7 @@ subroutine fortran_rms_value (val_arr, good_val, ave_val, rms_val) bind(c)
   if (c_associated(val_arr))   call c_f_pointer(val_arr, f_val_arr)
   !! container general array (1D_ALLOC_logical)
   if (c_associated(good_val))   call c_f_pointer(good_val, f_good_val)
-  f_rms_val = rms_value(val_arr=f_val_arr%data, good_val=f_good_val%data, ave_val=f_ave_val)
+  f_rms_val = rms_value(f_val_arr%data, f_good_val%data, f_ave_val)
 
   ! out: f_ave_val 0D_NOT_real
   ! no output conversion for f_ave_val
@@ -4390,7 +4621,7 @@ subroutine fortran_rot_2d (vec_in, angle, vec_out) bind(c)
   endif
   ! in: f_angle 0D_NOT_real
   f_angle = angle
-  f_vec_out = rot_2d(vec_in=f_vec_in, angle=f_angle)
+  f_vec_out = rot_2d(f_vec_in, f_angle)
 
   ! out: f_vec_out 1D_NOT_real
   if (c_associated(vec_out)) then
@@ -4416,7 +4647,7 @@ subroutine fortran_rotate_vec (vec, axis, angle) bind(c)
   f_axis = axis
   ! in: f_angle 0D_NOT_real
   f_angle = angle
-  call rotate_vec(vec=f_vec%data, axis=f_axis, angle=f_angle)
+  call rotate_vec(f_vec%data, f_axis, f_angle)
 
 end subroutine
 subroutine fortran_rotate_vec_given_axis_angle (vec_in, axis, angle, vec_out) bind(c)
@@ -4446,7 +4677,7 @@ subroutine fortran_rotate_vec_given_axis_angle (vec_in, axis, angle, vec_out) bi
   if (c_associated(axis))   call c_f_pointer(axis, f_axis)
   ! in: f_angle 0D_NOT_real
   f_angle = angle
-  f_vec_out = rotate_vec_given_axis_angle(vec_in=f_vec_in, axis=f_axis%data, angle=f_angle)
+  f_vec_out = rotate_vec_given_axis_angle(f_vec_in, f_axis%data, f_angle)
 
   ! out: f_vec_out 1D_NOT_real
   if (c_associated(vec_out)) then
@@ -4467,7 +4698,7 @@ subroutine fortran_rp8 (int_in, re_out) bind(c)
   ! ** End of parameters **
   ! in: f_int_in 0D_NOT_integer
   f_int_in = int_in
-  f_re_out = rp8(int_in=f_int_in)
+  f_re_out = rp8(f_int_in)
 
   ! out: f_re_out 0D_NOT_real
   call c_f_pointer(re_out, f_re_out_ptr)
@@ -4503,7 +4734,7 @@ subroutine fortran_run_timer (command, time, time0) bind(c)
   else
     f_time0_ptr => null()
   endif
-  call run_timer(command=f_command, time=f_time_ptr, time0=f_time0_ptr)
+  call run_timer(f_command, f_time_ptr, f_time0_ptr)
 
   ! inout: f_command 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -4539,7 +4770,7 @@ subroutine fortran_set_parameter_int (param_val, set_val, save_val) bind(c)
   else
     f_set_val_ptr => null()
   endif
-  f_save_val = set_parameter_int(param_val=f_param_val_ptr, set_val=f_set_val_ptr)
+  f_save_val = set_parameter(f_param_val_ptr, f_set_val_ptr)
 
   ! inout: f_param_val 0D_NOT_integer
   ! no output conversion for f_param_val
@@ -4584,8 +4815,7 @@ subroutine fortran_set_parameter_logic (param_val, set_val, save_val) bind(c)
   else
     f_set_val_native_ptr => null()
   endif
-  f_save_val = set_parameter_logic(param_val=f_param_val_native_ptr, &
-      set_val=f_set_val_native_ptr)
+  f_save_val = set_parameter(f_param_val_native_ptr, f_set_val_native_ptr)
 
   ! inout: f_param_val 0D_NOT_logical
   if (c_associated(param_val)) then
@@ -4632,7 +4862,7 @@ subroutine fortran_set_parameter_real (param_val, set_val, save_val) bind(c)
   else
     f_set_val_ptr => null()
   endif
-  f_save_val = set_parameter_real(param_val=f_param_val_ptr, set_val=f_set_val_ptr)
+  f_save_val = set_parameter(f_param_val_ptr, f_set_val_ptr)
 
   ! inout: f_param_val 0D_NOT_real
   ! no output conversion for f_param_val
@@ -4659,7 +4889,7 @@ subroutine fortran_set_species_charge (species_in, charge, species_charged) bind
   f_species_in = species_in
   ! in: f_charge 0D_NOT_integer
   f_charge = charge
-  f_species_charged = set_species_charge(species_in=f_species_in, charge=f_charge)
+  f_species_charged = set_species_charge(f_species_in, f_charge)
 
   ! out: f_species_charged 0D_NOT_integer
   call c_f_pointer(species_charged, f_species_charged_ptr)
@@ -4687,7 +4917,7 @@ subroutine fortran_sinc (x, nd, y) bind(c)
   else
     f_nd_ptr => null()
   endif
-  f_y = sinc(x=f_x, nd=f_nd_ptr)
+  f_y = sinc(f_x, f_nd_ptr)
 
   ! out: f_y 0D_NOT_real
   call c_f_pointer(y, f_y_ptr)
@@ -4715,7 +4945,7 @@ subroutine fortran_sincc (x, nd, y) bind(c)
   else
     f_nd_ptr => null()
   endif
-  f_y = sincc(x=f_x, nd=f_nd_ptr)
+  f_y = sincc(f_x, f_nd_ptr)
 
   ! out: f_y 0D_NOT_real
   call c_f_pointer(y, f_y_ptr)
@@ -4743,7 +4973,7 @@ subroutine fortran_sinhx_x (x, nd, y) bind(c)
   else
     f_nd_ptr => null()
   endif
-  f_y = sinhx_x(x=f_x, nd=f_nd_ptr)
+  f_y = sinhx_x(f_x, f_nd_ptr)
 
   ! out: f_y 0D_NOT_real
   call c_f_pointer(y, f_y_ptr)
@@ -4776,7 +5006,7 @@ subroutine fortran_skip_header (ix_unit, error_flag) bind(c)
   else
     f_error_flag_native_ptr => null()
   endif
-  call skip_header(ix_unit=f_ix_unit_ptr, error_flag=f_error_flag_native_ptr)
+  call skip_header(f_ix_unit_ptr, f_error_flag_native_ptr)
 
   ! inout: f_ix_unit 0D_NOT_integer
   ! no output conversion for f_ix_unit
@@ -4826,7 +5056,7 @@ subroutine fortran_species_id (name, default_, print_err, species) bind(c)
   else
     f_print_err_native_ptr => null()
   endif
-  f_species = species_id(name=f_name, default=f_default_ptr, print_err=f_print_err_native_ptr)
+  f_species = species_id(f_name, f_default_ptr, f_print_err_native_ptr)
 
   ! out: f_species 0D_NOT_integer
   call c_f_pointer(species, f_species_ptr)
@@ -4852,7 +5082,7 @@ subroutine fortran_species_id_from_openpmd (pmd_name, charge, species) bind(c)
   call to_f_str(f_pmd_name_ptr, f_pmd_name)
   ! in: f_charge 0D_NOT_integer
   f_charge = charge
-  f_species = species_id_from_openpmd(pmd_name=f_pmd_name, charge=f_charge)
+  f_species = species_id_from_openpmd(f_pmd_name, f_charge)
 
   ! out: f_species 0D_NOT_integer
   call c_f_pointer(species, f_species_ptr)
@@ -4871,7 +5101,7 @@ subroutine fortran_species_name (species, name) bind(c)
   ! ** End of parameters **
   ! in: f_species 0D_NOT_integer
   f_species = species
-  f_name = species_name(species=f_species)
+  f_name = species_name(f_species)
 
   ! out: f_name 0D_NOT_character
   call c_f_pointer(name, f_name_ptr, [len_trim(f_name) + 1]) ! output-only string
@@ -4894,7 +5124,7 @@ subroutine fortran_species_of (mass, charge, species) bind(c)
   f_mass = mass
   ! in: f_charge 0D_NOT_integer
   f_charge = charge
-  f_species = species_of(mass=f_mass, charge=f_charge)
+  f_species = species_of(f_mass, f_charge)
 
   ! out: f_species 0D_NOT_integer
   call c_f_pointer(species, f_species_ptr)
@@ -4922,7 +5152,7 @@ subroutine fortran_spin_of (species, non_subatomic_default, spin) bind(c)
   else
     f_non_subatomic_default_ptr => null()
   endif
-  f_spin = spin_of(species=f_species, non_subatomic_default=f_non_subatomic_default_ptr)
+  f_spin = spin_of(f_species, f_non_subatomic_default_ptr)
 
   ! out: f_spin 0D_NOT_real
   call c_f_pointer(spin, f_spin_ptr)
@@ -4956,7 +5186,7 @@ subroutine fortran_spline1 (a_spline, x, n, y) bind(c)
   else
     f_n_ptr => null()
   endif
-  f_y = spline1(a_spline=f_a_spline, x=f_x, n=f_n_ptr)
+  f_y = spline1(f_a_spline, f_x, f_n_ptr)
 
   ! out: f_y 0D_NOT_real
   call c_f_pointer(y, f_y_ptr)
@@ -4976,7 +5206,7 @@ subroutine fortran_spline_akima (spline, ok) bind(c)
   ! ** End of parameters **
   !! container type array (1D_ALLOC_type)
   if (c_associated(spline))   call c_f_pointer(spline, f_spline)
-  call spline_akima(spline=f_spline%data, ok=f_ok)
+  call spline_akima(f_spline%data, f_ok)
 
   ! out: f_ok 0D_NOT_logical
   call c_f_pointer(ok, f_ok_ptr)
@@ -5009,8 +5239,7 @@ subroutine fortran_spline_akima_interpolate (x_knot, y_knot, x, ok, y, dy) bind(
   if (c_associated(y_knot))   call c_f_pointer(y_knot, f_y_knot)
   ! in: f_x 0D_NOT_real
   f_x = x
-  call spline_akima_interpolate(x_knot=f_x_knot%data, y_knot=f_y_knot%data, x=f_x, ok=f_ok, &
-      y=f_y, dy=f_dy)
+  call spline_akima_interpolate(f_x_knot%data, f_y_knot%data, f_x, f_ok, f_y, f_dy)
 
   ! out: f_ok 0D_NOT_logical
   call c_f_pointer(ok, f_ok_ptr)
@@ -5044,7 +5273,7 @@ subroutine fortran_spline_evaluate (spline, x, ok, y, dy) bind(c)
   if (c_associated(spline))   call c_f_pointer(spline, f_spline)
   ! in: f_x 0D_NOT_real
   f_x = x
-  call spline_evaluate(spline=f_spline%data, x=f_x, ok=f_ok, y=f_y, dy=f_dy)
+  call spline_evaluate(f_spline%data, f_x, f_ok, f_y, f_dy)
 
   ! out: f_ok 0D_NOT_logical
   call c_f_pointer(ok, f_ok_ptr)
@@ -5071,7 +5300,7 @@ subroutine fortran_sqrt_alpha (alpha, x, y) bind(c)
   f_alpha = alpha
   ! in: f_x 0D_NOT_real
   f_x = x
-  f_y = sqrt_alpha(alpha=f_alpha, x=f_x)
+  f_y = sqrt_alpha(f_alpha, f_x)
 
   ! out: f_y 0D_NOT_real
   call c_f_pointer(y, f_y_ptr)
@@ -5099,7 +5328,7 @@ subroutine fortran_sqrt_one (x, nd, ds1) bind(c)
   else
     f_nd_ptr => null()
   endif
-  f_ds1 = sqrt_one(x=f_x, nd=f_nd_ptr)
+  f_ds1 = sqrt_one(f_x, f_nd_ptr)
 
   ! out: f_ds1 0D_NOT_real
   call c_f_pointer(ds1, f_ds1_ptr)
@@ -5128,7 +5357,7 @@ subroutine fortran_str_count (str, match, num) bind(c)
   if (.not. c_associated(match)) return
   call c_f_pointer(match, f_match_ptr, [huge(0)])
   call to_f_str(f_match_ptr, f_match)
-  f_num = str_count(str=f_str, match=f_match)
+  f_num = str_count(f_str, f_match)
 
   ! inout: f_str 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -5154,7 +5383,7 @@ subroutine fortran_str_downcase (dst, src) bind(c)
   if (.not. c_associated(src)) return
   call c_f_pointer(src, f_src_ptr, [huge(0)])
   call to_f_str(f_src_ptr, f_src)
-  call str_downcase(dst=f_dst, src=f_src)
+  call str_downcase(f_dst, f_src)
 
   ! out: f_dst 0D_NOT_character
   call c_f_pointer(dst, f_dst_ptr, [len_trim(f_dst) + 1]) ! output-only string
@@ -5196,8 +5425,7 @@ subroutine fortran_str_first_in_set (line, set, ignore_clauses, ix_match) bind(c
   else
     f_ignore_clauses_native_ptr => null()
   endif
-  f_ix_match = str_first_in_set(line=f_line, set=f_set, &
-      ignore_clauses=f_ignore_clauses_native_ptr)
+  f_ix_match = str_first_in_set(f_line, f_set, f_ignore_clauses_native_ptr)
 
   ! inout: f_line 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -5237,7 +5465,7 @@ subroutine fortran_str_first_not_in_set (line, set, ix_match) bind(c)
   if (.not. c_associated(set)) return
   call c_f_pointer(set, f_set_ptr, [huge(0)])
   call to_f_str(f_set_ptr, f_set)
-  f_ix_match = str_first_not_in_set(line=f_line, set=f_set)
+  f_ix_match = str_first_not_in_set(f_line, f_set)
 
   ! inout: f_line 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -5270,7 +5498,7 @@ subroutine fortran_str_last_in_set (line, set, ix_match) bind(c)
   if (.not. c_associated(set)) return
   call c_f_pointer(set, f_set_ptr, [huge(0)])
   call to_f_str(f_set_ptr, f_set)
-  f_ix_match = str_last_in_set(line=f_line, set=f_set)
+  f_ix_match = str_last_in_set(f_line, f_set)
 
   ! inout: f_line 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -5303,7 +5531,7 @@ subroutine fortran_str_last_not_in_set (line, set, ix_match) bind(c)
   if (.not. c_associated(set)) return
   call c_f_pointer(set, f_set_ptr, [huge(0)])
   call to_f_str(f_set_ptr, f_set)
-  f_ix_match = str_last_not_in_set(line=f_line, set=f_set)
+  f_ix_match = str_last_not_in_set(f_line, f_set)
 
   ! inout: f_line 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -5336,7 +5564,7 @@ subroutine fortran_str_match_wild (str, pat, a_match) bind(c)
   if (.not. c_associated(pat)) return
   call c_f_pointer(pat, f_pat_ptr, [huge(0)])
   call to_f_str(f_pat_ptr, f_pat)
-  f_a_match = str_match_wild(str=f_str, pat=f_pat)
+  f_a_match = str_match_wild(f_str, f_pat)
 
   ! inout: f_str 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -5409,9 +5637,8 @@ subroutine fortran_str_substitute (string, str_match, str_replace, do_trim, igno
   else
     f_ignore_escaped_native_ptr => null()
   endif
-  call str_substitute(string=f_string, str_match=f_str_match_call_ptr, &
-      str_replace=f_str_replace_call_ptr, do_trim=f_do_trim_native_ptr, &
-      ignore_escaped=f_ignore_escaped_native_ptr)
+  call str_substitute(f_string, f_str_match_call_ptr, f_str_replace_call_ptr, &
+      f_do_trim_native_ptr, f_ignore_escaped_native_ptr)
 
   ! inout: f_string 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -5450,7 +5677,7 @@ subroutine fortran_str_upcase (dst, src) bind(c)
   if (.not. c_associated(src)) return
   call c_f_pointer(src, f_src_ptr, [huge(0)])
   call to_f_str(f_src_ptr, f_src)
-  call str_upcase(dst=f_dst, src=f_src)
+  call str_upcase(f_dst, f_src)
 
   ! out: f_dst 0D_NOT_character
   call c_f_pointer(dst, f_dst_ptr, [len_trim(f_dst) + 1]) ! output-only string
@@ -5507,8 +5734,8 @@ subroutine fortran_string_to_int (line, default_, err_flag, err_print_flag, valu
   else
     f_err_print_flag_native_ptr => null()
   endif
-  f_value = string_to_int(line=f_line, default=f_default_ptr, err_flag=f_err_flag_native_ptr, &
-      err_print_flag=f_err_print_flag_native_ptr)
+  f_value = string_to_int(f_line, f_default_ptr, f_err_flag_native_ptr, &
+      f_err_print_flag_native_ptr)
 
   ! inout: f_line 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -5583,8 +5810,8 @@ subroutine fortran_string_to_real (line, default_, err_flag, err_print_flag, val
   else
     f_err_print_flag_native_ptr => null()
   endif
-  f_value = string_to_real(line=f_line, default=f_default_ptr, err_flag=f_err_flag_native_ptr, &
-      err_print_flag=f_err_print_flag_native_ptr)
+  f_value = string_to_real(f_line, f_default_ptr, f_err_flag_native_ptr, &
+      f_err_print_flag_native_ptr)
 
   ! inout: f_line 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -5636,7 +5863,7 @@ subroutine fortran_string_trim (in_string, out_string, word_len) bind(c)
   else
     f_word_len_ptr => null()
   endif
-  call string_trim(in_string=f_in_string, out_string=f_out_string, word_len=f_word_len_ptr)
+  call string_trim(f_in_string, f_out_string, f_word_len_ptr)
 
   ! inout: f_in_string 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -5696,8 +5923,7 @@ subroutine fortran_string_trim2 (in_str, delimitors, out_str, ix_word, delim, ix
   else
     f_ix_next_ptr => null()
   endif
-  call string_trim2(in_str=f_in_str, delimitors=f_delimitors, out_str=f_out_str, &
-      ix_word=f_ix_word_ptr, delim=f_delim, ix_next=f_ix_next_ptr)
+  call string_trim2(f_in_str, f_delimitors, f_out_str, f_ix_word_ptr, f_delim, f_ix_next_ptr)
 
   ! inout: f_in_str 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -5769,7 +5995,7 @@ subroutine fortran_super_bicubic_coef (y, y1, y2, y12, d1, d2, c) bind(c)
   f_d1 = d1
   ! in: f_d2 0D_NOT_real
   f_d2 = d2
-  call super_bicubic_coef(y=f_y, y1=f_y1, y2=f_y2, y12=f_y12, d1=f_d1, d2=f_d2, c=f_c)
+  call super_bicubic_coef(f_y, f_y1, f_y2, f_y12, f_d1, f_d2, f_c)
 
   ! out: f_c 2D_NOT_real
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_c', c_name='c', python_name='c', type='real', kind='dp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=118, definition='real(dp), dimension(4,4), intent(out) :: c', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent='out', intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='dp', static=False, target=False, value=False, volatile=False, attributes=()), name='c', comment='', default=None), intent='out', description='Coefficients.', doc_data_type='float', doc_is_optional=False)
@@ -5854,8 +6080,8 @@ subroutine fortran_super_bicubic_interpolation (y, y1, y2, y12, x1l, x1u, x2l, x
   f_x1 = x1
   ! in: f_x2 0D_NOT_real
   f_x2 = x2
-  call super_bicubic_interpolation(y=f_y, y1=f_y1, y2=f_y2, y12=f_y12, x1l=f_x1l, x1u=f_x1u, &
-      x2l=f_x2l, x2u=f_x2u, x1=f_x1, x2=f_x2, ansy=f_ansy, ansy1=f_ansy1, ansy2=f_ansy2)
+  call super_bicubic_interpolation(f_y, f_y1, f_y2, f_y12, f_x1l, f_x1u, f_x2l, f_x2u, f_x1, &
+      f_x2, f_ansy, f_ansy1, f_ansy2)
 
   ! out: f_ansy 0D_NOT_real
   call c_f_pointer(ansy, f_ansy_ptr)
@@ -5891,7 +6117,7 @@ subroutine fortran_super_polint (xa, ya, x, y, dy) bind(c)
   if (c_associated(ya))   call c_f_pointer(ya, f_ya)
   ! in: f_x 0D_NOT_real
   f_x = x
-  call super_polint(xa=f_xa%data, ya=f_ya%data, x=f_x, y=f_y, dy=f_dy)
+  call super_polint(f_xa%data, f_ya%data, f_x, f_y, f_dy)
 
   ! out: f_y 0D_NOT_real
   call c_f_pointer(y, f_y_ptr)
@@ -5917,11 +6143,29 @@ subroutine fortran_super_poly (x, coeffs, value) bind(c)
   f_x = x
   !! container general array (1D_ALLOC_real)
   if (c_associated(coeffs))   call c_f_pointer(coeffs, f_coeffs)
-  f_value = super_poly(x=f_x, coeffs=f_coeffs%data)
+  f_value = super_poly(f_x, f_coeffs%data)
 
   ! out: f_value 0D_NOT_real
   call c_f_pointer(value, f_value_ptr)
   f_value_ptr = f_value
+end subroutine
+subroutine fortran_super_sobseq (x, ran_state) bind(c)
+
+  use random_mod, only: random_state_struct
+  implicit none
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: x
+  type(real_container_alloc), pointer :: f_x
+  ! ** Inout parameters **
+  type(c_ptr), value :: ran_state  ! 0D_NOT_type
+  type(random_state_struct), pointer :: f_ran_state
+  ! ** End of parameters **
+  !! container general array (1D_ALLOC_real)
+  if (c_associated(x))   call c_f_pointer(x, f_x)
+  ! inout: f_ran_state 0D_NOT_type
+  if (c_associated(ran_state))   call c_f_pointer(ran_state, f_ran_state)
+  call super_sobseq(f_x%data, f_ran_state)
+
 end subroutine
 subroutine fortran_super_sort (arr) bind(c)
 
@@ -5932,7 +6176,7 @@ subroutine fortran_super_sort (arr) bind(c)
   ! ** End of parameters **
   !! container general array (1D_ALLOC_integer)
   if (c_associated(arr))   call c_f_pointer(arr, f_arr)
-  call super_sort(arr=f_arr%data)
+  call super_sort(f_arr%data)
 
 end subroutine
 subroutine fortran_system_command (line, err_flag) bind(c)
@@ -5960,7 +6204,7 @@ subroutine fortran_system_command (line, err_flag) bind(c)
   else
     f_err_flag_native_ptr => null()
   endif
-  call system_command(line=f_line, err_flag=f_err_flag_native_ptr)
+  call system_command(f_line, f_err_flag_native_ptr)
 
   ! inout: f_line 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -5999,7 +6243,7 @@ subroutine fortran_to_str (num, max_signif, string) bind(c)
   else
     f_max_signif_ptr => null()
   endif
-  f_string = to_str(num=f_num_ptr, max_signif=f_max_signif_ptr)
+  f_string = to_str(f_num_ptr, f_max_signif_ptr)
 
   ! inout: f_num 0D_NOT_real
   ! no output conversion for f_num
@@ -6046,8 +6290,8 @@ subroutine fortran_tricubic_cmplx_eval (x_norm, y_norm, z_norm, tri_coef, df_dx,
   ! in: f_tri_coef 0D_NOT_type
   if (.not. c_associated(tri_coef)) return
   call c_f_pointer(tri_coef, f_tri_coef)
-  f_f_val = tricubic_cmplx_eval(x_norm=f_x_norm, y_norm=f_y_norm, z_norm=f_z_norm, &
-      tri_coef=f_tri_coef, df_dx=f_df_dx, df_dy=f_df_dy, df_dz=f_df_dz)
+  f_f_val = tricubic_cmplx_eval(f_x_norm, f_y_norm, f_z_norm, f_tri_coef, f_df_dx, f_df_dy, &
+      f_df_dz)
 
   ! out: f_df_dx 0D_NOT_complex
   ! no output conversion for f_df_dx
@@ -6071,7 +6315,7 @@ subroutine fortran_type_this_file (filename) bind(c)
   if (.not. c_associated(filename)) return
   call c_f_pointer(filename, f_filename_ptr, [huge(0)])
   call to_f_str(f_filename_ptr, f_filename)
-  call type_this_file(filename=f_filename)
+  call type_this_file(f_filename)
 
   ! inout: f_filename 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -6088,7 +6332,7 @@ subroutine fortran_upcase_string (string) bind(c)
   if (.not. c_associated(string)) return
   call c_f_pointer(string, f_string_ptr, [huge(0)])
   call to_f_str(f_string_ptr, f_string)
-  call upcase_string(string=f_string)
+  call upcase_string(f_string)
 
   ! inout: f_string 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -6129,7 +6373,7 @@ subroutine fortran_w_mat_to_axis_angle (w_mat, axis, angle) bind(c)
   else
     f_w_mat_ptr => null()
   endif
-  call w_mat_to_axis_angle(w_mat=f_w_mat, axis=f_axis, angle=f_angle)
+  call w_mat_to_axis_angle(f_w_mat, f_axis, f_angle)
 
   ! out: f_axis 1D_NOT_real
   if (c_associated(axis)) then
@@ -6159,7 +6403,7 @@ subroutine fortran_w_mat_to_quat (w_mat, quat) bind(c)
   else
     f_w_mat_ptr => null()
   endif
-  f_quat = w_mat_to_quat(w_mat=f_w_mat)
+  f_quat = w_mat_to_quat(f_w_mat)
 
   ! out: f_quat 1D_NOT_real
   if (c_associated(quat)) then
@@ -6183,7 +6427,7 @@ subroutine fortran_word_len (wording, wlen) bind(c)
   if (.not. c_associated(wording)) return
   call c_f_pointer(wording, f_wording_ptr, [huge(0)])
   call to_f_str(f_wording_ptr, f_wording)
-  f_wlen = word_len(wording=f_wording)
+  f_wlen = word_len(f_wording)
 
   ! inout: f_wording 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -6267,9 +6511,8 @@ subroutine fortran_word_read (in_str, delim_list, word, ix_word, delim, delim_fo
   else
     f_ignore_interior_native_ptr => null()
   endif
-  call word_read(in_str=f_in_str, delim_list=f_delim_list, word=f_word, ix_word=f_ix_word_ptr, &
-      delim=f_delim, delim_found=f_delim_found_native_ptr, out_str=f_out_str, &
-      ignore_interior=f_ignore_interior_native_ptr)
+  call word_read(f_in_str, f_delim_list, f_word, f_ix_word_ptr, f_delim, &
+      f_delim_found_native_ptr, f_out_str, f_ignore_interior_native_ptr)
 
   ! inout: f_in_str 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -6311,7 +6554,7 @@ subroutine fortran_x0_radiation_length (species, x0) bind(c)
   ! ** End of parameters **
   ! in: f_species 0D_NOT_integer
   f_species = species
-  f_x0 = x0_radiation_length(species=f_species)
+  f_x0 = x0_radiation_length(f_species)
 
   ! out: f_x0 0D_NOT_real
   call c_f_pointer(x0, f_x0_ptr)

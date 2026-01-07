@@ -5506,6 +5506,62 @@ void init_qp_symbol_struct(py::module& m, py::class_<QpSymbolProxy>& cls) {
 }
 
 // =============================================================================
+// random_state_struct
+void init_random_state_struct(
+    py::module& m,
+    py::class_<RandomStateProxy>& cls) {
+  cls.def(py::init<>())
+      // RandomStateProxy.ix (0D_NOT_integer8 -
+      .def_property("ix", &RandomStateProxy::ix, &RandomStateProxy::set_ix)
+      // RandomStateProxy.iy (0D_NOT_integer8 -
+      .def_property("iy", &RandomStateProxy::iy, &RandomStateProxy::set_iy)
+      // RandomStateProxy.number_stored (0D_NOT_logical -
+      .def_property(
+          "number_stored",
+          &RandomStateProxy::number_stored,
+          &RandomStateProxy::set_number_stored)
+      // RandomStateProxy.h_saved (0D_NOT_real -
+      .def_property(
+          "h_saved", &RandomStateProxy::h_saved, &RandomStateProxy::set_h_saved)
+      // RandomStateProxy.engine (0D_NOT_integer - Params
+      .def_property(
+          "engine", &RandomStateProxy::engine, &RandomStateProxy::set_engine)
+      // RandomStateProxy.seed (0D_NOT_integer -
+      .def_property(
+          "seed", &RandomStateProxy::seed, &RandomStateProxy::set_seed)
+      // RandomStateProxy.am (0D_NOT_real -
+      .def_property("am", &RandomStateProxy::am, &RandomStateProxy::set_am)
+      // RandomStateProxy.gauss_converter (0D_NOT_integer -
+      .def_property(
+          "gauss_converter",
+          &RandomStateProxy::gauss_converter,
+          &RandomStateProxy::set_gauss_converter)
+      // RandomStateProxy.gauss_sigma_cut (0D_NOT_real - Only used if positive.
+      .def_property(
+          "gauss_sigma_cut",
+          &RandomStateProxy::gauss_sigma_cut,
+          &RandomStateProxy::set_gauss_sigma_cut)
+      // RandomStateProxy.in_sobseq (0D_NOT_integer8 -
+      .def_property(
+          "in_sobseq",
+          &RandomStateProxy::in_sobseq,
+          &RandomStateProxy::set_in_sobseq)
+      // 1D_NOT_integer8 ix_sobseq proxy support missing
+      // RandomStateProxy.x_sobseq (1D_NOT_real -
+      .def_property_readonly("x_sobseq", &RandomStateProxy::x_sobseq)
+
+      .def(
+          "__repr__",
+          [](const RandomStateProxy& self) { return to_string(self); })
+
+      ;
+
+  // 1D RandomStateProxy arrays are not used in structs/routines
+  // 2D RandomStateProxy arrays are not used in structs/routines
+  // 3D RandomStateProxy arrays are not used in structs/routines
+}
+
+// =============================================================================
 // nametable_struct
 void init_nametable_struct(py::module& m, py::class_<NametableProxy>& cls) {
   cls.def(py::init<>())

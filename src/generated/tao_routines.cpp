@@ -1671,6 +1671,29 @@ void Tao::tao_pointer_to_tao_lat(
       /* int* */ _lat_type,
       /* void* */ &tao_lat);
 }
+void Tao::tao_pointer_to_universe(
+    int& ix_uni,
+    optional_ref<bool> neg2_to_default,
+    TaoUniverseProxy& u) {
+  auto* _neg2_to_default = neg2_to_default.has_value()
+      ? &neg2_to_default->get()
+      : nullptr; // inout, optional
+  auto _u = &u; // input, required, pointer
+  fortran_tao_pointer_to_universe_int(
+      /* int& */ ix_uni, /* bool* */ _neg2_to_default, /* void* */ &u);
+}
+void Tao::tao_pointer_to_universe(
+    std::string& string,
+    optional_ref<bool> neg2_to_default,
+    TaoUniverseProxy& u) {
+  auto _string = string.c_str(); // ptr, inout, required
+  auto* _neg2_to_default = neg2_to_default.has_value()
+      ? &neg2_to_default->get()
+      : nullptr; // inout, optional
+  auto _u = &u; // input, required, pointer
+  fortran_tao_pointer_to_universe_str(
+      /* const char* */ _string, /* bool* */ _neg2_to_default, /* void* */ &u);
+}
 Tao::TaoPointerToUniverses Tao::tao_pointer_to_universes(
     std::string name_in,
     std::optional<int> dflt_uni) {
