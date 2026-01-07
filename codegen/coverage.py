@@ -151,6 +151,29 @@ document.addEventListener('DOMContentLoaded', function() {
 """
 
 
+def struct_usage_count(
+    routines: list[FortranRoutine],
+    structs: list[CodegenStructure],
+) -> dict[str, int]:
+    struct_names = {struct.f_name.lower() for struct in structs}
+    usage = dict.fromkeys(struct_names, 0)
+    for routine in routines:
+        if not routine.usable:
+            continue
+        for arg in routine.args:
+            if arg.full_type.type == "type" and arg.kind.lower() in struct_names:
+                usage[arg.kind.lower()] += 1
+                break
+
+    for st in structs:
+        for arg in st.arg:
+            if arg.full_type.type == "type" and arg.kind.lower() in struct_names:
+                usage[arg.kind.lower()] += 1
+                break
+
+    return usage
+
+
 def generate_coverage_report(
     routines: list[FortranRoutine],
     structs: list[CodegenStructure],
@@ -201,6 +224,9 @@ def generate_coverage_report(
     structs_partial = len(missing_struct_attrs)
     structs_full = total_structs - structs_partial
     struct_health = (structs_full / total_structs * 100) if total_structs else 0
+
+    # Struct Usage calculation
+    usage_counts = struct_usage_count(routines, structs)
 
     # --- Body ---
 
@@ -253,10 +279,15 @@ def generate_coverage_report(
         # Create search text for data-search to allow easy filtering
         search_txt = f"{s.f_name} {loc_str}".lower()
 
+        usage_c = usage_counts.get(s.f_name.lower(), 0)
+        # Visual style: Dim '0' usages to reduce visual noise
+        usage_html = str(usage_c) if usage_c > 0 else '<span style="color:#d4d4d4">0</span>'
+
         row = [
             _tag("td", html.escape(s.f_name), "col-mono"),
             _tag("td", loc_str, "col-loc"),
             _tag("td", str(len(s.arg))),
+            _tag("td", usage_html),  # New Column
             _tag("td", status_html, "col-stat"),
             _tag("td", dropped_html),
         ]
@@ -368,11 +399,16 @@ def generate_coverage_report(
     {summary_html}
 
     <h2 id="sec-structs">Structure Definitions</h2>
-    <p class="intro">Fields removed from structures due to unmapped types.</p>
+    <p class="intro">
+        Fields omitted from the wrapped structures without a corresponding C++ wrapped class are listed under 'dropped fields'.
+        Usage of the structure in the bindings is reflected in "Field #" (the
+        number of fields that use the structure), and "Routine #" (the number
+        of routines that use the structure).
+    </p>
     <input type="text" class="table-search" placeholder="Filter structures by name or module..." data-target="table-structs">
     <div class="table-container">
         <table id="table-structs">
-            <thead><tr><th>Name</th><th>Module</th><th>Fields</th><th>Status</th><th>Dropped Attributes</th></tr></thead>
+            <thead><tr><th>Name</th><th>Module</th><th>Field #</th><th>Routine #</th><th>Status</th><th>Dropped Fields</th></tr></thead>
             <tbody>{"".join(rows_structs)}</tbody>
         </table>
     </div>
@@ -390,7 +426,7 @@ def generate_coverage_report(
     </div>
 
     <h2 id="sec-blockers">Implementation Blockers</h2>
-    <p class="intro">Why are routines completely skipped? (Excludes routines that have at least one working definition).</p>
+    <p class="intro">This is a summary of the reason why unwrapped routines are not wrapped.</p>
     <div class="table-container" style="max-width: 800px;">
         <table id="table-blockers">
             <thead><tr><th>Reason</th><th>Unique Routines Affected</th><th>% of Missing</th></tr></thead>

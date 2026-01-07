@@ -140,7 +140,7 @@ void add_this_multipass(
     optional_ref<EleProxy> lord_in = std::nullopt);
 
 // Skipped unusable routine add_this_name_to_list:
-// - Variable-sized inout character array: names(:) 1D_ALLOC_character
+// - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_add_this_taylor_term(
     void* ele /* 0D_NOT_type inout */,
@@ -750,8 +750,8 @@ BunchParamsProxy calc_bunch_sigma_matrix_etc(
     optional_ref<EleProxy> ele = std::nullopt);
 
 // Skipped unusable routine calc_density_derivative_complex:
-// - Variable in sized array: density(:,:,:) 3D_NOT_real
-// - Variable inout sized array: density_prime(:,:,:) 3D_NOT_complex
+// - Variable in sized array: 3D_NOT_real
+// - Variable inout sized array: 3D_NOT_complex
 extern "C" void fortran_calc_emittances_and_twiss_from_sigma_matrix(
     double* sigma_mat /* 2D_NOT_real in */,
     void* bunch_params /* 0D_NOT_type out */,
@@ -1395,8 +1395,8 @@ Bmad::CreateElementSlice create_element_slice(
     optional_ref<CoordProxy> orb_in = std::nullopt);
 
 // Skipped unusable routine create_feedback:
-// - Variable-sized in character array: input(:) 1D_ALLOC_character
-// - Variable-sized in character array: output(:) 1D_ALLOC_character
+// - Variable-sized in character array: 1D_ALLOC_character
+// - Variable-sized in character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_create_field_overlap(
     void* lat /* 0D_NOT_type inout */,
@@ -1483,8 +1483,8 @@ extern "C" void fortran_crystal_type_to_crystal_params(
 bool crystal_type_to_crystal_params(EleProxy& ele);
 
 // Skipped unusable routine csr3d_steady_state_solver:
-// - Variable in sized array: density(:,:,:) 3D_NOT_real
-// - Variable inout sized array: wake(:,:,:,:) 4D_NOT_real
+// - Variable in sized array: 3D_NOT_real
+// - Variable inout sized array: 4D_NOT_real
 
 // Skipped unusable routine csr_and_sc_apply_kicks:
 // - Untranslated type: csr_struct (0D)
@@ -1500,7 +1500,7 @@ extern "C" bool fortran_custom_attribute_ubound_index(
 int custom_attribute_ubound_index(int ele_class);
 
 // Skipped unusable routine custom_ele_attrib_name_list:
-// - Variable-sized out character array: name_list(:) 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine damap_equal_bmad_taylor:
@@ -2844,7 +2844,7 @@ extern "C" bool fortran_field_attribute_free(
 bool field_attribute_free(EleProxy& ele, std::string attrib_name);
 
 // Skipped unusable routine field_interpolate_3d:
-// - Variable in sized array: field_mesh(0:,0:,0:) 3D_NOT_real
+// - Variable in sized array: 3D_NOT_real
 extern "C" void fortran_finalize_reflectivity_table(
     void* table /* 0D_NOT_type inout */,
     bool& in_degrees /* 0D_NOT_logical in */);
@@ -3025,7 +3025,7 @@ extern "C" void fortran_get_called_file(
 void get_called_file(std::string& delim, std::string& call_file, bool& err);
 
 // Skipped unusable routine get_cgrn_csr3d:
-// - Variable inout sized array: cgrn(0:,0:,0:) 3D_NOT_complex
+// - Variable inout sized array: 3D_NOT_complex
 extern "C" void fortran_get_emit_from_sigma_mat(
     double* sigma_mat /* 2D_NOT_real in */,
     double* normal /* 1D_NOT_real out */,
@@ -3043,7 +3043,7 @@ Bmad::GetEmitFromSigmaMat get_emit_from_sigma_mat(
 // - Untranslated type: str_index_struct (0D)
 
 // Skipped unusable routine get_list_of_names:
-// - Variable-sized inout character array: name_list(:) 1D_ALLOC_character
+// - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_get_next_word(
     const char* word /* 0D_NOT_character in */,
@@ -3069,11 +3069,11 @@ void get_next_word(
 
 // Skipped unusable routine get_overlay_group_names:
 // - Untranslated type: parser_ele_struct (0D)
-// - Variable-sized inout character array: names_out(:) 1D_ALLOC_character
+// - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine get_sequence_args:
-// - Variable-sized inout character array: arg_list(:) 1D_ALLOC_character
+// - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_get_slave_list(
     void* lord /* 0D_NOT_type in */,
@@ -3086,7 +3086,7 @@ struct GetSlaveList {
 Bmad::GetSlaveList get_slave_list(EleProxy& lord);
 
 // Skipped unusable routine get_switch:
-// - Variable-sized inout character array: name_list(:) 1D_ALLOC_character
+// - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine getrhotilde:
@@ -4140,13 +4140,13 @@ Bmad::MakeSmatFromAbc make_smat_from_abc(
     NormalModesProxy& mode);
 
 // Skipped unusable routine make_sr_mats:
-// - Variable out sized array: M(:,:) 2D_NOT_real
-// - Variable out sized array: Bone(:,:) 2D_NOT_real
-// - Variable out sized array: Done(:,:) 2D_NOT_real
+// - Variable out sized array: 2D_NOT_real
+// - Variable out sized array: 2D_NOT_real
+// - Variable out sized array: 2D_NOT_real
 
 // Skipped unusable routine make_srdt_cache:
 // - Untranslated type: sliced_eles_struct (1D)
-// - Variable inout sized array: cache(:,:,:) 3D_ALLOC_complex
+// - Variable inout sized array: 3D_ALLOC_complex
 extern "C" void fortran_make_unit_mad_map(void* map /* 0D_NOT_type inout */);
 void make_unit_mad_map(MadMapProxy& map);
 extern "C" void fortran_make_v(
@@ -4168,7 +4168,7 @@ struct MakeVMats {
 Bmad::MakeVMats make_v_mats(EleProxy& ele);
 
 // Skipped unusable routine make_ykick_mat:
-// - Variable inout sized array: Yone(:,:) 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 extern "C" void fortran_makeup_control_slave(
     void* lat /* 0D_NOT_type inout */,
     void* slave /* 0D_NOT_type inout */,
@@ -4259,7 +4259,7 @@ void mat6_add_pitch(
     FixedArray2D<Real, 6, 6> mat6);
 
 // Skipped unusable routine mat6_from_s_to_s:
-// - Variable inout sized array: mat6(:,:) 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 extern "C" void fortran_mat6_to_complex_taylor(
     std::complex<double>* vec0 /* 1D_NOT_complex in */,
     std::complex<double>* mat6 /* 2D_NOT_complex in */,
@@ -4368,7 +4368,7 @@ Bmad::MultiTurnTrackingAnalysis multi_turn_tracking_analysis(
     int i_dim);
 
 // Skipped unusable routine multi_turn_tracking_to_mat:
-// - Variable out sized array: map1(:,:) 2D_NOT_real
+// - Variable out sized array: 2D_NOT_real
 extern "C" void fortran_multilayer_type_to_multilayer_params(
     void* ele /* 0D_NOT_type inout */,
     bool& err_flag /* 0D_NOT_logical out */);
@@ -4863,24 +4863,24 @@ void osc_alloc_rectpipe_arrays(
     FixedArray1D<Int, 3> npad);
 
 // Skipped unusable routine osc_cathodeimages_solver:
-// - Variable inout sized array: rho(:,:,:) 3D_NOT_real
-// - Variable out sized array: phi(:,:,:) 3D_NOT_real
-// - Variable out sized array: efield(:,:,:,:) 4D_NOT_real
-// - Variable out sized array: bfield(:,:,:,:) 4D_NOT_real
+// - Variable inout sized array: 3D_NOT_real
+// - Variable out sized array: 3D_NOT_real
+// - Variable out sized array: 4D_NOT_real
+// - Variable out sized array: 4D_NOT_real
 
 // Skipped unusable routine osc_freespace_solver:
-// - Variable in sized array: rho(:,:,:) 3D_NOT_real
-// - Variable out sized array: phi(:,:,:) 3D_NOT_real
-// - Variable out sized array: efield(:,:,:,:) 4D_NOT_real
-// - Variable out sized array: bfield(:,:,:,:) 4D_NOT_real
+// - Variable in sized array: 3D_NOT_real
+// - Variable out sized array: 3D_NOT_real
+// - Variable out sized array: 4D_NOT_real
+// - Variable out sized array: 4D_NOT_real
 
 // Skipped unusable routine osc_freespace_solver2:
-// - Variable in sized array: rho(:,:,:) 3D_NOT_real
-// - Variable inout sized array: efield(:,:,:,:) 4D_NOT_real
-// - Variable inout sized array: phi(:,:,:) 3D_NOT_real
+// - Variable in sized array: 3D_NOT_real
+// - Variable inout sized array: 4D_NOT_real
+// - Variable inout sized array: 3D_NOT_real
 
 // Skipped unusable routine osc_get_cgrn_freespace:
-// - Variable inout sized array: cgrn(:,:,:) 3D_NOT_complex
+// - Variable inout sized array: 3D_NOT_complex
 
 // Skipped unusable routine osc_getgrnfree:
 // - Translated arg count mismatch (unsupported?)
@@ -4908,10 +4908,10 @@ extern "C" void fortran_osc_read_rectpipe_grn();
 void osc_read_rectpipe_grn();
 
 // Skipped unusable routine osc_rectpipe_solver:
-// - Variable in sized array: rho(:,:,:) 3D_NOT_real
-// - Variable out sized array: phi(:,:,:) 3D_NOT_real
-// - Variable out sized array: efield(:,:,:,:) 4D_NOT_real
-// - Variable out sized array: bfield(:,:,:,:) 4D_NOT_real
+// - Variable in sized array: 3D_NOT_real
+// - Variable out sized array: 3D_NOT_real
+// - Variable out sized array: 4D_NOT_real
+// - Variable out sized array: 4D_NOT_real
 extern "C" void fortran_osc_write_rectpipe_grn(
     double& apipe /* 0D_NOT_real inout */,
     double& bpipe /* 0D_NOT_real inout */,
@@ -5101,7 +5101,7 @@ Bmad::ParseRealList2 parse_real_list2(
     optional_ref<bool> single_value = std::nullopt);
 
 // Skipped unusable routine parse_real_matrix:
-// - Variable in sized array: table(:,:) 2D_ALLOC_real
+// - Variable in sized array: 2D_ALLOC_real
 
 // Skipped unusable routine parse_superimpose_command:
 // - Untranslated type: parser_ele_struct (0D)
@@ -5111,7 +5111,7 @@ Bmad::ParseRealList2 parse_real_list2(
 
 // Skipped unusable routine parser_add_branch:
 // - Untranslated type: seq_struct (1D)
-// - Variable-sized inout character array: seq_name(:) 1D_ALLOC_character
+// - Variable-sized inout character array: 1D_ALLOC_character
 // - Untranslated type: parser_lat_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_parser_add_constant(
@@ -5153,7 +5153,7 @@ void parser_call_check(
 
 // Skipped unusable routine parser_expand_line:
 // - Untranslated type: seq_struct (1D)
-// - Variable-sized in character array: seq_name(:) 1D_ALLOC_character
+// - Variable-sized in character array: 1D_ALLOC_character
 // - Untranslated type: base_line_ele_struct (1D)
 // - Translated arg count mismatch (unsupported?)
 extern "C" bool fortran_parser_fast_complex_read(
@@ -5816,7 +5816,7 @@ extern "C" void fortran_ptc_ran_seed_put(int& iseed /* 0D_NOT_integer in */);
 void ptc_ran_seed_put(int iseed);
 
 // Skipped unusable routine ptc_read_flat_file:
-// - Variable-sized in character array: flat_file(:) 1D_ALLOC_character
+// - Variable-sized in character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine ptc_read_map_with_radiation:
@@ -5905,7 +5905,7 @@ FixedArray2D<Real, 6, 6> pwd_mat(
 // - Untranslated type: rad_int_info_struct (0D)
 
 // Skipped unusable routine quad_mat2_calc:
-// - Variable out sized array: mat2(:,:) 2D_NOT_real
+// - Variable out sized array: 2D_NOT_real
 extern "C" void fortran_rad1_damp_and_stoc_mats(
     void* ele /* 0D_NOT_type in */,
     bool& include_opening_angle /* 0D_NOT_logical in */,
@@ -6127,7 +6127,7 @@ void read_binary_grid_field(
     bool err_flag);
 
 // Skipped unusable routine read_digested_bmad_file:
-// - Variable-sized out character array: lat_files(:) 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_read_surface_reflection_file(
     const char* file_name /* 0D_NOT_character in */,
@@ -6857,7 +6857,7 @@ void sol_quad_mat6_calc(
     std::optional<bool> make_matrix = std::nullopt);
 
 // Skipped unusable routine solenoid_track_and_mat:
-// - Variable inout sized array: mat6(:,:) 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 extern "C" void fortran_solve_psi_adaptive(
     double& t0 /* 0D_NOT_real in */,
     double& t1 /* 0D_NOT_real in */,
@@ -6897,7 +6897,7 @@ ComplexTaylorProxy sort_complex_taylor_terms(
 
 // Skipped unusable routine space_charge_3d:
 // - Untranslated type: mesh3d_struct (0D)
-// - Variable in sized array: image_efield(:,:,:,:) 4D_ALLOC_real
+// - Variable in sized array: 4D_ALLOC_real
 
 // Skipped unusable routine space_charge_cathodeimages:
 // - Untranslated type: mesh3d_struct (0D)
@@ -7026,7 +7026,7 @@ void spline_fit_orbit(
     FixedArray1D<Real, 4> spline_y);
 
 // Skipped unusable routine split_expression_string:
-// - Variable-sized out character array: lines(:) 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_split_lat(
     void* lat /* 0D_NOT_type inout */,
@@ -7088,7 +7088,7 @@ SummationRdtProxy srdt_calc(
     optional_ref<SummationRdtProxyAlloc1D> per_ele_out = std::nullopt);
 
 // Skipped unusable routine srdt_calc_with_cache:
-// - Variable inout sized array: cache(:,:,:) 3D_ALLOC_complex
+// - Variable inout sized array: 3D_ALLOC_complex
 extern "C" void fortran_srdt_lsq_solution(
     void* lat /* 0D_NOT_type in */,
     void* var_indexes /* 1D_ALLOC_integer in */,
@@ -7159,7 +7159,7 @@ void surface_grid_displacement(
     std::optional<bool> extend_grid = std::nullopt);
 
 // Skipped unusable routine switch_attrib_value_name:
-// - Variable-sized out character array: name_list(:) 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_symp_lie_bmad(
     void* ele /* 0D_NOT_type inout */,
@@ -8323,14 +8323,14 @@ WakeProxy transfer_wake(WakeProxy& wake_in);
 // - Routine in configuration skip list
 
 // Skipped unusable routine transport_with_sr:
-// - Variable in sized array: M(:,:) 2D_NOT_real
-// - Variable in sized array: Bone(:,:) 2D_NOT_real
-// - Variable inout sized array: Yone(:,:) 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 
 // Skipped unusable routine transport_with_sr_and_ibs:
-// - Variable in sized array: M(:,:) 2D_NOT_real
-// - Variable in sized array: Bone(:,:) 2D_NOT_real
-// - Variable in sized array: Yone(:,:) 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
 extern "C" void fortran_truncate_complex_taylor_to_order(
     void* complex_taylor_in /* 1D_ALLOC_type in */,
     int& order /* 0D_NOT_integer in */,
@@ -8471,10 +8471,10 @@ int twiss_at_start(
     std::optional<bool> type_out = std::nullopt);
 
 // Skipped unusable routine twiss_from_mat2:
-// - Variable inout sized array: mat_in(:,:) 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 
 // Skipped unusable routine twiss_from_mat6:
-// - Variable in sized array: mat6(:,:) 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
 extern "C" void fortran_twiss_from_tracking(
     void* lat /* 0D_NOT_type inout */,
     void* ref_orb0 /* 0D_NOT_type in */,
@@ -8516,18 +8516,18 @@ extern "C" void fortran_twiss_to_1_turn_mat(
 FixedArray2D<Real, 2, 2> twiss_to_1_turn_mat(TwissProxy& twiss, double phi);
 
 // Skipped unusable routine type_complex_taylors:
-// - Variable-sized out character array: lines(:) 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_type_coord(void* coord /* 0D_NOT_type in */);
 void type_coord(CoordProxy& coord);
 
 // Skipped unusable routine type_ele:
-// - Variable-sized in character array: lines(:) 1D_ALLOC_character
+// - Variable-sized in character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine type_end_stuff:
-// - Variable-sized inout character array: li(:) 1D_ALLOC_character
-// - Variable-sized inout character array: lines(:) 1D_ALLOC_character
+// - Variable-sized inout character array: 1D_ALLOC_character
+// - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_type_expression_tree(
     void* tree /* 0D_NOT_type in */,
@@ -8544,12 +8544,12 @@ void type_expression_tree(
 
 // Skipped unusable routine type_ptc_fibre:
 // - Untranslated type: fibre (0D)
-// - Variable-sized out character array: lines(:) 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine type_ptc_internal_state:
 // - Untranslated type: internal_state (0D)
-// - Variable-sized out character array: lines(:) 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine type_ptc_layout:
@@ -8559,11 +8559,11 @@ void type_expression_tree(
 // - Untranslated type: real_8 (1D)
 
 // Skipped unusable routine type_taylors:
-// - Variable-sized inout character array: lines(:) 1D_ALLOC_character
+// - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine type_twiss:
-// - Variable-sized out character array: lines(:) 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine universal_equal_universal:
@@ -8771,7 +8771,7 @@ void word_to_value(
     optional_ref<EleProxy> ele = std::nullopt);
 
 // Skipped unusable routine write_2d:
-// - Variable inout sized array: grid(:,:) 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 extern "C" void fortran_write_ascii_beam_file(
     const char* file_name /* 0D_NOT_character in */,
     void* beam /* 0D_NOT_type in */,
@@ -8911,7 +8911,7 @@ bool write_bmad_lattice_file(
     optional_ref<CoordProxy> orbit0 = std::nullopt);
 
 // Skipped unusable routine write_digested_bmad_file:
-// - Variable-sized in character array: file_names(:) 1D_ALLOC_character
+// - Variable-sized in character array: 1D_ALLOC_character
 // - Untranslated type: extra_parsing_info_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 

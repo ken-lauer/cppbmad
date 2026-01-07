@@ -182,7 +182,7 @@ void tao_calc_data_at_s_pts(
     BoolAlloc1D& good);
 
 // Skipped unusable routine tao_call_cmd:
-// - Variable-sized in character array: cmd_arg(:) 1D_ALLOC_character
+// - Variable-sized in character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_cbar_wave_anal(void* plot /* 0D_NOT_type inout */);
 void tao_cbar_wave_anal(TaoPlotProxy& plot);
@@ -248,7 +248,7 @@ extern "C" void fortran_tao_cmd_history_record(
 void tao_cmd_history_record(std::string& cmd);
 
 // Skipped unusable routine tao_cmd_split:
-// - Variable-sized out character array: cmd_word(:) 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_command(
     const char* command_line /* 0D_NOT_character in */,
@@ -361,7 +361,7 @@ void tao_data_sanity_check(
     bool& is_valid);
 
 // Skipped unusable routine tao_data_show_use:
-// - Variable-sized inout character array: lines(:) 1D_ALLOC_character
+// - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_data_type_substitute(
     const char* template_ /* 0D_NOT_character in */,
@@ -824,7 +824,7 @@ extern "C" void fortran_tao_graph_setup(
 void tao_graph_setup(TaoPlotProxy& plot, TaoGraphProxy& graph);
 
 // Skipped unusable routine tao_help:
-// - Variable-sized out character array: lines(:) 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine tao_hook_branch_calc_def:
@@ -1138,10 +1138,10 @@ extern "C" bool fortran_tao_merit(
 bool tao_merit(double& this_merit);
 
 // Skipped unusable routine tao_mrq_func:
-// - Variable out sized array: dy_da(:,:) 2D_NOT_real
+// - Variable out sized array: 2D_NOT_real
 
 // Skipped unusable routine tao_next_switch:
-// - Variable-sized in character array: switch_list(:) 1D_ALLOC_character
+// - Variable-sized in character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_next_word(
     const char* line /* 0D_NOT_character inout */,
@@ -1910,7 +1910,7 @@ extern "C" void fortran_tao_show_constraints(
 void tao_show_constraints(int iunit, std::string form);
 
 // Skipped unusable routine tao_show_this:
-// - Variable-sized out character array: lines(:) 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_single_mode(
     const char* char_ /* 0D_NOT_character in */);
@@ -1965,7 +1965,7 @@ extern "C" bool fortran_tao_subin_uni_number(
 std::string tao_subin_uni_number(std::string name_in, int ix_uni, bool& ok);
 
 // Skipped unusable routine tao_svd_func:
-// - Variable out sized array: dy_da(:,:) 2D_NOT_real
+// - Variable out sized array: 2D_NOT_real
 extern "C" void fortran_tao_svd_optimizer(bool& abort /* 0D_NOT_logical out */);
 bool tao_svd_optimizer();
 extern "C" void fortran_tao_symbol_import_from_lat(
@@ -2094,7 +2094,7 @@ extern "C" void fortran_tao_var_repoint();
 void tao_var_repoint();
 
 // Skipped unusable routine tao_var_show_use:
-// - Variable-sized inout character array: lines(:) 1D_ALLOC_character
+// - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine tao_var_stuffit1:
@@ -2157,7 +2157,7 @@ extern "C" void fortran_tao_write_cmd(
 void tao_write_cmd(std::string what);
 
 // Skipped unusable routine tao_write_lines:
-// - Variable-sized in character array: line(:) 1D_ALLOC_character
+// - Variable-sized in character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_x_axis_cmd(
     const char* where /* 0D_NOT_character in */,

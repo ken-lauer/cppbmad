@@ -242,14 +242,14 @@ void cosc(double x, std::optional<int> nd, double& y);
 // - Untranslated type: bin_struct (0D)
 
 // Skipped unusable routine covar_expand:
-// - Variable inout sized array: covar(:,:) 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 
 // Skipped unusable routine cplx_mat_inverse:
-// - Variable inout sized array: mat(:,:) 2D_NOT_complex
-// - Variable inout sized array: mat_inv(:,:) 2D_NOT_complex
+// - Variable inout sized array: 2D_NOT_complex
+// - Variable inout sized array: 2D_NOT_complex
 
 // Skipped unusable routine cplx_mat_make_unit:
-// - Variable inout sized array: mat(:,:) 2D_NOT_complex
+// - Variable inout sized array: 2D_NOT_complex
 extern "C" bool fortran_create_a_spline(
     void* r0 /* 1D_ALLOC_real in */,
     void* r1 /* 1D_ALLOC_real in */,
@@ -268,20 +268,20 @@ extern "C" bool fortran_cross_product(
 void cross_product(RealAlloc1D& a, RealAlloc1D& b, FixedArray1D<Real, 3> c);
 
 // Skipped unusable routine da2_div:
-// - Variable in sized array: ta(0:,0:) 2D_NOT_real
-// - Variable in sized array: tb(0:,0:) 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine da2_evaluate:
-// - Variable in sized array: ta(0:,0:) 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
 
 // Skipped unusable routine da2_inverse:
-// - Variable in sized array: ta(0:,0:) 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine da2_mult:
-// - Variable in sized array: ta(0:,0:) 2D_NOT_real
-// - Variable in sized array: tb(0:,0:) 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_date_and_time_stamp(
     const char* string /* 0D_NOT_character inout */,
@@ -297,7 +297,7 @@ extern "C" void fortran_detab(const char* str /* 0D_NOT_character inout */);
 void detab(std::string& str);
 
 // Skipped unusable routine determinant:
-// - Variable inout sized array: mat(:,:) 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 extern "C" void fortran_display_size_and_resolution(
     int& ix_screen /* 0D_NOT_integer inout */,
     double& x_size /* 0D_NOT_real inout */,
@@ -416,7 +416,7 @@ extern "C" bool fortran_find_location_real(
 void find_location(RealAlloc1D& arr, double value, int& ix_match);
 
 // Skipped unusable routine find_location_str:
-// - Variable-sized inout character array: arr(:) 1D_ALLOC_character
+// - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" bool fortran_fine_frequency_estimate(
     void* data /* 1D_ALLOC_real in */,
@@ -675,46 +675,46 @@ extern "C" bool fortran_mass_of(
 double mass_of(int species);
 
 // Skipped unusable routine mat_eigen:
-// - Variable inout sized array: mat(:,:) 2D_NOT_real
-// - Variable inout sized array: eigen_vec(:,:) 2D_NOT_complex
+// - Variable inout sized array: 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_complex
 
 // Skipped unusable routine mat_inverse:
-// - Variable inout sized array: mat(:,:) 2D_NOT_real
-// - Variable inout sized array: mat_inv(:,:) 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 
 // Skipped unusable routine mat_make_unit:
-// - Variable inout sized array: mat(:,:) 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 
 // Skipped unusable routine mat_pseudoinverse:
-// - Variable inout sized array: A(:,:) 2D_NOT_real
-// - Variable inout sized array: Ap(:,:) 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 
 // Skipped unusable routine mat_rotation:
-// - Variable inout sized array: mat(:,:) 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 
 // Skipped unusable routine mat_scale_p0:
-// - Variable in sized array: mat_in(:,:) 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine mat_symp_conj:
-// - Variable inout sized array: mat(:,:) 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine mat_symp_conj_i:
-// - Variable inout sized array: mat(:,:) 2D_NOT_complex
+// - Variable inout sized array: 2D_NOT_complex
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine mat_symp_error:
-// - Variable in sized array: mat(:,:) 2D_NOT_real
-// - Variable inout sized array: err_mat(:,:) 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 
 // Skipped unusable routine mat_symplectify:
-// - Variable in sized array: mat_in(:,:) 2D_NOT_real
-// - Variable out sized array: mat_symp(:,:) 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
+// - Variable out sized array: 2D_NOT_real
 
 // Skipped unusable routine mat_type:
-// - Variable inout sized array: mat(:,:) 2D_NOT_real
-// - Variable-sized inout character array: lines(:) 1D_ALLOC_character
+// - Variable inout sized array: 2D_NOT_real
+// - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" bool fortran_match_reg(
     const char* str /* 0D_NOT_character inout */,
@@ -728,7 +728,7 @@ extern "C" bool fortran_match_wild(
 void match_wild(std::string& string, std::string& template_, bool& is_match);
 
 // Skipped unusable routine match_word:
-// - Variable-sized inout character array: names(:) 1D_ALLOC_character
+// - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine max_nonzero:
@@ -845,7 +845,7 @@ void parse_fortran_format(
     int& digits);
 
 // Skipped unusable routine pointer_to_locations:
-// - Variable-sized inout character array: names(:) 1D_ALLOC_character
+// - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine pointer_to_ran_state:
@@ -982,7 +982,7 @@ extern "C" bool fortran_quote(
 void quote(std::string& str, std::string& q_str);
 
 // Skipped unusable routine quoten:
-// - Variable-sized inout character array: str(:) 1D_ALLOC_character
+// - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine ran_default_state:
@@ -1084,7 +1084,7 @@ void rot_2d(
     FixedArray1D<Real, 2> vec_out);
 
 // Skipped unusable routine rotate_mat:
-// - Variable inout sized array: mat(:,:) 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 extern "C" void fortran_rotate_vec(
     void* vec /* 1D_ALLOC_real inout */,
     int& axis /* 0D_NOT_integer in */,
@@ -1421,11 +1421,11 @@ SimUtils::SuperBicubicInterpolation super_bicubic_interpolation(
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine super_gaussj:
-// - Variable inout sized array: a(:,:) 2D_NOT_real
-// - Variable inout sized array: b(:,:) 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 
 // Skipped unusable routine super_ludcmp:
-// - Variable in sized array: a(:,:) 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
 
 // Skipped unusable routine super_mnbrak:
 // - Argument not defined: ax (have: [])
@@ -1439,7 +1439,7 @@ SimUtils::SuperBicubicInterpolation super_bicubic_interpolation(
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine super_mrqcof:
-// - Variable inout sized array: co_alpha(:,:) 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 // - Untranslated type: super_mrqmin_storage_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 
@@ -1524,8 +1524,8 @@ void super_sort(IntAlloc1D& arr);
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine svd_fit:
-// - Variable inout sized array: A(:,:) 2D_NOT_real
-// - Variable inout sized array: v_mat(:,:) 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 extern "C" void fortran_system_command(
     const char* line /* 0D_NOT_character inout */,
     bool* err_flag /* 0D_NOT_logical inout */);

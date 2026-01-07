@@ -10,16 +10,14 @@ from collections.abc import Sequence
 from dataclasses import dataclass, field
 from typing import Literal
 
-import pydantic
-
-from .config import CodegenConfig
+from .arg import Argument as InterfaceArgument
+from .config import CodegenConfig, RoutineSettings
 from .context import config_context, get_params
 from .cpp import CppWrapperArgument, generate_routine_cpp_wrapper, generate_routines_header
 from .docstring import DocstringParameter, RoutineDocstring, parse_routine_comment_block
 from .exceptions import RenameError, RoutineNotFoundError
 from .fortran import generate_fortran_routine_with_c_binding
-from .gen import Argument as InterfaceArgument
-from .paths import ACC_ROOT_DIR, CODEGEN_ROOT, CPPBMAD_ROOT, CPPBMAD_SRC
+from .paths import CODEGEN_ROOT, CPPBMAD_ROOT
 from .structs import (
     FileLine,
     StructureMember,
@@ -86,93 +84,6 @@ docstring_hotfixes["init_coord3"] = {
         )
     ],
 }
-
-
-class RoutineSettings(pydantic.BaseModel):
-    fortran_output_filename: str
-    cpp_output_filename: str
-    cpp_namespace: str
-    interface_path: pathlib.Path | None
-    source_paths: list[pathlib.Path]
-    skip_files: set[str]
-    skip_procedures: set[str]
-
-    @property
-    def fortran_module_name(self):
-        stem = pathlib.Path(self.fortran_output_filename).stem
-        return f"cppbmad_{stem}"
-
-    @property
-    def cpp_header_filename(self):
-        return pathlib.Path(self.cpp_output_filename).with_suffix(".hpp").name
-
-
-routine_settings = [
-    RoutineSettings(
-        fortran_output_filename="bmad_routines.f90",
-        cpp_output_filename="bmad_routines.cpp",
-        cpp_namespace="Bmad",
-        interface_path=ACC_ROOT_DIR / "bmad/modules/bmad_routine_interface.f90",
-        source_paths=[
-            ACC_ROOT_DIR / "bmad" / "code",
-            ACC_ROOT_DIR / "bmad" / "geometry",
-            ACC_ROOT_DIR / "bmad" / "interface",
-            ACC_ROOT_DIR / "bmad" / "low_level",
-            ACC_ROOT_DIR / "bmad" / "modules",
-            ACC_ROOT_DIR / "bmad" / "multiparticle",
-            ACC_ROOT_DIR / "bmad" / "output",
-            ACC_ROOT_DIR / "bmad" / "parsing",
-            ACC_ROOT_DIR / "bmad" / "photon",
-            ACC_ROOT_DIR / "bmad" / "ptc",
-            ACC_ROOT_DIR / "bmad" / "space_charge",
-            ACC_ROOT_DIR / "bmad" / "spin",
-        ],
-        skip_files={
-            "init_custom.f90",
-            "taylor_mod.f90",
-        },
-        skip_procedures={
-            "sc_field_calc",
-            "ptc_taylor_equal_bmad_taylor",
-            "bmad_taylor_equal_ptc_taylor",
-            "parse_evaluate_value",
-        },
-    ),
-    RoutineSettings(
-        fortran_output_filename="sim_utils_routines.f90",
-        cpp_output_filename="sim_utils_routines.cpp",
-        cpp_namespace="SimUtils",
-        interface_path=ACC_ROOT_DIR / "sim_utils" / "interfaces" / "sim_utils_interface.f90",
-        source_paths=[
-            ACC_ROOT_DIR / "sim_utils" / "interfaces",
-            ACC_ROOT_DIR / "sim_utils" / "math",
-        ],
-        skip_files=set(),
-        skip_procedures=set(),
-    ),
-    RoutineSettings(
-        fortran_output_filename="tao_routines.f90",
-        cpp_output_filename="tao_routines.cpp",
-        cpp_namespace="Tao",
-        interface_path=ACC_ROOT_DIR / "tao" / "code" / "tao_interface.f90",
-        source_paths=[
-            ACC_ROOT_DIR / "tao" / "code",
-        ],
-        skip_files=set(),
-        skip_procedures=set(),
-    ),
-    RoutineSettings(
-        fortran_output_filename="cppbmad_test_routines.f90",
-        cpp_output_filename="cppbmad_test_routines.cpp",
-        cpp_namespace="CppBmadTest",
-        interface_path=CPPBMAD_SRC / "tests" / "routines" / "cppbmad_tests.f90",
-        source_paths=[
-            CPPBMAD_SRC / "tests" / "routines",
-        ],
-        skip_files=set(),
-        skip_procedures=set(),
-    ),
-]
 
 
 def normalize_intent(typ: TypeInformation, doc_intent: Intent | None = None) -> Intent:
@@ -596,18 +507,12 @@ class FortranRoutine:
                 if ":" in arg.array or "0:" in arg.array or "*" in arg.array:
                     arr = ",".join(arg.array)
                     if arg.type == "character":
-                        reasons.append(
-                            f"Variable-sized {arg.intent} character array: {arg.c_name}({arr}) {arg.full_type}"
-                        )
+                        reasons.append(f"Variable-sized {arg.intent} character array: {arg.full_type}")
                     if len(arg.array) > 1:
                         if arg.member.type_info.pointer:
-                            reasons.append(
-                                f"Pointer to variable {arg.intent} sized array: {arg.c_name}({arr}) {arg.full_type}"
-                            )
+                            reasons.append(f"Pointer to variable {arg.intent} sized array: {arg.full_type}")
                         if arg.type != "type":
-                            reasons.append(
-                                f"Variable {arg.intent} sized array: {arg.c_name}({arr}) {arg.full_type}"
-                            )
+                            reasons.append(f"Variable {arg.intent} sized array: {arg.full_type}")
 
         if len(self.arg_names_with_result) != len(self.args):
             reasons.append("Translated arg count mismatch (unsupported?)")
@@ -1140,7 +1045,7 @@ def generate_routines(params: CodegenConfig):
     all_routines = []
     all_routines_by_name = {}
     to_write = {}
-    for settings in routine_settings:
+    for settings in params.routines:
         # Filter out private routines to start with:
         routines = [routine for routine in parse_bmad_routines(settings, params) if not routine.private]
         all_routines.extend(routines)

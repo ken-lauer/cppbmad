@@ -351,7 +351,7 @@ def test_parse_declaration(
 @pytest.mark.parametrize(
     ("line", "expected_decl"),
     [
-        (
+        pytest.param(
             "type name",
             [
                 ParsedDeclaration(
@@ -359,7 +359,7 @@ def test_parse_declaration(
                 )
             ],
         ),
-        (
+        pytest.param(
             "type (spin_orbit_map1_struct), allocatable :: q_ele(:)",
             [
                 ParsedDeclaration(
@@ -372,7 +372,7 @@ def test_parse_declaration(
                 )
             ],
         ),
-        (
+        pytest.param(
             "type (spin_orbit_map1_struct), allocatable :: q_ele(0:)",
             [
                 ParsedDeclaration(
@@ -385,7 +385,7 @@ def test_parse_declaration(
                 )
             ],
         ),
-        (
+        pytest.param(
             "type (qp_axis_struct) x, y, x2, y2",
             [
                 ParsedDeclaration(
@@ -414,10 +414,34 @@ def test_parse_declaration(
                 ),
             ],
         ),
+        pytest.param(
+            "real(rp) DN(N,N), DV(N), DM(N,N)",
+            [
+                ParsedDeclaration(
+                    name="DN",
+                    type=TypeInformation(type="real", kind="rp", dimension="N,N"),
+                    dimension="N,N",
+                    default=None,
+                ),
+                ParsedDeclaration(
+                    name="DV",
+                    type=TypeInformation(type="real", kind="rp", dimension="N"),
+                    dimension="N",
+                    default=None,
+                ),
+                ParsedDeclaration(
+                    name="DM",
+                    type=TypeInformation(type="real", kind="rp", dimension="N,N"),
+                    dimension="N,N",
+                    default=None,
+                ),
+            ],
+        ),
     ],
 )
 def test_parse_type_decl(line: str, expected_decl: list[ParsedDeclaration]) -> None:
-    assert parse_declaration(line) == expected_decl
+    res = parse_declaration(line)
+    assert res == expected_decl
 
 
 @pytest.mark.parametrize(

@@ -5,8 +5,8 @@ import pathlib
 import shutil
 
 
-def normalize(path: str) -> pathlib.Path:
-    path = os.path.expandvars(path)
+def normalize(path: str | pathlib.Path) -> pathlib.Path:
+    path = os.path.expandvars(str(path))
     return pathlib.Path(path).expanduser().resolve().absolute()
 
 

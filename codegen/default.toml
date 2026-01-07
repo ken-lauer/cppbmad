@@ -1,10 +1,3 @@
-# List of use statements needed in various Fortran modules.
-equality_use_statements = [
-  "use bmad_struct",
-  # "use tao_struct",
-]
-test_use_statements = ["use bmad_json", "use sim_utils_json", "use tao_json"]
-
 struct_list = [
   "spline_struct",
   "spin_polar_struct",
@@ -400,3 +393,61 @@ skips = [
 
 [c_to_python_name_translation]
 "global" = "global_"
+
+
+[[routines]]
+fortran_output_filename = "bmad_routines.f90"
+cpp_output_filename = "bmad_routines.cpp"
+cpp_namespace = "Bmad"
+# interface_path = "$ACC_ROOT_DIR/bmad/modules/bmad_routine_interface.f90"
+source_paths = [
+  "$ACC_ROOT_DIR/bmad/code",
+  "$ACC_ROOT_DIR/bmad/geometry",
+  "$ACC_ROOT_DIR/bmad/interface",
+  "$ACC_ROOT_DIR/bmad/low_level",
+  "$ACC_ROOT_DIR/bmad/modules",
+  "$ACC_ROOT_DIR/bmad/multiparticle",
+  "$ACC_ROOT_DIR/bmad/output",
+  "$ACC_ROOT_DIR/bmad/parsing",
+  "$ACC_ROOT_DIR/bmad/photon",
+  "$ACC_ROOT_DIR/bmad/ptc",
+  "$ACC_ROOT_DIR/bmad/space_charge",
+  "$ACC_ROOT_DIR/bmad/spin",
+]
+skip_files = ["init_custom.f90", "taylor_mod.f90"]
+skip_procedures = [
+  "parse_evaluate_value",
+  "ptc_taylor_equal_bmad_taylor",
+  "bmad_taylor_equal_ptc_taylor",
+  "sc_field_calc",
+]
+
+[[routines]]
+fortran_output_filename = "sim_utils_routines.f90"
+cpp_output_filename = "sim_utils_routines.cpp"
+cpp_namespace = "SimUtils"
+# interface_path = "$ACC_ROOT_DIR/sim_utils/interfaces/sim_utils_interface.f90"
+source_paths = [
+  "$ACC_ROOT_DIR/sim_utils/interfaces",
+  "$ACC_ROOT_DIR/sim_utils/math",
+]
+skip_files = []
+skip_procedures = []
+
+[[routines]]
+fortran_output_filename = "tao_routines.f90"
+cpp_output_filename = "tao_routines.cpp"
+cpp_namespace = "Tao"
+# interface_path = "$ACC_ROOT_DIR/tao/code/tao_interface.f90"
+source_paths = ["$ACC_ROOT_DIR/tao/code"]
+skip_files = []
+skip_procedures = []
+
+[[routines]]
+fortran_output_filename = "cppbmad_test_routines.f90"
+cpp_output_filename = "cppbmad_test_routines.cpp"
+cpp_namespace = "CppBmadTest"
+# interface_path = "src/tests/routines/cppbmad_tests.f90"
+source_paths = ["src/tests/routines"]
+skip_files = []
+skip_procedures = []

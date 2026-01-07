@@ -19,8 +19,6 @@ import logging
 import pathlib
 import typing
 
-import tomllib
-
 from .arg import Argument, CodegenStructure
 from .config import CodegenConfig
 from .context import ConfigContext, config_context
@@ -30,7 +28,7 @@ from .enums import ENUM_FILENAME, write_enums
 from .paths import CODEGEN_ROOT, CPPBMAD_INCLUDE, CPPBMAD_ROOT, CPPBMAD_SRC, REPO_ROOT
 from .proxy import create_cpp_proxy_header, create_cpp_proxy_impl, create_fortran_proxy_code
 from .py import generate_pybmad
-from .routines import generate_routines, parse_bmad_routines, routine_settings
+from .routines import generate_routines, parse_bmad_routines
 from .structs import ParsedStructure, load_bmad_parser_structures
 from .util import write_contents_if_differs, write_if_differs
 
@@ -241,7 +239,7 @@ def write_proxy_classes(params: CodegenConfig, structs: list[CodegenStructure]) 
 def load_routines(parsed_structs: list[ParsedStructure], config: CodegenConfig):
     structs_seen = set()
     settings_and_routines = []
-    for settings in routine_settings:
+    for settings in config.routines:
         routines = parse_bmad_routines(settings, config)
         settings_and_routines.append((settings, routines))
         for routine in routines:
@@ -286,10 +284,8 @@ def generate(
     # TODO refactor globals
     global params  # noqa: PLW0603
 
-    with config_file.open("rb") as fp:
-        params = CodegenConfig(**tomllib.load(fp))
-
     logger.info(f"Config file: {config_file}")
+    params = CodegenConfig.from_file(config_file)
 
     parsed_structs = load_bmad_parser_structures()
     _settings_and_routines, _routine_structs = load_routines(parsed_structs, params)
