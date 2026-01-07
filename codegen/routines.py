@@ -84,6 +84,17 @@ docstring_hotfixes["init_coord3"] = {
         )
     ],
 }
+# docstring_hotfixes["ran_gauss_converter"] = {
+#     "outputs": [
+#         DocstringParameter(
+#             name="get",
+#             description="Get the current (before any set) gaussian converter.",
+#             data_type="character(*)",
+#             is_input=True,
+#             is_output=True,
+#         )
+#     ],
+# }
 
 
 def normalize_intent(typ: TypeInformation, doc_intent: Intent | None = None) -> Intent:

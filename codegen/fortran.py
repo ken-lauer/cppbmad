@@ -316,7 +316,7 @@ class FortranWrapperGeneralArgument(FortranWrapperArgument):
         ]
 
     def get_input_conversion(self) -> list[str]:
-        if self.is_function_result or self.intent == "out":
+        if self.is_function_result or (self.intent == "out" and not self.arg.is_optional):
             return []
 
         result = [f"  ! {self.intent}: {self.f_name} {self.arg.full_type}"]
@@ -402,7 +402,7 @@ class FortranWrapperStringArgument(FortranWrapperArgument):
         return decls
 
     def get_input_conversion(self) -> list[str]:
-        if self.intent == "out" or self.is_function_result:
+        if (self.intent == "out" and not self.arg.is_optional) or self.is_function_result:
             return []
 
         result = [f"  ! {self.intent}: {self.f_name} {self.arg.full_type}"]
