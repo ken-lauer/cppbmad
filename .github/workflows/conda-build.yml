@@ -122,7 +122,7 @@ jobs:
       - name: Tweak library search path
         shell: bash -l {0}
         run: |
-          lib_path="$ACC_ROOT_DIR/$BUILD_TYPE"
+          lib_path="$ACC_ROOT_DIR/$BUILD_TYPE/lib"
           # TODO: linux failing; macos fine
           echo "LD_LIBRARY_PATH=$lib_path:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           # echo "DYLD_LIBRARY_PATH=$lib_path:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
