@@ -460,7 +460,9 @@ def generate_pybmad(
     array_usage = struct_array_usage_dimensions(routines_by_name, structs)
     for struct in sorted(structs, key=by_module_and_name):
         code_lines.extend(
-            generate_pybmad_struct_code(structs, routines_by_name, struct, array_usage[struct.f_name])
+            generate_pybmad_struct_code(
+                structs, routines_by_name, struct, array_usage.get(struct.f_name.lower(), set())
+            )
         )
 
     code_lines.append("} // namespace Pybmad")
