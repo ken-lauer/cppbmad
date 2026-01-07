@@ -100,6 +100,12 @@ def normalize_intent(typ: TypeInformation, doc_intent: Intent | None = None) -> 
 
 
 @dataclasses.dataclass
+class _InterfaceOverload:
+    name: str
+    docstring: list[str]
+
+
+@dataclasses.dataclass
 class RoutineArg(InterfaceArgument):
     intent: Intent = "inout"
     description: str = ""
@@ -661,7 +667,9 @@ class FortranParser:
                         marked_private.add(name.strip(", "))
 
                 if in_interface and pre_comment_parts[:2] == ["module", "procedure"]:
-                    interface_overloads[pre_comment_parts[2].lower()] = in_interface
+                    interface_overloads[pre_comment_parts[2].lower()] = _InterfaceOverload(
+                        name=in_interface, docstring=list(interface_doc)
+                    )
 
             # Handle the "contains" keyword
             if stripped_line.lower() == "contains" and current_procedure:
@@ -747,9 +755,11 @@ class FortranParser:
 
         for proc in self.procedures:
             if proc.name.lower() in interface_overloads:
-                overloaded_name = interface_overloads[proc.name.lower()]
-                proc.interface = overloaded_name
-                proc.private = overloaded_name in marked_private  # is this a thing?
+                ovd = interface_overloads[proc.name.lower()]
+                proc.interface = ovd.name
+                proc.private = ovd.name in marked_private  # is this a thing?
+                # if len(ovd.docstring) >= len(proc.doc_comment):
+                proc.doc_comment = list(ovd.docstring)
             elif proc.name.lower() in marked_private:
                 proc.private = True
 
