@@ -448,6 +448,20 @@ extern "C" void fortran_beam_equal_beam(
     void* beam1 /* 0D_NOT_type inout */,
     void* beam2 /* 0D_NOT_type in */);
 void beam_equal_beam(BeamProxy& beam1, BeamProxy& beam2);
+extern "C" bool fortran_beam_init_setup(
+    void* beam_init_in /* 0D_NOT_type in */,
+    void* ele /* 0D_NOT_type in */,
+    int& species /* 0D_NOT_integer in */,
+    void* modes /* 0D_NOT_type in */,
+    bool* err_flag /* 0D_NOT_logical in */,
+    void* beam_init_set /* 0D_NOT_type inout */);
+void beam_init_setup(
+    BeamInitProxy& beam_init_in,
+    EleProxy& ele,
+    int species,
+    optional_ref<NormalModesProxy> modes,
+    std::optional<bool> err_flag,
+    BeamInitProxy& beam_init_set);
 extern "C" void fortran_beam_tilts(
     double* S /* 2D_NOT_real in */,
     double& angle_xy /* 0D_NOT_real out */,
@@ -6689,20 +6703,6 @@ struct SetEleStatusStale {
   bool set_slaves;
 };
 Bmad::SetEleStatusStale set_ele_status_stale();
-extern "C" bool fortran_set_emit_from_beam_init(
-    void* beam_init_in /* 0D_NOT_type in */,
-    void* ele /* 0D_NOT_type in */,
-    int& species /* 0D_NOT_integer in */,
-    void* modes /* 0D_NOT_type in */,
-    bool* err_flag /* 0D_NOT_logical in */,
-    void* beam_init_set /* 0D_NOT_type inout */);
-void set_emit_from_beam_init(
-    BeamInitProxy& beam_init_in,
-    EleProxy& ele,
-    int species,
-    optional_ref<NormalModesProxy> modes,
-    std::optional<bool> err_flag,
-    BeamInitProxy& beam_init_set);
 
 // Skipped unusable routine set_flags_for_changed_all_attribute:
 // - Untranslated type: all_pointer_struct (0D)

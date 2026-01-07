@@ -10371,6 +10371,30 @@ beam1 :
 beam2 : 
 )""");
   m.def(
+      "beam_init_setup",
+      &Bmad::beam_init_setup,
+      py::arg("beam_init_in"),
+      py::arg("ele"),
+      py::arg("species"),
+      py::arg("modes") = py::none(),
+      py::arg("err_flag") = py::none(),
+      py::arg("beam_init_set"),
+      R"""(No docstring available
+
+Parameters
+----------
+beam_init_in : BeamInitStruct
+    Input parameters
+ele : EleStruct
+species : int
+    Beam particle species.
+modes : NormalModesStruct, optional
+    Normal mode parameters. Ouput:
+err_flag : bool, optional
+    Set true if there is an error. False otherwise.
+beam_init_set : 
+)""");
+  m.def(
       "beam_tilts",
       &Bmad::beam_tilts,
       py::arg("S"),
@@ -15007,11 +15031,7 @@ order : LatEleOrderStruct
       py::arg("particle_at"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(import
-
-implicit none
-type (ele_struct) ele
-end subroutine
+      R"""(No docstring available
 
 Parameters
 ----------
@@ -24011,13 +24031,7 @@ c1 : CoordStruct
       &Bmad::make_mat6_symp_lie_ptc,
       py::arg("ele"),
       py::arg("start_orb"),
-      R"""(import
-
-implicit none
-type (ele_struct), target :: ele
-type (coord_struct) :: start_orb, end_orb
-type (lat_param_struct) param
-end subroutine
+      R"""(No docstring available
 
 Parameters
 ----------
@@ -24026,9 +24040,6 @@ ele : EleStruct
     This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
 start_orb : CoordStruct
     Coordinates at the beginning of element.
-
-Returns
--------
 end_orb : CoordStruct
     Coordinates at end of element.
 )""");
@@ -28333,15 +28344,7 @@ e_type : int
       py::arg("ele_orientation"),
       py::arg("return_stream_end") = py::none(),
       py::arg("physical_end"),
-      R"""(import
-
-implicit none
-type (twiss_struct) twiss
-real(rp), optional :: tol
-real(rp) x(:), xp(:)
-real(rp) tune, emit
-real(rp) x_0, xp_0, chi
-end subroutine
+      R"""(No docstring available
 
 Parameters
 ----------
@@ -28353,6 +28356,7 @@ ele_orientation : int
     Either 1 = Normal or -1 = element reversed.
 return_stream_end : bool, optional
     If True return the stream end instead of the physical end. Default is False.
+physical_end : 
 )""");
   py::class_<PyPhysicalEleEnd, std::unique_ptr<PyPhysicalEleEnd>>(
       m, "PhysicalEleEnd", "Fortran routine physical_ele_end return value")
@@ -32659,14 +32663,7 @@ err_id : int
       &Bmad::set_ele_defaults,
       py::arg("ele"),
       py::arg("do_allocate") = py::none(),
-      R"""(import
-
-implicit none
-type (lat_struct) lat
-type (coord_struct), optional :: orb(0:)
-integer key
-logical on_switch
-end subroutine
+      R"""(No docstring available
 
 Parameters
 ----------
@@ -32750,30 +32747,6 @@ set_slaves : bool
               return py::cast(s.set_slaves);
             return py::none();
           });
-  m.def(
-      "set_emit_from_beam_init",
-      &Bmad::set_emit_from_beam_init,
-      py::arg("beam_init_in"),
-      py::arg("ele"),
-      py::arg("species"),
-      py::arg("modes") = py::none(),
-      py::arg("err_flag") = py::none(),
-      py::arg("beam_init_set"),
-      R"""(No docstring available
-
-Parameters
-----------
-beam_init_in : BeamInitStruct
-    Input parameters
-ele : EleStruct
-species : int
-    Beam particle species.
-modes : NormalModesStruct, optional
-    Normal mode parameters. Used if stuff like beam_init_in.a_emit set negative. Ouput:
-err_flag : bool, optional
-    Set true if there is an error. False otherwise.
-beam_init_set : 
-)""");
   m.def(
       "set_flags_for_changed_attribute",
       py::overload_cast<EleProxy&, int, std::optional<bool>>(
@@ -33257,14 +33230,7 @@ save_val :
       py::arg("n_step") = py::none(),
       py::arg("no_cavity") = py::none(),
       py::arg("force_init") = py::none(),
-      R"""(import
-
-implicit none
-type (ele_struct), target :: ele
-type (coord_struct) orbit
-real(rp) rf_time
-logical reference_active_edge
-end subroutine
+      R"""(No docstring available
 
 Parameters
 ----------
@@ -38222,20 +38188,15 @@ ix_branch :
       &python_tao_is_valid_name,
       py::arg("name"),
       py::arg("is_valid"),
-      R"""(implicit none
-
-character(*) single_mode_file
-end subroutine
+      R"""(No docstring available
 
 Parameters
 ----------
 name : unknown
     Name to be checked.
-
-Returns
--------
 why_invalid : unknown
     Why invalid description.
+is_valid : 
 )""");
   py::class_<PyTaoIsValidName, std::unique_ptr<PyTaoIsValidName>>(
       m, "TaoIsValidName", "Fortran routine tao_is_valid_name return value")
@@ -43857,17 +43818,13 @@ end_orb : CoordStruct
       py::arg("start_orb"),
       py::arg("ele"),
       py::arg("param"),
-      R"""(import
+      R"""(No docstring available
 
-implicit none
-type (coord_struct) :: start_orb, end_orb
-type (ele_struct) ele
-type (lat_param_struct) :: param
-end subroutine
-
-
-Returns
--------
+Parameters
+----------
+start_orb : 
+ele : 
+param : 
 end_orb : CoordStruct
     .spin(3)   -- Ending spin
 )""");

@@ -501,6 +501,18 @@ subroutine fortran_bicubic_cmplx_eval (x_norm, y_norm, bi_coef, df_dx, df_dy, f_
   ! in: f_bi_coef 0D_NOT_type
   if (.not. c_associated(bi_coef)) return
   call c_f_pointer(bi_coef, f_bi_coef)
+  ! out: f_df_dx 0D_NOT_complex
+  if (c_associated(df_dx)) then
+    call c_f_pointer(df_dx, f_df_dx_ptr)
+  else
+    f_df_dx_ptr => null()
+  endif
+  ! out: f_df_dy 0D_NOT_complex
+  if (c_associated(df_dy)) then
+    call c_f_pointer(df_dy, f_df_dy_ptr)
+  else
+    f_df_dy_ptr => null()
+  endif
   f_f_val = bicubic_cmplx_eval(f_x_norm, f_y_norm, f_bi_coef, f_df_dx, f_df_dy)
 
   ! out: f_df_dx 0D_NOT_complex
@@ -1745,6 +1757,18 @@ subroutine fortran_fourier_amplitude (data, frequency, cos_amp, sin_amp, dcos_am
   if (c_associated(data))   call c_f_pointer(data, f_data)
   ! in: f_frequency 0D_NOT_real
   f_frequency = frequency
+  ! out: f_dcos_amp 0D_NOT_real
+  if (c_associated(dcos_amp)) then
+    call c_f_pointer(dcos_amp, f_dcos_amp_ptr)
+  else
+    f_dcos_amp_ptr => null()
+  endif
+  ! out: f_dsin_amp 0D_NOT_real
+  if (c_associated(dsin_amp)) then
+    call c_f_pointer(dsin_amp, f_dsin_amp_ptr)
+  else
+    f_dsin_amp_ptr => null()
+  endif
   call fourier_amplitude(f_data%data, f_frequency, f_cos_amp, f_sin_amp, f_dcos_amp, &
       f_dsin_amp)
 
@@ -4176,6 +4200,20 @@ subroutine fortran_ran_gauss_converter (set, set_sigma_cut, get, get_sigma_cut, 
   else
     f_set_sigma_cut_ptr => null()
   endif
+  ! out: f_get 0D_NOT_character
+  if (c_associated(get)) then
+    call c_f_pointer(get, f_get_ptr, [huge(0)])
+    call to_f_str(f_get_ptr, f_get)
+    f_get_call_ptr => f_get
+  else
+    f_get_call_ptr => null()
+  endif
+  ! out: f_get_sigma_cut 0D_NOT_real
+  if (c_associated(get_sigma_cut)) then
+    call c_f_pointer(get_sigma_cut, f_get_sigma_cut_ptr)
+  else
+    f_get_sigma_cut_ptr => null()
+  endif
   ! in: f_ran_state 0D_NOT_type
   if (c_associated(ran_state))   call c_f_pointer(ran_state, f_ran_state)
   call ran_gauss_converter(f_set_call_ptr, f_set_sigma_cut_ptr, f_get_call_ptr, &
@@ -4588,6 +4626,12 @@ subroutine fortran_rms_value (val_arr, good_val, ave_val, rms_val) bind(c)
   if (c_associated(val_arr))   call c_f_pointer(val_arr, f_val_arr)
   !! container general array (1D_ALLOC_logical)
   if (c_associated(good_val))   call c_f_pointer(good_val, f_good_val)
+  ! out: f_ave_val 0D_NOT_real
+  if (c_associated(ave_val)) then
+    call c_f_pointer(ave_val, f_ave_val_ptr)
+  else
+    f_ave_val_ptr => null()
+  endif
   f_rms_val = rms_value(f_val_arr%data, f_good_val%data, f_ave_val)
 
   ! out: f_ave_val 0D_NOT_real
@@ -5237,6 +5281,18 @@ subroutine fortran_spline_akima_interpolate (x_knot, y_knot, x, ok, y, dy) bind(
   if (c_associated(y_knot))   call c_f_pointer(y_knot, f_y_knot)
   ! in: f_x 0D_NOT_real
   f_x = x
+  ! out: f_y 0D_NOT_real
+  if (c_associated(y)) then
+    call c_f_pointer(y, f_y_ptr)
+  else
+    f_y_ptr => null()
+  endif
+  ! out: f_dy 0D_NOT_real
+  if (c_associated(dy)) then
+    call c_f_pointer(dy, f_dy_ptr)
+  else
+    f_dy_ptr => null()
+  endif
   call spline_akima_interpolate(f_x_knot%data, f_y_knot%data, f_x, f_ok, f_y, f_dy)
 
   ! out: f_ok 0D_NOT_logical
@@ -5271,6 +5327,18 @@ subroutine fortran_spline_evaluate (spline, x, ok, y, dy) bind(c)
   if (c_associated(spline))   call c_f_pointer(spline, f_spline)
   ! in: f_x 0D_NOT_real
   f_x = x
+  ! out: f_y 0D_NOT_real
+  if (c_associated(y)) then
+    call c_f_pointer(y, f_y_ptr)
+  else
+    f_y_ptr => null()
+  endif
+  ! out: f_dy 0D_NOT_real
+  if (c_associated(dy)) then
+    call c_f_pointer(dy, f_dy_ptr)
+  else
+    f_dy_ptr => null()
+  endif
   call spline_evaluate(f_spline%data, f_x, f_ok, f_y, f_dy)
 
   ! out: f_ok 0D_NOT_logical
@@ -6288,6 +6356,24 @@ subroutine fortran_tricubic_cmplx_eval (x_norm, y_norm, z_norm, tri_coef, df_dx,
   ! in: f_tri_coef 0D_NOT_type
   if (.not. c_associated(tri_coef)) return
   call c_f_pointer(tri_coef, f_tri_coef)
+  ! out: f_df_dx 0D_NOT_complex
+  if (c_associated(df_dx)) then
+    call c_f_pointer(df_dx, f_df_dx_ptr)
+  else
+    f_df_dx_ptr => null()
+  endif
+  ! out: f_df_dy 0D_NOT_complex
+  if (c_associated(df_dy)) then
+    call c_f_pointer(df_dy, f_df_dy_ptr)
+  else
+    f_df_dy_ptr => null()
+  endif
+  ! out: f_df_dz 0D_NOT_complex
+  if (c_associated(df_dz)) then
+    call c_f_pointer(df_dz, f_df_dz_ptr)
+  else
+    f_df_dz_ptr => null()
+  endif
   f_f_val = tricubic_cmplx_eval(f_x_norm, f_y_norm, f_z_norm, f_tri_coef, f_df_dx, f_df_dy, &
       f_df_dz)
 

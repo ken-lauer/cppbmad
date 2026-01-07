@@ -781,6 +781,30 @@ void Bmad::beam_equal_beam(BeamProxy& beam1, BeamProxy& beam2) {
   fortran_beam_equal_beam(
       /* void* */ beam1.get_fortran_ptr(), /* void* */ beam2.get_fortran_ptr());
 }
+void Bmad::beam_init_setup(
+    BeamInitProxy& beam_init_in,
+    EleProxy& ele,
+    int species,
+    optional_ref<NormalModesProxy> modes,
+    std::optional<bool> err_flag,
+    BeamInitProxy& beam_init_set) {
+  auto* _modes = modes.has_value() ? modes->get().get_fortran_ptr()
+                                   : nullptr; // input, optional
+  bool err_flag_lvalue;
+  auto* _err_flag{&err_flag_lvalue};
+  if (err_flag.has_value()) {
+    err_flag_lvalue = err_flag.value();
+  } else {
+    _err_flag = nullptr;
+  }
+  fortran_beam_init_setup(
+      /* void* */ beam_init_in.get_fortran_ptr(),
+      /* void* */ ele.get_fortran_ptr(),
+      /* int& */ species,
+      /* void* */ _modes,
+      /* bool* */ _err_flag,
+      /* void* */ beam_init_set.get_fortran_ptr());
+}
 Bmad::BeamTilts Bmad::beam_tilts(FixedArray2D<Real, 6, 6> S) {
   double _S_vec[6 * 6];
   matrix_to_vec(S, _S_vec);
@@ -9986,30 +10010,6 @@ Bmad::SetEleStatusStale Bmad::set_ele_status_stale() {
       /* int& */ _status_group,
       /* bool& */ _set_slaves);
   return SetEleStatusStale{std::move(_ele), _status_group, _set_slaves};
-}
-void Bmad::set_emit_from_beam_init(
-    BeamInitProxy& beam_init_in,
-    EleProxy& ele,
-    int species,
-    optional_ref<NormalModesProxy> modes,
-    std::optional<bool> err_flag,
-    BeamInitProxy& beam_init_set) {
-  auto* _modes = modes.has_value() ? modes->get().get_fortran_ptr()
-                                   : nullptr; // input, optional
-  bool err_flag_lvalue;
-  auto* _err_flag{&err_flag_lvalue};
-  if (err_flag.has_value()) {
-    err_flag_lvalue = err_flag.value();
-  } else {
-    _err_flag = nullptr;
-  }
-  fortran_set_emit_from_beam_init(
-      /* void* */ beam_init_in.get_fortran_ptr(),
-      /* void* */ ele.get_fortran_ptr(),
-      /* int& */ species,
-      /* void* */ _modes,
-      /* bool* */ _err_flag,
-      /* void* */ beam_init_set.get_fortran_ptr());
 }
 void Bmad::set_flags_for_changed_attribute(
     EleProxy& ele,

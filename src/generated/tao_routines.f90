@@ -2260,6 +2260,14 @@ subroutine fortran_tao_evaluate_a_datum (datum, u, tao_lat, datum_value, valid_v
   ! in: f_tao_lat 0D_NOT_type
   if (.not. c_associated(tao_lat)) return
   call c_f_pointer(tao_lat, f_tao_lat)
+  ! out: f_why_invalid 0D_NOT_character
+  if (c_associated(why_invalid)) then
+    call c_f_pointer(why_invalid, f_why_invalid_ptr, [huge(0)])
+    call to_f_str(f_why_invalid_ptr, f_why_invalid)
+    f_why_invalid_call_ptr => f_why_invalid
+  else
+    f_why_invalid_call_ptr => null()
+  endif
   ! in: f_called_from_lat_calc 0D_NOT_logical
   if (c_associated(called_from_lat_calc)) then
     call c_f_pointer(called_from_lat_calc, f_called_from_lat_calc_ptr)
@@ -2708,6 +2716,18 @@ subroutine fortran_tao_get_opt_vars (var_value, var_step, var_delta, var_weight,
   if (c_associated(var_weight))   call c_f_pointer(var_weight, f_var_weight)
   !! container general array (1D_ALLOC_integer)
   if (c_associated(var_ix))   call c_f_pointer(var_ix, f_var_ix)
+  ! out: f_ignore_if_weight_is_zero 0D_NOT_logical
+  if (c_associated(ignore_if_weight_is_zero)) then
+    call c_f_pointer(ignore_if_weight_is_zero, f_ignore_if_weight_is_zero_ptr)
+  else
+    f_ignore_if_weight_is_zero_ptr => null()
+  endif
+  ! out: f_ignore_if_not_limited 0D_NOT_logical
+  if (c_associated(ignore_if_not_limited)) then
+    call c_f_pointer(ignore_if_not_limited, f_ignore_if_not_limited_ptr)
+  else
+    f_ignore_if_not_limited_ptr => null()
+  endif
   call tao_get_opt_vars(f_var_value%data, f_var_step%data, f_var_delta%data, f_var_weight%data, &
       f_var_ix%data, f_ignore_if_weight_is_zero, f_ignore_if_not_limited)
 
@@ -3166,6 +3186,12 @@ subroutine fortran_tao_init_find_elements (u, search_string, eles, attribute, fo
   else
     f_attribute_call_ptr => null()
   endif
+  ! out: f_found_one 0D_NOT_logical
+  if (c_associated(found_one)) then
+    call c_f_pointer(found_one, f_found_one_ptr)
+  else
+    f_found_one_ptr => null()
+  endif
   call tao_init_find_elements(f_u, f_search_string, f_eles%data, f_attribute_call_ptr, &
       f_found_one)
 
@@ -3611,6 +3637,12 @@ subroutine fortran_tao_lattice_calc (calc_ok, print_err) bind(c)
   logical :: f_print_err
   logical(c_bool), pointer :: f_print_err_ptr
   ! ** End of parameters **
+  ! out: f_print_err 0D_NOT_logical
+  if (c_associated(print_err)) then
+    call c_f_pointer(print_err, f_print_err_ptr)
+  else
+    f_print_err_ptr => null()
+  endif
   call tao_lattice_calc(f_calc_ok, f_print_err)
 
   ! out: f_calc_ok 0D_NOT_logical
@@ -3944,6 +3976,12 @@ subroutine fortran_tao_merit (calc_ok, this_merit) bind(c)
   real(rp) :: f_this_merit
   real(c_double), pointer :: f_this_merit_ptr
   ! ** End of parameters **
+  ! out: f_calc_ok 0D_NOT_logical
+  if (c_associated(calc_ok)) then
+    call c_f_pointer(calc_ok, f_calc_ok_ptr)
+  else
+    f_calc_ok_ptr => null()
+  endif
   f_this_merit = tao_merit(f_calc_ok)
 
   ! out: f_calc_ok 0D_NOT_logical
@@ -4196,6 +4234,26 @@ subroutine fortran_tao_param_value_at_s (dat_name, ele_to_s, ele_here, orbit, er
     return
   endif
   call c_f_pointer(orbit, f_orbit)
+  ! out: f_why_invalid 0D_NOT_character
+  if (c_associated(why_invalid)) then
+    call c_f_pointer(why_invalid, f_why_invalid_ptr, [huge(0)])
+    call to_f_str(f_why_invalid_ptr, f_why_invalid)
+    f_why_invalid_call_ptr => f_why_invalid
+  else
+    f_why_invalid_call_ptr => null()
+  endif
+  ! out: f_print_err 0D_NOT_logical
+  if (c_associated(print_err)) then
+    call c_f_pointer(print_err, f_print_err_ptr)
+  else
+    f_print_err_ptr => null()
+  endif
+  ! out: f_bad_datum 0D_NOT_logical
+  if (c_associated(bad_datum)) then
+    call c_f_pointer(bad_datum, f_bad_datum_ptr)
+  else
+    f_bad_datum_ptr => null()
+  endif
   f_value = tao_param_value_at_s(f_dat_name, f_ele_to_s, f_ele_here, f_orbit, f_err_flag, &
       f_why_invalid_call_ptr, f_print_err, f_bad_datum)
 
@@ -4428,6 +4486,18 @@ subroutine fortran_tao_pick_universe (name_in, name_out, picked, err, ix_uni, ex
   call to_f_str(f_name_in_ptr, f_name_in)
   !! container general array (1D_ALLOC_logical)
   if (c_associated(picked))   call c_f_pointer(picked, f_picked)
+  ! out: f_ix_uni 0D_NOT_integer
+  if (c_associated(ix_uni)) then
+    call c_f_pointer(ix_uni, f_ix_uni_ptr)
+  else
+    f_ix_uni_ptr => null()
+  endif
+  ! out: f_explicit_uni 0D_NOT_logical
+  if (c_associated(explicit_uni)) then
+    call c_f_pointer(explicit_uni, f_explicit_uni_ptr)
+  else
+    f_explicit_uni_ptr => null()
+  endif
   ! in: f_dflt_uni 0D_NOT_integer
   if (c_associated(dflt_uni)) then
     call c_f_pointer(dflt_uni, f_dflt_uni_ptr)
@@ -4725,6 +4795,14 @@ subroutine fortran_tao_pointer_to_datum_ele (lat, ele_name, ix_ele, datum, valid
   ! in: f_datum 0D_NOT_type
   if (.not. c_associated(datum)) return
   call c_f_pointer(datum, f_datum)
+  ! out: f_why_invalid 0D_NOT_character
+  if (c_associated(why_invalid)) then
+    call c_f_pointer(why_invalid, f_why_invalid_ptr, [huge(0)])
+    call to_f_str(f_why_invalid_ptr, f_why_invalid)
+    f_why_invalid_call_ptr => f_why_invalid
+  else
+    f_why_invalid_call_ptr => null()
+  endif
   ! in: f_print_err 0D_NOT_logical
   if (c_associated(print_err)) then
     call c_f_pointer(print_err, f_print_err_ptr)
@@ -4782,6 +4860,20 @@ subroutine fortran_tao_pointer_to_ele_shape (ix_uni, ele, ele_shape, dat_var_nam
   call c_f_pointer(ele, f_ele)
   !! container type array (1D_ALLOC_type)
   if (c_associated(ele_shape))   call c_f_pointer(ele_shape, f_ele_shape)
+  ! out: f_dat_var_name 0D_NOT_character
+  if (c_associated(dat_var_name)) then
+    call c_f_pointer(dat_var_name, f_dat_var_name_ptr, [huge(0)])
+    call to_f_str(f_dat_var_name_ptr, f_dat_var_name)
+    f_dat_var_name_call_ptr => f_dat_var_name
+  else
+    f_dat_var_name_call_ptr => null()
+  endif
+  ! out: f_dat_var_value 0D_NOT_real
+  if (c_associated(dat_var_value)) then
+    call c_f_pointer(dat_var_value, f_dat_var_value_ptr)
+  else
+    f_dat_var_value_ptr => null()
+  endif
   ! inout: f_ix_shape_min 0D_NOT_integer
   if (c_associated(ix_shape_min)) then
     call c_f_pointer(ix_shape_min, f_ix_shape_min_ptr)
@@ -4929,6 +5021,20 @@ subroutine fortran_tao_pointer_to_universes (name_in, unis, err, name_out, expli
   call to_f_str(f_name_in_ptr, f_name_in)
   !! container type array (1D_ALLOC_type)
   if (c_associated(unis))   call c_f_pointer(unis, f_unis)
+  ! out: f_name_out 0D_NOT_character
+  if (c_associated(name_out)) then
+    call c_f_pointer(name_out, f_name_out_ptr, [huge(0)])
+    call to_f_str(f_name_out_ptr, f_name_out)
+    f_name_out_call_ptr => f_name_out
+  else
+    f_name_out_call_ptr => null()
+  endif
+  ! out: f_explicit_uni 0D_NOT_logical
+  if (c_associated(explicit_uni)) then
+    call c_f_pointer(explicit_uni, f_explicit_uni_ptr)
+  else
+    f_explicit_uni_ptr => null()
+  endif
   ! in: f_dflt_uni 0D_NOT_integer
   if (c_associated(dflt_uni)) then
     call c_f_pointer(dflt_uni, f_dflt_uni_ptr)
@@ -6135,6 +6241,14 @@ subroutine fortran_tao_set_invalid (datum, message, why_invalid, exterminate, er
   if (.not. c_associated(message)) return
   call c_f_pointer(message, f_message_ptr, [huge(0)])
   call to_f_str(f_message_ptr, f_message)
+  ! out: f_why_invalid 0D_NOT_character
+  if (c_associated(why_invalid)) then
+    call c_f_pointer(why_invalid, f_why_invalid_ptr, [huge(0)])
+    call to_f_str(f_why_invalid_ptr, f_why_invalid)
+    f_why_invalid_call_ptr => f_why_invalid
+  else
+    f_why_invalid_call_ptr => null()
+  endif
   ! in: f_exterminate 0D_NOT_logical
   if (c_associated(exterminate)) then
     call c_f_pointer(exterminate, f_exterminate_ptr)
@@ -6450,6 +6564,12 @@ subroutine fortran_tao_set_qp_axis_struct (qp_axis_name, component, qp_axis, val
   if (.not. c_associated(value)) return
   call c_f_pointer(value, f_value_ptr, [huge(0)])
   call to_f_str(f_value_ptr, f_value)
+  ! out: f_ix_uni 0D_NOT_integer
+  if (c_associated(ix_uni)) then
+    call c_f_pointer(ix_uni, f_ix_uni_ptr)
+  else
+    f_ix_uni_ptr => null()
+  endif
   call tao_set_qp_axis_struct(f_qp_axis_name, f_component, f_qp_axis, f_value, f_error, &
       f_ix_uni)
 
@@ -6500,6 +6620,12 @@ subroutine fortran_tao_set_qp_point_struct (qp_point_name, component, qp_point, 
   if (.not. c_associated(value)) return
   call c_f_pointer(value, f_value_ptr, [huge(0)])
   call to_f_str(f_value_ptr, f_value)
+  ! out: f_ix_uni 0D_NOT_integer
+  if (c_associated(ix_uni)) then
+    call c_f_pointer(ix_uni, f_ix_uni_ptr)
+  else
+    f_ix_uni_ptr => null()
+  endif
   call tao_set_qp_point_struct(f_qp_point_name, f_component, f_qp_point, f_value, f_error, &
       f_ix_uni)
 
@@ -6550,6 +6676,12 @@ subroutine fortran_tao_set_qp_rect_struct (qp_rect_name, component, qp_rect, val
   if (.not. c_associated(value)) return
   call c_f_pointer(value, f_value_ptr, [huge(0)])
   call to_f_str(f_value_ptr, f_value)
+  ! out: f_ix_uni 0D_NOT_integer
+  if (c_associated(ix_uni)) then
+    call c_f_pointer(ix_uni, f_ix_uni_ptr)
+  else
+    f_ix_uni_ptr => null()
+  endif
   call tao_set_qp_rect_struct(f_qp_rect_name, f_component, f_qp_rect, f_value, f_error, &
       f_ix_uni)
 
@@ -7476,6 +7608,12 @@ subroutine fortran_tao_top_level (command, errcode) bind(c)
   else
     f_command_call_ptr => null()
   endif
+  ! out: f_errcode 0D_NOT_integer
+  if (c_associated(errcode)) then
+    call c_f_pointer(errcode, f_errcode_ptr)
+  else
+    f_errcode_ptr => null()
+  endif
   call tao_top_level(f_command_call_ptr, f_errcode)
 
   ! out: f_errcode 0D_NOT_integer
@@ -7505,6 +7643,12 @@ subroutine fortran_tao_tracking_ele_index (ele, datum, ix_branch, ix_ele) bind(c
   ! in: f_datum 0D_NOT_type
   if (.not. c_associated(datum)) return
   call c_f_pointer(datum, f_datum)
+  ! out: f_ix_branch 0D_NOT_integer
+  if (c_associated(ix_branch)) then
+    call c_f_pointer(ix_branch, f_ix_branch_ptr)
+  else
+    f_ix_branch_ptr => null()
+  endif
   f_ix_ele = tao_tracking_ele_index(f_ele, f_datum, f_ix_branch)
 
   ! out: f_ix_branch 0D_NOT_integer
@@ -8129,6 +8273,12 @@ subroutine fortran_tao_x_scale_plot (plot, x_min_in, x_max_in, include_wall, gan
     f_gang_call_ptr => f_gang
   else
     f_gang_call_ptr => null()
+  endif
+  ! out: f_have_scaled 0D_NOT_logical
+  if (c_associated(have_scaled)) then
+    call c_f_pointer(have_scaled, f_have_scaled_ptr)
+  else
+    f_have_scaled_ptr => null()
   endif
   call tao_x_scale_plot(f_plot, f_x_min_in, f_x_max_in, f_include_wall_native_ptr, &
       f_gang_call_ptr, f_have_scaled)
