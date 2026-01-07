@@ -12,6 +12,7 @@ module bmad_struct_proxy_mod
   use srdt_mod, only: summation_rdt_struct
   use quick_plot_struct, only: qp_axis_struct, qp_legend_struct, qp_line_struct, qp_point_struct, qp_rect_struct, qp_symbol_struct
   use mad_mod, only: mad_energy_struct, mad_map_struct
+  use bbu_track_mod, only: bbu_beam_struct, bbu_param_struct, bbu_stage_struct
   use test_struct_defs, only: all_encompassing_struct, test_sub_struct, test_sub_sub_struct
   
   type :: spline_struct_container_alloc
@@ -685,6 +686,18 @@ module bmad_struct_proxy_mod
   type :: mad_map_struct_container_alloc
     type(mad_map_struct), allocatable :: data(:)
   end type mad_map_struct_container_alloc
+
+  type :: bbu_stage_struct_container_alloc
+    type(bbu_stage_struct), allocatable :: data(:)
+  end type bbu_stage_struct_container_alloc
+
+  type :: bbu_beam_struct_container_alloc
+    type(bbu_beam_struct), allocatable :: data(:)
+  end type bbu_beam_struct_container_alloc
+
+  type :: bbu_param_struct_container_alloc
+    type(bbu_param_struct), allocatable :: data(:)
+  end type bbu_param_struct_container_alloc
 
   type :: all_encompassing_struct_container_alloc
     type(all_encompassing_struct), allocatable :: data(:)
@@ -56010,6 +56023,1617 @@ contains
       strides = 0_c_int
       is_allocated = .false.
     endif
+  end subroutine
+
+  !! bbu_stage_struct
+
+    function allocate_fortran_bbu_stage_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(bbu_stage_struct), pointer :: fptr
+      type(bbu_stage_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_bbu_stage_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(bbu_stage_struct), pointer :: fptr
+      type(bbu_stage_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_bbu_stage_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(bbu_stage_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_bbu_stage_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(bbu_stage_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_bbu_stage_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(bbu_stage_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_bbu_stage_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bbu_stage_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_bbu_stage_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(bbu_stage_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! bbu_stage_struct%ix_ele_lr_wake: 0D_NOT_integer
+
+  subroutine bbu_stage_struct_get_ix_ele_lr_wake(struct_obj_ptr, value_out) bind(c, name='bbu_stage_struct_get_ix_ele_lr_wake')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_ele_lr_wake
+  end subroutine
+
+
+  subroutine bbu_stage_struct_set_ix_ele_lr_wake(struct_obj_ptr, value_in) bind(c, name='bbu_stage_struct_set_ix_ele_lr_wake')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_ele_lr_wake = value_in
+  end subroutine
+
+  ! bbu_stage_struct%ix_ele_stage_end: 0D_NOT_integer
+
+  subroutine bbu_stage_struct_get_ix_ele_stage_end(struct_obj_ptr, value_out) bind(c, name='bbu_stage_struct_get_ix_ele_stage_end')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_ele_stage_end
+  end subroutine
+
+
+  subroutine bbu_stage_struct_set_ix_ele_stage_end(struct_obj_ptr, value_in) bind(c, name='bbu_stage_struct_set_ix_ele_stage_end')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_ele_stage_end = value_in
+  end subroutine
+
+  ! bbu_stage_struct%ix_pass: 0D_NOT_integer
+
+  subroutine bbu_stage_struct_get_ix_pass(struct_obj_ptr, value_out) bind(c, name='bbu_stage_struct_get_ix_pass')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_pass
+  end subroutine
+
+
+  subroutine bbu_stage_struct_set_ix_pass(struct_obj_ptr, value_in) bind(c, name='bbu_stage_struct_set_ix_pass')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_pass = value_in
+  end subroutine
+
+  ! bbu_stage_struct%ix_stage_pass1: 0D_NOT_integer
+
+  subroutine bbu_stage_struct_get_ix_stage_pass1(struct_obj_ptr, value_out) bind(c, name='bbu_stage_struct_get_ix_stage_pass1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_stage_pass1
+  end subroutine
+
+
+  subroutine bbu_stage_struct_set_ix_stage_pass1(struct_obj_ptr, value_in) bind(c, name='bbu_stage_struct_set_ix_stage_pass1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_stage_pass1 = value_in
+  end subroutine
+
+  ! bbu_stage_struct%ix_head_bunch: 0D_NOT_integer
+
+  subroutine bbu_stage_struct_get_ix_head_bunch(struct_obj_ptr, value_out) bind(c, name='bbu_stage_struct_get_ix_head_bunch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_head_bunch
+  end subroutine
+
+
+  subroutine bbu_stage_struct_set_ix_head_bunch(struct_obj_ptr, value_in) bind(c, name='bbu_stage_struct_set_ix_head_bunch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_head_bunch = value_in
+  end subroutine
+
+  ! bbu_stage_struct%ix_hom_max: 0D_NOT_integer
+
+  subroutine bbu_stage_struct_get_ix_hom_max(struct_obj_ptr, value_out) bind(c, name='bbu_stage_struct_get_ix_hom_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_hom_max
+  end subroutine
+
+
+  subroutine bbu_stage_struct_set_ix_hom_max(struct_obj_ptr, value_in) bind(c, name='bbu_stage_struct_set_ix_hom_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_hom_max = value_in
+  end subroutine
+
+  ! bbu_stage_struct%hom_voltage_max: 0D_NOT_real
+
+  subroutine bbu_stage_struct_get_hom_voltage_max(struct_obj_ptr, value_out) bind(c, name='bbu_stage_struct_get_hom_voltage_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%hom_voltage_max
+  end subroutine
+
+
+  subroutine bbu_stage_struct_set_hom_voltage_max(struct_obj_ptr, value_in) bind(c, name='bbu_stage_struct_set_hom_voltage_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%hom_voltage_max = value_in
+  end subroutine
+
+  ! bbu_stage_struct%time_at_wake_ele: 0D_NOT_real
+
+  subroutine bbu_stage_struct_get_time_at_wake_ele(struct_obj_ptr, value_out) bind(c, name='bbu_stage_struct_get_time_at_wake_ele')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%time_at_wake_ele
+  end subroutine
+
+
+  subroutine bbu_stage_struct_set_time_at_wake_ele(struct_obj_ptr, value_in) bind(c, name='bbu_stage_struct_set_time_at_wake_ele')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%time_at_wake_ele = value_in
+  end subroutine
+
+  ! bbu_stage_struct%ave_orb: 1D_NOT_real
+
+  subroutine bbu_stage_struct_get_ave_orb_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='bbu_stage_struct_get_ave_orb_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(bbu_stage_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%ave_orb)) then
+      data_ptr = c_loc(struct_obj%ave_orb(lbound(struct_obj%ave_orb, 1)))
+      bounds(1) = int(lbound(struct_obj%ave_orb, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%ave_orb, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! bbu_stage_struct%rms_orb: 1D_NOT_real
+
+  subroutine bbu_stage_struct_get_rms_orb_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='bbu_stage_struct_get_rms_orb_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(bbu_stage_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%rms_orb)) then
+      data_ptr = c_loc(struct_obj%rms_orb(lbound(struct_obj%rms_orb, 1)))
+      bounds(1) = int(lbound(struct_obj%rms_orb, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%rms_orb, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! bbu_stage_struct%min_orb: 1D_NOT_real
+
+  subroutine bbu_stage_struct_get_min_orb_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='bbu_stage_struct_get_min_orb_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(bbu_stage_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%min_orb)) then
+      data_ptr = c_loc(struct_obj%min_orb(lbound(struct_obj%min_orb, 1)))
+      bounds(1) = int(lbound(struct_obj%min_orb, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%min_orb, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! bbu_stage_struct%max_orb: 1D_NOT_real
+
+  subroutine bbu_stage_struct_get_max_orb_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='bbu_stage_struct_get_max_orb_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(bbu_stage_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%max_orb)) then
+      data_ptr = c_loc(struct_obj%max_orb(lbound(struct_obj%max_orb, 1)))
+      bounds(1) = int(lbound(struct_obj%max_orb, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%max_orb, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! bbu_stage_struct%n_orb: 0D_NOT_integer
+
+  subroutine bbu_stage_struct_get_n_orb(struct_obj_ptr, value_out) bind(c, name='bbu_stage_struct_get_n_orb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_orb
+  end subroutine
+
+
+  subroutine bbu_stage_struct_set_n_orb(struct_obj_ptr, value_in) bind(c, name='bbu_stage_struct_set_n_orb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_stage_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_orb = value_in
+  end subroutine
+
+  !! bbu_beam_struct
+
+    function allocate_fortran_bbu_beam_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(bbu_beam_struct), pointer :: fptr
+      type(bbu_beam_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_bbu_beam_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(bbu_beam_struct), pointer :: fptr
+      type(bbu_beam_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_bbu_beam_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(bbu_beam_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_bbu_beam_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(bbu_beam_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_bbu_beam_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(bbu_beam_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_bbu_beam_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bbu_beam_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_bbu_beam_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(bbu_beam_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! bbu_beam_struct%bunch: 1D_ALLOC_type
+
+  subroutine bbu_beam_struct_get_bunch_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='bbu_beam_struct_get_bunch_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(bbu_beam_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%bunch) .and. is_contiguous(struct_obj%bunch)) then
+      data_ptr = c_loc(struct_obj%bunch(lbound(struct_obj%bunch, 1)))
+      bounds(1) = int(lbound(struct_obj%bunch, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%bunch, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%bunch(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! bbu_beam_struct%stage: 1D_ALLOC_type
+
+  subroutine bbu_beam_struct_get_stage_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='bbu_beam_struct_get_stage_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(bbu_beam_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%stage) .and. is_contiguous(struct_obj%stage)) then
+      data_ptr = c_loc(struct_obj%stage(lbound(struct_obj%stage, 1)))
+      bounds(1) = int(lbound(struct_obj%stage, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%stage, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%stage(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! bbu_beam_struct%ix_ele_bunch: 1D_ALLOC_integer
+
+  subroutine bbu_beam_struct_get_ix_ele_bunch_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='bbu_beam_struct_get_ix_ele_bunch_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(bbu_beam_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%ix_ele_bunch) .and. is_contiguous(struct_obj%ix_ele_bunch)) then
+      data_ptr = c_loc(struct_obj%ix_ele_bunch(lbound(struct_obj%ix_ele_bunch, 1)))
+      bounds(1) = int(lbound(struct_obj%ix_ele_bunch, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%ix_ele_bunch, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! bbu_beam_struct%ix_bunch_head: 0D_NOT_integer
+
+  subroutine bbu_beam_struct_get_ix_bunch_head(struct_obj_ptr, value_out) bind(c, name='bbu_beam_struct_get_ix_bunch_head')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_beam_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_bunch_head
+  end subroutine
+
+
+  subroutine bbu_beam_struct_set_ix_bunch_head(struct_obj_ptr, value_in) bind(c, name='bbu_beam_struct_set_ix_bunch_head')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_beam_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_bunch_head = value_in
+  end subroutine
+
+  ! bbu_beam_struct%ix_bunch_end: 0D_NOT_integer
+
+  subroutine bbu_beam_struct_get_ix_bunch_end(struct_obj_ptr, value_out) bind(c, name='bbu_beam_struct_get_ix_bunch_end')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_beam_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_bunch_end
+  end subroutine
+
+
+  subroutine bbu_beam_struct_set_ix_bunch_end(struct_obj_ptr, value_in) bind(c, name='bbu_beam_struct_set_ix_bunch_end')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_beam_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_bunch_end = value_in
+  end subroutine
+
+  ! bbu_beam_struct%n_bunch_in_lat: 0D_NOT_integer
+
+  subroutine bbu_beam_struct_get_n_bunch_in_lat(struct_obj_ptr, value_out) bind(c, name='bbu_beam_struct_get_n_bunch_in_lat')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_beam_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_bunch_in_lat
+  end subroutine
+
+
+  subroutine bbu_beam_struct_set_n_bunch_in_lat(struct_obj_ptr, value_in) bind(c, name='bbu_beam_struct_set_n_bunch_in_lat')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_beam_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_bunch_in_lat = value_in
+  end subroutine
+
+  ! bbu_beam_struct%ix_stage_voltage_max: 0D_NOT_integer
+
+  subroutine bbu_beam_struct_get_ix_stage_voltage_max(struct_obj_ptr, value_out) bind(c, name='bbu_beam_struct_get_ix_stage_voltage_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_beam_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_stage_voltage_max
+  end subroutine
+
+
+  subroutine bbu_beam_struct_set_ix_stage_voltage_max(struct_obj_ptr, value_in) bind(c, name='bbu_beam_struct_set_ix_stage_voltage_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_beam_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_stage_voltage_max = value_in
+  end subroutine
+
+  ! bbu_beam_struct%hom_voltage_max: 0D_NOT_real
+
+  subroutine bbu_beam_struct_get_hom_voltage_max(struct_obj_ptr, value_out) bind(c, name='bbu_beam_struct_get_hom_voltage_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(bbu_beam_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%hom_voltage_max
+  end subroutine
+
+
+  subroutine bbu_beam_struct_set_hom_voltage_max(struct_obj_ptr, value_in) bind(c, name='bbu_beam_struct_set_hom_voltage_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(bbu_beam_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%hom_voltage_max = value_in
+  end subroutine
+
+  ! bbu_beam_struct%time_now: 0D_NOT_real
+
+  subroutine bbu_beam_struct_get_time_now(struct_obj_ptr, value_out) bind(c, name='bbu_beam_struct_get_time_now')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(bbu_beam_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%time_now
+  end subroutine
+
+
+  subroutine bbu_beam_struct_set_time_now(struct_obj_ptr, value_in) bind(c, name='bbu_beam_struct_set_time_now')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(bbu_beam_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%time_now = value_in
+  end subroutine
+
+  ! bbu_beam_struct%one_turn_time: 0D_NOT_real
+
+  subroutine bbu_beam_struct_get_one_turn_time(struct_obj_ptr, value_out) bind(c, name='bbu_beam_struct_get_one_turn_time')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(bbu_beam_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%one_turn_time
+  end subroutine
+
+
+  subroutine bbu_beam_struct_set_one_turn_time(struct_obj_ptr, value_in) bind(c, name='bbu_beam_struct_set_one_turn_time')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(bbu_beam_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%one_turn_time = value_in
+  end subroutine
+
+  ! bbu_beam_struct%rf_wavelength_max: 0D_NOT_real
+
+  subroutine bbu_beam_struct_get_rf_wavelength_max(struct_obj_ptr, value_out) bind(c, name='bbu_beam_struct_get_rf_wavelength_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(bbu_beam_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rf_wavelength_max
+  end subroutine
+
+
+  subroutine bbu_beam_struct_set_rf_wavelength_max(struct_obj_ptr, value_in) bind(c, name='bbu_beam_struct_set_rf_wavelength_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(bbu_beam_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rf_wavelength_max = value_in
+  end subroutine
+
+  !! bbu_param_struct
+
+    function allocate_fortran_bbu_param_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(bbu_param_struct), pointer :: fptr
+      type(bbu_param_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_bbu_param_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(bbu_param_struct), pointer :: fptr
+      type(bbu_param_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_bbu_param_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(bbu_param_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_bbu_param_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(bbu_param_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_bbu_param_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(bbu_param_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_bbu_param_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bbu_param_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_bbu_param_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(bbu_param_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! bbu_param_struct%lat_filename: 0D_NOT_character
+
+  subroutine bbu_param_struct_get_lat_filename_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='bbu_param_struct_get_lat_filename_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%lat_filename)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%lat_filename), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_lat_filename(struct_obj_ptr, str_ptr, str_len) bind(c, name='bbu_param_struct_set_lat_filename')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(bbu_param_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%lat_filename = str_in ! implicitly handles padding
+  end subroutine
+
+  ! bbu_param_struct%lat2_filename: 0D_NOT_character
+
+  subroutine bbu_param_struct_get_lat2_filename_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='bbu_param_struct_get_lat2_filename_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%lat2_filename)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%lat2_filename), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_lat2_filename(struct_obj_ptr, str_ptr, str_len) bind(c, name='bbu_param_struct_set_lat2_filename')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(bbu_param_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%lat2_filename = str_in ! implicitly handles padding
+  end subroutine
+
+  ! bbu_param_struct%bunch_by_bunch_info_file: 0D_NOT_character
+
+  subroutine bbu_param_struct_get_bunch_by_bunch_info_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='bbu_param_struct_get_bunch_by_bunch_info_file_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%bunch_by_bunch_info_file)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%bunch_by_bunch_info_file), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_bunch_by_bunch_info_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='bbu_param_struct_set_bunch_by_bunch_info_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(bbu_param_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%bunch_by_bunch_info_file = str_in ! implicitly handles padding
+  end subroutine
+
+  ! bbu_param_struct%hybridize: 0D_NOT_logical
+
+  subroutine bbu_param_struct_get_hybridize(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_hybridize')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%hybridize
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_hybridize(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_hybridize')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%hybridize = value_in
+  end subroutine
+
+  ! bbu_param_struct%write_digested_hybrid_lat: 0D_NOT_logical
+
+  subroutine bbu_param_struct_get_write_digested_hybrid_lat(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_write_digested_hybrid_lat')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%write_digested_hybrid_lat
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_write_digested_hybrid_lat(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_write_digested_hybrid_lat')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%write_digested_hybrid_lat = value_in
+  end subroutine
+
+  ! bbu_param_struct%write_voltage_vs_time_dat: 0D_NOT_logical
+
+  subroutine bbu_param_struct_get_write_voltage_vs_time_dat(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_write_voltage_vs_time_dat')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%write_voltage_vs_time_dat
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_write_voltage_vs_time_dat(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_write_voltage_vs_time_dat')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%write_voltage_vs_time_dat = value_in
+  end subroutine
+
+  ! bbu_param_struct%keep_overlays_and_groups: 0D_NOT_logical
+
+  subroutine bbu_param_struct_get_keep_overlays_and_groups(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_keep_overlays_and_groups')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%keep_overlays_and_groups
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_keep_overlays_and_groups(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_keep_overlays_and_groups')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%keep_overlays_and_groups = value_in
+  end subroutine
+
+  ! bbu_param_struct%keep_all_lcavities: 0D_NOT_logical
+
+  subroutine bbu_param_struct_get_keep_all_lcavities(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_keep_all_lcavities')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%keep_all_lcavities
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_keep_all_lcavities(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_keep_all_lcavities')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%keep_all_lcavities = value_in
+  end subroutine
+
+  ! bbu_param_struct%use_taylor_for_hybrids: 0D_NOT_logical
+
+  subroutine bbu_param_struct_get_use_taylor_for_hybrids(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_use_taylor_for_hybrids')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%use_taylor_for_hybrids
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_use_taylor_for_hybrids(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_use_taylor_for_hybrids')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%use_taylor_for_hybrids = value_in
+  end subroutine
+
+  ! bbu_param_struct%stable_orbit_anal: 0D_NOT_logical
+
+  subroutine bbu_param_struct_get_stable_orbit_anal(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_stable_orbit_anal')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%stable_orbit_anal
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_stable_orbit_anal(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_stable_orbit_anal')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%stable_orbit_anal = value_in
+  end subroutine
+
+  ! bbu_param_struct%limit_factor: 0D_NOT_real
+
+  subroutine bbu_param_struct_get_limit_factor(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_limit_factor')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%limit_factor
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_limit_factor(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_limit_factor')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%limit_factor = value_in
+  end subroutine
+
+  ! bbu_param_struct%simulation_turns_max: 0D_NOT_real
+
+  subroutine bbu_param_struct_get_simulation_turns_max(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_simulation_turns_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%simulation_turns_max
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_simulation_turns_max(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_simulation_turns_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%simulation_turns_max = value_in
+  end subroutine
+
+  ! bbu_param_struct%bunch_freq: 0D_NOT_real
+
+  subroutine bbu_param_struct_get_bunch_freq(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_bunch_freq')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%bunch_freq
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_bunch_freq(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_bunch_freq')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%bunch_freq = value_in
+  end subroutine
+
+  ! bbu_param_struct%init_particle_offset: 0D_NOT_real
+
+  subroutine bbu_param_struct_get_init_particle_offset(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_init_particle_offset')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%init_particle_offset
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_init_particle_offset(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_init_particle_offset')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%init_particle_offset = value_in
+  end subroutine
+
+  ! bbu_param_struct%current: 0D_NOT_real
+
+  subroutine bbu_param_struct_get_current(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_current')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%current
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_current(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_current')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%current = value_in
+  end subroutine
+
+  ! bbu_param_struct%rel_tol: 0D_NOT_real
+
+  subroutine bbu_param_struct_get_rel_tol(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_rel_tol')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%rel_tol
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_rel_tol(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_rel_tol')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%rel_tol = value_in
+  end subroutine
+
+  ! bbu_param_struct%drscan: 0D_NOT_logical
+
+  subroutine bbu_param_struct_get_drscan(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_drscan')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%drscan
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_drscan(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_drscan')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%drscan = value_in
+  end subroutine
+
+  ! bbu_param_struct%use_interpolated_threshold: 0D_NOT_logical
+
+  subroutine bbu_param_struct_get_use_interpolated_threshold(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_use_interpolated_threshold')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%use_interpolated_threshold
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_use_interpolated_threshold(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_use_interpolated_threshold')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%use_interpolated_threshold = value_in
+  end subroutine
+
+  ! bbu_param_struct%write_hom_info: 0D_NOT_logical
+
+  subroutine bbu_param_struct_get_write_hom_info(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_write_hom_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%write_hom_info
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_write_hom_info(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_write_hom_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%write_hom_info = value_in
+  end subroutine
+
+  ! bbu_param_struct%elindex: 0D_NOT_integer
+
+  subroutine bbu_param_struct_get_elindex(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_elindex')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%elindex
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_elindex(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_elindex')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%elindex = value_in
+  end subroutine
+
+  ! bbu_param_struct%elname: 0D_NOT_character
+
+  subroutine bbu_param_struct_get_elname_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='bbu_param_struct_get_elname_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%elname)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%elname), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_elname(struct_obj_ptr, str_ptr, str_len) bind(c, name='bbu_param_struct_set_elname')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(bbu_param_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%elname = str_in ! implicitly handles padding
+  end subroutine
+
+  ! bbu_param_struct%nstep: 0D_NOT_integer
+
+  subroutine bbu_param_struct_get_nstep(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_nstep')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%nstep
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_nstep(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_nstep')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%nstep = value_in
+  end subroutine
+
+  ! bbu_param_struct%begdr: 0D_NOT_real
+
+  subroutine bbu_param_struct_get_begdr(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_begdr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%begdr
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_begdr(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_begdr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%begdr = value_in
+  end subroutine
+
+  ! bbu_param_struct%enddr: 0D_NOT_real
+
+  subroutine bbu_param_struct_get_enddr(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_enddr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%enddr
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_enddr(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_enddr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%enddr = value_in
+  end subroutine
+
+  ! bbu_param_struct%nrep: 0D_NOT_integer
+
+  subroutine bbu_param_struct_get_nrep(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_nrep')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%nrep
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_nrep(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_nrep')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%nrep = value_in
+  end subroutine
+
+  ! bbu_param_struct%ran_seed: 0D_NOT_integer
+
+  subroutine bbu_param_struct_get_ran_seed(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_ran_seed')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ran_seed
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_ran_seed(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_ran_seed')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ran_seed = value_in
+  end subroutine
+
+  ! bbu_param_struct%hom_order_cutoff: 0D_NOT_integer
+
+  subroutine bbu_param_struct_get_hom_order_cutoff(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_hom_order_cutoff')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%hom_order_cutoff
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_hom_order_cutoff(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_hom_order_cutoff')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%hom_order_cutoff = value_in
+  end subroutine
+
+  ! bbu_param_struct%ran_gauss_sigma_cut: 0D_NOT_real
+
+  subroutine bbu_param_struct_get_ran_gauss_sigma_cut(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_ran_gauss_sigma_cut')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ran_gauss_sigma_cut
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_ran_gauss_sigma_cut(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_ran_gauss_sigma_cut')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ran_gauss_sigma_cut = value_in
+  end subroutine
+
+  ! bbu_param_struct%ele_track_end: 0D_NOT_character
+
+  subroutine bbu_param_struct_get_ele_track_end_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='bbu_param_struct_get_ele_track_end_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%ele_track_end)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%ele_track_end), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_ele_track_end(struct_obj_ptr, str_ptr, str_len) bind(c, name='bbu_param_struct_set_ele_track_end')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(bbu_param_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%ele_track_end = str_in ! implicitly handles padding
+  end subroutine
+
+  ! bbu_param_struct%ix_ele_track_end: 0D_NOT_integer
+
+  subroutine bbu_param_struct_get_ix_ele_track_end(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_ix_ele_track_end')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix_ele_track_end
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_ix_ele_track_end(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_ix_ele_track_end')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix_ele_track_end = value_in
+  end subroutine
+
+  ! bbu_param_struct%regression: 0D_NOT_logical
+
+  subroutine bbu_param_struct_get_regression(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_regression')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%regression
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_regression(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_regression')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%regression = value_in
+  end subroutine
+
+  ! bbu_param_struct%normalize_z_to_rf: 0D_NOT_logical
+
+  subroutine bbu_param_struct_get_normalize_z_to_rf(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_normalize_z_to_rf')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%normalize_z_to_rf
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_normalize_z_to_rf(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_normalize_z_to_rf')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%normalize_z_to_rf = value_in
+  end subroutine
+
+  ! bbu_param_struct%ramp_on: 0D_NOT_logical
+
+  subroutine bbu_param_struct_get_ramp_on(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_ramp_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ramp_on
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_ramp_on(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_ramp_on')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ramp_on = value_in
+  end subroutine
+
+  ! bbu_param_struct%ramp_pattern: 1D_NOT_real
+
+  subroutine bbu_param_struct_get_ramp_pattern_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='bbu_param_struct_get_ramp_pattern_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(bbu_param_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%ramp_pattern)) then
+      data_ptr = c_loc(struct_obj%ramp_pattern(lbound(struct_obj%ramp_pattern, 1)))
+      bounds(1) = int(lbound(struct_obj%ramp_pattern, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%ramp_pattern, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! bbu_param_struct%ramp_n_start: 0D_NOT_integer
+
+  subroutine bbu_param_struct_get_ramp_n_start(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_ramp_n_start')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ramp_n_start
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_ramp_n_start(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_ramp_n_start')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ramp_n_start = value_in
+  end subroutine
+
+  ! bbu_param_struct%n_ramp_pattern: 0D_NOT_integer
+
+  subroutine bbu_param_struct_get_n_ramp_pattern(struct_obj_ptr, value_out) bind(c, name='bbu_param_struct_get_n_ramp_pattern')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%n_ramp_pattern
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_n_ramp_pattern(struct_obj_ptr, value_in) bind(c, name='bbu_param_struct_set_n_ramp_pattern')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(bbu_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%n_ramp_pattern = value_in
   end subroutine
 
   !! all_encompassing_struct

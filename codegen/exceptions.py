@@ -7,3 +7,7 @@ class RoutineNotFoundError(Exception):
 
 class RenameError(Exception):
     pass
+
+
+class UnsupportedTypeError(Exception):
+    pass

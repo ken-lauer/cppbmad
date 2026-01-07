@@ -6817,6 +6817,256 @@ void mad_map_struct_get_t_info(
     int* bounds,
     int* strides,
     bool* is_alloc);
+void bbu_stage_struct_get_ix_ele_lr_wake(
+    const void* struct_obj,
+    int* value_out);
+void bbu_stage_struct_set_ix_ele_lr_wake(void* struct_obj, int value_in);
+void bbu_stage_struct_get_ix_ele_stage_end(
+    const void* struct_obj,
+    int* value_out);
+void bbu_stage_struct_set_ix_ele_stage_end(void* struct_obj, int value_in);
+void bbu_stage_struct_get_ix_pass(const void* struct_obj, int* value_out);
+void bbu_stage_struct_set_ix_pass(void* struct_obj, int value_in);
+void bbu_stage_struct_get_ix_stage_pass1(
+    const void* struct_obj,
+    int* value_out);
+void bbu_stage_struct_set_ix_stage_pass1(void* struct_obj, int value_in);
+void bbu_stage_struct_get_ix_head_bunch(const void* struct_obj, int* value_out);
+void bbu_stage_struct_set_ix_head_bunch(void* struct_obj, int value_in);
+void bbu_stage_struct_get_ix_hom_max(const void* struct_obj, int* value_out);
+void bbu_stage_struct_set_ix_hom_max(void* struct_obj, int value_in);
+void bbu_stage_struct_get_hom_voltage_max(
+    const void* struct_obj,
+    double* value_out);
+void bbu_stage_struct_set_hom_voltage_max(void* struct_obj, double value_in);
+void bbu_stage_struct_get_time_at_wake_ele(
+    const void* struct_obj,
+    double* value_out);
+void bbu_stage_struct_set_time_at_wake_ele(void* struct_obj, double value_in);
+void bbu_stage_struct_get_ave_orb_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void bbu_stage_struct_get_rms_orb_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void bbu_stage_struct_get_min_orb_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void bbu_stage_struct_get_max_orb_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void bbu_stage_struct_get_n_orb(const void* struct_obj, int* value_out);
+void bbu_stage_struct_set_n_orb(void* struct_obj, int value_in);
+
+void bbu_beam_struct_get_bunch_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void bbu_beam_struct_get_stage_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void bbu_beam_struct_get_ix_ele_bunch_info(
+    const void* s,
+    int** d,
+    int* bounds,
+    bool* is_alloc);
+void bbu_beam_struct_get_ix_bunch_head(const void* struct_obj, int* value_out);
+void bbu_beam_struct_set_ix_bunch_head(void* struct_obj, int value_in);
+void bbu_beam_struct_get_ix_bunch_end(const void* struct_obj, int* value_out);
+void bbu_beam_struct_set_ix_bunch_end(void* struct_obj, int value_in);
+void bbu_beam_struct_get_n_bunch_in_lat(const void* struct_obj, int* value_out);
+void bbu_beam_struct_set_n_bunch_in_lat(void* struct_obj, int value_in);
+void bbu_beam_struct_get_ix_stage_voltage_max(
+    const void* struct_obj,
+    int* value_out);
+void bbu_beam_struct_set_ix_stage_voltage_max(void* struct_obj, int value_in);
+void bbu_beam_struct_get_hom_voltage_max(
+    const void* struct_obj,
+    double* value_out);
+void bbu_beam_struct_set_hom_voltage_max(void* struct_obj, double value_in);
+void bbu_beam_struct_get_time_now(const void* struct_obj, double* value_out);
+void bbu_beam_struct_set_time_now(void* struct_obj, double value_in);
+void bbu_beam_struct_get_one_turn_time(
+    const void* struct_obj,
+    double* value_out);
+void bbu_beam_struct_set_one_turn_time(void* struct_obj, double value_in);
+void bbu_beam_struct_get_rf_wavelength_max(
+    const void* struct_obj,
+    double* value_out);
+void bbu_beam_struct_set_rf_wavelength_max(void* struct_obj, double value_in);
+void bbu_param_struct_get_lat_filename_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void bbu_param_struct_set_lat_filename(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void bbu_param_struct_get_lat2_filename_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void bbu_param_struct_set_lat2_filename(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void bbu_param_struct_get_bunch_by_bunch_info_file_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void bbu_param_struct_set_bunch_by_bunch_info_file(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void bbu_param_struct_get_hybridize(const void* struct_obj, bool* value_out);
+void bbu_param_struct_set_hybridize(void* struct_obj, bool value_in);
+void bbu_param_struct_get_write_digested_hybrid_lat(
+    const void* struct_obj,
+    bool* value_out);
+void bbu_param_struct_set_write_digested_hybrid_lat(
+    void* struct_obj,
+    bool value_in);
+void bbu_param_struct_get_write_voltage_vs_time_dat(
+    const void* struct_obj,
+    bool* value_out);
+void bbu_param_struct_set_write_voltage_vs_time_dat(
+    void* struct_obj,
+    bool value_in);
+void bbu_param_struct_get_keep_overlays_and_groups(
+    const void* struct_obj,
+    bool* value_out);
+void bbu_param_struct_set_keep_overlays_and_groups(
+    void* struct_obj,
+    bool value_in);
+void bbu_param_struct_get_keep_all_lcavities(
+    const void* struct_obj,
+    bool* value_out);
+void bbu_param_struct_set_keep_all_lcavities(void* struct_obj, bool value_in);
+void bbu_param_struct_get_use_taylor_for_hybrids(
+    const void* struct_obj,
+    bool* value_out);
+void bbu_param_struct_set_use_taylor_for_hybrids(
+    void* struct_obj,
+    bool value_in);
+void bbu_param_struct_get_stable_orbit_anal(
+    const void* struct_obj,
+    bool* value_out);
+void bbu_param_struct_set_stable_orbit_anal(void* struct_obj, bool value_in);
+void bbu_param_struct_get_limit_factor(
+    const void* struct_obj,
+    double* value_out);
+void bbu_param_struct_set_limit_factor(void* struct_obj, double value_in);
+void bbu_param_struct_get_simulation_turns_max(
+    const void* struct_obj,
+    double* value_out);
+void bbu_param_struct_set_simulation_turns_max(
+    void* struct_obj,
+    double value_in);
+void bbu_param_struct_get_bunch_freq(const void* struct_obj, double* value_out);
+void bbu_param_struct_set_bunch_freq(void* struct_obj, double value_in);
+void bbu_param_struct_get_init_particle_offset(
+    const void* struct_obj,
+    double* value_out);
+void bbu_param_struct_set_init_particle_offset(
+    void* struct_obj,
+    double value_in);
+void bbu_param_struct_get_current(const void* struct_obj, double* value_out);
+void bbu_param_struct_set_current(void* struct_obj, double value_in);
+void bbu_param_struct_get_rel_tol(const void* struct_obj, double* value_out);
+void bbu_param_struct_set_rel_tol(void* struct_obj, double value_in);
+void bbu_param_struct_get_drscan(const void* struct_obj, bool* value_out);
+void bbu_param_struct_set_drscan(void* struct_obj, bool value_in);
+void bbu_param_struct_get_use_interpolated_threshold(
+    const void* struct_obj,
+    bool* value_out);
+void bbu_param_struct_set_use_interpolated_threshold(
+    void* struct_obj,
+    bool value_in);
+void bbu_param_struct_get_write_hom_info(
+    const void* struct_obj,
+    bool* value_out);
+void bbu_param_struct_set_write_hom_info(void* struct_obj, bool value_in);
+void bbu_param_struct_get_elindex(const void* struct_obj, int* value_out);
+void bbu_param_struct_set_elindex(void* struct_obj, int value_in);
+void bbu_param_struct_get_elname_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void bbu_param_struct_set_elname(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void bbu_param_struct_get_nstep(const void* struct_obj, int* value_out);
+void bbu_param_struct_set_nstep(void* struct_obj, int value_in);
+void bbu_param_struct_get_begdr(const void* struct_obj, double* value_out);
+void bbu_param_struct_set_begdr(void* struct_obj, double value_in);
+void bbu_param_struct_get_enddr(const void* struct_obj, double* value_out);
+void bbu_param_struct_set_enddr(void* struct_obj, double value_in);
+void bbu_param_struct_get_nrep(const void* struct_obj, int* value_out);
+void bbu_param_struct_set_nrep(void* struct_obj, int value_in);
+void bbu_param_struct_get_ran_seed(const void* struct_obj, int* value_out);
+void bbu_param_struct_set_ran_seed(void* struct_obj, int value_in);
+void bbu_param_struct_get_hom_order_cutoff(
+    const void* struct_obj,
+    int* value_out);
+void bbu_param_struct_set_hom_order_cutoff(void* struct_obj, int value_in);
+void bbu_param_struct_get_ran_gauss_sigma_cut(
+    const void* struct_obj,
+    double* value_out);
+void bbu_param_struct_set_ran_gauss_sigma_cut(
+    void* struct_obj,
+    double value_in);
+void bbu_param_struct_get_ele_track_end_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void bbu_param_struct_set_ele_track_end(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void bbu_param_struct_get_ix_ele_track_end(
+    const void* struct_obj,
+    int* value_out);
+void bbu_param_struct_set_ix_ele_track_end(void* struct_obj, int value_in);
+void bbu_param_struct_get_regression(const void* struct_obj, bool* value_out);
+void bbu_param_struct_set_regression(void* struct_obj, bool value_in);
+void bbu_param_struct_get_normalize_z_to_rf(
+    const void* struct_obj,
+    bool* value_out);
+void bbu_param_struct_set_normalize_z_to_rf(void* struct_obj, bool value_in);
+void bbu_param_struct_get_ramp_on(const void* struct_obj, bool* value_out);
+void bbu_param_struct_set_ramp_on(void* struct_obj, bool value_in);
+void bbu_param_struct_get_ramp_pattern_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+void bbu_param_struct_get_ramp_n_start(const void* struct_obj, int* value_out);
+void bbu_param_struct_set_ramp_n_start(void* struct_obj, int value_in);
+void bbu_param_struct_get_n_ramp_pattern(
+    const void* struct_obj,
+    int* value_out);
+void bbu_param_struct_set_n_ramp_pattern(void* struct_obj, int value_in);
 void all_encompassing_struct_get_real_rp_0d(
     const void* struct_obj,
     double* value_out);
@@ -10065,6 +10315,51 @@ void access_mad_map_struct_container(
     size_t* elem_size,
     bool* alloc);
 
+void* allocate_fortran_bbu_stage_struct(int n, size_t* element_size);
+void deallocate_fortran_bbu_stage_struct(void* ptr, int n) noexcept;
+void copy_fortran_bbu_stage_struct(const void* src, void* dst);
+
+void* allocate_bbu_stage_struct_container();
+void reallocate_bbu_stage_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_bbu_stage_struct_container(void*) noexcept;
+void access_bbu_stage_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_bbu_beam_struct(int n, size_t* element_size);
+void deallocate_fortran_bbu_beam_struct(void* ptr, int n) noexcept;
+void copy_fortran_bbu_beam_struct(const void* src, void* dst);
+
+void* allocate_bbu_beam_struct_container();
+void reallocate_bbu_beam_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_bbu_beam_struct_container(void*) noexcept;
+void access_bbu_beam_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_bbu_param_struct(int n, size_t* element_size);
+void deallocate_fortran_bbu_param_struct(void* ptr, int n) noexcept;
+void copy_fortran_bbu_param_struct(const void* src, void* dst);
+
+void* allocate_bbu_param_struct_container();
+void reallocate_bbu_param_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_bbu_param_struct_container(void*) noexcept;
+void access_bbu_param_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_all_encompassing_struct(int n, size_t* element_size);
 void deallocate_fortran_all_encompassing_struct(void* ptr, int n) noexcept;
 void copy_fortran_all_encompassing_struct(const void* src, void* dst);
@@ -12857,6 +13152,54 @@ using MadMapProxyAlloc1D = FTypeAlloc1D<
     deallocate_mad_map_struct_container,
     reallocate_mad_map_struct_container_data,
     access_mad_map_struct_container>;
+
+class BbuStageProxy;
+
+using BbuStageProxyArray1D = FTypeArray1D<
+    BbuStageProxy,
+    allocate_fortran_bbu_stage_struct,
+    deallocate_fortran_bbu_stage_struct>;
+using BbuStageProxyArray2D = FTypeArray2D<BbuStageProxy>;
+using BbuStageProxyArray3D = FTypeArray3D<BbuStageProxy>;
+
+using BbuStageProxyAlloc1D = FTypeAlloc1D<
+    BbuStageProxyArray1D,
+    allocate_bbu_stage_struct_container,
+    deallocate_bbu_stage_struct_container,
+    reallocate_bbu_stage_struct_container_data,
+    access_bbu_stage_struct_container>;
+
+class BbuBeamProxy;
+
+using BbuBeamProxyArray1D = FTypeArray1D<
+    BbuBeamProxy,
+    allocate_fortran_bbu_beam_struct,
+    deallocate_fortran_bbu_beam_struct>;
+using BbuBeamProxyArray2D = FTypeArray2D<BbuBeamProxy>;
+using BbuBeamProxyArray3D = FTypeArray3D<BbuBeamProxy>;
+
+using BbuBeamProxyAlloc1D = FTypeAlloc1D<
+    BbuBeamProxyArray1D,
+    allocate_bbu_beam_struct_container,
+    deallocate_bbu_beam_struct_container,
+    reallocate_bbu_beam_struct_container_data,
+    access_bbu_beam_struct_container>;
+
+class BbuParamProxy;
+
+using BbuParamProxyArray1D = FTypeArray1D<
+    BbuParamProxy,
+    allocate_fortran_bbu_param_struct,
+    deallocate_fortran_bbu_param_struct>;
+using BbuParamProxyArray2D = FTypeArray2D<BbuParamProxy>;
+using BbuParamProxyArray3D = FTypeArray3D<BbuParamProxy>;
+
+using BbuParamProxyAlloc1D = FTypeAlloc1D<
+    BbuParamProxyArray1D,
+    allocate_bbu_param_struct_container,
+    deallocate_bbu_param_struct_container,
+    reallocate_bbu_param_struct_container_data,
+    access_bbu_param_struct_container>;
 
 class AllEncompassingProxy;
 
@@ -19833,6 +20176,190 @@ class MadMapProxy : public FortranProxy<MadMapProxy> {
   FArray1D<double> k() const; // 1D_NOT_real
   FArray2D<double> r() const; // 2D_NOT_real
   FArray3D<double> t() const; // 3D_NOT_real
+};
+
+template <>
+struct FortranTraits<BbuStageProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_bbu_stage_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_bbu_stage_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_bbu_stage_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "bbu_stage_struct";
+  }
+};
+
+class BbuStageProxy : public FortranProxy<BbuStageProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  int ix_ele_lr_wake() const; // 0D_NOT_integer
+  void set_ix_ele_lr_wake(int value);
+  int ix_ele_stage_end() const; // 0D_NOT_integer
+  void set_ix_ele_stage_end(int value);
+  int ix_pass() const; // 0D_NOT_integer
+  void set_ix_pass(int value);
+  int ix_stage_pass1() const; // 0D_NOT_integer
+  void set_ix_stage_pass1(int value);
+  int ix_head_bunch() const; // 0D_NOT_integer
+  void set_ix_head_bunch(int value);
+  int ix_hom_max() const; // 0D_NOT_integer
+  void set_ix_hom_max(int value);
+  double hom_voltage_max() const; // 0D_NOT_real
+  void set_hom_voltage_max(double value);
+  double time_at_wake_ele() const; // 0D_NOT_real
+  void set_time_at_wake_ele(double value);
+  FArray1D<double> ave_orb() const; // 1D_NOT_real
+  FArray1D<double> rms_orb() const; // 1D_NOT_real
+  FArray1D<double> min_orb() const; // 1D_NOT_real
+  FArray1D<double> max_orb() const; // 1D_NOT_real
+  int n_orb() const; // 0D_NOT_integer
+  void set_n_orb(int value);
+};
+
+template <>
+struct FortranTraits<BbuBeamProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_bbu_beam_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_bbu_beam_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_bbu_beam_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "bbu_beam_struct";
+  }
+};
+
+class BbuBeamProxy : public FortranProxy<BbuBeamProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  BunchProxyArray1D bunch() const; // 1D_ALLOC_type
+  BbuStageProxyArray1D stage() const; // 1D_ALLOC_type
+  FArray1D<int> ix_ele_bunch() const; // 1D_ALLOC_integer
+  int ix_bunch_head() const; // 0D_NOT_integer
+  void set_ix_bunch_head(int value);
+  int ix_bunch_end() const; // 0D_NOT_integer
+  void set_ix_bunch_end(int value);
+  int n_bunch_in_lat() const; // 0D_NOT_integer
+  void set_n_bunch_in_lat(int value);
+  int ix_stage_voltage_max() const; // 0D_NOT_integer
+  void set_ix_stage_voltage_max(int value);
+  double hom_voltage_max() const; // 0D_NOT_real
+  void set_hom_voltage_max(double value);
+  double time_now() const; // 0D_NOT_real
+  void set_time_now(double value);
+  double one_turn_time() const; // 0D_NOT_real
+  void set_one_turn_time(double value);
+  double rf_wavelength_max() const; // 0D_NOT_real
+  void set_rf_wavelength_max(double value);
+};
+
+template <>
+struct FortranTraits<BbuParamProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_bbu_param_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_bbu_param_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_bbu_param_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "bbu_param_struct";
+  }
+};
+
+class BbuParamProxy : public FortranProxy<BbuParamProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  std::string lat_filename() const; // 0D_NOT_character
+  void set_lat_filename(const std::string& value);
+  std::string lat2_filename() const; // 0D_NOT_character
+  void set_lat2_filename(const std::string& value);
+  std::string bunch_by_bunch_info_file() const; // 0D_NOT_character
+  void set_bunch_by_bunch_info_file(const std::string& value);
+  bool hybridize() const; // 0D_NOT_logical
+  void set_hybridize(bool value);
+  bool write_digested_hybrid_lat() const; // 0D_NOT_logical
+  void set_write_digested_hybrid_lat(bool value);
+  bool write_voltage_vs_time_dat() const; // 0D_NOT_logical
+  void set_write_voltage_vs_time_dat(bool value);
+  bool keep_overlays_and_groups() const; // 0D_NOT_logical
+  void set_keep_overlays_and_groups(bool value);
+  bool keep_all_lcavities() const; // 0D_NOT_logical
+  void set_keep_all_lcavities(bool value);
+  bool use_taylor_for_hybrids() const; // 0D_NOT_logical
+  void set_use_taylor_for_hybrids(bool value);
+  bool stable_orbit_anal() const; // 0D_NOT_logical
+  void set_stable_orbit_anal(bool value);
+  double limit_factor() const; // 0D_NOT_real
+  void set_limit_factor(double value);
+  double simulation_turns_max() const; // 0D_NOT_real
+  void set_simulation_turns_max(double value);
+  double bunch_freq() const; // 0D_NOT_real
+  void set_bunch_freq(double value);
+  double init_particle_offset() const; // 0D_NOT_real
+  void set_init_particle_offset(double value);
+  double current() const; // 0D_NOT_real
+  void set_current(double value);
+  double rel_tol() const; // 0D_NOT_real
+  void set_rel_tol(double value);
+  bool drscan() const; // 0D_NOT_logical
+  void set_drscan(bool value);
+  bool use_interpolated_threshold() const; // 0D_NOT_logical
+  void set_use_interpolated_threshold(bool value);
+  bool write_hom_info() const; // 0D_NOT_logical
+  void set_write_hom_info(bool value);
+  int elindex() const; // 0D_NOT_integer
+  void set_elindex(int value);
+  std::string elname() const; // 0D_NOT_character
+  void set_elname(const std::string& value);
+  int nstep() const; // 0D_NOT_integer
+  void set_nstep(int value);
+  double begdr() const; // 0D_NOT_real
+  void set_begdr(double value);
+  double enddr() const; // 0D_NOT_real
+  void set_enddr(double value);
+  int nrep() const; // 0D_NOT_integer
+  void set_nrep(int value);
+  int ran_seed() const; // 0D_NOT_integer
+  void set_ran_seed(int value);
+  int hom_order_cutoff() const; // 0D_NOT_integer
+  void set_hom_order_cutoff(int value);
+  double ran_gauss_sigma_cut() const; // 0D_NOT_real
+  void set_ran_gauss_sigma_cut(double value);
+  std::string ele_track_end() const; // 0D_NOT_character
+  void set_ele_track_end(const std::string& value);
+  int ix_ele_track_end() const; // 0D_NOT_integer
+  void set_ix_ele_track_end(int value);
+  bool regression() const; // 0D_NOT_logical
+  void set_regression(bool value);
+  bool normalize_z_to_rf() const; // 0D_NOT_logical
+  void set_normalize_z_to_rf(bool value);
+  bool ramp_on() const; // 0D_NOT_logical
+  void set_ramp_on(bool value);
+  FArray1D<double> ramp_pattern() const; // 1D_NOT_real
+  int ramp_n_start() const; // 0D_NOT_integer
+  void set_ramp_n_start(int value);
+  int n_ramp_pattern() const; // 0D_NOT_integer
+  void set_n_ramp_pattern(int value);
 };
 
 template <>

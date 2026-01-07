@@ -196,6 +196,11 @@ struct_list = [
   "mad_energy_struct",
   "mad_map_struct",
 
+  # BBU 
+  "bbu_stage_struct",
+  "bbu_beam_struct",
+  "bbu_param_struct",
+
   # Testing
   "all_encompassing_struct",
   "test_sub_struct",
@@ -440,6 +445,15 @@ cpp_output_filename = "tao_routines.cpp"
 cpp_namespace = "Tao"
 # interface_path = "$ACC_ROOT_DIR/tao/code/tao_interface.f90"
 source_paths = ["$ACC_ROOT_DIR/tao/code"]
+skip_files = []
+skip_procedures = []
+
+[[routines]]
+fortran_output_filename = "bsim_routines.f90"
+cpp_output_filename = "bsim_routines.cpp"
+cpp_namespace = "bsim"
+# interface_path = "$ACC_ROOT_DIR/bsim/"
+source_paths = ["$ACC_ROOT_DIR/bsim/code"]
 skip_files = []
 skip_procedures = []
 

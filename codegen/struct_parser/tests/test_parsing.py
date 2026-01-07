@@ -437,6 +437,17 @@ def test_parse_declaration(
                 ),
             ],
         ),
+        pytest.param(
+            """character(100) :: exclude_from_maps = 'beambeam::*'""",
+            [
+                ParsedDeclaration(
+                    name="exclude_from_maps",
+                    type=TypeInformation(type="character", kind="100"),
+                    dimension=None,
+                    default="'beambeam::*'",
+                ),
+            ],
+        ),
     ],
 )
 def test_parse_type_decl(line: str, expected_decl: list[ParsedDeclaration]) -> None:

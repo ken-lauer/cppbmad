@@ -4,6 +4,7 @@ import collections
 import html
 
 from .arg import CodegenStructure
+from .paths import ACC_ROOT_DIR
 from .routines import FortranRoutine
 
 
@@ -309,18 +310,22 @@ def generate_coverage_report(
         group_covered = any(r.usable for r in variants)
 
         for i, r in enumerate(variants_sorted):
-            # Styling for start of a new group
             tr_class = "group-start" if i == 0 else ""
 
-            # Location Render
-            fname = r.filename.name if r.filename else ""
+            if r.filename:
+                try:
+                    rel_path = r.filename.relative_to(ACC_ROOT_DIR)
+                    fname = f"$ACC_ROOT_DIR/{rel_path}"
+                except ValueError:
+                    fname = str(r.filename)
+            else:
+                fname = ""
             mod = r.module if r.module else ""
             if fname and mod:
                 loc_txt = f"{mod}<br><span style='color:#999'>{fname}</span>"
             else:
                 loc_txt = mod or fname or "Unknown"
 
-            # Status Render
             if r.usable:
                 status_html = _tag("span", "USABLE", "badge badge-ok")
                 reason_html = ""

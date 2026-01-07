@@ -4,6 +4,7 @@ from dataclasses import dataclass, fields
 from enum import Enum
 from typing import Literal, NamedTuple
 
+from .exceptions import UnsupportedTypeError
 from .util import struct_to_proxy_class_name
 
 
@@ -165,10 +166,6 @@ def get_cpp_container(cpp_base: str, dim: int, ptr: str) -> str:
     return f"VariableArray{dim}D<{cpp_base}>"
 
 
-class UnsupportedTypeError(Exception):
-    pass
-
-
 def remove_optional(typ: str) -> str:
     typ = typ.strip()
     if typ.startswith("optional_ref<"):
@@ -297,7 +294,8 @@ def get_type_transform(
     elif ft.dim > 0:
         if is_dynamic_array:
             cpp_return_type = info.allocatable_container
-            assert cpp_return_type, f"{ft} {ft.dim} {is_dynamic_array=} allocatable container unset?"
+            if not cpp_return_type:
+                raise UnsupportedTypeError(f"{ft} {ft.dim} {is_dynamic_array=} allocatable container")
         else:
             cpp_return_type = get_cpp_container(info.cpp_bmad_type, ft.dim, ft.ptr)
 

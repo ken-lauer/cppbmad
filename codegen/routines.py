@@ -15,7 +15,7 @@ from .config import CodegenConfig, RoutineSettings
 from .context import config_context, get_params
 from .cpp import CppWrapperArgument, generate_routine_cpp_wrapper, generate_routines_header
 from .docstring import DocstringParameter, RoutineDocstring, parse_routine_comment_block
-from .exceptions import RenameError, RoutineNotFoundError
+from .exceptions import RenameError, RoutineNotFoundError, UnsupportedTypeError
 from .fortran import generate_fortran_routine_with_c_binding
 from .paths import CODEGEN_ROOT, CPPBMAD_ROOT
 from .structs import (
@@ -779,8 +779,10 @@ def parse_bmad_routines(settings: RoutineSettings, config: CodegenConfig):
     for proc in procedures:
         try:
             proc.parse(config=config)
+        except UnsupportedTypeError as ex:
+            logger.warning("Parsing failed for routine %r: %s", proc.name, ex)
         except Exception:
-            logger.exception("Parsing failed for routine: %s", proc.name)
+            logger.exception("Parsing failed for routine %r", proc.name)
 
     return procedures
 

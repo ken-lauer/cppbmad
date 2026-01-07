@@ -2425,6 +2425,93 @@ std::string to_string(const MadMapProxy& self) {
        std::pair{"r", to_string(self.r())},
        std::pair{"t", to_string(self.t())}});
 }
+std::string to_string(const BbuStageProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BbuStageProxy",
+      {std::pair{"ix_ele_lr_wake", to_string(self.ix_ele_lr_wake())},
+       std::pair{"ix_ele_stage_end", to_string(self.ix_ele_stage_end())},
+       std::pair{"ix_pass", to_string(self.ix_pass())},
+       std::pair{"ix_stage_pass1", to_string(self.ix_stage_pass1())},
+       std::pair{"ix_head_bunch", to_string(self.ix_head_bunch())},
+       std::pair{"ix_hom_max", to_string(self.ix_hom_max())},
+       std::pair{"hom_voltage_max", to_string(self.hom_voltage_max())},
+       std::pair{"time_at_wake_ele", to_string(self.time_at_wake_ele())},
+       std::pair{"ave_orb", to_string(self.ave_orb())},
+       std::pair{"rms_orb", to_string(self.rms_orb())},
+       std::pair{"min_orb", to_string(self.min_orb())},
+       std::pair{"max_orb", to_string(self.max_orb())},
+       std::pair{"n_orb", to_string(self.n_orb())}});
+}
+std::string to_string(const BbuBeamProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BbuBeamProxy",
+      {std::pair{"bunch", "[...]"},
+       std::pair{"stage", "[...]"},
+       std::pair{"ix_ele_bunch", to_string(self.ix_ele_bunch())},
+       std::pair{"ix_bunch_head", to_string(self.ix_bunch_head())},
+       std::pair{"ix_bunch_end", to_string(self.ix_bunch_end())},
+       std::pair{"n_bunch_in_lat", to_string(self.n_bunch_in_lat())},
+       std::pair{
+           "ix_stage_voltage_max", to_string(self.ix_stage_voltage_max())},
+       std::pair{"hom_voltage_max", to_string(self.hom_voltage_max())},
+       std::pair{"time_now", to_string(self.time_now())},
+       std::pair{"one_turn_time", to_string(self.one_turn_time())},
+       std::pair{"rf_wavelength_max", to_string(self.rf_wavelength_max())}});
+}
+std::string to_string(const BbuParamProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BbuParamProxy",
+      {std::pair{"lat_filename", self.lat_filename()},
+       std::pair{"lat2_filename", self.lat2_filename()},
+       std::pair{"bunch_by_bunch_info_file", self.bunch_by_bunch_info_file()},
+       std::pair{"hybridize", to_string(self.hybridize())},
+       std::pair{
+           "write_digested_hybrid_lat",
+           to_string(self.write_digested_hybrid_lat())},
+       std::pair{
+           "write_voltage_vs_time_dat",
+           to_string(self.write_voltage_vs_time_dat())},
+       std::pair{
+           "keep_overlays_and_groups",
+           to_string(self.keep_overlays_and_groups())},
+       std::pair{"keep_all_lcavities", to_string(self.keep_all_lcavities())},
+       std::pair{
+           "use_taylor_for_hybrids", to_string(self.use_taylor_for_hybrids())},
+       std::pair{"stable_orbit_anal", to_string(self.stable_orbit_anal())},
+       std::pair{"limit_factor", to_string(self.limit_factor())},
+       std::pair{
+           "simulation_turns_max", to_string(self.simulation_turns_max())},
+       std::pair{"bunch_freq", to_string(self.bunch_freq())},
+       std::pair{
+           "init_particle_offset", to_string(self.init_particle_offset())},
+       std::pair{"current", to_string(self.current())},
+       std::pair{"rel_tol", to_string(self.rel_tol())},
+       std::pair{"drscan", to_string(self.drscan())},
+       std::pair{
+           "use_interpolated_threshold",
+           to_string(self.use_interpolated_threshold())},
+       std::pair{"write_hom_info", to_string(self.write_hom_info())},
+       std::pair{"elindex", to_string(self.elindex())},
+       std::pair{"elname", self.elname()},
+       std::pair{"nstep", to_string(self.nstep())},
+       std::pair{"begdr", to_string(self.begdr())},
+       std::pair{"enddr", to_string(self.enddr())},
+       std::pair{"nrep", to_string(self.nrep())},
+       std::pair{"ran_seed", to_string(self.ran_seed())},
+       std::pair{"hom_order_cutoff", to_string(self.hom_order_cutoff())},
+       std::pair{"ran_gauss_sigma_cut", to_string(self.ran_gauss_sigma_cut())},
+       std::pair{"ele_track_end", self.ele_track_end()},
+       std::pair{"ix_ele_track_end", to_string(self.ix_ele_track_end())},
+       std::pair{"regression", to_string(self.regression())},
+       std::pair{"normalize_z_to_rf", to_string(self.normalize_z_to_rf())},
+       std::pair{"ramp_on", to_string(self.ramp_on())},
+       std::pair{"ramp_pattern", to_string(self.ramp_pattern())},
+       std::pair{"ramp_n_start", to_string(self.ramp_n_start())},
+       std::pair{"n_ramp_pattern", to_string(self.n_ramp_pattern())}});
+}
 std::string to_string(const AllEncompassingProxy& self) {
   return repr(
       self.get_fortran_ptr(),

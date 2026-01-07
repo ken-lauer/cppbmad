@@ -10,6 +10,297 @@ namespace py = pybind11;
 namespace Pybmad {
 
 // =============================================================================
+// bbu_beam_struct
+void init_bbu_beam_struct(py::module& m, py::class_<BbuBeamProxy>& cls) {
+  cls.def(py::init<>())
+      // BbuBeamProxy.bunch (1D_ALLOC_type - Bunches in the lattice
+      .def_property_readonly("bunch", &BbuBeamProxy::bunch)
+      // BbuBeamProxy.stage (1D_ALLOC_type -
+      .def_property_readonly("stage", &BbuBeamProxy::stage)
+      // BbuBeamProxy.ix_ele_bunch (1D_ALLOC_integer - element where bunch is
+      .def_property_readonly("ix_ele_bunch", &BbuBeamProxy::ix_ele_bunch)
+      // BbuBeamProxy.ix_bunch_head (0D_NOT_integer - Index to head bunch(:)
+      .def_property(
+          "ix_bunch_head",
+          &BbuBeamProxy::ix_bunch_head,
+          &BbuBeamProxy::set_ix_bunch_head)
+      // BbuBeamProxy.ix_bunch_end (0D_NOT_integer - Index of the end bunch(:). -1 -> no bunches.
+      .def_property(
+          "ix_bunch_end",
+          &BbuBeamProxy::ix_bunch_end,
+          &BbuBeamProxy::set_ix_bunch_end)
+      // BbuBeamProxy.n_bunch_in_lat (0D_NOT_integer - Number of bunches transversing the lattice.
+      .def_property(
+          "n_bunch_in_lat",
+          &BbuBeamProxy::n_bunch_in_lat,
+          &BbuBeamProxy::set_n_bunch_in_lat)
+      // BbuBeamProxy.ix_stage_voltage_max (0D_NOT_integer -
+      .def_property(
+          "ix_stage_voltage_max",
+          &BbuBeamProxy::ix_stage_voltage_max,
+          &BbuBeamProxy::set_ix_stage_voltage_max)
+      // BbuBeamProxy.hom_voltage_max (0D_NOT_real -
+      .def_property(
+          "hom_voltage_max",
+          &BbuBeamProxy::hom_voltage_max,
+          &BbuBeamProxy::set_hom_voltage_max)
+      // BbuBeamProxy.time_now (0D_NOT_real -
+      .def_property(
+          "time_now", &BbuBeamProxy::time_now, &BbuBeamProxy::set_time_now)
+      // BbuBeamProxy.one_turn_time (0D_NOT_real -
+      .def_property(
+          "one_turn_time",
+          &BbuBeamProxy::one_turn_time,
+          &BbuBeamProxy::set_one_turn_time)
+      // BbuBeamProxy.rf_wavelength_max (0D_NOT_real -
+      .def_property(
+          "rf_wavelength_max",
+          &BbuBeamProxy::rf_wavelength_max,
+          &BbuBeamProxy::set_rf_wavelength_max)
+
+      .def("__repr__", [](const BbuBeamProxy& self) { return to_string(self); })
+
+      ;
+
+  // 1D BbuBeamProxy arrays are not used in structs/routines
+  // 2D BbuBeamProxy arrays are not used in structs/routines
+  // 3D BbuBeamProxy arrays are not used in structs/routines
+}
+
+// =============================================================================
+// bbu_param_struct
+void init_bbu_param_struct(py::module& m, py::class_<BbuParamProxy>& cls) {
+  cls.def(py::init<>())
+      // BbuParamProxy.lat_filename (0D_NOT_character - Bmad lattice file name
+      .def_property(
+          "lat_filename",
+          &BbuParamProxy::lat_filename,
+          &BbuParamProxy::set_lat_filename)
+      // BbuParamProxy.lat2_filename (0D_NOT_character - Bmad lattice2 file name for secondary parser
+      .def_property(
+          "lat2_filename",
+          &BbuParamProxy::lat2_filename,
+          &BbuParamProxy::set_lat2_filename)
+      // BbuParamProxy.bunch_by_bunch_info_file (0D_NOT_character - For outputting bunch-by-bunch info.
+      .def_property(
+          "bunch_by_bunch_info_file",
+          &BbuParamProxy::bunch_by_bunch_info_file,
+          &BbuParamProxy::set_bunch_by_bunch_info_file)
+      // BbuParamProxy.hybridize (0D_NOT_logical - Combine non-hom elements to speed up simulation?
+      .def_property(
+          "hybridize", &BbuParamProxy::hybridize, &BbuParamProxy::set_hybridize)
+      // BbuParamProxy.write_digested_hybrid_lat (0D_NOT_logical - For debugging purposes.
+      .def_property(
+          "write_digested_hybrid_lat",
+          &BbuParamProxy::write_digested_hybrid_lat,
+          &BbuParamProxy::set_write_digested_hybrid_lat)
+      // BbuParamProxy.write_voltage_vs_time_dat (0D_NOT_logical - For debugging purposes.
+      .def_property(
+          "write_voltage_vs_time_dat",
+          &BbuParamProxy::write_voltage_vs_time_dat,
+          &BbuParamProxy::set_write_voltage_vs_time_dat)
+      // BbuParamProxy.keep_overlays_and_groups (0D_NOT_logical - Keep when hybridizing?
+      .def_property(
+          "keep_overlays_and_groups",
+          &BbuParamProxy::keep_overlays_and_groups,
+          &BbuParamProxy::set_keep_overlays_and_groups)
+      // BbuParamProxy.keep_all_lcavities (0D_NOT_logical - Keep when hybridizing?
+      .def_property(
+          "keep_all_lcavities",
+          &BbuParamProxy::keep_all_lcavities,
+          &BbuParamProxy::set_keep_all_lcavities)
+      // BbuParamProxy.use_taylor_for_hybrids (0D_NOT_logical - Use taylor map for hybrids when true. Otherwise tracking method is linear.
+      .def_property(
+          "use_taylor_for_hybrids",
+          &BbuParamProxy::use_taylor_for_hybrids,
+          &BbuParamProxy::set_use_taylor_for_hybrids)
+      // BbuParamProxy.stable_orbit_anal (0D_NOT_logical - Write stable_orbit.out and hom_voltage.out?
+      .def_property(
+          "stable_orbit_anal",
+          &BbuParamProxy::stable_orbit_anal,
+          &BbuParamProxy::set_stable_orbit_anal)
+      // BbuParamProxy.limit_factor (0D_NOT_real - Init_hom_amp * limit_factor = simulation unstable limit
+      .def_property(
+          "limit_factor",
+          &BbuParamProxy::limit_factor,
+          &BbuParamProxy::set_limit_factor)
+      // BbuParamProxy.simulation_turns_max (0D_NOT_real - Sets the duration of the simulation.
+      .def_property(
+          "simulation_turns_max",
+          &BbuParamProxy::simulation_turns_max,
+          &BbuParamProxy::set_simulation_turns_max)
+      // BbuParamProxy.bunch_freq (0D_NOT_real - Freq in Hz.
+      .def_property(
+          "bunch_freq",
+          &BbuParamProxy::bunch_freq,
+          &BbuParamProxy::set_bunch_freq)
+      // BbuParamProxy.init_particle_offset (0D_NOT_real - Initial particle offset for particles born in the first turn period.
+      .def_property(
+          "init_particle_offset",
+          &BbuParamProxy::init_particle_offset,
+          &BbuParamProxy::set_init_particle_offset)
+      // BbuParamProxy.current (0D_NOT_real - Starting current (amps)
+      .def_property(
+          "current", &BbuParamProxy::current, &BbuParamProxy::set_current)
+      // BbuParamProxy.rel_tol (0D_NOT_real - Final threshold current accuracy.
+      .def_property(
+          "rel_tol", &BbuParamProxy::rel_tol, &BbuParamProxy::set_rel_tol)
+      // BbuParamProxy.drscan (0D_NOT_logical - If true, scan DR variable as in PRSTAB 7 (2004) Fig. 3.
+      .def_property(
+          "drscan", &BbuParamProxy::drscan, &BbuParamProxy::set_drscan)
+      // BbuParamProxy.use_interpolated_threshold (0D_NOT_logical -
+      .def_property(
+          "use_interpolated_threshold",
+          &BbuParamProxy::use_interpolated_threshold,
+          &BbuParamProxy::set_use_interpolated_threshold)
+      // BbuParamProxy.write_hom_info (0D_NOT_logical - Write HOM parameters to main output file?
+      .def_property(
+          "write_hom_info",
+          &BbuParamProxy::write_hom_info,
+          &BbuParamProxy::set_write_hom_info)
+      // BbuParamProxy.elindex (0D_NOT_integer -
+      .def_property(
+          "elindex", &BbuParamProxy::elindex, &BbuParamProxy::set_elindex)
+      // BbuParamProxy.elname (0D_NOT_character - Element to step length for DRSCAN
+      .def_property(
+          "elname", &BbuParamProxy::elname, &BbuParamProxy::set_elname)
+      // BbuParamProxy.nstep (0D_NOT_integer - Number of steps for DRSCAN.
+      .def_property("nstep", &BbuParamProxy::nstep, &BbuParamProxy::set_nstep)
+      // BbuParamProxy.begdr (0D_NOT_real - Beginning DR value for DRSCAN.
+      .def_property("begdr", &BbuParamProxy::begdr, &BbuParamProxy::set_begdr)
+      // BbuParamProxy.enddr (0D_NOT_real - End DR value for DRSCAN.
+      .def_property("enddr", &BbuParamProxy::enddr, &BbuParamProxy::set_enddr)
+      // BbuParamProxy.nrep (0D_NOT_integer - Number of times to repeat threshold calculation
+      .def_property("nrep", &BbuParamProxy::nrep, &BbuParamProxy::set_nrep)
+      // BbuParamProxy.ran_seed (0D_NOT_integer - If set to 0, the output results will vary from run to run.
+      .def_property(
+          "ran_seed", &BbuParamProxy::ran_seed, &BbuParamProxy::set_ran_seed)
+      // BbuParamProxy.hom_order_cutoff (0D_NOT_integer - If positive -> ignore HOM's with order greater than this.
+      .def_property(
+          "hom_order_cutoff",
+          &BbuParamProxy::hom_order_cutoff,
+          &BbuParamProxy::set_hom_order_cutoff)
+      // BbuParamProxy.ran_gauss_sigma_cut (0D_NOT_real -
+      .def_property(
+          "ran_gauss_sigma_cut",
+          &BbuParamProxy::ran_gauss_sigma_cut,
+          &BbuParamProxy::set_ran_gauss_sigma_cut)
+      // BbuParamProxy.ele_track_end (0D_NOT_character -
+      .def_property(
+          "ele_track_end",
+          &BbuParamProxy::ele_track_end,
+          &BbuParamProxy::set_ele_track_end)
+      // BbuParamProxy.ix_ele_track_end (0D_NOT_integer - Default: set to last element with a wake
+      .def_property(
+          "ix_ele_track_end",
+          &BbuParamProxy::ix_ele_track_end,
+          &BbuParamProxy::set_ix_ele_track_end)
+      // BbuParamProxy.regression (0D_NOT_logical - Do regression test?
+      .def_property(
+          "regression",
+          &BbuParamProxy::regression,
+          &BbuParamProxy::set_regression)
+      // BbuParamProxy.normalize_z_to_rf (0D_NOT_logical - make starting z = mod(z, rf_wavelength)? Ramp parameters
+      .def_property(
+          "normalize_z_to_rf",
+          &BbuParamProxy::normalize_z_to_rf,
+          &BbuParamProxy::set_normalize_z_to_rf)
+      // BbuParamProxy.ramp_on (0D_NOT_logical -
+      .def_property(
+          "ramp_on", &BbuParamProxy::ramp_on, &BbuParamProxy::set_ramp_on)
+      // BbuParamProxy.ramp_pattern (1D_NOT_real -
+      .def_property_readonly("ramp_pattern", &BbuParamProxy::ramp_pattern)
+      // BbuParamProxy.ramp_n_start (0D_NOT_integer - Index of start of ramp Internal parameters
+      .def_property(
+          "ramp_n_start",
+          &BbuParamProxy::ramp_n_start,
+          &BbuParamProxy::set_ramp_n_start)
+      // BbuParamProxy.n_ramp_pattern (0D_NOT_integer - Number of valid ramp_pattern
+      .def_property(
+          "n_ramp_pattern",
+          &BbuParamProxy::n_ramp_pattern,
+          &BbuParamProxy::set_n_ramp_pattern)
+
+      .def(
+          "__repr__", [](const BbuParamProxy& self) { return to_string(self); })
+
+      ;
+
+  // 1D BbuParamProxy arrays are not used in structs/routines
+  // 2D BbuParamProxy arrays are not used in structs/routines
+  // 3D BbuParamProxy arrays are not used in structs/routines
+}
+
+// =============================================================================
+// bbu_stage_struct
+void init_bbu_stage_struct(py::module& m, py::class_<BbuStageProxy>& cls) {
+  cls.def(py::init<>())
+      // BbuStageProxy.ix_ele_lr_wake (0D_NOT_integer - Element index of element with the wake
+      .def_property(
+          "ix_ele_lr_wake",
+          &BbuStageProxy::ix_ele_lr_wake,
+          &BbuStageProxy::set_ix_ele_lr_wake)
+      // BbuStageProxy.ix_ele_stage_end (0D_NOT_integer - Element at end of stage.
+      .def_property(
+          "ix_ele_stage_end",
+          &BbuStageProxy::ix_ele_stage_end,
+          &BbuStageProxy::set_ix_ele_stage_end)
+      // BbuStageProxy.ix_pass (0D_NOT_integer - Pass index when in multipass section
+      .def_property(
+          "ix_pass", &BbuStageProxy::ix_pass, &BbuStageProxy::set_ix_pass)
+      // BbuStageProxy.ix_stage_pass1 (0D_NOT_integer - Index of corresponding stage on first pass
+      .def_property(
+          "ix_stage_pass1",
+          &BbuStageProxy::ix_stage_pass1,
+          &BbuStageProxy::set_ix_stage_pass1)
+      // BbuStageProxy.ix_head_bunch (0D_NOT_integer -
+      .def_property(
+          "ix_head_bunch",
+          &BbuStageProxy::ix_head_bunch,
+          &BbuStageProxy::set_ix_head_bunch)
+      // BbuStageProxy.ix_hom_max (0D_NOT_integer -
+      .def_property(
+          "ix_hom_max",
+          &BbuStageProxy::ix_hom_max,
+          &BbuStageProxy::set_ix_hom_max)
+      // BbuStageProxy.hom_voltage_max (0D_NOT_real -
+      .def_property(
+          "hom_voltage_max",
+          &BbuStageProxy::hom_voltage_max,
+          &BbuStageProxy::set_hom_voltage_max)
+      // BbuStageProxy.time_at_wake_ele (0D_NOT_real -
+      .def_property(
+          "time_at_wake_ele",
+          &BbuStageProxy::time_at_wake_ele,
+          &BbuStageProxy::set_time_at_wake_ele)
+      // BbuStageProxy.ave_orb (1D_NOT_real -
+      .def_property_readonly("ave_orb", &BbuStageProxy::ave_orb)
+      // BbuStageProxy.rms_orb (1D_NOT_real -
+      .def_property_readonly("rms_orb", &BbuStageProxy::rms_orb)
+      // BbuStageProxy.min_orb (1D_NOT_real -
+      .def_property_readonly("min_orb", &BbuStageProxy::min_orb)
+      // BbuStageProxy.max_orb (1D_NOT_real -
+      .def_property_readonly("max_orb", &BbuStageProxy::max_orb)
+      // BbuStageProxy.n_orb (0D_NOT_integer -
+      .def_property("n_orb", &BbuStageProxy::n_orb, &BbuStageProxy::set_n_orb)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) { return BbuStageProxyAlloc1D(lbound, sz); },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
+
+      .def(
+          "__repr__", [](const BbuStageProxy& self) { return to_string(self); })
+
+      ;
+
+  bind_FTypeArrayND<BbuStageProxyArray1D>(m, "BbuStageStructArray1D");
+  bind_FTypeAlloc1D<BbuStageProxyAlloc1D>(m, "BbuStageStructAlloc1D");
+  // 2D BbuStageProxy arrays are not used in structs/routines
+  // 3D BbuStageProxy arrays are not used in structs/routines
+}
+
+// =============================================================================
 // ac_kicker_freq_struct
 void init_ac_kicker_freq_struct(
     py::module& m,

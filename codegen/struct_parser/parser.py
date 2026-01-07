@@ -561,7 +561,7 @@ class ParsedDeclaration(NamedTuple):
 def split_type_and_variables(line: str) -> tuple[str, str]:
     """Split the type name and variables in a declaration like 'real (rp) foo'."""
     if "::" in line:
-        type_, variables = line.split("::")
+        type_, variables = line.split("::", 1)
         return type_.strip(), variables.strip()
 
     variables = remove_type_from_declaration(line)

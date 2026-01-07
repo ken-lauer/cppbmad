@@ -268,6 +268,9 @@ void init_tao_cmd_history_struct(py::module&, py::class_<TaoCmdHistoryProxy>&);
 void init_tao_universe_struct(py::module&, py::class_<TaoUniverseProxy>&);
 void init_mad_energy_struct(py::module&, py::class_<MadEnergyProxy>&);
 void init_mad_map_struct(py::module&, py::class_<MadMapProxy>&);
+void init_bbu_stage_struct(py::module&, py::class_<BbuStageProxy>&);
+void init_bbu_beam_struct(py::module&, py::class_<BbuBeamProxy>&);
+void init_bbu_param_struct(py::module&, py::class_<BbuParamProxy>&);
 void init_all_encompassing_struct(
     py::module&,
     py::class_<AllEncompassingProxy>&);

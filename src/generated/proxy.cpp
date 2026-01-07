@@ -11818,6 +11818,459 @@ FArray3D<double> MadMapProxy::t() const {
   return ProxyHelpers::get_array_3d<double>(
       fortran_ptr_, mad_map_struct_get_t_info);
 }
+int BbuStageProxy::ix_ele_lr_wake() const {
+  int value;
+  bbu_stage_struct_get_ix_ele_lr_wake(fortran_ptr_, &value);
+  return value;
+}
+void BbuStageProxy::set_ix_ele_lr_wake(int value) {
+  bbu_stage_struct_set_ix_ele_lr_wake(fortran_ptr_, value);
+}
+int BbuStageProxy::ix_ele_stage_end() const {
+  int value;
+  bbu_stage_struct_get_ix_ele_stage_end(fortran_ptr_, &value);
+  return value;
+}
+void BbuStageProxy::set_ix_ele_stage_end(int value) {
+  bbu_stage_struct_set_ix_ele_stage_end(fortran_ptr_, value);
+}
+int BbuStageProxy::ix_pass() const {
+  int value;
+  bbu_stage_struct_get_ix_pass(fortran_ptr_, &value);
+  return value;
+}
+void BbuStageProxy::set_ix_pass(int value) {
+  bbu_stage_struct_set_ix_pass(fortran_ptr_, value);
+}
+int BbuStageProxy::ix_stage_pass1() const {
+  int value;
+  bbu_stage_struct_get_ix_stage_pass1(fortran_ptr_, &value);
+  return value;
+}
+void BbuStageProxy::set_ix_stage_pass1(int value) {
+  bbu_stage_struct_set_ix_stage_pass1(fortran_ptr_, value);
+}
+int BbuStageProxy::ix_head_bunch() const {
+  int value;
+  bbu_stage_struct_get_ix_head_bunch(fortran_ptr_, &value);
+  return value;
+}
+void BbuStageProxy::set_ix_head_bunch(int value) {
+  bbu_stage_struct_set_ix_head_bunch(fortran_ptr_, value);
+}
+int BbuStageProxy::ix_hom_max() const {
+  int value;
+  bbu_stage_struct_get_ix_hom_max(fortran_ptr_, &value);
+  return value;
+}
+void BbuStageProxy::set_ix_hom_max(int value) {
+  bbu_stage_struct_set_ix_hom_max(fortran_ptr_, value);
+}
+double BbuStageProxy::hom_voltage_max() const {
+  double value;
+  bbu_stage_struct_get_hom_voltage_max(fortran_ptr_, &value);
+  return value;
+}
+void BbuStageProxy::set_hom_voltage_max(double value) {
+  bbu_stage_struct_set_hom_voltage_max(fortran_ptr_, value);
+}
+double BbuStageProxy::time_at_wake_ele() const {
+  double value;
+  bbu_stage_struct_get_time_at_wake_ele(fortran_ptr_, &value);
+  return value;
+}
+void BbuStageProxy::set_time_at_wake_ele(double value) {
+  bbu_stage_struct_set_time_at_wake_ele(fortran_ptr_, value);
+}
+FArray1D<double> BbuStageProxy::ave_orb() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_, bbu_stage_struct_get_ave_orb_info);
+}
+FArray1D<double> BbuStageProxy::rms_orb() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_, bbu_stage_struct_get_rms_orb_info);
+}
+FArray1D<double> BbuStageProxy::min_orb() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_, bbu_stage_struct_get_min_orb_info);
+}
+FArray1D<double> BbuStageProxy::max_orb() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_, bbu_stage_struct_get_max_orb_info);
+}
+int BbuStageProxy::n_orb() const {
+  int value;
+  bbu_stage_struct_get_n_orb(fortran_ptr_, &value);
+  return value;
+}
+void BbuStageProxy::set_n_orb(int value) {
+  bbu_stage_struct_set_n_orb(fortran_ptr_, value);
+}
+BunchProxyArray1D BbuBeamProxy::bunch() const {
+  return ProxyHelpers::get_type_array_1d<BunchProxyArray1D>(
+      fortran_ptr_, bbu_beam_struct_get_bunch_info);
+}
+BbuStageProxyArray1D BbuBeamProxy::stage() const {
+  return ProxyHelpers::get_type_array_1d<BbuStageProxyArray1D>(
+      fortran_ptr_, bbu_beam_struct_get_stage_info);
+}
+FArray1D<int> BbuBeamProxy::ix_ele_bunch() const {
+  return ProxyHelpers::get_array_1d<int>(
+      fortran_ptr_, bbu_beam_struct_get_ix_ele_bunch_info);
+}
+int BbuBeamProxy::ix_bunch_head() const {
+  int value;
+  bbu_beam_struct_get_ix_bunch_head(fortran_ptr_, &value);
+  return value;
+}
+void BbuBeamProxy::set_ix_bunch_head(int value) {
+  bbu_beam_struct_set_ix_bunch_head(fortran_ptr_, value);
+}
+int BbuBeamProxy::ix_bunch_end() const {
+  int value;
+  bbu_beam_struct_get_ix_bunch_end(fortran_ptr_, &value);
+  return value;
+}
+void BbuBeamProxy::set_ix_bunch_end(int value) {
+  bbu_beam_struct_set_ix_bunch_end(fortran_ptr_, value);
+}
+int BbuBeamProxy::n_bunch_in_lat() const {
+  int value;
+  bbu_beam_struct_get_n_bunch_in_lat(fortran_ptr_, &value);
+  return value;
+}
+void BbuBeamProxy::set_n_bunch_in_lat(int value) {
+  bbu_beam_struct_set_n_bunch_in_lat(fortran_ptr_, value);
+}
+int BbuBeamProxy::ix_stage_voltage_max() const {
+  int value;
+  bbu_beam_struct_get_ix_stage_voltage_max(fortran_ptr_, &value);
+  return value;
+}
+void BbuBeamProxy::set_ix_stage_voltage_max(int value) {
+  bbu_beam_struct_set_ix_stage_voltage_max(fortran_ptr_, value);
+}
+double BbuBeamProxy::hom_voltage_max() const {
+  double value;
+  bbu_beam_struct_get_hom_voltage_max(fortran_ptr_, &value);
+  return value;
+}
+void BbuBeamProxy::set_hom_voltage_max(double value) {
+  bbu_beam_struct_set_hom_voltage_max(fortran_ptr_, value);
+}
+double BbuBeamProxy::time_now() const {
+  double value;
+  bbu_beam_struct_get_time_now(fortran_ptr_, &value);
+  return value;
+}
+void BbuBeamProxy::set_time_now(double value) {
+  bbu_beam_struct_set_time_now(fortran_ptr_, value);
+}
+double BbuBeamProxy::one_turn_time() const {
+  double value;
+  bbu_beam_struct_get_one_turn_time(fortran_ptr_, &value);
+  return value;
+}
+void BbuBeamProxy::set_one_turn_time(double value) {
+  bbu_beam_struct_set_one_turn_time(fortran_ptr_, value);
+}
+double BbuBeamProxy::rf_wavelength_max() const {
+  double value;
+  bbu_beam_struct_get_rf_wavelength_max(fortran_ptr_, &value);
+  return value;
+}
+void BbuBeamProxy::set_rf_wavelength_max(double value) {
+  bbu_beam_struct_set_rf_wavelength_max(fortran_ptr_, value);
+}
+std::string BbuParamProxy::lat_filename() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, bbu_param_struct_get_lat_filename_info);
+  return std::string(arr.data(), arr.size());
+}
+void BbuParamProxy::set_lat_filename(const std::string& value) {
+  bbu_param_struct_set_lat_filename(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string BbuParamProxy::lat2_filename() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, bbu_param_struct_get_lat2_filename_info);
+  return std::string(arr.data(), arr.size());
+}
+void BbuParamProxy::set_lat2_filename(const std::string& value) {
+  bbu_param_struct_set_lat2_filename(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string BbuParamProxy::bunch_by_bunch_info_file() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, bbu_param_struct_get_bunch_by_bunch_info_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void BbuParamProxy::set_bunch_by_bunch_info_file(const std::string& value) {
+  bbu_param_struct_set_bunch_by_bunch_info_file(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+bool BbuParamProxy::hybridize() const {
+  bool value;
+  bbu_param_struct_get_hybridize(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_hybridize(bool value) {
+  bbu_param_struct_set_hybridize(fortran_ptr_, value);
+}
+bool BbuParamProxy::write_digested_hybrid_lat() const {
+  bool value;
+  bbu_param_struct_get_write_digested_hybrid_lat(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_write_digested_hybrid_lat(bool value) {
+  bbu_param_struct_set_write_digested_hybrid_lat(fortran_ptr_, value);
+}
+bool BbuParamProxy::write_voltage_vs_time_dat() const {
+  bool value;
+  bbu_param_struct_get_write_voltage_vs_time_dat(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_write_voltage_vs_time_dat(bool value) {
+  bbu_param_struct_set_write_voltage_vs_time_dat(fortran_ptr_, value);
+}
+bool BbuParamProxy::keep_overlays_and_groups() const {
+  bool value;
+  bbu_param_struct_get_keep_overlays_and_groups(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_keep_overlays_and_groups(bool value) {
+  bbu_param_struct_set_keep_overlays_and_groups(fortran_ptr_, value);
+}
+bool BbuParamProxy::keep_all_lcavities() const {
+  bool value;
+  bbu_param_struct_get_keep_all_lcavities(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_keep_all_lcavities(bool value) {
+  bbu_param_struct_set_keep_all_lcavities(fortran_ptr_, value);
+}
+bool BbuParamProxy::use_taylor_for_hybrids() const {
+  bool value;
+  bbu_param_struct_get_use_taylor_for_hybrids(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_use_taylor_for_hybrids(bool value) {
+  bbu_param_struct_set_use_taylor_for_hybrids(fortran_ptr_, value);
+}
+bool BbuParamProxy::stable_orbit_anal() const {
+  bool value;
+  bbu_param_struct_get_stable_orbit_anal(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_stable_orbit_anal(bool value) {
+  bbu_param_struct_set_stable_orbit_anal(fortran_ptr_, value);
+}
+double BbuParamProxy::limit_factor() const {
+  double value;
+  bbu_param_struct_get_limit_factor(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_limit_factor(double value) {
+  bbu_param_struct_set_limit_factor(fortran_ptr_, value);
+}
+double BbuParamProxy::simulation_turns_max() const {
+  double value;
+  bbu_param_struct_get_simulation_turns_max(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_simulation_turns_max(double value) {
+  bbu_param_struct_set_simulation_turns_max(fortran_ptr_, value);
+}
+double BbuParamProxy::bunch_freq() const {
+  double value;
+  bbu_param_struct_get_bunch_freq(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_bunch_freq(double value) {
+  bbu_param_struct_set_bunch_freq(fortran_ptr_, value);
+}
+double BbuParamProxy::init_particle_offset() const {
+  double value;
+  bbu_param_struct_get_init_particle_offset(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_init_particle_offset(double value) {
+  bbu_param_struct_set_init_particle_offset(fortran_ptr_, value);
+}
+double BbuParamProxy::current() const {
+  double value;
+  bbu_param_struct_get_current(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_current(double value) {
+  bbu_param_struct_set_current(fortran_ptr_, value);
+}
+double BbuParamProxy::rel_tol() const {
+  double value;
+  bbu_param_struct_get_rel_tol(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_rel_tol(double value) {
+  bbu_param_struct_set_rel_tol(fortran_ptr_, value);
+}
+bool BbuParamProxy::drscan() const {
+  bool value;
+  bbu_param_struct_get_drscan(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_drscan(bool value) {
+  bbu_param_struct_set_drscan(fortran_ptr_, value);
+}
+bool BbuParamProxy::use_interpolated_threshold() const {
+  bool value;
+  bbu_param_struct_get_use_interpolated_threshold(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_use_interpolated_threshold(bool value) {
+  bbu_param_struct_set_use_interpolated_threshold(fortran_ptr_, value);
+}
+bool BbuParamProxy::write_hom_info() const {
+  bool value;
+  bbu_param_struct_get_write_hom_info(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_write_hom_info(bool value) {
+  bbu_param_struct_set_write_hom_info(fortran_ptr_, value);
+}
+int BbuParamProxy::elindex() const {
+  int value;
+  bbu_param_struct_get_elindex(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_elindex(int value) {
+  bbu_param_struct_set_elindex(fortran_ptr_, value);
+}
+std::string BbuParamProxy::elname() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, bbu_param_struct_get_elname_info);
+  return std::string(arr.data(), arr.size());
+}
+void BbuParamProxy::set_elname(const std::string& value) {
+  bbu_param_struct_set_elname(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int BbuParamProxy::nstep() const {
+  int value;
+  bbu_param_struct_get_nstep(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_nstep(int value) {
+  bbu_param_struct_set_nstep(fortran_ptr_, value);
+}
+double BbuParamProxy::begdr() const {
+  double value;
+  bbu_param_struct_get_begdr(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_begdr(double value) {
+  bbu_param_struct_set_begdr(fortran_ptr_, value);
+}
+double BbuParamProxy::enddr() const {
+  double value;
+  bbu_param_struct_get_enddr(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_enddr(double value) {
+  bbu_param_struct_set_enddr(fortran_ptr_, value);
+}
+int BbuParamProxy::nrep() const {
+  int value;
+  bbu_param_struct_get_nrep(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_nrep(int value) {
+  bbu_param_struct_set_nrep(fortran_ptr_, value);
+}
+int BbuParamProxy::ran_seed() const {
+  int value;
+  bbu_param_struct_get_ran_seed(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_ran_seed(int value) {
+  bbu_param_struct_set_ran_seed(fortran_ptr_, value);
+}
+int BbuParamProxy::hom_order_cutoff() const {
+  int value;
+  bbu_param_struct_get_hom_order_cutoff(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_hom_order_cutoff(int value) {
+  bbu_param_struct_set_hom_order_cutoff(fortran_ptr_, value);
+}
+double BbuParamProxy::ran_gauss_sigma_cut() const {
+  double value;
+  bbu_param_struct_get_ran_gauss_sigma_cut(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_ran_gauss_sigma_cut(double value) {
+  bbu_param_struct_set_ran_gauss_sigma_cut(fortran_ptr_, value);
+}
+std::string BbuParamProxy::ele_track_end() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, bbu_param_struct_get_ele_track_end_info);
+  return std::string(arr.data(), arr.size());
+}
+void BbuParamProxy::set_ele_track_end(const std::string& value) {
+  bbu_param_struct_set_ele_track_end(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int BbuParamProxy::ix_ele_track_end() const {
+  int value;
+  bbu_param_struct_get_ix_ele_track_end(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_ix_ele_track_end(int value) {
+  bbu_param_struct_set_ix_ele_track_end(fortran_ptr_, value);
+}
+bool BbuParamProxy::regression() const {
+  bool value;
+  bbu_param_struct_get_regression(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_regression(bool value) {
+  bbu_param_struct_set_regression(fortran_ptr_, value);
+}
+bool BbuParamProxy::normalize_z_to_rf() const {
+  bool value;
+  bbu_param_struct_get_normalize_z_to_rf(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_normalize_z_to_rf(bool value) {
+  bbu_param_struct_set_normalize_z_to_rf(fortran_ptr_, value);
+}
+bool BbuParamProxy::ramp_on() const {
+  bool value;
+  bbu_param_struct_get_ramp_on(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_ramp_on(bool value) {
+  bbu_param_struct_set_ramp_on(fortran_ptr_, value);
+}
+FArray1D<double> BbuParamProxy::ramp_pattern() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_, bbu_param_struct_get_ramp_pattern_info);
+}
+int BbuParamProxy::ramp_n_start() const {
+  int value;
+  bbu_param_struct_get_ramp_n_start(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_ramp_n_start(int value) {
+  bbu_param_struct_set_ramp_n_start(fortran_ptr_, value);
+}
+int BbuParamProxy::n_ramp_pattern() const {
+  int value;
+  bbu_param_struct_get_n_ramp_pattern(fortran_ptr_, &value);
+  return value;
+}
+void BbuParamProxy::set_n_ramp_pattern(int value) {
+  bbu_param_struct_set_n_ramp_pattern(fortran_ptr_, value);
+}
 double AllEncompassingProxy::real_rp_0d() const {
   double value;
   all_encompassing_struct_get_real_rp_0d(fortran_ptr_, &value);

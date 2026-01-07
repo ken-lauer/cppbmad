@@ -104,10 +104,10 @@ precision_module = "precision_def"
 #   "tao_eval_node_struct%node",
 # ]
 
-# [[sources]]
-# source_dir = "${ACC_ROOT_DIR}/bsim"
-# fortran_filename = "${ACC_ROOT_DIR}/bsim/code/bsim_json.f90"
-# json_filename = "json/bsim_structs.json"
-# function_prefix = "bsim_"
-# skip_includes = ["mpif.h"]
-# precision_module = "precision_def"
+[[sources]]
+source_dir = "${ACC_ROOT_DIR}/bsim"
+fortran_filename = "${ACC_ROOT_DIR}/bsim/code/bsim_json.f90"
+json_filename = "json/bsim_structs.json"
+function_prefix = "bsim_"
+skip_includes = ["fftw3.f03"]
+precision_module = "precision_def"

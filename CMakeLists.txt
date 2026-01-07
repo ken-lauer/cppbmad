@@ -28,6 +28,7 @@ add_library(${LIBNAME} SHARED
   src/generated/bmad_routines.f90
   src/generated/sim_utils_routines.f90
   src/generated/tao_routines.f90
+  src/generated/bsim_routines.f90
   src/tao_proxy_helpers.f90
   src/test_struct_defs.f90
   src/tests/routines/cppbmad_tests.f90
@@ -38,6 +39,7 @@ add_library(${LIBNAME} SHARED
   src/generated/cppbmad_test_routines.cpp
   src/generated/bmad_routines.cpp
   src/generated/sim_utils_routines.cpp
+  src/generated/bsim_routines.cpp
   src/generated/tao_routines.cpp
   src/generated/to_string.cpp
   src/tao_index.cpp
@@ -104,6 +106,7 @@ target_link_libraries(${LIBNAME} PUBLIC
   bmad
   sim_utils
   tao
+  bsim
   # cpp_bmad_interface
 )
 

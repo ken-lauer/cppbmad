@@ -375,6 +375,73 @@ PyAttributeName2 python_attribute_name2(
   auto py_result{PyAttributeName2{ix_att, show_private, attrib_name}};
   return py_result;
 }
+struct PyBbuHomVoltageCalc {
+  int n_period;
+  int ix_stage_last_tracked;
+};
+PyBbuHomVoltageCalc python_bbu_hom_voltage_calc(
+    LatProxy& lat,
+    BbuBeamProxy& bbu_beam,
+    int n_period,
+    int ix_stage_last_tracked) {
+  bsim::bbu_hom_voltage_calc(lat, bbu_beam, n_period, ix_stage_last_tracked);
+  auto py_result{PyBbuHomVoltageCalc{n_period, ix_stage_last_tracked}};
+  return py_result;
+}
+struct PyBbuSetup {
+  double dt_bunch;
+};
+PyBbuSetup python_bbu_setup(
+    LatProxy& lat,
+    double dt_bunch,
+    BbuParamProxy& bbu_param,
+    BbuBeamProxy& bbu_beam) {
+  bsim::bbu_setup(lat, dt_bunch, bbu_param, bbu_beam);
+  auto py_result{PyBbuSetup{dt_bunch}};
+  return py_result;
+}
+struct PyBbuTrackAStage {
+  bool lost;
+  int ix_stage_tracked;
+};
+PyBbuTrackAStage python_bbu_track_a_stage(
+    LatProxy& lat,
+    BbuBeamProxy& bbu_beam,
+    BbuParamProxy& bbu_param,
+    bool lost,
+    int ix_stage_tracked) {
+  bsim::bbu_track_a_stage(lat, bbu_beam, bbu_param, lost, ix_stage_tracked);
+  auto py_result{PyBbuTrackAStage{lost, ix_stage_tracked}};
+  return py_result;
+}
+struct PyBbuTrackAll {
+  double hom_voltage_normalized;
+  double growth_rate;
+  bool lost;
+  int irep;
+};
+PyBbuTrackAll python_bbu_track_all(
+    LatProxy& lat,
+    BbuBeamProxy& bbu_beam,
+    BbuParamProxy& bbu_param,
+    BeamInitProxy& beam_init,
+    double hom_voltage_normalized,
+    double growth_rate,
+    bool lost,
+    int irep) {
+  bsim::bbu_track_all(
+      lat,
+      bbu_beam,
+      bbu_param,
+      beam_init,
+      hom_voltage_normalized,
+      growth_rate,
+      lost,
+      irep);
+  auto py_result{
+      PyBbuTrackAll{hom_voltage_normalized, growth_rate, lost, irep}};
+  return py_result;
+}
 struct PyBendLengthHasBeenSet {
   bool is_set;
 };
@@ -483,6 +550,14 @@ PyCheckForSuperimposeProblem python_check_for_superimpose_problem(
   Bmad::check_for_superimpose_problem(
       branch, super_ele, err_flag, ref_ele, wrap);
   auto py_result{PyCheckForSuperimposeProblem{err_flag, wrap}};
+  return py_result;
+}
+struct PyCheckRfFreq {
+  double fb;
+};
+PyCheckRfFreq python_check_rf_freq(LatProxy& lat, double fb) {
+  bsim::check_rf_freq(lat, fb);
+  auto py_result{PyCheckRfFreq{fb}};
   return py_result;
 }
 struct PyChromCalc : public Bmad::ChromCalc {
@@ -2323,6 +2398,14 @@ PyHdf5WriteGridField python_hdf5_write_grid_field(
   auto py_result{PyHdf5WriteGridField{file_name, err_flag}};
   return py_result;
 }
+struct PyHomVoltage {
+  double voltage;
+};
+PyHomVoltage python_hom_voltage(WakeLrModeProxy& lr_wake, double voltage) {
+  bsim::hom_voltage(lr_wake, voltage);
+  auto py_result{PyHomVoltage{voltage}};
+  return py_result;
+}
 struct PyIBessel {
   int m;
   double arg;
@@ -2877,6 +2960,15 @@ struct PyLogicStr {
 PyLogicStr python_logic_str(bool logic, std::string str) {
   SimUtils::logic_str(logic, str);
   auto py_result{PyLogicStr{logic, str}};
+  return py_result;
+}
+struct PyLogicalToPython {
+  bool logic;
+  std::string string;
+};
+PyLogicalToPython python_logical_to_python(bool logic, std::string string) {
+  bsim::logical_to_python(logic, string);
+  auto py_result{PyLogicalToPython{logic, string}};
   return py_result;
 }
 struct PyLordEdgeAligned {
@@ -4506,6 +4598,31 @@ PySetTune python_set_tune(
     bool ok) {
   Bmad::set_tune(phi_a_set, phi_b_set, dk1, eles, branch, orb, print_err, ok);
   auto py_result{PySetTune{ok}};
+  return py_result;
+}
+struct PySetTune3d {
+  std::optional<std::string> mask;
+  bool everything_ok;
+};
+PySetTune3d python_set_tune_3d(
+    BranchProxy& branch,
+    FixedArray1D<Real, 3> target_tunes,
+    std::optional<std::string> mask,
+    std::optional<bool> use_phase_trombone,
+    std::optional<bool> z_tune_set,
+    std::optional<FixedArray1D<string, 2>> group_knobs,
+    std::optional<bool> print_err,
+    bool everything_ok) {
+  bsim::set_tune_3d(
+      branch,
+      target_tunes,
+      make_opt_ref(mask),
+      use_phase_trombone,
+      z_tune_set,
+      group_knobs,
+      print_err,
+      everything_ok);
+  auto py_result{PySetTune3d{mask, everything_ok}};
   return py_result;
 }
 struct PySignificantDifference {
@@ -6796,6 +6913,12 @@ PYBIND11_MODULE(_pybmad, m) {
       m, "MadEnergyStruct", "Fortran struct: mad_energy_struct");
   auto py_MadMapStruct = py::class_<MadMapProxy>(
       m, "MadMapStruct", "Fortran struct: mad_map_struct");
+  auto py_BbuStageStruct = py::class_<BbuStageProxy>(
+      m, "BbuStageStruct", "Fortran struct: bbu_stage_struct");
+  auto py_BbuBeamStruct = py::class_<BbuBeamProxy>(
+      m, "BbuBeamStruct", "Fortran struct: bbu_beam_struct");
+  auto py_BbuParamStruct = py::class_<BbuParamProxy>(
+      m, "BbuParamStruct", "Fortran struct: bbu_param_struct");
   auto py_AllEncompassingStruct = py::class_<AllEncompassingProxy>(
       m, "AllEncompassingStruct", "Fortran struct: all_encompassing_struct");
   auto py_TestSubStruct = py::class_<TestSubProxy>(
@@ -6971,6 +7094,9 @@ PYBIND11_MODULE(_pybmad, m) {
   init_tao_universe_struct(m, py_TaoUniverseStruct);
   init_mad_energy_struct(m, py_MadEnergyStruct);
   init_mad_map_struct(m, py_MadMapStruct);
+  init_bbu_stage_struct(m, py_BbuStageStruct);
+  init_bbu_beam_struct(m, py_BbuBeamStruct);
+  init_bbu_param_struct(m, py_BbuParamStruct);
   init_all_encompassing_struct(m, py_AllEncompassingStruct);
   init_test_sub_struct(m, py_TestSubStruct);
   init_test_sub_sub_struct(m, py_TestSubSubStruct);
@@ -10008,6 +10134,172 @@ z_slice : float
     Array of slice positions 1:n_slice. zero padded for indexes greater than n_slice
 )""");
   m.def(
+      "bbu_add_a_bunch",
+      &bsim::bbu_add_a_bunch,
+      py::arg("lat"),
+      py::arg("bbu_beam"),
+      py::arg("bbu_param"),
+      py::arg("beam_init"),
+      R"""(No docstring available
+
+Parameters
+----------
+lat : 
+bbu_beam : 
+bbu_param : 
+beam_init : 
+)""");
+  m.def(
+      "bbu_hom_voltage_calc",
+      &python_bbu_hom_voltage_calc,
+      py::arg("lat"),
+      py::arg("bbu_beam"),
+      py::arg("n_period"),
+      py::arg("ix_stage_last_tracked"),
+      R"""(No docstring available
+
+Parameters
+----------
+lat : 
+bbu_beam : 
+n_period : 
+ix_stage_last_tracked : 
+)""");
+  py::class_<PyBbuHomVoltageCalc, std::unique_ptr<PyBbuHomVoltageCalc>>(
+      m,
+      "BbuHomVoltageCalc",
+      "Fortran routine bbu_hom_voltage_calc return value")
+      .def_readonly("n_period", &PyBbuHomVoltageCalc::n_period)
+      .def_readonly(
+          "ix_stage_last_tracked", &PyBbuHomVoltageCalc::ix_stage_last_tracked)
+      .def("__len__", [](const PyBbuHomVoltageCalc&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const PyBbuHomVoltageCalc& s, size_t i) -> py::object {
+            if (i >= 2)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.n_period);
+            if (i == 1)
+              return py::cast(s.ix_stage_last_tracked);
+            return py::none();
+          });
+  m.def(
+      "bbu_remove_head_bunch",
+      &bsim::bbu_remove_head_bunch,
+      py::arg("bbu_beam"),
+      R"""(No docstring available
+
+Parameters
+----------
+bbu_beam : 
+)""");
+  m.def(
+      "bbu_setup",
+      &python_bbu_setup,
+      py::arg("lat"),
+      py::arg("dt_bunch"),
+      py::arg("bbu_param"),
+      py::arg("bbu_beam"),
+      R"""(No docstring available
+
+Parameters
+----------
+lat : 
+dt_bunch : 
+bbu_param : 
+bbu_beam : 
+)""");
+  py::class_<PyBbuSetup, std::unique_ptr<PyBbuSetup>>(
+      m, "BbuSetup", "Fortran routine bbu_setup return value")
+      .def_readonly("dt_bunch", &PyBbuSetup::dt_bunch)
+      .def("__len__", [](const PyBbuSetup&) { return 1; })
+      .def("__getitem__", [](const PyBbuSetup& s, size_t i) -> py::object {
+        if (i >= 1)
+          throw py::index_error();
+        if (i == 0)
+          return py::cast(s.dt_bunch);
+        return py::none();
+      });
+  m.def(
+      "bbu_track_a_stage",
+      &python_bbu_track_a_stage,
+      py::arg("lat"),
+      py::arg("bbu_beam"),
+      py::arg("bbu_param"),
+      py::arg("lost"),
+      py::arg("ix_stage_tracked"),
+      R"""(No docstring available
+
+Parameters
+----------
+lat : 
+bbu_beam : 
+bbu_param : 
+lost : 
+ix_stage_tracked : 
+)""");
+  py::class_<PyBbuTrackAStage, std::unique_ptr<PyBbuTrackAStage>>(
+      m, "BbuTrackAStage", "Fortran routine bbu_track_a_stage return value")
+      .def_readonly("lost", &PyBbuTrackAStage::lost)
+      .def_readonly("ix_stage_tracked", &PyBbuTrackAStage::ix_stage_tracked)
+      .def("__len__", [](const PyBbuTrackAStage&) { return 2; })
+      .def(
+          "__getitem__", [](const PyBbuTrackAStage& s, size_t i) -> py::object {
+            if (i >= 2)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.lost);
+            if (i == 1)
+              return py::cast(s.ix_stage_tracked);
+            return py::none();
+          });
+  m.def(
+      "bbu_track_all",
+      &python_bbu_track_all,
+      py::arg("lat"),
+      py::arg("bbu_beam"),
+      py::arg("bbu_param"),
+      py::arg("beam_init"),
+      py::arg("hom_voltage_normalized"),
+      py::arg("growth_rate"),
+      py::arg("lost"),
+      py::arg("irep"),
+      R"""(No docstring available
+
+Parameters
+----------
+lat : 
+bbu_beam : 
+bbu_param : 
+beam_init : 
+hom_voltage_normalized : 
+growth_rate : 
+lost : 
+irep : 
+)""");
+  py::class_<PyBbuTrackAll, std::unique_ptr<PyBbuTrackAll>>(
+      m, "BbuTrackAll", "Fortran routine bbu_track_all return value")
+      .def_readonly(
+          "hom_voltage_normalized", &PyBbuTrackAll::hom_voltage_normalized)
+      .def_readonly("growth_rate", &PyBbuTrackAll::growth_rate)
+      .def_readonly("lost", &PyBbuTrackAll::lost)
+      .def_readonly("irep", &PyBbuTrackAll::irep)
+      .def("__len__", [](const PyBbuTrackAll&) { return 4; })
+      .def("__getitem__", [](const PyBbuTrackAll& s, size_t i) -> py::object {
+        if (i >= 4)
+          throw py::index_error();
+        if (i == 0)
+          return py::cast(s.hom_voltage_normalized);
+        if (i == 1)
+          return py::cast(s.growth_rate);
+        if (i == 2)
+          return py::cast(s.lost);
+        if (i == 3)
+          return py::cast(s.irep);
+        return py::none();
+      });
+  m.def(
       "beam_envelope_ibs",
       &Bmad::beam_envelope_ibs,
       py::arg("sigma_mat"),
@@ -11458,6 +11750,29 @@ print_err : bool, optional
               return py::cast(s.translated_s);
             return py::none();
           });
+  m.def(
+      "check_rf_freq",
+      &python_check_rf_freq,
+      py::arg("lat"),
+      py::arg("fb"),
+      R"""(No docstring available
+
+Parameters
+----------
+lat : 
+fb : 
+)""");
+  py::class_<PyCheckRfFreq, std::unique_ptr<PyCheckRfFreq>>(
+      m, "CheckRfFreq", "Fortran routine check_rf_freq return value")
+      .def_readonly("fb", &PyCheckRfFreq::fb)
+      .def("__len__", [](const PyCheckRfFreq&) { return 1; })
+      .def("__getitem__", [](const PyCheckRfFreq& s, size_t i) -> py::object {
+        if (i >= 1)
+          throw py::index_error();
+        if (i == 0)
+          return py::cast(s.fb);
+        return py::none();
+      });
   m.def(
       "choose_quads_for_set_tune",
       &Bmad::choose_quads_for_set_tune,
@@ -12939,6 +13254,17 @@ res :
           return py::cast(s.res);
         return py::none();
       });
+  m.def(
+      "count_lines_in_file",
+      &bsim::count_lines_in_file,
+      py::arg("file_name"),
+      R"""(No docstring available
+
+Parameters
+----------
+file_name : 
+lines : 
+)""");
   m.def(
       "create_a_spline",
       &SimUtils::create_a_spline,
@@ -20059,6 +20385,29 @@ err_flag :
             return py::none();
           });
   m.def(
+      "hom_voltage",
+      &python_hom_voltage,
+      py::arg("lr_wake"),
+      py::arg("voltage"),
+      R"""(No docstring available
+
+Parameters
+----------
+lr_wake : 
+voltage : 
+)""");
+  py::class_<PyHomVoltage, std::unique_ptr<PyHomVoltage>>(
+      m, "HomVoltage", "Fortran routine hom_voltage return value")
+      .def_readonly("voltage", &PyHomVoltage::voltage)
+      .def("__len__", [](const PyHomVoltage&) { return 1; })
+      .def("__getitem__", [](const PyHomVoltage& s, size_t i) -> py::object {
+        if (i >= 1)
+          throw py::index_error();
+        if (i == 0)
+          return py::cast(s.voltage);
+        return py::none();
+      });
+  m.def(
       "hwang_bend_edge_kick",
       &Bmad::hwang_bend_edge_kick,
       py::arg("ele"),
@@ -21248,6 +21597,19 @@ ix_branch : int, optional
 orbit : CoordStruct, optional
     orbit array to enlarge.
     This parameter is an input/output and is modified in-place. As an output: Enlarged orbit array.
+)""");
+  m.def(
+      "insert_phase_trombone",
+      &bsim::insert_phase_trombone,
+      py::arg("branch"),
+      R"""(No docstring available
+
+Parameters
+----------
+branch : BranchStruct
+    Lattice branch.
+    This parameter is an input/output and is modified in-place. As an output: Lattice branch with trumbone at
+    branch.ele(1).
 )""");
   m.def(
       "int_str",
@@ -22571,6 +22933,34 @@ str :
           return py::cast(s.str);
         return py::none();
       });
+  m.def(
+      "logical_to_python",
+      &python_logical_to_python,
+      py::arg("logic"),
+      py::arg("string"),
+      R"""(No docstring available
+
+Parameters
+----------
+logic : 
+string : 
+)""");
+  py::class_<PyLogicalToPython, std::unique_ptr<PyLogicalToPython>>(
+      m, "LogicalToPython", "Fortran routine logical_to_python return value")
+      .def_readonly("logic", &PyLogicalToPython::logic)
+      .def_readonly("string", &PyLogicalToPython::string)
+      .def("__len__", [](const PyLogicalToPython&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const PyLogicalToPython& s, size_t i) -> py::object {
+            if (i >= 2)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.logic);
+            if (i == 1)
+              return py::cast(s.string);
+            return py::none();
+          });
   m.def(
       "lord_edge_aligned",
       &python_lord_edge_aligned,
@@ -30616,6 +31006,16 @@ track_antiparticle : bool, optional
     Set the particle species of the reversed lat to the anti-particle of lat_in? Default is True.
 )""");
   m.def(
+      "rf_cav_names",
+      &bsim::rf_cav_names,
+      py::arg("lat"),
+      R"""(No docstring available
+
+Parameters
+----------
+lat : 
+)""");
+  m.def(
       "rf_coupler_kick",
       &Bmad::rf_coupler_kick,
       py::arg("ele"),
@@ -32410,6 +32810,52 @@ ok :
           throw py::index_error();
         if (i == 0)
           return py::cast(s.ok);
+        return py::none();
+      });
+  m.def(
+      "set_tune_3d",
+      &python_set_tune_3d,
+      py::arg("branch"),
+      py::arg("target_tunes"),
+      py::arg("mask") = py::none(),
+      py::arg("use_phase_trombone") = py::none(),
+      py::arg("z_tune_set") = py::none(),
+      py::arg("group_knobs") = py::none(),
+      py::arg("print_err") = py::none(),
+      py::arg("everything_ok"),
+      R"""(No docstring available
+
+Parameters
+----------
+branch : BranchStruct
+    This parameter is an input/output and is modified in-place. As an output: with adjusted quads and RF to
+    match desired tunes.
+target_tunes : float
+    tunes for a, b, z modes (rad/2pi). Must include integer part.
+mask : 
+use_phase_trombone : bool, optional
+    Default False. If true, use a match element in phase trombone mode to adjust the tunes. The match element
+    must be the first element in the lattice. Use insert_phase_trombone to insert one.
+z_tune_set : bool, optional
+    Default True. If false, do not try to set the synch tune.
+group_knobs : unknown, optional
+    If set non-blank, use these group elements for tuning.
+print_err : bool, optional
+    Print error message if there is a problem? Default is True.
+everything_ok : 
+)""");
+  py::class_<PySetTune3d, std::unique_ptr<PySetTune3d>>(
+      m, "SetTune3d", "Fortran routine set_tune_3d return value")
+      .def_readonly("mask", &PySetTune3d::mask)
+      .def_readonly("everything_ok", &PySetTune3d::everything_ok)
+      .def("__len__", [](const PySetTune3d&) { return 2; })
+      .def("__getitem__", [](const PySetTune3d& s, size_t i) -> py::object {
+        if (i >= 2)
+          throw py::index_error();
+        if (i == 0)
+          return py::cast(s.mask);
+        if (i == 1)
+          return py::cast(s.everything_ok);
         return py::none();
       });
   m.def(
@@ -46012,6 +46458,22 @@ output_form : int, optional
     Everything in one file.
 orbit0 : CoordStruct, optional
     Initial orbit. Used to write the inital orbit if the lattice geometry is closed.
+)""");
+  m.def(
+      "write_bunch_by_bunch_info",
+      &bsim::write_bunch_by_bunch_info,
+      py::arg("lat"),
+      py::arg("bbu_beam"),
+      py::arg("bbu_param"),
+      py::arg("this_stage"),
+      R"""(No docstring available
+
+Parameters
+----------
+lat : 
+bbu_beam : 
+bbu_param : 
+this_stage : 
 )""");
   m.def(
       "write_gpt_field_grid_file_1d",
