@@ -79,14 +79,13 @@ if (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
 
 endif()
 
-if("${CMAKE_SYSTEM_NAME}" MATCHES "Darwin")
-  # No address sanitization options
-else()
-  set(BASE_CXX_FLAGS "${BASE_CXX_FLAGS} -fsanitize=address,undefined")
-  set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fsanitize=address,undefined")
-  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address,undefined")
-endif()
-
+# if("${CMAKE_SYSTEM_NAME}" MATCHES "Darwin")
+#   # No address sanitization options
+# else()
+#   set(BASE_CXX_FLAGS "${BASE_CXX_FLAGS} -fsanitize=address,undefined")
+#   set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fsanitize=address,undefined")
+#   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address,undefined")
+# endif()
 
 target_include_directories(${LIBNAME} PRIVATE
   "./include"
@@ -155,7 +154,16 @@ set_property(TARGET test_all_encompassing PROPERTY CXX_STANDARD 17)
 enable_testing()
 add_test(NAME AllEncompassingProxyTests COMMAND test_all_encompassing)
 
-option(BUILD_PYBMAD "Build the Bmad Python bindings" ON)
+# Python / pybmad
+find_package(pybind11 QUIET)
+
+if(pybind11_FOUND)
+  set(_default_build_pybmad ON)
+else()
+  # pybind11 not found; default BUILD_PYBMAD to OFF
+  set(_default_build_pybmad OFF)
+endif()
+option(BUILD_PYBMAD "Build the Bmad Python bindings" ${_default_build_pybmad})
 
 if(BUILD_PYBMAD OR SKBUILD)
   add_subdirectory(python)

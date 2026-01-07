@@ -1,0 +1,124 @@
+name: Bmad-ecosystem - Conda build & test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-conda:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: ubuntu-single-core
+            os: ubuntu-latest
+            shared: Y
+            openmp_mpi: N
+            bmad_ref: main
+            build_type: release
+          - name: macos-single-core
+            os: macos-latest
+            shared: Y
+            openmp_mpi: N
+            bmad_ref: main
+            build_type: release
+          - name: ubuntu-openmp
+            os: ubuntu-latest
+            shared: Y
+            openmp_mpi: Y
+            bmad_ref: main
+            build_type: release
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/checkout@v6
+        with:
+          repository: bmad-sim/bmad-ecosystem
+          # repository: ken-lauer/bmad-ecosystem
+          ref: ${{ matrix.bmad_ref }}
+          path: bmad_src
+
+      - name: Setup miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-version: latest
+          use-mamba: true
+          activate-environment: bmad-build
+          channels: conda-forge
+          environment-file: bmad_src/.github/bmad-build-env.yaml
+          python-version: 3.12
+          conda-remove-defaults: true
+
+      - name: Include Linux-only requirements
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        shell: bash -eo pipefail -l {0}
+        run: conda install -y libacl libgomp
+
+      - name: Include OpenMPI variants (if using MPI)
+        if: ${{ matrix.openmp_mpi == 'Y' }}
+        shell: bash -eo pipefail -l {0}
+        run: conda install -y 'hdf5=*=mpi_openmpi*'
+
+      - name: Build Bmad with Conda
+        env:
+          USE_MPI: ${{ matrix.openmp_mpi }}
+          SHARED: ${{ matrix.shared }}
+          USE_CONDA: 1
+        working-directory: bmad_src
+        shell: bash -eo pipefail -l {0}
+        run: .github/scripts/install_bmad.sh
+
+      - name: Set environment variables
+        shell: bash -l {0}
+        run: |
+          echo "ACC_ROOT_DIR=$GITHUB_WORKSPACE/bmad_src" >> $GITHUB_ENV
+          echo "BUILD_TYPE=${{ matrix.build_type }}" >> $GITHUB_ENV
+
+      # - name: Run Bmad Tests
+      #   shell: bash -eo pipefail -l {0}
+      #   working-directory: bmad_src
+      #   run: .github/scripts/run_tests.sh 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Install build dependencies
+        shell: bash -eo pipefail -l {0}
+        run: conda install -y cmake pydantic clang-format
+
+      - name: Regenerate cppbmad
+        shell: bash -eo pipefail -l {0}
+        run: |
+          python -m codegen
+
+      - name: Build cppbmad and run tests
+        shell: bash -eo pipefail -l {0}
+        run: |
+          cmake -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" -B "${BUILD_TYPE}" .
+          cmake --build "${BUILD_TYPE}"
+
+      - name: Run cppbmad tests
+        shell: bash -eo pipefail -l {0}
+        working-directory: ${{ matrix.build_type }}
+        run: |
+          ./test_all_encompassing
+          ./test_integration 
+          ./test_arrays
+
+      - name: pybmad on Linux (non-parallel)
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        shell: bash -eo pipefail -l {0}
+        run: CMAKE_BUILD_PARALLEL_LEVEL=1 python -m pip install -vv .
+
+      - name: pybmad on MacOS
+        if: ${{ matrix.os != 'ubuntu-latest' }}
+        shell: bash -eo pipefail -l {0}
+        run: python -m pip install -vv .
+
+      - name: Run a simple test
+        shell: bash -eo pipefail -l {0}
+        run: python python/examples/parse.py
