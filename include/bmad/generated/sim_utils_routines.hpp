@@ -847,10 +847,13 @@ void parse_fortran_format(
 // Skipped unusable routine pointer_to_locations:
 // - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine pointer_to_ran_state:
-// - Untranslated type: random_state_struct (0D)
-// - Untranslated type: random_state_struct (0D)
+extern "C" bool fortran_pointer_to_ran_state(
+    void* ran_state /* 0D_NOT_type in */,
+    int* ix_thread /* 0D_NOT_integer in */,
+    void* ran_state_ptr /* 0D_PTR_type out */);
+RandomStateProxy pointer_to_ran_state(
+    optional_ref<RandomStateProxy> ran_state = std::nullopt,
+    std::optional<int> ix_thread = std::nullopt);
 extern "C" bool fortran_poly_eval(
     void* poly /* 1D_ALLOC_real in */,
     double& x /* 0D_NOT_real in */,
@@ -882,11 +885,11 @@ void quadratic_roots(
 extern "C" bool fortran_quat_conj_complex(
     std::complex<double>* q_in /* 1D_NOT_complex in */,
     std::complex<double>* q_out /* 1D_NOT_complex out */);
-FixedArray1D<Complex, 4> quat_conj_complex(FixedArray1D<Complex, 4> q_in);
+FixedArray1D<Complex, 4> quat_conj(FixedArray1D<Complex, 4> q_in);
 extern "C" bool fortran_quat_conj_real(
     double* q_in /* 1D_NOT_real in */,
     double* q_out /* 1D_NOT_real out */);
-FixedArray1D<Real, 4> quat_conj_real(FixedArray1D<Real, 4> q_in);
+FixedArray1D<Real, 4> quat_conj(FixedArray1D<Real, 4> q_in);
 extern "C" bool fortran_quat_inverse(
     double* q_in /* 1D_NOT_real in */,
     double* q_out /* 1D_NOT_real out */);
@@ -902,7 +905,7 @@ extern "C" bool fortran_quat_mul_complex(
     std::complex<double>* q8 /* 1D_NOT_complex inout */,
     std::complex<double>* q9 /* 1D_NOT_complex inout */,
     std::complex<double>* q_out /* 1D_NOT_complex out */);
-FixedArray1D<Complex, 4> quat_mul_complex(
+FixedArray1D<Complex, 4> quat_mul(
     FixedArray1D<Complex, 4> q1,
     FixedArray1D<Complex, 4> q2,
     std::optional<FixedArray1D<Complex, 4>> q3 = std::nullopt,
@@ -923,7 +926,7 @@ extern "C" bool fortran_quat_mul_real(
     double* q8 /* 1D_NOT_real inout */,
     double* q9 /* 1D_NOT_real inout */,
     double* q_out /* 1D_NOT_real out */);
-FixedArray1D<Real, 4> quat_mul_real(
+FixedArray1D<Real, 4> quat_mul(
     FixedArray1D<Real, 4> q1,
     FixedArray1D<Real, 4> q2,
     std::optional<FixedArray1D<Real, 4>> q3 = std::nullopt,
@@ -937,14 +940,14 @@ extern "C" bool fortran_quat_rotate_complex(
     std::complex<double>* quat /* 1D_NOT_complex in */,
     std::complex<double>* vec_in /* 1D_NOT_complex in */,
     std::complex<double>* vec_out /* 1D_NOT_complex out */);
-FixedArray1D<Complex, 3> quat_rotate_complex(
+FixedArray1D<Complex, 3> quat_rotate(
     FixedArray1D<Complex, 4> quat,
     FixedArray1D<Complex, 3> vec_in);
 extern "C" bool fortran_quat_rotate_real(
     double* quat /* 1D_NOT_real in */,
     double* vec_in /* 1D_NOT_real in */,
     double* vec_out /* 1D_NOT_real out */);
-FixedArray1D<Real, 3> quat_rotate_real(
+FixedArray1D<Real, 3> quat_rotate(
     FixedArray1D<Real, 4> quat,
     FixedArray1D<Real, 3> vec_in);
 extern "C" void fortran_quat_to_axis_angle(
@@ -984,34 +987,67 @@ void quote(std::string& str, std::string& q_str);
 // Skipped unusable routine quoten:
 // - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine ran_default_state:
-// - Untranslated type: random_state_struct (0D)
-// - Untranslated type: random_state_struct (0D)
-
-// Skipped unusable routine ran_engine:
-// - Untranslated type: random_state_struct (0D)
-
-// Skipped unusable routine ran_gauss_converter:
-// - Untranslated type: random_state_struct (0D)
-
-// Skipped unusable routine ran_gauss_scalar:
-// - Untranslated type: random_state_struct (0D)
-
-// Skipped unusable routine ran_gauss_vector:
-// - Untranslated type: random_state_struct (0D)
+extern "C" void fortran_ran_default_state(
+    void* set_state /* 0D_NOT_type in */,
+    void* get_state /* 0D_NOT_type out */);
+RandomStateProxy ran_default_state(
+    optional_ref<RandomStateProxy> set_state = std::nullopt);
+extern "C" void fortran_ran_engine(
+    const char* set /* 0D_NOT_character in */,
+    const char* get /* 0D_NOT_character in */,
+    void* ran_state /* 0D_NOT_type in */);
+void ran_engine(
+    std::optional<std::string> set = std::nullopt,
+    std::optional<std::string> get = std::nullopt,
+    optional_ref<RandomStateProxy> ran_state = std::nullopt);
+extern "C" void fortran_ran_gauss_converter(
+    const char* set /* 0D_NOT_character in */,
+    double* set_sigma_cut /* 0D_NOT_real in */,
+    const char* get /* 0D_NOT_character out */,
+    double& get_sigma_cut /* 0D_NOT_real out */,
+    void* ran_state /* 0D_NOT_type in */);
+struct RanGaussConverter {
+  std::string get;
+  double get_sigma_cut;
+};
+SimUtils::RanGaussConverter ran_gauss_converter(
+    std::optional<std::string> set = std::nullopt,
+    std::optional<double> set_sigma_cut = std::nullopt,
+    optional_ref<RandomStateProxy> ran_state = std::nullopt);
+extern "C" void fortran_ran_gauss_scalar(
+    double& harvest /* 0D_NOT_real out */,
+    void* ran_state /* 0D_NOT_type in */,
+    double* sigma_cut /* 0D_NOT_real in */,
+    int* index_quasi /* 0D_NOT_integer inout */);
+double ran_gauss_scalar(
+    optional_ref<RandomStateProxy> ran_state = std::nullopt,
+    std::optional<double> sigma_cut = std::nullopt,
+    optional_ref<int> index_quasi = std::nullopt);
+extern "C" void fortran_ran_gauss_vector(
+    void* harvest /* 1D_ALLOC_real out */,
+    void* ran_state /* 0D_NOT_type in */,
+    double* sigma_cut /* 0D_NOT_real in */);
+RealAlloc1D ran_gauss_vector(
+    optional_ref<RandomStateProxy> ran_state = std::nullopt,
+    std::optional<double> sigma_cut = std::nullopt);
 extern "C" void fortran_ran_seed_get(int& seed /* 0D_NOT_integer out */);
 int ran_seed_get();
 extern "C" void fortran_ran_seed_put(
     int& seed /* 0D_NOT_integer in */,
     int* mpi_offset /* 0D_NOT_integer in */);
 void ran_seed_put(int seed, std::optional<int> mpi_offset = std::nullopt);
-
-// Skipped unusable routine ran_uniform_scalar:
-// - Untranslated type: random_state_struct (0D)
-
-// Skipped unusable routine ran_uniform_vector:
-// - Untranslated type: random_state_struct (0D)
+extern "C" void fortran_ran_uniform_scalar(
+    double& harvest /* 0D_NOT_real out */,
+    void* ran_state /* 0D_NOT_type in */,
+    int* index_quasi /* 0D_NOT_integer inout */);
+double ran_uniform(
+    optional_ref<RandomStateProxy> ran_state = std::nullopt,
+    optional_ref<int> index_quasi = std::nullopt);
+extern "C" void fortran_ran_uniform_vector(
+    void* harvest /* 1D_ALLOC_real out */,
+    void* ran_state /* 0D_NOT_type in */);
+RealAlloc1D ran_uniform(
+    optional_ref<RandomStateProxy> ran_state = std::nullopt);
 extern "C" bool fortran_real_num_fortran_format(
     double& number /* 0D_NOT_real inout */,
     int& width /* 0D_NOT_integer inout */,
@@ -1498,9 +1534,11 @@ double super_poly(double x, RealAlloc1D& coeffs);
 
 // Skipped unusable routine super_rtsafe:
 // - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine super_sobseq:
-// - Untranslated type: random_state_struct (0D)
+extern "C" void fortran_super_sobseq(
+    void* x /* 1D_ALLOC_real out */,
+    void* ran_state /* 0D_NOT_type inout */);
+RealAlloc1D super_sobseq(
+    optional_ref<RandomStateProxy> ran_state = std::nullopt);
 extern "C" void fortran_super_sort(void* arr /* 1D_ALLOC_integer inout */);
 void super_sort(IntAlloc1D& arr);
 

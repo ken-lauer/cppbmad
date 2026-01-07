@@ -1671,6 +1671,41 @@ void Tao::tao_pointer_to_tao_lat(
       /* int* */ _lat_type,
       /* void* */ &tao_lat);
 }
+TaoUniverseProxy Tao::tao_pointer_to_universe(
+    int ix_uni,
+    std::optional<bool> neg2_to_default) {
+  bool neg2_to_default_lvalue;
+  auto* _neg2_to_default{&neg2_to_default_lvalue};
+  if (neg2_to_default.has_value()) {
+    neg2_to_default_lvalue = neg2_to_default.value();
+  } else {
+    _neg2_to_default = nullptr;
+  }
+  TaoUniverseProxy _u;
+  fortran_tao_pointer_to_universe_int(
+      /* int& */ ix_uni,
+      /* bool* */ _neg2_to_default,
+      /* void* */ _u.get_fortran_ptr());
+  return std::move(_u);
+}
+TaoUniverseProxy Tao::tao_pointer_to_universe(
+    std::string& string,
+    std::optional<bool> neg2_to_default) {
+  auto _string = string.c_str(); // ptr, inout, required
+  bool neg2_to_default_lvalue;
+  auto* _neg2_to_default{&neg2_to_default_lvalue};
+  if (neg2_to_default.has_value()) {
+    neg2_to_default_lvalue = neg2_to_default.value();
+  } else {
+    _neg2_to_default = nullptr;
+  }
+  TaoUniverseProxy _u;
+  fortran_tao_pointer_to_universe_str(
+      /* const char* */ _string,
+      /* bool* */ _neg2_to_default,
+      /* void* */ _u.get_fortran_ptr());
+  return std::move(_u);
+}
 Tao::TaoPointerToUniverses Tao::tao_pointer_to_universes(
     std::string name_in,
     std::optional<int> dflt_uni) {

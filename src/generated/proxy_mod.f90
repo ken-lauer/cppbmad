@@ -12,6 +12,7 @@ module bmad_struct_proxy_mod
   use srdt_mod, only: summation_rdt_struct
   use quick_plot_struct, only: qp_axis_struct, qp_legend_struct, qp_line_struct, qp_point_struct, qp_rect_struct, qp_symbol_struct
   use mad_mod, only: mad_energy_struct, mad_map_struct
+  use random_mod, only: random_state_struct
   use bbu_track_mod, only: bbu_beam_struct, bbu_param_struct, bbu_stage_struct
   use test_struct_defs, only: all_encompassing_struct, test_sub_struct, test_sub_sub_struct
   
@@ -686,6 +687,10 @@ module bmad_struct_proxy_mod
   type :: mad_map_struct_container_alloc
     type(mad_map_struct), allocatable :: data(:)
   end type mad_map_struct_container_alloc
+
+  type :: random_state_struct_container_alloc
+    type(random_state_struct), allocatable :: data(:)
+  end type random_state_struct_container_alloc
 
   type :: bbu_stage_struct_container_alloc
     type(bbu_stage_struct), allocatable :: data(:)
@@ -56021,6 +56026,345 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  !! random_state_struct
+
+    function allocate_fortran_random_state_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(random_state_struct), pointer :: fptr
+      type(random_state_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_random_state_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(random_state_struct), pointer :: fptr
+      type(random_state_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_random_state_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(random_state_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_random_state_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(random_state_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_random_state_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(random_state_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_random_state_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(random_state_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_random_state_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(random_state_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! random_state_struct%ix: 0D_NOT_integer8
+
+  subroutine random_state_struct_get_ix(struct_obj_ptr, value_out) bind(c, name='random_state_struct_get_ix')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int64_t), intent(out) :: value_out
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%ix
+  end subroutine
+
+
+  subroutine random_state_struct_set_ix(struct_obj_ptr, value_in) bind(c, name='random_state_struct_set_ix')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int64_t), intent(in), value :: value_in
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%ix = value_in
+  end subroutine
+
+  ! random_state_struct%iy: 0D_NOT_integer8
+
+  subroutine random_state_struct_get_iy(struct_obj_ptr, value_out) bind(c, name='random_state_struct_get_iy')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int64_t), intent(out) :: value_out
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%iy
+  end subroutine
+
+
+  subroutine random_state_struct_set_iy(struct_obj_ptr, value_in) bind(c, name='random_state_struct_set_iy')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int64_t), intent(in), value :: value_in
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%iy = value_in
+  end subroutine
+
+  ! random_state_struct%number_stored: 0D_NOT_logical
+
+  subroutine random_state_struct_get_number_stored(struct_obj_ptr, value_out) bind(c, name='random_state_struct_get_number_stored')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%number_stored
+  end subroutine
+
+
+  subroutine random_state_struct_set_number_stored(struct_obj_ptr, value_in) bind(c, name='random_state_struct_set_number_stored')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%number_stored = value_in
+  end subroutine
+
+  ! random_state_struct%h_saved: 0D_NOT_real
+
+  subroutine random_state_struct_get_h_saved(struct_obj_ptr, value_out) bind(c, name='random_state_struct_get_h_saved')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%h_saved
+  end subroutine
+
+
+  subroutine random_state_struct_set_h_saved(struct_obj_ptr, value_in) bind(c, name='random_state_struct_set_h_saved')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%h_saved = value_in
+  end subroutine
+
+  ! random_state_struct%engine: 0D_NOT_integer
+
+  subroutine random_state_struct_get_engine(struct_obj_ptr, value_out) bind(c, name='random_state_struct_get_engine')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%engine
+  end subroutine
+
+
+  subroutine random_state_struct_set_engine(struct_obj_ptr, value_in) bind(c, name='random_state_struct_set_engine')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%engine = value_in
+  end subroutine
+
+  ! random_state_struct%seed: 0D_NOT_integer
+
+  subroutine random_state_struct_get_seed(struct_obj_ptr, value_out) bind(c, name='random_state_struct_get_seed')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%seed
+  end subroutine
+
+
+  subroutine random_state_struct_set_seed(struct_obj_ptr, value_in) bind(c, name='random_state_struct_set_seed')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%seed = value_in
+  end subroutine
+
+  ! random_state_struct%am: 0D_NOT_real
+
+  subroutine random_state_struct_get_am(struct_obj_ptr, value_out) bind(c, name='random_state_struct_get_am')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%am
+  end subroutine
+
+
+  subroutine random_state_struct_set_am(struct_obj_ptr, value_in) bind(c, name='random_state_struct_set_am')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%am = value_in
+  end subroutine
+
+  ! random_state_struct%gauss_converter: 0D_NOT_integer
+
+  subroutine random_state_struct_get_gauss_converter(struct_obj_ptr, value_out) bind(c, name='random_state_struct_get_gauss_converter')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%gauss_converter
+  end subroutine
+
+
+  subroutine random_state_struct_set_gauss_converter(struct_obj_ptr, value_in) bind(c, name='random_state_struct_set_gauss_converter')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%gauss_converter = value_in
+  end subroutine
+
+  ! random_state_struct%gauss_sigma_cut: 0D_NOT_real
+
+  subroutine random_state_struct_get_gauss_sigma_cut(struct_obj_ptr, value_out) bind(c, name='random_state_struct_get_gauss_sigma_cut')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%gauss_sigma_cut
+  end subroutine
+
+
+  subroutine random_state_struct_set_gauss_sigma_cut(struct_obj_ptr, value_in) bind(c, name='random_state_struct_set_gauss_sigma_cut')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%gauss_sigma_cut = value_in
+  end subroutine
+
+  ! random_state_struct%in_sobseq: 0D_NOT_integer8
+
+  subroutine random_state_struct_get_in_sobseq(struct_obj_ptr, value_out) bind(c, name='random_state_struct_get_in_sobseq')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int64_t), intent(out) :: value_out
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%in_sobseq
+  end subroutine
+
+
+  subroutine random_state_struct_set_in_sobseq(struct_obj_ptr, value_in) bind(c, name='random_state_struct_set_in_sobseq')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int64_t), intent(in), value :: value_in
+    type(random_state_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%in_sobseq = value_in
+  end subroutine
+
+  ! skipped random_state_struct%ix_sobseq: Unsupported type: 1D_NOT_integer8
+  ! random_state_struct%x_sobseq: 1D_NOT_real
+
+  subroutine random_state_struct_get_x_sobseq_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='random_state_struct_get_x_sobseq_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(random_state_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%x_sobseq)) then
+      data_ptr = c_loc(struct_obj%x_sobseq(lbound(struct_obj%x_sobseq, 1)))
+      bounds(1) = int(lbound(struct_obj%x_sobseq, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%x_sobseq, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
       is_allocated = .false.
     endif
   end subroutine

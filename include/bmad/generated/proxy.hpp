@@ -6817,6 +6817,39 @@ void mad_map_struct_get_t_info(
     int* bounds,
     int* strides,
     bool* is_alloc);
+void random_state_struct_get_ix(const void* struct_obj, int64_t* value_out);
+void random_state_struct_set_ix(void* struct_obj, int64_t value_in);
+void random_state_struct_get_iy(const void* struct_obj, int64_t* value_out);
+void random_state_struct_set_iy(void* struct_obj, int64_t value_in);
+void random_state_struct_get_number_stored(
+    const void* struct_obj,
+    bool* value_out);
+void random_state_struct_set_number_stored(void* struct_obj, bool value_in);
+void random_state_struct_get_h_saved(const void* struct_obj, double* value_out);
+void random_state_struct_set_h_saved(void* struct_obj, double value_in);
+void random_state_struct_get_engine(const void* struct_obj, int* value_out);
+void random_state_struct_set_engine(void* struct_obj, int value_in);
+void random_state_struct_get_seed(const void* struct_obj, int* value_out);
+void random_state_struct_set_seed(void* struct_obj, int value_in);
+void random_state_struct_get_am(const void* struct_obj, double* value_out);
+void random_state_struct_set_am(void* struct_obj, double value_in);
+void random_state_struct_get_gauss_converter(
+    const void* struct_obj,
+    int* value_out);
+void random_state_struct_set_gauss_converter(void* struct_obj, int value_in);
+void random_state_struct_get_gauss_sigma_cut(
+    const void* struct_obj,
+    double* value_out);
+void random_state_struct_set_gauss_sigma_cut(void* struct_obj, double value_in);
+void random_state_struct_get_in_sobseq(
+    const void* struct_obj,
+    int64_t* value_out);
+void random_state_struct_set_in_sobseq(void* struct_obj, int64_t value_in);
+void random_state_struct_get_x_sobseq_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
 void bbu_stage_struct_get_ix_ele_lr_wake(
     const void* struct_obj,
     int* value_out);
@@ -10315,6 +10348,21 @@ void access_mad_map_struct_container(
     size_t* elem_size,
     bool* alloc);
 
+void* allocate_fortran_random_state_struct(int n, size_t* element_size);
+void deallocate_fortran_random_state_struct(void* ptr, int n) noexcept;
+void copy_fortran_random_state_struct(const void* src, void* dst);
+
+void* allocate_random_state_struct_container();
+void reallocate_random_state_struct_container_data(void*, int, size_t) noexcept;
+void deallocate_random_state_struct_container(void*) noexcept;
+void access_random_state_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_bbu_stage_struct(int n, size_t* element_size);
 void deallocate_fortran_bbu_stage_struct(void* ptr, int n) noexcept;
 void copy_fortran_bbu_stage_struct(const void* src, void* dst);
@@ -13152,6 +13200,22 @@ using MadMapProxyAlloc1D = FTypeAlloc1D<
     deallocate_mad_map_struct_container,
     reallocate_mad_map_struct_container_data,
     access_mad_map_struct_container>;
+
+class RandomStateProxy;
+
+using RandomStateProxyArray1D = FTypeArray1D<
+    RandomStateProxy,
+    allocate_fortran_random_state_struct,
+    deallocate_fortran_random_state_struct>;
+using RandomStateProxyArray2D = FTypeArray2D<RandomStateProxy>;
+using RandomStateProxyArray3D = FTypeArray3D<RandomStateProxy>;
+
+using RandomStateProxyAlloc1D = FTypeAlloc1D<
+    RandomStateProxyArray1D,
+    allocate_random_state_struct_container,
+    deallocate_random_state_struct_container,
+    reallocate_random_state_struct_container_data,
+    access_random_state_struct_container>;
 
 class BbuStageProxy;
 
@@ -20176,6 +20240,51 @@ class MadMapProxy : public FortranProxy<MadMapProxy> {
   FArray1D<double> k() const; // 1D_NOT_real
   FArray2D<double> r() const; // 2D_NOT_real
   FArray3D<double> t() const; // 3D_NOT_real
+};
+
+template <>
+struct FortranTraits<RandomStateProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_random_state_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_random_state_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_random_state_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "random_state_struct";
+  }
+};
+
+class RandomStateProxy : public FortranProxy<RandomStateProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  int64_t ix() const; // 0D_NOT_integer8
+  void set_ix(int64_t value);
+  int64_t iy() const; // 0D_NOT_integer8
+  void set_iy(int64_t value);
+  bool number_stored() const; // 0D_NOT_logical
+  void set_number_stored(bool value);
+  double h_saved() const; // 0D_NOT_real
+  void set_h_saved(double value);
+  int engine() const; // 0D_NOT_integer
+  void set_engine(int value);
+  int seed() const; // 0D_NOT_integer
+  void set_seed(int value);
+  double am() const; // 0D_NOT_real
+  void set_am(double value);
+  int gauss_converter() const; // 0D_NOT_integer
+  void set_gauss_converter(int value);
+  double gauss_sigma_cut() const; // 0D_NOT_real
+  void set_gauss_sigma_cut(double value);
+  int64_t in_sobseq() const; // 0D_NOT_integer8
+  void set_in_sobseq(int64_t value);
+  FArray1D<double> x_sobseq() const; // 1D_NOT_real
 };
 
 template <>

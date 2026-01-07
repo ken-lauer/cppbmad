@@ -11818,6 +11818,90 @@ FArray3D<double> MadMapProxy::t() const {
   return ProxyHelpers::get_array_3d<double>(
       fortran_ptr_, mad_map_struct_get_t_info);
 }
+int64_t RandomStateProxy::ix() const {
+  int64_t value;
+  random_state_struct_get_ix(fortran_ptr_, &value);
+  return value;
+}
+void RandomStateProxy::set_ix(int64_t value) {
+  random_state_struct_set_ix(fortran_ptr_, value);
+}
+int64_t RandomStateProxy::iy() const {
+  int64_t value;
+  random_state_struct_get_iy(fortran_ptr_, &value);
+  return value;
+}
+void RandomStateProxy::set_iy(int64_t value) {
+  random_state_struct_set_iy(fortran_ptr_, value);
+}
+bool RandomStateProxy::number_stored() const {
+  bool value;
+  random_state_struct_get_number_stored(fortran_ptr_, &value);
+  return value;
+}
+void RandomStateProxy::set_number_stored(bool value) {
+  random_state_struct_set_number_stored(fortran_ptr_, value);
+}
+double RandomStateProxy::h_saved() const {
+  double value;
+  random_state_struct_get_h_saved(fortran_ptr_, &value);
+  return value;
+}
+void RandomStateProxy::set_h_saved(double value) {
+  random_state_struct_set_h_saved(fortran_ptr_, value);
+}
+int RandomStateProxy::engine() const {
+  int value;
+  random_state_struct_get_engine(fortran_ptr_, &value);
+  return value;
+}
+void RandomStateProxy::set_engine(int value) {
+  random_state_struct_set_engine(fortran_ptr_, value);
+}
+int RandomStateProxy::seed() const {
+  int value;
+  random_state_struct_get_seed(fortran_ptr_, &value);
+  return value;
+}
+void RandomStateProxy::set_seed(int value) {
+  random_state_struct_set_seed(fortran_ptr_, value);
+}
+double RandomStateProxy::am() const {
+  double value;
+  random_state_struct_get_am(fortran_ptr_, &value);
+  return value;
+}
+void RandomStateProxy::set_am(double value) {
+  random_state_struct_set_am(fortran_ptr_, value);
+}
+int RandomStateProxy::gauss_converter() const {
+  int value;
+  random_state_struct_get_gauss_converter(fortran_ptr_, &value);
+  return value;
+}
+void RandomStateProxy::set_gauss_converter(int value) {
+  random_state_struct_set_gauss_converter(fortran_ptr_, value);
+}
+double RandomStateProxy::gauss_sigma_cut() const {
+  double value;
+  random_state_struct_get_gauss_sigma_cut(fortran_ptr_, &value);
+  return value;
+}
+void RandomStateProxy::set_gauss_sigma_cut(double value) {
+  random_state_struct_set_gauss_sigma_cut(fortran_ptr_, value);
+}
+int64_t RandomStateProxy::in_sobseq() const {
+  int64_t value;
+  random_state_struct_get_in_sobseq(fortran_ptr_, &value);
+  return value;
+}
+void RandomStateProxy::set_in_sobseq(int64_t value) {
+  random_state_struct_set_in_sobseq(fortran_ptr_, value);
+}
+FArray1D<double> RandomStateProxy::x_sobseq() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_, random_state_struct_get_x_sobseq_info);
+}
 int BbuStageProxy::ix_ele_lr_wake() const {
   int value;
   bbu_stage_struct_get_ix_ele_lr_wake(fortran_ptr_, &value);

@@ -18,17 +18,17 @@ use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
     add_lattice_control_structs, allocate_branch_array, allocate_lat_ele_array, &
     angle_between_polars, angle_to_canonical_coords, apply_all_rampers, apply_energy_kick, &
     apply_rampers_to_slave, at_this_ele_end, attribute_bookkeeper, autoscale_phase_and_amp, &
-    average_twiss, bbi_kick, bbi_slice_calc, beam_equal_beam, bend_exact_multipole_field, &
-    bend_length_has_been_set, bend_shift, bmad_parser, bmad_parser2, branch_equal_branch, &
-    branch_name, bunch_equal_bunch, c_to_cbar, calc_super_slave_key, calc_z_tune, &
-    canonical_to_angle_coords, cbar_to_c, check_aperture_limit, check_controller_controls, &
-    check_if_s_in_bounds, choose_quads_for_set_tune, chrom_calc, chrom_tune, classical_radius, &
-    clear_lat_1turn_mats, clear_taylor_maps_from_elements, closed_orbit_calc, &
-    closed_orbit_from_tracking, combine_consecutive_elements, &
-    complex_taylor_equal_complex_taylor, complex_taylors_equal_complex_taylors, &
-    control_bookkeeper, convert_bend_exact_multipole, convert_coords, &
-    convert_particle_coordinates_s_to_t, convert_particle_coordinates_t_to_s, convert_pc_to, &
-    convert_total_energy_to, converter_distribution_parser, coord_equal_coord, &
+    average_twiss, bbi_kick, bbi_slice_calc, beam_equal_beam, beam_init_setup, &
+    bend_exact_multipole_field, bend_length_has_been_set, bend_shift, bmad_parser, &
+    bmad_parser2, branch_equal_branch, branch_name, bunch_equal_bunch, c_to_cbar, &
+    calc_super_slave_key, calc_z_tune, canonical_to_angle_coords, cbar_to_c, &
+    check_aperture_limit, check_controller_controls, check_if_s_in_bounds, &
+    choose_quads_for_set_tune, chrom_calc, chrom_tune, classical_radius, clear_lat_1turn_mats, &
+    clear_taylor_maps_from_elements, closed_orbit_calc, closed_orbit_from_tracking, &
+    combine_consecutive_elements, complex_taylor_equal_complex_taylor, &
+    complex_taylors_equal_complex_taylors, control_bookkeeper, convert_bend_exact_multipole, &
+    convert_coords, convert_particle_coordinates_s_to_t, convert_particle_coordinates_t_to_s, &
+    convert_pc_to, convert_total_energy_to, converter_distribution_parser, coord_equal_coord, &
     coords_body_to_local, coords_body_to_rel_exit, coords_curvilinear_to_floor, &
     coords_floor_to_curvilinear, coords_floor_to_local_curvilinear, coords_floor_to_relative, &
     coords_local_curvilinear_to_body, coords_local_curvilinear_to_floor, &
@@ -49,15 +49,14 @@ use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
     fringe_here, g_bending_strength_from_em_field, g_integrals_calc, gamma_ref, &
     gen_grad1_to_em_taylor, gen_grad_at_s_to_em_taylor, get_slave_list, gradient_shift_sr_wake, &
     hdf5_write_beam, hdf5_write_grid_field, init_bmad, init_bmad_parser_common, &
-    init_complex_taylor_series, init_coord1, init_coord2, init_coord3, init_custom, init_ele, &
-    init_em_taylor_series, init_lat, init_multipole_cache, init_photon_from_a_photon_init_ele, &
-    init_taylor_series, init_wake, insert_element, ion_kick, key_name_to_key_index, &
-    kill_ptc_layouts, kill_taylor, knot_interpolate, knots_to_string, &
-    lat_compute_ref_energy_and_time, lat_ele_locator, lat_equal_lat, lat_geometry, &
-    lat_make_mat6, lat_sanity_check, lat_to_ptc_layout, lat_vec_equal_lat_vec, &
-    lattice_bookkeeper, lcavity_rf_step_setup, linear_to_spin_taylor, lord_edge_aligned, &
-    low_energy_z_correction, make_g2_mats, make_g_mats, make_hybrid_lat, make_mat6, &
-    make_mat6_bmad, make_mat6_bmad_photon, make_mat6_symp_lie_ptc, make_mat6_taylor, &
+    init_complex_taylor_series, init_coord, init_custom, init_ele, init_em_taylor_series, &
+    init_lat, init_multipole_cache, init_photon_from_a_photon_init_ele, init_taylor_series, &
+    init_wake, insert_element, ion_kick, key_name_to_key_index, kill_ptc_layouts, kill_taylor, &
+    knot_interpolate, knots_to_string, lat_compute_ref_energy_and_time, lat_ele_locator, &
+    lat_equal_lat, lat_geometry, lat_make_mat6, lat_sanity_check, lat_to_ptc_layout, &
+    lat_vec_equal_lat_vec, lattice_bookkeeper, lcavity_rf_step_setup, linear_to_spin_taylor, &
+    lord_edge_aligned, low_energy_z_correction, make_g2_mats, make_g_mats, make_hybrid_lat, &
+    make_mat6, make_mat6_bmad, make_mat6_bmad_photon, make_mat6_symp_lie_ptc, make_mat6_taylor, &
     make_mat6_tracking, make_v_mats, map1_inverse, map1_make_unit, map1_times_map1, &
     map_to_angle_coords, master_parameter_value, mat4_multipole, mat6_add_offsets, &
     mat6_add_pitch, mat_symp_decouple, match_ele_to_mat6, mexp, momentum_compaction, &
@@ -69,41 +68,37 @@ use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
     orbit_to_floor_phase_space, orbit_to_local_curvilinear, orbit_too_large, &
     order_super_lord_slaves, particle_is_moving_backwards, particle_is_moving_forward, &
     particle_rf_time, patch_flips_propagation_direction, patch_length, physical_ele_end, &
-    pointer_to_branch_given_ele, pointer_to_branch_given_name, pointer_to_ele1, &
-    pointer_to_ele2, pointer_to_ele3, pointer_to_ele4, pointer_to_field_ele, pointer_to_girder, &
+    pointer_to_branch, pointer_to_ele, pointer_to_field_ele, pointer_to_girder, &
     pointer_to_lord, pointer_to_multipass_lord, pointer_to_next_ele, pointer_to_super_lord, &
     pointer_to_wake_ele, polar_to_spinor, polar_to_vec, ptc_bookkeeper, ptc_ran_seed_put, &
     ptc_set_rf_state_for_c_normal, ptc_transfer_map_with_spin, radiation_integrals, &
     ramper_slave_setup, ramper_value, re_allocate_eles, reallocate_beam, reallocate_bunch, &
-    reallocate_control, reallocate_coord_array, reallocate_coord_lat, reallocate_coord_n, &
-    reallocate_expression_stack, rel_tracking_charge_to_mass, relative_mode_flip, &
-    remove_dead_from_bunch, remove_eles_from_lat, remove_lord_slave_link, reverse_lat, &
-    rf_coupler_kick, rf_is_on, rf_ref_time_offset, rotate_for_curved_surface, rotate_spin, &
-    rotate_spin_a_step, rotate_spin_given_field, s_body_calc, s_calc, save_a_beam_step, &
-    save_a_bunch_step, save_a_step, sbend_body_with_k1_map, set_ele_attribute, &
-    set_ele_defaults, set_ele_name, set_ele_real_attribute, set_ele_status_stale, &
-    set_emit_from_beam_init, set_flags_for_changed_integer_attribute, &
-    set_flags_for_changed_lat_attribute, set_flags_for_changed_logical_attribute, &
-    set_flags_for_changed_real_attribute, set_fringe_on_off, set_lords_status_stale, &
-    set_on_off, set_orbit_to_zero, set_ptc, set_ptc_base_state, set_status_flags, set_tune, &
-    set_twiss, set_z_tune, significant_difference, slice_lattice, sol_quad_mat6_calc, &
-    spin_dn_dpz_from_mat8, spin_dn_dpz_from_qmap, spin_map1_normalize, &
-    spin_mat8_resonance_strengths, spin_mat_to_eigen, spin_omega, &
-    spin_quat_resonance_strengths, spin_taylor_to_linear, spinor_to_polar, spinor_to_vec, &
-    spline_fit_orbit, split_lat, sprint_spin_taylor_map, start_branch_at, stream_ele_end, &
-    strong_beam_sigma_calc, strong_beam_strength, symp_lie_bmad, taper_mag_strengths, &
-    taylor_equal_taylor, taylors_equal_taylors, tilt_coords, tilt_coords_photon, tilt_mat6, &
-    to_surface_coords, track1, track1_bmad, track1_bmad_photon, track1_bunch_space_charge, &
-    track1_linear, track1_runge_kutta, track1_spin, track1_spin_integration, &
-    track1_spin_taylor, track1_symp_lie_ptc, track1_taylor, track1_time_runge_kutta, &
-    track_a_beambeam, track_a_bend, track_a_converter, track_a_crab_cavity, track_a_drift, &
-    track_a_drift_photon, track_a_foil, track_a_gkicker, track_a_lcavity, track_a_lcavity_old, &
-    track_a_mask, track_a_match, track_a_patch, track_a_pickup, track_a_quadrupole, &
-    track_a_rfcavity, track_a_sad_mult, track_a_sol_quad, track_a_thick_multipole, &
-    track_a_wiggler, track_a_zero_length_element, track_all, track_bunch_time, &
-    track_from_s_to_s, track_many, track_to_surface, tracking_rad_map_setup, transfer_ac_kick, &
-    transfer_branch, transfer_branch_parameters, transfer_branches, transfer_ele, &
-    transfer_ele_taylor, transfer_eles, transfer_fieldmap, transfer_lat, &
+    reallocate_control, reallocate_coord, reallocate_expression_stack, &
+    rel_tracking_charge_to_mass, relative_mode_flip, remove_dead_from_bunch, &
+    remove_eles_from_lat, remove_lord_slave_link, reverse_lat, rf_coupler_kick, rf_is_on, &
+    rf_ref_time_offset, rotate_for_curved_surface, rotate_spin, rotate_spin_a_step, &
+    rotate_spin_given_field, s_body_calc, s_calc, save_a_beam_step, save_a_bunch_step, &
+    save_a_step, sbend_body_with_k1_map, set_ele_attribute, set_ele_defaults, set_ele_name, &
+    set_ele_real_attribute, set_ele_status_stale, set_flags_for_changed_attribute, &
+    set_fringe_on_off, set_lords_status_stale, set_on_off, set_orbit_to_zero, set_ptc, &
+    set_ptc_base_state, set_status_flags, set_tune, set_twiss, set_z_tune, &
+    significant_difference, slice_lattice, sol_quad_mat6_calc, spin_dn_dpz_from_mat8, &
+    spin_dn_dpz_from_qmap, spin_map1_normalize, spin_mat8_resonance_strengths, &
+    spin_mat_to_eigen, spin_omega, spin_quat_resonance_strengths, spin_taylor_to_linear, &
+    spinor_to_polar, spinor_to_vec, spline_fit_orbit, split_lat, sprint_spin_taylor_map, &
+    start_branch_at, stream_ele_end, strong_beam_sigma_calc, strong_beam_strength, &
+    symp_lie_bmad, taper_mag_strengths, taylor_equal_taylor, taylors_equal_taylors, &
+    tilt_coords, tilt_coords_photon, tilt_mat6, to_surface_coords, track1, track1_bmad, &
+    track1_bmad_photon, track1_bunch_space_charge, track1_linear, track1_runge_kutta, &
+    track1_spin, track1_spin_integration, track1_spin_taylor, track1_symp_lie_ptc, &
+    track1_taylor, track1_time_runge_kutta, track_a_beambeam, track_a_bend, track_a_converter, &
+    track_a_crab_cavity, track_a_drift, track_a_drift_photon, track_a_foil, track_a_gkicker, &
+    track_a_lcavity, track_a_lcavity_old, track_a_mask, track_a_match, track_a_patch, &
+    track_a_pickup, track_a_quadrupole, track_a_rfcavity, track_a_sad_mult, track_a_sol_quad, &
+    track_a_thick_multipole, track_a_wiggler, track_a_zero_length_element, track_all, &
+    track_bunch_time, track_from_s_to_s, track_many, track_to_surface, tracking_rad_map_setup, &
+    transfer_ac_kick, transfer_branch, transfer_branch_parameters, transfer_branches, &
+    transfer_ele, transfer_ele_taylor, transfer_eles, transfer_fieldmap, transfer_lat, &
     transfer_lat_parameters, transfer_map_calc, transfer_mat2_from_twiss, &
     transfer_mat_from_twiss, transfer_matrix_calc, transfer_twiss, transfer_wake, &
     twiss1_propagate, twiss_and_track_from_s_to_s, twiss_and_track_intra_ele, twiss_at_element, &
@@ -146,15 +141,14 @@ use ptc_interface_mod, only: apply_patch_to_ptc_fibre, bmad_patch_parameters_to_
     kind_name, ptc_set_taylor_order_if_needed, remove_constant_taylor, set_ptc_com_pointers, &
     set_ptc_quiet, sigma_mat_ptc_to_bmad, taylor_inverse, taylor_propagate1
 
-use write_lattice_file_mod, only: array_re_str, cmplx_re_str, rchomp, re_str_qp, re_str_rp, &
-    value_to_line, write_lat_line, write_line_element
+use write_lattice_file_mod, only: array_re_str, cmplx_re_str, rchomp, re_str, value_to_line, &
+    write_lat_line, write_line_element
 
 use astra_interface_mod, only: astra_max_field_reference, rotate3, write_astra_bend, &
     write_astra_field_grid_file, write_astra_field_grid_file_3d
 
-use attribute_mod, only: attribute_free1, attribute_free2, attribute_free3, attribute_index1, &
-    attribute_index2, attribute_name1, attribute_name2, attribute_type, attribute_units, &
-    custom_attribute_ubound_index, field_attribute_free, has_attribute, &
+use attribute_mod, only: attribute_free, attribute_index, attribute_name, attribute_type, &
+    attribute_units, custom_attribute_ubound_index, field_attribute_free, has_attribute, &
     has_orientation_attributes, init_attribute_name1, init_attribute_name_array, &
     n_attrib_string_max_len, set_custom_attribute_name, string_attrib
 
@@ -178,13 +172,13 @@ use beam_utils, only: calc_bunch_params, calc_bunch_params_slice, calc_bunch_par
     init_beam_distribution, init_bunch_distribution, init_spin_distribution, track1_bunch_hom
 
 use wall3d_mod, only: calc_wall_radius, create_concatenated_wall3d, mark_patch_regions, &
-    pointer_to_wall3d, re_allocate_wall3d_section_array, re_allocate_wall3d_vertex_array, &
-    wall3d_d_radius, wall3d_initializer, wall3d_section_initializer, wall3d_to_position
+    pointer_to_wall3d, re_allocate, wall3d_d_radius, wall3d_initializer, &
+    wall3d_section_initializer, wall3d_to_position
 
-use complex_taylor_mod, only: complex_taylor_clean, complex_taylor_exponent_index, &
-    complex_taylor_make_unit, complex_taylor_to_mat6, kill_complex_taylor, &
-    mat6_to_complex_taylor, sort_complex_taylor_terms, track_complex_taylor, &
-    truncate_complex_taylor_to_order
+use complex_taylor_mod, only: complex_taylor_clean, complex_taylor_coef, &
+    complex_taylor_exponent_index, complex_taylor_make_unit, complex_taylor_to_mat6, &
+    kill_complex_taylor, mat6_to_complex_taylor, sort_complex_taylor_terms, &
+    track_complex_taylor, truncate_complex_taylor_to_order
 
 use transfer_map_mod, only: concat_transfer_mat, transfer_map_from_s_to_s
 
@@ -235,6 +229,8 @@ use dynamic_aperture_mod, only: dynamic_aperture_point, dynamic_aperture_scan
 use measurement_mod, only: ele_is_monitor, to_eta_reading, to_orbit_reading, &
     to_phase_and_coupling_reading
 
+use element_at_s_mod, only: element_at_s, pointer_to_element_at_s
+
 use csr3d_mod, only: ellipinc_test
 
 use rad_6d_mod, only: emit_6d, rad1_damp_and_stoc_mats, rad_damp_and_stoc_mats, rad_g_integrals
@@ -275,7 +271,7 @@ use longitudinal_profile_mod, only: find_fwhm, find_normalization, get_bl_from_f
 use photon_utils_mod, only: has_curvature, photon_type, pointer_to_surface_displacement_pt, &
     pointer_to_surface_segmented_pt, surface_grid_displacement, z_at_surface
 
-use integration_timer_mod, only: integration_timer_ele
+use integration_timer_mod, only: integration_timer
 
 use runge_kutta_mod, only: kick_vector_calc, odeint_bmad
 
@@ -295,8 +291,6 @@ use wake_mod, only: order_particles_in_z, randomize_lr_wake_frequencies, &
     sr_longitudinal_wake_particle, sr_transverse_wake_particle, sr_z_long_wake, track1_lr_wake, &
     track1_sr_wake, zero_lr_wakes_in_lat
 
-use element_at_s_mod, only: pointer_to_element_at_s
-
 use radiation_mod, only: radiation_map_setup, release_rad_int_cache, track1_radiation, &
     track1_radiation_center
 
@@ -312,7 +306,7 @@ use beam_mod, only: track1_beam, track1_bunch, track_beam, track_bunch
 
 use capillary_mod, only: track_a_capillary
 
-use twiss_and_track_mod, only: twiss_and_track_at_s
+use twiss_and_track_mod, only: twiss_and_track, twiss_and_track_at_s
 
 use opal_interface_mod, only: write_opal_field_grid_file, write_opal_lattice_file
 
@@ -389,9 +383,8 @@ subroutine fortran_ab_multipole_kick (a, b, n, ref_species, ele_orientation, coo
   else
     f_scale_ptr => null()
   endif
-  call ab_multipole_kick(a=f_a, b=f_b, n=f_n, ref_species=f_ref_species, &
-      ele_orientation=f_ele_orientation, coord=f_coord, kx=f_kx, ky=f_ky, dk=f_dk, &
-      pole_type=f_pole_type_ptr, scale=f_scale_ptr)
+  call ab_multipole_kick(f_a, f_b, f_n, f_ref_species, f_ele_orientation, f_coord, f_kx, f_ky, &
+      f_dk, f_pole_type_ptr, f_scale_ptr)
 
   ! out: f_kx 0D_NOT_real
   call c_f_pointer(kx, f_kx_ptr)
@@ -473,9 +466,8 @@ subroutine fortran_ab_multipole_kicks (an, bn, ix_pole_max, ele, orbit, pole_typ
   else
     f_make_matrix_native_ptr => null()
   endif
-  call ab_multipole_kicks(an=f_an%data, bn=f_bn%data, ix_pole_max=f_ix_pole_max, ele=f_ele, &
-      orbit=f_orbit, pole_type=f_pole_type_ptr, scale=f_scale_ptr, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call ab_multipole_kicks(f_an%data, f_bn%data, f_ix_pole_max, f_ele, f_orbit, f_pole_type_ptr, &
+      f_scale_ptr, f_mat6, f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_absolute_photon_position (e_orb, photon_orb) bind(c)
@@ -495,7 +487,7 @@ subroutine fortran_absolute_photon_position (e_orb, photon_orb) bind(c)
   ! inout: f_photon_orb 0D_NOT_type
   if (.not. c_associated(photon_orb)) return
   call c_f_pointer(photon_orb, f_photon_orb)
-  call absolute_photon_position(e_orb=f_e_orb, photon_orb=f_photon_orb)
+  call absolute_photon_position(f_e_orb, f_photon_orb)
 
 end subroutine
 subroutine fortran_absolute_time_tracking (ele, is_abs_time) bind(c)
@@ -513,7 +505,7 @@ subroutine fortran_absolute_time_tracking (ele, is_abs_time) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_is_abs_time = absolute_time_tracking(ele=f_ele)
+  f_is_abs_time = absolute_time_tracking(f_ele)
 
   ! out: f_is_abs_time 0D_NOT_logical
   call c_f_pointer(is_abs_time, f_is_abs_time_ptr)
@@ -548,7 +540,7 @@ subroutine fortran_ac_kicker_amp (ele, orbit, true_time, ac_amp) bind(c)
   else
     f_true_time_ptr => null()
   endif
-  f_ac_amp = ac_kicker_amp(ele=f_ele, orbit=f_orbit, true_time=f_true_time_ptr)
+  f_ac_amp = ac_kicker_amp(f_ele, f_orbit, f_true_time_ptr)
 
   ! out: f_ac_amp 0D_NOT_real
   call c_f_pointer(ac_amp, f_ac_amp_ptr)
@@ -590,7 +582,7 @@ subroutine fortran_action_to_xyz (ring, ix, J, X, err_flag) bind(c)
   else
     f_J_ptr => null()
   endif
-  call action_to_xyz(ring=f_ring, ix=f_ix, J=f_J, X=f_X, err_flag=f_err_flag)
+  call action_to_xyz(f_ring, f_ix, f_J, f_X, f_err_flag)
 
   ! out: f_X 1D_NOT_real
   if (c_associated(X)) then
@@ -662,9 +654,8 @@ subroutine fortran_add_lattice_control_structs (ele, n_add_slave, n_add_lord, &
   else
     f_add_at_end_native_ptr => null()
   endif
-  call add_lattice_control_structs(ele=f_ele, n_add_slave=f_n_add_slave_ptr, &
-      n_add_lord=f_n_add_lord_ptr, n_add_slave_field=f_n_add_slave_field_ptr, &
-      n_add_lord_field=f_n_add_lord_field_ptr, add_at_end=f_add_at_end_native_ptr)
+  call add_lattice_control_structs(f_ele, f_n_add_slave_ptr, f_n_add_lord_ptr, &
+      f_n_add_slave_field_ptr, f_n_add_lord_field_ptr, f_add_at_end_native_ptr)
 
 end subroutine
 subroutine fortran_add_superimpose (lat, super_ele_in, ix_branch, err_flag, super_ele_out, &
@@ -766,11 +757,9 @@ subroutine fortran_add_superimpose (lat, super_ele_in, ix_branch, err_flag, supe
   else
     f_wrap_native_ptr => null()
   endif
-  call add_superimpose(lat=f_lat, super_ele_in=f_super_ele_in, ix_branch=f_ix_branch, &
-      err_flag=f_err_flag, super_ele_out=f_super_ele_out, &
-      save_null_drift=f_save_null_drift_native_ptr, &
-      create_jumbo_slave=f_create_jumbo_slave_native_ptr, ix_insert=f_ix_insert_ptr, &
-      mangle_slave_names=f_mangle_slave_names_native_ptr, wrap=f_wrap_native_ptr)
+  call add_superimpose(f_lat, f_super_ele_in, f_ix_branch, f_err_flag, f_super_ele_out, &
+      f_save_null_drift_native_ptr, f_create_jumbo_slave_native_ptr, f_ix_insert_ptr, &
+      f_mangle_slave_names_native_ptr, f_wrap_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -797,7 +786,7 @@ subroutine fortran_add_this_multipass (lat, m_slaves, lord_in) bind(c)
   if (c_associated(m_slaves))   call c_f_pointer(m_slaves, f_m_slaves)
   ! inout: f_lord_in 0D_NOT_type
   if (c_associated(lord_in))   call c_f_pointer(lord_in, f_lord_in)
-  call add_this_multipass(lat=f_lat, m_slaves=f_m_slaves%data, lord_in=f_lord_in)
+  call add_this_multipass(f_lat, f_m_slaves%data, f_lord_in)
 
 end subroutine
 subroutine fortran_add_this_taylor_term (ele, i_out, coef, expn) bind(c)
@@ -839,7 +828,7 @@ subroutine fortran_add_this_taylor_term (ele, i_out, coef, expn) bind(c)
   else
     f_expn_ptr => null()
   endif
-  call add_this_taylor_term(ele=f_ele, i_out=f_i_out_ptr, coef=f_coef_ptr, expn=f_expn)
+  call add_this_taylor_term(f_ele, f_i_out_ptr, f_coef_ptr, f_expn)
 
   ! inout: f_i_out 0D_NOT_integer
   ! no output conversion for f_i_out
@@ -888,8 +877,7 @@ subroutine fortran_adjust_super_slave_names (lat, ix1_lord, ix2_lord, first_time
   else
     f_first_time_native_ptr => null()
   endif
-  call adjust_super_slave_names(lat=f_lat, ix1_lord=f_ix1_lord_ptr, ix2_lord=f_ix2_lord_ptr, &
-      first_time=f_first_time_native_ptr)
+  call adjust_super_slave_names(f_lat, f_ix1_lord_ptr, f_ix2_lord_ptr, f_first_time_native_ptr)
 
   ! inout: f_ix1_lord 0D_NOT_integer
   ! no output conversion for f_ix1_lord
@@ -919,7 +907,7 @@ subroutine fortran_allocate_branch_array (lat, upper_bound) bind(c)
   call c_f_pointer(lat, f_lat)
   ! in: f_upper_bound 0D_NOT_integer
   f_upper_bound = upper_bound
-  call allocate_branch_array(lat=f_lat, upper_bound=f_upper_bound)
+  call allocate_branch_array(f_lat, f_upper_bound)
 
 end subroutine
 subroutine fortran_allocate_lat_ele_array (lat, upper_bound, ix_branch, do_ramper_slave_setup) &
@@ -966,8 +954,8 @@ subroutine fortran_allocate_lat_ele_array (lat, upper_bound, ix_branch, do_rampe
   else
     f_do_ramper_slave_setup_native_ptr => null()
   endif
-  call allocate_lat_ele_array(lat=f_lat, upper_bound=f_upper_bound_ptr, &
-      ix_branch=f_ix_branch_ptr, do_ramper_slave_setup=f_do_ramper_slave_setup_native_ptr)
+  call allocate_lat_ele_array(f_lat, f_upper_bound_ptr, f_ix_branch_ptr, &
+      f_do_ramper_slave_setup_native_ptr)
 
 end subroutine
 subroutine fortran_angle_between_polars (polar1, polar2, angle) bind(c)
@@ -990,7 +978,7 @@ subroutine fortran_angle_between_polars (polar1, polar2, angle) bind(c)
   ! in: f_polar2 0D_NOT_type
   if (.not. c_associated(polar2)) return
   call c_f_pointer(polar2, f_polar2)
-  f_angle = angle_between_polars(polar1=f_polar1, polar2=f_polar2)
+  f_angle = angle_between_polars(f_polar1, f_polar2)
 
   ! out: f_angle 0D_NOT_real
   call c_f_pointer(angle, f_angle_ptr)
@@ -1020,7 +1008,7 @@ subroutine fortran_angle_to_canonical_coords (orbit, coord_type) bind(c)
   else
     f_coord_type_call_ptr => null()
   endif
-  call angle_to_canonical_coords(orbit=f_orbit, coord_type=f_coord_type_call_ptr)
+  call angle_to_canonical_coords(f_orbit, f_coord_type_call_ptr)
 
 end subroutine
 subroutine fortran_aperture_bookkeeper (ele) bind(c)
@@ -1034,7 +1022,7 @@ subroutine fortran_aperture_bookkeeper (ele) bind(c)
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call aperture_bookkeeper(ele=f_ele)
+  call aperture_bookkeeper(f_ele)
 
 end subroutine
 subroutine fortran_apply_all_rampers (lat, err_flag) bind(c)
@@ -1056,7 +1044,7 @@ subroutine fortran_apply_all_rampers (lat, err_flag) bind(c)
     return
   endif
   call c_f_pointer(lat, f_lat)
-  call apply_all_rampers(lat=f_lat, err_flag=f_err_flag)
+  call apply_all_rampers(f_lat, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -1111,8 +1099,7 @@ subroutine fortran_apply_energy_kick (dE, orbit, ddE_dr, mat6, make_matrix) bind
   else
     f_make_matrix_native_ptr => null()
   endif
-  call apply_energy_kick(dE=f_dE, orbit=f_orbit, ddE_dr=f_ddE_dr, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call apply_energy_kick(f_dE, f_orbit, f_ddE_dr, f_mat6, f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_apply_patch_to_ptc_fibre (ele) bind(c)
@@ -1126,7 +1113,7 @@ subroutine fortran_apply_patch_to_ptc_fibre (ele) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call apply_patch_to_ptc_fibre(ele=f_ele)
+  call apply_patch_to_ptc_fibre(f_ele)
 
 end subroutine
 subroutine fortran_apply_rampers_to_slave (slave, err_flag) bind(c)
@@ -1148,7 +1135,7 @@ subroutine fortran_apply_rampers_to_slave (slave, err_flag) bind(c)
     return
   endif
   call c_f_pointer(slave, f_slave)
-  call apply_rampers_to_slave(slave=f_slave, err_flag=f_err_flag)
+  call apply_rampers_to_slave(f_slave, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -1179,7 +1166,7 @@ subroutine fortran_array_re_str (arr, parens_in, str_out) bind(c)
   else
     f_parens_in_call_ptr => null()
   endif
-  f_str_out = array_re_str(arr=f_arr%data, parens_in=f_parens_in_call_ptr)
+  f_str_out = array_re_str(f_arr%data, f_parens_in_call_ptr)
 
   ! inout: f_parens_in 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -1207,7 +1194,7 @@ subroutine fortran_astra_max_field_reference (pt0, ele, field_value) bind(c)
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_field_value = astra_max_field_reference(pt0=f_pt0, ele=f_ele)
+  f_field_value = astra_max_field_reference(f_pt0, f_ele)
 
   ! out: f_field_value 0D_NOT_real
   call c_f_pointer(field_value, f_field_value_ptr)
@@ -1230,7 +1217,7 @@ subroutine fortran_at_this_ele_end (now_at, where_at, is_at_this_end) bind(c)
   f_now_at = now_at
   ! in: f_where_at 0D_NOT_integer
   f_where_at = where_at
-  f_is_at_this_end = at_this_ele_end(now_at=f_now_at, where_at=f_where_at)
+  f_is_at_this_end = at_this_ele_end(f_now_at, f_where_at)
 
   ! out: f_is_at_this_end 0D_NOT_logical
   call c_f_pointer(is_at_this_end, f_is_at_this_end_ptr)
@@ -1261,7 +1248,7 @@ subroutine fortran_attribute_bookkeeper (ele, force_bookkeeping) bind(c)
   else
     f_force_bookkeeping_native_ptr => null()
   endif
-  call attribute_bookkeeper(ele=f_ele, force_bookkeeping=f_force_bookkeeping_native_ptr)
+  call attribute_bookkeeper(f_ele, f_force_bookkeeping_native_ptr)
 
 end subroutine
 subroutine fortran_attribute_free1 (ix_ele, attrib_name, lat, err_print_flag, except_overlay, &
@@ -1269,14 +1256,9 @@ subroutine fortran_attribute_free1 (ix_ele, attrib_name, lat, err_print_flag, ex
 
   use bmad_struct, only: lat_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: free  ! 0D_NOT_logical
-  logical :: f_free
-  logical(c_bool), pointer :: f_free_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: ix_ele  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_ele
-  integer(c_int), pointer :: f_ix_ele_ptr
+  ! ** In parameters **
+  integer(c_int) :: ix_ele  ! 0D_NOT_integer
+  integer :: f_ix_ele
   type(c_ptr), intent(in), value :: attrib_name
   character(len=4096), target :: f_attrib_name
   character(kind=c_char), pointer :: f_attrib_name_ptr(:)
@@ -1297,24 +1279,24 @@ subroutine fortran_attribute_free1 (ix_ele, attrib_name, lat, err_print_flag, ex
   logical, target :: f_dependent_attribs_free_native
   logical, pointer :: f_dependent_attribs_free_native_ptr
   logical(c_bool), pointer :: f_dependent_attribs_free_ptr
+  ! ** Out parameters **
   type(c_ptr), intent(in), value :: why_not_free  ! 0D_NOT_integer
-  integer(c_int) :: f_why_not_free
+  integer :: f_why_not_free
   integer(c_int), pointer :: f_why_not_free_ptr
+  type(c_ptr), intent(in), value :: free  ! 0D_NOT_logical
+  logical :: f_free
+  logical(c_bool), pointer :: f_free_ptr
   ! ** End of parameters **
-  ! inout: f_ix_ele 0D_NOT_integer
-  if (c_associated(ix_ele)) then
-    call c_f_pointer(ix_ele, f_ix_ele_ptr)
-  else
-    f_ix_ele_ptr => null()
-  endif
-  ! inout: f_attrib_name 0D_NOT_character
+  ! in: f_ix_ele 0D_NOT_integer
+  f_ix_ele = ix_ele
+  ! in: f_attrib_name 0D_NOT_character
   if (.not. c_associated(attrib_name)) return
   call c_f_pointer(attrib_name, f_attrib_name_ptr, [huge(0)])
   call to_f_str(f_attrib_name_ptr, f_attrib_name)
-  ! inout: f_lat 0D_NOT_type
+  ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  ! inout: f_err_print_flag 0D_NOT_logical
+  ! in: f_err_print_flag 0D_NOT_logical
   if (c_associated(err_print_flag)) then
     call c_f_pointer(err_print_flag, f_err_print_flag_ptr)
     f_err_print_flag_native = f_err_print_flag_ptr
@@ -1322,7 +1304,7 @@ subroutine fortran_attribute_free1 (ix_ele, attrib_name, lat, err_print_flag, ex
   else
     f_err_print_flag_native_ptr => null()
   endif
-  ! inout: f_except_overlay 0D_NOT_logical
+  ! in: f_except_overlay 0D_NOT_logical
   if (c_associated(except_overlay)) then
     call c_f_pointer(except_overlay, f_except_overlay_ptr)
     f_except_overlay_native = f_except_overlay_ptr
@@ -1330,7 +1312,7 @@ subroutine fortran_attribute_free1 (ix_ele, attrib_name, lat, err_print_flag, ex
   else
     f_except_overlay_native_ptr => null()
   endif
-  ! inout: f_dependent_attribs_free 0D_NOT_logical
+  ! in: f_dependent_attribs_free 0D_NOT_logical
   if (c_associated(dependent_attribs_free)) then
     call c_f_pointer(dependent_attribs_free, f_dependent_attribs_free_ptr)
     f_dependent_attribs_free_native = f_dependent_attribs_free_ptr
@@ -1338,43 +1320,16 @@ subroutine fortran_attribute_free1 (ix_ele, attrib_name, lat, err_print_flag, ex
   else
     f_dependent_attribs_free_native_ptr => null()
   endif
-  ! inout: f_why_not_free 0D_NOT_integer
+  ! out: f_why_not_free 0D_NOT_integer
   if (c_associated(why_not_free)) then
     call c_f_pointer(why_not_free, f_why_not_free_ptr)
   else
     f_why_not_free_ptr => null()
   endif
-  f_free = attribute_free1(ix_ele=f_ix_ele_ptr, attrib_name=f_attrib_name, lat=f_lat, &
-      err_print_flag=f_err_print_flag_native_ptr, except_overlay=f_except_overlay_native_ptr, &
-      dependent_attribs_free=f_dependent_attribs_free_native_ptr, &
-      why_not_free=f_why_not_free_ptr)
+  f_free = attribute_free(f_ix_ele, f_attrib_name, f_lat, f_err_print_flag_native_ptr, &
+      f_except_overlay_native_ptr, f_dependent_attribs_free_native_ptr, f_why_not_free)
 
-  ! inout: f_ix_ele 0D_NOT_integer
-  ! no output conversion for f_ix_ele
-  ! inout: f_attrib_name 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
-  ! inout: f_err_print_flag 0D_NOT_logical
-  if (c_associated(err_print_flag)) then
-    call c_f_pointer(err_print_flag, f_err_print_flag_ptr)
-    f_err_print_flag_ptr = f_err_print_flag_native
-  else
-    ! f_err_print_flag unset
-  endif
-  ! inout: f_except_overlay 0D_NOT_logical
-  if (c_associated(except_overlay)) then
-    call c_f_pointer(except_overlay, f_except_overlay_ptr)
-    f_except_overlay_ptr = f_except_overlay_native
-  else
-    ! f_except_overlay unset
-  endif
-  ! inout: f_dependent_attribs_free 0D_NOT_logical
-  if (c_associated(dependent_attribs_free)) then
-    call c_f_pointer(dependent_attribs_free, f_dependent_attribs_free_ptr)
-    f_dependent_attribs_free_ptr = f_dependent_attribs_free_native
-  else
-    ! f_dependent_attribs_free unset
-  endif
-  ! inout: f_why_not_free 0D_NOT_integer
+  ! out: f_why_not_free 0D_NOT_integer
   ! no output conversion for f_why_not_free
   ! out: f_free 0D_NOT_logical
   call c_f_pointer(free, f_free_ptr)
@@ -1385,11 +1340,7 @@ subroutine fortran_attribute_free2 (ele, attrib_name, err_print_flag, except_ove
 
   use bmad_struct, only: ele_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: free  ! 0D_NOT_logical
-  logical :: f_free
-  logical(c_bool), pointer :: f_free_ptr
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
   type(c_ptr), intent(in), value :: attrib_name
@@ -1410,18 +1361,22 @@ subroutine fortran_attribute_free2 (ele, attrib_name, err_print_flag, except_ove
   logical, target :: f_dependent_attribs_free_native
   logical, pointer :: f_dependent_attribs_free_native_ptr
   logical(c_bool), pointer :: f_dependent_attribs_free_ptr
+  ! ** Out parameters **
   type(c_ptr), intent(in), value :: why_not_free  ! 0D_NOT_integer
-  integer(c_int) :: f_why_not_free
+  integer :: f_why_not_free
   integer(c_int), pointer :: f_why_not_free_ptr
+  type(c_ptr), intent(in), value :: free  ! 0D_NOT_logical
+  logical :: f_free
+  logical(c_bool), pointer :: f_free_ptr
   ! ** End of parameters **
-  ! inout: f_ele 0D_NOT_type
+  ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  ! inout: f_attrib_name 0D_NOT_character
+  ! in: f_attrib_name 0D_NOT_character
   if (.not. c_associated(attrib_name)) return
   call c_f_pointer(attrib_name, f_attrib_name_ptr, [huge(0)])
   call to_f_str(f_attrib_name_ptr, f_attrib_name)
-  ! inout: f_err_print_flag 0D_NOT_logical
+  ! in: f_err_print_flag 0D_NOT_logical
   if (c_associated(err_print_flag)) then
     call c_f_pointer(err_print_flag, f_err_print_flag_ptr)
     f_err_print_flag_native = f_err_print_flag_ptr
@@ -1429,7 +1384,7 @@ subroutine fortran_attribute_free2 (ele, attrib_name, err_print_flag, except_ove
   else
     f_err_print_flag_native_ptr => null()
   endif
-  ! inout: f_except_overlay 0D_NOT_logical
+  ! in: f_except_overlay 0D_NOT_logical
   if (c_associated(except_overlay)) then
     call c_f_pointer(except_overlay, f_except_overlay_ptr)
     f_except_overlay_native = f_except_overlay_ptr
@@ -1437,7 +1392,7 @@ subroutine fortran_attribute_free2 (ele, attrib_name, err_print_flag, except_ove
   else
     f_except_overlay_native_ptr => null()
   endif
-  ! inout: f_dependent_attribs_free 0D_NOT_logical
+  ! in: f_dependent_attribs_free 0D_NOT_logical
   if (c_associated(dependent_attribs_free)) then
     call c_f_pointer(dependent_attribs_free, f_dependent_attribs_free_ptr)
     f_dependent_attribs_free_native = f_dependent_attribs_free_ptr
@@ -1445,41 +1400,16 @@ subroutine fortran_attribute_free2 (ele, attrib_name, err_print_flag, except_ove
   else
     f_dependent_attribs_free_native_ptr => null()
   endif
-  ! inout: f_why_not_free 0D_NOT_integer
+  ! out: f_why_not_free 0D_NOT_integer
   if (c_associated(why_not_free)) then
     call c_f_pointer(why_not_free, f_why_not_free_ptr)
   else
     f_why_not_free_ptr => null()
   endif
-  f_free = attribute_free2(ele=f_ele, attrib_name=f_attrib_name, &
-      err_print_flag=f_err_print_flag_native_ptr, except_overlay=f_except_overlay_native_ptr, &
-      dependent_attribs_free=f_dependent_attribs_free_native_ptr, &
-      why_not_free=f_why_not_free_ptr)
+  f_free = attribute_free(f_ele, f_attrib_name, f_err_print_flag_native_ptr, &
+      f_except_overlay_native_ptr, f_dependent_attribs_free_native_ptr, f_why_not_free)
 
-  ! inout: f_attrib_name 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
-  ! inout: f_err_print_flag 0D_NOT_logical
-  if (c_associated(err_print_flag)) then
-    call c_f_pointer(err_print_flag, f_err_print_flag_ptr)
-    f_err_print_flag_ptr = f_err_print_flag_native
-  else
-    ! f_err_print_flag unset
-  endif
-  ! inout: f_except_overlay 0D_NOT_logical
-  if (c_associated(except_overlay)) then
-    call c_f_pointer(except_overlay, f_except_overlay_ptr)
-    f_except_overlay_ptr = f_except_overlay_native
-  else
-    ! f_except_overlay unset
-  endif
-  ! inout: f_dependent_attribs_free 0D_NOT_logical
-  if (c_associated(dependent_attribs_free)) then
-    call c_f_pointer(dependent_attribs_free, f_dependent_attribs_free_ptr)
-    f_dependent_attribs_free_ptr = f_dependent_attribs_free_native
-  else
-    ! f_dependent_attribs_free unset
-  endif
-  ! inout: f_why_not_free 0D_NOT_integer
+  ! out: f_why_not_free 0D_NOT_integer
   ! no output conversion for f_why_not_free
   ! out: f_free 0D_NOT_logical
   call c_f_pointer(free, f_free_ptr)
@@ -1490,17 +1420,11 @@ subroutine fortran_attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_pri
 
   use bmad_struct, only: lat_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: free  ! 0D_NOT_logical
-  logical :: f_free
-  logical(c_bool), pointer :: f_free_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: ix_ele  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_ele
-  integer(c_int), pointer :: f_ix_ele_ptr
-  type(c_ptr), intent(in), value :: ix_branch  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_branch
-  integer(c_int), pointer :: f_ix_branch_ptr
+  ! ** In parameters **
+  integer(c_int) :: ix_ele  ! 0D_NOT_integer
+  integer :: f_ix_ele
+  integer(c_int) :: ix_branch  ! 0D_NOT_integer
+  integer :: f_ix_branch
   type(c_ptr), intent(in), value :: attrib_name
   character(len=4096), target :: f_attrib_name
   character(kind=c_char), pointer :: f_attrib_name_ptr(:)
@@ -1521,30 +1445,26 @@ subroutine fortran_attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_pri
   logical, target :: f_dependent_attribs_free_native
   logical, pointer :: f_dependent_attribs_free_native_ptr
   logical(c_bool), pointer :: f_dependent_attribs_free_ptr
+  ! ** Out parameters **
   type(c_ptr), intent(in), value :: why_not_free  ! 0D_NOT_integer
-  integer(c_int) :: f_why_not_free
+  integer :: f_why_not_free
   integer(c_int), pointer :: f_why_not_free_ptr
+  type(c_ptr), intent(in), value :: free  ! 0D_NOT_logical
+  logical :: f_free
+  logical(c_bool), pointer :: f_free_ptr
   ! ** End of parameters **
-  ! inout: f_ix_ele 0D_NOT_integer
-  if (c_associated(ix_ele)) then
-    call c_f_pointer(ix_ele, f_ix_ele_ptr)
-  else
-    f_ix_ele_ptr => null()
-  endif
-  ! inout: f_ix_branch 0D_NOT_integer
-  if (c_associated(ix_branch)) then
-    call c_f_pointer(ix_branch, f_ix_branch_ptr)
-  else
-    f_ix_branch_ptr => null()
-  endif
-  ! inout: f_attrib_name 0D_NOT_character
+  ! in: f_ix_ele 0D_NOT_integer
+  f_ix_ele = ix_ele
+  ! in: f_ix_branch 0D_NOT_integer
+  f_ix_branch = ix_branch
+  ! in: f_attrib_name 0D_NOT_character
   if (.not. c_associated(attrib_name)) return
   call c_f_pointer(attrib_name, f_attrib_name_ptr, [huge(0)])
   call to_f_str(f_attrib_name_ptr, f_attrib_name)
-  ! inout: f_lat 0D_NOT_type
+  ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  ! inout: f_err_print_flag 0D_NOT_logical
+  ! in: f_err_print_flag 0D_NOT_logical
   if (c_associated(err_print_flag)) then
     call c_f_pointer(err_print_flag, f_err_print_flag_ptr)
     f_err_print_flag_native = f_err_print_flag_ptr
@@ -1552,7 +1472,7 @@ subroutine fortran_attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_pri
   else
     f_err_print_flag_native_ptr => null()
   endif
-  ! inout: f_except_overlay 0D_NOT_logical
+  ! in: f_except_overlay 0D_NOT_logical
   if (c_associated(except_overlay)) then
     call c_f_pointer(except_overlay, f_except_overlay_ptr)
     f_except_overlay_native = f_except_overlay_ptr
@@ -1560,7 +1480,7 @@ subroutine fortran_attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_pri
   else
     f_except_overlay_native_ptr => null()
   endif
-  ! inout: f_dependent_attribs_free 0D_NOT_logical
+  ! in: f_dependent_attribs_free 0D_NOT_logical
   if (c_associated(dependent_attribs_free)) then
     call c_f_pointer(dependent_attribs_free, f_dependent_attribs_free_ptr)
     f_dependent_attribs_free_native = f_dependent_attribs_free_ptr
@@ -1568,46 +1488,17 @@ subroutine fortran_attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_pri
   else
     f_dependent_attribs_free_native_ptr => null()
   endif
-  ! inout: f_why_not_free 0D_NOT_integer
+  ! out: f_why_not_free 0D_NOT_integer
   if (c_associated(why_not_free)) then
     call c_f_pointer(why_not_free, f_why_not_free_ptr)
   else
     f_why_not_free_ptr => null()
   endif
-  f_free = attribute_free3(ix_ele=f_ix_ele_ptr, ix_branch=f_ix_branch_ptr, &
-      attrib_name=f_attrib_name, lat=f_lat, err_print_flag=f_err_print_flag_native_ptr, &
-      except_overlay=f_except_overlay_native_ptr, &
-      dependent_attribs_free=f_dependent_attribs_free_native_ptr, &
-      why_not_free=f_why_not_free_ptr)
+  f_free = attribute_free(f_ix_ele, f_ix_branch, f_attrib_name, f_lat, &
+      f_err_print_flag_native_ptr, f_except_overlay_native_ptr, &
+      f_dependent_attribs_free_native_ptr, f_why_not_free)
 
-  ! inout: f_ix_ele 0D_NOT_integer
-  ! no output conversion for f_ix_ele
-  ! inout: f_ix_branch 0D_NOT_integer
-  ! no output conversion for f_ix_branch
-  ! inout: f_attrib_name 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
-  ! inout: f_err_print_flag 0D_NOT_logical
-  if (c_associated(err_print_flag)) then
-    call c_f_pointer(err_print_flag, f_err_print_flag_ptr)
-    f_err_print_flag_ptr = f_err_print_flag_native
-  else
-    ! f_err_print_flag unset
-  endif
-  ! inout: f_except_overlay 0D_NOT_logical
-  if (c_associated(except_overlay)) then
-    call c_f_pointer(except_overlay, f_except_overlay_ptr)
-    f_except_overlay_ptr = f_except_overlay_native
-  else
-    ! f_except_overlay unset
-  endif
-  ! inout: f_dependent_attribs_free 0D_NOT_logical
-  if (c_associated(dependent_attribs_free)) then
-    call c_f_pointer(dependent_attribs_free, f_dependent_attribs_free_ptr)
-    f_dependent_attribs_free_ptr = f_dependent_attribs_free_native
-  else
-    ! f_dependent_attribs_free unset
-  endif
-  ! inout: f_why_not_free 0D_NOT_integer
+  ! out: f_why_not_free 0D_NOT_integer
   ! no output conversion for f_why_not_free
   ! out: f_free 0D_NOT_logical
   call c_f_pointer(free, f_free_ptr)
@@ -1618,20 +1509,12 @@ subroutine fortran_attribute_index1 (ele, name, full_name, can_abbreviate, print
 
   use bmad_struct, only: ele_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: attrib_index  ! 0D_NOT_integer
-  integer :: f_attrib_index
-  integer(c_int), pointer :: f_attrib_index_ptr
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
   type(c_ptr), intent(in), value :: name
   character(len=4096), target :: f_name
   character(kind=c_char), pointer :: f_name_ptr(:)
-  type(c_ptr), intent(in), value :: full_name
-  character(len=4096), target :: f_full_name
-  character(kind=c_char), pointer :: f_full_name_ptr(:)
-  character(len=4096), pointer :: f_full_name_call_ptr
   type(c_ptr), intent(in), value :: can_abbreviate  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_can_abbreviate
   logical, target :: f_can_abbreviate_native
@@ -1642,15 +1525,23 @@ subroutine fortran_attribute_index1 (ele, name, full_name, can_abbreviate, print
   logical, target :: f_print_error_native
   logical, pointer :: f_print_error_native_ptr
   logical(c_bool), pointer :: f_print_error_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: full_name
+  character(len=4096), target :: f_full_name
+  character(kind=c_char), pointer :: f_full_name_ptr(:)
+  character(len=4096), pointer :: f_full_name_call_ptr
+  type(c_ptr), intent(in), value :: attrib_index  ! 0D_NOT_integer
+  integer :: f_attrib_index
+  integer(c_int), pointer :: f_attrib_index_ptr
   ! ** End of parameters **
-  ! inout: f_ele 0D_NOT_type
+  ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  ! inout: f_name 0D_NOT_character
+  ! in: f_name 0D_NOT_character
   if (.not. c_associated(name)) return
   call c_f_pointer(name, f_name_ptr, [huge(0)])
   call to_f_str(f_name_ptr, f_name)
-  ! inout: f_full_name 0D_NOT_character
+  ! out: f_full_name 0D_NOT_character
   if (c_associated(full_name)) then
     call c_f_pointer(full_name, f_full_name_ptr, [huge(0)])
     call to_f_str(f_full_name_ptr, f_full_name)
@@ -1658,7 +1549,7 @@ subroutine fortran_attribute_index1 (ele, name, full_name, can_abbreviate, print
   else
     f_full_name_call_ptr => null()
   endif
-  ! inout: f_can_abbreviate 0D_NOT_logical
+  ! in: f_can_abbreviate 0D_NOT_logical
   if (c_associated(can_abbreviate)) then
     call c_f_pointer(can_abbreviate, f_can_abbreviate_ptr)
     f_can_abbreviate_native = f_can_abbreviate_ptr
@@ -1666,7 +1557,7 @@ subroutine fortran_attribute_index1 (ele, name, full_name, can_abbreviate, print
   else
     f_can_abbreviate_native_ptr => null()
   endif
-  ! inout: f_print_error 0D_NOT_logical
+  ! in: f_print_error 0D_NOT_logical
   if (c_associated(print_error)) then
     call c_f_pointer(print_error, f_print_error_ptr)
     f_print_error_native = f_print_error_ptr
@@ -1674,27 +1565,12 @@ subroutine fortran_attribute_index1 (ele, name, full_name, can_abbreviate, print
   else
     f_print_error_native_ptr => null()
   endif
-  f_attrib_index = attribute_index1(ele=f_ele, name=f_name, full_name=f_full_name_call_ptr, &
-      can_abbreviate=f_can_abbreviate_native_ptr, print_error=f_print_error_native_ptr)
+  f_attrib_index = attribute_index(f_ele, f_name, f_full_name_call_ptr, &
+      f_can_abbreviate_native_ptr, f_print_error_native_ptr)
 
-  ! inout: f_name 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
-  ! inout: f_full_name 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
-  ! inout: f_can_abbreviate 0D_NOT_logical
-  if (c_associated(can_abbreviate)) then
-    call c_f_pointer(can_abbreviate, f_can_abbreviate_ptr)
-    f_can_abbreviate_ptr = f_can_abbreviate_native
-  else
-    ! f_can_abbreviate unset
-  endif
-  ! inout: f_print_error 0D_NOT_logical
-  if (c_associated(print_error)) then
-    call c_f_pointer(print_error, f_print_error_ptr)
-    f_print_error_ptr = f_print_error_native
-  else
-    ! f_print_error unset
-  endif
+  ! out: f_full_name 0D_NOT_character
+  call c_f_pointer(full_name, f_full_name_ptr, [len_trim(f_full_name) + 1]) ! output-only string
+  call to_c_str(f_full_name, f_full_name_ptr)
   ! out: f_attrib_index 0D_NOT_integer
   call c_f_pointer(attrib_index, f_attrib_index_ptr)
   f_attrib_index_ptr = f_attrib_index
@@ -1703,21 +1579,12 @@ subroutine fortran_attribute_index2 (key, name, full_name, can_abbreviate, print
     attrib_index) bind(c)
 
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: attrib_index  ! 0D_NOT_integer
-  integer :: f_attrib_index
-  integer(c_int), pointer :: f_attrib_index_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: key  ! 0D_NOT_integer
-  integer(c_int) :: f_key
-  integer(c_int), pointer :: f_key_ptr
+  ! ** In parameters **
+  integer(c_int) :: key  ! 0D_NOT_integer
+  integer :: f_key
   type(c_ptr), intent(in), value :: name
   character(len=4096), target :: f_name
   character(kind=c_char), pointer :: f_name_ptr(:)
-  type(c_ptr), intent(in), value :: full_name
-  character(len=4096), target :: f_full_name
-  character(kind=c_char), pointer :: f_full_name_ptr(:)
-  character(len=4096), pointer :: f_full_name_call_ptr
   type(c_ptr), intent(in), value :: can_abbreviate  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_can_abbreviate
   logical, target :: f_can_abbreviate_native
@@ -1728,18 +1595,22 @@ subroutine fortran_attribute_index2 (key, name, full_name, can_abbreviate, print
   logical, target :: f_print_error_native
   logical, pointer :: f_print_error_native_ptr
   logical(c_bool), pointer :: f_print_error_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: full_name
+  character(len=4096), target :: f_full_name
+  character(kind=c_char), pointer :: f_full_name_ptr(:)
+  character(len=4096), pointer :: f_full_name_call_ptr
+  type(c_ptr), intent(in), value :: attrib_index  ! 0D_NOT_integer
+  integer :: f_attrib_index
+  integer(c_int), pointer :: f_attrib_index_ptr
   ! ** End of parameters **
-  ! inout: f_key 0D_NOT_integer
-  if (c_associated(key)) then
-    call c_f_pointer(key, f_key_ptr)
-  else
-    f_key_ptr => null()
-  endif
-  ! inout: f_name 0D_NOT_character
+  ! in: f_key 0D_NOT_integer
+  f_key = key
+  ! in: f_name 0D_NOT_character
   if (.not. c_associated(name)) return
   call c_f_pointer(name, f_name_ptr, [huge(0)])
   call to_f_str(f_name_ptr, f_name)
-  ! inout: f_full_name 0D_NOT_character
+  ! out: f_full_name 0D_NOT_character
   if (c_associated(full_name)) then
     call c_f_pointer(full_name, f_full_name_ptr, [huge(0)])
     call to_f_str(f_full_name_ptr, f_full_name)
@@ -1747,7 +1618,7 @@ subroutine fortran_attribute_index2 (key, name, full_name, can_abbreviate, print
   else
     f_full_name_call_ptr => null()
   endif
-  ! inout: f_can_abbreviate 0D_NOT_logical
+  ! in: f_can_abbreviate 0D_NOT_logical
   if (c_associated(can_abbreviate)) then
     call c_f_pointer(can_abbreviate, f_can_abbreviate_ptr)
     f_can_abbreviate_native = f_can_abbreviate_ptr
@@ -1755,7 +1626,7 @@ subroutine fortran_attribute_index2 (key, name, full_name, can_abbreviate, print
   else
     f_can_abbreviate_native_ptr => null()
   endif
-  ! inout: f_print_error 0D_NOT_logical
+  ! in: f_print_error 0D_NOT_logical
   if (c_associated(print_error)) then
     call c_f_pointer(print_error, f_print_error_ptr)
     f_print_error_native = f_print_error_ptr
@@ -1763,29 +1634,12 @@ subroutine fortran_attribute_index2 (key, name, full_name, can_abbreviate, print
   else
     f_print_error_native_ptr => null()
   endif
-  f_attrib_index = attribute_index2(key=f_key_ptr, name=f_name, full_name=f_full_name_call_ptr, &
-      can_abbreviate=f_can_abbreviate_native_ptr, print_error=f_print_error_native_ptr)
+  f_attrib_index = attribute_index(f_key, f_name, f_full_name_call_ptr, &
+      f_can_abbreviate_native_ptr, f_print_error_native_ptr)
 
-  ! inout: f_key 0D_NOT_integer
-  ! no output conversion for f_key
-  ! inout: f_name 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
-  ! inout: f_full_name 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
-  ! inout: f_can_abbreviate 0D_NOT_logical
-  if (c_associated(can_abbreviate)) then
-    call c_f_pointer(can_abbreviate, f_can_abbreviate_ptr)
-    f_can_abbreviate_ptr = f_can_abbreviate_native
-  else
-    ! f_can_abbreviate unset
-  endif
-  ! inout: f_print_error 0D_NOT_logical
-  if (c_associated(print_error)) then
-    call c_f_pointer(print_error, f_print_error_ptr)
-    f_print_error_ptr = f_print_error_native
-  else
-    ! f_print_error unset
-  endif
+  ! out: f_full_name 0D_NOT_character
+  call c_f_pointer(full_name, f_full_name_ptr, [len_trim(f_full_name) + 1]) ! output-only string
+  call to_c_str(f_full_name, f_full_name_ptr)
   ! out: f_attrib_index 0D_NOT_integer
   call c_f_pointer(attrib_index, f_attrib_index_ptr)
   f_attrib_index_ptr = f_attrib_index
@@ -1793,36 +1647,26 @@ end subroutine
 subroutine fortran_attribute_name1 (key, ix_att, show_private, attrib_name) bind(c)
 
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: attrib_name
-  character(len=4096), target :: f_attrib_name
-  character(kind=c_char), pointer :: f_attrib_name_ptr(:)
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: key  ! 0D_NOT_integer
-  integer(c_int) :: f_key
-  integer(c_int), pointer :: f_key_ptr
-  type(c_ptr), intent(in), value :: ix_att  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_att
-  integer(c_int), pointer :: f_ix_att_ptr
+  ! ** In parameters **
+  integer(c_int) :: key  ! 0D_NOT_integer
+  integer :: f_key
+  integer(c_int) :: ix_att  ! 0D_NOT_integer
+  integer :: f_ix_att
   type(c_ptr), intent(in), value :: show_private  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_show_private
   logical, target :: f_show_private_native
   logical, pointer :: f_show_private_native_ptr
   logical(c_bool), pointer :: f_show_private_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: attrib_name
+  character(len=4096), target :: f_attrib_name
+  character(kind=c_char), pointer :: f_attrib_name_ptr(:)
   ! ** End of parameters **
-  ! inout: f_key 0D_NOT_integer
-  if (c_associated(key)) then
-    call c_f_pointer(key, f_key_ptr)
-  else
-    f_key_ptr => null()
-  endif
-  ! inout: f_ix_att 0D_NOT_integer
-  if (c_associated(ix_att)) then
-    call c_f_pointer(ix_att, f_ix_att_ptr)
-  else
-    f_ix_att_ptr => null()
-  endif
-  ! inout: f_show_private 0D_NOT_logical
+  ! in: f_key 0D_NOT_integer
+  f_key = key
+  ! in: f_ix_att 0D_NOT_integer
+  f_ix_att = ix_att
+  ! in: f_show_private 0D_NOT_logical
   if (c_associated(show_private)) then
     call c_f_pointer(show_private, f_show_private_ptr)
     f_show_private_native = f_show_private_ptr
@@ -1830,20 +1674,8 @@ subroutine fortran_attribute_name1 (key, ix_att, show_private, attrib_name) bind
   else
     f_show_private_native_ptr => null()
   endif
-  f_attrib_name = attribute_name1(key=f_key_ptr, ix_att=f_ix_att_ptr, &
-      show_private=f_show_private_native_ptr)
+  f_attrib_name = attribute_name(f_key, f_ix_att, f_show_private_native_ptr)
 
-  ! inout: f_key 0D_NOT_integer
-  ! no output conversion for f_key
-  ! inout: f_ix_att 0D_NOT_integer
-  ! no output conversion for f_ix_att
-  ! inout: f_show_private 0D_NOT_logical
-  if (c_associated(show_private)) then
-    call c_f_pointer(show_private, f_show_private_ptr)
-    f_show_private_ptr = f_show_private_native
-  else
-    ! f_show_private unset
-  endif
   ! out: f_attrib_name 0D_NOT_character
   call c_f_pointer(attrib_name, f_attrib_name_ptr, [len_trim(f_attrib_name) + 1]) ! output-only string
   call to_c_str(f_attrib_name, f_attrib_name_ptr)
@@ -1852,32 +1684,27 @@ subroutine fortran_attribute_name2 (ele, ix_att, show_private, attrib_name) bind
 
   use bmad_struct, only: ele_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: attrib_name
-  character(len=4096), target :: f_attrib_name
-  character(kind=c_char), pointer :: f_attrib_name_ptr(:)
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
-  type(c_ptr), intent(in), value :: ix_att  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_att
-  integer(c_int), pointer :: f_ix_att_ptr
+  integer(c_int) :: ix_att  ! 0D_NOT_integer
+  integer :: f_ix_att
   type(c_ptr), intent(in), value :: show_private  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_show_private
   logical, target :: f_show_private_native
   logical, pointer :: f_show_private_native_ptr
   logical(c_bool), pointer :: f_show_private_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: attrib_name
+  character(len=4096), target :: f_attrib_name
+  character(kind=c_char), pointer :: f_attrib_name_ptr(:)
   ! ** End of parameters **
-  ! inout: f_ele 0D_NOT_type
+  ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  ! inout: f_ix_att 0D_NOT_integer
-  if (c_associated(ix_att)) then
-    call c_f_pointer(ix_att, f_ix_att_ptr)
-  else
-    f_ix_att_ptr => null()
-  endif
-  ! inout: f_show_private 0D_NOT_logical
+  ! in: f_ix_att 0D_NOT_integer
+  f_ix_att = ix_att
+  ! in: f_show_private 0D_NOT_logical
   if (c_associated(show_private)) then
     call c_f_pointer(show_private, f_show_private_ptr)
     f_show_private_native = f_show_private_ptr
@@ -1885,18 +1712,8 @@ subroutine fortran_attribute_name2 (ele, ix_att, show_private, attrib_name) bind
   else
     f_show_private_native_ptr => null()
   endif
-  f_attrib_name = attribute_name2(ele=f_ele, ix_att=f_ix_att_ptr, &
-      show_private=f_show_private_native_ptr)
+  f_attrib_name = attribute_name(f_ele, f_ix_att, f_show_private_native_ptr)
 
-  ! inout: f_ix_att 0D_NOT_integer
-  ! no output conversion for f_ix_att
-  ! inout: f_show_private 0D_NOT_logical
-  if (c_associated(show_private)) then
-    call c_f_pointer(show_private, f_show_private_ptr)
-    f_show_private_ptr = f_show_private_native
-  else
-    ! f_show_private unset
-  endif
   ! out: f_attrib_name 0D_NOT_character
   call c_f_pointer(attrib_name, f_attrib_name_ptr, [len_trim(f_attrib_name) + 1]) ! output-only string
   call to_c_str(f_attrib_name, f_attrib_name_ptr)
@@ -1922,7 +1739,7 @@ subroutine fortran_attribute_type (attrib_name, ele, attrib_type) bind(c)
   call to_f_str(f_attrib_name_ptr, f_attrib_name)
   ! in: f_ele 0D_NOT_type
   if (c_associated(ele))   call c_f_pointer(ele, f_ele)
-  f_attrib_type = attribute_type(attrib_name=f_attrib_name, ele=f_ele)
+  f_attrib_type = attribute_type(f_attrib_name, f_ele)
 
   ! out: f_attrib_type 0D_NOT_integer
   call c_f_pointer(attrib_type, f_attrib_type_ptr)
@@ -1956,8 +1773,7 @@ subroutine fortran_attribute_units (attrib_name, unrecognized_units, attrib_unit
   else
     f_unrecognized_units_call_ptr => null()
   endif
-  f_attrib_units = attribute_units(attrib_name=f_attrib_name, &
-      unrecognized_units=f_unrecognized_units_call_ptr)
+  f_attrib_units = attribute_units(f_attrib_name, f_unrecognized_units_call_ptr)
 
   ! out: f_attrib_units 0D_NOT_character
   call c_f_pointer(attrib_units, f_attrib_units_ptr, [len_trim(f_attrib_units) + 1]) ! output-only string
@@ -2032,9 +1848,8 @@ subroutine fortran_autoscale_phase_and_amp (ele, param, err_flag, scale_phase, s
   else
     f_call_bookkeeper_native_ptr => null()
   endif
-  call autoscale_phase_and_amp(ele=f_ele, param=f_param, err_flag=f_err_flag, &
-      scale_phase=f_scale_phase_native_ptr, scale_amp=f_scale_amp_native_ptr, &
-      call_bookkeeper=f_call_bookkeeper_native_ptr)
+  call autoscale_phase_and_amp(f_ele, f_param, f_err_flag, f_scale_phase_native_ptr, &
+      f_scale_amp_native_ptr, f_call_bookkeeper_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -2064,7 +1879,7 @@ subroutine fortran_average_twiss (frac1, twiss1, twiss2, ave_twiss) bind(c)
   ! inout: f_twiss2 0D_NOT_type
   if (.not. c_associated(twiss2)) return
   call c_f_pointer(twiss2, f_twiss2)
-  f_ave_twiss = average_twiss(frac1=f_frac1, twiss1=f_twiss1, twiss2=f_twiss2)
+  f_ave_twiss = average_twiss(f_frac1, f_twiss1, f_twiss2)
 
   ! out: f_ave_twiss 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -2099,7 +1914,7 @@ subroutine fortran_bbi_kick (x, y, sigma, nk, dnk) bind(c)
   else
     f_sigma_ptr => null()
   endif
-  call bbi_kick(x=f_x, y=f_y, sigma=f_sigma, nk=f_nk, dnk=f_dnk)
+  call bbi_kick(f_x, f_y, f_sigma, f_nk, f_dnk)
 
   ! out: f_nk 1D_NOT_real
   if (c_associated(nk)) then
@@ -2129,7 +1944,7 @@ subroutine fortran_bbi_slice_calc (ele, n_slice, z_slice) bind(c)
   f_n_slice = n_slice
   !! container general array (1D_ALLOC_real)
   if (c_associated(z_slice))   call c_f_pointer(z_slice, f_z_slice)
-  call bbi_slice_calc(ele=f_ele, n_slice=f_n_slice, z_slice=f_z_slice%data)
+  call bbi_slice_calc(f_ele, f_n_slice, f_z_slice%data)
 
 end subroutine
 subroutine fortran_beam_envelope_ibs (sigma_mat, ibs_mat, tail_cut, tau, energy, n_part, &
@@ -2172,8 +1987,8 @@ subroutine fortran_beam_envelope_ibs (sigma_mat, ibs_mat, tail_cut, tau, energy,
   f_n_part = n_part
   ! in: f_species 0D_NOT_integer
   f_species = species
-  call beam_envelope_ibs(sigma_mat=f_sigma_mat, ibs_mat=f_ibs_mat, tail_cut=f_tail_cut, &
-      tau=f_tau, energy=f_energy, n_part=f_n_part, species=f_species)
+  call beam_envelope_ibs(f_sigma_mat, f_ibs_mat, f_tail_cut, f_tau, f_energy, f_n_part, &
+      f_species)
 
   ! out: f_ibs_mat 2D_NOT_real
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_ibs_mat', c_name='ibs_mat', python_name='ibs_mat', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=783, definition='real(rp) sigma_mat(6,6), ibs_mat(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='ibs_mat', comment='', default=None), intent='out', description='changes in 2nd order moments due to IBS are ibs_mat*element_length', doc_data_type='float', doc_is_optional=False)
@@ -2183,19 +1998,67 @@ subroutine fortran_beam_equal_beam (beam1, beam2) bind(c)
   use bmad_struct, only: beam_struct
   implicit none
   ! ** In parameters **
-  type(c_ptr), value :: beam1  ! 0D_NOT_type
-  type(beam_struct), pointer :: f_beam1
   type(c_ptr), value :: beam2  ! 0D_NOT_type
   type(beam_struct), pointer :: f_beam2
+  ! ** Inout parameters **
+  type(c_ptr), value :: beam1  ! 0D_NOT_type
+  type(beam_struct), pointer :: f_beam1
   ! ** End of parameters **
-  ! in: f_beam1 0D_NOT_type
+  ! inout: f_beam1 0D_NOT_type
   if (.not. c_associated(beam1)) return
   call c_f_pointer(beam1, f_beam1)
   ! in: f_beam2 0D_NOT_type
   if (.not. c_associated(beam2)) return
   call c_f_pointer(beam2, f_beam2)
-  call beam_equal_beam(beam1=f_beam1, beam2=f_beam2)
+  call beam_equal_beam(f_beam1, f_beam2)
 
+end subroutine
+subroutine fortran_beam_init_setup (beam_init_in, ele, species, modes, err_flag, beam_init_set) &
+    bind(c)
+
+  use bmad_struct, only: beam_init_struct, ele_struct, normal_modes_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: beam_init_in  ! 0D_NOT_type
+  type(beam_init_struct), pointer :: f_beam_init_in
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  integer(c_int) :: species  ! 0D_NOT_integer
+  integer :: f_species
+  type(c_ptr), value :: modes  ! 0D_NOT_type
+  type(normal_modes_struct), pointer :: f_modes
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_err_flag
+  logical, target :: f_err_flag_native
+  logical, pointer :: f_err_flag_native_ptr
+  logical(c_bool), pointer :: f_err_flag_ptr
+  ! ** Out parameters **
+  type(c_ptr), value :: beam_init_set  ! 0D_NOT_type
+  type(beam_init_struct), pointer :: f_beam_init_set
+  ! ** End of parameters **
+  ! in: f_beam_init_in 0D_NOT_type
+  if (.not. c_associated(beam_init_in)) return
+  call c_f_pointer(beam_init_in, f_beam_init_in)
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_species 0D_NOT_integer
+  f_species = species
+  ! in: f_modes 0D_NOT_type
+  if (c_associated(modes))   call c_f_pointer(modes, f_modes)
+  ! in: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_native = f_err_flag_ptr
+    f_err_flag_native_ptr => f_err_flag_native
+  else
+    f_err_flag_native_ptr => null()
+  endif
+  f_beam_init_set = beam_init_setup(f_beam_init_in, f_ele, f_species, f_modes, &
+      f_err_flag_native_ptr)
+
+  ! out: f_beam_init_set 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_beam_tilts (S, angle_xy, angle_xz, angle_yz, angle_xpz, angle_ypz) bind(c)
 
@@ -2228,8 +2091,7 @@ subroutine fortran_beam_tilts (S, angle_xy, angle_xz, angle_yz, angle_xpz, angle
   else
     f_S_ptr => null()
   endif
-  call beam_tilts(S=f_S, angle_xy=f_angle_xy, angle_xz=f_angle_xz, angle_yz=f_angle_yz, &
-      angle_xpz=f_angle_xpz, angle_ypz=f_angle_ypz)
+  call beam_tilts(f_S, f_angle_xy, f_angle_xz, f_angle_yz, f_angle_xpz, f_angle_ypz)
 
   ! out: f_angle_xy 0D_NOT_real
   call c_f_pointer(angle_xy, f_angle_xy_ptr)
@@ -2310,8 +2172,8 @@ subroutine fortran_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matr
   else
     f_track_spin_native_ptr => null()
   endif
-  call bend_edge_kick(ele=f_ele, param=f_param, particle_at=f_particle_at, orb=f_orb, &
-      mat6=f_mat6, make_matrix=f_make_matrix_native_ptr, track_spin=f_track_spin_native_ptr)
+  call bend_edge_kick(f_ele, f_param, f_particle_at, f_orb, f_mat6, f_make_matrix_native_ptr, &
+      f_track_spin_native_ptr)
 
 end subroutine
 subroutine fortran_bend_exact_multipole_field (ele, param, orbit, local_ref_frame, field, &
@@ -2372,9 +2234,8 @@ subroutine fortran_bend_exact_multipole_field (ele, param, orbit, local_ref_fram
   else
     f_calc_potential_native_ptr => null()
   endif
-  call bend_exact_multipole_field(ele=f_ele, param=f_param, orbit=f_orbit, &
-      local_ref_frame=f_local_ref_frame, field=f_field, calc_dfield=f_calc_dfield_native_ptr, &
-      calc_potential=f_calc_potential_native_ptr)
+  call bend_exact_multipole_field(f_ele, f_param, f_orbit, f_local_ref_frame, f_field, &
+      f_calc_dfield_native_ptr, f_calc_potential_native_ptr)
 
   ! out: f_field 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -2394,7 +2255,7 @@ subroutine fortran_bend_length_has_been_set (ele, is_set) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_is_set = bend_length_has_been_set(ele=f_ele)
+  f_is_set = bend_length_has_been_set(f_ele)
 
   ! out: f_is_set 0D_NOT_logical
   call c_f_pointer(is_set, f_is_set_ptr)
@@ -2418,7 +2279,7 @@ subroutine fortran_bend_photon_e_rel_init (r_in, E_rel) bind(c)
   else
     f_r_in_ptr => null()
   endif
-  f_E_rel = bend_photon_e_rel_init(r_in=f_r_in_ptr)
+  f_E_rel = bend_photon_e_rel_init(f_r_in_ptr)
 
   ! out: f_E_rel 0D_NOT_real
   call c_f_pointer(E_rel, f_E_rel_ptr)
@@ -2445,8 +2306,7 @@ subroutine fortran_bend_photon_energy_integ_prob (E_photon, g_bend, gamma, integ
   f_g_bend = g_bend
   ! in: f_gamma 0D_NOT_real
   f_gamma = gamma
-  f_integ_prob = bend_photon_energy_integ_prob(E_photon=f_E_photon, g_bend=f_g_bend, &
-      gamma=f_gamma)
+  f_integ_prob = bend_photon_energy_integ_prob(f_E_photon, f_g_bend, f_gamma)
 
   ! out: f_integ_prob 0D_NOT_real
   call c_f_pointer(integ_prob, f_integ_prob_ptr)
@@ -2465,7 +2325,7 @@ subroutine fortran_bend_photon_energy_normalized_probability (E_rel, prob) bind(
   ! ** End of parameters **
   ! in: f_E_rel 0D_NOT_real
   f_E_rel = E_rel
-  f_prob = bend_photon_energy_normalized_probability(E_rel=f_E_rel)
+  f_prob = bend_photon_energy_normalized_probability(f_E_rel)
 
   ! out: f_prob 0D_NOT_real
   call c_f_pointer(prob, f_prob_ptr)
@@ -2564,11 +2424,9 @@ subroutine fortran_bend_photon_init (g_bend_x, g_bend_y, gamma, orbit, E_min, E_
   else
     f_emit_probability_ptr => null()
   endif
-  call bend_photon_init(g_bend_x=f_g_bend_x, g_bend_y=f_g_bend_y, gamma=f_gamma, orbit=f_orbit, &
-      E_min=f_E_min_ptr, E_max=f_E_max_ptr, E_integ_prob=f_E_integ_prob_ptr, &
-      vert_angle_min=f_vert_angle_min_ptr, vert_angle_max=f_vert_angle_max_ptr, &
-      vert_angle_symmetric=f_vert_angle_symmetric_native_ptr, &
-      emit_probability=f_emit_probability_ptr)
+  call bend_photon_init(f_g_bend_x, f_g_bend_y, f_gamma, f_orbit, f_E_min_ptr, f_E_max_ptr, &
+      f_E_integ_prob_ptr, f_vert_angle_min_ptr, f_vert_angle_max_ptr, &
+      f_vert_angle_symmetric_native_ptr, f_emit_probability_ptr)
 
   ! out: f_orbit 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -2602,8 +2460,7 @@ subroutine fortran_bend_photon_polarization_init (g_bend_x, g_bend_y, E_rel, gam
   ! out: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  call bend_photon_polarization_init(g_bend_x=f_g_bend_x, g_bend_y=f_g_bend_y, E_rel=f_E_rel, &
-      gamma_phi=f_gamma_phi, orbit=f_orbit)
+  call bend_photon_polarization_init(f_g_bend_x, f_g_bend_y, f_E_rel, f_gamma_phi, f_orbit)
 
   ! out: f_orbit 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -2647,8 +2504,7 @@ subroutine fortran_bend_photon_vert_angle_init (E_rel, gamma, r_in, invert, phi)
   else
     f_invert_native_ptr => null()
   endif
-  f_phi = bend_photon_vert_angle_init(E_rel=f_E_rel, gamma=f_gamma, r_in=f_r_in_ptr, &
-      invert=f_invert_native_ptr)
+  f_phi = bend_photon_vert_angle_init(f_E_rel, f_gamma, f_r_in_ptr, f_invert_native_ptr)
 
   ! out: f_phi 0D_NOT_real
   call c_f_pointer(phi, f_phi_ptr)
@@ -2688,8 +2544,7 @@ subroutine fortran_bend_shift (position1, g, delta_s, w_mat, ref_tilt, position2
   else
     f_ref_tilt_ptr => null()
   endif
-  f_position2 = bend_shift(position1=f_position1, g=f_g, delta_s=f_delta_s, w_mat=f_w_mat, &
-      ref_tilt=f_ref_tilt_ptr)
+  f_position2 = bend_shift(f_position1, f_g, f_delta_s, f_w_mat, f_ref_tilt_ptr)
 
   ! out: f_w_mat 2D_NOT_real
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=556, definition='real(rp), optional :: w_mat(3,3), ref_tilt', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='W matrix used in the transformation', doc_data_type='float', doc_is_optional=False)
@@ -2717,8 +2572,7 @@ subroutine fortran_bend_vert_angle_integ_prob (vert_angle, E_rel, gamma, integ_p
   f_E_rel = E_rel
   ! in: f_gamma 0D_NOT_real
   f_gamma = gamma
-  f_integ_prob = bend_vert_angle_integ_prob(vert_angle=f_vert_angle, E_rel=f_E_rel, &
-      gamma=f_gamma)
+  f_integ_prob = bend_vert_angle_integ_prob(f_vert_angle, f_E_rel, f_gamma)
 
   ! out: f_integ_prob 0D_NOT_real
   call c_f_pointer(integ_prob, f_integ_prob_ptr)
@@ -2774,8 +2628,8 @@ subroutine fortran_bl_via_vlassov (current, alpha, Energy, sigma_p, Vrf, omega, 
   f_R = R
   ! in: f_L 0D_NOT_real
   f_L = L
-  call bl_via_vlassov(current=f_current, alpha=f_alpha, Energy=f_Energy, sigma_p=f_sigma_p, &
-      Vrf=f_Vrf, omega=f_omega, U0=f_U0, circ=f_circ, R=f_R, L=f_L, sigma_z=f_sigma_z)
+  call bl_via_vlassov(f_current, f_alpha, f_Energy, f_sigma_p, f_Vrf, f_omega, f_U0, f_circ, &
+      f_R, f_L, f_sigma_z)
 
   ! out: f_sigma_z 0D_NOT_real
   call c_f_pointer(sigma_z, f_sigma_z_ptr)
@@ -2834,6 +2688,12 @@ subroutine fortran_bmad_parser (lat_file, lat, make_mats6, digested_read_ok, use
   else
     f_make_mats6_native_ptr => null()
   endif
+  ! out: f_digested_read_ok 0D_NOT_logical
+  if (c_associated(digested_read_ok)) then
+    call c_f_pointer(digested_read_ok, f_digested_read_ok_ptr)
+  else
+    f_digested_read_ok_ptr => null()
+  endif
   ! in: f_use_line 0D_NOT_character
   if (c_associated(use_line)) then
     call c_f_pointer(use_line, f_use_line_ptr, [huge(0)])
@@ -2842,11 +2702,16 @@ subroutine fortran_bmad_parser (lat_file, lat, make_mats6, digested_read_ok, use
   else
     f_use_line_call_ptr => null()
   endif
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
   ! out: f_parse_lat 0D_NOT_type
   if (c_associated(parse_lat))   call c_f_pointer(parse_lat, f_parse_lat)
-  call bmad_parser(lat_file=f_lat_file, lat=f_lat, make_mats6=f_make_mats6_native_ptr, &
-      digested_read_ok=f_digested_read_ok, use_line=f_use_line_call_ptr, err_flag=f_err_flag, &
-      parse_lat=f_parse_lat)
+  call bmad_parser(f_lat_file, f_lat, f_make_mats6_native_ptr, f_digested_read_ok, &
+      f_use_line_call_ptr, f_err_flag, f_parse_lat)
 
   ! out: f_lat 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -2910,9 +2775,8 @@ subroutine fortran_bmad_parser2 (lat_file, lat, orbit, make_mats6, err_flag, par
   endif
   ! in: f_parse_lat 0D_NOT_type
   if (c_associated(parse_lat))   call c_f_pointer(parse_lat, f_parse_lat)
-  call bmad_parser2(lat_file=f_lat_file, lat=f_lat, orbit=f_orbit%data, &
-      make_mats6=f_make_mats6_native_ptr, err_flag=f_err_flag_native_ptr, &
-      parse_lat=f_parse_lat)
+  call bmad_parser2(f_lat_file, f_lat, f_orbit%data, f_make_mats6_native_ptr, &
+      f_err_flag_native_ptr, f_parse_lat)
 
   ! inout: f_err_flag 0D_NOT_logical
   if (c_associated(err_flag)) then
@@ -2947,7 +2811,7 @@ subroutine fortran_bmad_patch_parameters_to_ptc (ang, exi) bind(c)
   else
     f_exi_ptr => null()
   endif
-  call bmad_patch_parameters_to_ptc(ang=f_ang, exi=f_exi)
+  call bmad_patch_parameters_to_ptc(f_ang, f_exi)
 
 end subroutine
 subroutine fortran_bp_set_ran_status () bind(c)
@@ -2964,20 +2828,18 @@ subroutine fortran_branch_equal_branch (branch1, branch2) bind(c)
   ! ** In parameters **
   type(c_ptr), value :: branch2  ! 0D_NOT_type
   type(branch_struct), pointer :: f_branch2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: branch1  ! 0D_NOT_type
   type(branch_struct), pointer :: f_branch1
   ! ** End of parameters **
-  ! out: f_branch1 0D_NOT_type
+  ! inout: f_branch1 0D_NOT_type
   if (.not. c_associated(branch1)) return
   call c_f_pointer(branch1, f_branch1)
   ! in: f_branch2 0D_NOT_type
   if (.not. c_associated(branch2)) return
   call c_f_pointer(branch2, f_branch2)
-  call branch_equal_branch(branch1=f_branch1, branch2=f_branch2)
+  call branch_equal_branch(f_branch1, f_branch2)
 
-  ! out: f_branch1 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_branch_name (branch, name) bind(c)
 
@@ -2994,7 +2856,7 @@ subroutine fortran_branch_name (branch, name) bind(c)
   ! in: f_branch 0D_NOT_type
   if (.not. c_associated(branch)) return
   call c_f_pointer(branch, f_branch)
-  f_name = branch_name(branch=f_branch)
+  f_name = branch_name(f_branch)
 
   ! out: f_name 0D_NOT_character
   call c_f_pointer(name, f_name_ptr, [len_trim(f_name) + 1]) ! output-only string
@@ -3011,7 +2873,7 @@ subroutine fortran_branch_to_ptc_m_u (branch) bind(c)
   ! in: f_branch 0D_NOT_type
   if (.not. c_associated(branch)) return
   call c_f_pointer(branch, f_branch)
-  call branch_to_ptc_m_u(branch=f_branch)
+  call branch_to_ptc_m_u(f_branch)
 
 end subroutine
 subroutine fortran_bunch_equal_bunch (bunch1, bunch2) bind(c)
@@ -3019,18 +2881,19 @@ subroutine fortran_bunch_equal_bunch (bunch1, bunch2) bind(c)
   use bmad_struct, only: bunch_struct
   implicit none
   ! ** In parameters **
-  type(c_ptr), value :: bunch1  ! 0D_NOT_type
-  type(bunch_struct), pointer :: f_bunch1
   type(c_ptr), value :: bunch2  ! 0D_NOT_type
   type(bunch_struct), pointer :: f_bunch2
+  ! ** Inout parameters **
+  type(c_ptr), value :: bunch1  ! 0D_NOT_type
+  type(bunch_struct), pointer :: f_bunch1
   ! ** End of parameters **
-  ! in: f_bunch1 0D_NOT_type
+  ! inout: f_bunch1 0D_NOT_type
   if (.not. c_associated(bunch1)) return
   call c_f_pointer(bunch1, f_bunch1)
   ! in: f_bunch2 0D_NOT_type
   if (.not. c_associated(bunch2)) return
   call c_f_pointer(bunch2, f_bunch2)
-  call bunch_equal_bunch(bunch1=f_bunch1, bunch2=f_bunch2)
+  call bunch_equal_bunch(f_bunch1, f_bunch2)
 
 end subroutine
 subroutine fortran_c_to_cbar (ele, cbar_mat) bind(c)
@@ -3048,10 +2911,10 @@ subroutine fortran_c_to_cbar (ele, cbar_mat) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call c_to_cbar(ele=f_ele, cbar_mat=f_cbar_mat)
+  call c_to_cbar(f_ele, f_cbar_mat)
 
   ! out: f_cbar_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_cbar_mat', c_name='cbar_mat', python_name='cbar_mat', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=633, definition='real(rp) cbar_mat(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='cbar_mat', comment='', default=None), intent='out', description='Cbar matrix.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_cbar_mat', c_name='cbar_mat', python_name='cbar_mat', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=642, definition='real(rp) cbar_mat(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='cbar_mat', comment='', default=None), intent='out', description='Cbar matrix.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_calc_bunch_params (bunch, bunch_params, error, print_err, n_mat, &
     is_time_coords, ele) bind(c)
@@ -3114,9 +2977,8 @@ subroutine fortran_calc_bunch_params (bunch, bunch_params, error, print_err, n_m
   endif
   ! in: f_ele 0D_NOT_type
   if (c_associated(ele))   call c_f_pointer(ele, f_ele)
-  call calc_bunch_params(bunch=f_bunch, bunch_params=f_bunch_params, error=f_error, &
-      print_err=f_print_err_native_ptr, n_mat=f_n_mat, &
-      is_time_coords=f_is_time_coords_native_ptr, ele=f_ele)
+  call calc_bunch_params(f_bunch, f_bunch_params, f_error, f_print_err_native_ptr, f_n_mat, &
+      f_is_time_coords_native_ptr, f_ele)
 
 end subroutine
 subroutine fortran_calc_bunch_params_slice (bunch, bunch_params, plane, slice_center, &
@@ -3183,9 +3045,8 @@ subroutine fortran_calc_bunch_params_slice (bunch, bunch_params, plane, slice_ce
   endif
   ! in: f_ele 0D_NOT_type
   if (c_associated(ele))   call c_f_pointer(ele, f_ele)
-  call calc_bunch_params_slice(bunch=f_bunch, bunch_params=f_bunch_params, plane=f_plane, &
-      slice_center=f_slice_center, slice_spread=f_slice_spread, err=f_err, &
-      print_err=f_print_err_native_ptr, is_time_coords=f_is_time_coords_native_ptr, ele=f_ele)
+  call calc_bunch_params_slice(f_bunch, f_bunch_params, f_plane, f_slice_center, &
+      f_slice_spread, f_err, f_print_err_native_ptr, f_is_time_coords_native_ptr, f_ele)
 
 end subroutine
 subroutine fortran_calc_bunch_params_z_slice (bunch, bunch_params, slice_bounds, err, &
@@ -3250,9 +3111,8 @@ subroutine fortran_calc_bunch_params_z_slice (bunch, bunch_params, slice_bounds,
   endif
   ! in: f_ele 0D_NOT_type
   if (c_associated(ele))   call c_f_pointer(ele, f_ele)
-  call calc_bunch_params_z_slice(bunch=f_bunch, bunch_params=f_bunch_params, &
-      slice_bounds=f_slice_bounds, err=f_err, print_err=f_print_err_native_ptr, &
-      is_time_coords=f_is_time_coords_native_ptr, ele=f_ele)
+  call calc_bunch_params_z_slice(f_bunch, f_bunch_params, f_slice_bounds, f_err, &
+      f_print_err_native_ptr, f_is_time_coords_native_ptr, f_ele)
 
 end subroutine
 subroutine fortran_calc_bunch_sigma_matrix_etc (particle, charge, bunch_params, is_time_coords, &
@@ -3294,8 +3154,8 @@ subroutine fortran_calc_bunch_sigma_matrix_etc (particle, charge, bunch_params, 
   endif
   ! inout: f_ele 0D_NOT_type
   if (c_associated(ele))   call c_f_pointer(ele, f_ele)
-  call calc_bunch_sigma_matrix_etc(particle=f_particle%data, charge=f_charge%data, &
-      bunch_params=f_bunch_params, is_time_coords=f_is_time_coords_native_ptr, ele=f_ele)
+  call calc_bunch_sigma_matrix_etc(f_particle%data, f_charge%data, f_bunch_params, &
+      f_is_time_coords_native_ptr, f_ele)
 
   ! out: f_bunch_params 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -3349,9 +3209,8 @@ subroutine fortran_calc_emittances_and_twiss_from_sigma_matrix (sigma_mat, bunch
   else
     f_print_err_native_ptr => null()
   endif
-  call calc_emittances_and_twiss_from_sigma_matrix(sigma_mat=f_sigma_mat, &
-      bunch_params=f_bunch_params, error=f_error, print_err=f_print_err_native_ptr, &
-      n_mat=f_n_mat)
+  call calc_emittances_and_twiss_from_sigma_matrix(f_sigma_mat, f_bunch_params, f_error, &
+      f_print_err_native_ptr, f_n_mat)
 
   ! out: f_bunch_params 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -3378,7 +3237,7 @@ subroutine fortran_calc_spin_params (bunch, bunch_params) bind(c)
   ! out: f_bunch_params 0D_NOT_type
   if (.not. c_associated(bunch_params)) return
   call c_f_pointer(bunch_params, f_bunch_params)
-  call calc_spin_params(bunch=f_bunch, bunch_params=f_bunch_params)
+  call calc_spin_params(f_bunch, f_bunch_params)
 
   ! out: f_bunch_params 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -3418,8 +3277,7 @@ subroutine fortran_calc_super_slave_key (lord1, lord2, slave, create_jumbo_slave
   else
     f_create_jumbo_slave_native_ptr => null()
   endif
-  call calc_super_slave_key(lord1=f_lord1, lord2=f_lord2, slave=f_slave, &
-      create_jumbo_slave=f_create_jumbo_slave_native_ptr)
+  call calc_super_slave_key(f_lord1, f_lord2, f_slave, f_create_jumbo_slave_native_ptr)
 
   ! out: f_slave 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -3452,8 +3310,13 @@ subroutine fortran_calc_wall_radius (v, cos_ang, sin_ang, r_wall, dr_dtheta, ix_
   f_cos_ang = cos_ang
   ! in: f_sin_ang 0D_NOT_real
   f_sin_ang = sin_ang
-  call calc_wall_radius(v=f_v%data, cos_ang=f_cos_ang, sin_ang=f_sin_ang, r_wall=f_r_wall, &
-      dr_dtheta=f_dr_dtheta, ix_vertex=f_ix_vertex)
+  ! out: f_ix_vertex 0D_NOT_integer
+  if (c_associated(ix_vertex)) then
+    call c_f_pointer(ix_vertex, f_ix_vertex_ptr)
+  else
+    f_ix_vertex_ptr => null()
+  endif
+  call calc_wall_radius(f_v%data, f_cos_ang, f_sin_ang, f_r_wall, f_dr_dtheta, f_ix_vertex)
 
   ! out: f_r_wall 0D_NOT_real
   call c_f_pointer(r_wall, f_r_wall_ptr)
@@ -3475,7 +3338,7 @@ subroutine fortran_calc_z_tune (branch) bind(c)
   ! inout: f_branch 0D_NOT_type
   if (.not. c_associated(branch)) return
   call c_f_pointer(branch, f_branch)
-  call calc_z_tune(branch=f_branch)
+  call calc_z_tune(f_branch)
 
 end subroutine
 subroutine fortran_canonical_to_angle_coords (orbit, coord_type) bind(c)
@@ -3502,7 +3365,7 @@ subroutine fortran_canonical_to_angle_coords (orbit, coord_type) bind(c)
   else
     f_coord_type_call_ptr => null()
   endif
-  call canonical_to_angle_coords(orbit=f_orbit, coord_type=f_coord_type_call_ptr)
+  call canonical_to_angle_coords(f_orbit, f_coord_type_call_ptr)
 
 end subroutine
 subroutine fortran_cbar_to_c (cbar_mat, a, b, c_mat) bind(c)
@@ -3535,10 +3398,10 @@ subroutine fortran_cbar_to_c (cbar_mat, a, b, c_mat) bind(c)
   ! in: f_b 0D_NOT_type
   if (.not. c_associated(b)) return
   call c_f_pointer(b, f_b)
-  call cbar_to_c(cbar_mat=f_cbar_mat, a=f_a, b=f_b, c_mat=f_c_mat)
+  call cbar_to_c(f_cbar_mat, f_a, f_b, f_c_mat)
 
   ! out: f_c_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_c_mat', c_name='c_mat', python_name='c_mat', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=668, definition='real(rp) cbar_mat(2,2), c_mat(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='c_mat', comment='', default=None), intent='out', description='C matrix.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_c_mat', c_name='c_mat', python_name='c_mat', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=677, definition='real(rp) cbar_mat(2,2), c_mat(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='c_mat', comment='', default=None), intent='out', description='C matrix.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_check_aperture_limit (orb, ele, particle_at, param, old_orb, check_momentum) &
     bind(c)
@@ -3584,8 +3447,8 @@ subroutine fortran_check_aperture_limit (orb, ele, particle_at, param, old_orb, 
   else
     f_check_momentum_native_ptr => null()
   endif
-  call check_aperture_limit(orb=f_orb, ele=f_ele, particle_at=f_particle_at, param=f_param, &
-      old_orb=f_old_orb, check_momentum=f_check_momentum_native_ptr)
+  call check_aperture_limit(f_orb, f_ele, f_particle_at, f_param, f_old_orb, &
+      f_check_momentum_native_ptr)
 
 end subroutine
 subroutine fortran_check_controller_controls (ele_key, contrl, name, err) bind(c)
@@ -3613,8 +3476,7 @@ subroutine fortran_check_controller_controls (ele_key, contrl, name, err) bind(c
   if (.not. c_associated(name)) return
   call c_f_pointer(name, f_name_ptr, [huge(0)])
   call to_f_str(f_name_ptr, f_name)
-  call check_controller_controls(ele_key=f_ele_key, contrl=f_contrl%data, name=f_name, &
-      err=f_err)
+  call check_controller_controls(f_ele_key, f_contrl%data, f_name, f_err)
 
   ! out: f_err 0D_NOT_logical
   call c_f_pointer(err, f_err_ptr)
@@ -3667,8 +3529,8 @@ subroutine fortran_check_for_superimpose_problem (branch, super_ele, err_flag, r
   else
     f_wrap_native_ptr => null()
   endif
-  call check_for_superimpose_problem(branch=f_branch, super_ele=f_super_ele, &
-      err_flag=f_err_flag_native_ptr, ref_ele=f_ref_ele, wrap=f_wrap_native_ptr)
+  call check_for_superimpose_problem(f_branch, f_super_ele, f_err_flag_native_ptr, f_ref_ele, &
+      f_wrap_native_ptr)
 
   ! inout: f_err_flag 0D_NOT_logical
   if (c_associated(err_flag)) then
@@ -3716,6 +3578,12 @@ subroutine fortran_check_if_s_in_bounds (branch, s, err_flag, translated_s, prin
   call c_f_pointer(branch, f_branch)
   ! in: f_s 0D_NOT_real
   f_s = s
+  ! out: f_translated_s 0D_NOT_real
+  if (c_associated(translated_s)) then
+    call c_f_pointer(translated_s, f_translated_s_ptr)
+  else
+    f_translated_s_ptr => null()
+  endif
   ! in: f_print_err 0D_NOT_logical
   if (c_associated(print_err)) then
     call c_f_pointer(print_err, f_print_err_ptr)
@@ -3724,8 +3592,7 @@ subroutine fortran_check_if_s_in_bounds (branch, s, err_flag, translated_s, prin
   else
     f_print_err_native_ptr => null()
   endif
-  call check_if_s_in_bounds(branch=f_branch, s=f_s, err_flag=f_err_flag, &
-      translated_s=f_translated_s, print_err=f_print_err_native_ptr)
+  call check_if_s_in_bounds(f_branch, f_s, f_err_flag, f_translated_s, f_print_err_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -3772,8 +3639,14 @@ subroutine fortran_choose_quads_for_set_tune (branch, dk1, eles, mask, err_flag)
   else
     f_mask_call_ptr => null()
   endif
-  call choose_quads_for_set_tune(branch=f_branch, dk1=f_dk1%data, eles=f_eles%data, &
-      mask=f_mask_call_ptr, err_flag=f_err_flag)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  call choose_quads_for_set_tune(f_branch, f_dk1%data, f_eles%data, f_mask_call_ptr, &
+      f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   ! no output conversion for f_err_flag
@@ -3830,6 +3703,12 @@ subroutine fortran_chrom_calc (lat, delta_e, chrom_a, chrom_b, err_flag, pz, low
   else
     f_delta_e_ptr => null()
   endif
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
   ! in: f_pz 0D_NOT_real
   if (c_associated(pz)) then
     call c_f_pointer(pz, f_pz_ptr)
@@ -3852,10 +3731,8 @@ subroutine fortran_chrom_calc (lat, delta_e, chrom_a, chrom_b, err_flag, pz, low
   endif
   ! in: f_orb0 0D_NOT_type
   if (c_associated(orb0))   call c_f_pointer(orb0, f_orb0)
-  call chrom_calc(lat=f_lat, delta_e=f_delta_e_ptr, chrom_a=f_chrom_a, chrom_b=f_chrom_b, &
-      err_flag=f_err_flag, pz=f_pz_ptr, low_E_lat=f_low_E_lat, high_E_lat=f_high_E_lat, &
-      low_E_orb=f_low_E_orb%data, high_E_orb=f_high_E_orb%data, ix_branch=f_ix_branch_ptr, &
-      orb0=f_orb0)
+  call chrom_calc(f_lat, f_delta_e_ptr, f_chrom_a, f_chrom_b, f_err_flag, f_pz_ptr, &
+      f_low_E_lat, f_high_E_lat, f_low_E_orb%data, f_high_E_orb%data, f_ix_branch_ptr, f_orb0)
 
   ! inout: f_delta_e 0D_NOT_real
   ! no output conversion for f_delta_e
@@ -3913,8 +3790,7 @@ subroutine fortran_chrom_tune (lat, delta_e, target_x, target_y, err_tol, err_fl
   f_target_y = target_y
   ! in: f_err_tol 0D_NOT_real
   f_err_tol = err_tol
-  call chrom_tune(lat=f_lat, delta_e=f_delta_e_ptr, target_x=f_target_x, target_y=f_target_y, &
-      err_tol=f_err_tol, err_flag=f_err_flag)
+  call chrom_tune(f_lat, f_delta_e_ptr, f_target_x, f_target_y, f_err_tol, f_err_flag)
 
   ! inout: f_delta_e 0D_NOT_real
   ! no output conversion for f_delta_e
@@ -3935,7 +3811,7 @@ subroutine fortran_classical_radius (species, radius) bind(c)
   ! ** End of parameters **
   ! in: f_species 0D_NOT_integer
   f_species = species
-  f_radius = classical_radius(species=f_species)
+  f_radius = classical_radius(f_species)
 
   ! out: f_radius 0D_NOT_real
   call c_f_pointer(radius, f_radius_ptr)
@@ -3952,7 +3828,7 @@ subroutine fortran_clear_lat_1turn_mats (lat) bind(c)
   ! out: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call clear_lat_1turn_mats(lat=f_lat)
+  call clear_lat_1turn_mats(f_lat)
 
   ! out: f_lat 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -3968,7 +3844,7 @@ subroutine fortran_clear_taylor_maps_from_elements (lat) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call clear_taylor_maps_from_elements(lat=f_lat)
+  call clear_taylor_maps_from_elements(f_lat)
 
 end subroutine
 subroutine fortran_closed_orbit_calc (lat, closed_orb, i_dim, direction, ix_branch, err_flag, &
@@ -4028,6 +3904,12 @@ subroutine fortran_closed_orbit_calc (lat, closed_orb, i_dim, direction, ix_bran
   else
     f_ix_branch_ptr => null()
   endif
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
   ! in: f_print_err 0D_NOT_logical
   if (c_associated(print_err)) then
     call c_f_pointer(print_err, f_print_err_ptr)
@@ -4036,9 +3918,8 @@ subroutine fortran_closed_orbit_calc (lat, closed_orb, i_dim, direction, ix_bran
   else
     f_print_err_native_ptr => null()
   endif
-  call closed_orbit_calc(lat=f_lat, closed_orb=f_closed_orb%data, i_dim=f_i_dim_ptr, &
-      direction=f_direction_ptr, ix_branch=f_ix_branch_ptr, err_flag=f_err_flag, &
-      print_err=f_print_err_native_ptr)
+  call closed_orbit_calc(f_lat, f_closed_orb%data, f_i_dim_ptr, f_direction_ptr, &
+      f_ix_branch_ptr, f_err_flag, f_print_err_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   ! no output conversion for f_err_flag
@@ -4083,9 +3964,14 @@ subroutine fortran_closed_orbit_from_tracking (lat, closed_orb, i_dim, eps_rel, 
   if (c_associated(eps_abs))   call c_f_pointer(eps_abs, f_eps_abs)
   ! in: f_init_guess 0D_NOT_type
   if (c_associated(init_guess))   call c_f_pointer(init_guess, f_init_guess)
-  call closed_orbit_from_tracking(lat=f_lat, closed_orb=f_closed_orb%data, i_dim=f_i_dim, &
-      eps_rel=f_eps_rel%data, eps_abs=f_eps_abs%data, init_guess=f_init_guess, &
-      err_flag=f_err_flag)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  call closed_orbit_from_tracking(f_lat, f_closed_orb%data, f_i_dim, f_eps_rel%data, &
+      f_eps_abs%data, f_init_guess, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   ! no output conversion for f_err_flag
@@ -4108,7 +3994,7 @@ subroutine fortran_cmplx_re_str (cmp, str_out) bind(c)
   else
     f_cmp_ptr => null()
   endif
-  f_str_out = cmplx_re_str(cmp=f_cmp_ptr)
+  f_str_out = cmplx_re_str(f_cmp_ptr)
 
   ! inout: f_cmp 0D_NOT_complex
   ! no output conversion for f_cmp
@@ -4131,7 +4017,7 @@ subroutine fortran_combine_consecutive_elements (lat, error) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call combine_consecutive_elements(lat=f_lat, error=f_error)
+  call combine_consecutive_elements(f_lat, f_error)
 
   ! out: f_error 0D_NOT_logical
   call c_f_pointer(error, f_error_ptr)
@@ -4148,8 +4034,137 @@ subroutine fortran_complex_taylor_clean (complex_taylor) bind(c)
   ! inout: f_complex_taylor 0D_NOT_type
   if (.not. c_associated(complex_taylor)) return
   call c_f_pointer(complex_taylor, f_complex_taylor)
-  call complex_taylor_clean(complex_taylor=f_complex_taylor)
+  call complex_taylor_clean(f_complex_taylor)
 
+end subroutine
+subroutine fortran_complex_taylor_coef1 (complex_taylor, exp, coef) bind(c)
+
+  use bmad_struct, only: complex_taylor_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: complex_taylor  ! 0D_NOT_type
+  type(complex_taylor_struct), pointer :: f_complex_taylor
+  type(c_ptr), intent(in), value :: exp
+  type(integer_container_alloc), pointer :: f_exp
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: coef  ! 0D_NOT_complex
+  complex(rp) :: f_coef
+  complex(c_double_complex), pointer :: f_coef_ptr
+  ! ** End of parameters **
+  ! in: f_complex_taylor 0D_NOT_type
+  if (.not. c_associated(complex_taylor)) return
+  call c_f_pointer(complex_taylor, f_complex_taylor)
+  !! container general array (1D_ALLOC_integer)
+  if (c_associated(exp))   call c_f_pointer(exp, f_exp)
+  f_coef = complex_taylor_coef(f_complex_taylor, f_exp%data)
+
+  ! out: f_coef 0D_NOT_complex
+  call c_f_pointer(coef, f_coef_ptr)
+  f_coef_ptr = f_coef
+end subroutine
+subroutine fortran_complex_taylor_coef2 (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9, &
+    coef) bind(c)
+
+  use bmad_struct, only: complex_taylor_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: complex_taylor  ! 0D_NOT_type
+  type(complex_taylor_struct), pointer :: f_complex_taylor
+  type(c_ptr), intent(in), value :: i1  ! 0D_NOT_integer
+  integer(c_int) :: f_i1
+  integer(c_int), pointer :: f_i1_ptr
+  type(c_ptr), intent(in), value :: i2  ! 0D_NOT_integer
+  integer(c_int) :: f_i2
+  integer(c_int), pointer :: f_i2_ptr
+  type(c_ptr), intent(in), value :: i3  ! 0D_NOT_integer
+  integer(c_int) :: f_i3
+  integer(c_int), pointer :: f_i3_ptr
+  type(c_ptr), intent(in), value :: i4  ! 0D_NOT_integer
+  integer(c_int) :: f_i4
+  integer(c_int), pointer :: f_i4_ptr
+  type(c_ptr), intent(in), value :: i5  ! 0D_NOT_integer
+  integer(c_int) :: f_i5
+  integer(c_int), pointer :: f_i5_ptr
+  type(c_ptr), intent(in), value :: i6  ! 0D_NOT_integer
+  integer(c_int) :: f_i6
+  integer(c_int), pointer :: f_i6_ptr
+  type(c_ptr), intent(in), value :: i7  ! 0D_NOT_integer
+  integer(c_int) :: f_i7
+  integer(c_int), pointer :: f_i7_ptr
+  type(c_ptr), intent(in), value :: i8  ! 0D_NOT_integer
+  integer(c_int) :: f_i8
+  integer(c_int), pointer :: f_i8_ptr
+  type(c_ptr), intent(in), value :: i9  ! 0D_NOT_integer
+  integer(c_int) :: f_i9
+  integer(c_int), pointer :: f_i9_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: coef  ! 0D_NOT_complex
+  complex(rp) :: f_coef
+  complex(c_double_complex), pointer :: f_coef_ptr
+  ! ** End of parameters **
+  ! in: f_complex_taylor 0D_NOT_type
+  if (.not. c_associated(complex_taylor)) return
+  call c_f_pointer(complex_taylor, f_complex_taylor)
+  ! in: f_i1 0D_NOT_integer
+  if (c_associated(i1)) then
+    call c_f_pointer(i1, f_i1_ptr)
+  else
+    f_i1_ptr => null()
+  endif
+  ! in: f_i2 0D_NOT_integer
+  if (c_associated(i2)) then
+    call c_f_pointer(i2, f_i2_ptr)
+  else
+    f_i2_ptr => null()
+  endif
+  ! in: f_i3 0D_NOT_integer
+  if (c_associated(i3)) then
+    call c_f_pointer(i3, f_i3_ptr)
+  else
+    f_i3_ptr => null()
+  endif
+  ! in: f_i4 0D_NOT_integer
+  if (c_associated(i4)) then
+    call c_f_pointer(i4, f_i4_ptr)
+  else
+    f_i4_ptr => null()
+  endif
+  ! in: f_i5 0D_NOT_integer
+  if (c_associated(i5)) then
+    call c_f_pointer(i5, f_i5_ptr)
+  else
+    f_i5_ptr => null()
+  endif
+  ! in: f_i6 0D_NOT_integer
+  if (c_associated(i6)) then
+    call c_f_pointer(i6, f_i6_ptr)
+  else
+    f_i6_ptr => null()
+  endif
+  ! in: f_i7 0D_NOT_integer
+  if (c_associated(i7)) then
+    call c_f_pointer(i7, f_i7_ptr)
+  else
+    f_i7_ptr => null()
+  endif
+  ! in: f_i8 0D_NOT_integer
+  if (c_associated(i8)) then
+    call c_f_pointer(i8, f_i8_ptr)
+  else
+    f_i8_ptr => null()
+  endif
+  ! in: f_i9 0D_NOT_integer
+  if (c_associated(i9)) then
+    call c_f_pointer(i9, f_i9_ptr)
+  else
+    f_i9_ptr => null()
+  endif
+  f_coef = complex_taylor_coef(f_complex_taylor, f_i1_ptr, f_i2_ptr, f_i3_ptr, f_i4_ptr, &
+      f_i5_ptr, f_i6_ptr, f_i7_ptr, f_i8_ptr, f_i9_ptr)
+
+  ! out: f_coef 0D_NOT_complex
+  call c_f_pointer(coef, f_coef_ptr)
+  f_coef_ptr = f_coef
 end subroutine
 subroutine fortran_complex_taylor_equal_complex_taylor (complex_taylor1, complex_taylor2) &
     bind(c)
@@ -4159,21 +4174,18 @@ subroutine fortran_complex_taylor_equal_complex_taylor (complex_taylor1, complex
   ! ** In parameters **
   type(c_ptr), value :: complex_taylor2  ! 0D_NOT_type
   type(complex_taylor_struct), pointer :: f_complex_taylor2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: complex_taylor1  ! 0D_NOT_type
   type(complex_taylor_struct), pointer :: f_complex_taylor1
   ! ** End of parameters **
-  ! out: f_complex_taylor1 0D_NOT_type
+  ! inout: f_complex_taylor1 0D_NOT_type
   if (.not. c_associated(complex_taylor1)) return
   call c_f_pointer(complex_taylor1, f_complex_taylor1)
   ! in: f_complex_taylor2 0D_NOT_type
   if (.not. c_associated(complex_taylor2)) return
   call c_f_pointer(complex_taylor2, f_complex_taylor2)
-  call complex_taylor_equal_complex_taylor(complex_taylor1=f_complex_taylor1, &
-      complex_taylor2=f_complex_taylor2)
+  call complex_taylor_equal_complex_taylor(f_complex_taylor1, f_complex_taylor2)
 
-  ! out: f_complex_taylor1 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_complex_taylor_exponent_index (expn, index) bind(c)
 
@@ -4194,7 +4206,7 @@ subroutine fortran_complex_taylor_exponent_index (expn, index) bind(c)
   else
     f_expn_ptr => null()
   endif
-  f_index = complex_taylor_exponent_index(expn=f_expn)
+  f_index = complex_taylor_exponent_index(f_expn)
 
   ! out: f_index 0D_NOT_integer
   call c_f_pointer(index, f_index_ptr)
@@ -4210,7 +4222,7 @@ subroutine fortran_complex_taylor_make_unit (complex_taylor) bind(c)
   ! ** End of parameters **
   !! container type array (1D_ALLOC_type)
   if (c_associated(complex_taylor))   call c_f_pointer(complex_taylor, f_complex_taylor)
-  call complex_taylor_make_unit(complex_taylor=f_complex_taylor%data)
+  call complex_taylor_make_unit(f_complex_taylor%data)
 
 end subroutine
 subroutine fortran_complex_taylor_to_mat6 (a_complex_taylor, r_in, vec0, mat6, r_out) bind(c)
@@ -4238,8 +4250,7 @@ subroutine fortran_complex_taylor_to_mat6 (a_complex_taylor, r_in, vec0, mat6, r
   if (c_associated(r_in))   call c_f_pointer(r_in, f_r_in)
   !! container general array (1D_ALLOC_complex)
   if (c_associated(r_out))   call c_f_pointer(r_out, f_r_out)
-  call complex_taylor_to_mat6(a_complex_taylor=f_a_complex_taylor, r_in=f_r_in%data, &
-      vec0=f_vec0, mat6=f_mat6, r_out=f_r_out%data)
+  call complex_taylor_to_mat6(f_a_complex_taylor, f_r_in%data, f_vec0, f_mat6, f_r_out%data)
 
   ! out: f_vec0 1D_NOT_complex
   if (c_associated(vec0)) then
@@ -4257,7 +4268,7 @@ subroutine fortran_complex_taylors_equal_complex_taylors (complex_taylor1, compl
   ! ** In parameters **
   type(c_ptr), intent(in), value :: complex_taylor2
   type(complex_taylor_struct_container_alloc), pointer :: f_complex_taylor2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: complex_taylor1
   type(complex_taylor_struct_container_alloc), pointer :: f_complex_taylor1
   ! ** End of parameters **
@@ -4265,8 +4276,7 @@ subroutine fortran_complex_taylors_equal_complex_taylors (complex_taylor1, compl
   if (c_associated(complex_taylor1))   call c_f_pointer(complex_taylor1, f_complex_taylor1)
   !! container type array (1D_ALLOC_type)
   if (c_associated(complex_taylor2))   call c_f_pointer(complex_taylor2, f_complex_taylor2)
-  call complex_taylors_equal_complex_taylors(complex_taylor1=f_complex_taylor1%data, &
-      complex_taylor2=f_complex_taylor2%data)
+  call complex_taylors_equal_complex_taylors(f_complex_taylor1%data, f_complex_taylor2%data)
 
 end subroutine
 subroutine fortran_compute_slave_coupler (slave) bind(c)
@@ -4280,7 +4290,7 @@ subroutine fortran_compute_slave_coupler (slave) bind(c)
   ! inout: f_slave 0D_NOT_type
   if (.not. c_associated(slave)) return
   call c_f_pointer(slave, f_slave)
-  call compute_slave_coupler(slave=f_slave)
+  call compute_slave_coupler(f_slave)
 
 end subroutine
 subroutine fortran_concat_ele_taylor (orb_taylor, ele, err_flag, spin_taylor) bind(c)
@@ -4306,8 +4316,7 @@ subroutine fortran_concat_ele_taylor (orb_taylor, ele, err_flag, spin_taylor) bi
   f_err_flag = err_flag
   !! container type array (1D_ALLOC_type)
   if (c_associated(spin_taylor))   call c_f_pointer(spin_taylor, f_spin_taylor)
-  call concat_ele_taylor(orb_taylor=f_orb_taylor%data, ele=f_ele, err_flag=f_err_flag, &
-      spin_taylor=f_spin_taylor%data)
+  call concat_ele_taylor(f_orb_taylor%data, f_ele, f_err_flag, f_spin_taylor%data)
 
 end subroutine
 subroutine fortran_concat_taylor (taylor1, taylor2, taylor3) bind(c)
@@ -4328,7 +4337,7 @@ subroutine fortran_concat_taylor (taylor1, taylor2, taylor3) bind(c)
   if (c_associated(taylor2))   call c_f_pointer(taylor2, f_taylor2)
   !! container type array (1D_ALLOC_type)
   if (c_associated(taylor3))   call c_f_pointer(taylor3, f_taylor3)
-  call concat_taylor(taylor1=f_taylor1%data, taylor2=f_taylor2%data, taylor3=f_taylor3%data)
+  call concat_taylor(f_taylor1%data, f_taylor2%data, f_taylor3%data)
 
 end subroutine
 subroutine fortran_concat_transfer_mat (mat_1, vec_1, mat_0, vec_0, mat_out, vec_out) bind(c)
@@ -4391,8 +4400,7 @@ subroutine fortran_concat_transfer_mat (mat_1, vec_1, mat_0, vec_0, mat_out, vec
   else
     f_vec_out_ptr => null()
   endif
-  call concat_transfer_mat(mat_1=f_mat_1, vec_1=f_vec_1, mat_0=f_mat_0, vec_0=f_vec_0, &
-      mat_out=f_mat_out, vec_out=f_vec_out)
+  call concat_transfer_mat(f_mat_1, f_vec_1, f_mat_0, f_vec_0, f_mat_out, f_vec_out)
 
   ! out: f_mat_out 2D_NOT_real
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat_out', c_name='mat_out', python_name='mat_out', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=564, definition='real(rp) mat_1(6,6), vec_1(6), mat_0(6,6), vec_0(6), mat_out(6,6), vec_out(6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat_out', comment='', default=None), intent='out', description='Map from s0 to s2', doc_data_type='float', doc_is_optional=False)
@@ -4425,7 +4433,7 @@ subroutine fortran_control_bookkeeper (lat, ele, err_flag) bind(c)
   else
     f_err_flag_native_ptr => null()
   endif
-  call control_bookkeeper(lat=f_lat, ele=f_ele, err_flag=f_err_flag_native_ptr)
+  call control_bookkeeper(f_lat, f_ele, f_err_flag_native_ptr)
 
 end subroutine
 subroutine fortran_convert_bend_exact_multipole (g, out_type, an, bn) bind(c)
@@ -4462,7 +4470,7 @@ subroutine fortran_convert_bend_exact_multipole (g, out_type, an, bn) bind(c)
   else
     f_bn_ptr => null()
   endif
-  call convert_bend_exact_multipole(g=f_g, out_type=f_out_type, an=f_an, bn=f_bn)
+  call convert_bend_exact_multipole(f_g, f_out_type, f_an, f_bn)
 
 end subroutine
 subroutine fortran_convert_coords (in_type_str, coord_in, ele, out_type_str, coord_out, &
@@ -4517,8 +4525,14 @@ subroutine fortran_convert_coords (in_type_str, coord_in, ele, out_type_str, coo
     return
   endif
   call c_f_pointer(coord_out, f_coord_out)
-  call convert_coords(in_type_str=f_in_type_str, coord_in=f_coord_in, ele=f_ele, &
-      out_type_str=f_out_type_str, coord_out=f_coord_out, err_flag=f_err_flag)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  call convert_coords(f_in_type_str, f_coord_in, f_ele, f_out_type_str, f_coord_out, &
+      f_err_flag)
 
   ! out: f_out_type_str 0D_NOT_character
   call c_f_pointer(out_type_str, f_out_type_str_ptr, [len_trim(f_out_type_str) + 1]) ! output-only string
@@ -4580,9 +4594,8 @@ subroutine fortran_convert_field_ele_to_lab (ele, s_here, forward_transform, fie
   else
     f_calc_potential_native_ptr => null()
   endif
-  call convert_field_ele_to_lab(ele=f_ele, s_here=f_s_here, &
-      forward_transform=f_forward_transform, field=f_field, &
-      calc_dfield=f_calc_dfield_native_ptr, calc_potential=f_calc_potential_native_ptr)
+  call convert_field_ele_to_lab(f_ele, f_s_here, f_forward_transform, f_field, &
+      f_calc_dfield_native_ptr, f_calc_potential_native_ptr)
 
   ! out: f_field 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -4637,8 +4650,8 @@ subroutine fortran_convert_local_cartesian_to_local_curvilinear (x, z, g, xout, 
   else
     f_sout_ptr => null()
   endif
-  call convert_local_cartesian_to_local_curvilinear(x=f_x_ptr, z=f_z_ptr, g=f_g_ptr, &
-      xout=f_xout_ptr, sout=f_sout_ptr)
+  call convert_local_cartesian_to_local_curvilinear(f_x_ptr, f_z_ptr, f_g_ptr, f_xout_ptr, &
+      f_sout_ptr)
 
   ! inout: f_x 0D_NOT_real
   ! no output conversion for f_x
@@ -4701,8 +4714,8 @@ subroutine fortran_convert_local_curvilinear_to_local_cartesian (x, s, g, xout, 
   else
     f_zout_ptr => null()
   endif
-  call convert_local_curvilinear_to_local_cartesian(x=f_x_ptr, s=f_s_ptr, g=f_g_ptr, &
-      xout=f_xout_ptr, zout=f_zout_ptr)
+  call convert_local_curvilinear_to_local_cartesian(f_x_ptr, f_s_ptr, f_g_ptr, f_xout_ptr, &
+      f_zout_ptr)
 
   ! inout: f_x 0D_NOT_real
   ! no output conversion for f_x
@@ -4735,8 +4748,7 @@ subroutine fortran_convert_particle_coordinates_s_to_t (particle, s_body, orient
   f_s_body = s_body
   ! in: f_orientation 0D_NOT_integer
   f_orientation = orientation
-  call convert_particle_coordinates_s_to_t(particle=f_particle, s_body=f_s_body, &
-      orientation=f_orientation)
+  call convert_particle_coordinates_s_to_t(f_particle, f_s_body, f_orientation)
 
 end subroutine
 subroutine fortran_convert_particle_coordinates_t_to_s (particle, ele, s_body, &
@@ -4766,6 +4778,12 @@ subroutine fortran_convert_particle_coordinates_t_to_s (particle, ele, s_body, &
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
+  ! out: f_s_body 0D_NOT_real
+  if (c_associated(s_body)) then
+    call c_f_pointer(s_body, f_s_body_ptr)
+  else
+    f_s_body_ptr => null()
+  endif
   ! in: f_use_downstream_p0c 0D_NOT_logical
   if (c_associated(use_downstream_p0c)) then
     call c_f_pointer(use_downstream_p0c, f_use_downstream_p0c_ptr)
@@ -4774,8 +4792,8 @@ subroutine fortran_convert_particle_coordinates_t_to_s (particle, ele, s_body, &
   else
     f_use_downstream_p0c_native_ptr => null()
   endif
-  call convert_particle_coordinates_t_to_s(particle=f_particle, ele=f_ele, s_body=f_s_body, &
-      use_downstream_p0c=f_use_downstream_p0c_native_ptr)
+  call convert_particle_coordinates_t_to_s(f_particle, f_ele, f_s_body, &
+      f_use_downstream_p0c_native_ptr)
 
   ! out: f_s_body 0D_NOT_real
   ! no output conversion for f_s_body
@@ -4816,8 +4834,50 @@ subroutine fortran_convert_pc_to (pc, particle, E_tot, gamma, kinetic, beta, brh
   f_pc = pc
   ! in: f_particle 0D_NOT_integer
   f_particle = particle
-  call convert_pc_to(pc=f_pc, particle=f_particle, E_tot=f_E_tot, gamma=f_gamma, &
-      kinetic=f_kinetic, beta=f_beta, brho=f_brho, beta1=f_beta1, err_flag=f_err_flag)
+  ! out: f_E_tot 0D_NOT_real
+  if (c_associated(E_tot)) then
+    call c_f_pointer(E_tot, f_E_tot_ptr)
+  else
+    f_E_tot_ptr => null()
+  endif
+  ! out: f_gamma 0D_NOT_real
+  if (c_associated(gamma)) then
+    call c_f_pointer(gamma, f_gamma_ptr)
+  else
+    f_gamma_ptr => null()
+  endif
+  ! out: f_kinetic 0D_NOT_real
+  if (c_associated(kinetic)) then
+    call c_f_pointer(kinetic, f_kinetic_ptr)
+  else
+    f_kinetic_ptr => null()
+  endif
+  ! out: f_beta 0D_NOT_real
+  if (c_associated(beta)) then
+    call c_f_pointer(beta, f_beta_ptr)
+  else
+    f_beta_ptr => null()
+  endif
+  ! out: f_brho 0D_NOT_real
+  if (c_associated(brho)) then
+    call c_f_pointer(brho, f_brho_ptr)
+  else
+    f_brho_ptr => null()
+  endif
+  ! out: f_beta1 0D_NOT_real
+  if (c_associated(beta1)) then
+    call c_f_pointer(beta1, f_beta1_ptr)
+  else
+    f_beta1_ptr => null()
+  endif
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  call convert_pc_to(f_pc, f_particle, f_E_tot, f_gamma, f_kinetic, f_beta, f_brho, f_beta1, &
+      f_err_flag)
 
   ! out: f_E_tot 0D_NOT_real
   ! no output conversion for f_E_tot
@@ -4875,6 +4935,48 @@ subroutine fortran_convert_total_energy_to (E_tot, particle, gamma, kinetic, bet
   f_E_tot = E_tot
   ! in: f_particle 0D_NOT_integer
   f_particle = particle
+  ! out: f_gamma 0D_NOT_real
+  if (c_associated(gamma)) then
+    call c_f_pointer(gamma, f_gamma_ptr)
+  else
+    f_gamma_ptr => null()
+  endif
+  ! out: f_kinetic 0D_NOT_real
+  if (c_associated(kinetic)) then
+    call c_f_pointer(kinetic, f_kinetic_ptr)
+  else
+    f_kinetic_ptr => null()
+  endif
+  ! out: f_beta 0D_NOT_real
+  if (c_associated(beta)) then
+    call c_f_pointer(beta, f_beta_ptr)
+  else
+    f_beta_ptr => null()
+  endif
+  ! out: f_pc 0D_NOT_real
+  if (c_associated(pc)) then
+    call c_f_pointer(pc, f_pc_ptr)
+  else
+    f_pc_ptr => null()
+  endif
+  ! out: f_brho 0D_NOT_real
+  if (c_associated(brho)) then
+    call c_f_pointer(brho, f_brho_ptr)
+  else
+    f_brho_ptr => null()
+  endif
+  ! out: f_beta1 0D_NOT_real
+  if (c_associated(beta1)) then
+    call c_f_pointer(beta1, f_beta1_ptr)
+  else
+    f_beta1_ptr => null()
+  endif
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
   ! in: f_print_err 0D_NOT_logical
   if (c_associated(print_err)) then
     call c_f_pointer(print_err, f_print_err_ptr)
@@ -4883,9 +4985,8 @@ subroutine fortran_convert_total_energy_to (E_tot, particle, gamma, kinetic, bet
   else
     f_print_err_native_ptr => null()
   endif
-  call convert_total_energy_to(E_tot=f_E_tot, particle=f_particle, gamma=f_gamma, &
-      kinetic=f_kinetic, beta=f_beta, pc=f_pc, brho=f_brho, beta1=f_beta1, err_flag=f_err_flag, &
-      print_err=f_print_err_native_ptr)
+  call convert_total_energy_to(f_E_tot, f_particle, f_gamma, f_kinetic, f_beta, f_pc, f_brho, &
+      f_beta1, f_err_flag, f_print_err_native_ptr)
 
   ! out: f_gamma 0D_NOT_real
   ! no output conversion for f_gamma
@@ -4927,8 +5028,7 @@ subroutine fortran_converter_distribution_parser (ele, delim, delim_found, err_f
     return
   endif
   call c_f_pointer(ele, f_ele)
-  call converter_distribution_parser(ele=f_ele, delim=f_delim, delim_found=f_delim_found, &
-      err_flag=f_err_flag)
+  call converter_distribution_parser(f_ele, f_delim, f_delim_found, f_err_flag)
 
   ! out: f_delim 0D_NOT_character
   call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1]) ! output-only string
@@ -4957,7 +5057,7 @@ subroutine fortran_coord_equal_coord (coord1, coord2) bind(c)
   ! in: f_coord2 0D_NOT_type
   if (.not. c_associated(coord2)) return
   call c_f_pointer(coord2, f_coord2)
-  call coord_equal_coord(coord1=f_coord1, coord2=f_coord2)
+  call coord_equal_coord(f_coord1, f_coord2)
 
   ! out: f_coord1 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -4989,7 +5089,7 @@ subroutine fortran_coord_state_name (coord_state, one_word, state_str) bind(c)
   else
     f_one_word_native_ptr => null()
   endif
-  f_state_str = coord_state_name(coord_state=f_coord_state, one_word=f_one_word_native_ptr)
+  f_state_str = coord_state_name(f_coord_state, f_one_word_native_ptr)
 
   ! inout: f_one_word 0D_NOT_logical
   if (c_associated(one_word)) then
@@ -5045,8 +5145,8 @@ subroutine fortran_coords_body_to_local (body_position, ele, w_mat, calculate_an
   else
     f_calculate_angles_native_ptr => null()
   endif
-  f_local_position = coords_body_to_local(body_position=f_body_position, ele=f_ele, &
-      w_mat=f_w_mat, calculate_angles=f_calculate_angles_native_ptr)
+  f_local_position = coords_body_to_local(f_body_position, f_ele, f_w_mat, &
+      f_calculate_angles_native_ptr)
 
   ! out: f_local_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -5094,8 +5194,8 @@ subroutine fortran_coords_body_to_rel_exit (body_position, ele, w_mat, calculate
   else
     f_calculate_angles_native_ptr => null()
   endif
-  f_rel_exit = coords_body_to_rel_exit(body_position=f_body_position, ele=f_ele, w_mat=f_w_mat, &
-      calculate_angles=f_calculate_angles_native_ptr)
+  f_rel_exit = coords_body_to_rel_exit(f_body_position, f_ele, f_w_mat, &
+      f_calculate_angles_native_ptr)
 
   ! out: f_rel_exit 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -5131,7 +5231,7 @@ subroutine fortran_coords_curvilinear_to_floor (xys, branch, err_flag, global) b
     return
   endif
   call c_f_pointer(branch, f_branch)
-  f_global = coords_curvilinear_to_floor(xys=f_xys, branch=f_branch, err_flag=f_err_flag)
+  f_global = coords_curvilinear_to_floor(f_xys, f_branch, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -5170,8 +5270,8 @@ subroutine fortran_coords_floor_to_curvilinear (floor_coords, ele0, ele1, status
   ! out: f_ele1 0D_PTR_type
   if (.not. c_associated(ele1)) return
   call c_f_pointer(ele1, f_ele1)
-  f_local_coords = coords_floor_to_curvilinear(floor_coords=f_floor_coords, ele0=f_ele0, &
-      ele1=f_ele1, status=f_status, w_mat=f_w_mat)
+  f_local_coords = coords_floor_to_curvilinear(f_floor_coords, f_ele0, f_ele1, f_status, &
+      f_w_mat)
 
   ! out: f_ele1 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
@@ -5179,7 +5279,7 @@ subroutine fortran_coords_floor_to_curvilinear (floor_coords, ele0, ele1, status
   call c_f_pointer(status, f_status_ptr)
   f_status_ptr = f_status
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=739, definition='real(rp), optional :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='W matrix at s, to transform vectors from floor to local. w_mat will only be well defined if status = ok$', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=748, definition='real(rp), optional :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='W matrix at s, to transform vectors from floor to local. w_mat will only be well defined if status = ok$', doc_data_type='float', doc_is_optional=False)
   ! out: f_local_coords 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -5218,14 +5318,14 @@ subroutine fortran_coords_floor_to_local_curvilinear (global_position, ele, stat
   else
     f_relative_to_ptr => null()
   endif
-  f_local_position = coords_floor_to_local_curvilinear(global_position=f_global_position, &
-      ele=f_ele, status=f_status, w_mat=f_w_mat, relative_to=f_relative_to_ptr)
+  f_local_position = coords_floor_to_local_curvilinear(f_global_position, f_ele, f_status, &
+      f_w_mat, f_relative_to_ptr)
 
   ! out: f_status 0D_NOT_integer
   call c_f_pointer(status, f_status_ptr)
   f_status_ptr = f_status
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=727, definition='real(rp), optional :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='W matrix at s, to transform vectors. v_global = w_mat.v_local v_local = transpose(w_mat).v_global', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=736, definition='real(rp), optional :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='W matrix at s, to transform vectors. v_global = w_mat.v_local v_local = transpose(w_mat).v_global', doc_data_type='float', doc_is_optional=False)
   ! out: f_local_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -5275,9 +5375,8 @@ subroutine fortran_coords_floor_to_relative (floor0, global_position, calculate_
   else
     f_is_delta_position_native_ptr => null()
   endif
-  f_local_position = coords_floor_to_relative(floor0=f_floor0, &
-      global_position=f_global_position, calculate_angles=f_calculate_angles_native_ptr, &
-      is_delta_position=f_is_delta_position_native_ptr)
+  f_local_position = coords_floor_to_relative(f_floor0, f_global_position, &
+      f_calculate_angles_native_ptr, f_is_delta_position_native_ptr)
 
   ! out: f_local_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -5325,8 +5424,8 @@ subroutine fortran_coords_local_curvilinear_to_body (local_position, ele, w_mat,
   else
     f_calculate_angles_native_ptr => null()
   endif
-  f_body_position = coords_local_curvilinear_to_body(local_position=f_local_position, &
-      ele=f_ele, w_mat=f_w_mat, calculate_angles=f_calculate_angles_native_ptr)
+  f_body_position = coords_local_curvilinear_to_body(f_local_position, f_ele, f_w_mat, &
+      f_calculate_angles_native_ptr)
 
   ! out: f_body_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -5389,12 +5488,11 @@ subroutine fortran_coords_local_curvilinear_to_floor (local_position, ele, in_bo
   else
     f_relative_to_ptr => null()
   endif
-  f_global_position = coords_local_curvilinear_to_floor(local_position=f_local_position, &
-      ele=f_ele, in_body_frame=f_in_body_frame_native_ptr, w_mat=f_w_mat, &
-      calculate_angles=f_calculate_angles_native_ptr, relative_to=f_relative_to_ptr)
+  f_global_position = coords_local_curvilinear_to_floor(f_local_position, f_ele, &
+      f_in_body_frame_native_ptr, f_w_mat, f_calculate_angles_native_ptr, f_relative_to_ptr)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=757, definition='real(rp), optional :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='W matrix at z, to transform vectors. v_global     = w_mat . v_local/body v_local/body = transpose(w_mat) . v_global', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=766, definition='real(rp), optional :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='W matrix at z, to transform vectors. v_global     = w_mat . v_local/body v_local/body = transpose(w_mat) . v_global', doc_data_type='float', doc_is_optional=False)
   ! out: f_global_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -5450,8 +5548,7 @@ subroutine fortran_coords_relative_to_floor (floor0, dr, theta, phi, psi, floor1
   else
     f_psi_ptr => null()
   endif
-  f_floor1 = coords_relative_to_floor(floor0=f_floor0, dr=f_dr, theta=f_theta_ptr, &
-      phi=f_phi_ptr, psi=f_psi_ptr)
+  f_floor1 = coords_relative_to_floor(f_floor0, f_dr, f_theta_ptr, f_phi_ptr, f_psi_ptr)
 
   ! inout: f_theta 0D_NOT_real
   ! no output conversion for f_theta
@@ -5507,7 +5604,7 @@ subroutine fortran_coulombfun (u, v, w, gam, res) bind(c)
   else
     f_gam_ptr => null()
   endif
-  f_res = coulombfun(u=f_u_ptr, v=f_v_ptr, w=f_w_ptr, gam=f_gam_ptr)
+  f_res = coulombfun(f_u_ptr, f_v_ptr, f_w_ptr, f_gam_ptr)
 
   ! inout: f_u 0D_NOT_real
   ! no output conversion for f_u
@@ -5545,7 +5642,7 @@ subroutine fortran_create_concatenated_wall3d (lat, err) bind(c)
   else
     f_err_native_ptr => null()
   endif
-  call create_concatenated_wall3d(lat=f_lat, err=f_err_native_ptr)
+  call create_concatenated_wall3d(f_lat, f_err_native_ptr)
 
   ! inout: f_err 0D_NOT_logical
   if (c_associated(err)) then
@@ -5617,10 +5714,8 @@ subroutine fortran_create_element_slice (sliced_ele, ele_in, l_slice, offset, pa
   if (c_associated(old_slice))   call c_f_pointer(old_slice, f_old_slice)
   ! in: f_orb_in 0D_NOT_type
   if (c_associated(orb_in))   call c_f_pointer(orb_in, f_orb_in)
-  call create_element_slice(sliced_ele=f_sliced_ele, ele_in=f_ele_in, l_slice=f_l_slice, &
-      offset=f_offset, param=f_param, include_upstream_end=f_include_upstream_end, &
-      include_downstream_end=f_include_downstream_end, err_flag=f_err_flag, &
-      old_slice=f_old_slice, orb_in=f_orb_in)
+  call create_element_slice(f_sliced_ele, f_ele_in, f_l_slice, f_offset, f_param, &
+      f_include_upstream_end, f_include_downstream_end, f_err_flag, f_old_slice, f_orb_in)
 
   ! out: f_sliced_ele 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -5670,8 +5765,7 @@ subroutine fortran_create_field_overlap (lat, lord_name, slave_name, err_flag) b
   endif
   call c_f_pointer(slave_name, f_slave_name_ptr, [huge(0)])
   call to_f_str(f_slave_name_ptr, f_slave_name)
-  call create_field_overlap(lat=f_lat, lord_name=f_lord_name, slave_name=f_slave_name, &
-      err_flag=f_err_flag)
+  call create_field_overlap(f_lat, f_lord_name, f_slave_name, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -5715,8 +5809,7 @@ subroutine fortran_create_girder (lat, ix_girder, contrl, girder_info, err_flag)
   else
     f_err_flag_native_ptr => null()
   endif
-  call create_girder(lat=f_lat, ix_girder=f_ix_girder, contrl=f_contrl%data, &
-      girder_info=f_girder_info, err_flag=f_err_flag_native_ptr)
+  call create_girder(f_lat, f_ix_girder, f_contrl%data, f_girder_info, f_err_flag_native_ptr)
 
   ! inout: f_err_flag 0D_NOT_logical
   if (c_associated(err_flag)) then
@@ -5746,7 +5839,7 @@ subroutine fortran_create_group (lord, contrl, err) bind(c)
   if (c_associated(contrl))   call c_f_pointer(contrl, f_contrl)
   ! in: f_err 0D_NOT_logical
   f_err = err
-  call create_group(lord=f_lord, contrl=f_contrl%data, err=f_err)
+  call create_group(f_lord, f_contrl%data, f_err)
 
 end subroutine
 subroutine fortran_create_lat_ele_nametable (lat, nametable) bind(c)
@@ -5766,7 +5859,7 @@ subroutine fortran_create_lat_ele_nametable (lat, nametable) bind(c)
   ! in: f_nametable 0D_NOT_type
   if (.not. c_associated(nametable)) return
   call c_f_pointer(nametable, f_nametable)
-  call create_lat_ele_nametable(lat=f_lat, nametable=f_nametable)
+  call create_lat_ele_nametable(f_lat, f_nametable)
 
 end subroutine
 subroutine fortran_create_overlay (lord, contrl, err) bind(c)
@@ -5789,7 +5882,7 @@ subroutine fortran_create_overlay (lord, contrl, err) bind(c)
   if (c_associated(contrl))   call c_f_pointer(contrl, f_contrl)
   ! in: f_err 0D_NOT_logical
   f_err = err
-  call create_overlay(lord=f_lord, contrl=f_contrl%data, err=f_err)
+  call create_overlay(f_lord, f_contrl%data, f_err)
 
 end subroutine
 subroutine fortran_create_planar_wiggler_model (wiggler_in, lat, err_flag, print_err) bind(c)
@@ -5826,6 +5919,12 @@ subroutine fortran_create_planar_wiggler_model (wiggler_in, lat, err_flag, print
     return
   endif
   call c_f_pointer(lat, f_lat)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
   ! in: f_print_err 0D_NOT_logical
   if (c_associated(print_err)) then
     call c_f_pointer(print_err, f_print_err_ptr)
@@ -5834,8 +5933,7 @@ subroutine fortran_create_planar_wiggler_model (wiggler_in, lat, err_flag, print
   else
     f_print_err_native_ptr => null()
   endif
-  call create_planar_wiggler_model(wiggler_in=f_wiggler_in, lat=f_lat, err_flag=f_err_flag, &
-      print_err=f_print_err_native_ptr)
+  call create_planar_wiggler_model(f_wiggler_in, f_lat, f_err_flag, f_print_err_native_ptr)
 
   ! out: f_lat 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -5862,7 +5960,7 @@ subroutine fortran_create_ramper (lord, contrl, err) bind(c)
   if (c_associated(contrl))   call c_f_pointer(contrl, f_contrl)
   ! in: f_err 0D_NOT_logical
   f_err = err
-  call create_ramper(lord=f_lord, contrl=f_contrl%data, err=f_err)
+  call create_ramper(f_lord, f_contrl%data, f_err)
 
 end subroutine
 subroutine fortran_create_sol_quad_model (sol_quad, lat) bind(c)
@@ -5881,7 +5979,7 @@ subroutine fortran_create_sol_quad_model (sol_quad, lat) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call create_sol_quad_model(sol_quad=f_sol_quad, lat=f_lat)
+  call create_sol_quad_model(f_sol_quad, f_lat)
 
 end subroutine
 subroutine fortran_create_unique_ele_names (lat, key, suffix) bind(c)
@@ -5907,7 +6005,7 @@ subroutine fortran_create_unique_ele_names (lat, key, suffix) bind(c)
   if (.not. c_associated(suffix)) return
   call c_f_pointer(suffix, f_suffix_ptr, [huge(0)])
   call to_f_str(f_suffix_ptr, f_suffix)
-  call create_unique_ele_names(lat=f_lat, key=f_key, suffix=f_suffix)
+  call create_unique_ele_names(f_lat, f_key, f_suffix)
 
 end subroutine
 subroutine fortran_create_wiggler_cartesian_map (ele, cart_map) bind(c)
@@ -5927,7 +6025,7 @@ subroutine fortran_create_wiggler_cartesian_map (ele, cart_map) bind(c)
   ! out: f_cart_map 0D_NOT_type
   if (.not. c_associated(cart_map)) return
   call c_f_pointer(cart_map, f_cart_map)
-  call create_wiggler_cartesian_map(ele=f_ele, cart_map=f_cart_map)
+  call create_wiggler_cartesian_map(f_ele, f_cart_map)
 
   ! out: f_cart_map 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -5943,7 +6041,7 @@ subroutine fortran_crystal_attribute_bookkeeper (ele) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call crystal_attribute_bookkeeper(ele=f_ele)
+  call crystal_attribute_bookkeeper(f_ele)
 
 end subroutine
 subroutine fortran_crystal_h_misalign (ele, orbit, h_vec) bind(c)
@@ -5973,7 +6071,7 @@ subroutine fortran_crystal_h_misalign (ele, orbit, h_vec) bind(c)
   else
     f_h_vec_ptr => null()
   endif
-  call crystal_h_misalign(ele=f_ele, orbit=f_orbit, h_vec=f_h_vec)
+  call crystal_h_misalign(f_ele, f_orbit, f_h_vec)
 
 end subroutine
 subroutine fortran_crystal_type_to_crystal_params (ele, err_flag) bind(c)
@@ -5995,7 +6093,7 @@ subroutine fortran_crystal_type_to_crystal_params (ele, err_flag) bind(c)
     return
   endif
   call c_f_pointer(ele, f_ele)
-  call crystal_type_to_crystal_params(ele=f_ele, err_flag=f_err_flag)
+  call crystal_type_to_crystal_params(f_ele, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -6014,7 +6112,7 @@ subroutine fortran_custom_attribute_ubound_index (ele_class, ix_ubound) bind(c)
   ! ** End of parameters **
   ! in: f_ele_class 0D_NOT_integer
   f_ele_class = ele_class
-  f_ix_ubound = custom_attribute_ubound_index(ele_class=f_ele_class)
+  f_ix_ubound = custom_attribute_ubound_index(f_ele_class)
 
   ! out: f_ix_ubound 0D_NOT_integer
   call c_f_pointer(ix_ubound, f_ix_ubound_ptr)
@@ -6083,8 +6181,8 @@ subroutine fortran_damping_matrix_d (gamma, g_tot, B0, B1, delta, species, mat) 
   else
     f_species_ptr => null()
   endif
-  f_mat = damping_matrix_d(gamma=f_gamma_ptr, g_tot=f_g_tot_ptr, B0=f_B0_ptr, B1=f_B1_ptr, &
-      delta=f_delta_ptr, species=f_species_ptr)
+  f_mat = damping_matrix_d(f_gamma_ptr, f_g_tot_ptr, f_B0_ptr, f_B1_ptr, f_delta_ptr, &
+      f_species_ptr)
 
   ! inout: f_gamma 0D_NOT_real
   ! no output conversion for f_gamma
@@ -6153,8 +6251,8 @@ subroutine fortran_deallocate_ele_pointers (ele, nullify_only, nullify_branch, d
   else
     f_dealloc_poles_native_ptr => null()
   endif
-  call deallocate_ele_pointers(ele=f_ele, nullify_only=f_nullify_only_native_ptr, &
-      nullify_branch=f_nullify_branch_native_ptr, dealloc_poles=f_dealloc_poles_native_ptr)
+  call deallocate_ele_pointers(f_ele, f_nullify_only_native_ptr, f_nullify_branch_native_ptr, &
+      f_dealloc_poles_native_ptr)
 
 end subroutine
 subroutine fortran_deallocate_expression_tree (tree) bind(c)
@@ -6168,7 +6266,7 @@ subroutine fortran_deallocate_expression_tree (tree) bind(c)
   ! inout: f_tree 0D_NOT_type
   if (.not. c_associated(tree)) return
   call c_f_pointer(tree, f_tree)
-  call deallocate_expression_tree(tree=f_tree)
+  call deallocate_expression_tree(f_tree)
 
 end subroutine
 subroutine fortran_deallocate_lat_pointers (lat) bind(c)
@@ -6182,7 +6280,7 @@ subroutine fortran_deallocate_lat_pointers (lat) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call deallocate_lat_pointers(lat=f_lat)
+  call deallocate_lat_pointers(f_lat)
 
 end subroutine
 subroutine fortran_default_tracking_species (param, species) bind(c)
@@ -6200,7 +6298,7 @@ subroutine fortran_default_tracking_species (param, species) bind(c)
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  f_species = default_tracking_species(param=f_param)
+  f_species = default_tracking_species(f_param)
 
   ! out: f_species 0D_NOT_integer
   call c_f_pointer(species, f_species_ptr)
@@ -6226,7 +6324,7 @@ subroutine fortran_detector_pixel_pt (orbit, ele, ix_pix) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_ix_pix = detector_pixel_pt(orbit=f_orbit, ele=f_ele)
+  f_ix_pix = detector_pixel_pt(f_orbit, f_ele)
 
   ! out: f_ix_pix 1D_NOT_integer
   if (c_associated(ix_pix)) then
@@ -6254,7 +6352,7 @@ subroutine fortran_diffraction_plate_or_mask_hit_spot (ele, orbit, ix_section) b
   ! in: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  f_ix_section = diffraction_plate_or_mask_hit_spot(ele=f_ele, orbit=f_orbit)
+  f_ix_section = diffraction_plate_or_mask_hit_spot(f_ele, f_orbit)
 
   ! out: f_ix_section 0D_NOT_integer
   call c_f_pointer(ix_section, f_ix_section_ptr)
@@ -6296,7 +6394,7 @@ subroutine fortran_diffusion_matrix_b (gamma, g_tot, species, mat) bind(c)
   else
     f_species_ptr => null()
   endif
-  f_mat = diffusion_matrix_b(gamma=f_gamma_ptr, g_tot=f_g_tot_ptr, species=f_species_ptr)
+  f_mat = diffusion_matrix_b(f_gamma_ptr, f_g_tot_ptr, f_species_ptr)
 
   ! inout: f_gamma 0D_NOT_real
   ! no output conversion for f_gamma
@@ -6335,8 +6433,7 @@ subroutine fortran_distance_to_aperture (orbit, particle_at, ele, no_aperture_he
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_dist = distance_to_aperture(orbit=f_orbit, particle_at=f_particle_at, ele=f_ele, &
-      no_aperture_here=f_no_aperture_here)
+  f_dist = distance_to_aperture(f_orbit, f_particle_at, f_ele, f_no_aperture_here)
 
   ! out: f_no_aperture_here 0D_NOT_logical
   call c_f_pointer(no_aperture_here, f_no_aperture_here_ptr)
@@ -6364,7 +6461,13 @@ subroutine fortran_do_mode_flip (ele, err_flag) bind(c)
     return
   endif
   call c_f_pointer(ele, f_ele)
-  call do_mode_flip(ele=f_ele, err_flag=f_err_flag)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  call do_mode_flip(f_ele, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   ! no output conversion for f_err_flag
@@ -6405,7 +6508,7 @@ subroutine fortran_dpc_given_de (pc_old, mass, dE, dpc) bind(c)
   else
     f_dE_ptr => null()
   endif
-  f_dpc = dpc_given_de(pc_old=f_pc_old_ptr, mass=f_mass_ptr, dE=f_dE_ptr)
+  f_dpc = dpc_given_de(f_pc_old_ptr, f_mass_ptr, f_dE_ptr)
 
   ! inout: f_pc_old 0D_NOT_real
   ! no output conversion for f_pc_old
@@ -6428,7 +6531,7 @@ subroutine fortran_drift_and_pipe_track_methods_adjustment (lat) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call drift_and_pipe_track_methods_adjustment(lat=f_lat)
+  call drift_and_pipe_track_methods_adjustment(f_lat)
 
 end subroutine
 subroutine fortran_drift_multipass_name_correction (lat) bind(c)
@@ -6442,7 +6545,7 @@ subroutine fortran_drift_multipass_name_correction (lat) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call drift_multipass_name_correction(lat=f_lat)
+  call drift_multipass_name_correction(f_lat)
 
 end subroutine
 subroutine fortran_drift_orbit_time (orbit, beta0, delta_s, delta_t) bind(c)
@@ -6479,8 +6582,7 @@ subroutine fortran_drift_orbit_time (orbit, beta0, delta_s, delta_t) bind(c)
   else
     f_delta_t_ptr => null()
   endif
-  call drift_orbit_time(orbit=f_orbit, beta0=f_beta0, delta_s=f_delta_s_ptr, &
-      delta_t=f_delta_t_ptr)
+  call drift_orbit_time(f_orbit, f_beta0, f_delta_s_ptr, f_delta_t_ptr)
 
 end subroutine
 subroutine fortran_drift_particle_to_s (p, s, branch) bind(c)
@@ -6504,7 +6606,7 @@ subroutine fortran_drift_particle_to_s (p, s, branch) bind(c)
   ! in: f_branch 0D_NOT_type
   if (.not. c_associated(branch)) return
   call c_f_pointer(branch, f_branch)
-  call drift_particle_to_s(p=f_p, s=f_s, branch=f_branch)
+  call drift_particle_to_s(f_p, f_s, f_branch)
 
 end subroutine
 subroutine fortran_drift_particle_to_t (p, t, branch) bind(c)
@@ -6528,7 +6630,7 @@ subroutine fortran_drift_particle_to_t (p, t, branch) bind(c)
   ! in: f_branch 0D_NOT_type
   if (.not. c_associated(branch)) return
   call c_f_pointer(branch, f_branch)
-  call drift_particle_to_t(p=f_p, t=f_t, branch=f_branch)
+  call drift_particle_to_t(f_p, f_t, f_branch)
 
 end subroutine
 subroutine fortran_dspline_len (s_chord0, s_chord1, spline, dtheta_ref, dlen) bind(c)
@@ -6563,8 +6665,7 @@ subroutine fortran_dspline_len (s_chord0, s_chord1, spline, dtheta_ref, dlen) bi
   else
     f_dtheta_ref_ptr => null()
   endif
-  f_dlen = dspline_len(s_chord0=f_s_chord0, s_chord1=f_s_chord1, spline=f_spline, &
-      dtheta_ref=f_dtheta_ref_ptr)
+  f_dlen = dspline_len(f_s_chord0, f_s_chord1, f_spline, f_dtheta_ref_ptr)
 
   ! out: f_dlen 0D_NOT_real
   call c_f_pointer(dlen, f_dlen_ptr)
@@ -6620,8 +6721,8 @@ subroutine fortran_dynamic_aperture_point (branch, ele0, orb0, theta_xy, ap_para
   else
     f_check_xy_init_native_ptr => null()
   endif
-  call dynamic_aperture_point(branch=f_branch, ele0=f_ele0, orb0=f_orb0, theta_xy=f_theta_xy, &
-      ap_param=f_ap_param, ap_point=f_ap_point, check_xy_init=f_check_xy_init_native_ptr)
+  call dynamic_aperture_point(f_branch, f_ele0, f_orb0, f_theta_xy, f_ap_param, f_ap_point, &
+      f_check_xy_init_native_ptr)
 
   ! out: f_ap_point 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -6665,9 +6766,8 @@ subroutine fortran_dynamic_aperture_scan (aperture_scan, aperture_param, pz_star
   else
     f_print_timing_native_ptr => null()
   endif
-  call dynamic_aperture_scan(aperture_scan=f_aperture_scan%data, &
-      aperture_param=f_aperture_param, pz_start=f_pz_start%data, lat=f_lat, &
-      print_timing=f_print_timing_native_ptr)
+  call dynamic_aperture_scan(f_aperture_scan%data, f_aperture_param, f_pz_start%data, f_lat, &
+      f_print_timing_native_ptr)
 
 end subroutine
 subroutine fortran_e_accel_field (ele, voltage_or_gradient, bmad_standard_tracking, field) &
@@ -6703,8 +6803,7 @@ subroutine fortran_e_accel_field (ele, voltage_or_gradient, bmad_standard_tracki
   else
     f_bmad_standard_tracking_native_ptr => null()
   endif
-  f_field = e_accel_field(ele=f_ele, voltage_or_gradient=f_voltage_or_gradient, &
-      bmad_standard_tracking=f_bmad_standard_tracking_native_ptr)
+  f_field = e_accel_field(f_ele, f_voltage_or_gradient, f_bmad_standard_tracking_native_ptr)
 
   ! out: f_field 0D_NOT_real
   call c_f_pointer(field, f_field_ptr)
@@ -6727,7 +6826,7 @@ subroutine fortran_e_crit_photon (gamma, g_bend, E_crit) bind(c)
   f_gamma = gamma
   ! in: f_g_bend 0D_NOT_real
   f_g_bend = g_bend
-  f_E_crit = e_crit_photon(gamma=f_gamma, g_bend=f_g_bend)
+  f_E_crit = e_crit_photon(f_gamma, f_g_bend)
 
   ! out: f_E_crit 0D_NOT_real
   call c_f_pointer(E_crit, f_E_crit_ptr)
@@ -6761,8 +6860,7 @@ subroutine fortran_eigen_decomp_6mat (mat, eval, evec, err_flag, tunes) bind(c)
   else
     f_mat_ptr => null()
   endif
-  call eigen_decomp_6mat(mat=f_mat, eval=f_eval, evec=f_evec, err_flag=f_err_flag, &
-      tunes=f_tunes)
+  call eigen_decomp_6mat(f_mat, f_eval, f_evec, f_err_flag, f_tunes)
 
   ! out: f_eval 1D_NOT_complex
   if (c_associated(eval)) then
@@ -6806,8 +6904,7 @@ subroutine fortran_ele_compute_ref_energy_and_time (ele0, ele, param, err_flag) 
   call c_f_pointer(param, f_param)
   ! in: f_err_flag 0D_NOT_logical
   f_err_flag = err_flag
-  call ele_compute_ref_energy_and_time(ele0=f_ele0, ele=f_ele, param=f_param, &
-      err_flag=f_err_flag)
+  call ele_compute_ref_energy_and_time(f_ele0, f_ele, f_param, f_err_flag)
 
 end subroutine
 subroutine fortran_ele_equal_ele (ele_out, ele_in) bind(c)
@@ -6817,20 +6914,18 @@ subroutine fortran_ele_equal_ele (ele_out, ele_in) bind(c)
   ! ** In parameters **
   type(c_ptr), value :: ele_in  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele_in
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: ele_out  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele_out
   ! ** End of parameters **
-  ! out: f_ele_out 0D_NOT_type
+  ! inout: f_ele_out 0D_NOT_type
   if (.not. c_associated(ele_out)) return
   call c_f_pointer(ele_out, f_ele_out)
   ! in: f_ele_in 0D_NOT_type
   if (.not. c_associated(ele_in)) return
   call c_f_pointer(ele_in, f_ele_in)
-  call ele_equal_ele(ele_out=f_ele_out, ele_in=f_ele_in)
+  call ele_equal_ele(f_ele_out, f_ele_in)
 
-  ! out: f_ele_out 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_ele_equals_ele (ele_out, ele_in, update_nametable) bind(c)
 
@@ -6853,7 +6948,7 @@ subroutine fortran_ele_equals_ele (ele_out, ele_in, update_nametable) bind(c)
   call c_f_pointer(ele_in, f_ele_in)
   ! in: f_update_nametable 0D_NOT_logical
   f_update_nametable = update_nametable
-  call ele_equals_ele(ele_out=f_ele_out, ele_in=f_ele_in, update_nametable=f_update_nametable)
+  call ele_equals_ele(f_ele_out, f_ele_in, f_update_nametable)
 
   ! out: f_ele_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -6869,7 +6964,7 @@ subroutine fortran_ele_finalizer (ele) bind(c)
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call ele_finalizer(ele=f_ele)
+  call ele_finalizer(f_ele)
 
 end subroutine
 subroutine fortran_ele_full_name (ele, template_, str) bind(c)
@@ -6899,7 +6994,7 @@ subroutine fortran_ele_full_name (ele, template_, str) bind(c)
   else
     f_template_call_ptr => null()
   endif
-  f_str = ele_full_name(ele=f_ele, template=f_template_call_ptr)
+  f_str = ele_full_name(f_ele, f_template_call_ptr)
 
   ! out: f_str 0D_ALLOC_character
   call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1]) ! output-only string
@@ -6949,8 +7044,8 @@ subroutine fortran_ele_geometry (floor_start, ele, floor_end, len_scale, ignore_
   else
     f_ignore_patch_err_native_ptr => null()
   endif
-  call ele_geometry(floor_start=f_floor_start, ele=f_ele, floor_end=f_floor_end, &
-      len_scale=f_len_scale_ptr, ignore_patch_err=f_ignore_patch_err_native_ptr)
+  call ele_geometry(f_floor_start, f_ele, f_floor_end, f_len_scale_ptr, &
+      f_ignore_patch_err_native_ptr)
 
   ! out: f_floor_end 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -6978,7 +7073,7 @@ subroutine fortran_ele_geometry_with_misalignments (ele, len_scale, floor) bind(
   else
     f_len_scale_ptr => null()
   endif
-  f_floor = ele_geometry_with_misalignments(ele=f_ele, len_scale=f_len_scale_ptr)
+  f_floor = ele_geometry_with_misalignments(f_ele, f_len_scale_ptr)
 
   ! out: f_floor 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -6998,7 +7093,7 @@ subroutine fortran_ele_has_constant_ds_dt_ref (ele, is_const) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_is_const = ele_has_constant_ds_dt_ref(ele=f_ele)
+  f_is_const = ele_has_constant_ds_dt_ref(f_ele)
 
   ! out: f_is_const 0D_NOT_logical
   call c_f_pointer(is_const, f_is_const_ptr)
@@ -7018,7 +7113,7 @@ subroutine fortran_ele_has_nonzero_kick (ele, has_kick) bind(c)
   ! out: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_has_kick = ele_has_nonzero_kick(ele=f_ele)
+  f_has_kick = ele_has_nonzero_kick(f_ele)
 
   ! out: f_ele 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -7041,7 +7136,7 @@ subroutine fortran_ele_has_nonzero_offset (ele, has_offset) bind(c)
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_has_offset = ele_has_nonzero_offset(ele=f_ele)
+  f_has_offset = ele_has_nonzero_offset(f_ele)
 
   ! out: f_has_offset 0D_NOT_logical
   call c_f_pointer(has_offset, f_has_offset_ptr)
@@ -7075,7 +7170,7 @@ subroutine fortran_ele_is_monitor (ele, print_warning, is_monitor) bind(c)
   else
     f_print_warning_native_ptr => null()
   endif
-  f_is_monitor = ele_is_monitor(ele=f_ele, print_warning=f_print_warning_native_ptr)
+  f_is_monitor = ele_is_monitor(f_ele, f_print_warning_native_ptr)
 
   ! out: f_is_monitor 0D_NOT_logical
   call c_f_pointer(is_monitor, f_is_monitor_ptr)
@@ -7095,7 +7190,7 @@ subroutine fortran_ele_loc (ele, loc) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_loc = ele_loc(ele=f_ele)
+  f_loc = ele_loc(f_ele)
 
   ! out: f_loc 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -7140,8 +7235,7 @@ subroutine fortran_ele_loc_name (ele, show_branch0, parens, str) bind(c)
   else
     f_parens_call_ptr => null()
   endif
-  f_str = ele_loc_name(ele=f_ele, show_branch0=f_show_branch0_native_ptr, &
-      parens=f_parens_call_ptr)
+  f_str = ele_loc_name(f_ele, f_show_branch0_native_ptr, f_parens_call_ptr)
 
   ! out: f_str 0D_NOT_character
   call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1]) ! output-only string
@@ -7165,7 +7259,7 @@ subroutine fortran_ele_misalignment_l_s_calc (ele, L_mis, S_mis) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call ele_misalignment_l_s_calc(ele=f_ele, L_mis=f_L_mis, S_mis=f_S_mis)
+  call ele_misalignment_l_s_calc(f_ele, f_L_mis, f_S_mis)
 
   ! out: f_L_mis 1D_NOT_real
   if (c_associated(L_mis)) then
@@ -7173,7 +7267,7 @@ subroutine fortran_ele_misalignment_l_s_calc (ele, L_mis, S_mis) bind(c)
     f_L_mis_ptr = f_L_mis(:)
   endif
   ! out: f_S_mis 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_S_mis', c_name='S_mis', python_name='S_mis', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=1154, definition='real(rp) :: L_mis(3), S_mis(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='S_mis', comment='', default=None), intent='out', description='Misalignment matrix relative to center of element', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_S_mis', c_name='S_mis', python_name='S_mis', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=1163, definition='real(rp) :: L_mis(3), S_mis(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='S_mis', comment='', default=None), intent='out', description='Misalignment matrix relative to center of element', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_ele_nametable_index (ele, ix_nt) bind(c)
 
@@ -7190,7 +7284,7 @@ subroutine fortran_ele_nametable_index (ele, ix_nt) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_ix_nt = ele_nametable_index(ele=f_ele)
+  f_ix_nt = ele_nametable_index(f_ele)
 
   ! out: f_ix_nt 0D_NOT_integer
   call c_f_pointer(ix_nt, f_ix_nt_ptr)
@@ -7213,7 +7307,7 @@ subroutine fortran_ele_order_calc (lat, order) bind(c)
   ! out: f_order 0D_NOT_type
   if (.not. c_associated(order)) return
   call c_f_pointer(order, f_order)
-  call ele_order_calc(lat=f_lat, order=f_order)
+  call ele_order_calc(f_lat, f_order)
 
   ! out: f_order 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -7263,8 +7357,8 @@ subroutine fortran_ele_reference_energy_correction (ele, orbit, particle_at, mat
   else
     f_make_matrix_native_ptr => null()
   endif
-  call ele_reference_energy_correction(ele=f_ele, orbit=f_orbit, particle_at=f_particle_at, &
-      mat6=f_mat6, make_matrix=f_make_matrix_native_ptr)
+  call ele_reference_energy_correction(f_ele, f_orbit, f_particle_at, f_mat6, &
+      f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_ele_rf_step_index (E_ref, s_rel, ele, ix_step) bind(c)
@@ -7290,7 +7384,7 @@ subroutine fortran_ele_rf_step_index (E_ref, s_rel, ele, ix_step) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_ix_step = ele_rf_step_index(E_ref=f_E_ref, s_rel=f_s_rel, ele=f_ele)
+  f_ix_step = ele_rf_step_index(f_E_ref, f_s_rel, f_ele)
 
   ! out: f_ix_step 0D_NOT_integer
   call c_f_pointer(ix_step, f_ix_step_ptr)
@@ -7319,7 +7413,13 @@ subroutine fortran_ele_to_ptc_magnetic_bn_an (ele, bn, an, n_max) bind(c)
   if (c_associated(bn))   call c_f_pointer(bn, f_bn)
   !! container general array (1D_ALLOC_real)
   if (c_associated(an))   call c_f_pointer(an, f_an)
-  call ele_to_ptc_magnetic_bn_an(ele=f_ele, bn=f_bn%data, an=f_an%data, n_max=f_n_max)
+  ! out: f_n_max 0D_NOT_integer
+  if (c_associated(n_max)) then
+    call c_f_pointer(n_max, f_n_max_ptr)
+  else
+    f_n_max_ptr => null()
+  endif
+  call ele_to_ptc_magnetic_bn_an(f_ele, f_bn%data, f_an%data, f_n_max)
 
   ! out: f_n_max 0D_NOT_integer
   ! no output conversion for f_n_max
@@ -7346,7 +7446,7 @@ subroutine fortran_ele_to_spin_taylor (ele, param, orb0) bind(c)
   ! in: f_orb0 0D_NOT_type
   if (.not. c_associated(orb0)) return
   call c_f_pointer(orb0, f_orb0)
-  call ele_to_spin_taylor(ele=f_ele, param=f_param, orb0=f_orb0)
+  call ele_to_spin_taylor(f_ele, f_param, f_orb0)
 
 end subroutine
 subroutine fortran_ele_to_taylor (ele, orb0, taylor_map_includes_offsets, include_damping, &
@@ -7400,10 +7500,8 @@ subroutine fortran_ele_to_taylor (ele, orb0, taylor_map_includes_offsets, includ
   call c_f_pointer(orbital_taylor, f_orbital_taylor, [6])
   !! type array (1D_NOT_type)
   call c_f_pointer(spin_taylor, f_spin_taylor, [4])
-  call ele_to_taylor(ele=f_ele, orb0=f_orb0, &
-      taylor_map_includes_offsets=f_taylor_map_includes_offsets_native_ptr, &
-      include_damping=f_include_damping_native_ptr, orbital_taylor=f_orbital_taylor, &
-      spin_taylor=f_spin_taylor)
+  call ele_to_taylor(f_ele, f_orb0, f_taylor_map_includes_offsets_native_ptr, &
+      f_include_damping_native_ptr, f_orbital_taylor, f_spin_taylor)
 
   ! out: f_orbital_taylor 1D_NOT_type
   ! TODO may require output conversion? 1D_NOT_type
@@ -7430,7 +7528,7 @@ subroutine fortran_ele_unique_name (ele, order, unique_name) bind(c)
   ! in: f_order 0D_NOT_type
   if (.not. c_associated(order)) return
   call c_f_pointer(order, f_order)
-  f_unique_name = ele_unique_name(ele=f_ele, order=f_order)
+  f_unique_name = ele_unique_name(f_ele, f_order)
 
   ! out: f_unique_name 0D_NOT_character
   call c_f_pointer(unique_name, f_unique_name_ptr, [len_trim(f_unique_name) + 1]) ! output-only string
@@ -7464,8 +7562,7 @@ subroutine fortran_ele_value_has_changed (ele, list, abs_tol, set_old, has_chang
   if (c_associated(abs_tol))   call c_f_pointer(abs_tol, f_abs_tol)
   ! in: f_set_old 0D_NOT_logical
   f_set_old = set_old
-  f_has_changed = ele_value_has_changed(ele=f_ele, list=f_list%data, abs_tol=f_abs_tol%data, &
-      set_old=f_set_old)
+  f_has_changed = ele_value_has_changed(f_ele, f_list%data, f_abs_tol%data, f_set_old)
 
   ! out: f_has_changed 0D_NOT_logical
   call c_f_pointer(has_changed, f_has_changed_ptr)
@@ -7478,7 +7575,7 @@ subroutine fortran_ele_vec_equal_ele_vec (ele1, ele2) bind(c)
   ! ** In parameters **
   type(c_ptr), intent(in), value :: ele2
   type(ele_struct_container_alloc), pointer :: f_ele2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: ele1
   type(ele_struct_container_alloc), pointer :: f_ele1
   ! ** End of parameters **
@@ -7486,7 +7583,7 @@ subroutine fortran_ele_vec_equal_ele_vec (ele1, ele2) bind(c)
   if (c_associated(ele1))   call c_f_pointer(ele1, f_ele1)
   !! container type array (1D_ALLOC_type)
   if (c_associated(ele2))   call c_f_pointer(ele2, f_ele2)
-  call ele_vec_equal_ele_vec(ele1=f_ele1%data, ele2=f_ele2%data)
+  call ele_vec_equal_ele_vec(f_ele1%data, f_ele2%data)
 
 end subroutine
 subroutine fortran_elec_multipole_field (a, b, n, coord, Ex, Ey, dE, compute_dE) bind(c)
@@ -7525,8 +7622,13 @@ subroutine fortran_elec_multipole_field (a, b, n, coord, Ex, Ey, dE, compute_dE)
   ! in: f_coord 0D_NOT_type
   if (.not. c_associated(coord)) return
   call c_f_pointer(coord, f_coord)
-  call elec_multipole_field(a=f_a, b=f_b, n=f_n, coord=f_coord, Ex=f_Ex, Ey=f_Ey, dE=f_dE, &
-      compute_dE=f_compute_dE)
+  ! out: f_compute_dE 0D_NOT_logical
+  if (c_associated(compute_dE)) then
+    call c_f_pointer(compute_dE, f_compute_dE_ptr)
+  else
+    f_compute_dE_ptr => null()
+  endif
+  call elec_multipole_field(f_a, f_b, f_n, f_coord, f_Ex, f_Ey, f_dE, f_compute_dE)
 
   ! out: f_Ex 0D_NOT_real
   call c_f_pointer(Ex, f_Ex_ptr)
@@ -7535,9 +7637,170 @@ subroutine fortran_elec_multipole_field (a, b, n, coord, Ex, Ey, dE, compute_dE)
   call c_f_pointer(Ey, f_Ey_ptr)
   f_Ey_ptr = f_Ey
   ! out: f_dE 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_dE', c_name='dE', python_name='dE', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=1253, definition='real(rp), optional :: dE(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='dE', comment='', default=None), intent='out', description='Field derivatives: dfield(x,y)/d(x,y).', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_dE', c_name='dE', python_name='dE', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=1255, definition='real(rp), optional :: dE(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='dE', comment='', default=None), intent='out', description='Field derivatives: dfield(x,y)/d(x,y).', doc_data_type='float', doc_is_optional=False)
   ! out: f_compute_dE 0D_NOT_logical
   ! no output conversion for f_compute_dE
+end subroutine
+subroutine fortran_element_at_s_branch (branch, s, choose_max, err_flag, s_eff, position, &
+    print_err, ix_ele) bind(c)
+
+  use bmad_struct, only: branch_struct, coord_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: branch  ! 0D_NOT_type
+  type(branch_struct), pointer :: f_branch
+  real(c_double) :: s  ! 0D_NOT_real
+  real(rp) :: f_s
+  logical(c_bool) :: choose_max  ! 0D_NOT_logical
+  logical :: f_choose_max
+  type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_err
+  logical, target :: f_print_err_native
+  logical, pointer :: f_print_err_native_ptr
+  logical(c_bool), pointer :: f_print_err_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  type(c_ptr), intent(in), value :: s_eff  ! 0D_NOT_real
+  real(rp) :: f_s_eff
+  real(c_double), pointer :: f_s_eff_ptr
+  type(c_ptr), value :: position  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_position
+  type(c_ptr), intent(in), value :: ix_ele  ! 0D_NOT_integer
+  integer :: f_ix_ele
+  integer(c_int), pointer :: f_ix_ele_ptr
+  ! ** End of parameters **
+  ! in: f_branch 0D_NOT_type
+  if (.not. c_associated(branch)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(branch, f_branch)
+  ! in: f_s 0D_NOT_real
+  f_s = s
+  ! in: f_choose_max 0D_NOT_logical
+  f_choose_max = choose_max
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  ! out: f_s_eff 0D_NOT_real
+  if (c_associated(s_eff)) then
+    call c_f_pointer(s_eff, f_s_eff_ptr)
+  else
+    f_s_eff_ptr => null()
+  endif
+  ! out: f_position 0D_NOT_type
+  if (c_associated(position))   call c_f_pointer(position, f_position)
+  ! in: f_print_err 0D_NOT_logical
+  if (c_associated(print_err)) then
+    call c_f_pointer(print_err, f_print_err_ptr)
+    f_print_err_native = f_print_err_ptr
+    f_print_err_native_ptr => f_print_err_native
+  else
+    f_print_err_native_ptr => null()
+  endif
+  f_ix_ele = element_at_s(f_branch, f_s, f_choose_max, f_err_flag, f_s_eff, f_position, &
+      f_print_err_native_ptr)
+
+  ! out: f_err_flag 0D_NOT_logical
+  ! no output conversion for f_err_flag
+  ! out: f_s_eff 0D_NOT_real
+  ! no output conversion for f_s_eff
+  ! out: f_position 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+  ! out: f_ix_ele 0D_NOT_integer
+  call c_f_pointer(ix_ele, f_ix_ele_ptr)
+  f_ix_ele_ptr = f_ix_ele
+end subroutine
+subroutine fortran_element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_eff, position, &
+    print_err, ix_ele) bind(c)
+
+  use bmad_struct, only: coord_struct, lat_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: lat  ! 0D_NOT_type
+  type(lat_struct), pointer :: f_lat
+  real(c_double) :: s  ! 0D_NOT_real
+  real(rp) :: f_s
+  logical(c_bool) :: choose_max  ! 0D_NOT_logical
+  logical :: f_choose_max
+  type(c_ptr), intent(in), value :: ix_branch  ! 0D_NOT_integer
+  integer(c_int) :: f_ix_branch
+  integer(c_int), pointer :: f_ix_branch_ptr
+  type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_err
+  logical, target :: f_print_err_native
+  logical, pointer :: f_print_err_native_ptr
+  logical(c_bool), pointer :: f_print_err_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  type(c_ptr), intent(in), value :: s_eff  ! 0D_NOT_real
+  real(rp) :: f_s_eff
+  real(c_double), pointer :: f_s_eff_ptr
+  type(c_ptr), value :: position  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_position
+  type(c_ptr), intent(in), value :: ix_ele  ! 0D_NOT_integer
+  integer :: f_ix_ele
+  integer(c_int), pointer :: f_ix_ele_ptr
+  ! ** End of parameters **
+  ! in: f_lat 0D_NOT_type
+  if (.not. c_associated(lat)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(lat, f_lat)
+  ! in: f_s 0D_NOT_real
+  f_s = s
+  ! in: f_choose_max 0D_NOT_logical
+  f_choose_max = choose_max
+  ! in: f_ix_branch 0D_NOT_integer
+  if (c_associated(ix_branch)) then
+    call c_f_pointer(ix_branch, f_ix_branch_ptr)
+  else
+    f_ix_branch_ptr => null()
+  endif
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  ! out: f_s_eff 0D_NOT_real
+  if (c_associated(s_eff)) then
+    call c_f_pointer(s_eff, f_s_eff_ptr)
+  else
+    f_s_eff_ptr => null()
+  endif
+  ! out: f_position 0D_NOT_type
+  if (c_associated(position))   call c_f_pointer(position, f_position)
+  ! in: f_print_err 0D_NOT_logical
+  if (c_associated(print_err)) then
+    call c_f_pointer(print_err, f_print_err_ptr)
+    f_print_err_native = f_print_err_ptr
+    f_print_err_native_ptr => f_print_err_native
+  else
+    f_print_err_native_ptr => null()
+  endif
+  f_ix_ele = element_at_s(f_lat, f_s, f_choose_max, f_ix_branch_ptr, f_err_flag, f_s_eff, &
+      f_position, f_print_err_native_ptr)
+
+  ! out: f_err_flag 0D_NOT_logical
+  ! no output conversion for f_err_flag
+  ! out: f_s_eff 0D_NOT_real
+  ! no output conversion for f_s_eff
+  ! out: f_position 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+  ! out: f_ix_ele 0D_NOT_integer
+  call c_f_pointer(ix_ele, f_ix_ele_ptr)
+  f_ix_ele_ptr = f_ix_ele
 end subroutine
 subroutine fortran_element_slice_iterator (ele, param, i_slice, n_slice_tot, sliced_ele, &
     s_start, s_end) bind(c)
@@ -7588,9 +7851,8 @@ subroutine fortran_element_slice_iterator (ele, param, i_slice, n_slice_tot, sli
   else
     f_s_end_ptr => null()
   endif
-  call element_slice_iterator(ele=f_ele, param=f_param, i_slice=f_i_slice, &
-      n_slice_tot=f_n_slice_tot, sliced_ele=f_sliced_ele, s_start=f_s_start_ptr, &
-      s_end=f_s_end_ptr)
+  call element_slice_iterator(f_ele, f_param, f_i_slice, f_n_slice_tot, f_sliced_ele, &
+      f_s_start_ptr, f_s_end_ptr)
 
 end subroutine
 subroutine fortran_ellipinc_test () bind(c)
@@ -7696,6 +7958,12 @@ subroutine fortran_em_field_calc (ele, param, s_pos, orbit, local_ref_frame, fie
   else
     f_calc_dfield_native_ptr => null()
   endif
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
   ! in: f_calc_potential 0D_NOT_logical
   if (c_associated(calc_potential)) then
     call c_f_pointer(calc_potential, f_calc_potential_ptr)
@@ -7738,13 +8006,10 @@ subroutine fortran_em_field_calc (ele, param, s_pos, orbit, local_ref_frame, fie
   endif
   ! in: f_original_ele 0D_NOT_type
   if (c_associated(original_ele))   call c_f_pointer(original_ele, f_original_ele)
-  call em_field_calc(ele=f_ele, param=f_param, s_pos=f_s_pos, orbit=f_orbit, &
-      local_ref_frame=f_local_ref_frame, field=f_field, calc_dfield=f_calc_dfield_native_ptr, &
-      err_flag=f_err_flag, calc_potential=f_calc_potential_native_ptr, &
-      use_overlap=f_use_overlap_native_ptr, &
-      grid_allow_s_out_of_bounds=f_grid_allow_s_out_of_bounds_native_ptr, &
-      rf_time=f_rf_time_ptr, used_eles=f_used_eles%data, print_err=f_print_err_native_ptr, &
-      original_ele=f_original_ele)
+  call em_field_calc(f_ele, f_param, f_s_pos, f_orbit, f_local_ref_frame, f_field, &
+      f_calc_dfield_native_ptr, f_err_flag, f_calc_potential_native_ptr, &
+      f_use_overlap_native_ptr, f_grid_allow_s_out_of_bounds_native_ptr, f_rf_time_ptr, &
+      f_used_eles%data, f_print_err_native_ptr, f_original_ele)
 
   ! out: f_field 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -7823,10 +8088,8 @@ subroutine fortran_em_field_derivatives (ele, param, s_pos, orbit, local_ref_fra
   else
     f_rf_time_ptr => null()
   endif
-  call em_field_derivatives(ele=f_ele, param=f_param, s_pos=f_s_pos_ptr, orbit=f_orbit, &
-      local_ref_frame=f_local_ref_frame_native_ptr, dfield=f_dfield, &
-      grid_allow_s_out_of_bounds=f_grid_allow_s_out_of_bounds_native_ptr, &
-      rf_time=f_rf_time_ptr)
+  call em_field_derivatives(f_ele, f_param, f_s_pos_ptr, f_orbit, f_local_ref_frame_native_ptr, &
+      f_dfield, f_grid_allow_s_out_of_bounds_native_ptr, f_rf_time_ptr)
 
   ! inout: f_s_pos 0D_NOT_real
   ! no output conversion for f_s_pos
@@ -7900,9 +8163,8 @@ subroutine fortran_em_field_kick_vector_time (ele, param, rf_time, orbit, dvec_d
   endif
   ! in: f_extra_field 0D_NOT_type
   if (c_associated(extra_field))   call c_f_pointer(extra_field, f_extra_field)
-  call em_field_kick_vector_time(ele=f_ele, param=f_param, rf_time=f_rf_time, orbit=f_orbit, &
-      dvec_dt=f_dvec_dt, err_flag=f_err_flag, print_err=f_print_err_native_ptr, &
-      extra_field=f_extra_field)
+  call em_field_kick_vector_time(f_ele, f_param, f_rf_time, f_orbit, f_dvec_dt, f_err_flag, &
+      f_print_err_native_ptr, f_extra_field)
 
   ! out: f_dvec_dt 1D_NOT_real
   if (c_associated(dvec_dt)) then
@@ -7929,7 +8191,7 @@ subroutine fortran_em_field_plus_em_field (field1, field2, field_tot) bind(c)
   ! in: f_field2 0D_NOT_type
   if (.not. c_associated(field2)) return
   call c_f_pointer(field2, f_field2)
-  f_field_tot = em_field_plus_em_field(field1=f_field1, field2=f_field2)
+  f_field_tot = em_field_plus_em_field(f_field1, f_field2)
 
   ! out: f_field_tot 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -7941,20 +8203,18 @@ subroutine fortran_em_taylor_equal_em_taylor (em_taylor1, em_taylor2) bind(c)
   ! ** In parameters **
   type(c_ptr), value :: em_taylor2  ! 0D_NOT_type
   type(em_taylor_struct), pointer :: f_em_taylor2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: em_taylor1  ! 0D_NOT_type
   type(em_taylor_struct), pointer :: f_em_taylor1
   ! ** End of parameters **
-  ! out: f_em_taylor1 0D_NOT_type
+  ! inout: f_em_taylor1 0D_NOT_type
   if (.not. c_associated(em_taylor1)) return
   call c_f_pointer(em_taylor1, f_em_taylor1)
   ! in: f_em_taylor2 0D_NOT_type
   if (.not. c_associated(em_taylor2)) return
   call c_f_pointer(em_taylor2, f_em_taylor2)
-  call em_taylor_equal_em_taylor(em_taylor1=f_em_taylor1, em_taylor2=f_em_taylor2)
+  call em_taylor_equal_em_taylor(f_em_taylor1, f_em_taylor2)
 
-  ! out: f_em_taylor1 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_em_taylors_equal_em_taylors (em_taylor1, em_taylor2) bind(c)
 
@@ -7963,7 +8223,7 @@ subroutine fortran_em_taylors_equal_em_taylors (em_taylor1, em_taylor2) bind(c)
   ! ** In parameters **
   type(c_ptr), intent(in), value :: em_taylor2
   type(em_taylor_struct_container_alloc), pointer :: f_em_taylor2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: em_taylor1
   type(em_taylor_struct_container_alloc), pointer :: f_em_taylor1
   ! ** End of parameters **
@@ -7971,7 +8231,7 @@ subroutine fortran_em_taylors_equal_em_taylors (em_taylor1, em_taylor2) bind(c)
   if (c_associated(em_taylor1))   call c_f_pointer(em_taylor1, f_em_taylor1)
   !! container type array (1D_ALLOC_type)
   if (c_associated(em_taylor2))   call c_f_pointer(em_taylor2, f_em_taylor2)
-  call em_taylors_equal_em_taylors(em_taylor1=f_em_taylor1%data, em_taylor2=f_em_taylor2%data)
+  call em_taylors_equal_em_taylors(f_em_taylor1%data, f_em_taylor2%data)
 
 end subroutine
 subroutine fortran_emit_6d (ele_ref, include_opening_angle, mode, sigma_mat, closed_orbit, &
@@ -8007,8 +8267,8 @@ subroutine fortran_emit_6d (ele_ref, include_opening_angle, mode, sigma_mat, clo
   if (c_associated(closed_orbit))   call c_f_pointer(closed_orbit, f_closed_orbit)
   ! out: f_rad_int_by_ele 0D_NOT_type
   if (c_associated(rad_int_by_ele))   call c_f_pointer(rad_int_by_ele, f_rad_int_by_ele)
-  call emit_6d(ele_ref=f_ele_ref, include_opening_angle=f_include_opening_angle, mode=f_mode, &
-      sigma_mat=f_sigma_mat, closed_orbit=f_closed_orbit%data, rad_int_by_ele=f_rad_int_by_ele)
+  call emit_6d(f_ele_ref, f_include_opening_angle, f_mode, f_sigma_mat, f_closed_orbit%data, &
+      f_rad_int_by_ele)
 
   ! out: f_mode 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -8036,7 +8296,7 @@ subroutine fortran_entering_element (orbit, particle_at, is_entering) bind(c)
   call c_f_pointer(orbit, f_orbit)
   ! in: f_particle_at 0D_NOT_integer
   f_particle_at = particle_at
-  f_is_entering = entering_element(orbit=f_orbit, particle_at=f_particle_at)
+  f_is_entering = entering_element(f_orbit, f_particle_at)
 
   ! out: f_is_entering 0D_NOT_logical
   call c_f_pointer(is_entering, f_is_entering_ptr)
@@ -8097,8 +8357,7 @@ subroutine fortran_envelope_radints (Lambda, Theta, Iota, alpha, emit) bind(c)
   else
     f_emit_ptr => null()
   endif
-  call envelope_radints(Lambda=f_Lambda, Theta=f_Theta, Iota=f_Iota, alpha=f_alpha, &
-      emit=f_emit)
+  call envelope_radints(f_Lambda, f_Theta, f_Iota, f_alpha, f_emit)
 
 end subroutine
 subroutine fortran_envelope_radints_ibs (Lambda, Theta, Iota, eles, alpha, emit, mode, &
@@ -8166,9 +8425,8 @@ subroutine fortran_envelope_radints_ibs (Lambda, Theta, Iota, eles, alpha, emit,
   f_npart = npart
   ! in: f_species 0D_NOT_integer
   f_species = species
-  call envelope_radints_ibs(Lambda=f_Lambda, Theta=f_Theta, Iota=f_Iota, eles=f_eles%data, &
-      alpha=f_alpha, emit=f_emit, mode=f_mode, tail_cut=f_tail_cut, npart=f_npart, &
-      species=f_species)
+  call envelope_radints_ibs(f_Lambda, f_Theta, f_Iota, f_eles%data, f_alpha, f_emit, f_mode, &
+      f_tail_cut, f_npart, f_species)
 
   ! out: f_alpha 1D_NOT_real
   if (c_associated(alpha)) then
@@ -8201,7 +8459,7 @@ subroutine fortran_eq_ac_kicker (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_ac_kicker(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_ac_kicker(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8227,7 +8485,7 @@ subroutine fortran_eq_ac_kicker_freq (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_ac_kicker_freq(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_ac_kicker_freq(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8253,7 +8511,7 @@ subroutine fortran_eq_ac_kicker_time (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_ac_kicker_time(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_ac_kicker_time(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8279,7 +8537,7 @@ subroutine fortran_eq_anormal_mode (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_anormal_mode(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_anormal_mode(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8305,7 +8563,7 @@ subroutine fortran_eq_aperture_param (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_aperture_param(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_aperture_param(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8331,7 +8589,7 @@ subroutine fortran_eq_aperture_point (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_aperture_point(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_aperture_point(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8357,7 +8615,7 @@ subroutine fortran_eq_aperture_scan (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_aperture_scan(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_aperture_scan(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8383,7 +8641,7 @@ subroutine fortran_eq_beam (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_beam(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_beam(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8409,7 +8667,7 @@ subroutine fortran_eq_beam_init (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_beam_init(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_beam_init(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8435,7 +8693,7 @@ subroutine fortran_eq_bmad_common (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_bmad_common(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_bmad_common(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8461,7 +8719,7 @@ subroutine fortran_eq_bookkeeping_state (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_bookkeeping_state(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_bookkeeping_state(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8487,7 +8745,7 @@ subroutine fortran_eq_bpm_phase_coupling (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_bpm_phase_coupling(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_bpm_phase_coupling(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8513,7 +8771,7 @@ subroutine fortran_eq_branch (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_branch(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_branch(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8539,7 +8797,7 @@ subroutine fortran_eq_bunch (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_bunch(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_bunch(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8565,7 +8823,7 @@ subroutine fortran_eq_bunch_params (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_bunch_params(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_bunch_params(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8591,7 +8849,7 @@ subroutine fortran_eq_cartesian_map (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_cartesian_map(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_cartesian_map(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8617,7 +8875,7 @@ subroutine fortran_eq_cartesian_map_term (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_cartesian_map_term(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_cartesian_map_term(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8643,7 +8901,7 @@ subroutine fortran_eq_cartesian_map_term1 (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_cartesian_map_term1(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_cartesian_map_term1(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8669,7 +8927,7 @@ subroutine fortran_eq_complex_taylor (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_complex_taylor(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_complex_taylor(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8695,7 +8953,7 @@ subroutine fortran_eq_complex_taylor_term (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_complex_taylor_term(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_complex_taylor_term(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8721,7 +8979,7 @@ subroutine fortran_eq_control (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_control(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_control(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8747,7 +9005,7 @@ subroutine fortran_eq_control_ramp1 (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_control_ramp1(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_control_ramp1(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8773,7 +9031,7 @@ subroutine fortran_eq_control_var1 (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_control_var1(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_control_var1(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8799,7 +9057,7 @@ subroutine fortran_eq_controller (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_controller(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_controller(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8825,7 +9083,7 @@ subroutine fortran_eq_coord (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_coord(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_coord(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8851,7 +9109,7 @@ subroutine fortran_eq_coord_array (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_coord_array(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_coord_array(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8877,7 +9135,7 @@ subroutine fortran_eq_cylindrical_map (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_cylindrical_map(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_cylindrical_map(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8903,7 +9161,7 @@ subroutine fortran_eq_cylindrical_map_term (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_cylindrical_map_term(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_cylindrical_map_term(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8929,7 +9187,7 @@ subroutine fortran_eq_cylindrical_map_term1 (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_cylindrical_map_term1(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_cylindrical_map_term1(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8955,7 +9213,7 @@ subroutine fortran_eq_ele (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_ele(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_ele(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -8981,7 +9239,7 @@ subroutine fortran_eq_ellipse_beam_init (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_ellipse_beam_init(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_ellipse_beam_init(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9007,7 +9265,7 @@ subroutine fortran_eq_em_field (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_em_field(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_em_field(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9033,7 +9291,7 @@ subroutine fortran_eq_em_taylor (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_em_taylor(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_em_taylor(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9059,7 +9317,7 @@ subroutine fortran_eq_em_taylor_term (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_em_taylor_term(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_em_taylor_term(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9085,7 +9343,7 @@ subroutine fortran_eq_expression_atom (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_expression_atom(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_expression_atom(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9111,7 +9369,7 @@ subroutine fortran_eq_floor_position (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_floor_position(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_floor_position(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9137,7 +9395,7 @@ subroutine fortran_eq_gen_grad1 (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_gen_grad1(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_gen_grad1(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9163,7 +9421,7 @@ subroutine fortran_eq_gen_grad_map (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_gen_grad_map(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_gen_grad_map(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9189,7 +9447,7 @@ subroutine fortran_eq_grid_beam_init (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_grid_beam_init(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_grid_beam_init(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9215,7 +9473,7 @@ subroutine fortran_eq_grid_field (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_grid_field(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_grid_field(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9241,7 +9499,7 @@ subroutine fortran_eq_grid_field_pt (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_grid_field_pt(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_grid_field_pt(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9267,7 +9525,7 @@ subroutine fortran_eq_grid_field_pt1 (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_grid_field_pt1(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_grid_field_pt1(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9293,7 +9551,7 @@ subroutine fortran_eq_high_energy_space_charge (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_high_energy_space_charge(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_high_energy_space_charge(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9319,7 +9577,7 @@ subroutine fortran_eq_interval1_coef (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_interval1_coef(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_interval1_coef(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9345,7 +9603,7 @@ subroutine fortran_eq_kv_beam_init (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_kv_beam_init(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_kv_beam_init(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9371,7 +9629,7 @@ subroutine fortran_eq_lat (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_lat(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_lat(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9397,7 +9655,7 @@ subroutine fortran_eq_lat_ele_loc (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_lat_ele_loc(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_lat_ele_loc(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9423,7 +9681,7 @@ subroutine fortran_eq_lat_param (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_lat_param(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_lat_param(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9449,7 +9707,7 @@ subroutine fortran_eq_linac_normal_mode (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_linac_normal_mode(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_linac_normal_mode(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9475,7 +9733,7 @@ subroutine fortran_eq_mode3 (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_mode3(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_mode3(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9501,7 +9759,7 @@ subroutine fortran_eq_mode_info (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_mode_info(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_mode_info(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9527,7 +9785,7 @@ subroutine fortran_eq_normal_modes (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_normal_modes(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_normal_modes(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9553,7 +9811,7 @@ subroutine fortran_eq_photon_element (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_photon_element(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_photon_element(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9579,7 +9837,7 @@ subroutine fortran_eq_photon_material (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_photon_material(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_photon_material(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9605,7 +9863,7 @@ subroutine fortran_eq_photon_reflect_surface (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_photon_reflect_surface(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_photon_reflect_surface(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9631,7 +9889,7 @@ subroutine fortran_eq_photon_reflect_table (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_photon_reflect_table(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_photon_reflect_table(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9657,7 +9915,7 @@ subroutine fortran_eq_photon_target (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_photon_target(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_photon_target(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9683,7 +9941,7 @@ subroutine fortran_eq_pixel_detec (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_pixel_detec(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_pixel_detec(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9709,7 +9967,7 @@ subroutine fortran_eq_pixel_pt (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_pixel_pt(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_pixel_pt(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9735,7 +9993,7 @@ subroutine fortran_eq_pre_tracker (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_pre_tracker(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_pre_tracker(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9761,7 +10019,7 @@ subroutine fortran_eq_rad_int1 (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_rad_int1(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_rad_int1(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9787,7 +10045,7 @@ subroutine fortran_eq_rad_int_all_ele (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_rad_int_all_ele(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_rad_int_all_ele(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9813,7 +10071,7 @@ subroutine fortran_eq_rad_int_branch (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_rad_int_branch(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_rad_int_branch(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9839,7 +10097,7 @@ subroutine fortran_eq_rad_map (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_rad_map(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_rad_map(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9865,7 +10123,7 @@ subroutine fortran_eq_rad_map_ele (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_rad_map_ele(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_rad_map_ele(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9891,7 +10149,7 @@ subroutine fortran_eq_ramper_lord (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_ramper_lord(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_ramper_lord(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9917,7 +10175,7 @@ subroutine fortran_eq_space_charge_common (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_space_charge_common(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_space_charge_common(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9943,7 +10201,7 @@ subroutine fortran_eq_spin_polar (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_spin_polar(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_spin_polar(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9969,7 +10227,7 @@ subroutine fortran_eq_spline (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_spline(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_spline(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -9995,7 +10253,7 @@ subroutine fortran_eq_strong_beam (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_strong_beam(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_strong_beam(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10021,7 +10279,7 @@ subroutine fortran_eq_surface_curvature (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_surface_curvature(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_surface_curvature(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10047,7 +10305,7 @@ subroutine fortran_eq_surface_displacement (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_surface_displacement(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_surface_displacement(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10073,7 +10331,7 @@ subroutine fortran_eq_surface_displacement_pt (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_surface_displacement_pt(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_surface_displacement_pt(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10099,7 +10357,7 @@ subroutine fortran_eq_surface_h_misalign (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_surface_h_misalign(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_surface_h_misalign(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10125,7 +10383,7 @@ subroutine fortran_eq_surface_h_misalign_pt (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_surface_h_misalign_pt(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_surface_h_misalign_pt(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10151,7 +10409,7 @@ subroutine fortran_eq_surface_segmented (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_surface_segmented(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_surface_segmented(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10177,7 +10435,7 @@ subroutine fortran_eq_surface_segmented_pt (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_surface_segmented_pt(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_surface_segmented_pt(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10203,7 +10461,7 @@ subroutine fortran_eq_target_point (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_target_point(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_target_point(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10229,7 +10487,7 @@ subroutine fortran_eq_taylor (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_taylor(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_taylor(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10255,7 +10513,7 @@ subroutine fortran_eq_taylor_term (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_taylor_term(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_taylor_term(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10281,7 +10539,7 @@ subroutine fortran_eq_track (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_track(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_track(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10307,7 +10565,7 @@ subroutine fortran_eq_track_point (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_track_point(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_track_point(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10333,7 +10591,7 @@ subroutine fortran_eq_twiss (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_twiss(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_twiss(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10359,7 +10617,7 @@ subroutine fortran_eq_wake (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_wake(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_wake(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10385,7 +10643,7 @@ subroutine fortran_eq_wake_lr (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_wake_lr(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_wake_lr(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10411,7 +10669,7 @@ subroutine fortran_eq_wake_lr_mode (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_wake_lr_mode(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_wake_lr_mode(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10437,7 +10695,7 @@ subroutine fortran_eq_wake_sr (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_wake_sr(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_wake_sr(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10463,7 +10721,7 @@ subroutine fortran_eq_wake_sr_mode (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_wake_sr_mode(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_wake_sr_mode(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10489,7 +10747,7 @@ subroutine fortran_eq_wake_sr_z_long (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_wake_sr_z_long(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_wake_sr_z_long(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10515,7 +10773,7 @@ subroutine fortran_eq_wall3d (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_wall3d(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_wall3d(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10541,7 +10799,7 @@ subroutine fortran_eq_wall3d_section (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_wall3d_section(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_wall3d_section(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10567,7 +10825,7 @@ subroutine fortran_eq_wall3d_vertex (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_wall3d_vertex(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_wall3d_vertex(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10593,7 +10851,7 @@ subroutine fortran_eq_xy_disp (f1, f2, is_eq) bind(c)
   ! in: f_f2 0D_NOT_type
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_xy_disp(f1=f_f1, f2=f_f2)
+  f_is_eq = eq_xy_disp(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -10621,7 +10879,7 @@ subroutine fortran_equal_sign_here (ele, delim, is_here) bind(c)
   if (.not. c_associated(delim)) return
   call c_f_pointer(delim, f_delim_ptr, [huge(0)])
   call to_f_str(f_delim_ptr, f_delim)
-  f_is_here = equal_sign_here(ele=f_ele, delim=f_delim)
+  f_is_here = equal_sign_here(f_ele, f_delim)
 
   ! inout: f_delim 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -10649,7 +10907,7 @@ subroutine fortran_equivalent_taylor_attributes (ele_taylor, ele2, equiv) bind(c
   ! in: f_ele2 0D_NOT_type
   if (.not. c_associated(ele2)) return
   call c_f_pointer(ele2, f_ele2)
-  f_equiv = equivalent_taylor_attributes(ele_taylor=f_ele_taylor, ele2=f_ele2)
+  f_equiv = equivalent_taylor_attributes(f_ele_taylor, f_ele2)
 
   ! out: f_equiv 0D_NOT_logical
   call c_f_pointer(equiv, f_equiv_ptr)
@@ -10714,7 +10972,7 @@ subroutine fortran_etdiv (A, B, C, D, E, F) bind(c)
   else
     f_F_ptr => null()
   endif
-  call etdiv(A=f_A_ptr, B=f_B_ptr, C=f_C_ptr, D=f_D_ptr, E=f_E_ptr, F=f_F_ptr)
+  call etdiv(f_A_ptr, f_B_ptr, f_C_ptr, f_D_ptr, f_E_ptr, f_F_ptr)
 
   ! inout: f_A 0D_NOT_real
   ! no output conversion for f_A
@@ -10770,8 +11028,8 @@ subroutine fortran_evaluate_array_index (err_flag, delim_list1, word2, delim_lis
   endif
   call c_f_pointer(delim_list2, f_delim_list2_ptr, [huge(0)])
   call to_f_str(f_delim_list2_ptr, f_delim_list2)
-  f_this_index = evaluate_array_index(err_flag=f_err_flag, delim_list1=f_delim_list1, &
-      word2=f_word2, delim_list2=f_delim_list2, delim2=f_delim2)
+  f_this_index = evaluate_array_index(f_err_flag, f_delim_list1, f_word2, f_delim_list2, &
+      f_delim2)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -10805,7 +11063,7 @@ subroutine fortran_evaluate_logical (word, iostat, this_logic) bind(c)
   if (.not. c_associated(word)) return
   call c_f_pointer(word, f_word_ptr, [huge(0)])
   call to_f_str(f_word_ptr, f_word)
-  f_this_logic = evaluate_logical(word=f_word, iostat=f_iostat)
+  f_this_logic = evaluate_logical(f_word, f_iostat)
 
   ! out: f_iostat 0D_NOT_integer
   call c_f_pointer(iostat, f_iostat_ptr)
@@ -10864,8 +11122,8 @@ subroutine fortran_exact_bend_edge_kick (ele, param, particle_at, orb, mat6, mak
   else
     f_make_matrix_native_ptr => null()
   endif
-  call exact_bend_edge_kick(ele=f_ele, param=f_param, particle_at=f_particle_at, orb=f_orb, &
-      mat6=f_mat6, make_matrix=f_make_matrix_native_ptr)
+  call exact_bend_edge_kick(f_ele, f_param, f_particle_at, f_orb, f_mat6, &
+      f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_exp_bessi0 (t, B1, B2, func_retval__) bind(c)
@@ -10889,7 +11147,7 @@ subroutine fortran_exp_bessi0 (t, B1, B2, func_retval__) bind(c)
   f_B1 = B1
   ! in: f_B2 0D_NOT_real
   f_B2 = B2
-  f_func_retval__ = exp_bessi0(t=f_t, B1=f_B1, B2=f_B2)
+  f_func_retval__ = exp_bessi0(f_t, f_B1, f_B2)
 
   ! out: f_func_retval__ 0D_NOT_real
   call c_f_pointer(func_retval__, f_func_retval___ptr)
@@ -10944,8 +11202,8 @@ subroutine fortran_expect_one_of (delim_list, check_input_delim, ele_name, delim
   else
     f_delim_found_native_ptr => null()
   endif
-  f_is_ok = expect_one_of(delim_list=f_delim_list, check_input_delim=f_check_input_delim, &
-      ele_name=f_ele_name, delim=f_delim, delim_found=f_delim_found_native_ptr)
+  f_is_ok = expect_one_of(f_delim_list, f_check_input_delim, f_ele_name, f_delim, &
+      f_delim_found_native_ptr)
 
   ! inout: f_delim 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -11004,9 +11262,8 @@ subroutine fortran_expect_this (expecting, check_delim, call_check, err_str, ele
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_is_ok = expect_this(expecting=f_expecting, check_delim=f_check_delim, &
-      call_check=f_call_check, err_str=f_err_str, ele=f_ele, delim=f_delim, &
-      delim_found=f_delim_found)
+  f_is_ok = expect_this(f_expecting, f_check_delim, f_call_check, f_err_str, f_ele, f_delim, &
+      f_delim_found)
 
   ! out: f_delim 0D_NOT_character
   call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1]) ! output-only string
@@ -11045,7 +11302,7 @@ subroutine fortran_expression_stack_to_string (stack, polish, str) bind(c)
   else
     f_polish_native_ptr => null()
   endif
-  f_str = expression_stack_to_string(stack=f_stack%data, polish=f_polish_native_ptr)
+  f_str = expression_stack_to_string(f_stack%data, f_polish_native_ptr)
 
   ! out: f_str 0D_ALLOC_character
   call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1]) ! output-only string
@@ -11089,8 +11346,8 @@ subroutine fortran_expression_stack_value (stack, err_flag, err_str, var, use_ol
   else
     f_use_old_native_ptr => null()
   endif
-  f_value = expression_stack_value(stack=f_stack%data, err_flag=f_err_flag, err_str=f_err_str, &
-      var=f_var%data, use_old=f_use_old_native_ptr)
+  f_value = expression_stack_value(f_stack%data, f_err_flag, f_err_str, f_var%data, &
+      f_use_old_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -11134,8 +11391,7 @@ subroutine fortran_expression_string_to_stack (string, stack, n_stack, err_flag,
   call to_f_str(f_string_ptr, f_string)
   !! container type array (1D_ALLOC_type)
   if (c_associated(stack))   call c_f_pointer(stack, f_stack)
-  call expression_string_to_stack(string=f_string, stack=f_stack%data, n_stack=f_n_stack, &
-      err_flag=f_err_flag, err_str=f_err_str)
+  call expression_string_to_stack(f_string, f_stack%data, f_n_stack, f_err_flag, f_err_str)
 
   ! out: f_n_stack 0D_NOT_integer
   call c_f_pointer(n_stack, f_n_stack_ptr)
@@ -11180,8 +11436,7 @@ subroutine fortran_expression_string_to_tree (string, root_tree, err_flag, err_s
     return
   endif
   call c_f_pointer(root_tree, f_root_tree)
-  call expression_string_to_tree(string=f_string, root_tree=f_root_tree, err_flag=f_err_flag, &
-      err_str=f_err_str)
+  call expression_string_to_tree(f_string, f_root_tree, f_err_flag, f_err_str)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -11232,8 +11487,8 @@ subroutine fortran_expression_tree_to_string (tree, include_root, n_node, parent
   endif
   ! in: f_parent 0D_NOT_type
   if (c_associated(parent))   call c_f_pointer(parent, f_parent)
-  f_str_out = expression_tree_to_string(tree=f_tree, include_root=f_include_root_native_ptr, &
-      n_node=f_n_node_ptr, parent=f_parent)
+  f_str_out = expression_tree_to_string(f_tree, f_include_root_native_ptr, f_n_node_ptr, &
+      f_parent)
 
   ! out: f_str_out 0D_ALLOC_character
   call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1]) ! output-only string
@@ -11275,6 +11530,14 @@ subroutine fortran_expression_value (expression, err_flag, err_str, var, use_old
   endif
   call c_f_pointer(expression, f_expression_ptr, [huge(0)])
   call to_f_str(f_expression_ptr, f_expression)
+  ! out: f_err_str 0D_NOT_character
+  if (c_associated(err_str)) then
+    call c_f_pointer(err_str, f_err_str_ptr, [huge(0)])
+    call to_f_str(f_err_str_ptr, f_err_str)
+    f_err_str_call_ptr => f_err_str
+  else
+    f_err_str_call_ptr => null()
+  endif
   !! container type array (1D_ALLOC_type)
   if (c_associated(var))   call c_f_pointer(var, f_var)
   ! in: f_use_old 0D_NOT_logical
@@ -11285,8 +11548,8 @@ subroutine fortran_expression_value (expression, err_flag, err_str, var, use_old
   else
     f_use_old_native_ptr => null()
   endif
-  f_value = expression_value(expression=f_expression, err_flag=f_err_flag, &
-      err_str=f_err_str_call_ptr, var=f_var%data, use_old=f_use_old_native_ptr)
+  f_value = expression_value(f_expression, f_err_flag, f_err_str_call_ptr, f_var%data, &
+      f_use_old_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -11324,7 +11587,7 @@ subroutine fortran_fft1 (a, b, n, isn, ierr) bind(c)
   f_n = n
   ! in: f_isn 0D_NOT_integer
   f_isn = isn
-  call fft1(a=f_a%data, b=f_b%data, n=f_n, isn=f_isn, ierr=f_ierr)
+  call fft1(f_a%data, f_b%data, f_n, f_isn, f_ierr)
 
   ! out: f_ierr 0D_NOT_integer
   call c_f_pointer(ierr, f_ierr_ptr)
@@ -11352,7 +11615,7 @@ subroutine fortran_field_attribute_free (ele, attrib_name, free) bind(c)
   if (.not. c_associated(attrib_name)) return
   call c_f_pointer(attrib_name, f_attrib_name_ptr, [huge(0)])
   call to_f_str(f_attrib_name_ptr, f_attrib_name)
-  f_free = field_attribute_free(ele=f_ele, attrib_name=f_attrib_name)
+  f_free = field_attribute_free(f_ele, f_attrib_name)
 
   ! out: f_free 0D_NOT_logical
   call c_f_pointer(free, f_free_ptr)
@@ -11374,7 +11637,7 @@ subroutine fortran_finalize_reflectivity_table (table, in_degrees) bind(c)
   call c_f_pointer(table, f_table)
   ! in: f_in_degrees 0D_NOT_logical
   f_in_degrees = in_degrees
-  call finalize_reflectivity_table(table=f_table, in_degrees=f_in_degrees)
+  call finalize_reflectivity_table(f_table, f_in_degrees)
 
 end subroutine
 subroutine fortran_find_element_ends (ele, ele1, ele2, ix_multipass) bind(c)
@@ -11408,7 +11671,7 @@ subroutine fortran_find_element_ends (ele, ele1, ele2, ix_multipass) bind(c)
   else
     f_ix_multipass_ptr => null()
   endif
-  call find_element_ends(ele=f_ele, ele1=f_ele1, ele2=f_ele2, ix_multipass=f_ix_multipass_ptr)
+  call find_element_ends(f_ele, f_ele1, f_ele2, f_ix_multipass_ptr)
 
   ! out: f_ele1 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
@@ -11438,7 +11701,7 @@ subroutine fortran_find_fwhm (bound, args, fwhm) bind(c)
   else
     f_args_ptr => null()
   endif
-  call find_fwhm(bound=f_bound, args=f_args, fwhm=f_fwhm)
+  call find_fwhm(f_bound, f_args, f_fwhm)
 
   ! out: f_fwhm 0D_NOT_real
   call c_f_pointer(fwhm, f_fwhm_ptr)
@@ -11489,8 +11752,8 @@ subroutine fortran_find_matching_fieldmap (file_name, ele, fm_type, match_ele, i
   else
     f_ignore_slaves_native_ptr => null()
   endif
-  call find_matching_fieldmap(file_name=f_file_name, ele=f_ele, fm_type=f_fm_type, &
-      match_ele=f_match_ele, ix_field=f_ix_field, ignore_slaves=f_ignore_slaves_native_ptr)
+  call find_matching_fieldmap(f_file_name, f_ele, f_fm_type, f_match_ele, f_ix_field, &
+      f_ignore_slaves_native_ptr)
 
   ! out: f_match_ele 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
@@ -11525,7 +11788,7 @@ subroutine fortran_find_normalization (bound, p0, args, pnrml) bind(c)
   else
     f_args_ptr => null()
   endif
-  call find_normalization(bound=f_bound, p0=f_p0, args=f_args, pnrml=f_pnrml)
+  call find_normalization(f_bound, f_p0, f_args, f_pnrml)
 
   ! out: f_pnrml 0D_NOT_real
   call c_f_pointer(pnrml, f_pnrml_ptr)
@@ -11555,13 +11818,12 @@ subroutine fortran_floor_angles_to_w_mat (theta, phi, psi, w_mat, w_mat_inv) bin
   f_phi = phi
   ! in: f_psi 0D_NOT_real
   f_psi = psi
-  call floor_angles_to_w_mat(theta=f_theta, phi=f_phi, psi=f_psi, w_mat=f_w_mat, &
-      w_mat_inv=f_w_mat_inv)
+  call floor_angles_to_w_mat(f_theta, f_phi, f_psi, f_w_mat, f_w_mat_inv)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=1330, definition='real(rp), optional :: w_mat(3,3), w_mat_inv(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='Orientation matrix.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=1332, definition='real(rp), optional :: w_mat(3,3), w_mat_inv(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='Orientation matrix.', doc_data_type='float', doc_is_optional=False)
   ! out: f_w_mat_inv 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat_inv', c_name='w_mat_inv', python_name='w_mat_inv', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=1330, definition='real(rp), optional :: w_mat(3,3), w_mat_inv(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat_inv', comment='', default=None), intent='out', description='Inverse Orientation matrix.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat_inv', c_name='w_mat_inv', python_name='w_mat_inv', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=1332, definition='real(rp), optional :: w_mat(3,3), w_mat_inv(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat_inv', comment='', default=None), intent='out', description='Inverse Orientation matrix.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_floor_w_mat_to_angles (w_mat, theta, phi, psi, floor0) bind(c)
 
@@ -11593,8 +11855,7 @@ subroutine fortran_floor_w_mat_to_angles (w_mat, theta, phi, psi, floor0) bind(c
   endif
   ! in: f_floor0 0D_NOT_type
   if (c_associated(floor0))   call c_f_pointer(floor0, f_floor0)
-  call floor_w_mat_to_angles(w_mat=f_w_mat, theta=f_theta, phi=f_phi, psi=f_psi, &
-      floor0=f_floor0)
+  call floor_w_mat_to_angles(f_w_mat, f_theta, f_phi, f_psi, f_floor0)
 
   ! out: f_theta 0D_NOT_real
   call c_f_pointer(theta, f_theta_ptr)
@@ -11628,8 +11889,7 @@ subroutine fortran_form_complex_taylor (re_taylor, im_taylor, complex_taylor) bi
   ! out: f_complex_taylor 0D_NOT_type
   if (.not. c_associated(complex_taylor)) return
   call c_f_pointer(complex_taylor, f_complex_taylor)
-  call form_complex_taylor(re_taylor=f_re_taylor, im_taylor=f_im_taylor, &
-      complex_taylor=f_complex_taylor)
+  call form_complex_taylor(f_re_taylor, f_im_taylor, f_complex_taylor)
 
   ! out: f_complex_taylor 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -11659,6 +11919,14 @@ subroutine fortran_form_digested_bmad_file_name (lat_file, digested_file, full_l
   if (.not. c_associated(lat_file)) return
   call c_f_pointer(lat_file, f_lat_file_ptr, [huge(0)])
   call to_f_str(f_lat_file_ptr, f_lat_file)
+  ! out: f_full_lat_file 0D_NOT_character
+  if (c_associated(full_lat_file)) then
+    call c_f_pointer(full_lat_file, f_full_lat_file_ptr, [huge(0)])
+    call to_f_str(f_full_lat_file_ptr, f_full_lat_file)
+    f_full_lat_file_call_ptr => f_full_lat_file
+  else
+    f_full_lat_file_call_ptr => null()
+  endif
   ! in: f_use_line 0D_NOT_character
   if (c_associated(use_line)) then
     call c_f_pointer(use_line, f_use_line_ptr, [huge(0)])
@@ -11667,8 +11935,8 @@ subroutine fortran_form_digested_bmad_file_name (lat_file, digested_file, full_l
   else
     f_use_line_call_ptr => null()
   endif
-  call form_digested_bmad_file_name(lat_file=f_lat_file, digested_file=f_digested_file, &
-      full_lat_file=f_full_lat_file_call_ptr, use_line=f_use_line_call_ptr)
+  call form_digested_bmad_file_name(f_lat_file, f_digested_file, f_full_lat_file_call_ptr, &
+      f_use_line_call_ptr)
 
   ! out: f_digested_file 0D_NOT_character
   call c_f_pointer(digested_file, f_digested_file_ptr, [len_trim(f_digested_file) + 1]) ! output-only string
@@ -11701,7 +11969,7 @@ subroutine fortran_fringe_here (ele, orbit, particle_at, is_here) bind(c)
   call c_f_pointer(orbit, f_orbit)
   ! in: f_particle_at 0D_NOT_integer
   f_particle_at = particle_at
-  f_is_here = fringe_here(ele=f_ele, orbit=f_orbit, particle_at=f_particle_at)
+  f_is_here = fringe_here(f_ele, f_orbit, f_particle_at)
 
   ! out: f_is_here 0D_NOT_logical
   call c_f_pointer(is_here, f_is_here_ptr)
@@ -11742,7 +12010,7 @@ subroutine fortran_g_bend_from_em_field (b, e, orbit, g_bend) bind(c)
   ! in: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  f_g_bend = g_bend_from_em_field(B=f_b, E=f_e, orbit=f_orbit)
+  f_g_bend = g_bend_from_em_field(f_b, f_e, f_orbit)
 
   ! out: f_g_bend 1D_NOT_real
   if (c_associated(g_bend)) then
@@ -11787,8 +12055,8 @@ subroutine fortran_g_bending_strength_from_em_field (ele, param, s_rel, orbit, l
   call c_f_pointer(orbit, f_orbit)
   ! in: f_local_ref_frame 0D_NOT_logical
   f_local_ref_frame = local_ref_frame
-  call g_bending_strength_from_em_field(ele=f_ele, param=f_param, s_rel=f_s_rel, orbit=f_orbit, &
-      local_ref_frame=f_local_ref_frame, g=f_g, dg=f_dg)
+  call g_bending_strength_from_em_field(f_ele, f_param, f_s_rel, f_orbit, f_local_ref_frame, &
+      f_g, f_dg)
 
   ! out: f_g 1D_NOT_real
   if (c_associated(g)) then
@@ -11796,7 +12064,7 @@ subroutine fortran_g_bending_strength_from_em_field (ele, param, s_rel, orbit, l
     f_g_ptr = f_g(:)
   endif
   ! out: f_dg 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_dg', c_name='dg', python_name='dg', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=1358, definition='real(rp), optional :: dg(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='dg', comment='', default=None), intent='out', description='dg(:)/dr gradient. Takes into account dg_x/dx in a bend due to curvilinear coords.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_dg', c_name='dg', python_name='dg', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=1360, definition='real(rp), optional :: dg(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='dg', comment='', default=None), intent='out', description='dg(:)/dr gradient. Takes into account dg_x/dx in a bend due to curvilinear coords.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_g_integrals_calc (lat) bind(c)
 
@@ -11809,7 +12077,7 @@ subroutine fortran_g_integrals_calc (lat) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call g_integrals_calc(lat=f_lat)
+  call g_integrals_calc(f_lat)
 
 end subroutine
 subroutine fortran_gamma_ref (ele, gamma) bind(c)
@@ -11827,7 +12095,7 @@ subroutine fortran_gamma_ref (ele, gamma) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_gamma = gamma_ref(ele=f_ele)
+  f_gamma = gamma_ref(f_ele)
 
   ! out: f_gamma 0D_NOT_real
   call c_f_pointer(gamma, f_gamma_ptr)
@@ -11858,7 +12126,7 @@ subroutine fortran_gen_grad1_to_em_taylor (ele, gen_grad, iz, em_taylor) bind(c)
   f_iz = iz
   !! type array (1D_NOT_type)
   call c_f_pointer(em_taylor, f_em_taylor, [3])
-  call gen_grad1_to_em_taylor(ele=f_ele, gen_grad=f_gen_grad, iz=f_iz, em_taylor=f_em_taylor)
+  call gen_grad1_to_em_taylor(f_ele, f_gen_grad, f_iz, f_em_taylor)
 
   ! out: f_em_taylor 1D_NOT_type
   ! TODO may require output conversion? 1D_NOT_type
@@ -11888,8 +12156,7 @@ subroutine fortran_gen_grad_at_s_to_em_taylor (ele, gen_grad, s_pos, em_taylor) 
   f_s_pos = s_pos
   !! type array (1D_NOT_type)
   call c_f_pointer(em_taylor, f_em_taylor, [3])
-  call gen_grad_at_s_to_em_taylor(ele=f_ele, gen_grad=f_gen_grad, s_pos=f_s_pos, &
-      em_taylor=f_em_taylor)
+  call gen_grad_at_s_to_em_taylor(f_ele, f_gen_grad, f_s_pos, f_em_taylor)
 
   ! out: f_em_taylor 1D_NOT_type
   ! TODO may require output conversion? 1D_NOT_type
@@ -11931,7 +12198,7 @@ subroutine fortran_gen_grad_field (deriv, gg, rho, theta, field) bind(c)
   else
     f_theta_ptr => null()
   endif
-  f_field = gen_grad_field(deriv=f_deriv%data, gg=f_gg, rho=f_rho_ptr, theta=f_theta_ptr)
+  f_field = gen_grad_field(f_deriv%data, f_gg, f_rho_ptr, f_theta_ptr)
 
   ! inout: f_rho 0D_NOT_real
   ! no output conversion for f_rho
@@ -11966,7 +12233,7 @@ subroutine fortran_get_bl_from_fwhm (bound, args, sigma) bind(c)
   else
     f_args_ptr => null()
   endif
-  call get_bl_from_fwhm(bound=f_bound, args=f_args, sigma=f_sigma)
+  call get_bl_from_fwhm(f_bound, f_args, f_sigma)
 
   ! out: f_sigma 0D_NOT_real
   call c_f_pointer(sigma, f_sigma_ptr)
@@ -12004,7 +12271,7 @@ subroutine fortran_get_called_file (delim, call_file, err) bind(c)
   else
     f_err_native_ptr => null()
   endif
-  call get_called_file(delim=f_delim, call_file=f_call_file, err=f_err_native_ptr)
+  call get_called_file(f_delim, f_call_file, f_err_native_ptr)
 
   ! inout: f_delim 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -12050,8 +12317,7 @@ subroutine fortran_get_emit_from_sigma_mat (sigma_mat, normal, Nmat, err_flag) b
   else
     f_Nmat_ptr => null()
   endif
-  call get_emit_from_sigma_mat(sigma_mat=f_sigma_mat, normal=f_normal, Nmat=f_Nmat, &
-      err_flag=f_err_flag)
+  call get_emit_from_sigma_mat(f_sigma_mat, f_normal, f_Nmat, f_err_flag)
 
   ! out: f_normal 1D_NOT_real
   if (c_associated(normal)) then
@@ -12136,9 +12402,8 @@ subroutine fortran_get_next_word (word, ix_word, delim_list, delim, delim_found,
   else
     f_err_flag_native_ptr => null()
   endif
-  call get_next_word(word=f_word, ix_word=f_ix_word, delim_list=f_delim_list, delim=f_delim, &
-      delim_found=f_delim_found, upper_case_word=f_upper_case_word_native_ptr, &
-      call_check=f_call_check_native_ptr, err_flag=f_err_flag_native_ptr)
+  call get_next_word(f_word, f_ix_word, f_delim_list, f_delim, f_delim_found, &
+      f_upper_case_word_native_ptr, f_call_check_native_ptr, f_err_flag_native_ptr)
 
 end subroutine
 subroutine fortran_get_slave_list (lord, slaves, n_slave) bind(c)
@@ -12160,7 +12425,7 @@ subroutine fortran_get_slave_list (lord, slaves, n_slave) bind(c)
   call c_f_pointer(lord, f_lord)
   !! container type array (1D_ALLOC_type)
   if (c_associated(slaves))   call c_f_pointer(slaves, f_slaves)
-  call get_slave_list(lord=f_lord, slaves=f_slaves%data, n_slave=f_n_slave)
+  call get_slave_list(f_lord, f_slaves%data, f_n_slave)
 
   ! out: f_n_slave 0D_NOT_integer
   call c_f_pointer(n_slave, f_n_slave_ptr)
@@ -12204,8 +12469,7 @@ subroutine fortran_gpt_field_grid_scaling (ele, dimensions, field_scale, ref_tim
   else
     f_ref_time_ptr => null()
   endif
-  call gpt_field_grid_scaling(ele=f_ele, dimensions=f_dimensions_ptr, &
-      field_scale=f_field_scale_ptr, ref_time=f_ref_time_ptr)
+  call gpt_field_grid_scaling(f_ele, f_dimensions_ptr, f_field_scale_ptr, f_ref_time_ptr)
 
   ! inout: f_dimensions 0D_NOT_integer
   ! no output conversion for f_dimensions
@@ -12234,7 +12498,7 @@ subroutine fortran_gpt_max_field_reference (pt0, ele, field_value) bind(c)
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_field_value = gpt_max_field_reference(pt0=f_pt0, ele=f_ele)
+  f_field_value = gpt_max_field_reference(f_pt0, f_ele)
 
   ! out: f_field_value 0D_NOT_real
   call c_f_pointer(field_value, f_field_value_ptr)
@@ -12279,8 +12543,7 @@ subroutine fortran_gpt_to_particle_bunch (gpt_file, ele, bunch, err_flag) bind(c
     return
   endif
   call c_f_pointer(bunch, f_bunch)
-  call gpt_to_particle_bunch(gpt_file=f_gpt_file, ele=f_ele, bunch=f_bunch, &
-      err_flag=f_err_flag)
+  call gpt_to_particle_bunch(f_gpt_file, f_ele, f_bunch, f_err_flag)
 
   ! out: f_bunch 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -12308,7 +12571,7 @@ subroutine fortran_gradient_shift_sr_wake (ele, param, grad_shift) bind(c)
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  f_grad_shift = gradient_shift_sr_wake(ele=f_ele, param=f_param)
+  f_grad_shift = gradient_shift_sr_wake(f_ele, f_param)
 
   ! out: f_grad_shift 0D_NOT_real
   call c_f_pointer(grad_shift, f_grad_shift_ptr)
@@ -12394,10 +12657,8 @@ subroutine fortran_grid_field_interpolate (ele, orbit, grid, g_field, err_flag, 
   else
     f_print_err_native_ptr => null()
   endif
-  call grid_field_interpolate(ele=f_ele, orbit=f_orbit, grid=f_grid, g_field=f_g_field, &
-      err_flag=f_err_flag, x1=f_x1, x2=f_x2_ptr, x3=f_x3_ptr, &
-      allow_s_out_of_bounds=f_allow_s_out_of_bounds_native_ptr, &
-      print_err=f_print_err_native_ptr)
+  call grid_field_interpolate(f_ele, f_orbit, f_grid, f_g_field, f_err_flag, f_x1, f_x2_ptr, &
+      f_x3_ptr, f_allow_s_out_of_bounds_native_ptr, f_print_err_native_ptr)
 
   ! out: f_g_field 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -12452,8 +12713,8 @@ subroutine fortran_hard_multipole_edge_kick (ele, param, particle_at, orbit, mat
   else
     f_make_matrix_native_ptr => null()
   endif
-  call hard_multipole_edge_kick(ele=f_ele, param=f_param, particle_at=f_particle_at, &
-      orbit=f_orbit, mat6=f_mat6, make_matrix=f_make_matrix_native_ptr)
+  call hard_multipole_edge_kick(f_ele, f_param, f_particle_at, f_orbit, f_mat6, &
+      f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_has_attribute (ele, attrib, has_it) bind(c)
@@ -12478,7 +12739,7 @@ subroutine fortran_has_attribute (ele, attrib, has_it) bind(c)
   if (.not. c_associated(attrib)) return
   call c_f_pointer(attrib, f_attrib_ptr, [huge(0)])
   call to_f_str(f_attrib_ptr, f_attrib)
-  f_has_it = has_attribute(ele=f_ele, attrib=f_attrib)
+  f_has_it = has_attribute(f_ele, f_attrib)
 
   ! inout: f_attrib 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -12501,7 +12762,7 @@ subroutine fortran_has_curvature (phot_ele, curved) bind(c)
   ! in: f_phot_ele 0D_NOT_type
   if (.not. c_associated(phot_ele)) return
   call c_f_pointer(phot_ele, f_phot_ele)
-  f_curved = has_curvature(phot_ele=f_phot_ele)
+  f_curved = has_curvature(f_phot_ele)
 
   ! out: f_curved 0D_NOT_logical
   call c_f_pointer(curved, f_curved_ptr)
@@ -12522,7 +12783,7 @@ subroutine fortran_has_orientation_attributes (ele, has_attribs) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_has_attribs = has_orientation_attributes(ele=f_ele)
+  f_has_attribs = has_orientation_attributes(f_ele)
 
   ! out: f_has_attribs 0D_NOT_logical
   call c_f_pointer(has_attribs, f_has_attribs_ptr)
@@ -12588,9 +12849,8 @@ subroutine fortran_hdf5_write_beam (file_name, bunches, append, error, lat, aliv
   else
     f_alive_only_native_ptr => null()
   endif
-  call hdf5_write_beam(file_name=f_file_name, bunches=f_bunches%data, &
-      append=f_append_native_ptr, error=f_error_native_ptr, lat=f_lat, &
-      alive_only=f_alive_only_native_ptr)
+  call hdf5_write_beam(f_file_name, f_bunches%data, f_append_native_ptr, f_error_native_ptr, &
+      f_lat, f_alive_only_native_ptr)
 
   ! inout: f_file_name 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -12651,8 +12911,7 @@ subroutine fortran_hdf5_write_grid_field (file_name, ele, g_field, err_flag) bin
   else
     f_err_flag_native_ptr => null()
   endif
-  call hdf5_write_grid_field(file_name=f_file_name, ele=f_ele, g_field=f_g_field%data, &
-      err_flag=f_err_flag_native_ptr)
+  call hdf5_write_grid_field(f_file_name, f_ele, f_g_field%data, f_err_flag_native_ptr)
 
   ! inout: f_file_name 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -12714,8 +12973,8 @@ subroutine fortran_hwang_bend_edge_kick (ele, param, particle_at, orb, mat6, mak
   else
     f_make_matrix_native_ptr => null()
   endif
-  call hwang_bend_edge_kick(ele=f_ele, param=f_param, particle_at=f_particle_at, orb=f_orb, &
-      mat6=f_mat6, make_matrix=f_make_matrix_native_ptr)
+  call hwang_bend_edge_kick(f_ele, f_param, f_particle_at, f_orb, f_mat6, &
+      f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_ibs_matrix_c (sigma_mat, tail_cut, tau, energy, n_part, species, ibs_mat) &
@@ -12787,8 +13046,8 @@ subroutine fortran_ibs_matrix_c (sigma_mat, tail_cut, tau, energy, n_part, speci
   else
     f_species_ptr => null()
   endif
-  f_ibs_mat = ibs_matrix_c(sigma_mat=f_sigma_mat, tail_cut=f_tail_cut_native_ptr, &
-      tau=f_tau_ptr, energy=f_energy_ptr, n_part=f_n_part_ptr, species=f_species_ptr)
+  f_ibs_mat = ibs_matrix_c(f_sigma_mat, f_tail_cut_native_ptr, f_tau_ptr, f_energy_ptr, &
+      f_n_part_ptr, f_species_ptr)
 
   ! inout: f_tail_cut 0D_NOT_logical
   if (c_associated(tail_cut)) then
@@ -12880,8 +13139,7 @@ subroutine fortran_igfcoulombfun (u, v, w, gam, dx, dy, dz, res) bind(c)
   else
     f_dz_ptr => null()
   endif
-  f_res = igfcoulombfun(u=f_u_ptr, v=f_v_ptr, w=f_w_ptr, gam=f_gam_ptr, dx=f_dx_ptr, &
-      dy=f_dy_ptr, dz=f_dz_ptr)
+  f_res = igfcoulombfun(f_u_ptr, f_v_ptr, f_w_ptr, f_gam_ptr, f_dx_ptr, f_dy_ptr, f_dz_ptr)
 
   ! inout: f_u 0D_NOT_real
   ! no output conversion for f_u
@@ -12973,8 +13231,7 @@ subroutine fortran_igfexfun (u, v, w, gam, dx, dy, dz, res) bind(c)
   else
     f_dz_ptr => null()
   endif
-  f_res = igfexfun(u=f_u_ptr, v=f_v_ptr, w=f_w_ptr, gam=f_gam_ptr, dx=f_dx_ptr, dy=f_dy_ptr, &
-      dz=f_dz_ptr)
+  f_res = igfexfun(f_u_ptr, f_v_ptr, f_w_ptr, f_gam_ptr, f_dx_ptr, f_dy_ptr, f_dz_ptr)
 
   ! inout: f_u 0D_NOT_real
   ! no output conversion for f_u
@@ -13066,8 +13323,7 @@ subroutine fortran_igfeyfun (u, v, w, gam, dx, dy, dz, res) bind(c)
   else
     f_dz_ptr => null()
   endif
-  f_res = igfeyfun(u=f_u_ptr, v=f_v_ptr, w=f_w_ptr, gam=f_gam_ptr, dx=f_dx_ptr, dy=f_dy_ptr, &
-      dz=f_dz_ptr)
+  f_res = igfeyfun(f_u_ptr, f_v_ptr, f_w_ptr, f_gam_ptr, f_dx_ptr, f_dy_ptr, f_dz_ptr)
 
   ! inout: f_u 0D_NOT_real
   ! no output conversion for f_u
@@ -13159,8 +13415,7 @@ subroutine fortran_igfezfun (u, v, w, gam, dx, dy, dz, res) bind(c)
   else
     f_dz_ptr => null()
   endif
-  f_res = igfezfun(u=f_u_ptr, v=f_v_ptr, w=f_w_ptr, gam=f_gam_ptr, dx=f_dx_ptr, dy=f_dy_ptr, &
-      dz=f_dz_ptr)
+  f_res = igfezfun(f_u_ptr, f_v_ptr, f_w_ptr, f_gam_ptr, f_dx_ptr, f_dy_ptr, f_dz_ptr)
 
   ! inout: f_u 0D_NOT_real
   ! no output conversion for f_u
@@ -13223,8 +13478,8 @@ subroutine fortran_init_attribute_name1 (ix_key, ix_attrib, name, attrib_state, 
   else
     f_override_native_ptr => null()
   endif
-  call init_attribute_name1(ix_key=f_ix_key, ix_attrib=f_ix_attrib, name=f_name, &
-      attrib_state=f_attrib_state_ptr, override=f_override_native_ptr)
+  call init_attribute_name1(f_ix_key, f_ix_attrib, f_name, f_attrib_state_ptr, &
+      f_override_native_ptr)
 
 end subroutine
 subroutine fortran_init_attribute_name_array () bind(c)
@@ -13296,6 +13551,12 @@ subroutine fortran_init_beam_distribution (ele, param, beam_init, beam, err_flag
     return
   endif
   call c_f_pointer(beam, f_beam)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
   ! in: f_modes 0D_NOT_type
   if (c_associated(modes))   call c_f_pointer(modes, f_modes)
   ! out: f_beam_init_set 0D_NOT_type
@@ -13316,10 +13577,8 @@ subroutine fortran_init_beam_distribution (ele, param, beam_init, beam, err_flag
   else
     f_conserve_momentum_native_ptr => null()
   endif
-  call init_beam_distribution(ele=f_ele, param=f_param, beam_init=f_beam_init, beam=f_beam, &
-      err_flag=f_err_flag, modes=f_modes, beam_init_set=f_beam_init_set, &
-      print_p0c_shift_warning=f_print_p0c_shift_warning_native_ptr, &
-      conserve_momentum=f_conserve_momentum_native_ptr)
+  call init_beam_distribution(f_ele, f_param, f_beam_init, f_beam, f_err_flag, f_modes, &
+      f_beam_init_set, f_print_p0c_shift_warning_native_ptr, f_conserve_momentum_native_ptr)
 
   ! out: f_beam 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -13352,7 +13611,7 @@ subroutine fortran_init_bmad_parser_common (lat) bind(c)
   ! ** End of parameters **
   ! inout: f_lat 0D_NOT_type
   if (c_associated(lat))   call c_f_pointer(lat, f_lat)
-  call init_bmad_parser_common(lat=f_lat)
+  call init_bmad_parser_common(f_lat)
 
 end subroutine
 subroutine fortran_init_bunch_distribution (ele, param, beam_init, ix_bunch, bunch, err_flag, &
@@ -13421,6 +13680,12 @@ subroutine fortran_init_bunch_distribution (ele, param, beam_init, ix_bunch, bun
     return
   endif
   call c_f_pointer(bunch, f_bunch)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
   ! in: f_modes 0D_NOT_type
   if (c_associated(modes))   call c_f_pointer(modes, f_modes)
   ! out: f_beam_init_used 0D_NOT_type
@@ -13441,11 +13706,9 @@ subroutine fortran_init_bunch_distribution (ele, param, beam_init, ix_bunch, bun
   else
     f_conserve_momentum_native_ptr => null()
   endif
-  call init_bunch_distribution(ele=f_ele, param=f_param, beam_init=f_beam_init, &
-      ix_bunch=f_ix_bunch, bunch=f_bunch, err_flag=f_err_flag, modes=f_modes, &
-      beam_init_used=f_beam_init_used, &
-      print_p0c_shift_warning=f_print_p0c_shift_warning_native_ptr, &
-      conserve_momentum=f_conserve_momentum_native_ptr)
+  call init_bunch_distribution(f_ele, f_param, f_beam_init, f_ix_bunch, f_bunch, f_err_flag, &
+      f_modes, f_beam_init_used, f_print_p0c_shift_warning_native_ptr, &
+      f_conserve_momentum_native_ptr)
 
   ! out: f_bunch 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -13490,8 +13753,7 @@ subroutine fortran_init_complex_taylor_series (complex_taylor, n_term, save) bin
   else
     f_save_native_ptr => null()
   endif
-  call init_complex_taylor_series(complex_taylor=f_complex_taylor, n_term=f_n_term, &
-      save=f_save_native_ptr)
+  call init_complex_taylor_series(f_complex_taylor, f_n_term, f_save_native_ptr)
 
 end subroutine
 subroutine fortran_init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, &
@@ -13611,10 +13873,9 @@ subroutine fortran_init_coord1 (orb, vec, ele, element_end, particle, direction,
   else
     f_random_on_native_ptr => null()
   endif
-  call init_coord1(orb=f_orb, vec=f_vec, ele=f_ele, element_end=f_element_end_ptr, &
-      particle=f_particle_ptr, direction=f_direction_ptr, E_photon=f_E_photon_ptr, &
-      t_offset=f_t_offset_ptr, shift_vec6=f_shift_vec6_native_ptr, spin=f_spin, &
-      s_pos=f_s_pos_ptr, random_on=f_random_on_native_ptr)
+  call init_coord(f_orb, f_vec, f_ele, f_element_end_ptr, f_particle_ptr, f_direction_ptr, &
+      f_E_photon_ptr, f_t_offset_ptr, f_shift_vec6_native_ptr, f_spin, f_s_pos_ptr, &
+      f_random_on_native_ptr)
 
 end subroutine
 subroutine fortran_init_coord2 (orb_out, orb_in, ele, element_end, particle, direction, &
@@ -13730,10 +13991,9 @@ subroutine fortran_init_coord2 (orb_out, orb_in, ele, element_end, particle, dir
   else
     f_random_on_native_ptr => null()
   endif
-  call init_coord2(orb_out=f_orb_out, orb_in=f_orb_in, ele=f_ele, &
-      element_end=f_element_end_ptr, particle=f_particle_ptr, direction=f_direction_ptr, &
-      E_photon=f_E_photon_ptr, t_offset=f_t_offset_ptr, shift_vec6=f_shift_vec6_native_ptr, &
-      spin=f_spin, s_pos=f_s_pos_ptr, random_on=f_random_on_native_ptr)
+  call init_coord(f_orb_out, f_orb_in, f_ele, f_element_end_ptr, f_particle_ptr, &
+      f_direction_ptr, f_E_photon_ptr, f_t_offset_ptr, f_shift_vec6_native_ptr, f_spin, &
+      f_s_pos_ptr, f_random_on_native_ptr)
 
   ! out: f_orb_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -13823,9 +14083,8 @@ subroutine fortran_init_coord3 (orb, ele, element_end, particle, direction, E_ph
   else
     f_spin_ptr => null()
   endif
-  call init_coord3(orb=f_orb, ele=f_ele, element_end=f_element_end_ptr, &
-      particle=f_particle_ptr, direction=f_direction_ptr, E_photon=f_E_photon_ptr, &
-      t_offset=f_t_offset_ptr, shift_vec6=f_shift_vec6_native_ptr, spin=f_spin)
+  call init_coord(f_orb, f_ele, f_element_end_ptr, f_particle_ptr, f_direction_ptr, &
+      f_E_photon_ptr, f_t_offset_ptr, f_shift_vec6_native_ptr, f_spin)
 
 end subroutine
 subroutine fortran_init_custom (lat) bind(c)
@@ -13839,7 +14098,7 @@ subroutine fortran_init_custom (lat) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call init_custom(lat=f_lat)
+  call init_custom(f_lat)
 
 end subroutine
 subroutine fortran_init_ele (ele, key, sub_key, ix_ele, branch) bind(c)
@@ -13885,8 +14144,7 @@ subroutine fortran_init_ele (ele, key, sub_key, ix_ele, branch) bind(c)
   endif
   ! in: f_branch 0D_NOT_type
   if (c_associated(branch))   call c_f_pointer(branch, f_branch)
-  call init_ele(ele=f_ele, key=f_key_ptr, sub_key=f_sub_key_ptr, ix_ele=f_ix_ele_ptr, &
-      branch=f_branch)
+  call init_ele(f_ele, f_key_ptr, f_sub_key_ptr, f_ix_ele_ptr, f_branch)
 
   ! out: f_ele 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -13920,8 +14178,7 @@ subroutine fortran_init_em_taylor_series (em_taylor, n_term, save_old) bind(c)
   else
     f_save_old_native_ptr => null()
   endif
-  call init_em_taylor_series(em_taylor=f_em_taylor, n_term=f_n_term, &
-      save_old=f_save_old_native_ptr)
+  call init_em_taylor_series(f_em_taylor, f_n_term, f_save_old_native_ptr)
 
 end subroutine
 subroutine fortran_init_lat (lat, n, init_beginning_ele) bind(c)
@@ -13958,7 +14215,7 @@ subroutine fortran_init_lat (lat, n, init_beginning_ele) bind(c)
   else
     f_init_beginning_ele_native_ptr => null()
   endif
-  call init_lat(lat=f_lat, n=f_n_ptr, init_beginning_ele=f_init_beginning_ele_native_ptr)
+  call init_lat(f_lat, f_n_ptr, f_init_beginning_ele_native_ptr)
 
   ! out: f_lat 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -13974,7 +14231,7 @@ subroutine fortran_init_multipole_cache (ele) bind(c)
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call init_multipole_cache(ele=f_ele)
+  call init_multipole_cache(f_ele)
 
 end subroutine
 subroutine fortran_init_photon_from_a_photon_init_ele (ele, param, orbit, random_on) bind(c)
@@ -14012,8 +14269,7 @@ subroutine fortran_init_photon_from_a_photon_init_ele (ele, param, orbit, random
   else
     f_random_on_native_ptr => null()
   endif
-  call init_photon_from_a_photon_init_ele(ele=f_ele, param=f_param, orbit=f_orbit, &
-      random_on=f_random_on_native_ptr)
+  call init_photon_from_a_photon_init_ele(f_ele, f_param, f_orbit, f_random_on_native_ptr)
 
   ! out: f_orbit 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -14087,10 +14343,15 @@ subroutine fortran_init_photon_integ_prob (gamma, g, E_min, E_max, vert_angle_mi
   else
     f_energy_integ_prob_ptr => null()
   endif
-  f_integ_prob = init_photon_integ_prob(gamma=f_gamma, g=f_g, E_min=f_E_min, E_max=f_E_max, &
-      vert_angle_min=f_vert_angle_min_ptr, vert_angle_max=f_vert_angle_max_ptr, &
-      vert_angle_symmetric=f_vert_angle_symmetric_native_ptr, &
-      energy_integ_prob=f_energy_integ_prob_ptr, E_photon=f_E_photon)
+  ! out: f_E_photon 0D_NOT_real
+  if (c_associated(E_photon)) then
+    call c_f_pointer(E_photon, f_E_photon_ptr)
+  else
+    f_E_photon_ptr => null()
+  endif
+  f_integ_prob = init_photon_integ_prob(f_gamma, f_g, f_E_min, f_E_max, f_vert_angle_min_ptr, &
+      f_vert_angle_max_ptr, f_vert_angle_symmetric_native_ptr, f_energy_integ_prob_ptr, &
+      f_E_photon)
 
   ! out: f_E_photon 0D_NOT_real
   ! no output conversion for f_E_photon
@@ -14121,7 +14382,7 @@ subroutine fortran_init_spin_distribution (beam_init, bunch, ele) bind(c)
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call init_spin_distribution(beam_init=f_beam_init, bunch=f_bunch, ele=f_ele)
+  call init_spin_distribution(f_beam_init, f_bunch, f_ele)
 
   ! out: f_bunch 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -14156,7 +14417,7 @@ subroutine fortran_init_surface_segment (phot, ix, iy) bind(c)
   else
     f_iy_ptr => null()
   endif
-  call init_surface_segment(phot=f_phot, ix=f_ix_ptr, iy=f_iy_ptr)
+  call init_surface_segment(f_phot, f_ix_ptr, f_iy_ptr)
 
   ! inout: f_ix 0D_NOT_integer
   ! no output conversion for f_ix
@@ -14192,8 +14453,7 @@ subroutine fortran_init_taylor_series (bmad_taylor, n_term, save_old) bind(c)
   else
     f_save_old_native_ptr => null()
   endif
-  call init_taylor_series(bmad_taylor=f_bmad_taylor, n_term=f_n_term, &
-      save_old=f_save_old_native_ptr)
+  call init_taylor_series(f_bmad_taylor, f_n_term, f_save_old_native_ptr)
 
 end subroutine
 subroutine fortran_init_wake (wake, n_sr_long, n_sr_trans, n_sr_z, n_lr_mode, always_allocate) &
@@ -14238,8 +14498,8 @@ subroutine fortran_init_wake (wake, n_sr_long, n_sr_trans, n_sr_z, n_lr_mode, al
   else
     f_always_allocate_native_ptr => null()
   endif
-  call init_wake(wake=f_wake, n_sr_long=f_n_sr_long, n_sr_trans=f_n_sr_trans, n_sr_z=f_n_sr_z, &
-      n_lr_mode=f_n_lr_mode, always_allocate=f_always_allocate_native_ptr)
+  call init_wake(f_wake, f_n_sr_long, f_n_sr_trans, f_n_sr_z, f_n_lr_mode, &
+      f_always_allocate_native_ptr)
 
   ! out: f_wake 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
@@ -14278,8 +14538,7 @@ subroutine fortran_insert_element (lat, insert_ele, ix_ele, ix_branch, orbit) bi
   endif
   !! container type array (1D_ALLOC_type)
   if (c_associated(orbit))   call c_f_pointer(orbit, f_orbit)
-  call insert_element(lat=f_lat, insert_ele=f_insert_ele, ix_ele=f_ix_ele, &
-      ix_branch=f_ix_branch_ptr, orbit=f_orbit%data)
+  call insert_element(f_lat, f_insert_ele, f_ix_ele, f_ix_branch_ptr, f_orbit%data)
 
 end subroutine
 subroutine fortran_integrand_base (t, args, func_retval__) bind(c)
@@ -14300,7 +14559,7 @@ subroutine fortran_integrand_base (t, args, func_retval__) bind(c)
   f_t = t
   !! container general array (1D_ALLOC_real)
   if (c_associated(args))   call c_f_pointer(args, f_args)
-  f_func_retval__ = integrand_base(t=f_t, args=f_args%data)
+  f_func_retval__ = integrand_base(f_t, f_args%data)
 
   ! out: f_func_retval__ 0D_NOT_real
   call c_f_pointer(func_retval__, f_func_retval___ptr)
@@ -14333,7 +14592,7 @@ subroutine fortran_integrate_psi (bound, p0, args, result) bind(c)
   else
     f_args_ptr => null()
   endif
-  call integrate_psi(bound=f_bound, p0=f_p0, args=f_args, result=f_result)
+  call integrate_psi(f_bound, f_p0, f_args, f_result)
 
   ! out: f_result 0D_NOT_real
   call c_f_pointer(result, f_result_ptr)
@@ -14388,8 +14647,7 @@ subroutine fortran_integrated_mats (eles, coos, Lambda, Theta, Iota, mode) bind(
   ! inout: f_mode 0D_NOT_type
   if (.not. c_associated(mode)) return
   call c_f_pointer(mode, f_mode)
-  call integrated_mats(eles=f_eles%data, coos=f_coos%data, Lambda=f_Lambda, Theta=f_Theta, &
-      Iota=f_Iota, mode=f_mode)
+  call integrated_mats(f_eles%data, f_coos%data, f_Lambda, f_Theta, f_Iota, f_mode)
 
 end subroutine
 subroutine fortran_integration_timer_ele (ele, param, start, orb_max, tol) bind(c)
@@ -14428,8 +14686,7 @@ subroutine fortran_integration_timer_ele (ele, param, start, orb_max, tol) bind(
   else
     f_tol_ptr => null()
   endif
-  call integration_timer_ele(ele=f_ele, param=f_param, start=f_start, orb_max=f_orb_max, &
-      tol=f_tol_ptr)
+  call integration_timer(f_ele, f_param, f_start, f_orb_max, f_tol_ptr)
 
   ! inout: f_tol 0D_NOT_real
   ! no output conversion for f_tol
@@ -14478,8 +14735,7 @@ subroutine fortran_ion_kick (orbit, r_beam, n_beam_part, a_twiss, b_twiss, sig_e
   call c_f_pointer(b_twiss, f_b_twiss)
   ! in: f_sig_ee 0D_NOT_real
   f_sig_ee = sig_ee
-  call ion_kick(orbit=f_orbit, r_beam=f_r_beam, n_beam_part=f_n_beam_part, a_twiss=f_a_twiss, &
-      b_twiss=f_b_twiss, sig_ee=f_sig_ee, kick=f_kick)
+  call ion_kick(f_orbit, f_r_beam, f_n_beam_part, f_a_twiss, f_b_twiss, f_sig_ee, f_kick)
 
   ! out: f_kick 1D_NOT_real
   if (c_associated(kick)) then
@@ -14504,7 +14760,7 @@ subroutine fortran_is_attribute (ix_attrib, which, is_attrib) bind(c)
   f_ix_attrib = ix_attrib
   ! in: f_which 0D_NOT_integer
   f_which = which
-  f_is_attrib = is_attribute(ix_attrib=f_ix_attrib, which=f_which)
+  f_is_attrib = is_attribute(f_ix_attrib, f_which)
 
   ! out: f_is_attrib 0D_NOT_logical
   call c_f_pointer(is_attrib, f_is_attrib_ptr)
@@ -14539,8 +14795,7 @@ subroutine fortran_key_name_to_key_index (key_str, abbrev_allowed, key_index) bi
   else
     f_abbrev_allowed_native_ptr => null()
   endif
-  f_key_index = key_name_to_key_index(key_str=f_key_str, &
-      abbrev_allowed=f_abbrev_allowed_native_ptr)
+  f_key_index = key_name_to_key_index(f_key_str, f_abbrev_allowed_native_ptr)
 
   ! out: f_key_index 0D_NOT_integer
   call c_f_pointer(key_index, f_key_index_ptr)
@@ -14592,8 +14847,8 @@ subroutine fortran_kick_vector_calc (ele, param, s_body, orbit, dr_ds, err, prin
   else
     f_print_err_native_ptr => null()
   endif
-  call kick_vector_calc(ele=f_ele, param=f_param, s_body=f_s_body, orbit=f_orbit, &
-      dr_ds=f_dr_ds, err=f_err, print_err=f_print_err_native_ptr)
+  call kick_vector_calc(f_ele, f_param, f_s_body, f_orbit, f_dr_ds, f_err, &
+      f_print_err_native_ptr)
 
   ! out: f_dr_ds 1D_NOT_real
   if (c_associated(dr_ds)) then
@@ -14621,7 +14876,7 @@ subroutine fortran_kill_complex_taylor (complex_taylor) bind(c)
   ! ** End of parameters **
   !! container type array (1D_ALLOC_type)
   if (c_associated(complex_taylor))   call c_f_pointer(complex_taylor, f_complex_taylor)
-  call kill_complex_taylor(complex_taylor=f_complex_taylor%data)
+  call kill_complex_taylor(f_complex_taylor%data)
 
 end subroutine
 subroutine fortran_kill_ptc_layouts (lat) bind(c)
@@ -14635,7 +14890,7 @@ subroutine fortran_kill_ptc_layouts (lat) bind(c)
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call kill_ptc_layouts(lat=f_lat)
+  call kill_ptc_layouts(f_lat)
 
 end subroutine
 subroutine fortran_kill_taylor (bmad_taylor) bind(c)
@@ -14648,7 +14903,7 @@ subroutine fortran_kill_taylor (bmad_taylor) bind(c)
   ! ** End of parameters **
   !! container type array (1D_ALLOC_type)
   if (c_associated(bmad_taylor))   call c_f_pointer(bmad_taylor, f_bmad_taylor)
-  call kill_taylor(bmad_taylor=f_bmad_taylor%data)
+  call kill_taylor(f_bmad_taylor%data)
 
 end subroutine
 subroutine fortran_kind_name (this_kind, kind_str) bind(c)
@@ -14668,7 +14923,7 @@ subroutine fortran_kind_name (this_kind, kind_str) bind(c)
   else
     f_this_kind => null()
   endif
-  f_kind_str = kind_name(this_kind=f_this_kind)
+  f_kind_str = kind_name(f_this_kind)
 
   ! out: f_kind_str 0D_NOT_character
   call c_f_pointer(kind_str, f_kind_str_ptr, [len_trim(f_kind_str) + 1]) ! output-only string
@@ -14703,8 +14958,7 @@ subroutine fortran_knot_interpolate (x_knot, y_knot, x_pt, interpolation, err_fl
   f_x_pt = x_pt
   ! in: f_interpolation 0D_NOT_integer
   f_interpolation = interpolation
-  f_y_pt = knot_interpolate(x_knot=f_x_knot%data, y_knot=f_y_knot%data, x_pt=f_x_pt, &
-      interpolation=f_interpolation, err_flag=f_err_flag)
+  f_y_pt = knot_interpolate(f_x_knot%data, f_y_knot%data, f_x_pt, f_interpolation, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -14730,7 +14984,7 @@ subroutine fortran_knots_to_string (x_knot, y_knot, str) bind(c)
   if (c_associated(x_knot))   call c_f_pointer(x_knot, f_x_knot)
   !! container general array (1D_ALLOC_real)
   if (c_associated(y_knot))   call c_f_pointer(y_knot, f_y_knot)
-  f_str = knots_to_string(x_knot=f_x_knot%data, y_knot=f_y_knot%data)
+  f_str = knots_to_string(f_x_knot%data, f_y_knot%data)
 
   ! out: f_str 0D_ALLOC_character
   call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1]) ! output-only string
@@ -14772,7 +15026,7 @@ subroutine fortran_lafun (x, y, z, res) bind(c)
   else
     f_z_ptr => null()
   endif
-  f_res = lafun(x=f_x_ptr, y=f_y_ptr, z=f_z_ptr)
+  f_res = lafun(f_x_ptr, f_y_ptr, f_z_ptr)
 
   ! inout: f_x 0D_NOT_real
   ! no output conversion for f_x
@@ -14803,7 +15057,7 @@ subroutine fortran_lat_compute_ref_energy_and_time (lat, err_flag) bind(c)
     return
   endif
   call c_f_pointer(lat, f_lat)
-  call lat_compute_ref_energy_and_time(lat=f_lat, err_flag=f_err_flag)
+  call lat_compute_ref_energy_and_time(f_lat, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -14864,6 +15118,12 @@ subroutine fortran_lat_ele_locator (loc_str, lat, eles, n_loc, err, above_ubound
   else
     f_n_loc_ptr => null()
   endif
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
   ! in: f_above_ubound_is_err 0D_NOT_logical
   if (c_associated(above_ubound_is_err)) then
     call c_f_pointer(above_ubound_is_err, f_above_ubound_is_err_ptr)
@@ -14894,10 +15154,9 @@ subroutine fortran_lat_ele_locator (loc_str, lat, eles, n_loc, err, above_ubound
   else
     f_append_eles_native_ptr => null()
   endif
-  call lat_ele_locator(loc_str=f_loc_str, lat=f_lat, eles=f_eles%data, n_loc=f_n_loc_ptr, &
-      err=f_err, above_ubound_is_err=f_above_ubound_is_err_native_ptr, &
-      ix_dflt_branch=f_ix_dflt_branch_ptr, order_by_index=f_order_by_index_native_ptr, &
-      append_eles=f_append_eles_native_ptr)
+  call lat_ele_locator(f_loc_str, f_lat, f_eles%data, f_n_loc_ptr, f_err, &
+      f_above_ubound_is_err_native_ptr, f_ix_dflt_branch_ptr, f_order_by_index_native_ptr, &
+      f_append_eles_native_ptr)
 
   ! inout: f_n_loc 0D_NOT_integer
   ! no output conversion for f_n_loc
@@ -14911,20 +15170,18 @@ subroutine fortran_lat_equal_lat (lat_out, lat_in) bind(c)
   ! ** In parameters **
   type(c_ptr), value :: lat_in  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat_in
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: lat_out  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat_out
   ! ** End of parameters **
-  ! out: f_lat_out 0D_NOT_type
+  ! inout: f_lat_out 0D_NOT_type
   if (.not. c_associated(lat_out)) return
   call c_f_pointer(lat_out, f_lat_out)
   ! in: f_lat_in 0D_NOT_type
   if (.not. c_associated(lat_in)) return
   call c_f_pointer(lat_in, f_lat_in)
-  call lat_equal_lat(lat_out=f_lat_out, lat_in=f_lat_in)
+  call lat_equal_lat(f_lat_out, f_lat_in)
 
-  ! out: f_lat_out 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_lat_geometry (lat) bind(c)
 
@@ -14937,7 +15194,7 @@ subroutine fortran_lat_geometry (lat) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call lat_geometry(lat=f_lat)
+  call lat_geometry(f_lat)
 
 end subroutine
 subroutine fortran_lat_make_mat6 (lat, ix_ele, ref_orb, ix_branch, err_flag) bind(c)
@@ -14982,8 +15239,13 @@ subroutine fortran_lat_make_mat6 (lat, ix_ele, ref_orb, ix_branch, err_flag) bin
   else
     f_ix_branch_ptr => null()
   endif
-  call lat_make_mat6(lat=f_lat, ix_ele=f_ix_ele_ptr, ref_orb=f_ref_orb%data, &
-      ix_branch=f_ix_branch_ptr, err_flag=f_err_flag)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  call lat_make_mat6(f_lat, f_ix_ele_ptr, f_ref_orb%data, f_ix_branch_ptr, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   ! no output conversion for f_err_flag
@@ -15007,7 +15269,7 @@ subroutine fortran_lat_sanity_check (lat, err_flag) bind(c)
     return
   endif
   call c_f_pointer(lat, f_lat)
-  call lat_sanity_check(lat=f_lat, err_flag=f_err_flag)
+  call lat_sanity_check(f_lat, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -15024,7 +15286,7 @@ subroutine fortran_lat_to_ptc_layout (lat) bind(c)
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call lat_to_ptc_layout(lat=f_lat)
+  call lat_to_ptc_layout(f_lat)
 
 end subroutine
 subroutine fortran_lat_vec_equal_lat_vec (lat1, lat2) bind(c)
@@ -15034,7 +15296,7 @@ subroutine fortran_lat_vec_equal_lat_vec (lat1, lat2) bind(c)
   ! ** In parameters **
   type(c_ptr), intent(in), value :: lat2
   type(lat_struct_container_alloc), pointer :: f_lat2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: lat1
   type(lat_struct_container_alloc), pointer :: f_lat1
   ! ** End of parameters **
@@ -15042,7 +15304,7 @@ subroutine fortran_lat_vec_equal_lat_vec (lat1, lat2) bind(c)
   if (c_associated(lat1))   call c_f_pointer(lat1, f_lat1)
   !! container type array (1D_ALLOC_type)
   if (c_associated(lat2))   call c_f_pointer(lat2, f_lat2)
-  call lat_vec_equal_lat_vec(lat1=f_lat1%data, lat2=f_lat2%data)
+  call lat_vec_equal_lat_vec(f_lat1%data, f_lat2%data)
 
 end subroutine
 subroutine fortran_lattice_bookkeeper (lat, err_flag) bind(c)
@@ -15064,7 +15326,13 @@ subroutine fortran_lattice_bookkeeper (lat, err_flag) bind(c)
     return
   endif
   call c_f_pointer(lat, f_lat)
-  call lattice_bookkeeper(lat=f_lat, err_flag=f_err_flag)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  call lattice_bookkeeper(f_lat, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   ! no output conversion for f_err_flag
@@ -15080,7 +15348,7 @@ subroutine fortran_lcavity_rf_step_setup (ele) bind(c)
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call lcavity_rf_step_setup(ele=f_ele)
+  call lcavity_rf_step_setup(f_ele)
 
 end subroutine
 subroutine fortran_linear_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix) &
@@ -15133,8 +15401,8 @@ subroutine fortran_linear_bend_edge_kick (ele, param, particle_at, orb, mat6, ma
   else
     f_make_matrix_native_ptr => null()
   endif
-  call linear_bend_edge_kick(ele=f_ele, param=f_param, particle_at=f_particle_at, orb=f_orb, &
-      mat6=f_mat6, make_matrix=f_make_matrix_native_ptr)
+  call linear_bend_edge_kick(f_ele, f_param, f_particle_at, f_orb, f_mat6, &
+      f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_linear_coef (stack, err_flag, coef) bind(c)
@@ -15154,7 +15422,7 @@ subroutine fortran_linear_coef (stack, err_flag, coef) bind(c)
   ! ** End of parameters **
   !! container type array (1D_ALLOC_type)
   if (c_associated(stack))   call c_f_pointer(stack, f_stack)
-  f_coef = linear_coef(stack=f_stack%data, err_flag=f_err_flag)
+  f_coef = linear_coef(f_stack%data, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -15184,7 +15452,7 @@ subroutine fortran_linear_to_spin_taylor (q_map, spin_taylor) bind(c)
   endif
   !! type array (1D_NOT_type)
   call c_f_pointer(spin_taylor, f_spin_taylor, [4])
-  call linear_to_spin_taylor(q_map=f_q_map, spin_taylor=f_spin_taylor)
+  call linear_to_spin_taylor(f_q_map, f_spin_taylor)
 
   ! out: f_spin_taylor 1D_NOT_type
   ! TODO may require output conversion? 1D_NOT_type
@@ -15216,8 +15484,13 @@ subroutine fortran_load_parse_line (action, ix_start, end_of_file, err_flag) bin
   call to_f_str(f_action_ptr, f_action)
   ! in: f_ix_start 0D_NOT_integer
   f_ix_start = ix_start
-  call load_parse_line(action=f_action, ix_start=f_ix_start, end_of_file=f_end_of_file, &
-      err_flag=f_err_flag)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  call load_parse_line(f_action, f_ix_start, f_end_of_file, f_err_flag)
 
   ! out: f_end_of_file 0D_NOT_logical
   call c_f_pointer(end_of_file, f_end_of_file_ptr)
@@ -15249,7 +15522,7 @@ subroutine fortran_lord_edge_aligned (slave, slave_edge, lord, is_aligned) bind(
   ! in: f_lord 0D_NOT_type
   if (.not. c_associated(lord)) return
   call c_f_pointer(lord, f_lord)
-  f_is_aligned = lord_edge_aligned(slave=f_slave, slave_edge=f_slave_edge, lord=f_lord)
+  f_is_aligned = lord_edge_aligned(f_slave, f_slave_edge, f_lord)
 
   ! out: f_is_aligned 0D_NOT_logical
   call c_f_pointer(is_aligned, f_is_aligned_ptr)
@@ -15303,8 +15576,7 @@ subroutine fortran_low_energy_z_correction (orbit, ele, ds, mat6, make_matrix, d
   else
     f_make_matrix_native_ptr => null()
   endif
-  f_dz = low_energy_z_correction(orbit=f_orbit, ele=f_ele, ds=f_ds, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  f_dz = low_energy_z_correction(f_orbit, f_ele, f_ds, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_dz 0D_NOT_real
   call c_f_pointer(dz, f_dz_ptr)
@@ -15328,7 +15600,7 @@ subroutine fortran_mad_add_offsets_and_multipoles (ele, map) bind(c)
   ! out: f_map 0D_NOT_type
   if (.not. c_associated(map)) return
   call c_f_pointer(map, f_map)
-  call mad_add_offsets_and_multipoles(ele=f_ele, map=f_map)
+  call mad_add_offsets_and_multipoles(f_ele, f_map)
 
   ! out: f_map 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -15355,7 +15627,7 @@ subroutine fortran_mad_concat_map2 (map1, map2, map3) bind(c)
   ! out: f_map3 0D_NOT_type
   if (.not. c_associated(map3)) return
   call c_f_pointer(map3, f_map3)
-  call mad_concat_map2(map1=f_map1, map2=f_map2, map3=f_map3)
+  call mad_concat_map2(f_map1, f_map2, f_map3)
 
   ! out: f_map3 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -15383,7 +15655,7 @@ subroutine fortran_mad_drift (ele, energy, map) bind(c)
   ! out: f_map 0D_NOT_type
   if (.not. c_associated(map)) return
   call c_f_pointer(map, f_map)
-  call mad_drift(ele=f_ele, energy=f_energy, map=f_map)
+  call mad_drift(f_ele, f_energy, f_map)
 
   ! out: f_map 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -15411,7 +15683,7 @@ subroutine fortran_mad_elsep (ele, energy, map) bind(c)
   ! out: f_map 0D_NOT_type
   if (.not. c_associated(map)) return
   call c_f_pointer(map, f_map)
-  call mad_elsep(ele=f_ele, energy=f_energy, map=f_map)
+  call mad_elsep(f_ele, f_energy, f_map)
 
   ! out: f_map 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -15438,7 +15710,7 @@ subroutine fortran_mad_map_to_taylor (map, energy, taylor) bind(c)
   call c_f_pointer(energy, f_energy)
   !! container type array (1D_ALLOC_type)
   if (c_associated(taylor))   call c_f_pointer(taylor, f_taylor)
-  call mad_map_to_taylor(map=f_map, energy=f_energy, taylor=f_taylor%data)
+  call mad_map_to_taylor(f_map, f_energy, f_taylor%data)
 
 end subroutine
 subroutine fortran_mad_quadrupole (ele, energy, map) bind(c)
@@ -15464,7 +15736,7 @@ subroutine fortran_mad_quadrupole (ele, energy, map) bind(c)
   ! out: f_map 0D_NOT_type
   if (.not. c_associated(map)) return
   call c_f_pointer(map, f_map)
-  call mad_quadrupole(ele=f_ele, energy=f_energy, map=f_map)
+  call mad_quadrupole(f_ele, f_energy, f_map)
 
   ! out: f_map 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -15492,7 +15764,7 @@ subroutine fortran_mad_rfcavity (ele, energy, map) bind(c)
   ! out: f_map 0D_NOT_type
   if (.not. c_associated(map)) return
   call c_f_pointer(map, f_map)
-  call mad_rfcavity(ele=f_ele, energy=f_energy, map=f_map)
+  call mad_rfcavity(f_ele, f_energy, f_map)
 
   ! out: f_map 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -15520,7 +15792,7 @@ subroutine fortran_mad_sbend (ele, energy, map) bind(c)
   ! out: f_map 0D_NOT_type
   if (.not. c_associated(map)) return
   call c_f_pointer(map, f_map)
-  call mad_sbend(ele=f_ele, energy=f_energy, map=f_map)
+  call mad_sbend(f_ele, f_energy, f_map)
 
   ! out: f_map 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -15548,7 +15820,7 @@ subroutine fortran_mad_sbend_body (ele, energy, map) bind(c)
   ! out: f_map 0D_NOT_type
   if (.not. c_associated(map)) return
   call c_f_pointer(map, f_map)
-  call mad_sbend_body(ele=f_ele, energy=f_energy, map=f_map)
+  call mad_sbend_body(f_ele, f_energy, f_map)
 
   ! out: f_map 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -15580,7 +15852,7 @@ subroutine fortran_mad_sbend_fringe (ele, energy, into, map) bind(c)
   ! out: f_map 0D_NOT_type
   if (.not. c_associated(map)) return
   call c_f_pointer(map, f_map)
-  call mad_sbend_fringe(ele=f_ele, energy=f_energy, into=f_into, map=f_map)
+  call mad_sbend_fringe(f_ele, f_energy, f_into, f_map)
 
   ! out: f_map 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -15608,7 +15880,7 @@ subroutine fortran_mad_sextupole (ele, energy, map) bind(c)
   ! out: f_map 0D_NOT_type
   if (.not. c_associated(map)) return
   call c_f_pointer(map, f_map)
-  call mad_sextupole(ele=f_ele, energy=f_energy, map=f_map)
+  call mad_sextupole(f_ele, f_energy, f_map)
 
   ! out: f_map 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -15636,7 +15908,7 @@ subroutine fortran_mad_solenoid (ele, energy, map) bind(c)
   ! out: f_map 0D_NOT_type
   if (.not. c_associated(map)) return
   call c_f_pointer(map, f_map)
-  call mad_solenoid(ele=f_ele, energy=f_energy, map=f_map)
+  call mad_solenoid(f_ele, f_energy, f_map)
 
   ! out: f_map 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -15667,7 +15939,7 @@ subroutine fortran_mad_tmfoc (el, sk1, c, s, d, f) bind(c)
   f_el = el
   ! in: f_sk1 0D_NOT_real
   f_sk1 = sk1
-  call mad_tmfoc(el=f_el, sk1=f_sk1, c=f_c, s=f_s, d=f_d, f=f_f)
+  call mad_tmfoc(f_el, f_sk1, f_c, f_s, f_d, f_f)
 
   ! out: f_c 0D_NOT_real
   call c_f_pointer(c, f_c_ptr)
@@ -15697,7 +15969,7 @@ subroutine fortran_mad_tmsymm (te) bind(c)
   else
     f_te_ptr => null()
   endif
-  call mad_tmsymm(te=f_te)
+  call mad_tmsymm(f_te)
 
 end subroutine
 subroutine fortran_mad_tmtilt (map, tilt) bind(c)
@@ -15716,7 +15988,7 @@ subroutine fortran_mad_tmtilt (map, tilt) bind(c)
   call c_f_pointer(map, f_map)
   ! in: f_tilt 0D_NOT_real
   f_tilt = tilt
-  call mad_tmtilt(map=f_map, tilt=f_tilt)
+  call mad_tmtilt(f_map, f_tilt)
 
 end subroutine
 subroutine fortran_mad_track1 (c0, map, c1) bind(c)
@@ -15742,7 +16014,7 @@ subroutine fortran_mad_track1 (c0, map, c1) bind(c)
   ! out: f_c1 0D_NOT_type
   if (.not. c_associated(c1)) return
   call c_f_pointer(c1, f_c1)
-  call mad_track1(c0=f_c0, map=f_map, c1=f_c1)
+  call mad_track1(f_c0, f_map, f_c1)
 
   ! out: f_c1 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -15779,7 +16051,7 @@ subroutine fortran_make_g2_mats (twiss, g2_mat, g2_inv_mat) bind(c)
   else
     f_g2_inv_mat_ptr => null()
   endif
-  call make_g2_mats(twiss=f_twiss, g2_mat=f_g2_mat, g2_inv_mat=f_g2_inv_mat)
+  call make_g2_mats(f_twiss, f_g2_mat, f_g2_inv_mat)
 
 end subroutine
 subroutine fortran_make_g_mats (ele, g_mat, g_inv_mat) bind(c)
@@ -15800,12 +16072,12 @@ subroutine fortran_make_g_mats (ele, g_mat, g_inv_mat) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call make_g_mats(ele=f_ele, g_mat=f_g_mat, g_inv_mat=f_g_inv_mat)
+  call make_g_mats(f_ele, f_g_mat, f_g_inv_mat)
 
   ! out: f_g_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_g_mat', c_name='g_mat', python_name='g_mat', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1665, definition='real(rp) g_mat(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='g_mat', comment='', default=None), intent='out', description='Normal mode to betaless coords', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_g_mat', c_name='g_mat', python_name='g_mat', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1667, definition='real(rp) g_mat(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='g_mat', comment='', default=None), intent='out', description='Normal mode to betaless coords', doc_data_type='float', doc_is_optional=False)
   ! out: f_g_inv_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_g_inv_mat', c_name='g_inv_mat', python_name='g_inv_mat', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1666, definition='real(rp) g_inv_mat(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='g_inv_mat', comment='', default=None), intent='out', description='The inverse of G_MAT', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_g_inv_mat', c_name='g_inv_mat', python_name='g_inv_mat', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1668, definition='real(rp) g_inv_mat(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='g_inv_mat', comment='', default=None), intent='out', description='The inverse of G_MAT', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_make_hvbp (N, B, V, H, Vbar, Hbar) bind(c)
 
@@ -15838,7 +16110,7 @@ subroutine fortran_make_hvbp (N, B, V, H, Vbar, Hbar) bind(c)
   else
     f_N_ptr => null()
   endif
-  call make_hvbp(N=f_N, B=f_B, V=f_V, H=f_H, Vbar=f_Vbar, Hbar=f_Hbar)
+  call make_hvbp(f_N, f_B, f_V, f_H, f_Vbar, f_Hbar)
 
   ! out: f_B 2D_NOT_real
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_B', c_name='B', python_name='B', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=201, definition='real(rp) B(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='B', comment='', default=None), intent='out', description='Block diagonal matrix of Twiss parameters', doc_data_type='float', doc_is_optional=False)
@@ -15885,8 +16157,7 @@ subroutine fortran_make_hybrid_lat (lat_in, lat_out, use_taylor, orb0_arr) bind(
   endif
   !! container type array (1D_ALLOC_type)
   if (c_associated(orb0_arr))   call c_f_pointer(orb0_arr, f_orb0_arr)
-  call make_hybrid_lat(lat_in=f_lat_in, lat_out=f_lat_out, use_taylor=f_use_taylor_native_ptr, &
-      orb0_arr=f_orb0_arr%data)
+  call make_hybrid_lat(f_lat_in, f_lat_out, f_use_taylor_native_ptr, f_orb0_arr%data)
 
   ! out: f_lat_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -15919,7 +16190,7 @@ subroutine fortran_make_mad_map (ele, param, energy, map) bind(c)
   ! out: f_map 0D_NOT_type
   if (.not. c_associated(map)) return
   call c_f_pointer(map, f_map)
-  call make_mad_map(ele=f_ele, param=f_param, energy=f_energy, map=f_map)
+  call make_mad_map(f_ele, f_param, f_energy, f_map)
 
   ! out: f_energy 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -15963,8 +16234,13 @@ subroutine fortran_make_mat6 (ele, param, start_orb, end_orb, err_flag) bind(c)
   if (c_associated(start_orb))   call c_f_pointer(start_orb, f_start_orb)
   ! out: f_end_orb 0D_NOT_type
   if (c_associated(end_orb))   call c_f_pointer(end_orb, f_end_orb)
-  call make_mat6(ele=f_ele, param=f_param, start_orb=f_start_orb, end_orb=f_end_orb, &
-      err_flag=f_err_flag)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  call make_mat6(f_ele, f_param, f_start_orb, f_end_orb, f_err_flag)
 
   ! out: f_end_orb 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -16002,8 +16278,13 @@ subroutine fortran_make_mat6_bmad (ele, param, start_orb, end_orb, err) bind(c)
   ! out: f_end_orb 0D_NOT_type
   if (.not. c_associated(end_orb)) return
   call c_f_pointer(end_orb, f_end_orb)
-  call make_mat6_bmad(ele=f_ele, param=f_param, start_orb=f_start_orb, end_orb=f_end_orb, &
-      err=f_err)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
+  call make_mat6_bmad(f_ele, f_param, f_start_orb, f_end_orb, f_err)
 
   ! out: f_end_orb 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -16041,8 +16322,13 @@ subroutine fortran_make_mat6_bmad_photon (ele, param, start_orb, end_orb, err) b
   ! out: f_end_orb 0D_NOT_type
   if (.not. c_associated(end_orb)) return
   call c_f_pointer(end_orb, f_end_orb)
-  call make_mat6_bmad_photon(ele=f_ele, param=f_param, start_orb=f_start_orb, &
-      end_orb=f_end_orb, err=f_err)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
+  call make_mat6_bmad_photon(f_ele, f_param, f_start_orb, f_end_orb, f_err)
 
   ! out: f_end_orb 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -16065,7 +16351,7 @@ subroutine fortran_make_mat6_high_energy_space_charge (ele, param) bind(c)
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  call make_mat6_high_energy_space_charge(ele=f_ele, param=f_param)
+  call make_mat6_high_energy_space_charge(f_ele, f_param)
 
 end subroutine
 subroutine fortran_make_mat6_mad (ele, param, c0, c1) bind(c)
@@ -16096,7 +16382,7 @@ subroutine fortran_make_mat6_mad (ele, param, c0, c1) bind(c)
   ! out: f_c1 0D_NOT_type
   if (.not. c_associated(c1)) return
   call c_f_pointer(c1, f_c1)
-  call make_mat6_mad(ele=f_ele, param=f_param, c0=f_c0, c1=f_c1)
+  call make_mat6_mad(f_ele, f_param, f_c0, f_c1)
 
   ! out: f_c1 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -16124,7 +16410,7 @@ subroutine fortran_make_mat6_symp_lie_ptc (ele, start_orb, end_orb) bind(c)
   ! out: f_end_orb 0D_NOT_type
   if (.not. c_associated(end_orb)) return
   call c_f_pointer(end_orb, f_end_orb)
-  call make_mat6_symp_lie_ptc(ele=f_ele, start_orb=f_start_orb, end_orb=f_end_orb)
+  call make_mat6_symp_lie_ptc(f_ele, f_start_orb, f_end_orb)
 
   ! out: f_end_orb 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -16165,8 +16451,7 @@ subroutine fortran_make_mat6_taylor (ele, start_orb, end_orb, err_flag) bind(c)
   else
     f_err_flag_native_ptr => null()
   endif
-  call make_mat6_taylor(ele=f_ele, start_orb=f_start_orb, end_orb=f_end_orb, &
-      err_flag=f_err_flag_native_ptr)
+  call make_mat6_taylor(f_ele, f_start_orb, f_end_orb, f_err_flag_native_ptr)
 
   ! out: f_end_orb 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -16239,8 +16524,8 @@ subroutine fortran_make_mat6_tracking (ele, param, start_orb, end_orb, err_flag,
   else
     f_spin_only_native_ptr => null()
   endif
-  call make_mat6_tracking(ele=f_ele, param=f_param, start_orb=f_start_orb, end_orb=f_end_orb, &
-      err_flag=f_err_flag, spin_only=f_spin_only_native_ptr)
+  call make_mat6_tracking(f_ele, f_param, f_start_orb, f_end_orb, f_err_flag, &
+      f_spin_only_native_ptr)
 
   ! out: f_end_orb 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -16286,8 +16571,7 @@ subroutine fortran_make_n (t6, N, err_flag, abz_tunes, tunes_out, U) bind(c)
   else
     f_abz_tunes_ptr => null()
   endif
-  call make_n(t6=f_t6, N=f_N, err_flag=f_err_flag, abz_tunes=f_abz_tunes, &
-      tunes_out=f_tunes_out, U=f_U)
+  call make_n(f_t6, f_N, f_err_flag, f_abz_tunes, f_tunes_out, f_U)
 
   ! out: f_N 2D_NOT_real
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_N', c_name='N', python_name='N', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=828, definition='real(rp) N(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='N', comment='', default=None), intent='out', description='X = N.J', doc_data_type='float', doc_is_optional=False)
@@ -16340,7 +16624,7 @@ subroutine fortran_make_pbrh (M, P, Bp, R, H, abz_tunes) bind(c)
   else
     f_abz_tunes_ptr => null()
   endif
-  call make_pbrh(M=f_M, P=f_P, Bp=f_Bp, R=f_R, H=f_H, abz_tunes=f_abz_tunes)
+  call make_pbrh(f_M, f_P, f_Bp, f_R, f_H, f_abz_tunes)
 
   ! out: f_P 2D_NOT_complex
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_P', c_name='P', python_name='P', type='complex', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=660, definition='complex(rp) P(6,6)', type_info=TypeInformation(type='complex', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='P', comment='', default=None), intent='out', description='Eqn. 97.  Phase advances.', doc_data_type='complex', doc_is_optional=False)
@@ -16386,8 +16670,7 @@ subroutine fortran_make_smat_from_abc (t6, mode, sigma_mat, err_flag, Nout) bind
     return
   endif
   call c_f_pointer(mode, f_mode)
-  call make_smat_from_abc(t6=f_t6, mode=f_mode, sigma_mat=f_sigma_mat, err_flag=f_err_flag, &
-      Nout=f_Nout)
+  call make_smat_from_abc(f_t6, f_mode, f_sigma_mat, f_err_flag, f_Nout)
 
   ! out: f_sigma_mat 2D_NOT_real
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_sigma_mat', c_name='sigma_mat', python_name='sigma_mat', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=1070, definition='real(rp) sigma_mat(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='sigma_mat', comment='', default=None), intent='out', description='beam envelop sigma matrix', doc_data_type='float', doc_is_optional=False)
@@ -16408,7 +16691,7 @@ subroutine fortran_make_unit_mad_map (map) bind(c)
   ! inout: f_map 0D_NOT_type
   if (.not. c_associated(map)) return
   call c_f_pointer(map, f_map)
-  call make_unit_mad_map(map=f_map)
+  call make_unit_mad_map(f_map)
 
 end subroutine
 subroutine fortran_make_v (M, V, abz_tunes) bind(c)
@@ -16446,7 +16729,7 @@ subroutine fortran_make_v (M, V, abz_tunes) bind(c)
   else
     f_abz_tunes_ptr => null()
   endif
-  call make_v(M=f_M, V=f_V, abz_tunes=f_abz_tunes)
+  call make_v(f_M, f_V, f_abz_tunes)
 
 end subroutine
 subroutine fortran_make_v_mats (ele, v_mat, v_inv_mat) bind(c)
@@ -16467,12 +16750,12 @@ subroutine fortran_make_v_mats (ele, v_mat, v_inv_mat) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call make_v_mats(ele=f_ele, v_mat=f_v_mat, v_inv_mat=f_v_inv_mat)
+  call make_v_mats(f_ele, f_v_mat, f_v_inv_mat)
 
   ! out: f_v_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_v_mat', c_name='v_mat', python_name='v_mat', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1762, definition='real(rp), optional :: v_mat(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='v_mat', comment='', default=None), intent='out', description='Normal mode to X-Y coords transformation', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_v_mat', c_name='v_mat', python_name='v_mat', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1755, definition='real(rp), optional :: v_mat(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='v_mat', comment='', default=None), intent='out', description='Normal mode to X-Y coords transformation', doc_data_type='float', doc_is_optional=False)
   ! out: f_v_inv_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_v_inv_mat', c_name='v_inv_mat', python_name='v_inv_mat', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1763, definition='real(rp), optional :: v_inv_mat(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='v_inv_mat', comment='', default=None), intent='out', description='X-Y coords to Normal mode transformation', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_v_inv_mat', c_name='v_inv_mat', python_name='v_inv_mat', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1756, definition='real(rp), optional :: v_inv_mat(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='v_inv_mat', comment='', default=None), intent='out', description='X-Y coords to Normal mode transformation', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_makeup_control_slave (lat, slave, err_flag) bind(c)
 
@@ -16503,7 +16786,7 @@ subroutine fortran_makeup_control_slave (lat, slave, err_flag) bind(c)
   else
     f_err_flag_native_ptr => null()
   endif
-  call makeup_control_slave(lat=f_lat, slave=f_slave, err_flag=f_err_flag_native_ptr)
+  call makeup_control_slave(f_lat, f_slave, f_err_flag_native_ptr)
 
   ! inout: f_err_flag 0D_NOT_logical
   if (c_associated(err_flag)) then
@@ -16542,7 +16825,7 @@ subroutine fortran_makeup_group_lord (lat, lord, err_flag) bind(c)
   else
     f_err_flag_native_ptr => null()
   endif
-  call makeup_group_lord(lat=f_lat, lord=f_lord, err_flag=f_err_flag_native_ptr)
+  call makeup_group_lord(f_lat, f_lord, f_err_flag_native_ptr)
 
   ! inout: f_err_flag 0D_NOT_logical
   if (c_associated(err_flag)) then
@@ -16581,7 +16864,7 @@ subroutine fortran_makeup_multipass_slave (lat, slave, err_flag) bind(c)
   else
     f_err_flag_native_ptr => null()
   endif
-  call makeup_multipass_slave(lat=f_lat, slave=f_slave, err_flag=f_err_flag_native_ptr)
+  call makeup_multipass_slave(f_lat, f_slave, f_err_flag_native_ptr)
 
   ! inout: f_err_flag 0D_NOT_logical
   if (c_associated(err_flag)) then
@@ -16620,7 +16903,7 @@ subroutine fortran_makeup_super_slave (lat, slave, err_flag) bind(c)
   else
     f_err_flag_native_ptr => null()
   endif
-  call makeup_super_slave(lat=f_lat, slave=f_slave, err_flag=f_err_flag_native_ptr)
+  call makeup_super_slave(f_lat, f_slave, f_err_flag_native_ptr)
 
   ! inout: f_err_flag 0D_NOT_logical
   if (c_associated(err_flag)) then
@@ -16681,9 +16964,8 @@ subroutine fortran_makeup_super_slave1 (slave, lord, offset, param, include_upst
   f_include_upstream_end = include_upstream_end
   ! in: f_include_downstream_end 0D_NOT_logical
   f_include_downstream_end = include_downstream_end
-  call makeup_super_slave1(slave=f_slave, lord=f_lord, offset=f_offset, param=f_param, &
-      include_upstream_end=f_include_upstream_end, &
-      include_downstream_end=f_include_downstream_end, err_flag=f_err_flag)
+  call makeup_super_slave1(f_slave, f_lord, f_offset, f_param, f_include_upstream_end, &
+      f_include_downstream_end, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -16703,7 +16985,7 @@ subroutine fortran_map1_inverse (map1, inv_map1) bind(c)
   ! in: f_map1 0D_NOT_type
   if (.not. c_associated(map1)) return
   call c_f_pointer(map1, f_map1)
-  f_inv_map1 = map1_inverse(map1=f_map1)
+  f_inv_map1 = map1_inverse(f_map1)
 
   ! out: f_inv_map1 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -16719,7 +17001,7 @@ subroutine fortran_map1_make_unit (map1) bind(c)
   ! out: f_map1 0D_NOT_type
   if (.not. c_associated(map1)) return
   call c_f_pointer(map1, f_map1)
-  call map1_make_unit(map1=f_map1)
+  call map1_make_unit(f_map1)
 
   ! out: f_map1 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -16743,7 +17025,7 @@ subroutine fortran_map1_times_map1 (map2, map1, map_out) bind(c)
   ! in: f_map1 0D_NOT_type
   if (.not. c_associated(map1)) return
   call c_f_pointer(map1, f_map1)
-  f_map_out = map1_times_map1(map2=f_map2, map1=f_map1)
+  f_map_out = map1_times_map1(f_map2, f_map1)
 
   ! out: f_map_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -16763,7 +17045,7 @@ subroutine fortran_map_to_angle_coords (t_canon, t_angle) bind(c)
   call c_f_pointer(t_canon, f_t_canon, [6])
   !! type array (1D_NOT_type)
   call c_f_pointer(t_angle, f_t_angle, [6])
-  call map_to_angle_coords(t_canon=f_t_canon, t_angle=f_t_angle)
+  call map_to_angle_coords(f_t_canon, f_t_angle)
 
   ! out: f_t_angle 1D_NOT_type
   ! TODO may require output conversion? 1D_NOT_type
@@ -16779,7 +17061,7 @@ subroutine fortran_mark_patch_regions (branch) bind(c)
   ! inout: f_branch 0D_NOT_type
   if (.not. c_associated(branch)) return
   call c_f_pointer(branch, f_branch)
-  call mark_patch_regions(branch=f_branch)
+  call mark_patch_regions(f_branch)
 
 end subroutine
 subroutine fortran_master_parameter_value (master_parameter, ele, value) bind(c)
@@ -16801,7 +17083,7 @@ subroutine fortran_master_parameter_value (master_parameter, ele, value) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_value = master_parameter_value(master_parameter=f_master_parameter, ele=f_ele)
+  f_value = master_parameter_value(f_master_parameter, f_ele)
 
   ! out: f_value 0D_NOT_real
   call c_f_pointer(value, f_value_ptr)
@@ -16840,12 +17122,12 @@ subroutine fortran_mat4_multipole (knl, tilt, n, orbit, kick_mat) bind(c)
   ! in: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  call mat4_multipole(knl=f_knl, tilt=f_tilt, n=f_n_ptr, orbit=f_orbit, kick_mat=f_kick_mat)
+  call mat4_multipole(f_knl, f_tilt, f_n_ptr, f_orbit, f_kick_mat)
 
   ! inout: f_n 0D_NOT_integer
   ! no output conversion for f_n
   ! out: f_kick_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_kick_mat', c_name='kick_mat', python_name='kick_mat', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1811, definition='real(rp) kick_mat(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='kick_mat', comment='', default=None), intent='out', description='Kick matrix (Jacobian) at orbit.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_kick_mat', c_name='kick_mat', python_name='kick_mat', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1804, definition='real(rp) kick_mat(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='kick_mat', comment='', default=None), intent='out', description='Kick matrix (Jacobian) at orbit.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_mat6_add_offsets (ele, param) bind(c)
 
@@ -16864,7 +17146,7 @@ subroutine fortran_mat6_add_offsets (ele, param) bind(c)
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  call mat6_add_offsets(ele=f_ele, param=f_param)
+  call mat6_add_offsets(f_ele, f_param)
 
 end subroutine
 subroutine fortran_mat6_add_pitch (x_pitch_tot, y_pitch_tot, orientation, mat6) bind(c)
@@ -16895,8 +17177,7 @@ subroutine fortran_mat6_add_pitch (x_pitch_tot, y_pitch_tot, orientation, mat6) 
   else
     f_mat6_ptr => null()
   endif
-  call mat6_add_pitch(x_pitch_tot=f_x_pitch_tot, y_pitch_tot=f_y_pitch_tot, &
-      orientation=f_orientation, mat6=f_mat6)
+  call mat6_add_pitch(f_x_pitch_tot, f_y_pitch_tot, f_orientation, f_mat6)
 
 end subroutine
 subroutine fortran_mat6_to_complex_taylor (vec0, mat6, complex_taylor) bind(c)
@@ -16930,7 +17211,7 @@ subroutine fortran_mat6_to_complex_taylor (vec0, mat6, complex_taylor) bind(c)
   endif
   !! type array (1D_NOT_type)
   call c_f_pointer(complex_taylor, f_complex_taylor, [6])
-  call mat6_to_complex_taylor(vec0=f_vec0, mat6=f_mat6, complex_taylor=f_complex_taylor)
+  call mat6_to_complex_taylor(f_vec0, f_mat6, f_complex_taylor)
 
   ! out: f_complex_taylor 1D_NOT_type
   ! TODO may require output conversion? 1D_NOT_type
@@ -17024,8 +17305,8 @@ subroutine fortran_mat_symp_decouple (t0, stat, U, V, Ubar, Vbar, G, twiss1, twi
   call c_f_pointer(twiss2, f_twiss2)
   ! in: f_type_out 0D_NOT_logical
   f_type_out = type_out
-  call mat_symp_decouple(t0=f_t0, stat=f_stat, U=f_U, V=f_V, Ubar=f_Ubar, Vbar=f_Vbar, G=f_G, &
-      twiss1=f_twiss1, twiss2=f_twiss2, gamma=f_gamma, type_out=f_type_out)
+  call mat_symp_decouple(f_t0, f_stat, f_U, f_V, f_Ubar, f_Vbar, f_G, f_twiss1, f_twiss2, &
+      f_gamma, f_type_out)
 
   ! out: f_stat 0D_NOT_integer
   call c_f_pointer(stat, f_stat_ptr)
@@ -17099,12 +17380,11 @@ subroutine fortran_match_ele_to_mat6 (ele, start_orb, mat6, vec0, err_flag, incl
   else
     f_set_trombone_native_ptr => null()
   endif
-  call match_ele_to_mat6(ele=f_ele, start_orb=f_start_orb, mat6=f_mat6, vec0=f_vec0, &
-      err_flag=f_err_flag, include_delta_time=f_include_delta_time_native_ptr, &
-      set_trombone=f_set_trombone_native_ptr)
+  call match_ele_to_mat6(f_ele, f_start_orb, f_mat6, f_vec0, f_err_flag, &
+      f_include_delta_time_native_ptr, f_set_trombone_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=1819, definition='real(rp) mat6(6,6), vec0(6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix (1st order part of xfer map).', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=1812, definition='real(rp) mat6(6,6), vec0(6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix (1st order part of xfer map).', doc_data_type='float', doc_is_optional=False)
   ! out: f_vec0 1D_NOT_real
   if (c_associated(vec0)) then
     call c_f_pointer(vec0, f_vec0_ptr, [6])
@@ -17131,7 +17411,7 @@ subroutine fortran_mexp (x, m, this_exp) bind(c)
   f_x = x
   ! in: f_m 0D_NOT_integer
   f_m = m
-  f_this_exp = mexp(x=f_x, m=f_m)
+  f_this_exp = mexp(f_x, f_m)
 
   ! out: f_this_exp 0D_NOT_real
   call c_f_pointer(this_exp, f_this_exp_ptr)
@@ -17167,7 +17447,7 @@ subroutine fortran_mfft1 (a, b, n, ndim, isn, ierr) bind(c)
   f_ndim = ndim
   ! in: f_isn 0D_NOT_integer
   f_isn = isn
-  call mfft1(a=f_a%data, b=f_b%data, n=f_n%data, ndim=f_ndim, isn=f_isn, ierr=f_ierr)
+  call mfft1(f_a%data, f_b%data, f_n%data, f_ndim, f_isn, f_ierr)
 
   ! out: f_ierr 0D_NOT_integer
   call c_f_pointer(ierr, f_ierr_ptr)
@@ -17188,7 +17468,7 @@ subroutine fortran_momentum_compaction (branch, mom_comp) bind(c)
   ! in: f_branch 0D_NOT_type
   if (.not. c_associated(branch)) return
   call c_f_pointer(branch, f_branch)
-  f_mom_comp = momentum_compaction(branch=f_branch)
+  f_mom_comp = momentum_compaction(f_branch)
 
   ! out: f_mom_comp 0D_NOT_real
   call c_f_pointer(mom_comp, f_mom_comp_ptr)
@@ -17240,8 +17520,8 @@ subroutine fortran_multi_turn_tracking_analysis (track, i_dim, track0, ele, stab
     return
   endif
   call c_f_pointer(ele, f_ele)
-  call multi_turn_tracking_analysis(track=f_track%data, i_dim=f_i_dim, track0=f_track0, &
-      ele=f_ele, stable=f_stable, growth_rate=f_growth_rate, chi=f_chi, err_flag=f_err_flag)
+  call multi_turn_tracking_analysis(f_track%data, f_i_dim, f_track0, f_ele, f_stable, &
+      f_growth_rate, f_chi, f_err_flag)
 
   ! out: f_track0 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -17279,7 +17559,7 @@ subroutine fortran_multilayer_type_to_multilayer_params (ele, err_flag) bind(c)
     return
   endif
   call c_f_pointer(ele, f_ele)
-  call multilayer_type_to_multilayer_params(ele=f_ele, err_flag=f_err_flag)
+  call multilayer_type_to_multilayer_params(f_ele, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -17321,8 +17601,8 @@ subroutine fortran_multipass_chain (ele, ix_pass, n_links, chain_ele, use_super_
   else
     f_use_super_lord_native_ptr => null()
   endif
-  call multipass_chain(ele=f_ele, ix_pass=f_ix_pass, n_links=f_n_links, &
-      chain_ele=f_chain_ele%data, use_super_lord=f_use_super_lord_native_ptr)
+  call multipass_chain(f_ele, f_ix_pass, f_n_links, f_chain_ele%data, &
+      f_use_super_lord_native_ptr)
 
 end subroutine
 subroutine fortran_multipole1_ab_to_kt (an, bn, n, knl, tn) bind(c)
@@ -17349,7 +17629,7 @@ subroutine fortran_multipole1_ab_to_kt (an, bn, n, knl, tn) bind(c)
   f_bn = bn
   ! in: f_n 0D_NOT_integer
   f_n = n
-  call multipole1_ab_to_kt(an=f_an, bn=f_bn, n=f_n, knl=f_knl, tn=f_tn)
+  call multipole1_ab_to_kt(f_an, f_bn, f_n, f_knl, f_tn)
 
   ! out: f_knl 0D_NOT_real
   call c_f_pointer(knl, f_knl_ptr)
@@ -17386,7 +17666,7 @@ subroutine fortran_multipole1_kt_to_ab (knl, knsl, tn, n, an, bn) bind(c)
   f_tn = tn
   ! in: f_n 0D_NOT_integer
   f_n = n
-  call multipole1_kt_to_ab(knl=f_knl, knsl=f_knsl, tn=f_tn, n=f_n, an=f_an, bn=f_bn)
+  call multipole1_kt_to_ab(f_knl, f_knsl, f_tn, f_n, f_an, f_bn)
 
   ! out: f_an 0D_NOT_real
   call c_f_pointer(an, f_an_ptr)
@@ -17417,7 +17697,7 @@ subroutine fortran_multipole_ab_to_kt (an, bn, knl, tn) bind(c)
   if (c_associated(knl))   call c_f_pointer(knl, f_knl)
   !! container general array (1D_ALLOC_real)
   if (c_associated(tn))   call c_f_pointer(tn, f_tn)
-  call multipole_ab_to_kt(an=f_an%data, bn=f_bn%data, knl=f_knl%data, tn=f_tn%data)
+  call multipole_ab_to_kt(f_an%data, f_bn%data, f_knl%data, f_tn%data)
 
 end subroutine
 subroutine fortran_multipole_ele_to_ab (ele, use_ele_tilt, ix_pole_max, a, b, pole_type, &
@@ -17472,6 +17752,12 @@ subroutine fortran_multipole_ele_to_ab (ele, use_ele_tilt, ix_pole_max, a, b, po
   else
     f_include_kicks_ptr => null()
   endif
+  ! out: f_b1 0D_NOT_real
+  if (c_associated(b1)) then
+    call c_f_pointer(b1, f_b1_ptr)
+  else
+    f_b1_ptr => null()
+  endif
   ! in: f_original 0D_NOT_logical
   if (c_associated(original)) then
     call c_f_pointer(original, f_original_ptr)
@@ -17480,9 +17766,8 @@ subroutine fortran_multipole_ele_to_ab (ele, use_ele_tilt, ix_pole_max, a, b, po
   else
     f_original_native_ptr => null()
   endif
-  call multipole_ele_to_ab(ele=f_ele, use_ele_tilt=f_use_ele_tilt, ix_pole_max=f_ix_pole_max, &
-      a=f_a, b=f_b, pole_type=f_pole_type_ptr, include_kicks=f_include_kicks_ptr, b1=f_b1, &
-      original=f_original_native_ptr)
+  call multipole_ele_to_ab(f_ele, f_use_ele_tilt, f_ix_pole_max, f_a, f_b, f_pole_type_ptr, &
+      f_include_kicks_ptr, f_b1, f_original_native_ptr)
 
   ! out: f_ix_pole_max 0D_NOT_integer
   call c_f_pointer(ix_pole_max, f_ix_pole_max_ptr)
@@ -17546,9 +17831,8 @@ subroutine fortran_multipole_ele_to_kt (ele, use_ele_tilt, ix_pole_max, knl, til
   else
     f_include_kicks_ptr => null()
   endif
-  call multipole_ele_to_kt(ele=f_ele, use_ele_tilt=f_use_ele_tilt, ix_pole_max=f_ix_pole_max, &
-      knl=f_knl%data, tilt=f_tilt%data, pole_type=f_pole_type_ptr, &
-      include_kicks=f_include_kicks_ptr)
+  call multipole_ele_to_kt(f_ele, f_use_ele_tilt, f_ix_pole_max, f_knl%data, f_tilt%data, &
+      f_pole_type_ptr, f_include_kicks_ptr)
 
   ! out: f_ix_pole_max 0D_NOT_integer
   call c_f_pointer(ix_pole_max, f_ix_pole_max_ptr)
@@ -17583,7 +17867,7 @@ subroutine fortran_multipole_init (ele, who, zero) bind(c)
   else
     f_zero_native_ptr => null()
   endif
-  call multipole_init(ele=f_ele, who=f_who, zero=f_zero_native_ptr)
+  call multipole_init(f_ele, f_who, f_zero_native_ptr)
 
   ! out: f_ele 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -17643,9 +17927,8 @@ subroutine fortran_multipole_kick (knl, tilt, n, ref_species, ele_orientation, c
   else
     f_ref_orb_offset_native_ptr => null()
   endif
-  call multipole_kick(knl=f_knl, tilt=f_tilt, n=f_n, ref_species=f_ref_species, &
-      ele_orientation=f_ele_orientation, coord=f_coord, pole_type=f_pole_type_ptr, &
-      ref_orb_offset=f_ref_orb_offset_native_ptr)
+  call multipole_kick(f_knl, f_tilt, f_n, f_ref_species, f_ele_orientation, f_coord, &
+      f_pole_type_ptr, f_ref_orb_offset_native_ptr)
 
 end subroutine
 subroutine fortran_multipole_kick_mat (knl, tilt, ref_species, ele, orbit, factor, mat6) &
@@ -17685,11 +17968,11 @@ subroutine fortran_multipole_kick_mat (knl, tilt, ref_species, ele, orbit, facto
   call c_f_pointer(orbit, f_orbit)
   ! in: f_factor 0D_NOT_real
   f_factor = factor
-  call multipole_kick_mat(knl=f_knl%data, tilt=f_tilt%data, ref_species=f_ref_species, &
-      ele=f_ele, orbit=f_orbit, factor=f_factor, mat6=f_mat6)
+  call multipole_kick_mat(f_knl%data, f_tilt%data, f_ref_species, f_ele, f_orbit, f_factor, &
+      f_mat6)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=1943, definition='real(rp) mat6(6,6), factor', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='matrix with kick values at mat6(2:4:2, 1:3:2). The rest of the matrix is untouched.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=1936, definition='real(rp) mat6(6,6), factor', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='matrix with kick values at mat6(2:4:2, 1:3:2). The rest of the matrix is untouched.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_multipole_kicks (knl, tilt, ele, orbit, pole_type, ref_orb_offset) bind(c)
 
@@ -17738,8 +18021,8 @@ subroutine fortran_multipole_kicks (knl, tilt, ele, orbit, pole_type, ref_orb_of
   else
     f_ref_orb_offset_native_ptr => null()
   endif
-  call multipole_kicks(knl=f_knl%data, tilt=f_tilt%data, ele=f_ele, orbit=f_orbit, &
-      pole_type=f_pole_type_ptr, ref_orb_offset=f_ref_orb_offset_native_ptr)
+  call multipole_kicks(f_knl%data, f_tilt%data, f_ele, f_orbit, f_pole_type_ptr, &
+      f_ref_orb_offset_native_ptr)
 
 end subroutine
 subroutine fortran_multipole_kt_to_ab (knl, knsl, tn, an, bn) bind(c)
@@ -17768,8 +18051,7 @@ subroutine fortran_multipole_kt_to_ab (knl, knsl, tn, an, bn) bind(c)
   if (c_associated(an))   call c_f_pointer(an, f_an)
   !! container general array (1D_ALLOC_real)
   if (c_associated(bn))   call c_f_pointer(bn, f_bn)
-  call multipole_kt_to_ab(knl=f_knl%data, knsl=f_knsl%data, tn=f_tn%data, an=f_an%data, &
-      bn=f_bn%data)
+  call multipole_kt_to_ab(f_knl%data, f_knsl%data, f_tn%data, f_an%data, f_bn%data)
 
 end subroutine
 subroutine fortran_multipole_spin_tracking (ele, param, orbit) bind(c)
@@ -17794,7 +18076,7 @@ subroutine fortran_multipole_spin_tracking (ele, param, orbit) bind(c)
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  call multipole_spin_tracking(ele=f_ele, param=f_param, orbit=f_orbit)
+  call multipole_spin_tracking(f_ele, f_param, f_orbit)
 
 end subroutine
 subroutine fortran_mytan (y, x, arg) bind(c)
@@ -17824,7 +18106,7 @@ subroutine fortran_mytan (y, x, arg) bind(c)
   else
     f_x_ptr => null()
   endif
-  f_arg = mytan(y=f_y_ptr, x=f_x_ptr)
+  f_arg = mytan(f_y_ptr, f_x_ptr)
 
   ! inout: f_y 0D_NOT_real
   ! no output conversion for f_y
@@ -17875,7 +18157,7 @@ subroutine fortran_new_control (lat, ix_ele, ele_name) bind(c)
   else
     f_ele_name_call_ptr => null()
   endif
-  call new_control(lat=f_lat, ix_ele=f_ix_ele, ele_name=f_ele_name_call_ptr)
+  call new_control(f_lat, f_ix_ele, f_ele_name_call_ptr)
 
 end subroutine
 subroutine fortran_nint_chk (re_val, int_val) bind(c)
@@ -17891,7 +18173,7 @@ subroutine fortran_nint_chk (re_val, int_val) bind(c)
   ! ** End of parameters **
   ! in: f_re_val 0D_NOT_real
   f_re_val = re_val
-  f_int_val = nint_chk(re_val=f_re_val)
+  f_int_val = nint_chk(f_re_val)
 
   ! out: f_int_val 0D_NOT_integer
   call c_f_pointer(int_val, f_int_val_ptr)
@@ -17946,8 +18228,8 @@ subroutine fortran_normal_form_complex_taylors (one_turn_taylor, rf_on, F, L, A,
   else
     f_order_ptr => null()
   endif
-  call normal_form_complex_taylors(one_turn_taylor=f_one_turn_taylor, rf_on=f_rf_on_native_ptr, &
-      F=f_F, L=f_L, A=f_A, A_inverse=f_A_inverse, order=f_order_ptr)
+  call normal_form_complex_taylors(f_one_turn_taylor, f_rf_on_native_ptr, f_F, f_L, f_A, &
+      f_A_inverse, f_order_ptr)
 
   ! inout: f_rf_on 0D_NOT_logical
   if (c_associated(rf_on)) then
@@ -17986,8 +18268,7 @@ subroutine fortran_normal_form_taylors (one_turn_taylor, rf_on, dhdj, A, A_inver
   call c_f_pointer(A, f_A, [6])
   !! type array (1D_NOT_type)
   call c_f_pointer(A_inverse, f_A_inverse, [6])
-  call normal_form_taylors(one_turn_taylor=f_one_turn_taylor, rf_on=f_rf_on, dhdj=f_dhdj, &
-      A=f_A, A_inverse=f_A_inverse)
+  call normal_form_taylors(f_one_turn_taylor, f_rf_on, f_dhdj, f_A, f_A_inverse)
 
   ! out: f_dhdj 1D_NOT_type
   ! TODO may require output conversion? 1D_NOT_type
@@ -18045,8 +18326,7 @@ subroutine fortran_normal_mode3_calc (t6, tune, B, HV, above_transition, abz_tun
   else
     f_abz_tunes_ptr => null()
   endif
-  call normal_mode3_calc(t6=f_t6, tune=f_tune, B=f_B, HV=f_HV, &
-      above_transition=f_above_transition_native_ptr, abz_tunes=f_abz_tunes)
+  call normal_mode3_calc(f_t6, f_tune, f_B, f_HV, f_above_transition_native_ptr, f_abz_tunes)
 
   ! out: f_tune 1D_NOT_real
   if (c_associated(tune)) then
@@ -18083,7 +18363,7 @@ subroutine fortran_normal_mode_dispersion (ele, reverse) bind(c)
   else
     f_reverse_native_ptr => null()
   endif
-  call normal_mode_dispersion(ele=f_ele, reverse=f_reverse_native_ptr)
+  call normal_mode_dispersion(f_ele, f_reverse_native_ptr)
 
 end subroutine
 subroutine fortran_normalize_evecs (evec, err_flag) bind(c)
@@ -18105,7 +18385,7 @@ subroutine fortran_normalize_evecs (evec, err_flag) bind(c)
   else
     f_evec_ptr => null()
   endif
-  call normalize_evecs(evec=f_evec, err_flag=f_err_flag)
+  call normalize_evecs(f_evec, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -18126,7 +18406,7 @@ subroutine fortran_num_field_eles (ele, n_field_ele) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_n_field_ele = num_field_eles(ele=f_ele)
+  f_n_field_ele = num_field_eles(f_ele)
 
   ! out: f_n_field_ele 0D_NOT_integer
   call c_f_pointer(n_field_ele, f_n_field_ele_ptr)
@@ -18151,7 +18431,7 @@ subroutine fortran_num_lords (slave, lord_type, num) bind(c)
   call c_f_pointer(slave, f_slave)
   ! in: f_lord_type 0D_NOT_integer
   f_lord_type = lord_type
-  f_num = num_lords(slave=f_slave, lord_type=f_lord_type)
+  f_num = num_lords(f_slave, f_lord_type)
 
   ! out: f_num 0D_NOT_integer
   call c_f_pointer(num, f_num_ptr)
@@ -18231,9 +18511,8 @@ subroutine fortran_odeint_bmad (orbit, ele, param, s1_body, s2_body, err_flag, t
   else
     f_make_matrix_native_ptr => null()
   endif
-  call odeint_bmad(orbit=f_orbit, ele=f_ele, param=f_param, s1_body=f_s1_body, &
-      s2_body=f_s2_body, err_flag=f_err_flag, track=f_track, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call odeint_bmad(f_orbit, f_ele, f_param, f_s1_body, f_s2_body, f_err_flag, f_track, f_mat6, &
+      f_make_matrix_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -18311,11 +18590,16 @@ subroutine fortran_odeint_bmad_time (orb, ele, param, t_dir, rf_time, err_flag, 
   else
     f_t_end_ptr => null()
   endif
+  ! out: f_dt_step 0D_NOT_real
+  if (c_associated(dt_step)) then
+    call c_f_pointer(dt_step, f_dt_step_ptr)
+  else
+    f_dt_step_ptr => null()
+  endif
   ! in: f_extra_field 0D_NOT_type
   if (c_associated(extra_field))   call c_f_pointer(extra_field, f_extra_field)
-  call odeint_bmad_time(orb=f_orb, ele=f_ele, param=f_param, t_dir=f_t_dir, &
-      rf_time=f_rf_time_ptr, err_flag=f_err_flag, track=f_track, t_end=f_t_end_ptr, &
-      dt_step=f_dt_step, extra_field=f_extra_field)
+  call odeint_bmad_time(f_orb, f_ele, f_param, f_t_dir, f_rf_time_ptr, f_err_flag, f_track, &
+      f_t_end_ptr, f_dt_step, f_extra_field)
 
   ! inout: f_rf_time 0D_NOT_real
   ! no output conversion for f_rf_time
@@ -18414,6 +18698,12 @@ subroutine fortran_offset_particle (ele, set, orbit, set_tilt, set_hvkicks, drif
   else
     f_s_pos_ptr => null()
   endif
+  ! out: f_s_out 0D_NOT_real
+  if (c_associated(s_out)) then
+    call c_f_pointer(s_out, f_s_out_ptr)
+  else
+    f_s_out_ptr => null()
+  endif
   ! in: f_set_spin 0D_NOT_logical
   if (c_associated(set_spin)) then
     call c_f_pointer(set_spin, f_set_spin_ptr)
@@ -18443,10 +18733,9 @@ subroutine fortran_offset_particle (ele, set, orbit, set_tilt, set_hvkicks, drif
   else
     f_time_ptr => null()
   endif
-  call offset_particle(ele=f_ele, set=f_set, orbit=f_orbit, set_tilt=f_set_tilt_native_ptr, &
-      set_hvkicks=f_set_hvkicks_native_ptr, drift_to_edge=f_drift_to_edge_ptr, &
-      s_pos=f_s_pos_ptr, s_out=f_s_out, set_spin=f_set_spin_native_ptr, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr, spin_qrot=f_spin_qrot, time=f_time_ptr)
+  call offset_particle(f_ele, f_set, f_orbit, f_set_tilt_native_ptr, f_set_hvkicks_native_ptr, &
+      f_drift_to_edge_ptr, f_s_pos_ptr, f_s_out, f_set_spin_native_ptr, f_mat6, &
+      f_make_matrix_native_ptr, f_spin_qrot, f_time_ptr)
 
   ! out: f_s_out 0D_NOT_real
   ! no output conversion for f_s_out
@@ -18502,8 +18791,7 @@ subroutine fortran_offset_photon (ele, orbit, set, offset_position_only, rot_mat
   else
     f_rot_mat_ptr => null()
   endif
-  call offset_photon(ele=f_ele, orbit=f_orbit, set=f_set, &
-      offset_position_only=f_offset_position_only_native_ptr, rot_mat=f_rot_mat)
+  call offset_photon(f_ele, f_orbit, f_set, f_offset_position_only_native_ptr, f_rot_mat)
 
 end subroutine
 subroutine fortran_one_turn_mat_at_ele (ele, phi_a, phi_b, mat4) bind(c)
@@ -18529,10 +18817,10 @@ subroutine fortran_one_turn_mat_at_ele (ele, phi_a, phi_b, mat4) bind(c)
   f_phi_a = phi_a
   ! in: f_phi_b 0D_NOT_real
   f_phi_b = phi_b
-  call one_turn_mat_at_ele(ele=f_ele, phi_a=f_phi_a, phi_b=f_phi_b, mat4=f_mat4)
+  call one_turn_mat_at_ele(f_ele, f_phi_a, f_phi_b, f_mat4)
 
   ! out: f_mat4 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat4', c_name='mat4', python_name='mat4', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=2011, definition='real(rp) mat4(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat4', comment='', default=None), intent='out', description='1-Turn coupled matrix.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat4', c_name='mat4', python_name='mat4', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=2004, definition='real(rp) mat4(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat4', comment='', default=None), intent='out', description='1-Turn coupled matrix.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_open_binary_file (file_name, action, iu, r_name, iver, is_ok) bind(c)
 
@@ -18570,8 +18858,7 @@ subroutine fortran_open_binary_file (file_name, action, iu, r_name, iver, is_ok)
   if (.not. c_associated(r_name)) return
   call c_f_pointer(r_name, f_r_name_ptr, [huge(0)])
   call to_f_str(f_r_name_ptr, f_r_name)
-  f_is_ok = open_binary_file(file_name=f_file_name, action=f_action, iu=f_iu, r_name=f_r_name, &
-      iver=f_iver)
+  f_is_ok = open_binary_file(f_file_name, f_action, f_iu, f_r_name, f_iver)
 
   ! out: f_iu 0D_NOT_integer
   call c_f_pointer(iu, f_iu_ptr)
@@ -18612,8 +18899,31 @@ subroutine fortran_orbit_amplitude_calc (ele, orb, amp_a, amp_b, amp_na, amp_nb)
   ! in: f_orb 0D_NOT_type
   if (.not. c_associated(orb)) return
   call c_f_pointer(orb, f_orb)
-  call orbit_amplitude_calc(ele=f_ele, orb=f_orb, amp_a=f_amp_a, amp_b=f_amp_b, &
-      amp_na=f_amp_na, amp_nb=f_amp_nb)
+  ! out: f_amp_a 0D_NOT_real
+  if (c_associated(amp_a)) then
+    call c_f_pointer(amp_a, f_amp_a_ptr)
+  else
+    f_amp_a_ptr => null()
+  endif
+  ! out: f_amp_b 0D_NOT_real
+  if (c_associated(amp_b)) then
+    call c_f_pointer(amp_b, f_amp_b_ptr)
+  else
+    f_amp_b_ptr => null()
+  endif
+  ! out: f_amp_na 0D_NOT_real
+  if (c_associated(amp_na)) then
+    call c_f_pointer(amp_na, f_amp_na_ptr)
+  else
+    f_amp_na_ptr => null()
+  endif
+  ! out: f_amp_nb 0D_NOT_real
+  if (c_associated(amp_nb)) then
+    call c_f_pointer(amp_nb, f_amp_nb_ptr)
+  else
+    f_amp_nb_ptr => null()
+  endif
+  call orbit_amplitude_calc(f_ele, f_orb, f_amp_a, f_amp_b, f_amp_na, f_amp_nb)
 
   ! out: f_amp_a 0D_NOT_real
   ! no output conversion for f_amp_a
@@ -18664,8 +18974,7 @@ subroutine fortran_orbit_reference_energy_correction (orbit, p0c_new, mat6, make
   else
     f_make_matrix_native_ptr => null()
   endif
-  call orbit_reference_energy_correction(orbit=f_orbit, p0c_new=f_p0c_new, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call orbit_reference_energy_correction(f_orbit, f_p0c_new, f_mat6, f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_orbit_to_floor_phase_space (orbit, ele, floor_phase_space) bind(c)
@@ -18688,7 +18997,7 @@ subroutine fortran_orbit_to_floor_phase_space (orbit, ele, floor_phase_space) bi
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_floor_phase_space = orbit_to_floor_phase_space(orbit=f_orbit, ele=f_ele)
+  f_floor_phase_space = orbit_to_floor_phase_space(f_orbit, f_ele)
 
   ! out: f_floor_phase_space 1D_NOT_real
   if (c_associated(floor_phase_space)) then
@@ -18734,8 +19043,8 @@ subroutine fortran_orbit_to_local_curvilinear (orbit, ele, z_direction, relative
   else
     f_relative_to_ptr => null()
   endif
-  f_local_position = orbit_to_local_curvilinear(orbit=f_orbit, ele=f_ele, &
-      z_direction=f_z_direction_ptr, relative_to=f_relative_to_ptr)
+  f_local_position = orbit_to_local_curvilinear(f_orbit, f_ele, f_z_direction_ptr, &
+      f_relative_to_ptr)
 
   ! out: f_local_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -18773,8 +19082,7 @@ subroutine fortran_orbit_too_large (orbit, param, check_momentum, is_too_large) 
   else
     f_check_momentum_native_ptr => null()
   endif
-  f_is_too_large = orbit_too_large(orbit=f_orbit, param=f_param, &
-      check_momentum=f_check_momentum_native_ptr)
+  f_is_too_large = orbit_too_large(f_orbit, f_param, f_check_momentum_native_ptr)
 
   ! out: f_param 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -18825,8 +19133,7 @@ subroutine fortran_order_evecs_by_n_similarity (evec, eval, mat_tunes, Nmat, err
   else
     f_Nmat_ptr => null()
   endif
-  call order_evecs_by_n_similarity(evec=f_evec, eval=f_eval, mat_tunes=f_mat_tunes, &
-      Nmat=f_Nmat, err_flag=f_err_flag)
+  call order_evecs_by_n_similarity(f_evec, f_eval, f_mat_tunes, f_Nmat, f_err_flag)
 
   ! out: f_evec 2D_NOT_complex
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_evec', c_name='evec', python_name='evec', type='complex', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=570, definition='complex(rp) evec(6,6)', type_info=TypeInformation(type='complex', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='evec', comment='', default=None), intent='out', description='complex eigenvectors arranged down columns.', doc_data_type='complex', doc_is_optional=False)
@@ -18869,7 +19176,7 @@ subroutine fortran_order_evecs_by_plane_dominance (evec, eval, mat_tunes) bind(c
   else
     f_mat_tunes_ptr => null()
   endif
-  call order_evecs_by_plane_dominance(evec=f_evec, eval=f_eval, mat_tunes=f_mat_tunes)
+  call order_evecs_by_plane_dominance(f_evec, f_eval, f_mat_tunes)
 
 end subroutine
 subroutine fortran_order_evecs_by_tune (evec, eval, mat_tunes, abz_tunes, err_flag) bind(c)
@@ -18922,8 +19229,7 @@ subroutine fortran_order_evecs_by_tune (evec, eval, mat_tunes, abz_tunes, err_fl
   else
     f_abz_tunes_ptr => null()
   endif
-  call order_evecs_by_tune(evec=f_evec, eval=f_eval, mat_tunes=f_mat_tunes, &
-      abz_tunes=f_abz_tunes, err_flag=f_err_flag)
+  call order_evecs_by_tune(f_evec, f_eval, f_mat_tunes, f_abz_tunes, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -18940,7 +19246,7 @@ subroutine fortran_order_particles_in_z (bunch) bind(c)
   ! inout: f_bunch 0D_NOT_type
   if (.not. c_associated(bunch)) return
   call c_f_pointer(bunch, f_bunch)
-  call order_particles_in_z(bunch=f_bunch)
+  call order_particles_in_z(f_bunch)
 
 end subroutine
 subroutine fortran_order_super_lord_slaves (lat, ix_lord) bind(c)
@@ -18958,7 +19264,7 @@ subroutine fortran_order_super_lord_slaves (lat, ix_lord) bind(c)
   call c_f_pointer(lat, f_lat)
   ! in: f_ix_lord 0D_NOT_integer
   f_ix_lord = ix_lord
-  call order_super_lord_slaves(lat=f_lat, ix_lord=f_ix_lord)
+  call order_super_lord_slaves(f_lat, f_ix_lord)
 
 end subroutine
 subroutine fortran_osc_alloc_freespace_array (nlo, nhi, npad) bind(c)
@@ -18996,7 +19302,7 @@ subroutine fortran_osc_alloc_freespace_array (nlo, nhi, npad) bind(c)
   else
     f_npad_ptr => null()
   endif
-  call osc_alloc_freespace_array(nlo=f_nlo, nhi=f_nhi, npad=f_npad)
+  call osc_alloc_freespace_array(f_nlo, f_nhi, f_npad)
 
 end subroutine
 subroutine fortran_osc_alloc_image_array (nlo, nhi, npad) bind(c)
@@ -19034,7 +19340,7 @@ subroutine fortran_osc_alloc_image_array (nlo, nhi, npad) bind(c)
   else
     f_npad_ptr => null()
   endif
-  call osc_alloc_image_array(nlo=f_nlo, nhi=f_nhi, npad=f_npad)
+  call osc_alloc_image_array(f_nlo, f_nhi, f_npad)
 
 end subroutine
 subroutine fortran_osc_alloc_rectpipe_arrays (nlo, nhi, npad) bind(c)
@@ -19072,7 +19378,7 @@ subroutine fortran_osc_alloc_rectpipe_arrays (nlo, nhi, npad) bind(c)
   else
     f_npad_ptr => null()
   endif
-  call osc_alloc_rectpipe_arrays(nlo=f_nlo, nhi=f_nhi, npad=f_npad)
+  call osc_alloc_rectpipe_arrays(f_nlo, f_nhi, f_npad)
 
 end subroutine
 subroutine fortran_osc_getgrnpipe (gam, a, b, delta, umin, npad) bind(c)
@@ -19137,8 +19443,7 @@ subroutine fortran_osc_getgrnpipe (gam, a, b, delta, umin, npad) bind(c)
   else
     f_npad_ptr => null()
   endif
-  call osc_getgrnpipe(gam=f_gam_ptr, a=f_a_ptr, b=f_b_ptr, delta=f_delta, umin=f_umin, &
-      npad=f_npad)
+  call osc_getgrnpipe(f_gam_ptr, f_a_ptr, f_b_ptr, f_delta, f_umin, f_npad)
 
   ! inout: f_gam 0D_NOT_real
   ! no output conversion for f_gam
@@ -19237,8 +19542,8 @@ subroutine fortran_osc_write_rectpipe_grn (apipe, bpipe, delta, umin, umax, nlo,
   else
     f_gamma_ptr => null()
   endif
-  call osc_write_rectpipe_grn(apipe=f_apipe_ptr, bpipe=f_bpipe_ptr, delta=f_delta, umin=f_umin, &
-      umax=f_umax, nlo=f_nlo, nhi=f_nhi, gamma=f_gamma_ptr)
+  call osc_write_rectpipe_grn(f_apipe_ptr, f_bpipe_ptr, f_delta, f_umin, f_umax, f_nlo, f_nhi, &
+      f_gamma_ptr)
 
   ! inout: f_apipe 0D_NOT_real
   ! no output conversion for f_apipe
@@ -19301,8 +19606,8 @@ subroutine fortran_parse_cartesian_map (ct_map, ele, lat, delim, delim_found, er
   else
     f_err_flag_native_ptr => null()
   endif
-  call parse_cartesian_map(ct_map=f_ct_map, ele=f_ele, lat=f_lat, delim=f_delim, &
-      delim_found=f_delim_found_native_ptr, err_flag=f_err_flag_native_ptr)
+  call parse_cartesian_map(f_ct_map, f_ele, f_lat, f_delim, f_delim_found_native_ptr, &
+      f_err_flag_native_ptr)
 
   ! inout: f_delim 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -19376,8 +19681,8 @@ subroutine fortran_parse_cylindrical_map (cl_map, ele, lat, delim, delim_found, 
   else
     f_err_flag_native_ptr => null()
   endif
-  call parse_cylindrical_map(cl_map=f_cl_map, ele=f_ele, lat=f_lat, delim=f_delim, &
-      delim_found=f_delim_found_native_ptr, err_flag=f_err_flag_native_ptr)
+  call parse_cylindrical_map(f_cl_map, f_ele, f_lat, f_delim, f_delim_found_native_ptr, &
+      f_err_flag_native_ptr)
 
   ! inout: f_delim 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -19450,8 +19755,8 @@ subroutine fortran_parse_gen_grad_map (gg_map, ele, lat, delim, delim_found, err
   else
     f_err_flag_native_ptr => null()
   endif
-  call parse_gen_grad_map(gg_map=f_gg_map, ele=f_ele, lat=f_lat, delim=f_delim, &
-      delim_found=f_delim_found_native_ptr, err_flag=f_err_flag_native_ptr)
+  call parse_gen_grad_map(f_gg_map, f_ele, f_lat, f_delim, f_delim_found_native_ptr, &
+      f_err_flag_native_ptr)
 
   ! inout: f_delim 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -19524,8 +19829,8 @@ subroutine fortran_parse_grid_field (g_field, ele, lat, delim, delim_found, err_
   else
     f_err_flag_native_ptr => null()
   endif
-  call parse_grid_field(g_field=f_g_field, ele=f_ele, lat=f_lat, delim=f_delim, &
-      delim_found=f_delim_found_native_ptr, err_flag=f_err_flag_native_ptr)
+  call parse_grid_field(f_g_field, f_ele, f_lat, f_delim, f_delim_found_native_ptr, &
+      f_err_flag_native_ptr)
 
   ! inout: f_delim 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -19649,10 +19954,9 @@ subroutine fortran_parse_integer_list (err_str, lat, int_array, exact_size, deli
   else
     f_default_value_ptr => null()
   endif
-  f_is_ok = parse_integer_list(err_str=f_err_str, lat=f_lat, int_array=f_int_array%data, &
-      exact_size=f_exact_size_native_ptr, delim=f_delim, delim_found=f_delim_found_native_ptr, &
-      open_delim=f_open_delim_call_ptr, separator=f_separator_call_ptr, &
-      close_delim=f_close_delim_call_ptr, default_value=f_default_value_ptr)
+  f_is_ok = parse_integer_list(f_err_str, f_lat, f_int_array%data, f_exact_size_native_ptr, &
+      f_delim, f_delim_found_native_ptr, f_open_delim_call_ptr, f_separator_call_ptr, &
+      f_close_delim_call_ptr, f_default_value_ptr)
 
   ! inout: f_err_str 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -19775,11 +20079,9 @@ subroutine fortran_parse_integer_list2 (err_str, lat, int_array, num_found, deli
   else
     f_default_value_ptr => null()
   endif
-  f_is_ok = parse_integer_list2(err_str=f_err_str, lat=f_lat, int_array=f_int_array%data, &
-      num_found=f_num_found, delim=f_delim, delim_found=f_delim_found, &
-      num_expected=f_num_expected_ptr, open_delim=f_open_delim_call_ptr, &
-      separator=f_separator_call_ptr, close_delim=f_close_delim_call_ptr, &
-      default_value=f_default_value_ptr)
+  f_is_ok = parse_integer_list2(f_err_str, f_lat, f_int_array%data, f_num_found, f_delim, &
+      f_delim_found, f_num_expected_ptr, f_open_delim_call_ptr, f_separator_call_ptr, &
+      f_close_delim_call_ptr, f_default_value_ptr)
 
   ! out: f_num_found 0D_NOT_integer
   call c_f_pointer(num_found, f_num_found_ptr)
@@ -19889,11 +20191,15 @@ subroutine fortran_parse_real_list (lat, err_str, real_array, exact_size, delim,
   else
     f_default_value_ptr => null()
   endif
-  f_is_ok = parse_real_list(lat=f_lat, err_str=f_err_str, real_array=f_real_array%data, &
-      exact_size=f_exact_size, delim=f_delim, delim_found=f_delim_found, &
-      open_delim=f_open_delim_call_ptr, separator=f_separator_call_ptr, &
-      close_delim=f_close_delim_call_ptr, default_value=f_default_value_ptr, &
-      num_found=f_num_found)
+  ! out: f_num_found 0D_NOT_integer
+  if (c_associated(num_found)) then
+    call c_f_pointer(num_found, f_num_found_ptr)
+  else
+    f_num_found_ptr => null()
+  endif
+  f_is_ok = parse_real_list(f_lat, f_err_str, f_real_array%data, f_exact_size, f_delim, &
+      f_delim_found, f_open_delim_call_ptr, f_separator_call_ptr, f_close_delim_call_ptr, &
+      f_default_value_ptr, f_num_found)
 
   ! out: f_delim 0D_NOT_character
   call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1]) ! output-only string
@@ -20012,11 +20318,9 @@ subroutine fortran_parse_real_list2 (lat, err_str, real_array, num_found, delim,
   else
     f_single_value_native_ptr => null()
   endif
-  f_is_ok = parse_real_list2(lat=f_lat, err_str=f_err_str, real_array=f_real_array%data, &
-      num_found=f_num_found, delim=f_delim, delim_found=f_delim_found, &
-      num_expected=f_num_expected_ptr, open_brace=f_open_brace_call_ptr, &
-      separator=f_separator_call_ptr, close_brace=f_close_brace_call_ptr, &
-      default_value=f_default_value_ptr, single_value=f_single_value_native_ptr)
+  f_is_ok = parse_real_list2(f_lat, f_err_str, f_real_array%data, f_num_found, f_delim, &
+      f_delim_found, f_num_expected_ptr, f_open_brace_call_ptr, f_separator_call_ptr, &
+      f_close_brace_call_ptr, f_default_value_ptr, f_single_value_native_ptr)
 
   ! out: f_num_found 0D_NOT_integer
   call c_f_pointer(num_found, f_num_found_ptr)
@@ -20079,7 +20383,7 @@ subroutine fortran_parser_add_constant (word, lat, redef_is_error) bind(c)
   else
     f_redef_is_error_native_ptr => null()
   endif
-  call parser_add_constant(word=f_word, lat=f_lat, redef_is_error=f_redef_is_error_native_ptr)
+  call parser_add_constant(f_word, f_lat, f_redef_is_error_native_ptr)
 
   ! inout: f_word 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -20159,9 +20463,8 @@ subroutine fortran_parser_call_check (word, ix_word, delim, delim_found, call_fo
   else
     f_err_flag_native_ptr => null()
   endif
-  call parser_call_check(word=f_word, ix_word=f_ix_word_ptr, delim=f_delim, &
-      delim_found=f_delim_found_native_ptr, call_found=f_call_found_native_ptr, &
-      err_flag=f_err_flag_native_ptr)
+  call parser_call_check(f_word, f_ix_word_ptr, f_delim, f_delim_found_native_ptr, &
+      f_call_found_native_ptr, f_err_flag_native_ptr)
 
   ! inout: f_word 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -20220,8 +20523,7 @@ subroutine fortran_parser_fast_complex_read (cmplx_vec, ele, delim, err_str, is_
   if (.not. c_associated(err_str)) return
   call c_f_pointer(err_str, f_err_str_ptr, [huge(0)])
   call to_f_str(f_err_str_ptr, f_err_str)
-  f_is_ok = parser_fast_complex_read(cmplx_vec=f_cmplx_vec%data, ele=f_ele, delim=f_delim, &
-      err_str=f_err_str)
+  f_is_ok = parser_fast_complex_read(f_cmplx_vec%data, f_ele, f_delim, f_err_str)
 
   ! out: f_delim 0D_NOT_character
   call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1]) ! output-only string
@@ -20264,8 +20566,7 @@ subroutine fortran_parser_fast_integer_read (int_vec, ele, delim_wanted, err_str
   if (.not. c_associated(err_str)) return
   call c_f_pointer(err_str, f_err_str_ptr, [huge(0)])
   call to_f_str(f_err_str_ptr, f_err_str)
-  f_is_ok = parser_fast_integer_read(int_vec=f_int_vec%data, ele=f_ele, &
-      delim_wanted=f_delim_wanted, err_str=f_err_str)
+  f_is_ok = parser_fast_integer_read(f_int_vec%data, f_ele, f_delim_wanted, f_err_str)
 
   ! inout: f_delim_wanted 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -20328,8 +20629,14 @@ subroutine fortran_parser_fast_real_read (real_vec, ele, end_delims, delim, err_
   else
     f_exact_size_native_ptr => null()
   endif
-  f_is_ok = parser_fast_real_read(real_vec=f_real_vec%data, ele=f_ele, end_delims=f_end_delims, &
-      delim=f_delim, err_str=f_err_str, exact_size=f_exact_size_native_ptr, n_real=f_n_real)
+  ! out: f_n_real 0D_NOT_integer
+  if (c_associated(n_real)) then
+    call c_f_pointer(n_real, f_n_real_ptr)
+  else
+    f_n_real_ptr => null()
+  endif
+  f_is_ok = parser_fast_real_read(f_real_vec%data, f_ele, f_end_delims, f_delim, f_err_str, &
+      f_exact_size_native_ptr, f_n_real)
 
   ! out: f_delim 0D_NOT_character
   call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1]) ! output-only string
@@ -20417,9 +20724,8 @@ subroutine fortran_parser_file_stack (how, file_name_in, finished, err, open_fil
   else
     f_abort_on_open_error_native_ptr => null()
   endif
-  call parser_file_stack(how=f_how, file_name_in=f_file_name_in_call_ptr, &
-      finished=f_finished_native_ptr, err=f_err_native_ptr, open_file=f_open_file_native_ptr, &
-      abort_on_open_error=f_abort_on_open_error_native_ptr)
+  call parser_file_stack(f_how, f_file_name_in_call_ptr, f_finished_native_ptr, &
+      f_err_native_ptr, f_open_file_native_ptr, f_abort_on_open_error_native_ptr)
 
   ! inout: f_how 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -20542,9 +20848,8 @@ subroutine fortran_parser_get_integer (int_val, word, ix_word, delim, delim_foun
   else
     f_str2_call_ptr => null()
   endif
-  call parser_get_integer(int_val=f_int_val_ptr, word=f_word, ix_word=f_ix_word_ptr, &
-      delim=f_delim, delim_found=f_delim_found_native_ptr, err=f_err_native_ptr, &
-      str1=f_str1_call_ptr, str2=f_str2_call_ptr)
+  call parser_get_integer(f_int_val_ptr, f_word, f_ix_word_ptr, f_delim, &
+      f_delim_found_native_ptr, f_err_native_ptr, f_str1_call_ptr, f_str2_call_ptr)
 
   ! inout: f_int_val 0D_NOT_integer
   ! no output conversion for f_int_val
@@ -20639,9 +20944,8 @@ subroutine fortran_parser_get_logical (attrib_name, this_logic, ele_name, delim,
   else
     f_err_native_ptr => null()
   endif
-  call parser_get_logical(attrib_name=f_attrib_name, this_logic=f_this_logic_native_ptr, &
-      ele_name=f_ele_name, delim=f_delim, delim_found=f_delim_found_native_ptr, &
-      err=f_err_native_ptr)
+  call parser_get_logical(f_attrib_name, f_this_logic_native_ptr, f_ele_name, f_delim, &
+      f_delim_found_native_ptr, f_err_native_ptr)
 
   ! inout: f_attrib_name 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -20682,7 +20986,7 @@ subroutine fortran_parser_identify_fork_to_element (lat) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call parser_identify_fork_to_element(lat=f_lat)
+  call parser_identify_fork_to_element(f_lat)
 
 end subroutine
 subroutine fortran_parser_init_custom_elements (lat) bind(c)
@@ -20696,7 +21000,7 @@ subroutine fortran_parser_init_custom_elements (lat) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call parser_init_custom_elements(lat=f_lat)
+  call parser_init_custom_elements(f_lat)
 
 end subroutine
 subroutine fortran_parser_print_line (lat, end_of_file) bind(c)
@@ -20723,7 +21027,7 @@ subroutine fortran_parser_print_line (lat, end_of_file) bind(c)
   else
     f_end_of_file_native_ptr => null()
   endif
-  call parser_print_line(lat=f_lat, end_of_file=f_end_of_file_native_ptr)
+  call parser_print_line(f_lat, f_end_of_file_native_ptr)
 
   ! inout: f_end_of_file 0D_NOT_logical
   if (c_associated(end_of_file)) then
@@ -20777,8 +21081,7 @@ subroutine fortran_parser_read_lr_wake (ele, delim, delim_found, err_flag) bind(
   else
     f_err_flag_native_ptr => null()
   endif
-  call parser_read_lr_wake(ele=f_ele, delim=f_delim, delim_found=f_delim_found_native_ptr, &
-      err_flag=f_err_flag_native_ptr)
+  call parser_read_lr_wake(f_ele, f_delim, f_delim_found_native_ptr, f_err_flag_native_ptr)
 
   ! inout: f_delim 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -20816,7 +21119,7 @@ subroutine fortran_parser_read_old_format_lr_wake (ele, lr_file_name) bind(c)
   if (.not. c_associated(lr_file_name)) return
   call c_f_pointer(lr_file_name, f_lr_file_name_ptr, [huge(0)])
   call to_f_str(f_lr_file_name_ptr, f_lr_file_name)
-  call parser_read_old_format_lr_wake(ele=f_ele, lr_file_name=f_lr_file_name)
+  call parser_read_old_format_lr_wake(f_ele, f_lr_file_name)
 
 end subroutine
 subroutine fortran_parser_read_old_format_sr_wake (ele, sr_file_name) bind(c)
@@ -20838,7 +21141,7 @@ subroutine fortran_parser_read_old_format_sr_wake (ele, sr_file_name) bind(c)
   if (.not. c_associated(sr_file_name)) return
   call c_f_pointer(sr_file_name, f_sr_file_name_ptr, [huge(0)])
   call to_f_str(f_sr_file_name_ptr, f_sr_file_name)
-  call parser_read_old_format_sr_wake(ele=f_ele, sr_file_name=f_sr_file_name)
+  call parser_read_old_format_sr_wake(f_ele, f_sr_file_name)
 
 end subroutine
 subroutine fortran_parser_read_sr_wake (ele, delim, delim_found, err_flag) bind(c)
@@ -20885,8 +21188,7 @@ subroutine fortran_parser_read_sr_wake (ele, delim, delim_found, err_flag) bind(
   else
     f_err_flag_native_ptr => null()
   endif
-  call parser_read_sr_wake(ele=f_ele, delim=f_delim, delim_found=f_delim_found_native_ptr, &
-      err_flag=f_err_flag_native_ptr)
+  call parser_read_sr_wake(f_ele, f_delim, f_delim_found_native_ptr, f_err_flag_native_ptr)
 
   ! inout: f_delim 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -20931,8 +21233,7 @@ subroutine fortran_parser_transfer_control_struct (con_in, con_out, lord, ix_var
   call c_f_pointer(lord, f_lord)
   ! in: f_ix_var 0D_NOT_integer
   f_ix_var = ix_var
-  call parser_transfer_control_struct(con_in=f_con_in, con_out=f_con_out, lord=f_lord, &
-      ix_var=f_ix_var)
+  call parser_transfer_control_struct(f_con_in, f_con_out, f_lord, f_ix_var)
 
   ! out: f_con_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -20994,9 +21295,8 @@ subroutine fortran_particle_in_global_frame (orb, branch, in_time_coordinates, i
   else
     f_w_mat_out_ptr => null()
   endif
-  f_particle = particle_in_global_frame(orb=f_orb, branch=f_branch, &
-      in_time_coordinates=f_in_time_coordinates_native_ptr, &
-      in_body_frame=f_in_body_frame_native_ptr, w_mat_out=f_w_mat_out)
+  f_particle = particle_in_global_frame(f_orb, f_branch, f_in_time_coordinates_native_ptr, &
+      f_in_body_frame_native_ptr, f_w_mat_out)
 
   ! out: f_particle 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -21016,7 +21316,7 @@ subroutine fortran_particle_is_moving_backwards (orbit, is_moving_backwards) bin
   ! in: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  f_is_moving_backwards = particle_is_moving_backwards(orbit=f_orbit)
+  f_is_moving_backwards = particle_is_moving_backwards(f_orbit)
 
   ! out: f_is_moving_backwards 0D_NOT_logical
   call c_f_pointer(is_moving_backwards, f_is_moving_backwards_ptr)
@@ -21046,7 +21346,7 @@ subroutine fortran_particle_is_moving_forward (orbit, dir, is_moving_forward) bi
   else
     f_dir_ptr => null()
   endif
-  f_is_moving_forward = particle_is_moving_forward(orbit=f_orbit, dir=f_dir_ptr)
+  f_is_moving_forward = particle_is_moving_forward(f_orbit, f_dir_ptr)
 
   ! out: f_is_moving_forward 0D_NOT_logical
   call c_f_pointer(is_moving_forward, f_is_moving_forward_ptr)
@@ -21130,10 +21430,8 @@ subroutine fortran_particle_rf_time (orbit, ele, reference_active_edge, s_rel, t
   else
     f_abs_time_native_ptr => null()
   endif
-  f_time = particle_rf_time(orbit=f_orbit, ele=f_ele, &
-      reference_active_edge=f_reference_active_edge_native_ptr, s_rel=f_s_rel_ptr, &
-      time_coords=f_time_coords_native_ptr, rf_freq=f_rf_freq_ptr, &
-      abs_time=f_abs_time_native_ptr)
+  f_time = particle_rf_time(f_orbit, f_ele, f_reference_active_edge_native_ptr, f_s_rel_ptr, &
+      f_time_coords_native_ptr, f_rf_freq_ptr, f_abs_time_native_ptr)
 
   ! out: f_time 0D_NOT_real16
   call c_f_pointer(time, f_time_ptr)
@@ -21156,7 +21454,7 @@ subroutine fortran_patch_flips_propagation_direction (x_pitch, y_pitch, is_flip)
   f_x_pitch = x_pitch
   ! in: f_y_pitch 0D_NOT_real
   f_y_pitch = y_pitch
-  f_is_flip = patch_flips_propagation_direction(x_pitch=f_x_pitch, y_pitch=f_y_pitch)
+  f_is_flip = patch_flips_propagation_direction(f_x_pitch, f_y_pitch)
 
   ! out: f_is_flip 0D_NOT_logical
   call c_f_pointer(is_flip, f_is_flip_ptr)
@@ -21186,7 +21484,7 @@ subroutine fortran_patch_length (patch, ref_coords, length) bind(c)
   else
     f_ref_coords_ptr => null()
   endif
-  f_length = patch_length(patch=f_patch, ref_coords=f_ref_coords_ptr)
+  f_length = patch_length(f_patch, f_ref_coords_ptr)
 
   ! out: f_length 0D_NOT_real
   call c_f_pointer(length, f_length_ptr)
@@ -21223,8 +21521,8 @@ subroutine fortran_photon_absorption_and_phase_shift (material, Energy, absorpti
   call to_f_str(f_material_ptr, f_material)
   ! in: f_Energy 0D_NOT_real
   f_Energy = Energy
-  call photon_absorption_and_phase_shift(material=f_material, Energy=f_Energy, &
-      absorption=f_absorption, phase_shift=f_phase_shift, err_flag=f_err_flag)
+  call photon_absorption_and_phase_shift(f_material, f_Energy, f_absorption, f_phase_shift, &
+      f_err_flag)
 
   ! out: f_absorption 0D_NOT_real
   call c_f_pointer(absorption, f_absorption_ptr)
@@ -21281,8 +21579,8 @@ subroutine fortran_photon_add_to_detector_statistics (orbit0, orbit, ele, ix_pt,
   endif
   ! in: f_pixel_pt 0D_NOT_type
   if (c_associated(pixel_pt))   call c_f_pointer(pixel_pt, f_pixel_pt)
-  call photon_add_to_detector_statistics(orbit0=f_orbit0, orbit=f_orbit, ele=f_ele, &
-      ix_pt=f_ix_pt_ptr, iy_pt=f_iy_pt_ptr, pixel_pt=f_pixel_pt)
+  call photon_add_to_detector_statistics(f_orbit0, f_orbit, f_ele, f_ix_pt_ptr, f_iy_pt_ptr, &
+      f_pixel_pt)
 
   ! inout: f_ix_pt 0D_NOT_integer
   ! no output conversion for f_ix_pt
@@ -21316,8 +21614,7 @@ subroutine fortran_photon_reflection (graze_angle_in, energy, surface, graze_ang
   ! in: f_surface 0D_NOT_type
   if (.not. c_associated(surface)) return
   call c_f_pointer(surface, f_surface)
-  call photon_reflection(graze_angle_in=f_graze_angle_in, energy=f_energy, surface=f_surface, &
-      graze_angle_out=f_graze_angle_out, phi_out=f_phi_out)
+  call photon_reflection(f_graze_angle_in, f_energy, f_surface, f_graze_angle_out, f_phi_out)
 
   ! out: f_graze_angle_out 0D_NOT_real
   call c_f_pointer(graze_angle_out, f_graze_angle_out_ptr)
@@ -21337,7 +21634,7 @@ subroutine fortran_photon_reflection_std_surface_init (surface) bind(c)
   ! out: f_surface 0D_NOT_type
   if (.not. c_associated(surface)) return
   call c_f_pointer(surface, f_surface)
-  call photon_reflection_std_surface_init(surface=f_surface)
+  call photon_reflection_std_surface_init(f_surface)
 
   ! out: f_surface 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -21369,8 +21666,7 @@ subroutine fortran_photon_reflectivity (angle, energy, surface, p_reflect, rel_p
   ! in: f_surface 0D_NOT_type
   if (.not. c_associated(surface)) return
   call c_f_pointer(surface, f_surface)
-  call photon_reflectivity(angle=f_angle, energy=f_energy, surface=f_surface, &
-      p_reflect=f_p_reflect, rel_p_specular=f_rel_p_specular)
+  call photon_reflectivity(f_angle, f_energy, f_surface, f_p_reflect, f_rel_p_specular)
 
   ! out: f_p_reflect 0D_NOT_real
   call c_f_pointer(p_reflect, f_p_reflect_ptr)
@@ -21430,8 +21726,8 @@ subroutine fortran_photon_target_corner_calc (aperture_ele, x_lim, y_lim, z_lim,
   ! out: f_corner 0D_NOT_type
   if (.not. c_associated(corner)) return
   call c_f_pointer(corner, f_corner)
-  call photon_target_corner_calc(aperture_ele=f_aperture_ele, x_lim=f_x_lim_ptr, &
-      y_lim=f_y_lim_ptr, z_lim=f_z_lim_ptr, source_ele=f_source_ele, corner=f_corner)
+  call photon_target_corner_calc(f_aperture_ele, f_x_lim_ptr, f_y_lim_ptr, f_z_lim_ptr, &
+      f_source_ele, f_corner)
 
   ! inout: f_x_lim 0D_NOT_real
   ! no output conversion for f_x_lim
@@ -21453,7 +21749,7 @@ subroutine fortran_photon_target_setup (ele) bind(c)
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call photon_target_setup(ele=f_ele)
+  call photon_target_setup(f_ele)
 
 end subroutine
 subroutine fortran_photon_type (ele, e_type) bind(c)
@@ -21471,7 +21767,7 @@ subroutine fortran_photon_type (ele, e_type) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_e_type = photon_type(ele=f_ele)
+  f_e_type = photon_type(f_ele)
 
   ! out: f_e_type 0D_NOT_integer
   call c_f_pointer(e_type, f_e_type_ptr)
@@ -21514,8 +21810,8 @@ subroutine fortran_physical_ele_end (track_end, orbit, ele_orientation, return_s
   else
     f_return_stream_end_native_ptr => null()
   endif
-  f_physical_end = physical_ele_end(track_end=f_track_end, orbit=f_orbit, &
-      ele_orientation=f_ele_orientation, return_stream_end=f_return_stream_end_native_ptr)
+  f_physical_end = physical_ele_end(f_track_end, f_orbit, f_ele_orientation, &
+      f_return_stream_end_native_ptr)
 
   ! out: f_physical_end 0D_NOT_integer
   call c_f_pointer(physical_end, f_physical_end_ptr)
@@ -21562,8 +21858,8 @@ subroutine fortran_point_photon_emission (ele, param, orbit, direction, max_targ
   else
     f_w_to_surface_ptr => null()
   endif
-  call point_photon_emission(ele=f_ele, param=f_param, orbit=f_orbit, direction=f_direction, &
-      max_target_area=f_max_target_area, w_to_surface=f_w_to_surface)
+  call point_photon_emission(f_ele, f_param, f_orbit, f_direction, f_max_target_area, &
+      f_w_to_surface)
 
 end subroutine
 subroutine fortran_pointer_to_branch_given_ele (ele, branch_ptr) bind(c)
@@ -21580,7 +21876,7 @@ subroutine fortran_pointer_to_branch_given_ele (ele, branch_ptr) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_branch_ptr = pointer_to_branch_given_ele(ele=f_ele)
+  f_branch_ptr = pointer_to_branch(f_ele)
 
   ! out: f_branch_ptr 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
@@ -21629,8 +21925,8 @@ subroutine fortran_pointer_to_branch_given_name (branch_name, lat, parameter_is_
   else
     f_blank_branch_ptr => null()
   endif
-  f_branch_ptr = pointer_to_branch_given_name(branch_name=f_branch_name, lat=f_lat, &
-      parameter_is_branch0=f_parameter_is_branch0_native_ptr, blank_branch=f_blank_branch_ptr)
+  f_branch_ptr = pointer_to_branch(f_branch_name, f_lat, f_parameter_is_branch0_native_ptr, &
+      f_blank_branch_ptr)
 
   ! out: f_branch_ptr 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
@@ -21639,40 +21935,31 @@ subroutine fortran_pointer_to_ele1 (lat, ix_ele, ix_branch, ele_ptr) bind(c)
 
   use bmad_struct, only: ele_struct, lat_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
-  type(ele_struct), pointer :: f_ele_ptr
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat
-  type(c_ptr), intent(in), value :: ix_ele  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_ele
-  integer(c_int), pointer :: f_ix_ele_ptr
+  integer(c_int) :: ix_ele  ! 0D_NOT_integer
+  integer :: f_ix_ele
   type(c_ptr), intent(in), value :: ix_branch  ! 0D_NOT_integer
   integer(c_int) :: f_ix_branch
   integer(c_int), pointer :: f_ix_branch_ptr
+  ! ** Out parameters **
+  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_ele_ptr
   ! ** End of parameters **
-  ! inout: f_lat 0D_NOT_type
+  ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  ! inout: f_ix_ele 0D_NOT_integer
-  if (c_associated(ix_ele)) then
-    call c_f_pointer(ix_ele, f_ix_ele_ptr)
-  else
-    f_ix_ele_ptr => null()
-  endif
-  ! inout: f_ix_branch 0D_NOT_integer
+  ! in: f_ix_ele 0D_NOT_integer
+  f_ix_ele = ix_ele
+  ! in: f_ix_branch 0D_NOT_integer
   if (c_associated(ix_branch)) then
     call c_f_pointer(ix_branch, f_ix_branch_ptr)
   else
     f_ix_branch_ptr => null()
   endif
-  f_ele_ptr = pointer_to_ele1(lat=f_lat, ix_ele=f_ix_ele_ptr, ix_branch=f_ix_branch_ptr)
+  f_ele_ptr = pointer_to_ele(f_lat, f_ix_ele, f_ix_branch_ptr)
 
-  ! inout: f_ix_ele 0D_NOT_integer
-  ! no output conversion for f_ix_ele
-  ! inout: f_ix_branch 0D_NOT_integer
-  ! no output conversion for f_ix_branch
   ! out: f_ele_ptr 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
 end subroutine
@@ -21680,22 +21967,22 @@ subroutine fortran_pointer_to_ele2 (lat, ele_loc, ele_ptr) bind(c)
 
   use bmad_struct, only: ele_struct, lat_ele_loc_struct, lat_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
-  type(ele_struct), pointer :: f_ele_ptr
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat
   type(c_ptr), value :: ele_loc  ! 0D_NOT_type
   type(lat_ele_loc_struct), pointer :: f_ele_loc
+  ! ** Out parameters **
+  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_ele_ptr
   ! ** End of parameters **
-  ! inout: f_lat 0D_NOT_type
+  ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  ! inout: f_ele_loc 0D_NOT_type
+  ! in: f_ele_loc 0D_NOT_type
   if (.not. c_associated(ele_loc)) return
   call c_f_pointer(ele_loc, f_ele_loc)
-  f_ele_ptr = pointer_to_ele2(lat=f_lat, ele_loc=f_ele_loc)
+  f_ele_ptr = pointer_to_ele(f_lat, f_ele_loc)
 
   ! out: f_ele_ptr 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
@@ -21704,27 +21991,25 @@ subroutine fortran_pointer_to_ele3 (lat, ele_name, ele_ptr) bind(c)
 
   use bmad_struct, only: ele_struct, lat_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
-  type(ele_struct), pointer :: f_ele_ptr
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat
   type(c_ptr), intent(in), value :: ele_name
   character(len=4096), target :: f_ele_name
   character(kind=c_char), pointer :: f_ele_name_ptr(:)
+  ! ** Out parameters **
+  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_ele_ptr
   ! ** End of parameters **
-  ! inout: f_lat 0D_NOT_type
+  ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  ! inout: f_ele_name 0D_NOT_character
+  ! in: f_ele_name 0D_NOT_character
   if (.not. c_associated(ele_name)) return
   call c_f_pointer(ele_name, f_ele_name_ptr, [huge(0)])
   call to_f_str(f_ele_name_ptr, f_ele_name)
-  f_ele_ptr = pointer_to_ele3(lat=f_lat, ele_name=f_ele_name)
+  f_ele_ptr = pointer_to_ele(f_lat, f_ele_name)
 
-  ! inout: f_ele_name 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
   ! out: f_ele_ptr 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
 end subroutine
@@ -21732,22 +22017,22 @@ subroutine fortran_pointer_to_ele4 (lat, foreign_ele, ele_ptr) bind(c)
 
   use bmad_struct, only: ele_struct, lat_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
-  type(ele_struct), pointer :: f_ele_ptr
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat
   type(c_ptr), value :: foreign_ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_foreign_ele
+  ! ** Out parameters **
+  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_ele_ptr
   ! ** End of parameters **
-  ! inout: f_lat 0D_NOT_type
+  ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  ! inout: f_foreign_ele 0D_NOT_type
+  ! in: f_foreign_ele 0D_NOT_type
   if (.not. c_associated(foreign_ele)) return
   call c_f_pointer(foreign_ele, f_foreign_ele)
-  f_ele_ptr = pointer_to_ele4(lat=f_lat, foreign_ele=f_foreign_ele)
+  f_ele_ptr = pointer_to_ele(f_lat, f_foreign_ele)
 
   ! out: f_ele_ptr 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
@@ -21792,6 +22077,18 @@ subroutine fortran_pointer_to_element_at_s (branch, s, choose_max, err_flag, s_e
   f_s = s
   ! in: f_choose_max 0D_NOT_logical
   f_choose_max = choose_max
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  ! out: f_s_eff 0D_NOT_real
+  if (c_associated(s_eff)) then
+    call c_f_pointer(s_eff, f_s_eff_ptr)
+  else
+    f_s_eff_ptr => null()
+  endif
   ! out: f_position 0D_NOT_type
   if (c_associated(position))   call c_f_pointer(position, f_position)
   ! in: f_print_err 0D_NOT_logical
@@ -21802,9 +22099,8 @@ subroutine fortran_pointer_to_element_at_s (branch, s, choose_max, err_flag, s_e
   else
     f_print_err_native_ptr => null()
   endif
-  f_ele = pointer_to_element_at_s(branch=f_branch, s=f_s, choose_max=f_choose_max, &
-      err_flag=f_err_flag, s_eff=f_s_eff, position=f_position, &
-      print_err=f_print_err_native_ptr)
+  f_ele = pointer_to_element_at_s(f_branch, f_s, f_choose_max, f_err_flag, f_s_eff, f_position, &
+      f_print_err_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   ! no output conversion for f_err_flag
@@ -21836,8 +22132,13 @@ subroutine fortran_pointer_to_field_ele (ele, ix_field_ele, dz_offset, field_ele
   call c_f_pointer(ele, f_ele)
   ! in: f_ix_field_ele 0D_NOT_integer
   f_ix_field_ele = ix_field_ele
-  f_field_ele = pointer_to_field_ele(ele=f_ele, ix_field_ele=f_ix_field_ele, &
-      dz_offset=f_dz_offset)
+  ! out: f_dz_offset 0D_NOT_real
+  if (c_associated(dz_offset)) then
+    call c_f_pointer(dz_offset, f_dz_offset_ptr)
+  else
+    f_dz_offset_ptr => null()
+  endif
+  f_field_ele = pointer_to_field_ele(f_ele, f_ix_field_ele, f_dz_offset)
 
   ! out: f_dz_offset 0D_NOT_real
   ! no output conversion for f_dz_offset
@@ -21861,7 +22162,13 @@ subroutine fortran_pointer_to_girder (ele, ix_slave_back, girder) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_girder = pointer_to_girder(ele=f_ele, ix_slave_back=f_ix_slave_back)
+  ! out: f_ix_slave_back 0D_NOT_integer
+  if (c_associated(ix_slave_back)) then
+    call c_f_pointer(ix_slave_back, f_ix_slave_back_ptr)
+  else
+    f_ix_slave_back_ptr => null()
+  endif
+  f_girder = pointer_to_girder(f_ele, f_ix_slave_back)
 
   ! out: f_ix_slave_back 0D_NOT_integer
   ! no output conversion for f_ix_slave_back
@@ -21903,15 +22210,32 @@ subroutine fortran_pointer_to_lord (slave, ix_lord, control, ix_slave_back, lord
   f_ix_lord = ix_lord
   ! out: f_control 0D_PTR_type
   if (c_associated(control))   call c_f_pointer(control, f_control)
+  ! out: f_ix_slave_back 0D_NOT_integer
+  if (c_associated(ix_slave_back)) then
+    call c_f_pointer(ix_slave_back, f_ix_slave_back_ptr)
+  else
+    f_ix_slave_back_ptr => null()
+  endif
   ! in: f_lord_type 0D_NOT_integer
   if (c_associated(lord_type)) then
     call c_f_pointer(lord_type, f_lord_type_ptr)
   else
     f_lord_type_ptr => null()
   endif
-  f_lord_ptr = pointer_to_lord(slave=f_slave, ix_lord=f_ix_lord, control=f_control, &
-      ix_slave_back=f_ix_slave_back, lord_type=f_lord_type_ptr, ix_control=f_ix_control, &
-      ix_ic=f_ix_ic)
+  ! out: f_ix_control 0D_NOT_integer
+  if (c_associated(ix_control)) then
+    call c_f_pointer(ix_control, f_ix_control_ptr)
+  else
+    f_ix_control_ptr => null()
+  endif
+  ! out: f_ix_ic 0D_NOT_integer
+  if (c_associated(ix_ic)) then
+    call c_f_pointer(ix_ic, f_ix_ic_ptr)
+  else
+    f_ix_ic_ptr => null()
+  endif
+  f_lord_ptr = pointer_to_lord(f_slave, f_ix_lord, f_control, f_ix_slave_back, f_lord_type_ptr, &
+      f_ix_control, f_ix_ic)
 
   ! out: f_control 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
@@ -21943,10 +22267,15 @@ subroutine fortran_pointer_to_multipass_lord (ele, ix_pass, super_lord, multi_lo
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
+  ! out: f_ix_pass 0D_NOT_integer
+  if (c_associated(ix_pass)) then
+    call c_f_pointer(ix_pass, f_ix_pass_ptr)
+  else
+    f_ix_pass_ptr => null()
+  endif
   ! out: f_super_lord 0D_PTR_type
   if (c_associated(super_lord))   call c_f_pointer(super_lord, f_super_lord)
-  f_multi_lord = pointer_to_multipass_lord(ele=f_ele, ix_pass=f_ix_pass, &
-      super_lord=f_super_lord)
+  f_multi_lord = pointer_to_multipass_lord(f_ele, f_ix_pass, f_super_lord)
 
   ! out: f_ix_pass 0D_NOT_integer
   ! no output conversion for f_ix_pass
@@ -22005,8 +22334,8 @@ subroutine fortran_pointer_to_next_ele (this_ele, offset, skip_beginning, follow
   else
     f_follow_fork_native_ptr => null()
   endif
-  f_next_ele = pointer_to_next_ele(this_ele=f_this_ele, offset=f_offset_ptr, &
-      skip_beginning=f_skip_beginning_native_ptr, follow_fork=f_follow_fork_native_ptr)
+  f_next_ele = pointer_to_next_ele(f_this_ele, f_offset_ptr, f_skip_beginning_native_ptr, &
+      f_follow_fork_native_ptr)
 
   ! out: f_next_ele 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
@@ -22052,9 +22381,26 @@ subroutine fortran_pointer_to_slave (lord, ix_slave, control, lord_type, ix_lord
   else
     f_lord_type_ptr => null()
   endif
-  f_slave_ptr = pointer_to_slave(lord=f_lord, ix_slave=f_ix_slave, control=f_control, &
-      lord_type=f_lord_type_ptr, ix_lord_back=f_ix_lord_back, ix_control=f_ix_control, &
-      ix_ic=f_ix_ic)
+  ! out: f_ix_lord_back 0D_NOT_integer
+  if (c_associated(ix_lord_back)) then
+    call c_f_pointer(ix_lord_back, f_ix_lord_back_ptr)
+  else
+    f_ix_lord_back_ptr => null()
+  endif
+  ! out: f_ix_control 0D_NOT_integer
+  if (c_associated(ix_control)) then
+    call c_f_pointer(ix_control, f_ix_control_ptr)
+  else
+    f_ix_control_ptr => null()
+  endif
+  ! out: f_ix_ic 0D_NOT_integer
+  if (c_associated(ix_ic)) then
+    call c_f_pointer(ix_ic, f_ix_ic_ptr)
+  else
+    f_ix_ic_ptr => null()
+  endif
+  f_slave_ptr = pointer_to_slave(f_lord, f_ix_slave, f_control, f_lord_type_ptr, &
+      f_ix_lord_back, f_ix_control, f_ix_ic)
 
   ! out: f_control 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
@@ -22098,15 +22444,32 @@ subroutine fortran_pointer_to_super_lord (slave, control, ix_slave_back, ix_cont
   call c_f_pointer(slave, f_slave)
   ! out: f_control 0D_PTR_type
   if (c_associated(control))   call c_f_pointer(control, f_control)
+  ! out: f_ix_slave_back 0D_NOT_integer
+  if (c_associated(ix_slave_back)) then
+    call c_f_pointer(ix_slave_back, f_ix_slave_back_ptr)
+  else
+    f_ix_slave_back_ptr => null()
+  endif
+  ! out: f_ix_control 0D_NOT_integer
+  if (c_associated(ix_control)) then
+    call c_f_pointer(ix_control, f_ix_control_ptr)
+  else
+    f_ix_control_ptr => null()
+  endif
+  ! out: f_ix_ic 0D_NOT_integer
+  if (c_associated(ix_ic)) then
+    call c_f_pointer(ix_ic, f_ix_ic_ptr)
+  else
+    f_ix_ic_ptr => null()
+  endif
   ! in: f_lord_type 0D_NOT_integer
   if (c_associated(lord_type)) then
     call c_f_pointer(lord_type, f_lord_type_ptr)
   else
     f_lord_type_ptr => null()
   endif
-  f_lord_ptr = pointer_to_super_lord(slave=f_slave, control=f_control, &
-      ix_slave_back=f_ix_slave_back, ix_control=f_ix_control, ix_ic=f_ix_ic, &
-      lord_type=f_lord_type_ptr)
+  f_lord_ptr = pointer_to_super_lord(f_slave, f_control, f_ix_slave_back, f_ix_control, &
+      f_ix_ic, f_lord_type_ptr)
 
   ! out: f_control 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
@@ -22206,8 +22569,8 @@ subroutine fortran_pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, i
   else
     f_yy_ptr => null()
   endif
-  f_pt = pointer_to_surface_displacement_pt(ele=f_ele, nearest=f_nearest, x=f_x_ptr, y=f_y_ptr, &
-      ix=f_ix_ptr, iy=f_iy_ptr, extend_grid=f_extend_grid_native_ptr, xx=f_xx_ptr, yy=f_yy_ptr)
+  f_pt = pointer_to_surface_displacement_pt(f_ele, f_nearest, f_x_ptr, f_y_ptr, f_ix_ptr, &
+      f_iy_ptr, f_extend_grid_native_ptr, f_xx_ptr, f_yy_ptr)
 
   ! inout: f_x 0D_NOT_real
   ! no output conversion for f_x
@@ -22311,8 +22674,8 @@ subroutine fortran_pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, 
   else
     f_yy_ptr => null()
   endif
-  f_pt = pointer_to_surface_segmented_pt(ele=f_ele, nearest=f_nearest, x=f_x_ptr, y=f_y_ptr, &
-      ix=f_ix_ptr, iy=f_iy_ptr, extend_grid=f_extend_grid_native_ptr, xx=f_xx_ptr, yy=f_yy_ptr)
+  f_pt = pointer_to_surface_segmented_pt(f_ele, f_nearest, f_x_ptr, f_y_ptr, f_ix_ptr, &
+      f_iy_ptr, f_extend_grid_native_ptr, f_xx_ptr, f_yy_ptr)
 
   ! inout: f_x 0D_NOT_real
   ! no output conversion for f_x
@@ -22346,7 +22709,13 @@ subroutine fortran_pointer_to_wake_ele (ele, delta_s, wake_ele) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_wake_ele = pointer_to_wake_ele(ele=f_ele, delta_s=f_delta_s)
+  ! out: f_delta_s 0D_NOT_real
+  if (c_associated(delta_s)) then
+    call c_f_pointer(delta_s, f_delta_s_ptr)
+  else
+    f_delta_s_ptr => null()
+  endif
+  f_wake_ele = pointer_to_wake_ele(f_ele, f_delta_s)
 
   ! out: f_delta_s 0D_NOT_real
   ! no output conversion for f_delta_s
@@ -22382,8 +22751,19 @@ subroutine fortran_pointer_to_wall3d (ele, ix_wall, ds_offset, is_branch_wall, w
   else
     f_ix_wall_ptr => null()
   endif
-  f_wall3d = pointer_to_wall3d(ele=f_ele, ix_wall=f_ix_wall_ptr, ds_offset=f_ds_offset, &
-      is_branch_wall=f_is_branch_wall)
+  ! out: f_ds_offset 0D_NOT_real
+  if (c_associated(ds_offset)) then
+    call c_f_pointer(ds_offset, f_ds_offset_ptr)
+  else
+    f_ds_offset_ptr => null()
+  endif
+  ! out: f_is_branch_wall 0D_NOT_logical
+  if (c_associated(is_branch_wall)) then
+    call c_f_pointer(is_branch_wall, f_is_branch_wall_ptr)
+  else
+    f_is_branch_wall_ptr => null()
+  endif
+  f_wall3d = pointer_to_wall3d(f_ele, f_ix_wall_ptr, f_ds_offset, f_is_branch_wall)
 
   ! out: f_ds_offset 0D_NOT_real
   ! no output conversion for f_ds_offset
@@ -22407,7 +22787,7 @@ subroutine fortran_polar_to_spinor (polar, spinor) bind(c)
   ! in: f_polar 0D_NOT_type
   if (.not. c_associated(polar)) return
   call c_f_pointer(polar, f_polar)
-  f_spinor = polar_to_spinor(polar=f_polar)
+  f_spinor = polar_to_spinor(f_polar)
 
   ! out: f_spinor 1D_NOT_complex
   if (c_associated(spinor)) then
@@ -22430,7 +22810,7 @@ subroutine fortran_polar_to_vec (polar, vec) bind(c)
   ! in: f_polar 0D_NOT_type
   if (.not. c_associated(polar)) return
   call c_f_pointer(polar, f_polar)
-  f_vec = polar_to_vec(polar=f_polar)
+  f_vec = polar_to_vec(f_polar)
 
   ! out: f_vec 1D_NOT_real
   if (c_associated(vec)) then
@@ -22468,8 +22848,7 @@ subroutine fortran_project_emit_to_xyz (ring, ix, mode, sigma_x, sigma_y, sigma_
   ! in: f_mode 0D_NOT_type
   if (.not. c_associated(mode)) return
   call c_f_pointer(mode, f_mode)
-  call project_emit_to_xyz(ring=f_ring, ix=f_ix, mode=f_mode, sigma_x=f_sigma_x, &
-      sigma_y=f_sigma_y, sigma_z=f_sigma_z)
+  call project_emit_to_xyz(f_ring, f_ix, f_mode, f_sigma_x, f_sigma_y, f_sigma_z)
 
   ! out: f_sigma_x 0D_NOT_real
   call c_f_pointer(sigma_x, f_sigma_x_ptr)
@@ -22508,7 +22887,7 @@ subroutine fortran_psi_prime_sca (t, p, dpdt, args) bind(c)
   else
     f_args_ptr => null()
   endif
-  call psi_prime_sca(t=f_t, p=f_p, dpdt=f_dpdt, args=f_args)
+  call psi_prime_sca(f_t, f_p, f_dpdt, f_args)
 
   ! out: f_dpdt 0D_NOT_real
   call c_f_pointer(dpdt, f_dpdt_ptr)
@@ -22525,7 +22904,7 @@ subroutine fortran_ptc_bookkeeper (lat) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call ptc_bookkeeper(lat=f_lat)
+  call ptc_bookkeeper(f_lat)
 
 end subroutine
 subroutine fortran_ptc_closed_orbit_calc (branch, closed_orbit, radiation_damping_on) bind(c)
@@ -22557,8 +22936,7 @@ subroutine fortran_ptc_closed_orbit_calc (branch, closed_orbit, radiation_dampin
   else
     f_radiation_damping_on_native_ptr => null()
   endif
-  call ptc_closed_orbit_calc(branch=f_branch, closed_orbit=f_closed_orbit%data, &
-      radiation_damping_on=f_radiation_damping_on_native_ptr)
+  call ptc_closed_orbit_calc(f_branch, f_closed_orbit%data, f_radiation_damping_on_native_ptr)
 
 end subroutine
 subroutine fortran_ptc_emit_calc (ele, norm_mode, sigma_mat, closed_orb) bind(c)
@@ -22594,8 +22972,7 @@ subroutine fortran_ptc_emit_calc (ele, norm_mode, sigma_mat, closed_orb) bind(c)
   ! out: f_closed_orb 0D_NOT_type
   if (.not. c_associated(closed_orb)) return
   call c_f_pointer(closed_orb, f_closed_orb)
-  call ptc_emit_calc(ele=f_ele, norm_mode=f_norm_mode, sigma_mat=f_sigma_mat, &
-      closed_orb=f_closed_orb)
+  call ptc_emit_calc(f_ele, f_norm_mode, f_sigma_mat, f_closed_orb)
 
   ! out: f_norm_mode 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -22662,9 +23039,8 @@ subroutine fortran_ptc_layouts_resplit (dKL_max, l_max, l_max_drift_only, bend_d
   else
     f_crossover_wiggler_ptr => null()
   endif
-  call ptc_layouts_resplit(dKL_max=f_dKL_max, l_max=f_l_max, &
-      l_max_drift_only=f_l_max_drift_only, bend_dorb=f_bend_dorb, sex_dx=f_sex_dx, &
-      even=f_even_native_ptr, crossover=f_crossover, crossover_wiggler=f_crossover_wiggler)
+  call ptc_layouts_resplit(f_dKL_max, f_l_max, f_l_max_drift_only, f_bend_dorb, f_sex_dx, &
+      f_even_native_ptr, f_crossover, f_crossover_wiggler)
 
 end subroutine
 subroutine fortran_ptc_one_turn_mat_and_closed_orbit_calc (branch, pz) bind(c)
@@ -22688,7 +23064,7 @@ subroutine fortran_ptc_one_turn_mat_and_closed_orbit_calc (branch, pz) bind(c)
   else
     f_pz_ptr => null()
   endif
-  call ptc_one_turn_mat_and_closed_orbit_calc(branch=f_branch, pz=f_pz_ptr)
+  call ptc_one_turn_mat_and_closed_orbit_calc(f_branch, f_pz_ptr)
 
 end subroutine
 subroutine fortran_ptc_ran_seed_put (iseed) bind(c)
@@ -22700,7 +23076,7 @@ subroutine fortran_ptc_ran_seed_put (iseed) bind(c)
   ! ** End of parameters **
   ! in: f_iseed 0D_NOT_integer
   f_iseed = iseed
-  call ptc_ran_seed_put(iseed=f_iseed)
+  call ptc_ran_seed_put(f_iseed)
 
 end subroutine
 subroutine fortran_ptc_set_rf_state_for_c_normal (nocavity) bind(c)
@@ -22712,7 +23088,7 @@ subroutine fortran_ptc_set_rf_state_for_c_normal (nocavity) bind(c)
   ! ** End of parameters **
   ! in: f_nocavity 0D_NOT_logical
   f_nocavity = nocavity
-  call ptc_set_rf_state_for_c_normal(nocavity=f_nocavity)
+  call ptc_set_rf_state_for_c_normal(f_nocavity)
 
 end subroutine
 subroutine fortran_ptc_set_taylor_order_if_needed () bind(c)
@@ -22755,8 +23131,7 @@ subroutine fortran_ptc_spin_calc (ele, norm_mode, sigma_mat, closed_orb) bind(c)
   ! out: f_closed_orb 0D_NOT_type
   if (.not. c_associated(closed_orb)) return
   call c_f_pointer(closed_orb, f_closed_orb)
-  call ptc_spin_calc(ele=f_ele, norm_mode=f_norm_mode, sigma_mat=f_sigma_mat, &
-      closed_orb=f_closed_orb)
+  call ptc_spin_calc(f_ele, f_norm_mode, f_sigma_mat, f_closed_orb)
 
   ! out: f_norm_mode 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -22790,8 +23165,19 @@ subroutine fortran_ptc_track_all (branch, orbit, track_state, err_flag) bind(c)
   call c_f_pointer(branch, f_branch)
   !! container type array (1D_ALLOC_type)
   if (c_associated(orbit))   call c_f_pointer(orbit, f_orbit)
-  call ptc_track_all(branch=f_branch, orbit=f_orbit%data, track_state=f_track_state, &
-      err_flag=f_err_flag)
+  ! out: f_track_state 0D_NOT_integer
+  if (c_associated(track_state)) then
+    call c_f_pointer(track_state, f_track_state_ptr)
+  else
+    f_track_state_ptr => null()
+  endif
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  call ptc_track_all(f_branch, f_orbit%data, f_track_state, f_err_flag)
 
   ! out: f_track_state 0D_NOT_integer
   ! no output conversion for f_track_state
@@ -22880,9 +23266,8 @@ subroutine fortran_ptc_transfer_map_with_spin (branch, t_map, s_map, orb0, err_f
   else
     f_unit_start_native_ptr => null()
   endif
-  call ptc_transfer_map_with_spin(branch=f_branch, t_map=f_t_map, s_map=f_s_map, orb0=f_orb0, &
-      err_flag=f_err_flag, ix1=f_ix1_ptr, ix2=f_ix2_ptr, one_turn=f_one_turn_native_ptr, &
-      unit_start=f_unit_start_native_ptr)
+  call ptc_transfer_map_with_spin(f_branch, f_t_map, f_s_map, f_orb0, f_err_flag, f_ix1_ptr, &
+      f_ix2_ptr, f_one_turn_native_ptr, f_unit_start_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -22921,7 +23306,7 @@ subroutine fortran_pwd_mat (lat, t6, inductance, sig_z, t6_pwd) bind(c)
   f_inductance = inductance
   ! in: f_sig_z 0D_NOT_real
   f_sig_z = sig_z
-  f_t6_pwd = pwd_mat(lat=f_lat, t6=f_t6, inductance=f_inductance, sig_z=f_sig_z)
+  f_t6_pwd = pwd_mat(f_lat, f_t6, f_inductance, f_sig_z)
 
   ! out: f_t6_pwd 2D_NOT_real
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_t6_pwd', c_name='t6_pwd', python_name='t6_pwd', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=682, definition='REAL(rp) t6_pwd(6,6)', type_info=TypeInformation(type='REAL', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='t6_pwd', comment='', default=None), intent='out', description='1-turn transfer matrix with PWD defocusing applied', doc_data_type='float', doc_is_optional=False)
@@ -22993,9 +23378,8 @@ subroutine fortran_rad1_damp_and_stoc_mats (ele, include_opening_angle, orb_in, 
   if (c_associated(ele0))   call c_f_pointer(ele0, f_ele0)
   ! out: f_rad_int1 0D_NOT_type
   if (c_associated(rad_int1))   call c_f_pointer(rad_int1, f_rad_int1)
-  call rad1_damp_and_stoc_mats(ele=f_ele, include_opening_angle=f_include_opening_angle, &
-      orb_in=f_orb_in, orb_out=f_orb_out, rad_map=f_rad_map, g2_tol=f_g2_tol, g3_tol=f_g3_tol, &
-      err_flag=f_err_flag, ele0=f_ele0, rad_int1=f_rad_int1)
+  call rad1_damp_and_stoc_mats(f_ele, f_include_opening_angle, f_orb_in, f_orb_out, f_rad_map, &
+      f_g2_tol, f_g3_tol, f_err_flag, f_ele0, f_rad_int1)
 
   ! out: f_rad_map 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -23067,10 +23451,8 @@ subroutine fortran_rad_damp_and_stoc_mats (ele1, ele2, include_opening_angle, rm
   if (c_associated(closed_orbit))   call c_f_pointer(closed_orbit, f_closed_orbit)
   ! out: f_rad_int_branch 0D_NOT_type
   if (c_associated(rad_int_branch))   call c_f_pointer(rad_int_branch, f_rad_int_branch)
-  call rad_damp_and_stoc_mats(ele1=f_ele1, ele2=f_ele2, &
-      include_opening_angle=f_include_opening_angle, rmap=f_rmap, mode=f_mode, &
-      xfer_nodamp_mat=f_xfer_nodamp_mat, err_flag=f_err_flag, closed_orbit=f_closed_orbit%data, &
-      rad_int_branch=f_rad_int_branch)
+  call rad_damp_and_stoc_mats(f_ele1, f_ele2, f_include_opening_angle, f_rmap, f_mode, &
+      f_xfer_nodamp_mat, f_err_flag, f_closed_orbit%data, f_rad_int_branch)
 
   ! out: f_rmap 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -23145,9 +23527,8 @@ subroutine fortran_rad_g_integrals (ele, where, orb_in, orb_out, int_g, int_g2, 
   f_g2_tol = g2_tol
   ! in: f_g3_tol 0D_NOT_real
   f_g3_tol = g3_tol
-  call rad_g_integrals(ele=f_ele, where=f_where, orb_in=f_orb_in, orb_out=f_orb_out, &
-      int_g=f_int_g, int_g2=f_int_g2_ptr, int_g3=f_int_g3_ptr, g_tol=f_g_tol, g2_tol=f_g2_tol, &
-      g3_tol=f_g3_tol)
+  call rad_g_integrals(f_ele, f_where, f_orb_in, f_orb_out, f_int_g, f_int_g2_ptr, &
+      f_int_g3_ptr, f_g_tol, f_g2_tol, f_g3_tol)
 
   ! out: f_int_g 1D_NOT_real
   if (c_associated(int_g)) then
@@ -23204,8 +23585,8 @@ subroutine fortran_radiation_integrals (lat, orbit, mode, ix_cache, ix_branch, r
   endif
   ! out: f_rad_int_by_ele 0D_NOT_type
   if (c_associated(rad_int_by_ele))   call c_f_pointer(rad_int_by_ele, f_rad_int_by_ele)
-  call radiation_integrals(lat=f_lat, orbit=f_orbit%data, mode=f_mode, ix_cache=f_ix_cache_ptr, &
-      ix_branch=f_ix_branch_ptr, rad_int_by_ele=f_rad_int_by_ele)
+  call radiation_integrals(f_lat, f_orbit%data, f_mode, f_ix_cache_ptr, f_ix_branch_ptr, &
+      f_rad_int_by_ele)
 
   ! out: f_mode 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -23237,7 +23618,7 @@ subroutine fortran_radiation_map_setup (ele, err_flag, ref_orbit_in) bind(c)
   call c_f_pointer(ele, f_ele)
   ! inout: f_ref_orbit_in 0D_NOT_type
   if (c_associated(ref_orbit_in))   call c_f_pointer(ref_orbit_in, f_ref_orbit_in)
-  call radiation_map_setup(ele=f_ele, err_flag=f_err_flag, ref_orbit_in=f_ref_orbit_in)
+  call radiation_map_setup(f_ele, f_err_flag, f_ref_orbit_in)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -23268,7 +23649,7 @@ subroutine fortran_ramper_slave_setup (lat, force_setup) bind(c)
   else
     f_force_setup_native_ptr => null()
   endif
-  call ramper_slave_setup(lat=f_lat, force_setup=f_force_setup_native_ptr)
+  call ramper_slave_setup(f_lat, f_force_setup_native_ptr)
 
 end subroutine
 subroutine fortran_ramper_value (ramper, r1, err_flag, value) bind(c)
@@ -23302,7 +23683,7 @@ subroutine fortran_ramper_value (ramper, r1, err_flag, value) bind(c)
     return
   endif
   call c_f_pointer(r1, f_r1)
-  f_value = ramper_value(ramper=f_ramper, r1=f_r1, err_flag=f_err_flag)
+  f_value = ramper_value(f_ramper, f_r1, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -23326,7 +23707,13 @@ subroutine fortran_randomize_lr_wake_frequencies (ele, set_done) bind(c)
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call randomize_lr_wake_frequencies(ele=f_ele, set_done=f_set_done)
+  ! out: f_set_done 0D_NOT_logical
+  if (c_associated(set_done)) then
+    call c_f_pointer(set_done, f_set_done_ptr)
+  else
+    f_set_done_ptr => null()
+  endif
+  call randomize_lr_wake_frequencies(f_ele, f_set_done)
 
   ! out: f_set_done 0D_NOT_logical
   ! no output conversion for f_set_done
@@ -23358,7 +23745,7 @@ subroutine fortran_rchomp (rel, plc, out) bind(c)
   else
     f_plc_ptr => null()
   endif
-  f_out = rchomp(rel=f_rel_ptr, plc=f_plc_ptr)
+  f_out = rchomp(f_rel_ptr, f_plc_ptr)
 
   ! inout: f_rel 0D_NOT_real
   ! no output conversion for f_rel
@@ -23409,8 +23796,7 @@ subroutine fortran_re_allocate_eles (eles, n, save_old, exact) bind(c)
   else
     f_exact_native_ptr => null()
   endif
-  call re_allocate_eles(eles=f_eles%data, n=f_n, save_old=f_save_old_native_ptr, &
-      exact=f_exact_native_ptr)
+  call re_allocate_eles(f_eles%data, f_n, f_save_old_native_ptr, f_exact_native_ptr)
 
 end subroutine
 subroutine fortran_re_allocate_wall3d_section_array (section, n, exact) bind(c)
@@ -23420,20 +23806,20 @@ subroutine fortran_re_allocate_wall3d_section_array (section, n, exact) bind(c)
   ! ** In parameters **
   integer(c_int) :: n  ! 0D_NOT_integer
   integer :: f_n
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: section
+  type(wall3d_section_struct_container_alloc), pointer :: f_section
   type(c_ptr), intent(in), value :: exact  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_exact
   logical, target :: f_exact_native
   logical, pointer :: f_exact_native_ptr
   logical(c_bool), pointer :: f_exact_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: section
-  type(wall3d_section_struct_container_alloc), pointer :: f_section
   ! ** End of parameters **
   !! container type array (1D_ALLOC_type)
   if (c_associated(section))   call c_f_pointer(section, f_section)
   ! in: f_n 0D_NOT_integer
   f_n = n
-  ! in: f_exact 0D_NOT_logical
+  ! inout: f_exact 0D_NOT_logical
   if (c_associated(exact)) then
     call c_f_pointer(exact, f_exact_ptr)
     f_exact_native = f_exact_ptr
@@ -23441,9 +23827,15 @@ subroutine fortran_re_allocate_wall3d_section_array (section, n, exact) bind(c)
   else
     f_exact_native_ptr => null()
   endif
-  call re_allocate_wall3d_section_array(section=f_section%data, n=f_n, &
-      exact=f_exact_native_ptr)
+  call re_allocate(f_section%data, f_n, f_exact_native_ptr)
 
+  ! inout: f_exact 0D_NOT_logical
+  if (c_associated(exact)) then
+    call c_f_pointer(exact, f_exact_ptr)
+    f_exact_ptr = f_exact_native
+  else
+    ! f_exact unset
+  endif
 end subroutine
 subroutine fortran_re_allocate_wall3d_vertex_array (v, n, exact) bind(c)
 
@@ -23452,20 +23844,20 @@ subroutine fortran_re_allocate_wall3d_vertex_array (v, n, exact) bind(c)
   ! ** In parameters **
   integer(c_int) :: n  ! 0D_NOT_integer
   integer :: f_n
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: v
+  type(wall3d_vertex_struct_container_alloc), pointer :: f_v
   type(c_ptr), intent(in), value :: exact  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_exact
   logical, target :: f_exact_native
   logical, pointer :: f_exact_native_ptr
   logical(c_bool), pointer :: f_exact_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: v
-  type(wall3d_vertex_struct_container_alloc), pointer :: f_v
   ! ** End of parameters **
   !! container type array (1D_ALLOC_type)
   if (c_associated(v))   call c_f_pointer(v, f_v)
   ! in: f_n 0D_NOT_integer
   f_n = n
-  ! in: f_exact 0D_NOT_logical
+  ! inout: f_exact 0D_NOT_logical
   if (c_associated(exact)) then
     call c_f_pointer(exact, f_exact_ptr)
     f_exact_native = f_exact_ptr
@@ -23473,8 +23865,15 @@ subroutine fortran_re_allocate_wall3d_vertex_array (v, n, exact) bind(c)
   else
     f_exact_native_ptr => null()
   endif
-  call re_allocate_wall3d_vertex_array(v=f_v%data, n=f_n, exact=f_exact_native_ptr)
+  call re_allocate(f_v%data, f_n, f_exact_native_ptr)
 
+  ! inout: f_exact 0D_NOT_logical
+  if (c_associated(exact)) then
+    call c_f_pointer(exact, f_exact_ptr)
+    f_exact_ptr = f_exact_native
+  else
+    ! f_exact unset
+  endif
 end subroutine
 subroutine fortran_re_associate_node_array (tree, n, exact) bind(c)
 
@@ -23505,7 +23904,7 @@ subroutine fortran_re_associate_node_array (tree, n, exact) bind(c)
   else
     f_exact_native_ptr => null()
   endif
-  call re_associate_node_array(tree=f_tree, n=f_n, exact=f_exact_native_ptr)
+  call re_associate_node_array(f_tree, f_n, f_exact_native_ptr)
 
 end subroutine
 subroutine fortran_re_str_qp (rel, str_out) bind(c)
@@ -23530,7 +23929,7 @@ subroutine fortran_re_str_qp (rel, str_out) bind(c)
   else
     f_rel_native_ptr => null()
   endif
-  f_str_out = re_str_qp(rel=f_rel_native_ptr)
+  f_str_out = re_str(f_rel_native_ptr)
 
   ! inout: f_rel 0D_NOT_real16
   if (c_associated(rel)) then
@@ -23561,7 +23960,7 @@ subroutine fortran_re_str_rp (rel, str_out) bind(c)
   else
     f_rel_ptr => null()
   endif
-  f_str_out = re_str_rp(rel=f_rel_ptr)
+  f_str_out = re_str(f_rel_ptr)
 
   ! inout: f_rel 0D_NOT_real
   ! no output conversion for f_rel
@@ -23608,8 +24007,7 @@ subroutine fortran_read_beam_ascii (file_name, beam, beam_init, err_flag) bind(c
     return
   endif
   call c_f_pointer(beam_init, f_beam_init)
-  call read_beam_ascii(file_name=f_file_name, beam=f_beam, beam_init=f_beam_init, &
-      err_flag=f_err_flag)
+  call read_beam_ascii(f_file_name, f_beam, f_beam_init, f_err_flag)
 
   ! out: f_beam 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -23688,10 +24086,8 @@ subroutine fortran_read_beam_file (file_name, beam, beam_init, err_flag, ele, &
   else
     f_conserve_momentum_native_ptr => null()
   endif
-  call read_beam_file(file_name=f_file_name, beam=f_beam, beam_init=f_beam_init, &
-      err_flag=f_err_flag, ele=f_ele, &
-      print_mom_shift_warning=f_print_mom_shift_warning_native_ptr, &
-      conserve_momentum=f_conserve_momentum_native_ptr)
+  call read_beam_file(f_file_name, f_beam, f_beam_init, f_err_flag, f_ele, &
+      f_print_mom_shift_warning_native_ptr, f_conserve_momentum_native_ptr)
 
   ! out: f_beam 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -23733,8 +24129,7 @@ subroutine fortran_read_binary_cartesian_map (file_name, ele, cart_map, err_flag
   call c_f_pointer(cart_map, f_cart_map)
   ! in: f_err_flag 0D_NOT_logical
   f_err_flag = err_flag
-  call read_binary_cartesian_map(file_name=f_file_name, ele=f_ele, cart_map=f_cart_map, &
-      err_flag=f_err_flag)
+  call read_binary_cartesian_map(f_file_name, f_ele, f_cart_map, f_err_flag)
 
 end subroutine
 subroutine fortran_read_binary_cylindrical_map (file_name, ele, cl_map, err_flag) bind(c)
@@ -23764,8 +24159,7 @@ subroutine fortran_read_binary_cylindrical_map (file_name, ele, cl_map, err_flag
   call c_f_pointer(cl_map, f_cl_map)
   ! in: f_err_flag 0D_NOT_logical
   f_err_flag = err_flag
-  call read_binary_cylindrical_map(file_name=f_file_name, ele=f_ele, cl_map=f_cl_map, &
-      err_flag=f_err_flag)
+  call read_binary_cylindrical_map(f_file_name, f_ele, f_cl_map, f_err_flag)
 
 end subroutine
 subroutine fortran_read_binary_grid_field (file_name, ele, g_field, err_flag) bind(c)
@@ -23795,8 +24189,7 @@ subroutine fortran_read_binary_grid_field (file_name, ele, g_field, err_flag) bi
   call c_f_pointer(g_field, f_g_field)
   ! in: f_err_flag 0D_NOT_logical
   f_err_flag = err_flag
-  call read_binary_grid_field(file_name=f_file_name, ele=f_ele, g_field=f_g_field, &
-      err_flag=f_err_flag)
+  call read_binary_grid_field(f_file_name, f_ele, f_g_field, f_err_flag)
 
 end subroutine
 subroutine fortran_read_surface_reflection_file (file_name, surface) bind(c)
@@ -23818,7 +24211,7 @@ subroutine fortran_read_surface_reflection_file (file_name, surface) bind(c)
   ! out: f_surface 0D_NOT_type
   if (.not. c_associated(surface)) return
   call c_f_pointer(surface, f_surface)
-  call read_surface_reflection_file(file_name=f_file_name, surface=f_surface)
+  call read_surface_reflection_file(f_file_name, f_surface)
 
   ! out: f_surface 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -23861,8 +24254,7 @@ subroutine fortran_reallocate_beam (beam, n_bunch, n_particle, extend) bind(c)
   else
     f_extend_native_ptr => null()
   endif
-  call reallocate_beam(beam=f_beam, n_bunch=f_n_bunch, n_particle=f_n_particle_ptr, &
-      extend=f_extend_native_ptr)
+  call reallocate_beam(f_beam, f_n_bunch, f_n_particle_ptr, f_extend_native_ptr)
 
   ! inout: f_extend 0D_NOT_logical
   if (c_associated(extend)) then
@@ -23908,7 +24300,7 @@ subroutine fortran_reallocate_bunch (bunch, n_particle, save) bind(c)
   else
     f_save_native_ptr => null()
   endif
-  call reallocate_bunch(bunch=f_bunch, n_particle=f_n_particle, save=f_save_native_ptr)
+  call reallocate_bunch(f_bunch, f_n_particle, f_save_native_ptr)
 
   ! out: f_bunch 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -23929,7 +24321,7 @@ subroutine fortran_reallocate_control (lat, n) bind(c)
   call c_f_pointer(lat, f_lat)
   ! in: f_n 0D_NOT_integer
   f_n = n
-  call reallocate_control(lat=f_lat, n=f_n)
+  call reallocate_control(f_lat, f_n)
 
 end subroutine
 subroutine fortran_reallocate_coord_array (coord_array, lat) bind(c)
@@ -23948,7 +24340,7 @@ subroutine fortran_reallocate_coord_array (coord_array, lat) bind(c)
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call reallocate_coord_array(coord_array=f_coord_array%data, lat=f_lat)
+  call reallocate_coord(f_coord_array%data, f_lat)
 
 end subroutine
 subroutine fortran_reallocate_coord_lat (coord, lat, ix_branch) bind(c)
@@ -23976,7 +24368,7 @@ subroutine fortran_reallocate_coord_lat (coord, lat, ix_branch) bind(c)
   else
     f_ix_branch_ptr => null()
   endif
-  call reallocate_coord_lat(coord=f_coord%data, lat=f_lat, ix_branch=f_ix_branch_ptr)
+  call reallocate_coord(f_coord%data, f_lat, f_ix_branch_ptr)
 
 end subroutine
 subroutine fortran_reallocate_coord_n (coord, n_coord) bind(c)
@@ -23994,7 +24386,7 @@ subroutine fortran_reallocate_coord_n (coord, n_coord) bind(c)
   if (c_associated(coord))   call c_f_pointer(coord, f_coord)
   ! in: f_n_coord 0D_NOT_integer
   f_n_coord = n_coord
-  call reallocate_coord_n(coord=f_coord%data, n_coord=f_n_coord)
+  call reallocate_coord(f_coord%data, f_n_coord)
 
 end subroutine
 subroutine fortran_reallocate_expression_stack (stack, n, exact) bind(c)
@@ -24025,7 +24417,7 @@ subroutine fortran_reallocate_expression_stack (stack, n, exact) bind(c)
   else
     f_exact_native_ptr => null()
   endif
-  call reallocate_expression_stack(stack=f_stack%data, n=f_n, exact=f_exact_native_ptr)
+  call reallocate_expression_stack(f_stack%data, f_n, f_exact_native_ptr)
 
 end subroutine
 subroutine fortran_rel_tracking_charge_to_mass (orbit, ref_species, rel_charge) bind(c)
@@ -24047,7 +24439,7 @@ subroutine fortran_rel_tracking_charge_to_mass (orbit, ref_species, rel_charge) 
   call c_f_pointer(orbit, f_orbit)
   ! in: f_ref_species 0D_NOT_integer
   f_ref_species = ref_species
-  f_rel_charge = rel_tracking_charge_to_mass(orbit=f_orbit, ref_species=f_ref_species)
+  f_rel_charge = rel_tracking_charge_to_mass(f_orbit, f_ref_species)
 
   ! out: f_rel_charge 0D_NOT_real
   call c_f_pointer(rel_charge, f_rel_charge_ptr)
@@ -24073,7 +24465,7 @@ subroutine fortran_relative_mode_flip (ele1, ele2, func_retval__) bind(c)
   ! inout: f_ele2 0D_NOT_type
   if (.not. c_associated(ele2)) return
   call c_f_pointer(ele2, f_ele2)
-  f_func_retval__ = relative_mode_flip(ele1=f_ele1, ele2=f_ele2)
+  f_func_retval__ = relative_mode_flip(f_ele1, f_ele2)
 
   ! out: f_func_retval__ 0D_NOT_logical
   call c_f_pointer(func_retval__, f_func_retval___ptr)
@@ -24093,7 +24485,7 @@ subroutine fortran_release_rad_int_cache (ix_cache) bind(c)
   else
     f_ix_cache_ptr => null()
   endif
-  call release_rad_int_cache(ix_cache=f_ix_cache_ptr)
+  call release_rad_int_cache(f_ix_cache_ptr)
 
   ! inout: f_ix_cache 0D_NOT_integer
   ! no output conversion for f_ix_cache
@@ -24122,8 +24514,8 @@ subroutine fortran_remove_constant_taylor (taylor_in, taylor_out, c0, &
   if (c_associated(c0))   call c_f_pointer(c0, f_c0)
   ! in: f_remove_higher_order_terms 0D_NOT_logical
   f_remove_higher_order_terms = remove_higher_order_terms
-  call remove_constant_taylor(taylor_in=f_taylor_in%data, taylor_out=f_taylor_out%data, &
-      c0=f_c0%data, remove_higher_order_terms=f_remove_higher_order_terms)
+  call remove_constant_taylor(f_taylor_in%data, f_taylor_out%data, f_c0%data, &
+      f_remove_higher_order_terms)
 
 end subroutine
 subroutine fortran_remove_dead_from_bunch (bunch_in, bunch_out) bind(c)
@@ -24143,7 +24535,7 @@ subroutine fortran_remove_dead_from_bunch (bunch_in, bunch_out) bind(c)
   ! out: f_bunch_out 0D_NOT_type
   if (.not. c_associated(bunch_out)) return
   call c_f_pointer(bunch_out, f_bunch_out)
-  call remove_dead_from_bunch(bunch_in=f_bunch_in, bunch_out=f_bunch_out)
+  call remove_dead_from_bunch(f_bunch_in, f_bunch_out)
 
   ! out: f_bunch_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -24173,7 +24565,7 @@ subroutine fortran_remove_eles_from_lat (lat, check_sanity) bind(c)
   else
     f_check_sanity_native_ptr => null()
   endif
-  call remove_eles_from_lat(lat=f_lat, check_sanity=f_check_sanity_native_ptr)
+  call remove_eles_from_lat(f_lat, f_check_sanity_native_ptr)
 
 end subroutine
 subroutine fortran_remove_lord_slave_link (lord, slave) bind(c)
@@ -24192,7 +24584,7 @@ subroutine fortran_remove_lord_slave_link (lord, slave) bind(c)
   ! inout: f_slave 0D_NOT_type
   if (.not. c_associated(slave)) return
   call c_f_pointer(slave, f_slave)
-  call remove_lord_slave_link(lord=f_lord, slave=f_slave)
+  call remove_lord_slave_link(f_lord, f_slave)
 
 end subroutine
 subroutine fortran_reverse_lat (lat_in, lat_rev, track_antiparticle) bind(c)
@@ -24225,8 +24617,7 @@ subroutine fortran_reverse_lat (lat_in, lat_rev, track_antiparticle) bind(c)
   else
     f_track_antiparticle_native_ptr => null()
   endif
-  call reverse_lat(lat_in=f_lat_in, lat_rev=f_lat_rev, &
-      track_antiparticle=f_track_antiparticle_native_ptr)
+  call reverse_lat(f_lat_in, f_lat_rev, f_track_antiparticle_native_ptr)
 
   ! out: f_lat_rev 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -24285,8 +24676,8 @@ subroutine fortran_rf_coupler_kick (ele, param, particle_at, phase, orbit, mat6,
   else
     f_make_matrix_native_ptr => null()
   endif
-  call rf_coupler_kick(ele=f_ele, param=f_param, particle_at=f_particle_at, phase=f_phase, &
-      orbit=f_orbit, mat6=f_mat6, make_matrix=f_make_matrix_native_ptr)
+  call rf_coupler_kick(f_ele, f_param, f_particle_at, f_phase, f_orbit, f_mat6, &
+      f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_rf_is_on (branch, ix_ele1, ix_ele2, is_on) bind(c)
@@ -24322,7 +24713,7 @@ subroutine fortran_rf_is_on (branch, ix_ele1, ix_ele2, is_on) bind(c)
   else
     f_ix_ele2_ptr => null()
   endif
-  f_is_on = rf_is_on(branch=f_branch, ix_ele1=f_ix_ele1_ptr, ix_ele2=f_ix_ele2_ptr)
+  f_is_on = rf_is_on(f_branch, f_ix_ele1_ptr, f_ix_ele2_ptr)
 
   ! out: f_is_on 0D_NOT_logical
   call c_f_pointer(is_on, f_is_on_ptr)
@@ -24352,7 +24743,7 @@ subroutine fortran_rf_ref_time_offset (ele, ds, time) bind(c)
   else
     f_ds_ptr => null()
   endif
-  f_time = rf_ref_time_offset(ele=f_ele, ds=f_ds_ptr)
+  f_time = rf_ref_time_offset(f_ele, f_ds_ptr)
 
   ! out: f_time 0D_NOT_real
   call c_f_pointer(time, f_time_ptr)
@@ -24448,8 +24839,8 @@ subroutine fortran_rfun (u, v, w, gam, a, b, hz, i, j, res) bind(c)
   else
     f_j_ptr => null()
   endif
-  f_res = rfun(u=f_u_ptr, v=f_v_ptr, w=f_w_ptr, gam=f_gam_ptr, a=f_a_ptr, b=f_b_ptr, &
-      hz=f_hz_ptr, i=f_i_ptr, j=f_j_ptr)
+  f_res = rfun(f_u_ptr, f_v_ptr, f_w_ptr, f_gam_ptr, f_a_ptr, f_b_ptr, f_hz_ptr, f_i_ptr, &
+      f_j_ptr)
 
   ! inout: f_u 0D_NOT_real
   ! no output conversion for f_u
@@ -24557,9 +24948,8 @@ subroutine fortran_rk_adaptive_time_step (ele, param, orb, t_dir, rf_time, dt_tr
   endif
   ! inout: f_extra_field 0D_NOT_type
   if (c_associated(extra_field))   call c_f_pointer(extra_field, f_extra_field)
-  call rk_adaptive_time_step(ele=f_ele, param=f_param, orb=f_orb, t_dir=f_t_dir_ptr, &
-      rf_time=f_rf_time_ptr, dt_try=f_dt_try_ptr, dt_did=f_dt_did_ptr, dt_next=f_dt_next_ptr, &
-      err_flag=f_err_flag_native_ptr, extra_field=f_extra_field)
+  call rk_adaptive_time_step(f_ele, f_param, f_orb, f_t_dir_ptr, f_rf_time_ptr, f_dt_try_ptr, &
+      f_dt_did_ptr, f_dt_next_ptr, f_err_flag_native_ptr, f_extra_field)
 
   ! inout: f_t_dir 0D_NOT_integer
   ! no output conversion for f_t_dir
@@ -24659,9 +25049,8 @@ subroutine fortran_rk_time_step1 (ele, param, rf_time, orb, dt, new_orb, r_err, 
   endif
   ! inout: f_extra_field 0D_NOT_type
   if (c_associated(extra_field))   call c_f_pointer(extra_field, f_extra_field)
-  call rk_time_step1(ele=f_ele, param=f_param, rf_time=f_rf_time, orb=f_orb, dt=f_dt, &
-      new_orb=f_new_orb, r_err=f_r_err, dr_dt=f_dr_dt, err_flag=f_err_flag_native_ptr, &
-      print_err=f_print_err_native_ptr, extra_field=f_extra_field)
+  call rk_time_step1(f_ele, f_param, f_rf_time, f_orb, f_dt, f_new_orb, f_r_err, f_dr_dt, &
+      f_err_flag_native_ptr, f_print_err_native_ptr, f_extra_field)
 
   ! out: f_r_err 1D_NOT_real
   if (c_associated(r_err)) then
@@ -24711,7 +25100,7 @@ subroutine fortran_rotate3 (vec, angle, rvec) bind(c)
   else
     f_angle_ptr => null()
   endif
-  f_rvec = rotate3(vec=f_vec, angle=f_angle_ptr)
+  f_rvec = rotate3(f_vec, f_angle_ptr)
 
   ! inout: f_angle 0D_NOT_real
   ! no output conversion for f_angle
@@ -24779,8 +25168,8 @@ subroutine fortran_rotate_em_field (field, w_mat, w_inv, calc_dfield, calc_poten
   else
     f_calc_potential_native_ptr => null()
   endif
-  call rotate_em_field(field=f_field, w_mat=f_w_mat, w_inv=f_w_inv, &
-      calc_dfield=f_calc_dfield_native_ptr, calc_potential=f_calc_potential_native_ptr)
+  call rotate_em_field(f_field, f_w_mat, f_w_inv, f_calc_dfield_native_ptr, &
+      f_calc_potential_native_ptr)
 
 end subroutine
 subroutine fortran_rotate_field_zx (field, theta) bind(c)
@@ -24803,7 +25192,7 @@ subroutine fortran_rotate_field_zx (field, theta) bind(c)
   else
     f_theta_ptr => null()
   endif
-  call rotate_field_zx(field=f_field, theta=f_theta_ptr)
+  call rotate_field_zx(f_field, f_theta_ptr)
 
   ! inout: f_theta 0D_NOT_real
   ! no output conversion for f_theta
@@ -24839,7 +25228,7 @@ subroutine fortran_rotate_for_curved_surface (ele, orbit, set, rot_mat) bind(c)
   else
     f_rot_mat_ptr => null()
   endif
-  call rotate_for_curved_surface(ele=f_ele, orbit=f_orbit, set=f_set, rot_mat=f_rot_mat)
+  call rotate_for_curved_surface(f_ele, f_orbit, f_set, f_rot_mat)
 
 end subroutine
 subroutine fortran_rotate_spin (rot_vec, spin, qrot) bind(c)
@@ -24872,7 +25261,7 @@ subroutine fortran_rotate_spin (rot_vec, spin, qrot) bind(c)
   else
     f_spin_ptr => null()
   endif
-  call rotate_spin(rot_vec=f_rot_vec, spin=f_spin, qrot=f_qrot)
+  call rotate_spin(f_rot_vec, f_spin, f_qrot)
 
   ! out: f_qrot 1D_NOT_real
   if (c_associated(qrot)) then
@@ -24906,7 +25295,7 @@ subroutine fortran_rotate_spin_a_step (orbit, field, ele, ds) bind(c)
   call c_f_pointer(ele, f_ele)
   ! in: f_ds 0D_NOT_real
   f_ds = ds
-  call rotate_spin_a_step(orbit=f_orbit, field=f_field, ele=f_ele, ds=f_ds)
+  call rotate_spin_a_step(f_orbit, f_field, f_ele, f_ds)
 
 end subroutine
 subroutine fortran_rotate_spin_given_field (orbit, sign_z_vel, BL, EL, qrot) bind(c)
@@ -24955,8 +25344,7 @@ subroutine fortran_rotate_spin_given_field (orbit, sign_z_vel, BL, EL, qrot) bin
   else
     f_qrot_ptr => null()
   endif
-  call rotate_spin_given_field(orbit=f_orbit, sign_z_vel=f_sign_z_vel, BL=f_BL, EL=f_EL, &
-      qrot=f_qrot)
+  call rotate_spin_given_field(f_orbit, f_sign_z_vel, f_BL, f_EL, f_qrot)
 
 end subroutine
 subroutine fortran_s_body_calc (orbit, ele, s_body) bind(c)
@@ -24979,7 +25367,7 @@ subroutine fortran_s_body_calc (orbit, ele, s_body) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_s_body = s_body_calc(orbit=f_orbit, ele=f_ele)
+  f_s_body = s_body_calc(f_orbit, f_ele)
 
   ! out: f_s_body 0D_NOT_real
   call c_f_pointer(s_body, f_s_body_ptr)
@@ -24996,7 +25384,7 @@ subroutine fortran_s_calc (lat) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call s_calc(lat=f_lat)
+  call s_calc(f_lat)
 
 end subroutine
 subroutine fortran_sad_mult_hard_bend_edge_kick (ele, param, particle_at, orbit, mat6, &
@@ -25049,8 +25437,8 @@ subroutine fortran_sad_mult_hard_bend_edge_kick (ele, param, particle_at, orbit,
   else
     f_make_matrix_native_ptr => null()
   endif
-  call sad_mult_hard_bend_edge_kick(ele=f_ele, param=f_param, particle_at=f_particle_at, &
-      orbit=f_orbit, mat6=f_mat6, make_matrix=f_make_matrix_native_ptr)
+  call sad_mult_hard_bend_edge_kick(f_ele, f_param, f_particle_at, f_orbit, f_mat6, &
+      f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_sad_soft_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix) &
@@ -25103,8 +25491,8 @@ subroutine fortran_sad_soft_bend_edge_kick (ele, param, particle_at, orb, mat6, 
   else
     f_make_matrix_native_ptr => null()
   endif
-  call sad_soft_bend_edge_kick(ele=f_ele, param=f_param, particle_at=f_particle_at, orb=f_orb, &
-      mat6=f_mat6, make_matrix=f_make_matrix_native_ptr)
+  call sad_soft_bend_edge_kick(f_ele, f_param, f_particle_at, f_orb, f_mat6, &
+      f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_save_a_beam_step (ele, beam, bunch_tracks, s_body, is_time_coords) bind(c)
@@ -25149,8 +25537,8 @@ subroutine fortran_save_a_beam_step (ele, beam, bunch_tracks, s_body, is_time_co
   else
     f_is_time_coords_native_ptr => null()
   endif
-  call save_a_beam_step(ele=f_ele, beam=f_beam, bunch_tracks=f_bunch_tracks%data, &
-      s_body=f_s_body_ptr, is_time_coords=f_is_time_coords_native_ptr)
+  call save_a_beam_step(f_ele, f_beam, f_bunch_tracks%data, f_s_body_ptr, &
+      f_is_time_coords_native_ptr)
 
 end subroutine
 subroutine fortran_save_a_bunch_step (ele, bunch, bunch_track, s_body, is_time_coords) bind(c)
@@ -25195,8 +25583,8 @@ subroutine fortran_save_a_bunch_step (ele, bunch, bunch_track, s_body, is_time_c
   else
     f_is_time_coords_native_ptr => null()
   endif
-  call save_a_bunch_step(ele=f_ele, bunch=f_bunch, bunch_track=f_bunch_track, &
-      s_body=f_s_body_ptr, is_time_coords=f_is_time_coords_native_ptr)
+  call save_a_bunch_step(f_ele, f_bunch, f_bunch_track, f_s_body_ptr, &
+      f_is_time_coords_native_ptr)
 
 end subroutine
 subroutine fortran_save_a_step (track, ele, param, local_ref_frame, orb, s_rel, save_field, &
@@ -25283,9 +25671,8 @@ subroutine fortran_save_a_step (track, ele, param, local_ref_frame, orb, s_rel, 
   endif
   ! in: f_strong_beam 0D_NOT_type
   if (c_associated(strong_beam))   call c_f_pointer(strong_beam, f_strong_beam)
-  call save_a_step(track=f_track, ele=f_ele, param=f_param, local_ref_frame=f_local_ref_frame, &
-      orb=f_orb, s_rel=f_s_rel, save_field=f_save_field_native_ptr, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr, rf_time=f_rf_time_ptr, strong_beam=f_strong_beam)
+  call save_a_step(f_track, f_ele, f_param, f_local_ref_frame, f_orb, f_s_rel, &
+      f_save_field_native_ptr, f_mat6, f_make_matrix_native_ptr, f_rf_time_ptr, f_strong_beam)
 
 end subroutine
 subroutine fortran_sbend_body_with_k1_map (ele, dg, b1, param, n_step, orbit, mat6, &
@@ -25346,8 +25733,8 @@ subroutine fortran_sbend_body_with_k1_map (ele, dg, b1, param, n_step, orbit, ma
   else
     f_make_matrix_native_ptr => null()
   endif
-  call sbend_body_with_k1_map(ele=f_ele, dg=f_dg, b1=f_b1, param=f_param, n_step=f_n_step, &
-      orbit=f_orbit, mat6=f_mat6, make_matrix=f_make_matrix_native_ptr)
+  call sbend_body_with_k1_map(f_ele, f_dg, f_b1, f_param, f_n_step, f_orbit, f_mat6, &
+      f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_sc_adaptive_step (bunch, ele, include_image, t_now, dt_step, dt_next, &
@@ -25402,8 +25789,8 @@ subroutine fortran_sc_adaptive_step (bunch, ele, include_image, t_now, dt_step, 
   endif
   !! container type array (1D_ALLOC_type)
   if (c_associated(sc_field))   call c_f_pointer(sc_field, f_sc_field)
-  call sc_adaptive_step(bunch=f_bunch, ele=f_ele, include_image=f_include_image_native_ptr, &
-      t_now=f_t_now, dt_step=f_dt_step_ptr, dt_next=f_dt_next, sc_field=f_sc_field%data)
+  call sc_adaptive_step(f_bunch, f_ele, f_include_image_native_ptr, f_t_now, f_dt_step_ptr, &
+      f_dt_next, f_sc_field%data)
 
   ! inout: f_include_image 0D_NOT_logical
   if (c_associated(include_image)) then
@@ -25460,8 +25847,13 @@ subroutine fortran_sc_step (bunch, ele, include_image, t_end, sc_field, n_emit) 
   f_t_end = t_end
   !! container type array (1D_ALLOC_type)
   if (c_associated(sc_field))   call c_f_pointer(sc_field, f_sc_field)
-  call sc_step(bunch=f_bunch, ele=f_ele, include_image=f_include_image_native_ptr, &
-      t_end=f_t_end, sc_field=f_sc_field%data, n_emit=f_n_emit)
+  ! out: f_n_emit 0D_NOT_integer
+  if (c_associated(n_emit)) then
+    call c_f_pointer(n_emit, f_n_emit_ptr)
+  else
+    f_n_emit_ptr => null()
+  endif
+  call sc_step(f_bunch, f_ele, f_include_image_native_ptr, f_t_end, f_sc_field%data, f_n_emit)
 
   ! inout: f_include_image 0D_NOT_logical
   if (c_associated(include_image)) then
@@ -25503,7 +25895,7 @@ subroutine fortran_set_active_fixer (fixer, turn_on, orbit) bind(c)
   endif
   ! out: f_orbit 0D_NOT_type
   if (c_associated(orbit))   call c_f_pointer(orbit, f_orbit)
-  call set_active_fixer(fixer=f_fixer, turn_on=f_turn_on_native_ptr, orbit=f_orbit)
+  call set_active_fixer(f_fixer, f_turn_on_native_ptr, f_orbit)
 
   ! out: f_orbit 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -25537,8 +25929,7 @@ subroutine fortran_set_custom_attribute_name (custom_name, err_flag, custom_inde
   else
     f_custom_index_ptr => null()
   endif
-  call set_custom_attribute_name(custom_name=f_custom_name, err_flag=f_err_flag, &
-      custom_index=f_custom_index_ptr)
+  call set_custom_attribute_name(f_custom_name, f_err_flag, f_custom_index_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -25605,9 +25996,14 @@ subroutine fortran_set_ele_attribute (ele, set_string, err_flag, err_print_flag,
   else
     f_set_lords_native_ptr => null()
   endif
-  call set_ele_attribute(ele=f_ele, set_string=f_set_string, err_flag=f_err_flag, &
-      err_print_flag=f_err_print_flag_native_ptr, set_lords=f_set_lords_native_ptr, &
-      err_id=f_err_id)
+  ! out: f_err_id 0D_NOT_integer
+  if (c_associated(err_id)) then
+    call c_f_pointer(err_id, f_err_id_ptr)
+  else
+    f_err_id_ptr => null()
+  endif
+  call set_ele_attribute(f_ele, f_set_string, f_err_flag, f_err_print_flag_native_ptr, &
+      f_set_lords_native_ptr, f_err_id)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -25640,7 +26036,7 @@ subroutine fortran_set_ele_defaults (ele, do_allocate) bind(c)
   else
     f_do_allocate_native_ptr => null()
   endif
-  call set_ele_defaults(ele=f_ele, do_allocate=f_do_allocate_native_ptr)
+  call set_ele_defaults(f_ele, f_do_allocate_native_ptr)
 
 end subroutine
 subroutine fortran_set_ele_name (ele, name) bind(c)
@@ -25662,7 +26058,7 @@ subroutine fortran_set_ele_name (ele, name) bind(c)
   if (.not. c_associated(name)) return
   call c_f_pointer(name, f_name_ptr, [huge(0)])
   call to_f_str(f_name_ptr, f_name)
-  call set_ele_name(ele=f_ele, name=f_name)
+  call set_ele_name(f_ele, f_name)
 
 end subroutine
 subroutine fortran_set_ele_real_attribute (ele, attrib_name, value, err_flag, err_print_flag) &
@@ -25714,8 +26110,8 @@ subroutine fortran_set_ele_real_attribute (ele, attrib_name, value, err_flag, er
   else
     f_err_print_flag_native_ptr => null()
   endif
-  call set_ele_real_attribute(ele=f_ele, attrib_name=f_attrib_name, value=f_value, &
-      err_flag=f_err_flag, err_print_flag=f_err_print_flag_native_ptr)
+  call set_ele_real_attribute(f_ele, f_attrib_name, f_value, f_err_flag, &
+      f_err_print_flag_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -25738,7 +26134,13 @@ subroutine fortran_set_ele_status_stale (ele, status_group, set_slaves) bind(c)
   ! out: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call set_ele_status_stale(ele=f_ele, status_group=f_status_group, set_slaves=f_set_slaves)
+  ! out: f_set_slaves 0D_NOT_logical
+  if (c_associated(set_slaves)) then
+    call c_f_pointer(set_slaves, f_set_slaves_ptr)
+  else
+    f_set_slaves_ptr => null()
+  endif
+  call set_ele_status_stale(f_ele, f_status_group, f_set_slaves)
 
   ! out: f_ele 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -25747,53 +26149,6 @@ subroutine fortran_set_ele_status_stale (ele, status_group, set_slaves) bind(c)
   f_status_group_ptr = f_status_group
   ! out: f_set_slaves 0D_NOT_logical
   ! no output conversion for f_set_slaves
-end subroutine
-subroutine fortran_set_emit_from_beam_init (beam_init_in, ele, species, modes, err_flag, &
-    beam_init_set) bind(c)
-
-  use bmad_struct, only: beam_init_struct, ele_struct, normal_modes_struct
-  implicit none
-  ! ** In parameters **
-  type(c_ptr), value :: beam_init_in  ! 0D_NOT_type
-  type(beam_init_struct), pointer :: f_beam_init_in
-  type(c_ptr), value :: ele  ! 0D_NOT_type
-  type(ele_struct), pointer :: f_ele
-  integer(c_int) :: species  ! 0D_NOT_integer
-  integer :: f_species
-  type(c_ptr), value :: modes  ! 0D_NOT_type
-  type(normal_modes_struct), pointer :: f_modes
-  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
-  logical(c_bool), pointer :: f_err_flag
-  logical, target :: f_err_flag_native
-  logical, pointer :: f_err_flag_native_ptr
-  logical(c_bool), pointer :: f_err_flag_ptr
-  ! ** Out parameters **
-  type(c_ptr), value :: beam_init_set  ! 0D_NOT_type
-  type(beam_init_struct), pointer :: f_beam_init_set
-  ! ** End of parameters **
-  ! in: f_beam_init_in 0D_NOT_type
-  if (.not. c_associated(beam_init_in)) return
-  call c_f_pointer(beam_init_in, f_beam_init_in)
-  ! in: f_ele 0D_NOT_type
-  if (.not. c_associated(ele)) return
-  call c_f_pointer(ele, f_ele)
-  ! in: f_species 0D_NOT_integer
-  f_species = species
-  ! in: f_modes 0D_NOT_type
-  if (c_associated(modes))   call c_f_pointer(modes, f_modes)
-  ! in: f_err_flag 0D_NOT_logical
-  if (c_associated(err_flag)) then
-    call c_f_pointer(err_flag, f_err_flag_ptr)
-    f_err_flag_native = f_err_flag_ptr
-    f_err_flag_native_ptr => f_err_flag_native
-  else
-    f_err_flag_native_ptr => null()
-  endif
-  f_beam_init_set = set_emit_from_beam_init(beam_init_in=f_beam_init_in, ele=f_ele, &
-      species=f_species, modes=f_modes, err_flag=f_err_flag_native_ptr)
-
-  ! out: f_beam_init_set 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_set_flags_for_changed_integer_attribute (ele, attrib, set_dependent) bind(c)
 
@@ -25829,8 +26184,7 @@ subroutine fortran_set_flags_for_changed_integer_attribute (ele, attrib, set_dep
   else
     f_set_dependent_native_ptr => null()
   endif
-  call set_flags_for_changed_integer_attribute(ele=f_ele, attrib=f_attrib_ptr, &
-      set_dependent=f_set_dependent_native_ptr)
+  call set_flags_for_changed_attribute(f_ele, f_attrib_ptr, f_set_dependent_native_ptr)
 
   ! inout: f_attrib 0D_NOT_integer
   ! no output conversion for f_attrib
@@ -25860,7 +26214,7 @@ subroutine fortran_set_flags_for_changed_lat_attribute (lat, set_dependent) bind
   else
     f_set_dependent_native_ptr => null()
   endif
-  call set_flags_for_changed_lat_attribute(lat=f_lat, set_dependent=f_set_dependent_native_ptr)
+  call set_flags_for_changed_attribute(f_lat, f_set_dependent_native_ptr)
 
 end subroutine
 subroutine fortran_set_flags_for_changed_logical_attribute (ele, attrib, set_dependent) bind(c)
@@ -25901,8 +26255,7 @@ subroutine fortran_set_flags_for_changed_logical_attribute (ele, attrib, set_dep
   else
     f_set_dependent_native_ptr => null()
   endif
-  call set_flags_for_changed_logical_attribute(ele=f_ele, attrib=f_attrib_native_ptr, &
-      set_dependent=f_set_dependent_native_ptr)
+  call set_flags_for_changed_attribute(f_ele, f_attrib_native_ptr, f_set_dependent_native_ptr)
 
   ! inout: f_attrib 0D_NOT_logical
   if (c_associated(attrib)) then
@@ -25946,8 +26299,7 @@ subroutine fortran_set_flags_for_changed_real_attribute (ele, attrib, set_depend
   else
     f_set_dependent_native_ptr => null()
   endif
-  call set_flags_for_changed_real_attribute(ele=f_ele, attrib=f_attrib_ptr, &
-      set_dependent=f_set_dependent_native_ptr)
+  call set_flags_for_changed_attribute(f_ele, f_attrib_ptr, f_set_dependent_native_ptr)
 
   ! inout: f_attrib 0D_NOT_real
   ! no output conversion for f_attrib
@@ -25975,7 +26327,7 @@ subroutine fortran_set_fringe_on_off (fringe_at, ele_end, on_or_off) bind(c)
   f_ele_end = ele_end
   ! in: f_on_or_off 0D_NOT_integer
   f_on_or_off = on_or_off
-  call set_fringe_on_off(fringe_at=f_fringe_at_ptr, ele_end=f_ele_end, on_or_off=f_on_or_off)
+  call set_fringe_on_off(f_fringe_at_ptr, f_ele_end, f_on_or_off)
 
   ! inout: f_fringe_at 0D_NOT_real
   ! no output conversion for f_fringe_at
@@ -26017,8 +26369,8 @@ subroutine fortran_set_lords_status_stale (ele, stat_group, control_bookkeeping,
   else
     f_flag_ptr => null()
   endif
-  call set_lords_status_stale(ele=f_ele, stat_group=f_stat_group, &
-      control_bookkeeping=f_control_bookkeeping_native_ptr, flag=f_flag_ptr)
+  call set_lords_status_stale(f_ele, f_stat_group, f_control_bookkeeping_native_ptr, &
+      f_flag_ptr)
 
 end subroutine
 subroutine fortran_set_on_off (key, lat, switch_, orb, use_ref_orb, ix_branch, saved_values, &
@@ -26093,9 +26445,8 @@ subroutine fortran_set_on_off (key, lat, switch_, orb, use_ref_orb, ix_branch, s
   else
     f_set_val_ptr => null()
   endif
-  call set_on_off(key=f_key, lat=f_lat, switch=f_switch, orb=f_orb%data, &
-      use_ref_orb=f_use_ref_orb_native_ptr, ix_branch=f_ix_branch_ptr, &
-      saved_values=f_saved_values%data, attribute=f_attribute_call_ptr, set_val=f_set_val_ptr)
+  call set_on_off(f_key, f_lat, f_switch, f_orb%data, f_use_ref_orb_native_ptr, &
+      f_ix_branch_ptr, f_saved_values%data, f_attribute_call_ptr, f_set_val_ptr)
 
 end subroutine
 subroutine fortran_set_orbit_to_zero (orbit, n1, n2, ix_noset) bind(c)
@@ -26126,7 +26477,7 @@ subroutine fortran_set_orbit_to_zero (orbit, n1, n2, ix_noset) bind(c)
   else
     f_ix_noset_ptr => null()
   endif
-  call set_orbit_to_zero(orbit=f_orbit%data, n1=f_n1, n2=f_n2, ix_noset=f_ix_noset_ptr)
+  call set_orbit_to_zero(f_orbit%data, f_n1, f_n2, f_ix_noset_ptr)
 
 end subroutine
 subroutine fortran_set_ptc (e_tot, particle, taylor_order, integ_order, n_step, no_cavity, &
@@ -26206,9 +26557,8 @@ subroutine fortran_set_ptc (e_tot, particle, taylor_order, integ_order, n_step, 
   else
     f_force_init_native_ptr => null()
   endif
-  call set_ptc(e_tot=f_e_tot_ptr, particle=f_particle_ptr, taylor_order=f_taylor_order_ptr, &
-      integ_order=f_integ_order_ptr, n_step=f_n_step_ptr, no_cavity=f_no_cavity_native_ptr, &
-      force_init=f_force_init_native_ptr)
+  call set_ptc(f_e_tot_ptr, f_particle_ptr, f_taylor_order_ptr, f_integ_order_ptr, &
+      f_n_step_ptr, f_no_cavity_native_ptr, f_force_init_native_ptr)
 
 end subroutine
 subroutine fortran_set_ptc_base_state (component, set_val, old_val) bind(c)
@@ -26231,7 +26581,13 @@ subroutine fortran_set_ptc_base_state (component, set_val, old_val) bind(c)
   call to_f_str(f_component_ptr, f_component)
   ! in: f_set_val 0D_NOT_logical
   f_set_val = set_val
-  call set_ptc_base_state(component=f_component, set_val=f_set_val, old_val=f_old_val)
+  ! out: f_old_val 0D_NOT_logical
+  if (c_associated(old_val)) then
+    call c_f_pointer(old_val, f_old_val_ptr)
+  else
+    f_old_val_ptr => null()
+  endif
+  call set_ptc_base_state(f_component, f_set_val, f_old_val)
 
   ! out: f_old_val 0D_NOT_logical
   ! no output conversion for f_old_val
@@ -26266,7 +26622,7 @@ subroutine fortran_set_ptc_quiet (channel, set, old_val) bind(c)
   else
     f_old_val_ptr => null()
   endif
-  call set_ptc_quiet(channel=f_channel, set=f_set, old_val=f_old_val_ptr)
+  call set_ptc_quiet(f_channel, f_set, f_old_val_ptr)
 
   ! inout: f_old_val 0D_NOT_integer
   ! no output conversion for f_old_val
@@ -26289,7 +26645,7 @@ subroutine fortran_set_ptc_verbose (on) bind(c)
   else
     f_on_native_ptr => null()
   endif
-  call set_ptc_verbose(on=f_on_native_ptr)
+  call set_ptc_verbose(f_on_native_ptr)
 
   ! inout: f_on 0D_NOT_logical
   if (c_associated(on)) then
@@ -26319,7 +26675,7 @@ subroutine fortran_set_pwd_ele (lat, mode0, inductance) bind(c)
   call c_f_pointer(mode0, f_mode0)
   ! in: f_inductance 0D_NOT_real
   f_inductance = inductance
-  call set_pwd_ele(lat=f_lat, mode0=f_mode0, inductance=f_inductance)
+  call set_pwd_ele(f_lat, f_mode0, f_inductance)
 
 end subroutine
 subroutine fortran_set_status_flags (bookkeeping_state, stat) bind(c)
@@ -26338,7 +26694,7 @@ subroutine fortran_set_status_flags (bookkeeping_state, stat) bind(c)
   call c_f_pointer(bookkeeping_state, f_bookkeeping_state)
   ! in: f_stat 0D_NOT_integer
   f_stat = stat
-  call set_status_flags(bookkeeping_state=f_bookkeeping_state, stat=f_stat)
+  call set_status_flags(f_bookkeeping_state, f_stat)
 
   ! out: f_bookkeeping_state 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -26393,8 +26749,8 @@ subroutine fortran_set_tune (phi_a_set, phi_b_set, dk1, eles, branch, orb, print
   else
     f_print_err_native_ptr => null()
   endif
-  f_ok = set_tune(phi_a_set=f_phi_a_set, phi_b_set=f_phi_b_set, dk1=f_dk1%data, &
-      eles=f_eles%data, branch=f_branch, orb=f_orb%data, print_err=f_print_err_native_ptr)
+  f_ok = set_tune(f_phi_a_set, f_phi_b_set, f_dk1%data, f_eles%data, f_branch, f_orb%data, &
+      f_print_err_native_ptr)
 
   ! out: f_ok 0D_NOT_logical
   call c_f_pointer(ok, f_ok_ptr)
@@ -26442,8 +26798,8 @@ subroutine fortran_set_twiss (branch, twiss_ele, ix_ele, match_deta_ds, err_flag
   else
     f_print_err_native_ptr => null()
   endif
-  call set_twiss(branch=f_branch, twiss_ele=f_twiss_ele, ix_ele=f_ix_ele, &
-      match_deta_ds=f_match_deta_ds, err_flag=f_err_flag, print_err=f_print_err_native_ptr)
+  call set_twiss(f_branch, f_twiss_ele, f_ix_ele, f_match_deta_ds, f_err_flag, &
+      f_print_err_native_ptr)
 
 end subroutine
 subroutine fortran_set_z_tune (branch, z_tune, ok, print_err) bind(c)
@@ -26471,6 +26827,12 @@ subroutine fortran_set_z_tune (branch, z_tune, ok, print_err) bind(c)
   call c_f_pointer(branch, f_branch)
   ! in: f_z_tune 0D_NOT_real
   f_z_tune = z_tune
+  ! out: f_ok 0D_NOT_logical
+  if (c_associated(ok)) then
+    call c_f_pointer(ok, f_ok_ptr)
+  else
+    f_ok_ptr => null()
+  endif
   ! in: f_print_err 0D_NOT_logical
   if (c_associated(print_err)) then
     call c_f_pointer(print_err, f_print_err_ptr)
@@ -26479,7 +26841,7 @@ subroutine fortran_set_z_tune (branch, z_tune, ok, print_err) bind(c)
   else
     f_print_err_native_ptr => null()
   endif
-  call set_z_tune(branch=f_branch, z_tune=f_z_tune, ok=f_ok, print_err=f_print_err_native_ptr)
+  call set_z_tune(f_branch, f_z_tune, f_ok, f_print_err_native_ptr)
 
   ! out: f_ok 0D_NOT_logical
   ! no output conversion for f_ok
@@ -26495,7 +26857,7 @@ subroutine fortran_settable_dep_var_bookkeeping (ele) bind(c)
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call settable_dep_var_bookkeeping(ele=f_ele)
+  call settable_dep_var_bookkeeping(f_ele)
 
 end subroutine
 subroutine fortran_setup_high_energy_space_charge_calc (calc_on, branch, n_part, mode, &
@@ -26527,8 +26889,8 @@ subroutine fortran_setup_high_energy_space_charge_calc (calc_on, branch, n_part,
   call c_f_pointer(mode, f_mode)
   !! container type array (1D_ALLOC_type)
   if (c_associated(closed_orb))   call c_f_pointer(closed_orb, f_closed_orb)
-  call setup_high_energy_space_charge_calc(calc_on=f_calc_on, branch=f_branch, n_part=f_n_part, &
-      mode=f_mode, closed_orb=f_closed_orb%data)
+  call setup_high_energy_space_charge_calc(f_calc_on, f_branch, f_n_part, f_mode, &
+      f_closed_orb%data)
 
 end subroutine
 subroutine fortran_sigma_mat_ptc_to_bmad (sigma_mat_ptc, beta0, sigma_mat_bmad) bind(c)
@@ -26554,8 +26916,7 @@ subroutine fortran_sigma_mat_ptc_to_bmad (sigma_mat_ptc, beta0, sigma_mat_bmad) 
   endif
   ! in: f_beta0 0D_NOT_real
   f_beta0 = beta0
-  call sigma_mat_ptc_to_bmad(sigma_mat_ptc=f_sigma_mat_ptc, beta0=f_beta0, &
-      sigma_mat_bmad=f_sigma_mat_bmad)
+  call sigma_mat_ptc_to_bmad(f_sigma_mat_ptc, f_beta0, f_sigma_mat_bmad)
 
   ! out: f_sigma_mat_bmad 2D_NOT_real
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_sigma_mat_bmad', c_name='sigma_mat_bmad', python_name='sigma_mat_bmad', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=1331, definition='real(rp) sigma_mat_bmad(6,6), sigma_mat_ptc(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='sigma_mat_bmad', comment='', default=None), intent='out', description='Bmad sigma matrix.', doc_data_type='float', doc_is_optional=False)
@@ -26596,8 +26957,7 @@ subroutine fortran_significant_difference (value1, value2, abs_tol, rel_tol, is_
   else
     f_rel_tol_ptr => null()
   endif
-  f_is_different = significant_difference(value1=f_value1, value2=f_value2, &
-      abs_tol=f_abs_tol_ptr, rel_tol=f_rel_tol_ptr)
+  f_is_different = significant_difference(f_value1, f_value2, f_abs_tol_ptr, f_rel_tol_ptr)
 
   ! out: f_is_different 0D_NOT_logical
   call c_f_pointer(is_different, f_is_different_ptr)
@@ -26618,7 +26978,7 @@ subroutine fortran_skip_ele_blender (ele, skip) bind(c)
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_skip = skip_ele_blender(ele=f_ele)
+  f_skip = skip_ele_blender(f_ele)
 
   ! out: f_skip 0D_NOT_logical
   call c_f_pointer(skip, f_skip_ptr)
@@ -26660,8 +27020,7 @@ subroutine fortran_slice_lattice (lat, ele_list, error, do_bookkeeping) bind(c)
   else
     f_do_bookkeeping_native_ptr => null()
   endif
-  call slice_lattice(lat=f_lat, ele_list=f_ele_list, error=f_error, &
-      do_bookkeeping=f_do_bookkeeping_native_ptr)
+  call slice_lattice(f_lat, f_ele_list, f_error, f_do_bookkeeping_native_ptr)
 
   ! out: f_error 0D_NOT_logical
   call c_f_pointer(error, f_error_ptr)
@@ -26717,8 +27076,8 @@ subroutine fortran_soft_quadrupole_edge_kick (ele, param, particle_at, orbit, ma
   else
     f_make_matrix_native_ptr => null()
   endif
-  call soft_quadrupole_edge_kick(ele=f_ele, param=f_param, particle_at=f_particle_at, &
-      orbit=f_orbit, mat6=f_mat6, make_matrix=f_make_matrix_native_ptr)
+  call soft_quadrupole_edge_kick(f_ele, f_param, f_particle_at, f_orbit, f_mat6, &
+      f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_sol_quad_mat6_calc (ks_in, k1_in, tilt, length, ele, orbit, mat6, &
@@ -26788,8 +27147,8 @@ subroutine fortran_sol_quad_mat6_calc (ks_in, k1_in, tilt, length, ele, orbit, m
   else
     f_make_matrix_native_ptr => null()
   endif
-  call sol_quad_mat6_calc(ks_in=f_ks_in_ptr, k1_in=f_k1_in_ptr, tilt=f_tilt, length=f_length, &
-      ele=f_ele, orbit=f_orbit, mat6=f_mat6, make_matrix=f_make_matrix_native_ptr)
+  call sol_quad_mat6_calc(f_ks_in_ptr, f_k1_in_ptr, f_tilt, f_length, f_ele, f_orbit, f_mat6, &
+      f_make_matrix_native_ptr)
 
   ! inout: f_ks_in 0D_NOT_real
   ! no output conversion for f_ks_in
@@ -26827,7 +27186,7 @@ subroutine fortran_solve_psi_adaptive (t0, t1, p0, args, p1) bind(c)
   else
     f_args_ptr => null()
   endif
-  call solve_psi_adaptive(t0=f_t0, t1=f_t1, p0=f_p0, args=f_args, p1=f_p1)
+  call solve_psi_adaptive(f_t0, f_t1, f_p0, f_args, f_p1)
 
   ! out: f_p1 0D_NOT_real
   call c_f_pointer(p1, f_p1_ptr)
@@ -26869,7 +27228,7 @@ subroutine fortran_solve_psi_fixed_steps (t0, t1, p0, args, t, p) bind(c)
   if (c_associated(t))   call c_f_pointer(t, f_t)
   !! container general array (1D_ALLOC_real)
   if (c_associated(p))   call c_f_pointer(p, f_p)
-  call solve_psi_fixed_steps(t0=f_t0, t1=f_t1, p0=f_p0, args=f_args, t=f_t%data, p=f_p%data)
+  call solve_psi_fixed_steps(f_t0, f_t1, f_p0, f_args, f_t%data, f_p%data)
 
 end subroutine
 subroutine fortran_sort_complex_taylor_terms (complex_taylor_in, complex_taylor_sorted) bind(c)
@@ -26889,8 +27248,7 @@ subroutine fortran_sort_complex_taylor_terms (complex_taylor_in, complex_taylor_
   ! out: f_complex_taylor_sorted 0D_NOT_type
   if (.not. c_associated(complex_taylor_sorted)) return
   call c_f_pointer(complex_taylor_sorted, f_complex_taylor_sorted)
-  call sort_complex_taylor_terms(complex_taylor_in=f_complex_taylor_in, &
-      complex_taylor_sorted=f_complex_taylor_sorted)
+  call sort_complex_taylor_terms(f_complex_taylor_in, f_complex_taylor_sorted)
 
   ! out: f_complex_taylor_sorted 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -26927,8 +27285,7 @@ subroutine fortran_spin_dn_dpz_from_mat8 (mat_1turn, dn_dpz_partial, error, dn_d
   else
     f_dn_dpz_partial_ptr => null()
   endif
-  f_dn_dpz = spin_dn_dpz_from_mat8(mat_1turn=f_mat_1turn, dn_dpz_partial=f_dn_dpz_partial, &
-      error=f_error)
+  f_dn_dpz = spin_dn_dpz_from_mat8(f_mat_1turn, f_dn_dpz_partial, f_error)
 
   ! out: f_error 0D_NOT_logical
   call c_f_pointer(error, f_error_ptr)
@@ -27002,9 +27359,8 @@ subroutine fortran_spin_dn_dpz_from_qmap (orb_mat, q_map, dn_dpz_partial, dn_dpz
   else
     f_n0_ptr => null()
   endif
-  f_dn_dpz = spin_dn_dpz_from_qmap(orb_mat=f_orb_mat, q_map=f_q_map, &
-      dn_dpz_partial=f_dn_dpz_partial, dn_dpz_partial2=f_dn_dpz_partial2, error=f_error, &
-      n0=f_n0)
+  f_dn_dpz = spin_dn_dpz_from_qmap(f_orb_mat, f_q_map, f_dn_dpz_partial, f_dn_dpz_partial2, &
+      f_error, f_n0)
 
   ! out: f_error 0D_NOT_logical
   call c_f_pointer(error, f_error_ptr)
@@ -27030,7 +27386,7 @@ subroutine fortran_spin_map1_normalize (spin1) bind(c)
   else
     f_spin1_ptr => null()
   endif
-  call spin_map1_normalize(spin1=f_spin1)
+  call spin_map1_normalize(f_spin1)
 
 end subroutine
 subroutine fortran_spin_mat8_resonance_strengths (orb_evec, mat8, xi_sum, xi_diff) bind(c)
@@ -27065,8 +27421,7 @@ subroutine fortran_spin_mat8_resonance_strengths (orb_evec, mat8, xi_sum, xi_dif
   else
     f_mat8_ptr => null()
   endif
-  call spin_mat8_resonance_strengths(orb_evec=f_orb_evec, mat8=f_mat8, xi_sum=f_xi_sum, &
-      xi_diff=f_xi_diff)
+  call spin_mat8_resonance_strengths(f_orb_evec, f_mat8, f_xi_sum, f_xi_diff)
 
   ! out: f_xi_sum 0D_NOT_real
   call c_f_pointer(xi_sum, f_xi_sum_ptr)
@@ -27117,8 +27472,8 @@ subroutine fortran_spin_mat_to_eigen (orb_mat, spin_map, orb_eval, orb_evec, n0,
   else
     f_spin_map_ptr => null()
   endif
-  call spin_mat_to_eigen(orb_mat=f_orb_mat, spin_map=f_spin_map, orb_eval=f_orb_eval, &
-      orb_evec=f_orb_evec, n0=f_n0, spin_evec=f_spin_evec, error=f_error)
+  call spin_mat_to_eigen(f_orb_mat, f_spin_map, f_orb_eval, f_orb_evec, f_n0, f_spin_evec, &
+      f_error)
 
   ! out: f_orb_eval 1D_NOT_complex
   if (c_associated(orb_eval)) then
@@ -27126,14 +27481,14 @@ subroutine fortran_spin_mat_to_eigen (orb_mat, spin_map, orb_eval, orb_evec, n0,
     f_orb_eval_ptr = f_orb_eval(:)
   endif
   ! out: f_orb_evec 2D_NOT_complex
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_orb_evec', c_name='orb_evec', python_name='orb_evec', type='complex', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=2799, definition='complex(rp) orb_eval(6), orb_evec(6,6), spin_evec(6,3)', type_info=TypeInformation(type='complex', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='orb_evec', comment='', default=None), intent='out', description='Orbital eigenvectors. orb_evec(j,:) is the j^th vector.', doc_data_type='complex', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_orb_evec', c_name='orb_evec', python_name='orb_evec', type='complex', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=2751, definition='complex(rp) orb_eval(6), orb_evec(6,6), spin_evec(6,3)', type_info=TypeInformation(type='complex', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='orb_evec', comment='', default=None), intent='out', description='Orbital eigenvectors. orb_evec(j,:) is the j^th vector.', doc_data_type='complex', doc_is_optional=False)
   ! out: f_n0 1D_NOT_real
   if (c_associated(n0)) then
     call c_f_pointer(n0, f_n0_ptr, [3])
     f_n0_ptr = f_n0(:)
   endif
   ! out: f_spin_evec 2D_NOT_complex
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_spin_evec', c_name='spin_evec', python_name='spin_evec', type='complex', kind='rp', pointer_type='NOT', array=['6', '3'], init_value=None, comment='', member=StructureMember(line=2799, definition='complex(rp) orb_eval(6), orb_evec(6,6), spin_evec(6,3)', type_info=TypeInformation(type='complex', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='spin_evec', comment='', default=None), intent='out', description='Spin eigenvectors. spin_evec(j,:) is the j^th vector.', doc_data_type='complex', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_spin_evec', c_name='spin_evec', python_name='spin_evec', type='complex', kind='rp', pointer_type='NOT', array=['6', '3'], init_value=None, comment='', member=StructureMember(line=2751, definition='complex(rp) orb_eval(6), orb_evec(6,6), spin_evec(6,3)', type_info=TypeInformation(type='complex', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='spin_evec', comment='', default=None), intent='out', description='Spin eigenvectors. spin_evec(j,:) is the j^th vector.', doc_data_type='complex', doc_is_optional=False)
   ! out: f_error 0D_NOT_logical
   call c_f_pointer(error, f_error_ptr)
   f_error_ptr = f_error
@@ -27180,8 +27535,7 @@ subroutine fortran_spin_omega (field, orbit, sign_z_vel, phase_space_coords, ome
   else
     f_phase_space_coords_native_ptr => null()
   endif
-  f_omega = spin_omega(field=f_field, orbit=f_orbit, sign_z_vel=f_sign_z_vel_ptr, &
-      phase_space_coords=f_phase_space_coords_native_ptr)
+  f_omega = spin_omega(f_field, f_orbit, f_sign_z_vel_ptr, f_phase_space_coords_native_ptr)
 
   ! inout: f_sign_z_vel 0D_NOT_integer
   ! no output conversion for f_sign_z_vel
@@ -27230,8 +27584,7 @@ subroutine fortran_spin_quat_resonance_strengths (orb_evec, spin_q, xi_sum, xi_d
   else
     f_spin_q_ptr => null()
   endif
-  call spin_quat_resonance_strengths(orb_evec=f_orb_evec, spin_q=f_spin_q, xi_sum=f_xi_sum, &
-      xi_diff=f_xi_diff)
+  call spin_quat_resonance_strengths(f_orb_evec, f_spin_q, f_xi_sum, f_xi_diff)
 
   ! out: f_xi_sum 0D_NOT_real
   call c_f_pointer(xi_sum, f_xi_sum_ptr)
@@ -27273,11 +27626,10 @@ subroutine fortran_spin_taylor_to_linear (spin_taylor, normalize, dref_orb, is_o
   endif
   ! in: f_is_on 0D_NOT_logical
   f_is_on = is_on
-  f_spin_map1 = spin_taylor_to_linear(spin_taylor=f_spin_taylor, normalize=f_normalize, &
-      dref_orb=f_dref_orb, is_on=f_is_on)
+  f_spin_map1 = spin_taylor_to_linear(f_spin_taylor, f_normalize, f_dref_orb, f_is_on)
 
   ! out: f_spin_map1 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_spin_map1', c_name='spin_map1', python_name='spin_map1', type='real', kind='rp', pointer_type='NOT', array=['0:3', '0:6'], init_value=None, comment='', member=StructureMember(line=2832, definition='real(rp) dref_orb(6), spin_map1(0:3,0:6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='0:3,0:6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='spin_map1', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_spin_map1', c_name='spin_map1', python_name='spin_map1', type='real', kind='rp', pointer_type='NOT', array=['0:3', '0:6'], init_value=None, comment='', member=StructureMember(line=2784, definition='real(rp) dref_orb(6), spin_map1(0:3,0:6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='0:3,0:6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='spin_map1', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
 end subroutine
 subroutine fortran_spinor_to_polar (spinor, polar) bind(c)
 
@@ -27298,7 +27650,7 @@ subroutine fortran_spinor_to_polar (spinor, polar) bind(c)
   else
     f_spinor_ptr => null()
   endif
-  f_polar = spinor_to_polar(spinor=f_spinor)
+  f_polar = spinor_to_polar(f_spinor)
 
   ! out: f_polar 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -27322,7 +27674,7 @@ subroutine fortran_spinor_to_vec (spinor, vec) bind(c)
   else
     f_spinor_ptr => null()
   endif
-  f_vec = spinor_to_vec(spinor=f_spinor)
+  f_vec = spinor_to_vec(f_spinor)
 
   ! out: f_vec 1D_NOT_real
   if (c_associated(vec)) then
@@ -27366,8 +27718,7 @@ subroutine fortran_spline_fit_orbit (start_orb, end_orb, spline_x, spline_y) bin
   else
     f_spline_y_ptr => null()
   endif
-  call spline_fit_orbit(start_orb=f_start_orb, end_orb=f_end_orb, spline_x=f_spline_x, &
-      spline_y=f_spline_y)
+  call spline_fit_orbit(f_start_orb, f_end_orb, f_spline_x, f_spline_y)
 
 end subroutine
 subroutine fortran_split_lat (lat, s_split, ix_branch, ix_split, split_done, add_suffix, &
@@ -27452,6 +27803,12 @@ subroutine fortran_split_lat (lat, s_split, ix_branch, ix_split, split_done, add
   else
     f_save_null_drift_native_ptr => null()
   endif
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
   ! in: f_choose_max 0D_NOT_logical
   if (c_associated(choose_max)) then
     call c_f_pointer(choose_max, f_choose_max_ptr)
@@ -27466,10 +27823,9 @@ subroutine fortran_split_lat (lat, s_split, ix_branch, ix_split, split_done, add
   else
     f_ix_insert_ptr => null()
   endif
-  call split_lat(lat=f_lat, s_split=f_s_split, ix_branch=f_ix_branch, ix_split=f_ix_split, &
-      split_done=f_split_done, add_suffix=f_add_suffix_native_ptr, &
-      check_sanity=f_check_sanity_native_ptr, save_null_drift=f_save_null_drift_native_ptr, &
-      err_flag=f_err_flag, choose_max=f_choose_max_native_ptr, ix_insert=f_ix_insert_ptr)
+  call split_lat(f_lat, f_s_split, f_ix_branch, f_ix_split, f_split_done, &
+      f_add_suffix_native_ptr, f_check_sanity_native_ptr, f_save_null_drift_native_ptr, &
+      f_err_flag, f_choose_max_native_ptr, f_ix_insert_ptr)
 
   ! out: f_ix_split 0D_NOT_integer
   call c_f_pointer(ix_split, f_ix_split_ptr)
@@ -27502,7 +27858,7 @@ subroutine fortran_sprint_spin_taylor_map (ele, start_orbit) bind(c)
   else
     f_start_orbit_ptr => null()
   endif
-  call sprint_spin_taylor_map(ele=f_ele, start_orbit=f_start_orbit)
+  call sprint_spin_taylor_map(f_ele, f_start_orbit)
 
 end subroutine
 subroutine fortran_sr_longitudinal_wake_particle (ele, orbit) bind(c)
@@ -27521,7 +27877,7 @@ subroutine fortran_sr_longitudinal_wake_particle (ele, orbit) bind(c)
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  call sr_longitudinal_wake_particle(ele=f_ele, orbit=f_orbit)
+  call sr_longitudinal_wake_particle(f_ele, f_orbit)
 
 end subroutine
 subroutine fortran_sr_transverse_wake_particle (ele, orbit) bind(c)
@@ -27540,7 +27896,7 @@ subroutine fortran_sr_transverse_wake_particle (ele, orbit) bind(c)
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  call sr_transverse_wake_particle(ele=f_ele, orbit=f_orbit)
+  call sr_transverse_wake_particle(f_ele, f_orbit)
 
 end subroutine
 subroutine fortran_sr_z_long_wake (ele, bunch, z_ave) bind(c)
@@ -27564,7 +27920,7 @@ subroutine fortran_sr_z_long_wake (ele, bunch, z_ave) bind(c)
   call c_f_pointer(bunch, f_bunch)
   ! in: f_z_ave 0D_NOT_real
   f_z_ave = z_ave
-  call sr_z_long_wake(ele=f_ele, bunch=f_bunch, z_ave=f_z_ave)
+  call sr_z_long_wake(f_ele, f_bunch, f_z_ave)
 
 end subroutine
 subroutine fortran_srdt_calc (lat, srdt_sums, order, n_slices_gen_opt, n_slices_sxt_opt, &
@@ -27613,9 +27969,8 @@ subroutine fortran_srdt_calc (lat, srdt_sums, order, n_slices_gen_opt, n_slices_
   endif
   !! container type array (1D_ALLOC_type)
   if (c_associated(per_ele_out))   call c_f_pointer(per_ele_out, f_per_ele_out)
-  call srdt_calc(lat=f_lat, srdt_sums=f_srdt_sums, order=f_order, &
-      n_slices_gen_opt=f_n_slices_gen_opt_ptr, n_slices_sxt_opt=f_n_slices_sxt_opt_ptr, &
-      per_ele_out=f_per_ele_out%data)
+  call srdt_calc(f_lat, f_srdt_sums, f_order, f_n_slices_gen_opt_ptr, f_n_slices_sxt_opt_ptr, &
+      f_per_ele_out%data)
 
   ! out: f_srdt_sums 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -27687,10 +28042,8 @@ subroutine fortran_srdt_lsq_solution (lat, var_indexes, ls_soln, n_slices_gen_op
   else
     f_weight_in_ptr => null()
   endif
-  call srdt_lsq_solution(lat=f_lat, var_indexes=f_var_indexes%data, ls_soln=f_ls_soln%data, &
-      n_slices_gen_opt=f_n_slices_gen_opt_ptr, n_slices_sxt_opt=f_n_slices_sxt_opt_ptr, &
-      chrom_set_x_opt=f_chrom_set_x_opt_ptr, chrom_set_y_opt=f_chrom_set_y_opt_ptr, &
-      weight_in=f_weight_in)
+  call srdt_lsq_solution(f_lat, f_var_indexes%data, f_ls_soln%data, f_n_slices_gen_opt_ptr, &
+      f_n_slices_sxt_opt_ptr, f_chrom_set_x_opt_ptr, f_chrom_set_y_opt_ptr, f_weight_in)
 
 end subroutine
 subroutine fortran_start_branch_at (lat, ele_start, move_end_marker, error) bind(c)
@@ -27720,8 +28073,7 @@ subroutine fortran_start_branch_at (lat, ele_start, move_end_marker, error) bind
   call to_f_str(f_ele_start_ptr, f_ele_start)
   ! in: f_move_end_marker 0D_NOT_logical
   f_move_end_marker = move_end_marker
-  call start_branch_at(lat=f_lat, ele_start=f_ele_start, move_end_marker=f_move_end_marker, &
-      error=f_error)
+  call start_branch_at(f_lat, f_ele_start, f_move_end_marker, f_error)
 
   ! out: f_error 0D_NOT_logical
   call c_f_pointer(error, f_error_ptr)
@@ -27744,7 +28096,7 @@ subroutine fortran_stream_ele_end (physical_end, ele_orientation, stream_end) bi
   f_physical_end = physical_end
   ! in: f_ele_orientation 0D_NOT_integer
   f_ele_orientation = ele_orientation
-  f_stream_end = stream_ele_end(physical_end=f_physical_end, ele_orientation=f_ele_orientation)
+  f_stream_end = stream_ele_end(f_physical_end, f_ele_orientation)
 
   ! out: f_stream_end 0D_NOT_integer
   call c_f_pointer(stream_end, f_stream_end_ptr)
@@ -27772,7 +28124,7 @@ subroutine fortran_string_attrib (attrib_name, ele, attrib_value) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call string_attrib(attrib_name=f_attrib_name, ele=f_ele, attrib_value=f_attrib_value)
+  call string_attrib(f_attrib_name, f_ele, f_attrib_value)
 
   ! out: f_attrib_value 0D_NOT_character
   call c_f_pointer(attrib_value, f_attrib_value_ptr, [len_trim(f_attrib_value) + 1]) ! output-only string
@@ -27803,8 +28155,7 @@ subroutine fortran_strong_beam_sigma_calc (ele, s_pos, sigma, bbi_const, dsigma_
   call c_f_pointer(ele, f_ele)
   ! in: f_s_pos 0D_NOT_real
   f_s_pos = s_pos
-  call strong_beam_sigma_calc(ele=f_ele, s_pos=f_s_pos, sigma=f_sigma, bbi_const=f_bbi_const, &
-      dsigma_ds=f_dsigma_ds)
+  call strong_beam_sigma_calc(f_ele, f_s_pos, f_sigma, f_bbi_const, f_dsigma_ds)
 
   ! out: f_sigma 1D_NOT_real
   if (c_associated(sigma)) then
@@ -27835,7 +28186,7 @@ subroutine fortran_strong_beam_strength (ele, strength) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_strength = strong_beam_strength(ele=f_ele)
+  f_strength = strong_beam_strength(f_ele)
 
   ! out: f_strength 0D_NOT_real
   call c_f_pointer(strength, f_strength_ptr)
@@ -27903,8 +28254,8 @@ subroutine fortran_surface_grid_displacement (ele, x, y, err_flag, z, dz_dxy, ex
   else
     f_extend_grid_native_ptr => null()
   endif
-  call surface_grid_displacement(ele=f_ele, x=f_x_ptr, y=f_y_ptr, err_flag=f_err_flag, z=f_z, &
-      dz_dxy=f_dz_dxy, extend_grid=f_extend_grid_native_ptr)
+  call surface_grid_displacement(f_ele, f_x_ptr, f_y_ptr, f_err_flag, f_z, f_dz_dxy, &
+      f_extend_grid_native_ptr)
 
   ! inout: f_x 0D_NOT_real
   ! no output conversion for f_x
@@ -27975,8 +28326,8 @@ subroutine fortran_symp_lie_bmad (ele, param, orbit, track, mat6, make_matrix, o
   else
     f_offset_ele_native_ptr => null()
   endif
-  call symp_lie_bmad(ele=f_ele, param=f_param, orbit=f_orbit, track=f_track, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr, offset_ele=f_offset_ele_native_ptr)
+  call symp_lie_bmad(f_ele, f_param, f_orbit, f_track, f_mat6, f_make_matrix_native_ptr, &
+      f_offset_ele_native_ptr)
 
   ! out: f_track 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -28019,8 +28370,7 @@ subroutine fortran_t6_to_b123 (t6, abz_tunes, B1, B2, B3, err_flag) bind(c)
   else
     f_abz_tunes_ptr => null()
   endif
-  call t6_to_b123(t6=f_t6, abz_tunes=f_abz_tunes, B1=f_B1, B2=f_B2, B3=f_B3, &
-      err_flag=f_err_flag)
+  call t6_to_b123(f_t6, f_abz_tunes, f_B1, f_B2, f_B3, f_err_flag)
 
   ! out: f_B1 2D_NOT_real
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_B1', c_name='B1', python_name='B1', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=53, definition='real(rp) B1(6,6), B2(6,6), B3(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='B1', comment='', default=None), intent='out', description='Beta matrix associated with a-mode.', doc_data_type='float', doc_is_optional=False)
@@ -28073,8 +28423,7 @@ subroutine fortran_taper_mag_strengths (lat, ref_lat, except, err_flag) bind(c)
   else
     f_err_flag_native_ptr => null()
   endif
-  call taper_mag_strengths(lat=f_lat, ref_lat=f_ref_lat, except=f_except_call_ptr, &
-      err_flag=f_err_flag_native_ptr)
+  call taper_mag_strengths(f_lat, f_ref_lat, f_except_call_ptr, f_err_flag_native_ptr)
 
   ! inout: f_err_flag 0D_NOT_logical
   if (c_associated(err_flag)) then
@@ -28160,9 +28509,8 @@ subroutine fortran_target_min_max_calc (r_corner1, r_corner2, y_min, y_max, phi_
   else
     f_initial_native_ptr => null()
   endif
-  call target_min_max_calc(r_corner1=f_r_corner1, r_corner2=f_r_corner2, y_min=f_y_min_ptr, &
-      y_max=f_y_max_ptr, phi_min=f_phi_min_ptr, phi_max=f_phi_max_ptr, &
-      initial=f_initial_native_ptr)
+  call target_min_max_calc(f_r_corner1, f_r_corner2, f_y_min_ptr, f_y_max_ptr, f_phi_min_ptr, &
+      f_phi_max_ptr, f_initial_native_ptr)
 
   ! inout: f_y_min 0D_NOT_real
   ! no output conversion for f_y_min
@@ -28195,7 +28543,7 @@ subroutine fortran_target_rot_mats (r_center, w_to_target, w_to_ele) bind(c)
   else
     f_r_center_ptr => null()
   endif
-  call target_rot_mats(r_center=f_r_center, w_to_target=f_w_to_target, w_to_ele=f_w_to_ele)
+  call target_rot_mats(f_r_center, f_w_to_target, f_w_to_ele)
 
   ! out: f_w_to_target 2D_NOT_real
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_to_target', c_name='w_to_target', python_name='w_to_target', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=1140, definition='real(rp) r_center(3), w_to_target(3,3), w_to_ele(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_to_target', comment='', default=None), intent='out', description='Rotation matrix from ele to target coords.', doc_data_type='float', doc_is_optional=False)
@@ -28209,20 +28557,18 @@ subroutine fortran_taylor_equal_taylor (taylor1, taylor2) bind(c)
   ! ** In parameters **
   type(c_ptr), value :: taylor2  ! 0D_NOT_type
   type(taylor_struct), pointer :: f_taylor2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: taylor1  ! 0D_NOT_type
   type(taylor_struct), pointer :: f_taylor1
   ! ** End of parameters **
-  ! out: f_taylor1 0D_NOT_type
+  ! inout: f_taylor1 0D_NOT_type
   if (.not. c_associated(taylor1)) return
   call c_f_pointer(taylor1, f_taylor1)
   ! in: f_taylor2 0D_NOT_type
   if (.not. c_associated(taylor2)) return
   call c_f_pointer(taylor2, f_taylor2)
-  call taylor_equal_taylor(taylor1=f_taylor1, taylor2=f_taylor2)
+  call taylor_equal_taylor(f_taylor1, f_taylor2)
 
-  ! out: f_taylor1 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_taylor_inverse (taylor_in, taylor_inv, err) bind(c)
 
@@ -28242,7 +28588,13 @@ subroutine fortran_taylor_inverse (taylor_in, taylor_inv, err) bind(c)
   if (c_associated(taylor_in))   call c_f_pointer(taylor_in, f_taylor_in)
   !! container type array (1D_ALLOC_type)
   if (c_associated(taylor_inv))   call c_f_pointer(taylor_inv, f_taylor_inv)
-  call taylor_inverse(taylor_in=f_taylor_in%data, taylor_inv=f_taylor_inv%data, err=f_err)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
+  call taylor_inverse(f_taylor_in%data, f_taylor_inv%data, f_err)
 
   ! out: f_err 0D_NOT_logical
   ! no output conversion for f_err
@@ -28289,8 +28641,8 @@ subroutine fortran_taylor_propagate1 (orb_taylor, ele, param, err_flag, ref_in, 
   if (c_associated(ref_in))   call c_f_pointer(ref_in, f_ref_in)
   !! container type array (1D_ALLOC_type)
   if (c_associated(spin_taylor))   call c_f_pointer(spin_taylor, f_spin_taylor)
-  call taylor_propagate1(orb_taylor=f_orb_taylor%data, ele=f_ele, param=f_param, &
-      err_flag=f_err_flag, ref_in=f_ref_in, spin_taylor=f_spin_taylor%data)
+  call taylor_propagate1(f_orb_taylor%data, f_ele, f_param, f_err_flag, f_ref_in, &
+      f_spin_taylor%data)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -28318,7 +28670,7 @@ subroutine fortran_taylor_to_mad_map (taylor, energy, map) bind(c)
   ! out: f_map 0D_NOT_type
   if (.not. c_associated(map)) return
   call c_f_pointer(map, f_map)
-  call taylor_to_mad_map(taylor=f_taylor%data, energy=f_energy, map=f_map)
+  call taylor_to_mad_map(f_taylor%data, f_energy, f_map)
 
   ! out: f_map 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -28330,7 +28682,7 @@ subroutine fortran_taylors_equal_taylors (taylor1, taylor2) bind(c)
   ! ** In parameters **
   type(c_ptr), intent(in), value :: taylor2
   type(taylor_struct_container_alloc), pointer :: f_taylor2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: taylor1
   type(taylor_struct_container_alloc), pointer :: f_taylor1
   ! ** End of parameters **
@@ -28338,7 +28690,7 @@ subroutine fortran_taylors_equal_taylors (taylor1, taylor2) bind(c)
   if (c_associated(taylor1))   call c_f_pointer(taylor1, f_taylor1)
   !! container type array (1D_ALLOC_type)
   if (c_associated(taylor2))   call c_f_pointer(taylor2, f_taylor2)
-  call taylors_equal_taylors(taylor1=f_taylor1%data, taylor2=f_taylor2%data)
+  call taylors_equal_taylors(f_taylor1%data, f_taylor2%data)
 
 end subroutine
 subroutine fortran_tilt_coords (tilt_val, coord, mat6, make_matrix) bind(c)
@@ -28378,8 +28730,7 @@ subroutine fortran_tilt_coords (tilt_val, coord, mat6, make_matrix) bind(c)
   else
     f_make_matrix_native_ptr => null()
   endif
-  call tilt_coords(tilt_val=f_tilt_val, coord=f_coord%data, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call tilt_coords(f_tilt_val, f_coord%data, f_mat6, f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_tilt_coords_photon (tilt_val, coord, w_mat) bind(c)
@@ -28406,7 +28757,7 @@ subroutine fortran_tilt_coords_photon (tilt_val, coord, w_mat) bind(c)
   else
     f_w_mat_ptr => null()
   endif
-  call tilt_coords_photon(tilt_val=f_tilt_val, coord=f_coord%data, w_mat=f_w_mat)
+  call tilt_coords_photon(f_tilt_val, f_coord%data, f_w_mat)
 
 end subroutine
 subroutine fortran_tilt_mat6 (mat6, tilt) bind(c)
@@ -28429,7 +28780,7 @@ subroutine fortran_tilt_mat6 (mat6, tilt) bind(c)
   endif
   ! in: f_tilt 0D_NOT_real
   f_tilt = tilt
-  call tilt_mat6(mat6=f_mat6, tilt=f_tilt)
+  call tilt_mat6(f_mat6, f_tilt)
 
 end subroutine
 subroutine fortran_to_eta_reading (eta_actual, ele, axis, add_noise, reading, err) bind(c)
@@ -28462,8 +28813,7 @@ subroutine fortran_to_eta_reading (eta_actual, ele, axis, add_noise, reading, er
   f_axis = axis
   ! in: f_add_noise 0D_NOT_logical
   f_add_noise = add_noise
-  call to_eta_reading(eta_actual=f_eta_actual%data, ele=f_ele, axis=f_axis, &
-      add_noise=f_add_noise, reading=f_reading, err=f_err)
+  call to_eta_reading(f_eta_actual%data, f_ele, f_axis, f_add_noise, f_reading, f_err)
 
   ! out: f_reading 0D_NOT_real
   call c_f_pointer(reading, f_reading_ptr)
@@ -28561,9 +28911,8 @@ subroutine fortran_to_fieldmap_coords (ele, local_orb, s_body, ele_anchor_pt, r0
   endif
   ! in: f_err_flag 0D_NOT_logical
   f_err_flag = err_flag
-  call to_fieldmap_coords(ele=f_ele, local_orb=f_local_orb, s_body=f_s_body, &
-      ele_anchor_pt=f_ele_anchor_pt, r0=f_r0, curved_ref_frame=f_curved_ref_frame, x=f_x_ptr, &
-      y=f_y_ptr, z=f_z_ptr, cos_ang=f_cos_ang_ptr, sin_ang=f_sin_ang_ptr, err_flag=f_err_flag)
+  call to_fieldmap_coords(f_ele, f_local_orb, f_s_body, f_ele_anchor_pt, f_r0, &
+      f_curved_ref_frame, f_x_ptr, f_y_ptr, f_z_ptr, f_cos_ang_ptr, f_sin_ang_ptr, f_err_flag)
 
   ! inout: f_x 0D_NOT_real
   ! no output conversion for f_x
@@ -28607,8 +28956,7 @@ subroutine fortran_to_orbit_reading (orb, ele, axis, add_noise, reading, err) bi
   f_axis = axis
   ! in: f_add_noise 0D_NOT_logical
   f_add_noise = add_noise
-  call to_orbit_reading(orb=f_orb, ele=f_ele, axis=f_axis, add_noise=f_add_noise, &
-      reading=f_reading, err=f_err)
+  call to_orbit_reading(f_orb, f_ele, f_axis, f_add_noise, f_reading, f_err)
 
   ! out: f_reading 0D_NOT_real
   call c_f_pointer(reading, f_reading_ptr)
@@ -28641,8 +28989,7 @@ subroutine fortran_to_phase_and_coupling_reading (ele, add_noise, reading, err) 
   ! out: f_reading 0D_NOT_type
   if (.not. c_associated(reading)) return
   call c_f_pointer(reading, f_reading)
-  call to_phase_and_coupling_reading(ele=f_ele, add_noise=f_add_noise, reading=f_reading, &
-      err=f_err)
+  call to_phase_and_coupling_reading(f_ele, f_add_noise, f_reading, f_err)
 
   ! out: f_reading 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -28669,7 +29016,7 @@ subroutine fortran_to_photon_angle_coords (orb_in, ele, orb_out) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_orb_out = to_photon_angle_coords(orb_in=f_orb_in, ele=f_ele)
+  f_orb_out = to_photon_angle_coords(f_orb_in, f_ele)
 
   ! out: f_orb_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -28696,7 +29043,7 @@ subroutine fortran_to_surface_coords (lab_orbit, ele, surface_orbit) bind(c)
   ! out: f_surface_orbit 0D_NOT_type
   if (.not. c_associated(surface_orbit)) return
   call c_f_pointer(surface_orbit, f_surface_orbit)
-  call to_surface_coords(lab_orbit=f_lab_orbit, ele=f_ele, surface_orbit=f_surface_orbit)
+  call to_surface_coords(f_lab_orbit, f_ele, f_surface_orbit)
 
   ! out: f_surface_orbit 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -28721,7 +29068,7 @@ subroutine fortran_touschek_lifetime (mode, Tl, lat) bind(c)
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call touschek_lifetime(mode=f_mode, Tl=f_Tl, lat=f_lat)
+  call touschek_lifetime(f_mode, f_Tl, f_lat)
 
   ! out: f_Tl 0D_NOT_real
   call c_f_pointer(Tl, f_Tl_ptr)
@@ -28765,7 +29112,7 @@ subroutine fortran_touschek_rate1 (mode, rate, lat, ix, s) bind(c)
   else
     f_s_ptr => null()
   endif
-  call touschek_rate1(mode=f_mode, rate=f_rate, lat=f_lat, ix=f_ix_ptr, s=f_s_ptr)
+  call touschek_rate1(f_mode, f_rate, f_lat, f_ix_ptr, f_s_ptr)
 
   ! out: f_rate 0D_NOT_real
   call c_f_pointer(rate, f_rate_ptr)
@@ -28814,7 +29161,7 @@ subroutine fortran_touschek_rate1_zap (mode, rate, lat, ix, s) bind(c)
   else
     f_s_ptr => null()
   endif
-  call touschek_rate1_zap(mode=f_mode, rate=f_rate_ptr, lat=f_lat, ix=f_ix_ptr, s=f_s_ptr)
+  call touschek_rate1_zap(f_mode, f_rate_ptr, f_lat, f_ix_ptr, f_s_ptr)
 
   ! inout: f_rate 0D_NOT_real
   ! no output conversion for f_rate
@@ -28890,6 +29237,12 @@ subroutine fortran_track1 (start_orb, ele, param, end_orb, track, err_flag, igno
   call c_f_pointer(end_orb, f_end_orb)
   ! inout: f_track 0D_NOT_type
   if (c_associated(track))   call c_f_pointer(track, f_track)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
   ! in: f_ignore_radiation 0D_NOT_logical
   if (c_associated(ignore_radiation)) then
     call c_f_pointer(ignore_radiation, f_ignore_radiation_ptr)
@@ -28914,9 +29267,8 @@ subroutine fortran_track1 (start_orb, ele, param, end_orb, track, err_flag, igno
   else
     f_init_to_edge_native_ptr => null()
   endif
-  call track1(start_orb=f_start_orb, ele=f_ele, param=f_param, end_orb=f_end_orb, &
-      track=f_track, err_flag=f_err_flag, ignore_radiation=f_ignore_radiation_native_ptr, &
-      make_map1=f_make_map1_native_ptr, init_to_edge=f_init_to_edge_native_ptr)
+  call track1(f_start_orb, f_ele, f_param, f_end_orb, f_track, f_err_flag, &
+      f_ignore_radiation_native_ptr, f_make_map1_native_ptr, f_init_to_edge_native_ptr)
 
   ! out: f_end_orb 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -28957,8 +29309,7 @@ subroutine fortran_track1_beam (beam, ele, err, centroid, direction) bind(c)
   else
     f_direction_ptr => null()
   endif
-  call track1_beam(beam=f_beam, ele=f_ele, err=f_err, centroid=f_centroid%data, &
-      direction=f_direction_ptr)
+  call track1_beam(f_beam, f_ele, f_err, f_centroid%data, f_direction_ptr)
 
   ! out: f_err 0D_NOT_logical
   call c_f_pointer(err, f_err_ptr)
@@ -29012,6 +29363,12 @@ subroutine fortran_track1_bmad (orbit, ele, param, err_flag, track, mat6, make_m
     return
   endif
   call c_f_pointer(param, f_param)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
   ! out: f_track 0D_NOT_type
   if (c_associated(track))   call c_f_pointer(track, f_track)
   !! general array (2D_NOT_real)
@@ -29029,8 +29386,8 @@ subroutine fortran_track1_bmad (orbit, ele, param, err_flag, track, mat6, make_m
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track1_bmad(orbit=f_orbit, ele=f_ele, param=f_param, err_flag=f_err_flag, track=f_track, &
-      mat6=f_mat6, make_matrix=f_make_matrix_native_ptr)
+  call track1_bmad(f_orbit, f_ele, f_param, f_err_flag, f_track, f_mat6, &
+      f_make_matrix_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   ! no output conversion for f_err_flag
@@ -29075,7 +29432,13 @@ subroutine fortran_track1_bmad_photon (orbit, ele, param, err_flag) bind(c)
     return
   endif
   call c_f_pointer(param, f_param)
-  call track1_bmad_photon(orbit=f_orbit, ele=f_ele, param=f_param, err_flag=f_err_flag)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  call track1_bmad_photon(f_orbit, f_ele, f_param, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
   ! no output conversion for f_err_flag
@@ -29118,8 +29481,7 @@ subroutine fortran_track1_bunch (bunch, ele, err, centroid, direction, bunch_tra
   endif
   ! inout: f_bunch_track 0D_NOT_type
   if (c_associated(bunch_track))   call c_f_pointer(bunch_track, f_bunch_track)
-  call track1_bunch(bunch=f_bunch, ele=f_ele, err=f_err, centroid=f_centroid%data, &
-      direction=f_direction_ptr, bunch_track=f_bunch_track)
+  call track1_bunch(f_bunch, f_ele, f_err, f_centroid%data, f_direction_ptr, f_bunch_track)
 
   ! out: f_err 0D_NOT_logical
   call c_f_pointer(err, f_err_ptr)
@@ -29173,8 +29535,8 @@ subroutine fortran_track1_bunch_csr (bunch, ele, centroid, err, s_start, s_end, 
   endif
   ! inout: f_bunch_track 0D_NOT_type
   if (c_associated(bunch_track))   call c_f_pointer(bunch_track, f_bunch_track)
-  call track1_bunch_csr(bunch=f_bunch, ele=f_ele, centroid=f_centroid%data, err=f_err, &
-      s_start=f_s_start_ptr, s_end=f_s_end_ptr, bunch_track=f_bunch_track)
+  call track1_bunch_csr(f_bunch, f_ele, f_centroid%data, f_err, f_s_start_ptr, f_s_end_ptr, &
+      f_bunch_track)
 
   ! out: f_err 0D_NOT_logical
   call c_f_pointer(err, f_err_ptr)
@@ -29228,8 +29590,8 @@ subroutine fortran_track1_bunch_csr3d (bunch, ele, centroid, err, s_start, s_end
   endif
   ! inout: f_bunch_track 0D_NOT_type
   if (c_associated(bunch_track))   call c_f_pointer(bunch_track, f_bunch_track)
-  call track1_bunch_csr3d(bunch=f_bunch, ele=f_ele, centroid=f_centroid%data, err=f_err, &
-      s_start=f_s_start_ptr, s_end=f_s_end_ptr, bunch_track=f_bunch_track)
+  call track1_bunch_csr3d(f_bunch, f_ele, f_centroid%data, f_err, f_s_start_ptr, f_s_end_ptr, &
+      f_bunch_track)
 
   ! out: f_err 0D_NOT_logical
   call c_f_pointer(err, f_err_ptr)
@@ -29265,8 +29627,7 @@ subroutine fortran_track1_bunch_hom (bunch, ele, direction, bunch_track) bind(c)
   endif
   ! inout: f_bunch_track 0D_NOT_type
   if (c_associated(bunch_track))   call c_f_pointer(bunch_track, f_bunch_track)
-  call track1_bunch_hom(bunch=f_bunch, ele=f_ele, direction=f_direction_ptr, &
-      bunch_track=f_bunch_track)
+  call track1_bunch_hom(f_bunch, f_ele, f_direction_ptr, f_bunch_track)
 
 end subroutine
 subroutine fortran_track1_bunch_space_charge (bunch, ele, err, track_to_same_s, bunch_track) &
@@ -29308,8 +29669,8 @@ subroutine fortran_track1_bunch_space_charge (bunch, ele, err, track_to_same_s, 
   endif
   ! inout: f_bunch_track 0D_NOT_type
   if (c_associated(bunch_track))   call c_f_pointer(bunch_track, f_bunch_track)
-  call track1_bunch_space_charge(bunch=f_bunch, ele=f_ele, err=f_err, &
-      track_to_same_s=f_track_to_same_s_native_ptr, bunch_track=f_bunch_track)
+  call track1_bunch_space_charge(f_bunch, f_ele, f_err, f_track_to_same_s_native_ptr, &
+      f_bunch_track)
 
   ! out: f_err 0D_NOT_logical
   call c_f_pointer(err, f_err_ptr)
@@ -29337,7 +29698,7 @@ subroutine fortran_track1_crystal (ele, param, orbit) bind(c)
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  call track1_crystal(ele=f_ele, param=f_param, orbit=f_orbit)
+  call track1_crystal(f_ele, f_param, f_orbit)
 
 end subroutine
 subroutine fortran_track1_diffraction_plate_or_mask (ele, param, orbit) bind(c)
@@ -29362,7 +29723,7 @@ subroutine fortran_track1_diffraction_plate_or_mask (ele, param, orbit) bind(c)
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  call track1_diffraction_plate_or_mask(ele=f_ele, param=f_param, orbit=f_orbit)
+  call track1_diffraction_plate_or_mask(f_ele, f_param, f_orbit)
 
 end subroutine
 subroutine fortran_track1_high_energy_space_charge (ele, param, orbit) bind(c)
@@ -29387,7 +29748,7 @@ subroutine fortran_track1_high_energy_space_charge (ele, param, orbit) bind(c)
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  call track1_high_energy_space_charge(ele=f_ele, param=f_param, orbit=f_orbit)
+  call track1_high_energy_space_charge(f_ele, f_param, f_orbit)
 
 end subroutine
 subroutine fortran_track1_lens (ele, param, orbit) bind(c)
@@ -29412,7 +29773,7 @@ subroutine fortran_track1_lens (ele, param, orbit) bind(c)
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  call track1_lens(ele=f_ele, param=f_param, orbit=f_orbit)
+  call track1_lens(f_ele, f_param, f_orbit)
 
 end subroutine
 subroutine fortran_track1_linear (orbit, ele, param) bind(c)
@@ -29437,7 +29798,7 @@ subroutine fortran_track1_linear (orbit, ele, param) bind(c)
   ! inout: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  call track1_linear(orbit=f_orbit, ele=f_ele, param=f_param)
+  call track1_linear(f_orbit, f_ele, f_param)
 
 end subroutine
 subroutine fortran_track1_lr_wake (bunch, ele) bind(c)
@@ -29456,7 +29817,7 @@ subroutine fortran_track1_lr_wake (bunch, ele) bind(c)
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call track1_lr_wake(bunch=f_bunch, ele=f_ele)
+  call track1_lr_wake(f_bunch, f_ele)
 
 end subroutine
 subroutine fortran_track1_mad (orbit, ele, param) bind(c)
@@ -29481,7 +29842,7 @@ subroutine fortran_track1_mad (orbit, ele, param) bind(c)
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  call track1_mad(orbit=f_orbit, ele=f_ele, param=f_param)
+  call track1_mad(f_orbit, f_ele, f_param)
 
 end subroutine
 subroutine fortran_track1_mirror (ele, param, orbit) bind(c)
@@ -29506,7 +29867,7 @@ subroutine fortran_track1_mirror (ele, param, orbit) bind(c)
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  call track1_mirror(ele=f_ele, param=f_param, orbit=f_orbit)
+  call track1_mirror(f_ele, f_param, f_orbit)
 
 end subroutine
 subroutine fortran_track1_mosaic_crystal (ele, param, orbit) bind(c)
@@ -29531,7 +29892,7 @@ subroutine fortran_track1_mosaic_crystal (ele, param, orbit) bind(c)
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  call track1_mosaic_crystal(ele=f_ele, param=f_param, orbit=f_orbit)
+  call track1_mosaic_crystal(f_ele, f_param, f_orbit)
 
 end subroutine
 subroutine fortran_track1_multilayer_mirror (ele, param, orbit) bind(c)
@@ -29556,7 +29917,7 @@ subroutine fortran_track1_multilayer_mirror (ele, param, orbit) bind(c)
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  call track1_multilayer_mirror(ele=f_ele, param=f_param, orbit=f_orbit)
+  call track1_multilayer_mirror(f_ele, f_param, f_orbit)
 
 end subroutine
 subroutine fortran_track1_radiation (orbit, ele, edge) bind(c)
@@ -29580,7 +29941,7 @@ subroutine fortran_track1_radiation (orbit, ele, edge) bind(c)
   call c_f_pointer(ele, f_ele)
   ! in: f_edge 0D_NOT_integer
   f_edge = edge
-  call track1_radiation(orbit=f_orbit, ele=f_ele, edge=f_edge)
+  call track1_radiation(f_orbit, f_ele, f_edge)
 
 end subroutine
 subroutine fortran_track1_radiation_center (orbit, ele1, ele2, rad_damp, rad_fluct) bind(c)
@@ -29631,8 +29992,8 @@ subroutine fortran_track1_radiation_center (orbit, ele1, ele2, rad_damp, rad_flu
   else
     f_rad_fluct_native_ptr => null()
   endif
-  call track1_radiation_center(orbit=f_orbit, ele1=f_ele1, ele2=f_ele2, &
-      rad_damp=f_rad_damp_native_ptr, rad_fluct=f_rad_fluct_native_ptr)
+  call track1_radiation_center(f_orbit, f_ele1, f_ele2, f_rad_damp_native_ptr, &
+      f_rad_fluct_native_ptr)
 
 end subroutine
 subroutine fortran_track1_runge_kutta (orbit, ele, param, err_flag, track, mat6, make_matrix) &
@@ -29701,8 +30062,8 @@ subroutine fortran_track1_runge_kutta (orbit, ele, param, err_flag, track, mat6,
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track1_runge_kutta(orbit=f_orbit, ele=f_ele, param=f_param, err_flag=f_err_flag, &
-      track=f_track, mat6=f_mat6, make_matrix=f_make_matrix_native_ptr)
+  call track1_runge_kutta(f_orbit, f_ele, f_param, f_err_flag, f_track, f_mat6, &
+      f_make_matrix_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -29732,7 +30093,7 @@ subroutine fortran_track1_sample (ele, param, orbit) bind(c)
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  call track1_sample(ele=f_ele, param=f_param, orbit=f_orbit)
+  call track1_sample(f_ele, f_param, f_orbit)
 
 end subroutine
 subroutine fortran_track1_spin (start_orb, ele, param, end_orb, make_quaternion) bind(c)
@@ -29775,8 +30136,7 @@ subroutine fortran_track1_spin (start_orb, ele, param, end_orb, make_quaternion)
   else
     f_make_quaternion_native_ptr => null()
   endif
-  call track1_spin(start_orb=f_start_orb, ele=f_ele, param=f_param, end_orb=f_end_orb, &
-      make_quaternion=f_make_quaternion_native_ptr)
+  call track1_spin(f_start_orb, f_ele, f_param, f_end_orb, f_make_quaternion_native_ptr)
 
   ! out: f_ele 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -29817,8 +30177,7 @@ subroutine fortran_track1_spin_integration (start_orb, ele, param, end_orb) bind
   ! out: f_end_orb 0D_NOT_type
   if (.not. c_associated(end_orb)) return
   call c_f_pointer(end_orb, f_end_orb)
-  call track1_spin_integration(start_orb=f_start_orb, ele=f_ele, param=f_param, &
-      end_orb=f_end_orb)
+  call track1_spin_integration(f_start_orb, f_ele, f_param, f_end_orb)
 
   ! out: f_end_orb 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -29850,7 +30209,7 @@ subroutine fortran_track1_spin_taylor (start_orb, ele, param, end_orb) bind(c)
   ! out: f_end_orb 0D_NOT_type
   if (.not. c_associated(end_orb)) return
   call c_f_pointer(end_orb, f_end_orb)
-  call track1_spin_taylor(start_orb=f_start_orb, ele=f_ele, param=f_param, end_orb=f_end_orb)
+  call track1_spin_taylor(f_start_orb, f_ele, f_param, f_end_orb)
 
   ! out: f_end_orb 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -29872,7 +30231,7 @@ subroutine fortran_track1_sr_wake (bunch, ele) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call track1_sr_wake(bunch=f_bunch, ele=f_ele)
+  call track1_sr_wake(f_bunch, f_ele)
 
 end subroutine
 subroutine fortran_track1_symp_lie_ptc (orbit, ele, param, track) bind(c)
@@ -29902,7 +30261,7 @@ subroutine fortran_track1_symp_lie_ptc (orbit, ele, param, track) bind(c)
   call c_f_pointer(param, f_param)
   ! out: f_track 0D_NOT_type
   if (c_associated(track))   call c_f_pointer(track, f_track)
-  call track1_symp_lie_ptc(orbit=f_orbit, ele=f_ele, param=f_param, track=f_track)
+  call track1_symp_lie_ptc(f_orbit, f_ele, f_param, f_track)
 
   ! out: f_track 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -29945,11 +30304,10 @@ subroutine fortran_track1_taylor (orbit, ele, taylor, mat6, make_matrix) bind(c)
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track1_taylor(orbit=f_orbit, ele=f_ele, taylor=f_taylor, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track1_taylor(f_orbit, f_ele, f_taylor, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3324, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3267, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_track1_time_runge_kutta (orbit, ele, param, err_flag, track, t_end, dt_step) &
     bind(c)
@@ -30012,8 +30370,8 @@ subroutine fortran_track1_time_runge_kutta (orbit, ele, param, err_flag, track, 
   else
     f_dt_step_ptr => null()
   endif
-  call track1_time_runge_kutta(orbit=f_orbit, ele=f_ele, param=f_param, err_flag=f_err_flag, &
-      track=f_track, t_end=f_t_end_ptr, dt_step=f_dt_step_ptr)
+  call track1_time_runge_kutta(f_orbit, f_ele, f_param, f_err_flag, f_track, f_t_end_ptr, &
+      f_dt_step_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -30066,13 +30424,12 @@ subroutine fortran_track_a_beambeam (orbit, ele, param, track, mat6, make_matrix
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_beambeam(orbit=f_orbit, ele=f_ele, param=f_param, track=f_track, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track_a_beambeam(f_orbit, f_ele, f_param, f_track, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_track 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=2960, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=2912, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_track_a_bend (orbit, ele, param, mat6, make_matrix) bind(c)
 
@@ -30119,8 +30476,7 @@ subroutine fortran_track_a_bend (orbit, ele, param, mat6, make_matrix) bind(c)
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_bend(orbit=f_orbit, ele=f_ele, param=f_param, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track_a_bend(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_track_a_bend_photon (orb, ele, length) bind(c)
@@ -30144,7 +30500,7 @@ subroutine fortran_track_a_bend_photon (orb, ele, length) bind(c)
   call c_f_pointer(ele, f_ele)
   ! in: f_length 0D_NOT_real
   f_length = length
-  call track_a_bend_photon(orb=f_orb, ele=f_ele, length=f_length)
+  call track_a_bend_photon(f_orb, f_ele, f_length)
 
 end subroutine
 subroutine fortran_track_a_capillary (orb, ele) bind(c)
@@ -30164,7 +30520,7 @@ subroutine fortran_track_a_capillary (orb, ele) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call track_a_capillary(orb=f_orb, ele=f_ele)
+  call track_a_capillary(f_orb, f_ele)
 
 end subroutine
 subroutine fortran_track_a_converter (orbit, ele, param, mat6, make_matrix) bind(c)
@@ -30206,11 +30562,10 @@ subroutine fortran_track_a_converter (orbit, ele, param, mat6, make_matrix) bind
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_converter(orbit=f_orbit, ele=f_ele, param=f_param, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track_a_converter(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=2980, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=2932, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_track_a_crab_cavity (orbit, ele, param, mat6, make_matrix) bind(c)
 
@@ -30251,11 +30606,10 @@ subroutine fortran_track_a_crab_cavity (orbit, ele, param, mat6, make_matrix) bi
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_crab_cavity(orbit=f_orbit, ele=f_ele, param=f_param, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track_a_crab_cavity(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=2990, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=2942, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_track_a_drift (orb, length, mat6, make_matrix, ele_orientation, &
     include_ref_motion, time) bind(c)
@@ -30328,9 +30682,8 @@ subroutine fortran_track_a_drift (orb, length, mat6, make_matrix, ele_orientatio
   else
     f_time_ptr => null()
   endif
-  call track_a_drift(orb=f_orb, length=f_length, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr, ele_orientation=f_ele_orientation_ptr, &
-      include_ref_motion=f_include_ref_motion_native_ptr, time=f_time_ptr)
+  call track_a_drift(f_orb, f_length, f_mat6, f_make_matrix_native_ptr, f_ele_orientation_ptr, &
+      f_include_ref_motion_native_ptr, f_time_ptr)
 
   ! inout: f_time 0D_NOT_real
   ! no output conversion for f_time
@@ -30355,8 +30708,7 @@ subroutine fortran_track_a_drift_photon (orb, length, phase_relative_to_ref) bin
   f_length = length
   ! in: f_phase_relative_to_ref 0D_NOT_logical
   f_phase_relative_to_ref = phase_relative_to_ref
-  call track_a_drift_photon(orb=f_orb, length=f_length, &
-      phase_relative_to_ref=f_phase_relative_to_ref)
+  call track_a_drift_photon(f_orb, f_length, f_phase_relative_to_ref)
 
 end subroutine
 subroutine fortran_track_a_foil (orbit, ele, param, mat6, make_matrix) bind(c)
@@ -30398,11 +30750,10 @@ subroutine fortran_track_a_foil (orbit, ele, param, mat6, make_matrix) bind(c)
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_foil(orbit=f_orbit, ele=f_ele, param=f_param, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track_a_foil(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3127, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3079, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_track_a_gkicker (orbit, ele, param, mat6, make_matrix) bind(c)
 
@@ -30449,8 +30800,7 @@ subroutine fortran_track_a_gkicker (orbit, ele, param, mat6, make_matrix) bind(c
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_gkicker(orbit=f_orbit, ele=f_ele, param=f_param, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track_a_gkicker(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_track_a_lcavity (orbit, ele, param, mat6, make_matrix) bind(c)
@@ -30498,8 +30848,7 @@ subroutine fortran_track_a_lcavity (orbit, ele, param, mat6, make_matrix) bind(c
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_lcavity(orbit=f_orbit, ele=f_ele, param=f_param, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track_a_lcavity(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_track_a_lcavity_old (orbit, ele, param, mat6, make_matrix) bind(c)
@@ -30547,8 +30896,7 @@ subroutine fortran_track_a_lcavity_old (orbit, ele, param, mat6, make_matrix) bi
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_lcavity_old(orbit=f_orbit, ele=f_ele, param=f_param, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track_a_lcavity_old(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_track_a_mask (orbit, ele, param, mat6, make_matrix) bind(c)
@@ -30590,11 +30938,10 @@ subroutine fortran_track_a_mask (orbit, ele, param, mat6, make_matrix) bind(c)
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_mask(orbit=f_orbit, ele=f_ele, param=f_param, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track_a_mask(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3048, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3000, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_track_a_match (orbit, ele, param, err_flag, mat6, make_matrix) bind(c)
 
@@ -30648,8 +30995,8 @@ subroutine fortran_track_a_match (orbit, ele, param, err_flag, mat6, make_matrix
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_match(orbit=f_orbit, ele=f_ele, param=f_param, err_flag=f_err_flag_native_ptr, &
-      mat6=f_mat6, make_matrix=f_make_matrix_native_ptr)
+  call track_a_match(f_orbit, f_ele, f_param, f_err_flag_native_ptr, f_mat6, &
+      f_make_matrix_native_ptr)
 
   ! inout: f_err_flag 0D_NOT_logical
   if (c_associated(err_flag)) then
@@ -30659,7 +31006,7 @@ subroutine fortran_track_a_match (orbit, ele, param, err_flag, mat6, make_matrix
     ! f_err_flag unset
   endif
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3058, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3010, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_track_a_patch (ele, orbit, drift_to_exit, s_ent, ds_ref, track_spin, mat6, &
     make_matrix) bind(c)
@@ -30712,6 +31059,18 @@ subroutine fortran_track_a_patch (ele, orbit, drift_to_exit, s_ent, ds_ref, trac
   else
     f_drift_to_exit_native_ptr => null()
   endif
+  ! out: f_s_ent 0D_NOT_real
+  if (c_associated(s_ent)) then
+    call c_f_pointer(s_ent, f_s_ent_ptr)
+  else
+    f_s_ent_ptr => null()
+  endif
+  ! out: f_ds_ref 0D_NOT_real
+  if (c_associated(ds_ref)) then
+    call c_f_pointer(ds_ref, f_ds_ref_ptr)
+  else
+    f_ds_ref_ptr => null()
+  endif
   ! in: f_track_spin 0D_NOT_logical
   if (c_associated(track_spin)) then
     call c_f_pointer(track_spin, f_track_spin_ptr)
@@ -30728,16 +31087,15 @@ subroutine fortran_track_a_patch (ele, orbit, drift_to_exit, s_ent, ds_ref, trac
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_patch(ele=f_ele, orbit=f_orbit, drift_to_exit=f_drift_to_exit_native_ptr, &
-      s_ent=f_s_ent, ds_ref=f_ds_ref, track_spin=f_track_spin_native_ptr, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track_a_patch(f_ele, f_orbit, f_drift_to_exit_native_ptr, f_s_ent, f_ds_ref, &
+      f_track_spin_native_ptr, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_s_ent 0D_NOT_real
   ! no output conversion for f_s_ent
   ! out: f_ds_ref 0D_NOT_real
   ! no output conversion for f_ds_ref
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3077, definition='real(rp), optional :: mat6(6,6), s_ent, ds_ref', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3029, definition='real(rp), optional :: mat6(6,6), s_ent, ds_ref', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_track_a_patch_photon (ele, orbit, drift_to_exit, use_z_pos) bind(c)
 
@@ -30782,8 +31140,7 @@ subroutine fortran_track_a_patch_photon (ele, orbit, drift_to_exit, use_z_pos) b
   else
     f_use_z_pos_native_ptr => null()
   endif
-  call track_a_patch_photon(ele=f_ele, orbit=f_orbit, drift_to_exit=f_drift_to_exit_native_ptr, &
-      use_z_pos=f_use_z_pos_native_ptr)
+  call track_a_patch_photon(f_ele, f_orbit, f_drift_to_exit_native_ptr, f_use_z_pos_native_ptr)
 
 end subroutine
 subroutine fortran_track_a_pickup (orbit, ele, param, err_flag, mat6, make_matrix) bind(c)
@@ -30838,8 +31195,8 @@ subroutine fortran_track_a_pickup (orbit, ele, param, err_flag, mat6, make_matri
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_pickup(orbit=f_orbit, ele=f_ele, param=f_param, err_flag=f_err_flag_native_ptr, &
-      mat6=f_mat6, make_matrix=f_make_matrix_native_ptr)
+  call track_a_pickup(f_orbit, f_ele, f_param, f_err_flag_native_ptr, f_mat6, &
+      f_make_matrix_native_ptr)
 
   ! inout: f_err_flag 0D_NOT_logical
   if (c_associated(err_flag)) then
@@ -30849,7 +31206,7 @@ subroutine fortran_track_a_pickup (orbit, ele, param, err_flag, mat6, make_matri
     ! f_err_flag unset
   endif
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3068, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3020, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_track_a_quadrupole (orbit, ele, param, mat6, make_matrix) bind(c)
 
@@ -30890,11 +31247,10 @@ subroutine fortran_track_a_quadrupole (orbit, ele, param, mat6, make_matrix) bin
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_quadrupole(orbit=f_orbit, ele=f_ele, param=f_param, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track_a_quadrupole(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3087, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3039, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_track_a_rfcavity (orbit, ele, param, mat6, make_matrix) bind(c)
 
@@ -30935,11 +31291,10 @@ subroutine fortran_track_a_rfcavity (orbit, ele, param, mat6, make_matrix) bind(
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_rfcavity(orbit=f_orbit, ele=f_ele, param=f_param, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track_a_rfcavity(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3097, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3049, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_track_a_sad_mult (orbit, ele, param, mat6, make_matrix) bind(c)
 
@@ -30986,8 +31341,7 @@ subroutine fortran_track_a_sad_mult (orbit, ele, param, mat6, make_matrix) bind(
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_sad_mult(orbit=f_orbit, ele=f_ele, param=f_param, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track_a_sad_mult(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_track_a_sol_quad (orbit, ele, param, mat6, make_matrix) bind(c)
@@ -31029,11 +31383,10 @@ subroutine fortran_track_a_sol_quad (orbit, ele, param, mat6, make_matrix) bind(
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_sol_quad(orbit=f_orbit, ele=f_ele, param=f_param, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track_a_sol_quad(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3117, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3069, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_track_a_thick_multipole (orbit, ele, param, mat6, make_matrix) bind(c)
 
@@ -31080,8 +31433,7 @@ subroutine fortran_track_a_thick_multipole (orbit, ele, param, mat6, make_matrix
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_thick_multipole(orbit=f_orbit, ele=f_ele, param=f_param, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track_a_thick_multipole(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
 end subroutine
 subroutine fortran_track_a_wiggler (orbit, ele, param, mat6, make_matrix) bind(c)
@@ -31123,11 +31475,10 @@ subroutine fortran_track_a_wiggler (orbit, ele, param, mat6, make_matrix) bind(c
   else
     f_make_matrix_native_ptr => null()
   endif
-  call track_a_wiggler(orbit=f_orbit, ele=f_ele, param=f_param, mat6=f_mat6, &
-      make_matrix=f_make_matrix_native_ptr)
+  call track_a_wiggler(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3147, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3099, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_track_a_zero_length_element (orbit, ele, param, err_flag, track) bind(c)
 
@@ -31171,8 +31522,7 @@ subroutine fortran_track_a_zero_length_element (orbit, ele, param, err_flag, tra
   call c_f_pointer(param, f_param)
   ! out: f_track 0D_NOT_type
   if (c_associated(track))   call c_f_pointer(track, f_track)
-  call track_a_zero_length_element(orbit=f_orbit, ele=f_ele, param=f_param, &
-      err_flag=f_err_flag, track=f_track)
+  call track_a_zero_length_element(f_orbit, f_ele, f_param, f_err_flag, f_track)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -31224,6 +31574,18 @@ subroutine fortran_track_all (lat, orbit, ix_branch, track_state, err_flag, orbi
   else
     f_ix_branch_ptr => null()
   endif
+  ! out: f_track_state 0D_NOT_integer
+  if (c_associated(track_state)) then
+    call c_f_pointer(track_state, f_track_state_ptr)
+  else
+    f_track_state_ptr => null()
+  endif
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
   !! container type array (1D_ALLOC_type)
   if (c_associated(orbit0))   call c_f_pointer(orbit0, f_orbit0)
   ! in: f_init_lost 0D_NOT_logical
@@ -31234,9 +31596,8 @@ subroutine fortran_track_all (lat, orbit, ix_branch, track_state, err_flag, orbi
   else
     f_init_lost_native_ptr => null()
   endif
-  call track_all(lat=f_lat, orbit=f_orbit%data, ix_branch=f_ix_branch_ptr, &
-      track_state=f_track_state, err_flag=f_err_flag, orbit0=f_orbit0%data, &
-      init_lost=f_init_lost_native_ptr)
+  call track_all(f_lat, f_orbit%data, f_ix_branch_ptr, f_track_state, f_err_flag, &
+      f_orbit0%data, f_init_lost_native_ptr)
 
   ! out: f_track_state 0D_NOT_integer
   ! no output conversion for f_track_state
@@ -31290,8 +31651,8 @@ subroutine fortran_track_beam (lat, beam, ele1, ele2, err, centroid, direction, 
   endif
   !! container type array (1D_ALLOC_type)
   if (c_associated(bunch_tracks))   call c_f_pointer(bunch_tracks, f_bunch_tracks)
-  call track_beam(lat=f_lat, beam=f_beam, ele1=f_ele1, ele2=f_ele2, err=f_err, &
-      centroid=f_centroid%data, direction=f_direction_ptr, bunch_tracks=f_bunch_tracks%data)
+  call track_beam(f_lat, f_beam, f_ele1, f_ele2, f_err, f_centroid%data, f_direction_ptr, &
+      f_bunch_tracks%data)
 
   ! out: f_err 0D_NOT_logical
   call c_f_pointer(err, f_err_ptr)
@@ -31344,8 +31705,8 @@ subroutine fortran_track_bunch (lat, bunch, ele1, ele2, err, centroid, direction
   endif
   ! inout: f_bunch_track 0D_NOT_type
   if (c_associated(bunch_track))   call c_f_pointer(bunch_track, f_bunch_track)
-  call track_bunch(lat=f_lat, bunch=f_bunch, ele1=f_ele1, ele2=f_ele2, err=f_err, &
-      centroid=f_centroid%data, direction=f_direction_ptr, bunch_track=f_bunch_track)
+  call track_bunch(f_lat, f_bunch, f_ele1, f_ele2, f_err, f_centroid%data, f_direction_ptr, &
+      f_bunch_track)
 
   ! out: f_err 0D_NOT_logical
   call c_f_pointer(err, f_err_ptr)
@@ -31384,8 +31745,8 @@ subroutine fortran_track_bunch_time (bunch, branch, t_end, s_end, dt_step, extra
   if (c_associated(dt_step))   call c_f_pointer(dt_step, f_dt_step)
   !! container type array (1D_ALLOC_type)
   if (c_associated(extra_field))   call c_f_pointer(extra_field, f_extra_field)
-  call track_bunch_time(bunch=f_bunch, branch=f_branch, t_end=f_t_end, s_end=f_s_end, &
-      dt_step=f_dt_step%data, extra_field=f_extra_field%data)
+  call track_bunch_time(f_bunch, f_branch, f_t_end, f_s_end, f_dt_step%data, &
+      f_extra_field%data)
 
 end subroutine
 subroutine fortran_track_bunch_to_s (bunch, s, branch) bind(c)
@@ -31409,7 +31770,7 @@ subroutine fortran_track_bunch_to_s (bunch, s, branch) bind(c)
   ! in: f_branch 0D_NOT_type
   if (.not. c_associated(branch)) return
   call c_f_pointer(branch, f_branch)
-  call track_bunch_to_s(bunch=f_bunch, s=f_s, branch=f_branch)
+  call track_bunch_to_s(f_bunch, f_s, f_branch)
 
 end subroutine
 subroutine fortran_track_bunch_to_t (bunch, t_target, branch) bind(c)
@@ -31433,7 +31794,7 @@ subroutine fortran_track_bunch_to_t (bunch, t_target, branch) bind(c)
   ! in: f_branch 0D_NOT_type
   if (.not. c_associated(branch)) return
   call c_f_pointer(branch, f_branch)
-  call track_bunch_to_t(bunch=f_bunch, t_target=f_t_target, branch=f_branch)
+  call track_bunch_to_t(f_bunch, f_t_target, f_branch)
 
 end subroutine
 subroutine fortran_track_complex_taylor (start_orb, complex_taylor, end_orb) bind(c)
@@ -31455,8 +31816,7 @@ subroutine fortran_track_complex_taylor (start_orb, complex_taylor, end_orb) bin
   if (c_associated(complex_taylor))   call c_f_pointer(complex_taylor, f_complex_taylor)
   !! container general array (1D_ALLOC_complex)
   if (c_associated(end_orb))   call c_f_pointer(end_orb, f_end_orb)
-  call track_complex_taylor(start_orb=f_start_orb%data, complex_taylor=f_complex_taylor%data, &
-      end_orb=f_end_orb%data)
+  call track_complex_taylor(f_start_orb%data, f_complex_taylor%data, f_end_orb%data)
 
 end subroutine
 subroutine fortran_track_from_s_to_s (lat, s_start, s_end, orbit_start, orbit_end, all_orb, &
@@ -31509,15 +31869,20 @@ subroutine fortran_track_from_s_to_s (lat, s_start, s_end, orbit_start, orbit_en
   else
     f_ix_branch_ptr => null()
   endif
+  ! out: f_track_state 0D_NOT_integer
+  if (c_associated(track_state)) then
+    call c_f_pointer(track_state, f_track_state_ptr)
+  else
+    f_track_state_ptr => null()
+  endif
   ! in: f_ix_ele_end 0D_NOT_integer
   if (c_associated(ix_ele_end)) then
     call c_f_pointer(ix_ele_end, f_ix_ele_end_ptr)
   else
     f_ix_ele_end_ptr => null()
   endif
-  call track_from_s_to_s(lat=f_lat, s_start=f_s_start, s_end=f_s_end, &
-      orbit_start=f_orbit_start, orbit_end=f_orbit_end, all_orb=f_all_orb%data, &
-      ix_branch=f_ix_branch_ptr, track_state=f_track_state, ix_ele_end=f_ix_ele_end_ptr)
+  call track_from_s_to_s(f_lat, f_s_start, f_s_end, f_orbit_start, f_orbit_end, f_all_orb%data, &
+      f_ix_branch_ptr, f_track_state, f_ix_ele_end_ptr)
 
   ! out: f_orbit_end 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -31566,8 +31931,14 @@ subroutine fortran_track_many (lat, orbit, ix_start, ix_end, direction, ix_branc
   else
     f_ix_branch_ptr => null()
   endif
-  call track_many(lat=f_lat, orbit=f_orbit%data, ix_start=f_ix_start, ix_end=f_ix_end, &
-      direction=f_direction, ix_branch=f_ix_branch_ptr, track_state=f_track_state)
+  ! out: f_track_state 0D_NOT_integer
+  if (c_associated(track_state)) then
+    call c_f_pointer(track_state, f_track_state_ptr)
+  else
+    f_track_state_ptr => null()
+  endif
+  call track_many(f_lat, f_orbit%data, f_ix_start, f_ix_end, f_direction, f_ix_branch_ptr, &
+      f_track_state)
 
   ! out: f_track_state 0D_NOT_integer
   ! no output conversion for f_track_state
@@ -31598,10 +31969,10 @@ subroutine fortran_track_to_surface (ele, orbit, param, w_surface) bind(c)
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  call track_to_surface(ele=f_ele, orbit=f_orbit, param=f_param, w_surface=f_w_surface)
+  call track_to_surface(f_ele, f_orbit, f_param, f_w_surface)
 
   ! out: f_w_surface 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_surface', c_name='w_surface', python_name='w_surface', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3208, definition='real(rp) :: w_surface(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_surface', comment='', default=None), intent='out', description='real(rp), rotation matrix to transform to surface coords.', doc_data_type=None, doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_surface', c_name='w_surface', python_name='w_surface', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3160, definition='real(rp) :: w_surface(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_surface', comment='', default=None), intent='out', description='real(rp), rotation matrix to transform to surface coords.', doc_data_type=None, doc_is_optional=False)
 end subroutine
 subroutine fortran_track_until_dead (start_orb, lat, end_orb, track) bind(c)
 
@@ -31629,7 +32000,7 @@ subroutine fortran_track_until_dead (start_orb, lat, end_orb, track) bind(c)
   call c_f_pointer(end_orb, f_end_orb)
   ! out: f_track 0D_NOT_type
   if (c_associated(track))   call c_f_pointer(track, f_track)
-  call track_until_dead(start_orb=f_start_orb, lat=f_lat, end_orb=f_end_orb, track=f_track)
+  call track_until_dead(f_start_orb, f_lat, f_end_orb, f_track)
 
   ! out: f_end_orb 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -31673,8 +32044,7 @@ subroutine fortran_tracking_rad_map_setup (ele, tollerance, ref_edge, rad_map, e
     return
   endif
   call c_f_pointer(rad_map, f_rad_map)
-  call tracking_rad_map_setup(ele=f_ele, tollerance=f_tollerance, ref_edge=f_ref_edge, &
-      rad_map=f_rad_map, err_flag=f_err_flag)
+  call tracking_rad_map_setup(f_ele, f_tollerance, f_ref_edge, f_rad_map, f_err_flag)
 
   ! out: f_rad_map 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -31699,7 +32069,7 @@ subroutine fortran_transfer_ac_kick (ac_in, ac_out) bind(c)
   ! out: f_ac_out 0D_PTR_type
   if (.not. c_associated(ac_out)) return
   call c_f_pointer(ac_out, f_ac_out)
-  call transfer_ac_kick(ac_in=f_ac_in, ac_out=f_ac_out)
+  call transfer_ac_kick(f_ac_in, f_ac_out)
 
   ! out: f_ac_out 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
@@ -31721,7 +32091,7 @@ subroutine fortran_transfer_branch (branch1, branch2) bind(c)
   ! out: f_branch2 0D_NOT_type
   if (.not. c_associated(branch2)) return
   call c_f_pointer(branch2, f_branch2)
-  call transfer_branch(branch1=f_branch1, branch2=f_branch2)
+  call transfer_branch(f_branch1, f_branch2)
 
   ! out: f_branch2 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -31743,7 +32113,7 @@ subroutine fortran_transfer_branch_parameters (branch_in, branch_out) bind(c)
   ! out: f_branch_out 0D_NOT_type
   if (.not. c_associated(branch_out)) return
   call c_f_pointer(branch_out, f_branch_out)
-  call transfer_branch_parameters(branch_in=f_branch_in, branch_out=f_branch_out)
+  call transfer_branch_parameters(f_branch_in, f_branch_out)
 
   ! out: f_branch_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -31763,7 +32133,7 @@ subroutine fortran_transfer_branches (branch1, branch2) bind(c)
   if (c_associated(branch1))   call c_f_pointer(branch1, f_branch1)
   !! container type array (1D_ALLOC_type)
   if (c_associated(branch2))   call c_f_pointer(branch2, f_branch2)
-  call transfer_branches(branch1=f_branch1%data, branch2=f_branch2%data)
+  call transfer_branches(f_branch1%data, f_branch2%data)
 
 end subroutine
 subroutine fortran_transfer_ele (ele1, ele2, nullify_pointers) bind(c)
@@ -31796,7 +32166,7 @@ subroutine fortran_transfer_ele (ele1, ele2, nullify_pointers) bind(c)
   else
     f_nullify_pointers_native_ptr => null()
   endif
-  call transfer_ele(ele1=f_ele1, ele2=f_ele2, nullify_pointers=f_nullify_pointers_native_ptr)
+  call transfer_ele(f_ele1, f_ele2, f_nullify_pointers_native_ptr)
 
   ! out: f_ele2 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -31827,7 +32197,7 @@ subroutine fortran_transfer_ele_taylor (ele_in, ele_out, taylor_order) bind(c)
   else
     f_taylor_order_ptr => null()
   endif
-  call transfer_ele_taylor(ele_in=f_ele_in, ele_out=f_ele_out, taylor_order=f_taylor_order_ptr)
+  call transfer_ele_taylor(f_ele_in, f_ele_out, f_taylor_order_ptr)
 
   ! out: f_ele_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -31847,7 +32217,7 @@ subroutine fortran_transfer_eles (ele1, ele2) bind(c)
   if (c_associated(ele1))   call c_f_pointer(ele1, f_ele1)
   !! container type array (1D_ALLOC_type)
   if (c_associated(ele2))   call c_f_pointer(ele2, f_ele2)
-  call transfer_eles(ele1=f_ele1%data, ele2=f_ele2%data)
+  call transfer_eles(f_ele1%data, f_ele2%data)
 
 end subroutine
 subroutine fortran_transfer_fieldmap (ele_in, ele_out, who) bind(c)
@@ -31871,7 +32241,7 @@ subroutine fortran_transfer_fieldmap (ele_in, ele_out, who) bind(c)
   call c_f_pointer(ele_out, f_ele_out)
   ! in: f_who 0D_NOT_integer
   f_who = who
-  call transfer_fieldmap(ele_in=f_ele_in, ele_out=f_ele_out, who=f_who)
+  call transfer_fieldmap(f_ele_in, f_ele_out, f_who)
 
   ! out: f_ele_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -31911,8 +32281,7 @@ subroutine fortran_transfer_fixer_params (fixer, to_stored, orbit, who, is_ok) b
   else
     f_who_call_ptr => null()
   endif
-  f_is_ok = transfer_fixer_params(fixer=f_fixer, to_stored=f_to_stored, orbit=f_orbit, &
-      who=f_who_call_ptr)
+  f_is_ok = transfer_fixer_params(f_fixer, f_to_stored, f_orbit, f_who_call_ptr)
 
   ! out: f_is_ok 0D_NOT_logical
   call c_f_pointer(is_ok, f_is_ok_ptr)
@@ -31935,7 +32304,7 @@ subroutine fortran_transfer_lat (lat1, lat2) bind(c)
   ! out: f_lat2 0D_NOT_type
   if (.not. c_associated(lat2)) return
   call c_f_pointer(lat2, f_lat2)
-  call transfer_lat(lat1=f_lat1, lat2=f_lat2)
+  call transfer_lat(f_lat1, f_lat2)
 
   ! out: f_lat2 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -31957,7 +32326,7 @@ subroutine fortran_transfer_lat_parameters (lat_in, lat_out) bind(c)
   ! out: f_lat_out 0D_NOT_type
   if (.not. c_associated(lat_out)) return
   call c_f_pointer(lat_out, f_lat_out)
-  call transfer_lat_parameters(lat_in=f_lat_in, lat_out=f_lat_out)
+  call transfer_lat_parameters(f_lat_in, f_lat_out)
 
   ! out: f_lat_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -32061,10 +32430,9 @@ subroutine fortran_transfer_map_calc (lat, orb_map, err_flag, ix1, ix2, ref_orb,
   endif
   !! container type array (1D_ALLOC_type)
   if (c_associated(spin_map))   call c_f_pointer(spin_map, f_spin_map)
-  call transfer_map_calc(lat=f_lat, orb_map=f_orb_map%data, err_flag=f_err_flag, ix1=f_ix1_ptr, &
-      ix2=f_ix2_ptr, ref_orb=f_ref_orb, ix_branch=f_ix_branch_ptr, &
-      one_turn=f_one_turn_native_ptr, unit_start=f_unit_start_native_ptr, &
-      concat_if_possible=f_concat_if_possible_native_ptr, spin_map=f_spin_map%data)
+  call transfer_map_calc(f_lat, f_orb_map%data, f_err_flag, f_ix1_ptr, f_ix2_ptr, f_ref_orb, &
+      f_ix_branch_ptr, f_one_turn_native_ptr, f_unit_start_native_ptr, &
+      f_concat_if_possible_native_ptr, f_spin_map%data)
 
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -32163,6 +32531,12 @@ subroutine fortran_transfer_map_from_s_to_s (lat, t_map, s1, s2, ref_orb_in, ref
   else
     f_unit_start_native_ptr => null()
   endif
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
   ! in: f_concat_if_possible 0D_NOT_logical
   if (c_associated(concat_if_possible)) then
     call c_f_pointer(concat_if_possible, f_concat_if_possible_ptr)
@@ -32173,10 +32547,9 @@ subroutine fortran_transfer_map_from_s_to_s (lat, t_map, s1, s2, ref_orb_in, ref
   endif
   !! container type array (1D_ALLOC_type)
   if (c_associated(spin_map))   call c_f_pointer(spin_map, f_spin_map)
-  call transfer_map_from_s_to_s(lat=f_lat, t_map=f_t_map%data, s1=f_s1_ptr, s2=f_s2_ptr, &
-      ref_orb_in=f_ref_orb_in, ref_orb_out=f_ref_orb_out, ix_branch=f_ix_branch_ptr, &
-      one_turn=f_one_turn_native_ptr, unit_start=f_unit_start_native_ptr, err_flag=f_err_flag, &
-      concat_if_possible=f_concat_if_possible_native_ptr, spin_map=f_spin_map%data)
+  call transfer_map_from_s_to_s(f_lat, f_t_map%data, f_s1_ptr, f_s2_ptr, f_ref_orb_in, &
+      f_ref_orb_out, f_ix_branch_ptr, f_one_turn_native_ptr, f_unit_start_native_ptr, &
+      f_err_flag, f_concat_if_possible_native_ptr, f_spin_map%data)
 
   ! out: f_ref_orb_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -32203,10 +32576,10 @@ subroutine fortran_transfer_mat2_from_twiss (twiss1, twiss2, mat) bind(c)
   ! in: f_twiss2 0D_NOT_type
   if (.not. c_associated(twiss2)) return
   call c_f_pointer(twiss2, f_twiss2)
-  call transfer_mat2_from_twiss(twiss1=f_twiss1, twiss2=f_twiss2, mat=f_mat)
+  call transfer_mat2_from_twiss(f_twiss1, f_twiss2, f_mat)
 
   ! out: f_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat', c_name='mat', python_name='mat', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=3445, definition='real(rp) mat(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat', comment='', default=None), intent='out', description='Transfer matrix between the two points.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat', c_name='mat', python_name='mat', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=3388, definition='real(rp) mat(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat', comment='', default=None), intent='out', description='Transfer matrix between the two points.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_transfer_mat_from_twiss (ele1, ele2, orb1, orb2, m) bind(c)
 
@@ -32248,10 +32621,10 @@ subroutine fortran_transfer_mat_from_twiss (ele1, ele2, orb1, orb2, m) bind(c)
   else
     f_orb2_ptr => null()
   endif
-  call transfer_mat_from_twiss(ele1=f_ele1, ele2=f_ele2, orb1=f_orb1, orb2=f_orb2, m=f_m)
+  call transfer_mat_from_twiss(f_ele1, f_ele2, f_orb1, f_orb2, f_m)
 
   ! out: f_m 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_m', c_name='m', python_name='m', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3438, definition='real(rp) m(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='m', comment='', default=None), intent='out', description='Transfer matrix between the two points.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_m', c_name='m', python_name='m', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3381, definition='real(rp) m(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='m', comment='', default=None), intent='out', description='Transfer matrix between the two points.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_transfer_matrix_calc (lat, xfer_mat, xfer_vec, ix1, ix2, ix_branch, &
     one_turn) bind(c)
@@ -32326,8 +32699,8 @@ subroutine fortran_transfer_matrix_calc (lat, xfer_mat, xfer_vec, ix1, ix2, ix_b
   else
     f_one_turn_native_ptr => null()
   endif
-  call transfer_matrix_calc(lat=f_lat, xfer_mat=f_xfer_mat, xfer_vec=f_xfer_vec, ix1=f_ix1_ptr, &
-      ix2=f_ix2_ptr, ix_branch=f_ix_branch_ptr, one_turn=f_one_turn_native_ptr)
+  call transfer_matrix_calc(f_lat, f_xfer_mat, f_xfer_vec, f_ix1_ptr, f_ix2_ptr, &
+      f_ix_branch_ptr, f_one_turn_native_ptr)
 
 end subroutine
 subroutine fortran_transfer_twiss (ele_in, ele_out, reverse) bind(c)
@@ -32360,7 +32733,7 @@ subroutine fortran_transfer_twiss (ele_in, ele_out, reverse) bind(c)
   else
     f_reverse_native_ptr => null()
   endif
-  call transfer_twiss(ele_in=f_ele_in, ele_out=f_ele_out, reverse=f_reverse_native_ptr)
+  call transfer_twiss(f_ele_in, f_ele_out, f_reverse_native_ptr)
 
   ! out: f_ele_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -32382,7 +32755,7 @@ subroutine fortran_transfer_wake (wake_in, wake_out) bind(c)
   ! out: f_wake_out 0D_PTR_type
   if (.not. c_associated(wake_out)) return
   call c_f_pointer(wake_out, f_wake_out)
-  call transfer_wake(wake_in=f_wake_in, wake_out=f_wake_out)
+  call transfer_wake(f_wake_in, f_wake_out)
 
   ! out: f_wake_out 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
@@ -32407,8 +32780,8 @@ subroutine fortran_truncate_complex_taylor_to_order (complex_taylor_in, order, &
   f_order = order
   !! container type array (1D_ALLOC_type)
   if (c_associated(complex_taylor_out))   call c_f_pointer(complex_taylor_out, f_complex_taylor_out)
-  call truncate_complex_taylor_to_order(complex_taylor_in=f_complex_taylor_in%data, &
-      order=f_order, complex_taylor_out=f_complex_taylor_out%data)
+  call truncate_complex_taylor_to_order(f_complex_taylor_in%data, f_order, &
+      f_complex_taylor_out%data)
 
 end subroutine
 subroutine fortran_twiss1_propagate (twiss1, mat2, ele_key, length, twiss2, err) bind(c)
@@ -32449,8 +32822,7 @@ subroutine fortran_twiss1_propagate (twiss1, mat2, ele_key, length, twiss2, err)
   ! out: f_twiss2 0D_NOT_type
   if (.not. c_associated(twiss2)) return
   call c_f_pointer(twiss2, f_twiss2)
-  call twiss1_propagate(twiss1=f_twiss1, mat2=f_mat2, ele_key=f_ele_key, length=f_length, &
-      twiss2=f_twiss2, err=f_err)
+  call twiss1_propagate(f_twiss1, f_mat2, f_ele_key, f_length, f_twiss2, f_err)
 
   ! out: f_twiss2 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -32496,8 +32868,7 @@ subroutine fortran_twiss3_at_start (lat, err_flag, ix_branch, tune3) bind(c)
   else
     f_ix_branch_ptr => null()
   endif
-  call twiss3_at_start(lat=f_lat, err_flag=f_err_flag_native_ptr, ix_branch=f_ix_branch_ptr, &
-      tune3=f_tune3)
+  call twiss3_at_start(f_lat, f_err_flag_native_ptr, f_ix_branch_ptr, f_tune3)
 
   ! inout: f_err_flag 0D_NOT_logical
   if (c_associated(err_flag)) then
@@ -32523,7 +32894,7 @@ subroutine fortran_twiss3_from_twiss2 (ele) bind(c)
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call twiss3_from_twiss2(ele=f_ele)
+  call twiss3_from_twiss2(f_ele)
 
 end subroutine
 subroutine fortran_twiss3_propagate1 (ele1, ele2, err_flag) bind(c)
@@ -32555,7 +32926,7 @@ subroutine fortran_twiss3_propagate1 (ele1, ele2, err_flag) bind(c)
   else
     f_err_flag_native_ptr => null()
   endif
-  call twiss3_propagate1(ele1=f_ele1, ele2=f_ele2, err_flag=f_err_flag_native_ptr)
+  call twiss3_propagate1(f_ele1, f_ele2, f_err_flag_native_ptr)
 
   ! inout: f_err_flag 0D_NOT_logical
   if (c_associated(err_flag)) then
@@ -32585,8 +32956,66 @@ subroutine fortran_twiss3_propagate_all (lat, ix_branch) bind(c)
   else
     f_ix_branch_ptr => null()
   endif
-  call twiss3_propagate_all(lat=f_lat, ix_branch=f_ix_branch_ptr)
+  call twiss3_propagate_all(f_lat, f_ix_branch_ptr)
 
+end subroutine
+subroutine fortran_twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom) bind(c)
+
+  use bmad_struct, only: coord_array_struct, lat_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_err
+  logical, target :: f_print_err_native
+  logical, pointer :: f_print_err_native_ptr
+  logical(c_bool), pointer :: f_print_err_ptr
+  type(c_ptr), intent(in), value :: calc_chrom  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_calc_chrom
+  logical, target :: f_calc_chrom_native
+  logical, pointer :: f_calc_chrom_native_ptr
+  logical(c_bool), pointer :: f_calc_chrom_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
+  integer :: f_status
+  integer(c_int), pointer :: f_status_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: lat  ! 0D_NOT_type
+  type(lat_struct), pointer :: f_lat
+  type(c_ptr), intent(in), value :: orb_array
+  type(coord_array_struct_container_alloc), pointer :: f_orb_array
+  ! ** End of parameters **
+  ! inout: f_lat 0D_NOT_type
+  if (.not. c_associated(lat)) return
+  call c_f_pointer(lat, f_lat)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(orb_array))   call c_f_pointer(orb_array, f_orb_array)
+  ! out: f_status 0D_NOT_integer
+  if (c_associated(status)) then
+    call c_f_pointer(status, f_status_ptr)
+  else
+    f_status_ptr => null()
+  endif
+  ! in: f_print_err 0D_NOT_logical
+  if (c_associated(print_err)) then
+    call c_f_pointer(print_err, f_print_err_ptr)
+    f_print_err_native = f_print_err_ptr
+    f_print_err_native_ptr => f_print_err_native
+  else
+    f_print_err_native_ptr => null()
+  endif
+  ! in: f_calc_chrom 0D_NOT_logical
+  if (c_associated(calc_chrom)) then
+    call c_f_pointer(calc_chrom, f_calc_chrom_ptr)
+    f_calc_chrom_native = f_calc_chrom_ptr
+    f_calc_chrom_native_ptr => f_calc_chrom_native
+  else
+    f_calc_chrom_native_ptr => null()
+  endif
+  call twiss_and_track(f_lat, f_orb_array%data, f_status, f_print_err_native_ptr, &
+      f_calc_chrom_native_ptr)
+
+  ! out: f_status 0D_NOT_integer
+  ! no output conversion for f_status
 end subroutine
 subroutine fortran_twiss_and_track_at_s (lat, s, ele_at_s, orb, orb_at_s, ix_branch, err, &
     use_last, compute_floor_coords) bind(c)
@@ -32640,6 +33069,12 @@ subroutine fortran_twiss_and_track_at_s (lat, s, ele_at_s, orb, orb_at_s, ix_bra
   else
     f_ix_branch_ptr => null()
   endif
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
   ! in: f_use_last 0D_NOT_logical
   if (c_associated(use_last)) then
     call c_f_pointer(use_last, f_use_last_ptr)
@@ -32656,12 +33091,83 @@ subroutine fortran_twiss_and_track_at_s (lat, s, ele_at_s, orb, orb_at_s, ix_bra
   else
     f_compute_floor_coords_native_ptr => null()
   endif
-  call twiss_and_track_at_s(lat=f_lat, s=f_s, ele_at_s=f_ele_at_s, orb=f_orb%data, &
-      orb_at_s=f_orb_at_s, ix_branch=f_ix_branch_ptr, err=f_err, &
-      use_last=f_use_last_native_ptr, compute_floor_coords=f_compute_floor_coords_native_ptr)
+  call twiss_and_track_at_s(f_lat, f_s, f_ele_at_s, f_orb%data, f_orb_at_s, f_ix_branch_ptr, &
+      f_err, f_use_last_native_ptr, f_compute_floor_coords_native_ptr)
 
   ! out: f_err 0D_NOT_logical
   ! no output conversion for f_err
+end subroutine
+subroutine fortran_twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, &
+    orb_start) bind(c)
+
+  use bmad_struct, only: coord_struct, lat_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: ix_branch  ! 0D_NOT_integer
+  integer(c_int) :: f_ix_branch
+  integer(c_int), pointer :: f_ix_branch_ptr
+  type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_err
+  logical, target :: f_print_err_native
+  logical, pointer :: f_print_err_native_ptr
+  logical(c_bool), pointer :: f_print_err_ptr
+  type(c_ptr), intent(in), value :: calc_chrom  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_calc_chrom
+  logical, target :: f_calc_chrom_native
+  logical, pointer :: f_calc_chrom_native_ptr
+  logical(c_bool), pointer :: f_calc_chrom_ptr
+  type(c_ptr), value :: orb_start  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_orb_start
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
+  integer :: f_status
+  integer(c_int), pointer :: f_status_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: lat  ! 0D_NOT_type
+  type(lat_struct), pointer :: f_lat
+  type(c_ptr), intent(in), value :: orb
+  type(coord_struct_container_alloc), pointer :: f_orb
+  ! ** End of parameters **
+  ! inout: f_lat 0D_NOT_type
+  if (.not. c_associated(lat)) return
+  call c_f_pointer(lat, f_lat)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(orb))   call c_f_pointer(orb, f_orb)
+  ! out: f_status 0D_NOT_integer
+  if (c_associated(status)) then
+    call c_f_pointer(status, f_status_ptr)
+  else
+    f_status_ptr => null()
+  endif
+  ! in: f_ix_branch 0D_NOT_integer
+  if (c_associated(ix_branch)) then
+    call c_f_pointer(ix_branch, f_ix_branch_ptr)
+  else
+    f_ix_branch_ptr => null()
+  endif
+  ! in: f_print_err 0D_NOT_logical
+  if (c_associated(print_err)) then
+    call c_f_pointer(print_err, f_print_err_ptr)
+    f_print_err_native = f_print_err_ptr
+    f_print_err_native_ptr => f_print_err_native
+  else
+    f_print_err_native_ptr => null()
+  endif
+  ! in: f_calc_chrom 0D_NOT_logical
+  if (c_associated(calc_chrom)) then
+    call c_f_pointer(calc_chrom, f_calc_chrom_ptr)
+    f_calc_chrom_native = f_calc_chrom_ptr
+    f_calc_chrom_native_ptr => f_calc_chrom_native
+  else
+    f_calc_chrom_native_ptr => null()
+  endif
+  ! in: f_orb_start 0D_NOT_type
+  if (c_associated(orb_start))   call c_f_pointer(orb_start, f_orb_start)
+  call twiss_and_track(f_lat, f_orb%data, f_status, f_ix_branch_ptr, f_print_err_native_ptr, &
+      f_calc_chrom_native_ptr, f_orb_start)
+
+  ! out: f_status 0D_NOT_integer
+  ! no output conversion for f_status
 end subroutine
 subroutine fortran_twiss_and_track_from_s_to_s (branch, orbit_start, s_end, orbit_end, &
     ele_start, ele_end, err, compute_floor_coords, compute_twiss) bind(c)
@@ -32711,6 +33217,12 @@ subroutine fortran_twiss_and_track_from_s_to_s (branch, orbit_start, s_end, orbi
   if (c_associated(ele_start))   call c_f_pointer(ele_start, f_ele_start)
   ! out: f_ele_end 0D_NOT_type
   if (c_associated(ele_end))   call c_f_pointer(ele_end, f_ele_end)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
   ! in: f_compute_floor_coords 0D_NOT_logical
   if (c_associated(compute_floor_coords)) then
     call c_f_pointer(compute_floor_coords, f_compute_floor_coords_ptr)
@@ -32727,10 +33239,8 @@ subroutine fortran_twiss_and_track_from_s_to_s (branch, orbit_start, s_end, orbi
   else
     f_compute_twiss_native_ptr => null()
   endif
-  call twiss_and_track_from_s_to_s(branch=f_branch, orbit_start=f_orbit_start, s_end=f_s_end, &
-      orbit_end=f_orbit_end, ele_start=f_ele_start, ele_end=f_ele_end, err=f_err, &
-      compute_floor_coords=f_compute_floor_coords_native_ptr, &
-      compute_twiss=f_compute_twiss_native_ptr)
+  call twiss_and_track_from_s_to_s(f_branch, f_orbit_start, f_s_end, f_orbit_end, f_ele_start, &
+      f_ele_end, f_err, f_compute_floor_coords_native_ptr, f_compute_twiss_native_ptr)
 
   ! out: f_orbit_end 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -32809,6 +33319,12 @@ subroutine fortran_twiss_and_track_intra_ele (ele, param, l_start, l_end, track_
   if (c_associated(ele_start))   call c_f_pointer(ele_start, f_ele_start)
   ! inout: f_ele_end 0D_NOT_type
   if (c_associated(ele_end))   call c_f_pointer(ele_end, f_ele_end)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
   ! in: f_compute_floor_coords 0D_NOT_logical
   if (c_associated(compute_floor_coords)) then
     call c_f_pointer(compute_floor_coords, f_compute_floor_coords_ptr)
@@ -32833,11 +33349,10 @@ subroutine fortran_twiss_and_track_intra_ele (ele, param, l_start, l_end, track_
   else
     f_reuse_ele_end_native_ptr => null()
   endif
-  call twiss_and_track_intra_ele(ele=f_ele, param=f_param, l_start=f_l_start, l_end=f_l_end, &
-      track_upstream_end=f_track_upstream_end, track_downstream_end=f_track_downstream_end, &
-      orbit_start=f_orbit_start, orbit_end=f_orbit_end, ele_start=f_ele_start, &
-      ele_end=f_ele_end, err=f_err, compute_floor_coords=f_compute_floor_coords_native_ptr, &
-      compute_twiss=f_compute_twiss_native_ptr, reuse_ele_end=f_reuse_ele_end_native_ptr)
+  call twiss_and_track_intra_ele(f_ele, f_param, f_l_start, f_l_end, f_track_upstream_end, &
+      f_track_downstream_end, f_orbit_start, f_orbit_end, f_ele_start, f_ele_end, f_err, &
+      f_compute_floor_coords_native_ptr, f_compute_twiss_native_ptr, &
+      f_reuse_ele_end_native_ptr)
 
   ! out: f_orbit_end 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -32868,7 +33383,7 @@ subroutine fortran_twiss_at_element (ele, start, end, average) bind(c)
   if (c_associated(end))   call c_f_pointer(end, f_end)
   ! out: f_average 0D_NOT_type
   if (c_associated(average))   call c_f_pointer(average, f_average)
-  call twiss_at_element(ele=f_ele, start=f_start, end=f_end, average=f_average)
+  call twiss_at_element(f_ele, f_start, f_end, f_average)
 
   ! out: f_start 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -32901,6 +33416,12 @@ subroutine fortran_twiss_at_start (lat, status, ix_branch, type_out) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
+  ! out: f_status 0D_NOT_integer
+  if (c_associated(status)) then
+    call c_f_pointer(status, f_status_ptr)
+  else
+    f_status_ptr => null()
+  endif
   ! in: f_ix_branch 0D_NOT_integer
   if (c_associated(ix_branch)) then
     call c_f_pointer(ix_branch, f_ix_branch_ptr)
@@ -32915,8 +33436,7 @@ subroutine fortran_twiss_at_start (lat, status, ix_branch, type_out) bind(c)
   else
     f_type_out_native_ptr => null()
   endif
-  call twiss_at_start(lat=f_lat, status=f_status, ix_branch=f_ix_branch_ptr, &
-      type_out=f_type_out_native_ptr)
+  call twiss_at_start(f_lat, f_status, f_ix_branch_ptr, f_type_out_native_ptr)
 
   ! out: f_status 0D_NOT_integer
   ! no output conversion for f_status
@@ -32957,8 +33477,7 @@ subroutine fortran_twiss_from_tracking (lat, ref_orb0, symp_err, err_flag, d_orb
   call c_f_pointer(ref_orb0, f_ref_orb0)
   !! container general array (1D_ALLOC_real)
   if (c_associated(d_orb))   call c_f_pointer(d_orb, f_d_orb)
-  call twiss_from_tracking(lat=f_lat, ref_orb0=f_ref_orb0, symp_err=f_symp_err, &
-      err_flag=f_err_flag, d_orb=f_d_orb%data)
+  call twiss_from_tracking(f_lat, f_ref_orb0, f_symp_err, f_err_flag, f_d_orb%data)
 
   ! out: f_symp_err 0D_NOT_real
   call c_f_pointer(symp_err, f_symp_err_ptr)
@@ -33001,6 +33520,12 @@ subroutine fortran_twiss_propagate1 (ele1, ele2, err_flag, forward) bind(c)
     return
   endif
   call c_f_pointer(ele2, f_ele2)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
   ! in: f_forward 0D_NOT_logical
   if (c_associated(forward)) then
     call c_f_pointer(forward, f_forward_ptr)
@@ -33009,8 +33534,7 @@ subroutine fortran_twiss_propagate1 (ele1, ele2, err_flag, forward) bind(c)
   else
     f_forward_native_ptr => null()
   endif
-  call twiss_propagate1(ele1=f_ele1, ele2=f_ele2, err_flag=f_err_flag, &
-      forward=f_forward_native_ptr)
+  call twiss_propagate1(f_ele1, f_ele2, f_err_flag, f_forward_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   ! no output conversion for f_err_flag
@@ -33050,6 +33574,12 @@ subroutine fortran_twiss_propagate_all (lat, ix_branch, err_flag, ie_start, ie_e
   else
     f_ix_branch_ptr => null()
   endif
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
   ! in: f_ie_start 0D_NOT_integer
   if (c_associated(ie_start)) then
     call c_f_pointer(ie_start, f_ie_start_ptr)
@@ -33062,8 +33592,7 @@ subroutine fortran_twiss_propagate_all (lat, ix_branch, err_flag, ie_start, ie_e
   else
     f_ie_end_ptr => null()
   endif
-  call twiss_propagate_all(lat=f_lat, ix_branch=f_ix_branch_ptr, err_flag=f_err_flag, &
-      ie_start=f_ie_start_ptr, ie_end=f_ie_end_ptr)
+  call twiss_propagate_all(f_lat, f_ix_branch_ptr, f_err_flag, f_ie_start_ptr, f_ie_end_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   ! no output conversion for f_err_flag
@@ -33087,10 +33616,10 @@ subroutine fortran_twiss_to_1_turn_mat (twiss, phi, mat2) bind(c)
   call c_f_pointer(twiss, f_twiss)
   ! in: f_phi 0D_NOT_real
   f_phi = phi
-  call twiss_to_1_turn_mat(twiss=f_twiss, phi=f_phi, mat2=f_mat2)
+  call twiss_to_1_turn_mat(f_twiss, f_phi, f_mat2)
 
   ! out: f_mat2 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat2', c_name='mat2', python_name='mat2', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=3577, definition='real(rp) phi, mat2(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat2', comment='', default=None), intent='out', description='1-turn matrix.', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat2', c_name='mat2', python_name='mat2', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=3520, definition='real(rp) phi, mat2(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat2', comment='', default=None), intent='out', description='1-turn matrix.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_type_coord (coord) bind(c)
 
@@ -33103,7 +33632,7 @@ subroutine fortran_type_coord (coord) bind(c)
   ! in: f_coord 0D_NOT_type
   if (.not. c_associated(coord)) return
   call c_f_pointer(coord, f_coord)
-  call type_coord(coord=f_coord)
+  call type_coord(f_coord)
 
 end subroutine
 subroutine fortran_type_expression_tree (tree, indent) bind(c)
@@ -33126,7 +33655,7 @@ subroutine fortran_type_expression_tree (tree, indent) bind(c)
   else
     f_indent_ptr => null()
   endif
-  call type_expression_tree(tree=f_tree, indent=f_indent_ptr)
+  call type_expression_tree(f_tree, f_indent_ptr)
 
 end subroutine
 subroutine fortran_update_ele_from_fibre (ele) bind(c)
@@ -33140,7 +33669,7 @@ subroutine fortran_update_ele_from_fibre (ele) bind(c)
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call update_ele_from_fibre(ele=f_ele)
+  call update_ele_from_fibre(f_ele)
 
 end subroutine
 subroutine fortran_update_fibre_from_ele (ele, survey_needed) bind(c)
@@ -33158,7 +33687,7 @@ subroutine fortran_update_fibre_from_ele (ele, survey_needed) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call update_fibre_from_ele(ele=f_ele, survey_needed=f_survey_needed)
+  call update_fibre_from_ele(f_ele, f_survey_needed)
 
   ! out: f_survey_needed 0D_NOT_logical
   call c_f_pointer(survey_needed, f_survey_needed_ptr)
@@ -33180,7 +33709,7 @@ subroutine fortran_update_floor_angles (floor, floor0) bind(c)
   call c_f_pointer(floor, f_floor)
   ! in: f_floor0 0D_NOT_type
   if (c_associated(floor0))   call c_f_pointer(floor0, f_floor0)
-  call update_floor_angles(floor=f_floor, floor0=f_floor0)
+  call update_floor_angles(f_floor, f_floor0)
 
 end subroutine
 subroutine fortran_valid_field_calc (ele, field_calc, is_valid) bind(c)
@@ -33202,7 +33731,7 @@ subroutine fortran_valid_field_calc (ele, field_calc, is_valid) bind(c)
   call c_f_pointer(ele, f_ele)
   ! in: f_field_calc 0D_NOT_integer
   f_field_calc = field_calc
-  f_is_valid = valid_field_calc(ele=f_ele, field_calc=f_field_calc)
+  f_is_valid = valid_field_calc(f_ele, f_field_calc)
 
   ! out: f_is_valid 0D_NOT_logical
   call c_f_pointer(is_valid, f_is_valid_ptr)
@@ -33227,7 +33756,7 @@ subroutine fortran_valid_fringe_type (ele, fringe_type, is_valid) bind(c)
   call c_f_pointer(ele, f_ele)
   ! in: f_fringe_type 0D_NOT_integer
   f_fringe_type = fringe_type
-  f_is_valid = valid_fringe_type(ele=f_ele, fringe_type=f_fringe_type)
+  f_is_valid = valid_fringe_type(f_ele, f_fringe_type)
 
   ! out: f_is_valid 0D_NOT_logical
   call c_f_pointer(is_valid, f_is_valid_ptr)
@@ -33256,8 +33785,7 @@ subroutine fortran_valid_mat6_calc_method (ele, species, mat6_calc_method, is_va
   f_species = species
   ! in: f_mat6_calc_method 0D_NOT_integer
   f_mat6_calc_method = mat6_calc_method
-  f_is_valid = valid_mat6_calc_method(ele=f_ele, species=f_species, &
-      mat6_calc_method=f_mat6_calc_method)
+  f_is_valid = valid_mat6_calc_method(f_ele, f_species, f_mat6_calc_method)
 
   ! out: f_is_valid 0D_NOT_logical
   call c_f_pointer(is_valid, f_is_valid_ptr)
@@ -33282,8 +33810,7 @@ subroutine fortran_valid_spin_tracking_method (ele, spin_tracking_method, is_val
   call c_f_pointer(ele, f_ele)
   ! in: f_spin_tracking_method 0D_NOT_integer
   f_spin_tracking_method = spin_tracking_method
-  f_is_valid = valid_spin_tracking_method(ele=f_ele, &
-      spin_tracking_method=f_spin_tracking_method)
+  f_is_valid = valid_spin_tracking_method(f_ele, f_spin_tracking_method)
 
   ! out: f_is_valid 0D_NOT_logical
   call c_f_pointer(is_valid, f_is_valid_ptr)
@@ -33312,8 +33839,7 @@ subroutine fortran_valid_tracking_method (ele, species, tracking_method, is_vali
   f_species = species
   ! in: f_tracking_method 0D_NOT_integer
   f_tracking_method = tracking_method
-  f_is_valid = valid_tracking_method(ele=f_ele, species=f_species, &
-      tracking_method=f_tracking_method)
+  f_is_valid = valid_tracking_method(f_ele, f_species, f_tracking_method)
 
   ! out: f_is_valid 0D_NOT_logical
   call c_f_pointer(is_valid, f_is_valid_ptr)
@@ -33361,6 +33887,12 @@ subroutine fortran_value_of_attribute (ele, attrib_name, err_flag, err_print_fla
   endif
   call c_f_pointer(attrib_name, f_attrib_name_ptr, [huge(0)])
   call to_f_str(f_attrib_name_ptr, f_attrib_name)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
   ! in: f_err_print_flag 0D_NOT_logical
   if (c_associated(err_print_flag)) then
     call c_f_pointer(err_print_flag, f_err_print_flag_ptr)
@@ -33375,8 +33907,8 @@ subroutine fortran_value_of_attribute (ele, attrib_name, err_flag, err_print_fla
   else
     f_err_value_ptr => null()
   endif
-  f_value = value_of_attribute(ele=f_ele, attrib_name=f_attrib_name, err_flag=f_err_flag, &
-      err_print_flag=f_err_print_flag_native_ptr, err_value=f_err_value_ptr)
+  f_value = value_of_attribute(f_ele, f_attrib_name, f_err_flag, f_err_print_flag_native_ptr, &
+      f_err_value_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   ! no output conversion for f_err_flag
@@ -33445,8 +33977,8 @@ subroutine fortran_value_to_line (line, value, str, typ, ignore_if_zero, use_com
   else
     f_use_comma_native_ptr => null()
   endif
-  call value_to_line(line=f_line, value=f_value_ptr, str=f_str, typ=f_typ, &
-      ignore_if_zero=f_ignore_if_zero_native_ptr, use_comma=f_use_comma_native_ptr)
+  call value_to_line(f_line, f_value_ptr, f_str, f_typ, f_ignore_if_zero_native_ptr, &
+      f_use_comma_native_ptr)
 
   ! inout: f_line 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -33499,7 +34031,7 @@ subroutine fortran_vec_to_polar (vec, phase, polar) bind(c)
   else
     f_phase_ptr => null()
   endif
-  f_polar = vec_to_polar(vec=f_vec, phase=f_phase_ptr)
+  f_polar = vec_to_polar(f_vec, f_phase_ptr)
 
   ! out: f_polar 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -33532,7 +34064,7 @@ subroutine fortran_vec_to_spinor (vec, phase, spinor) bind(c)
   else
     f_phase_ptr => null()
   endif
-  f_spinor = vec_to_spinor(vec=f_vec, phase=f_phase_ptr)
+  f_spinor = vec_to_spinor(f_vec, f_phase_ptr)
 
   ! out: f_spinor 1D_NOT_complex
   if (c_associated(spinor)) then
@@ -33586,8 +34118,8 @@ subroutine fortran_verify_valid_name (name, ix_name, pure_name, include_wild, is
   else
     f_include_wild_native_ptr => null()
   endif
-  f_is_valid = verify_valid_name(name=f_name, ix_name=f_ix_name, &
-      pure_name=f_pure_name_native_ptr, include_wild=f_include_wild_native_ptr)
+  f_is_valid = verify_valid_name(f_name, f_ix_name, f_pure_name_native_ptr, &
+      f_include_wild_native_ptr)
 
   ! out: f_is_valid 0D_NOT_logical
   call c_f_pointer(is_valid, f_is_valid_ptr)
@@ -33621,10 +34153,10 @@ subroutine fortran_w_mat_for_bend_angle (angle, ref_tilt, r_vec, w_mat) bind(c)
   else
     f_r_vec_ptr => null()
   endif
-  f_w_mat = w_mat_for_bend_angle(angle=f_angle, ref_tilt=f_ref_tilt, r_vec=f_r_vec)
+  f_w_mat = w_mat_for_bend_angle(f_angle, f_ref_tilt, f_r_vec)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3719, definition='real(rp) angle, ref_tilt, w_mat(3,3), t_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3662, definition='real(rp) angle, ref_tilt, w_mat(3,3), t_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
 end subroutine
 subroutine fortran_w_mat_for_tilt (tilt, return_inverse, w_mat) bind(c)
 
@@ -33652,10 +34184,10 @@ subroutine fortran_w_mat_for_tilt (tilt, return_inverse, w_mat) bind(c)
   else
     f_return_inverse_native_ptr => null()
   endif
-  f_w_mat = w_mat_for_tilt(tilt=f_tilt, return_inverse=f_return_inverse_native_ptr)
+  f_w_mat = w_mat_for_tilt(f_tilt, f_return_inverse_native_ptr)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3743, definition='real(rp) :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3686, definition='real(rp) :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
 end subroutine
 subroutine fortran_w_mat_for_x_pitch (x_pitch, return_inverse, w_mat) bind(c)
 
@@ -33683,10 +34215,10 @@ subroutine fortran_w_mat_for_x_pitch (x_pitch, return_inverse, w_mat) bind(c)
   else
     f_return_inverse_native_ptr => null()
   endif
-  f_w_mat = w_mat_for_x_pitch(x_pitch=f_x_pitch, return_inverse=f_return_inverse_native_ptr)
+  f_w_mat = w_mat_for_x_pitch(f_x_pitch, f_return_inverse_native_ptr)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3727, definition='real(rp) :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3670, definition='real(rp) :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
 end subroutine
 subroutine fortran_w_mat_for_y_pitch (y_pitch, return_inverse, w_mat) bind(c)
 
@@ -33714,10 +34246,10 @@ subroutine fortran_w_mat_for_y_pitch (y_pitch, return_inverse, w_mat) bind(c)
   else
     f_return_inverse_native_ptr => null()
   endif
-  f_w_mat = w_mat_for_y_pitch(y_pitch=f_y_pitch, return_inverse=f_return_inverse_native_ptr)
+  f_w_mat = w_mat_for_y_pitch(f_y_pitch, f_return_inverse_native_ptr)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3735, definition='real(rp) :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3678, definition='real(rp) :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
 end subroutine
 subroutine fortran_wall3d_d_radius (position, ele, ix_wall, perp, ix_section, no_wall_here, &
     origin, radius_wall, err_flag, d_radius) bind(c)
@@ -33770,9 +34302,32 @@ subroutine fortran_wall3d_d_radius (position, ele, ix_wall, perp, ix_section, no
   else
     f_ix_wall_ptr => null()
   endif
-  f_d_radius = wall3d_d_radius(position=f_position%data, ele=f_ele, ix_wall=f_ix_wall_ptr, &
-      perp=f_perp, ix_section=f_ix_section, no_wall_here=f_no_wall_here, origin=f_origin, &
-      radius_wall=f_radius_wall, err_flag=f_err_flag)
+  ! out: f_ix_section 0D_NOT_integer
+  if (c_associated(ix_section)) then
+    call c_f_pointer(ix_section, f_ix_section_ptr)
+  else
+    f_ix_section_ptr => null()
+  endif
+  ! out: f_no_wall_here 0D_NOT_logical
+  if (c_associated(no_wall_here)) then
+    call c_f_pointer(no_wall_here, f_no_wall_here_ptr)
+  else
+    f_no_wall_here_ptr => null()
+  endif
+  ! out: f_radius_wall 0D_NOT_real
+  if (c_associated(radius_wall)) then
+    call c_f_pointer(radius_wall, f_radius_wall_ptr)
+  else
+    f_radius_wall_ptr => null()
+  endif
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  f_d_radius = wall3d_d_radius(f_position%data, f_ele, f_ix_wall_ptr, f_perp, f_ix_section, &
+      f_no_wall_here, f_origin, f_radius_wall, f_err_flag)
 
   ! out: f_perp 1D_NOT_real
   if (c_associated(perp)) then
@@ -33811,7 +34366,7 @@ subroutine fortran_wall3d_initializer (wall3d, err) bind(c)
   ! inout: f_wall3d 0D_NOT_type
   if (.not. c_associated(wall3d)) return
   call c_f_pointer(wall3d, f_wall3d)
-  call wall3d_initializer(wall3d=f_wall3d, err=f_err)
+  call wall3d_initializer(f_wall3d, f_err)
 
   ! out: f_err 0D_NOT_logical
   call c_f_pointer(err, f_err_ptr)
@@ -33832,7 +34387,7 @@ subroutine fortran_wall3d_section_initializer (section, err) bind(c)
   ! inout: f_section 0D_NOT_type
   if (.not. c_associated(section)) return
   call c_f_pointer(section, f_section)
-  call wall3d_section_initializer(section=f_section, err=f_err)
+  call wall3d_section_initializer(f_section, f_err)
 
   ! out: f_err 0D_NOT_logical
   call c_f_pointer(err, f_err_ptr)
@@ -33858,7 +34413,7 @@ subroutine fortran_wall3d_to_position (orbit, ele, position) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_position = wall3d_to_position(orbit=f_orbit, ele=f_ele)
+  f_position = wall3d_to_position(f_orbit, f_ele)
 
   ! out: f_position 1D_NOT_real
   if (c_associated(position)) then
@@ -33910,8 +34465,7 @@ subroutine fortran_word_to_value (word, lat, value, err_flag, ele) bind(c)
   endif
   ! inout: f_ele 0D_NOT_type
   if (c_associated(ele))   call c_f_pointer(ele, f_ele)
-  call word_to_value(word=f_word, lat=f_lat, value=f_value_ptr, err_flag=f_err_flag_native_ptr, &
-      ele=f_ele)
+  call word_to_value(f_word, f_lat, f_value_ptr, f_err_flag_native_ptr, f_ele)
 
   ! inout: f_word 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -33969,8 +34523,8 @@ subroutine fortran_write_ascii_beam_file (file_name, beam, new_file, alive_only)
   else
     f_alive_only_native_ptr => null()
   endif
-  call write_ascii_beam_file(file_name=f_file_name, beam=f_beam, &
-      new_file=f_new_file_native_ptr, alive_only=f_alive_only_native_ptr)
+  call write_ascii_beam_file(f_file_name, f_beam, f_new_file_native_ptr, &
+      f_alive_only_native_ptr)
 
 end subroutine
 subroutine fortran_write_astra_bend (iu, strength, id, d1, d2, d3, d4) bind(c)
@@ -34045,8 +34599,7 @@ subroutine fortran_write_astra_bend (iu, strength, id, d1, d2, d3, d4) bind(c)
   else
     f_d4_ptr => null()
   endif
-  call write_astra_bend(iu=f_iu_ptr, strength=f_strength_ptr, id=f_id_ptr, d1=f_d1, d2=f_d2, &
-      d3=f_d3, d4=f_d4)
+  call write_astra_bend(f_iu_ptr, f_strength_ptr, f_id_ptr, f_d1, f_d2, f_d3, f_d4)
 
   ! inout: f_iu 0D_NOT_integer
   ! no output conversion for f_iu
@@ -34087,8 +34640,13 @@ subroutine fortran_write_astra_field_grid_file (astra_file_unit, ele, maxfield, 
   else
     f_dz_ptr => null()
   endif
-  call write_astra_field_grid_file(astra_file_unit=f_astra_file_unit, ele=f_ele, &
-      maxfield=f_maxfield, dz=f_dz_ptr, err=f_err)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
+  call write_astra_field_grid_file(f_astra_file_unit, f_ele, f_maxfield, f_dz_ptr, f_err)
 
   ! out: f_maxfield 0D_NOT_real
   call c_f_pointer(maxfield, f_maxfield_ptr)
@@ -34131,8 +34689,13 @@ subroutine fortran_write_astra_field_grid_file_3d (base_filename, ele, maxfield,
   else
     f_dz_ptr => null()
   endif
-  call write_astra_field_grid_file_3d(base_filename=f_base_filename, ele=f_ele, &
-      maxfield=f_maxfield, dz=f_dz_ptr, err=f_err)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
+  call write_astra_field_grid_file_3d(f_base_filename, f_ele, f_maxfield, f_dz_ptr, f_err)
 
   ! out: f_maxfield 0D_NOT_real
   call c_f_pointer(maxfield, f_maxfield_ptr)
@@ -34198,8 +34761,8 @@ subroutine fortran_write_beam_file (file_name, beam, new_file, file_format, lat,
   else
     f_alive_only_native_ptr => null()
   endif
-  call write_beam_file(file_name=f_file_name, beam=f_beam, new_file=f_new_file_native_ptr, &
-      file_format=f_file_format_ptr, lat=f_lat, alive_only=f_alive_only_native_ptr)
+  call write_beam_file(f_file_name, f_beam, f_new_file_native_ptr, f_file_format_ptr, f_lat, &
+      f_alive_only_native_ptr)
 
 end subroutine
 subroutine fortran_write_beam_floor_positions (file_name, beam, ele, new_file) bind(c)
@@ -34238,8 +34801,7 @@ subroutine fortran_write_beam_floor_positions (file_name, beam, ele, new_file) b
   else
     f_new_file_native_ptr => null()
   endif
-  call write_beam_floor_positions(file_name=f_file_name, beam=f_beam, ele=f_ele, &
-      new_file=f_new_file_native_ptr)
+  call write_beam_floor_positions(f_file_name, f_beam, f_ele, f_new_file_native_ptr)
 
 end subroutine
 subroutine fortran_write_binary_cartesian_map (file_name, ele, cart_map, err_flag) bind(c)
@@ -34269,8 +34831,7 @@ subroutine fortran_write_binary_cartesian_map (file_name, ele, cart_map, err_fla
   call c_f_pointer(cart_map, f_cart_map)
   ! in: f_err_flag 0D_NOT_logical
   f_err_flag = err_flag
-  call write_binary_cartesian_map(file_name=f_file_name, ele=f_ele, cart_map=f_cart_map, &
-      err_flag=f_err_flag)
+  call write_binary_cartesian_map(f_file_name, f_ele, f_cart_map, f_err_flag)
 
 end subroutine
 subroutine fortran_write_binary_cylindrical_map (file_name, ele, cl_map, err_flag) bind(c)
@@ -34300,8 +34861,7 @@ subroutine fortran_write_binary_cylindrical_map (file_name, ele, cl_map, err_fla
   call c_f_pointer(cl_map, f_cl_map)
   ! in: f_err_flag 0D_NOT_logical
   f_err_flag = err_flag
-  call write_binary_cylindrical_map(file_name=f_file_name, ele=f_ele, cl_map=f_cl_map, &
-      err_flag=f_err_flag)
+  call write_binary_cylindrical_map(f_file_name, f_ele, f_cl_map, f_err_flag)
 
 end subroutine
 subroutine fortran_write_binary_grid_field (file_name, ele, g_field, err_flag) bind(c)
@@ -34331,8 +34891,7 @@ subroutine fortran_write_binary_grid_field (file_name, ele, g_field, err_flag) b
   call c_f_pointer(g_field, f_g_field)
   ! in: f_err_flag 0D_NOT_logical
   f_err_flag = err_flag
-  call write_binary_grid_field(file_name=f_file_name, ele=f_ele, g_field=f_g_field, &
-      err_flag=f_err_flag)
+  call write_binary_grid_field(f_file_name, f_ele, f_g_field, f_err_flag)
 
 end subroutine
 subroutine fortran_write_blender_ele (iu, ele, old_format) bind(c)
@@ -34368,7 +34927,7 @@ subroutine fortran_write_blender_ele (iu, ele, old_format) bind(c)
   else
     f_old_format_native_ptr => null()
   endif
-  call write_blender_ele(iu=f_iu_ptr, ele=f_ele, old_format=f_old_format_native_ptr)
+  call write_blender_ele(f_iu_ptr, f_ele, f_old_format_native_ptr)
 
   ! inout: f_iu 0D_NOT_integer
   ! no output conversion for f_iu
@@ -34398,7 +34957,7 @@ subroutine fortran_write_blender_lat_layout (file_name, lat) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call write_blender_lat_layout(file_name=f_file_name, lat=f_lat)
+  call write_blender_lat_layout(f_file_name, f_lat)
 
   ! inout: f_file_name 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -34430,6 +34989,12 @@ subroutine fortran_write_bmad_lattice_file (bmad_file, lat, err, output_form, or
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
   ! in: f_output_form 0D_NOT_integer
   if (c_associated(output_form)) then
     call c_f_pointer(output_form, f_output_form_ptr)
@@ -34438,8 +35003,7 @@ subroutine fortran_write_bmad_lattice_file (bmad_file, lat, err, output_form, or
   endif
   ! in: f_orbit0 0D_NOT_type
   if (c_associated(orbit0))   call c_f_pointer(orbit0, f_orbit0)
-  call write_bmad_lattice_file(bmad_file=f_bmad_file, lat=f_lat, err=f_err, &
-      output_form=f_output_form_ptr, orbit0=f_orbit0)
+  call write_bmad_lattice_file(f_bmad_file, f_lat, f_err, f_output_form_ptr, f_orbit0)
 
   ! out: f_err 0D_NOT_logical
   ! no output conversion for f_err
@@ -34479,8 +35043,14 @@ subroutine fortran_write_gpt_field_grid_file_1d (gpt_file_unit, ele, maxfield, r
   else
     f_dz_ptr => null()
   endif
-  call write_gpt_field_grid_file_1d(gpt_file_unit=f_gpt_file_unit, ele=f_ele, &
-      maxfield=f_maxfield, ref_time=f_ref_time, dz=f_dz_ptr, err=f_err)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
+  call write_gpt_field_grid_file_1d(f_gpt_file_unit, f_ele, f_maxfield, f_ref_time, f_dz_ptr, &
+      f_err)
 
   ! out: f_maxfield 0D_NOT_real
   call c_f_pointer(maxfield, f_maxfield_ptr)
@@ -34544,9 +35114,14 @@ subroutine fortran_write_gpt_field_grid_file_2d (gpt_file_unit, ele, maxfield, r
   else
     f_r_max_ptr => null()
   endif
-  call write_gpt_field_grid_file_2d(gpt_file_unit=f_gpt_file_unit, ele=f_ele, &
-      maxfield=f_maxfield, ref_time=f_ref_time, dr=f_dr_ptr, dz=f_dz_ptr, r_max=f_r_max_ptr, &
-      err=f_err)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
+  call write_gpt_field_grid_file_2d(f_gpt_file_unit, f_ele, f_maxfield, f_ref_time, f_dr_ptr, &
+      f_dz_ptr, f_r_max_ptr, f_err)
 
   ! out: f_maxfield 0D_NOT_real
   call c_f_pointer(maxfield, f_maxfield_ptr)
@@ -34595,8 +35170,14 @@ subroutine fortran_write_gpt_field_grid_file_3d (base_filename, ele, maxfield, r
   else
     f_dz_ptr => null()
   endif
-  call write_gpt_field_grid_file_3d(base_filename=f_base_filename, ele=f_ele, &
-      maxfield=f_maxfield, ref_time=f_ref_time, dz=f_dz_ptr, err=f_err)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
+  call write_gpt_field_grid_file_3d(f_base_filename, f_ele, f_maxfield, f_ref_time, f_dz_ptr, &
+      f_err)
 
   ! out: f_maxfield 0D_NOT_real
   call c_f_pointer(maxfield, f_maxfield_ptr)
@@ -34654,8 +35235,8 @@ subroutine fortran_write_lat_line (line, iu, end_is_neigh, do_split, scibmad) bi
   else
     f_scibmad_native_ptr => null()
   endif
-  call write_lat_line(line=f_line, iu=f_iu, end_is_neigh=f_end_is_neigh, &
-      do_split=f_do_split_native_ptr, scibmad=f_scibmad_native_ptr)
+  call write_lat_line(f_line, f_iu, f_end_is_neigh, f_do_split_native_ptr, &
+      f_scibmad_native_ptr)
 
   ! inout: f_line 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -34731,10 +35312,15 @@ subroutine fortran_write_lattice_in_elegant_format (out_file_name, lat, ref_orbi
   else
     f_ix_branch_ptr => null()
   endif
-  call write_lattice_in_elegant_format(out_file_name=f_out_file_name, lat=f_lat, &
-      ref_orbit=f_ref_orbit%data, use_matrix_model=f_use_matrix_model_native_ptr, &
-      include_apertures=f_include_apertures_native_ptr, dr12_drift_max=f_dr12_drift_max_ptr, &
-      ix_branch=f_ix_branch_ptr, err=f_err)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
+  call write_lattice_in_elegant_format(f_out_file_name, f_lat, f_ref_orbit%data, &
+      f_use_matrix_model_native_ptr, f_include_apertures_native_ptr, f_dr12_drift_max_ptr, &
+      f_ix_branch_ptr, f_err)
 
   ! out: f_err 0D_NOT_logical
   ! no output conversion for f_err
@@ -34817,10 +35403,15 @@ subroutine fortran_write_lattice_in_foreign_format (out_type, out_file_name, lat
   else
     f_ix_branch_ptr => null()
   endif
-  call write_lattice_in_foreign_format(out_type=f_out_type, out_file_name=f_out_file_name, &
-      lat=f_lat, ref_orbit=f_ref_orbit%data, use_matrix_model=f_use_matrix_model_native_ptr, &
-      include_apertures=f_include_apertures_native_ptr, dr12_drift_max=f_dr12_drift_max_ptr, &
-      ix_branch=f_ix_branch_ptr, err=f_err)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
+  call write_lattice_in_foreign_format(f_out_type, f_out_file_name, f_lat, f_ref_orbit%data, &
+      f_use_matrix_model_native_ptr, f_include_apertures_native_ptr, f_dr12_drift_max_ptr, &
+      f_ix_branch_ptr, f_err)
 
   ! out: f_err 0D_NOT_logical
   ! no output conversion for f_err
@@ -34903,10 +35494,15 @@ subroutine fortran_write_lattice_in_mad_format (out_type, out_file_name, lat, re
   else
     f_ix_branch_ptr => null()
   endif
-  call write_lattice_in_mad_format(out_type=f_out_type, out_file_name=f_out_file_name, &
-      lat=f_lat, ref_orbit=f_ref_orbit%data, use_matrix_model=f_use_matrix_model_native_ptr, &
-      include_apertures=f_include_apertures_native_ptr, dr12_drift_max=f_dr12_drift_max_ptr, &
-      ix_branch=f_ix_branch_ptr, err=f_err)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
+  call write_lattice_in_mad_format(f_out_type, f_out_file_name, f_lat, f_ref_orbit%data, &
+      f_use_matrix_model_native_ptr, f_include_apertures_native_ptr, f_dr12_drift_max_ptr, &
+      f_ix_branch_ptr, f_err)
 
   ! out: f_err 0D_NOT_logical
   ! no output conversion for f_err
@@ -34965,9 +35561,8 @@ subroutine fortran_write_lattice_in_sad_format (out_file_name, lat, include_aper
   else
     f_err_native_ptr => null()
   endif
-  call write_lattice_in_sad_format(out_file_name=f_out_file_name, lat=f_lat, &
-      include_apertures=f_include_apertures_native_ptr, ix_branch=f_ix_branch_ptr, &
-      err=f_err_native_ptr)
+  call write_lattice_in_sad_format(f_out_file_name, f_lat, f_include_apertures_native_ptr, &
+      f_ix_branch_ptr, f_err_native_ptr)
 
   ! inout: f_out_file_name 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -35010,7 +35605,13 @@ subroutine fortran_write_lattice_in_scibmad (scibmad_file, lat, err_flag) bind(c
     return
   endif
   call c_f_pointer(lat, f_lat)
-  call write_lattice_in_scibmad(scibmad_file=f_scibmad_file, lat=f_lat, err_flag=f_err_flag)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  call write_lattice_in_scibmad(f_scibmad_file, f_lat, f_err_flag)
 
   ! out: f_scibmad_file 0D_NOT_character
   call c_f_pointer(scibmad_file, f_scibmad_file_ptr, [len_trim(f_scibmad_file) + 1]) ! output-only string
@@ -35050,7 +35651,7 @@ subroutine fortran_write_line_element (line, iu, ele, lat) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call write_line_element(line=f_line, iu=f_iu_ptr, ele=f_ele, lat=f_lat)
+  call write_line_element(f_line, f_iu_ptr, f_ele, f_lat)
 
   ! inout: f_line 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
@@ -35085,8 +35686,13 @@ subroutine fortran_write_opal_field_grid_file (opal_file_unit, ele, param, maxfi
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  call write_opal_field_grid_file(opal_file_unit=f_opal_file_unit, ele=f_ele, param=f_param, &
-      maxfield=f_maxfield, err=f_err)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
+  call write_opal_field_grid_file(f_opal_file_unit, f_ele, f_param, f_maxfield, f_err)
 
   ! out: f_maxfield 0D_NOT_real
   call c_f_pointer(maxfield, f_maxfield_ptr)
@@ -35113,7 +35719,13 @@ subroutine fortran_write_opal_lattice_file (opal_file_unit, lat, err) bind(c)
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call write_opal_lattice_file(opal_file_unit=f_opal_file_unit, lat=f_lat, err=f_err)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
+  call write_opal_lattice_file(f_opal_file_unit, f_lat, f_err)
 
   ! out: f_err 0D_NOT_logical
   ! no output conversion for f_err
@@ -35171,8 +35783,14 @@ subroutine fortran_write_time_particle_distribution (time_file_unit, bunch, ele,
   else
     f_format_call_ptr => null()
   endif
-  call write_time_particle_distribution(time_file_unit=f_time_file_unit, bunch=f_bunch, &
-      ele=f_ele, style=f_style_call_ptr, branch=f_branch, format=f_format_call_ptr, err=f_err)
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
+  call write_time_particle_distribution(f_time_file_unit, f_bunch, f_ele, f_style_call_ptr, &
+      f_branch, f_format_call_ptr, f_err)
 
   ! out: f_err 0D_NOT_logical
   ! no output conversion for f_err
@@ -35213,7 +35831,7 @@ subroutine fortran_xlafun (x, y, z, res) bind(c)
   else
     f_z_ptr => null()
   endif
-  f_res = xlafun(x=f_x_ptr, y=f_y_ptr, z=f_z_ptr)
+  f_res = xlafun(f_x_ptr, f_y_ptr, f_z_ptr)
 
   ! inout: f_x 0D_NOT_real
   ! no output conversion for f_x
@@ -35241,7 +35859,7 @@ subroutine fortran_xraylib_nist_compound (name, indx) bind(c)
   if (.not. c_associated(name)) return
   call c_f_pointer(name, f_name_ptr, [huge(0)])
   call to_f_str(f_name_ptr, f_name)
-  f_indx = xraylib_nist_compound(name=f_name)
+  f_indx = xraylib_nist_compound(f_name)
 
   ! out: f_indx 0D_NOT_integer
   call c_f_pointer(indx, f_indx_ptr)
@@ -35283,7 +35901,7 @@ subroutine fortran_ylafun (x, y, z, res) bind(c)
   else
     f_z_ptr => null()
   endif
-  f_res = ylafun(x=f_x_ptr, y=f_y_ptr, z=f_z_ptr)
+  f_res = ylafun(f_x_ptr, f_y_ptr, f_z_ptr)
 
   ! inout: f_x 0D_NOT_real
   ! no output conversion for f_x
@@ -35352,8 +35970,7 @@ subroutine fortran_z_at_surface (ele, x, y, err_flag, extend_grid, dz_dxy, z) bi
   else
     f_extend_grid_native_ptr => null()
   endif
-  f_z = z_at_surface(ele=f_ele, x=f_x_ptr, y=f_y_ptr, err_flag=f_err_flag, &
-      extend_grid=f_extend_grid_native_ptr, dz_dxy=f_dz_dxy)
+  f_z = z_at_surface(f_ele, f_x_ptr, f_y_ptr, f_err_flag, f_extend_grid_native_ptr, f_dz_dxy)
 
   ! inout: f_x 0D_NOT_real
   ! no output conversion for f_x
@@ -35382,7 +35999,7 @@ subroutine fortran_zero_ele_kicks (ele) bind(c)
   ! out: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call zero_ele_kicks(ele=f_ele)
+  call zero_ele_kicks(f_ele)
 
   ! out: f_ele 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -35398,7 +36015,7 @@ subroutine fortran_zero_ele_offsets (ele) bind(c)
   ! out: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  call zero_ele_offsets(ele=f_ele)
+  call zero_ele_offsets(f_ele)
 
   ! out: f_ele 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -35414,7 +36031,7 @@ subroutine fortran_zero_lr_wakes_in_lat (lat) bind(c)
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  call zero_lr_wakes_in_lat(lat=f_lat)
+  call zero_lr_wakes_in_lat(f_lat)
 
 end subroutine
 subroutine fortran_zlafun (x, y, z, res) bind(c)
@@ -35453,7 +36070,7 @@ subroutine fortran_zlafun (x, y, z, res) bind(c)
   else
     f_z_ptr => null()
   endif
-  f_res = zlafun(x=f_x_ptr, y=f_y_ptr, z=f_z_ptr)
+  f_res = zlafun(f_x_ptr, f_y_ptr, f_z_ptr)
 
   ! inout: f_x 0D_NOT_real
   ! no output conversion for f_x

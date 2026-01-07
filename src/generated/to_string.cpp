@@ -2425,6 +2425,22 @@ std::string to_string(const MadMapProxy& self) {
        std::pair{"r", to_string(self.r())},
        std::pair{"t", to_string(self.t())}});
 }
+std::string to_string(const RandomStateProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "RandomStateProxy",
+      {std::pair{"ix", to_string(self.ix())},
+       std::pair{"iy", to_string(self.iy())},
+       std::pair{"number_stored", to_string(self.number_stored())},
+       std::pair{"h_saved", to_string(self.h_saved())},
+       std::pair{"engine", to_string(self.engine())},
+       std::pair{"seed", to_string(self.seed())},
+       std::pair{"am", to_string(self.am())},
+       std::pair{"gauss_converter", to_string(self.gauss_converter())},
+       std::pair{"gauss_sigma_cut", to_string(self.gauss_sigma_cut())},
+       std::pair{"in_sobseq", to_string(self.in_sobseq())},
+       std::pair{"x_sobseq", to_string(self.x_sobseq())}});
+}
 std::string to_string(const BbuStageProxy& self) {
   return repr(
       self.get_fortran_ptr(),
@@ -2620,6 +2636,41 @@ std::string to_string(const SimUtils::ApfftCorr& self) {
       {std::pair{"phase", to_string(self.phase)},
        std::pair{"amp", to_string(self.amp)},
        std::pair{"freq", to_string(self.freq)}});
+}
+std::string to_string(const Bmad::AttributeFree1& self) {
+  return repr(
+      &self,
+      "Bmad::AttributeFree1",
+      {std::pair{"why_not_free", to_string(self.why_not_free)},
+       std::pair{"free", to_string(self.free)}});
+}
+std::string to_string(const Bmad::AttributeFree2& self) {
+  return repr(
+      &self,
+      "Bmad::AttributeFree2",
+      {std::pair{"why_not_free", to_string(self.why_not_free)},
+       std::pair{"free", to_string(self.free)}});
+}
+std::string to_string(const Bmad::AttributeFree3& self) {
+  return repr(
+      &self,
+      "Bmad::AttributeFree3",
+      {std::pair{"why_not_free", to_string(self.why_not_free)},
+       std::pair{"free", to_string(self.free)}});
+}
+std::string to_string(const Bmad::AttributeIndex1& self) {
+  return repr(
+      &self,
+      "Bmad::AttributeIndex1",
+      {std::pair{"full_name", self.full_name},
+       std::pair{"attrib_index", to_string(self.attrib_index)}});
+}
+std::string to_string(const Bmad::AttributeIndex2& self) {
+  return repr(
+      &self,
+      "Bmad::AttributeIndex2",
+      {std::pair{"full_name", self.full_name},
+       std::pair{"attrib_index", to_string(self.attrib_index)}});
 }
 std::string to_string(const Bmad::BbiKick& self) {
   return repr(
@@ -2828,6 +2879,24 @@ std::string to_string(const Bmad::ElecMultipoleField& self) {
        std::pair{"Ey", to_string(self.Ey)},
        std::pair{"dE", to_string(self.dE)},
        std::pair{"compute_dE", to_string(self.compute_dE)}});
+}
+std::string to_string(const Bmad::ElementAtSBranch& self) {
+  return repr(
+      &self,
+      "Bmad::ElementAtSBranch",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"s_eff", to_string(self.s_eff)},
+       std::pair{"position", to_string(self.position)},
+       std::pair{"ix_ele", to_string(self.ix_ele)}});
+}
+std::string to_string(const Bmad::ElementAtSLat& self) {
+  return repr(
+      &self,
+      "Bmad::ElementAtSLat",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"s_eff", to_string(self.s_eff)},
+       std::pair{"position", to_string(self.position)},
+       std::pair{"ix_ele", to_string(self.ix_ele)}});
 }
 std::string to_string(const Bmad::EmFieldCalc& self) {
   return repr(
@@ -3430,6 +3499,13 @@ std::string to_string(const Bmad::RadiationIntegrals& self) {
       "Bmad::RadiationIntegrals",
       {std::pair{"mode", to_string(self.mode)},
        std::pair{"rad_int_by_ele", to_string(self.rad_int_by_ele)}});
+}
+std::string to_string(const SimUtils::RanGaussConverter& self) {
+  return repr(
+      &self,
+      "SimUtils::RanGaussConverter",
+      {std::pair{"get", self.get},
+       std::pair{"get_sigma_cut", to_string(self.get_sigma_cut)}});
 }
 std::string to_string(const Bmad::ReadBeamAscii& self) {
   return repr(
