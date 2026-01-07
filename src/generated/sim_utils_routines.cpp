@@ -1211,13 +1211,18 @@ SimUtils::RanGaussConverter SimUtils::ran_gauss_converter(
 }
 double SimUtils::ran_gauss_scalar(
     optional_ref<RandomStateProxy> ran_state,
-    optional_ref<double> sigma_cut,
+    std::optional<double> sigma_cut,
     optional_ref<int> index_quasi) {
   double _harvest{};
   auto* _ran_state = ran_state.has_value() ? ran_state->get().get_fortran_ptr()
                                            : nullptr; // input, optional
-  auto* _sigma_cut =
-      sigma_cut.has_value() ? &sigma_cut->get() : nullptr; // inout, optional
+  double sigma_cut_lvalue;
+  auto* _sigma_cut{&sigma_cut_lvalue};
+  if (sigma_cut.has_value()) {
+    sigma_cut_lvalue = sigma_cut.value();
+  } else {
+    _sigma_cut = nullptr;
+  }
   auto* _index_quasi = index_quasi.has_value() ? &index_quasi->get()
                                                : nullptr; // inout, optional
   fortran_ran_gauss_scalar(
@@ -1229,13 +1234,18 @@ double SimUtils::ran_gauss_scalar(
 }
 RealAlloc1D SimUtils::ran_gauss_vector(
     optional_ref<RandomStateProxy> ran_state,
-    optional_ref<double> sigma_cut) {
+    std::optional<double> sigma_cut) {
   // intent=out allocatable general array
   auto harvest{RealAlloc1D()};
   auto* _ran_state = ran_state.has_value() ? ran_state->get().get_fortran_ptr()
                                            : nullptr; // input, optional
-  auto* _sigma_cut =
-      sigma_cut.has_value() ? &sigma_cut->get() : nullptr; // inout, optional
+  double sigma_cut_lvalue;
+  auto* _sigma_cut{&sigma_cut_lvalue};
+  if (sigma_cut.has_value()) {
+    sigma_cut_lvalue = sigma_cut.value();
+  } else {
+    _sigma_cut = nullptr;
+  }
   fortran_ran_gauss_vector(
       /* void* */ harvest.get_fortran_ptr(),
       /* void* */ _ran_state,

@@ -4191,23 +4191,24 @@ subroutine fortran_ran_gauss_scalar (harvest, ran_state, sigma_cut, index_quasi)
 
   use random_mod, only: random_state_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: harvest  ! 0D_NOT_real
-  real(rp) :: f_harvest
-  real(c_double), pointer :: f_harvest_ptr
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: ran_state  ! 0D_NOT_type
   type(random_state_struct), pointer :: f_ran_state
   type(c_ptr), intent(in), value :: sigma_cut  ! 0D_NOT_real
   real(c_double) :: f_sigma_cut
   real(c_double), pointer :: f_sigma_cut_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: harvest  ! 0D_NOT_real
+  real(rp) :: f_harvest
+  real(c_double), pointer :: f_harvest_ptr
+  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: index_quasi  ! 0D_NOT_integer
   integer(c_int) :: f_index_quasi
   integer(c_int), pointer :: f_index_quasi_ptr
   ! ** End of parameters **
-  ! inout: f_ran_state 0D_NOT_type
+  ! in: f_ran_state 0D_NOT_type
   if (c_associated(ran_state))   call c_f_pointer(ran_state, f_ran_state)
-  ! inout: f_sigma_cut 0D_NOT_real
+  ! in: f_sigma_cut 0D_NOT_real
   if (c_associated(sigma_cut)) then
     call c_f_pointer(sigma_cut, f_sigma_cut_ptr)
   else
@@ -4224,8 +4225,6 @@ subroutine fortran_ran_gauss_scalar (harvest, ran_state, sigma_cut, index_quasi)
   ! out: f_harvest 0D_NOT_real
   call c_f_pointer(harvest, f_harvest_ptr)
   f_harvest_ptr = f_harvest
-  ! inout: f_sigma_cut 0D_NOT_real
-  ! no output conversion for f_sigma_cut
   ! inout: f_index_quasi 0D_NOT_integer
   ! no output conversion for f_index_quasi
 end subroutine
@@ -4233,21 +4232,21 @@ subroutine fortran_ran_gauss_vector (harvest, ran_state, sigma_cut) bind(c)
 
   use random_mod, only: random_state_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: harvest
-  type(real_container_alloc), pointer :: f_harvest
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: ran_state  ! 0D_NOT_type
   type(random_state_struct), pointer :: f_ran_state
   type(c_ptr), intent(in), value :: sigma_cut  ! 0D_NOT_real
   real(c_double) :: f_sigma_cut
   real(c_double), pointer :: f_sigma_cut_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: harvest
+  type(real_container_alloc), pointer :: f_harvest
   ! ** End of parameters **
   !! container general array (1D_ALLOC_real)
   if (c_associated(harvest))   call c_f_pointer(harvest, f_harvest)
-  ! inout: f_ran_state 0D_NOT_type
+  ! in: f_ran_state 0D_NOT_type
   if (c_associated(ran_state))   call c_f_pointer(ran_state, f_ran_state)
-  ! inout: f_sigma_cut 0D_NOT_real
+  ! in: f_sigma_cut 0D_NOT_real
   if (c_associated(sigma_cut)) then
     call c_f_pointer(sigma_cut, f_sigma_cut_ptr)
   else
@@ -4255,8 +4254,6 @@ subroutine fortran_ran_gauss_vector (harvest, ran_state, sigma_cut) bind(c)
   endif
   call ran_gauss_vector(f_harvest%data, f_ran_state, f_sigma_cut_ptr)
 
-  ! inout: f_sigma_cut 0D_NOT_real
-  ! no output conversion for f_sigma_cut
 end subroutine
 subroutine fortran_ran_seed_get (seed) bind(c)
 
@@ -4297,18 +4294,19 @@ subroutine fortran_ran_uniform_scalar (harvest, ran_state, index_quasi) bind(c)
 
   use random_mod, only: random_state_struct
   implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ran_state  ! 0D_NOT_type
+  type(random_state_struct), pointer :: f_ran_state
   ! ** Out parameters **
   type(c_ptr), intent(in), value :: harvest  ! 0D_NOT_real
   real(rp) :: f_harvest
   real(c_double), pointer :: f_harvest_ptr
   ! ** Inout parameters **
-  type(c_ptr), value :: ran_state  ! 0D_NOT_type
-  type(random_state_struct), pointer :: f_ran_state
   type(c_ptr), intent(in), value :: index_quasi  ! 0D_NOT_integer
   integer(c_int) :: f_index_quasi
   integer(c_int), pointer :: f_index_quasi_ptr
   ! ** End of parameters **
-  ! inout: f_ran_state 0D_NOT_type
+  ! in: f_ran_state 0D_NOT_type
   if (c_associated(ran_state))   call c_f_pointer(ran_state, f_ran_state)
   ! inout: f_index_quasi 0D_NOT_integer
   if (c_associated(index_quasi)) then
@@ -4328,16 +4326,16 @@ subroutine fortran_ran_uniform_vector (harvest, ran_state) bind(c)
 
   use random_mod, only: random_state_struct
   implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ran_state  ! 0D_NOT_type
+  type(random_state_struct), pointer :: f_ran_state
   ! ** Out parameters **
   type(c_ptr), intent(in), value :: harvest
   type(real_container_alloc), pointer :: f_harvest
-  ! ** Inout parameters **
-  type(c_ptr), value :: ran_state  ! 0D_NOT_type
-  type(random_state_struct), pointer :: f_ran_state
   ! ** End of parameters **
   !! container general array (1D_ALLOC_real)
   if (c_associated(harvest))   call c_f_pointer(harvest, f_harvest)
-  ! inout: f_ran_state 0D_NOT_type
+  ! in: f_ran_state 0D_NOT_type
   if (c_associated(ran_state))   call c_f_pointer(ran_state, f_ran_state)
   call ran_uniform(f_harvest%data, f_ran_state)
 

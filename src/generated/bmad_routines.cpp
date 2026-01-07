@@ -434,27 +434,37 @@ void Bmad::attribute_bookkeeper(
   fortran_attribute_bookkeeper(
       /* void* */ ele.get_fortran_ptr(), /* bool* */ _force_bookkeeping);
 }
-void Bmad::attribute_free(
-    int& ix_ele,
-    std::string& attrib_name,
+Bmad::AttributeFree1 Bmad::attribute_free(
+    int ix_ele,
+    std::string attrib_name,
     LatProxy& lat,
-    optional_ref<bool> err_print_flag,
-    optional_ref<bool> except_overlay,
-    optional_ref<bool> dependent_attribs_free,
-    optional_ref<int> why_not_free,
-    bool& free) {
-  auto _attrib_name = attrib_name.c_str(); // ptr, inout, required
-  auto* _err_print_flag = err_print_flag.has_value()
-      ? &err_print_flag->get()
-      : nullptr; // inout, optional
-  auto* _except_overlay = except_overlay.has_value()
-      ? &except_overlay->get()
-      : nullptr; // inout, optional
-  auto* _dependent_attribs_free = dependent_attribs_free.has_value()
-      ? &dependent_attribs_free->get()
-      : nullptr; // inout, optional
-  auto* _why_not_free = why_not_free.has_value() ? &why_not_free->get()
-                                                 : nullptr; // inout, optional
+    std::optional<bool> err_print_flag,
+    std::optional<bool> except_overlay,
+    std::optional<bool> dependent_attribs_free) {
+  auto _attrib_name = attrib_name.c_str();
+  bool err_print_flag_lvalue;
+  auto* _err_print_flag{&err_print_flag_lvalue};
+  if (err_print_flag.has_value()) {
+    err_print_flag_lvalue = err_print_flag.value();
+  } else {
+    _err_print_flag = nullptr;
+  }
+  bool except_overlay_lvalue;
+  auto* _except_overlay{&except_overlay_lvalue};
+  if (except_overlay.has_value()) {
+    except_overlay_lvalue = except_overlay.value();
+  } else {
+    _except_overlay = nullptr;
+  }
+  bool dependent_attribs_free_lvalue;
+  auto* _dependent_attribs_free{&dependent_attribs_free_lvalue};
+  if (dependent_attribs_free.has_value()) {
+    dependent_attribs_free_lvalue = dependent_attribs_free.value();
+  } else {
+    _dependent_attribs_free = nullptr;
+  }
+  int _why_not_free{};
+  bool _free{};
   fortran_attribute_free1(
       /* int& */ ix_ele,
       /* const char* */ _attrib_name,
@@ -462,60 +472,82 @@ void Bmad::attribute_free(
       /* bool* */ _err_print_flag,
       /* bool* */ _except_overlay,
       /* bool* */ _dependent_attribs_free,
-      /* int* */ _why_not_free,
-      /* bool& */ free);
+      /* int& */ _why_not_free,
+      /* bool& */ _free);
+  return AttributeFree1{_why_not_free, _free};
 }
-void Bmad::attribute_free(
+Bmad::AttributeFree2 Bmad::attribute_free(
     EleProxy& ele,
-    std::string& attrib_name,
-    optional_ref<bool> err_print_flag,
-    optional_ref<bool> except_overlay,
-    optional_ref<bool> dependent_attribs_free,
-    optional_ref<int> why_not_free,
-    bool& free) {
-  auto _attrib_name = attrib_name.c_str(); // ptr, inout, required
-  auto* _err_print_flag = err_print_flag.has_value()
-      ? &err_print_flag->get()
-      : nullptr; // inout, optional
-  auto* _except_overlay = except_overlay.has_value()
-      ? &except_overlay->get()
-      : nullptr; // inout, optional
-  auto* _dependent_attribs_free = dependent_attribs_free.has_value()
-      ? &dependent_attribs_free->get()
-      : nullptr; // inout, optional
-  auto* _why_not_free = why_not_free.has_value() ? &why_not_free->get()
-                                                 : nullptr; // inout, optional
+    std::string attrib_name,
+    std::optional<bool> err_print_flag,
+    std::optional<bool> except_overlay,
+    std::optional<bool> dependent_attribs_free) {
+  auto _attrib_name = attrib_name.c_str();
+  bool err_print_flag_lvalue;
+  auto* _err_print_flag{&err_print_flag_lvalue};
+  if (err_print_flag.has_value()) {
+    err_print_flag_lvalue = err_print_flag.value();
+  } else {
+    _err_print_flag = nullptr;
+  }
+  bool except_overlay_lvalue;
+  auto* _except_overlay{&except_overlay_lvalue};
+  if (except_overlay.has_value()) {
+    except_overlay_lvalue = except_overlay.value();
+  } else {
+    _except_overlay = nullptr;
+  }
+  bool dependent_attribs_free_lvalue;
+  auto* _dependent_attribs_free{&dependent_attribs_free_lvalue};
+  if (dependent_attribs_free.has_value()) {
+    dependent_attribs_free_lvalue = dependent_attribs_free.value();
+  } else {
+    _dependent_attribs_free = nullptr;
+  }
+  int _why_not_free{};
+  bool _free{};
   fortran_attribute_free2(
       /* void* */ ele.get_fortran_ptr(),
       /* const char* */ _attrib_name,
       /* bool* */ _err_print_flag,
       /* bool* */ _except_overlay,
       /* bool* */ _dependent_attribs_free,
-      /* int* */ _why_not_free,
-      /* bool& */ free);
+      /* int& */ _why_not_free,
+      /* bool& */ _free);
+  return AttributeFree2{_why_not_free, _free};
 }
-void Bmad::attribute_free(
-    int& ix_ele,
-    int& ix_branch,
-    std::string& attrib_name,
+Bmad::AttributeFree3 Bmad::attribute_free(
+    int ix_ele,
+    int ix_branch,
+    std::string attrib_name,
     LatProxy& lat,
-    optional_ref<bool> err_print_flag,
-    optional_ref<bool> except_overlay,
-    optional_ref<bool> dependent_attribs_free,
-    optional_ref<int> why_not_free,
-    bool& free) {
-  auto _attrib_name = attrib_name.c_str(); // ptr, inout, required
-  auto* _err_print_flag = err_print_flag.has_value()
-      ? &err_print_flag->get()
-      : nullptr; // inout, optional
-  auto* _except_overlay = except_overlay.has_value()
-      ? &except_overlay->get()
-      : nullptr; // inout, optional
-  auto* _dependent_attribs_free = dependent_attribs_free.has_value()
-      ? &dependent_attribs_free->get()
-      : nullptr; // inout, optional
-  auto* _why_not_free = why_not_free.has_value() ? &why_not_free->get()
-                                                 : nullptr; // inout, optional
+    std::optional<bool> err_print_flag,
+    std::optional<bool> except_overlay,
+    std::optional<bool> dependent_attribs_free) {
+  auto _attrib_name = attrib_name.c_str();
+  bool err_print_flag_lvalue;
+  auto* _err_print_flag{&err_print_flag_lvalue};
+  if (err_print_flag.has_value()) {
+    err_print_flag_lvalue = err_print_flag.value();
+  } else {
+    _err_print_flag = nullptr;
+  }
+  bool except_overlay_lvalue;
+  auto* _except_overlay{&except_overlay_lvalue};
+  if (except_overlay.has_value()) {
+    except_overlay_lvalue = except_overlay.value();
+  } else {
+    _except_overlay = nullptr;
+  }
+  bool dependent_attribs_free_lvalue;
+  auto* _dependent_attribs_free{&dependent_attribs_free_lvalue};
+  if (dependent_attribs_free.has_value()) {
+    dependent_attribs_free_lvalue = dependent_attribs_free.value();
+  } else {
+    _dependent_attribs_free = nullptr;
+  }
+  int _why_not_free{};
+  bool _free{};
   fortran_attribute_free3(
       /* int& */ ix_ele,
       /* int& */ ix_branch,
@@ -524,82 +556,109 @@ void Bmad::attribute_free(
       /* bool* */ _err_print_flag,
       /* bool* */ _except_overlay,
       /* bool* */ _dependent_attribs_free,
-      /* int* */ _why_not_free,
-      /* bool& */ free);
+      /* int& */ _why_not_free,
+      /* bool& */ _free);
+  return AttributeFree3{_why_not_free, _free};
 }
-void Bmad::attribute_index(
+Bmad::AttributeIndex1 Bmad::attribute_index(
     EleProxy& ele,
-    std::string& name,
-    optional_ref<std::string> full_name,
-    optional_ref<bool> can_abbreviate,
-    optional_ref<bool> print_error,
-    int& attrib_index) {
-  auto _name = name.c_str(); // ptr, inout, required
-  const char* _full_name =
-      full_name.has_value() ? full_name->get().c_str() : nullptr;
-  auto* _can_abbreviate = can_abbreviate.has_value()
-      ? &can_abbreviate->get()
-      : nullptr; // inout, optional
-  auto* _print_error = print_error.has_value() ? &print_error->get()
-                                               : nullptr; // inout, optional
+    std::string name,
+    std::optional<bool> can_abbreviate,
+    std::optional<bool> print_error) {
+  auto _name = name.c_str();
+  char _full_name[4096];
+  bool can_abbreviate_lvalue;
+  auto* _can_abbreviate{&can_abbreviate_lvalue};
+  if (can_abbreviate.has_value()) {
+    can_abbreviate_lvalue = can_abbreviate.value();
+  } else {
+    _can_abbreviate = nullptr;
+  }
+  bool print_error_lvalue;
+  auto* _print_error{&print_error_lvalue};
+  if (print_error.has_value()) {
+    print_error_lvalue = print_error.value();
+  } else {
+    _print_error = nullptr;
+  }
+  int _attrib_index{};
   fortran_attribute_index1(
       /* void* */ ele.get_fortran_ptr(),
       /* const char* */ _name,
       /* const char* */ _full_name,
       /* bool* */ _can_abbreviate,
       /* bool* */ _print_error,
-      /* int& */ attrib_index);
+      /* int& */ _attrib_index);
+  return AttributeIndex1{_full_name, _attrib_index};
 }
-void Bmad::attribute_index(
-    int& key,
-    std::string& name,
-    optional_ref<std::string> full_name,
-    optional_ref<bool> can_abbreviate,
-    optional_ref<bool> print_error,
-    int& attrib_index) {
-  auto _name = name.c_str(); // ptr, inout, required
-  const char* _full_name =
-      full_name.has_value() ? full_name->get().c_str() : nullptr;
-  auto* _can_abbreviate = can_abbreviate.has_value()
-      ? &can_abbreviate->get()
-      : nullptr; // inout, optional
-  auto* _print_error = print_error.has_value() ? &print_error->get()
-                                               : nullptr; // inout, optional
+Bmad::AttributeIndex2 Bmad::attribute_index(
+    int key,
+    std::string name,
+    std::optional<bool> can_abbreviate,
+    std::optional<bool> print_error) {
+  auto _name = name.c_str();
+  char _full_name[4096];
+  bool can_abbreviate_lvalue;
+  auto* _can_abbreviate{&can_abbreviate_lvalue};
+  if (can_abbreviate.has_value()) {
+    can_abbreviate_lvalue = can_abbreviate.value();
+  } else {
+    _can_abbreviate = nullptr;
+  }
+  bool print_error_lvalue;
+  auto* _print_error{&print_error_lvalue};
+  if (print_error.has_value()) {
+    print_error_lvalue = print_error.value();
+  } else {
+    _print_error = nullptr;
+  }
+  int _attrib_index{};
   fortran_attribute_index2(
       /* int& */ key,
       /* const char* */ _name,
       /* const char* */ _full_name,
       /* bool* */ _can_abbreviate,
       /* bool* */ _print_error,
-      /* int& */ attrib_index);
+      /* int& */ _attrib_index);
+  return AttributeIndex2{_full_name, _attrib_index};
 }
-void Bmad::attribute_name(
-    int& key,
-    int& ix_att,
-    optional_ref<bool> show_private,
-    std::string& attrib_name) {
-  auto* _show_private = show_private.has_value() ? &show_private->get()
-                                                 : nullptr; // inout, optional
-  auto _attrib_name = attrib_name.c_str(); // ptr, inout, required
+std::string Bmad::attribute_name(
+    int key,
+    int ix_att,
+    std::optional<bool> show_private) {
+  bool show_private_lvalue;
+  auto* _show_private{&show_private_lvalue};
+  if (show_private.has_value()) {
+    show_private_lvalue = show_private.value();
+  } else {
+    _show_private = nullptr;
+  }
+  char _attrib_name[4096];
   fortran_attribute_name1(
       /* int& */ key,
       /* int& */ ix_att,
       /* bool* */ _show_private,
       /* const char* */ _attrib_name);
+  return _attrib_name;
 }
-void Bmad::attribute_name(
+std::string Bmad::attribute_name(
     EleProxy& ele,
-    int& ix_att,
-    optional_ref<bool> show_private,
-    std::string& attrib_name) {
-  auto* _show_private = show_private.has_value() ? &show_private->get()
-                                                 : nullptr; // inout, optional
-  auto _attrib_name = attrib_name.c_str(); // ptr, inout, required
+    int ix_att,
+    std::optional<bool> show_private) {
+  bool show_private_lvalue;
+  auto* _show_private{&show_private_lvalue};
+  if (show_private.has_value()) {
+    show_private_lvalue = show_private.value();
+  } else {
+    _show_private = nullptr;
+  }
+  char _attrib_name[4096];
   fortran_attribute_name2(
       /* void* */ ele.get_fortran_ptr(),
       /* int& */ ix_att,
       /* bool* */ _show_private,
       /* const char* */ _attrib_name);
+  return _attrib_name;
 }
 int Bmad::attribute_type(std::string attrib_name, optional_ref<EleProxy> ele) {
   auto _attrib_name = attrib_name.c_str();
@@ -1095,12 +1154,10 @@ void Bmad::bmad_patch_parameters_to_ptc(
 void Bmad::bp_set_ran_status() {
   fortran_bp_set_ran_status();
 }
-BranchProxy Bmad::branch_equal_branch(BranchProxy& branch2) {
-  BranchProxy _branch1;
+void Bmad::branch_equal_branch(BranchProxy& branch1, BranchProxy& branch2) {
   fortran_branch_equal_branch(
-      /* void* */ _branch1.get_fortran_ptr(),
+      /* void* */ branch1.get_fortran_ptr(),
       /* void* */ branch2.get_fortran_ptr());
-  return std::move(_branch1);
 }
 void Bmad::branch_name(BranchProxy& branch, std::string& name) {
   auto _name = name.c_str(); // ptr, inout, required
@@ -1709,13 +1766,12 @@ void Bmad::complex_taylor_coef(
       /* int* */ _i9,
       /* std::complex<double>& */ coef);
 }
-ComplexTaylorProxy Bmad::complex_taylor_equal_complex_taylor(
+void Bmad::complex_taylor_equal_complex_taylor(
+    ComplexTaylorProxy& complex_taylor1,
     ComplexTaylorProxy& complex_taylor2) {
-  ComplexTaylorProxy _complex_taylor1;
   fortran_complex_taylor_equal_complex_taylor(
-      /* void* */ _complex_taylor1.get_fortran_ptr(),
+      /* void* */ complex_taylor1.get_fortran_ptr(),
       /* void* */ complex_taylor2.get_fortran_ptr());
-  return std::move(_complex_taylor1);
 }
 int Bmad::complex_taylor_exponent_index(FixedArray1D<Int, 6> expn) {
   auto* _expn = expn.data(); // CppWrapperGeneralArgument
@@ -1748,15 +1804,14 @@ Bmad::ComplexTaylorToMat6 Bmad::complex_taylor_to_mat6(
   vec_to_matrix(_mat6_vec, mat6);
   return ComplexTaylorToMat6{_vec0, mat6, std::move(r_out)};
 }
-ComplexTaylorProxyAlloc1D Bmad::complex_taylors_equal_complex_taylors(
+void Bmad::complex_taylors_equal_complex_taylors(
+    ComplexTaylorProxyAlloc1D& complex_taylor1,
     ComplexTaylorProxyAlloc1D& complex_taylor2) {
-  // intent=out allocatable type array
-  auto complex_taylor1{ComplexTaylorProxyAlloc1D()};
+  // intent=inout allocatable type array
   // intent=in allocatable type array
   fortran_complex_taylors_equal_complex_taylors(
       /* void* */ complex_taylor1.get_fortran_ptr(),
       /* void* */ complex_taylor2.get_fortran_ptr());
-  return std::move(complex_taylor1);
 }
 void Bmad::compute_slave_coupler(EleProxy& slave) {
   fortran_compute_slave_coupler(/* void* */ slave.get_fortran_ptr());
@@ -2703,12 +2758,10 @@ void Bmad::ele_compute_ref_energy_and_time(
       /* void* */ param.get_fortran_ptr(),
       /* bool& */ err_flag);
 }
-EleProxy Bmad::ele_equal_ele(EleProxy& ele_in) {
-  EleProxy _ele_out;
+void Bmad::ele_equal_ele(EleProxy& ele_out, EleProxy& ele_in) {
   fortran_ele_equal_ele(
-      /* void* */ _ele_out.get_fortran_ptr(),
+      /* void* */ ele_out.get_fortran_ptr(),
       /* void* */ ele_in.get_fortran_ptr());
-  return std::move(_ele_out);
 }
 EleProxy Bmad::ele_equals_ele(EleProxy& ele_in, bool update_nametable) {
   EleProxy _ele_out;
@@ -2973,13 +3026,11 @@ void Bmad::ele_value_has_changed(
       /* bool& */ set_old,
       /* bool& */ has_changed);
 }
-EleProxyAlloc1D Bmad::ele_vec_equal_ele_vec(EleProxyAlloc1D& ele2) {
-  // intent=out allocatable type array
-  auto ele1{EleProxyAlloc1D()};
+void Bmad::ele_vec_equal_ele_vec(EleProxyAlloc1D& ele1, EleProxyAlloc1D& ele2) {
+  // intent=inout allocatable type array
   // intent=in allocatable type array
   fortran_ele_vec_equal_ele_vec(
       /* void* */ ele1.get_fortran_ptr(), /* void* */ ele2.get_fortran_ptr());
-  return std::move(ele1);
 }
 Bmad::ElecMultipoleField Bmad::elec_multipole_field(
     double a,
@@ -3003,61 +3054,68 @@ Bmad::ElecMultipoleField Bmad::elec_multipole_field(
   vec_to_matrix(_dE_vec, dE);
   return ElecMultipoleField{_Ex, _Ey, dE, _compute_dE};
 }
-void Bmad::element_at_s(
+Bmad::ElementAtSBranch Bmad::element_at_s(
     BranchProxy& branch,
-    double& s,
-    bool& choose_max,
-    optional_ref<bool> err_flag,
-    optional_ref<double> s_eff,
-    optional_ref<CoordProxy> position,
-    optional_ref<bool> print_err,
-    int& ix_ele) {
-  auto* _err_flag =
-      err_flag.has_value() ? &err_flag->get() : nullptr; // inout, optional
-  auto* _s_eff = s_eff.has_value() ? &s_eff->get() : nullptr; // inout, optional
-  auto* _position = position.has_value() ? position->get().get_fortran_ptr()
-                                         : nullptr; // input, optional
-  auto* _print_err =
-      print_err.has_value() ? &print_err->get() : nullptr; // inout, optional
+    double s,
+    bool choose_max,
+    std::optional<bool> print_err) {
+  bool _err_flag{};
+  double _s_eff{};
+  CoordProxy _position;
+  bool print_err_lvalue;
+  auto* _print_err{&print_err_lvalue};
+  if (print_err.has_value()) {
+    print_err_lvalue = print_err.value();
+  } else {
+    _print_err = nullptr;
+  }
+  int _ix_ele{};
   fortran_element_at_s_branch(
       /* void* */ branch.get_fortran_ptr(),
       /* double& */ s,
       /* bool& */ choose_max,
-      /* bool* */ _err_flag,
-      /* double* */ _s_eff,
-      /* void* */ _position,
+      /* bool& */ _err_flag,
+      /* double& */ _s_eff,
+      /* void* */ _position.get_fortran_ptr(),
       /* bool* */ _print_err,
-      /* int& */ ix_ele);
+      /* int& */ _ix_ele);
+  return ElementAtSBranch{_err_flag, _s_eff, std::move(_position), _ix_ele};
 }
-void Bmad::element_at_s(
+Bmad::ElementAtSLat Bmad::element_at_s(
     LatProxy& lat,
-    double& s,
-    bool& choose_max,
-    optional_ref<int> ix_branch,
-    optional_ref<bool> err_flag,
-    optional_ref<double> s_eff,
-    optional_ref<CoordProxy> position,
-    optional_ref<bool> print_err,
-    int& ix_ele) {
-  auto* _ix_branch =
-      ix_branch.has_value() ? &ix_branch->get() : nullptr; // inout, optional
-  auto* _err_flag =
-      err_flag.has_value() ? &err_flag->get() : nullptr; // inout, optional
-  auto* _s_eff = s_eff.has_value() ? &s_eff->get() : nullptr; // inout, optional
-  auto* _position = position.has_value() ? position->get().get_fortran_ptr()
-                                         : nullptr; // input, optional
-  auto* _print_err =
-      print_err.has_value() ? &print_err->get() : nullptr; // inout, optional
+    double s,
+    bool choose_max,
+    std::optional<int> ix_branch,
+    std::optional<bool> print_err) {
+  int ix_branch_lvalue;
+  auto* _ix_branch{&ix_branch_lvalue};
+  if (ix_branch.has_value()) {
+    ix_branch_lvalue = ix_branch.value();
+  } else {
+    _ix_branch = nullptr;
+  }
+  bool _err_flag{};
+  double _s_eff{};
+  CoordProxy _position;
+  bool print_err_lvalue;
+  auto* _print_err{&print_err_lvalue};
+  if (print_err.has_value()) {
+    print_err_lvalue = print_err.value();
+  } else {
+    _print_err = nullptr;
+  }
+  int _ix_ele{};
   fortran_element_at_s_lat(
       /* void* */ lat.get_fortran_ptr(),
       /* double& */ s,
       /* bool& */ choose_max,
       /* int* */ _ix_branch,
-      /* bool* */ _err_flag,
-      /* double* */ _s_eff,
-      /* void* */ _position,
+      /* bool& */ _err_flag,
+      /* double& */ _s_eff,
+      /* void* */ _position.get_fortran_ptr(),
       /* bool* */ _print_err,
-      /* int& */ ix_ele);
+      /* int& */ _ix_ele);
+  return ElementAtSLat{_err_flag, _s_eff, std::move(_position), _ix_ele};
 }
 void Bmad::element_slice_iterator(
     EleProxy& ele,
@@ -3230,32 +3288,30 @@ FixedArray1D<Real, 10> Bmad::em_field_kick_vector_time(
       /* void* */ _extra_field);
   return _dvec_dt;
 }
-EmFieldProxy Bmad::em_field_plus_em_field(
+void Bmad::em_field_plus_em_field(
     EmFieldProxy& field1,
-    EmFieldProxy& field2) {
-  EmFieldProxy _field_tot;
+    EmFieldProxy& field2,
+    EmFieldProxy& field_tot) {
   fortran_em_field_plus_em_field(
       /* void* */ field1.get_fortran_ptr(),
       /* void* */ field2.get_fortran_ptr(),
-      /* void* */ _field_tot.get_fortran_ptr());
-  return std::move(_field_tot);
+      /* void* */ field_tot.get_fortran_ptr());
 }
-EmTaylorProxy Bmad::em_taylor_equal_em_taylor(EmTaylorProxy& em_taylor2) {
-  EmTaylorProxy _em_taylor1;
+void Bmad::em_taylor_equal_em_taylor(
+    EmTaylorProxy& em_taylor1,
+    EmTaylorProxy& em_taylor2) {
   fortran_em_taylor_equal_em_taylor(
-      /* void* */ _em_taylor1.get_fortran_ptr(),
+      /* void* */ em_taylor1.get_fortran_ptr(),
       /* void* */ em_taylor2.get_fortran_ptr());
-  return std::move(_em_taylor1);
 }
-EmTaylorProxyAlloc1D Bmad::em_taylors_equal_em_taylors(
+void Bmad::em_taylors_equal_em_taylors(
+    EmTaylorProxyAlloc1D& em_taylor1,
     EmTaylorProxyAlloc1D& em_taylor2) {
-  // intent=out allocatable type array
-  auto em_taylor1{EmTaylorProxyAlloc1D()};
+  // intent=inout allocatable type array
   // intent=in allocatable type array
   fortran_em_taylors_equal_em_taylors(
       /* void* */ em_taylor1.get_fortran_ptr(),
       /* void* */ em_taylor2.get_fortran_ptr());
-  return std::move(em_taylor1);
 }
 Bmad::Emit6d Bmad::emit_6d(
     EleProxy& ele_ref,
@@ -5820,12 +5876,10 @@ bool Bmad::lat_ele_locator(
       /* bool* */ _append_eles);
   return _err;
 }
-LatProxy Bmad::lat_equal_lat(LatProxy& lat_in) {
-  LatProxy _lat_out;
+void Bmad::lat_equal_lat(LatProxy& lat_out, LatProxy& lat_in) {
   fortran_lat_equal_lat(
-      /* void* */ _lat_out.get_fortran_ptr(),
+      /* void* */ lat_out.get_fortran_ptr(),
       /* void* */ lat_in.get_fortran_ptr());
-  return std::move(_lat_out);
 }
 void Bmad::lat_geometry(LatProxy& lat) {
   fortran_lat_geometry(/* void* */ lat.get_fortran_ptr());
@@ -5870,13 +5924,11 @@ bool Bmad::lat_sanity_check(LatProxy& lat) {
 void Bmad::lat_to_ptc_layout(LatProxy& lat) {
   fortran_lat_to_ptc_layout(/* void* */ lat.get_fortran_ptr());
 }
-LatProxyAlloc1D Bmad::lat_vec_equal_lat_vec(LatProxyAlloc1D& lat2) {
-  // intent=out allocatable type array
-  auto lat1{LatProxyAlloc1D()};
+void Bmad::lat_vec_equal_lat_vec(LatProxyAlloc1D& lat1, LatProxyAlloc1D& lat2) {
+  // intent=inout allocatable type array
   // intent=in allocatable type array
   fortran_lat_vec_equal_lat_vec(
       /* void* */ lat1.get_fortran_ptr(), /* void* */ lat2.get_fortran_ptr());
-  return std::move(lat1);
 }
 bool Bmad::lattice_bookkeeper(LatProxy& lat) {
   bool _err_flag{};
@@ -6478,15 +6530,14 @@ SpinOrbitMap1Proxy Bmad::map1_make_unit() {
   fortran_map1_make_unit(/* void* */ _map1.get_fortran_ptr());
   return std::move(_map1);
 }
-SpinOrbitMap1Proxy Bmad::map1_times_map1(
+void Bmad::map1_times_map1(
     SpinOrbitMap1Proxy& map2,
-    SpinOrbitMap1Proxy& map1) {
-  SpinOrbitMap1Proxy _map_out;
+    SpinOrbitMap1Proxy& map1,
+    SpinOrbitMap1Proxy& map_out) {
   fortran_map1_times_map1(
       /* void* */ map2.get_fortran_ptr(),
       /* void* */ map1.get_fortran_ptr(),
-      /* void* */ _map_out.get_fortran_ptr());
-  return std::move(_map_out);
+      /* void* */ map_out.get_fortran_ptr());
 }
 TaylorProxyArray1D Bmad::map_to_angle_coords(
     FixedArray1D<TaylorProxy, 6> t_canon) {
@@ -8297,50 +8348,49 @@ BranchProxy Bmad::pointer_to_branch(
       /* void* */ _branch_ptr.get_fortran_ptr());
   return std::move(_branch_ptr);
 }
-void Bmad::pointer_to_ele(
+EleProxy Bmad::pointer_to_ele(
     LatProxy& lat,
-    int& ix_ele,
-    optional_ref<int> ix_branch,
-    EleProxy& ele_ptr) {
-  auto* _ix_branch =
-      ix_branch.has_value() ? &ix_branch->get() : nullptr; // inout, optional
-  auto _ele_ptr = &ele_ptr; // input, required, pointer
+    int ix_ele,
+    std::optional<int> ix_branch) {
+  int ix_branch_lvalue;
+  auto* _ix_branch{&ix_branch_lvalue};
+  if (ix_branch.has_value()) {
+    ix_branch_lvalue = ix_branch.value();
+  } else {
+    _ix_branch = nullptr;
+  }
+  EleProxy _ele_ptr;
   fortran_pointer_to_ele1(
       /* void* */ lat.get_fortran_ptr(),
       /* int& */ ix_ele,
       /* int* */ _ix_branch,
-      /* void* */ &ele_ptr);
+      /* void* */ _ele_ptr.get_fortran_ptr());
+  return std::move(_ele_ptr);
 }
-void Bmad::pointer_to_ele(
-    LatProxy& lat,
-    LatEleLocProxy& ele_loc,
-    EleProxy& ele_ptr) {
-  auto _ele_ptr = &ele_ptr; // input, required, pointer
+EleProxy Bmad::pointer_to_ele(LatProxy& lat, LatEleLocProxy& ele_loc) {
+  EleProxy _ele_ptr;
   fortran_pointer_to_ele2(
       /* void* */ lat.get_fortran_ptr(),
       /* void* */ ele_loc.get_fortran_ptr(),
-      /* void* */ &ele_ptr);
+      /* void* */ _ele_ptr.get_fortran_ptr());
+  return std::move(_ele_ptr);
 }
-void Bmad::pointer_to_ele(
-    LatProxy& lat,
-    std::string& ele_name,
-    EleProxy& ele_ptr) {
-  auto _ele_name = ele_name.c_str(); // ptr, inout, required
-  auto _ele_ptr = &ele_ptr; // input, required, pointer
+EleProxy Bmad::pointer_to_ele(LatProxy& lat, std::string ele_name) {
+  auto _ele_name = ele_name.c_str();
+  EleProxy _ele_ptr;
   fortran_pointer_to_ele3(
       /* void* */ lat.get_fortran_ptr(),
       /* const char* */ _ele_name,
-      /* void* */ &ele_ptr);
+      /* void* */ _ele_ptr.get_fortran_ptr());
+  return std::move(_ele_ptr);
 }
-void Bmad::pointer_to_ele(
-    LatProxy& lat,
-    EleProxy& foreign_ele,
-    EleProxy& ele_ptr) {
-  auto _ele_ptr = &ele_ptr; // input, required, pointer
+EleProxy Bmad::pointer_to_ele(LatProxy& lat, EleProxy& foreign_ele) {
+  EleProxy _ele_ptr;
   fortran_pointer_to_ele4(
       /* void* */ lat.get_fortran_ptr(),
       /* void* */ foreign_ele.get_fortran_ptr(),
-      /* void* */ &ele_ptr);
+      /* void* */ _ele_ptr.get_fortran_ptr());
+  return std::move(_ele_ptr);
 }
 Bmad::PointerToElementAtS Bmad::pointer_to_element_at_s(
     BranchProxy& branch,
@@ -9034,30 +9084,18 @@ void Bmad::re_allocate_eles(
 void Bmad::re_allocate(
     Wall3dSectionProxyAlloc1D& section,
     int n,
-    std::optional<bool> exact) {
+    optional_ref<bool> exact) {
   // intent=inout allocatable type array
-  bool exact_lvalue;
-  auto* _exact{&exact_lvalue};
-  if (exact.has_value()) {
-    exact_lvalue = exact.value();
-  } else {
-    _exact = nullptr;
-  }
+  auto* _exact = exact.has_value() ? &exact->get() : nullptr; // inout, optional
   fortran_re_allocate_wall3d_section_array(
       /* void* */ section.get_fortran_ptr(), /* int& */ n, /* bool* */ _exact);
 }
 void Bmad::re_allocate(
     Wall3dVertexProxyAlloc1D& v,
     int n,
-    std::optional<bool> exact) {
+    optional_ref<bool> exact) {
   // intent=inout allocatable type array
-  bool exact_lvalue;
-  auto* _exact{&exact_lvalue};
-  if (exact.has_value()) {
-    exact_lvalue = exact.value();
-  } else {
-    _exact = nullptr;
-  }
+  auto* _exact = exact.has_value() ? &exact->get() : nullptr; // inout, optional
   fortran_re_allocate_wall3d_vertex_array(
       /* void* */ v.get_fortran_ptr(), /* int& */ n, /* bool* */ _exact);
 }
@@ -11030,12 +11068,10 @@ Bmad::TargetRotMats Bmad::target_rot_mats(FixedArray1D<Real, 3> r_center) {
   vec_to_matrix(_w_to_ele_vec, w_to_ele);
   return TargetRotMats{w_to_target, w_to_ele};
 }
-TaylorProxy Bmad::taylor_equal_taylor(TaylorProxy& taylor2) {
-  TaylorProxy _taylor1;
+void Bmad::taylor_equal_taylor(TaylorProxy& taylor1, TaylorProxy& taylor2) {
   fortran_taylor_equal_taylor(
-      /* void* */ _taylor1.get_fortran_ptr(),
+      /* void* */ taylor1.get_fortran_ptr(),
       /* void* */ taylor2.get_fortran_ptr());
-  return std::move(_taylor1);
 }
 Bmad::TaylorInverse Bmad::taylor_inverse(TaylorProxyAlloc1D& taylor_in) {
   // intent=in allocatable type array
@@ -11082,14 +11118,14 @@ MadMapProxy Bmad::taylor_to_mad_map(
       /* void* */ _map.get_fortran_ptr());
   return std::move(_map);
 }
-TaylorProxyAlloc1D Bmad::taylors_equal_taylors(TaylorProxyAlloc1D& taylor2) {
-  // intent=out allocatable type array
-  auto taylor1{TaylorProxyAlloc1D()};
+void Bmad::taylors_equal_taylors(
+    TaylorProxyAlloc1D& taylor1,
+    TaylorProxyAlloc1D& taylor2) {
+  // intent=inout allocatable type array
   // intent=in allocatable type array
   fortran_taylors_equal_taylors(
       /* void* */ taylor1.get_fortran_ptr(),
       /* void* */ taylor2.get_fortran_ptr());
-  return std::move(taylor1);
 }
 void Bmad::tilt_coords(
     double tilt_val,
@@ -13077,25 +13113,34 @@ void Bmad::twiss3_propagate_all(LatProxy& lat, std::optional<int> ix_branch) {
   fortran_twiss3_propagate_all(
       /* void* */ lat.get_fortran_ptr(), /* int* */ _ix_branch);
 }
-void Bmad::twiss_and_track(
+int Bmad::twiss_and_track(
     LatProxy& lat,
     CoordArrayProxyAlloc1D& orb_array,
-    optional_ref<int> status,
-    optional_ref<bool> print_err,
-    optional_ref<bool> calc_chrom) {
+    std::optional<bool> print_err,
+    std::optional<bool> calc_chrom) {
   // intent=inout allocatable type array
-  auto* _status =
-      status.has_value() ? &status->get() : nullptr; // inout, optional
-  auto* _print_err =
-      print_err.has_value() ? &print_err->get() : nullptr; // inout, optional
-  auto* _calc_chrom =
-      calc_chrom.has_value() ? &calc_chrom->get() : nullptr; // inout, optional
+  int _status{};
+  bool print_err_lvalue;
+  auto* _print_err{&print_err_lvalue};
+  if (print_err.has_value()) {
+    print_err_lvalue = print_err.value();
+  } else {
+    _print_err = nullptr;
+  }
+  bool calc_chrom_lvalue;
+  auto* _calc_chrom{&calc_chrom_lvalue};
+  if (calc_chrom.has_value()) {
+    calc_chrom_lvalue = calc_chrom.value();
+  } else {
+    _calc_chrom = nullptr;
+  }
   fortran_twiss_and_track_all(
       /* void* */ lat.get_fortran_ptr(),
       /* void* */ orb_array.get_fortran_ptr(),
-      /* int* */ _status,
+      /* int& */ _status,
       /* bool* */ _print_err,
       /* bool* */ _calc_chrom);
+  return _status;
 }
 bool Bmad::twiss_and_track_at_s(
     LatProxy& lat,
@@ -13147,33 +13192,47 @@ bool Bmad::twiss_and_track_at_s(
       /* bool* */ _compute_floor_coords);
   return _err;
 }
-void Bmad::twiss_and_track(
+int Bmad::twiss_and_track(
     LatProxy& lat,
     CoordProxyAlloc1D& orb,
-    optional_ref<int> status,
-    optional_ref<int> ix_branch,
-    optional_ref<bool> print_err,
-    optional_ref<bool> calc_chrom,
+    std::optional<int> ix_branch,
+    std::optional<bool> print_err,
+    std::optional<bool> calc_chrom,
     optional_ref<CoordProxy> orb_start) {
   // intent=inout allocatable type array
-  auto* _status =
-      status.has_value() ? &status->get() : nullptr; // inout, optional
-  auto* _ix_branch =
-      ix_branch.has_value() ? &ix_branch->get() : nullptr; // inout, optional
-  auto* _print_err =
-      print_err.has_value() ? &print_err->get() : nullptr; // inout, optional
-  auto* _calc_chrom =
-      calc_chrom.has_value() ? &calc_chrom->get() : nullptr; // inout, optional
+  int _status{};
+  int ix_branch_lvalue;
+  auto* _ix_branch{&ix_branch_lvalue};
+  if (ix_branch.has_value()) {
+    ix_branch_lvalue = ix_branch.value();
+  } else {
+    _ix_branch = nullptr;
+  }
+  bool print_err_lvalue;
+  auto* _print_err{&print_err_lvalue};
+  if (print_err.has_value()) {
+    print_err_lvalue = print_err.value();
+  } else {
+    _print_err = nullptr;
+  }
+  bool calc_chrom_lvalue;
+  auto* _calc_chrom{&calc_chrom_lvalue};
+  if (calc_chrom.has_value()) {
+    calc_chrom_lvalue = calc_chrom.value();
+  } else {
+    _calc_chrom = nullptr;
+  }
   auto* _orb_start = orb_start.has_value() ? orb_start->get().get_fortran_ptr()
                                            : nullptr; // input, optional
   fortran_twiss_and_track_branch(
       /* void* */ lat.get_fortran_ptr(),
       /* void* */ orb.get_fortran_ptr(),
-      /* int* */ _status,
+      /* int& */ _status,
       /* int* */ _ix_branch,
       /* bool* */ _print_err,
       /* bool* */ _calc_chrom,
       /* void* */ _orb_start);
+  return _status;
 }
 Bmad::TwissAndTrackFromSToS Bmad::twiss_and_track_from_s_to_s(
     BranchProxy& branch,

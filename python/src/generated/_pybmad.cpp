@@ -184,197 +184,6 @@ PyAtThisEleEnd python_at_this_ele_end(
   auto py_result{PyAtThisEleEnd{is_at_this_end}};
   return py_result;
 }
-struct PyAttributeFree1 {
-  int ix_ele;
-  std::string attrib_name;
-  std::optional<bool> err_print_flag;
-  std::optional<bool> except_overlay;
-  std::optional<bool> dependent_attribs_free;
-  std::optional<int> why_not_free;
-  bool free;
-};
-PyAttributeFree1 python_attribute_free1(
-    int ix_ele,
-    std::string attrib_name,
-    LatProxy& lat,
-    std::optional<bool> err_print_flag,
-    std::optional<bool> except_overlay,
-    std::optional<bool> dependent_attribs_free,
-    std::optional<int> why_not_free,
-    bool free) {
-  Bmad::attribute_free(
-      ix_ele,
-      attrib_name,
-      lat,
-      make_opt_ref(err_print_flag),
-      make_opt_ref(except_overlay),
-      make_opt_ref(dependent_attribs_free),
-      make_opt_ref(why_not_free),
-      free);
-  auto py_result{PyAttributeFree1{
-      ix_ele,
-      attrib_name,
-      err_print_flag,
-      except_overlay,
-      dependent_attribs_free,
-      why_not_free,
-      free}};
-  return py_result;
-}
-struct PyAttributeFree2 {
-  std::string attrib_name;
-  std::optional<bool> err_print_flag;
-  std::optional<bool> except_overlay;
-  std::optional<bool> dependent_attribs_free;
-  std::optional<int> why_not_free;
-  bool free;
-};
-PyAttributeFree2 python_attribute_free2(
-    EleProxy& ele,
-    std::string attrib_name,
-    std::optional<bool> err_print_flag,
-    std::optional<bool> except_overlay,
-    std::optional<bool> dependent_attribs_free,
-    std::optional<int> why_not_free,
-    bool free) {
-  Bmad::attribute_free(
-      ele,
-      attrib_name,
-      make_opt_ref(err_print_flag),
-      make_opt_ref(except_overlay),
-      make_opt_ref(dependent_attribs_free),
-      make_opt_ref(why_not_free),
-      free);
-  auto py_result{PyAttributeFree2{
-      attrib_name,
-      err_print_flag,
-      except_overlay,
-      dependent_attribs_free,
-      why_not_free,
-      free}};
-  return py_result;
-}
-struct PyAttributeFree3 {
-  int ix_ele;
-  int ix_branch;
-  std::string attrib_name;
-  std::optional<bool> err_print_flag;
-  std::optional<bool> except_overlay;
-  std::optional<bool> dependent_attribs_free;
-  std::optional<int> why_not_free;
-  bool free;
-};
-PyAttributeFree3 python_attribute_free3(
-    int ix_ele,
-    int ix_branch,
-    std::string attrib_name,
-    LatProxy& lat,
-    std::optional<bool> err_print_flag,
-    std::optional<bool> except_overlay,
-    std::optional<bool> dependent_attribs_free,
-    std::optional<int> why_not_free,
-    bool free) {
-  Bmad::attribute_free(
-      ix_ele,
-      ix_branch,
-      attrib_name,
-      lat,
-      make_opt_ref(err_print_flag),
-      make_opt_ref(except_overlay),
-      make_opt_ref(dependent_attribs_free),
-      make_opt_ref(why_not_free),
-      free);
-  auto py_result{PyAttributeFree3{
-      ix_ele,
-      ix_branch,
-      attrib_name,
-      err_print_flag,
-      except_overlay,
-      dependent_attribs_free,
-      why_not_free,
-      free}};
-  return py_result;
-}
-struct PyAttributeIndex1 {
-  std::string name;
-  std::optional<std::string> full_name;
-  std::optional<bool> can_abbreviate;
-  std::optional<bool> print_error;
-  int attrib_index;
-};
-PyAttributeIndex1 python_attribute_index1(
-    EleProxy& ele,
-    std::string name,
-    std::optional<std::string> full_name,
-    std::optional<bool> can_abbreviate,
-    std::optional<bool> print_error,
-    int attrib_index) {
-  Bmad::attribute_index(
-      ele,
-      name,
-      make_opt_ref(full_name),
-      make_opt_ref(can_abbreviate),
-      make_opt_ref(print_error),
-      attrib_index);
-  auto py_result{PyAttributeIndex1{
-      name, full_name, can_abbreviate, print_error, attrib_index}};
-  return py_result;
-}
-struct PyAttributeIndex2 {
-  int key;
-  std::string name;
-  std::optional<std::string> full_name;
-  std::optional<bool> can_abbreviate;
-  std::optional<bool> print_error;
-  int attrib_index;
-};
-PyAttributeIndex2 python_attribute_index2(
-    int key,
-    std::string name,
-    std::optional<std::string> full_name,
-    std::optional<bool> can_abbreviate,
-    std::optional<bool> print_error,
-    int attrib_index) {
-  Bmad::attribute_index(
-      key,
-      name,
-      make_opt_ref(full_name),
-      make_opt_ref(can_abbreviate),
-      make_opt_ref(print_error),
-      attrib_index);
-  auto py_result{PyAttributeIndex2{
-      key, name, full_name, can_abbreviate, print_error, attrib_index}};
-  return py_result;
-}
-struct PyAttributeName1 {
-  int key;
-  int ix_att;
-  std::optional<bool> show_private;
-  std::string attrib_name;
-};
-PyAttributeName1 python_attribute_name1(
-    int key,
-    int ix_att,
-    std::optional<bool> show_private,
-    std::string attrib_name) {
-  Bmad::attribute_name(key, ix_att, make_opt_ref(show_private), attrib_name);
-  auto py_result{PyAttributeName1{key, ix_att, show_private, attrib_name}};
-  return py_result;
-}
-struct PyAttributeName2 {
-  int ix_att;
-  std::optional<bool> show_private;
-  std::string attrib_name;
-};
-PyAttributeName2 python_attribute_name2(
-    EleProxy& ele,
-    int ix_att,
-    std::optional<bool> show_private,
-    std::string attrib_name) {
-  Bmad::attribute_name(ele, ix_att, make_opt_ref(show_private), attrib_name);
-  auto py_result{PyAttributeName2{ix_att, show_private, attrib_name}};
-  return py_result;
-}
 struct PyBbuHomVoltageCalc {
   int n_period;
   int ix_stage_last_tracked;
@@ -1067,69 +876,6 @@ PyEleValueHasChanged python_ele_value_has_changed(
     bool has_changed) {
   Bmad::ele_value_has_changed(ele, list, abs_tol, set_old, has_changed);
   auto py_result{PyEleValueHasChanged{has_changed}};
-  return py_result;
-}
-struct PyElementAtSBranch {
-  double s;
-  bool choose_max;
-  std::optional<bool> err_flag;
-  std::optional<double> s_eff;
-  std::optional<bool> print_err;
-  int ix_ele;
-};
-PyElementAtSBranch python_element_at_s_branch(
-    BranchProxy& branch,
-    double s,
-    bool choose_max,
-    std::optional<bool> err_flag,
-    std::optional<double> s_eff,
-    optional_ref<CoordProxy> position,
-    std::optional<bool> print_err,
-    int ix_ele) {
-  Bmad::element_at_s(
-      branch,
-      s,
-      choose_max,
-      make_opt_ref(err_flag),
-      make_opt_ref(s_eff),
-      position,
-      make_opt_ref(print_err),
-      ix_ele);
-  auto py_result{
-      PyElementAtSBranch{s, choose_max, err_flag, s_eff, print_err, ix_ele}};
-  return py_result;
-}
-struct PyElementAtSLat {
-  double s;
-  bool choose_max;
-  std::optional<int> ix_branch;
-  std::optional<bool> err_flag;
-  std::optional<double> s_eff;
-  std::optional<bool> print_err;
-  int ix_ele;
-};
-PyElementAtSLat python_element_at_s_lat(
-    LatProxy& lat,
-    double s,
-    bool choose_max,
-    std::optional<int> ix_branch,
-    std::optional<bool> err_flag,
-    std::optional<double> s_eff,
-    optional_ref<CoordProxy> position,
-    std::optional<bool> print_err,
-    int ix_ele) {
-  Bmad::element_at_s(
-      lat,
-      s,
-      choose_max,
-      make_opt_ref(ix_branch),
-      make_opt_ref(err_flag),
-      make_opt_ref(s_eff),
-      position,
-      make_opt_ref(print_err),
-      ix_ele);
-  auto py_result{PyElementAtSLat{
-      s, choose_max, ix_branch, err_flag, s_eff, print_err, ix_ele}};
   return py_result;
 }
 
@@ -4005,30 +3751,6 @@ PyPhysicalEleEnd python_physical_ele_end(
   auto py_result{PyPhysicalEleEnd{physical_end}};
   return py_result;
 }
-struct PyPointerToEle1 {
-  int ix_ele;
-  std::optional<int> ix_branch;
-};
-PyPointerToEle1 python_pointer_to_ele1(
-    LatProxy& lat,
-    int ix_ele,
-    std::optional<int> ix_branch,
-    EleProxy& ele_ptr) {
-  Bmad::pointer_to_ele(lat, ix_ele, make_opt_ref(ix_branch), ele_ptr);
-  auto py_result{PyPointerToEle1{ix_ele, ix_branch}};
-  return py_result;
-}
-struct PyPointerToEle3 {
-  std::string ele_name;
-};
-PyPointerToEle3 python_pointer_to_ele3(
-    LatProxy& lat,
-    std::string ele_name,
-    EleProxy& ele_ptr) {
-  Bmad::pointer_to_ele(lat, ele_name, ele_ptr);
-  auto py_result{PyPointerToEle3{ele_name}};
-  return py_result;
-}
 
 struct PyPointerToSurfaceDisplacementPt {
   SurfaceDisplacementPtProxy pt;
@@ -4207,7 +3929,6 @@ PyRamperValue python_ramper_value(
 
 struct PyRanGaussScalar {
   double harvest;
-  std::optional<double> sigma_cut;
   std::optional<int> index_quasi;
 };
 PyRanGaussScalar python_ran_gauss_scalar(
@@ -4215,20 +3936,8 @@ PyRanGaussScalar python_ran_gauss_scalar(
     std::optional<double> sigma_cut = std::nullopt,
     std::optional<int> index_quasi = std::nullopt) {
   auto _result = SimUtils::ran_gauss_scalar(
-      ran_state, make_opt_ref(sigma_cut), make_opt_ref(index_quasi));
-  auto py_result{PyRanGaussScalar{_result, sigma_cut, index_quasi}};
-  return py_result;
-}
-
-struct PyRanGaussVector {
-  RealAlloc1D harvest;
-  std::optional<double> sigma_cut;
-};
-PyRanGaussVector python_ran_gauss_vector(
-    optional_ref<RandomStateProxy> ran_state = std::nullopt,
-    std::optional<double> sigma_cut = std::nullopt) {
-  auto _result = SimUtils::ran_gauss_vector(ran_state, make_opt_ref(sigma_cut));
-  auto py_result{PyRanGaussVector{_result, sigma_cut}};
+      ran_state, sigma_cut, make_opt_ref(index_quasi));
+  auto py_result{PyRanGaussScalar{_result, index_quasi}};
   return py_result;
 }
 
@@ -4263,6 +3972,28 @@ PyReAllocateCDouble python_re_allocate_c_double(
     std::optional<double> init_val = std::nullopt) {
   Tao::re_allocate_c_double(re, n, exact, make_opt_ref(init_val));
   auto py_result{PyReAllocateCDouble{init_val}};
+  return py_result;
+}
+struct PyReAllocateWall3dSectionArray {
+  std::optional<bool> exact;
+};
+PyReAllocateWall3dSectionArray python_re_allocate_wall3d_section_array(
+    Wall3dSectionProxyAlloc1D& section,
+    int n,
+    std::optional<bool> exact = std::nullopt) {
+  Bmad::re_allocate(section, n, make_opt_ref(exact));
+  auto py_result{PyReAllocateWall3dSectionArray{exact}};
+  return py_result;
+}
+struct PyReAllocateWall3dVertexArray {
+  std::optional<bool> exact;
+};
+PyReAllocateWall3dVertexArray python_re_allocate_wall3d_vertex_array(
+    Wall3dVertexProxyAlloc1D& v,
+    int n,
+    std::optional<bool> exact = std::nullopt) {
+  Bmad::re_allocate(v, n, make_opt_ref(exact));
+  auto py_result{PyReAllocateWall3dVertexArray{exact}};
   return py_result;
 }
 struct PyReStrQp {
@@ -5739,28 +5470,16 @@ PyTaoPointerToEleShape python_tao_pointer_to_ele_shape(
   auto py_result{PyTaoPointerToEleShape{_result, ix_shape_min}};
   return py_result;
 }
-struct PyTaoPointerToUniverseInt {
-  int ix_uni;
-  std::optional<bool> neg2_to_default;
-};
-PyTaoPointerToUniverseInt python_tao_pointer_to_universe_int(
-    int ix_uni,
-    std::optional<bool> neg2_to_default,
-    TaoUniverseProxy& u) {
-  Tao::tao_pointer_to_universe(ix_uni, make_opt_ref(neg2_to_default), u);
-  auto py_result{PyTaoPointerToUniverseInt{ix_uni, neg2_to_default}};
-  return py_result;
-}
+
 struct PyTaoPointerToUniverseStr {
+  TaoUniverseProxy u;
   std::string string;
-  std::optional<bool> neg2_to_default;
 };
 PyTaoPointerToUniverseStr python_tao_pointer_to_universe_str(
     std::string string,
-    std::optional<bool> neg2_to_default,
-    TaoUniverseProxy& u) {
-  Tao::tao_pointer_to_universe(string, make_opt_ref(neg2_to_default), u);
-  auto py_result{PyTaoPointerToUniverseStr{string, neg2_to_default}};
+    std::optional<bool> neg2_to_default = std::nullopt) {
+  auto _result = Tao::tao_pointer_to_universe(string, neg2_to_default);
+  auto py_result{PyTaoPointerToUniverseStr{_result, string}};
   return py_result;
 }
 struct PyTaoRadIntCalcNeeded {
@@ -6366,52 +6085,6 @@ PyTwiss3Propagate1 python_twiss3_propagate1(
     bool err_flag) {
   Bmad::twiss3_propagate1(ele1, ele2, err_flag);
   auto py_result{PyTwiss3Propagate1{err_flag}};
-  return py_result;
-}
-struct PyTwissAndTrackAll {
-  std::optional<int> status;
-  std::optional<bool> print_err;
-  std::optional<bool> calc_chrom;
-};
-PyTwissAndTrackAll python_twiss_and_track_all(
-    LatProxy& lat,
-    CoordArrayProxyAlloc1D& orb_array,
-    std::optional<int> status = std::nullopt,
-    std::optional<bool> print_err = std::nullopt,
-    std::optional<bool> calc_chrom = std::nullopt) {
-  Bmad::twiss_and_track(
-      lat,
-      orb_array,
-      make_opt_ref(status),
-      make_opt_ref(print_err),
-      make_opt_ref(calc_chrom));
-  auto py_result{PyTwissAndTrackAll{status, print_err, calc_chrom}};
-  return py_result;
-}
-struct PyTwissAndTrackBranch {
-  std::optional<int> status;
-  std::optional<int> ix_branch;
-  std::optional<bool> print_err;
-  std::optional<bool> calc_chrom;
-};
-PyTwissAndTrackBranch python_twiss_and_track_branch(
-    LatProxy& lat,
-    CoordProxyAlloc1D& orb,
-    std::optional<int> status = std::nullopt,
-    std::optional<int> ix_branch = std::nullopt,
-    std::optional<bool> print_err = std::nullopt,
-    std::optional<bool> calc_chrom = std::nullopt,
-    optional_ref<CoordProxy> orb_start = std::nullopt) {
-  Bmad::twiss_and_track(
-      lat,
-      orb,
-      make_opt_ref(status),
-      make_opt_ref(ix_branch),
-      make_opt_ref(print_err),
-      make_opt_ref(calc_chrom),
-      orb_start);
-  auto py_result{
-      PyTwissAndTrackBranch{status, ix_branch, print_err, calc_chrom}};
   return py_result;
 }
 struct PyTypeThisFile {
@@ -9847,52 +9520,76 @@ force_bookkeeping : bool, optional
           LatProxy&,
           std::optional<bool>,
           std::optional<bool>,
-          std::optional<bool>,
-          std::optional<int>,
-          bool>(&python_attribute_free1),
+          std::optional<bool>>(&Bmad::attribute_free),
       py::arg("ix_ele"),
       py::arg("attrib_name"),
       py::arg("lat"),
       py::arg("err_print_flag") = py::none(),
       py::arg("except_overlay") = py::none(),
       py::arg("dependent_attribs_free") = py::none(),
-      py::arg("why_not_free") = py::none(),
-      py::arg("free"),
-      R"""(This function overloaded by attribute_free. See attribute_free for more details.
+      R"""(Overloaded function for:
+
+Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
+except_overlay, dependent_attribs_free, why_not_free) result (free)
+Function attribute_free2 (ele, attrib_name, err_print_flag,
+except_overlay, dependent_attribs_free, why_not_free) result (free)
+Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
+except_overlay, why_not_free) result (free)
+Routine to check if an attribute is free to vary.
+Attributes that cannot be changed directly include super_slave attributes (since
+these attributes are controlled by their super_lords) and attributes that
+are controlled by an overlay.
+Also dependent variables such as the angle of a bend cannot be
+freely variable.
+
+Parameters
+----------
+ix_ele : int
+    Index of element in element array.
+ix_branch : int
+    Branch index of element.
+ele : EleStruct
+    Element containing the attribute
+attrib_name : unknown
+    Name of the attribute. Assumed upper case.
+lat : LatStruct
+    Lattice structure.
+err_print_flag : bool, optional
+    If present and False then suppress printing of an error message if attribute is not free.
+except_overlay : bool, optional
+    If present and True then an attribute that is controlled by an overlay will be treated as free. This is
+    used by, for example, the create_overlay routine.
+dependent_attribs_free : bool, optional
+    If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
+    b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
+
+Return value is a dictionary containing values below.
 
 
 Returns
 -------
-free
+free : bool
+    Set True if attribtute not found or attriubte cannot be changed directly.
+why_not_free : int
+    Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
+    -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
+    -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
+    Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
+    element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
 )""");
-  py::class_<PyAttributeFree1, std::unique_ptr<PyAttributeFree1>>(
+  py::class_<Bmad::AttributeFree1, std::unique_ptr<Bmad::AttributeFree1>>(
       m, "AttributeFree1", "Fortran routine attribute_free1 return value")
-      .def_readonly("ix_ele", &PyAttributeFree1::ix_ele)
-      .def_readonly("attrib_name", &PyAttributeFree1::attrib_name)
-      .def_readonly("err_print_flag", &PyAttributeFree1::err_print_flag)
-      .def_readonly("except_overlay", &PyAttributeFree1::except_overlay)
-      .def_readonly(
-          "dependent_attribs_free", &PyAttributeFree1::dependent_attribs_free)
-      .def_readonly("why_not_free", &PyAttributeFree1::why_not_free)
-      .def_readonly("free", &PyAttributeFree1::free)
-      .def("__len__", [](const PyAttributeFree1&) { return 7; })
+      .def_readonly("why_not_free", &Bmad::AttributeFree1::why_not_free)
+      .def_readonly("free", &Bmad::AttributeFree1::free)
+      .def("__len__", [](const Bmad::AttributeFree1&) { return 2; })
       .def(
-          "__getitem__", [](const PyAttributeFree1& s, size_t i) -> py::object {
-            if (i >= 7)
+          "__getitem__",
+          [](const Bmad::AttributeFree1& s, size_t i) -> py::object {
+            if (i >= 2)
               throw py::index_error();
             if (i == 0)
-              return py::cast(s.ix_ele);
-            if (i == 1)
-              return py::cast(s.attrib_name);
-            if (i == 2)
-              return py::cast(s.err_print_flag);
-            if (i == 3)
-              return py::cast(s.except_overlay);
-            if (i == 4)
-              return py::cast(s.dependent_attribs_free);
-            if (i == 5)
               return py::cast(s.why_not_free);
-            if (i == 6)
+            if (i == 1)
               return py::cast(s.free);
             return py::none();
           });
@@ -9903,48 +9600,75 @@ free
           std::string,
           std::optional<bool>,
           std::optional<bool>,
-          std::optional<bool>,
-          std::optional<int>,
-          bool>(&python_attribute_free2),
+          std::optional<bool>>(&Bmad::attribute_free),
       py::arg("ele"),
       py::arg("attrib_name"),
       py::arg("err_print_flag") = py::none(),
       py::arg("except_overlay") = py::none(),
       py::arg("dependent_attribs_free") = py::none(),
-      py::arg("why_not_free") = py::none(),
-      py::arg("free"),
-      R"""(This function overloaded by attribute_free. See attribute_free for more details.
+      R"""(Overloaded function for:
+
+Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
+except_overlay, dependent_attribs_free, why_not_free) result (free)
+Function attribute_free2 (ele, attrib_name, err_print_flag,
+except_overlay, dependent_attribs_free, why_not_free) result (free)
+Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
+except_overlay, why_not_free) result (free)
+Routine to check if an attribute is free to vary.
+Attributes that cannot be changed directly include super_slave attributes (since
+these attributes are controlled by their super_lords) and attributes that
+are controlled by an overlay.
+Also dependent variables such as the angle of a bend cannot be
+freely variable.
+
+Parameters
+----------
+ix_ele : int
+    Index of element in element array.
+ix_branch : int
+    Branch index of element.
+ele : EleStruct
+    Element containing the attribute
+attrib_name : unknown
+    Name of the attribute. Assumed upper case.
+lat : LatStruct
+    Lattice structure.
+err_print_flag : bool, optional
+    If present and False then suppress printing of an error message if attribute is not free.
+except_overlay : bool, optional
+    If present and True then an attribute that is controlled by an overlay will be treated as free. This is
+    used by, for example, the create_overlay routine.
+dependent_attribs_free : bool, optional
+    If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
+    b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
+
+Return value is a dictionary containing values below.
 
 
 Returns
 -------
-free
+free : bool
+    Set True if attribtute not found or attriubte cannot be changed directly.
+why_not_free : int
+    Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
+    -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
+    -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
+    Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
+    element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
 )""");
-  py::class_<PyAttributeFree2, std::unique_ptr<PyAttributeFree2>>(
+  py::class_<Bmad::AttributeFree2, std::unique_ptr<Bmad::AttributeFree2>>(
       m, "AttributeFree2", "Fortran routine attribute_free2 return value")
-      .def_readonly("attrib_name", &PyAttributeFree2::attrib_name)
-      .def_readonly("err_print_flag", &PyAttributeFree2::err_print_flag)
-      .def_readonly("except_overlay", &PyAttributeFree2::except_overlay)
-      .def_readonly(
-          "dependent_attribs_free", &PyAttributeFree2::dependent_attribs_free)
-      .def_readonly("why_not_free", &PyAttributeFree2::why_not_free)
-      .def_readonly("free", &PyAttributeFree2::free)
-      .def("__len__", [](const PyAttributeFree2&) { return 6; })
+      .def_readonly("why_not_free", &Bmad::AttributeFree2::why_not_free)
+      .def_readonly("free", &Bmad::AttributeFree2::free)
+      .def("__len__", [](const Bmad::AttributeFree2&) { return 2; })
       .def(
-          "__getitem__", [](const PyAttributeFree2& s, size_t i) -> py::object {
-            if (i >= 6)
+          "__getitem__",
+          [](const Bmad::AttributeFree2& s, size_t i) -> py::object {
+            if (i >= 2)
               throw py::index_error();
             if (i == 0)
-              return py::cast(s.attrib_name);
-            if (i == 1)
-              return py::cast(s.err_print_flag);
-            if (i == 2)
-              return py::cast(s.except_overlay);
-            if (i == 3)
-              return py::cast(s.dependent_attribs_free);
-            if (i == 4)
               return py::cast(s.why_not_free);
-            if (i == 5)
+            if (i == 1)
               return py::cast(s.free);
             return py::none();
           });
@@ -9957,9 +9681,7 @@ free
           LatProxy&,
           std::optional<bool>,
           std::optional<bool>,
-          std::optional<bool>,
-          std::optional<int>,
-          bool>(&python_attribute_free3),
+          std::optional<bool>>(&Bmad::attribute_free),
       py::arg("ix_ele"),
       py::arg("ix_branch"),
       py::arg("attrib_name"),
@@ -9967,44 +9689,69 @@ free
       py::arg("err_print_flag") = py::none(),
       py::arg("except_overlay") = py::none(),
       py::arg("dependent_attribs_free") = py::none(),
-      py::arg("why_not_free") = py::none(),
-      py::arg("free"),
-      R"""(err_print_flag, except_overlay, dependent_attribs_free, why_not_free) result (free)
+      R"""(Overloaded function for:
 
-This function overloaded by attribute_free. See attribute_free for more details.
+Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
+except_overlay, dependent_attribs_free, why_not_free) result (free)
+Function attribute_free2 (ele, attrib_name, err_print_flag,
+except_overlay, dependent_attribs_free, why_not_free) result (free)
+Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
+except_overlay, why_not_free) result (free)
+Routine to check if an attribute is free to vary.
+Attributes that cannot be changed directly include super_slave attributes (since
+these attributes are controlled by their super_lords) and attributes that
+are controlled by an overlay.
+Also dependent variables such as the angle of a bend cannot be
+freely variable.
 
+Parameters
+----------
+ix_ele : int
+    Index of element in element array.
+ix_branch : int
+    Branch index of element.
+ele : EleStruct
+    Element containing the attribute
+attrib_name : unknown
+    Name of the attribute. Assumed upper case.
+lat : LatStruct
+    Lattice structure.
+err_print_flag : bool, optional
+    If present and False then suppress printing of an error message if attribute is not free.
+except_overlay : bool, optional
+    If present and True then an attribute that is controlled by an overlay will be treated as free. This is
+    used by, for example, the create_overlay routine.
+dependent_attribs_free : bool, optional
+    If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
+    b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
+
+Return value is a dictionary containing values below.
+
+
+Returns
+-------
+free : bool
+    Set True if attribtute not found or attriubte cannot be changed directly.
+why_not_free : int
+    Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
+    -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
+    -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
+    Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
+    element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
 )""");
-  py::class_<PyAttributeFree3, std::unique_ptr<PyAttributeFree3>>(
+  py::class_<Bmad::AttributeFree3, std::unique_ptr<Bmad::AttributeFree3>>(
       m, "AttributeFree3", "Fortran routine attribute_free3 return value")
-      .def_readonly("ix_ele", &PyAttributeFree3::ix_ele)
-      .def_readonly("ix_branch", &PyAttributeFree3::ix_branch)
-      .def_readonly("attrib_name", &PyAttributeFree3::attrib_name)
-      .def_readonly("err_print_flag", &PyAttributeFree3::err_print_flag)
-      .def_readonly("except_overlay", &PyAttributeFree3::except_overlay)
-      .def_readonly(
-          "dependent_attribs_free", &PyAttributeFree3::dependent_attribs_free)
-      .def_readonly("why_not_free", &PyAttributeFree3::why_not_free)
-      .def_readonly("free", &PyAttributeFree3::free)
-      .def("__len__", [](const PyAttributeFree3&) { return 8; })
+      .def_readonly("why_not_free", &Bmad::AttributeFree3::why_not_free)
+      .def_readonly("free", &Bmad::AttributeFree3::free)
+      .def("__len__", [](const Bmad::AttributeFree3&) { return 2; })
       .def(
-          "__getitem__", [](const PyAttributeFree3& s, size_t i) -> py::object {
-            if (i >= 8)
+          "__getitem__",
+          [](const Bmad::AttributeFree3& s, size_t i) -> py::object {
+            if (i >= 2)
               throw py::index_error();
             if (i == 0)
-              return py::cast(s.ix_ele);
-            if (i == 1)
-              return py::cast(s.ix_branch);
-            if (i == 2)
-              return py::cast(s.attrib_name);
-            if (i == 3)
-              return py::cast(s.err_print_flag);
-            if (i == 4)
-              return py::cast(s.except_overlay);
-            if (i == 5)
-              return py::cast(s.dependent_attribs_free);
-            if (i == 6)
               return py::cast(s.why_not_free);
-            if (i == 7)
+            if (i == 1)
               return py::cast(s.free);
             return py::none();
           });
@@ -10013,45 +9760,61 @@ This function overloaded by attribute_free. See attribute_free for more details.
       py::overload_cast<
           EleProxy&,
           std::string,
-          std::optional<std::string>,
           std::optional<bool>,
-          std::optional<bool>,
-          int>(&python_attribute_index1),
+          std::optional<bool>>(&Bmad::attribute_index),
       py::arg("ele"),
       py::arg("name"),
-      py::arg("full_name") = py::none(),
       py::arg("can_abbreviate") = py::none(),
       py::arg("print_error") = py::none(),
-      py::arg("attrib_index"),
-      R"""(Overloaded by attribute_index. See attribute_index for more details.
+      R"""(Function to return the index of a attribute for a given BMAD element type
+
+and the name of the attribute. Abbreviations are by default permitted but must be at
+least 3 characters. Exception: overlay and group varialbe names may not
+be abbreviated.
+attribute_index1 (ele, name, full_name, can_abbreviate, print_error) result (attrib_index)
+attribute_index2 (key, name, full_name, can_abbreviate, print_error) result (attrib_index)
+
+Parameters
+----------
+ele : EleStruct
+    attribute_index will restrict the name search to valid attributes of the given element.
+key : int
+    Equivalent to ele.key.
+name : unknown
+    Attribute name. Must be uppercase.
+can_abbreviate : bool, optional
+    Can abbreviate names? Default is True.
+print_error : bool, optional
+    Default True. If false, do not print error message.
+
+Return value is a dictionary containing values below.
 
 
 Returns
 -------
-attrib_index
+full_name : unknown
+    Non-abbreviated name.
+attrib_index : int
+    Index of the attribute. If the attribute name is not appropriate then 0 will be returned. Example: ele.key
+    = sbend$ ix = attribute_index (ele, 'K1') Result: ix -> k1$
+
+Notes
+-----
+Overloaded versions:
 )""");
-  py::class_<PyAttributeIndex1, std::unique_ptr<PyAttributeIndex1>>(
+  py::class_<Bmad::AttributeIndex1, std::unique_ptr<Bmad::AttributeIndex1>>(
       m, "AttributeIndex1", "Fortran routine attribute_index1 return value")
-      .def_readonly("name", &PyAttributeIndex1::name)
-      .def_readonly("full_name", &PyAttributeIndex1::full_name)
-      .def_readonly("can_abbreviate", &PyAttributeIndex1::can_abbreviate)
-      .def_readonly("print_error", &PyAttributeIndex1::print_error)
-      .def_readonly("attrib_index", &PyAttributeIndex1::attrib_index)
-      .def("__len__", [](const PyAttributeIndex1&) { return 5; })
+      .def_readonly("full_name", &Bmad::AttributeIndex1::full_name)
+      .def_readonly("attrib_index", &Bmad::AttributeIndex1::attrib_index)
+      .def("__len__", [](const Bmad::AttributeIndex1&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyAttributeIndex1& s, size_t i) -> py::object {
-            if (i >= 5)
+          [](const Bmad::AttributeIndex1& s, size_t i) -> py::object {
+            if (i >= 2)
               throw py::index_error();
             if (i == 0)
-              return py::cast(s.name);
-            if (i == 1)
               return py::cast(s.full_name);
-            if (i == 2)
-              return py::cast(s.can_abbreviate);
-            if (i == 3)
-              return py::cast(s.print_error);
-            if (i == 4)
+            if (i == 1)
               return py::cast(s.attrib_index);
             return py::none();
           });
@@ -10060,120 +9823,135 @@ attrib_index
       py::overload_cast<
           int,
           std::string,
-          std::optional<std::string>,
           std::optional<bool>,
-          std::optional<bool>,
-          int>(&python_attribute_index2),
+          std::optional<bool>>(&Bmad::attribute_index),
       py::arg("key"),
       py::arg("name"),
-      py::arg("full_name") = py::none(),
       py::arg("can_abbreviate") = py::none(),
       py::arg("print_error") = py::none(),
-      py::arg("attrib_index"),
-      R"""(Overloaded by attribute_index. See attribute_index for more details.
+      R"""(Function to return the index of a attribute for a given BMAD element type
+
+and the name of the attribute. Abbreviations are by default permitted but must be at
+least 3 characters. Exception: overlay and group varialbe names may not
+be abbreviated.
+attribute_index1 (ele, name, full_name, can_abbreviate, print_error) result (attrib_index)
+attribute_index2 (key, name, full_name, can_abbreviate, print_error) result (attrib_index)
+
+Parameters
+----------
+ele : EleStruct
+    attribute_index will restrict the name search to valid attributes of the given element.
+key : int
+    Equivalent to ele.key.
+name : unknown
+    Attribute name. Must be uppercase.
+can_abbreviate : bool, optional
+    Can abbreviate names? Default is True.
+print_error : bool, optional
+    Default True. If false, do not print error message.
+
+Return value is a dictionary containing values below.
 
 
 Returns
 -------
-attrib_index
+full_name : unknown
+    Non-abbreviated name.
+attrib_index : int
+    Index of the attribute. If the attribute name is not appropriate then 0 will be returned. Example: ele.key
+    = sbend$ ix = attribute_index (ele, 'K1') Result: ix -> k1$
+
+Notes
+-----
+Overloaded versions:
 )""");
-  py::class_<PyAttributeIndex2, std::unique_ptr<PyAttributeIndex2>>(
+  py::class_<Bmad::AttributeIndex2, std::unique_ptr<Bmad::AttributeIndex2>>(
       m, "AttributeIndex2", "Fortran routine attribute_index2 return value")
-      .def_readonly("key", &PyAttributeIndex2::key)
-      .def_readonly("name", &PyAttributeIndex2::name)
-      .def_readonly("full_name", &PyAttributeIndex2::full_name)
-      .def_readonly("can_abbreviate", &PyAttributeIndex2::can_abbreviate)
-      .def_readonly("print_error", &PyAttributeIndex2::print_error)
-      .def_readonly("attrib_index", &PyAttributeIndex2::attrib_index)
-      .def("__len__", [](const PyAttributeIndex2&) { return 6; })
+      .def_readonly("full_name", &Bmad::AttributeIndex2::full_name)
+      .def_readonly("attrib_index", &Bmad::AttributeIndex2::attrib_index)
+      .def("__len__", [](const Bmad::AttributeIndex2&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyAttributeIndex2& s, size_t i) -> py::object {
-            if (i >= 6)
+          [](const Bmad::AttributeIndex2& s, size_t i) -> py::object {
+            if (i >= 2)
               throw py::index_error();
             if (i == 0)
-              return py::cast(s.key);
-            if (i == 1)
-              return py::cast(s.name);
-            if (i == 2)
               return py::cast(s.full_name);
-            if (i == 3)
-              return py::cast(s.can_abbreviate);
-            if (i == 4)
-              return py::cast(s.print_error);
-            if (i == 5)
+            if (i == 1)
               return py::cast(s.attrib_index);
             return py::none();
           });
   m.def(
       "attribute_name",
-      py::overload_cast<int, int, std::optional<bool>, std::string>(
-          &python_attribute_name1),
+      py::overload_cast<int, int, std::optional<bool>>(&Bmad::attribute_name),
       py::arg("key"),
       py::arg("ix_att"),
       py::arg("show_private") = py::none(),
-      py::arg("attrib_name"),
-      R"""(Overloaded by attribute_name. See attribute_name for more details.
+      R"""(Function to return the name of an attribute for a particular type of
 
+Bmad element.
+attribute_name1 (ele, ix_att, show_private) result (attrib_name)
+attribute_name2 (key, ix_att, show_private) result (attrib_name)
+
+Parameters
+----------
+ele : EleStruct
+    .key             -- Integer: Key name of element type (e.g. SBEND$, etc.)
+key : int
+    Key name of element type (e.g. sbend$, etc.)
+ix_att : int
+    Index of attribute (e.g. k1$)
+show_private : bool, optional
+    If False (default) return null_name$ for private attributes.
 
 Returns
 -------
-attrib_name
+attrib_name : unknown
+    Name of attribute. First character is a "!" if there is a problem. Will always be upper case (even with
+    private attributes). = "!BAD ELE KEY"           .key is invalid = "!BAD INDEX"             ix_att is
+    invalid (out of range). = "!NULL" (null_name$)     ix_att does not correspond to an attribute or is
+    private. Example: ele.key = sbend$ name = attribute_name (ele, k1$) Result: name -> "K1"
+
+Notes
+-----
+Overloaded versions:
 )""");
-  py::class_<PyAttributeName1, std::unique_ptr<PyAttributeName1>>(
-      m, "AttributeName1", "Fortran routine attribute_name1 return value")
-      .def_readonly("key", &PyAttributeName1::key)
-      .def_readonly("ix_att", &PyAttributeName1::ix_att)
-      .def_readonly("show_private", &PyAttributeName1::show_private)
-      .def_readonly("attrib_name", &PyAttributeName1::attrib_name)
-      .def("__len__", [](const PyAttributeName1&) { return 4; })
-      .def(
-          "__getitem__", [](const PyAttributeName1& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
-            if (i == 0)
-              return py::cast(s.key);
-            if (i == 1)
-              return py::cast(s.ix_att);
-            if (i == 2)
-              return py::cast(s.show_private);
-            if (i == 3)
-              return py::cast(s.attrib_name);
-            return py::none();
-          });
   m.def(
       "attribute_name",
-      py::overload_cast<EleProxy&, int, std::optional<bool>, std::string>(
-          &python_attribute_name2),
+      py::overload_cast<EleProxy&, int, std::optional<bool>>(
+          &Bmad::attribute_name),
       py::arg("ele"),
       py::arg("ix_att"),
       py::arg("show_private") = py::none(),
-      py::arg("attrib_name"),
-      R"""(Overloaded by attribute_name. See attribute_name for more details.
+      R"""(Function to return the name of an attribute for a particular type of
 
+Bmad element.
+attribute_name1 (ele, ix_att, show_private) result (attrib_name)
+attribute_name2 (key, ix_att, show_private) result (attrib_name)
+
+Parameters
+----------
+ele : EleStruct
+    .key             -- Integer: Key name of element type (e.g. SBEND$, etc.)
+key : int
+    Key name of element type (e.g. sbend$, etc.)
+ix_att : int
+    Index of attribute (e.g. k1$)
+show_private : bool, optional
+    If False (default) return null_name$ for private attributes.
 
 Returns
 -------
-attrib_name
+attrib_name : unknown
+    Name of attribute. First character is a "!" if there is a problem. Will always be upper case (even with
+    private attributes). = "!BAD ELE KEY"           .key is invalid = "!BAD INDEX"             ix_att is
+    invalid (out of range). = "!NULL" (null_name$)     ix_att does not correspond to an attribute or is
+    private. Example: ele.key = sbend$ name = attribute_name (ele, k1$) Result: name -> "K1"
+
+Notes
+-----
+Overloaded versions:
 )""");
-  py::class_<PyAttributeName2, std::unique_ptr<PyAttributeName2>>(
-      m, "AttributeName2", "Fortran routine attribute_name2 return value")
-      .def_readonly("ix_att", &PyAttributeName2::ix_att)
-      .def_readonly("show_private", &PyAttributeName2::show_private)
-      .def_readonly("attrib_name", &PyAttributeName2::attrib_name)
-      .def("__len__", [](const PyAttributeName2&) { return 3; })
-      .def(
-          "__getitem__", [](const PyAttributeName2& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
-            if (i == 0)
-              return py::cast(s.ix_att);
-            if (i == 1)
-              return py::cast(s.show_private);
-            if (i == 2)
-              return py::cast(s.attrib_name);
-            return py::none();
-          });
   m.def(
       "attribute_type",
       &Bmad::attribute_type,
@@ -10585,16 +10363,12 @@ ibs_mat : float
       &Bmad::beam_equal_beam,
       py::arg("beam1"),
       py::arg("beam2"),
-      R"""(Subroutine to set one particle beam equal to another taking care of
-
-pointers so that they don't all point to the same place.
+      R"""(No docstring available
 
 Parameters
 ----------
-beam2 : BeamStruct
-    Input beam Output
-beam1 : BeamStruct
-    Output beam
+beam1 : 
+beam2 : 
 )""");
   m.def(
       "beam_tilts",
@@ -11345,18 +11119,14 @@ ok : bool
   m.def(
       "branch_equal_branch",
       &Bmad::branch_equal_branch,
+      py::arg("branch1"),
       py::arg("branch2"),
-      R"""(Subroutine that is used to set one branch equal to another.
+      R"""(No docstring available
 
 Parameters
 ----------
-branch2 : BranchStruct
-    Input branch.
-
-Returns
--------
-branch1 : BranchStruct
-    Output branch.
+branch1 : 
+branch2 : 
 )""");
   m.def(
       "branch_name",
@@ -11407,14 +11177,12 @@ Note: If a Bmad element is using a hard edge model (EG: RFcavity element), there
       &Bmad::bunch_equal_bunch,
       py::arg("bunch1"),
       py::arg("bunch2"),
-      R"""(Subroutine to set one particle bunch equal to another.
+      R"""(No docstring available
 
 Parameters
 ----------
-bunch2 : BunchStruct
-    Input bunch Output
-bunch1 : BunchStruct
-    Output bunch
+bunch1 : 
+bunch2 : 
 )""");
   m.def(
       "c_to_cbar",
@@ -12453,11 +12221,38 @@ complex_taylor :
       py::arg("complex_taylor"),
       py::arg("exp"),
       py::arg("coef"),
-      R"""(Function to return the coefficient for a particular complex_taylor term
+      R"""(Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
 
-from a complex_taylor Series. This routine is used by the overloaded function
-complex_taylor_coef. See complex_taylor_coef for more details.
+Function to return the coefficient for a particular complex_taylor term
+from a complex_taylor Series.
+or less. Also: complex_taylor_coef2 does not check that all i1, ..., i9 are between
+1 and 6.
+For example: To get the 2nd order term corresponding to
+y(out) = Coef * p_z(in)^2
+[This is somtimes refered to as the T_366 term]
+The call would be:
+type (complex_taylor_struct) complex_taylor(6)      ! complex_taylor Map
+...
+coef = complex_taylor_coef (complex_taylor(3), 6, 6)  ! 1st possibility or ...
+coef = complex_taylor_coef (complex_taylor(3), [0, 0, 0, 0, 0, 2 ])
+Input (complex_taylor_coef1):
+complex_taylor -- complex_taylor_struct: complex_taylor series.
+exp(6)      -- Integer: Array of exponent indices.
+Input (complex_taylor_coef2):
+complex_taylor -- complex_taylor_struct: complex_taylor series.
+i1, ..., i9 -- Integer, optional: indexes (each between 1 and 6).
 
+
+Returns
+-------
+complex_taylor_coef : complex
+    Coefficient.
+
+Notes
+-----
+Note: complex_taylor_coef is overloaded by: complex_taylor_coef1 (complex_taylor, exp) complex_taylor_coef2
+(complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9) Using the complex_taylor_coef2 form limits obtaining
+coefficients to 9th order
 )""");
   py::class_<PyComplexTaylorCoef1, std::unique_ptr<PyComplexTaylorCoef1>>(
       m,
@@ -12499,11 +12294,38 @@ complex_taylor_coef. See complex_taylor_coef for more details.
       py::arg("i8") = py::none(),
       py::arg("i9") = py::none(),
       py::arg("coef"),
-      R"""(Function to return the coefficient for a particular complex_taylor term
+      R"""(Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
 
-from a complex_taylor Series. This routine is used by the overloaded function
-complex_taylor_coef. See complex_taylor_coef for more details.
+Function to return the coefficient for a particular complex_taylor term
+from a complex_taylor Series.
+or less. Also: complex_taylor_coef2 does not check that all i1, ..., i9 are between
+1 and 6.
+For example: To get the 2nd order term corresponding to
+y(out) = Coef * p_z(in)^2
+[This is somtimes refered to as the T_366 term]
+The call would be:
+type (complex_taylor_struct) complex_taylor(6)      ! complex_taylor Map
+...
+coef = complex_taylor_coef (complex_taylor(3), 6, 6)  ! 1st possibility or ...
+coef = complex_taylor_coef (complex_taylor(3), [0, 0, 0, 0, 0, 2 ])
+Input (complex_taylor_coef1):
+complex_taylor -- complex_taylor_struct: complex_taylor series.
+exp(6)      -- Integer: Array of exponent indices.
+Input (complex_taylor_coef2):
+complex_taylor -- complex_taylor_struct: complex_taylor series.
+i1, ..., i9 -- Integer, optional: indexes (each between 1 and 6).
 
+
+Returns
+-------
+complex_taylor_coef : complex
+    Coefficient.
+
+Notes
+-----
+Note: complex_taylor_coef is overloaded by: complex_taylor_coef1 (complex_taylor, exp) complex_taylor_coef2
+(complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9) Using the complex_taylor_coef2 form limits obtaining
+coefficients to 9th order
 )""");
   py::class_<PyComplexTaylorCoef2, std::unique_ptr<PyComplexTaylorCoef2>>(
       m,
@@ -12523,20 +12345,14 @@ complex_taylor_coef. See complex_taylor_coef for more details.
   m.def(
       "complex_taylor_equal_complex_taylor",
       &Bmad::complex_taylor_equal_complex_taylor,
+      py::arg("complex_taylor1"),
       py::arg("complex_taylor2"),
-      R"""(Subroutine that is used to set one complex_taylor equal to another.
-
-This routine takes care of the pointers in complex_taylor1.
+      R"""(No docstring available
 
 Parameters
 ----------
-complex_taylor2 : ComplexTaylorStruct
-    Input complex_taylor.
-
-Returns
--------
-complex_taylor1 : ComplexTaylorStruct
-    Output complex_taylor.
+complex_taylor1 : 
+complex_taylor2 : 
 )""");
   m.def(
       "complex_taylor_exponent_index",
@@ -12625,20 +12441,14 @@ r_out : complex
   m.def(
       "complex_taylors_equal_complex_taylors",
       &Bmad::complex_taylors_equal_complex_taylors,
+      py::arg("complex_taylor1"),
       py::arg("complex_taylor2"),
-      R"""(Subroutine to transfer the values from one complex_taylor map to another:
-
-complex_taylor1 <= complex_taylor2
+      R"""(No docstring available
 
 Parameters
 ----------
-complex_taylor2 : ComplexTaylorStruct
-    complex_taylor map.
-
-Returns
--------
-complex_taylor1 : ComplexTaylorStruct
-    complex_taylor map.
+complex_taylor1 : 
+complex_taylor2 : 
 )""");
   m.def(
       "compute_slave_coupler",
@@ -14851,20 +14661,14 @@ err_flag : bool
   m.def(
       "ele_equal_ele",
       &Bmad::ele_equal_ele,
+      py::arg("ele_out"),
       py::arg("ele_in"),
-      R"""(Subroutine that is used to set one element equal to another.
-
-This routine takes care of the pointers in ele_out.
+      R"""(No docstring available
 
 Parameters
 ----------
-ele_in : EleStruct
-    Input element.
-
-Returns
--------
-ele_out : EleStruct
-    Output element.
+ele_out : 
+ele_in : 
 )""");
   m.def(
       "ele_equals_ele",
@@ -15435,25 +15239,14 @@ has_changed :
   m.def(
       "ele_vec_equal_ele_vec",
       &Bmad::ele_vec_equal_ele_vec,
+      py::arg("ele1"),
       py::arg("ele2"),
-      R"""(Subroutine that is used to set one ele vector equal to another.
-
-This routine takes care of the pointers in ele1.
-ele1(:) = ele2(:)
+      R"""(No docstring available
 
 Parameters
 ----------
-ele2 : EleStruct
-    Input ele vector.
-
-Returns
--------
-ele1 : EleStruct
-    Output ele vector.
-
-Notes
------
-Note: This subroutine is called by the overloaded equal sign:
+ele1 : 
+ele2 : 
 )""");
   m.def(
       "elec_multipole_field",
@@ -15510,55 +15303,79 @@ compute_dE : bool
           });
   m.def(
       "element_at_s",
-      py::overload_cast<
-          BranchProxy&,
-          double,
-          bool,
-          std::optional<bool>,
-          std::optional<double>,
-          optional_ref<CoordProxy>,
-          std::optional<bool>,
-          int>(&python_element_at_s_branch),
+      py::overload_cast<BranchProxy&, double, bool, std::optional<bool>>(
+          &Bmad::element_at_s),
       py::arg("branch"),
       py::arg("s"),
       py::arg("choose_max"),
-      py::arg("err_flag") = py::none(),
-      py::arg("s_eff") = py::none(),
-      py::arg("position") = py::none(),
       py::arg("print_err") = py::none(),
-      py::arg("ix_ele"),
-      R"""(Overloaded routine. See element_at_s for more details.
+      R"""(Function to return the index of the element at position s.
+
+function element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_eff, position, print_err) result (ix_ele)
+function element_at_s_branch (branch, s, choose_max, err_flag, s_eff, position, print_err) result (ix_ele)
+The differnce between these two routine is that with element_at_s_lat, the branch is given by the lat
+and ix_ele arguments: branch = lat%branch(ix_ele). With element_at_s_branch, the branch is an argument.
+
+Parameters
+----------
+lat : LatStruct
+    Lattice of elements.
+branch : BranchStruct
+    Branch to use
+s : float
+    Longitudinal position.
+choose_max : bool
+    See above
+ix_branch : int, optional
+    Branch index. Default is 0.
+print_err : bool, optional
+    Print error message if there is an error? Default is True.
+
+Return value is a dictionary containing values below.
 
 
 Returns
 -------
-ix_ele
+ix_ele : int
+    Index of element at s.
+err_flag : bool
+    Set True if s is out of bounds. False otherwise.
+s_eff : float
+    Effective s. Equal to s with a open lattice. See above.
+position : CoordStruct
+    Positional information. .s         -- Same as input s. .ix_ele    -- Same as output ix_ele .location  --
+    Location relative to element. Upstream_end$, downstream_end$, or inside$
+
+Notes
+-----
+Related routines:
+pointer_to_element_at_s ix_ele = ix_end_of_branch branch%ele(ix_ele)%s_start <= s < branch%ele(ix_ele)%s
+ix_ele = 0 branch%ele(ix_ele)%s_start < s <= branch%ele(ix_ele)%s choose_max = True => ix_ele = ix2 choose_max
+= False => ix_ele = ix1 The setting of choose_max only makes a difference when s corresponds to an element
+boundary. For a circular lattice s is evaluated at the effective s which s_eff = s - branch_length *
+floor(s/branch_length) If there are multiple elements that are at the given s position due to the presence of
+an element with a negative length which of the possible elements is actually chosen is ill-defined.
+Overloaded versions:
 )""");
-  py::class_<PyElementAtSBranch, std::unique_ptr<PyElementAtSBranch>>(
+  py::class_<Bmad::ElementAtSBranch, std::unique_ptr<Bmad::ElementAtSBranch>>(
       m, "ElementAtSBranch", "Fortran routine element_at_s_branch return value")
-      .def_readonly("s", &PyElementAtSBranch::s)
-      .def_readonly("choose_max", &PyElementAtSBranch::choose_max)
-      .def_readonly("err_flag", &PyElementAtSBranch::err_flag)
-      .def_readonly("s_eff", &PyElementAtSBranch::s_eff)
-      .def_readonly("print_err", &PyElementAtSBranch::print_err)
-      .def_readonly("ix_ele", &PyElementAtSBranch::ix_ele)
-      .def("__len__", [](const PyElementAtSBranch&) { return 6; })
+      .def_readonly("err_flag", &Bmad::ElementAtSBranch::err_flag)
+      .def_readonly("s_eff", &Bmad::ElementAtSBranch::s_eff)
+      .def_readonly("position", &Bmad::ElementAtSBranch::position)
+      .def_readonly("ix_ele", &Bmad::ElementAtSBranch::ix_ele)
+      .def("__len__", [](const Bmad::ElementAtSBranch&) { return 4; })
       .def(
           "__getitem__",
-          [](const PyElementAtSBranch& s, size_t i) -> py::object {
-            if (i >= 6)
+          [](const Bmad::ElementAtSBranch& s, size_t i) -> py::object {
+            if (i >= 4)
               throw py::index_error();
             if (i == 0)
-              return py::cast(s.s);
-            if (i == 1)
-              return py::cast(s.choose_max);
-            if (i == 2)
               return py::cast(s.err_flag);
-            if (i == 3)
+            if (i == 1)
               return py::cast(s.s_eff);
-            if (i == 4)
-              return py::cast(s.print_err);
-            if (i == 5)
+            if (i == 2)
+              return py::cast(s.position);
+            if (i == 3)
               return py::cast(s.ix_ele);
             return py::none();
           });
@@ -15569,56 +15386,82 @@ ix_ele
           double,
           bool,
           std::optional<int>,
-          std::optional<bool>,
-          std::optional<double>,
-          optional_ref<CoordProxy>,
-          std::optional<bool>,
-          int>(&python_element_at_s_lat),
+          std::optional<bool>>(&Bmad::element_at_s),
       py::arg("lat"),
       py::arg("s"),
       py::arg("choose_max"),
       py::arg("ix_branch") = py::none(),
-      py::arg("err_flag") = py::none(),
-      py::arg("s_eff") = py::none(),
-      py::arg("position") = py::none(),
       py::arg("print_err") = py::none(),
-      py::arg("ix_ele"),
-      R"""(Overloaded routine. See element_at_s for more details.
+      R"""(Function to return the index of the element at position s.
+
+function element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_eff, position, print_err) result (ix_ele)
+function element_at_s_branch (branch, s, choose_max, err_flag, s_eff, position, print_err) result (ix_ele)
+The differnce between these two routine is that with element_at_s_lat, the branch is given by the lat
+and ix_ele arguments: branch = lat%branch(ix_ele). With element_at_s_branch, the branch is an argument.
+
+Parameters
+----------
+lat : LatStruct
+    Lattice of elements.
+branch : BranchStruct
+    Branch to use
+s : float
+    Longitudinal position.
+choose_max : bool
+    See above
+ix_branch : int, optional
+    Branch index. Default is 0.
+print_err : bool, optional
+    Print error message if there is an error? Default is True.
+
+Return value is a dictionary containing values below.
 
 
 Returns
 -------
-ix_ele
+ix_ele : int
+    Index of element at s.
+err_flag : bool
+    Set True if s is out of bounds. False otherwise.
+s_eff : float
+    Effective s. Equal to s with a open lattice. See above.
+position : CoordStruct
+    Positional information. .s         -- Same as input s. .ix_ele    -- Same as output ix_ele .location  --
+    Location relative to element. Upstream_end$, downstream_end$, or inside$
+
+Notes
+-----
+Related routines:
+pointer_to_element_at_s ix_ele = ix_end_of_branch branch%ele(ix_ele)%s_start <= s < branch%ele(ix_ele)%s
+ix_ele = 0 branch%ele(ix_ele)%s_start < s <= branch%ele(ix_ele)%s choose_max = True => ix_ele = ix2 choose_max
+= False => ix_ele = ix1 The setting of choose_max only makes a difference when s corresponds to an element
+boundary. For a circular lattice s is evaluated at the effective s which s_eff = s - branch_length *
+floor(s/branch_length) If there are multiple elements that are at the given s position due to the presence of
+an element with a negative length which of the possible elements is actually chosen is ill-defined.
+Overloaded versions:
 )""");
-  py::class_<PyElementAtSLat, std::unique_ptr<PyElementAtSLat>>(
+  py::class_<Bmad::ElementAtSLat, std::unique_ptr<Bmad::ElementAtSLat>>(
       m, "ElementAtSLat", "Fortran routine element_at_s_lat return value")
-      .def_readonly("s", &PyElementAtSLat::s)
-      .def_readonly("choose_max", &PyElementAtSLat::choose_max)
-      .def_readonly("ix_branch", &PyElementAtSLat::ix_branch)
-      .def_readonly("err_flag", &PyElementAtSLat::err_flag)
-      .def_readonly("s_eff", &PyElementAtSLat::s_eff)
-      .def_readonly("print_err", &PyElementAtSLat::print_err)
-      .def_readonly("ix_ele", &PyElementAtSLat::ix_ele)
-      .def("__len__", [](const PyElementAtSLat&) { return 7; })
-      .def("__getitem__", [](const PyElementAtSLat& s, size_t i) -> py::object {
-        if (i >= 7)
-          throw py::index_error();
-        if (i == 0)
-          return py::cast(s.s);
-        if (i == 1)
-          return py::cast(s.choose_max);
-        if (i == 2)
-          return py::cast(s.ix_branch);
-        if (i == 3)
-          return py::cast(s.err_flag);
-        if (i == 4)
-          return py::cast(s.s_eff);
-        if (i == 5)
-          return py::cast(s.print_err);
-        if (i == 6)
-          return py::cast(s.ix_ele);
-        return py::none();
-      });
+      .def_readonly("err_flag", &Bmad::ElementAtSLat::err_flag)
+      .def_readonly("s_eff", &Bmad::ElementAtSLat::s_eff)
+      .def_readonly("position", &Bmad::ElementAtSLat::position)
+      .def_readonly("ix_ele", &Bmad::ElementAtSLat::ix_ele)
+      .def("__len__", [](const Bmad::ElementAtSLat&) { return 4; })
+      .def(
+          "__getitem__",
+          [](const Bmad::ElementAtSLat& s, size_t i) -> py::object {
+            if (i >= 4)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.err_flag);
+            if (i == 1)
+              return py::cast(s.s_eff);
+            if (i == 2)
+              return py::cast(s.position);
+            if (i == 3)
+              return py::cast(s.ix_ele);
+            return py::none();
+          });
   m.def(
       "element_slice_iterator",
       &Bmad::element_slice_iterator,
@@ -15834,53 +15677,38 @@ dvec_dt : float
       &Bmad::em_field_plus_em_field,
       py::arg("field1"),
       py::arg("field2"),
-      R"""(Routine to add fields.
+      py::arg("field_tot"),
+      R"""(No docstring available
 
 Parameters
 ----------
-field1 : EmFieldStruct
-    Input field
-field2 : EmFieldStruct
-    Input field
-
-Returns
--------
-field_tot : EmFieldStruct
-    Combined field.
+field1 : 
+field2 : 
+field_tot : 
 )""");
   m.def(
       "em_taylor_equal_em_taylor",
       &Bmad::em_taylor_equal_em_taylor,
+      py::arg("em_taylor1"),
       py::arg("em_taylor2"),
-      R"""(Subroutine that is used to set one em_taylor equal to another.
+      R"""(No docstring available
 
 Parameters
 ----------
-em_taylor2 : EmTaylorStruct
-    Input em_taylor.
-
-Returns
--------
-em_taylor1 : EmTaylorStruct
-    Output em_taylor.
+em_taylor1 : 
+em_taylor2 : 
 )""");
   m.def(
       "em_taylors_equal_em_taylors",
       &Bmad::em_taylors_equal_em_taylors,
+      py::arg("em_taylor1"),
       py::arg("em_taylor2"),
-      R"""(Subroutine to transfer the values from one em_taylor map to another:
-
-Em_taylor1 <= Em_taylor2
+      R"""(No docstring available
 
 Parameters
 ----------
-em_taylor2 : EmTaylorStruct
-    Em_taylor map.
-
-Returns
--------
-em_taylor1 : EmTaylorStruct
-    Em_taylor map.
+em_taylor1 : 
+em_taylor2 : 
 )""");
   m.def(
       "emit_6d",
@@ -23024,20 +22852,14 @@ append_eles : bool, optional
   m.def(
       "lat_equal_lat",
       &Bmad::lat_equal_lat,
+      py::arg("lat_out"),
       py::arg("lat_in"),
-      R"""(Subroutine that is used to set one lat equal to another.
-
-This routine takes care of the pointers in lat_in.
+      R"""(No docstring available
 
 Parameters
 ----------
-lat_in : LatStruct
-    Input lat.
-
-Returns
--------
-lat_out : LatStruct
-    Output lat.
+lat_out : 
+lat_in : 
 )""");
   m.def(
       "lat_geometry",
@@ -23102,25 +22924,14 @@ lat : LatStruct
   m.def(
       "lat_vec_equal_lat_vec",
       &Bmad::lat_vec_equal_lat_vec,
+      py::arg("lat1"),
       py::arg("lat2"),
-      R"""(Subroutine that is used to set one lat vector equal to another.
-
-This routine takes care of the pointers in lat1.
-lat1(:) = lat2(:)
+      R"""(No docstring available
 
 Parameters
 ----------
-lat2 : LatStruct
-    Input lat vector.
-
-Returns
--------
-lat1 : LatStruct
-    Output lat vector.
-
-Notes
------
-Note: This subroutine is called by the overloaded equal sign:
+lat1 : 
+lat2 : 
 )""");
   m.def(
       "lattice_bookkeeper",
@@ -24671,22 +24482,14 @@ map1 : SpinOrbitMap1Struct
       &Bmad::map1_times_map1,
       py::arg("map2"),
       py::arg("map1"),
-      R"""(Routine to concatenate two spin orbital linear maps.
-
-map_out = map2(map1)
-Order is like applying matrices. map1 is before map2.
+      py::arg("map_out"),
+      R"""(No docstring available
 
 Parameters
 ----------
-map2 : SpinOrbitMap1Struct
-    Second map.
-map1 : SpinOrbitMap1Struct
-    First map.
-
-Returns
--------
-map_out : SpinOrbitMap1Struct
-    Concatenated map.
+map2 : 
+map1 : 
+map_out : 
 )""");
   m.def(
       "map_to_angle_coords",
@@ -28674,96 +28477,181 @@ Overloaded versions:
 )""");
   m.def(
       "pointer_to_ele",
-      py::overload_cast<LatProxy&, int, std::optional<int>, EleProxy&>(
-          &python_pointer_to_ele1),
+      py::overload_cast<LatProxy&, int, std::optional<int>>(
+          &Bmad::pointer_to_ele),
       py::arg("lat"),
       py::arg("ix_ele"),
       py::arg("ix_branch") = py::none(),
-      py::arg("ele_ptr"),
-      R"""(Function to return a pointer to an element in a lattice.
+      R"""(Routine to return a pointer to an element.
 
-This routine is overloaded by pointer_to_ele.
-See pointer_to_ele for more details.
+pointer_to_ele4(lat, foreign_ele) is useful when foreign_ele is associated with a separate
+lattice that has an identical layout. pointer_to_ele4 will then return the corresponding
+element in lat.
+are multiple elements that have the same name. Better in this case is to use:
+lat_ele_locator
 
+Parameters
+----------
+lat : LatStruct
+    Lattice.
+ix_ele : int
+    Index of element in lat.branch(ix_branch).
+ix_branch : int
+    Index of the lat.branch(:) containing the element.
+ix_nametable : int
+    Nametable index. See above
+ele_loc : LatEleLocStruct
+    Location identification.
+ele_name : unknown
+    Name or index of element.
+foreign_ele : EleStruct
+    Lattice element in another lattice.
 
 Returns
 -------
-ele_ptr
+ele_ptr : EleStruct
+    Pointer to the element. Nullified if no match or error.
+
+Notes
+-----
+Note that using ele_name to locate an element is potentially dangerous if there
+Related routines:
+pointer_to_slave pointer_to_lord
+Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
+pointer_to_ele2 (lat, ele_loc) result (ele_ptr), Function pointer_to_ele3 (lat, ele_name) result (ele_ptr),
+Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
 )""");
-  py::class_<PyPointerToEle1, std::unique_ptr<PyPointerToEle1>>(
-      m, "PointerToEle1", "Fortran routine pointer_to_ele1 return value")
-      .def_readonly("ix_ele", &PyPointerToEle1::ix_ele)
-      .def_readonly("ix_branch", &PyPointerToEle1::ix_branch)
-      .def("__len__", [](const PyPointerToEle1&) { return 2; })
-      .def("__getitem__", [](const PyPointerToEle1& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
-        if (i == 0)
-          return py::cast(s.ix_ele);
-        if (i == 1)
-          return py::cast(s.ix_branch);
-        return py::none();
-      });
   m.def(
       "pointer_to_ele",
-      py::overload_cast<LatProxy&, LatEleLocProxy&, EleProxy&>(
-          &Bmad::pointer_to_ele),
+      py::overload_cast<LatProxy&, LatEleLocProxy&>(&Bmad::pointer_to_ele),
       py::arg("lat"),
       py::arg("ele_loc"),
-      py::arg("ele_ptr"),
-      R"""(Function to return a pointer to an element in a lattice.
+      R"""(Routine to return a pointer to an element.
 
-This routine is overloaded by pointer_to_ele.
-See pointer_to_ele for more details.
+pointer_to_ele4(lat, foreign_ele) is useful when foreign_ele is associated with a separate
+lattice that has an identical layout. pointer_to_ele4 will then return the corresponding
+element in lat.
+are multiple elements that have the same name. Better in this case is to use:
+lat_ele_locator
 
+Parameters
+----------
+lat : LatStruct
+    Lattice.
+ix_ele : int
+    Index of element in lat.branch(ix_branch).
+ix_branch : int
+    Index of the lat.branch(:) containing the element.
+ix_nametable : int
+    Nametable index. See above
+ele_loc : LatEleLocStruct
+    Location identification.
+ele_name : unknown
+    Name or index of element.
+foreign_ele : EleStruct
+    Lattice element in another lattice.
 
 Returns
 -------
-ele_ptr
+ele_ptr : EleStruct
+    Pointer to the element. Nullified if no match or error.
+
+Notes
+-----
+Note that using ele_name to locate an element is potentially dangerous if there
+Related routines:
+pointer_to_slave pointer_to_lord
+Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
+pointer_to_ele2 (lat, ele_loc) result (ele_ptr), Function pointer_to_ele3 (lat, ele_name) result (ele_ptr),
+Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
 )""");
   m.def(
       "pointer_to_ele",
-      py::overload_cast<LatProxy&, std::string, EleProxy&>(
-          &python_pointer_to_ele3),
+      py::overload_cast<LatProxy&, std::string>(&Bmad::pointer_to_ele),
       py::arg("lat"),
       py::arg("ele_name"),
-      py::arg("ele_ptr"),
-      R"""(Function to return a pointer to an element in a lattice.
+      R"""(Routine to return a pointer to an element.
 
-This routine is overloaded by pointer_to_ele.
-See pointer_to_ele for more details.
+pointer_to_ele4(lat, foreign_ele) is useful when foreign_ele is associated with a separate
+lattice that has an identical layout. pointer_to_ele4 will then return the corresponding
+element in lat.
+are multiple elements that have the same name. Better in this case is to use:
+lat_ele_locator
 
+Parameters
+----------
+lat : LatStruct
+    Lattice.
+ix_ele : int
+    Index of element in lat.branch(ix_branch).
+ix_branch : int
+    Index of the lat.branch(:) containing the element.
+ix_nametable : int
+    Nametable index. See above
+ele_loc : LatEleLocStruct
+    Location identification.
+ele_name : unknown
+    Name or index of element.
+foreign_ele : EleStruct
+    Lattice element in another lattice.
 
 Returns
 -------
-ele_ptr
+ele_ptr : EleStruct
+    Pointer to the element. Nullified if no match or error.
+
+Notes
+-----
+Note that using ele_name to locate an element is potentially dangerous if there
+Related routines:
+pointer_to_slave pointer_to_lord
+Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
+pointer_to_ele2 (lat, ele_loc) result (ele_ptr), Function pointer_to_ele3 (lat, ele_name) result (ele_ptr),
+Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
 )""");
-  py::class_<PyPointerToEle3, std::unique_ptr<PyPointerToEle3>>(
-      m, "PointerToEle3", "Fortran routine pointer_to_ele3 return value")
-      .def_readonly("ele_name", &PyPointerToEle3::ele_name)
-      .def("__len__", [](const PyPointerToEle3&) { return 1; })
-      .def("__getitem__", [](const PyPointerToEle3& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
-        if (i == 0)
-          return py::cast(s.ele_name);
-        return py::none();
-      });
   m.def(
       "pointer_to_ele",
-      py::overload_cast<LatProxy&, EleProxy&, EleProxy&>(&Bmad::pointer_to_ele),
+      py::overload_cast<LatProxy&, EleProxy&>(&Bmad::pointer_to_ele),
       py::arg("lat"),
       py::arg("foreign_ele"),
-      py::arg("ele_ptr"),
-      R"""(Function to return a pointer to an element in a lattice.
+      R"""(Routine to return a pointer to an element.
 
-This routine is overloaded by pointer_to_ele.
-See pointer_to_ele for more details.
+pointer_to_ele4(lat, foreign_ele) is useful when foreign_ele is associated with a separate
+lattice that has an identical layout. pointer_to_ele4 will then return the corresponding
+element in lat.
+are multiple elements that have the same name. Better in this case is to use:
+lat_ele_locator
 
+Parameters
+----------
+lat : LatStruct
+    Lattice.
+ix_ele : int
+    Index of element in lat.branch(ix_branch).
+ix_branch : int
+    Index of the lat.branch(:) containing the element.
+ix_nametable : int
+    Nametable index. See above
+ele_loc : LatEleLocStruct
+    Location identification.
+ele_name : unknown
+    Name or index of element.
+foreign_ele : EleStruct
+    Lattice element in another lattice.
 
 Returns
 -------
-ele_ptr
+ele_ptr : EleStruct
+    Pointer to the element. Nullified if no match or error.
+
+Notes
+-----
+Note that using ele_name to locate an element is potentially dangerous if there
+Related routines:
+pointer_to_slave pointer_to_lord
+Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
+pointer_to_ele2 (lat, ele_loc) result (ele_ptr), Function pointer_to_ele3 (lat, ele_name) result (ele_ptr),
+Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
 )""");
   m.def(
       "pointer_to_element_at_s",
@@ -29848,9 +29736,11 @@ root :
       "quat_conj",
       py::overload_cast<FixedArray1D<Complex, 4>>(&SimUtils::quat_conj),
       py::arg("q_in"),
-      R"""(Routine to create the conjugate of a quaternian.
+      R"""(Overloaded name to create the conjugate of a quaternian.
 
-Overloaded by quat_conj.
+Overloaded functions are:
+Function quat_conj_real (q_in) result (q_out)
+Function quat_conj_complex (q_in) result (q_out)
 
 Parameters
 ----------
@@ -29866,9 +29756,11 @@ q_out : float
       "quat_conj",
       py::overload_cast<FixedArray1D<Real, 4>>(&SimUtils::quat_conj),
       py::arg("q_in"),
-      R"""(Routine to create the conjugate of a quaternian.
+      R"""(Overloaded name to create the conjugate of a quaternian.
 
-Overloaded by quat_conj.
+Overloaded functions are:
+Function quat_conj_real (q_in) result (q_out)
+Function quat_conj_complex (q_in) result (q_out)
 
 Parameters
 ----------
@@ -29917,21 +29809,27 @@ q_out : float
       py::arg("q7") = py::none(),
       py::arg("q8") = py::none(),
       py::arg("q9") = py::none(),
-      R"""(Routine to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
+      R"""(Overloaded name to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
 
-Overloaded by quat_mul.
+Overloaded functions are:
+Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
+Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
 
 Parameters
 ----------
-q1 : complex
+q1 : float
     Quaternions.
-q3 : complex, optional
+q3 : float, optional
     More quaternions.
 
 Returns
 -------
-q_out : complex
+q_out : float
     Resultant q1 * q2
+
+Notes
+-----
+Note: q_out = q1 * q2 represents a rotation of q2 first followed by q1.
 )""");
   m.def(
       "quat_mul",
@@ -29954,9 +29852,11 @@ q_out : complex
       py::arg("q7") = py::none(),
       py::arg("q8") = py::none(),
       py::arg("q9") = py::none(),
-      R"""(Routine to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
+      R"""(Overloaded name to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
 
-Overloaded by quat_mul.
+Overloaded functions are:
+Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
+Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
 
 Parameters
 ----------
@@ -29969,6 +29869,10 @@ Returns
 -------
 q_out : float
     Resultant q1 * q2
+
+Notes
+-----
+Note: q_out = q1 * q2 represents a rotation of q2 first followed by q1.
 )""");
   m.def(
       "quat_rotate",
@@ -29976,18 +29880,22 @@ q_out : float
           &SimUtils::quat_rotate),
       py::arg("quat"),
       py::arg("vec_in"),
-      R"""(Routine to rotate a vector using a quaternion..
+      R"""(Overloaded name to rotate a vector using a quaternion..
+
+Overloaded functions are:
+Function quat_rotate_real (quat, vec_in) result (vec_out)
+Function quat_rotate_complex (quat, vec_in) result (vec_out)
 
 Parameters
 ----------
-quat : complex
+quat : float
     Quaternion to rotate with. Does not have to be normalized.
-vec_in : complex
+vec_in : float
     Initial vector.
 
 Returns
 -------
-vec_out : complex
+vec_out : float
     Final vector.
 )""");
   m.def(
@@ -29996,7 +29904,11 @@ vec_out : complex
           &SimUtils::quat_rotate),
       py::arg("quat"),
       py::arg("vec_in"),
-      R"""(Routine to rotate a vector using a quaternion..
+      R"""(Overloaded name to rotate a vector using a quaternion..
+
+Overloaded functions are:
+Function quat_rotate_real (quat, vec_in) result (vec_out)
+Function quat_rotate_complex (quat, vec_in) result (vec_out)
 
 Parameters
 ----------
@@ -30577,56 +30489,74 @@ get_sigma_cut : float
       py::arg("index_quasi") = py::none(),
       R"""(Routine to return a gaussian distributed random number with unit sigma.
 
-See ran_gauss for more details.
+This routine uses the same algorithm as gasdev from Numerical Recipes.
+ran_gauss_scalar   ! harvest is a scalar
+ran_gauss_vector   ! harvest is a 1-D array.
 
+Parameters
+----------
+ran_state : RandomStateStruct, optional
+    Internal state. See the ran_seed_put documentation for more details.
+sigma_cut : float, optional
+    If present and positive will override setting of ran_state.gauss_sigma_cut.
+
+Returns
+-------
+harvest : float
+    Random number. Or
+    This parameter is an input/output and is modified in-place. As an output: Random number array.
 
 Notes
 -----
-Note: The index_quasi argument is used internally for the quasi-random number generator.
+Note: Use ran_seed_put for initialization.
+Note: Use ran_engine to set which random number generator to use.
+Overloaded versions:
 )""");
   py::class_<PyRanGaussScalar, std::unique_ptr<PyRanGaussScalar>>(
       m, "RanGaussScalar", "Fortran routine ran_gauss_scalar return value")
       .def_readonly("harvest", &PyRanGaussScalar::harvest)
-      .def_readonly("sigma_cut", &PyRanGaussScalar::sigma_cut)
       .def_readonly("index_quasi", &PyRanGaussScalar::index_quasi)
-      .def("__len__", [](const PyRanGaussScalar&) { return 3; })
+      .def("__len__", [](const PyRanGaussScalar&) { return 2; })
       .def(
           "__getitem__", [](const PyRanGaussScalar& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
-            if (i == 0)
-              return py::cast(s.harvest);
-            if (i == 1)
-              return py::cast(s.sigma_cut);
-            if (i == 2)
-              return py::cast(s.index_quasi);
-            return py::none();
-          });
-  m.def(
-      "ran_gauss_vector",
-      &python_ran_gauss_vector,
-      py::arg("ran_state") = py::none(),
-      py::arg("sigma_cut") = py::none(),
-      R"""(Routine to return a gaussian distributed random number with unit sigma.
-
-See ran_gauss for more details.
-
-)""");
-  py::class_<PyRanGaussVector, std::unique_ptr<PyRanGaussVector>>(
-      m, "RanGaussVector", "Fortran routine ran_gauss_vector return value")
-      .def_readonly("harvest", &PyRanGaussVector::harvest)
-      .def_readonly("sigma_cut", &PyRanGaussVector::sigma_cut)
-      .def("__len__", [](const PyRanGaussVector&) { return 2; })
-      .def(
-          "__getitem__", [](const PyRanGaussVector& s, size_t i) -> py::object {
             if (i >= 2)
               throw py::index_error();
             if (i == 0)
               return py::cast(s.harvest);
             if (i == 1)
-              return py::cast(s.sigma_cut);
+              return py::cast(s.index_quasi);
             return py::none();
           });
+  m.def(
+      "ran_gauss_vector",
+      &SimUtils::ran_gauss_vector,
+      py::arg("ran_state") = py::none(),
+      py::arg("sigma_cut") = py::none(),
+      R"""(Routine to return a gaussian distributed random number with unit sigma.
+
+This routine uses the same algorithm as gasdev from Numerical Recipes.
+ran_gauss_scalar   ! harvest is a scalar
+ran_gauss_vector   ! harvest is a 1-D array.
+
+Parameters
+----------
+ran_state : RandomStateStruct, optional
+    Internal state. See the ran_seed_put documentation for more details.
+sigma_cut : float, optional
+    If present and positive will override setting of ran_state.gauss_sigma_cut.
+
+Returns
+-------
+harvest : float
+    Random number. Or
+    This parameter is an input/output and is modified in-place. As an output: Random number array.
+
+Notes
+-----
+Note: Use ran_seed_put for initialization.
+Note: Use ran_engine to set which random number generator to use.
+Overloaded versions:
+)""");
   m.def(
       "ran_seed_get",
       &SimUtils::ran_seed_get,
@@ -30673,13 +30603,27 @@ Note: Use the subroutine ran_seed_get(seed) to get the seed used.
       py::arg("index_quasi") = py::none(),
       R"""(Routine to return a random number uniformly distributed in the
 
-interval [0, 1].
-See ran_uniform for more details.
+interval [0, 1]. This routine uses the same algorithm as ran or sobseq
+from Numberical Recipes in Fortran90.
+See ran_engine.
+ran_uniform_scalar   ! harvest is a scalar
+ran_uniform_vector   ! harvest is a 1-D array.
 
+Parameters
+----------
+ran_state : RandomStateStruct, optional
+    Internal state. See the ran_seed_put documentation for more details.
+
+Returns
+-------
+harvest : float
+    Random number. Or
+    This parameter is an input/output and is modified in-place. As an output: Random number array.
 
 Notes
 -----
-Note: The index_quasi argument is used internally for the quasi-random number generator.
+Note: Use ran_seed_put for initialization.
+Overloaded versions:
 )""");
   py::class_<PyRanUniformScalar, std::unique_ptr<PyRanUniformScalar>>(
       m, "RanUniformScalar", "Fortran routine ran_uniform_scalar return value")
@@ -30701,11 +30645,29 @@ Note: The index_quasi argument is used internally for the quasi-random number ge
       "ran_uniform",
       py::overload_cast<optional_ref<RandomStateProxy>>(&SimUtils::ran_uniform),
       py::arg("ran_state") = py::none(),
-      R"""(Routine to return a vector of random numbers uniformly distributed in the
+      R"""(Routine to return a random number uniformly distributed in the
 
-interval [0, 1].
-See ran_uniform for more details.
+interval [0, 1]. This routine uses the same algorithm as ran or sobseq
+from Numberical Recipes in Fortran90.
+See ran_engine.
+ran_uniform_scalar   ! harvest is a scalar
+ran_uniform_vector   ! harvest is a 1-D array.
 
+Parameters
+----------
+ran_state : RandomStateStruct, optional
+    Internal state. See the ran_seed_put documentation for more details.
+
+Returns
+-------
+harvest : float
+    Random number. Or
+    This parameter is an input/output and is modified in-place. As an output: Random number array.
+
+Notes
+-----
+Note: Use ran_seed_put for initialization.
+Overloaded versions:
 )""");
   m.def(
       "randomize_lr_wake_frequencies",
@@ -30821,45 +30783,67 @@ exact : bool, optional
   m.def(
       "re_allocate",
       py::overload_cast<Wall3dSectionProxyAlloc1D&, int, std::optional<bool>>(
-          &Bmad::re_allocate),
+          &python_re_allocate_wall3d_section_array),
       py::arg("section"),
       py::arg("n"),
       py::arg("exact") = py::none(),
-      R"""(Routine to reallocate an array of wall3d%section(:).
-
-Overloaded by re_allocate.
+      R"""(No docstring available
 
 Parameters
 ----------
-section : Wall3DSectionStruct
-    Array of vertices
-    This parameter is an input/output and is modified in-place. As an output: Allocated array.
-n : int
-    Minimum size needed for array.
-exact : bool, optional
-    If present and False then the size of the output array is permitted to be larger than n. Default is True.
+section : 
+n : 
+exact : 
 )""");
+  py::class_<
+      PyReAllocateWall3dSectionArray,
+      std::unique_ptr<PyReAllocateWall3dSectionArray>>(
+      m,
+      "ReAllocateWall3dSectionArray",
+      "Fortran routine re_allocate_wall3d_section_array return value")
+      .def_readonly("exact", &PyReAllocateWall3dSectionArray::exact)
+      .def("__len__", [](const PyReAllocateWall3dSectionArray&) { return 1; })
+      .def(
+          "__getitem__",
+          [](const PyReAllocateWall3dSectionArray& s, size_t i) -> py::object {
+            if (i >= 1)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.exact);
+            return py::none();
+          });
   m.def(
       "re_allocate",
       py::overload_cast<Wall3dVertexProxyAlloc1D&, int, std::optional<bool>>(
-          &Bmad::re_allocate),
+          &python_re_allocate_wall3d_vertex_array),
       py::arg("v"),
       py::arg("n"),
       py::arg("exact") = py::none(),
-      R"""(Routine to reallocate an array of vertex structures.
-
-Overloaded by re_allocate.
+      R"""(No docstring available
 
 Parameters
 ----------
-v : Wall3DVertexStruct
-    Array of vertices
-    This parameter is an input/output and is modified in-place. As an output: Allocated array.
-n : int
-    Minimum size needed for array.
-exact : bool, optional
-    If present and False then the size of the output array is permitted to be larger than n. Default is True.
+v : 
+n : 
+exact : 
 )""");
+  py::class_<
+      PyReAllocateWall3dVertexArray,
+      std::unique_ptr<PyReAllocateWall3dVertexArray>>(
+      m,
+      "ReAllocateWall3dVertexArray",
+      "Fortran routine re_allocate_wall3d_vertex_array return value")
+      .def_readonly("exact", &PyReAllocateWall3dVertexArray::exact)
+      .def("__len__", [](const PyReAllocateWall3dVertexArray&) { return 1; })
+      .def(
+          "__getitem__",
+          [](const PyReAllocateWall3dVertexArray& s, size_t i) -> py::object {
+            if (i >= 1)
+              throw py::index_error();
+            if (i == 0)
+              return py::cast(s.exact);
+            return py::none();
+          });
   m.def(
       "re_associate_node_array",
       &Bmad::re_associate_node_array,
@@ -39444,52 +39428,71 @@ tao_lat :
 )""");
   m.def(
       "tao_pointer_to_universe",
-      py::overload_cast<int, std::optional<bool>, TaoUniverseProxy&>(
-          &python_tao_pointer_to_universe_int),
+      py::overload_cast<int, std::optional<bool>>(
+          &Tao::tao_pointer_to_universe),
       py::arg("ix_uni"),
       py::arg("neg2_to_default") = py::none(),
-      py::arg("u"),
-      R"""(Overloaded by tao_pointer_to_universe. See this routine for more details.
+      R"""(Routine to set a pointer to a universe.
 
+This is an overloaded routine for the:
+tao_pointer_to_universe_int (ix_uni, neg2_to_default) result (u)
+tao_pointer_to_universe_str (string, neg2_to_default) result (u)
+That is, it cannot handlle something like "[1,3,4]@...". To handle multiple universe picks, use:
+tao_pointer_to_universes
+
+Parameters
+----------
+ix_uni : int
+    Index to the s.u(:) array If ix_uni is -1 -> u(s.global.default_universe) will be used.
+string : unknown
+    String in the form "<ix_uni>@..." or, if no "@" is present, u will point to the default universe.
+    This parameter is an input/output and is modified in-place. As an output: String with universe prefix
+    stripped off.
+neg2_to_default : bool, optional
+    i_uni = -2 (all universes) maps to the default uni? Default if False.
 
 Returns
 -------
-u
+u : TaoUniverseStruct
+    Universe pointer. u will be nullified if there is an error and an error message will be printed.
+
+Notes
+-----
+Note: With a string argument, this routine can only handle single universe picks.
 )""");
-  py::class_<
-      PyTaoPointerToUniverseInt,
-      std::unique_ptr<PyTaoPointerToUniverseInt>>(
-      m,
-      "TaoPointerToUniverseInt",
-      "Fortran routine tao_pointer_to_universe_int return value")
-      .def_readonly("ix_uni", &PyTaoPointerToUniverseInt::ix_uni)
-      .def_readonly(
-          "neg2_to_default", &PyTaoPointerToUniverseInt::neg2_to_default)
-      .def("__len__", [](const PyTaoPointerToUniverseInt&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyTaoPointerToUniverseInt& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
-            if (i == 0)
-              return py::cast(s.ix_uni);
-            if (i == 1)
-              return py::cast(s.neg2_to_default);
-            return py::none();
-          });
   m.def(
       "tao_pointer_to_universe",
-      py::overload_cast<std::string, std::optional<bool>, TaoUniverseProxy&>(
+      py::overload_cast<std::string, std::optional<bool>>(
           &python_tao_pointer_to_universe_str),
       py::arg("string"),
       py::arg("neg2_to_default") = py::none(),
-      py::arg("u"),
-      R"""(Overloaded by tao_pointer_to_universe. See this routine for more details.
+      R"""(Routine to set a pointer to a universe.
 
+This is an overloaded routine for the:
+tao_pointer_to_universe_int (ix_uni, neg2_to_default) result (u)
+tao_pointer_to_universe_str (string, neg2_to_default) result (u)
+That is, it cannot handlle something like "[1,3,4]@...". To handle multiple universe picks, use:
+tao_pointer_to_universes
+
+Parameters
+----------
+ix_uni : int
+    Index to the s.u(:) array If ix_uni is -1 -> u(s.global.default_universe) will be used.
+string : unknown
+    String in the form "<ix_uni>@..." or, if no "@" is present, u will point to the default universe.
+    This parameter is an input/output and is modified in-place. As an output: String with universe prefix
+    stripped off.
+neg2_to_default : bool, optional
+    i_uni = -2 (all universes) maps to the default uni? Default if False.
 
 Returns
 -------
-u
+u : TaoUniverseStruct
+    Universe pointer. u will be nullified if there is an error and an error message will be printed.
+
+Notes
+-----
+Note: With a string argument, this routine can only handle single universe picks.
 )""");
   py::class_<
       PyTaoPointerToUniverseStr,
@@ -39497,9 +39500,8 @@ u
       m,
       "TaoPointerToUniverseStr",
       "Fortran routine tao_pointer_to_universe_str return value")
+      .def_readonly("u", &PyTaoPointerToUniverseStr::u)
       .def_readonly("string", &PyTaoPointerToUniverseStr::string)
-      .def_readonly(
-          "neg2_to_default", &PyTaoPointerToUniverseStr::neg2_to_default)
       .def("__len__", [](const PyTaoPointerToUniverseStr&) { return 2; })
       .def(
           "__getitem__",
@@ -39507,9 +39509,9 @@ u
             if (i >= 2)
               throw py::index_error();
             if (i == 0)
-              return py::cast(s.string);
+              return py::cast(s.u);
             if (i == 1)
-              return py::cast(s.neg2_to_default);
+              return py::cast(s.string);
             return py::none();
           });
   m.def(
@@ -42024,20 +42026,14 @@ w_to_ele : float
   m.def(
       "taylor_equal_taylor",
       &Bmad::taylor_equal_taylor,
+      py::arg("taylor1"),
       py::arg("taylor2"),
-      R"""(Subroutine that is used to set one taylor equal to another.
-
-This routine takes care of the pointers in taylor1.
+      R"""(No docstring available
 
 Parameters
 ----------
-taylor2 : TaylorStruct
-    Input taylor.
-
-Returns
--------
-taylor1 : TaylorStruct
-    Output taylor.
+taylor1 : 
+taylor2 : 
 )""");
   m.def(
       "taylor_inverse",
@@ -42135,20 +42131,14 @@ map : MadMapStruct
   m.def(
       "taylors_equal_taylors",
       &Bmad::taylors_equal_taylors,
+      py::arg("taylor1"),
       py::arg("taylor2"),
-      R"""(Subroutine to transfer the values from one taylor map to another:
-
-Taylor1 <= Taylor2
+      R"""(No docstring available
 
 Parameters
 ----------
-taylor2 : TaylorStruct
-    Taylor map.
-
-Returns
--------
-taylor1 : TaylorStruct
-    Taylor map.
+taylor1 : 
+taylor2 : 
 )""");
   m.def(
       "test_bunch_struct_array",
@@ -45692,41 +45682,66 @@ ix_branch : int, optional
       py::overload_cast<
           LatProxy&,
           CoordArrayProxyAlloc1D&,
-          std::optional<int>,
           std::optional<bool>,
-          std::optional<bool>>(&python_twiss_and_track_all),
+          std::optional<bool>>(&Bmad::twiss_and_track),
       py::arg("lat"),
       py::arg("orb_array"),
-      py::arg("status") = py::none(),
       py::arg("print_err") = py::none(),
       py::arg("calc_chrom") = py::none(),
-      R"""(Subroutine to calculate the twiss parameters, transport matrices and orbit.
+      R"""(Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
 
+Routine to calculate the twiss parameters, transport matrices and orbit.
+The essential difference between these two procedures is that
+twiss_and_track_branch only does the main branch while twiss_and_track_all
+does everything but the photon_fork elements.
+twiss_propagate_failure$, no_complete_orbit$, or no_closed_orbit$. Note: in_stop_band$, unstable$,
+and non_symplectic$ refer to the 1-turn matrix which is computed with closed lattices.
+For an open geometry branch, status = no_complete_orbit$ is for
+where the particle is lost in tracking. A negative sign is used to differentiate an
+error occuring in the first call to twiss_at_start from the second call to twiss_at_start.
+If there is a problem in an open geometry branch, status argument setting is -N where N is the element
+where the particle was lost in tracking (negative numbers are used here to avoid confusion with ok$
+which is mapped to 1.
+
+Parameters
+----------
+lat : LatStruct
+    lattice. .param.geometry      -- Used to determine if lattice is open or closed.
+    This parameter is an input/output and is modified in-place. As an output: Lat with computed twiss
+    parameters.
+orb : CoordStruct
+    Orbit to be computed
+orb : 
+    Initial conditions to be used for an open geometry lattices.
+orb : unknown
+    Energy at which the closed orbit is computed.
+    This parameter is an input/output and is modified in-place. As an output: Computed orbit.
+orb_array : CoordArrayStruct
+    Array of orbit arrays.
+orb_array : unknown
+    Array of orbit arrays.
+ix_branch : int, optional
+    Branch to track.
+print_err : bool, optional
+    Default is True. If False, suppress error messages.
+calc_chrom : bool, optional
+    Default is False. If True, calculate the chromatic functions.
+orb_start : CoordStruct, optional
+    If present, use this as the starting orbit.
+
+Returns
+-------
+status : int
+    Set ok$ if everything is OK and set to something else otherwise. See above for more details.
 
 Notes
 -----
-Note: photon branches are currently ignored. This routine is overloaded by twiss_and_track. See
-twiss_and_track for more details.
+Note: This is not necessarily the fastest way to do things since this routine does the entire calculation from
+scratch. For a circular ring: If the RF is on, the computed orbit will be the 6D closed orbit. If the RF is
+off, the 4D transverse closed orbit using orbi(0)%vec(6) is computed. For an open lattice, the orbit will be
+computed using orb(0) as starting conditions. If there is a problem the status argument settings are:
+in_stop_band$, unstable$, non_symplectic$, in_stop_band$, non_symplectic$, xfer_mat_clac_failure$,
 )""");
-  py::class_<PyTwissAndTrackAll, std::unique_ptr<PyTwissAndTrackAll>>(
-      m, "TwissAndTrackAll", "Fortran routine twiss_and_track_all return value")
-      .def_readonly("status", &PyTwissAndTrackAll::status)
-      .def_readonly("print_err", &PyTwissAndTrackAll::print_err)
-      .def_readonly("calc_chrom", &PyTwissAndTrackAll::calc_chrom)
-      .def("__len__", [](const PyTwissAndTrackAll&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PyTwissAndTrackAll& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
-            if (i == 0)
-              return py::cast(s.status);
-            if (i == 1)
-              return py::cast(s.print_err);
-            if (i == 2)
-              return py::cast(s.calc_chrom);
-            return py::none();
-          });
   m.def(
       "twiss_and_track_at_s",
       &Bmad::twiss_and_track_at_s,
@@ -45790,47 +45805,69 @@ err : bool
           LatProxy&,
           CoordProxyAlloc1D&,
           std::optional<int>,
-          std::optional<int>,
           std::optional<bool>,
           std::optional<bool>,
-          optional_ref<CoordProxy>>(&python_twiss_and_track_branch),
+          optional_ref<CoordProxy>>(&Bmad::twiss_and_track),
       py::arg("lat"),
       py::arg("orb"),
-      py::arg("status") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::arg("print_err") = py::none(),
       py::arg("calc_chrom") = py::none(),
       py::arg("orb_start") = py::none(),
-      R"""(Subroutine to calculate the twiss parameters, transport matrices and orbit.
+      R"""(Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
 
-This routine is overloaded by twiss_and_track.
-See twiss_and_track for more details.
+Routine to calculate the twiss parameters, transport matrices and orbit.
+The essential difference between these two procedures is that
+twiss_and_track_branch only does the main branch while twiss_and_track_all
+does everything but the photon_fork elements.
+twiss_propagate_failure$, no_complete_orbit$, or no_closed_orbit$. Note: in_stop_band$, unstable$,
+and non_symplectic$ refer to the 1-turn matrix which is computed with closed lattices.
+For an open geometry branch, status = no_complete_orbit$ is for
+where the particle is lost in tracking. A negative sign is used to differentiate an
+error occuring in the first call to twiss_at_start from the second call to twiss_at_start.
+If there is a problem in an open geometry branch, status argument setting is -N where N is the element
+where the particle was lost in tracking (negative numbers are used here to avoid confusion with ok$
+which is mapped to 1.
 
+Parameters
+----------
+lat : LatStruct
+    lattice. .param.geometry      -- Used to determine if lattice is open or closed.
+    This parameter is an input/output and is modified in-place. As an output: Lat with computed twiss
+    parameters.
+orb : CoordStruct
+    Orbit to be computed
+orb : 
+    Initial conditions to be used for an open geometry lattices.
+orb : unknown
+    Energy at which the closed orbit is computed.
+    This parameter is an input/output and is modified in-place. As an output: Computed orbit.
+orb_array : CoordArrayStruct
+    Array of orbit arrays.
+orb_array : unknown
+    Array of orbit arrays.
+ix_branch : int, optional
+    Branch to track.
+print_err : bool, optional
+    Default is True. If False, suppress error messages.
+calc_chrom : bool, optional
+    Default is False. If True, calculate the chromatic functions.
+orb_start : CoordStruct, optional
+    If present, use this as the starting orbit.
+
+Returns
+-------
+status : int
+    Set ok$ if everything is OK and set to something else otherwise. See above for more details.
+
+Notes
+-----
+Note: This is not necessarily the fastest way to do things since this routine does the entire calculation from
+scratch. For a circular ring: If the RF is on, the computed orbit will be the 6D closed orbit. If the RF is
+off, the 4D transverse closed orbit using orbi(0)%vec(6) is computed. For an open lattice, the orbit will be
+computed using orb(0) as starting conditions. If there is a problem the status argument settings are:
+in_stop_band$, unstable$, non_symplectic$, in_stop_band$, non_symplectic$, xfer_mat_clac_failure$,
 )""");
-  py::class_<PyTwissAndTrackBranch, std::unique_ptr<PyTwissAndTrackBranch>>(
-      m,
-      "TwissAndTrackBranch",
-      "Fortran routine twiss_and_track_branch return value")
-      .def_readonly("status", &PyTwissAndTrackBranch::status)
-      .def_readonly("ix_branch", &PyTwissAndTrackBranch::ix_branch)
-      .def_readonly("print_err", &PyTwissAndTrackBranch::print_err)
-      .def_readonly("calc_chrom", &PyTwissAndTrackBranch::calc_chrom)
-      .def("__len__", [](const PyTwissAndTrackBranch&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const PyTwissAndTrackBranch& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
-            if (i == 0)
-              return py::cast(s.status);
-            if (i == 1)
-              return py::cast(s.ix_branch);
-            if (i == 2)
-              return py::cast(s.print_err);
-            if (i == 3)
-              return py::cast(s.calc_chrom);
-            return py::none();
-          });
   m.def(
       "twiss_and_track_from_s_to_s",
       &Bmad::twiss_and_track_from_s_to_s,

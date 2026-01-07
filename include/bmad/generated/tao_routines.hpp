@@ -1381,21 +1381,19 @@ void tao_pointer_to_tao_lat(
     std::optional<int> lat_type,
     TaoLatticeProxy& tao_lat);
 extern "C" bool fortran_tao_pointer_to_universe_int(
-    int& ix_uni /* 0D_NOT_integer inout */,
-    bool* neg2_to_default /* 0D_NOT_logical inout */,
-    void* u /* 0D_PTR_type inout */);
-void tao_pointer_to_universe(
-    int& ix_uni,
-    optional_ref<bool> neg2_to_default,
-    TaoUniverseProxy& u);
+    int& ix_uni /* 0D_NOT_integer in */,
+    bool* neg2_to_default /* 0D_NOT_logical in */,
+    void* u /* 0D_PTR_type out */);
+TaoUniverseProxy tao_pointer_to_universe(
+    int ix_uni,
+    std::optional<bool> neg2_to_default = std::nullopt);
 extern "C" bool fortran_tao_pointer_to_universe_str(
     const char* string /* 0D_NOT_character inout */,
-    bool* neg2_to_default /* 0D_NOT_logical inout */,
-    void* u /* 0D_PTR_type inout */);
-void tao_pointer_to_universe(
+    bool* neg2_to_default /* 0D_NOT_logical in */,
+    void* u /* 0D_PTR_type out */);
+TaoUniverseProxy tao_pointer_to_universe(
     std::string& string,
-    optional_ref<bool> neg2_to_default,
-    TaoUniverseProxy& u);
+    std::optional<bool> neg2_to_default = std::nullopt);
 extern "C" void fortran_tao_pointer_to_universes(
     const char* name_in /* 0D_NOT_character in */,
     void* unis /* 1D_ALLOC_type out */,

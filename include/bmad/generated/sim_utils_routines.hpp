@@ -1016,20 +1016,20 @@ SimUtils::RanGaussConverter ran_gauss_converter(
     optional_ref<RandomStateProxy> ran_state = std::nullopt);
 extern "C" void fortran_ran_gauss_scalar(
     double& harvest /* 0D_NOT_real out */,
-    void* ran_state /* 0D_NOT_type inout */,
-    double* sigma_cut /* 0D_NOT_real inout */,
+    void* ran_state /* 0D_NOT_type in */,
+    double* sigma_cut /* 0D_NOT_real in */,
     int* index_quasi /* 0D_NOT_integer inout */);
 double ran_gauss_scalar(
     optional_ref<RandomStateProxy> ran_state = std::nullopt,
-    optional_ref<double> sigma_cut = std::nullopt,
+    std::optional<double> sigma_cut = std::nullopt,
     optional_ref<int> index_quasi = std::nullopt);
 extern "C" void fortran_ran_gauss_vector(
     void* harvest /* 1D_ALLOC_real out */,
-    void* ran_state /* 0D_NOT_type inout */,
-    double* sigma_cut /* 0D_NOT_real inout */);
+    void* ran_state /* 0D_NOT_type in */,
+    double* sigma_cut /* 0D_NOT_real in */);
 RealAlloc1D ran_gauss_vector(
     optional_ref<RandomStateProxy> ran_state = std::nullopt,
-    optional_ref<double> sigma_cut = std::nullopt);
+    std::optional<double> sigma_cut = std::nullopt);
 extern "C" void fortran_ran_seed_get(int& seed /* 0D_NOT_integer out */);
 int ran_seed_get();
 extern "C" void fortran_ran_seed_put(
@@ -1038,14 +1038,14 @@ extern "C" void fortran_ran_seed_put(
 void ran_seed_put(int seed, std::optional<int> mpi_offset = std::nullopt);
 extern "C" void fortran_ran_uniform_scalar(
     double& harvest /* 0D_NOT_real out */,
-    void* ran_state /* 0D_NOT_type inout */,
+    void* ran_state /* 0D_NOT_type in */,
     int* index_quasi /* 0D_NOT_integer inout */);
 double ran_uniform(
     optional_ref<RandomStateProxy> ran_state = std::nullopt,
     optional_ref<int> index_quasi = std::nullopt);
 extern "C" void fortran_ran_uniform_vector(
     void* harvest /* 1D_ALLOC_real out */,
-    void* ran_state /* 0D_NOT_type inout */);
+    void* ran_state /* 0D_NOT_type in */);
 RealAlloc1D ran_uniform(
     optional_ref<RandomStateProxy> ran_state = std::nullopt);
 extern "C" bool fortran_real_num_fortran_format(

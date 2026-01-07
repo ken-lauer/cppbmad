@@ -4833,26 +4833,21 @@ subroutine fortran_tao_pointer_to_universe_int (ix_uni, neg2_to_default, u) bind
 
   use tao_struct, only: tao_universe_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), value :: u  ! 0D_PTR_type
-  type(tao_universe_struct), pointer :: f_u
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: ix_uni  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_uni
-  integer(c_int), pointer :: f_ix_uni_ptr
+  ! ** In parameters **
+  integer(c_int) :: ix_uni  ! 0D_NOT_integer
+  integer :: f_ix_uni
   type(c_ptr), intent(in), value :: neg2_to_default  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_neg2_to_default
   logical, target :: f_neg2_to_default_native
   logical, pointer :: f_neg2_to_default_native_ptr
   logical(c_bool), pointer :: f_neg2_to_default_ptr
+  ! ** Out parameters **
+  type(c_ptr), value :: u  ! 0D_PTR_type
+  type(tao_universe_struct), pointer :: f_u
   ! ** End of parameters **
-  ! inout: f_ix_uni 0D_NOT_integer
-  if (c_associated(ix_uni)) then
-    call c_f_pointer(ix_uni, f_ix_uni_ptr)
-  else
-    f_ix_uni_ptr => null()
-  endif
-  ! inout: f_neg2_to_default 0D_NOT_logical
+  ! in: f_ix_uni 0D_NOT_integer
+  f_ix_uni = ix_uni
+  ! in: f_neg2_to_default 0D_NOT_logical
   if (c_associated(neg2_to_default)) then
     call c_f_pointer(neg2_to_default, f_neg2_to_default_ptr)
     f_neg2_to_default_native = f_neg2_to_default_ptr
@@ -4860,17 +4855,8 @@ subroutine fortran_tao_pointer_to_universe_int (ix_uni, neg2_to_default, u) bind
   else
     f_neg2_to_default_native_ptr => null()
   endif
-  f_u = tao_pointer_to_universe(f_ix_uni_ptr, f_neg2_to_default_native_ptr)
+  f_u = tao_pointer_to_universe(f_ix_uni, f_neg2_to_default_native_ptr)
 
-  ! inout: f_ix_uni 0D_NOT_integer
-  ! no output conversion for f_ix_uni
-  ! inout: f_neg2_to_default 0D_NOT_logical
-  if (c_associated(neg2_to_default)) then
-    call c_f_pointer(neg2_to_default, f_neg2_to_default_ptr)
-    f_neg2_to_default_ptr = f_neg2_to_default_native
-  else
-    ! f_neg2_to_default unset
-  endif
   ! out: f_u 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
 end subroutine
@@ -4878,6 +4864,12 @@ subroutine fortran_tao_pointer_to_universe_str (string, neg2_to_default, u) bind
 
   use tao_struct, only: tao_universe_struct
   implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: neg2_to_default  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_neg2_to_default
+  logical, target :: f_neg2_to_default_native
+  logical, pointer :: f_neg2_to_default_native_ptr
+  logical(c_bool), pointer :: f_neg2_to_default_ptr
   ! ** Out parameters **
   type(c_ptr), value :: u  ! 0D_PTR_type
   type(tao_universe_struct), pointer :: f_u
@@ -4885,17 +4877,12 @@ subroutine fortran_tao_pointer_to_universe_str (string, neg2_to_default, u) bind
   type(c_ptr), intent(in), value :: string
   character(len=4096), target :: f_string
   character(kind=c_char), pointer :: f_string_ptr(:)
-  type(c_ptr), intent(in), value :: neg2_to_default  ! 0D_NOT_logical
-  logical(c_bool), pointer :: f_neg2_to_default
-  logical, target :: f_neg2_to_default_native
-  logical, pointer :: f_neg2_to_default_native_ptr
-  logical(c_bool), pointer :: f_neg2_to_default_ptr
   ! ** End of parameters **
   ! inout: f_string 0D_NOT_character
   if (.not. c_associated(string)) return
   call c_f_pointer(string, f_string_ptr, [huge(0)])
   call to_f_str(f_string_ptr, f_string)
-  ! inout: f_neg2_to_default 0D_NOT_logical
+  ! in: f_neg2_to_default 0D_NOT_logical
   if (c_associated(neg2_to_default)) then
     call c_f_pointer(neg2_to_default, f_neg2_to_default_ptr)
     f_neg2_to_default_native = f_neg2_to_default_ptr
@@ -4907,13 +4894,6 @@ subroutine fortran_tao_pointer_to_universe_str (string, neg2_to_default, u) bind
 
   ! inout: f_string 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
-  ! inout: f_neg2_to_default 0D_NOT_logical
-  if (c_associated(neg2_to_default)) then
-    call c_f_pointer(neg2_to_default, f_neg2_to_default_ptr)
-    f_neg2_to_default_ptr = f_neg2_to_default_native
-  else
-    ! f_neg2_to_default unset
-  endif
   ! out: f_u 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
 end subroutine

@@ -258,110 +258,118 @@ void attribute_bookkeeper(
     EleProxy& ele,
     std::optional<bool> force_bookkeeping = std::nullopt);
 extern "C" bool fortran_attribute_free1(
-    int& ix_ele /* 0D_NOT_integer inout */,
-    const char* attrib_name /* 0D_NOT_character inout */,
-    void* lat /* 0D_NOT_type inout */,
-    bool* err_print_flag /* 0D_NOT_logical inout */,
-    bool* except_overlay /* 0D_NOT_logical inout */,
-    bool* dependent_attribs_free /* 0D_NOT_logical inout */,
-    int* why_not_free /* 0D_NOT_integer inout */,
-    bool& free /* 0D_NOT_logical inout */);
-void attribute_free(
-    int& ix_ele,
-    std::string& attrib_name,
+    int& ix_ele /* 0D_NOT_integer in */,
+    const char* attrib_name /* 0D_NOT_character in */,
+    void* lat /* 0D_NOT_type in */,
+    bool* err_print_flag /* 0D_NOT_logical in */,
+    bool* except_overlay /* 0D_NOT_logical in */,
+    bool* dependent_attribs_free /* 0D_NOT_logical in */,
+    int& why_not_free /* 0D_NOT_integer out */,
+    bool& free /* 0D_NOT_logical out */);
+struct AttributeFree1 {
+  int why_not_free;
+  bool free;
+};
+Bmad::AttributeFree1 attribute_free(
+    int ix_ele,
+    std::string attrib_name,
     LatProxy& lat,
-    optional_ref<bool> err_print_flag,
-    optional_ref<bool> except_overlay,
-    optional_ref<bool> dependent_attribs_free,
-    optional_ref<int> why_not_free,
-    bool& free);
+    std::optional<bool> err_print_flag = std::nullopt,
+    std::optional<bool> except_overlay = std::nullopt,
+    std::optional<bool> dependent_attribs_free = std::nullopt);
 extern "C" bool fortran_attribute_free2(
-    void* ele /* 0D_NOT_type inout */,
-    const char* attrib_name /* 0D_NOT_character inout */,
-    bool* err_print_flag /* 0D_NOT_logical inout */,
-    bool* except_overlay /* 0D_NOT_logical inout */,
-    bool* dependent_attribs_free /* 0D_NOT_logical inout */,
-    int* why_not_free /* 0D_NOT_integer inout */,
-    bool& free /* 0D_NOT_logical inout */);
-void attribute_free(
+    void* ele /* 0D_NOT_type in */,
+    const char* attrib_name /* 0D_NOT_character in */,
+    bool* err_print_flag /* 0D_NOT_logical in */,
+    bool* except_overlay /* 0D_NOT_logical in */,
+    bool* dependent_attribs_free /* 0D_NOT_logical in */,
+    int& why_not_free /* 0D_NOT_integer out */,
+    bool& free /* 0D_NOT_logical out */);
+struct AttributeFree2 {
+  int why_not_free;
+  bool free;
+};
+Bmad::AttributeFree2 attribute_free(
     EleProxy& ele,
-    std::string& attrib_name,
-    optional_ref<bool> err_print_flag,
-    optional_ref<bool> except_overlay,
-    optional_ref<bool> dependent_attribs_free,
-    optional_ref<int> why_not_free,
-    bool& free);
+    std::string attrib_name,
+    std::optional<bool> err_print_flag = std::nullopt,
+    std::optional<bool> except_overlay = std::nullopt,
+    std::optional<bool> dependent_attribs_free = std::nullopt);
 extern "C" bool fortran_attribute_free3(
-    int& ix_ele /* 0D_NOT_integer inout */,
-    int& ix_branch /* 0D_NOT_integer inout */,
-    const char* attrib_name /* 0D_NOT_character inout */,
-    void* lat /* 0D_NOT_type inout */,
-    bool* err_print_flag /* 0D_NOT_logical inout */,
-    bool* except_overlay /* 0D_NOT_logical inout */,
-    bool* dependent_attribs_free /* 0D_NOT_logical inout */,
-    int* why_not_free /* 0D_NOT_integer inout */,
-    bool& free /* 0D_NOT_logical inout */);
-void attribute_free(
-    int& ix_ele,
-    int& ix_branch,
-    std::string& attrib_name,
+    int& ix_ele /* 0D_NOT_integer in */,
+    int& ix_branch /* 0D_NOT_integer in */,
+    const char* attrib_name /* 0D_NOT_character in */,
+    void* lat /* 0D_NOT_type in */,
+    bool* err_print_flag /* 0D_NOT_logical in */,
+    bool* except_overlay /* 0D_NOT_logical in */,
+    bool* dependent_attribs_free /* 0D_NOT_logical in */,
+    int& why_not_free /* 0D_NOT_integer out */,
+    bool& free /* 0D_NOT_logical out */);
+struct AttributeFree3 {
+  int why_not_free;
+  bool free;
+};
+Bmad::AttributeFree3 attribute_free(
+    int ix_ele,
+    int ix_branch,
+    std::string attrib_name,
     LatProxy& lat,
-    optional_ref<bool> err_print_flag,
-    optional_ref<bool> except_overlay,
-    optional_ref<bool> dependent_attribs_free,
-    optional_ref<int> why_not_free,
-    bool& free);
+    std::optional<bool> err_print_flag = std::nullopt,
+    std::optional<bool> except_overlay = std::nullopt,
+    std::optional<bool> dependent_attribs_free = std::nullopt);
 extern "C" bool fortran_attribute_index1(
-    void* ele /* 0D_NOT_type inout */,
-    const char* name /* 0D_NOT_character inout */,
-    const char* full_name /* 0D_NOT_character inout */,
-    bool* can_abbreviate /* 0D_NOT_logical inout */,
-    bool* print_error /* 0D_NOT_logical inout */,
-    int& attrib_index /* 0D_NOT_integer inout */);
-void attribute_index(
+    void* ele /* 0D_NOT_type in */,
+    const char* name /* 0D_NOT_character in */,
+    const char* full_name /* 0D_NOT_character out */,
+    bool* can_abbreviate /* 0D_NOT_logical in */,
+    bool* print_error /* 0D_NOT_logical in */,
+    int& attrib_index /* 0D_NOT_integer out */);
+struct AttributeIndex1 {
+  std::string full_name;
+  int attrib_index;
+};
+Bmad::AttributeIndex1 attribute_index(
     EleProxy& ele,
-    std::string& name,
-    optional_ref<std::string> full_name,
-    optional_ref<bool> can_abbreviate,
-    optional_ref<bool> print_error,
-    int& attrib_index);
+    std::string name,
+    std::optional<bool> can_abbreviate = std::nullopt,
+    std::optional<bool> print_error = std::nullopt);
 extern "C" bool fortran_attribute_index2(
-    int& key /* 0D_NOT_integer inout */,
-    const char* name /* 0D_NOT_character inout */,
-    const char* full_name /* 0D_NOT_character inout */,
-    bool* can_abbreviate /* 0D_NOT_logical inout */,
-    bool* print_error /* 0D_NOT_logical inout */,
-    int& attrib_index /* 0D_NOT_integer inout */);
-void attribute_index(
-    int& key,
-    std::string& name,
-    optional_ref<std::string> full_name,
-    optional_ref<bool> can_abbreviate,
-    optional_ref<bool> print_error,
-    int& attrib_index);
+    int& key /* 0D_NOT_integer in */,
+    const char* name /* 0D_NOT_character in */,
+    const char* full_name /* 0D_NOT_character out */,
+    bool* can_abbreviate /* 0D_NOT_logical in */,
+    bool* print_error /* 0D_NOT_logical in */,
+    int& attrib_index /* 0D_NOT_integer out */);
+struct AttributeIndex2 {
+  std::string full_name;
+  int attrib_index;
+};
+Bmad::AttributeIndex2 attribute_index(
+    int key,
+    std::string name,
+    std::optional<bool> can_abbreviate = std::nullopt,
+    std::optional<bool> print_error = std::nullopt);
 
 // Skipped unusable routine attribute_info:
 // - Untranslated type: ele_attribute_struct (0D)
 extern "C" bool fortran_attribute_name1(
-    int& key /* 0D_NOT_integer inout */,
-    int& ix_att /* 0D_NOT_integer inout */,
-    bool* show_private /* 0D_NOT_logical inout */,
-    const char* attrib_name /* 0D_NOT_character inout */);
-void attribute_name(
-    int& key,
-    int& ix_att,
-    optional_ref<bool> show_private,
-    std::string& attrib_name);
+    int& key /* 0D_NOT_integer in */,
+    int& ix_att /* 0D_NOT_integer in */,
+    bool* show_private /* 0D_NOT_logical in */,
+    const char* attrib_name /* 0D_NOT_character out */);
+std::string attribute_name(
+    int key,
+    int ix_att,
+    std::optional<bool> show_private = std::nullopt);
 extern "C" bool fortran_attribute_name2(
-    void* ele /* 0D_NOT_type inout */,
-    int& ix_att /* 0D_NOT_integer inout */,
-    bool* show_private /* 0D_NOT_logical inout */,
-    const char* attrib_name /* 0D_NOT_character inout */);
-void attribute_name(
+    void* ele /* 0D_NOT_type in */,
+    int& ix_att /* 0D_NOT_integer in */,
+    bool* show_private /* 0D_NOT_logical in */,
+    const char* attrib_name /* 0D_NOT_character out */);
+std::string attribute_name(
     EleProxy& ele,
-    int& ix_att,
-    optional_ref<bool> show_private,
-    std::string& attrib_name);
+    int ix_att,
+    std::optional<bool> show_private = std::nullopt);
 
 // Skipped unusable routine attribute_set_bookkeeping:
 // - Untranslated type: all_pointer_struct (0D)
@@ -437,7 +445,7 @@ FixedArray2D<Real, 6, 6> beam_envelope_ibs(
     double n_part,
     int species);
 extern "C" void fortran_beam_equal_beam(
-    void* beam1 /* 0D_NOT_type in */,
+    void* beam1 /* 0D_NOT_type inout */,
     void* beam2 /* 0D_NOT_type in */);
 void beam_equal_beam(BeamProxy& beam1, BeamProxy& beam2);
 extern "C" void fortran_beam_tilts(
@@ -665,9 +673,9 @@ void bmad_patch_parameters_to_ptc(
 extern "C" void fortran_bp_set_ran_status();
 void bp_set_ran_status();
 extern "C" void fortran_branch_equal_branch(
-    void* branch1 /* 0D_NOT_type out */,
+    void* branch1 /* 0D_NOT_type inout */,
     void* branch2 /* 0D_NOT_type in */);
-BranchProxy branch_equal_branch(BranchProxy& branch2);
+void branch_equal_branch(BranchProxy& branch1, BranchProxy& branch2);
 extern "C" bool fortran_branch_name(
     void* branch /* 0D_NOT_type in */,
     const char* name /* 0D_NOT_character inout */);
@@ -675,7 +683,7 @@ void branch_name(BranchProxy& branch, std::string& name);
 extern "C" void fortran_branch_to_ptc_m_u(void* branch /* 0D_NOT_type in */);
 void branch_to_ptc_m_u(BranchProxy& branch);
 extern "C" void fortran_bunch_equal_bunch(
-    void* bunch1 /* 0D_NOT_type in */,
+    void* bunch1 /* 0D_NOT_type inout */,
     void* bunch2 /* 0D_NOT_type in */);
 void bunch_equal_bunch(BunchProxy& bunch1, BunchProxy& bunch2);
 
@@ -1037,9 +1045,10 @@ void complex_taylor_coef(
 // Skipped unusable routine complex_taylor_equal_c_taylor:
 // - Untranslated type: c_taylor (0D)
 extern "C" void fortran_complex_taylor_equal_complex_taylor(
-    void* complex_taylor1 /* 0D_NOT_type out */,
+    void* complex_taylor1 /* 0D_NOT_type inout */,
     void* complex_taylor2 /* 0D_NOT_type in */);
-ComplexTaylorProxy complex_taylor_equal_complex_taylor(
+void complex_taylor_equal_complex_taylor(
+    ComplexTaylorProxy& complex_taylor1,
     ComplexTaylorProxy& complex_taylor2);
 extern "C" bool fortran_complex_taylor_exponent_index(
     int* expn /* 1D_NOT_integer in */,
@@ -1066,9 +1075,10 @@ Bmad::ComplexTaylorToMat6 complex_taylor_to_mat6(
 // Skipped unusable routine complex_taylors_equal_c_taylors:
 // - Untranslated type: c_taylor (1D)
 extern "C" void fortran_complex_taylors_equal_complex_taylors(
-    void* complex_taylor1 /* 1D_ALLOC_type out */,
+    void* complex_taylor1 /* 1D_ALLOC_type inout */,
     void* complex_taylor2 /* 1D_ALLOC_type in */);
-ComplexTaylorProxyAlloc1D complex_taylors_equal_complex_taylors(
+void complex_taylors_equal_complex_taylors(
+    ComplexTaylorProxyAlloc1D& complex_taylor1,
     ComplexTaylorProxyAlloc1D& complex_taylor2);
 extern "C" void fortran_compute_slave_coupler(
     void* slave /* 0D_NOT_type inout */);
@@ -1731,9 +1741,9 @@ void ele_compute_ref_energy_and_time(
     LatParamProxy& param,
     bool err_flag);
 extern "C" void fortran_ele_equal_ele(
-    void* ele_out /* 0D_NOT_type out */,
+    void* ele_out /* 0D_NOT_type inout */,
     void* ele_in /* 0D_NOT_type in */);
-EleProxy ele_equal_ele(EleProxy& ele_in);
+void ele_equal_ele(EleProxy& ele_out, EleProxy& ele_in);
 extern "C" void fortran_ele_equals_ele(
     void* ele_out /* 0D_NOT_type out */,
     void* ele_in /* 0D_NOT_type in */,
@@ -1898,9 +1908,9 @@ void ele_value_has_changed(
     bool set_old,
     bool& has_changed);
 extern "C" void fortran_ele_vec_equal_ele_vec(
-    void* ele1 /* 1D_ALLOC_type out */,
+    void* ele1 /* 1D_ALLOC_type inout */,
     void* ele2 /* 1D_ALLOC_type in */);
-EleProxyAlloc1D ele_vec_equal_ele_vec(EleProxyAlloc1D& ele2);
+void ele_vec_equal_ele_vec(EleProxyAlloc1D& ele1, EleProxyAlloc1D& ele2);
 extern "C" void fortran_elec_multipole_field(
     double& a /* 0D_NOT_real in */,
     double& b /* 0D_NOT_real in */,
@@ -1922,43 +1932,47 @@ Bmad::ElecMultipoleField elec_multipole_field(
     int n,
     CoordProxy& coord);
 extern "C" bool fortran_element_at_s_branch(
-    void* branch /* 0D_NOT_type inout */,
-    double& s /* 0D_NOT_real inout */,
-    bool& choose_max /* 0D_NOT_logical inout */,
-    bool* err_flag /* 0D_NOT_logical inout */,
-    double* s_eff /* 0D_NOT_real inout */,
-    void* position /* 0D_NOT_type inout */,
-    bool* print_err /* 0D_NOT_logical inout */,
-    int& ix_ele /* 0D_NOT_integer inout */);
-void element_at_s(
+    void* branch /* 0D_NOT_type in */,
+    double& s /* 0D_NOT_real in */,
+    bool& choose_max /* 0D_NOT_logical in */,
+    bool& err_flag /* 0D_NOT_logical out */,
+    double& s_eff /* 0D_NOT_real out */,
+    void* position /* 0D_NOT_type out */,
+    bool* print_err /* 0D_NOT_logical in */,
+    int& ix_ele /* 0D_NOT_integer out */);
+struct ElementAtSBranch {
+  bool err_flag;
+  double s_eff;
+  CoordProxy position;
+  int ix_ele;
+};
+Bmad::ElementAtSBranch element_at_s(
     BranchProxy& branch,
-    double& s,
-    bool& choose_max,
-    optional_ref<bool> err_flag,
-    optional_ref<double> s_eff,
-    optional_ref<CoordProxy> position,
-    optional_ref<bool> print_err,
-    int& ix_ele);
+    double s,
+    bool choose_max,
+    std::optional<bool> print_err = std::nullopt);
 extern "C" bool fortran_element_at_s_lat(
-    void* lat /* 0D_NOT_type inout */,
-    double& s /* 0D_NOT_real inout */,
-    bool& choose_max /* 0D_NOT_logical inout */,
-    int* ix_branch /* 0D_NOT_integer inout */,
-    bool* err_flag /* 0D_NOT_logical inout */,
-    double* s_eff /* 0D_NOT_real inout */,
-    void* position /* 0D_NOT_type inout */,
-    bool* print_err /* 0D_NOT_logical inout */,
-    int& ix_ele /* 0D_NOT_integer inout */);
-void element_at_s(
+    void* lat /* 0D_NOT_type in */,
+    double& s /* 0D_NOT_real in */,
+    bool& choose_max /* 0D_NOT_logical in */,
+    int* ix_branch /* 0D_NOT_integer in */,
+    bool& err_flag /* 0D_NOT_logical out */,
+    double& s_eff /* 0D_NOT_real out */,
+    void* position /* 0D_NOT_type out */,
+    bool* print_err /* 0D_NOT_logical in */,
+    int& ix_ele /* 0D_NOT_integer out */);
+struct ElementAtSLat {
+  bool err_flag;
+  double s_eff;
+  CoordProxy position;
+  int ix_ele;
+};
+Bmad::ElementAtSLat element_at_s(
     LatProxy& lat,
-    double& s,
-    bool& choose_max,
-    optional_ref<int> ix_branch,
-    optional_ref<bool> err_flag,
-    optional_ref<double> s_eff,
-    optional_ref<CoordProxy> position,
-    optional_ref<bool> print_err,
-    int& ix_ele);
+    double s,
+    bool choose_max,
+    std::optional<int> ix_branch = std::nullopt,
+    std::optional<bool> print_err = std::nullopt);
 extern "C" void fortran_element_slice_iterator(
     void* ele /* 0D_NOT_type in */,
     void* param /* 0D_NOT_type in */,
@@ -2051,16 +2065,22 @@ FixedArray1D<Real, 10> em_field_kick_vector_time(
 extern "C" bool fortran_em_field_plus_em_field(
     void* field1 /* 0D_NOT_type in */,
     void* field2 /* 0D_NOT_type in */,
-    void* field_tot /* 0D_NOT_type out */);
-EmFieldProxy em_field_plus_em_field(EmFieldProxy& field1, EmFieldProxy& field2);
+    void* field_tot /* 0D_NOT_type inout */);
+void em_field_plus_em_field(
+    EmFieldProxy& field1,
+    EmFieldProxy& field2,
+    EmFieldProxy& field_tot);
 extern "C" void fortran_em_taylor_equal_em_taylor(
-    void* em_taylor1 /* 0D_NOT_type out */,
+    void* em_taylor1 /* 0D_NOT_type inout */,
     void* em_taylor2 /* 0D_NOT_type in */);
-EmTaylorProxy em_taylor_equal_em_taylor(EmTaylorProxy& em_taylor2);
+void em_taylor_equal_em_taylor(
+    EmTaylorProxy& em_taylor1,
+    EmTaylorProxy& em_taylor2);
 extern "C" void fortran_em_taylors_equal_em_taylors(
-    void* em_taylor1 /* 1D_ALLOC_type out */,
+    void* em_taylor1 /* 1D_ALLOC_type inout */,
     void* em_taylor2 /* 1D_ALLOC_type in */);
-EmTaylorProxyAlloc1D em_taylors_equal_em_taylors(
+void em_taylors_equal_em_taylors(
+    EmTaylorProxyAlloc1D& em_taylor1,
     EmTaylorProxyAlloc1D& em_taylor2);
 extern "C" void fortran_emit_6d(
     void* ele_ref /* 0D_NOT_type in */,
@@ -3841,9 +3861,9 @@ bool lat_ele_locator(
     std::optional<bool> order_by_index = std::nullopt,
     std::optional<bool> append_eles = std::nullopt);
 extern "C" void fortran_lat_equal_lat(
-    void* lat_out /* 0D_NOT_type out */,
+    void* lat_out /* 0D_NOT_type inout */,
     void* lat_in /* 0D_NOT_type in */);
-LatProxy lat_equal_lat(LatProxy& lat_in);
+void lat_equal_lat(LatProxy& lat_out, LatProxy& lat_in);
 extern "C" void fortran_lat_geometry(void* lat /* 0D_NOT_type inout */);
 void lat_geometry(LatProxy& lat);
 extern "C" void fortran_lat_make_mat6(
@@ -3867,9 +3887,9 @@ bool lat_sanity_check(LatProxy& lat);
 extern "C" void fortran_lat_to_ptc_layout(void* lat /* 0D_NOT_type in */);
 void lat_to_ptc_layout(LatProxy& lat);
 extern "C" void fortran_lat_vec_equal_lat_vec(
-    void* lat1 /* 1D_ALLOC_type out */,
+    void* lat1 /* 1D_ALLOC_type inout */,
     void* lat2 /* 1D_ALLOC_type in */);
-LatProxyAlloc1D lat_vec_equal_lat_vec(LatProxyAlloc1D& lat2);
+void lat_vec_equal_lat_vec(LatProxyAlloc1D& lat1, LatProxyAlloc1D& lat2);
 extern "C" void fortran_lattice_bookkeeper(
     void* lat /* 0D_NOT_type inout */,
     bool& err_flag /* 0D_NOT_logical out */);
@@ -4283,10 +4303,11 @@ SpinOrbitMap1Proxy map1_make_unit();
 extern "C" bool fortran_map1_times_map1(
     void* map2 /* 0D_NOT_type in */,
     void* map1 /* 0D_NOT_type in */,
-    void* map_out /* 0D_NOT_type out */);
-SpinOrbitMap1Proxy map1_times_map1(
+    void* map_out /* 0D_NOT_type inout */);
+void map1_times_map1(
     SpinOrbitMap1Proxy& map2,
-    SpinOrbitMap1Proxy& map1);
+    SpinOrbitMap1Proxy& map1,
+    SpinOrbitMap1Proxy& map_out);
 
 // Skipped unusable routine map_coef:
 // - Untranslated type: real_8 (1D)
@@ -5557,30 +5578,29 @@ BranchProxy pointer_to_branch(
     std::optional<bool> parameter_is_branch0 = std::nullopt,
     std::optional<int> blank_branch = std::nullopt);
 extern "C" bool fortran_pointer_to_ele1(
-    void* lat /* 0D_NOT_type inout */,
-    int& ix_ele /* 0D_NOT_integer inout */,
-    int* ix_branch /* 0D_NOT_integer inout */,
-    void* ele_ptr /* 0D_PTR_type inout */);
-void pointer_to_ele(
+    void* lat /* 0D_NOT_type in */,
+    int& ix_ele /* 0D_NOT_integer in */,
+    int* ix_branch /* 0D_NOT_integer in */,
+    void* ele_ptr /* 0D_PTR_type out */);
+EleProxy pointer_to_ele(
     LatProxy& lat,
-    int& ix_ele,
-    optional_ref<int> ix_branch,
-    EleProxy& ele_ptr);
+    int ix_ele,
+    std::optional<int> ix_branch = std::nullopt);
 extern "C" bool fortran_pointer_to_ele2(
-    void* lat /* 0D_NOT_type inout */,
-    void* ele_loc /* 0D_NOT_type inout */,
-    void* ele_ptr /* 0D_PTR_type inout */);
-void pointer_to_ele(LatProxy& lat, LatEleLocProxy& ele_loc, EleProxy& ele_ptr);
+    void* lat /* 0D_NOT_type in */,
+    void* ele_loc /* 0D_NOT_type in */,
+    void* ele_ptr /* 0D_PTR_type out */);
+EleProxy pointer_to_ele(LatProxy& lat, LatEleLocProxy& ele_loc);
 extern "C" bool fortran_pointer_to_ele3(
-    void* lat /* 0D_NOT_type inout */,
-    const char* ele_name /* 0D_NOT_character inout */,
-    void* ele_ptr /* 0D_PTR_type inout */);
-void pointer_to_ele(LatProxy& lat, std::string& ele_name, EleProxy& ele_ptr);
+    void* lat /* 0D_NOT_type in */,
+    const char* ele_name /* 0D_NOT_character in */,
+    void* ele_ptr /* 0D_PTR_type out */);
+EleProxy pointer_to_ele(LatProxy& lat, std::string ele_name);
 extern "C" bool fortran_pointer_to_ele4(
-    void* lat /* 0D_NOT_type inout */,
-    void* foreign_ele /* 0D_NOT_type inout */,
-    void* ele_ptr /* 0D_PTR_type inout */);
-void pointer_to_ele(LatProxy& lat, EleProxy& foreign_ele, EleProxy& ele_ptr);
+    void* lat /* 0D_NOT_type in */,
+    void* foreign_ele /* 0D_NOT_type in */,
+    void* ele_ptr /* 0D_PTR_type out */);
+EleProxy pointer_to_ele(LatProxy& lat, EleProxy& foreign_ele);
 
 // Skipped unusable routine pointer_to_ele_multipole:
 // - Routine in configuration skip list
@@ -6106,19 +6126,19 @@ void re_allocate_eles(
 extern "C" void fortran_re_allocate_wall3d_section_array(
     void* section /* 1D_ALLOC_type inout */,
     int& n /* 0D_NOT_integer in */,
-    bool* exact /* 0D_NOT_logical in */);
+    bool* exact /* 0D_NOT_logical inout */);
 void re_allocate(
     Wall3dSectionProxyAlloc1D& section,
     int n,
-    std::optional<bool> exact = std::nullopt);
+    optional_ref<bool> exact = std::nullopt);
 extern "C" void fortran_re_allocate_wall3d_vertex_array(
     void* v /* 1D_ALLOC_type inout */,
     int& n /* 0D_NOT_integer in */,
-    bool* exact /* 0D_NOT_logical in */);
+    bool* exact /* 0D_NOT_logical inout */);
 void re_allocate(
     Wall3dVertexProxyAlloc1D& v,
     int n,
-    std::optional<bool> exact = std::nullopt);
+    optional_ref<bool> exact = std::nullopt);
 extern "C" void fortran_re_associate_node_array(
     void* tree /* 0D_NOT_type inout */,
     int& n /* 0D_NOT_integer in */,
@@ -7298,9 +7318,9 @@ struct TargetRotMats {
 };
 Bmad::TargetRotMats target_rot_mats(FixedArray1D<Real, 3> r_center);
 extern "C" void fortran_taylor_equal_taylor(
-    void* taylor1 /* 0D_NOT_type out */,
+    void* taylor1 /* 0D_NOT_type inout */,
     void* taylor2 /* 0D_NOT_type in */);
-TaylorProxy taylor_equal_taylor(TaylorProxy& taylor2);
+void taylor_equal_taylor(TaylorProxy& taylor1, TaylorProxy& taylor2);
 extern "C" void fortran_taylor_inverse(
     void* taylor_in /* 1D_ALLOC_type in */,
     void* taylor_inv /* 1D_ALLOC_type out */,
@@ -7343,9 +7363,11 @@ MadMapProxy taylor_to_mad_map(
 // Skipped unusable routine taylor_to_real_8:
 // - Untranslated type: real_8 (1D)
 extern "C" void fortran_taylors_equal_taylors(
-    void* taylor1 /* 1D_ALLOC_type out */,
+    void* taylor1 /* 1D_ALLOC_type inout */,
     void* taylor2 /* 1D_ALLOC_type in */);
-TaylorProxyAlloc1D taylors_equal_taylors(TaylorProxyAlloc1D& taylor2);
+void taylors_equal_taylors(
+    TaylorProxyAlloc1D& taylor1,
+    TaylorProxyAlloc1D& taylor2);
 extern "C" void fortran_tilt_coords(
     double& tilt_val /* 0D_NOT_real in */,
     void* coord /* 1D_ALLOC_real inout */,
@@ -8449,15 +8471,14 @@ void twiss3_propagate_all(
 extern "C" void fortran_twiss_and_track_all(
     void* lat /* 0D_NOT_type inout */,
     void* orb_array /* 1D_ALLOC_type inout */,
-    int* status /* 0D_NOT_integer inout */,
-    bool* print_err /* 0D_NOT_logical inout */,
-    bool* calc_chrom /* 0D_NOT_logical inout */);
-void twiss_and_track(
+    int& status /* 0D_NOT_integer out */,
+    bool* print_err /* 0D_NOT_logical in */,
+    bool* calc_chrom /* 0D_NOT_logical in */);
+int twiss_and_track(
     LatProxy& lat,
     CoordArrayProxyAlloc1D& orb_array,
-    optional_ref<int> status = std::nullopt,
-    optional_ref<bool> print_err = std::nullopt,
-    optional_ref<bool> calc_chrom = std::nullopt);
+    std::optional<bool> print_err = std::nullopt,
+    std::optional<bool> calc_chrom = std::nullopt);
 extern "C" void fortran_twiss_and_track_at_s(
     void* lat /* 0D_NOT_type in */,
     double& s /* 0D_NOT_real in */,
@@ -8480,18 +8501,17 @@ bool twiss_and_track_at_s(
 extern "C" void fortran_twiss_and_track_branch(
     void* lat /* 0D_NOT_type inout */,
     void* orb /* 1D_ALLOC_type inout */,
-    int* status /* 0D_NOT_integer inout */,
-    int* ix_branch /* 0D_NOT_integer inout */,
-    bool* print_err /* 0D_NOT_logical inout */,
-    bool* calc_chrom /* 0D_NOT_logical inout */,
-    void* orb_start /* 0D_NOT_type inout */);
-void twiss_and_track(
+    int& status /* 0D_NOT_integer out */,
+    int* ix_branch /* 0D_NOT_integer in */,
+    bool* print_err /* 0D_NOT_logical in */,
+    bool* calc_chrom /* 0D_NOT_logical in */,
+    void* orb_start /* 0D_NOT_type in */);
+int twiss_and_track(
     LatProxy& lat,
     CoordProxyAlloc1D& orb,
-    optional_ref<int> status = std::nullopt,
-    optional_ref<int> ix_branch = std::nullopt,
-    optional_ref<bool> print_err = std::nullopt,
-    optional_ref<bool> calc_chrom = std::nullopt,
+    std::optional<int> ix_branch = std::nullopt,
+    std::optional<bool> print_err = std::nullopt,
+    std::optional<bool> calc_chrom = std::nullopt,
     optional_ref<CoordProxy> orb_start = std::nullopt);
 extern "C" void fortran_twiss_and_track_from_s_to_s(
     void* branch /* 0D_NOT_type in */,

@@ -2637,6 +2637,41 @@ std::string to_string(const SimUtils::ApfftCorr& self) {
        std::pair{"amp", to_string(self.amp)},
        std::pair{"freq", to_string(self.freq)}});
 }
+std::string to_string(const Bmad::AttributeFree1& self) {
+  return repr(
+      &self,
+      "Bmad::AttributeFree1",
+      {std::pair{"why_not_free", to_string(self.why_not_free)},
+       std::pair{"free", to_string(self.free)}});
+}
+std::string to_string(const Bmad::AttributeFree2& self) {
+  return repr(
+      &self,
+      "Bmad::AttributeFree2",
+      {std::pair{"why_not_free", to_string(self.why_not_free)},
+       std::pair{"free", to_string(self.free)}});
+}
+std::string to_string(const Bmad::AttributeFree3& self) {
+  return repr(
+      &self,
+      "Bmad::AttributeFree3",
+      {std::pair{"why_not_free", to_string(self.why_not_free)},
+       std::pair{"free", to_string(self.free)}});
+}
+std::string to_string(const Bmad::AttributeIndex1& self) {
+  return repr(
+      &self,
+      "Bmad::AttributeIndex1",
+      {std::pair{"full_name", self.full_name},
+       std::pair{"attrib_index", to_string(self.attrib_index)}});
+}
+std::string to_string(const Bmad::AttributeIndex2& self) {
+  return repr(
+      &self,
+      "Bmad::AttributeIndex2",
+      {std::pair{"full_name", self.full_name},
+       std::pair{"attrib_index", to_string(self.attrib_index)}});
+}
 std::string to_string(const Bmad::BbiKick& self) {
   return repr(
       &self,
@@ -2844,6 +2879,24 @@ std::string to_string(const Bmad::ElecMultipoleField& self) {
        std::pair{"Ey", to_string(self.Ey)},
        std::pair{"dE", to_string(self.dE)},
        std::pair{"compute_dE", to_string(self.compute_dE)}});
+}
+std::string to_string(const Bmad::ElementAtSBranch& self) {
+  return repr(
+      &self,
+      "Bmad::ElementAtSBranch",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"s_eff", to_string(self.s_eff)},
+       std::pair{"position", to_string(self.position)},
+       std::pair{"ix_ele", to_string(self.ix_ele)}});
+}
+std::string to_string(const Bmad::ElementAtSLat& self) {
+  return repr(
+      &self,
+      "Bmad::ElementAtSLat",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"s_eff", to_string(self.s_eff)},
+       std::pair{"position", to_string(self.position)},
+       std::pair{"ix_ele", to_string(self.ix_ele)}});
 }
 std::string to_string(const Bmad::EmFieldCalc& self) {
   return repr(

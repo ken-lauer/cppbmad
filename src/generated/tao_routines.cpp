@@ -1671,28 +1671,40 @@ void Tao::tao_pointer_to_tao_lat(
       /* int* */ _lat_type,
       /* void* */ &tao_lat);
 }
-void Tao::tao_pointer_to_universe(
-    int& ix_uni,
-    optional_ref<bool> neg2_to_default,
-    TaoUniverseProxy& u) {
-  auto* _neg2_to_default = neg2_to_default.has_value()
-      ? &neg2_to_default->get()
-      : nullptr; // inout, optional
-  auto _u = &u; // input, required, pointer
+TaoUniverseProxy Tao::tao_pointer_to_universe(
+    int ix_uni,
+    std::optional<bool> neg2_to_default) {
+  bool neg2_to_default_lvalue;
+  auto* _neg2_to_default{&neg2_to_default_lvalue};
+  if (neg2_to_default.has_value()) {
+    neg2_to_default_lvalue = neg2_to_default.value();
+  } else {
+    _neg2_to_default = nullptr;
+  }
+  TaoUniverseProxy _u;
   fortran_tao_pointer_to_universe_int(
-      /* int& */ ix_uni, /* bool* */ _neg2_to_default, /* void* */ &u);
+      /* int& */ ix_uni,
+      /* bool* */ _neg2_to_default,
+      /* void* */ _u.get_fortran_ptr());
+  return std::move(_u);
 }
-void Tao::tao_pointer_to_universe(
+TaoUniverseProxy Tao::tao_pointer_to_universe(
     std::string& string,
-    optional_ref<bool> neg2_to_default,
-    TaoUniverseProxy& u) {
+    std::optional<bool> neg2_to_default) {
   auto _string = string.c_str(); // ptr, inout, required
-  auto* _neg2_to_default = neg2_to_default.has_value()
-      ? &neg2_to_default->get()
-      : nullptr; // inout, optional
-  auto _u = &u; // input, required, pointer
+  bool neg2_to_default_lvalue;
+  auto* _neg2_to_default{&neg2_to_default_lvalue};
+  if (neg2_to_default.has_value()) {
+    neg2_to_default_lvalue = neg2_to_default.value();
+  } else {
+    _neg2_to_default = nullptr;
+  }
+  TaoUniverseProxy _u;
   fortran_tao_pointer_to_universe_str(
-      /* const char* */ _string, /* bool* */ _neg2_to_default, /* void* */ &u);
+      /* const char* */ _string,
+      /* bool* */ _neg2_to_default,
+      /* void* */ _u.get_fortran_ptr());
+  return std::move(_u);
 }
 Tao::TaoPointerToUniverses Tao::tao_pointer_to_universes(
     std::string name_in,

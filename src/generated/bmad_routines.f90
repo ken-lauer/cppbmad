@@ -1257,14 +1257,9 @@ subroutine fortran_attribute_free1 (ix_ele, attrib_name, lat, err_print_flag, ex
 
   use bmad_struct, only: lat_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: free  ! 0D_NOT_logical
-  logical :: f_free
-  logical(c_bool), pointer :: f_free_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: ix_ele  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_ele
-  integer(c_int), pointer :: f_ix_ele_ptr
+  ! ** In parameters **
+  integer(c_int) :: ix_ele  ! 0D_NOT_integer
+  integer :: f_ix_ele
   type(c_ptr), intent(in), value :: attrib_name
   character(len=4096), target :: f_attrib_name
   character(kind=c_char), pointer :: f_attrib_name_ptr(:)
@@ -1285,24 +1280,24 @@ subroutine fortran_attribute_free1 (ix_ele, attrib_name, lat, err_print_flag, ex
   logical, target :: f_dependent_attribs_free_native
   logical, pointer :: f_dependent_attribs_free_native_ptr
   logical(c_bool), pointer :: f_dependent_attribs_free_ptr
+  ! ** Out parameters **
   type(c_ptr), intent(in), value :: why_not_free  ! 0D_NOT_integer
-  integer(c_int) :: f_why_not_free
+  integer :: f_why_not_free
   integer(c_int), pointer :: f_why_not_free_ptr
+  type(c_ptr), intent(in), value :: free  ! 0D_NOT_logical
+  logical :: f_free
+  logical(c_bool), pointer :: f_free_ptr
   ! ** End of parameters **
-  ! inout: f_ix_ele 0D_NOT_integer
-  if (c_associated(ix_ele)) then
-    call c_f_pointer(ix_ele, f_ix_ele_ptr)
-  else
-    f_ix_ele_ptr => null()
-  endif
-  ! inout: f_attrib_name 0D_NOT_character
+  ! in: f_ix_ele 0D_NOT_integer
+  f_ix_ele = ix_ele
+  ! in: f_attrib_name 0D_NOT_character
   if (.not. c_associated(attrib_name)) return
   call c_f_pointer(attrib_name, f_attrib_name_ptr, [huge(0)])
   call to_f_str(f_attrib_name_ptr, f_attrib_name)
-  ! inout: f_lat 0D_NOT_type
+  ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  ! inout: f_err_print_flag 0D_NOT_logical
+  ! in: f_err_print_flag 0D_NOT_logical
   if (c_associated(err_print_flag)) then
     call c_f_pointer(err_print_flag, f_err_print_flag_ptr)
     f_err_print_flag_native = f_err_print_flag_ptr
@@ -1310,7 +1305,7 @@ subroutine fortran_attribute_free1 (ix_ele, attrib_name, lat, err_print_flag, ex
   else
     f_err_print_flag_native_ptr => null()
   endif
-  ! inout: f_except_overlay 0D_NOT_logical
+  ! in: f_except_overlay 0D_NOT_logical
   if (c_associated(except_overlay)) then
     call c_f_pointer(except_overlay, f_except_overlay_ptr)
     f_except_overlay_native = f_except_overlay_ptr
@@ -1318,7 +1313,7 @@ subroutine fortran_attribute_free1 (ix_ele, attrib_name, lat, err_print_flag, ex
   else
     f_except_overlay_native_ptr => null()
   endif
-  ! inout: f_dependent_attribs_free 0D_NOT_logical
+  ! in: f_dependent_attribs_free 0D_NOT_logical
   if (c_associated(dependent_attribs_free)) then
     call c_f_pointer(dependent_attribs_free, f_dependent_attribs_free_ptr)
     f_dependent_attribs_free_native = f_dependent_attribs_free_ptr
@@ -1326,41 +1321,10 @@ subroutine fortran_attribute_free1 (ix_ele, attrib_name, lat, err_print_flag, ex
   else
     f_dependent_attribs_free_native_ptr => null()
   endif
-  ! inout: f_why_not_free 0D_NOT_integer
-  if (c_associated(why_not_free)) then
-    call c_f_pointer(why_not_free, f_why_not_free_ptr)
-  else
-    f_why_not_free_ptr => null()
-  endif
-  f_free = attribute_free(f_ix_ele_ptr, f_attrib_name, f_lat, f_err_print_flag_native_ptr, &
-      f_except_overlay_native_ptr, f_dependent_attribs_free_native_ptr, f_why_not_free_ptr)
+  f_free = attribute_free(f_ix_ele, f_attrib_name, f_lat, f_err_print_flag_native_ptr, &
+      f_except_overlay_native_ptr, f_dependent_attribs_free_native_ptr, f_why_not_free)
 
-  ! inout: f_ix_ele 0D_NOT_integer
-  ! no output conversion for f_ix_ele
-  ! inout: f_attrib_name 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
-  ! inout: f_err_print_flag 0D_NOT_logical
-  if (c_associated(err_print_flag)) then
-    call c_f_pointer(err_print_flag, f_err_print_flag_ptr)
-    f_err_print_flag_ptr = f_err_print_flag_native
-  else
-    ! f_err_print_flag unset
-  endif
-  ! inout: f_except_overlay 0D_NOT_logical
-  if (c_associated(except_overlay)) then
-    call c_f_pointer(except_overlay, f_except_overlay_ptr)
-    f_except_overlay_ptr = f_except_overlay_native
-  else
-    ! f_except_overlay unset
-  endif
-  ! inout: f_dependent_attribs_free 0D_NOT_logical
-  if (c_associated(dependent_attribs_free)) then
-    call c_f_pointer(dependent_attribs_free, f_dependent_attribs_free_ptr)
-    f_dependent_attribs_free_ptr = f_dependent_attribs_free_native
-  else
-    ! f_dependent_attribs_free unset
-  endif
-  ! inout: f_why_not_free 0D_NOT_integer
+  ! out: f_why_not_free 0D_NOT_integer
   ! no output conversion for f_why_not_free
   ! out: f_free 0D_NOT_logical
   call c_f_pointer(free, f_free_ptr)
@@ -1371,11 +1335,7 @@ subroutine fortran_attribute_free2 (ele, attrib_name, err_print_flag, except_ove
 
   use bmad_struct, only: ele_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: free  ! 0D_NOT_logical
-  logical :: f_free
-  logical(c_bool), pointer :: f_free_ptr
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
   type(c_ptr), intent(in), value :: attrib_name
@@ -1396,18 +1356,22 @@ subroutine fortran_attribute_free2 (ele, attrib_name, err_print_flag, except_ove
   logical, target :: f_dependent_attribs_free_native
   logical, pointer :: f_dependent_attribs_free_native_ptr
   logical(c_bool), pointer :: f_dependent_attribs_free_ptr
+  ! ** Out parameters **
   type(c_ptr), intent(in), value :: why_not_free  ! 0D_NOT_integer
-  integer(c_int) :: f_why_not_free
+  integer :: f_why_not_free
   integer(c_int), pointer :: f_why_not_free_ptr
+  type(c_ptr), intent(in), value :: free  ! 0D_NOT_logical
+  logical :: f_free
+  logical(c_bool), pointer :: f_free_ptr
   ! ** End of parameters **
-  ! inout: f_ele 0D_NOT_type
+  ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  ! inout: f_attrib_name 0D_NOT_character
+  ! in: f_attrib_name 0D_NOT_character
   if (.not. c_associated(attrib_name)) return
   call c_f_pointer(attrib_name, f_attrib_name_ptr, [huge(0)])
   call to_f_str(f_attrib_name_ptr, f_attrib_name)
-  ! inout: f_err_print_flag 0D_NOT_logical
+  ! in: f_err_print_flag 0D_NOT_logical
   if (c_associated(err_print_flag)) then
     call c_f_pointer(err_print_flag, f_err_print_flag_ptr)
     f_err_print_flag_native = f_err_print_flag_ptr
@@ -1415,7 +1379,7 @@ subroutine fortran_attribute_free2 (ele, attrib_name, err_print_flag, except_ove
   else
     f_err_print_flag_native_ptr => null()
   endif
-  ! inout: f_except_overlay 0D_NOT_logical
+  ! in: f_except_overlay 0D_NOT_logical
   if (c_associated(except_overlay)) then
     call c_f_pointer(except_overlay, f_except_overlay_ptr)
     f_except_overlay_native = f_except_overlay_ptr
@@ -1423,7 +1387,7 @@ subroutine fortran_attribute_free2 (ele, attrib_name, err_print_flag, except_ove
   else
     f_except_overlay_native_ptr => null()
   endif
-  ! inout: f_dependent_attribs_free 0D_NOT_logical
+  ! in: f_dependent_attribs_free 0D_NOT_logical
   if (c_associated(dependent_attribs_free)) then
     call c_f_pointer(dependent_attribs_free, f_dependent_attribs_free_ptr)
     f_dependent_attribs_free_native = f_dependent_attribs_free_ptr
@@ -1431,39 +1395,10 @@ subroutine fortran_attribute_free2 (ele, attrib_name, err_print_flag, except_ove
   else
     f_dependent_attribs_free_native_ptr => null()
   endif
-  ! inout: f_why_not_free 0D_NOT_integer
-  if (c_associated(why_not_free)) then
-    call c_f_pointer(why_not_free, f_why_not_free_ptr)
-  else
-    f_why_not_free_ptr => null()
-  endif
   f_free = attribute_free(f_ele, f_attrib_name, f_err_print_flag_native_ptr, &
-      f_except_overlay_native_ptr, f_dependent_attribs_free_native_ptr, f_why_not_free_ptr)
+      f_except_overlay_native_ptr, f_dependent_attribs_free_native_ptr, f_why_not_free)
 
-  ! inout: f_attrib_name 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
-  ! inout: f_err_print_flag 0D_NOT_logical
-  if (c_associated(err_print_flag)) then
-    call c_f_pointer(err_print_flag, f_err_print_flag_ptr)
-    f_err_print_flag_ptr = f_err_print_flag_native
-  else
-    ! f_err_print_flag unset
-  endif
-  ! inout: f_except_overlay 0D_NOT_logical
-  if (c_associated(except_overlay)) then
-    call c_f_pointer(except_overlay, f_except_overlay_ptr)
-    f_except_overlay_ptr = f_except_overlay_native
-  else
-    ! f_except_overlay unset
-  endif
-  ! inout: f_dependent_attribs_free 0D_NOT_logical
-  if (c_associated(dependent_attribs_free)) then
-    call c_f_pointer(dependent_attribs_free, f_dependent_attribs_free_ptr)
-    f_dependent_attribs_free_ptr = f_dependent_attribs_free_native
-  else
-    ! f_dependent_attribs_free unset
-  endif
-  ! inout: f_why_not_free 0D_NOT_integer
+  ! out: f_why_not_free 0D_NOT_integer
   ! no output conversion for f_why_not_free
   ! out: f_free 0D_NOT_logical
   call c_f_pointer(free, f_free_ptr)
@@ -1474,17 +1409,11 @@ subroutine fortran_attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_pri
 
   use bmad_struct, only: lat_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: free  ! 0D_NOT_logical
-  logical :: f_free
-  logical(c_bool), pointer :: f_free_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: ix_ele  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_ele
-  integer(c_int), pointer :: f_ix_ele_ptr
-  type(c_ptr), intent(in), value :: ix_branch  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_branch
-  integer(c_int), pointer :: f_ix_branch_ptr
+  ! ** In parameters **
+  integer(c_int) :: ix_ele  ! 0D_NOT_integer
+  integer :: f_ix_ele
+  integer(c_int) :: ix_branch  ! 0D_NOT_integer
+  integer :: f_ix_branch
   type(c_ptr), intent(in), value :: attrib_name
   character(len=4096), target :: f_attrib_name
   character(kind=c_char), pointer :: f_attrib_name_ptr(:)
@@ -1505,30 +1434,26 @@ subroutine fortran_attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_pri
   logical, target :: f_dependent_attribs_free_native
   logical, pointer :: f_dependent_attribs_free_native_ptr
   logical(c_bool), pointer :: f_dependent_attribs_free_ptr
+  ! ** Out parameters **
   type(c_ptr), intent(in), value :: why_not_free  ! 0D_NOT_integer
-  integer(c_int) :: f_why_not_free
+  integer :: f_why_not_free
   integer(c_int), pointer :: f_why_not_free_ptr
+  type(c_ptr), intent(in), value :: free  ! 0D_NOT_logical
+  logical :: f_free
+  logical(c_bool), pointer :: f_free_ptr
   ! ** End of parameters **
-  ! inout: f_ix_ele 0D_NOT_integer
-  if (c_associated(ix_ele)) then
-    call c_f_pointer(ix_ele, f_ix_ele_ptr)
-  else
-    f_ix_ele_ptr => null()
-  endif
-  ! inout: f_ix_branch 0D_NOT_integer
-  if (c_associated(ix_branch)) then
-    call c_f_pointer(ix_branch, f_ix_branch_ptr)
-  else
-    f_ix_branch_ptr => null()
-  endif
-  ! inout: f_attrib_name 0D_NOT_character
+  ! in: f_ix_ele 0D_NOT_integer
+  f_ix_ele = ix_ele
+  ! in: f_ix_branch 0D_NOT_integer
+  f_ix_branch = ix_branch
+  ! in: f_attrib_name 0D_NOT_character
   if (.not. c_associated(attrib_name)) return
   call c_f_pointer(attrib_name, f_attrib_name_ptr, [huge(0)])
   call to_f_str(f_attrib_name_ptr, f_attrib_name)
-  ! inout: f_lat 0D_NOT_type
+  ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  ! inout: f_err_print_flag 0D_NOT_logical
+  ! in: f_err_print_flag 0D_NOT_logical
   if (c_associated(err_print_flag)) then
     call c_f_pointer(err_print_flag, f_err_print_flag_ptr)
     f_err_print_flag_native = f_err_print_flag_ptr
@@ -1536,7 +1461,7 @@ subroutine fortran_attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_pri
   else
     f_err_print_flag_native_ptr => null()
   endif
-  ! inout: f_except_overlay 0D_NOT_logical
+  ! in: f_except_overlay 0D_NOT_logical
   if (c_associated(except_overlay)) then
     call c_f_pointer(except_overlay, f_except_overlay_ptr)
     f_except_overlay_native = f_except_overlay_ptr
@@ -1544,7 +1469,7 @@ subroutine fortran_attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_pri
   else
     f_except_overlay_native_ptr => null()
   endif
-  ! inout: f_dependent_attribs_free 0D_NOT_logical
+  ! in: f_dependent_attribs_free 0D_NOT_logical
   if (c_associated(dependent_attribs_free)) then
     call c_f_pointer(dependent_attribs_free, f_dependent_attribs_free_ptr)
     f_dependent_attribs_free_native = f_dependent_attribs_free_ptr
@@ -1552,44 +1477,11 @@ subroutine fortran_attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_pri
   else
     f_dependent_attribs_free_native_ptr => null()
   endif
-  ! inout: f_why_not_free 0D_NOT_integer
-  if (c_associated(why_not_free)) then
-    call c_f_pointer(why_not_free, f_why_not_free_ptr)
-  else
-    f_why_not_free_ptr => null()
-  endif
-  f_free = attribute_free(f_ix_ele_ptr, f_ix_branch_ptr, f_attrib_name, f_lat, &
+  f_free = attribute_free(f_ix_ele, f_ix_branch, f_attrib_name, f_lat, &
       f_err_print_flag_native_ptr, f_except_overlay_native_ptr, &
-      f_dependent_attribs_free_native_ptr, f_why_not_free_ptr)
+      f_dependent_attribs_free_native_ptr, f_why_not_free)
 
-  ! inout: f_ix_ele 0D_NOT_integer
-  ! no output conversion for f_ix_ele
-  ! inout: f_ix_branch 0D_NOT_integer
-  ! no output conversion for f_ix_branch
-  ! inout: f_attrib_name 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
-  ! inout: f_err_print_flag 0D_NOT_logical
-  if (c_associated(err_print_flag)) then
-    call c_f_pointer(err_print_flag, f_err_print_flag_ptr)
-    f_err_print_flag_ptr = f_err_print_flag_native
-  else
-    ! f_err_print_flag unset
-  endif
-  ! inout: f_except_overlay 0D_NOT_logical
-  if (c_associated(except_overlay)) then
-    call c_f_pointer(except_overlay, f_except_overlay_ptr)
-    f_except_overlay_ptr = f_except_overlay_native
-  else
-    ! f_except_overlay unset
-  endif
-  ! inout: f_dependent_attribs_free 0D_NOT_logical
-  if (c_associated(dependent_attribs_free)) then
-    call c_f_pointer(dependent_attribs_free, f_dependent_attribs_free_ptr)
-    f_dependent_attribs_free_ptr = f_dependent_attribs_free_native
-  else
-    ! f_dependent_attribs_free unset
-  endif
-  ! inout: f_why_not_free 0D_NOT_integer
+  ! out: f_why_not_free 0D_NOT_integer
   ! no output conversion for f_why_not_free
   ! out: f_free 0D_NOT_logical
   call c_f_pointer(free, f_free_ptr)
@@ -1600,20 +1492,12 @@ subroutine fortran_attribute_index1 (ele, name, full_name, can_abbreviate, print
 
   use bmad_struct, only: ele_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: attrib_index  ! 0D_NOT_integer
-  integer :: f_attrib_index
-  integer(c_int), pointer :: f_attrib_index_ptr
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
   type(c_ptr), intent(in), value :: name
   character(len=4096), target :: f_name
   character(kind=c_char), pointer :: f_name_ptr(:)
-  type(c_ptr), intent(in), value :: full_name
-  character(len=4096), target :: f_full_name
-  character(kind=c_char), pointer :: f_full_name_ptr(:)
-  character(len=4096), pointer :: f_full_name_call_ptr
   type(c_ptr), intent(in), value :: can_abbreviate  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_can_abbreviate
   logical, target :: f_can_abbreviate_native
@@ -1624,23 +1508,23 @@ subroutine fortran_attribute_index1 (ele, name, full_name, can_abbreviate, print
   logical, target :: f_print_error_native
   logical, pointer :: f_print_error_native_ptr
   logical(c_bool), pointer :: f_print_error_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: full_name
+  character(len=4096), target :: f_full_name
+  character(kind=c_char), pointer :: f_full_name_ptr(:)
+  character(len=4096), pointer :: f_full_name_call_ptr
+  type(c_ptr), intent(in), value :: attrib_index  ! 0D_NOT_integer
+  integer :: f_attrib_index
+  integer(c_int), pointer :: f_attrib_index_ptr
   ! ** End of parameters **
-  ! inout: f_ele 0D_NOT_type
+  ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  ! inout: f_name 0D_NOT_character
+  ! in: f_name 0D_NOT_character
   if (.not. c_associated(name)) return
   call c_f_pointer(name, f_name_ptr, [huge(0)])
   call to_f_str(f_name_ptr, f_name)
-  ! inout: f_full_name 0D_NOT_character
-  if (c_associated(full_name)) then
-    call c_f_pointer(full_name, f_full_name_ptr, [huge(0)])
-    call to_f_str(f_full_name_ptr, f_full_name)
-    f_full_name_call_ptr => f_full_name
-  else
-    f_full_name_call_ptr => null()
-  endif
-  ! inout: f_can_abbreviate 0D_NOT_logical
+  ! in: f_can_abbreviate 0D_NOT_logical
   if (c_associated(can_abbreviate)) then
     call c_f_pointer(can_abbreviate, f_can_abbreviate_ptr)
     f_can_abbreviate_native = f_can_abbreviate_ptr
@@ -1648,7 +1532,7 @@ subroutine fortran_attribute_index1 (ele, name, full_name, can_abbreviate, print
   else
     f_can_abbreviate_native_ptr => null()
   endif
-  ! inout: f_print_error 0D_NOT_logical
+  ! in: f_print_error 0D_NOT_logical
   if (c_associated(print_error)) then
     call c_f_pointer(print_error, f_print_error_ptr)
     f_print_error_native = f_print_error_ptr
@@ -1659,24 +1543,9 @@ subroutine fortran_attribute_index1 (ele, name, full_name, can_abbreviate, print
   f_attrib_index = attribute_index(f_ele, f_name, f_full_name_call_ptr, &
       f_can_abbreviate_native_ptr, f_print_error_native_ptr)
 
-  ! inout: f_name 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
-  ! inout: f_full_name 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
-  ! inout: f_can_abbreviate 0D_NOT_logical
-  if (c_associated(can_abbreviate)) then
-    call c_f_pointer(can_abbreviate, f_can_abbreviate_ptr)
-    f_can_abbreviate_ptr = f_can_abbreviate_native
-  else
-    ! f_can_abbreviate unset
-  endif
-  ! inout: f_print_error 0D_NOT_logical
-  if (c_associated(print_error)) then
-    call c_f_pointer(print_error, f_print_error_ptr)
-    f_print_error_ptr = f_print_error_native
-  else
-    ! f_print_error unset
-  endif
+  ! out: f_full_name 0D_NOT_character
+  call c_f_pointer(full_name, f_full_name_ptr, [len_trim(f_full_name) + 1]) ! output-only string
+  call to_c_str(f_full_name, f_full_name_ptr)
   ! out: f_attrib_index 0D_NOT_integer
   call c_f_pointer(attrib_index, f_attrib_index_ptr)
   f_attrib_index_ptr = f_attrib_index
@@ -1685,21 +1554,12 @@ subroutine fortran_attribute_index2 (key, name, full_name, can_abbreviate, print
     attrib_index) bind(c)
 
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: attrib_index  ! 0D_NOT_integer
-  integer :: f_attrib_index
-  integer(c_int), pointer :: f_attrib_index_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: key  ! 0D_NOT_integer
-  integer(c_int) :: f_key
-  integer(c_int), pointer :: f_key_ptr
+  ! ** In parameters **
+  integer(c_int) :: key  ! 0D_NOT_integer
+  integer :: f_key
   type(c_ptr), intent(in), value :: name
   character(len=4096), target :: f_name
   character(kind=c_char), pointer :: f_name_ptr(:)
-  type(c_ptr), intent(in), value :: full_name
-  character(len=4096), target :: f_full_name
-  character(kind=c_char), pointer :: f_full_name_ptr(:)
-  character(len=4096), pointer :: f_full_name_call_ptr
   type(c_ptr), intent(in), value :: can_abbreviate  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_can_abbreviate
   logical, target :: f_can_abbreviate_native
@@ -1710,26 +1570,22 @@ subroutine fortran_attribute_index2 (key, name, full_name, can_abbreviate, print
   logical, target :: f_print_error_native
   logical, pointer :: f_print_error_native_ptr
   logical(c_bool), pointer :: f_print_error_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: full_name
+  character(len=4096), target :: f_full_name
+  character(kind=c_char), pointer :: f_full_name_ptr(:)
+  character(len=4096), pointer :: f_full_name_call_ptr
+  type(c_ptr), intent(in), value :: attrib_index  ! 0D_NOT_integer
+  integer :: f_attrib_index
+  integer(c_int), pointer :: f_attrib_index_ptr
   ! ** End of parameters **
-  ! inout: f_key 0D_NOT_integer
-  if (c_associated(key)) then
-    call c_f_pointer(key, f_key_ptr)
-  else
-    f_key_ptr => null()
-  endif
-  ! inout: f_name 0D_NOT_character
+  ! in: f_key 0D_NOT_integer
+  f_key = key
+  ! in: f_name 0D_NOT_character
   if (.not. c_associated(name)) return
   call c_f_pointer(name, f_name_ptr, [huge(0)])
   call to_f_str(f_name_ptr, f_name)
-  ! inout: f_full_name 0D_NOT_character
-  if (c_associated(full_name)) then
-    call c_f_pointer(full_name, f_full_name_ptr, [huge(0)])
-    call to_f_str(f_full_name_ptr, f_full_name)
-    f_full_name_call_ptr => f_full_name
-  else
-    f_full_name_call_ptr => null()
-  endif
-  ! inout: f_can_abbreviate 0D_NOT_logical
+  ! in: f_can_abbreviate 0D_NOT_logical
   if (c_associated(can_abbreviate)) then
     call c_f_pointer(can_abbreviate, f_can_abbreviate_ptr)
     f_can_abbreviate_native = f_can_abbreviate_ptr
@@ -1737,7 +1593,7 @@ subroutine fortran_attribute_index2 (key, name, full_name, can_abbreviate, print
   else
     f_can_abbreviate_native_ptr => null()
   endif
-  ! inout: f_print_error 0D_NOT_logical
+  ! in: f_print_error 0D_NOT_logical
   if (c_associated(print_error)) then
     call c_f_pointer(print_error, f_print_error_ptr)
     f_print_error_native = f_print_error_ptr
@@ -1745,29 +1601,12 @@ subroutine fortran_attribute_index2 (key, name, full_name, can_abbreviate, print
   else
     f_print_error_native_ptr => null()
   endif
-  f_attrib_index = attribute_index(f_key_ptr, f_name, f_full_name_call_ptr, &
+  f_attrib_index = attribute_index(f_key, f_name, f_full_name_call_ptr, &
       f_can_abbreviate_native_ptr, f_print_error_native_ptr)
 
-  ! inout: f_key 0D_NOT_integer
-  ! no output conversion for f_key
-  ! inout: f_name 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
-  ! inout: f_full_name 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
-  ! inout: f_can_abbreviate 0D_NOT_logical
-  if (c_associated(can_abbreviate)) then
-    call c_f_pointer(can_abbreviate, f_can_abbreviate_ptr)
-    f_can_abbreviate_ptr = f_can_abbreviate_native
-  else
-    ! f_can_abbreviate unset
-  endif
-  ! inout: f_print_error 0D_NOT_logical
-  if (c_associated(print_error)) then
-    call c_f_pointer(print_error, f_print_error_ptr)
-    f_print_error_ptr = f_print_error_native
-  else
-    ! f_print_error unset
-  endif
+  ! out: f_full_name 0D_NOT_character
+  call c_f_pointer(full_name, f_full_name_ptr, [len_trim(f_full_name) + 1]) ! output-only string
+  call to_c_str(f_full_name, f_full_name_ptr)
   ! out: f_attrib_index 0D_NOT_integer
   call c_f_pointer(attrib_index, f_attrib_index_ptr)
   f_attrib_index_ptr = f_attrib_index
@@ -1775,36 +1614,26 @@ end subroutine
 subroutine fortran_attribute_name1 (key, ix_att, show_private, attrib_name) bind(c)
 
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: attrib_name
-  character(len=4096), target :: f_attrib_name
-  character(kind=c_char), pointer :: f_attrib_name_ptr(:)
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: key  ! 0D_NOT_integer
-  integer(c_int) :: f_key
-  integer(c_int), pointer :: f_key_ptr
-  type(c_ptr), intent(in), value :: ix_att  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_att
-  integer(c_int), pointer :: f_ix_att_ptr
+  ! ** In parameters **
+  integer(c_int) :: key  ! 0D_NOT_integer
+  integer :: f_key
+  integer(c_int) :: ix_att  ! 0D_NOT_integer
+  integer :: f_ix_att
   type(c_ptr), intent(in), value :: show_private  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_show_private
   logical, target :: f_show_private_native
   logical, pointer :: f_show_private_native_ptr
   logical(c_bool), pointer :: f_show_private_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: attrib_name
+  character(len=4096), target :: f_attrib_name
+  character(kind=c_char), pointer :: f_attrib_name_ptr(:)
   ! ** End of parameters **
-  ! inout: f_key 0D_NOT_integer
-  if (c_associated(key)) then
-    call c_f_pointer(key, f_key_ptr)
-  else
-    f_key_ptr => null()
-  endif
-  ! inout: f_ix_att 0D_NOT_integer
-  if (c_associated(ix_att)) then
-    call c_f_pointer(ix_att, f_ix_att_ptr)
-  else
-    f_ix_att_ptr => null()
-  endif
-  ! inout: f_show_private 0D_NOT_logical
+  ! in: f_key 0D_NOT_integer
+  f_key = key
+  ! in: f_ix_att 0D_NOT_integer
+  f_ix_att = ix_att
+  ! in: f_show_private 0D_NOT_logical
   if (c_associated(show_private)) then
     call c_f_pointer(show_private, f_show_private_ptr)
     f_show_private_native = f_show_private_ptr
@@ -1812,19 +1641,8 @@ subroutine fortran_attribute_name1 (key, ix_att, show_private, attrib_name) bind
   else
     f_show_private_native_ptr => null()
   endif
-  f_attrib_name = attribute_name(f_key_ptr, f_ix_att_ptr, f_show_private_native_ptr)
+  f_attrib_name = attribute_name(f_key, f_ix_att, f_show_private_native_ptr)
 
-  ! inout: f_key 0D_NOT_integer
-  ! no output conversion for f_key
-  ! inout: f_ix_att 0D_NOT_integer
-  ! no output conversion for f_ix_att
-  ! inout: f_show_private 0D_NOT_logical
-  if (c_associated(show_private)) then
-    call c_f_pointer(show_private, f_show_private_ptr)
-    f_show_private_ptr = f_show_private_native
-  else
-    ! f_show_private unset
-  endif
   ! out: f_attrib_name 0D_NOT_character
   call c_f_pointer(attrib_name, f_attrib_name_ptr, [len_trim(f_attrib_name) + 1]) ! output-only string
   call to_c_str(f_attrib_name, f_attrib_name_ptr)
@@ -1833,32 +1651,27 @@ subroutine fortran_attribute_name2 (ele, ix_att, show_private, attrib_name) bind
 
   use bmad_struct, only: ele_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: attrib_name
-  character(len=4096), target :: f_attrib_name
-  character(kind=c_char), pointer :: f_attrib_name_ptr(:)
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
-  type(c_ptr), intent(in), value :: ix_att  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_att
-  integer(c_int), pointer :: f_ix_att_ptr
+  integer(c_int) :: ix_att  ! 0D_NOT_integer
+  integer :: f_ix_att
   type(c_ptr), intent(in), value :: show_private  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_show_private
   logical, target :: f_show_private_native
   logical, pointer :: f_show_private_native_ptr
   logical(c_bool), pointer :: f_show_private_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: attrib_name
+  character(len=4096), target :: f_attrib_name
+  character(kind=c_char), pointer :: f_attrib_name_ptr(:)
   ! ** End of parameters **
-  ! inout: f_ele 0D_NOT_type
+  ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  ! inout: f_ix_att 0D_NOT_integer
-  if (c_associated(ix_att)) then
-    call c_f_pointer(ix_att, f_ix_att_ptr)
-  else
-    f_ix_att_ptr => null()
-  endif
-  ! inout: f_show_private 0D_NOT_logical
+  ! in: f_ix_att 0D_NOT_integer
+  f_ix_att = ix_att
+  ! in: f_show_private 0D_NOT_logical
   if (c_associated(show_private)) then
     call c_f_pointer(show_private, f_show_private_ptr)
     f_show_private_native = f_show_private_ptr
@@ -1866,17 +1679,8 @@ subroutine fortran_attribute_name2 (ele, ix_att, show_private, attrib_name) bind
   else
     f_show_private_native_ptr => null()
   endif
-  f_attrib_name = attribute_name(f_ele, f_ix_att_ptr, f_show_private_native_ptr)
+  f_attrib_name = attribute_name(f_ele, f_ix_att, f_show_private_native_ptr)
 
-  ! inout: f_ix_att 0D_NOT_integer
-  ! no output conversion for f_ix_att
-  ! inout: f_show_private 0D_NOT_logical
-  if (c_associated(show_private)) then
-    call c_f_pointer(show_private, f_show_private_ptr)
-    f_show_private_ptr = f_show_private_native
-  else
-    ! f_show_private unset
-  endif
   ! out: f_attrib_name 0D_NOT_character
   call c_f_pointer(attrib_name, f_attrib_name_ptr, [len_trim(f_attrib_name) + 1]) ! output-only string
   call to_c_str(f_attrib_name, f_attrib_name_ptr)
@@ -2161,12 +1965,13 @@ subroutine fortran_beam_equal_beam (beam1, beam2) bind(c)
   use bmad_struct, only: beam_struct
   implicit none
   ! ** In parameters **
-  type(c_ptr), value :: beam1  ! 0D_NOT_type
-  type(beam_struct), pointer :: f_beam1
   type(c_ptr), value :: beam2  ! 0D_NOT_type
   type(beam_struct), pointer :: f_beam2
+  ! ** Inout parameters **
+  type(c_ptr), value :: beam1  ! 0D_NOT_type
+  type(beam_struct), pointer :: f_beam1
   ! ** End of parameters **
-  ! in: f_beam1 0D_NOT_type
+  ! inout: f_beam1 0D_NOT_type
   if (.not. c_associated(beam1)) return
   call c_f_pointer(beam1, f_beam1)
   ! in: f_beam2 0D_NOT_type
@@ -2931,11 +2736,11 @@ subroutine fortran_branch_equal_branch (branch1, branch2) bind(c)
   ! ** In parameters **
   type(c_ptr), value :: branch2  ! 0D_NOT_type
   type(branch_struct), pointer :: f_branch2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: branch1  ! 0D_NOT_type
   type(branch_struct), pointer :: f_branch1
   ! ** End of parameters **
-  ! out: f_branch1 0D_NOT_type
+  ! inout: f_branch1 0D_NOT_type
   if (.not. c_associated(branch1)) return
   call c_f_pointer(branch1, f_branch1)
   ! in: f_branch2 0D_NOT_type
@@ -2943,8 +2748,6 @@ subroutine fortran_branch_equal_branch (branch1, branch2) bind(c)
   call c_f_pointer(branch2, f_branch2)
   call branch_equal_branch(f_branch1, f_branch2)
 
-  ! out: f_branch1 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_branch_name (branch, name) bind(c)
 
@@ -2986,12 +2789,13 @@ subroutine fortran_bunch_equal_bunch (bunch1, bunch2) bind(c)
   use bmad_struct, only: bunch_struct
   implicit none
   ! ** In parameters **
-  type(c_ptr), value :: bunch1  ! 0D_NOT_type
-  type(bunch_struct), pointer :: f_bunch1
   type(c_ptr), value :: bunch2  ! 0D_NOT_type
   type(bunch_struct), pointer :: f_bunch2
+  ! ** Inout parameters **
+  type(c_ptr), value :: bunch1  ! 0D_NOT_type
+  type(bunch_struct), pointer :: f_bunch1
   ! ** End of parameters **
-  ! in: f_bunch1 0D_NOT_type
+  ! inout: f_bunch1 0D_NOT_type
   if (.not. c_associated(bunch1)) return
   call c_f_pointer(bunch1, f_bunch1)
   ! in: f_bunch2 0D_NOT_type
@@ -4242,11 +4046,11 @@ subroutine fortran_complex_taylor_equal_complex_taylor (complex_taylor1, complex
   ! ** In parameters **
   type(c_ptr), value :: complex_taylor2  ! 0D_NOT_type
   type(complex_taylor_struct), pointer :: f_complex_taylor2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: complex_taylor1  ! 0D_NOT_type
   type(complex_taylor_struct), pointer :: f_complex_taylor1
   ! ** End of parameters **
-  ! out: f_complex_taylor1 0D_NOT_type
+  ! inout: f_complex_taylor1 0D_NOT_type
   if (.not. c_associated(complex_taylor1)) return
   call c_f_pointer(complex_taylor1, f_complex_taylor1)
   ! in: f_complex_taylor2 0D_NOT_type
@@ -4254,8 +4058,6 @@ subroutine fortran_complex_taylor_equal_complex_taylor (complex_taylor1, complex
   call c_f_pointer(complex_taylor2, f_complex_taylor2)
   call complex_taylor_equal_complex_taylor(f_complex_taylor1, f_complex_taylor2)
 
-  ! out: f_complex_taylor1 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_complex_taylor_exponent_index (expn, index) bind(c)
 
@@ -4338,7 +4140,7 @@ subroutine fortran_complex_taylors_equal_complex_taylors (complex_taylor1, compl
   ! ** In parameters **
   type(c_ptr), intent(in), value :: complex_taylor2
   type(complex_taylor_struct_container_alloc), pointer :: f_complex_taylor2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: complex_taylor1
   type(complex_taylor_struct_container_alloc), pointer :: f_complex_taylor1
   ! ** End of parameters **
@@ -6876,11 +6678,11 @@ subroutine fortran_ele_equal_ele (ele_out, ele_in) bind(c)
   ! ** In parameters **
   type(c_ptr), value :: ele_in  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele_in
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: ele_out  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele_out
   ! ** End of parameters **
-  ! out: f_ele_out 0D_NOT_type
+  ! inout: f_ele_out 0D_NOT_type
   if (.not. c_associated(ele_out)) return
   call c_f_pointer(ele_out, f_ele_out)
   ! in: f_ele_in 0D_NOT_type
@@ -6888,8 +6690,6 @@ subroutine fortran_ele_equal_ele (ele_out, ele_in) bind(c)
   call c_f_pointer(ele_in, f_ele_in)
   call ele_equal_ele(f_ele_out, f_ele_in)
 
-  ! out: f_ele_out 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_ele_equals_ele (ele_out, ele_in, update_nametable) bind(c)
 
@@ -7533,7 +7333,7 @@ subroutine fortran_ele_vec_equal_ele_vec (ele1, ele2) bind(c)
   ! ** In parameters **
   type(c_ptr), intent(in), value :: ele2
   type(ele_struct_container_alloc), pointer :: f_ele2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: ele1
   type(ele_struct_container_alloc), pointer :: f_ele1
   ! ** End of parameters **
@@ -7598,71 +7398,45 @@ subroutine fortran_element_at_s_branch (branch, s, choose_max, err_flag, s_eff, 
 
   use bmad_struct, only: branch_struct, coord_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: ix_ele  ! 0D_NOT_integer
-  integer :: f_ix_ele
-  integer(c_int), pointer :: f_ix_ele_ptr
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: branch  ! 0D_NOT_type
   type(branch_struct), pointer :: f_branch
-  type(c_ptr), intent(in), value :: s  ! 0D_NOT_real
-  real(c_double) :: f_s
-  real(c_double), pointer :: f_s_ptr
-  type(c_ptr), intent(in), value :: choose_max  ! 0D_NOT_logical
-  logical(c_bool), pointer :: f_choose_max
-  logical, target :: f_choose_max_native
-  logical, pointer :: f_choose_max_native_ptr
-  logical(c_bool), pointer :: f_choose_max_ptr
-  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
-  logical(c_bool), pointer :: f_err_flag
-  logical, target :: f_err_flag_native
-  logical, pointer :: f_err_flag_native_ptr
-  logical(c_bool), pointer :: f_err_flag_ptr
-  type(c_ptr), intent(in), value :: s_eff  ! 0D_NOT_real
-  real(c_double) :: f_s_eff
-  real(c_double), pointer :: f_s_eff_ptr
-  type(c_ptr), value :: position  ! 0D_NOT_type
-  type(coord_struct), pointer :: f_position
+  real(c_double) :: s  ! 0D_NOT_real
+  real(rp) :: f_s
+  logical(c_bool) :: choose_max  ! 0D_NOT_logical
+  logical :: f_choose_max
   type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_print_err
   logical, target :: f_print_err_native
   logical, pointer :: f_print_err_native_ptr
   logical(c_bool), pointer :: f_print_err_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  type(c_ptr), intent(in), value :: s_eff  ! 0D_NOT_real
+  real(rp) :: f_s_eff
+  real(c_double), pointer :: f_s_eff_ptr
+  type(c_ptr), value :: position  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_position
+  type(c_ptr), intent(in), value :: ix_ele  ! 0D_NOT_integer
+  integer :: f_ix_ele
+  integer(c_int), pointer :: f_ix_ele_ptr
   ! ** End of parameters **
-  ! inout: f_branch 0D_NOT_type
-  if (.not. c_associated(branch)) return
-  call c_f_pointer(branch, f_branch)
-  ! inout: f_s 0D_NOT_real
-  if (c_associated(s)) then
-    call c_f_pointer(s, f_s_ptr)
-  else
-    f_s_ptr => null()
-  endif
-  ! inout: f_choose_max 0D_NOT_logical
-  if (c_associated(choose_max)) then
-    call c_f_pointer(choose_max, f_choose_max_ptr)
-    f_choose_max_native = f_choose_max_ptr
-    f_choose_max_native_ptr => f_choose_max_native
-  else
-    f_choose_max_native_ptr => null()
-  endif
-  ! inout: f_err_flag 0D_NOT_logical
-  if (c_associated(err_flag)) then
+  ! in: f_branch 0D_NOT_type
+  if (.not. c_associated(branch)) then
     call c_f_pointer(err_flag, f_err_flag_ptr)
-    f_err_flag_native = f_err_flag_ptr
-    f_err_flag_native_ptr => f_err_flag_native
-  else
-    f_err_flag_native_ptr => null()
+    f_err_flag_ptr = .true.
+    return
   endif
-  ! inout: f_s_eff 0D_NOT_real
-  if (c_associated(s_eff)) then
-    call c_f_pointer(s_eff, f_s_eff_ptr)
-  else
-    f_s_eff_ptr => null()
-  endif
-  ! inout: f_position 0D_NOT_type
+  call c_f_pointer(branch, f_branch)
+  ! in: f_s 0D_NOT_real
+  f_s = s
+  ! in: f_choose_max 0D_NOT_logical
+  f_choose_max = choose_max
+  ! out: f_position 0D_NOT_type
   if (c_associated(position))   call c_f_pointer(position, f_position)
-  ! inout: f_print_err 0D_NOT_logical
+  ! in: f_print_err 0D_NOT_logical
   if (c_associated(print_err)) then
     call c_f_pointer(print_err, f_print_err_ptr)
     f_print_err_native = f_print_err_ptr
@@ -7670,34 +7444,15 @@ subroutine fortran_element_at_s_branch (branch, s, choose_max, err_flag, s_eff, 
   else
     f_print_err_native_ptr => null()
   endif
-  f_ix_ele = element_at_s(f_branch, f_s_ptr, f_choose_max_native_ptr, f_err_flag_native_ptr, &
-      f_s_eff_ptr, f_position, f_print_err_native_ptr)
+  f_ix_ele = element_at_s(f_branch, f_s, f_choose_max, f_err_flag, f_s_eff, f_position, &
+      f_print_err_native_ptr)
 
-  ! inout: f_s 0D_NOT_real
-  ! no output conversion for f_s
-  ! inout: f_choose_max 0D_NOT_logical
-  if (c_associated(choose_max)) then
-    call c_f_pointer(choose_max, f_choose_max_ptr)
-    f_choose_max_ptr = f_choose_max_native
-  else
-    ! f_choose_max unset
-  endif
-  ! inout: f_err_flag 0D_NOT_logical
-  if (c_associated(err_flag)) then
-    call c_f_pointer(err_flag, f_err_flag_ptr)
-    f_err_flag_ptr = f_err_flag_native
-  else
-    ! f_err_flag unset
-  endif
-  ! inout: f_s_eff 0D_NOT_real
+  ! out: f_err_flag 0D_NOT_logical
+  ! no output conversion for f_err_flag
+  ! out: f_s_eff 0D_NOT_real
   ! no output conversion for f_s_eff
-  ! inout: f_print_err 0D_NOT_logical
-  if (c_associated(print_err)) then
-    call c_f_pointer(print_err, f_print_err_ptr)
-    f_print_err_ptr = f_print_err_native
-  else
-    ! f_print_err unset
-  endif
+  ! out: f_position 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
   ! out: f_ix_ele 0D_NOT_integer
   call c_f_pointer(ix_ele, f_ix_ele_ptr)
   f_ix_ele_ptr = f_ix_ele
@@ -7707,80 +7462,54 @@ subroutine fortran_element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_
 
   use bmad_struct, only: coord_struct, lat_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: ix_ele  ! 0D_NOT_integer
-  integer :: f_ix_ele
-  integer(c_int), pointer :: f_ix_ele_ptr
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat
-  type(c_ptr), intent(in), value :: s  ! 0D_NOT_real
-  real(c_double) :: f_s
-  real(c_double), pointer :: f_s_ptr
-  type(c_ptr), intent(in), value :: choose_max  ! 0D_NOT_logical
-  logical(c_bool), pointer :: f_choose_max
-  logical, target :: f_choose_max_native
-  logical, pointer :: f_choose_max_native_ptr
-  logical(c_bool), pointer :: f_choose_max_ptr
+  real(c_double) :: s  ! 0D_NOT_real
+  real(rp) :: f_s
+  logical(c_bool) :: choose_max  ! 0D_NOT_logical
+  logical :: f_choose_max
   type(c_ptr), intent(in), value :: ix_branch  ! 0D_NOT_integer
   integer(c_int) :: f_ix_branch
   integer(c_int), pointer :: f_ix_branch_ptr
-  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
-  logical(c_bool), pointer :: f_err_flag
-  logical, target :: f_err_flag_native
-  logical, pointer :: f_err_flag_native_ptr
-  logical(c_bool), pointer :: f_err_flag_ptr
-  type(c_ptr), intent(in), value :: s_eff  ! 0D_NOT_real
-  real(c_double) :: f_s_eff
-  real(c_double), pointer :: f_s_eff_ptr
-  type(c_ptr), value :: position  ! 0D_NOT_type
-  type(coord_struct), pointer :: f_position
   type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_print_err
   logical, target :: f_print_err_native
   logical, pointer :: f_print_err_native_ptr
   logical(c_bool), pointer :: f_print_err_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  type(c_ptr), intent(in), value :: s_eff  ! 0D_NOT_real
+  real(rp) :: f_s_eff
+  real(c_double), pointer :: f_s_eff_ptr
+  type(c_ptr), value :: position  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_position
+  type(c_ptr), intent(in), value :: ix_ele  ! 0D_NOT_integer
+  integer :: f_ix_ele
+  integer(c_int), pointer :: f_ix_ele_ptr
   ! ** End of parameters **
-  ! inout: f_lat 0D_NOT_type
-  if (.not. c_associated(lat)) return
+  ! in: f_lat 0D_NOT_type
+  if (.not. c_associated(lat)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(lat, f_lat)
-  ! inout: f_s 0D_NOT_real
-  if (c_associated(s)) then
-    call c_f_pointer(s, f_s_ptr)
-  else
-    f_s_ptr => null()
-  endif
-  ! inout: f_choose_max 0D_NOT_logical
-  if (c_associated(choose_max)) then
-    call c_f_pointer(choose_max, f_choose_max_ptr)
-    f_choose_max_native = f_choose_max_ptr
-    f_choose_max_native_ptr => f_choose_max_native
-  else
-    f_choose_max_native_ptr => null()
-  endif
-  ! inout: f_ix_branch 0D_NOT_integer
+  ! in: f_s 0D_NOT_real
+  f_s = s
+  ! in: f_choose_max 0D_NOT_logical
+  f_choose_max = choose_max
+  ! in: f_ix_branch 0D_NOT_integer
   if (c_associated(ix_branch)) then
     call c_f_pointer(ix_branch, f_ix_branch_ptr)
   else
     f_ix_branch_ptr => null()
   endif
-  ! inout: f_err_flag 0D_NOT_logical
-  if (c_associated(err_flag)) then
-    call c_f_pointer(err_flag, f_err_flag_ptr)
-    f_err_flag_native = f_err_flag_ptr
-    f_err_flag_native_ptr => f_err_flag_native
-  else
-    f_err_flag_native_ptr => null()
-  endif
-  ! inout: f_s_eff 0D_NOT_real
-  if (c_associated(s_eff)) then
-    call c_f_pointer(s_eff, f_s_eff_ptr)
-  else
-    f_s_eff_ptr => null()
-  endif
-  ! inout: f_position 0D_NOT_type
+  ! out: f_position 0D_NOT_type
   if (c_associated(position))   call c_f_pointer(position, f_position)
-  ! inout: f_print_err 0D_NOT_logical
+  ! in: f_print_err 0D_NOT_logical
   if (c_associated(print_err)) then
     call c_f_pointer(print_err, f_print_err_ptr)
     f_print_err_native = f_print_err_ptr
@@ -7788,36 +7517,15 @@ subroutine fortran_element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_
   else
     f_print_err_native_ptr => null()
   endif
-  f_ix_ele = element_at_s(f_lat, f_s_ptr, f_choose_max_native_ptr, f_ix_branch_ptr, &
-      f_err_flag_native_ptr, f_s_eff_ptr, f_position, f_print_err_native_ptr)
+  f_ix_ele = element_at_s(f_lat, f_s, f_choose_max, f_ix_branch_ptr, f_err_flag, f_s_eff, &
+      f_position, f_print_err_native_ptr)
 
-  ! inout: f_s 0D_NOT_real
-  ! no output conversion for f_s
-  ! inout: f_choose_max 0D_NOT_logical
-  if (c_associated(choose_max)) then
-    call c_f_pointer(choose_max, f_choose_max_ptr)
-    f_choose_max_ptr = f_choose_max_native
-  else
-    ! f_choose_max unset
-  endif
-  ! inout: f_ix_branch 0D_NOT_integer
-  ! no output conversion for f_ix_branch
-  ! inout: f_err_flag 0D_NOT_logical
-  if (c_associated(err_flag)) then
-    call c_f_pointer(err_flag, f_err_flag_ptr)
-    f_err_flag_ptr = f_err_flag_native
-  else
-    ! f_err_flag unset
-  endif
-  ! inout: f_s_eff 0D_NOT_real
+  ! out: f_err_flag 0D_NOT_logical
+  ! no output conversion for f_err_flag
+  ! out: f_s_eff 0D_NOT_real
   ! no output conversion for f_s_eff
-  ! inout: f_print_err 0D_NOT_logical
-  if (c_associated(print_err)) then
-    call c_f_pointer(print_err, f_print_err_ptr)
-    f_print_err_ptr = f_print_err_native
-  else
-    ! f_print_err unset
-  endif
+  ! out: f_position 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
   ! out: f_ix_ele 0D_NOT_integer
   call c_f_pointer(ix_ele, f_ix_ele_ptr)
   f_ix_ele_ptr = f_ix_ele
@@ -8217,11 +7925,11 @@ subroutine fortran_em_taylor_equal_em_taylor (em_taylor1, em_taylor2) bind(c)
   ! ** In parameters **
   type(c_ptr), value :: em_taylor2  ! 0D_NOT_type
   type(em_taylor_struct), pointer :: f_em_taylor2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: em_taylor1  ! 0D_NOT_type
   type(em_taylor_struct), pointer :: f_em_taylor1
   ! ** End of parameters **
-  ! out: f_em_taylor1 0D_NOT_type
+  ! inout: f_em_taylor1 0D_NOT_type
   if (.not. c_associated(em_taylor1)) return
   call c_f_pointer(em_taylor1, f_em_taylor1)
   ! in: f_em_taylor2 0D_NOT_type
@@ -8229,8 +7937,6 @@ subroutine fortran_em_taylor_equal_em_taylor (em_taylor1, em_taylor2) bind(c)
   call c_f_pointer(em_taylor2, f_em_taylor2)
   call em_taylor_equal_em_taylor(f_em_taylor1, f_em_taylor2)
 
-  ! out: f_em_taylor1 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_em_taylors_equal_em_taylors (em_taylor1, em_taylor2) bind(c)
 
@@ -8239,7 +7945,7 @@ subroutine fortran_em_taylors_equal_em_taylors (em_taylor1, em_taylor2) bind(c)
   ! ** In parameters **
   type(c_ptr), intent(in), value :: em_taylor2
   type(em_taylor_struct_container_alloc), pointer :: f_em_taylor2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: em_taylor1
   type(em_taylor_struct_container_alloc), pointer :: f_em_taylor1
   ! ** End of parameters **
@@ -15146,11 +14852,11 @@ subroutine fortran_lat_equal_lat (lat_out, lat_in) bind(c)
   ! ** In parameters **
   type(c_ptr), value :: lat_in  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat_in
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: lat_out  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat_out
   ! ** End of parameters **
-  ! out: f_lat_out 0D_NOT_type
+  ! inout: f_lat_out 0D_NOT_type
   if (.not. c_associated(lat_out)) return
   call c_f_pointer(lat_out, f_lat_out)
   ! in: f_lat_in 0D_NOT_type
@@ -15158,8 +14864,6 @@ subroutine fortran_lat_equal_lat (lat_out, lat_in) bind(c)
   call c_f_pointer(lat_in, f_lat_in)
   call lat_equal_lat(f_lat_out, f_lat_in)
 
-  ! out: f_lat_out 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_lat_geometry (lat) bind(c)
 
@@ -15268,7 +14972,7 @@ subroutine fortran_lat_vec_equal_lat_vec (lat1, lat2) bind(c)
   ! ** In parameters **
   type(c_ptr), intent(in), value :: lat2
   type(lat_struct_container_alloc), pointer :: f_lat2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: lat1
   type(lat_struct_container_alloc), pointer :: f_lat1
   ! ** End of parameters **
@@ -21823,40 +21527,31 @@ subroutine fortran_pointer_to_ele1 (lat, ix_ele, ix_branch, ele_ptr) bind(c)
 
   use bmad_struct, only: ele_struct, lat_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
-  type(ele_struct), pointer :: f_ele_ptr
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat
-  type(c_ptr), intent(in), value :: ix_ele  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_ele
-  integer(c_int), pointer :: f_ix_ele_ptr
+  integer(c_int) :: ix_ele  ! 0D_NOT_integer
+  integer :: f_ix_ele
   type(c_ptr), intent(in), value :: ix_branch  ! 0D_NOT_integer
   integer(c_int) :: f_ix_branch
   integer(c_int), pointer :: f_ix_branch_ptr
+  ! ** Out parameters **
+  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_ele_ptr
   ! ** End of parameters **
-  ! inout: f_lat 0D_NOT_type
+  ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  ! inout: f_ix_ele 0D_NOT_integer
-  if (c_associated(ix_ele)) then
-    call c_f_pointer(ix_ele, f_ix_ele_ptr)
-  else
-    f_ix_ele_ptr => null()
-  endif
-  ! inout: f_ix_branch 0D_NOT_integer
+  ! in: f_ix_ele 0D_NOT_integer
+  f_ix_ele = ix_ele
+  ! in: f_ix_branch 0D_NOT_integer
   if (c_associated(ix_branch)) then
     call c_f_pointer(ix_branch, f_ix_branch_ptr)
   else
     f_ix_branch_ptr => null()
   endif
-  f_ele_ptr = pointer_to_ele(f_lat, f_ix_ele_ptr, f_ix_branch_ptr)
+  f_ele_ptr = pointer_to_ele(f_lat, f_ix_ele, f_ix_branch_ptr)
 
-  ! inout: f_ix_ele 0D_NOT_integer
-  ! no output conversion for f_ix_ele
-  ! inout: f_ix_branch 0D_NOT_integer
-  ! no output conversion for f_ix_branch
   ! out: f_ele_ptr 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
 end subroutine
@@ -21864,19 +21559,19 @@ subroutine fortran_pointer_to_ele2 (lat, ele_loc, ele_ptr) bind(c)
 
   use bmad_struct, only: ele_struct, lat_ele_loc_struct, lat_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
-  type(ele_struct), pointer :: f_ele_ptr
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat
   type(c_ptr), value :: ele_loc  ! 0D_NOT_type
   type(lat_ele_loc_struct), pointer :: f_ele_loc
+  ! ** Out parameters **
+  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_ele_ptr
   ! ** End of parameters **
-  ! inout: f_lat 0D_NOT_type
+  ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  ! inout: f_ele_loc 0D_NOT_type
+  ! in: f_ele_loc 0D_NOT_type
   if (.not. c_associated(ele_loc)) return
   call c_f_pointer(ele_loc, f_ele_loc)
   f_ele_ptr = pointer_to_ele(f_lat, f_ele_loc)
@@ -21888,27 +21583,25 @@ subroutine fortran_pointer_to_ele3 (lat, ele_name, ele_ptr) bind(c)
 
   use bmad_struct, only: ele_struct, lat_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
-  type(ele_struct), pointer :: f_ele_ptr
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat
   type(c_ptr), intent(in), value :: ele_name
   character(len=4096), target :: f_ele_name
   character(kind=c_char), pointer :: f_ele_name_ptr(:)
+  ! ** Out parameters **
+  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_ele_ptr
   ! ** End of parameters **
-  ! inout: f_lat 0D_NOT_type
+  ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  ! inout: f_ele_name 0D_NOT_character
+  ! in: f_ele_name 0D_NOT_character
   if (.not. c_associated(ele_name)) return
   call c_f_pointer(ele_name, f_ele_name_ptr, [huge(0)])
   call to_f_str(f_ele_name_ptr, f_ele_name)
   f_ele_ptr = pointer_to_ele(f_lat, f_ele_name)
 
-  ! inout: f_ele_name 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
   ! out: f_ele_ptr 0D_PTR_type
   ! TODO may require output conversion? 0D_PTR_type
 end subroutine
@@ -21916,19 +21609,19 @@ subroutine fortran_pointer_to_ele4 (lat, foreign_ele, ele_ptr) bind(c)
 
   use bmad_struct, only: ele_struct, lat_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
-  type(ele_struct), pointer :: f_ele_ptr
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat
   type(c_ptr), value :: foreign_ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_foreign_ele
+  ! ** Out parameters **
+  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_ele_ptr
   ! ** End of parameters **
-  ! inout: f_lat 0D_NOT_type
+  ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  ! inout: f_foreign_ele 0D_NOT_type
+  ! in: f_foreign_ele 0D_NOT_type
   if (.not. c_associated(foreign_ele)) return
   call c_f_pointer(foreign_ele, f_foreign_ele)
   f_ele_ptr = pointer_to_ele(f_lat, f_foreign_ele)
@@ -23585,20 +23278,20 @@ subroutine fortran_re_allocate_wall3d_section_array (section, n, exact) bind(c)
   ! ** In parameters **
   integer(c_int) :: n  ! 0D_NOT_integer
   integer :: f_n
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: section
+  type(wall3d_section_struct_container_alloc), pointer :: f_section
   type(c_ptr), intent(in), value :: exact  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_exact
   logical, target :: f_exact_native
   logical, pointer :: f_exact_native_ptr
   logical(c_bool), pointer :: f_exact_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: section
-  type(wall3d_section_struct_container_alloc), pointer :: f_section
   ! ** End of parameters **
   !! container type array (1D_ALLOC_type)
   if (c_associated(section))   call c_f_pointer(section, f_section)
   ! in: f_n 0D_NOT_integer
   f_n = n
-  ! in: f_exact 0D_NOT_logical
+  ! inout: f_exact 0D_NOT_logical
   if (c_associated(exact)) then
     call c_f_pointer(exact, f_exact_ptr)
     f_exact_native = f_exact_ptr
@@ -23608,6 +23301,13 @@ subroutine fortran_re_allocate_wall3d_section_array (section, n, exact) bind(c)
   endif
   call re_allocate(f_section%data, f_n, f_exact_native_ptr)
 
+  ! inout: f_exact 0D_NOT_logical
+  if (c_associated(exact)) then
+    call c_f_pointer(exact, f_exact_ptr)
+    f_exact_ptr = f_exact_native
+  else
+    ! f_exact unset
+  endif
 end subroutine
 subroutine fortran_re_allocate_wall3d_vertex_array (v, n, exact) bind(c)
 
@@ -23616,20 +23316,20 @@ subroutine fortran_re_allocate_wall3d_vertex_array (v, n, exact) bind(c)
   ! ** In parameters **
   integer(c_int) :: n  ! 0D_NOT_integer
   integer :: f_n
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: v
+  type(wall3d_vertex_struct_container_alloc), pointer :: f_v
   type(c_ptr), intent(in), value :: exact  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_exact
   logical, target :: f_exact_native
   logical, pointer :: f_exact_native_ptr
   logical(c_bool), pointer :: f_exact_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: v
-  type(wall3d_vertex_struct_container_alloc), pointer :: f_v
   ! ** End of parameters **
   !! container type array (1D_ALLOC_type)
   if (c_associated(v))   call c_f_pointer(v, f_v)
   ! in: f_n 0D_NOT_integer
   f_n = n
-  ! in: f_exact 0D_NOT_logical
+  ! inout: f_exact 0D_NOT_logical
   if (c_associated(exact)) then
     call c_f_pointer(exact, f_exact_ptr)
     f_exact_native = f_exact_ptr
@@ -23639,6 +23339,13 @@ subroutine fortran_re_allocate_wall3d_vertex_array (v, n, exact) bind(c)
   endif
   call re_allocate(f_v%data, f_n, f_exact_native_ptr)
 
+  ! inout: f_exact 0D_NOT_logical
+  if (c_associated(exact)) then
+    call c_f_pointer(exact, f_exact_ptr)
+    f_exact_ptr = f_exact_native
+  else
+    ! f_exact unset
+  endif
 end subroutine
 subroutine fortran_re_associate_node_array (tree, n, exact) bind(c)
 
@@ -28333,11 +28040,11 @@ subroutine fortran_taylor_equal_taylor (taylor1, taylor2) bind(c)
   ! ** In parameters **
   type(c_ptr), value :: taylor2  ! 0D_NOT_type
   type(taylor_struct), pointer :: f_taylor2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: taylor1  ! 0D_NOT_type
   type(taylor_struct), pointer :: f_taylor1
   ! ** End of parameters **
-  ! out: f_taylor1 0D_NOT_type
+  ! inout: f_taylor1 0D_NOT_type
   if (.not. c_associated(taylor1)) return
   call c_f_pointer(taylor1, f_taylor1)
   ! in: f_taylor2 0D_NOT_type
@@ -28345,8 +28052,6 @@ subroutine fortran_taylor_equal_taylor (taylor1, taylor2) bind(c)
   call c_f_pointer(taylor2, f_taylor2)
   call taylor_equal_taylor(f_taylor1, f_taylor2)
 
-  ! out: f_taylor1 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_taylor_inverse (taylor_in, taylor_inv, err) bind(c)
 
@@ -28454,7 +28159,7 @@ subroutine fortran_taylors_equal_taylors (taylor1, taylor2) bind(c)
   ! ** In parameters **
   type(c_ptr), intent(in), value :: taylor2
   type(taylor_struct_container_alloc), pointer :: f_taylor2
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: taylor1
   type(taylor_struct_container_alloc), pointer :: f_taylor1
   ! ** End of parameters **
@@ -32675,14 +32380,7 @@ subroutine fortran_twiss_and_track_all (lat, orb_array, status, print_err, calc_
 
   use bmad_struct, only: coord_array_struct, lat_struct
   implicit none
-  ! ** Inout parameters **
-  type(c_ptr), value :: lat  ! 0D_NOT_type
-  type(lat_struct), pointer :: f_lat
-  type(c_ptr), intent(in), value :: orb_array
-  type(coord_array_struct_container_alloc), pointer :: f_orb_array
-  type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
-  integer(c_int) :: f_status
-  integer(c_int), pointer :: f_status_ptr
+  ! ** In parameters **
   type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_print_err
   logical, target :: f_print_err_native
@@ -32693,19 +32391,22 @@ subroutine fortran_twiss_and_track_all (lat, orb_array, status, print_err, calc_
   logical, target :: f_calc_chrom_native
   logical, pointer :: f_calc_chrom_native_ptr
   logical(c_bool), pointer :: f_calc_chrom_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
+  integer :: f_status
+  integer(c_int), pointer :: f_status_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: lat  ! 0D_NOT_type
+  type(lat_struct), pointer :: f_lat
+  type(c_ptr), intent(in), value :: orb_array
+  type(coord_array_struct_container_alloc), pointer :: f_orb_array
   ! ** End of parameters **
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
   !! container type array (1D_ALLOC_type)
   if (c_associated(orb_array))   call c_f_pointer(orb_array, f_orb_array)
-  ! inout: f_status 0D_NOT_integer
-  if (c_associated(status)) then
-    call c_f_pointer(status, f_status_ptr)
-  else
-    f_status_ptr => null()
-  endif
-  ! inout: f_print_err 0D_NOT_logical
+  ! in: f_print_err 0D_NOT_logical
   if (c_associated(print_err)) then
     call c_f_pointer(print_err, f_print_err_ptr)
     f_print_err_native = f_print_err_ptr
@@ -32713,7 +32414,7 @@ subroutine fortran_twiss_and_track_all (lat, orb_array, status, print_err, calc_
   else
     f_print_err_native_ptr => null()
   endif
-  ! inout: f_calc_chrom 0D_NOT_logical
+  ! in: f_calc_chrom 0D_NOT_logical
   if (c_associated(calc_chrom)) then
     call c_f_pointer(calc_chrom, f_calc_chrom_ptr)
     f_calc_chrom_native = f_calc_chrom_ptr
@@ -32721,25 +32422,11 @@ subroutine fortran_twiss_and_track_all (lat, orb_array, status, print_err, calc_
   else
     f_calc_chrom_native_ptr => null()
   endif
-  call twiss_and_track(f_lat, f_orb_array%data, f_status_ptr, f_print_err_native_ptr, &
+  call twiss_and_track(f_lat, f_orb_array%data, f_status, f_print_err_native_ptr, &
       f_calc_chrom_native_ptr)
 
-  ! inout: f_status 0D_NOT_integer
+  ! out: f_status 0D_NOT_integer
   ! no output conversion for f_status
-  ! inout: f_print_err 0D_NOT_logical
-  if (c_associated(print_err)) then
-    call c_f_pointer(print_err, f_print_err_ptr)
-    f_print_err_ptr = f_print_err_native
-  else
-    ! f_print_err unset
-  endif
-  ! inout: f_calc_chrom 0D_NOT_logical
-  if (c_associated(calc_chrom)) then
-    call c_f_pointer(calc_chrom, f_calc_chrom_ptr)
-    f_calc_chrom_ptr = f_calc_chrom_native
-  else
-    ! f_calc_chrom unset
-  endif
 end subroutine
 subroutine fortran_twiss_and_track_at_s (lat, s, ele_at_s, orb, orb_at_s, ix_branch, err, &
     use_last, compute_floor_coords) bind(c)
@@ -32820,14 +32507,7 @@ subroutine fortran_twiss_and_track_branch (lat, orb, status, ix_branch, print_er
 
   use bmad_struct, only: coord_struct, lat_struct
   implicit none
-  ! ** Inout parameters **
-  type(c_ptr), value :: lat  ! 0D_NOT_type
-  type(lat_struct), pointer :: f_lat
-  type(c_ptr), intent(in), value :: orb
-  type(coord_struct_container_alloc), pointer :: f_orb
-  type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
-  integer(c_int) :: f_status
-  integer(c_int), pointer :: f_status_ptr
+  ! ** In parameters **
   type(c_ptr), intent(in), value :: ix_branch  ! 0D_NOT_integer
   integer(c_int) :: f_ix_branch
   integer(c_int), pointer :: f_ix_branch_ptr
@@ -32843,25 +32523,28 @@ subroutine fortran_twiss_and_track_branch (lat, orb, status, ix_branch, print_er
   logical(c_bool), pointer :: f_calc_chrom_ptr
   type(c_ptr), value :: orb_start  ! 0D_NOT_type
   type(coord_struct), pointer :: f_orb_start
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
+  integer :: f_status
+  integer(c_int), pointer :: f_status_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: lat  ! 0D_NOT_type
+  type(lat_struct), pointer :: f_lat
+  type(c_ptr), intent(in), value :: orb
+  type(coord_struct_container_alloc), pointer :: f_orb
   ! ** End of parameters **
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
   !! container type array (1D_ALLOC_type)
   if (c_associated(orb))   call c_f_pointer(orb, f_orb)
-  ! inout: f_status 0D_NOT_integer
-  if (c_associated(status)) then
-    call c_f_pointer(status, f_status_ptr)
-  else
-    f_status_ptr => null()
-  endif
-  ! inout: f_ix_branch 0D_NOT_integer
+  ! in: f_ix_branch 0D_NOT_integer
   if (c_associated(ix_branch)) then
     call c_f_pointer(ix_branch, f_ix_branch_ptr)
   else
     f_ix_branch_ptr => null()
   endif
-  ! inout: f_print_err 0D_NOT_logical
+  ! in: f_print_err 0D_NOT_logical
   if (c_associated(print_err)) then
     call c_f_pointer(print_err, f_print_err_ptr)
     f_print_err_native = f_print_err_ptr
@@ -32869,7 +32552,7 @@ subroutine fortran_twiss_and_track_branch (lat, orb, status, ix_branch, print_er
   else
     f_print_err_native_ptr => null()
   endif
-  ! inout: f_calc_chrom 0D_NOT_logical
+  ! in: f_calc_chrom 0D_NOT_logical
   if (c_associated(calc_chrom)) then
     call c_f_pointer(calc_chrom, f_calc_chrom_ptr)
     f_calc_chrom_native = f_calc_chrom_ptr
@@ -32877,29 +32560,13 @@ subroutine fortran_twiss_and_track_branch (lat, orb, status, ix_branch, print_er
   else
     f_calc_chrom_native_ptr => null()
   endif
-  ! inout: f_orb_start 0D_NOT_type
+  ! in: f_orb_start 0D_NOT_type
   if (c_associated(orb_start))   call c_f_pointer(orb_start, f_orb_start)
-  call twiss_and_track(f_lat, f_orb%data, f_status_ptr, f_ix_branch_ptr, &
-      f_print_err_native_ptr, f_calc_chrom_native_ptr, f_orb_start)
+  call twiss_and_track(f_lat, f_orb%data, f_status, f_ix_branch_ptr, f_print_err_native_ptr, &
+      f_calc_chrom_native_ptr, f_orb_start)
 
-  ! inout: f_status 0D_NOT_integer
+  ! out: f_status 0D_NOT_integer
   ! no output conversion for f_status
-  ! inout: f_ix_branch 0D_NOT_integer
-  ! no output conversion for f_ix_branch
-  ! inout: f_print_err 0D_NOT_logical
-  if (c_associated(print_err)) then
-    call c_f_pointer(print_err, f_print_err_ptr)
-    f_print_err_ptr = f_print_err_native
-  else
-    ! f_print_err unset
-  endif
-  ! inout: f_calc_chrom 0D_NOT_logical
-  if (c_associated(calc_chrom)) then
-    call c_f_pointer(calc_chrom, f_calc_chrom_ptr)
-    f_calc_chrom_ptr = f_calc_chrom_native
-  else
-    ! f_calc_chrom unset
-  endif
 end subroutine
 subroutine fortran_twiss_and_track_from_s_to_s (branch, orbit_start, s_end, orbit_end, &
     ele_start, ele_end, err, compute_floor_coords, compute_twiss) bind(c)
