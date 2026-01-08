@@ -60,6 +60,17 @@ void init_bbu_beam_struct(py::module& m, py::class_<BbuBeamProxy>& cls) {
 
       .def("__repr__", [](const BbuBeamProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const BbuBeamProxy& self) {
+            return BbuBeamProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const BbuBeamProxy& self, py::dict& memo) {
+            return BbuBeamProxy(self);
+          })
+
       ;
 
   // 1D BbuBeamProxy arrays are not used in structs/routines
@@ -224,6 +235,17 @@ void init_bbu_param_struct(py::module& m, py::class_<BbuParamProxy>& cls) {
       .def(
           "__repr__", [](const BbuParamProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const BbuParamProxy& self) {
+            return BbuParamProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const BbuParamProxy& self, py::dict& memo) {
+            return BbuParamProxy(self);
+          })
+
       ;
 
   // 1D BbuParamProxy arrays are not used in structs/routines
@@ -292,6 +314,17 @@ void init_bbu_stage_struct(py::module& m, py::class_<BbuStageProxy>& cls) {
       .def(
           "__repr__", [](const BbuStageProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const BbuStageProxy& self) {
+            return BbuStageProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const BbuStageProxy& self, py::dict& memo) {
+            return BbuStageProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<BbuStageProxyArray1D>(m, "BbuStageStructArray1D");
@@ -324,6 +357,17 @@ void init_ac_kicker_freq_struct(
           "__repr__",
           [](const AcKickerFreqProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const AcKickerFreqProxy& self) {
+            return AcKickerFreqProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const AcKickerFreqProxy& self, py::dict& memo) {
+            return AcKickerFreqProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<AcKickerFreqProxyArray1D>(m, "AcKickerFreqStructArray1D");
@@ -343,6 +387,17 @@ void init_ac_kicker_struct(py::module& m, py::class_<AcKickerProxy>& cls) {
 
       .def(
           "__repr__", [](const AcKickerProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const AcKickerProxy& self) {
+            return AcKickerProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const AcKickerProxy& self, py::dict& memo) {
+            return AcKickerProxy(self);
+          })
 
       ;
 
@@ -376,6 +431,17 @@ void init_ac_kicker_time_struct(
       .def(
           "__repr__",
           [](const AcKickerTimeProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const AcKickerTimeProxy& self) {
+            return AcKickerTimeProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const AcKickerTimeProxy& self, py::dict& memo) {
+            return AcKickerTimeProxy(self);
+          })
 
       ;
 
@@ -421,6 +487,17 @@ void init_anormal_mode_struct(
       .def(
           "__repr__",
           [](const AnormalModeProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const AnormalModeProxy& self) {
+            return AnormalModeProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const AnormalModeProxy& self, py::dict& memo) {
+            return AnormalModeProxy(self);
+          })
 
       ;
 
@@ -485,6 +562,17 @@ void init_aperture_param_struct(
           "__repr__",
           [](const ApertureParamProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const ApertureParamProxy& self) {
+            return ApertureParamProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const ApertureParamProxy& self, py::dict& memo) {
+            return ApertureParamProxy(self);
+          })
+
       ;
 
   // 1D ApertureParamProxy arrays are not used in structs/routines
@@ -527,6 +615,17 @@ void init_aperture_point_struct(
           "__repr__",
           [](const AperturePointProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const AperturePointProxy& self) {
+            return AperturePointProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const AperturePointProxy& self, py::dict& memo) {
+            return AperturePointProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<AperturePointProxyArray1D>(m, "AperturePointStructArray1D");
@@ -564,6 +663,17 @@ void init_aperture_scan_struct(
       .def(
           "__repr__",
           [](const ApertureScanProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const ApertureScanProxy& self) {
+            return ApertureScanProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const ApertureScanProxy& self, py::dict& memo) {
+            return ApertureScanProxy(self);
+          })
 
       ;
 
@@ -710,6 +820,17 @@ void init_beam_init_struct(py::module& m, py::class_<BeamInitProxy>& cls) {
       .def(
           "__repr__", [](const BeamInitProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const BeamInitProxy& self) {
+            return BeamInitProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const BeamInitProxy& self, py::dict& memo) {
+            return BeamInitProxy(self);
+          })
+
       ;
 
   // 1D BeamInitProxy arrays are not used in structs/routines
@@ -725,6 +846,15 @@ void init_beam_struct(py::module& m, py::class_<BeamProxy>& cls) {
       .def_property_readonly("bunch", &BeamProxy::bunch)
 
       .def("__repr__", [](const BeamProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const BeamProxy& self) {
+            return BeamProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const BeamProxy& self, py::dict& memo) { return BeamProxy(self); })
 
       ;
 
@@ -947,6 +1077,17 @@ void init_bmad_common_struct(py::module& m, py::class_<BmadCommonProxy>& cls) {
           "__repr__",
           [](const BmadCommonProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const BmadCommonProxy& self) {
+            return BmadCommonProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const BmadCommonProxy& self, py::dict& memo) {
+            return BmadCommonProxy(self);
+          })
+
       ;
 
   // 1D BmadCommonProxy arrays are not used in structs/routines
@@ -983,6 +1124,17 @@ void init_bmad_normal_form_struct(
       .def(
           "__repr__",
           [](const BmadNormalFormProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const BmadNormalFormProxy& self) {
+            return BmadNormalFormProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const BmadNormalFormProxy& self, py::dict& memo) {
+            return BmadNormalFormProxy(self);
+          })
 
       ;
 
@@ -1044,6 +1196,17 @@ void init_bookkeeping_state_struct(
       .def(
           "__repr__",
           [](const BookkeepingStateProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const BookkeepingStateProxy& self) {
+            return BookkeepingStateProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const BookkeepingStateProxy& self, py::dict& memo) {
+            return BookkeepingStateProxy(self);
+          })
 
       ;
 
@@ -1113,6 +1276,17 @@ void init_bpm_phase_coupling_struct(
           "__repr__",
           [](const BpmPhaseCouplingProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const BpmPhaseCouplingProxy& self) {
+            return BpmPhaseCouplingProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const BpmPhaseCouplingProxy& self, py::dict& memo) {
+            return BpmPhaseCouplingProxy(self);
+          })
+
       ;
 
   // 1D BpmPhaseCouplingProxy arrays are not used in structs/routines
@@ -1179,6 +1353,17 @@ void init_branch_struct(py::module& m, py::class_<BranchProxy>& cls) {
           py::arg("lbound") = 1)
 
       .def("__repr__", [](const BranchProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const BranchProxy& self) {
+            return BranchProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const BranchProxy& self, py::dict& memo) {
+            return BranchProxy(self);
+          })
 
       ;
 
@@ -1284,6 +1469,17 @@ void init_bunch_params_struct(
           "__repr__",
           [](const BunchParamsProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const BunchParamsProxy& self) {
+            return BunchParamsProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const BunchParamsProxy& self, py::dict& memo) {
+            return BunchParamsProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<BunchParamsProxyArray1D>(m, "BunchParamsStructArray1D");
@@ -1340,6 +1536,17 @@ void init_bunch_struct(py::module& m, py::class_<BunchProxy>& cls) {
 
       .def("__repr__", [](const BunchProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const BunchProxy& self) {
+            return BunchProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const BunchProxy& self, py::dict& memo) {
+            return BunchProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<BunchProxyArray1D>(m, "BunchStructArray1D");
@@ -1368,6 +1575,17 @@ void init_bunch_track_struct(py::module& m, py::class_<BunchTrackProxy>& cls) {
       .def(
           "__repr__",
           [](const BunchTrackProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const BunchTrackProxy& self) {
+            return BunchTrackProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const BunchTrackProxy& self, py::dict& memo) {
+            return BunchTrackProxy(self);
+          })
 
       ;
 
@@ -1418,6 +1636,17 @@ void init_cartesian_map_struct(
       .def(
           "__repr__",
           [](const CartesianMapProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const CartesianMapProxy& self) {
+            return CartesianMapProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const CartesianMapProxy& self, py::dict& memo) {
+            return CartesianMapProxy(self);
+          })
 
       ;
 
@@ -1480,6 +1709,17 @@ void init_cartesian_map_term1_struct(
           "__repr__",
           [](const CartesianMapTerm1Proxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const CartesianMapTerm1Proxy& self) {
+            return CartesianMapTerm1Proxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const CartesianMapTerm1Proxy& self, py::dict& memo) {
+            return CartesianMapTerm1Proxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<CartesianMapTerm1ProxyArray1D>(
@@ -1513,6 +1753,17 @@ void init_cartesian_map_term_struct(
           "__repr__",
           [](const CartesianMapTermProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const CartesianMapTermProxy& self) {
+            return CartesianMapTermProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const CartesianMapTermProxy& self, py::dict& memo) {
+            return CartesianMapTermProxy(self);
+          })
+
       ;
 
   // 1D CartesianMapTermProxy arrays are not used in structs/routines
@@ -1542,6 +1793,17 @@ void init_complex_taylor_struct(
       .def(
           "__repr__",
           [](const ComplexTaylorProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const ComplexTaylorProxy& self) {
+            return ComplexTaylorProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const ComplexTaylorProxy& self, py::dict& memo) {
+            return ComplexTaylorProxy(self);
+          })
 
       ;
 
@@ -1575,6 +1837,17 @@ void init_complex_taylor_term_struct(
       .def(
           "__repr__",
           [](const ComplexTaylorTermProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const ComplexTaylorTermProxy& self) {
+            return ComplexTaylorTermProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const ComplexTaylorTermProxy& self, py::dict& memo) {
+            return ComplexTaylorTermProxy(self);
+          })
 
       ;
 
@@ -1623,6 +1896,17 @@ void init_control_ramp1_struct(
           "__repr__",
           [](const ControlRamp1Proxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const ControlRamp1Proxy& self) {
+            return ControlRamp1Proxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const ControlRamp1Proxy& self, py::dict& memo) {
+            return ControlRamp1Proxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<ControlRamp1ProxyArray1D>(m, "ControlRamp1StructArray1D");
@@ -1664,6 +1948,17 @@ void init_control_struct(py::module& m, py::class_<ControlProxy>& cls) {
 
       .def("__repr__", [](const ControlProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const ControlProxy& self) {
+            return ControlProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const ControlProxy& self, py::dict& memo) {
+            return ControlProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<ControlProxyArray1D>(m, "ControlStructArray1D");
@@ -1701,6 +1996,17 @@ void init_control_var1_struct(
           "__repr__",
           [](const ControlVar1Proxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const ControlVar1Proxy& self) {
+            return ControlVar1Proxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const ControlVar1Proxy& self, py::dict& memo) {
+            return ControlVar1Proxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<ControlVar1ProxyArray1D>(m, "ControlVar1StructArray1D");
@@ -1726,6 +2032,17 @@ void init_controller_struct(py::module& m, py::class_<ControllerProxy>& cls) {
           "__repr__",
           [](const ControllerProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const ControllerProxy& self) {
+            return ControllerProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const ControllerProxy& self, py::dict& memo) {
+            return ControllerProxy(self);
+          })
+
       ;
 
   // 1D ControllerProxy arrays are not used in structs/routines
@@ -1748,6 +2065,17 @@ void init_coord_array_struct(py::module& m, py::class_<CoordArrayProxy>& cls) {
       .def(
           "__repr__",
           [](const CoordArrayProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const CoordArrayProxy& self) {
+            return CoordArrayProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const CoordArrayProxy& self, py::dict& memo) {
+            return CoordArrayProxy(self);
+          })
 
       ;
 
@@ -1816,6 +2144,17 @@ void init_coord_struct(py::module& m, py::class_<CoordProxy>& cls) {
 
       .def("__repr__", [](const CoordProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const CoordProxy& self) {
+            return CoordProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const CoordProxy& self, py::dict& memo) {
+            return CoordProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<CoordProxyArray1D>(m, "CoordStructArray1D");
@@ -1882,6 +2221,17 @@ void init_cylindrical_map_struct(
           "__repr__",
           [](const CylindricalMapProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const CylindricalMapProxy& self) {
+            return CylindricalMapProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const CylindricalMapProxy& self, py::dict& memo) {
+            return CylindricalMapProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<CylindricalMapProxyArray1D>(
@@ -1920,6 +2270,18 @@ void init_cylindrical_map_term1_struct(
           "__repr__",
           [](const CylindricalMapTerm1Proxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const CylindricalMapTerm1Proxy& self) {
+            return CylindricalMapTerm1Proxy(
+                self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const CylindricalMapTerm1Proxy& self, py::dict& memo) {
+            return CylindricalMapTerm1Proxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<CylindricalMapTerm1ProxyArray1D>(
@@ -1953,6 +2315,17 @@ void init_cylindrical_map_term_struct(
           "__repr__",
           [](const CylindricalMapTermProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const CylindricalMapTermProxy& self) {
+            return CylindricalMapTermProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const CylindricalMapTermProxy& self, py::dict& memo) {
+            return CylindricalMapTermProxy(self);
+          })
+
       ;
 
   // 1D CylindricalMapTermProxy arrays are not used in structs/routines
@@ -1979,6 +2352,17 @@ void init_ele_pointer_struct(py::module& m, py::class_<ElePointerProxy>& cls) {
       .def(
           "__repr__",
           [](const ElePointerProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const ElePointerProxy& self) {
+            return ElePointerProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const ElePointerProxy& self, py::dict& memo) {
+            return ElePointerProxy(self);
+          })
 
       ;
 
@@ -2250,6 +2634,15 @@ void init_ele_struct(py::module& m, py::class_<EleProxy>& cls) {
 
       .def("__repr__", [](const EleProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const EleProxy& self) {
+            return EleProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const EleProxy& self, py::dict& memo) { return EleProxy(self); })
+
       ;
 
   bind_FTypeArrayND<EleProxyArray1D>(m, "EleStructArray1D");
@@ -2291,6 +2684,17 @@ void init_ellipse_beam_init_struct(
           "__repr__",
           [](const EllipseBeamInitProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const EllipseBeamInitProxy& self) {
+            return EllipseBeamInitProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const EllipseBeamInitProxy& self, py::dict& memo) {
+            return EllipseBeamInitProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<EllipseBeamInitProxyArray1D>(
@@ -2327,6 +2731,17 @@ void init_em_field_struct(py::module& m, py::class_<EmFieldProxy>& cls) {
 
       .def("__repr__", [](const EmFieldProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const EmFieldProxy& self) {
+            return EmFieldProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const EmFieldProxy& self, py::dict& memo) {
+            return EmFieldProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<EmFieldProxyArray1D>(m, "EmFieldStructArray1D");
@@ -2351,6 +2766,17 @@ void init_em_taylor_struct(py::module& m, py::class_<EmTaylorProxy>& cls) {
 
       .def(
           "__repr__", [](const EmTaylorProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const EmTaylorProxy& self) {
+            return EmTaylorProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const EmTaylorProxy& self, py::dict& memo) {
+            return EmTaylorProxy(self);
+          })
 
       ;
 
@@ -2382,6 +2808,17 @@ void init_em_taylor_term_struct(
       .def(
           "__repr__",
           [](const EmTaylorTermProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const EmTaylorTermProxy& self) {
+            return EmTaylorTermProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const EmTaylorTermProxy& self, py::dict& memo) {
+            return EmTaylorTermProxy(self);
+          })
 
       ;
 
@@ -2417,6 +2854,17 @@ void init_expression_atom_struct(
       .def(
           "__repr__",
           [](const ExpressionAtomProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const ExpressionAtomProxy& self) {
+            return ExpressionAtomProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const ExpressionAtomProxy& self, py::dict& memo) {
+            return ExpressionAtomProxy(self);
+          })
 
       ;
 
@@ -2457,6 +2905,17 @@ void init_expression_tree_struct(
           "__repr__",
           [](const ExpressionTreeProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const ExpressionTreeProxy& self) {
+            return ExpressionTreeProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const ExpressionTreeProxy& self, py::dict& memo) {
+            return ExpressionTreeProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<ExpressionTreeProxyArray1D>(
@@ -2491,6 +2950,17 @@ void init_floor_position_struct(
           "__repr__",
           [](const FloorPositionProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const FloorPositionProxy& self) {
+            return FloorPositionProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const FloorPositionProxy& self, py::dict& memo) {
+            return FloorPositionProxy(self);
+          })
+
       ;
 
   // 1D FloorPositionProxy arrays are not used in structs/routines
@@ -2522,6 +2992,17 @@ void init_gen_grad1_struct(py::module& m, py::class_<GenGrad1Proxy>& cls) {
 
       .def(
           "__repr__", [](const GenGrad1Proxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const GenGrad1Proxy& self) {
+            return GenGrad1Proxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const GenGrad1Proxy& self, py::dict& memo) {
+            return GenGrad1Proxy(self);
+          })
 
       ;
 
@@ -2582,6 +3063,17 @@ void init_gen_grad_map_struct(py::module& m, py::class_<GenGradMapProxy>& cls) {
           "__repr__",
           [](const GenGradMapProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const GenGradMapProxy& self) {
+            return GenGradMapProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const GenGradMapProxy& self, py::dict& memo) {
+            return GenGradMapProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<GenGradMapProxyArray1D>(m, "GenGradMapStructArray1D");
@@ -2625,6 +3117,17 @@ void init_grid_beam_init_struct(
           "__repr__",
           [](const GridBeamInitProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const GridBeamInitProxy& self) {
+            return GridBeamInitProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const GridBeamInitProxy& self, py::dict& memo) {
+            return GridBeamInitProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<GridBeamInitProxyArray1D>(m, "GridBeamInitStructArray1D");
@@ -2647,6 +3150,17 @@ void init_grid_field_pt1_struct(
       .def(
           "__repr__",
           [](const GridFieldPt1Proxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const GridFieldPt1Proxy& self) {
+            return GridFieldPt1Proxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const GridFieldPt1Proxy& self, py::dict& memo) {
+            return GridFieldPt1Proxy(self);
+          })
 
       ;
 
@@ -2673,6 +3187,17 @@ void init_grid_field_pt_struct(
       .def(
           "__repr__",
           [](const GridFieldPtProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const GridFieldPtProxy& self) {
+            return GridFieldPtProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const GridFieldPtProxy& self, py::dict& memo) {
+            return GridFieldPtProxy(self);
+          })
 
       ;
 
@@ -2746,6 +3271,17 @@ void init_grid_field_struct(py::module& m, py::class_<GridFieldProxy>& cls) {
           "__repr__",
           [](const GridFieldProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const GridFieldProxy& self) {
+            return GridFieldProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const GridFieldProxy& self, py::dict& memo) {
+            return GridFieldProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<GridFieldProxyArray1D>(m, "GridFieldStructArray1D");
@@ -2807,6 +3343,18 @@ void init_high_energy_space_charge_struct(
             return to_string(self);
           })
 
+      .def(
+          "__copy__",
+          [](const HighEnergySpaceChargeProxy& self) {
+            return HighEnergySpaceChargeProxy(
+                self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const HighEnergySpaceChargeProxy& self, py::dict& memo) {
+            return HighEnergySpaceChargeProxy(self);
+          })
+
       ;
 
   // 1D HighEnergySpaceChargeProxy arrays are not used in structs/routines
@@ -2839,6 +3387,17 @@ void init_interval1_coef_struct(
           "__repr__",
           [](const Interval1CoefProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const Interval1CoefProxy& self) {
+            return Interval1CoefProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const Interval1CoefProxy& self, py::dict& memo) {
+            return Interval1CoefProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<Interval1CoefProxyArray1D>(m, "Interval1CoefStructArray1D");
@@ -2861,6 +3420,17 @@ void init_kv_beam_init_struct(py::module& m, py::class_<KvBeamInitProxy>& cls) {
       .def(
           "__repr__",
           [](const KvBeamInitProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const KvBeamInitProxy& self) {
+            return KvBeamInitProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const KvBeamInitProxy& self, py::dict& memo) {
+            return KvBeamInitProxy(self);
+          })
 
       ;
 
@@ -2890,6 +3460,17 @@ void init_lat_ele_loc_struct(py::module& m, py::class_<LatEleLocProxy>& cls) {
       .def(
           "__repr__",
           [](const LatEleLocProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const LatEleLocProxy& self) {
+            return LatEleLocProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const LatEleLocProxy& self, py::dict& memo) {
+            return LatEleLocProxy(self);
+          })
 
       ;
 
@@ -2927,6 +3508,17 @@ void init_lat_ele_order1_struct(
           "__repr__",
           [](const LatEleOrder1Proxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const LatEleOrder1Proxy& self) {
+            return LatEleOrder1Proxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const LatEleOrder1Proxy& self, py::dict& memo) {
+            return LatEleOrder1Proxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<LatEleOrder1ProxyArray1D>(m, "LatEleOrder1StructArray1D");
@@ -2955,6 +3547,17 @@ void init_lat_ele_order_array_struct(
           "__repr__",
           [](const LatEleOrderArrayProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const LatEleOrderArrayProxy& self) {
+            return LatEleOrderArrayProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const LatEleOrderArrayProxy& self, py::dict& memo) {
+            return LatEleOrderArrayProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<LatEleOrderArrayProxyArray1D>(
@@ -2977,6 +3580,17 @@ void init_lat_ele_order_struct(
       .def(
           "__repr__",
           [](const LatEleOrderProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const LatEleOrderProxy& self) {
+            return LatEleOrderProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const LatEleOrderProxy& self, py::dict& memo) {
+            return LatEleOrderProxy(self);
+          })
 
       ;
 
@@ -3056,6 +3670,17 @@ void init_lat_param_struct(py::module& m, py::class_<LatParamProxy>& cls) {
 
       .def(
           "__repr__", [](const LatParamProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const LatParamProxy& self) {
+            return LatParamProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const LatParamProxy& self, py::dict& memo) {
+            return LatParamProxy(self);
+          })
 
       ;
 
@@ -3158,6 +3783,15 @@ void init_lat_struct(py::module& m, py::class_<LatProxy>& cls) {
 
       .def("__repr__", [](const LatProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const LatProxy& self) {
+            return LatProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const LatProxy& self, py::dict& memo) { return LatProxy(self); })
+
       ;
 
   bind_FTypeArrayND<LatProxyArray1D>(m, "LatStructArray1D");
@@ -3212,6 +3846,17 @@ void init_linac_normal_mode_struct(
           "__repr__",
           [](const LinacNormalModeProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const LinacNormalModeProxy& self) {
+            return LinacNormalModeProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const LinacNormalModeProxy& self, py::dict& memo) {
+            return LinacNormalModeProxy(self);
+          })
+
       ;
 
   // 1D LinacNormalModeProxy arrays are not used in structs/routines
@@ -3237,6 +3882,17 @@ void init_mode3_struct(py::module& m, py::class_<Mode3Proxy>& cls) {
       .def_property("y", &Mode3Proxy::y, &Mode3Proxy::set_y)
 
       .def("__repr__", [](const Mode3Proxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const Mode3Proxy& self) {
+            return Mode3Proxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const Mode3Proxy& self, py::dict& memo) {
+            return Mode3Proxy(self);
+          })
 
       ;
 
@@ -3266,6 +3922,17 @@ void init_mode_info_struct(py::module& m, py::class_<ModeInfoProxy>& cls) {
 
       .def(
           "__repr__", [](const ModeInfoProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const ModeInfoProxy& self) {
+            return ModeInfoProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const ModeInfoProxy& self, py::dict& memo) {
+            return ModeInfoProxy(self);
+          })
 
       ;
 
@@ -3328,6 +3995,17 @@ void init_normal_modes_struct(
       .def(
           "__repr__",
           [](const NormalModesProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const NormalModesProxy& self) {
+            return NormalModesProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const NormalModesProxy& self, py::dict& memo) {
+            return NormalModesProxy(self);
+          })
 
       ;
 
@@ -3402,6 +4080,17 @@ void init_photon_element_struct(
           "__repr__",
           [](const PhotonElementProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const PhotonElementProxy& self) {
+            return PhotonElementProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const PhotonElementProxy& self, py::dict& memo) {
+            return PhotonElementProxy(self);
+          })
+
       ;
 
   // 1D PhotonElementProxy arrays are not used in structs/routines
@@ -3443,6 +4132,17 @@ void init_photon_material_struct(
       .def(
           "__repr__",
           [](const PhotonMaterialProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const PhotonMaterialProxy& self) {
+            return PhotonMaterialProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const PhotonMaterialProxy& self, py::dict& memo) {
+            return PhotonMaterialProxy(self);
+          })
 
       ;
 
@@ -3494,6 +4194,18 @@ void init_photon_reflect_surface_struct(
           "__repr__",
           [](const PhotonReflectSurfaceProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const PhotonReflectSurfaceProxy& self) {
+            return PhotonReflectSurfaceProxy(
+                self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const PhotonReflectSurfaceProxy& self, py::dict& memo) {
+            return PhotonReflectSurfaceProxy(self);
+          })
+
       ;
 
   // 1D PhotonReflectSurfaceProxy arrays are not used in structs/routines
@@ -3538,6 +4250,17 @@ void init_photon_reflect_table_struct(
           "__repr__",
           [](const PhotonReflectTableProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const PhotonReflectTableProxy& self) {
+            return PhotonReflectTableProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const PhotonReflectTableProxy& self, py::dict& memo) {
+            return PhotonReflectTableProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<PhotonReflectTableProxyArray1D>(
@@ -3577,6 +4300,17 @@ void init_photon_target_struct(
           "__repr__",
           [](const PhotonTargetProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const PhotonTargetProxy& self) {
+            return PhotonTargetProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const PhotonTargetProxy& self, py::dict& memo) {
+            return PhotonTargetProxy(self);
+          })
+
       ;
 
   // 1D PhotonTargetProxy arrays are not used in structs/routines
@@ -3613,6 +4347,17 @@ void init_pixel_detec_struct(py::module& m, py::class_<PixelDetecProxy>& cls) {
       .def(
           "__repr__",
           [](const PixelDetecProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const PixelDetecProxy& self) {
+            return PixelDetecProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const PixelDetecProxy& self, py::dict& memo) {
+            return PixelDetecProxy(self);
+          })
 
       ;
 
@@ -3656,6 +4401,17 @@ void init_pixel_pt_struct(py::module& m, py::class_<PixelPtProxy>& cls) {
 
       .def("__repr__", [](const PixelPtProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const PixelPtProxy& self) {
+            return PixelPtProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const PixelPtProxy& self, py::dict& memo) {
+            return PixelPtProxy(self);
+          })
+
       ;
 
   // 1D PixelPtProxy arrays are not used in structs/routines
@@ -3689,6 +4445,17 @@ void init_pre_tracker_struct(py::module& m, py::class_<PreTrackerProxy>& cls) {
           "__repr__",
           [](const PreTrackerProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const PreTrackerProxy& self) {
+            return PreTrackerProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const PreTrackerProxy& self, py::dict& memo) {
+            return PreTrackerProxy(self);
+          })
+
       ;
 
   // 1D PreTrackerProxy arrays are not used in structs/routines
@@ -3718,6 +4485,17 @@ void init_ptc_normal_form_struct(
       .def(
           "__repr__",
           [](const PtcNormalFormProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const PtcNormalFormProxy& self) {
+            return PtcNormalFormProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const PtcNormalFormProxy& self, py::dict& memo) {
+            return PtcNormalFormProxy(self);
+          })
 
       ;
 
@@ -3790,6 +4568,17 @@ void init_rad_int1_struct(py::module& m, py::class_<RadInt1Proxy>& cls) {
 
       .def("__repr__", [](const RadInt1Proxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const RadInt1Proxy& self) {
+            return RadInt1Proxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const RadInt1Proxy& self, py::dict& memo) {
+            return RadInt1Proxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<RadInt1ProxyArray1D>(m, "RadInt1StructArray1D");
@@ -3810,6 +4599,17 @@ void init_rad_int_all_ele_struct(
       .def(
           "__repr__",
           [](const RadIntAllEleProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const RadIntAllEleProxy& self) {
+            return RadIntAllEleProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const RadIntAllEleProxy& self, py::dict& memo) {
+            return RadIntAllEleProxy(self);
+          })
 
       ;
 
@@ -3838,6 +4638,17 @@ void init_rad_int_branch_struct(
           "__repr__",
           [](const RadIntBranchProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const RadIntBranchProxy& self) {
+            return RadIntBranchProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const RadIntBranchProxy& self, py::dict& memo) {
+            return RadIntBranchProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<RadIntBranchProxyArray1D>(m, "RadIntBranchStructArray1D");
@@ -3860,6 +4671,17 @@ void init_rad_map_ele_struct(py::module& m, py::class_<RadMapEleProxy>& cls) {
       .def(
           "__repr__",
           [](const RadMapEleProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const RadMapEleProxy& self) {
+            return RadMapEleProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const RadMapEleProxy& self, py::dict& memo) {
+            return RadMapEleProxy(self);
+          })
 
       ;
 
@@ -3884,6 +4706,17 @@ void init_rad_map_struct(py::module& m, py::class_<RadMapProxy>& cls) {
       .def_property_readonly("stoc_mat", &RadMapProxy::stoc_mat)
 
       .def("__repr__", [](const RadMapProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const RadMapProxy& self) {
+            return RadMapProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const RadMapProxy& self, py::dict& memo) {
+            return RadMapProxy(self);
+          })
 
       ;
 
@@ -3917,6 +4750,17 @@ void init_ramper_lord_struct(py::module& m, py::class_<RamperLordProxy>& cls) {
           "__repr__",
           [](const RamperLordProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const RamperLordProxy& self) {
+            return RamperLordProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const RamperLordProxy& self, py::dict& memo) {
+            return RamperLordProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<RamperLordProxyArray1D>(m, "RamperLordStructArray1D");
@@ -3944,6 +4788,17 @@ void init_resonance_h_struct(py::module& m, py::class_<ResonanceHProxy>& cls) {
           "__repr__",
           [](const ResonanceHProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const ResonanceHProxy& self) {
+            return ResonanceHProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const ResonanceHProxy& self, py::dict& memo) {
+            return ResonanceHProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<ResonanceHProxyArray1D>(m, "ResonanceHStructArray1D");
@@ -3962,6 +4817,17 @@ void init_rf_ele_struct(py::module& m, py::class_<RfEleProxy>& cls) {
       .def_property("ds_step", &RfEleProxy::ds_step, &RfEleProxy::set_ds_step)
 
       .def("__repr__", [](const RfEleProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const RfEleProxy& self) {
+            return RfEleProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const RfEleProxy& self, py::dict& memo) {
+            return RfEleProxy(self);
+          })
 
       ;
 
@@ -4010,6 +4876,17 @@ void init_rf_stair_step_struct(
       .def(
           "__repr__",
           [](const RfStairStepProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const RfStairStepProxy& self) {
+            return RfStairStepProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const RfStairStepProxy& self, py::dict& memo) {
+            return RfStairStepProxy(self);
+          })
 
       ;
 
@@ -4112,6 +4989,17 @@ void init_space_charge_common_struct(
           "__repr__",
           [](const SpaceChargeCommonProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const SpaceChargeCommonProxy& self) {
+            return SpaceChargeCommonProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const SpaceChargeCommonProxy& self, py::dict& memo) {
+            return SpaceChargeCommonProxy(self);
+          })
+
       ;
 
   // 1D SpaceChargeCommonProxy arrays are not used in structs/routines
@@ -4132,6 +5020,17 @@ void init_spin_axis_struct(py::module& m, py::class_<SpinAxisProxy>& cls) {
 
       .def(
           "__repr__", [](const SpinAxisProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const SpinAxisProxy& self) {
+            return SpinAxisProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const SpinAxisProxy& self, py::dict& memo) {
+            return SpinAxisProxy(self);
+          })
 
       ;
 
@@ -4164,6 +5063,17 @@ void init_spin_orbit_map1_struct(
           "__repr__",
           [](const SpinOrbitMap1Proxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const SpinOrbitMap1Proxy& self) {
+            return SpinOrbitMap1Proxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const SpinOrbitMap1Proxy& self, py::dict& memo) {
+            return SpinOrbitMap1Proxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<SpinOrbitMap1ProxyArray1D>(m, "SpinOrbitMap1StructArray1D");
@@ -4191,6 +5101,17 @@ void init_spin_polar_struct(py::module& m, py::class_<SpinPolarProxy>& cls) {
       .def(
           "__repr__",
           [](const SpinPolarProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const SpinPolarProxy& self) {
+            return SpinPolarProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const SpinPolarProxy& self, py::dict& memo) {
+            return SpinPolarProxy(self);
+          })
 
       ;
 
@@ -4233,6 +5154,17 @@ void init_strong_beam_struct(py::module& m, py::class_<StrongBeamProxy>& cls) {
           "__repr__",
           [](const StrongBeamProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const StrongBeamProxy& self) {
+            return StrongBeamProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const StrongBeamProxy& self, py::dict& memo) {
+            return StrongBeamProxy(self);
+          })
+
       ;
 
   // 1D StrongBeamProxy arrays are not used in structs/routines
@@ -4264,6 +5196,17 @@ void init_surface_curvature_struct(
       .def(
           "__repr__",
           [](const SurfaceCurvatureProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const SurfaceCurvatureProxy& self) {
+            return SurfaceCurvatureProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const SurfaceCurvatureProxy& self, py::dict& memo) {
+            return SurfaceCurvatureProxy(self);
+          })
 
       ;
 
@@ -4315,6 +5258,18 @@ void init_surface_displacement_pt_struct(
             return to_string(self);
           })
 
+      .def(
+          "__copy__",
+          [](const SurfaceDisplacementPtProxy& self) {
+            return SurfaceDisplacementPtProxy(
+                self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const SurfaceDisplacementPtProxy& self, py::dict& memo) {
+            return SurfaceDisplacementPtProxy(self);
+          })
+
       ;
 
   // 1D SurfaceDisplacementPtProxy arrays are not used in structs/routines
@@ -4344,6 +5299,18 @@ void init_surface_displacement_struct(
       .def(
           "__repr__",
           [](const SurfaceDisplacementProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const SurfaceDisplacementProxy& self) {
+            return SurfaceDisplacementProxy(
+                self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const SurfaceDisplacementProxy& self, py::dict& memo) {
+            return SurfaceDisplacementProxy(self);
+          })
 
       ;
 
@@ -4389,6 +5356,17 @@ void init_surface_h_misalign_pt_struct(
           "__repr__",
           [](const SurfaceHMisalignPtProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const SurfaceHMisalignPtProxy& self) {
+            return SurfaceHMisalignPtProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const SurfaceHMisalignPtProxy& self, py::dict& memo) {
+            return SurfaceHMisalignPtProxy(self);
+          })
+
       ;
 
   // 1D SurfaceHMisalignPtProxy arrays are not used in structs/routines
@@ -4418,6 +5396,17 @@ void init_surface_h_misalign_struct(
       .def(
           "__repr__",
           [](const SurfaceHMisalignProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const SurfaceHMisalignProxy& self) {
+            return SurfaceHMisalignProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const SurfaceHMisalignProxy& self, py::dict& memo) {
+            return SurfaceHMisalignProxy(self);
+          })
 
       ;
 
@@ -4456,6 +5445,17 @@ void init_surface_segmented_pt_struct(
           "__repr__",
           [](const SurfaceSegmentedPtProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const SurfaceSegmentedPtProxy& self) {
+            return SurfaceSegmentedPtProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const SurfaceSegmentedPtProxy& self, py::dict& memo) {
+            return SurfaceSegmentedPtProxy(self);
+          })
+
       ;
 
   // 1D SurfaceSegmentedPtProxy arrays are not used in structs/routines
@@ -4486,6 +5486,17 @@ void init_surface_segmented_struct(
           "__repr__",
           [](const SurfaceSegmentedProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const SurfaceSegmentedProxy& self) {
+            return SurfaceSegmentedProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const SurfaceSegmentedProxy& self, py::dict& memo) {
+            return SurfaceSegmentedProxy(self);
+          })
+
       ;
 
   // 1D SurfaceSegmentedProxy arrays are not used in structs/routines
@@ -4513,6 +5524,17 @@ void init_target_point_struct(
           "__repr__",
           [](const TargetPointProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TargetPointProxy& self) {
+            return TargetPointProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TargetPointProxy& self, py::dict& memo) {
+            return TargetPointProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<TargetPointProxyArray1D>(m, "TargetPointStructArray1D");
@@ -4536,6 +5558,17 @@ void init_taylor_struct(py::module& m, py::class_<TaylorProxy>& cls) {
           py::arg("lbound") = 1)
 
       .def("__repr__", [](const TaylorProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaylorProxy& self) {
+            return TaylorProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaylorProxy& self, py::dict& memo) {
+            return TaylorProxy(self);
+          })
 
       ;
 
@@ -4562,6 +5595,17 @@ void init_taylor_term_struct(py::module& m, py::class_<TaylorTermProxy>& cls) {
       .def(
           "__repr__",
           [](const TaylorTermProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaylorTermProxy& self) {
+            return TaylorTermProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaylorTermProxy& self, py::dict& memo) {
+            return TaylorTermProxy(self);
+          })
 
       ;
 
@@ -4605,6 +5649,17 @@ void init_track_point_struct(py::module& m, py::class_<TrackPointProxy>& cls) {
           "__repr__",
           [](const TrackPointProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TrackPointProxy& self) {
+            return TrackPointProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TrackPointProxy& self, py::dict& memo) {
+            return TrackPointProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<TrackPointProxyArray1D>(m, "TrackPointStructArray1D");
@@ -4629,6 +5684,17 @@ void init_track_struct(py::module& m, py::class_<TrackProxy>& cls) {
       .def_property("n_ok", &TrackProxy::n_ok, &TrackProxy::set_n_ok)
 
       .def("__repr__", [](const TrackProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TrackProxy& self) {
+            return TrackProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TrackProxy& self, py::dict& memo) {
+            return TrackProxy(self);
+          })
 
       ;
 
@@ -4680,6 +5746,17 @@ void init_twiss_struct(py::module& m, py::class_<TwissProxy>& cls) {
           "detap_dpz", &TwissProxy::detap_dpz, &TwissProxy::set_detap_dpz)
 
       .def("__repr__", [](const TwissProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TwissProxy& self) {
+            return TwissProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TwissProxy& self, py::dict& memo) {
+            return TwissProxy(self);
+          })
 
       ;
 
@@ -4740,6 +5817,17 @@ void init_wake_lr_mode_struct(py::module& m, py::class_<WakeLrModeProxy>& cls) {
           "__repr__",
           [](const WakeLrModeProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const WakeLrModeProxy& self) {
+            return WakeLrModeProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const WakeLrModeProxy& self, py::dict& memo) {
+            return WakeLrModeProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<WakeLrModeProxyArray1D>(m, "WakeLrModeStructArray1D");
@@ -4776,6 +5864,17 @@ void init_wake_lr_struct(py::module& m, py::class_<WakeLrProxy>& cls) {
           &WakeLrProxy::set_self_wake_on)
 
       .def("__repr__", [](const WakeLrProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const WakeLrProxy& self) {
+            return WakeLrProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const WakeLrProxy& self, py::dict& memo) {
+            return WakeLrProxy(self);
+          })
 
       ;
 
@@ -4828,6 +5927,17 @@ void init_wake_sr_mode_struct(py::module& m, py::class_<WakeSrModeProxy>& cls) {
           "__repr__",
           [](const WakeSrModeProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const WakeSrModeProxy& self) {
+            return WakeSrModeProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const WakeSrModeProxy& self, py::dict& memo) {
+            return WakeSrModeProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<WakeSrModeProxyArray1D>(m, "WakeSrModeStructArray1D");
@@ -4870,6 +5980,17 @@ void init_wake_sr_struct(py::module& m, py::class_<WakeSrProxy>& cls) {
           &WakeSrProxy::set_scale_with_length)
 
       .def("__repr__", [](const WakeSrProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const WakeSrProxy& self) {
+            return WakeSrProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const WakeSrProxy& self, py::dict& memo) {
+            return WakeSrProxy(self);
+          })
 
       ;
 
@@ -4916,6 +6037,17 @@ void init_wake_sr_z_long_struct(
           "__repr__",
           [](const WakeSrZLongProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const WakeSrZLongProxy& self) {
+            return WakeSrZLongProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const WakeSrZLongProxy& self, py::dict& memo) {
+            return WakeSrZLongProxy(self);
+          })
+
       ;
 
   // 1D WakeSrZLongProxy arrays are not used in structs/routines
@@ -4933,6 +6065,15 @@ void init_wake_struct(py::module& m, py::class_<WakeProxy>& cls) {
       .def_property("lr", &WakeProxy::lr, &WakeProxy::set_lr)
 
       .def("__repr__", [](const WakeProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const WakeProxy& self) {
+            return WakeProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const WakeProxy& self, py::dict& memo) { return WakeProxy(self); })
 
       ;
 
@@ -5032,6 +6173,17 @@ void init_wall3d_section_struct(
           "__repr__",
           [](const Wall3dSectionProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const Wall3dSectionProxy& self) {
+            return Wall3dSectionProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const Wall3dSectionProxy& self, py::dict& memo) {
+            return Wall3dSectionProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<Wall3dSectionProxyArray1D>(m, "Wall3DSectionStructArray1D");
@@ -5086,6 +6238,17 @@ void init_wall3d_struct(py::module& m, py::class_<Wall3dProxy>& cls) {
 
       .def("__repr__", [](const Wall3dProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const Wall3dProxy& self) {
+            return Wall3dProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const Wall3dProxy& self, py::dict& memo) {
+            return Wall3dProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<Wall3dProxyArray1D>(m, "Wall3DStructArray1D");
@@ -5139,6 +6302,17 @@ void init_wall3d_vertex_struct(
           "__repr__",
           [](const Wall3dVertexProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const Wall3dVertexProxy& self) {
+            return Wall3dVertexProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const Wall3dVertexProxy& self, py::dict& memo) {
+            return Wall3dVertexProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<Wall3dVertexProxyArray1D>(m, "Wall3DVertexStructArray1D");
@@ -5168,6 +6342,17 @@ void init_xy_disp_struct(py::module& m, py::class_<XyDispProxy>& cls) {
 
       .def("__repr__", [](const XyDispProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const XyDispProxy& self) {
+            return XyDispProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const XyDispProxy& self, py::dict& memo) {
+            return XyDispProxy(self);
+          })
+
       ;
 
   // 1D XyDispProxy arrays are not used in structs/routines
@@ -5189,6 +6374,17 @@ void init_bicubic_cmplx_coef_struct(
       .def(
           "__repr__",
           [](const BicubicCmplxCoefProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const BicubicCmplxCoefProxy& self) {
+            return BicubicCmplxCoefProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const BicubicCmplxCoefProxy& self, py::dict& memo) {
+            return BicubicCmplxCoefProxy(self);
+          })
 
       ;
 
@@ -5212,6 +6408,17 @@ void init_tricubic_cmplx_coef_struct(
       .def(
           "__repr__",
           [](const TricubicCmplxCoefProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TricubicCmplxCoefProxy& self) {
+            return TricubicCmplxCoefProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TricubicCmplxCoefProxy& self, py::dict& memo) {
+            return TricubicCmplxCoefProxy(self);
+          })
 
       ;
 
@@ -5244,6 +6451,17 @@ void init_mad_energy_struct(py::module& m, py::class_<MadEnergyProxy>& cls) {
           "__repr__",
           [](const MadEnergyProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const MadEnergyProxy& self) {
+            return MadEnergyProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const MadEnergyProxy& self, py::dict& memo) {
+            return MadEnergyProxy(self);
+          })
+
       ;
 
   // 1D MadEnergyProxy arrays are not used in structs/routines
@@ -5263,6 +6481,17 @@ void init_mad_map_struct(py::module& m, py::class_<MadMapProxy>& cls) {
       .def_property_readonly("t", &MadMapProxy::t)
 
       .def("__repr__", [](const MadMapProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const MadMapProxy& self) {
+            return MadMapProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const MadMapProxy& self, py::dict& memo) {
+            return MadMapProxy(self);
+          })
 
       ;
 
@@ -5361,6 +6590,17 @@ void init_qp_axis_struct(py::module& m, py::class_<QpAxisProxy>& cls) {
 
       .def("__repr__", [](const QpAxisProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const QpAxisProxy& self) {
+            return QpAxisProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const QpAxisProxy& self, py::dict& memo) {
+            return QpAxisProxy(self);
+          })
+
       ;
 
   // 1D QpAxisProxy arrays are not used in structs/routines
@@ -5402,6 +6642,17 @@ void init_qp_legend_struct(py::module& m, py::class_<QpLegendProxy>& cls) {
       .def(
           "__repr__", [](const QpLegendProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const QpLegendProxy& self) {
+            return QpLegendProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const QpLegendProxy& self, py::dict& memo) {
+            return QpLegendProxy(self);
+          })
+
       ;
 
   // 1D QpLegendProxy arrays are not used in structs/routines
@@ -5422,6 +6673,17 @@ void init_qp_line_struct(py::module& m, py::class_<QpLineProxy>& cls) {
 
       .def("__repr__", [](const QpLineProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const QpLineProxy& self) {
+            return QpLineProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const QpLineProxy& self, py::dict& memo) {
+            return QpLineProxy(self);
+          })
+
       ;
 
   // 1D QpLineProxy arrays are not used in structs/routines
@@ -5441,6 +6703,17 @@ void init_qp_point_struct(py::module& m, py::class_<QpPointProxy>& cls) {
       .def_property("units", &QpPointProxy::units, &QpPointProxy::set_units)
 
       .def("__repr__", [](const QpPointProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const QpPointProxy& self) {
+            return QpPointProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const QpPointProxy& self, py::dict& memo) {
+            return QpPointProxy(self);
+          })
 
       ;
 
@@ -5465,6 +6738,17 @@ void init_qp_rect_struct(py::module& m, py::class_<QpRectProxy>& cls) {
       .def_property("units", &QpRectProxy::units, &QpRectProxy::set_units)
 
       .def("__repr__", [](const QpRectProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const QpRectProxy& self) {
+            return QpRectProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const QpRectProxy& self, py::dict& memo) {
+            return QpRectProxy(self);
+          })
 
       ;
 
@@ -5497,6 +6781,17 @@ void init_qp_symbol_struct(py::module& m, py::class_<QpSymbolProxy>& cls) {
 
       .def(
           "__repr__", [](const QpSymbolProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const QpSymbolProxy& self) {
+            return QpSymbolProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const QpSymbolProxy& self, py::dict& memo) {
+            return QpSymbolProxy(self);
+          })
 
       ;
 
@@ -5554,6 +6849,17 @@ void init_random_state_struct(
           "__repr__",
           [](const RandomStateProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const RandomStateProxy& self) {
+            return RandomStateProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const RandomStateProxy& self, py::dict& memo) {
+            return RandomStateProxy(self);
+          })
+
       ;
 
   // 1D RandomStateProxy arrays are not used in structs/routines
@@ -5577,6 +6883,17 @@ void init_nametable_struct(py::module& m, py::class_<NametableProxy>& cls) {
       .def(
           "__repr__",
           [](const NametableProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const NametableProxy& self) {
+            return NametableProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const NametableProxy& self, py::dict& memo) {
+            return NametableProxy(self);
+          })
 
       ;
 
@@ -5604,6 +6921,17 @@ void init_spline_struct(py::module& m, py::class_<SplineProxy>& cls) {
           py::arg("lbound") = 1)
 
       .def("__repr__", [](const SplineProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const SplineProxy& self) {
+            return SplineProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const SplineProxy& self, py::dict& memo) {
+            return SplineProxy(self);
+          })
 
       ;
 
@@ -5694,6 +7022,17 @@ void init_summation_rdt_struct(
           "__repr__",
           [](const SummationRdtProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const SummationRdtProxy& self) {
+            return SummationRdtProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const SummationRdtProxy& self, py::dict& memo) {
+            return SummationRdtProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<SummationRdtProxyArray1D>(m, "SummationRdtStructArray1D");
@@ -5758,6 +7097,17 @@ void init_tao_beam_branch_struct(
           "__repr__",
           [](const TaoBeamBranchProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoBeamBranchProxy& self) {
+            return TaoBeamBranchProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoBeamBranchProxy& self, py::dict& memo) {
+            return TaoBeamBranchProxy(self);
+          })
+
       ;
 
   // 1D TaoBeamBranchProxy arrays are not used in structs/routines
@@ -5797,6 +7147,17 @@ void init_tao_beam_uni_struct(py::module& m, py::class_<TaoBeamUniProxy>& cls) {
           "__repr__",
           [](const TaoBeamUniProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoBeamUniProxy& self) {
+            return TaoBeamUniProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoBeamUniProxy& self, py::dict& memo) {
+            return TaoBeamUniProxy(self);
+          })
+
       ;
 
   // 1D TaoBeamUniProxy arrays are not used in structs/routines
@@ -5830,6 +7191,18 @@ void init_tao_building_wall_orientation_struct(
           "__repr__",
           [](const TaoBuildingWallOrientationProxy& self) {
             return to_string(self);
+          })
+
+      .def(
+          "__copy__",
+          [](const TaoBuildingWallOrientationProxy& self) {
+            return TaoBuildingWallOrientationProxy(
+                self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoBuildingWallOrientationProxy& self, py::dict& memo) {
+            return TaoBuildingWallOrientationProxy(self);
           })
 
       ;
@@ -5878,6 +7251,18 @@ void init_tao_building_wall_point_struct(
           "__repr__",
           [](const TaoBuildingWallPointProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoBuildingWallPointProxy& self) {
+            return TaoBuildingWallPointProxy(
+                self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoBuildingWallPointProxy& self, py::dict& memo) {
+            return TaoBuildingWallPointProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<TaoBuildingWallPointProxyArray1D>(
@@ -5920,6 +7305,18 @@ void init_tao_building_wall_section_struct(
             return to_string(self);
           })
 
+      .def(
+          "__copy__",
+          [](const TaoBuildingWallSectionProxy& self) {
+            return TaoBuildingWallSectionProxy(
+                self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoBuildingWallSectionProxy& self, py::dict& memo) {
+            return TaoBuildingWallSectionProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<TaoBuildingWallSectionProxyArray1D>(
@@ -5947,6 +7344,17 @@ void init_tao_building_wall_struct(
       .def(
           "__repr__",
           [](const TaoBuildingWallProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoBuildingWallProxy& self) {
+            return TaoBuildingWallProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoBuildingWallProxy& self, py::dict& memo) {
+            return TaoBuildingWallProxy(self);
+          })
 
       ;
 
@@ -5977,6 +7385,17 @@ void init_tao_cmd_history_struct(
       .def(
           "__repr__",
           [](const TaoCmdHistoryProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoCmdHistoryProxy& self) {
+            return TaoCmdHistoryProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoCmdHistoryProxy& self, py::dict& memo) {
+            return TaoCmdHistoryProxy(self);
+          })
 
       ;
 
@@ -6176,6 +7595,17 @@ void init_tao_common_struct(py::module& m, py::class_<TaoCommonProxy>& cls) {
           "__repr__",
           [](const TaoCommonProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoCommonProxy& self) {
+            return TaoCommonProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoCommonProxy& self, py::dict& memo) {
+            return TaoCommonProxy(self);
+          })
+
       ;
 
   // 1D TaoCommonProxy arrays are not used in structs/routines
@@ -6213,6 +7643,17 @@ void init_tao_curve_color_struct(
           "__repr__",
           [](const TaoCurveColorProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoCurveColorProxy& self) {
+            return TaoCurveColorProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoCurveColorProxy& self, py::dict& memo) {
+            return TaoCurveColorProxy(self);
+          })
+
       ;
 
   // 1D TaoCurveColorProxy arrays are not used in structs/routines
@@ -6236,6 +7677,17 @@ void init_tao_curve_orbit_struct(
       .def(
           "__repr__",
           [](const TaoCurveOrbitProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoCurveOrbitProxy& self) {
+            return TaoCurveOrbitProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoCurveOrbitProxy& self, py::dict& memo) {
+            return TaoCurveOrbitProxy(self);
+          })
 
       ;
 
@@ -6386,6 +7838,17 @@ void init_tao_curve_struct(py::module& m, py::class_<TaoCurveProxy>& cls) {
       .def(
           "__repr__", [](const TaoCurveProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoCurveProxy& self) {
+            return TaoCurveProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoCurveProxy& self, py::dict& memo) {
+            return TaoCurveProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<TaoCurveProxyArray1D>(m, "TaoCurveStructArray1D");
@@ -6413,6 +7876,17 @@ void init_tao_d1_data_struct(py::module& m, py::class_<TaoD1DataProxy>& cls) {
       .def(
           "__repr__",
           [](const TaoD1DataProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoD1DataProxy& self) {
+            return TaoD1DataProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoD1DataProxy& self, py::dict& memo) {
+            return TaoD1DataProxy(self);
+          })
 
       ;
 
@@ -6482,6 +7956,17 @@ void init_tao_d2_data_struct(py::module& m, py::class_<TaoD2DataProxy>& cls) {
       .def(
           "__repr__",
           [](const TaoD2DataProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoD2DataProxy& self) {
+            return TaoD2DataProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoD2DataProxy& self, py::dict& memo) {
+            return TaoD2DataProxy(self);
+          })
 
       ;
 
@@ -6675,6 +8160,17 @@ void init_tao_data_struct(py::module& m, py::class_<TaoDataProxy>& cls) {
 
       .def("__repr__", [](const TaoDataProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoDataProxy& self) {
+            return TaoDataProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoDataProxy& self, py::dict& memo) {
+            return TaoDataProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<TaoDataProxyArray1D>(m, "TaoDataStructArray1D");
@@ -6711,6 +8207,18 @@ void init_tao_data_var_component_struct(
           "__repr__",
           [](const TaoDataVarComponentProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoDataVarComponentProxy& self) {
+            return TaoDataVarComponentProxy(
+                self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoDataVarComponentProxy& self, py::dict& memo) {
+            return TaoDataVarComponentProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<TaoDataVarComponentProxyArray1D>(
@@ -6731,6 +8239,17 @@ void init_tao_drawing_struct(py::module& m, py::class_<TaoDrawingProxy>& cls) {
       .def(
           "__repr__",
           [](const TaoDrawingProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoDrawingProxy& self) {
+            return TaoDrawingProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoDrawingProxy& self, py::dict& memo) {
+            return TaoDrawingProxy(self);
+          })
 
       ;
 
@@ -6774,6 +8293,17 @@ void init_tao_dynamic_aperture_struct(
           "__repr__",
           [](const TaoDynamicApertureProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoDynamicApertureProxy& self) {
+            return TaoDynamicApertureProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoDynamicApertureProxy& self, py::dict& memo) {
+            return TaoDynamicApertureProxy(self);
+          })
+
       ;
 
   // 1D TaoDynamicApertureProxy arrays are not used in structs/routines
@@ -6803,6 +8333,17 @@ void init_tao_ele_pointer_struct(
       .def(
           "__repr__",
           [](const TaoElePointerProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoElePointerProxy& self) {
+            return TaoElePointerProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoElePointerProxy& self, py::dict& memo) {
+            return TaoElePointerProxy(self);
+          })
 
       ;
 
@@ -6868,6 +8409,17 @@ void init_tao_ele_shape_struct(
       .def(
           "__repr__",
           [](const TaoEleShapeProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoEleShapeProxy& self) {
+            return TaoEleShapeProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoEleShapeProxy& self, py::dict& memo) {
+            return TaoEleShapeProxy(self);
+          })
 
       ;
 
@@ -6945,6 +8497,17 @@ void init_tao_floor_plan_struct(
       .def(
           "__repr__",
           [](const TaoFloorPlanProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoFloorPlanProxy& self) {
+            return TaoFloorPlanProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoFloorPlanProxy& self, py::dict& memo) {
+            return TaoFloorPlanProxy(self);
+          })
 
       ;
 
@@ -7297,6 +8860,17 @@ void init_tao_global_struct(py::module& m, py::class_<TaoGlobalProxy>& cls) {
           "__repr__",
           [](const TaoGlobalProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoGlobalProxy& self) {
+            return TaoGlobalProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoGlobalProxy& self, py::dict& memo) {
+            return TaoGlobalProxy(self);
+          })
+
       ;
 
   // 1D TaoGlobalProxy arrays are not used in structs/routines
@@ -7436,6 +9010,17 @@ void init_tao_graph_struct(py::module& m, py::class_<TaoGraphProxy>& cls) {
       .def(
           "__repr__", [](const TaoGraphProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoGraphProxy& self) {
+            return TaoGraphProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoGraphProxy& self, py::dict& memo) {
+            return TaoGraphProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<TaoGraphProxyArray1D>(m, "TaoGraphStructArray1D");
@@ -7483,6 +9068,17 @@ void init_tao_histogram_struct(
       .def(
           "__repr__",
           [](const TaoHistogramProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoHistogramProxy& self) {
+            return TaoHistogramProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoHistogramProxy& self, py::dict& memo) {
+            return TaoHistogramProxy(self);
+          })
 
       ;
 
@@ -7695,6 +9291,17 @@ void init_tao_init_struct(py::module& m, py::class_<TaoInitProxy>& cls) {
 
       .def("__repr__", [](const TaoInitProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoInitProxy& self) {
+            return TaoInitProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoInitProxy& self, py::dict& memo) {
+            return TaoInitProxy(self);
+          })
+
       ;
 
   // 1D TaoInitProxy arrays are not used in structs/routines
@@ -7721,6 +9328,17 @@ void init_tao_lat_sigma_struct(
       .def(
           "__repr__",
           [](const TaoLatSigmaProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoLatSigmaProxy& self) {
+            return TaoLatSigmaProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoLatSigmaProxy& self, py::dict& memo) {
+            return TaoLatSigmaProxy(self);
+          })
 
       ;
 
@@ -7893,6 +9511,17 @@ void init_tao_lattice_branch_struct(
           "__repr__",
           [](const TaoLatticeBranchProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoLatticeBranchProxy& self) {
+            return TaoLatticeBranchProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoLatticeBranchProxy& self, py::dict& memo) {
+            return TaoLatticeBranchProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<TaoLatticeBranchProxyArray1D>(
@@ -7938,6 +9567,17 @@ void init_tao_lattice_struct(py::module& m, py::class_<TaoLatticeProxy>& cls) {
           "__repr__",
           [](const TaoLatticeProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoLatticeProxy& self) {
+            return TaoLatticeProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoLatticeProxy& self, py::dict& memo) {
+            return TaoLatticeProxy(self);
+          })
+
       ;
 
   // 1D TaoLatticeProxy arrays are not used in structs/routines
@@ -7967,6 +9607,17 @@ void init_tao_model_branch_struct(
       .def(
           "__repr__",
           [](const TaoModelBranchProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoModelBranchProxy& self) {
+            return TaoModelBranchProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoModelBranchProxy& self, py::dict& memo) {
+            return TaoModelBranchProxy(self);
+          })
 
       ;
 
@@ -8009,6 +9660,17 @@ void init_tao_model_element_struct(
           "__repr__",
           [](const TaoModelElementProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoModelElementProxy& self) {
+            return TaoModelElementProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoModelElementProxy& self, py::dict& memo) {
+            return TaoModelElementProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<TaoModelElementProxyArray1D>(
@@ -8050,6 +9712,17 @@ void init_tao_ping_scale_struct(
           "__repr__",
           [](const TaoPingScaleProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoPingScaleProxy& self) {
+            return TaoPingScaleProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoPingScaleProxy& self, py::dict& memo) {
+            return TaoPingScaleProxy(self);
+          })
+
       ;
 
   // 1D TaoPingScaleProxy arrays are not used in structs/routines
@@ -8084,6 +9757,17 @@ void init_tao_plot_cache_struct(
       .def(
           "__repr__",
           [](const TaoPlotCacheProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoPlotCacheProxy& self) {
+            return TaoPlotCacheProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoPlotCacheProxy& self, py::dict& memo) {
+            return TaoPlotCacheProxy(self);
+          })
 
       ;
 
@@ -8213,6 +9897,17 @@ void init_tao_plot_page_struct(
           "__repr__",
           [](const TaoPlotPageProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoPlotPageProxy& self) {
+            return TaoPlotPageProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoPlotPageProxy& self, py::dict& memo) {
+            return TaoPlotPageProxy(self);
+          })
+
       ;
 
   // 1D TaoPlotPageProxy arrays are not used in structs/routines
@@ -8260,6 +9955,17 @@ void init_tao_plot_region_struct(
       .def(
           "__repr__",
           [](const TaoPlotRegionProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoPlotRegionProxy& self) {
+            return TaoPlotRegionProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoPlotRegionProxy& self, py::dict& memo) {
+            return TaoPlotRegionProxy(self);
+          })
 
       ;
 
@@ -8340,6 +10046,17 @@ void init_tao_plot_struct(py::module& m, py::class_<TaoPlotProxy>& cls) {
 
       .def("__repr__", [](const TaoPlotProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoPlotProxy& self) {
+            return TaoPlotProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoPlotProxy& self, py::dict& memo) {
+            return TaoPlotProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<TaoPlotProxyArray1D>(m, "TaoPlotStructArray1D");
@@ -8377,6 +10094,18 @@ void init_tao_shape_pattern_point_struct(
           "__repr__",
           [](const TaoShapePatternPointProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoShapePatternPointProxy& self) {
+            return TaoShapePatternPointProxy(
+                self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoShapePatternPointProxy& self, py::dict& memo) {
+            return TaoShapePatternPointProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<TaoShapePatternPointProxyArray1D>(
@@ -8413,6 +10142,17 @@ void init_tao_shape_pattern_struct(
           "__repr__",
           [](const TaoShapePatternProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoShapePatternProxy& self) {
+            return TaoShapePatternProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoShapePatternProxy& self, py::dict& memo) {
+            return TaoShapePatternProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<TaoShapePatternProxyArray1D>(
@@ -8439,6 +10179,17 @@ void init_tao_spin_dn_dpz_struct(
       .def(
           "__repr__",
           [](const TaoSpinDnDpzProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoSpinDnDpzProxy& self) {
+            return TaoSpinDnDpzProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoSpinDnDpzProxy& self, py::dict& memo) {
+            return TaoSpinDnDpzProxy(self);
+          })
 
       ;
 
@@ -8472,6 +10223,17 @@ void init_tao_spin_ele_struct(py::module& m, py::class_<TaoSpinEleProxy>& cls) {
       .def(
           "__repr__",
           [](const TaoSpinEleProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoSpinEleProxy& self) {
+            return TaoSpinEleProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoSpinEleProxy& self, py::dict& memo) {
+            return TaoSpinEleProxy(self);
+          })
 
       ;
 
@@ -8521,6 +10283,17 @@ void init_tao_spin_map_struct(py::module& m, py::class_<TaoSpinMapProxy>& cls) {
       .def(
           "__repr__",
           [](const TaoSpinMapProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoSpinMapProxy& self) {
+            return TaoSpinMapProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoSpinMapProxy& self, py::dict& memo) {
+            return TaoSpinMapProxy(self);
+          })
 
       ;
 
@@ -8611,6 +10384,18 @@ void init_tao_spin_polarization_struct(
           "__repr__",
           [](const TaoSpinPolarizationProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoSpinPolarizationProxy& self) {
+            return TaoSpinPolarizationProxy(
+                self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoSpinPolarizationProxy& self, py::dict& memo) {
+            return TaoSpinPolarizationProxy(self);
+          })
+
       ;
 
   // 1D TaoSpinPolarizationProxy arrays are not used in structs/routines
@@ -8682,6 +10467,17 @@ void init_tao_super_universe_struct(
           "__repr__",
           [](const TaoSuperUniverseProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoSuperUniverseProxy& self) {
+            return TaoSuperUniverseProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoSuperUniverseProxy& self, py::dict& memo) {
+            return TaoSuperUniverseProxy(self);
+          })
+
       ;
 
   // 1D TaoSuperUniverseProxy arrays are not used in structs/routines
@@ -8711,6 +10507,17 @@ void init_tao_title_struct(py::module& m, py::class_<TaoTitleProxy>& cls) {
 
       .def(
           "__repr__", [](const TaoTitleProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoTitleProxy& self) {
+            return TaoTitleProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoTitleProxy& self, py::dict& memo) {
+            return TaoTitleProxy(self);
+          })
 
       ;
 
@@ -8795,6 +10602,17 @@ void init_tao_universe_calc_struct(
           "__repr__",
           [](const TaoUniverseCalcProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoUniverseCalcProxy& self) {
+            return TaoUniverseCalcProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoUniverseCalcProxy& self, py::dict& memo) {
+            return TaoUniverseCalcProxy(self);
+          })
+
       ;
 
   // 1D TaoUniverseCalcProxy arrays are not used in structs/routines
@@ -8822,6 +10640,17 @@ void init_tao_universe_pointer_struct(
       .def(
           "__repr__",
           [](const TaoUniversePointerProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoUniversePointerProxy& self) {
+            return TaoUniversePointerProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoUniversePointerProxy& self, py::dict& memo) {
+            return TaoUniversePointerProxy(self);
+          })
 
       ;
 
@@ -8925,6 +10754,17 @@ void init_tao_universe_struct(
           "__repr__",
           [](const TaoUniverseProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoUniverseProxy& self) {
+            return TaoUniverseProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoUniverseProxy& self, py::dict& memo) {
+            return TaoUniverseProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<TaoUniverseProxyArray1D>(m, "TaoUniverseStructArray1D");
@@ -8952,6 +10792,17 @@ void init_tao_v1_var_struct(py::module& m, py::class_<TaoV1VarProxy>& cls) {
 
       .def(
           "__repr__", [](const TaoV1VarProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoV1VarProxy& self) {
+            return TaoV1VarProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoV1VarProxy& self, py::dict& memo) {
+            return TaoV1VarProxy(self);
+          })
 
       ;
 
@@ -8999,6 +10850,17 @@ void init_tao_var_slave_struct(
       .def(
           "__repr__",
           [](const TaoVarSlaveProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoVarSlaveProxy& self) {
+            return TaoVarSlaveProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoVarSlaveProxy& self, py::dict& memo) {
+            return TaoVarSlaveProxy(self);
+          })
 
       ;
 
@@ -9138,6 +11000,17 @@ void init_tao_var_struct(py::module& m, py::class_<TaoVarProxy>& cls) {
 
       .def("__repr__", [](const TaoVarProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const TaoVarProxy& self) {
+            return TaoVarProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoVarProxy& self, py::dict& memo) {
+            return TaoVarProxy(self);
+          })
+
       ;
 
   bind_FTypeArrayND<TaoVarProxyArray1D>(m, "TaoVarStructArray1D");
@@ -9185,6 +11058,17 @@ void init_tao_wave_kick_pt_struct(
       .def(
           "__repr__",
           [](const TaoWaveKickPtProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoWaveKickPtProxy& self) {
+            return TaoWaveKickPtProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoWaveKickPtProxy& self, py::dict& memo) {
+            return TaoWaveKickPtProxy(self);
+          })
 
       ;
 
@@ -9317,6 +11201,17 @@ void init_tao_wave_struct(py::module& m, py::class_<TaoWaveProxy>& cls) {
       .def_property("d1_dat", &TaoWaveProxy::d1_dat, &TaoWaveProxy::set_d1_dat)
 
       .def("__repr__", [](const TaoWaveProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoWaveProxy& self) {
+            return TaoWaveProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoWaveProxy& self, py::dict& memo) {
+            return TaoWaveProxy(self);
+          })
 
       ;
 
@@ -9530,6 +11425,17 @@ void init_all_encompassing_struct(
           "__repr__",
           [](const AllEncompassingProxy& self) { return to_string(self); })
 
+      .def(
+          "__copy__",
+          [](const AllEncompassingProxy& self) {
+            return AllEncompassingProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const AllEncompassingProxy& self, py::dict& memo) {
+            return AllEncompassingProxy(self);
+          })
+
       ;
 
   // 1D AllEncompassingProxy arrays are not used in structs/routines
@@ -9550,6 +11456,17 @@ void init_test_sub_struct(py::module& m, py::class_<TestSubProxy>& cls) {
           py::arg("lbound") = 1)
 
       .def("__repr__", [](const TestSubProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TestSubProxy& self) {
+            return TestSubProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TestSubProxy& self, py::dict& memo) {
+            return TestSubProxy(self);
+          })
 
       ;
 
@@ -9581,6 +11498,17 @@ void init_test_sub_sub_struct(py::module& m, py::class_<TestSubSubProxy>& cls) {
       .def(
           "__repr__",
           [](const TestSubSubProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TestSubSubProxy& self) {
+            return TestSubSubProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TestSubSubProxy& self, py::dict& memo) {
+            return TestSubSubProxy(self);
+          })
 
       ;
 
