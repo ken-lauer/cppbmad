@@ -129,7 +129,6 @@ jobs:
           fi
           lib_path="$ACC_ROOT_DIR/$BMAD_BUILD_TYPE/lib"
 
-          python python/examples/parse.py || echo "running before ld_lib_path adjustment failed"
           echo "LD_LIBRARY_PATH=$lib_path:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           # echo "DYLD_LIBRARY_PATH=$lib_path:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
 
