@@ -406,6 +406,16 @@ def generate_pybmad_struct_code(
             }})
             """)
     )
+    code_lines.append(
+        textwrap.dedent(f"""
+            .def("__copy__", [](const {struct.cpp_class} &self){{
+                return {struct.cpp_class}(self);  // under-the-hood fortran copy
+            }})
+            .def("__deepcopy__", [](const {struct.cpp_class} &self, py::dict& memo){{
+                return {struct.cpp_class}(self);
+            }})
+            """)
+    )
     code_lines.append("        ;")
     code_lines.append("")
 
