@@ -6,7 +6,7 @@
 #include <pybind11/stl_bind.h>
 #include <string>
 
-#include "json.hpp"
+#include "bmad/json.hpp"
 #include "pybmad/common_structs.hpp"
 #include "pybmad/generated/init.hpp"
 

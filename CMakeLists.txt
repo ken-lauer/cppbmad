@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.15...3.27)
+include(CMakePackageConfigHelpers)
 
 set(LIBNAME cppbmad)
 set(PYBIND_LIBNAME _pybmad)
@@ -122,7 +123,35 @@ target_compile_definitions(${LIBNAME} PRIVATE VERSION_INFO="${PROJECT_VERSION}")
 if(SKBUILD)
   install(TARGETS ${LIBNAME} DESTINATION pybmad)
 else()
-  install(TARGETS ${LIBNAME} DESTINATION lib)
+  install(TARGETS ${LIBNAME}
+    EXPORT cppbmadTargets
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin
+    INCLUDES DESTINATION include
+  )
+  install(DIRECTORY include/
+    DESTINATION include
+  )
+  write_basic_package_version_file(
+    "cppbmadConfigVersion.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
+  )
+  # Library location info
+  install(EXPORT cppbmadTargets
+    FILE cppbmadTargets.cmake
+    NAMESPACE cppbmad::
+    DESTINATION lib/cmake/cppbmad
+  )
+  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/cppbmadConfig.cmake"
+    "include(\"\${CMAKE_CURRENT_LIST_DIR}/cppbmadTargets.cmake\")\n"
+  )
+  install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/cppbmadConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/cppbmadConfigVersion.cmake"
+    DESTINATION lib/cmake/cppbmad
+  )
 endif()
 
 foreach(TEST_NAME test_integration test_csr test_arrays)
