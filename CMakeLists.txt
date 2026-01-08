@@ -22,6 +22,7 @@ project(
 )
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 add_library(${LIBNAME} SHARED
   src/generated/proxy_mod.f90
