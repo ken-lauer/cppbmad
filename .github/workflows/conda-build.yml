@@ -122,8 +122,14 @@ jobs:
       - name: Tweak library search path
         shell: bash -l {0}
         run: |
-          lib_path="$ACC_ROOT_DIR/$BUILD_TYPE/lib"
-          # TODO: linux failing; macos fine
+          if [[ "$BUILD_TYPE" == "release" ]]; then
+            BMAD_BUILD_TYPE="production"
+          else
+            BMAD_BUILD_TYPE="$BUILD_TYPE"
+          fi
+          lib_path="$ACC_ROOT_DIR/$BMAD_BUILD_TYPE/lib"
+
+          python python/examples/parse.py || echo "running before ld_lib_path adjustment failed"
           echo "LD_LIBRARY_PATH=$lib_path:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           # echo "DYLD_LIBRARY_PATH=$lib_path:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
 
