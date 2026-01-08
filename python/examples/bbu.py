@@ -221,18 +221,12 @@ def main():
     n_stages = len(bbu_beam.stage)
     print(f"Number of stages and elements: {n_stages}   {lat.n_ele_track}")
 
-    # Restore Lattice
+    # Use the initial lattice
     lat = lat0
 
     # --------------------------------------------------------------------------
     # Tracking Execution
     # --------------------------------------------------------------------------
-    # Result variables
-    hom_voltage_gain = 0.0
-    growth_rate = 0.0
-    lost = False
-    irep = 0
-
     print("Starting bbu_track_all...")
     (hom_voltage_gain, growth_rate, lost, irep) = pybmad.bbu_track_all(
         lat=lat,
@@ -273,5 +267,6 @@ def main():
     }
 
 
-res = main()
-lat = res["lat"]
+if __name__ == "__main__":
+    res = main()
+    lat = res["lat"]
