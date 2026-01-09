@@ -22229,9 +22229,6 @@ def ab_multipole_kick(a: typing.SupportsFloat, b: typing.SupportsFloat, n: typin
         Factor to scale the kicks. Default is 1. For pole_type = electric$, set scale to the longitudinal length
         of the field region.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     kx : float
@@ -22336,9 +22333,6 @@ def action_to_xyz(ring: LatStruct, ix: typing.SupportsInt, J: typing.Annotated[c
     J : float
         Vector containing normal mode invariants and phases
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     X : float
@@ -22404,9 +22398,6 @@ def add_superimpose(lat: LatStruct, super_ele_in: EleStruct, ix_branch: typing.S
         at the lattice ending edge and the rest of the element is at the lattice start edge. If wrap = False, and
         the superimposed element has an end that extends beyound a lattice edge, extend the lattice to
         accommodate.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -22557,9 +22548,6 @@ def apfft_corr(rdata_in: RealAlloc1D, bounds: typing.Annotated[collections.abc.S
         'rec' or 'han' for rectangular or Hann window.
     diag : int, optional
         causes low-level routine apfft_ext to produce a fort.X file where X=9000+fid containing diag information.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -22776,9 +22764,6 @@ def attribute_free(ix_ele: typing.SupportsInt, attrib_name: str, lat: LatStruct,
         If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
         b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     free : bool
@@ -22828,9 +22813,6 @@ def attribute_free(ele: EleStruct, attrib_name: str, err_print_flag: bool | None
     dependent_attribs_free : bool, optional
         If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
         b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -22882,9 +22864,6 @@ def attribute_free(ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt, at
         If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
         b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     free : bool
@@ -22919,9 +22898,6 @@ def attribute_index(ele: EleStruct, name: str, can_abbreviate: bool | None = Non
         Can abbreviate names? Default is True.
     print_error : bool, optional
         Default True. If false, do not print error message.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -22958,9 +22934,6 @@ def attribute_index(key: typing.SupportsInt, name: str, can_abbreviate: bool | N
         Can abbreviate names? Default is True.
     print_error : bool, optional
         Default True. If false, do not print error message.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -23342,9 +23315,6 @@ def beam_tilts(S: typing.Annotated[collections.abc.Sequence[typing.Annotated[col
     S : float
         matrix of second order moments of beam envelope
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     angle_xy : float
@@ -23637,9 +23607,6 @@ def bicubic_cmplx_eval(x_norm: typing.SupportsFloat, y_norm: typing.SupportsFloa
     bi_coef : BicubicCmplxCoefStruct
         Coefficients.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     f_val : complex
@@ -23814,9 +23781,6 @@ def bracket_index_for_spline(x_knot: RealAlloc1D, x: typing.SupportsFloat, stric
     print_err : bool, optional
         Default is True. Print error message if out of range?
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     ix0 : int
@@ -23988,9 +23952,6 @@ def calc_emittances_and_twiss_from_sigma_matrix(sigma_mat: typing.Annotated[coll
     print_err : bool, optional
         If present and False then suppress "no eigen-system found" messages.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     bunch_params : BunchParamsStruct
@@ -24058,9 +24019,6 @@ def calc_wall_radius(v: Wall3DVertexStructAlloc1D, cos_ang: typing.SupportsFloat
         cosine of the transverse photon position.
     sin_ang : float
         sine of the transverse photon position.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -24401,9 +24359,6 @@ def coarse_frequency_estimate(data: RealAlloc1D, error: bool | None = None) -> P
     data : float
         data to analyze. Preferably size(data) is a power of 2 Otherwise the data is padded with zeros.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     frequency : float
@@ -24565,9 +24520,6 @@ def complex_taylor_to_mat6(a_complex_taylor: typing.Annotated[collections.abc.Se
         complex_taylor map.
     r_in : complex
         Coordinates at the input.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -25270,9 +25222,6 @@ def create_planar_wiggler_model(wiggler_in: EleStruct, print_err: bool | None = 
     print_err : bool, optional
         If True (default) print an error message if there is an error.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     lat : LatStruct
@@ -25798,9 +25747,6 @@ def eigen_decomp_6mat(mat: typing.Annotated[collections.abc.Sequence[typing.Anno
     mat : float
         6x6 real matrix.  Usually a transfer matrix or sigma matrix.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     eval : complex
@@ -26064,9 +26010,6 @@ def ele_to_ptc_magnetic_bn_an(ele: EleStruct) -> ...:
     ele : EleStruct
         Bmad Element.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     bn : float
@@ -26198,9 +26141,6 @@ def element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choose_max: bool
     print_err : bool, optional
         Print error message if there is an error? Default is True.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     ix_ele : int
@@ -26248,9 +26188,6 @@ def element_at_s(lat: LatStruct, s: typing.SupportsFloat, choose_max: bool, ix_b
         Branch index. Default is 0.
     print_err : bool, optional
         Print error message if there is an error? Default is True.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -26446,9 +26383,6 @@ def emit_6d(ele_ref: EleStruct, include_opening_angle: bool, closed_orbit: _pybm
     closed_orbit : CoordStruct, optional
         Closed orbit. If not present this routine will calculate it.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     mode : NormalModesStruct
@@ -26529,9 +26463,6 @@ def envelope_radints_ibs(Lambda: typing.Annotated[collections.abc.Sequence[typin
         number of particles in bunch.
     species : int
         Particle species.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -27527,9 +27458,6 @@ def evaluate_array_index(delim_list1: str, delim_list2: str) -> ...:
     delim_list2 : unknown
         Delimitor list to mark the end of word2. Normally '='.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     err_flag : bool
@@ -27554,9 +27482,6 @@ def evaluate_logical(word: str) -> ...:
     ----------
     word : unknown
         Input string.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -27657,9 +27582,6 @@ def expect_this(expecting: str, check_delim: bool, call_check: bool, err_str: st
     ele : EleStruct
         Element parameters being parsed.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     delim : unknown
@@ -27703,9 +27625,6 @@ def expression_stack_value(stack: ExpressionAtomStructAlloc1D, var: _pybmad.Cont
     use_old : bool, optional
         Use var.old_value? Must be present if var(:) is present.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     value : float
@@ -27733,9 +27652,6 @@ def expression_string_to_stack(string: str) -> ...:
     ----------
     string : unknown
         Expression to be converted.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -27765,9 +27681,6 @@ def expression_string_to_tree(string: str, root_tree: ExpressionTreeStruct) -> .
         Only used when recursively called.
     string : unknown
         Expression to be converted.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -27831,9 +27744,6 @@ def expression_value(expression: str, var: _pybmad.ControlVar1StructAlloc1D | No
         Array of control variables. Used with Bmad controller elements.
     use_old : bool, optional
         Use var.old_value? Must be present if var(:) is present.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -28186,9 +28096,6 @@ def form_digested_bmad_file_name(lat_file: str, use_line: str | None = None) -> 
         Line used for lattice expansion. If not present or blank, the line used is the one that was specified in
         the lattice file.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     digested_file : unknown
@@ -28210,9 +28117,6 @@ def fourier_amplitude(data: RealAlloc1D, frequency: typing.SupportsFloat) -> ...
         data to analyze
     frequency : float
         frequency
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -28411,9 +28315,6 @@ def get_emit_from_sigma_mat(sigma_mat: typing.Annotated[collections.abc.Sequence
     Nmat : float, optional
         If present, then the emittanced will be ordered such that the eigensystem most closely resembles Nmat.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     normal : float
@@ -28519,9 +28420,6 @@ def gpt_to_particle_bunch(gpt_file: str, ele: EleStruct) -> ...:
         Name of GPT data file.
     ele : EleStruct
         Lattice element whose downstream end coincident with the GPT screen.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -28879,9 +28777,6 @@ def init_beam_distribution(ele: EleStruct, param: LatParamStruct, beam_init: Bea
     shift_momentum : bool, optional
         Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     beam : BeamStruct
@@ -28935,9 +28830,6 @@ def init_bunch_distribution(ele: EleStruct, param: LatParamStruct, beam_init: Be
         Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
     shift_momentum : bool, optional
         Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -29061,9 +28953,6 @@ def init_coord(orb_in: CoordStruct, ele: _pybmad.EleStruct | None = None, elemen
         Default is True. Used only for photons being initalized with a photon_init element. If True, vary the
         photon coords using a random number generator. If False, the photon coords will be centered within the
         distribution specified in the photon_init ele.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -29237,9 +29126,6 @@ def init_photon_integ_prob(gamma: typing.SupportsFloat, g: typing.SupportsFloat,
         If present, E_photon will be set to the photon energy such that the integrated probability of generating a
         photon in the given angle and energy range in the interval [E_min, E_photon] is energy_integ_prob. That
         is, energy_integ_prob = 0 => E_photon = E_min and energy_integ_prob = 1 => E_photon = E_max.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -29696,9 +29582,6 @@ def kick_vector_calc(ele: EleStruct, param: LatParamStruct, s_body: typing.Suppo
         Logical, If True then take the input coordinates -- Logical, If True then take the input coordinates as
         being with respect to the frame of referene of the element.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     dr_ds : float
@@ -29965,9 +29848,6 @@ def linear_coef(stack: ExpressionAtomStructAlloc1D) -> ...:
     stack : ExpressionAtomStruct
         Expression stack.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     err_flag : bool
@@ -30028,9 +29908,6 @@ def load_parse_line(action: str, ix_start: typing.SupportsInt) -> ...:
         'continue', 'new_command', or 'init'
     ix_start : int
         Index in bp_com.parse_line string where to append stuff.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -30333,9 +30210,6 @@ def mad_tmfoc(el: typing.SupportsFloat, sk1: typing.SupportsFloat) -> ...:
     sk1 : float
         Quadrupole strength.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     c : float
@@ -30439,9 +30313,6 @@ def make_hvbp(N: typing.Annotated[collections.abc.Sequence[typing.Annotated[coll
     N : float
         Matrix of eigenvectors prepared by make_N
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     B : float
@@ -30491,9 +30362,6 @@ def make_mad_map(ele: EleStruct, param: LatParamStruct) -> ...:
         Element
     param : LatParamStruct
         particle id
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -30668,9 +30536,6 @@ def make_n(t6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collec
     abz_tunes : float, optional
         a-mode is abz_tunes(1), b-mode is abz_tunes(2), synch tune is abz_tunes(3)
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     N : float
@@ -30694,9 +30559,6 @@ def make_pbrh(M: typing.Annotated[collections.abc.Sequence[typing.Annotated[coll
         1-turn transfer matrix
     abz_tunes : float
         tunes for a,b, and c modes.  Used to identify which eigenvector is associated with which mode.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -30730,9 +30592,6 @@ def make_smat_from_abc(t6: typing.Annotated[collections.abc.Sequence[typing.Anno
         associate emittances with the proper mode. .b.tune      -- real(rp): b-mode tune.  Used to associate
         emittances with the proper mode. .z.tune      -- real(rp): z-mode tune.  Used to associate emittances with
         the proper mode.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -31546,9 +31405,6 @@ def normal_form_taylors(one_turn_taylor: typing.Annotated[collections.abc.Sequen
     rf_on : bool
         Was the map calculated with RF on?
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     A : TaylorStruct
@@ -31575,9 +31431,6 @@ def normal_mode3_calc(t6: typing.Annotated[collections.abc.Sequence[typing.Annot
         If present and false, then z-mode assumes positive slip factor. Else negative slip factor assumed.
     abz_tunes : float, optional
         Tunes to order eigensystem by.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -31669,9 +31522,6 @@ def odeint_bmad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, s1_bo
     make_matrix : bool, optional
         If True then make the 6x6 transfer matrix.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     err_flag : bool
@@ -31711,9 +31561,6 @@ def odeint_bmad_time(orb: CoordStruct, ele: EleStruct, param: LatParamStruct, t_
         element
     extra_field : EmFieldStruct, optional
         Static field to be added to the element field. Eg used with space charge.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -31827,9 +31674,6 @@ def open_binary_file(file_name: str, action: str, r_name: str) -> ...:
         'READ' or 'WRITE'
     r_name : unknown
         Calling routine name for error messages.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -31951,9 +31795,6 @@ def order_evecs_by_n_similarity(eval: typing.Annotated[collections.abc.Sequence[
         radians.
     Nmat : float
         Normalized, real eigen matrix from make_N.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -32190,9 +32031,6 @@ def parse_integer_list2(err_str: str, lat: LatStruct, int_array: IntAlloc1D, num
         = 0    -- real(rp): inital assignment of int_array elements.
         This parameter is an input/output and is modified in-place. As an output: Array of values.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     is_ok : bool
@@ -32224,9 +32062,6 @@ def parse_real_list(lat: LatStruct, err_str: str, exact_size: bool, open_delim: 
     separator : 
     close_delim : 
     default_value : 
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -32262,9 +32097,6 @@ def parse_real_list2(lat: LatStruct, err_str: str, real_array: RealAlloc1D, num_
         elements. single_value = False    -- logical, optional: If true then an array with a single value and no
         braces is accepted.
         This parameter is an input/output and is modified in-place. As an output: Array of values
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -32311,9 +32143,6 @@ def parser_fast_complex_read(ele: EleStruct, err_str: str) -> ...:
     err_str : unknown
         String used when printing error messages identifying where in the lattice file the error is occuring.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     cmplx_vec : complex
@@ -32347,9 +32176,6 @@ def parser_fast_real_read(ele: EleStruct, end_delims: str, err_str: str, exact_s
         String used when printing error messages identifying where in the lattice file the error is occuring.
     exact_size : bool, optional
         If True (default), number of values must match real_vec size.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -32591,9 +32417,6 @@ def photon_absorption_and_phase_shift(material: str, Energy: typing.SupportsFloa
     Energy : float
         Photon energy (eV).
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     absorption : float
@@ -32636,9 +32459,6 @@ def photon_reflection(graze_angle_in: typing.SupportsFloat, energy: typing.Suppo
     surface : PhotonReflectSurfaceStruct
         surface info
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     graze_angle_out : float
@@ -32678,9 +32498,6 @@ def photon_reflectivity(angle: typing.SupportsFloat, energy: typing.SupportsFloa
         Photon energy in eV.
     surface : PhotonReflectSurfaceStruct
         surface info
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -33038,9 +32855,6 @@ def pointer_to_element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choos
     print_err : bool, optional
         Print error message if there is an error? Default is True.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     ele : EleStruct
@@ -33173,9 +32987,6 @@ def pointer_to_slave(lord: EleStruct, ix_slave: typing.SupportsInt, lord_type: t
     lord_type : int, optional
         See above.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     slave_ptr : EleStruct
@@ -33286,9 +33097,6 @@ def pointer_to_wall3d(ele: EleStruct, ix_wall: typing.SupportsInt | None = None)
     ix_wall : int, optional
         index in wall3d(:) array. Default is 1.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     wall3d : Wall3DStruct
@@ -33377,9 +33185,6 @@ def project_emit_to_xyz(ring: LatStruct, ix: typing.SupportsInt, mode: NormalMod
         associate emittances with the proper mode. .b.tune      -- real(rp): b-mode tune.  Used to associate
         emittances with the proper mode.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     sigma_x : float
@@ -33446,9 +33251,6 @@ def ptc_emit_calc(ele: EleStruct, sigma_mat: typing.Annotated[collections.abc.Se
     ----------
     ele : EleStruct
         Element at which to evaluate the parameters.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -33546,9 +33348,6 @@ def ptc_spin_calc(ele: EleStruct, sigma_mat: typing.Annotated[collections.abc.Se
     ele : EleStruct
         Element at which to evaluate the parameters.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     norm_mode : 
@@ -33569,9 +33368,6 @@ def ptc_track_all(branch: BranchStruct, orbit: CoordStructAlloc1D) -> ...:
     orbit : CoordStruct
         Coordinates at beginning of branch.
         This parameter is an input/output and is modified in-place. As an output: Orbit array.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -33797,9 +33593,6 @@ def quat_to_axis_angle(quat: typing.Annotated[collections.abc.Sequence[typing.Su
     quat : float
         Rotation quaternion. Assumed normalized.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     axis : float
@@ -33878,9 +33671,6 @@ def rad1_damp_and_stoc_mats(ele: EleStruct, include_opening_angle: bool, orb_in:
     ele0 : EleStruct, optional
         Element before `ele`. Needed if and only if rad_int1 is present
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     rad_map : RadMapStruct
@@ -33909,9 +33699,6 @@ def rad_damp_and_stoc_mats(ele1: EleStruct, ele2: EleStruct, include_opening_ang
         comparing against other codes.
     closed_orbit : CoordStruct, optional
         Closed orbit. If not present this routine will calculate it.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -34090,9 +33877,6 @@ def ran_gauss_converter(set: str | None = None, set_sigma_cut: typing.SupportsFl
         Sigma cutoff. Initially: sigma_cut = -1.
     ran_state : RandomStateStruct, optional
         Internal state. See the ran_seed_put documentation for more details.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -34386,9 +34170,6 @@ def read_beam_ascii(file_name: str, beam_init: BeamInitStruct) -> ...:
     shift_momentum : bool, optional
         Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     beam : BeamStruct
@@ -34420,9 +34201,6 @@ def read_beam_file(file_name: str, beam_init: BeamInitStruct, ele: _pybmad.EleSt
         Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
     shift_momentum : bool, optional
         Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -34748,9 +34526,6 @@ def remove_constant_taylor(taylor_in: TaylorStructAlloc1D, remove_higher_order_t
         Input taylor map.
     remove_higher_order_terms : bool
         If True then terms that are higher order than bmad_com.taylor_order are removed.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -36179,9 +35954,6 @@ def solve_psi_fixed_steps(t0: typing.SupportsFloat, t1: typing.SupportsFloat, p0
     args : float
         Parameters.  See psi_prime comments for details.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     t : float
@@ -36512,9 +36284,6 @@ def spline_akima_interpolate(x_knot: RealAlloc1D, y_knot: RealAlloc1D, x: typing
     x : float
         Point to evaluate at.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     ok : bool
@@ -36536,9 +36305,6 @@ def spline_evaluate(spline: SplineStructAlloc1D, x: typing.SupportsFloat) -> ...
         Spline structure.
     x : float
         point for evaluation.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -37017,9 +36783,6 @@ def super_bicubic_interpolation(y: typing.Annotated[collections.abc.Sequence[typ
     x2 : float
         2-direction coordinate at point to evaluate.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     ansy : float
@@ -37037,9 +36800,6 @@ def super_polint(xa: RealAlloc1D, ya: RealAlloc1D, x: typing.SupportsFloat) -> .
     ----------
     xa : float
     x : float
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -37155,9 +36915,6 @@ def t6_to_b123(t6: typing.Annotated[collections.abc.Sequence[typing.Annotated[co
         1-turn transfer matrix.  RF assumed to be on.
     abz_tunes : float
         a-mode and b-mode tunes.  Used to order eigensystem.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -37672,9 +37429,6 @@ def tao_data_useit_plot_calc(curve: TaoCurveStruct, graph: TaoGraphStruct, check
     check_s_position : bool
         If present and True then veto data that does not have an s-position.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     data : TaoDataStruct
@@ -37708,9 +37462,6 @@ def tao_datum_integrate(datum: TaoDataStruct, branch: BranchStruct, s_pos: RealA
         Array of s-positions of the values.
     values : float
         Array of values.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -37939,9 +37690,6 @@ def tao_ele_geometry_with_misalignments(datum: TaoDataStruct, ele: EleStruct) ->
     ele : EleStruct
         Lattice element to evaluate at.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     valid_value : bool
@@ -37989,9 +37737,6 @@ def tao_eval_floor_orbit(datum: TaoDataStruct, ele: EleStruct, orbit: CoordStruc
         Particle orbit at element.
     bunch_params : BunchParamsStruct
         Bunch parameters at element.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -38042,9 +37787,6 @@ def tao_evaluate_datum_at_s(datum: TaoDataStruct, tao_lat: TaoLatticeStruct, ele
     valid_value : bool
         True if evaluation was sucessful. False if not.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     err_str : unknown
@@ -38084,9 +37826,6 @@ def tao_evaluate_lat_or_beam_data(data_name: str, print_err: bool, default_sourc
         Default eval_point. anchor_end$ (default), anchor_center$, or anchor_beginning$.
     dflt_s_offset : float, optional
         Default offset of eval_point. Default = 0.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -38206,9 +37945,6 @@ def tao_get_data() -> ...:
     Subroutine to get the values of the data used in optimization and put them
     
     in an array. The data is ordered starting with the first universe
-    
-    
-    Return value is a dictionary containing values below.
     
     
     Returns
@@ -38351,9 +38087,6 @@ def tao_graph_s_min_max_calc(graph: TaoGraphStruct, branch: BranchStruct) -> ...
         Graph to calculate for.
     branch : BranchStruct
         Associated lattice branch.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -38501,9 +38234,6 @@ def tao_inject_beam(u: TaoUniverseStruct, model: TaoLatticeStruct, ix_branch: ty
         Universe parameters.
     ix_branch : int
         Lattice branch index to inject into.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -38903,9 +38633,6 @@ def tao_particle_data_value(data_type: str, p: CoordStructAlloc1D, ele: EleStruc
     ix_bunch : int
         Bunch index.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     value : float
@@ -39096,9 +38823,6 @@ def tao_pointer_to_datum_ele(lat: LatStruct, ele_name: str, ix_ele: typing.Suppo
         Used for error messages and gives branch index.
     print_err : bool, optional
         Default is True. If False, do not print an error message.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -39419,9 +39143,6 @@ def tao_scale_graph(graph: TaoGraphStruct, y_min: typing.SupportsFloat, y_max: t
         Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
         include the building wall position will be included in determining the the scale.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     y_range : float
@@ -39692,9 +39413,6 @@ def tao_set_integer_value(var_str: str, value_str: str, min_val: typing.Supports
     print_err : bool, optional
         If True, print error message. Default is true
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     var : int
@@ -39756,9 +39474,6 @@ def tao_set_logical_value(var_str: str, value_str: str) -> ...:
         Used for error messages.
     value_str : unknown
         String with encoded value.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -39864,9 +39579,6 @@ def tao_set_qp_axis_struct(qp_axis_name: str, component: str, qp_axis: QpAxisStr
     value : unknown
         Component value.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     error : bool
@@ -39891,9 +39603,6 @@ def tao_set_qp_point_struct(qp_point_name: str, component: str, qp_point: QpPoin
     value : unknown
         Component value.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     error : bool
@@ -39917,9 +39626,6 @@ def tao_set_qp_rect_struct(qp_rect_name: str, component: str, qp_rect: QpRectStr
         component value.
     value : unknown
         Component value.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -39956,9 +39662,6 @@ def tao_set_real_value(var_str: str, value_str: str, min_val: typing.SupportsFlo
         Maximum value.
     dflt_uni : int, optional
         Default universe used to evaluate parameters.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -40271,9 +39974,6 @@ def tao_to_phase_and_coupling_reading(ele: EleStruct, why_invalid: str, datum: T
     ele : EleStruct
         The monitor.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     bpm_data : BpmPhaseCouplingStruct
@@ -40340,9 +40040,6 @@ def tao_tracking_ele_index(ele: EleStruct, datum: TaoDataStruct) -> ...:
         Lattice element.
     datum : TaoDataStruct
         Datum
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -40540,9 +40237,6 @@ def tao_wave_fit(curve: TaoCurveStruct, ix1: typing.SupportsInt, n_dat: typing.S
     f4 : float, optional
         fourth fit function.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     coef : float
@@ -40682,9 +40376,6 @@ def target_rot_mats(r_center: typing.Annotated[collections.abc.Sequence[typing.S
     r_center : float
         In lab coords: Center of target relative to phton emission point.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     w_to_target : float
@@ -40709,9 +40400,6 @@ def taylor_inverse(taylor_in: TaylorStructAlloc1D) -> ...:
     ----------
     taylor_in : TaylorStruct
         Input taylor map.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -41040,9 +40728,6 @@ def to_eta_reading(eta_actual: RealAlloc1D, ele: EleStruct, axis: typing.Support
     add_noise : bool
         If True add noise to the reading
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     reading : float
@@ -41096,9 +40781,6 @@ def to_orbit_reading(orb: CoordStruct, ele: EleStruct, axis: typing.SupportsInt,
     add_noise : bool
         If True add noise to the reading
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     reading : float
@@ -41121,9 +40803,6 @@ def to_phase_and_coupling_reading(ele: EleStruct, add_noise: bool) -> ...:
         Element where phase is measured. .value(phase_noise$) -- RMS Noise in radians.
     add_noise : bool
         If True add noise to the reading
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -42519,9 +42198,6 @@ def track_until_dead(start_orb: CoordStruct, lat: LatStruct) -> ...:
     lat : unknown
         lattice that contains and element at start_orb.s
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     end_orb : CoordStruct
@@ -42754,9 +42430,6 @@ def transfer_map_from_s_to_s(lat: LatStruct, t_map: TaylorStructAlloc1D, s1: typ
         This parameter is an input/output and is modified in-place. As an output: Final spin map. Only computed if
         bmad_com.spin_tracking_on = T.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     ref_orb_out : CoordStruct
@@ -42861,9 +42534,6 @@ def tricubic_cmplx_eval(x_norm: typing.SupportsFloat, y_norm: typing.SupportsFlo
     tri_coef : TricubicCmplxCoefStruct
         Coefficients.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     f_val : complex
@@ -42922,9 +42592,6 @@ def twiss3_at_start(lat: LatStruct, err_flag: bool, ix_branch: typing.SupportsIn
         Lattice with
     ix_branch : int, optional
         Branch index. 0 = default.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -43603,9 +43270,6 @@ def w_mat_to_axis_angle(w_mat: typing.Annotated[collections.abc.Sequence[typing.
     w_mat : float
         Rotation matrix.
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     axis : float
@@ -43648,9 +43312,6 @@ def wall3d_d_radius(position: RealAlloc1D, ele: EleStruct, ix_wall: typing.Suppo
         Element with wall
     ix_wall : int, optional
         Index of wall in .wall3d(:) array. Default is 1.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -43806,9 +43467,6 @@ def write_astra_field_grid_file(astra_file_unit: typing.SupportsInt, ele: EleStr
     dz : float, optional
         z step size in m. Default: 0.001 m
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     maxfield : float
@@ -43838,9 +43496,6 @@ def write_astra_field_grid_file_3d(base_filename: str, ele: EleStruct, dz: typin
         element to make map
     dz : float, optional
         z step size in m. Default: 0.001 m
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -43996,9 +43651,6 @@ def write_gpt_field_grid_file_1d(gpt_file_unit: typing.SupportsInt, ele: EleStru
     dz : float, optional
         z step size in m. Default: 0.001 m
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     maxfield : float
@@ -44026,9 +43678,6 @@ def write_gpt_field_grid_file_2d(gpt_file_unit: typing.SupportsInt, ele: EleStru
         z step size in m. Default: 0.001 m
     r_max : float, optional
         maximum radius in m. Default: 0.02 m
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -44058,9 +43707,6 @@ def write_gpt_field_grid_file_3d(base_filename: str, ele: EleStruct, dz: typing.
         element to make map
     dz : float, optional
         z step size in m. Default: 0.001 m
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------
@@ -44237,9 +43883,6 @@ def write_opal_field_grid_file(opal_file_unit: typing.SupportsInt, ele: EleStruc
     param : LatParamStruct
         Contains lattice information
     
-    Return value is a dictionary containing values below.
-    
-    
     Returns
     -------
     maxfield : float
@@ -44353,9 +43996,6 @@ def z_at_surface(ele: EleStruct, x: typing.SupportsFloat, y: typing.SupportsFloa
     extend_grid : bool, optional
         If a grid is involved and (x, y) is outside of the grid, and extend_grid = True: Pretend (x, y) is at
         edge. Default is False.
-    
-    Return value is a dictionary containing values below.
-    
     
     Returns
     -------

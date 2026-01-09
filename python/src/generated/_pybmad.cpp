@@ -8604,9 +8604,6 @@ scale : float, optional
     Factor to scale the kicks. Default is 1. For pole_type = electric$, set scale to the longitudinal length
     of the field region.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 kx : float
@@ -8625,15 +8622,15 @@ dk : float
       .def(
           "__getitem__",
           [](const Bmad::AbMultipoleKick& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.kx);
             if (i == 1)
               return py::cast(s.ky);
             if (i == 2)
               return py::cast(s.dk);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ab_multipole_kicks",
@@ -8720,11 +8717,11 @@ is_abs_time :
       .def(
           "__getitem__",
           [](const PyAbsoluteTimeTracking& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_abs_time);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ac_kicker_amp",
@@ -8751,11 +8748,11 @@ ac_amp :
       .def_readonly("ac_amp", &PyAcKickerAmp::ac_amp)
       .def("__len__", [](const PyAcKickerAmp&) { return 1; })
       .def("__getitem__", [](const PyAcKickerAmp& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.ac_amp);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "action_to_xyz",
@@ -8781,9 +8778,6 @@ ix : int
 J : float
     Vector containing normal mode invariants and phases
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 X : float
@@ -8799,13 +8793,13 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::ActionToXyz& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.X);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "add_lattice_control_structs",
@@ -8882,9 +8876,6 @@ wrap : bool, optional
     the superimposed element has an end that extends beyound a lattice edge, extend the lattice to
     accommodate.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 err_flag : bool
@@ -8900,13 +8891,13 @@ super_ele_out : EleStruct
       .def(
           "__getitem__",
           [](const Bmad::AddSuperimpose& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
               return py::cast(s.super_ele_out);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "add_this_multipass",
@@ -8944,13 +8935,13 @@ This subroutine is not intended for general use.
       .def(
           "__getitem__",
           [](const PyAddThisTaylorTerm& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.i_out);
             if (i == 1)
               return py::cast(s.coef);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "adjust_super_slave_names",
@@ -8975,15 +8966,15 @@ This routine is used by add_superimpose and is not meant for general use.
       .def(
           "__getitem__",
           [](const PyAdjustSuperSlaveNames& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.ix1_lord);
             if (i == 1)
               return py::cast(s.ix2_lord);
             if (i == 2)
               return py::cast(s.first_time);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "allocate_branch_array",
@@ -9051,11 +9042,11 @@ angle :
       .def(
           "__getitem__",
           [](const PyAngleBetweenPolars& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.angle);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "angle_to_canonical_coords",
@@ -9139,15 +9130,15 @@ The signal data is truncated to an odd length, and the phase is relative to the 
       .def_readonly("diag", &PyApfft::diag)
       .def("__len__", [](const PyApfft&) { return 3; })
       .def("__getitem__", [](const PyApfft& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.window);
         if (i == 1)
           return py::cast(s.phase);
         if (i == 2)
           return py::cast(s.diag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "apfft_corr",
@@ -9173,9 +9164,6 @@ window : unknown
 diag : int, optional
     causes low-level routine apfft_ext to produce a fort.X file where X=9000+fid containing diag information.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 phase : float
@@ -9194,15 +9182,15 @@ amp : float
       .def(
           "__getitem__",
           [](const SimUtils::ApfftCorr& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.phase);
             if (i == 1)
               return py::cast(s.amp);
             if (i == 2)
               return py::cast(s.freq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "apfft_ext",
@@ -9229,8 +9217,8 @@ by the corrected apfft subroutine in this module.
       .def_readonly("diag", &PyApfftExt::diag)
       .def("__len__", [](const PyApfftExt&) { return 5; })
       .def("__getitem__", [](const PyApfftExt& s, size_t i) -> py::object {
-        if (i >= 5)
-          throw py::index_error();
+        if (i < 0)
+          i += 5;
         if (i == 0)
           return py::cast(s.window);
         if (i == 1)
@@ -9241,7 +9229,7 @@ by the corrected apfft subroutine in this module.
           return py::cast(s.freq);
         if (i == 4)
           return py::cast(s.diag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "apply_all_rampers",
@@ -9330,13 +9318,13 @@ str_out :
       .def_readonly("str_out", &PyArrayReStr::str_out)
       .def("__len__", [](const PyArrayReStr&) { return 2; })
       .def("__getitem__", [](const PyArrayReStr& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.parens_in);
         if (i == 1)
           return py::cast(s.str_out);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "asinc",
@@ -9357,11 +9345,11 @@ y :
       .def_readonly("y", &PyAsinc::y)
       .def("__len__", [](const PyAsinc&) { return 1; })
       .def("__getitem__", [](const PyAsinc& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.y);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "assert_equal",
@@ -9383,13 +9371,13 @@ ival :
       .def_readonly("ival", &PyAssertEqual::ival)
       .def("__len__", [](const PyAssertEqual&) { return 2; })
       .def("__getitem__", [](const PyAssertEqual& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.err_str);
         if (i == 1)
           return py::cast(s.ival);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "astra_max_field_reference",
@@ -9416,11 +9404,11 @@ field_value :
       .def(
           "__getitem__",
           [](const PyAstraMaxFieldReference& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.field_value);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "at_this_ele_end",
@@ -9444,11 +9432,11 @@ is_at_this_end :
       .def_readonly("is_at_this_end", &PyAtThisEleEnd::is_at_this_end)
       .def("__len__", [](const PyAtThisEleEnd&) { return 1; })
       .def("__getitem__", [](const PyAtThisEleEnd& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_at_this_end);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "atomic_number",
@@ -9563,9 +9551,6 @@ dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
     b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 free : bool
@@ -9585,13 +9570,13 @@ why_not_free : int
       .def(
           "__getitem__",
           [](const Bmad::AttributeFree1& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.why_not_free);
             if (i == 1)
               return py::cast(s.free);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "attribute_free",
@@ -9642,9 +9627,6 @@ dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
     b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 free : bool
@@ -9664,13 +9646,13 @@ why_not_free : int
       .def(
           "__getitem__",
           [](const Bmad::AttributeFree2& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.why_not_free);
             if (i == 1)
               return py::cast(s.free);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "attribute_free",
@@ -9725,9 +9707,6 @@ dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
     b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 free : bool
@@ -9747,13 +9726,13 @@ why_not_free : int
       .def(
           "__getitem__",
           [](const Bmad::AttributeFree3& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.why_not_free);
             if (i == 1)
               return py::cast(s.free);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "attribute_index",
@@ -9787,9 +9766,6 @@ can_abbreviate : bool, optional
 print_error : bool, optional
     Default True. If false, do not print error message.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 full_name : unknown
@@ -9810,13 +9786,13 @@ Overloaded versions:
       .def(
           "__getitem__",
           [](const Bmad::AttributeIndex1& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.full_name);
             if (i == 1)
               return py::cast(s.attrib_index);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "attribute_index",
@@ -9850,9 +9826,6 @@ can_abbreviate : bool, optional
 print_error : bool, optional
     Default True. If false, do not print error message.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 full_name : unknown
@@ -9873,13 +9846,13 @@ Overloaded versions:
       .def(
           "__getitem__",
           [](const Bmad::AttributeIndex2& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.full_name);
             if (i == 1)
               return py::cast(s.attrib_index);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "attribute_name",
@@ -10131,13 +10104,13 @@ dnk : float
       .def_readonly("dnk", &Bmad::BbiKick::dnk)
       .def("__len__", [](const Bmad::BbiKick&) { return 2; })
       .def("__getitem__", [](const Bmad::BbiKick& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.nk);
         if (i == 1)
           return py::cast(s.dnk);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "bbi_slice_calc",
@@ -10198,13 +10171,13 @@ ix_stage_last_tracked :
       .def(
           "__getitem__",
           [](const PyBbuHomVoltageCalc& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.n_period);
             if (i == 1)
               return py::cast(s.ix_stage_last_tracked);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "bbu_remove_head_bunch",
@@ -10237,11 +10210,11 @@ bbu_beam :
       .def_readonly("dt_bunch", &PyBbuSetup::dt_bunch)
       .def("__len__", [](const PyBbuSetup&) { return 1; })
       .def("__getitem__", [](const PyBbuSetup& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.dt_bunch);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "bbu_track_a_stage",
@@ -10268,13 +10241,13 @@ ix_stage_tracked :
       .def("__len__", [](const PyBbuTrackAStage&) { return 2; })
       .def(
           "__getitem__", [](const PyBbuTrackAStage& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.lost);
             if (i == 1)
               return py::cast(s.ix_stage_tracked);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "bbu_track_all",
@@ -10309,8 +10282,8 @@ irep :
       .def_readonly("irep", &PyBbuTrackAll::irep)
       .def("__len__", [](const PyBbuTrackAll&) { return 4; })
       .def("__getitem__", [](const PyBbuTrackAll& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.hom_voltage_normalized);
         if (i == 1)
@@ -10319,7 +10292,7 @@ irep :
           return py::cast(s.lost);
         if (i == 3)
           return py::cast(s.irep);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "beam_envelope_ibs",
@@ -10417,9 +10390,6 @@ Parameters
 S : float
     matrix of second order moments of beam envelope
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 angle_xy : float
@@ -10442,8 +10412,8 @@ angle_ypz : float
       .def_readonly("angle_ypz", &Bmad::BeamTilts::angle_ypz)
       .def("__len__", [](const Bmad::BeamTilts&) { return 5; })
       .def("__getitem__", [](const Bmad::BeamTilts& s, size_t i) -> py::object {
-        if (i >= 5)
-          throw py::index_error();
+        if (i < 0)
+          i += 5;
         if (i == 0)
           return py::cast(s.angle_xy);
         if (i == 1)
@@ -10454,7 +10424,7 @@ angle_ypz : float
           return py::cast(s.angle_xpz);
         if (i == 4)
           return py::cast(s.angle_ypz);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "bend_edge_kick",
@@ -10540,11 +10510,11 @@ is_set :
       .def(
           "__getitem__",
           [](const PyBendLengthHasBeenSet& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_set);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "bend_photon_e_rel_init",
@@ -10811,9 +10781,6 @@ y_norm : float
 bi_coef : BicubicCmplxCoefStruct
     Coefficients.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 f_val : complex
@@ -10834,15 +10801,15 @@ df_dy : complex
       .def(
           "__getitem__",
           [](const SimUtils::BicubicCmplxEval& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.df_dx);
             if (i == 1)
               return py::cast(s.df_dy);
             if (i == 2)
               return py::cast(s.f_val);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "bin_index",
@@ -10893,13 +10860,13 @@ x_center
       .def_readonly("ix_bin", &PyBinXCenter::ix_bin)
       .def("__len__", [](const PyBinXCenter&) { return 2; })
       .def("__getitem__", [](const PyBinXCenter& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.x_center);
         if (i == 1)
           return py::cast(s.ix_bin);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "bit_set",
@@ -10924,11 +10891,11 @@ set_to_1 : bool
       .def_readonly("word", &PyBitSet::word)
       .def("__len__", [](const PyBitSet&) { return 1; })
       .def("__getitem__", [](const PyBitSet& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.word);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "bl_via_vlassov",
@@ -11015,8 +10982,8 @@ parse_lat : LatStruct
       .def("__len__", [](const Bmad::BmadParser&) { return 4; })
       .def(
           "__getitem__", [](const Bmad::BmadParser& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.lat);
             if (i == 1)
@@ -11025,7 +10992,7 @@ parse_lat : LatStruct
               return py::cast(s.err_flag);
             if (i == 3)
               return py::cast(s.parse_lat);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "bmad_parser2",
@@ -11060,11 +11027,11 @@ parse_lat : LatStruct, optional
       .def_readonly("err_flag", &PyBmadParser2::err_flag)
       .def("__len__", [](const PyBmadParser2&) { return 1; })
       .def("__getitem__", [](const PyBmadParser2& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.err_flag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "bmad_patch_parameters_to_ptc",
@@ -11110,9 +11077,6 @@ strict : bool, optional
 print_err : bool, optional
     Default is True. Print error message if out of range?
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 ix0 : int
@@ -11132,13 +11096,13 @@ ok : bool
       .def(
           "__getitem__",
           [](const SimUtils::BracketIndexForSpline& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.ix0);
             if (i == 1)
               return py::cast(s.ok);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "branch_equal_branch",
@@ -11170,11 +11134,11 @@ name :
       .def_readonly("name", &PyBranchName::name)
       .def("__len__", [](const PyBranchName&) { return 1; })
       .def("__getitem__", [](const PyBranchName& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.name);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "branch_to_ptc_m_u",
@@ -11359,13 +11323,13 @@ bunch_params : BunchParamsStruct
       .def(
           "__getitem__",
           [](const PyCalcBunchSigmaMatrixEtc& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.bunch_params);
             if (i == 1)
               return py::cast(s.is_time_coords);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "calc_emittances_and_twiss_from_sigma_matrix",
@@ -11382,9 +11346,6 @@ sigma_mat : float
     Sigma matrix.
 print_err : bool, optional
     If present and False then suppress "no eigen-system found" messages.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -11416,15 +11377,15 @@ n_mat : float
           "__getitem__",
           [](const Bmad::CalcEmittancesAndTwissFromSigmaMatrix& s,
              size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.bunch_params);
             if (i == 1)
               return py::cast(s.error);
             if (i == 2)
               return py::cast(s.n_mat);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "calc_file_number",
@@ -11451,8 +11412,8 @@ err_flag :
       .def("__len__", [](const PyCalcFileNumber&) { return 4; })
       .def(
           "__getitem__", [](const PyCalcFileNumber& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.file_name);
             if (i == 1)
@@ -11461,7 +11422,7 @@ err_flag :
               return py::cast(s.num_out);
             if (i == 3)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "calc_spin_params",
@@ -11520,9 +11481,6 @@ cos_ang : float
 sin_ang : float
     sine of the transverse photon position.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 r_wall : float
@@ -11542,15 +11500,15 @@ ix_vertex : int
       .def(
           "__getitem__",
           [](const Bmad::CalcWallRadius& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.r_wall);
             if (i == 1)
               return py::cast(s.dr_dtheta);
             if (i == 2)
               return py::cast(s.ix_vertex);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "calc_z_tune",
@@ -11618,13 +11576,13 @@ change :
       .def(
           "__getitem__",
           [](const PyChangeFileNumber& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.file_name);
             if (i == 1)
               return py::cast(s.change);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "charge_of",
@@ -11739,13 +11697,13 @@ This subroutine is not intended for general use.
       .def(
           "__getitem__",
           [](const PyCheckForSuperimposeProblem& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
               return py::cast(s.wrap);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "check_if_s_in_bounds",
@@ -11778,13 +11736,13 @@ print_err : bool, optional
       .def(
           "__getitem__",
           [](const Bmad::CheckIfSInBounds& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
               return py::cast(s.translated_s);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "check_rf_freq",
@@ -11803,11 +11761,11 @@ fb :
       .def_readonly("fb", &PyCheckRfFreq::fb)
       .def("__len__", [](const PyCheckRfFreq&) { return 1; })
       .def("__getitem__", [](const PyCheckRfFreq& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.fb);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "choose_quads_for_set_tune",
@@ -11843,15 +11801,15 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::ChooseQuadsForSetTune& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.dk1);
             if (i == 1)
               return py::cast(s.eles);
             if (i == 2)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "chrom_calc",
@@ -11906,8 +11864,8 @@ orb0 : CoordStruct, optional
       .def_readonly("delta_e", &PyChromCalc::delta_e)
       .def("__len__", [](const PyChromCalc&) { return 8; })
       .def("__getitem__", [](const PyChromCalc& s, size_t i) -> py::object {
-        if (i >= 8)
-          throw py::index_error();
+        if (i < 0)
+          i += 8;
         if (i == 0)
           return py::cast(s.chrom_a);
         if (i == 1)
@@ -11924,7 +11882,7 @@ orb0 : CoordStruct, optional
           return py::cast(s.high_E_orb);
         if (i == 7)
           return py::cast(s.delta_e);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "chrom_tune",
@@ -11963,13 +11921,13 @@ err_flag : bool
       .def_readonly("delta_e", &PyChromTune::delta_e)
       .def("__len__", [](const PyChromTune&) { return 2; })
       .def("__getitem__", [](const PyChromTune& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.err_flag);
         if (i == 1)
           return py::cast(s.delta_e);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "classical_radius",
@@ -11991,11 +11949,11 @@ radius :
       .def(
           "__getitem__",
           [](const PyClassicalRadius& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.radius);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "clear_lat_1turn_mats",
@@ -12096,13 +12054,13 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::ClosedOrbitFromTracking& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.closed_orb);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "cmplx_re_str",
@@ -12122,13 +12080,13 @@ str_out :
       .def_readonly("str_out", &PyCmplxReStr::str_out)
       .def("__len__", [](const PyCmplxReStr&) { return 2; })
       .def("__getitem__", [](const PyCmplxReStr& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.cmp);
         if (i == 1)
           return py::cast(s.str_out);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "coarse_frequency_estimate",
@@ -12143,9 +12101,6 @@ Parameters
 ----------
 data : float
     data to analyze. Preferably size(data) is a power of 2 Otherwise the data is padded with zeros.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -12166,13 +12121,13 @@ err : bool
       .def(
           "__getitem__",
           [](const PyCoarseFrequencyEstimate& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.frequency);
             if (i == 1)
               return py::cast(s.error);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "combine_consecutive_elements",
@@ -12216,8 +12171,8 @@ zi :
       .def(
           "__getitem__",
           [](const PyComplexErrorFunction& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.wr);
             if (i == 1)
@@ -12226,7 +12181,7 @@ zi :
               return py::cast(s.zr);
             if (i == 3)
               return py::cast(s.zi);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "complex_taylor_clean",
@@ -12287,11 +12242,11 @@ coefficients to 9th order
       .def(
           "__getitem__",
           [](const PyComplexTaylorCoef1& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.coef);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "complex_taylor_coef",
@@ -12360,11 +12315,11 @@ coefficients to 9th order
       .def(
           "__getitem__",
           [](const PyComplexTaylorCoef2& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.coef);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "complex_taylor_equal_complex_taylor",
@@ -12427,9 +12382,6 @@ a_complex_taylor : ComplexTaylorStruct
 r_in : complex
     Coordinates at the input.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 vec0 : complex
@@ -12452,15 +12404,15 @@ r_out : complex
       .def(
           "__getitem__",
           [](const Bmad::ComplexTaylorToMat6& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.vec0);
             if (i == 1)
               return py::cast(s.mat6);
             if (i == 2)
               return py::cast(s.r_out);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "complex_taylors_equal_complex_taylors",
@@ -12636,15 +12588,15 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::ConvertCoords& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.out_type_str);
             if (i == 1)
               return py::cast(s.coord_out);
             if (i == 2)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "convert_field_ele_to_lab",
@@ -12711,8 +12663,8 @@ sout :
           "__getitem__",
           [](const PyConvertLocalCartesianToLocalCurvilinear& s,
              size_t i) -> py::object {
-            if (i >= 5)
-              throw py::index_error();
+            if (i < 0)
+              i += 5;
             if (i == 0)
               return py::cast(s.x);
             if (i == 1)
@@ -12723,7 +12675,7 @@ sout :
               return py::cast(s.xout);
             if (i == 4)
               return py::cast(s.sout);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "convert_local_curvilinear_to_local_cartesian",
@@ -12761,8 +12713,8 @@ zout :
           "__getitem__",
           [](const PyConvertLocalCurvilinearToLocalCartesian& s,
              size_t i) -> py::object {
-            if (i >= 5)
-              throw py::index_error();
+            if (i < 0)
+              i += 5;
             if (i == 0)
               return py::cast(s.x);
             if (i == 1)
@@ -12773,7 +12725,7 @@ zout :
               return py::cast(s.xout);
             if (i == 4)
               return py::cast(s.zout);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "convert_particle_coordinates_s_to_t",
@@ -12853,8 +12805,8 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::ConvertPcTo& s, size_t i) -> py::object {
-            if (i >= 7)
-              throw py::index_error();
+            if (i < 0)
+              i += 7;
             if (i == 0)
               return py::cast(s.E_tot);
             if (i == 1)
@@ -12869,7 +12821,7 @@ err_flag : bool
               return py::cast(s.beta1);
             if (i == 6)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "convert_total_energy_to",
@@ -12919,8 +12871,8 @@ print_err : bool, optional
       .def(
           "__getitem__",
           [](const Bmad::ConvertTotalEnergyTo& s, size_t i) -> py::object {
-            if (i >= 7)
-              throw py::index_error();
+            if (i < 0)
+              i += 7;
             if (i == 0)
               return py::cast(s.gamma);
             if (i == 1)
@@ -12935,7 +12887,7 @@ print_err : bool, optional
               return py::cast(s.beta1);
             if (i == 6)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "converter_distribution_parser",
@@ -12972,15 +12924,15 @@ err_flag : bool
           "__getitem__",
           [](const Bmad::ConverterDistributionParser& s,
              size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.delim);
             if (i == 1)
               return py::cast(s.delim_found);
             if (i == 2)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "coord_equal_coord",
@@ -13022,13 +12974,13 @@ state_str : unknown
       .def("__len__", [](const PyCoordStateName&) { return 2; })
       .def(
           "__getitem__", [](const PyCoordStateName& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.state_str);
             if (i == 1)
               return py::cast(s.one_word);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "coords_body_to_local",
@@ -13132,15 +13084,15 @@ local_coords :
       .def(
           "__getitem__",
           [](const Bmad::CoordsFloorToCurvilinear& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.ele1);
             if (i == 1)
               return py::cast(s.status);
             if (i == 2)
               return py::cast(s.w_mat);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "coords_floor_to_local_curvilinear",
@@ -13183,13 +13135,13 @@ local_position :
           "__getitem__",
           [](const Bmad::CoordsFloorToLocalCurvilinear& s,
              size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.status);
             if (i == 1)
               return py::cast(s.w_mat);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "coords_floor_to_relative",
@@ -13307,15 +13259,15 @@ floor1 :
       .def(
           "__getitem__",
           [](const PyCoordsRelativeToFloor& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.theta);
             if (i == 1)
               return py::cast(s.phi);
             if (i == 2)
               return py::cast(s.psi);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "cos_one",
@@ -13334,11 +13286,11 @@ cos1 :
       .def_readonly("cos1", &PyCosOne::cos1)
       .def("__len__", [](const PyCosOne&) { return 1; })
       .def("__getitem__", [](const PyCosOne& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.cos1);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "cosc",
@@ -13359,11 +13311,11 @@ y :
       .def_readonly("y", &PyCosc::y)
       .def("__len__", [](const PyCosc&) { return 1; })
       .def("__getitem__", [](const PyCosc& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.y);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "coulombfun",
@@ -13392,8 +13344,8 @@ res :
       .def_readonly("res", &PyCoulombfun::res)
       .def("__len__", [](const PyCoulombfun&) { return 5; })
       .def("__getitem__", [](const PyCoulombfun& s, size_t i) -> py::object {
-        if (i >= 5)
-          throw py::index_error();
+        if (i < 0)
+          i += 5;
         if (i == 0)
           return py::cast(s.u);
         if (i == 1)
@@ -13404,7 +13356,7 @@ res :
           return py::cast(s.gam);
         if (i == 4)
           return py::cast(s.res);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "count_lines_in_file",
@@ -13481,11 +13433,11 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const PyCreateConcatenatedWall3d& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "create_element_slice",
@@ -13539,13 +13491,13 @@ orb_in : CoordStruct, optional
       .def(
           "__getitem__",
           [](const Bmad::CreateElementSlice& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.sliced_ele);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "create_field_overlap",
@@ -13596,11 +13548,11 @@ err_flag :
       .def_readonly("err_flag", &PyCreateGirder::err_flag)
       .def("__len__", [](const PyCreateGirder&) { return 1; })
       .def("__getitem__", [](const PyCreateGirder& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.err_flag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "create_group",
@@ -13685,9 +13637,6 @@ wig_model_com : WigglerModelingCommonStruct
 print_err : bool, optional
     If True (default) print an error message if there is an error.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 lat : LatStruct
@@ -13708,13 +13657,13 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::CreatePlanarWigglerModel& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.lat);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "create_ramper",
@@ -13899,8 +13848,8 @@ mat :
       .def("__len__", [](const PyDampingMatrixD&) { return 6; })
       .def(
           "__getitem__", [](const PyDampingMatrixD& s, size_t i) -> py::object {
-            if (i >= 6)
-              throw py::index_error();
+            if (i < 0)
+              i += 6;
             if (i == 0)
               return py::cast(s.gamma);
             if (i == 1)
@@ -13913,7 +13862,7 @@ mat :
               return py::cast(s.delta);
             if (i == 5)
               return py::cast(s.species);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "date_and_time_stamp",
@@ -13938,15 +13887,15 @@ include_zone :
       .def(
           "__getitem__",
           [](const PyDateAndTimeStamp& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.string);
             if (i == 1)
               return py::cast(s.numeric_month);
             if (i == 2)
               return py::cast(s.include_zone);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "deallocate_ele_pointers",
@@ -14018,11 +13967,11 @@ species :
       .def(
           "__getitem__",
           [](const PyDefaultTrackingSpecies& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.species);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "destfixedwindowls",
@@ -14049,11 +13998,11 @@ str :
       .def_readonly("str", &PyDetab::str)
       .def("__len__", [](const PyDetab&) { return 1; })
       .def("__getitem__", [](const PyDetab& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.str);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "detector_pixel_pt",
@@ -14101,11 +14050,11 @@ ix_section :
       .def(
           "__getitem__",
           [](const PyDiffractionPlateOrMaskHitSpot& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.ix_section);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "diffusion_matrix_b",
@@ -14132,15 +14081,15 @@ mat :
       .def(
           "__getitem__",
           [](const PyDiffusionMatrixB& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.gamma);
             if (i == 1)
               return py::cast(s.g_tot);
             if (i == 2)
               return py::cast(s.species);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "display_size_and_resolution",
@@ -14175,8 +14124,8 @@ y_res :
       .def(
           "__getitem__",
           [](const PyDisplaySizeAndResolution& s, size_t i) -> py::object {
-            if (i >= 5)
-              throw py::index_error();
+            if (i < 0)
+              i += 5;
             if (i == 0)
               return py::cast(s.ix_screen);
             if (i == 1)
@@ -14187,7 +14136,7 @@ y_res :
               return py::cast(s.x_res);
             if (i == 4)
               return py::cast(s.y_res);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "distance_to_aperture",
@@ -14220,13 +14169,13 @@ dist :
       .def(
           "__getitem__",
           [](const PyDistanceToAperture& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.no_aperture_here);
             if (i == 1)
               return py::cast(s.dist);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "dj_bessel",
@@ -14249,15 +14198,15 @@ dj_bes :
       .def_readonly("dj_bes", &PyDjBessel::dj_bes)
       .def("__len__", [](const PyDjBessel&) { return 3; })
       .def("__getitem__", [](const PyDjBessel& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.m);
         if (i == 1)
           return py::cast(s.arg);
         if (i == 2)
           return py::cast(s.dj_bes);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "djb_hash",
@@ -14280,15 +14229,15 @@ hash :
       .def_readonly("hash", &PyDjbHash::hash)
       .def("__len__", [](const PyDjbHash&) { return 3; })
       .def("__getitem__", [](const PyDjbHash& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.str);
         if (i == 1)
           return py::cast(s.old_hash);
         if (i == 2)
           return py::cast(s.hash);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "djb_str_hash",
@@ -14308,13 +14257,13 @@ hash_str :
       .def_readonly("hash_str", &PyDjbStrHash::hash_str)
       .def("__len__", [](const PyDjbStrHash&) { return 2; })
       .def("__getitem__", [](const PyDjbStrHash& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.in_str);
         if (i == 1)
           return py::cast(s.hash_str);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "do_mode_flip",
@@ -14346,11 +14295,11 @@ string :
       .def("__len__", [](const PyDowncaseString&) { return 1; })
       .def(
           "__getitem__", [](const PyDowncaseString& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.string);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "dpc_given_de",
@@ -14376,8 +14325,8 @@ dpc :
       .def_readonly("dpc", &PyDpcGivenDe::dpc)
       .def("__len__", [](const PyDpcGivenDe&) { return 4; })
       .def("__getitem__", [](const PyDpcGivenDe& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.pc_old);
         if (i == 1)
@@ -14386,7 +14335,7 @@ dpc :
           return py::cast(s.dE);
         if (i == 3)
           return py::cast(s.dpc);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "drift_and_pipe_track_methods_adjustment",
@@ -14586,11 +14535,11 @@ field :
       .def_readonly("field", &PyEAccelField::field)
       .def("__len__", [](const PyEAccelField&) { return 1; })
       .def("__getitem__", [](const PyEAccelField& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.field);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "e_crit_photon",
@@ -14624,9 +14573,6 @@ Parameters
 mat : float
     6x6 real matrix.  Usually a transfer matrix or sigma matrix.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 eval : complex
@@ -14648,8 +14594,8 @@ tunes : float
       .def(
           "__getitem__",
           [](const Bmad::EigenDecomp6mat& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.eval);
             if (i == 1)
@@ -14658,7 +14604,7 @@ tunes : float
               return py::cast(s.err_flag);
             if (i == 3)
               return py::cast(s.tunes);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ele_compute_ref_energy_and_time",
@@ -14748,11 +14694,11 @@ str :
       .def_readonly("str", &PyEleFullName::str)
       .def("__len__", [](const PyEleFullName&) { return 1; })
       .def("__getitem__", [](const PyEleFullName& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.str);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "ele_geometry",
@@ -14819,11 +14765,11 @@ is_const :
       .def(
           "__getitem__",
           [](const PyEleHasConstantDsDtRef& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_const);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ele_has_nonzero_kick",
@@ -14847,13 +14793,13 @@ has_kick :
       .def(
           "__getitem__",
           [](const PyEleHasNonzeroKick& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.ele);
             if (i == 1)
               return py::cast(s.has_kick);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ele_has_nonzero_offset",
@@ -14876,11 +14822,11 @@ has_offset :
       .def(
           "__getitem__",
           [](const PyEleHasNonzeroOffset& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.has_offset);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ele_is_monitor",
@@ -14941,11 +14887,11 @@ str :
       .def_readonly("str", &PyEleLocName::str)
       .def("__len__", [](const PyEleLocName&) { return 1; })
       .def("__getitem__", [](const PyEleLocName& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.str);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "ele_misalignment_l_s_calc",
@@ -14974,13 +14920,13 @@ S_mis : float
       .def(
           "__getitem__",
           [](const Bmad::EleMisalignmentLSCalc& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.L_mis);
             if (i == 1)
               return py::cast(s.S_mis);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ele_nametable_index",
@@ -15004,11 +14950,11 @@ ix_nt :
       .def(
           "__getitem__",
           [](const PyEleNametableIndex& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.ix_nt);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ele_order_calc",
@@ -15075,11 +15021,11 @@ ix_step :
       .def("__len__", [](const PyEleRfStepIndex&) { return 1; })
       .def(
           "__getitem__", [](const PyEleRfStepIndex& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.ix_step);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ele_to_ptc_magnetic_bn_an",
@@ -15093,9 +15039,6 @@ Parameters
 ----------
 ele : EleStruct
     Bmad Element.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -15119,15 +15062,15 @@ n_max : int
       .def(
           "__getitem__",
           [](const Bmad::EleToPtcMagneticBnAn& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.bn);
             if (i == 1)
               return py::cast(s.an);
             if (i == 2)
               return py::cast(s.n_max);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ele_to_spin_taylor",
@@ -15180,13 +15123,13 @@ spin_taylor : TaylorStruct
       .def(
           "__getitem__",
           [](const Bmad::EleToTaylor& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.orbital_taylor);
             if (i == 1)
               return py::cast(s.spin_taylor);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ele_unique_name",
@@ -15210,11 +15153,11 @@ unique_name :
       .def_readonly("unique_name", &PyEleUniqueName::unique_name)
       .def("__len__", [](const PyEleUniqueName&) { return 1; })
       .def("__getitem__", [](const PyEleUniqueName& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.unique_name);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "ele_value_has_changed",
@@ -15250,11 +15193,11 @@ has_changed :
       .def(
           "__getitem__",
           [](const PyEleValueHasChanged& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.has_changed);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ele_vec_equal_ele_vec",
@@ -15309,8 +15252,8 @@ compute_dE : bool
       .def(
           "__getitem__",
           [](const Bmad::ElecMultipoleField& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.Ex);
             if (i == 1)
@@ -15319,7 +15262,7 @@ compute_dE : bool
               return py::cast(s.dE);
             if (i == 3)
               return py::cast(s.compute_dE);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "element_at_s",
@@ -15350,9 +15293,6 @@ ix_branch : int, optional
     Branch index. Default is 0.
 print_err : bool, optional
     Print error message if there is an error? Default is True.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -15387,8 +15327,8 @@ Overloaded versions:
       .def(
           "__getitem__",
           [](const Bmad::ElementAtSBranch& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
@@ -15397,7 +15337,7 @@ Overloaded versions:
               return py::cast(s.position);
             if (i == 3)
               return py::cast(s.ix_ele);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "element_at_s",
@@ -15434,9 +15374,6 @@ ix_branch : int, optional
 print_err : bool, optional
     Print error message if there is an error? Default is True.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 ix_ele : int
@@ -15470,8 +15407,8 @@ Overloaded versions:
       .def(
           "__getitem__",
           [](const Bmad::ElementAtSLat& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
@@ -15480,7 +15417,7 @@ Overloaded versions:
               return py::cast(s.position);
             if (i == 3)
               return py::cast(s.ix_ele);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "element_slice_iterator",
@@ -15586,13 +15523,13 @@ original_ele : EleStruct, optional
       .def(
           "__getitem__",
           [](const Bmad::EmFieldCalc& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.field);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "em_field_derivatives",
@@ -15644,8 +15581,8 @@ dfield : EmFieldStruct
       .def(
           "__getitem__",
           [](const PyEmFieldDerivatives& s, size_t i) -> py::object {
-            if (i >= 5)
-              throw py::index_error();
+            if (i < 0)
+              i += 5;
             if (i == 0)
               return py::cast(s.dfield);
             if (i == 1)
@@ -15656,7 +15593,7 @@ dfield : EmFieldStruct
               return py::cast(s.grid_allow_s_out_of_bounds);
             if (i == 4)
               return py::cast(s.rf_time);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "em_field_kick_vector_time",
@@ -15752,9 +15689,6 @@ include_opening_angle : bool
 closed_orbit : CoordStruct, optional
     Closed orbit. If not present this routine will calculate it.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 mode : NormalModesStruct
@@ -15771,15 +15705,15 @@ rad_int_by_ele : RadIntAllEleStruct
       .def_readonly("rad_int_by_ele", &Bmad::Emit6d::rad_int_by_ele)
       .def("__len__", [](const Bmad::Emit6d&) { return 3; })
       .def("__getitem__", [](const Bmad::Emit6d& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.mode);
         if (i == 1)
           return py::cast(s.sigma_mat);
         if (i == 2)
           return py::cast(s.rad_int_by_ele);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "end_akima_spline_calc",
@@ -15820,11 +15754,11 @@ is_entering :
       .def(
           "__getitem__",
           [](const PyEnteringElement& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_entering);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "envelope_radints",
@@ -15889,9 +15823,6 @@ npart : float
 species : int
     Particle species.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 alpha : float
@@ -15911,13 +15842,13 @@ emit : float
       .def(
           "__getitem__",
           [](const Bmad::EnvelopeRadintsIbs& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.alpha);
             if (i == 1)
               return py::cast(s.emit);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_ac_kicker",
@@ -15938,11 +15869,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqAcKicker::is_eq)
       .def("__len__", [](const PyEqAcKicker&) { return 1; })
       .def("__getitem__", [](const PyEqAcKicker& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_ac_kicker_freq",
@@ -15964,11 +15895,11 @@ is_eq :
       .def("__len__", [](const PyEqAcKickerFreq&) { return 1; })
       .def(
           "__getitem__", [](const PyEqAcKickerFreq& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_ac_kicker_time",
@@ -15990,11 +15921,11 @@ is_eq :
       .def("__len__", [](const PyEqAcKickerTime&) { return 1; })
       .def(
           "__getitem__", [](const PyEqAcKickerTime& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_anormal_mode",
@@ -16015,11 +15946,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqAnormalMode::is_eq)
       .def("__len__", [](const PyEqAnormalMode&) { return 1; })
       .def("__getitem__", [](const PyEqAnormalMode& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_aperture_param",
@@ -16042,11 +15973,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqApertureParam& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_aperture_point",
@@ -16069,11 +16000,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqAperturePoint& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_aperture_scan",
@@ -16095,11 +16026,11 @@ is_eq :
       .def("__len__", [](const PyEqApertureScan&) { return 1; })
       .def(
           "__getitem__", [](const PyEqApertureScan& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_beam",
@@ -16120,11 +16051,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqBeam::is_eq)
       .def("__len__", [](const PyEqBeam&) { return 1; })
       .def("__getitem__", [](const PyEqBeam& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_beam_init",
@@ -16145,11 +16076,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqBeamInit::is_eq)
       .def("__len__", [](const PyEqBeamInit&) { return 1; })
       .def("__getitem__", [](const PyEqBeamInit& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_bmad_common",
@@ -16170,11 +16101,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqBmadCommon::is_eq)
       .def("__len__", [](const PyEqBmadCommon&) { return 1; })
       .def("__getitem__", [](const PyEqBmadCommon& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_bookkeeping_state",
@@ -16199,11 +16130,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqBookkeepingState& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_bpm_phase_coupling",
@@ -16228,11 +16159,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqBpmPhaseCoupling& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_branch",
@@ -16253,11 +16184,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqBranch::is_eq)
       .def("__len__", [](const PyEqBranch&) { return 1; })
       .def("__getitem__", [](const PyEqBranch& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_bunch",
@@ -16278,11 +16209,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqBunch::is_eq)
       .def("__len__", [](const PyEqBunch&) { return 1; })
       .def("__getitem__", [](const PyEqBunch& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_bunch_params",
@@ -16303,11 +16234,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqBunchParams::is_eq)
       .def("__len__", [](const PyEqBunchParams&) { return 1; })
       .def("__getitem__", [](const PyEqBunchParams& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_cartesian_map",
@@ -16329,11 +16260,11 @@ is_eq :
       .def("__len__", [](const PyEqCartesianMap&) { return 1; })
       .def(
           "__getitem__", [](const PyEqCartesianMap& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_cartesian_map_term",
@@ -16358,11 +16289,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqCartesianMapTerm& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_cartesian_map_term1",
@@ -16387,11 +16318,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqCartesianMapTerm1& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_complex_taylor",
@@ -16414,11 +16345,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqComplexTaylor& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_complex_taylor_term",
@@ -16443,11 +16374,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqComplexTaylorTerm& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_control",
@@ -16468,11 +16399,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqControl::is_eq)
       .def("__len__", [](const PyEqControl&) { return 1; })
       .def("__getitem__", [](const PyEqControl& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_control_ramp1",
@@ -16494,11 +16425,11 @@ is_eq :
       .def("__len__", [](const PyEqControlRamp1&) { return 1; })
       .def(
           "__getitem__", [](const PyEqControlRamp1& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_control_var1",
@@ -16519,11 +16450,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqControlVar1::is_eq)
       .def("__len__", [](const PyEqControlVar1&) { return 1; })
       .def("__getitem__", [](const PyEqControlVar1& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_controller",
@@ -16544,11 +16475,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqController::is_eq)
       .def("__len__", [](const PyEqController&) { return 1; })
       .def("__getitem__", [](const PyEqController& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_coord",
@@ -16569,11 +16500,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqCoord::is_eq)
       .def("__len__", [](const PyEqCoord&) { return 1; })
       .def("__getitem__", [](const PyEqCoord& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_coord_array",
@@ -16594,11 +16525,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqCoordArray::is_eq)
       .def("__len__", [](const PyEqCoordArray&) { return 1; })
       .def("__getitem__", [](const PyEqCoordArray& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_cylindrical_map",
@@ -16621,11 +16552,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqCylindricalMap& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_cylindrical_map_term",
@@ -16650,11 +16581,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqCylindricalMapTerm& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_cylindrical_map_term1",
@@ -16679,11 +16610,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqCylindricalMapTerm1& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_ele",
@@ -16704,11 +16635,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqEle::is_eq)
       .def("__len__", [](const PyEqEle&) { return 1; })
       .def("__getitem__", [](const PyEqEle& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_ellipse_beam_init",
@@ -16733,11 +16664,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqEllipseBeamInit& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_em_field",
@@ -16758,11 +16689,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqEmField::is_eq)
       .def("__len__", [](const PyEqEmField&) { return 1; })
       .def("__getitem__", [](const PyEqEmField& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_em_taylor",
@@ -16783,11 +16714,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqEmTaylor::is_eq)
       .def("__len__", [](const PyEqEmTaylor&) { return 1; })
       .def("__getitem__", [](const PyEqEmTaylor& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_em_taylor_term",
@@ -16809,11 +16740,11 @@ is_eq :
       .def("__len__", [](const PyEqEmTaylorTerm&) { return 1; })
       .def(
           "__getitem__", [](const PyEqEmTaylorTerm& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_expression_atom",
@@ -16836,11 +16767,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqExpressionAtom& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_floor_position",
@@ -16863,11 +16794,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqFloorPosition& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_gen_grad1",
@@ -16888,11 +16819,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqGenGrad1::is_eq)
       .def("__len__", [](const PyEqGenGrad1&) { return 1; })
       .def("__getitem__", [](const PyEqGenGrad1& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_gen_grad_map",
@@ -16913,11 +16844,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqGenGradMap::is_eq)
       .def("__len__", [](const PyEqGenGradMap&) { return 1; })
       .def("__getitem__", [](const PyEqGenGradMap& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_grid_beam_init",
@@ -16939,11 +16870,11 @@ is_eq :
       .def("__len__", [](const PyEqGridBeamInit&) { return 1; })
       .def(
           "__getitem__", [](const PyEqGridBeamInit& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_grid_field",
@@ -16964,11 +16895,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqGridField::is_eq)
       .def("__len__", [](const PyEqGridField&) { return 1; })
       .def("__getitem__", [](const PyEqGridField& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_grid_field_pt",
@@ -16989,11 +16920,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqGridFieldPt::is_eq)
       .def("__len__", [](const PyEqGridFieldPt&) { return 1; })
       .def("__getitem__", [](const PyEqGridFieldPt& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_grid_field_pt1",
@@ -17015,11 +16946,11 @@ is_eq :
       .def("__len__", [](const PyEqGridFieldPt1&) { return 1; })
       .def(
           "__getitem__", [](const PyEqGridFieldPt1& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_high_energy_space_charge",
@@ -17046,11 +16977,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqHighEnergySpaceCharge& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_interval1_coef",
@@ -17073,11 +17004,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqInterval1Coef& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_kv_beam_init",
@@ -17098,11 +17029,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqKvBeamInit::is_eq)
       .def("__len__", [](const PyEqKvBeamInit&) { return 1; })
       .def("__getitem__", [](const PyEqKvBeamInit& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_lat",
@@ -17123,11 +17054,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqLat::is_eq)
       .def("__len__", [](const PyEqLat&) { return 1; })
       .def("__getitem__", [](const PyEqLat& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_lat_ele_loc",
@@ -17148,11 +17079,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqLatEleLoc::is_eq)
       .def("__len__", [](const PyEqLatEleLoc&) { return 1; })
       .def("__getitem__", [](const PyEqLatEleLoc& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_lat_param",
@@ -17173,11 +17104,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqLatParam::is_eq)
       .def("__len__", [](const PyEqLatParam&) { return 1; })
       .def("__getitem__", [](const PyEqLatParam& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_linac_normal_mode",
@@ -17202,11 +17133,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqLinacNormalMode& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_mode3",
@@ -17227,11 +17158,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqMode3::is_eq)
       .def("__len__", [](const PyEqMode3&) { return 1; })
       .def("__getitem__", [](const PyEqMode3& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_mode_info",
@@ -17252,11 +17183,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqModeInfo::is_eq)
       .def("__len__", [](const PyEqModeInfo&) { return 1; })
       .def("__getitem__", [](const PyEqModeInfo& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_normal_modes",
@@ -17277,11 +17208,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqNormalModes::is_eq)
       .def("__len__", [](const PyEqNormalModes&) { return 1; })
       .def("__getitem__", [](const PyEqNormalModes& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_photon_element",
@@ -17304,11 +17235,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqPhotonElement& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_photon_material",
@@ -17331,11 +17262,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqPhotonMaterial& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_photon_reflect_surface",
@@ -17362,11 +17293,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqPhotonReflectSurface& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_photon_reflect_table",
@@ -17391,11 +17322,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqPhotonReflectTable& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_photon_target",
@@ -17417,11 +17348,11 @@ is_eq :
       .def("__len__", [](const PyEqPhotonTarget&) { return 1; })
       .def(
           "__getitem__", [](const PyEqPhotonTarget& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_pixel_detec",
@@ -17442,11 +17373,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqPixelDetec::is_eq)
       .def("__len__", [](const PyEqPixelDetec&) { return 1; })
       .def("__getitem__", [](const PyEqPixelDetec& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_pixel_pt",
@@ -17467,11 +17398,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqPixelPt::is_eq)
       .def("__len__", [](const PyEqPixelPt&) { return 1; })
       .def("__getitem__", [](const PyEqPixelPt& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_pre_tracker",
@@ -17492,11 +17423,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqPreTracker::is_eq)
       .def("__len__", [](const PyEqPreTracker&) { return 1; })
       .def("__getitem__", [](const PyEqPreTracker& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_rad_int1",
@@ -17517,11 +17448,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqRadInt1::is_eq)
       .def("__len__", [](const PyEqRadInt1&) { return 1; })
       .def("__getitem__", [](const PyEqRadInt1& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_rad_int_all_ele",
@@ -17543,11 +17474,11 @@ is_eq :
       .def("__len__", [](const PyEqRadIntAllEle&) { return 1; })
       .def(
           "__getitem__", [](const PyEqRadIntAllEle& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_rad_int_branch",
@@ -17569,11 +17500,11 @@ is_eq :
       .def("__len__", [](const PyEqRadIntBranch&) { return 1; })
       .def(
           "__getitem__", [](const PyEqRadIntBranch& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_rad_map",
@@ -17594,11 +17525,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqRadMap::is_eq)
       .def("__len__", [](const PyEqRadMap&) { return 1; })
       .def("__getitem__", [](const PyEqRadMap& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_rad_map_ele",
@@ -17619,11 +17550,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqRadMapEle::is_eq)
       .def("__len__", [](const PyEqRadMapEle&) { return 1; })
       .def("__getitem__", [](const PyEqRadMapEle& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_ramper_lord",
@@ -17644,11 +17575,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqRamperLord::is_eq)
       .def("__len__", [](const PyEqRamperLord&) { return 1; })
       .def("__getitem__", [](const PyEqRamperLord& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_space_charge_common",
@@ -17673,11 +17604,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqSpaceChargeCommon& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_spin_polar",
@@ -17698,11 +17629,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqSpinPolar::is_eq)
       .def("__len__", [](const PyEqSpinPolar&) { return 1; })
       .def("__getitem__", [](const PyEqSpinPolar& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_spline",
@@ -17723,11 +17654,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqSpline::is_eq)
       .def("__len__", [](const PyEqSpline&) { return 1; })
       .def("__getitem__", [](const PyEqSpline& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_strong_beam",
@@ -17748,11 +17679,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqStrongBeam::is_eq)
       .def("__len__", [](const PyEqStrongBeam&) { return 1; })
       .def("__getitem__", [](const PyEqStrongBeam& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_surface_curvature",
@@ -17777,11 +17708,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqSurfaceCurvature& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_surface_displacement",
@@ -17806,11 +17737,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqSurfaceDisplacement& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_surface_displacement_pt",
@@ -17837,11 +17768,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqSurfaceDisplacementPt& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_surface_h_misalign",
@@ -17866,11 +17797,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqSurfaceHMisalign& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_surface_h_misalign_pt",
@@ -17895,11 +17826,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqSurfaceHMisalignPt& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_surface_segmented",
@@ -17924,11 +17855,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqSurfaceSegmented& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_surface_segmented_pt",
@@ -17953,11 +17884,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqSurfaceSegmentedPt& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_target_point",
@@ -17978,11 +17909,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqTargetPoint::is_eq)
       .def("__len__", [](const PyEqTargetPoint&) { return 1; })
       .def("__getitem__", [](const PyEqTargetPoint& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_taylor",
@@ -18003,11 +17934,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqTaylor::is_eq)
       .def("__len__", [](const PyEqTaylor&) { return 1; })
       .def("__getitem__", [](const PyEqTaylor& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_taylor_term",
@@ -18028,11 +17959,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqTaylorTerm::is_eq)
       .def("__len__", [](const PyEqTaylorTerm&) { return 1; })
       .def("__getitem__", [](const PyEqTaylorTerm& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_track",
@@ -18053,11 +17984,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqTrack::is_eq)
       .def("__len__", [](const PyEqTrack&) { return 1; })
       .def("__getitem__", [](const PyEqTrack& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_track_point",
@@ -18078,11 +18009,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqTrackPoint::is_eq)
       .def("__len__", [](const PyEqTrackPoint&) { return 1; })
       .def("__getitem__", [](const PyEqTrackPoint& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_twiss",
@@ -18103,11 +18034,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqTwiss::is_eq)
       .def("__len__", [](const PyEqTwiss&) { return 1; })
       .def("__getitem__", [](const PyEqTwiss& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_wake",
@@ -18128,11 +18059,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqWake::is_eq)
       .def("__len__", [](const PyEqWake&) { return 1; })
       .def("__getitem__", [](const PyEqWake& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_wake_lr",
@@ -18153,11 +18084,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqWakeLr::is_eq)
       .def("__len__", [](const PyEqWakeLr&) { return 1; })
       .def("__getitem__", [](const PyEqWakeLr& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_wake_lr_mode",
@@ -18178,11 +18109,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqWakeLrMode::is_eq)
       .def("__len__", [](const PyEqWakeLrMode&) { return 1; })
       .def("__getitem__", [](const PyEqWakeLrMode& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_wake_sr",
@@ -18203,11 +18134,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqWakeSr::is_eq)
       .def("__len__", [](const PyEqWakeSr&) { return 1; })
       .def("__getitem__", [](const PyEqWakeSr& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_wake_sr_mode",
@@ -18228,11 +18159,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqWakeSrMode::is_eq)
       .def("__len__", [](const PyEqWakeSrMode&) { return 1; })
       .def("__getitem__", [](const PyEqWakeSrMode& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_wake_sr_z_long",
@@ -18253,11 +18184,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqWakeSrZLong::is_eq)
       .def("__len__", [](const PyEqWakeSrZLong&) { return 1; })
       .def("__getitem__", [](const PyEqWakeSrZLong& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_wall3d",
@@ -18278,11 +18209,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqWall3d::is_eq)
       .def("__len__", [](const PyEqWall3d&) { return 1; })
       .def("__getitem__", [](const PyEqWall3d& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "eq_wall3d_section",
@@ -18305,11 +18236,11 @@ is_eq :
       .def(
           "__getitem__",
           [](const PyEqWall3dSection& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_wall3d_vertex",
@@ -18331,11 +18262,11 @@ is_eq :
       .def("__len__", [](const PyEqWall3dVertex&) { return 1; })
       .def(
           "__getitem__", [](const PyEqWall3dVertex& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_eq);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "eq_xy_disp",
@@ -18356,11 +18287,11 @@ is_eq :
       .def_readonly("is_eq", &PyEqXyDisp::is_eq)
       .def("__len__", [](const PyEqXyDisp&) { return 1; })
       .def("__getitem__", [](const PyEqXyDisp& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_eq);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "equal_sign_here",
@@ -18382,13 +18313,13 @@ is_here :
       .def_readonly("is_here", &PyEqualSignHere::is_here)
       .def("__len__", [](const PyEqualSignHere&) { return 2; })
       .def("__getitem__", [](const PyEqualSignHere& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.delim);
         if (i == 1)
           return py::cast(s.is_here);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "equivalent_taylor_attributes",
@@ -18417,11 +18348,11 @@ equiv :
       .def(
           "__getitem__",
           [](const PyEquivalentTaylorAttributes& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.equiv);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "err_exit",
@@ -18438,11 +18369,11 @@ err_str :
       .def_readonly("err_str", &PyErrExit::err_str)
       .def("__len__", [](const PyErrExit&) { return 1; })
       .def("__getitem__", [](const PyErrExit& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.err_str);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "etdiv",
@@ -18474,8 +18405,8 @@ F :
       .def_readonly("F", &PyEtdiv::F)
       .def("__len__", [](const PyEtdiv&) { return 6; })
       .def("__getitem__", [](const PyEtdiv& s, size_t i) -> py::object {
-        if (i >= 6)
-          throw py::index_error();
+        if (i < 0)
+          i += 6;
         if (i == 0)
           return py::cast(s.A);
         if (i == 1)
@@ -18488,7 +18419,7 @@ F :
           return py::cast(s.E);
         if (i == 5)
           return py::cast(s.F);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "evaluate_array_index",
@@ -18506,9 +18437,6 @@ delim_list1 : unknown
     Delimitor after the integer. Normally ')'.
 delim_list2 : unknown
     Delimitor list to mark the end of word2. Normally '='.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -18535,8 +18463,8 @@ this_index : int
       .def(
           "__getitem__",
           [](const Bmad::EvaluateArrayIndex& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
@@ -18545,7 +18473,7 @@ this_index : int
               return py::cast(s.delim2);
             if (i == 3)
               return py::cast(s.this_index);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "evaluate_logical",
@@ -18563,9 +18491,6 @@ Parameters
 word : unknown
     Input string.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 this_logic : bool
@@ -18581,13 +18506,13 @@ iostat : int
       .def(
           "__getitem__",
           [](const Bmad::EvaluateLogical& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.iostat);
             if (i == 1)
               return py::cast(s.this_logic);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "exact_bend_edge_kick",
@@ -18685,15 +18610,15 @@ expect_this
       .def_readonly("is_ok", &PyExpectOneOf::is_ok)
       .def("__len__", [](const PyExpectOneOf&) { return 3; })
       .def("__getitem__", [](const PyExpectOneOf& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.delim);
         if (i == 1)
           return py::cast(s.delim_found);
         if (i == 2)
           return py::cast(s.is_ok);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "expect_this",
@@ -18722,9 +18647,6 @@ err_str : unknown
 ele : EleStruct
     Element parameters being parsed.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 delim : unknown
@@ -18745,15 +18667,15 @@ expect_one_of
       .def("__len__", [](const Bmad::ExpectThis&) { return 3; })
       .def(
           "__getitem__", [](const Bmad::ExpectThis& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.delim);
             if (i == 1)
               return py::cast(s.delim_found);
             if (i == 2)
               return py::cast(s.is_ok);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "expression_stack_to_string",
@@ -18793,9 +18715,6 @@ var : ControlVar1Struct, optional
 use_old : bool, optional
     Use var.old_value? Must be present if var(:) is present.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 value : float
@@ -18823,15 +18742,15 @@ expression_value expression_string_to_stack
       .def(
           "__getitem__",
           [](const Bmad::ExpressionStackValue& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
               return py::cast(s.err_str);
             if (i == 2)
               return py::cast(s.value);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "expression_string_to_stack",
@@ -18848,9 +18767,6 @@ Parameters
 ----------
 string : unknown
     Expression to be converted.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -18882,8 +18798,8 @@ expression_value expression_stack_value
       .def(
           "__getitem__",
           [](const Bmad::ExpressionStringToStack& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.stack);
             if (i == 1)
@@ -18892,7 +18808,7 @@ expression_value expression_stack_value
               return py::cast(s.err_flag);
             if (i == 3)
               return py::cast(s.err_str);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "expression_string_to_tree",
@@ -18909,9 +18825,6 @@ root_tree : ExpressionTreeStruct
     Only used when recursively called.
 string : unknown
     Expression to be converted.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -18954,13 +18867,13 @@ construct "mass_of(He++)" will not get split will get marked as a species_const$
       .def(
           "__getitem__",
           [](const Bmad::ExpressionStringToTree& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
               return py::cast(s.err_str);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "expression_tree_to_string",
@@ -19005,9 +18918,6 @@ var : ControlVar1Struct, optional
 use_old : bool, optional
     Use var.old_value? Must be present if var(:) is present.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 value : float
@@ -19031,15 +18941,15 @@ expression_string_to_stack expression_stack_value
       .def(
           "__getitem__",
           [](const Bmad::ExpressionValue& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
               return py::cast(s.err_str);
             if (i == 2)
               return py::cast(s.value);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "factorial",
@@ -19059,13 +18969,13 @@ fact :
       .def_readonly("fact", &PyFactorial::fact)
       .def("__len__", [](const PyFactorial&) { return 2; })
       .def("__getitem__", [](const PyFactorial& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.n);
         if (i == 1)
           return py::cast(s.fact);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "faddeeva_function",
@@ -19166,8 +19076,8 @@ add_switch :
       .def(
           "__getitem__",
           [](const PyFileDirectorizer& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.in_file);
             if (i == 1)
@@ -19176,7 +19086,7 @@ add_switch :
               return py::cast(s.directory);
             if (i == 3)
               return py::cast(s.add_switch);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "file_get",
@@ -19199,15 +19109,15 @@ file_name :
       .def_readonly("file_name", &PyFileGet::file_name)
       .def("__len__", [](const PyFileGet&) { return 3; })
       .def("__getitem__", [](const PyFileGet& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.string);
         if (i == 1)
           return py::cast(s.dflt_file_name);
         if (i == 2)
           return py::cast(s.file_name);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "file_get_open",
@@ -19236,8 +19146,8 @@ readonly :
       .def_readonly("readonly", &PyFileGetOpen::readonly)
       .def("__len__", [](const PyFileGetOpen&) { return 5; })
       .def("__getitem__", [](const PyFileGetOpen& s, size_t i) -> py::object {
-        if (i >= 5)
-          throw py::index_error();
+        if (i < 0)
+          i += 5;
         if (i == 0)
           return py::cast(s.string);
         if (i == 1)
@@ -19248,7 +19158,7 @@ readonly :
           return py::cast(s.file_unit);
         if (i == 4)
           return py::cast(s.readonly);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "file_suffixer",
@@ -19274,8 +19184,8 @@ add_switch :
       .def_readonly("add_switch", &PyFileSuffixer::add_switch)
       .def("__len__", [](const PyFileSuffixer&) { return 4; })
       .def("__getitem__", [](const PyFileSuffixer& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.in_file_name);
         if (i == 1)
@@ -19284,7 +19194,7 @@ add_switch :
           return py::cast(s.suffix);
         if (i == 3)
           return py::cast(s.add_switch);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "finalize_reflectivity_table",
@@ -19330,13 +19240,13 @@ ix_multipass : int, optional
       .def(
           "__getitem__",
           [](const Bmad::FindElementEnds& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.ele1);
             if (i == 1)
               return py::cast(s.ele2);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "find_fwhm",
@@ -19386,13 +19296,13 @@ ix_match :
       .def(
           "__getitem__",
           [](const PyFindLocationInt& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.value);
             if (i == 1)
               return py::cast(s.ix_match);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "find_location",
@@ -19418,13 +19328,13 @@ ix_match :
       .def(
           "__getitem__",
           [](const PyFindLocationLogic& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.value);
             if (i == 1)
               return py::cast(s.ix_match);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "find_location",
@@ -19449,11 +19359,11 @@ ix_match :
       .def(
           "__getitem__",
           [](const PyFindLocationReal& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.ix_match);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "find_matching_fieldmap",
@@ -19492,13 +19402,13 @@ ignore_slaves : bool, optional
       .def(
           "__getitem__",
           [](const Bmad::FindMatchingFieldmap& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.match_ele);
             if (i == 1)
               return py::cast(s.ix_field);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "find_normalization",
@@ -19564,11 +19474,11 @@ called when the instance is no longer needed.
       .def_readonly("z", &PyFixedwindowls::z)
       .def("__len__", [](const PyFixedwindowls&) { return 1; })
       .def("__getitem__", [](const PyFixedwindowls& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.z);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "floor_angles_to_w_mat",
@@ -19601,13 +19511,13 @@ w_mat_inv : float
       .def(
           "__getitem__",
           [](const Bmad::FloorAnglesToWMat& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.w_mat);
             if (i == 1)
               return py::cast(s.w_mat_inv);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "floor_w_mat_to_angles",
@@ -19641,15 +19551,15 @@ floor0 : FloorPositionStruct, optional
       .def(
           "__getitem__",
           [](const Bmad::FloorWMatToAngles& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.theta);
             if (i == 1)
               return py::cast(s.phi);
             if (i == 2)
               return py::cast(s.psi);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "form_complex_taylor",
@@ -19692,9 +19602,6 @@ use_line : unknown, optional
     Line used for lattice expansion. If not present or blank, the line used is the one that was specified in
     the lattice file.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 digested_file : unknown
@@ -19716,13 +19623,13 @@ full_lat_file : unknown
       .def(
           "__getitem__",
           [](const Bmad::FormDigestedBmadFileName& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.digested_file);
             if (i == 1)
               return py::cast(s.full_lat_file);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "fourier_amplitude",
@@ -19741,9 +19648,6 @@ data : float
     data to analyze
 frequency : float
     frequency
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -19768,8 +19672,8 @@ dsin_amp : float
       .def(
           "__getitem__",
           [](const SimUtils::FourierAmplitude& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.cos_amp);
             if (i == 1)
@@ -19778,7 +19682,7 @@ dsin_amp : float
               return py::cast(s.dcos_amp);
             if (i == 3)
               return py::cast(s.dsin_amp);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "fringe_here",
@@ -19804,11 +19708,11 @@ is_here :
       .def_readonly("is_here", &PyFringeHere::is_here)
       .def("__len__", [](const PyFringeHere&) { return 1; })
       .def("__getitem__", [](const PyFringeHere& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_here);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "g_bend_from_em_field",
@@ -19876,13 +19780,13 @@ dg : float
           "__getitem__",
           [](const Bmad::GBendingStrengthFromEmField& s,
              size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.g);
             if (i == 1)
               return py::cast(s.dg);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "g_integrals_calc",
@@ -19913,11 +19817,11 @@ gamma :
       .def_readonly("gamma", &PyGammaRef::gamma)
       .def("__len__", [](const PyGammaRef&) { return 1; })
       .def("__getitem__", [](const PyGammaRef& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.gamma);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "gen_complete_elliptic",
@@ -19953,8 +19857,8 @@ value :
       .def(
           "__getitem__",
           [](const PyGenCompleteElliptic& s, size_t i) -> py::object {
-            if (i >= 6)
-              throw py::index_error();
+            if (i < 0)
+              i += 6;
             if (i == 0)
               return py::cast(s.kc);
             if (i == 1)
@@ -19967,7 +19871,7 @@ value :
               return py::cast(s.err_tol);
             if (i == 5)
               return py::cast(s.value);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "gen_grad1_to_em_taylor",
@@ -20031,13 +19935,13 @@ field :
       .def_readonly("theta", &PyGenGradField::theta)
       .def("__len__", [](const PyGenGradField&) { return 2; })
       .def("__getitem__", [](const PyGenGradField& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.rho);
         if (i == 1)
           return py::cast(s.theta);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "get_bl_from_fwhm",
@@ -20081,15 +19985,15 @@ err :
       .def_readonly("err", &PyGetCalledFile::err)
       .def("__len__", [](const PyGetCalledFile&) { return 3; })
       .def("__getitem__", [](const PyGetCalledFile& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.delim);
         if (i == 1)
           return py::cast(s.call_file);
         if (i == 2)
           return py::cast(s.err);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "get_emit_from_sigma_mat",
@@ -20118,9 +20022,6 @@ sigma_mat : float
 Nmat : float, optional
     If present, then the emittanced will be ordered such that the eigensystem most closely resembles Nmat.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 normal : float
@@ -20140,13 +20041,13 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::GetEmitFromSigmaMat& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.normal);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "get_file_number",
@@ -20172,8 +20073,8 @@ err_flag :
       .def_readonly("err_flag", &PyGetFileNumber::err_flag)
       .def("__len__", [](const PyGetFileNumber&) { return 4; })
       .def("__getitem__", [](const PyGetFileNumber& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.file_name);
         if (i == 1)
@@ -20182,7 +20083,7 @@ err_flag :
           return py::cast(s.num_out);
         if (i == 3)
           return py::cast(s.err_flag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "get_file_time_stamp",
@@ -20205,13 +20106,13 @@ end subroutine
       .def(
           "__getitem__",
           [](const PyGetFileTimeStamp& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.file);
             if (i == 1)
               return py::cast(s.time_stamp);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "get_next_word",
@@ -20271,13 +20172,13 @@ n_slave : int
       .def(
           "__getitem__",
           [](const Bmad::GetSlaveList& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.slaves);
             if (i == 1)
               return py::cast(s.n_slave);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "gpt_field_grid_scaling",
@@ -20306,15 +20207,15 @@ ref_time :
       .def(
           "__getitem__",
           [](const PyGptFieldGridScaling& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.dimensions);
             if (i == 1)
               return py::cast(s.field_scale);
             if (i == 2)
               return py::cast(s.ref_time);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "gpt_max_field_reference",
@@ -20339,11 +20240,11 @@ field_value :
       .def(
           "__getitem__",
           [](const PyGptMaxFieldReference& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.field_value);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "gpt_to_particle_bunch",
@@ -20358,9 +20259,6 @@ gpt_file : unknown
     Name of GPT data file.
 ele : EleStruct
     Lattice element whose downstream end coincident with the GPT screen.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -20381,13 +20279,13 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::GptToParticleBunch& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.bunch);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "gradient_shift_sr_wake",
@@ -20414,11 +20312,11 @@ grad_shift :
       .def(
           "__getitem__",
           [](const PyGradientShiftSrWake& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.grad_shift);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "grid_field_interpolate",
@@ -20480,11 +20378,11 @@ hh :
       .def_readonly("N", &PyHanhan::N)
       .def("__len__", [](const PyHanhan&) { return 1; })
       .def("__getitem__", [](const PyHanhan& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.N);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "hard_multipole_edge_kick",
@@ -20542,13 +20440,13 @@ has_it :
       .def_readonly("has_it", &PyHasAttribute::has_it)
       .def("__len__", [](const PyHasAttribute&) { return 2; })
       .def("__getitem__", [](const PyHasAttribute& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.attrib);
         if (i == 1)
           return py::cast(s.has_it);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "has_curvature",
@@ -20615,8 +20513,8 @@ alive_only :
       .def_readonly("alive_only", &PyHdf5WriteBeam::alive_only)
       .def("__len__", [](const PyHdf5WriteBeam&) { return 4; })
       .def("__getitem__", [](const PyHdf5WriteBeam& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.file_name);
         if (i == 1)
@@ -20625,7 +20523,7 @@ alive_only :
           return py::cast(s.error);
         if (i == 3)
           return py::cast(s.alive_only);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "hdf5_write_grid_field",
@@ -20653,13 +20551,13 @@ err_flag :
       .def(
           "__getitem__",
           [](const PyHdf5WriteGridField& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.file_name);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "hom_voltage",
@@ -20678,11 +20576,11 @@ voltage :
       .def_readonly("voltage", &PyHomVoltage::voltage)
       .def("__len__", [](const PyHomVoltage&) { return 1; })
       .def("__getitem__", [](const PyHomVoltage& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.voltage);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "hwang_bend_edge_kick",
@@ -20740,15 +20638,15 @@ i_bes :
       .def_readonly("i_bes", &PyIBessel::i_bes)
       .def("__len__", [](const PyIBessel&) { return 3; })
       .def("__getitem__", [](const PyIBessel& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.m);
         if (i == 1)
           return py::cast(s.arg);
         if (i == 2)
           return py::cast(s.i_bes);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "i_bessel_extended",
@@ -20773,15 +20671,15 @@ i_bes :
       .def(
           "__getitem__",
           [](const PyIBesselExtended& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.m);
             if (i == 1)
               return py::cast(s.arg);
             if (i == 2)
               return py::cast(s.i_bes);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ibs_matrix_c",
@@ -20814,8 +20712,8 @@ ibs_mat :
       .def_readonly("species", &PyIbsMatrixC::species)
       .def("__len__", [](const PyIbsMatrixC&) { return 5; })
       .def("__getitem__", [](const PyIbsMatrixC& s, size_t i) -> py::object {
-        if (i >= 5)
-          throw py::index_error();
+        if (i < 0)
+          i += 5;
         if (i == 0)
           return py::cast(s.tail_cut);
         if (i == 1)
@@ -20826,7 +20724,7 @@ ibs_mat :
           return py::cast(s.n_part);
         if (i == 4)
           return py::cast(s.species);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "igfcoulombfun",
@@ -20864,8 +20762,8 @@ res :
       .def_readonly("res", &PyIgfcoulombfun::res)
       .def("__len__", [](const PyIgfcoulombfun&) { return 8; })
       .def("__getitem__", [](const PyIgfcoulombfun& s, size_t i) -> py::object {
-        if (i >= 8)
-          throw py::index_error();
+        if (i < 0)
+          i += 8;
         if (i == 0)
           return py::cast(s.u);
         if (i == 1)
@@ -20882,7 +20780,7 @@ res :
           return py::cast(s.dz);
         if (i == 7)
           return py::cast(s.res);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "igfexfun",
@@ -20920,8 +20818,8 @@ res :
       .def_readonly("res", &PyIgfexfun::res)
       .def("__len__", [](const PyIgfexfun&) { return 8; })
       .def("__getitem__", [](const PyIgfexfun& s, size_t i) -> py::object {
-        if (i >= 8)
-          throw py::index_error();
+        if (i < 0)
+          i += 8;
         if (i == 0)
           return py::cast(s.u);
         if (i == 1)
@@ -20938,7 +20836,7 @@ res :
           return py::cast(s.dz);
         if (i == 7)
           return py::cast(s.res);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "igfeyfun",
@@ -20976,8 +20874,8 @@ res :
       .def_readonly("res", &PyIgfeyfun::res)
       .def("__len__", [](const PyIgfeyfun&) { return 8; })
       .def("__getitem__", [](const PyIgfeyfun& s, size_t i) -> py::object {
-        if (i >= 8)
-          throw py::index_error();
+        if (i < 0)
+          i += 8;
         if (i == 0)
           return py::cast(s.u);
         if (i == 1)
@@ -20994,7 +20892,7 @@ res :
           return py::cast(s.dz);
         if (i == 7)
           return py::cast(s.res);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "igfezfun",
@@ -21032,8 +20930,8 @@ res :
       .def_readonly("res", &PyIgfezfun::res)
       .def("__len__", [](const PyIgfezfun&) { return 8; })
       .def("__getitem__", [](const PyIgfezfun& s, size_t i) -> py::object {
-        if (i >= 8)
-          throw py::index_error();
+        if (i < 0)
+          i += 8;
         if (i == 0)
           return py::cast(s.u);
         if (i == 1)
@@ -21050,7 +20948,7 @@ res :
           return py::cast(s.dz);
         if (i == 7)
           return py::cast(s.res);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "increment_file_number",
@@ -21080,8 +20978,8 @@ cnumber :
       .def(
           "__getitem__",
           [](const PyIncrementFileNumber& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.file_name);
             if (i == 1)
@@ -21090,7 +20988,7 @@ cnumber :
               return py::cast(s.number);
             if (i == 3)
               return py::cast(s.cnumber);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "index_nocase",
@@ -21113,15 +21011,15 @@ indx :
       .def_readonly("indx", &PyIndexNocase::indx)
       .def("__len__", [](const PyIndexNocase&) { return 3; })
       .def("__getitem__", [](const PyIndexNocase& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.string1);
         if (i == 1)
           return py::cast(s.string2);
         if (i == 2)
           return py::cast(s.indx);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "init_attribute_name1",
@@ -21185,9 +21083,6 @@ print_p0c_shift_warning : bool, optional
 shift_momentum : bool, optional
     Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 beam : BeamStruct
@@ -21211,8 +21106,8 @@ beam_init_set : BeamInitStruct
       .def(
           "__getitem__",
           [](const PyInitBeamDistribution& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.beam);
             if (i == 1)
@@ -21221,7 +21116,7 @@ beam_init_set : BeamInitStruct
               return py::cast(s.beam_init_set);
             if (i == 3)
               return py::cast(s.conserve_momentum);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "init_bmad",
@@ -21279,9 +21174,6 @@ print_p0c_shift_warning : bool, optional
 shift_momentum : bool, optional
     Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 bunch : BunchStruct
@@ -21306,8 +21198,8 @@ beam_init_used : BeamInitStruct
       .def(
           "__getitem__",
           [](const PyInitBunchDistribution& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.bunch);
             if (i == 1)
@@ -21316,7 +21208,7 @@ beam_init_used : BeamInitStruct
               return py::cast(s.beam_init_used);
             if (i == 3)
               return py::cast(s.conserve_momentum);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "init_complex_taylor_series",
@@ -21479,9 +21371,6 @@ random_on : bool, optional
     Default is True. Used only for photons being initalized with a photon_init element. If True, vary the
     photon coords using a random number generator. If False, the photon coords will be centered within the
     distribution specified in the photon_init ele.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -21703,9 +21592,6 @@ energy_integ_prob : float, optional
     photon in the given angle and energy range in the interval [E_min, E_photon] is energy_integ_prob. That
     is, energy_integ_prob = 0 => E_photon = E_min and energy_integ_prob = 1 => E_photon = E_max.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 E_photon : float
@@ -21725,13 +21611,13 @@ integ_prob : float
       .def(
           "__getitem__",
           [](const Bmad::InitPhotonIntegProb& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.E_photon);
             if (i == 1)
               return py::cast(s.integ_prob);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "init_spin_distribution",
@@ -21773,13 +21659,13 @@ phot : unknown
       .def(
           "__getitem__",
           [](const PyInitSurfaceSegment& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.ix);
             if (i == 1)
               return py::cast(s.iy);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "init_taylor_series",
@@ -21909,15 +21795,15 @@ str :
       .def_readonly("str", &PyIntStr::str)
       .def("__len__", [](const PyIntStr&) { return 3; })
       .def("__getitem__", [](const PyIntStr& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.int_);
         if (i == 1)
           return py::cast(s.width);
         if (i == 2)
           return py::cast(s.str);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "integrand_base",
@@ -21944,11 +21830,11 @@ t : float
       .def_readonly("func_retval__", &PyIntegrandBase::func_retval__)
       .def("__len__", [](const PyIntegrandBase&) { return 1; })
       .def("__getitem__", [](const PyIntegrandBase& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.func_retval__);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "integrate_max",
@@ -21980,8 +21866,8 @@ datum :
       .def_readonly("ix_m", &PyIntegrateMax::ix_m)
       .def("__len__", [](const PyIntegrateMax&) { return 4; })
       .def("__getitem__", [](const PyIntegrateMax& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.ix_start);
         if (i == 1)
@@ -21990,7 +21876,7 @@ datum :
           return py::cast(s.datum_value);
         if (i == 3)
           return py::cast(s.ix_m);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "integrate_min",
@@ -22022,8 +21908,8 @@ datum :
       .def_readonly("ix_m", &PyIntegrateMin::ix_m)
       .def("__len__", [](const PyIntegrateMin&) { return 4; })
       .def("__getitem__", [](const PyIntegrateMin& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.ix_start);
         if (i == 1)
@@ -22032,7 +21918,7 @@ datum :
           return py::cast(s.datum_value);
         if (i == 3)
           return py::cast(s.ix_m);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "integrate_psi",
@@ -22095,11 +21981,11 @@ tol :
       .def(
           "__getitem__",
           [](const PyIntegrationTimerEle& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.tol);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "interpolated_fft",
@@ -22129,8 +22015,8 @@ this_fft
       .def(
           "__getitem__",
           [](const PyInterpolatedFft& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.calc_ok);
             if (i == 1)
@@ -22139,7 +22025,7 @@ this_fft
               return py::cast(s.opt_dump_index);
             if (i == 3)
               return py::cast(s.this_fft);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "interpolated_fft_gsl",
@@ -22168,8 +22054,8 @@ available.
       .def(
           "__getitem__",
           [](const PyInterpolatedFftGsl& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.calc_ok);
             if (i == 1)
@@ -22178,7 +22064,7 @@ available.
               return py::cast(s.opt_dump_index);
             if (i == 3)
               return py::cast(s.this_fft);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ion_kick",
@@ -22233,15 +22119,15 @@ prob
       .def_readonly("is_alpha", &PyIsAlphabetic::is_alpha)
       .def("__len__", [](const PyIsAlphabetic&) { return 3; })
       .def("__getitem__", [](const PyIsAlphabetic& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.string);
         if (i == 1)
           return py::cast(s.valid_chars);
         if (i == 2)
           return py::cast(s.is_alpha);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "is_attribute",
@@ -22287,11 +22173,11 @@ is_decreasing :
       .def(
           "__getitem__",
           [](const PyIsDecreasingSequence& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_decreasing);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "is_false",
@@ -22342,11 +22228,11 @@ is_increasing :
       .def(
           "__getitem__",
           [](const PyIsIncreasingSequence& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_increasing);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "is_integer",
@@ -22375,8 +22261,8 @@ valid :
       .def_readonly("valid", &PyIsInteger::valid)
       .def("__len__", [](const PyIsInteger&) { return 5; })
       .def("__getitem__", [](const PyIsInteger& s, size_t i) -> py::object {
-        if (i >= 5)
-          throw py::index_error();
+        if (i < 0)
+          i += 5;
         if (i == 0)
           return py::cast(s.string);
         if (i == 1)
@@ -22387,7 +22273,7 @@ valid :
           return py::cast(s.ix_word);
         if (i == 4)
           return py::cast(s.valid);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "is_logical",
@@ -22410,15 +22296,15 @@ valid :
       .def_readonly("valid", &PyIsLogical::valid)
       .def("__len__", [](const PyIsLogical&) { return 3; })
       .def("__getitem__", [](const PyIsLogical& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.string);
         if (i == 1)
           return py::cast(s.ignore);
         if (i == 2)
           return py::cast(s.valid);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "is_real",
@@ -22444,8 +22330,8 @@ valid :
       .def_readonly("valid", &PyIsReal::valid)
       .def("__len__", [](const PyIsReal&) { return 4; })
       .def("__getitem__", [](const PyIsReal& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.string);
         if (i == 1)
@@ -22454,7 +22340,7 @@ valid :
           return py::cast(s.real_num);
         if (i == 3)
           return py::cast(s.valid);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "is_subatomic_species",
@@ -22517,15 +22403,15 @@ j_bes :
       .def_readonly("j_bes", &PyJBessel::j_bes)
       .def("__len__", [](const PyJBessel&) { return 3; })
       .def("__getitem__", [](const PyJBessel& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.m);
         if (i == 1)
           return py::cast(s.arg);
         if (i == 2)
           return py::cast(s.j_bes);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "key_name_to_key_index",
@@ -22553,11 +22439,11 @@ key_index :
       .def(
           "__getitem__",
           [](const PyKeyNameToKeyIndex& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.key_index);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "kick_vector_calc",
@@ -22610,9 +22496,6 @@ local_ref_frame : !
     Logical, If True then take the input coordinates -- Logical, If True then take the input coordinates as
     being with respect to the frame of referene of the element.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 dr_ds : float
@@ -22637,15 +22520,15 @@ NOTE: dr(5)/ds IS IGNORED WHEN CALCULATING Z. SEE TRANSFER_THIS_ORBIT ABOVE. dr(
       .def("__len__", [](const PyKickVectorCalc&) { return 3; })
       .def(
           "__getitem__", [](const PyKickVectorCalc& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.dr_ds);
             if (i == 1)
               return py::cast(s.err);
             if (i == 2)
               return py::cast(s.print_err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "kill_complex_taylor",
@@ -22731,13 +22614,13 @@ y_pt :
       .def(
           "__getitem__",
           [](const PyKnotInterpolate& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
               return py::cast(s.y_pt);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "knots_to_string",
@@ -22758,11 +22641,11 @@ str :
       .def_readonly("str", &PyKnotsToString::str)
       .def("__len__", [](const PyKnotsToString&) { return 1; })
       .def("__getitem__", [](const PyKnotsToString& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.str);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "lafun",
@@ -22788,8 +22671,8 @@ res :
       .def_readonly("res", &PyLafun::res)
       .def("__len__", [](const PyLafun&) { return 4; })
       .def("__getitem__", [](const PyLafun& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.x);
         if (i == 1)
@@ -22798,7 +22681,7 @@ res :
           return py::cast(s.z);
         if (i == 3)
           return py::cast(s.res);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "lat_compute_ref_energy_and_time",
@@ -22861,13 +22744,13 @@ append_eles : bool, optional
       .def_readonly("n_loc", &PyLatEleLocator::n_loc)
       .def("__len__", [](const PyLatEleLocator&) { return 2; })
       .def("__getitem__", [](const PyLatEleLocator& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.err);
         if (i == 1)
           return py::cast(s.n_loc);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "lat_equal_lat",
@@ -23022,9 +22905,6 @@ Parameters
 stack : ExpressionAtomStruct
     Expression stack.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 err_flag : bool
@@ -23039,13 +22919,13 @@ coef : float
       .def("__len__", [](const Bmad::LinearCoef&) { return 2; })
       .def(
           "__getitem__", [](const Bmad::LinearCoef& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
               return py::cast(s.coef);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "linear_fit",
@@ -23078,8 +22958,8 @@ sig_b :
       .def_readonly("sig_b", &PyLinearFit::sig_b)
       .def("__len__", [](const PyLinearFit&) { return 5; })
       .def("__getitem__", [](const PyLinearFit& s, size_t i) -> py::object {
-        if (i >= 5)
-          throw py::index_error();
+        if (i < 0)
+          i += 5;
         if (i == 0)
           return py::cast(s.n_data);
         if (i == 1)
@@ -23090,7 +22970,7 @@ sig_b :
           return py::cast(s.sig_a);
         if (i == 4)
           return py::cast(s.sig_b);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "linear_fit_2d",
@@ -23141,9 +23021,6 @@ action : unknown
 ix_start : int
     Index in bp_com.parse_line string where to append stuff.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 end_of_file : bool
@@ -23159,13 +23036,13 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::LoadParseLine& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.end_of_file);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "logic_str",
@@ -23185,13 +23062,13 @@ str :
       .def_readonly("str", &PyLogicStr::str)
       .def("__len__", [](const PyLogicStr&) { return 2; })
       .def("__getitem__", [](const PyLogicStr& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.logic);
         if (i == 1)
           return py::cast(s.str);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "logical_to_python",
@@ -23213,13 +23090,13 @@ string :
       .def(
           "__getitem__",
           [](const PyLogicalToPython& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.logic);
             if (i == 1)
               return py::cast(s.string);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "lord_edge_aligned",
@@ -23247,11 +23124,11 @@ is_aligned :
       .def(
           "__getitem__",
           [](const PyLordEdgeAligned& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_aligned);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "low_energy_z_correction",
@@ -23289,11 +23166,11 @@ dz :
       .def(
           "__getitem__",
           [](const PyLowEnergyZCorrection& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.dz);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "lunget",
@@ -23577,9 +23454,6 @@ el : float
 sk1 : float
     Quadrupole strength.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 c : float
@@ -23599,8 +23473,8 @@ f : float
       .def_readonly("f", &Bmad::MadTmfoc::f)
       .def("__len__", [](const Bmad::MadTmfoc&) { return 4; })
       .def("__getitem__", [](const Bmad::MadTmfoc& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.c);
         if (i == 1)
@@ -23609,7 +23483,7 @@ f : float
           return py::cast(s.d);
         if (i == 3)
           return py::cast(s.f);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "mad_tmsymm",
@@ -23700,13 +23574,13 @@ g_inv_mat : float
       .def_readonly("g_inv_mat", &Bmad::MakeGMats::g_inv_mat)
       .def("__len__", [](const Bmad::MakeGMats&) { return 2; })
       .def("__getitem__", [](const Bmad::MakeGMats& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.g_mat);
         if (i == 1)
           return py::cast(s.g_inv_mat);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "make_hvbp",
@@ -23733,9 +23607,6 @@ Parameters
 N : float
     Matrix of eigenvectors prepared by make_N
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 B : float
@@ -23758,8 +23629,8 @@ Hbar : float
       .def_readonly("Hbar", &Bmad::MakeHvbp::Hbar)
       .def("__len__", [](const Bmad::MakeHvbp&) { return 5; })
       .def("__getitem__", [](const Bmad::MakeHvbp& s, size_t i) -> py::object {
-        if (i >= 5)
-          throw py::index_error();
+        if (i < 0)
+          i += 5;
         if (i == 0)
           return py::cast(s.B);
         if (i == 1)
@@ -23770,7 +23641,7 @@ Hbar : float
           return py::cast(s.Vbar);
         if (i == 4)
           return py::cast(s.Hbar);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "make_hybrid_lat",
@@ -23813,13 +23684,13 @@ comment_out :
       .def(
           "__getitem__",
           [](const PyMakeLegalComment& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.comment_in);
             if (i == 1)
               return py::cast(s.comment_out);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "make_mad_map",
@@ -23835,9 +23706,6 @@ ele : EleStruct
 param : LatParamStruct
     particle id
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 energy : MadEnergyStruct
@@ -23852,13 +23720,13 @@ map : MadMapStruct
       .def("__len__", [](const Bmad::MakeMadMap&) { return 2; })
       .def(
           "__getitem__", [](const Bmad::MakeMadMap& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.energy);
             if (i == 1)
               return py::cast(s.map);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "make_mat6",
@@ -23887,13 +23755,13 @@ err_flag : bool
       .def_readonly("err_flag", &Bmad::MakeMat6::err_flag)
       .def("__len__", [](const Bmad::MakeMat6&) { return 2; })
       .def("__getitem__", [](const Bmad::MakeMat6& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.end_orb);
         if (i == 1)
           return py::cast(s.err_flag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "make_mat6_bmad",
@@ -23925,13 +23793,13 @@ err : bool
       .def(
           "__getitem__",
           [](const Bmad::MakeMat6Bmad& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.end_orb);
             if (i == 1)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "make_mat6_bmad_photon",
@@ -23967,13 +23835,13 @@ err : bool
       .def(
           "__getitem__",
           [](const Bmad::MakeMat6BmadPhoton& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.end_orb);
             if (i == 1)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "make_mat6_high_energy_space_charge",
@@ -24069,13 +23937,13 @@ err_flag :
       .def("__len__", [](const PyMakeMat6Taylor&) { return 2; })
       .def(
           "__getitem__", [](const PyMakeMat6Taylor& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.end_orb);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "make_mat6_tracking",
@@ -24110,13 +23978,13 @@ spin_only : bool, optional
       .def(
           "__getitem__",
           [](const Bmad::MakeMat6Tracking& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.end_orb);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "make_n",
@@ -24141,9 +24009,6 @@ t6 : float
 abz_tunes : float, optional
     a-mode is abz_tunes(1), b-mode is abz_tunes(2), synch tune is abz_tunes(3)
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 N : float
@@ -24163,8 +24028,8 @@ U : float
       .def_readonly("U", &Bmad::MakeN::U)
       .def("__len__", [](const Bmad::MakeN&) { return 4; })
       .def("__getitem__", [](const Bmad::MakeN& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.N);
         if (i == 1)
@@ -24173,7 +24038,7 @@ U : float
           return py::cast(s.tunes_out);
         if (i == 3)
           return py::cast(s.U);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "make_pbrh",
@@ -24190,9 +24055,6 @@ M : float
     1-turn transfer matrix
 abz_tunes : float
     tunes for a,b, and c modes.  Used to identify which eigenvector is associated with which mode.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -24213,8 +24075,8 @@ H : complex
       .def_readonly("H", &Bmad::MakePbrh::H)
       .def("__len__", [](const Bmad::MakePbrh&) { return 4; })
       .def("__getitem__", [](const Bmad::MakePbrh& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.P);
         if (i == 1)
@@ -24223,7 +24085,7 @@ H : complex
           return py::cast(s.R);
         if (i == 3)
           return py::cast(s.H);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "make_smat_from_abc",
@@ -24250,9 +24112,6 @@ mode : NormalModesStruct
     emittances with the proper mode. .z.tune      -- real(rp): z-mode tune.  Used to associate emittances with
     the proper mode.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 sigma_mat : float
@@ -24271,15 +24130,15 @@ Nout : float
       .def(
           "__getitem__",
           [](const Bmad::MakeSmatFromAbc& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.sigma_mat);
             if (i == 1)
               return py::cast(s.err_flag);
             if (i == 2)
               return py::cast(s.Nout);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "make_unit_mad_map",
@@ -24326,13 +24185,13 @@ v_inv_mat : float
       .def_readonly("v_inv_mat", &Bmad::MakeVMats::v_inv_mat)
       .def("__len__", [](const Bmad::MakeVMats&) { return 2; })
       .def("__getitem__", [](const Bmad::MakeVMats& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.v_mat);
         if (i == 1)
           return py::cast(s.v_inv_mat);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "makeup_control_slave",
@@ -24352,11 +24211,11 @@ v_inv_mat : float
       .def(
           "__getitem__",
           [](const PyMakeupControlSlave& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "makeup_group_lord",
@@ -24376,11 +24235,11 @@ This routine is private to bookkeeper_mod.
       .def(
           "__getitem__",
           [](const PyMakeupGroupLord& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "makeup_multipass_slave",
@@ -24402,11 +24261,11 @@ This routine is not meant for guse.
       .def(
           "__getitem__",
           [](const PyMakeupMultipassSlave& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "makeup_super_slave",
@@ -24426,11 +24285,11 @@ This routine is not meant for general use.
       .def(
           "__getitem__",
           [](const PyMakeupSuperSlave& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "makeup_super_slave1",
@@ -24579,11 +24438,11 @@ value :
       .def(
           "__getitem__",
           [](const PyMasterParameterValue& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.value);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "mat4_multipole",
@@ -24612,13 +24471,13 @@ kick_mat : float
       .def_readonly("n", &PyMat4Multipole::n)
       .def("__len__", [](const PyMat4Multipole&) { return 2; })
       .def("__getitem__", [](const PyMat4Multipole& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.kick_mat);
         if (i == 1)
           return py::cast(s.n);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "mat6_add_offsets",
@@ -24721,8 +24580,8 @@ type_out : bool
       .def(
           "__getitem__",
           [](const Bmad::MatSympDecouple& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.stat);
             if (i == 1)
@@ -24731,7 +24590,7 @@ type_out : bool
               return py::cast(s.twiss2);
             if (i == 3)
               return py::cast(s.gamma);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "match_ele_to_mat6",
@@ -24769,15 +24628,15 @@ set_trombone : bool, optional
       .def(
           "__getitem__",
           [](const Bmad::MatchEleToMat6& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.mat6);
             if (i == 1)
               return py::cast(s.vec0);
             if (i == 2)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "match_reg",
@@ -24800,15 +24659,15 @@ is_match :
       .def_readonly("is_match", &PyMatchReg::is_match)
       .def("__len__", [](const PyMatchReg&) { return 3; })
       .def("__getitem__", [](const PyMatchReg& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.str);
         if (i == 1)
           return py::cast(s.pat);
         if (i == 2)
           return py::cast(s.is_match);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "match_wild",
@@ -24831,15 +24690,15 @@ is_match :
       .def_readonly("is_match", &PyMatchWild::is_match)
       .def("__len__", [](const PyMatchWild&) { return 3; })
       .def("__getitem__", [](const PyMatchWild& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.string);
         if (i == 1)
           return py::cast(s.template_);
         if (i == 2)
           return py::cast(s.is_match);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "maximize_projection",
@@ -24862,13 +24721,13 @@ which is the frequency that maximizes the projection.
       .def(
           "__getitem__",
           [](const PyMaximizeProjection& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.seed);
             if (i == 1)
               return py::cast(s.func_retval__);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "mexp",
@@ -24891,11 +24750,11 @@ this_exp :
       .def_readonly("this_exp", &PyMexp::this_exp)
       .def("__len__", [](const PyMexp&) { return 1; })
       .def("__getitem__", [](const PyMexp& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.this_exp);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "mfft1",
@@ -24931,11 +24790,11 @@ milli_sec :
       .def_readonly("milli_sec", &PyMilliSleep::milli_sec)
       .def("__len__", [](const PyMilliSleep&) { return 1; })
       .def("__getitem__", [](const PyMilliSleep& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.milli_sec);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "momentum_compaction",
@@ -24959,11 +24818,11 @@ mom_comp :
       .def(
           "__getitem__",
           [](const PyMomentumCompaction& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.mom_comp);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "multi_turn_tracking_analysis",
@@ -25012,8 +24871,8 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::MultiTurnTrackingAnalysis& s, size_t i) -> py::object {
-            if (i >= 6)
-              throw py::index_error();
+            if (i < 0)
+              i += 6;
             if (i == 0)
               return py::cast(s.track0);
             if (i == 1)
@@ -25026,7 +24885,7 @@ err_flag : bool
               return py::cast(s.chi);
             if (i == 5)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "multilayer_type_to_multilayer_params",
@@ -25102,13 +24961,13 @@ tn : float
       .def(
           "__getitem__",
           [](const Bmad::Multipole1AbToKt& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.knl);
             if (i == 1)
               return py::cast(s.tn);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "multipole1_kt_to_ab",
@@ -25142,13 +25001,13 @@ bn : float
       .def(
           "__getitem__",
           [](const Bmad::Multipole1KtToAb& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.an);
             if (i == 1)
               return py::cast(s.bn);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "multipole_ab_to_kt",
@@ -25176,13 +25035,13 @@ tn : float
       .def(
           "__getitem__",
           [](const Bmad::MultipoleAbToKt& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.knl);
             if (i == 1)
               return py::cast(s.tn);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "multipole_ele_to_ab",
@@ -25232,8 +25091,8 @@ original : bool, optional
       .def(
           "__getitem__",
           [](const Bmad::MultipoleEleToAb& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.ix_pole_max);
             if (i == 1)
@@ -25242,7 +25101,7 @@ original : bool, optional
               return py::cast(s.b);
             if (i == 3)
               return py::cast(s.b1);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "multipole_ele_to_kt",
@@ -25282,15 +25141,15 @@ include_kicks : int, optional
       .def(
           "__getitem__",
           [](const Bmad::MultipoleEleToKt& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.ix_pole_max);
             if (i == 1)
               return py::cast(s.knl);
             if (i == 2)
               return py::cast(s.tilt);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "multipole_init",
@@ -25429,13 +25288,13 @@ bn : float
       .def(
           "__getitem__",
           [](const Bmad::MultipoleKtToAb& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.an);
             if (i == 1)
               return py::cast(s.bn);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "multipole_spin_tracking",
@@ -25475,15 +25334,15 @@ arg :
       .def_readonly("arg", &PyMytan::arg)
       .def("__len__", [](const PyMytan&) { return 3; })
       .def("__getitem__", [](const PyMytan& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.y);
         if (i == 1)
           return py::cast(s.x);
         if (i == 2)
           return py::cast(s.arg);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "n_attrib_string_max_len",
@@ -25511,13 +25370,13 @@ max_len : int
       .def("__len__", [](const PyNBinsAutomatic&) { return 2; })
       .def(
           "__getitem__", [](const PyNBinsAutomatic& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.n_data);
             if (i == 1)
               return py::cast(s.n);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "n_choose_k",
@@ -25540,15 +25399,15 @@ nck :
       .def_readonly("nck", &PyNChooseK::nck)
       .def("__len__", [](const PyNChooseK&) { return 3; })
       .def("__getitem__", [](const PyNChooseK& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.n);
         if (i == 1)
           return py::cast(s.k);
         if (i == 2)
           return py::cast(s.nck);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "n_spline_create",
@@ -25592,13 +25451,13 @@ decomposition loop until all elements of freqs and amps are populated.
       .def_readonly("opt_zero_first", &PyNaff::opt_zero_first)
       .def("__len__", [](const PyNaff&) { return 2; })
       .def("__getitem__", [](const PyNaff& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.opt_dump_spectra);
         if (i == 1)
           return py::cast(s.opt_zero_first);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "nametable_add",
@@ -25620,13 +25479,13 @@ ix_name :
       .def_readonly("ix_name", &PyNametableAdd::ix_name)
       .def("__len__", [](const PyNametableAdd&) { return 2; })
       .def("__getitem__", [](const PyNametableAdd& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.name);
         if (i == 1)
           return py::cast(s.ix_name);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "nametable_bracket_indexx",
@@ -25657,15 +25516,15 @@ ix_max :
       .def(
           "__getitem__",
           [](const PyNametableBracketIndexx& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.name);
             if (i == 1)
               return py::cast(s.n_match);
             if (i == 2)
               return py::cast(s.ix_max);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "nametable_change1",
@@ -25689,13 +25548,13 @@ ix_name :
       .def(
           "__getitem__",
           [](const PyNametableChange1& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.name);
             if (i == 1)
               return py::cast(s.ix_name);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "nametable_init",
@@ -25717,13 +25576,13 @@ n_max :
       .def_readonly("n_max", &PyNametableInit::n_max)
       .def("__len__", [](const PyNametableInit&) { return 2; })
       .def("__getitem__", [](const PyNametableInit& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.n_min);
         if (i == 1)
           return py::cast(s.n_max);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "nametable_remove",
@@ -25744,11 +25603,11 @@ ix_name :
       .def(
           "__getitem__",
           [](const PyNametableRemove& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.ix_name);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "new_control",
@@ -25820,13 +25679,13 @@ order :
       .def(
           "__getitem__",
           [](const PyNormalFormComplexTaylors& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.rf_on);
             if (i == 1)
               return py::cast(s.order);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "normal_form_taylors",
@@ -25854,9 +25713,6 @@ one_turn_taylor : TaylorStruct
 rf_on : bool
     Was the map calculated with RF on?
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 A : TaylorStruct
@@ -25877,15 +25733,15 @@ dhdj : TaylorStruct
       .def(
           "__getitem__",
           [](const Bmad::NormalFormTaylors& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.dhdj);
             if (i == 1)
               return py::cast(s.A);
             if (i == 2)
               return py::cast(s.A_inverse);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "normal_mode3_calc",
@@ -25909,9 +25765,6 @@ above_transition : bool, optional
 abz_tunes : float, optional
     Tunes to order eigensystem by.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 tune : float
@@ -25930,15 +25783,15 @@ HV : float
       .def(
           "__getitem__",
           [](const Bmad::NormalMode3Calc& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.tune);
             if (i == 1)
               return py::cast(s.B);
             if (i == 2)
               return py::cast(s.HV);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "normal_mode_dispersion",
@@ -25992,11 +25845,11 @@ n_field_ele :
       .def_readonly("n_field_ele", &PyNumFieldEles::n_field_ele)
       .def("__len__", [](const PyNumFieldEles&) { return 1; })
       .def("__getitem__", [](const PyNumFieldEles& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.n_field_ele);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "num_lords",
@@ -26020,11 +25873,11 @@ num :
       .def_readonly("num", &PyNumLords::num)
       .def("__len__", [](const PyNumLords&) { return 1; })
       .def("__getitem__", [](const PyNumLords& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.num);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "odeint_bmad",
@@ -26063,9 +25916,6 @@ mat6 : float, optional
 make_matrix : bool, optional
     If True then make the 6x6 transfer matrix.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 err_flag : bool
@@ -26081,13 +25931,13 @@ track : TrackStruct
       .def("__len__", [](const Bmad::OdeintBmad&) { return 2; })
       .def(
           "__getitem__", [](const Bmad::OdeintBmad& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
               return py::cast(s.track);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "odeint_bmad_time",
@@ -26130,9 +25980,6 @@ t_end : float, optional
 extra_field : EmFieldStruct, optional
     Static field to be added to the element field. Eg used with space charge.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 err_flag : bool
@@ -26148,15 +25995,15 @@ dt_step : float
       .def("__len__", [](const PyOdeintBmadTime&) { return 3; })
       .def(
           "__getitem__", [](const PyOdeintBmadTime& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
               return py::cast(s.dt_step);
             if (i == 2)
               return py::cast(s.rf_time);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "offset_particle",
@@ -26221,15 +26068,15 @@ time : float, optional
       .def("__len__", [](const PyOffsetParticle&) { return 3; })
       .def(
           "__getitem__", [](const PyOffsetParticle& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.s_out);
             if (i == 1)
               return py::cast(s.spin_qrot);
             if (i == 2)
               return py::cast(s.time);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "offset_photon",
@@ -26310,9 +26157,6 @@ action : unknown
 r_name : unknown
     Calling routine name for error messages.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 iu : int
@@ -26331,15 +26175,15 @@ is_ok : bool
       .def(
           "__getitem__",
           [](const Bmad::OpenBinaryFile& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.iu);
             if (i == 1)
               return py::cast(s.iver);
             if (i == 2)
               return py::cast(s.is_ok);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "openpmd_species_name",
@@ -26393,8 +26237,8 @@ amp_nb : float
       .def(
           "__getitem__",
           [](const Bmad::OrbitAmplitudeCalc& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.amp_a);
             if (i == 1)
@@ -26403,7 +26247,7 @@ amp_nb : float
               return py::cast(s.amp_na);
             if (i == 3)
               return py::cast(s.amp_nb);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "orbit_reference_energy_correction",
@@ -26490,13 +26334,13 @@ is_too_large :
       .def_readonly("is_too_large", &PyOrbitTooLarge::is_too_large)
       .def("__len__", [](const PyOrbitTooLarge&) { return 2; })
       .def("__getitem__", [](const PyOrbitTooLarge& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.param);
         if (i == 1)
           return py::cast(s.is_too_large);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "order_evecs_by_n_similarity",
@@ -26521,9 +26365,6 @@ mat_tunes : float
 Nmat : float
     Normalized, real eigen matrix from make_N.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 evec : complex
@@ -26543,13 +26384,13 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::OrderEvecsByNSimilarity& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.evec);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "order_evecs_by_plane_dominance",
@@ -26651,13 +26492,13 @@ str :
       .def_readonly("str", &PyOrdinalStr::str)
       .def("__len__", [](const PyOrdinalStr&) { return 2; })
       .def("__getitem__", [](const PyOrdinalStr& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.n);
         if (i == 1)
           return py::cast(s.str);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "osc_alloc_freespace_array",
@@ -26728,15 +26569,15 @@ npad :
       .def_readonly("b", &PyOscGetgrnpipe::b)
       .def("__len__", [](const PyOscGetgrnpipe&) { return 3; })
       .def("__getitem__", [](const PyOscGetgrnpipe& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.gam);
         if (i == 1)
           return py::cast(s.a);
         if (i == 2)
           return py::cast(s.b);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "osc_read_rectpipe_grn",
@@ -26779,15 +26620,15 @@ gamma :
       .def(
           "__getitem__",
           [](const PyOscWriteRectpipeGrn& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.apipe);
             if (i == 1)
               return py::cast(s.bpipe);
             if (i == 2)
               return py::cast(s.gamma);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parse_cartesian_map",
@@ -26823,15 +26664,15 @@ pt(i,j,k) = ( (ex_re, ex_im), .... (bz_re, bz_im) )
       .def(
           "__getitem__",
           [](const PyParseCartesianMap& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.delim);
             if (i == 1)
               return py::cast(s.delim_found);
             if (i == 2)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parse_cylindrical_map",
@@ -26864,15 +26705,15 @@ err_flag :
       .def(
           "__getitem__",
           [](const PyParseCylindricalMap& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.delim);
             if (i == 1)
               return py::cast(s.delim_found);
             if (i == 2)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parse_fortran_format",
@@ -26908,8 +26749,8 @@ digits :
       .def(
           "__getitem__",
           [](const PyParseFortranFormat& s, size_t i) -> py::object {
-            if (i >= 6)
-              throw py::index_error();
+            if (i < 0)
+              i += 6;
             if (i == 0)
               return py::cast(s.format_str);
             if (i == 1)
@@ -26922,7 +26763,7 @@ digits :
               return py::cast(s.width);
             if (i == 5)
               return py::cast(s.digits);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parse_gen_grad_map",
@@ -26945,15 +26786,15 @@ digits :
       .def(
           "__getitem__",
           [](const PyParseGenGradMap& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.delim);
             if (i == 1)
               return py::cast(s.delim_found);
             if (i == 2)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parse_grid_field",
@@ -26983,15 +26824,15 @@ err_flag :
       .def("__len__", [](const PyParseGridField&) { return 3; })
       .def(
           "__getitem__", [](const PyParseGridField& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.delim);
             if (i == 1)
               return py::cast(s.delim_found);
             if (i == 2)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parse_integer_list",
@@ -27031,8 +26872,8 @@ See parse_integer_list2 for more details
       .def(
           "__getitem__",
           [](const PyParseIntegerList& s, size_t i) -> py::object {
-            if (i >= 9)
-              throw py::index_error();
+            if (i < 0)
+              i += 9;
             if (i == 0)
               return py::cast(s.err_str);
             if (i == 1)
@@ -27051,7 +26892,7 @@ See parse_integer_list2 for more details
               return py::cast(s.default_value);
             if (i == 8)
               return py::cast(s.is_ok);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parse_integer_list2",
@@ -27083,9 +26924,6 @@ int_array : int
     = 0    -- real(rp): inital assignment of int_array elements.
     This parameter is an input/output and is modified in-place. As an output: Array of values.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 is_ok : bool
@@ -27114,8 +26952,8 @@ delim_found : bool
       .def(
           "__getitem__",
           [](const PyParseIntegerList2& s, size_t i) -> py::object {
-            if (i >= 9)
-              throw py::index_error();
+            if (i < 0)
+              i += 9;
             if (i == 0)
               return py::cast(s.num_found);
             if (i == 1)
@@ -27134,7 +26972,7 @@ delim_found : bool
               return py::cast(s.close_delim);
             if (i == 8)
               return py::cast(s.default_value);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parse_real_list",
@@ -27165,9 +27003,6 @@ separator :
 close_delim : 
 default_value : 
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 real_array : 
@@ -27191,8 +27026,8 @@ parse_real_matrix.
       .def(
           "__getitem__",
           [](const Bmad::ParseRealList& s, size_t i) -> py::object {
-            if (i >= 5)
-              throw py::index_error();
+            if (i < 0)
+              i += 5;
             if (i == 0)
               return py::cast(s.real_array);
             if (i == 1)
@@ -27203,7 +27038,7 @@ parse_real_matrix.
               return py::cast(s.num_found);
             if (i == 4)
               return py::cast(s.is_ok);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parse_real_list2",
@@ -27238,9 +27073,6 @@ real_array : float
     braces is accepted.
     This parameter is an input/output and is modified in-place. As an output: Array of values
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 is_ok : bool
@@ -27272,8 +27104,8 @@ pase_real_list parse_real_matrix.
       .def("__len__", [](const PyParseRealList2&) { return 10; })
       .def(
           "__getitem__", [](const PyParseRealList2& s, size_t i) -> py::object {
-            if (i >= 10)
-              throw py::index_error();
+            if (i < 0)
+              i += 10;
             if (i == 0)
               return py::cast(s.num_found);
             if (i == 1)
@@ -27294,7 +27126,7 @@ pase_real_list parse_real_matrix.
               return py::cast(s.default_value);
             if (i == 9)
               return py::cast(s.single_value);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parser_add_constant",
@@ -27320,13 +27152,13 @@ redef_is_error :
       .def(
           "__getitem__",
           [](const PyParserAddConstant& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.word);
             if (i == 1)
               return py::cast(s.redef_is_error);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parser_call_check",
@@ -27352,8 +27184,8 @@ redef_is_error :
       .def(
           "__getitem__",
           [](const PyParserCallCheck& s, size_t i) -> py::object {
-            if (i >= 6)
-              throw py::index_error();
+            if (i < 0)
+              i += 6;
             if (i == 0)
               return py::cast(s.word);
             if (i == 1)
@@ -27366,7 +27198,7 @@ redef_is_error :
               return py::cast(s.call_found);
             if (i == 5)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parser_fast_complex_read",
@@ -27385,9 +27217,6 @@ ele : EleStruct
     Lattice element associated with the array. Used for error messages.
 err_str : unknown
     String used when printing error messages identifying where in the lattice file the error is occuring.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -27411,15 +27240,15 @@ is_ok : bool
       .def(
           "__getitem__",
           [](const Bmad::ParserFastComplexRead& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.cmplx_vec);
             if (i == 1)
               return py::cast(s.delim);
             if (i == 2)
               return py::cast(s.is_ok);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parser_fast_integer_read",
@@ -27445,15 +27274,15 @@ is_ok
       .def(
           "__getitem__",
           [](const PyParserFastIntegerRead& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.delim_wanted);
             if (i == 1)
               return py::cast(s.err_str);
             if (i == 2)
               return py::cast(s.is_ok);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parser_fast_real_read",
@@ -27478,9 +27307,6 @@ err_str : unknown
     String used when printing error messages identifying where in the lattice file the error is occuring.
 exact_size : bool, optional
     If True (default), number of values must match real_vec size.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -27507,8 +27333,8 @@ n_real : int
       .def(
           "__getitem__",
           [](const Bmad::ParserFastRealRead& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.real_vec);
             if (i == 1)
@@ -27517,7 +27343,7 @@ n_real : int
               return py::cast(s.n_real);
             if (i == 3)
               return py::cast(s.is_ok);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parser_file_stack",
@@ -27547,8 +27373,8 @@ This subroutine is not intended for general use.
       .def(
           "__getitem__",
           [](const PyParserFileStack& s, size_t i) -> py::object {
-            if (i >= 6)
-              throw py::index_error();
+            if (i < 0)
+              i += 6;
             if (i == 0)
               return py::cast(s.how);
             if (i == 1)
@@ -27561,7 +27387,7 @@ This subroutine is not intended for general use.
               return py::cast(s.open_file);
             if (i == 5)
               return py::cast(s.abort_on_open_error);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parser_get_integer",
@@ -27601,8 +27427,8 @@ str2 :
       .def(
           "__getitem__",
           [](const PyParserGetInteger& s, size_t i) -> py::object {
-            if (i >= 8)
-              throw py::index_error();
+            if (i < 0)
+              i += 8;
             if (i == 0)
               return py::cast(s.int_val);
             if (i == 1)
@@ -27619,7 +27445,7 @@ str2 :
               return py::cast(s.str1);
             if (i == 7)
               return py::cast(s.str2);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parser_get_logical",
@@ -27653,8 +27479,8 @@ err :
       .def(
           "__getitem__",
           [](const PyParserGetLogical& s, size_t i) -> py::object {
-            if (i >= 6)
-              throw py::index_error();
+            if (i < 0)
+              i += 6;
             if (i == 0)
               return py::cast(s.attrib_name);
             if (i == 1)
@@ -27667,7 +27493,7 @@ err :
               return py::cast(s.delim_found);
             if (i == 5)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parser_identify_fork_to_element",
@@ -27699,11 +27525,11 @@ This subroutine is not intended for general use.
       .def(
           "__getitem__",
           [](const PyParserPrintLine& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.end_of_file);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parser_read_lr_wake",
@@ -27731,15 +27557,15 @@ ele : EleStruct
       .def(
           "__getitem__",
           [](const PyParserReadLrWake& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.delim);
             if (i == 1)
               return py::cast(s.delim_found);
             if (i == 2)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parser_read_old_format_lr_wake",
@@ -27801,15 +27627,15 @@ ele : EleStruct
       .def(
           "__getitem__",
           [](const PyParserReadSrWake& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.delim);
             if (i == 1)
               return py::cast(s.delim_found);
             if (i == 2)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "parser_transfer_control_struct",
@@ -27891,11 +27717,11 @@ is_moving_backwards :
       .def(
           "__getitem__",
           [](const PyParticleIsMovingBackwards& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_moving_backwards);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "particle_is_moving_forward",
@@ -27925,11 +27751,11 @@ is_moving_forward :
       .def(
           "__getitem__",
           [](const PyParticleIsMovingForward& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_moving_forward);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "particle_rf_time",
@@ -27973,11 +27799,11 @@ time :
       .def("__len__", [](const PyParticleRfTime&) { return 1; })
       .def(
           "__getitem__", [](const PyParticleRfTime& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.time);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "patch_flips_propagation_direction",
@@ -28007,11 +27833,11 @@ is_flip :
           "__getitem__",
           [](const PyPatchFlipsPropagationDirection& s,
              size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_flip);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "patch_length",
@@ -28034,11 +27860,11 @@ length :
       .def_readonly("length", &PyPatchLength::length)
       .def("__len__", [](const PyPatchLength&) { return 1; })
       .def("__getitem__", [](const PyPatchLength& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.length);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "photon_absorption_and_phase_shift",
@@ -28055,9 +27881,6 @@ material : unknown
     Material name.
 Energy : float
     Photon energy (eV).
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -28086,15 +27909,15 @@ err_flag : bool
           "__getitem__",
           [](const Bmad::PhotonAbsorptionAndPhaseShift& s,
              size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.absorption);
             if (i == 1)
               return py::cast(s.phase_shift);
             if (i == 2)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "photon_add_to_detector_statistics",
@@ -28135,13 +27958,13 @@ pixel_pt : PixelPtStruct, optional
       .def(
           "__getitem__",
           [](const PyPhotonAddToDetectorStatistics& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.ix_pt);
             if (i == 1)
               return py::cast(s.iy_pt);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "photon_reflection",
@@ -28160,9 +27983,6 @@ energy : float
 surface : PhotonReflectSurfaceStruct
     surface info
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 graze_angle_out : float
@@ -28178,13 +27998,13 @@ phi_out : float
       .def(
           "__getitem__",
           [](const Bmad::PhotonReflection& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.graze_angle_out);
             if (i == 1)
               return py::cast(s.phi_out);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "photon_reflection_std_surface_init",
@@ -28224,9 +28044,6 @@ energy : float
 surface : PhotonReflectSurfaceStruct
     surface info
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 p_reflect : float
@@ -28246,13 +28063,13 @@ rel_p_specular : float
       .def(
           "__getitem__",
           [](const Bmad::PhotonReflectivity& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.p_reflect);
             if (i == 1)
               return py::cast(s.rel_p_specular);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "photon_target_corner_calc",
@@ -28291,8 +28108,8 @@ corner : TargetPointStruct
       .def(
           "__getitem__",
           [](const PyPhotonTargetCornerCalc& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.corner);
             if (i == 1)
@@ -28301,7 +28118,7 @@ corner : TargetPointStruct
               return py::cast(s.y_lim);
             if (i == 3)
               return py::cast(s.z_lim);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "photon_target_setup",
@@ -28364,11 +28181,11 @@ physical_end :
       .def("__len__", [](const PyPhysicalEleEnd&) { return 1; })
       .def(
           "__getitem__", [](const PyPhysicalEleEnd& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.physical_end);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "point_photon_emission",
@@ -28688,9 +28505,6 @@ choose_max : bool
 print_err : bool, optional
     Print error message if there is an error? Default is True.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 ele : EleStruct
@@ -28725,8 +28539,8 @@ negative length which of the possible elements is actually chosen is ill-defined
       .def(
           "__getitem__",
           [](const Bmad::PointerToElementAtS& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
@@ -28735,7 +28549,7 @@ negative length which of the possible elements is actually chosen is ill-defined
               return py::cast(s.position);
             if (i == 3)
               return py::cast(s.ele);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "pointer_to_field_ele",
@@ -28810,8 +28624,8 @@ lord_ptr :
       .def(
           "__getitem__",
           [](const Bmad::PointerToLord& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.control);
             if (i == 1)
@@ -28820,7 +28634,7 @@ lord_ptr :
               return py::cast(s.ix_control);
             if (i == 3)
               return py::cast(s.ix_ic);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "pointer_to_multipass_lord",
@@ -28853,13 +28667,13 @@ multi_lord :
       .def(
           "__getitem__",
           [](const Bmad::PointerToMultipassLord& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.ix_pass);
             if (i == 1)
               return py::cast(s.super_lord);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "pointer_to_next_ele",
@@ -28919,9 +28733,6 @@ ix_slave : int
 lord_type : int, optional
     See above.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 slave_ptr : EleStruct
@@ -28952,8 +28763,8 @@ pointer_to_lord pointer_to_super_lord pointer_to_ele num_lords
       .def(
           "__getitem__",
           [](const Bmad::PointerToSlave& s, size_t i) -> py::object {
-            if (i >= 5)
-              throw py::index_error();
+            if (i < 0)
+              i += 5;
             if (i == 0)
               return py::cast(s.control);
             if (i == 1)
@@ -28964,7 +28775,7 @@ pointer_to_lord pointer_to_super_lord pointer_to_ele num_lords
               return py::cast(s.ix_ic);
             if (i == 4)
               return py::cast(s.slave_ptr);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "pointer_to_super_lord",
@@ -29006,8 +28817,8 @@ lord_ptr :
       .def(
           "__getitem__",
           [](const Bmad::PointerToSuperLord& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.control);
             if (i == 1)
@@ -29016,7 +28827,7 @@ lord_ptr :
               return py::cast(s.ix_control);
             if (i == 3)
               return py::cast(s.ix_ic);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "pointer_to_surface_displacement_pt",
@@ -29068,8 +28879,8 @@ pt : GridPointStruct
           "__getitem__",
           [](const PyPointerToSurfaceDisplacementPt& s,
              size_t i) -> py::object {
-            if (i >= 7)
-              throw py::index_error();
+            if (i < 0)
+              i += 7;
             if (i == 0)
               return py::cast(s.pt);
             if (i == 1)
@@ -29084,7 +28895,7 @@ pt : GridPointStruct
               return py::cast(s.xx);
             if (i == 6)
               return py::cast(s.yy);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "pointer_to_surface_segmented_pt",
@@ -29135,8 +28946,8 @@ pt : GridPointStruct
       .def(
           "__getitem__",
           [](const PyPointerToSurfaceSegmentedPt& s, size_t i) -> py::object {
-            if (i >= 7)
-              throw py::index_error();
+            if (i < 0)
+              i += 7;
             if (i == 0)
               return py::cast(s.pt);
             if (i == 1)
@@ -29151,7 +28962,7 @@ pt : GridPointStruct
               return py::cast(s.xx);
             if (i == 6)
               return py::cast(s.yy);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "pointer_to_wake_ele",
@@ -29184,9 +28995,6 @@ ele : EleStruct
 ix_wall : int, optional
     index in wall3d(:) array. Default is 1.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 wall3d : Wall3DStruct
@@ -29205,15 +29013,15 @@ is_branch_wall : bool
       .def(
           "__getitem__",
           [](const Bmad::PointerToWall3d& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.ds_offset);
             if (i == 1)
               return py::cast(s.is_branch_wall);
             if (i == 2)
               return py::cast(s.wall3d);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "polar_to_spinor",
@@ -29265,11 +29073,11 @@ y :
       .def_readonly("y", &PyPolyEval::y)
       .def("__len__", [](const PyPolyEval&) { return 1; })
       .def("__getitem__", [](const PyPolyEval& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.y);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "probability_funct",
@@ -29291,11 +29099,11 @@ prob :
       .def(
           "__getitem__",
           [](const PyProbabilityFunct& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.prob);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "projdd",
@@ -29316,11 +29124,11 @@ projdd :
       .def_readonly("func_retval__", &PyProjdd::func_retval__)
       .def("__len__", [](const PyProjdd&) { return 1; })
       .def("__getitem__", [](const PyProjdd& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.func_retval__);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "project_emit_to_xyz",
@@ -29351,9 +29159,6 @@ mode : NormalModesStruct
     associate emittances with the proper mode. .b.tune      -- real(rp): b-mode tune.  Used to associate
     emittances with the proper mode.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 sigma_x : float
@@ -29372,15 +29177,15 @@ sigma_z : float
       .def(
           "__getitem__",
           [](const Bmad::ProjectEmitToXyz& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.sigma_x);
             if (i == 1)
               return py::cast(s.sigma_y);
             if (i == 2)
               return py::cast(s.sigma_z);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "psi_prime_sca",
@@ -29452,9 +29257,6 @@ Parameters
 ele : EleStruct
     Element at which to evaluate the parameters.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 norm_mode : 
@@ -29472,13 +29274,13 @@ closed_orb : CoordStruct
       .def(
           "__getitem__",
           [](const Bmad::PtcEmitCalc& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.norm_mode);
             if (i == 1)
               return py::cast(s.closed_orb);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ptc_layouts_resplit",
@@ -29588,9 +29390,6 @@ Parameters
 ele : EleStruct
     Element at which to evaluate the parameters.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 norm_mode : 
@@ -29608,13 +29407,13 @@ closed_orb : CoordStruct
       .def(
           "__getitem__",
           [](const Bmad::PtcSpinCalc& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.norm_mode);
             if (i == 1)
               return py::cast(s.closed_orb);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ptc_track_all",
@@ -29631,9 +29430,6 @@ orbit : CoordStruct
     Coordinates at beginning of branch.
     This parameter is an input/output and is modified in-place. As an output: Orbit array.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 track_state : int
@@ -29649,13 +29445,13 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::PtcTrackAll& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.track_state);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ptc_transfer_map_with_spin",
@@ -29939,9 +29735,6 @@ Parameters
 quat : float
     Rotation quaternion. Assumed normalized.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 axis : float
@@ -29959,13 +29752,13 @@ angle : float
       .def(
           "__getitem__",
           [](const SimUtils::QuatToAxisAngle& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.axis);
             if (i == 1)
               return py::cast(s.angle);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "quat_to_omega",
@@ -30026,8 +29819,8 @@ ios :
       .def_readonly("ios", &PyQueryString::ios)
       .def("__len__", [](const PyQueryString&) { return 5; })
       .def("__getitem__", [](const PyQueryString& s, size_t i) -> py::object {
-        if (i >= 5)
-          throw py::index_error();
+        if (i < 0)
+          i += 5;
         if (i == 0)
           return py::cast(s.query_str);
         if (i == 1)
@@ -30038,7 +29831,7 @@ ios :
           return py::cast(s.ix);
         if (i == 4)
           return py::cast(s.ios);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "quote",
@@ -30058,13 +29851,13 @@ q_str :
       .def_readonly("q_str", &PyQuote::q_str)
       .def("__len__", [](const PyQuote&) { return 2; })
       .def("__getitem__", [](const PyQuote& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.str);
         if (i == 1)
           return py::cast(s.q_str);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "rad1_damp_and_stoc_mats",
@@ -30096,9 +29889,6 @@ g3_tol : float
 ele0 : EleStruct, optional
     Element before `ele`. Needed if and only if rad_int1 is present
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 rad_map : RadMapStruct
@@ -30121,15 +29911,15 @@ rad_int1 : RadInt1Struct
       .def(
           "__getitem__",
           [](const Bmad::Rad1DampAndStocMats& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.rad_map);
             if (i == 1)
               return py::cast(s.err_flag);
             if (i == 2)
               return py::cast(s.rad_int1);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "rad_damp_and_stoc_mats",
@@ -30155,9 +29945,6 @@ include_opening_angle : bool
     comparing against other codes.
 closed_orbit : CoordStruct, optional
     Closed orbit. If not present this routine will calculate it.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -30189,8 +29976,8 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::RadDampAndStocMats& s, size_t i) -> py::object {
-            if (i >= 5)
-              throw py::index_error();
+            if (i < 0)
+              i += 5;
             if (i == 0)
               return py::cast(s.rmap);
             if (i == 1)
@@ -30201,7 +29988,7 @@ err_flag : bool
               return py::cast(s.err_flag);
             if (i == 4)
               return py::cast(s.rad_int_branch);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "rad_g_integrals",
@@ -30249,15 +30036,15 @@ int_g : float
       .def_readonly("int_g3", &PyRadGIntegrals::int_g3)
       .def("__len__", [](const PyRadGIntegrals&) { return 3; })
       .def("__getitem__", [](const PyRadGIntegrals& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.int_g);
         if (i == 1)
           return py::cast(s.int_g2);
         if (i == 2)
           return py::cast(s.int_g3);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "radiation_integrals",
@@ -30310,15 +30097,15 @@ rad_int_by_ele : RadIntAllEleStruct
       .def(
           "__getitem__",
           [](const PyRadiationIntegrals& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.mode);
             if (i == 1)
               return py::cast(s.rad_int_by_ele);
             if (i == 2)
               return py::cast(s.ix_cache);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "radiation_map_setup",
@@ -30381,13 +30168,13 @@ value :
       .def_readonly("value", &PyRamperValue::value)
       .def("__len__", [](const PyRamperValue&) { return 2; })
       .def("__getitem__", [](const PyRamperValue& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.err_flag);
         if (i == 1)
           return py::cast(s.value);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "ran_default_state",
@@ -30454,9 +30241,6 @@ set_sigma_cut : float, optional
 ran_state : RandomStateStruct, optional
     Internal state. See the ran_seed_put documentation for more details.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 get : unknown
@@ -30477,13 +30261,13 @@ get_sigma_cut : float
       .def(
           "__getitem__",
           [](const SimUtils::RanGaussConverter& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.get);
             if (i == 1)
               return py::cast(s.get_sigma_cut);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ran_gauss_scalar",
@@ -30523,13 +30307,13 @@ Overloaded versions:
       .def("__len__", [](const PyRanGaussScalar&) { return 2; })
       .def(
           "__getitem__", [](const PyRanGaussScalar& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.harvest);
             if (i == 1)
               return py::cast(s.index_quasi);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ran_gauss_vector",
@@ -30637,13 +30421,13 @@ Overloaded versions:
       .def(
           "__getitem__",
           [](const PyRanUniformScalar& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.harvest);
             if (i == 1)
               return py::cast(s.index_quasi);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "ran_uniform",
@@ -30715,15 +30499,15 @@ out :
       .def_readonly("out", &PyRchomp::out)
       .def("__len__", [](const PyRchomp&) { return 3; })
       .def("__getitem__", [](const PyRchomp& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.rel);
         if (i == 1)
           return py::cast(s.plc);
         if (i == 2)
           return py::cast(s.out);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "re_allocate_c_double",
@@ -30756,11 +30540,11 @@ exact : bool, optional
       .def(
           "__getitem__",
           [](const PyReAllocateCDouble& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.init_val);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "re_allocate_eles",
@@ -30810,11 +30594,11 @@ exact :
       .def(
           "__getitem__",
           [](const PyReAllocateWall3dSectionArray& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.exact);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "re_allocate",
@@ -30842,11 +30626,11 @@ exact :
       .def(
           "__getitem__",
           [](const PyReAllocateWall3dVertexArray& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.exact);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "re_associate_node_array",
@@ -30882,13 +30666,13 @@ str_out :
       .def_readonly("str_out", &PyReStrQp::str_out)
       .def("__len__", [](const PyReStrQp&) { return 2; })
       .def("__getitem__", [](const PyReStrQp& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.rel);
         if (i == 1)
           return py::cast(s.str_out);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "re_str",
@@ -30908,13 +30692,13 @@ str_out :
       .def_readonly("str_out", &PyReStrRp::str_out)
       .def("__len__", [](const PyReStrRp&) { return 2; })
       .def("__getitem__", [](const PyReStrRp& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.rel);
         if (i == 1)
           return py::cast(s.str_out);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "read_beam_ascii",
@@ -30945,9 +30729,6 @@ print_mom_shift_warning : bool, optional
 shift_momentum : bool, optional
     Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 beam : BeamStruct
@@ -30963,13 +30744,13 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::ReadBeamAscii& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.beam);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "read_beam_file",
@@ -31002,9 +30783,6 @@ print_mom_shift_warning : bool, optional
 shift_momentum : bool, optional
     Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 beam : BeamStruct
@@ -31019,15 +30797,15 @@ err_flag : bool
       .def_readonly("conserve_momentum", &PyReadBeamFile::conserve_momentum)
       .def("__len__", [](const PyReadBeamFile&) { return 3; })
       .def("__getitem__", [](const PyReadBeamFile& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.beam);
         if (i == 1)
           return py::cast(s.err_flag);
         if (i == 2)
           return py::cast(s.conserve_momentum);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "read_binary_cartesian_map",
@@ -31133,8 +30911,8 @@ fmt_str :
       .def(
           "__getitem__",
           [](const PyRealNumFortranFormat& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.number);
             if (i == 1)
@@ -31143,7 +30921,7 @@ fmt_str :
               return py::cast(s.n_blanks);
             if (i == 3)
               return py::cast(s.fmt_str);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "real_path",
@@ -31166,15 +30944,15 @@ is_ok :
       .def_readonly("is_ok", &PyRealPath::is_ok)
       .def("__len__", [](const PyRealPath&) { return 3; })
       .def("__getitem__", [](const PyRealPath& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.path_in);
         if (i == 1)
           return py::cast(s.path_out);
         if (i == 2)
           return py::cast(s.is_ok);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "real_str",
@@ -31200,8 +30978,8 @@ str :
       .def_readonly("str", &PyRealStr::str)
       .def("__len__", [](const PyRealStr&) { return 4; })
       .def("__getitem__", [](const PyRealStr& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.r_num);
         if (i == 1)
@@ -31210,7 +30988,7 @@ str :
           return py::cast(s.n_decimal);
         if (i == 3)
           return py::cast(s.str);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "real_to_string",
@@ -31239,8 +31017,8 @@ str :
       .def_readonly("str", &PyRealToString::str)
       .def("__len__", [](const PyRealToString&) { return 5; })
       .def("__getitem__", [](const PyRealToString& s, size_t i) -> py::object {
-        if (i >= 5)
-          throw py::index_error();
+        if (i < 0)
+          i += 5;
         if (i == 0)
           return py::cast(s.real_num);
         if (i == 1)
@@ -31251,7 +31029,7 @@ str :
           return py::cast(s.n_decimal);
         if (i == 4)
           return py::cast(s.str);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "reallocate_beam",
@@ -31280,11 +31058,11 @@ extend :
       .def("__len__", [](const PyReallocateBeam&) { return 1; })
       .def(
           "__getitem__", [](const PyReallocateBeam& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.extend);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "reallocate_bp_com_const",
@@ -31490,11 +31268,11 @@ rel_charge :
       .def(
           "__getitem__",
           [](const PyRelTrackingChargeToMass& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.rel_charge);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "relative_mode_flip",
@@ -31517,11 +31295,11 @@ relative_mode_flip :
       .def(
           "__getitem__",
           [](const PyRelativeModeFlip& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.func_retval__);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "release_rad_int_cache",
@@ -31546,11 +31324,11 @@ ix_cache : int
       .def(
           "__getitem__",
           [](const PyReleaseRadIntCache& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.ix_cache);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "remove_constant_taylor",
@@ -31568,9 +31346,6 @@ taylor_in : TaylorStruct
     Input taylor map.
 remove_higher_order_terms : bool
     If True then terms that are higher order than bmad_com.taylor_order are removed.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -31591,13 +31366,13 @@ c0 : float
       .def(
           "__getitem__",
           [](const Bmad::RemoveConstantTaylor& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.taylor_out);
             if (i == 1)
               return py::cast(s.c0);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "remove_dead_from_bunch",
@@ -31738,11 +31513,11 @@ is_on :
       .def_readonly("is_on", &PyRfIsOn::is_on)
       .def("__len__", [](const PyRfIsOn&) { return 1; })
       .def("__getitem__", [](const PyRfIsOn& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.is_on);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "rf_ref_time_offset",
@@ -31767,11 +31542,11 @@ time :
       .def(
           "__getitem__",
           [](const PyRfRefTimeOffset& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.time);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "rfun",
@@ -31815,8 +31590,8 @@ res :
       .def_readonly("res", &PyRfun::res)
       .def("__len__", [](const PyRfun&) { return 10; })
       .def("__getitem__", [](const PyRfun& s, size_t i) -> py::object {
-        if (i >= 10)
-          throw py::index_error();
+        if (i < 0)
+          i += 10;
         if (i == 0)
           return py::cast(s.u);
         if (i == 1)
@@ -31837,7 +31612,7 @@ res :
           return py::cast(s.j);
         if (i == 9)
           return py::cast(s.res);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "rk_adaptive_time_step",
@@ -31881,8 +31656,8 @@ extra_field :
       .def(
           "__getitem__",
           [](const PyRkAdaptiveTimeStep& s, size_t i) -> py::object {
-            if (i >= 6)
-              throw py::index_error();
+            if (i < 0)
+              i += 6;
             if (i == 0)
               return py::cast(s.t_dir);
             if (i == 1)
@@ -31895,7 +31670,7 @@ extra_field :
               return py::cast(s.dt_next);
             if (i == 5)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "rk_time_step1",
@@ -31933,15 +31708,15 @@ extra_field :
       .def_readonly("print_err", &PyRkTimeStep1::print_err)
       .def("__len__", [](const PyRkTimeStep1&) { return 3; })
       .def("__getitem__", [](const PyRkTimeStep1& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.r_err);
         if (i == 1)
           return py::cast(s.err_flag);
         if (i == 2)
           return py::cast(s.print_err);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "rms_value",
@@ -31967,13 +31742,13 @@ rms_val :
       .def_readonly("rms_val", &PyRmsValue::rms_val)
       .def("__len__", [](const PyRmsValue&) { return 2; })
       .def("__getitem__", [](const PyRmsValue& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.ave_val);
         if (i == 1)
           return py::cast(s.rms_val);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "rot_2d",
@@ -32010,11 +31785,11 @@ rvec :
       .def_readonly("angle", &PyRotate3::angle)
       .def("__len__", [](const PyRotate3&) { return 1; })
       .def("__getitem__", [](const PyRotate3& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.angle);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "rotate_em_field",
@@ -32056,11 +31831,11 @@ theta :
       .def_readonly("theta", &PyRotateFieldZx::theta)
       .def("__len__", [](const PyRotateFieldZx&) { return 1; })
       .def("__getitem__", [](const PyRotateFieldZx& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.theta);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "rotate_for_curved_surface",
@@ -32229,15 +32004,15 @@ time0 :
       .def_readonly("time0", &PyRunTimer::time0)
       .def("__len__", [](const PyRunTimer&) { return 3; })
       .def("__getitem__", [](const PyRunTimer& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.command);
         if (i == 1)
           return py::cast(s.time);
         if (i == 2)
           return py::cast(s.time0);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "s_body_calc",
@@ -32260,11 +32035,11 @@ s_body :
       .def_readonly("s_body", &PySBodyCalc::s_body)
       .def("__len__", [](const PySBodyCalc&) { return 1; })
       .def("__getitem__", [](const PySBodyCalc& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.s_body);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "s_calc",
@@ -32514,15 +32289,15 @@ dt_next : float
       .def("__len__", [](const PyScAdaptiveStep&) { return 3; })
       .def(
           "__getitem__", [](const PyScAdaptiveStep& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.dt_next);
             if (i == 1)
               return py::cast(s.include_image);
             if (i == 2)
               return py::cast(s.dt_step);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "sc_step",
@@ -32562,13 +32337,13 @@ n_emit : int
       .def_readonly("include_image", &PyScStep::include_image)
       .def("__len__", [](const PyScStep&) { return 2; })
       .def("__getitem__", [](const PyScStep& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.n_emit);
         if (i == 1)
           return py::cast(s.include_image);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "set_active_fixer",
@@ -32650,13 +32425,13 @@ err_id : int
       .def(
           "__getitem__",
           [](const Bmad::SetEleAttribute& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
               return py::cast(s.err_id);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "set_ele_defaults",
@@ -32737,15 +32512,15 @@ set_slaves : bool
       .def(
           "__getitem__",
           [](const Bmad::SetEleStatusStale& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.ele);
             if (i == 1)
               return py::cast(s.status_group);
             if (i == 2)
               return py::cast(s.set_slaves);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "set_flags_for_changed_attribute",
@@ -32811,11 +32586,11 @@ Overloaded versions:
           "__getitem__",
           [](const PySetFlagsForChangedIntegerAttribute& s,
              size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.attrib);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "set_flags_for_changed_attribute",
@@ -32930,11 +32705,11 @@ Overloaded versions:
           "__getitem__",
           [](const PySetFlagsForChangedLogicalAttribute& s,
              size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.attrib);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "set_flags_for_changed_attribute",
@@ -32999,11 +32774,11 @@ Overloaded versions:
           "__getitem__",
           [](const PySetFlagsForChangedRealAttribute& s,
              size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.attrib);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "set_fringe_on_off",
@@ -33029,11 +32804,11 @@ on_or_off : int
       .def("__len__", [](const PySetFringeOnOff&) { return 1; })
       .def(
           "__getitem__", [](const PySetFringeOnOff& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.fringe_at);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "set_lords_status_stale",
@@ -33142,15 +32917,15 @@ save_val :
       .def(
           "__getitem__",
           [](const PySetParameterInt& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.param_val);
             if (i == 1)
               return py::cast(s.set_val);
             if (i == 2)
               return py::cast(s.save_val);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "set_parameter",
@@ -33177,15 +32952,15 @@ save_val :
       .def(
           "__getitem__",
           [](const PySetParameterLogic& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.param_val);
             if (i == 1)
               return py::cast(s.set_val);
             if (i == 2)
               return py::cast(s.save_val);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "set_parameter",
@@ -33210,15 +32985,15 @@ save_val :
       .def(
           "__getitem__",
           [](const PySetParameterReal& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.param_val);
             if (i == 1)
               return py::cast(s.set_val);
             if (i == 2)
               return py::cast(s.save_val);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "set_ptc",
@@ -33298,11 +33073,11 @@ old_val : int
       .def_readonly("old_val", &PySetPtcQuiet::old_val)
       .def("__len__", [](const PySetPtcQuiet&) { return 1; })
       .def("__getitem__", [](const PySetPtcQuiet& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.old_val);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "set_ptc_verbose",
@@ -33319,11 +33094,11 @@ on :
       .def_readonly("on", &PySetPtcVerbose::on)
       .def("__len__", [](const PySetPtcVerbose&) { return 1; })
       .def("__getitem__", [](const PySetPtcVerbose& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.on);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "set_pwd_ele",
@@ -33425,11 +33200,11 @@ ok :
       .def_readonly("ok", &PySetTune::ok)
       .def("__len__", [](const PySetTune&) { return 1; })
       .def("__getitem__", [](const PySetTune& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.ok);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "set_tune_3d",
@@ -33469,13 +33244,13 @@ everything_ok :
       .def_readonly("everything_ok", &PySetTune3d::everything_ok)
       .def("__len__", [](const PySetTune3d&) { return 2; })
       .def("__getitem__", [](const PySetTune3d& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.mask);
         if (i == 1)
           return py::cast(s.everything_ok);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "set_twiss",
@@ -33618,11 +33393,11 @@ is_different :
       .def(
           "__getitem__",
           [](const PySignificantDifference& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_different);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "sinc",
@@ -33643,11 +33418,11 @@ y :
       .def_readonly("y", &PySinc::y)
       .def("__len__", [](const PySinc&) { return 1; })
       .def("__getitem__", [](const PySinc& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.y);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "sincc",
@@ -33668,11 +33443,11 @@ y :
       .def_readonly("y", &PySincc::y)
       .def("__len__", [](const PySincc&) { return 1; })
       .def("__getitem__", [](const PySincc& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.y);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "sinhx_x",
@@ -33693,11 +33468,11 @@ y :
       .def_readonly("y", &PySinhxX::y)
       .def("__len__", [](const PySinhxX&) { return 1; })
       .def("__getitem__", [](const PySinhxX& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.y);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "skip_ele_blender",
@@ -33717,11 +33492,11 @@ skip :
       .def("__len__", [](const PySkipEleBlender&) { return 1; })
       .def(
           "__getitem__", [](const PySkipEleBlender& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.skip);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "skip_header",
@@ -33741,13 +33516,13 @@ error_flag :
       .def_readonly("error_flag", &PySkipHeader::error_flag)
       .def("__len__", [](const PySkipHeader&) { return 2; })
       .def("__getitem__", [](const PySkipHeader& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.ix_unit);
         if (i == 1)
           return py::cast(s.error_flag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "slice_lattice",
@@ -33844,13 +33619,13 @@ make_matrix : bool, optional
       .def(
           "__getitem__",
           [](const PySolQuadMat6Calc& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.ks_in);
             if (i == 1)
               return py::cast(s.k1_in);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "solve_psi_adaptive",
@@ -33904,9 +33679,6 @@ p0 : float
 args : float
     Parameters.  See psi_prime comments for details.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 t : float
@@ -33926,13 +33698,13 @@ p : float
       .def(
           "__getitem__",
           [](const Bmad::SolvePsiFixedSteps& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.t);
             if (i == 1)
               return py::cast(s.p);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "sort_complex_taylor_terms",
@@ -34128,13 +33900,13 @@ xi_diff : float
           "__getitem__",
           [](const Bmad::SpinMat8ResonanceStrengths& s,
              size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.xi_sum);
             if (i == 1)
               return py::cast(s.xi_diff);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "spin_mat_to_eigen",
@@ -34171,8 +33943,8 @@ error : bool
       .def(
           "__getitem__",
           [](const Bmad::SpinMatToEigen& s, size_t i) -> py::object {
-            if (i >= 5)
-              throw py::index_error();
+            if (i < 0)
+              i += 5;
             if (i == 0)
               return py::cast(s.orb_eval);
             if (i == 1)
@@ -34183,7 +33955,7 @@ error : bool
               return py::cast(s.spin_evec);
             if (i == 4)
               return py::cast(s.error);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "spin_of",
@@ -34231,13 +34003,13 @@ omega :
       .def_readonly("phase_space_coords", &PySpinOmega::phase_space_coords)
       .def("__len__", [](const PySpinOmega&) { return 2; })
       .def("__getitem__", [](const PySpinOmega& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.sign_z_vel);
         if (i == 1)
           return py::cast(s.phase_space_coords);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "spin_quat_resonance_strengths",
@@ -34270,13 +34042,13 @@ xi_diff : float
           "__getitem__",
           [](const Bmad::SpinQuatResonanceStrengths& s,
              size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.xi_sum);
             if (i == 1)
               return py::cast(s.xi_diff);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "spin_taylor_to_linear",
@@ -34405,9 +34177,6 @@ y_knot : float
 x : float
     Point to evaluate at.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 ok : bool
@@ -34431,15 +34200,15 @@ dy : float
           "__getitem__",
           [](const SimUtils::SplineAkimaInterpolate& s,
              size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.ok);
             if (i == 1)
               return py::cast(s.y);
             if (i == 2)
               return py::cast(s.dy);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "spline_evaluate",
@@ -34456,9 +34225,6 @@ spline : SplineStruct
     Spline structure.
 x : float
     point for evaluation.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -34486,15 +34252,15 @@ spline_mod
       .def(
           "__getitem__",
           [](const SimUtils::SplineEvaluate& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.ok);
             if (i == 1)
               return py::cast(s.y);
             if (i == 2)
               return py::cast(s.dy);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "spline_fit_orbit",
@@ -34571,15 +34337,15 @@ ix_insert : int, optional
       .def_readonly("err_flag", &Bmad::SplitLat::err_flag)
       .def("__len__", [](const Bmad::SplitLat&) { return 3; })
       .def("__getitem__", [](const Bmad::SplitLat& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.ix_split);
         if (i == 1)
           return py::cast(s.split_done);
         if (i == 2)
           return py::cast(s.err_flag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "sprint_spin_taylor_map",
@@ -34615,11 +34381,11 @@ y :
       .def_readonly("y", &PySqrtAlpha::y)
       .def("__len__", [](const PySqrtAlpha&) { return 1; })
       .def("__getitem__", [](const PySqrtAlpha& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.y);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "sqrt_one",
@@ -34640,11 +34406,11 @@ ds1 :
       .def_readonly("ds1", &PySqrtOne::ds1)
       .def("__len__", [](const PySqrtOne&) { return 1; })
       .def("__getitem__", [](const PySqrtOne& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.ds1);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "sr_longitudinal_wake_particle",
@@ -34817,15 +34583,15 @@ num :
       .def_readonly("num", &PyStrCount::num)
       .def("__len__", [](const PyStrCount&) { return 3; })
       .def("__getitem__", [](const PyStrCount& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.str);
         if (i == 1)
           return py::cast(s.match);
         if (i == 2)
           return py::cast(s.num);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "str_downcase",
@@ -34862,8 +34628,8 @@ ix_match :
       .def_readonly("ix_match", &PyStrFirstInSet::ix_match)
       .def("__len__", [](const PyStrFirstInSet&) { return 4; })
       .def("__getitem__", [](const PyStrFirstInSet& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.line);
         if (i == 1)
@@ -34872,7 +34638,7 @@ ix_match :
           return py::cast(s.ignore_clauses);
         if (i == 3)
           return py::cast(s.ix_match);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "str_first_not_in_set",
@@ -34899,15 +34665,15 @@ ix_match :
       .def(
           "__getitem__",
           [](const PyStrFirstNotInSet& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.line);
             if (i == 1)
               return py::cast(s.set);
             if (i == 2)
               return py::cast(s.ix_match);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "str_last_in_set",
@@ -34930,15 +34696,15 @@ ix_match :
       .def_readonly("ix_match", &PyStrLastInSet::ix_match)
       .def("__len__", [](const PyStrLastInSet&) { return 3; })
       .def("__getitem__", [](const PyStrLastInSet& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.line);
         if (i == 1)
           return py::cast(s.set);
         if (i == 2)
           return py::cast(s.ix_match);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "str_last_not_in_set",
@@ -34963,15 +34729,15 @@ ix_match :
       .def(
           "__getitem__",
           [](const PyStrLastNotInSet& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.line);
             if (i == 1)
               return py::cast(s.set);
             if (i == 2)
               return py::cast(s.ix_match);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "str_match_wild",
@@ -34994,15 +34760,15 @@ a_match :
       .def_readonly("a_match", &PyStrMatchWild::a_match)
       .def("__len__", [](const PyStrMatchWild&) { return 3; })
       .def("__getitem__", [](const PyStrMatchWild& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.str);
         if (i == 1)
           return py::cast(s.pat);
         if (i == 2)
           return py::cast(s.a_match);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "str_substitute",
@@ -35031,8 +34797,8 @@ ignore_escaped :
       .def_readonly("ignore_escaped", &PyStrSubstitute::ignore_escaped)
       .def("__len__", [](const PyStrSubstitute&) { return 5; })
       .def("__getitem__", [](const PyStrSubstitute& s, size_t i) -> py::object {
-        if (i >= 5)
-          throw py::index_error();
+        if (i < 0)
+          i += 5;
         if (i == 0)
           return py::cast(s.string);
         if (i == 1)
@@ -35043,7 +34809,7 @@ ignore_escaped :
           return py::cast(s.do_trim);
         if (i == 4)
           return py::cast(s.ignore_escaped);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "str_upcase",
@@ -35077,11 +34843,11 @@ stream_end :
       .def_readonly("stream_end", &PyStreamEleEnd::stream_end)
       .def("__len__", [](const PyStreamEleEnd&) { return 1; })
       .def("__getitem__", [](const PyStreamEleEnd& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.stream_end);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "string_attrib",
@@ -35133,8 +34899,8 @@ value :
       .def_readonly("value", &PyStringToInt::value)
       .def("__len__", [](const PyStringToInt&) { return 5; })
       .def("__getitem__", [](const PyStringToInt& s, size_t i) -> py::object {
-        if (i >= 5)
-          throw py::index_error();
+        if (i < 0)
+          i += 5;
         if (i == 0)
           return py::cast(s.line);
         if (i == 1)
@@ -35145,7 +34911,7 @@ value :
           return py::cast(s.err_print_flag);
         if (i == 4)
           return py::cast(s.value);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "string_to_real",
@@ -35174,8 +34940,8 @@ value :
       .def_readonly("value", &PyStringToReal::value)
       .def("__len__", [](const PyStringToReal&) { return 5; })
       .def("__getitem__", [](const PyStringToReal& s, size_t i) -> py::object {
-        if (i >= 5)
-          throw py::index_error();
+        if (i < 0)
+          i += 5;
         if (i == 0)
           return py::cast(s.line);
         if (i == 1)
@@ -35186,7 +34952,7 @@ value :
           return py::cast(s.err_print_flag);
         if (i == 4)
           return py::cast(s.value);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "string_trim",
@@ -35209,15 +34975,15 @@ word_len :
       .def_readonly("word_len", &PyStringTrim::word_len)
       .def("__len__", [](const PyStringTrim&) { return 3; })
       .def("__getitem__", [](const PyStringTrim& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.in_string);
         if (i == 1)
           return py::cast(s.out_string);
         if (i == 2)
           return py::cast(s.word_len);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "string_trim2",
@@ -35249,8 +35015,8 @@ ix_next :
       .def_readonly("ix_next", &PyStringTrim2::ix_next)
       .def("__len__", [](const PyStringTrim2&) { return 6; })
       .def("__getitem__", [](const PyStringTrim2& s, size_t i) -> py::object {
-        if (i >= 6)
-          throw py::index_error();
+        if (i < 0)
+          i += 6;
         if (i == 0)
           return py::cast(s.in_str);
         if (i == 1)
@@ -35263,7 +35029,7 @@ ix_next :
           return py::cast(s.delim);
         if (i == 5)
           return py::cast(s.ix_next);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "strong_beam_sigma_calc",
@@ -35298,15 +35064,15 @@ dsigma_ds : float
       .def(
           "__getitem__",
           [](const Bmad::StrongBeamSigmaCalc& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.sigma);
             if (i == 1)
               return py::cast(s.bbi_const);
             if (i == 2)
               return py::cast(s.dsigma_ds);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "strong_beam_strength",
@@ -35330,11 +35096,11 @@ strength :
       .def(
           "__getitem__",
           [](const PyStrongBeamStrength& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.strength);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "super_bicubic_coef",
@@ -35411,9 +35177,6 @@ x1 : float
 x2 : float
     2-direction coordinate at point to evaluate.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 ansy : float
@@ -35439,15 +35202,15 @@ ansy2 : float
           "__getitem__",
           [](const SimUtils::SuperBicubicInterpolation& s,
              size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.ansy);
             if (i == 1)
               return py::cast(s.ansy1);
             if (i == 2)
               return py::cast(s.ansy2);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "super_polint",
@@ -35462,9 +35225,6 @@ Parameters
 xa : float
 x : float
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 y : float
@@ -35478,13 +35238,13 @@ dy : float
       .def(
           "__getitem__",
           [](const SimUtils::SuperPolint& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.y);
             if (i == 1)
               return py::cast(s.dy);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "super_poly",
@@ -35574,13 +35334,13 @@ dz_dxy : float, optional
       .def(
           "__getitem__",
           [](const PySurfaceGridDisplacement& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.x);
             if (i == 1)
               return py::cast(s.y);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "symp_lie_bmad",
@@ -35634,13 +35394,13 @@ err_flag :
       .def_readonly("err_flag", &PySystemCommand::err_flag)
       .def("__len__", [](const PySystemCommand&) { return 2; })
       .def("__getitem__", [](const PySystemCommand& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.line);
         if (i == 1)
           return py::cast(s.err_flag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "t6_to_b123",
@@ -35657,9 +35417,6 @@ t6 : float
     1-turn transfer matrix.  RF assumed to be on.
 abz_tunes : float
     a-mode and b-mode tunes.  Used to order eigensystem.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -35680,8 +35437,8 @@ err_flag : bool
       .def_readonly("err_flag", &Bmad::T6ToB123::err_flag)
       .def("__len__", [](const Bmad::T6ToB123&) { return 4; })
       .def("__getitem__", [](const Bmad::T6ToB123& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.B1);
         if (i == 1)
@@ -35690,7 +35447,7 @@ err_flag : bool
           return py::cast(s.B3);
         if (i == 3)
           return py::cast(s.err_flag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_abort_command_file",
@@ -35760,13 +35517,13 @@ exact :
       .def(
           "__getitem__",
           [](const PyTaoAllocateDataArray& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.n_data);
             if (i == 1)
               return py::cast(s.exact);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_allocate_v1_var",
@@ -35788,13 +35545,13 @@ save_old :
       .def(
           "__getitem__",
           [](const PyTaoAllocateV1Var& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.n_v1);
             if (i == 1)
               return py::cast(s.save_old);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_allocate_var_array",
@@ -35818,11 +35575,11 @@ n_var : int
       .def(
           "__getitem__",
           [](const PyTaoAllocateVarArray& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.default_good_user);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_beam_emit_calc",
@@ -35853,11 +35610,11 @@ emit :
       .def(
           "__getitem__",
           [](const PyTaoBeamEmitCalc& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.emit);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_beam_track",
@@ -35929,11 +35686,11 @@ ix_this :
       .def("__len__", [](const PyTaoBranchIndex&) { return 1; })
       .def(
           "__getitem__", [](const PyTaoBranchIndex& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.ix_this);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_c_out_io_buffer_reset",
@@ -35966,11 +35723,11 @@ good :
       .def(
           "__getitem__",
           [](const PyTaoCalcDataAtSPts& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.comp_sign);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_cbar_wave_anal",
@@ -36007,13 +35764,13 @@ err_flag :
       .def_readonly("update", &PyTaoChangeEle::update)
       .def("__len__", [](const PyTaoChangeEle&) { return 2; })
       .def("__getitem__", [](const PyTaoChangeEle& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.err_flag);
         if (i == 1)
           return py::cast(s.update);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_change_tune",
@@ -36106,15 +35863,15 @@ do_chrom :
       .def(
           "__getitem__",
           [](const PyTaoChromCalcNeeded& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.data_type);
             if (i == 1)
               return py::cast(s.data_source);
             if (i == 2)
               return py::cast(s.do_chrom);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_clear_cmd",
@@ -36151,13 +35908,13 @@ value2 :
       .def_readonly("value2", &PyTaoClipCmd::value2)
       .def("__len__", [](const PyTaoClipCmd&) { return 2; })
       .def("__getitem__", [](const PyTaoClipCmd& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.value1);
         if (i == 1)
           return py::cast(s.value2);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_close_command_file",
@@ -36181,11 +35938,11 @@ value2 :
       .def(
           "__getitem__",
           [](const PyTaoCmdHistoryRecord& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.cmd);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_command",
@@ -36208,13 +35965,13 @@ err_is_fatal : bool
       .def_readonly("err", &PyTaoCommand::err)
       .def("__len__", [](const PyTaoCommand&) { return 2; })
       .def("__getitem__", [](const PyTaoCommand& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.err_is_fatal);
         if (i == 1)
           return py::cast(s.err);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_constraint_type_name",
@@ -36238,11 +35995,11 @@ datum_name :
       .def(
           "__getitem__",
           [](const PyTaoConstraintTypeName& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.datum_name);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_control_tree_list",
@@ -36370,11 +36127,11 @@ ele_track :
       .def("__len__", [](const PyTaoCurveEleRef&) { return 1; })
       .def(
           "__getitem__", [](const PyTaoCurveEleRef& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.point_to_ele_ref);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_curve_ix_uni",
@@ -36394,11 +36151,11 @@ ix_uni :
       .def_readonly("ix_uni", &PyTaoCurveIxUni::ix_uni)
       .def("__len__", [](const PyTaoCurveIxUni&) { return 1; })
       .def("__getitem__", [](const PyTaoCurveIxUni& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.ix_uni);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_curve_name",
@@ -36422,11 +36179,11 @@ curve_name :
       .def_readonly("curve_name", &PyTaoCurveName::curve_name)
       .def("__len__", [](const PyTaoCurveName&) { return 1; })
       .def("__getitem__", [](const PyTaoCurveName& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.curve_name);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_curve_rms_calc",
@@ -36454,13 +36211,13 @@ mean : float
       .def(
           "__getitem__",
           [](const Tao::TaoCurveRmsCalc& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.rms);
             if (i == 1)
               return py::cast(s.mean);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_d2_d1_name",
@@ -36483,11 +36240,11 @@ d2_d1_name :
       .def_readonly("d2_d1_name", &PyTaoD2D1Name::d2_d1_name)
       .def("__len__", [](const PyTaoD2D1Name&) { return 1; })
       .def("__getitem__", [](const PyTaoD2D1Name& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.d2_d1_name);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_d2_data_stuffit",
@@ -36511,13 +36268,13 @@ n_d1_data :
       .def(
           "__getitem__",
           [](const PyTaoD2DataStuffit& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.d2_name);
             if (i == 1)
               return py::cast(s.n_d1_data);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_data_check",
@@ -36534,11 +36291,11 @@ err :
       .def_readonly("err", &PyTaoDataCheck::err)
       .def("__len__", [](const PyTaoDataCheck&) { return 1; })
       .def("__getitem__", [](const PyTaoDataCheck& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.err);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_data_coupling_init",
@@ -36582,11 +36339,11 @@ is_valid :
       .def(
           "__getitem__",
           [](const PyTaoDataSanityCheck& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_valid);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_data_type_substitute",
@@ -36630,9 +36387,6 @@ curve :
 check_s_position : bool
     If present and True then veto data that does not have an s-position.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 data : TaoDataStruct
@@ -36652,13 +36406,13 @@ most_invalid : unknown
       .def(
           "__getitem__",
           [](const Tao::TaoDataUseitPlotCalc& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.data);
             if (i == 1)
               return py::cast(s.most_invalid);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_datum_has_associated_ele",
@@ -36688,11 +36442,11 @@ has_associated_ele :
       .def(
           "__getitem__",
           [](const PyTaoDatumHasAssociatedEle& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.has_associated_ele);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_datum_integrate",
@@ -36714,9 +36468,6 @@ s_pos : float
 values : float
     Array of values.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 valid_value : bool
@@ -36737,15 +36488,15 @@ result : float
       .def(
           "__getitem__",
           [](const Tao::TaoDatumIntegrate& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.valid_value);
             if (i == 1)
               return py::cast(s.why_invalid);
             if (i == 2)
               return py::cast(s.result);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_datum_name",
@@ -36768,11 +36519,11 @@ datum_name :
       .def_readonly("datum_name", &PyTaoDatumName::datum_name)
       .def("__len__", [](const PyTaoDatumName&) { return 1; })
       .def("__getitem__", [](const PyTaoDatumName& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.datum_name);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_datum_s_position",
@@ -36913,11 +36664,11 @@ have_data : bool
       .def(
           "__getitem__",
           [](const PyTaoDrawCurveData& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.have_data);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_draw_ele_for_floor_plan",
@@ -36961,13 +36712,13 @@ label_name : unknown
       .def(
           "__getitem__",
           [](const PyTaoDrawEleForFloorPlan& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.offset1);
             if (i == 1)
               return py::cast(s.offset2);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_draw_floor_plan",
@@ -37030,11 +36781,11 @@ have_data : bool
       .def(
           "__getitem__",
           [](const PyTaoDrawHistogramData& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.have_data);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_draw_lat_layout",
@@ -37077,9 +36828,6 @@ datum : unknown
 ele : EleStruct
     Lattice element to evaluate at.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 valid_value : bool
@@ -37107,15 +36855,15 @@ value : float
           "__getitem__",
           [](const Tao::TaoEleGeometryWithMisalignments& s,
              size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.valid_value);
             if (i == 1)
               return py::cast(s.why_invalid);
             if (i == 2)
               return py::cast(s.value);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_ele_shape_info",
@@ -37157,8 +36905,8 @@ ix_shape_min : int, optional
       .def(
           "__getitem__",
           [](const PyTaoEleShapeInfo& s, size_t i) -> py::object {
-            if (i >= 5)
-              throw py::index_error();
+            if (i < 0)
+              i += 5;
             if (i == 0)
               return py::cast(s.e_shape);
             if (i == 1)
@@ -37169,7 +36917,7 @@ ix_shape_min : int, optional
               return py::cast(s.y2);
             if (i == 4)
               return py::cast(s.ix_shape_min);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_eval_floor_orbit",
@@ -37193,9 +36941,6 @@ orbit : CoordStruct
 bunch_params : BunchParamsStruct
     Bunch parameters at element.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 valid_value : bool
@@ -37216,15 +36961,15 @@ value : float
       .def(
           "__getitem__",
           [](const Tao::TaoEvalFloorOrbit& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.valid_value);
             if (i == 1)
               return py::cast(s.why_invalid);
             if (i == 2)
               return py::cast(s.value);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_evaluate_a_datum",
@@ -37267,15 +37012,15 @@ print_err : bool, optional
       .def(
           "__getitem__",
           [](const Tao::TaoEvaluateADatum& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.datum_value);
             if (i == 1)
               return py::cast(s.valid_value);
             if (i == 2)
               return py::cast(s.why_invalid);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_evaluate_datum_at_s",
@@ -37298,9 +37043,6 @@ ele_ref : EleStruct
     Reference element.
 valid_value : bool
     True if evaluation was sucessful. False if not.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -37325,15 +37067,15 @@ value : float
       .def(
           "__getitem__",
           [](const Tao::TaoEvaluateDatumAtS& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.err_str);
             if (i == 1)
               return py::cast(s.bad_datum);
             if (i == 2)
               return py::cast(s.value);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_evaluate_lat_or_beam_data",
@@ -37376,9 +37118,6 @@ dflt_eval_point : int, optional
 dflt_s_offset : float, optional
     Default offset of eval_point. Default = 0.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 err : bool
@@ -37400,15 +37139,15 @@ values : float
       .def(
           "__getitem__",
           [](const PyTaoEvaluateLatOrBeamData& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.err);
             if (i == 1)
               return py::cast(s.values);
             if (i == 2)
               return py::cast(s.default_source);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_evaluate_tune",
@@ -37436,11 +37175,11 @@ q_val :
       .def(
           "__getitem__",
           [](const PyTaoEvaluateTune& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.q_val);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_expression_hash_substitute",
@@ -37495,13 +37234,13 @@ print_flag : bool, optional
       .def(
           "__getitem__",
           [](const Tao::TaoFindPlotRegion& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.err);
             if (i == 1)
               return py::cast(s.region);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_fixer",
@@ -37545,13 +37284,13 @@ y_screen : float
       .def(
           "__getitem__",
           [](const Tao::TaoFloorToScreen& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.x_screen);
             if (i == 1)
               return py::cast(s.y_screen);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_floor_to_screen_coords",
@@ -37593,9 +37332,6 @@ abort : bool
 in an array. The data is ordered starting with the first universe
 
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 data_value : float
@@ -37615,8 +37351,8 @@ data_ix_dModel : int
       .def_readonly("data_ix_dModel", &Tao::TaoGetData::data_ix_dModel)
       .def("__len__", [](const Tao::TaoGetData&) { return 4; })
       .def("__getitem__", [](const Tao::TaoGetData& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.data_value);
         if (i == 1)
@@ -37625,7 +37361,7 @@ data_ix_dModel : int
           return py::cast(s.data_meas_value);
         if (i == 3)
           return py::cast(s.data_ix_dModel);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_get_opt_vars",
@@ -37665,8 +37401,8 @@ ignore_if_not_limited : bool
       .def(
           "__getitem__",
           [](const Tao::TaoGetOptVars& s, size_t i) -> py::object {
-            if (i >= 7)
-              throw py::index_error();
+            if (i < 0)
+              i += 7;
             if (i == 0)
               return py::cast(s.var_value);
             if (i == 1)
@@ -37681,7 +37417,7 @@ ignore_if_not_limited : bool
               return py::cast(s.ignore_if_weight_is_zero);
             if (i == 6)
               return py::cast(s.ignore_if_not_limited);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_get_user_input",
@@ -37799,11 +37535,11 @@ graph_name :
       .def_readonly("graph_name", &PyTaoGraphName::graph_name)
       .def("__len__", [](const PyTaoGraphName&) { return 1; })
       .def("__getitem__", [](const PyTaoGraphName& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.graph_name);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_graph_phase_space_setup",
@@ -37831,9 +37567,6 @@ graph : TaoGraphStruct
 branch : BranchStruct
     Associated lattice branch.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 s_min : float
@@ -37853,13 +37586,13 @@ s_max : float
       .def(
           "__getitem__",
           [](const Tao::TaoGraphSMinMaxCalc& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.s_min);
             if (i == 1)
               return py::cast(s.s_max);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_graph_setup",
@@ -37912,15 +37645,15 @@ comb_ds_save :
       .def(
           "__getitem__",
           [](const PyTaoInitBeamInUniverse& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.track_start);
             if (i == 1)
               return py::cast(s.track_end);
             if (i == 2)
               return py::cast(s.comb_ds_save);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_init_beams",
@@ -37975,13 +37708,13 @@ keep_existing_data :
       .def(
           "__getitem__",
           [](const PyTaoInitDataInUniverse& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.n_d2_add);
             if (i == 1)
               return py::cast(s.keep_existing_data);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_init_dynamic_aperture",
@@ -38027,13 +37760,13 @@ found_one : bool
       .def(
           "__getitem__",
           [](const Tao::TaoInitFindElements& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.eles);
             if (i == 1)
               return py::cast(s.found_one);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_init_global",
@@ -38065,13 +37798,13 @@ err_flag :
       .def("__len__", [](const PyTaoInitLattice&) { return 2; })
       .def(
           "__getitem__", [](const PyTaoInitLattice& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.lat_file);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_init_plotting",
@@ -38090,11 +37823,11 @@ plot_file :
       .def(
           "__getitem__",
           [](const PyTaoInitPlotting& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.plot_file);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_init_variables",
@@ -38128,9 +37861,6 @@ model : TaoLatticeStruct
 ix_branch : int
     Lattice branch index to inject into.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 beam : BeamStruct
@@ -38146,13 +37876,13 @@ init_ok : bool
       .def(
           "__getitem__",
           [](const Tao::TaoInjectBeam& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.beam);
             if (i == 1)
               return py::cast(s.init_ok);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_inject_particle",
@@ -38177,11 +37907,11 @@ ix_branch :
       .def(
           "__getitem__",
           [](const PyTaoInjectParticle& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.ix_branch);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_is_valid_name",
@@ -38205,13 +37935,13 @@ is_valid :
       .def("__len__", [](const PyTaoIsValidName&) { return 2; })
       .def(
           "__getitem__", [](const PyTaoIsValidName& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.why_invalid);
             if (i == 1)
               return py::cast(s.is_valid);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_json_cmd",
@@ -38253,8 +37983,8 @@ header_str :
       .def(
           "__getitem__",
           [](const PyTaoKeyInfoToStr& s, size_t i) -> py::object {
-            if (i >= 5)
-              throw py::index_error();
+            if (i < 0)
+              i += 5;
             if (i == 0)
               return py::cast(s.ix_key);
             if (i == 1)
@@ -38265,7 +37995,7 @@ header_str :
               return py::cast(s.key_str);
             if (i == 4)
               return py::cast(s.header_str);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_lat_bookkeeper",
@@ -38309,11 +38039,11 @@ emit :
       .def("__len__", [](const PyTaoLatEmitCalc&) { return 1; })
       .def(
           "__getitem__", [](const PyTaoLatEmitCalc& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.emit);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_lat_sigma_calc_needed",
@@ -38340,15 +38070,15 @@ do_lat_sigma :
       .def(
           "__getitem__",
           [](const PyTaoLatSigmaCalcNeeded& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.data_type);
             if (i == 1)
               return py::cast(s.data_source);
             if (i == 2)
               return py::cast(s.do_lat_sigma);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_lat_sigma_track",
@@ -38407,13 +38137,13 @@ print_err : bool
       .def(
           "__getitem__",
           [](const Tao::TaoLatticeCalc& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.calc_ok);
             if (i == 1)
               return py::cast(s.print_err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_lattice_equal_tao_lattice",
@@ -38500,15 +38230,15 @@ good :
       .def(
           "__getitem__",
           [](const PyTaoLoadThisDatum& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.datum_value);
             if (i == 1)
               return py::cast(s.valid_value);
             if (i == 2)
               return py::cast(s.why_invalid);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_locate_all_elements",
@@ -38540,13 +38270,13 @@ ignore_blank : bool, optional
       .def(
           "__getitem__",
           [](const Tao::TaoLocateAllElements& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.eles);
             if (i == 1)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_locate_elements",
@@ -38599,15 +38329,15 @@ multiple_eles_is_err : bool, optional
       .def(
           "__getitem__",
           [](const PyTaoLocateElements& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.eles);
             if (i == 1)
               return py::cast(s.err);
             if (i == 2)
               return py::cast(s.above_ubound_is_err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_mark_lattice_ele",
@@ -38639,13 +38369,13 @@ this_merit :
       .def_readonly("this_merit", &PyTaoMerit::this_merit)
       .def("__len__", [](const PyTaoMerit&) { return 2; })
       .def("__getitem__", [](const PyTaoMerit& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.calc_ok);
         if (i == 1)
           return py::cast(s.this_merit);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_next_word",
@@ -38674,13 +38404,13 @@ word : unknown
       .def_readonly("line", &PyTaoNextWord::line)
       .def("__len__", [](const PyTaoNextWord&) { return 2; })
       .def("__getitem__", [](const PyTaoNextWord& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.word);
         if (i == 1)
           return py::cast(s.line);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_one_turn_map_calc_needed",
@@ -38710,15 +38440,15 @@ do_one_turn_map :
       .def(
           "__getitem__",
           [](const PyTaoOneTurnMapCalcNeeded& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.data_type);
             if (i == 1)
               return py::cast(s.data_source);
             if (i == 2)
               return py::cast(s.do_one_turn_map);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_open_file",
@@ -38748,13 +38478,13 @@ binary : bool, optional
       .def_readonly("file", &PyTaoOpenFile::file)
       .def("__len__", [](const PyTaoOpenFile&) { return 2; })
       .def("__getitem__", [](const PyTaoOpenFile& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.iunit);
         if (i == 1)
           return py::cast(s.file);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_open_scratch_file",
@@ -38778,13 +38508,13 @@ iu :
       .def(
           "__getitem__",
           [](const PyTaoOpenScratchFile& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.err);
             if (i == 1)
               return py::cast(s.iu);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_optimization_status",
@@ -38808,11 +38538,11 @@ why_str :
       .def(
           "__getitem__",
           [](const PyTaoOptimizationStatus& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.why_str);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_orbit_beta_wave_anal",
@@ -38875,8 +38605,8 @@ value :
       .def(
           "__getitem__",
           [](const PyTaoParamValueAtS& s, size_t i) -> py::object {
-            if (i >= 6)
-              throw py::index_error();
+            if (i < 0)
+              i += 6;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
@@ -38889,7 +38619,7 @@ value :
               return py::cast(s.dat_name);
             if (i == 5)
               return py::cast(s.value);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_parse_command_args",
@@ -38913,13 +38643,13 @@ cmd_line :
       .def(
           "__getitem__",
           [](const PyTaoParseCommandArgs& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.error);
             if (i == 1)
               return py::cast(s.cmd_line);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_parse_element_param_str",
@@ -38960,8 +38690,8 @@ component : unknown
       .def(
           "__getitem__",
           [](const Tao::TaoParseElementParamStr& s, size_t i) -> py::object {
-            if (i >= 6)
-              throw py::index_error();
+            if (i < 0)
+              i += 6;
             if (i == 0)
               return py::cast(s.err);
             if (i == 1)
@@ -38974,7 +38704,7 @@ component : unknown
               return py::cast(s.where);
             if (i == 5)
               return py::cast(s.component);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_particle_data_value",
@@ -38996,9 +38726,6 @@ ele : EleStruct
 ix_bunch : int
     Bunch index.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 value : float
@@ -39018,13 +38745,13 @@ err : bool
       .def(
           "__getitem__",
           [](const Tao::TaoParticleDataValue& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.value);
             if (i == 1)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_pause_cmd",
@@ -39099,8 +38826,8 @@ pure_uni : bool, optional
       .def(
           "__getitem__",
           [](const Tao::TaoPickUniverse& s, size_t i) -> py::object {
-            if (i >= 5)
-              throw py::index_error();
+            if (i < 0)
+              i += 5;
             if (i == 0)
               return py::cast(s.name_out);
             if (i == 1)
@@ -39111,7 +38838,7 @@ pure_uni : bool, optional
               return py::cast(s.ix_uni);
             if (i == 4)
               return py::cast(s.explicit_uni);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_pipe_cmd",
@@ -39285,9 +39012,6 @@ datum : TaoDataStruct
 print_err : bool, optional
     Default is True. If False, do not print an error message.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 ele : EleStruct
@@ -39309,8 +39033,8 @@ why_invalid : unknown
       .def(
           "__getitem__",
           [](const PyTaoPointerToDatumEle& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.valid);
             if (i == 1)
@@ -39319,7 +39043,7 @@ why_invalid : unknown
               return py::cast(s.ele);
             if (i == 3)
               return py::cast(s.ele_name);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_pointer_to_ele_shape",
@@ -39361,15 +39085,15 @@ e_shape :
       .def(
           "__getitem__",
           [](const PyTaoPointerToEleShape& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.dat_var_name);
             if (i == 1)
               return py::cast(s.dat_var_value);
             if (i == 2)
               return py::cast(s.ix_shape_min);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_pointer_to_tao_lat",
@@ -39467,13 +39191,13 @@ Note: With a string argument, this routine can only handle single universe picks
       .def(
           "__getitem__",
           [](const PyTaoPointerToUniverseStr& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.u);
             if (i == 1)
               return py::cast(s.string);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_pointer_to_universes",
@@ -39511,8 +39235,8 @@ dflt_uni : int, optional
       .def(
           "__getitem__",
           [](const Tao::TaoPointerToUniverses& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.unis);
             if (i == 1)
@@ -39521,7 +39245,7 @@ dflt_uni : int, optional
               return py::cast(s.name_out);
             if (i == 3)
               return py::cast(s.explicit_uni);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_pointer_to_var_in_lattice",
@@ -39643,15 +39367,15 @@ do_rad_int :
       .def(
           "__getitem__",
           [](const PyTaoRadIntCalcNeeded& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.data_type);
             if (i == 1)
               return py::cast(s.data_source);
             if (i == 2)
               return py::cast(s.do_rad_int);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_re_execute",
@@ -39667,13 +39391,13 @@ do_rad_int :
       .def_readonly("err", &PyTaoReExecute::err)
       .def("__len__", [](const PyTaoReExecute&) { return 2; })
       .def("__getitem__", [](const PyTaoReExecute& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.string);
         if (i == 1)
           return py::cast(s.err);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_read_cmd",
@@ -39699,13 +39423,13 @@ silent : bool
       .def_readonly("file", &PyTaoReadCmd::file)
       .def("__len__", [](const PyTaoReadCmd&) { return 2; })
       .def("__getitem__", [](const PyTaoReadCmd& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.which);
         if (i == 1)
           return py::cast(s.file);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_read_phase_space_index",
@@ -39737,11 +39461,11 @@ ix_ps :
       .def(
           "__getitem__",
           [](const PyTaoReadPhaseSpaceIndex& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.ix_ps);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_regression_test",
@@ -39773,11 +39497,11 @@ str : unknown
       .def(
           "__getitem__",
           [](const PyTaoRemoveBlankCharacters& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.str);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_run_cmd",
@@ -39857,9 +39581,6 @@ include_wall : bool, optional
     Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
     include the building wall position will be included in determining the the scale.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 y_range : float
@@ -39875,13 +39596,13 @@ y2_range : float
       .def(
           "__getitem__",
           [](const Tao::TaoScaleGraph& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.y_range);
             if (i == 1)
               return py::cast(s.y2_range);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_scale_ping_data",
@@ -40029,11 +39750,11 @@ value_str : unknown
       .def(
           "__getitem__",
           [](const PyTaoSetCalculateCmd& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.switch_);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_set_curve_cmd",
@@ -40090,11 +39811,11 @@ value_str : unknown
       .def_readonly("silent", &PyTaoSetDataCmd::silent)
       .def("__len__", [](const PyTaoSetDataCmd&) { return 1; })
       .def("__getitem__", [](const PyTaoSetDataCmd& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.silent);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_set_data_useit_opt",
@@ -40179,11 +39900,11 @@ value : unknown
       .def(
           "__getitem__",
           [](const PyTaoSetElementsCmd& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.update);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_set_floor_plan_axis_label",
@@ -40212,11 +39933,11 @@ which :
       .def(
           "__getitem__",
           [](const PyTaoSetFloorPlanAxisLabel& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.which);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_set_geodesic_lm_cmd",
@@ -40289,9 +40010,6 @@ max_val : int, optional
 print_err : bool, optional
     If True, print error message. Default is true
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 var : int
@@ -40309,13 +40027,13 @@ error : bool
       .def(
           "__getitem__",
           [](const Tao::TaoSetIntegerValue& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.var);
             if (i == 1)
               return py::cast(s.error);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_set_invalid",
@@ -40387,9 +40105,6 @@ var_str : unknown
 value_str : unknown
     String with encoded value.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 var : bool
@@ -40407,13 +40122,13 @@ error : bool
       .def(
           "__getitem__",
           [](const Tao::TaoSetLogicalValue& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.var);
             if (i == 1)
               return py::cast(s.error);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_set_openmp_n_threads",
@@ -40539,9 +40254,6 @@ qp_axis : QpAxisStruct
 value : unknown
     Component value.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 error : bool
@@ -40559,13 +40271,13 @@ ix_uni : int
       .def(
           "__getitem__",
           [](const Tao::TaoSetQpAxisStruct& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.error);
             if (i == 1)
               return py::cast(s.ix_uni);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_set_qp_point_struct",
@@ -40589,9 +40301,6 @@ qp_point : QpPointStruct
 value : unknown
     Component value.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 error : bool
@@ -40611,13 +40320,13 @@ ix_uni : int
       .def(
           "__getitem__",
           [](const Tao::TaoSetQpPointStruct& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.error);
             if (i == 1)
               return py::cast(s.ix_uni);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_set_qp_rect_struct",
@@ -40641,9 +40350,6 @@ qp_rect : QpRectStruct
 value : unknown
     Component value.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 error : bool
@@ -40661,13 +40367,13 @@ ix_uni : int
       .def(
           "__getitem__",
           [](const Tao::TaoSetQpRectStruct& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.error);
             if (i == 1)
               return py::cast(s.ix_uni);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_set_ran_state_cmd",
@@ -40706,9 +40412,6 @@ max_val : float, optional
 dflt_uni : int, optional
     Default universe used to evaluate parameters.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 var : float
@@ -40724,13 +40427,13 @@ error : bool
       .def(
           "__getitem__",
           [](const Tao::TaoSetRealValue& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.var);
             if (i == 1)
               return py::cast(s.error);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_set_region_cmd",
@@ -41010,15 +40713,15 @@ do_calc :
       .def(
           "__getitem__",
           [](const PyTaoSpinMatricesCalcNeeded& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.data_type);
             if (i == 1)
               return py::cast(s.data_source);
             if (i == 2)
               return py::cast(s.do_calc);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_spin_tracking_turn_on",
@@ -41051,13 +40754,13 @@ err : bool
       .def(
           "__getitem__",
           [](const Tao::TaoSplitComponent& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.comp);
             if (i == 1)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_srdt_calc_needed",
@@ -41084,15 +40787,15 @@ do_srdt :
       .def(
           "__getitem__",
           [](const PyTaoSrdtCalcNeeded& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.data_type);
             if (i == 1)
               return py::cast(s.data_source);
             if (i == 2)
               return py::cast(s.do_srdt);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_subin_uni_number",
@@ -41122,13 +40825,13 @@ ok :
       .def(
           "__getitem__",
           [](const PyTaoSubinUniNumber& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.name_out);
             if (i == 1)
               return py::cast(s.ok);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_svd_optimizer",
@@ -41195,8 +40898,8 @@ err :
       .def(
           "__getitem__",
           [](const PyTaoToChangeNumber& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.num_str);
             if (i == 1)
@@ -41205,7 +40908,7 @@ err :
               return py::cast(s.abs_or_rel);
             if (i == 3)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_to_int",
@@ -41225,15 +40928,15 @@ If the string str is blank then i_int = 0
       .def_readonly("err", &PyTaoToInt::err)
       .def("__len__", [](const PyTaoToInt&) { return 3; })
       .def("__getitem__", [](const PyTaoToInt& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.str);
         if (i == 1)
           return py::cast(s.i_int);
         if (i == 2)
           return py::cast(s.err);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_to_phase_and_coupling_reading",
@@ -41247,9 +40950,6 @@ Parameters
 ----------
 ele : EleStruct
     The monitor.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -41271,15 +40971,15 @@ valid_value : bool
       .def(
           "__getitem__",
           [](const PyTaoToPhaseAndCouplingReading& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.bpm_data);
             if (i == 1)
               return py::cast(s.valid_value);
             if (i == 2)
               return py::cast(s.why_invalid);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_to_real",
@@ -41302,13 +41002,13 @@ err_flag : bool
       .def_readonly("err_flag", &Tao::TaoToReal::err_flag)
       .def("__len__", [](const Tao::TaoToReal&) { return 2; })
       .def("__getitem__", [](const Tao::TaoToReal& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.value);
         if (i == 1)
           return py::cast(s.err_flag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_too_many_particles_lost",
@@ -41333,11 +41033,11 @@ no_beam :
       .def(
           "__getitem__",
           [](const PyTaoTooManyParticlesLost& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.no_beam);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_top10_derivative_print",
@@ -41386,9 +41086,6 @@ ele : EleStruct
 datum : TaoDataStruct
     Datum
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 ix_branch : int
@@ -41408,13 +41105,13 @@ ix_ele : int
       .def(
           "__getitem__",
           [](const Tao::TaoTrackingEleIndex& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.ix_branch);
             if (i == 1)
               return py::cast(s.ix_ele);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_turn_on_special_calcs_if_needed_for_plotting",
@@ -41466,11 +41163,11 @@ i_this_uni :
       .def(
           "__getitem__",
           [](const PyTaoUniverseIndex& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.i_this_uni);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_use_data",
@@ -41527,11 +41224,11 @@ var1_name :
       .def_readonly("var1_name", &PyTaoVar1Name::var1_name)
       .def("__len__", [](const PyTaoVar1Name&) { return 1; })
       .def("__getitem__", [](const PyTaoVar1Name& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.var1_name);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_var_attrib_name",
@@ -41553,11 +41250,11 @@ var_attrib_name :
       .def(
           "__getitem__",
           [](const PyTaoVarAttribName& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.var_attrib_name);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_var_check",
@@ -41667,11 +41364,11 @@ plot_place :
       .def_readonly("err_flag", &PyTaoWaveCmd::err_flag)
       .def("__len__", [](const PyTaoWaveCmd&) { return 1; })
       .def("__getitem__", [](const PyTaoWaveCmd& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.err_flag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_wave_fit",
@@ -41704,9 +41401,6 @@ f3 : float, optional
 f4 : float, optional
     fourth fit function.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 coef : float
@@ -41720,13 +41414,13 @@ rms : float
       .def_readonly("rms", &Tao::TaoWaveFit::rms)
       .def("__len__", [](const Tao::TaoWaveFit&) { return 2; })
       .def("__getitem__", [](const Tao::TaoWaveFit& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.coef);
         if (i == 1)
           return py::cast(s.rms);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "tao_write_cmd",
@@ -41818,8 +41512,8 @@ have_scaled :
       .def("__len__", [](const PyTaoXScaleGraph&) { return 4; })
       .def(
           "__getitem__", [](const PyTaoXScaleGraph& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.x_min);
             if (i == 1)
@@ -41828,7 +41522,7 @@ have_scaled :
               return py::cast(s.include_wall);
             if (i == 3)
               return py::cast(s.have_scaled);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tao_x_scale_plot",
@@ -41891,11 +41585,11 @@ err_flag :
       .def(
           "__getitem__",
           [](const PyTaperMagStrengths& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "target_min_max_calc",
@@ -41933,8 +41627,8 @@ initial : bool, optional
       .def(
           "__getitem__",
           [](const PyTargetMinMaxCalc& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.y_min);
             if (i == 1)
@@ -41943,7 +41637,7 @@ initial : bool, optional
               return py::cast(s.phi_min);
             if (i == 3)
               return py::cast(s.phi_max);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "target_rot_mats",
@@ -41957,9 +41651,6 @@ Parameters
 ----------
 r_center : float
     In lab coords: Center of target relative to phton emission point.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -41976,13 +41667,13 @@ w_to_ele : float
       .def(
           "__getitem__",
           [](const Bmad::TargetRotMats& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.w_to_target);
             if (i == 1)
               return py::cast(s.w_to_ele);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "taylor_equal_taylor",
@@ -42007,9 +41698,6 @@ Parameters
 taylor_in : TaylorStruct
     Input taylor map.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 taylor_inv : TaylorStruct
@@ -42025,13 +41713,13 @@ err : bool
       .def(
           "__getitem__",
           [](const Bmad::TaylorInverse& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.taylor_inv);
             if (i == 1)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "taylor_propagate1",
@@ -42134,13 +41822,13 @@ arr_inout_opt :
           "__getitem__",
           [](const CppBmadTest::TestBunchStructArray& s,
              size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.arr_out);
             if (i == 1)
               return py::cast(s.opt_status);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "test_bunch_struct_scalar",
@@ -42176,13 +41864,13 @@ val_inout_opt :
           "__getitem__",
           [](const CppBmadTest::TestBunchStructScalar& s,
              size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.val_out);
             if (i == 1)
               return py::cast(s.opt_status);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "test_character_scalar",
@@ -42214,8 +41902,8 @@ val_inout_opt :
       .def(
           "__getitem__",
           [](const PyTestCharacterScalar& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.val_out);
             if (i == 1)
@@ -42224,7 +41912,7 @@ val_inout_opt :
               return py::cast(s.val_inout);
             if (i == 3)
               return py::cast(s.val_inout_opt);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "test_complex_array",
@@ -42254,13 +41942,13 @@ arr_inout_opt :
       .def(
           "__getitem__",
           [](const CppBmadTest::TestComplexArray& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.arr_out);
             if (i == 1)
               return py::cast(s.opt_status);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "test_complex_scalar",
@@ -42292,8 +41980,8 @@ val_inout_opt :
       .def(
           "__getitem__",
           [](const PyTestComplexScalar& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.val_out);
             if (i == 1)
@@ -42302,7 +41990,7 @@ val_inout_opt :
               return py::cast(s.val_inout);
             if (i == 3)
               return py::cast(s.val_inout_opt);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "test_integer8_array",
@@ -42334,13 +42022,13 @@ arr_inout_opt :
       .def(
           "__getitem__",
           [](const CppBmadTest::TestInteger8Array& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.arr_out);
             if (i == 1)
               return py::cast(s.opt_status);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "test_integer8_scalar",
@@ -42372,8 +42060,8 @@ val_inout_opt :
       .def(
           "__getitem__",
           [](const PyTestInteger8Scalar& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.val_out);
             if (i == 1)
@@ -42382,7 +42070,7 @@ val_inout_opt :
               return py::cast(s.val_inout);
             if (i == 3)
               return py::cast(s.val_inout_opt);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "test_integer_array",
@@ -42412,13 +42100,13 @@ arr_inout_opt :
       .def(
           "__getitem__",
           [](const CppBmadTest::TestIntegerArray& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.arr_out);
             if (i == 1)
               return py::cast(s.opt_status);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "test_integer_scalar",
@@ -42450,8 +42138,8 @@ val_inout_opt :
       .def(
           "__getitem__",
           [](const PyTestIntegerScalar& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.val_out);
             if (i == 1)
@@ -42460,7 +42148,7 @@ val_inout_opt :
               return py::cast(s.val_inout);
             if (i == 3)
               return py::cast(s.val_inout_opt);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "test_logical_array",
@@ -42490,13 +42178,13 @@ arr_inout_opt :
       .def(
           "__getitem__",
           [](const CppBmadTest::TestLogicalArray& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.arr_out);
             if (i == 1)
               return py::cast(s.opt_status);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "test_logical_scalar",
@@ -42528,8 +42216,8 @@ val_inout_opt :
       .def(
           "__getitem__",
           [](const PyTestLogicalScalar& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.val_out);
             if (i == 1)
@@ -42538,7 +42226,7 @@ val_inout_opt :
               return py::cast(s.val_inout);
             if (i == 3)
               return py::cast(s.val_inout_opt);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "test_real16_array",
@@ -42568,13 +42256,13 @@ arr_inout_opt :
       .def(
           "__getitem__",
           [](const CppBmadTest::TestReal16Array& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.arr_out);
             if (i == 1)
               return py::cast(s.opt_status);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "test_real16_scalar",
@@ -42604,8 +42292,8 @@ val_inout_opt :
       .def(
           "__getitem__",
           [](const PyTestReal16Scalar& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.val_out);
             if (i == 1)
@@ -42614,7 +42302,7 @@ val_inout_opt :
               return py::cast(s.val_inout);
             if (i == 3)
               return py::cast(s.val_inout_opt);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "test_real_array",
@@ -42644,13 +42332,13 @@ arr_inout_opt :
       .def(
           "__getitem__",
           [](const CppBmadTest::TestRealArray& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.arr_out);
             if (i == 1)
               return py::cast(s.opt_status);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "test_real_scalar",
@@ -42679,8 +42367,8 @@ val_inout_opt :
       .def("__len__", [](const PyTestRealScalar&) { return 4; })
       .def(
           "__getitem__", [](const PyTestRealScalar& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.val_out);
             if (i == 1)
@@ -42689,7 +42377,7 @@ val_inout_opt :
               return py::cast(s.val_inout);
             if (i == 3)
               return py::cast(s.val_inout_opt);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tilt_coords",
@@ -42777,9 +42465,6 @@ axis : int
 add_noise : bool
     If True add noise to the reading
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 reading : float
@@ -42795,13 +42480,13 @@ err : bool
       .def(
           "__getitem__",
           [](const Bmad::ToEtaReading& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.reading);
             if (i == 1)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "to_fieldmap_coords",
@@ -42852,8 +42537,8 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const PyToFieldmapCoords& s, size_t i) -> py::object {
-            if (i >= 5)
-              throw py::index_error();
+            if (i < 0)
+              i += 5;
             if (i == 0)
               return py::cast(s.x);
             if (i == 1)
@@ -42864,7 +42549,7 @@ err_flag : bool
               return py::cast(s.cos_ang);
             if (i == 4)
               return py::cast(s.sin_ang);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "to_orbit_reading",
@@ -42892,9 +42577,6 @@ axis : int
 add_noise : bool
     If True add noise to the reading
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 reading : float
@@ -42910,13 +42592,13 @@ err : bool
       .def(
           "__getitem__",
           [](const Bmad::ToOrbitReading& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.reading);
             if (i == 1)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "to_phase_and_coupling_reading",
@@ -42937,9 +42619,6 @@ ele : EleStruct
 add_noise : bool
     If True add noise to the reading
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 reading : BpmPhaseCouplingStruct
@@ -42959,13 +42638,13 @@ err : bool
       .def(
           "__getitem__",
           [](const Bmad::ToPhaseAndCouplingReading& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.reading);
             if (i == 1)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "to_photon_angle_coords",
@@ -43007,15 +42686,15 @@ end subroutine
       .def_readonly("string", &PyToStr::string)
       .def("__len__", [](const PyToStr&) { return 3; })
       .def("__getitem__", [](const PyToStr& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.num);
         if (i == 1)
           return py::cast(s.max_signif);
         if (i == 2)
           return py::cast(s.string);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "to_surface_coords",
@@ -43150,15 +42829,15 @@ s :
       .def(
           "__getitem__",
           [](const PyTouschekRate1Zap& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.rate);
             if (i == 1)
               return py::cast(s.ix);
             if (i == 2)
               return py::cast(s.s);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "track1",
@@ -43205,13 +42884,13 @@ init_to_edge : bool, optional
       .def_readonly("err_flag", &Bmad::Track1::err_flag)
       .def("__len__", [](const Bmad::Track1&) { return 2; })
       .def("__getitem__", [](const Bmad::Track1& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.end_orb);
         if (i == 1)
           return py::cast(s.err_flag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "track1_beam",
@@ -43278,13 +42957,13 @@ make_matrix : bool, optional
       .def("__len__", [](const Bmad::Track1Bmad&) { return 2; })
       .def(
           "__getitem__", [](const Bmad::Track1Bmad& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
               return py::cast(s.track);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "track1_bmad_photon",
@@ -43735,13 +43414,13 @@ make_matrix : bool, optional
       .def(
           "__getitem__",
           [](const Bmad::Track1RungeKutta& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
               return py::cast(s.track);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "track1_sample",
@@ -43786,15 +43465,15 @@ make_quaternion :
       .def_readonly("make_quaternion", &PyTrack1Spin::make_quaternion)
       .def("__len__", [](const PyTrack1Spin&) { return 3; })
       .def("__getitem__", [](const PyTrack1Spin& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.ele);
         if (i == 1)
           return py::cast(s.end_orb);
         if (i == 2)
           return py::cast(s.make_quaternion);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "track1_spin_integration",
@@ -43932,15 +43611,15 @@ dt_step : float, optional
       .def(
           "__getitem__",
           [](const PyTrack1TimeRungeKutta& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
               return py::cast(s.track);
             if (i == 2)
               return py::cast(s.dt_step);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "track_a_beambeam",
@@ -43976,13 +43655,13 @@ make_matrix : bool, optional
       .def(
           "__getitem__",
           [](const Bmad::TrackABeambeam& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.track);
             if (i == 1)
               return py::cast(s.mat6);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "track_a_bend",
@@ -44132,11 +43811,11 @@ time : float, optional
       .def_readonly("time", &PyTrackADrift::time)
       .def("__len__", [](const PyTrackADrift&) { return 1; })
       .def("__getitem__", [](const PyTrackADrift& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.time);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "track_a_drift_photon",
@@ -44312,13 +43991,13 @@ make_matrix : bool, optional
       .def_readonly("err_flag", &PyTrackAMatch::err_flag)
       .def("__len__", [](const PyTrackAMatch&) { return 2; })
       .def("__getitem__", [](const PyTrackAMatch& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.mat6);
         if (i == 1)
           return py::cast(s.err_flag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "track_a_patch",
@@ -44363,15 +44042,15 @@ make_matrix : bool, optional
       .def(
           "__getitem__",
           [](const Bmad::TrackAPatch& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.s_ent);
             if (i == 1)
               return py::cast(s.ds_ref);
             if (i == 2)
               return py::cast(s.mat6);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "track_a_patch_photon",
@@ -44431,13 +44110,13 @@ make_matrix : bool, optional
       .def_readonly("err_flag", &PyTrackAPickup::err_flag)
       .def("__len__", [](const PyTrackAPickup&) { return 2; })
       .def("__getitem__", [](const PyTrackAPickup& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.mat6);
         if (i == 1)
           return py::cast(s.err_flag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "track_a_quadrupole",
@@ -44616,13 +44295,13 @@ track : TrackStruct
       .def(
           "__getitem__",
           [](const Bmad::TrackAZeroLengthElement& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
               return py::cast(s.track);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "track_all",
@@ -44659,15 +44338,15 @@ init_lost : bool
       .def_readonly("orbit0", &Bmad::TrackAll::orbit0)
       .def("__len__", [](const Bmad::TrackAll&) { return 3; })
       .def("__getitem__", [](const Bmad::TrackAll& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.track_state);
         if (i == 1)
           return py::cast(s.err_flag);
         if (i == 2)
           return py::cast(s.orbit0);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "track_beam",
@@ -44880,15 +44559,15 @@ ix_ele_end : int, optional
       .def(
           "__getitem__",
           [](const Bmad::TrackFromSToS& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.orbit_end);
             if (i == 1)
               return py::cast(s.all_orb);
             if (i == 2)
               return py::cast(s.track_state);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "track_many",
@@ -44957,9 +44636,6 @@ start_orb : CoordStruct
 lat : unknown
     lattice that contains and element at start_orb.s
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 end_orb : CoordStruct
@@ -44975,13 +44651,13 @@ track : TrackStruct
       .def(
           "__getitem__",
           [](const Bmad::TrackUntilDead& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.end_orb);
             if (i == 1)
               return py::cast(s.track);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "tracking_rad_map_setup",
@@ -45016,13 +44692,13 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::TrackingRadMapSetup& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.rad_map);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "transfer_ac_kick",
@@ -45282,9 +44958,6 @@ spin_map : TaylorStruct, optional
     This parameter is an input/output and is modified in-place. As an output: Final spin map. Only computed if
     bmad_com.spin_tracking_on = T.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 ref_orb_out : CoordStruct
@@ -45304,13 +44977,13 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::TransferMapFromSToS& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.ref_orb_out);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "transfer_mat2_from_twiss",
@@ -45435,9 +45108,6 @@ z_norm : float
 tri_coef : TricubicCmplxCoefStruct
     Coefficients.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 f_val : complex
@@ -45463,8 +45133,8 @@ df_dz : complex
       .def(
           "__getitem__",
           [](const SimUtils::TricubicCmplxEval& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.df_dx);
             if (i == 1)
@@ -45473,7 +45143,7 @@ df_dz : complex
               return py::cast(s.df_dz);
             if (i == 3)
               return py::cast(s.f_val);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "truncate_complex_taylor_to_order",
@@ -45526,13 +45196,13 @@ err : bool
       .def(
           "__getitem__",
           [](const Bmad::Twiss1Propagate& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.twiss2);
             if (i == 1)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "twiss3_at_start",
@@ -45551,9 +45221,6 @@ lat : LatStruct
 ix_branch : int, optional
     Branch index. 0 = default.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 error : bool
@@ -45567,13 +45234,13 @@ tune3 : float
       .def_readonly("err_flag", &PyTwiss3AtStart::err_flag)
       .def("__len__", [](const PyTwiss3AtStart&) { return 2; })
       .def("__getitem__", [](const PyTwiss3AtStart& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.tune3);
         if (i == 1)
           return py::cast(s.err_flag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "twiss3_from_twiss2",
@@ -45612,11 +45279,11 @@ Subroutine from original mode3_mod.
       .def(
           "__getitem__",
           [](const PyTwiss3Propagate1& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "twiss3_propagate_all",
@@ -45872,15 +45539,15 @@ compute_twiss : bool, optional
       .def(
           "__getitem__",
           [](const Bmad::TwissAndTrackFromSToS& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.orbit_end);
             if (i == 1)
               return py::cast(s.ele_end);
             if (i == 2)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "twiss_and_track_intra_ele",
@@ -45949,13 +45616,13 @@ reuse_ele_end : bool, optional
       .def(
           "__getitem__",
           [](const Bmad::TwissAndTrackIntraEle& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.orbit_end);
             if (i == 1)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "twiss_at_element",
@@ -45984,15 +45651,15 @@ average : EleStruct
       .def(
           "__getitem__",
           [](const Bmad::TwissAtElement& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.start);
             if (i == 1)
               return py::cast(s.end);
             if (i == 2)
               return py::cast(s.average);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "twiss_at_start",
@@ -46049,13 +45716,13 @@ d_orb : float, optional
       .def(
           "__getitem__",
           [](const Bmad::TwissFromTracking& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.symp_err);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "twiss_propagate1",
@@ -46165,11 +45832,11 @@ filename :
       .def_readonly("filename", &PyTypeThisFile::filename)
       .def("__len__", [](const PyTypeThisFile&) { return 1; })
       .def("__getitem__", [](const PyTypeThisFile& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.filename);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "upcase_string",
@@ -46186,11 +45853,11 @@ string :
       .def_readonly("string", &PyUpcaseString::string)
       .def("__len__", [](const PyUpcaseString&) { return 1; })
       .def("__getitem__", [](const PyUpcaseString& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.string);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "update_ele_from_fibre",
@@ -46260,11 +45927,11 @@ is_valid :
       .def("__len__", [](const PyValidFieldCalc&) { return 1; })
       .def(
           "__getitem__", [](const PyValidFieldCalc& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_valid);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "valid_fringe_type",
@@ -46289,11 +45956,11 @@ is_valid :
       .def(
           "__getitem__",
           [](const PyValidFringeType& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_valid);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "valid_mat6_calc_method",
@@ -46323,11 +45990,11 @@ is_valid :
       .def(
           "__getitem__",
           [](const PyValidMat6CalcMethod& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_valid);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "valid_spin_tracking_method",
@@ -46356,11 +46023,11 @@ is_valid :
       .def(
           "__getitem__",
           [](const PyValidSpinTrackingMethod& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_valid);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "valid_tracking_method",
@@ -46390,11 +46057,11 @@ is_valid :
       .def(
           "__getitem__",
           [](const PyValidTrackingMethod& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.is_valid);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "value_of_attribute",
@@ -46428,13 +46095,13 @@ value :
       .def(
           "__getitem__",
           [](const PyValueOfAttribute& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
               return py::cast(s.value);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "value_to_line",
@@ -46466,8 +46133,8 @@ use_comma :
       .def_readonly("use_comma", &PyValueToLine::use_comma)
       .def("__len__", [](const PyValueToLine&) { return 6; })
       .def("__getitem__", [](const PyValueToLine& s, size_t i) -> py::object {
-        if (i >= 6)
-          throw py::index_error();
+        if (i < 0)
+          i += 6;
         if (i == 0)
           return py::cast(s.line);
         if (i == 1)
@@ -46480,7 +46147,7 @@ use_comma :
           return py::cast(s.ignore_if_zero);
         if (i == 5)
           return py::cast(s.use_comma);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "vec_to_polar",
@@ -46639,9 +46306,6 @@ Parameters
 w_mat : float
     Rotation matrix.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 axis : float
@@ -46659,13 +46323,13 @@ angle : float
       .def(
           "__getitem__",
           [](const SimUtils::WMatToAxisAngle& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.axis);
             if (i == 1)
               return py::cast(s.angle);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "w_mat_to_quat",
@@ -46709,9 +46373,6 @@ ele : EleStruct
 ix_wall : int, optional
     Index of wall in .wall3d(:) array. Default is 1.
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 d_radius : float
@@ -46742,8 +46403,8 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::Wall3dDRadius& s, size_t i) -> py::object {
-            if (i >= 7)
-              throw py::index_error();
+            if (i < 0)
+              i += 7;
             if (i == 0)
               return py::cast(s.perp);
             if (i == 1)
@@ -46758,7 +46419,7 @@ err_flag : bool
               return py::cast(s.err_flag);
             if (i == 6)
               return py::cast(s.d_radius);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "wall3d_initializer",
@@ -46841,13 +46502,13 @@ wlen :
       .def_readonly("wlen", &PyWordLen::wlen)
       .def("__len__", [](const PyWordLen&) { return 2; })
       .def("__getitem__", [](const PyWordLen& s, size_t i) -> py::object {
-        if (i >= 2)
-          throw py::index_error();
+        if (i < 0)
+          i += 2;
         if (i == 0)
           return py::cast(s.wording);
         if (i == 1)
           return py::cast(s.wlen);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "word_read",
@@ -46885,8 +46546,8 @@ ignore_interior :
       .def_readonly("ignore_interior", &PyWordRead::ignore_interior)
       .def("__len__", [](const PyWordRead&) { return 8; })
       .def("__getitem__", [](const PyWordRead& s, size_t i) -> py::object {
-        if (i >= 8)
-          throw py::index_error();
+        if (i < 0)
+          i += 8;
         if (i == 0)
           return py::cast(s.in_str);
         if (i == 1)
@@ -46903,7 +46564,7 @@ ignore_interior :
           return py::cast(s.out_str);
         if (i == 7)
           return py::cast(s.ignore_interior);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "word_to_value",
@@ -46930,15 +46591,15 @@ ele :
       .def_readonly("err_flag", &PyWordToValue::err_flag)
       .def("__len__", [](const PyWordToValue&) { return 3; })
       .def("__getitem__", [](const PyWordToValue& s, size_t i) -> py::object {
-        if (i >= 3)
-          throw py::index_error();
+        if (i < 0)
+          i += 3;
         if (i == 0)
           return py::cast(s.word);
         if (i == 1)
           return py::cast(s.value);
         if (i == 2)
           return py::cast(s.err_flag);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "write_ascii_beam_file",
@@ -46990,15 +46651,15 @@ d4 :
       .def("__len__", [](const PyWriteAstraBend&) { return 3; })
       .def(
           "__getitem__", [](const PyWriteAstraBend& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.iu);
             if (i == 1)
               return py::cast(s.strength);
             if (i == 2)
               return py::cast(s.id);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "write_astra_field_grid_file",
@@ -47020,9 +46681,6 @@ ele : EleStruct
 dz : float, optional
     z step size in m. Default: 0.001 m
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 maxfield : float
@@ -47042,13 +46700,13 @@ err : bool
       .def(
           "__getitem__",
           [](const Bmad::WriteAstraFieldGridFile& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.maxfield);
             if (i == 1)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "write_astra_field_grid_file_3d",
@@ -47077,9 +46735,6 @@ ele : EleStruct
 dz : float, optional
     z step size in m. Default: 0.001 m
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 maxfield : float
@@ -47099,13 +46754,13 @@ err : bool
       .def(
           "__getitem__",
           [](const Bmad::WriteAstraFieldGridFile3d& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.maxfield);
             if (i == 1)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "write_beam_file",
@@ -47238,13 +46893,13 @@ old_format :
       .def(
           "__getitem__",
           [](const PyWriteBlenderEle& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.iu);
             if (i == 1)
               return py::cast(s.old_format);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "write_blender_lat_layout",
@@ -47267,11 +46922,11 @@ lat :
       .def(
           "__getitem__",
           [](const PyWriteBlenderLatLayout& s, size_t i) -> py::object {
-            if (i >= 1)
-              throw py::index_error();
+            if (i < 0)
+              i += 1;
             if (i == 0)
               return py::cast(s.file_name);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "write_bmad_lattice_file",
@@ -47333,9 +46988,6 @@ ele : EleStruct
 dz : float, optional
     z step size in m. Default: 0.001 m
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 maxfield : float
@@ -47358,15 +47010,15 @@ err : bool
       .def(
           "__getitem__",
           [](const Bmad::WriteGptFieldGridFile1d& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.maxfield);
             if (i == 1)
               return py::cast(s.ref_time);
             if (i == 2)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "write_gpt_field_grid_file_2d",
@@ -47393,9 +47045,6 @@ dz : float, optional
 r_max : float, optional
     maximum radius in m. Default: 0.02 m
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 maxfield : float
@@ -47418,15 +47067,15 @@ err : bool
       .def(
           "__getitem__",
           [](const Bmad::WriteGptFieldGridFile2d& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.maxfield);
             if (i == 1)
               return py::cast(s.ref_time);
             if (i == 2)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "write_gpt_field_grid_file_3d",
@@ -47452,9 +47101,6 @@ ele : EleStruct
 dz : float, optional
     z step size in m. Default: 0.001 m
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 maxfield : float
@@ -47477,15 +47123,15 @@ err : bool
       .def(
           "__getitem__",
           [](const Bmad::WriteGptFieldGridFile3d& s, size_t i) -> py::object {
-            if (i >= 3)
-              throw py::index_error();
+            if (i < 0)
+              i += 3;
             if (i == 0)
               return py::cast(s.maxfield);
             if (i == 1)
               return py::cast(s.ref_time);
             if (i == 2)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "write_lat_line",
@@ -47522,11 +47168,11 @@ scibmad : bool, optional
       .def_readonly("line", &PyWriteLatLine::line)
       .def("__len__", [](const PyWriteLatLine&) { return 1; })
       .def("__getitem__", [](const PyWriteLatLine& s, size_t i) -> py::object {
-        if (i >= 1)
-          throw py::index_error();
+        if (i < 0)
+          i += 1;
         if (i == 0)
           return py::cast(s.line);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "write_lattice_in_elegant_format",
@@ -47678,8 +47324,8 @@ err :
       .def(
           "__getitem__",
           [](const PyWriteLatticeInSadFormat& s, size_t i) -> py::object {
-            if (i >= 4)
-              throw py::index_error();
+            if (i < 0)
+              i += 4;
             if (i == 0)
               return py::cast(s.out_file_name);
             if (i == 1)
@@ -47688,7 +47334,7 @@ err :
               return py::cast(s.ix_branch);
             if (i == 3)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "write_lattice_in_scibmad",
@@ -47717,13 +47363,13 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::WriteLatticeInScibmad& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.scibmad_file);
             if (i == 1)
               return py::cast(s.err_flag);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "write_line_element",
@@ -47749,13 +47395,13 @@ lat :
       .def(
           "__getitem__",
           [](const PyWriteLineElement& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.line);
             if (i == 1)
               return py::cast(s.iu);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "write_opal_field_grid_file",
@@ -47776,9 +47422,6 @@ ele : EleStruct
 param : LatParamStruct
     Contains lattice information
 
-Return value is a dictionary containing values below.
-
-
 Returns
 -------
 maxfield : float
@@ -47798,13 +47441,13 @@ err : bool
       .def(
           "__getitem__",
           [](const Bmad::WriteOpalFieldGridFile& s, size_t i) -> py::object {
-            if (i >= 2)
-              throw py::index_error();
+            if (i < 0)
+              i += 2;
             if (i == 0)
               return py::cast(s.maxfield);
             if (i == 1)
               return py::cast(s.err);
-            return py::none();
+            throw py::index_error();
           });
   m.def(
       "write_opal_lattice_file",
@@ -47899,8 +47542,8 @@ res :
       .def_readonly("res", &PyXlafun::res)
       .def("__len__", [](const PyXlafun&) { return 4; })
       .def("__getitem__", [](const PyXlafun& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.x);
         if (i == 1)
@@ -47909,7 +47552,7 @@ res :
           return py::cast(s.z);
         if (i == 3)
           return py::cast(s.res);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "xraylib_nist_compound",
@@ -47953,8 +47596,8 @@ res :
       .def_readonly("res", &PyYlafun::res)
       .def("__len__", [](const PyYlafun&) { return 4; })
       .def("__getitem__", [](const PyYlafun& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.x);
         if (i == 1)
@@ -47963,7 +47606,7 @@ res :
           return py::cast(s.z);
         if (i == 3)
           return py::cast(s.res);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "z_at_surface",
@@ -47981,9 +47624,6 @@ ele : EleStruct
 extend_grid : bool, optional
     If a grid is involved and (x, y) is outside of the grid, and extend_grid = True: Pretend (x, y) is at
     edge. Default is False.
-
-Return value is a dictionary containing values below.
-
 
 Returns
 -------
@@ -48007,8 +47647,8 @@ Remember: +z points into the element.
       .def_readonly("y", &PyZAtSurface::y)
       .def("__len__", [](const PyZAtSurface&) { return 5; })
       .def("__getitem__", [](const PyZAtSurface& s, size_t i) -> py::object {
-        if (i >= 5)
-          throw py::index_error();
+        if (i < 0)
+          i += 5;
         if (i == 0)
           return py::cast(s.err_flag);
         if (i == 1)
@@ -48019,7 +47659,7 @@ Remember: +z points into the element.
           return py::cast(s.x);
         if (i == 4)
           return py::cast(s.y);
-        return py::none();
+        throw py::index_error();
       });
   m.def(
       "zero_ele_kicks",
@@ -48078,8 +47718,8 @@ res :
       .def_readonly("res", &PyZlafun::res)
       .def("__len__", [](const PyZlafun&) { return 4; })
       .def("__getitem__", [](const PyZlafun& s, size_t i) -> py::object {
-        if (i >= 4)
-          throw py::index_error();
+        if (i < 0)
+          i += 4;
         if (i == 0)
           return py::cast(s.x);
         if (i == 1)
@@ -48088,6 +47728,6 @@ res :
           return py::cast(s.z);
         if (i == 3)
           return py::cast(s.res);
-        return py::none();
+        throw py::index_error();
       });
 }

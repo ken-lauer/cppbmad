@@ -96,10 +96,10 @@ def generate_routine_return_value_wrapper(routine: FortranRoutine) -> list[str]:
 
     lines.append(f'        .def("__len__", [](const {full_clsname} &) {{ return {len(outputs)}; }})')
     lines.append(f'        .def("__getitem__", [](const {full_clsname} &s, size_t i) -> py::object {{')
-    lines.append(f"            if (i >= {len(outputs)}) throw py::index_error();")
+    lines.append(f"            if (i < 0) i += {len(outputs)};")
     for i, arg in enumerate(outputs):
         lines.append(f"            if (i == {i}) return py::cast(s.{arg.c_name});")
-    lines.append("            return py::none();")
+    lines.append("            throw py::index_error();")
     lines.append("        })")
 
     # lines.append(f'      .def("__repr__", [](const {full_clsname} &self){{ return to_string(self); }})')

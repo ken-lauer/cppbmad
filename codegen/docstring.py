@@ -240,9 +240,6 @@ class RoutineDocstring:
 
         has_returns = bool(self.result_variable or self.outputs)
         if has_returns:
-            if len(self.outputs) > 1:
-                lines.extend(["", "Return value is a dictionary containing values below.", ""])
-
             lines.extend(["", "Returns", "-------"])
 
             if self.result_variable and not self.outputs:
