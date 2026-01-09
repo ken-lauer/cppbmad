@@ -8621,7 +8621,7 @@ dk : float
       .def("__len__", [](const Bmad::AbMultipoleKick&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::AbMultipoleKick& s, size_t i) -> py::object {
+          [](const Bmad::AbMultipoleKick& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -8716,7 +8716,7 @@ is_abs_time :
       .def("__len__", [](const PyAbsoluteTimeTracking&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyAbsoluteTimeTracking& s, size_t i) -> py::object {
+          [](const PyAbsoluteTimeTracking& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -8747,7 +8747,7 @@ ac_amp :
       m, "AcKickerAmp", "Fortran routine ac_kicker_amp return value")
       .def_readonly("ac_amp", &PyAcKickerAmp::ac_amp)
       .def("__len__", [](const PyAcKickerAmp&) { return 1; })
-      .def("__getitem__", [](const PyAcKickerAmp& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyAcKickerAmp& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -8790,17 +8790,15 @@ err_flag : bool
       .def_readonly("X", &Bmad::ActionToXyz::X)
       .def_readonly("err_flag", &Bmad::ActionToXyz::err_flag)
       .def("__len__", [](const Bmad::ActionToXyz&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ActionToXyz& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.X);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::ActionToXyz& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.X);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "add_lattice_control_structs",
       &Bmad::add_lattice_control_structs,
@@ -8890,7 +8888,7 @@ super_ele_out : EleStruct
       .def("__len__", [](const Bmad::AddSuperimpose&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::AddSuperimpose& s, size_t i) -> py::object {
+          [](const Bmad::AddSuperimpose& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -8933,8 +8931,7 @@ This subroutine is not intended for general use.
       .def_readonly("coef", &PyAddThisTaylorTerm::coef)
       .def("__len__", [](const PyAddThisTaylorTerm&) { return 2; })
       .def(
-          "__getitem__",
-          [](const PyAddThisTaylorTerm& s, size_t i) -> py::object {
+          "__getitem__", [](const PyAddThisTaylorTerm& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -8965,7 +8962,7 @@ This routine is used by add_superimpose and is not meant for general use.
       .def("__len__", [](const PyAdjustSuperSlaveNames&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyAdjustSuperSlaveNames& s, size_t i) -> py::object {
+          [](const PyAdjustSuperSlaveNames& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -9041,7 +9038,7 @@ angle :
       .def("__len__", [](const PyAngleBetweenPolars&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyAngleBetweenPolars& s, size_t i) -> py::object {
+          [](const PyAngleBetweenPolars& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -9129,7 +9126,7 @@ The signal data is truncated to an odd length, and the phase is relative to the 
       .def_readonly("phase", &PyApfft::phase)
       .def_readonly("diag", &PyApfft::diag)
       .def("__len__", [](const PyApfft&) { return 3; })
-      .def("__getitem__", [](const PyApfft& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyApfft& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -9180,8 +9177,7 @@ amp : float
       .def_readonly("freq", &SimUtils::ApfftCorr::freq)
       .def("__len__", [](const SimUtils::ApfftCorr&) { return 3; })
       .def(
-          "__getitem__",
-          [](const SimUtils::ApfftCorr& s, size_t i) -> py::object {
+          "__getitem__", [](const SimUtils::ApfftCorr& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -9216,7 +9212,7 @@ by the corrected apfft subroutine in this module.
       .def_readonly("freq", &PyApfftExt::freq)
       .def_readonly("diag", &PyApfftExt::diag)
       .def("__len__", [](const PyApfftExt&) { return 5; })
-      .def("__getitem__", [](const PyApfftExt& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyApfftExt& s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -9317,7 +9313,7 @@ str_out :
       .def_readonly("parens_in", &PyArrayReStr::parens_in)
       .def_readonly("str_out", &PyArrayReStr::str_out)
       .def("__len__", [](const PyArrayReStr&) { return 2; })
-      .def("__getitem__", [](const PyArrayReStr& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyArrayReStr& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -9344,7 +9340,7 @@ y :
       m, "Asinc", "Fortran routine asinc return value")
       .def_readonly("y", &PyAsinc::y)
       .def("__len__", [](const PyAsinc&) { return 1; })
-      .def("__getitem__", [](const PyAsinc& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyAsinc& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -9370,7 +9366,7 @@ ival :
       .def_readonly("err_str", &PyAssertEqual::err_str)
       .def_readonly("ival", &PyAssertEqual::ival)
       .def("__len__", [](const PyAssertEqual&) { return 2; })
-      .def("__getitem__", [](const PyAssertEqual& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyAssertEqual& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -9403,7 +9399,7 @@ field_value :
       .def("__len__", [](const PyAstraMaxFieldReference&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyAstraMaxFieldReference& s, size_t i) -> py::object {
+          [](const PyAstraMaxFieldReference& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -9431,7 +9427,7 @@ is_at_this_end :
       m, "AtThisEleEnd", "Fortran routine at_this_ele_end return value")
       .def_readonly("is_at_this_end", &PyAtThisEleEnd::is_at_this_end)
       .def("__len__", [](const PyAtThisEleEnd&) { return 1; })
-      .def("__getitem__", [](const PyAtThisEleEnd& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyAtThisEleEnd& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -9569,7 +9565,7 @@ why_not_free : int
       .def("__len__", [](const Bmad::AttributeFree1&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::AttributeFree1& s, size_t i) -> py::object {
+          [](const Bmad::AttributeFree1& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -9645,7 +9641,7 @@ why_not_free : int
       .def("__len__", [](const Bmad::AttributeFree2&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::AttributeFree2& s, size_t i) -> py::object {
+          [](const Bmad::AttributeFree2& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -9725,7 +9721,7 @@ why_not_free : int
       .def("__len__", [](const Bmad::AttributeFree3&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::AttributeFree3& s, size_t i) -> py::object {
+          [](const Bmad::AttributeFree3& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -9785,7 +9781,7 @@ Overloaded versions:
       .def("__len__", [](const Bmad::AttributeIndex1&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::AttributeIndex1& s, size_t i) -> py::object {
+          [](const Bmad::AttributeIndex1& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -9845,7 +9841,7 @@ Overloaded versions:
       .def("__len__", [](const Bmad::AttributeIndex2&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::AttributeIndex2& s, size_t i) -> py::object {
+          [](const Bmad::AttributeIndex2& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -10103,7 +10099,7 @@ dnk : float
       .def_readonly("nk", &Bmad::BbiKick::nk)
       .def_readonly("dnk", &Bmad::BbiKick::dnk)
       .def("__len__", [](const Bmad::BbiKick&) { return 2; })
-      .def("__getitem__", [](const Bmad::BbiKick& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Bmad::BbiKick& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -10169,8 +10165,7 @@ ix_stage_last_tracked :
           "ix_stage_last_tracked", &PyBbuHomVoltageCalc::ix_stage_last_tracked)
       .def("__len__", [](const PyBbuHomVoltageCalc&) { return 2; })
       .def(
-          "__getitem__",
-          [](const PyBbuHomVoltageCalc& s, size_t i) -> py::object {
+          "__getitem__", [](const PyBbuHomVoltageCalc& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -10209,7 +10204,7 @@ bbu_beam :
       m, "BbuSetup", "Fortran routine bbu_setup return value")
       .def_readonly("dt_bunch", &PyBbuSetup::dt_bunch)
       .def("__len__", [](const PyBbuSetup&) { return 1; })
-      .def("__getitem__", [](const PyBbuSetup& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyBbuSetup& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -10239,16 +10234,15 @@ ix_stage_tracked :
       .def_readonly("lost", &PyBbuTrackAStage::lost)
       .def_readonly("ix_stage_tracked", &PyBbuTrackAStage::ix_stage_tracked)
       .def("__len__", [](const PyBbuTrackAStage&) { return 2; })
-      .def(
-          "__getitem__", [](const PyBbuTrackAStage& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.lost);
-            if (i == 1)
-              return py::cast(s.ix_stage_tracked);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyBbuTrackAStage& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.lost);
+        if (i == 1)
+          return py::cast(s.ix_stage_tracked);
+        throw py::index_error();
+      });
   m.def(
       "bbu_track_all",
       &python_bbu_track_all,
@@ -10281,7 +10275,7 @@ irep :
       .def_readonly("lost", &PyBbuTrackAll::lost)
       .def_readonly("irep", &PyBbuTrackAll::irep)
       .def("__len__", [](const PyBbuTrackAll&) { return 4; })
-      .def("__getitem__", [](const PyBbuTrackAll& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyBbuTrackAll& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -10411,7 +10405,7 @@ angle_ypz : float
       .def_readonly("angle_xpz", &Bmad::BeamTilts::angle_xpz)
       .def_readonly("angle_ypz", &Bmad::BeamTilts::angle_ypz)
       .def("__len__", [](const Bmad::BeamTilts&) { return 5; })
-      .def("__getitem__", [](const Bmad::BeamTilts& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Bmad::BeamTilts& s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -10509,7 +10503,7 @@ is_set :
       .def("__len__", [](const PyBendLengthHasBeenSet&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyBendLengthHasBeenSet& s, size_t i) -> py::object {
+          [](const PyBendLengthHasBeenSet& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -10800,7 +10794,7 @@ df_dy : complex
       .def("__len__", [](const SimUtils::BicubicCmplxEval&) { return 3; })
       .def(
           "__getitem__",
-          [](const SimUtils::BicubicCmplxEval& s, size_t i) -> py::object {
+          [](const SimUtils::BicubicCmplxEval& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -10859,7 +10853,7 @@ x_center
       .def_readonly("x_center", &PyBinXCenter::x_center)
       .def_readonly("ix_bin", &PyBinXCenter::ix_bin)
       .def("__len__", [](const PyBinXCenter&) { return 2; })
-      .def("__getitem__", [](const PyBinXCenter& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyBinXCenter& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -10890,7 +10884,7 @@ set_to_1 : bool
       m, "BitSet", "Fortran routine bit_set return value")
       .def_readonly("word", &PyBitSet::word)
       .def("__len__", [](const PyBitSet&) { return 1; })
-      .def("__getitem__", [](const PyBitSet& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyBitSet& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -10980,20 +10974,19 @@ parse_lat : LatStruct
       .def_readonly("err_flag", &Bmad::BmadParser::err_flag)
       .def_readonly("parse_lat", &Bmad::BmadParser::parse_lat)
       .def("__len__", [](const Bmad::BmadParser&) { return 4; })
-      .def(
-          "__getitem__", [](const Bmad::BmadParser& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.lat);
-            if (i == 1)
-              return py::cast(s.digested_read_ok);
-            if (i == 2)
-              return py::cast(s.err_flag);
-            if (i == 3)
-              return py::cast(s.parse_lat);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::BmadParser& s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.lat);
+        if (i == 1)
+          return py::cast(s.digested_read_ok);
+        if (i == 2)
+          return py::cast(s.err_flag);
+        if (i == 3)
+          return py::cast(s.parse_lat);
+        throw py::index_error();
+      });
   m.def(
       "bmad_parser2",
       &python_bmad_parser2,
@@ -11026,7 +11019,7 @@ parse_lat : LatStruct, optional
       m, "BmadParser2", "Fortran routine bmad_parser2 return value")
       .def_readonly("err_flag", &PyBmadParser2::err_flag)
       .def("__len__", [](const PyBmadParser2&) { return 1; })
-      .def("__getitem__", [](const PyBmadParser2& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyBmadParser2& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -11095,7 +11088,7 @@ ok : bool
       .def("__len__", [](const SimUtils::BracketIndexForSpline&) { return 2; })
       .def(
           "__getitem__",
-          [](const SimUtils::BracketIndexForSpline& s, size_t i) -> py::object {
+          [](const SimUtils::BracketIndexForSpline& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -11133,7 +11126,7 @@ name :
       m, "BranchName", "Fortran routine branch_name return value")
       .def_readonly("name", &PyBranchName::name)
       .def("__len__", [](const PyBranchName&) { return 1; })
-      .def("__getitem__", [](const PyBranchName& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyBranchName& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -11322,7 +11315,7 @@ bunch_params : BunchParamsStruct
       .def("__len__", [](const PyCalcBunchSigmaMatrixEtc&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyCalcBunchSigmaMatrixEtc& s, size_t i) -> py::object {
+          [](const PyCalcBunchSigmaMatrixEtc& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -11376,7 +11369,7 @@ n_mat : float
       .def(
           "__getitem__",
           [](const Bmad::CalcEmittancesAndTwissFromSigmaMatrix& s,
-             size_t i) -> py::object {
+             int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -11410,20 +11403,19 @@ err_flag :
       .def_readonly("num_out", &PyCalcFileNumber::num_out)
       .def_readonly("err_flag", &PyCalcFileNumber::err_flag)
       .def("__len__", [](const PyCalcFileNumber&) { return 4; })
-      .def(
-          "__getitem__", [](const PyCalcFileNumber& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.file_name);
-            if (i == 1)
-              return py::cast(s.num_in);
-            if (i == 2)
-              return py::cast(s.num_out);
-            if (i == 3)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyCalcFileNumber& s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.file_name);
+        if (i == 1)
+          return py::cast(s.num_in);
+        if (i == 2)
+          return py::cast(s.num_out);
+        if (i == 3)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "calc_spin_params",
       &Bmad::calc_spin_params,
@@ -11499,7 +11491,7 @@ ix_vertex : int
       .def("__len__", [](const Bmad::CalcWallRadius&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::CalcWallRadius& s, size_t i) -> py::object {
+          [](const Bmad::CalcWallRadius& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -11573,17 +11565,15 @@ change :
       .def_readonly("file_name", &PyChangeFileNumber::file_name)
       .def_readonly("change", &PyChangeFileNumber::change)
       .def("__len__", [](const PyChangeFileNumber&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyChangeFileNumber& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.file_name);
-            if (i == 1)
-              return py::cast(s.change);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyChangeFileNumber& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.file_name);
+        if (i == 1)
+          return py::cast(s.change);
+        throw py::index_error();
+      });
   m.def(
       "charge_of",
       &SimUtils::charge_of,
@@ -11696,7 +11686,7 @@ This subroutine is not intended for general use.
       .def("__len__", [](const PyCheckForSuperimposeProblem&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyCheckForSuperimposeProblem& s, size_t i) -> py::object {
+          [](const PyCheckForSuperimposeProblem& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -11735,7 +11725,7 @@ print_err : bool, optional
       .def("__len__", [](const Bmad::CheckIfSInBounds&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::CheckIfSInBounds& s, size_t i) -> py::object {
+          [](const Bmad::CheckIfSInBounds& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -11760,7 +11750,7 @@ fb :
       m, "CheckRfFreq", "Fortran routine check_rf_freq return value")
       .def_readonly("fb", &PyCheckRfFreq::fb)
       .def("__len__", [](const PyCheckRfFreq&) { return 1; })
-      .def("__getitem__", [](const PyCheckRfFreq& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyCheckRfFreq& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -11800,7 +11790,7 @@ err_flag : bool
       .def("__len__", [](const Bmad::ChooseQuadsForSetTune&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::ChooseQuadsForSetTune& s, size_t i) -> py::object {
+          [](const Bmad::ChooseQuadsForSetTune& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -11863,7 +11853,7 @@ orb0 : CoordStruct, optional
       .def_readonly("high_E_orb", &PyChromCalc::high_E_orb)
       .def_readonly("delta_e", &PyChromCalc::delta_e)
       .def("__len__", [](const PyChromCalc&) { return 8; })
-      .def("__getitem__", [](const PyChromCalc& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyChromCalc& s, int i) -> py::object {
         if (i < 0)
           i += 8;
         if (i == 0)
@@ -11920,7 +11910,7 @@ err_flag : bool
       .def_readonly("err_flag", &PyChromTune::err_flag)
       .def_readonly("delta_e", &PyChromTune::delta_e)
       .def("__len__", [](const PyChromTune&) { return 2; })
-      .def("__getitem__", [](const PyChromTune& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyChromTune& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -11946,15 +11936,13 @@ radius :
       m, "ClassicalRadius", "Fortran routine classical_radius return value")
       .def_readonly("radius", &PyClassicalRadius::radius)
       .def("__len__", [](const PyClassicalRadius&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyClassicalRadius& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.radius);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyClassicalRadius& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.radius);
+        throw py::index_error();
+      });
   m.def(
       "clear_lat_1turn_mats",
       &Bmad::clear_lat_1turn_mats,
@@ -12053,7 +12041,7 @@ err_flag : bool
       .def("__len__", [](const Bmad::ClosedOrbitFromTracking&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::ClosedOrbitFromTracking& s, size_t i) -> py::object {
+          [](const Bmad::ClosedOrbitFromTracking& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -12079,7 +12067,7 @@ str_out :
       .def_readonly("cmp", &PyCmplxReStr::cmp)
       .def_readonly("str_out", &PyCmplxReStr::str_out)
       .def("__len__", [](const PyCmplxReStr&) { return 2; })
-      .def("__getitem__", [](const PyCmplxReStr& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyCmplxReStr& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -12120,7 +12108,7 @@ err : bool
       .def("__len__", [](const PyCoarseFrequencyEstimate&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyCoarseFrequencyEstimate& s, size_t i) -> py::object {
+          [](const PyCoarseFrequencyEstimate& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -12170,7 +12158,7 @@ zi :
       .def("__len__", [](const PyComplexErrorFunction&) { return 4; })
       .def(
           "__getitem__",
-          [](const PyComplexErrorFunction& s, size_t i) -> py::object {
+          [](const PyComplexErrorFunction& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -12241,7 +12229,7 @@ coefficients to 9th order
       .def("__len__", [](const PyComplexTaylorCoef1&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyComplexTaylorCoef1& s, size_t i) -> py::object {
+          [](const PyComplexTaylorCoef1& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -12314,7 +12302,7 @@ coefficients to 9th order
       .def("__len__", [](const PyComplexTaylorCoef2&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyComplexTaylorCoef2& s, size_t i) -> py::object {
+          [](const PyComplexTaylorCoef2& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -12403,7 +12391,7 @@ r_out : complex
       .def("__len__", [](const Bmad::ComplexTaylorToMat6&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::ComplexTaylorToMat6& s, size_t i) -> py::object {
+          [](const Bmad::ComplexTaylorToMat6& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -12586,8 +12574,7 @@ err_flag : bool
       .def_readonly("err_flag", &Bmad::ConvertCoords::err_flag)
       .def("__len__", [](const Bmad::ConvertCoords&) { return 3; })
       .def(
-          "__getitem__",
-          [](const Bmad::ConvertCoords& s, size_t i) -> py::object {
+          "__getitem__", [](const Bmad::ConvertCoords& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -12662,7 +12649,7 @@ sout :
       .def(
           "__getitem__",
           [](const PyConvertLocalCartesianToLocalCurvilinear& s,
-             size_t i) -> py::object {
+             int i) -> py::object {
             if (i < 0)
               i += 5;
             if (i == 0)
@@ -12712,7 +12699,7 @@ zout :
       .def(
           "__getitem__",
           [](const PyConvertLocalCurvilinearToLocalCartesian& s,
-             size_t i) -> py::object {
+             int i) -> py::object {
             if (i < 0)
               i += 5;
             if (i == 0)
@@ -12802,27 +12789,25 @@ err_flag : bool
       .def_readonly("beta1", &Bmad::ConvertPcTo::beta1)
       .def_readonly("err_flag", &Bmad::ConvertPcTo::err_flag)
       .def("__len__", [](const Bmad::ConvertPcTo&) { return 7; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ConvertPcTo& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 7;
-            if (i == 0)
-              return py::cast(s.E_tot);
-            if (i == 1)
-              return py::cast(s.gamma);
-            if (i == 2)
-              return py::cast(s.kinetic);
-            if (i == 3)
-              return py::cast(s.beta);
-            if (i == 4)
-              return py::cast(s.brho);
-            if (i == 5)
-              return py::cast(s.beta1);
-            if (i == 6)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::ConvertPcTo& s, int i) -> py::object {
+        if (i < 0)
+          i += 7;
+        if (i == 0)
+          return py::cast(s.E_tot);
+        if (i == 1)
+          return py::cast(s.gamma);
+        if (i == 2)
+          return py::cast(s.kinetic);
+        if (i == 3)
+          return py::cast(s.beta);
+        if (i == 4)
+          return py::cast(s.brho);
+        if (i == 5)
+          return py::cast(s.beta1);
+        if (i == 6)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "convert_total_energy_to",
       &Bmad::convert_total_energy_to,
@@ -12870,7 +12855,7 @@ print_err : bool, optional
       .def("__len__", [](const Bmad::ConvertTotalEnergyTo&) { return 7; })
       .def(
           "__getitem__",
-          [](const Bmad::ConvertTotalEnergyTo& s, size_t i) -> py::object {
+          [](const Bmad::ConvertTotalEnergyTo& s, int i) -> py::object {
             if (i < 0)
               i += 7;
             if (i == 0)
@@ -12922,8 +12907,7 @@ err_flag : bool
           "__len__", [](const Bmad::ConverterDistributionParser&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::ConverterDistributionParser& s,
-             size_t i) -> py::object {
+          [](const Bmad::ConverterDistributionParser& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -12972,16 +12956,15 @@ state_str : unknown
       .def_readonly("state_str", &PyCoordStateName::state_str)
       .def_readonly("one_word", &PyCoordStateName::one_word)
       .def("__len__", [](const PyCoordStateName&) { return 2; })
-      .def(
-          "__getitem__", [](const PyCoordStateName& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.state_str);
-            if (i == 1)
-              return py::cast(s.one_word);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyCoordStateName& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.state_str);
+        if (i == 1)
+          return py::cast(s.one_word);
+        throw py::index_error();
+      });
   m.def(
       "coords_body_to_local",
       &Bmad::coords_body_to_local,
@@ -13083,7 +13066,7 @@ local_coords :
       .def("__len__", [](const Bmad::CoordsFloorToCurvilinear&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::CoordsFloorToCurvilinear& s, size_t i) -> py::object {
+          [](const Bmad::CoordsFloorToCurvilinear& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -13134,7 +13117,7 @@ local_position :
       .def(
           "__getitem__",
           [](const Bmad::CoordsFloorToLocalCurvilinear& s,
-             size_t i) -> py::object {
+             int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -13258,7 +13241,7 @@ floor1 :
       .def("__len__", [](const PyCoordsRelativeToFloor&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyCoordsRelativeToFloor& s, size_t i) -> py::object {
+          [](const PyCoordsRelativeToFloor& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -13285,7 +13268,7 @@ cos1 :
       m, "CosOne", "Fortran routine cos_one return value")
       .def_readonly("cos1", &PyCosOne::cos1)
       .def("__len__", [](const PyCosOne&) { return 1; })
-      .def("__getitem__", [](const PyCosOne& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyCosOne& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -13310,7 +13293,7 @@ y :
       m, "Cosc", "Fortran routine cosc return value")
       .def_readonly("y", &PyCosc::y)
       .def("__len__", [](const PyCosc&) { return 1; })
-      .def("__getitem__", [](const PyCosc& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyCosc& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -13343,7 +13326,7 @@ res :
       .def_readonly("gam", &PyCoulombfun::gam)
       .def_readonly("res", &PyCoulombfun::res)
       .def("__len__", [](const PyCoulombfun&) { return 5; })
-      .def("__getitem__", [](const PyCoulombfun& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyCoulombfun& s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -13432,7 +13415,7 @@ err_flag : bool
       .def("__len__", [](const PyCreateConcatenatedWall3d&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyCreateConcatenatedWall3d& s, size_t i) -> py::object {
+          [](const PyCreateConcatenatedWall3d& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -13490,7 +13473,7 @@ orb_in : CoordStruct, optional
       .def("__len__", [](const Bmad::CreateElementSlice&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::CreateElementSlice& s, size_t i) -> py::object {
+          [](const Bmad::CreateElementSlice& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -13547,7 +13530,7 @@ err_flag :
       m, "CreateGirder", "Fortran routine create_girder return value")
       .def_readonly("err_flag", &PyCreateGirder::err_flag)
       .def("__len__", [](const PyCreateGirder&) { return 1; })
-      .def("__getitem__", [](const PyCreateGirder& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyCreateGirder& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -13656,7 +13639,7 @@ err_flag : bool
       .def("__len__", [](const Bmad::CreatePlanarWigglerModel&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::CreatePlanarWigglerModel& s, size_t i) -> py::object {
+          [](const Bmad::CreatePlanarWigglerModel& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -13846,24 +13829,23 @@ mat :
       .def_readonly("delta", &PyDampingMatrixD::delta)
       .def_readonly("species", &PyDampingMatrixD::species)
       .def("__len__", [](const PyDampingMatrixD&) { return 6; })
-      .def(
-          "__getitem__", [](const PyDampingMatrixD& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 6;
-            if (i == 0)
-              return py::cast(s.gamma);
-            if (i == 1)
-              return py::cast(s.g_tot);
-            if (i == 2)
-              return py::cast(s.B0);
-            if (i == 3)
-              return py::cast(s.B1);
-            if (i == 4)
-              return py::cast(s.delta);
-            if (i == 5)
-              return py::cast(s.species);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyDampingMatrixD& s, int i) -> py::object {
+        if (i < 0)
+          i += 6;
+        if (i == 0)
+          return py::cast(s.gamma);
+        if (i == 1)
+          return py::cast(s.g_tot);
+        if (i == 2)
+          return py::cast(s.B0);
+        if (i == 3)
+          return py::cast(s.B1);
+        if (i == 4)
+          return py::cast(s.delta);
+        if (i == 5)
+          return py::cast(s.species);
+        throw py::index_error();
+      });
   m.def(
       "date_and_time_stamp",
       &python_date_and_time_stamp,
@@ -13884,19 +13866,17 @@ include_zone :
       .def_readonly("numeric_month", &PyDateAndTimeStamp::numeric_month)
       .def_readonly("include_zone", &PyDateAndTimeStamp::include_zone)
       .def("__len__", [](const PyDateAndTimeStamp&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PyDateAndTimeStamp& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.string);
-            if (i == 1)
-              return py::cast(s.numeric_month);
-            if (i == 2)
-              return py::cast(s.include_zone);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyDateAndTimeStamp& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.string);
+        if (i == 1)
+          return py::cast(s.numeric_month);
+        if (i == 2)
+          return py::cast(s.include_zone);
+        throw py::index_error();
+      });
   m.def(
       "deallocate_ele_pointers",
       &Bmad::deallocate_ele_pointers,
@@ -13966,7 +13946,7 @@ species :
       .def("__len__", [](const PyDefaultTrackingSpecies&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyDefaultTrackingSpecies& s, size_t i) -> py::object {
+          [](const PyDefaultTrackingSpecies& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -13997,7 +13977,7 @@ str :
       m, "Detab", "Fortran routine detab return value")
       .def_readonly("str", &PyDetab::str)
       .def("__len__", [](const PyDetab&) { return 1; })
-      .def("__getitem__", [](const PyDetab& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyDetab& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -14049,7 +14029,7 @@ ix_section :
       .def("__len__", [](const PyDiffractionPlateOrMaskHitSpot&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyDiffractionPlateOrMaskHitSpot& s, size_t i) -> py::object {
+          [](const PyDiffractionPlateOrMaskHitSpot& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -14078,19 +14058,17 @@ mat :
       .def_readonly("g_tot", &PyDiffusionMatrixB::g_tot)
       .def_readonly("species", &PyDiffusionMatrixB::species)
       .def("__len__", [](const PyDiffusionMatrixB&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PyDiffusionMatrixB& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.gamma);
-            if (i == 1)
-              return py::cast(s.g_tot);
-            if (i == 2)
-              return py::cast(s.species);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyDiffusionMatrixB& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.gamma);
+        if (i == 1)
+          return py::cast(s.g_tot);
+        if (i == 2)
+          return py::cast(s.species);
+        throw py::index_error();
+      });
   m.def(
       "display_size_and_resolution",
       &python_display_size_and_resolution,
@@ -14123,7 +14101,7 @@ y_res :
       .def("__len__", [](const PyDisplaySizeAndResolution&) { return 5; })
       .def(
           "__getitem__",
-          [](const PyDisplaySizeAndResolution& s, size_t i) -> py::object {
+          [](const PyDisplaySizeAndResolution& s, int i) -> py::object {
             if (i < 0)
               i += 5;
             if (i == 0)
@@ -14168,7 +14146,7 @@ dist :
       .def("__len__", [](const PyDistanceToAperture&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyDistanceToAperture& s, size_t i) -> py::object {
+          [](const PyDistanceToAperture& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -14197,7 +14175,7 @@ dj_bes :
       .def_readonly("arg", &PyDjBessel::arg)
       .def_readonly("dj_bes", &PyDjBessel::dj_bes)
       .def("__len__", [](const PyDjBessel&) { return 3; })
-      .def("__getitem__", [](const PyDjBessel& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyDjBessel& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -14228,7 +14206,7 @@ hash :
       .def_readonly("old_hash", &PyDjbHash::old_hash)
       .def_readonly("hash", &PyDjbHash::hash)
       .def("__len__", [](const PyDjbHash&) { return 3; })
-      .def("__getitem__", [](const PyDjbHash& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyDjbHash& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -14256,7 +14234,7 @@ hash_str :
       .def_readonly("in_str", &PyDjbStrHash::in_str)
       .def_readonly("hash_str", &PyDjbStrHash::hash_str)
       .def("__len__", [](const PyDjbStrHash&) { return 2; })
-      .def("__getitem__", [](const PyDjbStrHash& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyDjbStrHash& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -14293,14 +14271,13 @@ string :
       m, "DowncaseString", "Fortran routine downcase_string return value")
       .def_readonly("string", &PyDowncaseString::string)
       .def("__len__", [](const PyDowncaseString&) { return 1; })
-      .def(
-          "__getitem__", [](const PyDowncaseString& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.string);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyDowncaseString& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.string);
+        throw py::index_error();
+      });
   m.def(
       "dpc_given_de",
       &python_dpc_given_de,
@@ -14324,7 +14301,7 @@ dpc :
       .def_readonly("dE", &PyDpcGivenDe::dE)
       .def_readonly("dpc", &PyDpcGivenDe::dpc)
       .def("__len__", [](const PyDpcGivenDe&) { return 4; })
-      .def("__getitem__", [](const PyDpcGivenDe& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyDpcGivenDe& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -14534,7 +14511,7 @@ field :
       m, "EAccelField", "Fortran routine e_accel_field return value")
       .def_readonly("field", &PyEAccelField::field)
       .def("__len__", [](const PyEAccelField&) { return 1; })
-      .def("__getitem__", [](const PyEAccelField& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEAccelField& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -14593,7 +14570,7 @@ tunes : float
       .def("__len__", [](const Bmad::EigenDecomp6mat&) { return 4; })
       .def(
           "__getitem__",
-          [](const Bmad::EigenDecomp6mat& s, size_t i) -> py::object {
+          [](const Bmad::EigenDecomp6mat& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -14693,7 +14670,7 @@ str :
       m, "EleFullName", "Fortran routine ele_full_name return value")
       .def_readonly("str", &PyEleFullName::str)
       .def("__len__", [](const PyEleFullName&) { return 1; })
-      .def("__getitem__", [](const PyEleFullName& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEleFullName& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -14764,7 +14741,7 @@ is_const :
       .def("__len__", [](const PyEleHasConstantDsDtRef&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEleHasConstantDsDtRef& s, size_t i) -> py::object {
+          [](const PyEleHasConstantDsDtRef& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -14791,8 +14768,7 @@ has_kick :
       .def_readonly("has_kick", &PyEleHasNonzeroKick::has_kick)
       .def("__len__", [](const PyEleHasNonzeroKick&) { return 2; })
       .def(
-          "__getitem__",
-          [](const PyEleHasNonzeroKick& s, size_t i) -> py::object {
+          "__getitem__", [](const PyEleHasNonzeroKick& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -14821,7 +14797,7 @@ has_offset :
       .def("__len__", [](const PyEleHasNonzeroOffset&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEleHasNonzeroOffset& s, size_t i) -> py::object {
+          [](const PyEleHasNonzeroOffset& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -14886,7 +14862,7 @@ str :
       m, "EleLocName", "Fortran routine ele_loc_name return value")
       .def_readonly("str", &PyEleLocName::str)
       .def("__len__", [](const PyEleLocName&) { return 1; })
-      .def("__getitem__", [](const PyEleLocName& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEleLocName& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -14919,7 +14895,7 @@ S_mis : float
       .def("__len__", [](const Bmad::EleMisalignmentLSCalc&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::EleMisalignmentLSCalc& s, size_t i) -> py::object {
+          [](const Bmad::EleMisalignmentLSCalc& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -14948,8 +14924,7 @@ ix_nt :
       .def_readonly("ix_nt", &PyEleNametableIndex::ix_nt)
       .def("__len__", [](const PyEleNametableIndex&) { return 1; })
       .def(
-          "__getitem__",
-          [](const PyEleNametableIndex& s, size_t i) -> py::object {
+          "__getitem__", [](const PyEleNametableIndex& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -15019,14 +14994,13 @@ ix_step :
       m, "EleRfStepIndex", "Fortran routine ele_rf_step_index return value")
       .def_readonly("ix_step", &PyEleRfStepIndex::ix_step)
       .def("__len__", [](const PyEleRfStepIndex&) { return 1; })
-      .def(
-          "__getitem__", [](const PyEleRfStepIndex& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.ix_step);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEleRfStepIndex& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.ix_step);
+        throw py::index_error();
+      });
   m.def(
       "ele_to_ptc_magnetic_bn_an",
       &Bmad::ele_to_ptc_magnetic_bn_an,
@@ -15061,7 +15035,7 @@ n_max : int
       .def("__len__", [](const Bmad::EleToPtcMagneticBnAn&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::EleToPtcMagneticBnAn& s, size_t i) -> py::object {
+          [](const Bmad::EleToPtcMagneticBnAn& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -15120,17 +15094,15 @@ spin_taylor : TaylorStruct
       .def_readonly("orbital_taylor", &Bmad::EleToTaylor::orbital_taylor)
       .def_readonly("spin_taylor", &Bmad::EleToTaylor::spin_taylor)
       .def("__len__", [](const Bmad::EleToTaylor&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::EleToTaylor& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.orbital_taylor);
-            if (i == 1)
-              return py::cast(s.spin_taylor);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::EleToTaylor& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.orbital_taylor);
+        if (i == 1)
+          return py::cast(s.spin_taylor);
+        throw py::index_error();
+      });
   m.def(
       "ele_unique_name",
       &python_ele_unique_name,
@@ -15152,7 +15124,7 @@ unique_name :
       m, "EleUniqueName", "Fortran routine ele_unique_name return value")
       .def_readonly("unique_name", &PyEleUniqueName::unique_name)
       .def("__len__", [](const PyEleUniqueName&) { return 1; })
-      .def("__getitem__", [](const PyEleUniqueName& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEleUniqueName& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -15192,7 +15164,7 @@ has_changed :
       .def("__len__", [](const PyEleValueHasChanged&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEleValueHasChanged& s, size_t i) -> py::object {
+          [](const PyEleValueHasChanged& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -15251,7 +15223,7 @@ compute_dE : bool
       .def("__len__", [](const Bmad::ElecMultipoleField&) { return 4; })
       .def(
           "__getitem__",
-          [](const Bmad::ElecMultipoleField& s, size_t i) -> py::object {
+          [](const Bmad::ElecMultipoleField& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -15326,7 +15298,7 @@ Overloaded versions:
       .def("__len__", [](const Bmad::ElementAtSBranch&) { return 4; })
       .def(
           "__getitem__",
-          [](const Bmad::ElementAtSBranch& s, size_t i) -> py::object {
+          [](const Bmad::ElementAtSBranch& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -15405,8 +15377,7 @@ Overloaded versions:
       .def_readonly("ix_ele", &Bmad::ElementAtSLat::ix_ele)
       .def("__len__", [](const Bmad::ElementAtSLat&) { return 4; })
       .def(
-          "__getitem__",
-          [](const Bmad::ElementAtSLat& s, size_t i) -> py::object {
+          "__getitem__", [](const Bmad::ElementAtSLat& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -15520,17 +15491,15 @@ original_ele : EleStruct, optional
       .def_readonly("field", &Bmad::EmFieldCalc::field)
       .def_readonly("err_flag", &Bmad::EmFieldCalc::err_flag)
       .def("__len__", [](const Bmad::EmFieldCalc&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::EmFieldCalc& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.field);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::EmFieldCalc& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.field);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "em_field_derivatives",
       &python_em_field_derivatives,
@@ -15580,7 +15549,7 @@ dfield : EmFieldStruct
       .def("__len__", [](const PyEmFieldDerivatives&) { return 5; })
       .def(
           "__getitem__",
-          [](const PyEmFieldDerivatives& s, size_t i) -> py::object {
+          [](const PyEmFieldDerivatives& s, int i) -> py::object {
             if (i < 0)
               i += 5;
             if (i == 0)
@@ -15704,7 +15673,7 @@ rad_int_by_ele : RadIntAllEleStruct
       .def_readonly("sigma_mat", &Bmad::Emit6d::sigma_mat)
       .def_readonly("rad_int_by_ele", &Bmad::Emit6d::rad_int_by_ele)
       .def("__len__", [](const Bmad::Emit6d&) { return 3; })
-      .def("__getitem__", [](const Bmad::Emit6d& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Bmad::Emit6d& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -15751,15 +15720,13 @@ is_entering :
       m, "EnteringElement", "Fortran routine entering_element return value")
       .def_readonly("is_entering", &PyEnteringElement::is_entering)
       .def("__len__", [](const PyEnteringElement&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyEnteringElement& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_entering);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEnteringElement& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_entering);
+        throw py::index_error();
+      });
   m.def(
       "envelope_radints",
       &Bmad::envelope_radints,
@@ -15841,7 +15808,7 @@ emit : float
       .def("__len__", [](const Bmad::EnvelopeRadintsIbs&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::EnvelopeRadintsIbs& s, size_t i) -> py::object {
+          [](const Bmad::EnvelopeRadintsIbs& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -15868,7 +15835,7 @@ is_eq :
       m, "EqAcKicker", "Fortran routine eq_ac_kicker return value")
       .def_readonly("is_eq", &PyEqAcKicker::is_eq)
       .def("__len__", [](const PyEqAcKicker&) { return 1; })
-      .def("__getitem__", [](const PyEqAcKicker& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqAcKicker& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -15893,14 +15860,13 @@ is_eq :
       m, "EqAcKickerFreq", "Fortran routine eq_ac_kicker_freq return value")
       .def_readonly("is_eq", &PyEqAcKickerFreq::is_eq)
       .def("__len__", [](const PyEqAcKickerFreq&) { return 1; })
-      .def(
-          "__getitem__", [](const PyEqAcKickerFreq& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqAcKickerFreq& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_ac_kicker_time",
       &python_eq_ac_kicker_time,
@@ -15919,14 +15885,13 @@ is_eq :
       m, "EqAcKickerTime", "Fortran routine eq_ac_kicker_time return value")
       .def_readonly("is_eq", &PyEqAcKickerTime::is_eq)
       .def("__len__", [](const PyEqAcKickerTime&) { return 1; })
-      .def(
-          "__getitem__", [](const PyEqAcKickerTime& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqAcKickerTime& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_anormal_mode",
       &python_eq_anormal_mode,
@@ -15945,7 +15910,7 @@ is_eq :
       m, "EqAnormalMode", "Fortran routine eq_anormal_mode return value")
       .def_readonly("is_eq", &PyEqAnormalMode::is_eq)
       .def("__len__", [](const PyEqAnormalMode&) { return 1; })
-      .def("__getitem__", [](const PyEqAnormalMode& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqAnormalMode& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -15970,15 +15935,13 @@ is_eq :
       m, "EqApertureParam", "Fortran routine eq_aperture_param return value")
       .def_readonly("is_eq", &PyEqApertureParam::is_eq)
       .def("__len__", [](const PyEqApertureParam&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyEqApertureParam& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqApertureParam& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_aperture_point",
       &python_eq_aperture_point,
@@ -15997,15 +15960,13 @@ is_eq :
       m, "EqAperturePoint", "Fortran routine eq_aperture_point return value")
       .def_readonly("is_eq", &PyEqAperturePoint::is_eq)
       .def("__len__", [](const PyEqAperturePoint&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyEqAperturePoint& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqAperturePoint& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_aperture_scan",
       &python_eq_aperture_scan,
@@ -16024,14 +15985,13 @@ is_eq :
       m, "EqApertureScan", "Fortran routine eq_aperture_scan return value")
       .def_readonly("is_eq", &PyEqApertureScan::is_eq)
       .def("__len__", [](const PyEqApertureScan&) { return 1; })
-      .def(
-          "__getitem__", [](const PyEqApertureScan& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqApertureScan& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_beam",
       &python_eq_beam,
@@ -16050,7 +16010,7 @@ is_eq :
       m, "EqBeam", "Fortran routine eq_beam return value")
       .def_readonly("is_eq", &PyEqBeam::is_eq)
       .def("__len__", [](const PyEqBeam&) { return 1; })
-      .def("__getitem__", [](const PyEqBeam& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqBeam& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16075,7 +16035,7 @@ is_eq :
       m, "EqBeamInit", "Fortran routine eq_beam_init return value")
       .def_readonly("is_eq", &PyEqBeamInit::is_eq)
       .def("__len__", [](const PyEqBeamInit&) { return 1; })
-      .def("__getitem__", [](const PyEqBeamInit& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqBeamInit& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16100,7 +16060,7 @@ is_eq :
       m, "EqBmadCommon", "Fortran routine eq_bmad_common return value")
       .def_readonly("is_eq", &PyEqBmadCommon::is_eq)
       .def("__len__", [](const PyEqBmadCommon&) { return 1; })
-      .def("__getitem__", [](const PyEqBmadCommon& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqBmadCommon& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16129,7 +16089,7 @@ is_eq :
       .def("__len__", [](const PyEqBookkeepingState&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqBookkeepingState& s, size_t i) -> py::object {
+          [](const PyEqBookkeepingState& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -16158,7 +16118,7 @@ is_eq :
       .def("__len__", [](const PyEqBpmPhaseCoupling&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqBpmPhaseCoupling& s, size_t i) -> py::object {
+          [](const PyEqBpmPhaseCoupling& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -16183,7 +16143,7 @@ is_eq :
       m, "EqBranch", "Fortran routine eq_branch return value")
       .def_readonly("is_eq", &PyEqBranch::is_eq)
       .def("__len__", [](const PyEqBranch&) { return 1; })
-      .def("__getitem__", [](const PyEqBranch& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqBranch& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16208,7 +16168,7 @@ is_eq :
       m, "EqBunch", "Fortran routine eq_bunch return value")
       .def_readonly("is_eq", &PyEqBunch::is_eq)
       .def("__len__", [](const PyEqBunch&) { return 1; })
-      .def("__getitem__", [](const PyEqBunch& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqBunch& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16233,7 +16193,7 @@ is_eq :
       m, "EqBunchParams", "Fortran routine eq_bunch_params return value")
       .def_readonly("is_eq", &PyEqBunchParams::is_eq)
       .def("__len__", [](const PyEqBunchParams&) { return 1; })
-      .def("__getitem__", [](const PyEqBunchParams& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqBunchParams& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16258,14 +16218,13 @@ is_eq :
       m, "EqCartesianMap", "Fortran routine eq_cartesian_map return value")
       .def_readonly("is_eq", &PyEqCartesianMap::is_eq)
       .def("__len__", [](const PyEqCartesianMap&) { return 1; })
-      .def(
-          "__getitem__", [](const PyEqCartesianMap& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqCartesianMap& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_cartesian_map_term",
       &python_eq_cartesian_map_term,
@@ -16288,7 +16247,7 @@ is_eq :
       .def("__len__", [](const PyEqCartesianMapTerm&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqCartesianMapTerm& s, size_t i) -> py::object {
+          [](const PyEqCartesianMapTerm& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -16317,7 +16276,7 @@ is_eq :
       .def("__len__", [](const PyEqCartesianMapTerm1&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqCartesianMapTerm1& s, size_t i) -> py::object {
+          [](const PyEqCartesianMapTerm1& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -16342,15 +16301,13 @@ is_eq :
       m, "EqComplexTaylor", "Fortran routine eq_complex_taylor return value")
       .def_readonly("is_eq", &PyEqComplexTaylor::is_eq)
       .def("__len__", [](const PyEqComplexTaylor&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyEqComplexTaylor& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqComplexTaylor& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_complex_taylor_term",
       &python_eq_complex_taylor_term,
@@ -16373,7 +16330,7 @@ is_eq :
       .def("__len__", [](const PyEqComplexTaylorTerm&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqComplexTaylorTerm& s, size_t i) -> py::object {
+          [](const PyEqComplexTaylorTerm& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -16398,7 +16355,7 @@ is_eq :
       m, "EqControl", "Fortran routine eq_control return value")
       .def_readonly("is_eq", &PyEqControl::is_eq)
       .def("__len__", [](const PyEqControl&) { return 1; })
-      .def("__getitem__", [](const PyEqControl& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqControl& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16423,14 +16380,13 @@ is_eq :
       m, "EqControlRamp1", "Fortran routine eq_control_ramp1 return value")
       .def_readonly("is_eq", &PyEqControlRamp1::is_eq)
       .def("__len__", [](const PyEqControlRamp1&) { return 1; })
-      .def(
-          "__getitem__", [](const PyEqControlRamp1& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqControlRamp1& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_control_var1",
       &python_eq_control_var1,
@@ -16449,7 +16405,7 @@ is_eq :
       m, "EqControlVar1", "Fortran routine eq_control_var1 return value")
       .def_readonly("is_eq", &PyEqControlVar1::is_eq)
       .def("__len__", [](const PyEqControlVar1&) { return 1; })
-      .def("__getitem__", [](const PyEqControlVar1& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqControlVar1& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16474,7 +16430,7 @@ is_eq :
       m, "EqController", "Fortran routine eq_controller return value")
       .def_readonly("is_eq", &PyEqController::is_eq)
       .def("__len__", [](const PyEqController&) { return 1; })
-      .def("__getitem__", [](const PyEqController& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqController& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16499,7 +16455,7 @@ is_eq :
       m, "EqCoord", "Fortran routine eq_coord return value")
       .def_readonly("is_eq", &PyEqCoord::is_eq)
       .def("__len__", [](const PyEqCoord&) { return 1; })
-      .def("__getitem__", [](const PyEqCoord& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqCoord& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16524,7 +16480,7 @@ is_eq :
       m, "EqCoordArray", "Fortran routine eq_coord_array return value")
       .def_readonly("is_eq", &PyEqCoordArray::is_eq)
       .def("__len__", [](const PyEqCoordArray&) { return 1; })
-      .def("__getitem__", [](const PyEqCoordArray& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqCoordArray& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16549,15 +16505,13 @@ is_eq :
       m, "EqCylindricalMap", "Fortran routine eq_cylindrical_map return value")
       .def_readonly("is_eq", &PyEqCylindricalMap::is_eq)
       .def("__len__", [](const PyEqCylindricalMap&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyEqCylindricalMap& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqCylindricalMap& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_cylindrical_map_term",
       &python_eq_cylindrical_map_term,
@@ -16580,7 +16534,7 @@ is_eq :
       .def("__len__", [](const PyEqCylindricalMapTerm&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqCylindricalMapTerm& s, size_t i) -> py::object {
+          [](const PyEqCylindricalMapTerm& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -16609,7 +16563,7 @@ is_eq :
       .def("__len__", [](const PyEqCylindricalMapTerm1&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqCylindricalMapTerm1& s, size_t i) -> py::object {
+          [](const PyEqCylindricalMapTerm1& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -16634,7 +16588,7 @@ is_eq :
       m, "EqEle", "Fortran routine eq_ele return value")
       .def_readonly("is_eq", &PyEqEle::is_eq)
       .def("__len__", [](const PyEqEle&) { return 1; })
-      .def("__getitem__", [](const PyEqEle& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqEle& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16662,8 +16616,7 @@ is_eq :
       .def_readonly("is_eq", &PyEqEllipseBeamInit::is_eq)
       .def("__len__", [](const PyEqEllipseBeamInit&) { return 1; })
       .def(
-          "__getitem__",
-          [](const PyEqEllipseBeamInit& s, size_t i) -> py::object {
+          "__getitem__", [](const PyEqEllipseBeamInit& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -16688,7 +16641,7 @@ is_eq :
       m, "EqEmField", "Fortran routine eq_em_field return value")
       .def_readonly("is_eq", &PyEqEmField::is_eq)
       .def("__len__", [](const PyEqEmField&) { return 1; })
-      .def("__getitem__", [](const PyEqEmField& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqEmField& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16713,7 +16666,7 @@ is_eq :
       m, "EqEmTaylor", "Fortran routine eq_em_taylor return value")
       .def_readonly("is_eq", &PyEqEmTaylor::is_eq)
       .def("__len__", [](const PyEqEmTaylor&) { return 1; })
-      .def("__getitem__", [](const PyEqEmTaylor& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqEmTaylor& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16738,14 +16691,13 @@ is_eq :
       m, "EqEmTaylorTerm", "Fortran routine eq_em_taylor_term return value")
       .def_readonly("is_eq", &PyEqEmTaylorTerm::is_eq)
       .def("__len__", [](const PyEqEmTaylorTerm&) { return 1; })
-      .def(
-          "__getitem__", [](const PyEqEmTaylorTerm& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqEmTaylorTerm& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_expression_atom",
       &python_eq_expression_atom,
@@ -16764,15 +16716,13 @@ is_eq :
       m, "EqExpressionAtom", "Fortran routine eq_expression_atom return value")
       .def_readonly("is_eq", &PyEqExpressionAtom::is_eq)
       .def("__len__", [](const PyEqExpressionAtom&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyEqExpressionAtom& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqExpressionAtom& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_floor_position",
       &python_eq_floor_position,
@@ -16791,15 +16741,13 @@ is_eq :
       m, "EqFloorPosition", "Fortran routine eq_floor_position return value")
       .def_readonly("is_eq", &PyEqFloorPosition::is_eq)
       .def("__len__", [](const PyEqFloorPosition&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyEqFloorPosition& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqFloorPosition& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_gen_grad1",
       &python_eq_gen_grad1,
@@ -16818,7 +16766,7 @@ is_eq :
       m, "EqGenGrad1", "Fortran routine eq_gen_grad1 return value")
       .def_readonly("is_eq", &PyEqGenGrad1::is_eq)
       .def("__len__", [](const PyEqGenGrad1&) { return 1; })
-      .def("__getitem__", [](const PyEqGenGrad1& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqGenGrad1& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16843,7 +16791,7 @@ is_eq :
       m, "EqGenGradMap", "Fortran routine eq_gen_grad_map return value")
       .def_readonly("is_eq", &PyEqGenGradMap::is_eq)
       .def("__len__", [](const PyEqGenGradMap&) { return 1; })
-      .def("__getitem__", [](const PyEqGenGradMap& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqGenGradMap& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16868,14 +16816,13 @@ is_eq :
       m, "EqGridBeamInit", "Fortran routine eq_grid_beam_init return value")
       .def_readonly("is_eq", &PyEqGridBeamInit::is_eq)
       .def("__len__", [](const PyEqGridBeamInit&) { return 1; })
-      .def(
-          "__getitem__", [](const PyEqGridBeamInit& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqGridBeamInit& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_grid_field",
       &python_eq_grid_field,
@@ -16894,7 +16841,7 @@ is_eq :
       m, "EqGridField", "Fortran routine eq_grid_field return value")
       .def_readonly("is_eq", &PyEqGridField::is_eq)
       .def("__len__", [](const PyEqGridField&) { return 1; })
-      .def("__getitem__", [](const PyEqGridField& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqGridField& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16919,7 +16866,7 @@ is_eq :
       m, "EqGridFieldPt", "Fortran routine eq_grid_field_pt return value")
       .def_readonly("is_eq", &PyEqGridFieldPt::is_eq)
       .def("__len__", [](const PyEqGridFieldPt&) { return 1; })
-      .def("__getitem__", [](const PyEqGridFieldPt& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqGridFieldPt& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -16944,14 +16891,13 @@ is_eq :
       m, "EqGridFieldPt1", "Fortran routine eq_grid_field_pt1 return value")
       .def_readonly("is_eq", &PyEqGridFieldPt1::is_eq)
       .def("__len__", [](const PyEqGridFieldPt1&) { return 1; })
-      .def(
-          "__getitem__", [](const PyEqGridFieldPt1& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqGridFieldPt1& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_high_energy_space_charge",
       &python_eq_high_energy_space_charge,
@@ -16976,7 +16922,7 @@ is_eq :
       .def("__len__", [](const PyEqHighEnergySpaceCharge&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqHighEnergySpaceCharge& s, size_t i) -> py::object {
+          [](const PyEqHighEnergySpaceCharge& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -17001,15 +16947,13 @@ is_eq :
       m, "EqInterval1Coef", "Fortran routine eq_interval1_coef return value")
       .def_readonly("is_eq", &PyEqInterval1Coef::is_eq)
       .def("__len__", [](const PyEqInterval1Coef&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyEqInterval1Coef& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqInterval1Coef& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_kv_beam_init",
       &python_eq_kv_beam_init,
@@ -17028,7 +16972,7 @@ is_eq :
       m, "EqKvBeamInit", "Fortran routine eq_kv_beam_init return value")
       .def_readonly("is_eq", &PyEqKvBeamInit::is_eq)
       .def("__len__", [](const PyEqKvBeamInit&) { return 1; })
-      .def("__getitem__", [](const PyEqKvBeamInit& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqKvBeamInit& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17053,7 +16997,7 @@ is_eq :
       m, "EqLat", "Fortran routine eq_lat return value")
       .def_readonly("is_eq", &PyEqLat::is_eq)
       .def("__len__", [](const PyEqLat&) { return 1; })
-      .def("__getitem__", [](const PyEqLat& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqLat& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17078,7 +17022,7 @@ is_eq :
       m, "EqLatEleLoc", "Fortran routine eq_lat_ele_loc return value")
       .def_readonly("is_eq", &PyEqLatEleLoc::is_eq)
       .def("__len__", [](const PyEqLatEleLoc&) { return 1; })
-      .def("__getitem__", [](const PyEqLatEleLoc& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqLatEleLoc& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17103,7 +17047,7 @@ is_eq :
       m, "EqLatParam", "Fortran routine eq_lat_param return value")
       .def_readonly("is_eq", &PyEqLatParam::is_eq)
       .def("__len__", [](const PyEqLatParam&) { return 1; })
-      .def("__getitem__", [](const PyEqLatParam& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqLatParam& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17131,8 +17075,7 @@ is_eq :
       .def_readonly("is_eq", &PyEqLinacNormalMode::is_eq)
       .def("__len__", [](const PyEqLinacNormalMode&) { return 1; })
       .def(
-          "__getitem__",
-          [](const PyEqLinacNormalMode& s, size_t i) -> py::object {
+          "__getitem__", [](const PyEqLinacNormalMode& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -17157,7 +17100,7 @@ is_eq :
       m, "EqMode3", "Fortran routine eq_mode3 return value")
       .def_readonly("is_eq", &PyEqMode3::is_eq)
       .def("__len__", [](const PyEqMode3&) { return 1; })
-      .def("__getitem__", [](const PyEqMode3& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqMode3& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17182,7 +17125,7 @@ is_eq :
       m, "EqModeInfo", "Fortran routine eq_mode_info return value")
       .def_readonly("is_eq", &PyEqModeInfo::is_eq)
       .def("__len__", [](const PyEqModeInfo&) { return 1; })
-      .def("__getitem__", [](const PyEqModeInfo& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqModeInfo& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17207,7 +17150,7 @@ is_eq :
       m, "EqNormalModes", "Fortran routine eq_normal_modes return value")
       .def_readonly("is_eq", &PyEqNormalModes::is_eq)
       .def("__len__", [](const PyEqNormalModes&) { return 1; })
-      .def("__getitem__", [](const PyEqNormalModes& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqNormalModes& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17232,15 +17175,13 @@ is_eq :
       m, "EqPhotonElement", "Fortran routine eq_photon_element return value")
       .def_readonly("is_eq", &PyEqPhotonElement::is_eq)
       .def("__len__", [](const PyEqPhotonElement&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyEqPhotonElement& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqPhotonElement& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_photon_material",
       &python_eq_photon_material,
@@ -17259,15 +17200,13 @@ is_eq :
       m, "EqPhotonMaterial", "Fortran routine eq_photon_material return value")
       .def_readonly("is_eq", &PyEqPhotonMaterial::is_eq)
       .def("__len__", [](const PyEqPhotonMaterial&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyEqPhotonMaterial& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqPhotonMaterial& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_photon_reflect_surface",
       &python_eq_photon_reflect_surface,
@@ -17292,7 +17231,7 @@ is_eq :
       .def("__len__", [](const PyEqPhotonReflectSurface&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqPhotonReflectSurface& s, size_t i) -> py::object {
+          [](const PyEqPhotonReflectSurface& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -17321,7 +17260,7 @@ is_eq :
       .def("__len__", [](const PyEqPhotonReflectTable&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqPhotonReflectTable& s, size_t i) -> py::object {
+          [](const PyEqPhotonReflectTable& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -17346,14 +17285,13 @@ is_eq :
       m, "EqPhotonTarget", "Fortran routine eq_photon_target return value")
       .def_readonly("is_eq", &PyEqPhotonTarget::is_eq)
       .def("__len__", [](const PyEqPhotonTarget&) { return 1; })
-      .def(
-          "__getitem__", [](const PyEqPhotonTarget& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqPhotonTarget& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_pixel_detec",
       &python_eq_pixel_detec,
@@ -17372,7 +17310,7 @@ is_eq :
       m, "EqPixelDetec", "Fortran routine eq_pixel_detec return value")
       .def_readonly("is_eq", &PyEqPixelDetec::is_eq)
       .def("__len__", [](const PyEqPixelDetec&) { return 1; })
-      .def("__getitem__", [](const PyEqPixelDetec& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqPixelDetec& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17397,7 +17335,7 @@ is_eq :
       m, "EqPixelPt", "Fortran routine eq_pixel_pt return value")
       .def_readonly("is_eq", &PyEqPixelPt::is_eq)
       .def("__len__", [](const PyEqPixelPt&) { return 1; })
-      .def("__getitem__", [](const PyEqPixelPt& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqPixelPt& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17422,7 +17360,7 @@ is_eq :
       m, "EqPreTracker", "Fortran routine eq_pre_tracker return value")
       .def_readonly("is_eq", &PyEqPreTracker::is_eq)
       .def("__len__", [](const PyEqPreTracker&) { return 1; })
-      .def("__getitem__", [](const PyEqPreTracker& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqPreTracker& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17447,7 +17385,7 @@ is_eq :
       m, "EqRadInt1", "Fortran routine eq_rad_int1 return value")
       .def_readonly("is_eq", &PyEqRadInt1::is_eq)
       .def("__len__", [](const PyEqRadInt1&) { return 1; })
-      .def("__getitem__", [](const PyEqRadInt1& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqRadInt1& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17472,14 +17410,13 @@ is_eq :
       m, "EqRadIntAllEle", "Fortran routine eq_rad_int_all_ele return value")
       .def_readonly("is_eq", &PyEqRadIntAllEle::is_eq)
       .def("__len__", [](const PyEqRadIntAllEle&) { return 1; })
-      .def(
-          "__getitem__", [](const PyEqRadIntAllEle& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqRadIntAllEle& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_rad_int_branch",
       &python_eq_rad_int_branch,
@@ -17498,14 +17435,13 @@ is_eq :
       m, "EqRadIntBranch", "Fortran routine eq_rad_int_branch return value")
       .def_readonly("is_eq", &PyEqRadIntBranch::is_eq)
       .def("__len__", [](const PyEqRadIntBranch&) { return 1; })
-      .def(
-          "__getitem__", [](const PyEqRadIntBranch& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqRadIntBranch& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_rad_map",
       &python_eq_rad_map,
@@ -17524,7 +17460,7 @@ is_eq :
       m, "EqRadMap", "Fortran routine eq_rad_map return value")
       .def_readonly("is_eq", &PyEqRadMap::is_eq)
       .def("__len__", [](const PyEqRadMap&) { return 1; })
-      .def("__getitem__", [](const PyEqRadMap& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqRadMap& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17549,7 +17485,7 @@ is_eq :
       m, "EqRadMapEle", "Fortran routine eq_rad_map_ele return value")
       .def_readonly("is_eq", &PyEqRadMapEle::is_eq)
       .def("__len__", [](const PyEqRadMapEle&) { return 1; })
-      .def("__getitem__", [](const PyEqRadMapEle& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqRadMapEle& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17574,7 +17510,7 @@ is_eq :
       m, "EqRamperLord", "Fortran routine eq_ramper_lord return value")
       .def_readonly("is_eq", &PyEqRamperLord::is_eq)
       .def("__len__", [](const PyEqRamperLord&) { return 1; })
-      .def("__getitem__", [](const PyEqRamperLord& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqRamperLord& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17603,7 +17539,7 @@ is_eq :
       .def("__len__", [](const PyEqSpaceChargeCommon&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqSpaceChargeCommon& s, size_t i) -> py::object {
+          [](const PyEqSpaceChargeCommon& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -17628,7 +17564,7 @@ is_eq :
       m, "EqSpinPolar", "Fortran routine eq_spin_polar return value")
       .def_readonly("is_eq", &PyEqSpinPolar::is_eq)
       .def("__len__", [](const PyEqSpinPolar&) { return 1; })
-      .def("__getitem__", [](const PyEqSpinPolar& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqSpinPolar& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17653,7 +17589,7 @@ is_eq :
       m, "EqSpline", "Fortran routine eq_spline return value")
       .def_readonly("is_eq", &PyEqSpline::is_eq)
       .def("__len__", [](const PyEqSpline&) { return 1; })
-      .def("__getitem__", [](const PyEqSpline& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqSpline& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17678,7 +17614,7 @@ is_eq :
       m, "EqStrongBeam", "Fortran routine eq_strong_beam return value")
       .def_readonly("is_eq", &PyEqStrongBeam::is_eq)
       .def("__len__", [](const PyEqStrongBeam&) { return 1; })
-      .def("__getitem__", [](const PyEqStrongBeam& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqStrongBeam& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17707,7 +17643,7 @@ is_eq :
       .def("__len__", [](const PyEqSurfaceCurvature&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqSurfaceCurvature& s, size_t i) -> py::object {
+          [](const PyEqSurfaceCurvature& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -17736,7 +17672,7 @@ is_eq :
       .def("__len__", [](const PyEqSurfaceDisplacement&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqSurfaceDisplacement& s, size_t i) -> py::object {
+          [](const PyEqSurfaceDisplacement& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -17767,7 +17703,7 @@ is_eq :
       .def("__len__", [](const PyEqSurfaceDisplacementPt&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqSurfaceDisplacementPt& s, size_t i) -> py::object {
+          [](const PyEqSurfaceDisplacementPt& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -17796,7 +17732,7 @@ is_eq :
       .def("__len__", [](const PyEqSurfaceHMisalign&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqSurfaceHMisalign& s, size_t i) -> py::object {
+          [](const PyEqSurfaceHMisalign& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -17825,7 +17761,7 @@ is_eq :
       .def("__len__", [](const PyEqSurfaceHMisalignPt&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqSurfaceHMisalignPt& s, size_t i) -> py::object {
+          [](const PyEqSurfaceHMisalignPt& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -17854,7 +17790,7 @@ is_eq :
       .def("__len__", [](const PyEqSurfaceSegmented&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqSurfaceSegmented& s, size_t i) -> py::object {
+          [](const PyEqSurfaceSegmented& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -17883,7 +17819,7 @@ is_eq :
       .def("__len__", [](const PyEqSurfaceSegmentedPt&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEqSurfaceSegmentedPt& s, size_t i) -> py::object {
+          [](const PyEqSurfaceSegmentedPt& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -17908,7 +17844,7 @@ is_eq :
       m, "EqTargetPoint", "Fortran routine eq_target_point return value")
       .def_readonly("is_eq", &PyEqTargetPoint::is_eq)
       .def("__len__", [](const PyEqTargetPoint&) { return 1; })
-      .def("__getitem__", [](const PyEqTargetPoint& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqTargetPoint& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17933,7 +17869,7 @@ is_eq :
       m, "EqTaylor", "Fortran routine eq_taylor return value")
       .def_readonly("is_eq", &PyEqTaylor::is_eq)
       .def("__len__", [](const PyEqTaylor&) { return 1; })
-      .def("__getitem__", [](const PyEqTaylor& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqTaylor& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17958,7 +17894,7 @@ is_eq :
       m, "EqTaylorTerm", "Fortran routine eq_taylor_term return value")
       .def_readonly("is_eq", &PyEqTaylorTerm::is_eq)
       .def("__len__", [](const PyEqTaylorTerm&) { return 1; })
-      .def("__getitem__", [](const PyEqTaylorTerm& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqTaylorTerm& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -17983,7 +17919,7 @@ is_eq :
       m, "EqTrack", "Fortran routine eq_track return value")
       .def_readonly("is_eq", &PyEqTrack::is_eq)
       .def("__len__", [](const PyEqTrack&) { return 1; })
-      .def("__getitem__", [](const PyEqTrack& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqTrack& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -18008,7 +17944,7 @@ is_eq :
       m, "EqTrackPoint", "Fortran routine eq_track_point return value")
       .def_readonly("is_eq", &PyEqTrackPoint::is_eq)
       .def("__len__", [](const PyEqTrackPoint&) { return 1; })
-      .def("__getitem__", [](const PyEqTrackPoint& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqTrackPoint& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -18033,7 +17969,7 @@ is_eq :
       m, "EqTwiss", "Fortran routine eq_twiss return value")
       .def_readonly("is_eq", &PyEqTwiss::is_eq)
       .def("__len__", [](const PyEqTwiss&) { return 1; })
-      .def("__getitem__", [](const PyEqTwiss& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqTwiss& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -18058,7 +17994,7 @@ is_eq :
       m, "EqWake", "Fortran routine eq_wake return value")
       .def_readonly("is_eq", &PyEqWake::is_eq)
       .def("__len__", [](const PyEqWake&) { return 1; })
-      .def("__getitem__", [](const PyEqWake& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqWake& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -18083,7 +18019,7 @@ is_eq :
       m, "EqWakeLr", "Fortran routine eq_wake_lr return value")
       .def_readonly("is_eq", &PyEqWakeLr::is_eq)
       .def("__len__", [](const PyEqWakeLr&) { return 1; })
-      .def("__getitem__", [](const PyEqWakeLr& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqWakeLr& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -18108,7 +18044,7 @@ is_eq :
       m, "EqWakeLrMode", "Fortran routine eq_wake_lr_mode return value")
       .def_readonly("is_eq", &PyEqWakeLrMode::is_eq)
       .def("__len__", [](const PyEqWakeLrMode&) { return 1; })
-      .def("__getitem__", [](const PyEqWakeLrMode& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqWakeLrMode& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -18133,7 +18069,7 @@ is_eq :
       m, "EqWakeSr", "Fortran routine eq_wake_sr return value")
       .def_readonly("is_eq", &PyEqWakeSr::is_eq)
       .def("__len__", [](const PyEqWakeSr&) { return 1; })
-      .def("__getitem__", [](const PyEqWakeSr& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqWakeSr& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -18158,7 +18094,7 @@ is_eq :
       m, "EqWakeSrMode", "Fortran routine eq_wake_sr_mode return value")
       .def_readonly("is_eq", &PyEqWakeSrMode::is_eq)
       .def("__len__", [](const PyEqWakeSrMode&) { return 1; })
-      .def("__getitem__", [](const PyEqWakeSrMode& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqWakeSrMode& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -18183,7 +18119,7 @@ is_eq :
       m, "EqWakeSrZLong", "Fortran routine eq_wake_sr_z_long return value")
       .def_readonly("is_eq", &PyEqWakeSrZLong::is_eq)
       .def("__len__", [](const PyEqWakeSrZLong&) { return 1; })
-      .def("__getitem__", [](const PyEqWakeSrZLong& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqWakeSrZLong& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -18208,7 +18144,7 @@ is_eq :
       m, "EqWall3d", "Fortran routine eq_wall3d return value")
       .def_readonly("is_eq", &PyEqWall3d::is_eq)
       .def("__len__", [](const PyEqWall3d&) { return 1; })
-      .def("__getitem__", [](const PyEqWall3d& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqWall3d& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -18233,15 +18169,13 @@ is_eq :
       m, "EqWall3dSection", "Fortran routine eq_wall3d_section return value")
       .def_readonly("is_eq", &PyEqWall3dSection::is_eq)
       .def("__len__", [](const PyEqWall3dSection&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyEqWall3dSection& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqWall3dSection& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_wall3d_vertex",
       &python_eq_wall3d_vertex,
@@ -18260,14 +18194,13 @@ is_eq :
       m, "EqWall3dVertex", "Fortran routine eq_wall3d_vertex return value")
       .def_readonly("is_eq", &PyEqWall3dVertex::is_eq)
       .def("__len__", [](const PyEqWall3dVertex&) { return 1; })
-      .def(
-          "__getitem__", [](const PyEqWall3dVertex& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_eq);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyEqWall3dVertex& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_eq);
+        throw py::index_error();
+      });
   m.def(
       "eq_xy_disp",
       &python_eq_xy_disp,
@@ -18286,7 +18219,7 @@ is_eq :
       m, "EqXyDisp", "Fortran routine eq_xy_disp return value")
       .def_readonly("is_eq", &PyEqXyDisp::is_eq)
       .def("__len__", [](const PyEqXyDisp&) { return 1; })
-      .def("__getitem__", [](const PyEqXyDisp& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqXyDisp& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -18312,7 +18245,7 @@ is_here :
       .def_readonly("delim", &PyEqualSignHere::delim)
       .def_readonly("is_here", &PyEqualSignHere::is_here)
       .def("__len__", [](const PyEqualSignHere&) { return 2; })
-      .def("__getitem__", [](const PyEqualSignHere& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEqualSignHere& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -18347,7 +18280,7 @@ equiv :
       .def("__len__", [](const PyEquivalentTaylorAttributes&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyEquivalentTaylorAttributes& s, size_t i) -> py::object {
+          [](const PyEquivalentTaylorAttributes& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -18368,7 +18301,7 @@ err_str :
       m, "ErrExit", "Fortran routine err_exit return value")
       .def_readonly("err_str", &PyErrExit::err_str)
       .def("__len__", [](const PyErrExit&) { return 1; })
-      .def("__getitem__", [](const PyErrExit& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyErrExit& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -18404,7 +18337,7 @@ F :
       .def_readonly("E", &PyEtdiv::E)
       .def_readonly("F", &PyEtdiv::F)
       .def("__len__", [](const PyEtdiv&) { return 6; })
-      .def("__getitem__", [](const PyEtdiv& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyEtdiv& s, int i) -> py::object {
         if (i < 0)
           i += 6;
         if (i == 0)
@@ -18462,7 +18395,7 @@ this_index : int
       .def("__len__", [](const Bmad::EvaluateArrayIndex&) { return 4; })
       .def(
           "__getitem__",
-          [](const Bmad::EvaluateArrayIndex& s, size_t i) -> py::object {
+          [](const Bmad::EvaluateArrayIndex& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -18505,7 +18438,7 @@ iostat : int
       .def("__len__", [](const Bmad::EvaluateLogical&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::EvaluateLogical& s, size_t i) -> py::object {
+          [](const Bmad::EvaluateLogical& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -18609,7 +18542,7 @@ expect_this
       .def_readonly("delim_found", &PyExpectOneOf::delim_found)
       .def_readonly("is_ok", &PyExpectOneOf::is_ok)
       .def("__len__", [](const PyExpectOneOf&) { return 3; })
-      .def("__getitem__", [](const PyExpectOneOf& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyExpectOneOf& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -18665,18 +18598,17 @@ expect_one_of
       .def_readonly("delim_found", &Bmad::ExpectThis::delim_found)
       .def_readonly("is_ok", &Bmad::ExpectThis::is_ok)
       .def("__len__", [](const Bmad::ExpectThis&) { return 3; })
-      .def(
-          "__getitem__", [](const Bmad::ExpectThis& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.delim);
-            if (i == 1)
-              return py::cast(s.delim_found);
-            if (i == 2)
-              return py::cast(s.is_ok);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::ExpectThis& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.delim);
+        if (i == 1)
+          return py::cast(s.delim_found);
+        if (i == 2)
+          return py::cast(s.is_ok);
+        throw py::index_error();
+      });
   m.def(
       "expression_stack_to_string",
       &Bmad::expression_stack_to_string,
@@ -18741,7 +18673,7 @@ expression_value expression_string_to_stack
       .def("__len__", [](const Bmad::ExpressionStackValue&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::ExpressionStackValue& s, size_t i) -> py::object {
+          [](const Bmad::ExpressionStackValue& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -18797,7 +18729,7 @@ expression_value expression_stack_value
       .def("__len__", [](const Bmad::ExpressionStringToStack&) { return 4; })
       .def(
           "__getitem__",
-          [](const Bmad::ExpressionStringToStack& s, size_t i) -> py::object {
+          [](const Bmad::ExpressionStringToStack& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -18866,7 +18798,7 @@ construct "mass_of(He++)" will not get split will get marked as a species_const$
       .def("__len__", [](const Bmad::ExpressionStringToTree&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::ExpressionStringToTree& s, size_t i) -> py::object {
+          [](const Bmad::ExpressionStringToTree& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -18940,7 +18872,7 @@ expression_string_to_stack expression_stack_value
       .def("__len__", [](const Bmad::ExpressionValue&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::ExpressionValue& s, size_t i) -> py::object {
+          [](const Bmad::ExpressionValue& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -18968,7 +18900,7 @@ fact :
       .def_readonly("n", &PyFactorial::n)
       .def_readonly("fact", &PyFactorial::fact)
       .def("__len__", [](const PyFactorial&) { return 2; })
-      .def("__getitem__", [](const PyFactorial& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyFactorial& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -19073,21 +19005,19 @@ add_switch :
       .def_readonly("directory", &PyFileDirectorizer::directory)
       .def_readonly("add_switch", &PyFileDirectorizer::add_switch)
       .def("__len__", [](const PyFileDirectorizer&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const PyFileDirectorizer& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.in_file);
-            if (i == 1)
-              return py::cast(s.out_file);
-            if (i == 2)
-              return py::cast(s.directory);
-            if (i == 3)
-              return py::cast(s.add_switch);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyFileDirectorizer& s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.in_file);
+        if (i == 1)
+          return py::cast(s.out_file);
+        if (i == 2)
+          return py::cast(s.directory);
+        if (i == 3)
+          return py::cast(s.add_switch);
+        throw py::index_error();
+      });
   m.def(
       "file_get",
       &python_file_get,
@@ -19108,7 +19038,7 @@ file_name :
       .def_readonly("dflt_file_name", &PyFileGet::dflt_file_name)
       .def_readonly("file_name", &PyFileGet::file_name)
       .def("__len__", [](const PyFileGet&) { return 3; })
-      .def("__getitem__", [](const PyFileGet& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyFileGet& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -19145,7 +19075,7 @@ readonly :
       .def_readonly("file_unit", &PyFileGetOpen::file_unit)
       .def_readonly("readonly", &PyFileGetOpen::readonly)
       .def("__len__", [](const PyFileGetOpen&) { return 5; })
-      .def("__getitem__", [](const PyFileGetOpen& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyFileGetOpen& s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -19183,7 +19113,7 @@ add_switch :
       .def_readonly("suffix", &PyFileSuffixer::suffix)
       .def_readonly("add_switch", &PyFileSuffixer::add_switch)
       .def("__len__", [](const PyFileSuffixer&) { return 4; })
-      .def("__getitem__", [](const PyFileSuffixer& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyFileSuffixer& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -19239,7 +19169,7 @@ ix_multipass : int, optional
       .def("__len__", [](const Bmad::FindElementEnds&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::FindElementEnds& s, size_t i) -> py::object {
+          [](const Bmad::FindElementEnds& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -19293,17 +19223,15 @@ ix_match :
       .def_readonly("value", &PyFindLocationInt::value)
       .def_readonly("ix_match", &PyFindLocationInt::ix_match)
       .def("__len__", [](const PyFindLocationInt&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyFindLocationInt& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.value);
-            if (i == 1)
-              return py::cast(s.ix_match);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyFindLocationInt& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.value);
+        if (i == 1)
+          return py::cast(s.ix_match);
+        throw py::index_error();
+      });
   m.def(
       "find_location",
       py::overload_cast<BoolAlloc1D&, bool, int>(&python_find_location_logic),
@@ -19326,8 +19254,7 @@ ix_match :
       .def_readonly("ix_match", &PyFindLocationLogic::ix_match)
       .def("__len__", [](const PyFindLocationLogic&) { return 2; })
       .def(
-          "__getitem__",
-          [](const PyFindLocationLogic& s, size_t i) -> py::object {
+          "__getitem__", [](const PyFindLocationLogic& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -19356,15 +19283,13 @@ ix_match :
       m, "FindLocationReal", "Fortran routine find_location_real return value")
       .def_readonly("ix_match", &PyFindLocationReal::ix_match)
       .def("__len__", [](const PyFindLocationReal&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyFindLocationReal& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.ix_match);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyFindLocationReal& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.ix_match);
+        throw py::index_error();
+      });
   m.def(
       "find_matching_fieldmap",
       &Bmad::find_matching_fieldmap,
@@ -19401,7 +19326,7 @@ ignore_slaves : bool, optional
       .def("__len__", [](const Bmad::FindMatchingFieldmap&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::FindMatchingFieldmap& s, size_t i) -> py::object {
+          [](const Bmad::FindMatchingFieldmap& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -19473,7 +19398,7 @@ called when the instance is no longer needed.
       m, "Fixedwindowls", "Fortran routine fixedwindowls return value")
       .def_readonly("z", &PyFixedwindowls::z)
       .def("__len__", [](const PyFixedwindowls&) { return 1; })
-      .def("__getitem__", [](const PyFixedwindowls& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyFixedwindowls& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -19510,7 +19435,7 @@ w_mat_inv : float
       .def("__len__", [](const Bmad::FloorAnglesToWMat&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::FloorAnglesToWMat& s, size_t i) -> py::object {
+          [](const Bmad::FloorAnglesToWMat& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -19550,7 +19475,7 @@ floor0 : FloorPositionStruct, optional
       .def("__len__", [](const Bmad::FloorWMatToAngles&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::FloorWMatToAngles& s, size_t i) -> py::object {
+          [](const Bmad::FloorWMatToAngles& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -19622,7 +19547,7 @@ full_lat_file : unknown
       .def("__len__", [](const Bmad::FormDigestedBmadFileName&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::FormDigestedBmadFileName& s, size_t i) -> py::object {
+          [](const Bmad::FormDigestedBmadFileName& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -19671,7 +19596,7 @@ dsin_amp : float
       .def("__len__", [](const SimUtils::FourierAmplitude&) { return 4; })
       .def(
           "__getitem__",
-          [](const SimUtils::FourierAmplitude& s, size_t i) -> py::object {
+          [](const SimUtils::FourierAmplitude& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -19707,7 +19632,7 @@ is_here :
       m, "FringeHere", "Fortran routine fringe_here return value")
       .def_readonly("is_here", &PyFringeHere::is_here)
       .def("__len__", [](const PyFringeHere&) { return 1; })
-      .def("__getitem__", [](const PyFringeHere& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyFringeHere& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -19778,8 +19703,7 @@ dg : float
           "__len__", [](const Bmad::GBendingStrengthFromEmField&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::GBendingStrengthFromEmField& s,
-             size_t i) -> py::object {
+          [](const Bmad::GBendingStrengthFromEmField& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -19816,7 +19740,7 @@ gamma :
       m, "GammaRef", "Fortran routine gamma_ref return value")
       .def_readonly("gamma", &PyGammaRef::gamma)
       .def("__len__", [](const PyGammaRef&) { return 1; })
-      .def("__getitem__", [](const PyGammaRef& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyGammaRef& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -19856,7 +19780,7 @@ value :
       .def("__len__", [](const PyGenCompleteElliptic&) { return 6; })
       .def(
           "__getitem__",
-          [](const PyGenCompleteElliptic& s, size_t i) -> py::object {
+          [](const PyGenCompleteElliptic& s, int i) -> py::object {
             if (i < 0)
               i += 6;
             if (i == 0)
@@ -19934,7 +19858,7 @@ field :
       .def_readonly("rho", &PyGenGradField::rho)
       .def_readonly("theta", &PyGenGradField::theta)
       .def("__len__", [](const PyGenGradField&) { return 2; })
-      .def("__getitem__", [](const PyGenGradField& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyGenGradField& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -19984,7 +19908,7 @@ err :
       .def_readonly("call_file", &PyGetCalledFile::call_file)
       .def_readonly("err", &PyGetCalledFile::err)
       .def("__len__", [](const PyGetCalledFile&) { return 3; })
-      .def("__getitem__", [](const PyGetCalledFile& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyGetCalledFile& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -20040,7 +19964,7 @@ err_flag : bool
       .def("__len__", [](const Bmad::GetEmitFromSigmaMat&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::GetEmitFromSigmaMat& s, size_t i) -> py::object {
+          [](const Bmad::GetEmitFromSigmaMat& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -20072,7 +19996,7 @@ err_flag :
       .def_readonly("num_out", &PyGetFileNumber::num_out)
       .def_readonly("err_flag", &PyGetFileNumber::err_flag)
       .def("__len__", [](const PyGetFileNumber&) { return 4; })
-      .def("__getitem__", [](const PyGetFileNumber& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyGetFileNumber& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -20103,17 +20027,15 @@ end subroutine
       .def_readonly("file", &PyGetFileTimeStamp::file)
       .def_readonly("time_stamp", &PyGetFileTimeStamp::time_stamp)
       .def("__len__", [](const PyGetFileTimeStamp&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyGetFileTimeStamp& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.file);
-            if (i == 1)
-              return py::cast(s.time_stamp);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyGetFileTimeStamp& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.file);
+        if (i == 1)
+          return py::cast(s.time_stamp);
+        throw py::index_error();
+      });
   m.def(
       "get_next_word",
       &Bmad::get_next_word,
@@ -20169,17 +20091,15 @@ n_slave : int
       .def_readonly("slaves", &Bmad::GetSlaveList::slaves)
       .def_readonly("n_slave", &Bmad::GetSlaveList::n_slave)
       .def("__len__", [](const Bmad::GetSlaveList&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::GetSlaveList& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.slaves);
-            if (i == 1)
-              return py::cast(s.n_slave);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::GetSlaveList& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.slaves);
+        if (i == 1)
+          return py::cast(s.n_slave);
+        throw py::index_error();
+      });
   m.def(
       "gpt_field_grid_scaling",
       &python_gpt_field_grid_scaling,
@@ -20206,7 +20126,7 @@ ref_time :
       .def("__len__", [](const PyGptFieldGridScaling&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyGptFieldGridScaling& s, size_t i) -> py::object {
+          [](const PyGptFieldGridScaling& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -20239,7 +20159,7 @@ field_value :
       .def("__len__", [](const PyGptMaxFieldReference&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyGptMaxFieldReference& s, size_t i) -> py::object {
+          [](const PyGptMaxFieldReference& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -20278,7 +20198,7 @@ err_flag : bool
       .def("__len__", [](const Bmad::GptToParticleBunch&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::GptToParticleBunch& s, size_t i) -> py::object {
+          [](const Bmad::GptToParticleBunch& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -20311,7 +20231,7 @@ grad_shift :
       .def("__len__", [](const PyGradientShiftSrWake&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyGradientShiftSrWake& s, size_t i) -> py::object {
+          [](const PyGradientShiftSrWake& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -20377,7 +20297,7 @@ hh :
       m, "Hanhan", "Fortran routine hanhan return value")
       .def_readonly("N", &PyHanhan::N)
       .def("__len__", [](const PyHanhan&) { return 1; })
-      .def("__getitem__", [](const PyHanhan& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyHanhan& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -20439,7 +20359,7 @@ has_it :
       .def_readonly("attrib", &PyHasAttribute::attrib)
       .def_readonly("has_it", &PyHasAttribute::has_it)
       .def("__len__", [](const PyHasAttribute&) { return 2; })
-      .def("__getitem__", [](const PyHasAttribute& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyHasAttribute& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -20512,7 +20432,7 @@ alive_only :
       .def_readonly("error", &PyHdf5WriteBeam::error)
       .def_readonly("alive_only", &PyHdf5WriteBeam::alive_only)
       .def("__len__", [](const PyHdf5WriteBeam&) { return 4; })
-      .def("__getitem__", [](const PyHdf5WriteBeam& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyHdf5WriteBeam& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -20550,7 +20470,7 @@ err_flag :
       .def("__len__", [](const PyHdf5WriteGridField&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyHdf5WriteGridField& s, size_t i) -> py::object {
+          [](const PyHdf5WriteGridField& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -20575,7 +20495,7 @@ voltage :
       m, "HomVoltage", "Fortran routine hom_voltage return value")
       .def_readonly("voltage", &PyHomVoltage::voltage)
       .def("__len__", [](const PyHomVoltage&) { return 1; })
-      .def("__getitem__", [](const PyHomVoltage& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyHomVoltage& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -20637,7 +20557,7 @@ i_bes :
       .def_readonly("arg", &PyIBessel::arg)
       .def_readonly("i_bes", &PyIBessel::i_bes)
       .def("__len__", [](const PyIBessel&) { return 3; })
-      .def("__getitem__", [](const PyIBessel& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyIBessel& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -20668,19 +20588,17 @@ i_bes :
       .def_readonly("arg", &PyIBesselExtended::arg)
       .def_readonly("i_bes", &PyIBesselExtended::i_bes)
       .def("__len__", [](const PyIBesselExtended&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PyIBesselExtended& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.m);
-            if (i == 1)
-              return py::cast(s.arg);
-            if (i == 2)
-              return py::cast(s.i_bes);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyIBesselExtended& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.m);
+        if (i == 1)
+          return py::cast(s.arg);
+        if (i == 2)
+          return py::cast(s.i_bes);
+        throw py::index_error();
+      });
   m.def(
       "ibs_matrix_c",
       &python_ibs_matrix_c,
@@ -20711,7 +20629,7 @@ ibs_mat :
       .def_readonly("n_part", &PyIbsMatrixC::n_part)
       .def_readonly("species", &PyIbsMatrixC::species)
       .def("__len__", [](const PyIbsMatrixC&) { return 5; })
-      .def("__getitem__", [](const PyIbsMatrixC& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyIbsMatrixC& s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -20761,7 +20679,7 @@ res :
       .def_readonly("dz", &PyIgfcoulombfun::dz)
       .def_readonly("res", &PyIgfcoulombfun::res)
       .def("__len__", [](const PyIgfcoulombfun&) { return 8; })
-      .def("__getitem__", [](const PyIgfcoulombfun& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyIgfcoulombfun& s, int i) -> py::object {
         if (i < 0)
           i += 8;
         if (i == 0)
@@ -20817,7 +20735,7 @@ res :
       .def_readonly("dz", &PyIgfexfun::dz)
       .def_readonly("res", &PyIgfexfun::res)
       .def("__len__", [](const PyIgfexfun&) { return 8; })
-      .def("__getitem__", [](const PyIgfexfun& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyIgfexfun& s, int i) -> py::object {
         if (i < 0)
           i += 8;
         if (i == 0)
@@ -20873,7 +20791,7 @@ res :
       .def_readonly("dz", &PyIgfeyfun::dz)
       .def_readonly("res", &PyIgfeyfun::res)
       .def("__len__", [](const PyIgfeyfun&) { return 8; })
-      .def("__getitem__", [](const PyIgfeyfun& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyIgfeyfun& s, int i) -> py::object {
         if (i < 0)
           i += 8;
         if (i == 0)
@@ -20929,7 +20847,7 @@ res :
       .def_readonly("dz", &PyIgfezfun::dz)
       .def_readonly("res", &PyIgfezfun::res)
       .def("__len__", [](const PyIgfezfun&) { return 8; })
-      .def("__getitem__", [](const PyIgfezfun& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyIgfezfun& s, int i) -> py::object {
         if (i < 0)
           i += 8;
         if (i == 0)
@@ -20977,7 +20895,7 @@ cnumber :
       .def("__len__", [](const PyIncrementFileNumber&) { return 4; })
       .def(
           "__getitem__",
-          [](const PyIncrementFileNumber& s, size_t i) -> py::object {
+          [](const PyIncrementFileNumber& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -21010,7 +20928,7 @@ indx :
       .def_readonly("string2", &PyIndexNocase::string2)
       .def_readonly("indx", &PyIndexNocase::indx)
       .def("__len__", [](const PyIndexNocase&) { return 3; })
-      .def("__getitem__", [](const PyIndexNocase& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyIndexNocase& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -21105,7 +21023,7 @@ beam_init_set : BeamInitStruct
       .def("__len__", [](const PyInitBeamDistribution&) { return 4; })
       .def(
           "__getitem__",
-          [](const PyInitBeamDistribution& s, size_t i) -> py::object {
+          [](const PyInitBeamDistribution& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -21197,7 +21115,7 @@ beam_init_used : BeamInitStruct
       .def("__len__", [](const PyInitBunchDistribution&) { return 4; })
       .def(
           "__getitem__",
-          [](const PyInitBunchDistribution& s, size_t i) -> py::object {
+          [](const PyInitBunchDistribution& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -21610,7 +21528,7 @@ integ_prob : float
       .def("__len__", [](const Bmad::InitPhotonIntegProb&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::InitPhotonIntegProb& s, size_t i) -> py::object {
+          [](const Bmad::InitPhotonIntegProb& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -21658,7 +21576,7 @@ phot : unknown
       .def("__len__", [](const PyInitSurfaceSegment&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyInitSurfaceSegment& s, size_t i) -> py::object {
+          [](const PyInitSurfaceSegment& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -21794,7 +21712,7 @@ str :
       .def_readonly("width", &PyIntStr::width)
       .def_readonly("str", &PyIntStr::str)
       .def("__len__", [](const PyIntStr&) { return 3; })
-      .def("__getitem__", [](const PyIntStr& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyIntStr& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -21829,7 +21747,7 @@ t : float
       m, "IntegrandBase", "Fortran routine integrand_base return value")
       .def_readonly("func_retval__", &PyIntegrandBase::func_retval__)
       .def("__len__", [](const PyIntegrandBase&) { return 1; })
-      .def("__getitem__", [](const PyIntegrandBase& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyIntegrandBase& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -21865,7 +21783,7 @@ datum :
       .def_readonly("datum_value", &PyIntegrateMax::datum_value)
       .def_readonly("ix_m", &PyIntegrateMax::ix_m)
       .def("__len__", [](const PyIntegrateMax&) { return 4; })
-      .def("__getitem__", [](const PyIntegrateMax& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyIntegrateMax& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -21907,7 +21825,7 @@ datum :
       .def_readonly("datum_value", &PyIntegrateMin::datum_value)
       .def_readonly("ix_m", &PyIntegrateMin::ix_m)
       .def("__len__", [](const PyIntegrateMin&) { return 4; })
-      .def("__getitem__", [](const PyIntegrateMin& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyIntegrateMin& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -21980,7 +21898,7 @@ tol :
       .def("__len__", [](const PyIntegrationTimerEle&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyIntegrationTimerEle& s, size_t i) -> py::object {
+          [](const PyIntegrationTimerEle& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -22012,21 +21930,19 @@ this_fft
       .def_readonly("opt_dump_index", &PyInterpolatedFft::opt_dump_index)
       .def_readonly("this_fft", &PyInterpolatedFft::this_fft)
       .def("__len__", [](const PyInterpolatedFft&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const PyInterpolatedFft& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.calc_ok);
-            if (i == 1)
-              return py::cast(s.opt_dump_spectrum);
-            if (i == 2)
-              return py::cast(s.opt_dump_index);
-            if (i == 3)
-              return py::cast(s.this_fft);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyInterpolatedFft& s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.calc_ok);
+        if (i == 1)
+          return py::cast(s.opt_dump_spectrum);
+        if (i == 2)
+          return py::cast(s.opt_dump_index);
+        if (i == 3)
+          return py::cast(s.this_fft);
+        throw py::index_error();
+      });
   m.def(
       "interpolated_fft_gsl",
       &python_interpolated_fft_gsl,
@@ -22053,7 +21969,7 @@ available.
       .def("__len__", [](const PyInterpolatedFftGsl&) { return 4; })
       .def(
           "__getitem__",
-          [](const PyInterpolatedFftGsl& s, size_t i) -> py::object {
+          [](const PyInterpolatedFftGsl& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -22118,7 +22034,7 @@ prob
       .def_readonly("valid_chars", &PyIsAlphabetic::valid_chars)
       .def_readonly("is_alpha", &PyIsAlphabetic::is_alpha)
       .def("__len__", [](const PyIsAlphabetic&) { return 3; })
-      .def("__getitem__", [](const PyIsAlphabetic& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyIsAlphabetic& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -22172,7 +22088,7 @@ is_decreasing :
       .def("__len__", [](const PyIsDecreasingSequence&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyIsDecreasingSequence& s, size_t i) -> py::object {
+          [](const PyIsDecreasingSequence& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -22227,7 +22143,7 @@ is_increasing :
       .def("__len__", [](const PyIsIncreasingSequence&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyIsIncreasingSequence& s, size_t i) -> py::object {
+          [](const PyIsIncreasingSequence& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -22260,7 +22176,7 @@ valid :
       .def_readonly("ix_word", &PyIsInteger::ix_word)
       .def_readonly("valid", &PyIsInteger::valid)
       .def("__len__", [](const PyIsInteger&) { return 5; })
-      .def("__getitem__", [](const PyIsInteger& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyIsInteger& s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -22295,7 +22211,7 @@ valid :
       .def_readonly("ignore", &PyIsLogical::ignore)
       .def_readonly("valid", &PyIsLogical::valid)
       .def("__len__", [](const PyIsLogical&) { return 3; })
-      .def("__getitem__", [](const PyIsLogical& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyIsLogical& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -22329,7 +22245,7 @@ valid :
       .def_readonly("real_num", &PyIsReal::real_num)
       .def_readonly("valid", &PyIsReal::valid)
       .def("__len__", [](const PyIsReal&) { return 4; })
-      .def("__getitem__", [](const PyIsReal& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyIsReal& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -22402,7 +22318,7 @@ j_bes :
       .def_readonly("arg", &PyJBessel::arg)
       .def_readonly("j_bes", &PyJBessel::j_bes)
       .def("__len__", [](const PyJBessel&) { return 3; })
-      .def("__getitem__", [](const PyJBessel& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyJBessel& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -22437,8 +22353,7 @@ key_index :
       .def_readonly("key_index", &PyKeyNameToKeyIndex::key_index)
       .def("__len__", [](const PyKeyNameToKeyIndex&) { return 1; })
       .def(
-          "__getitem__",
-          [](const PyKeyNameToKeyIndex& s, size_t i) -> py::object {
+          "__getitem__", [](const PyKeyNameToKeyIndex& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -22518,18 +22433,17 @@ NOTE: dr(5)/ds IS IGNORED WHEN CALCULATING Z. SEE TRANSFER_THIS_ORBIT ABOVE. dr(
       .def_readonly("err", &PyKickVectorCalc::err)
       .def_readonly("print_err", &PyKickVectorCalc::print_err)
       .def("__len__", [](const PyKickVectorCalc&) { return 3; })
-      .def(
-          "__getitem__", [](const PyKickVectorCalc& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.dr_ds);
-            if (i == 1)
-              return py::cast(s.err);
-            if (i == 2)
-              return py::cast(s.print_err);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyKickVectorCalc& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.dr_ds);
+        if (i == 1)
+          return py::cast(s.err);
+        if (i == 2)
+          return py::cast(s.print_err);
+        throw py::index_error();
+      });
   m.def(
       "kill_complex_taylor",
       &Bmad::kill_complex_taylor,
@@ -22611,17 +22525,15 @@ y_pt :
       .def_readonly("err_flag", &PyKnotInterpolate::err_flag)
       .def_readonly("y_pt", &PyKnotInterpolate::y_pt)
       .def("__len__", [](const PyKnotInterpolate&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyKnotInterpolate& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.y_pt);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyKnotInterpolate& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.y_pt);
+        throw py::index_error();
+      });
   m.def(
       "knots_to_string",
       &python_knots_to_string,
@@ -22640,7 +22552,7 @@ str :
       m, "KnotsToString", "Fortran routine knots_to_string return value")
       .def_readonly("str", &PyKnotsToString::str)
       .def("__len__", [](const PyKnotsToString&) { return 1; })
-      .def("__getitem__", [](const PyKnotsToString& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyKnotsToString& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -22670,7 +22582,7 @@ res :
       .def_readonly("z", &PyLafun::z)
       .def_readonly("res", &PyLafun::res)
       .def("__len__", [](const PyLafun&) { return 4; })
-      .def("__getitem__", [](const PyLafun& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyLafun& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -22743,7 +22655,7 @@ append_eles : bool, optional
       .def_readonly("err", &PyLatEleLocator::err)
       .def_readonly("n_loc", &PyLatEleLocator::n_loc)
       .def("__len__", [](const PyLatEleLocator&) { return 2; })
-      .def("__getitem__", [](const PyLatEleLocator& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyLatEleLocator& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -22917,16 +22829,15 @@ coef : float
       .def_readonly("err_flag", &Bmad::LinearCoef::err_flag)
       .def_readonly("coef", &Bmad::LinearCoef::coef)
       .def("__len__", [](const Bmad::LinearCoef&) { return 2; })
-      .def(
-          "__getitem__", [](const Bmad::LinearCoef& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.coef);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::LinearCoef& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.coef);
+        throw py::index_error();
+      });
   m.def(
       "linear_fit",
       &python_linear_fit,
@@ -22957,7 +22868,7 @@ sig_b :
       .def_readonly("sig_a", &PyLinearFit::sig_a)
       .def_readonly("sig_b", &PyLinearFit::sig_b)
       .def("__len__", [](const PyLinearFit&) { return 5; })
-      .def("__getitem__", [](const PyLinearFit& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyLinearFit& s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -23034,8 +22945,7 @@ err_flag : bool
       .def_readonly("err_flag", &Bmad::LoadParseLine::err_flag)
       .def("__len__", [](const Bmad::LoadParseLine&) { return 2; })
       .def(
-          "__getitem__",
-          [](const Bmad::LoadParseLine& s, size_t i) -> py::object {
+          "__getitem__", [](const Bmad::LoadParseLine& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -23061,7 +22971,7 @@ str :
       .def_readonly("logic", &PyLogicStr::logic)
       .def_readonly("str", &PyLogicStr::str)
       .def("__len__", [](const PyLogicStr&) { return 2; })
-      .def("__getitem__", [](const PyLogicStr& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyLogicStr& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -23087,17 +22997,15 @@ string :
       .def_readonly("logic", &PyLogicalToPython::logic)
       .def_readonly("string", &PyLogicalToPython::string)
       .def("__len__", [](const PyLogicalToPython&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyLogicalToPython& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.logic);
-            if (i == 1)
-              return py::cast(s.string);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyLogicalToPython& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.logic);
+        if (i == 1)
+          return py::cast(s.string);
+        throw py::index_error();
+      });
   m.def(
       "lord_edge_aligned",
       &python_lord_edge_aligned,
@@ -23121,15 +23029,13 @@ is_aligned :
       m, "LordEdgeAligned", "Fortran routine lord_edge_aligned return value")
       .def_readonly("is_aligned", &PyLordEdgeAligned::is_aligned)
       .def("__len__", [](const PyLordEdgeAligned&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyLordEdgeAligned& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_aligned);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyLordEdgeAligned& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_aligned);
+        throw py::index_error();
+      });
   m.def(
       "low_energy_z_correction",
       &python_low_energy_z_correction,
@@ -23165,7 +23071,7 @@ dz :
       .def("__len__", [](const PyLowEnergyZCorrection&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyLowEnergyZCorrection& s, size_t i) -> py::object {
+          [](const PyLowEnergyZCorrection& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -23472,7 +23378,7 @@ f : float
       .def_readonly("d", &Bmad::MadTmfoc::d)
       .def_readonly("f", &Bmad::MadTmfoc::f)
       .def("__len__", [](const Bmad::MadTmfoc&) { return 4; })
-      .def("__getitem__", [](const Bmad::MadTmfoc& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Bmad::MadTmfoc& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -23573,7 +23479,7 @@ g_inv_mat : float
       .def_readonly("g_mat", &Bmad::MakeGMats::g_mat)
       .def_readonly("g_inv_mat", &Bmad::MakeGMats::g_inv_mat)
       .def("__len__", [](const Bmad::MakeGMats&) { return 2; })
-      .def("__getitem__", [](const Bmad::MakeGMats& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Bmad::MakeGMats& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -23628,7 +23534,7 @@ Hbar : float
       .def_readonly("Vbar", &Bmad::MakeHvbp::Vbar)
       .def_readonly("Hbar", &Bmad::MakeHvbp::Hbar)
       .def("__len__", [](const Bmad::MakeHvbp&) { return 5; })
-      .def("__getitem__", [](const Bmad::MakeHvbp& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Bmad::MakeHvbp& s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -23681,17 +23587,15 @@ comment_out :
       .def_readonly("comment_in", &PyMakeLegalComment::comment_in)
       .def_readonly("comment_out", &PyMakeLegalComment::comment_out)
       .def("__len__", [](const PyMakeLegalComment&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyMakeLegalComment& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.comment_in);
-            if (i == 1)
-              return py::cast(s.comment_out);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyMakeLegalComment& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.comment_in);
+        if (i == 1)
+          return py::cast(s.comment_out);
+        throw py::index_error();
+      });
   m.def(
       "make_mad_map",
       &Bmad::make_mad_map,
@@ -23718,16 +23622,15 @@ map : MadMapStruct
       .def_readonly("energy", &Bmad::MakeMadMap::energy)
       .def_readonly("map", &Bmad::MakeMadMap::map)
       .def("__len__", [](const Bmad::MakeMadMap&) { return 2; })
-      .def(
-          "__getitem__", [](const Bmad::MakeMadMap& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.energy);
-            if (i == 1)
-              return py::cast(s.map);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::MakeMadMap& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.energy);
+        if (i == 1)
+          return py::cast(s.map);
+        throw py::index_error();
+      });
   m.def(
       "make_mat6",
       &Bmad::make_mat6,
@@ -23754,7 +23657,7 @@ err_flag : bool
       .def_readonly("end_orb", &Bmad::MakeMat6::end_orb)
       .def_readonly("err_flag", &Bmad::MakeMat6::err_flag)
       .def("__len__", [](const Bmad::MakeMat6&) { return 2; })
-      .def("__getitem__", [](const Bmad::MakeMat6& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Bmad::MakeMat6& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -23790,17 +23693,15 @@ err : bool
       .def_readonly("end_orb", &Bmad::MakeMat6Bmad::end_orb)
       .def_readonly("err", &Bmad::MakeMat6Bmad::err)
       .def("__len__", [](const Bmad::MakeMat6Bmad&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::MakeMat6Bmad& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.end_orb);
-            if (i == 1)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::MakeMat6Bmad& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.end_orb);
+        if (i == 1)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "make_mat6_bmad_photon",
       &Bmad::make_mat6_bmad_photon,
@@ -23834,7 +23735,7 @@ err : bool
       .def("__len__", [](const Bmad::MakeMat6BmadPhoton&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::MakeMat6BmadPhoton& s, size_t i) -> py::object {
+          [](const Bmad::MakeMat6BmadPhoton& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -23935,16 +23836,15 @@ err_flag :
       .def_readonly("end_orb", &PyMakeMat6Taylor::end_orb)
       .def_readonly("err_flag", &PyMakeMat6Taylor::err_flag)
       .def("__len__", [](const PyMakeMat6Taylor&) { return 2; })
-      .def(
-          "__getitem__", [](const PyMakeMat6Taylor& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.end_orb);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyMakeMat6Taylor& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.end_orb);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "make_mat6_tracking",
       &Bmad::make_mat6_tracking,
@@ -23977,7 +23877,7 @@ spin_only : bool, optional
       .def("__len__", [](const Bmad::MakeMat6Tracking&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::MakeMat6Tracking& s, size_t i) -> py::object {
+          [](const Bmad::MakeMat6Tracking& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -24027,7 +23927,7 @@ U : float
       .def_readonly("tunes_out", &Bmad::MakeN::tunes_out)
       .def_readonly("U", &Bmad::MakeN::U)
       .def("__len__", [](const Bmad::MakeN&) { return 4; })
-      .def("__getitem__", [](const Bmad::MakeN& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Bmad::MakeN& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -24074,7 +23974,7 @@ H : complex
       .def_readonly("R", &Bmad::MakePbrh::R)
       .def_readonly("H", &Bmad::MakePbrh::H)
       .def("__len__", [](const Bmad::MakePbrh&) { return 4; })
-      .def("__getitem__", [](const Bmad::MakePbrh& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Bmad::MakePbrh& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -24129,7 +24029,7 @@ Nout : float
       .def("__len__", [](const Bmad::MakeSmatFromAbc&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::MakeSmatFromAbc& s, size_t i) -> py::object {
+          [](const Bmad::MakeSmatFromAbc& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -24184,7 +24084,7 @@ v_inv_mat : float
       .def_readonly("v_mat", &Bmad::MakeVMats::v_mat)
       .def_readonly("v_inv_mat", &Bmad::MakeVMats::v_inv_mat)
       .def("__len__", [](const Bmad::MakeVMats&) { return 2; })
-      .def("__getitem__", [](const Bmad::MakeVMats& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Bmad::MakeVMats& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -24210,7 +24110,7 @@ v_inv_mat : float
       .def("__len__", [](const PyMakeupControlSlave&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyMakeupControlSlave& s, size_t i) -> py::object {
+          [](const PyMakeupControlSlave& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -24232,15 +24132,13 @@ This routine is private to bookkeeper_mod.
       m, "MakeupGroupLord", "Fortran routine makeup_group_lord return value")
       .def_readonly("err_flag", &PyMakeupGroupLord::err_flag)
       .def("__len__", [](const PyMakeupGroupLord&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyMakeupGroupLord& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyMakeupGroupLord& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "makeup_multipass_slave",
       &python_makeup_multipass_slave,
@@ -24260,7 +24158,7 @@ This routine is not meant for guse.
       .def("__len__", [](const PyMakeupMultipassSlave&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyMakeupMultipassSlave& s, size_t i) -> py::object {
+          [](const PyMakeupMultipassSlave& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -24282,15 +24180,13 @@ This routine is not meant for general use.
       m, "MakeupSuperSlave", "Fortran routine makeup_super_slave return value")
       .def_readonly("err_flag", &PyMakeupSuperSlave::err_flag)
       .def("__len__", [](const PyMakeupSuperSlave&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyMakeupSuperSlave& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyMakeupSuperSlave& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "makeup_super_slave1",
       &Bmad::makeup_super_slave1,
@@ -24437,7 +24333,7 @@ value :
       .def("__len__", [](const PyMasterParameterValue&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyMasterParameterValue& s, size_t i) -> py::object {
+          [](const PyMasterParameterValue& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -24470,7 +24366,7 @@ kick_mat : float
       .def_readonly("kick_mat", &PyMat4Multipole::kick_mat)
       .def_readonly("n", &PyMat4Multipole::n)
       .def("__len__", [](const PyMat4Multipole&) { return 2; })
-      .def("__getitem__", [](const PyMat4Multipole& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyMat4Multipole& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -24579,7 +24475,7 @@ type_out : bool
       .def("__len__", [](const Bmad::MatSympDecouple&) { return 4; })
       .def(
           "__getitem__",
-          [](const Bmad::MatSympDecouple& s, size_t i) -> py::object {
+          [](const Bmad::MatSympDecouple& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -24627,7 +24523,7 @@ set_trombone : bool, optional
       .def("__len__", [](const Bmad::MatchEleToMat6&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::MatchEleToMat6& s, size_t i) -> py::object {
+          [](const Bmad::MatchEleToMat6& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -24658,7 +24554,7 @@ is_match :
       .def_readonly("pat", &PyMatchReg::pat)
       .def_readonly("is_match", &PyMatchReg::is_match)
       .def("__len__", [](const PyMatchReg&) { return 3; })
-      .def("__getitem__", [](const PyMatchReg& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyMatchReg& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -24689,7 +24585,7 @@ is_match :
       .def_readonly("template_", &PyMatchWild::template_)
       .def_readonly("is_match", &PyMatchWild::is_match)
       .def("__len__", [](const PyMatchWild&) { return 3; })
-      .def("__getitem__", [](const PyMatchWild& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyMatchWild& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -24720,7 +24616,7 @@ which is the frequency that maximizes the projection.
       .def("__len__", [](const PyMaximizeProjection&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyMaximizeProjection& s, size_t i) -> py::object {
+          [](const PyMaximizeProjection& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -24749,7 +24645,7 @@ this_exp :
       m, "Mexp", "Fortran routine mexp return value")
       .def_readonly("this_exp", &PyMexp::this_exp)
       .def("__len__", [](const PyMexp&) { return 1; })
-      .def("__getitem__", [](const PyMexp& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyMexp& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -24789,7 +24685,7 @@ milli_sec :
       m, "MilliSleep", "Fortran routine milli_sleep return value")
       .def_readonly("milli_sec", &PyMilliSleep::milli_sec)
       .def("__len__", [](const PyMilliSleep&) { return 1; })
-      .def("__getitem__", [](const PyMilliSleep& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyMilliSleep& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -24817,7 +24713,7 @@ mom_comp :
       .def("__len__", [](const PyMomentumCompaction&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyMomentumCompaction& s, size_t i) -> py::object {
+          [](const PyMomentumCompaction& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -24870,7 +24766,7 @@ err_flag : bool
       .def("__len__", [](const Bmad::MultiTurnTrackingAnalysis&) { return 6; })
       .def(
           "__getitem__",
-          [](const Bmad::MultiTurnTrackingAnalysis& s, size_t i) -> py::object {
+          [](const Bmad::MultiTurnTrackingAnalysis& s, int i) -> py::object {
             if (i < 0)
               i += 6;
             if (i == 0)
@@ -24960,7 +24856,7 @@ tn : float
       .def("__len__", [](const Bmad::Multipole1AbToKt&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::Multipole1AbToKt& s, size_t i) -> py::object {
+          [](const Bmad::Multipole1AbToKt& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -25000,7 +24896,7 @@ bn : float
       .def("__len__", [](const Bmad::Multipole1KtToAb&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::Multipole1KtToAb& s, size_t i) -> py::object {
+          [](const Bmad::Multipole1KtToAb& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -25034,7 +24930,7 @@ tn : float
       .def("__len__", [](const Bmad::MultipoleAbToKt&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::MultipoleAbToKt& s, size_t i) -> py::object {
+          [](const Bmad::MultipoleAbToKt& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -25090,7 +24986,7 @@ original : bool, optional
       .def("__len__", [](const Bmad::MultipoleEleToAb&) { return 4; })
       .def(
           "__getitem__",
-          [](const Bmad::MultipoleEleToAb& s, size_t i) -> py::object {
+          [](const Bmad::MultipoleEleToAb& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -25140,7 +25036,7 @@ include_kicks : int, optional
       .def("__len__", [](const Bmad::MultipoleEleToKt&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::MultipoleEleToKt& s, size_t i) -> py::object {
+          [](const Bmad::MultipoleEleToKt& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -25287,7 +25183,7 @@ bn : float
       .def("__len__", [](const Bmad::MultipoleKtToAb&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::MultipoleKtToAb& s, size_t i) -> py::object {
+          [](const Bmad::MultipoleKtToAb& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -25333,7 +25229,7 @@ arg :
       .def_readonly("x", &PyMytan::x)
       .def_readonly("arg", &PyMytan::arg)
       .def("__len__", [](const PyMytan&) { return 3; })
-      .def("__getitem__", [](const PyMytan& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyMytan& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -25368,16 +25264,15 @@ max_len : int
       .def_readonly("n_data", &PyNBinsAutomatic::n_data)
       .def_readonly("n", &PyNBinsAutomatic::n)
       .def("__len__", [](const PyNBinsAutomatic&) { return 2; })
-      .def(
-          "__getitem__", [](const PyNBinsAutomatic& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.n_data);
-            if (i == 1)
-              return py::cast(s.n);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyNBinsAutomatic& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.n_data);
+        if (i == 1)
+          return py::cast(s.n);
+        throw py::index_error();
+      });
   m.def(
       "n_choose_k",
       &python_n_choose_k,
@@ -25398,7 +25293,7 @@ nck :
       .def_readonly("k", &PyNChooseK::k)
       .def_readonly("nck", &PyNChooseK::nck)
       .def("__len__", [](const PyNChooseK&) { return 3; })
-      .def("__getitem__", [](const PyNChooseK& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyNChooseK& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -25450,7 +25345,7 @@ decomposition loop until all elements of freqs and amps are populated.
       .def_readonly("opt_dump_spectra", &PyNaff::opt_dump_spectra)
       .def_readonly("opt_zero_first", &PyNaff::opt_zero_first)
       .def("__len__", [](const PyNaff&) { return 2; })
-      .def("__getitem__", [](const PyNaff& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyNaff& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -25478,7 +25373,7 @@ ix_name :
       .def_readonly("name", &PyNametableAdd::name)
       .def_readonly("ix_name", &PyNametableAdd::ix_name)
       .def("__len__", [](const PyNametableAdd&) { return 2; })
-      .def("__getitem__", [](const PyNametableAdd& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyNametableAdd& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -25515,7 +25410,7 @@ ix_max :
       .def("__len__", [](const PyNametableBracketIndexx&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyNametableBracketIndexx& s, size_t i) -> py::object {
+          [](const PyNametableBracketIndexx& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -25545,17 +25440,15 @@ ix_name :
       .def_readonly("name", &PyNametableChange1::name)
       .def_readonly("ix_name", &PyNametableChange1::ix_name)
       .def("__len__", [](const PyNametableChange1&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyNametableChange1& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.name);
-            if (i == 1)
-              return py::cast(s.ix_name);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyNametableChange1& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.name);
+        if (i == 1)
+          return py::cast(s.ix_name);
+        throw py::index_error();
+      });
   m.def(
       "nametable_init",
       &python_nametable_init,
@@ -25575,7 +25468,7 @@ n_max :
       .def_readonly("n_min", &PyNametableInit::n_min)
       .def_readonly("n_max", &PyNametableInit::n_max)
       .def("__len__", [](const PyNametableInit&) { return 2; })
-      .def("__getitem__", [](const PyNametableInit& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyNametableInit& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -25600,15 +25493,13 @@ ix_name :
       m, "NametableRemove", "Fortran routine nametable_remove return value")
       .def_readonly("ix_name", &PyNametableRemove::ix_name)
       .def("__len__", [](const PyNametableRemove&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyNametableRemove& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.ix_name);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyNametableRemove& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.ix_name);
+        throw py::index_error();
+      });
   m.def(
       "new_control",
       &Bmad::new_control,
@@ -25678,7 +25569,7 @@ order :
       .def("__len__", [](const PyNormalFormComplexTaylors&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyNormalFormComplexTaylors& s, size_t i) -> py::object {
+          [](const PyNormalFormComplexTaylors& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -25732,7 +25623,7 @@ dhdj : TaylorStruct
       .def("__len__", [](const Bmad::NormalFormTaylors&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::NormalFormTaylors& s, size_t i) -> py::object {
+          [](const Bmad::NormalFormTaylors& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -25782,7 +25673,7 @@ HV : float
       .def("__len__", [](const Bmad::NormalMode3Calc&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::NormalMode3Calc& s, size_t i) -> py::object {
+          [](const Bmad::NormalMode3Calc& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -25844,7 +25735,7 @@ n_field_ele :
       m, "NumFieldEles", "Fortran routine num_field_eles return value")
       .def_readonly("n_field_ele", &PyNumFieldEles::n_field_ele)
       .def("__len__", [](const PyNumFieldEles&) { return 1; })
-      .def("__getitem__", [](const PyNumFieldEles& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyNumFieldEles& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -25872,7 +25763,7 @@ num :
       m, "NumLords", "Fortran routine num_lords return value")
       .def_readonly("num", &PyNumLords::num)
       .def("__len__", [](const PyNumLords&) { return 1; })
-      .def("__getitem__", [](const PyNumLords& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyNumLords& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -25929,16 +25820,15 @@ track : TrackStruct
       .def_readonly("err_flag", &Bmad::OdeintBmad::err_flag)
       .def_readonly("track", &Bmad::OdeintBmad::track)
       .def("__len__", [](const Bmad::OdeintBmad&) { return 2; })
-      .def(
-          "__getitem__", [](const Bmad::OdeintBmad& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.track);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::OdeintBmad& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.track);
+        throw py::index_error();
+      });
   m.def(
       "odeint_bmad_time",
       &python_odeint_bmad_time,
@@ -25993,18 +25883,17 @@ dt_step : float
       .def_readonly("dt_step", &PyOdeintBmadTime::dt_step)
       .def_readonly("rf_time", &PyOdeintBmadTime::rf_time)
       .def("__len__", [](const PyOdeintBmadTime&) { return 3; })
-      .def(
-          "__getitem__", [](const PyOdeintBmadTime& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.dt_step);
-            if (i == 2)
-              return py::cast(s.rf_time);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyOdeintBmadTime& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.dt_step);
+        if (i == 2)
+          return py::cast(s.rf_time);
+        throw py::index_error();
+      });
   m.def(
       "offset_particle",
       &python_offset_particle,
@@ -26066,18 +25955,17 @@ time : float, optional
       .def_readonly("spin_qrot", &PyOffsetParticle::spin_qrot)
       .def_readonly("time", &PyOffsetParticle::time)
       .def("__len__", [](const PyOffsetParticle&) { return 3; })
-      .def(
-          "__getitem__", [](const PyOffsetParticle& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.s_out);
-            if (i == 1)
-              return py::cast(s.spin_qrot);
-            if (i == 2)
-              return py::cast(s.time);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyOffsetParticle& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.s_out);
+        if (i == 1)
+          return py::cast(s.spin_qrot);
+        if (i == 2)
+          return py::cast(s.time);
+        throw py::index_error();
+      });
   m.def(
       "offset_photon",
       &Bmad::offset_photon,
@@ -26174,7 +26062,7 @@ is_ok : bool
       .def("__len__", [](const Bmad::OpenBinaryFile&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::OpenBinaryFile& s, size_t i) -> py::object {
+          [](const Bmad::OpenBinaryFile& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -26236,7 +26124,7 @@ amp_nb : float
       .def("__len__", [](const Bmad::OrbitAmplitudeCalc&) { return 4; })
       .def(
           "__getitem__",
-          [](const Bmad::OrbitAmplitudeCalc& s, size_t i) -> py::object {
+          [](const Bmad::OrbitAmplitudeCalc& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -26333,7 +26221,7 @@ is_too_large :
       .def_readonly("param", &PyOrbitTooLarge::param)
       .def_readonly("is_too_large", &PyOrbitTooLarge::is_too_large)
       .def("__len__", [](const PyOrbitTooLarge&) { return 2; })
-      .def("__getitem__", [](const PyOrbitTooLarge& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyOrbitTooLarge& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -26383,7 +26271,7 @@ err_flag : bool
       .def("__len__", [](const Bmad::OrderEvecsByNSimilarity&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::OrderEvecsByNSimilarity& s, size_t i) -> py::object {
+          [](const Bmad::OrderEvecsByNSimilarity& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -26491,7 +26379,7 @@ str :
       .def_readonly("n", &PyOrdinalStr::n)
       .def_readonly("str", &PyOrdinalStr::str)
       .def("__len__", [](const PyOrdinalStr&) { return 2; })
-      .def("__getitem__", [](const PyOrdinalStr& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyOrdinalStr& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -26568,7 +26456,7 @@ npad :
       .def_readonly("a", &PyOscGetgrnpipe::a)
       .def_readonly("b", &PyOscGetgrnpipe::b)
       .def("__len__", [](const PyOscGetgrnpipe&) { return 3; })
-      .def("__getitem__", [](const PyOscGetgrnpipe& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyOscGetgrnpipe& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -26619,7 +26507,7 @@ gamma :
       .def("__len__", [](const PyOscWriteRectpipeGrn&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyOscWriteRectpipeGrn& s, size_t i) -> py::object {
+          [](const PyOscWriteRectpipeGrn& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -26662,8 +26550,7 @@ pt(i,j,k) = ( (ex_re, ex_im), .... (bz_re, bz_im) )
       .def_readonly("err_flag", &PyParseCartesianMap::err_flag)
       .def("__len__", [](const PyParseCartesianMap&) { return 3; })
       .def(
-          "__getitem__",
-          [](const PyParseCartesianMap& s, size_t i) -> py::object {
+          "__getitem__", [](const PyParseCartesianMap& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -26704,7 +26591,7 @@ err_flag :
       .def("__len__", [](const PyParseCylindricalMap&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyParseCylindricalMap& s, size_t i) -> py::object {
+          [](const PyParseCylindricalMap& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -26748,7 +26635,7 @@ digits :
       .def("__len__", [](const PyParseFortranFormat&) { return 6; })
       .def(
           "__getitem__",
-          [](const PyParseFortranFormat& s, size_t i) -> py::object {
+          [](const PyParseFortranFormat& s, int i) -> py::object {
             if (i < 0)
               i += 6;
             if (i == 0)
@@ -26783,19 +26670,17 @@ digits :
       .def_readonly("delim_found", &PyParseGenGradMap::delim_found)
       .def_readonly("err_flag", &PyParseGenGradMap::err_flag)
       .def("__len__", [](const PyParseGenGradMap&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PyParseGenGradMap& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.delim);
-            if (i == 1)
-              return py::cast(s.delim_found);
-            if (i == 2)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyParseGenGradMap& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.delim);
+        if (i == 1)
+          return py::cast(s.delim_found);
+        if (i == 2)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "parse_grid_field",
       &python_parse_grid_field,
@@ -26822,18 +26707,17 @@ err_flag :
       .def_readonly("delim_found", &PyParseGridField::delim_found)
       .def_readonly("err_flag", &PyParseGridField::err_flag)
       .def("__len__", [](const PyParseGridField&) { return 3; })
-      .def(
-          "__getitem__", [](const PyParseGridField& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.delim);
-            if (i == 1)
-              return py::cast(s.delim_found);
-            if (i == 2)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyParseGridField& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.delim);
+        if (i == 1)
+          return py::cast(s.delim_found);
+        if (i == 2)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "parse_integer_list",
       &python_parse_integer_list,
@@ -26869,31 +26753,29 @@ See parse_integer_list2 for more details
       .def_readonly("default_value", &PyParseIntegerList::default_value)
       .def_readonly("is_ok", &PyParseIntegerList::is_ok)
       .def("__len__", [](const PyParseIntegerList&) { return 9; })
-      .def(
-          "__getitem__",
-          [](const PyParseIntegerList& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 9;
-            if (i == 0)
-              return py::cast(s.err_str);
-            if (i == 1)
-              return py::cast(s.exact_size);
-            if (i == 2)
-              return py::cast(s.delim);
-            if (i == 3)
-              return py::cast(s.delim_found);
-            if (i == 4)
-              return py::cast(s.open_delim);
-            if (i == 5)
-              return py::cast(s.separator);
-            if (i == 6)
-              return py::cast(s.close_delim);
-            if (i == 7)
-              return py::cast(s.default_value);
-            if (i == 8)
-              return py::cast(s.is_ok);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyParseIntegerList& s, int i) -> py::object {
+        if (i < 0)
+          i += 9;
+        if (i == 0)
+          return py::cast(s.err_str);
+        if (i == 1)
+          return py::cast(s.exact_size);
+        if (i == 2)
+          return py::cast(s.delim);
+        if (i == 3)
+          return py::cast(s.delim_found);
+        if (i == 4)
+          return py::cast(s.open_delim);
+        if (i == 5)
+          return py::cast(s.separator);
+        if (i == 6)
+          return py::cast(s.close_delim);
+        if (i == 7)
+          return py::cast(s.default_value);
+        if (i == 8)
+          return py::cast(s.is_ok);
+        throw py::index_error();
+      });
   m.def(
       "parse_integer_list2",
       &python_parse_integer_list2,
@@ -26950,8 +26832,7 @@ delim_found : bool
       .def_readonly("default_value", &PyParseIntegerList2::default_value)
       .def("__len__", [](const PyParseIntegerList2&) { return 9; })
       .def(
-          "__getitem__",
-          [](const PyParseIntegerList2& s, size_t i) -> py::object {
+          "__getitem__", [](const PyParseIntegerList2& s, int i) -> py::object {
             if (i < 0)
               i += 9;
             if (i == 0)
@@ -27024,8 +26905,7 @@ parse_real_matrix.
       .def_readonly("is_ok", &Bmad::ParseRealList::is_ok)
       .def("__len__", [](const Bmad::ParseRealList&) { return 5; })
       .def(
-          "__getitem__",
-          [](const Bmad::ParseRealList& s, size_t i) -> py::object {
+          "__getitem__", [](const Bmad::ParseRealList& s, int i) -> py::object {
             if (i < 0)
               i += 5;
             if (i == 0)
@@ -27102,32 +26982,31 @@ pase_real_list parse_real_matrix.
       .def_readonly("default_value", &PyParseRealList2::default_value)
       .def_readonly("single_value", &PyParseRealList2::single_value)
       .def("__len__", [](const PyParseRealList2&) { return 10; })
-      .def(
-          "__getitem__", [](const PyParseRealList2& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 10;
-            if (i == 0)
-              return py::cast(s.num_found);
-            if (i == 1)
-              return py::cast(s.delim);
-            if (i == 2)
-              return py::cast(s.delim_found);
-            if (i == 3)
-              return py::cast(s.is_ok);
-            if (i == 4)
-              return py::cast(s.num_expected);
-            if (i == 5)
-              return py::cast(s.open_brace);
-            if (i == 6)
-              return py::cast(s.separator);
-            if (i == 7)
-              return py::cast(s.close_brace);
-            if (i == 8)
-              return py::cast(s.default_value);
-            if (i == 9)
-              return py::cast(s.single_value);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyParseRealList2& s, int i) -> py::object {
+        if (i < 0)
+          i += 10;
+        if (i == 0)
+          return py::cast(s.num_found);
+        if (i == 1)
+          return py::cast(s.delim);
+        if (i == 2)
+          return py::cast(s.delim_found);
+        if (i == 3)
+          return py::cast(s.is_ok);
+        if (i == 4)
+          return py::cast(s.num_expected);
+        if (i == 5)
+          return py::cast(s.open_brace);
+        if (i == 6)
+          return py::cast(s.separator);
+        if (i == 7)
+          return py::cast(s.close_brace);
+        if (i == 8)
+          return py::cast(s.default_value);
+        if (i == 9)
+          return py::cast(s.single_value);
+        throw py::index_error();
+      });
   m.def(
       "parser_add_constant",
       &python_parser_add_constant,
@@ -27150,8 +27029,7 @@ redef_is_error :
       .def_readonly("redef_is_error", &PyParserAddConstant::redef_is_error)
       .def("__len__", [](const PyParserAddConstant&) { return 2; })
       .def(
-          "__getitem__",
-          [](const PyParserAddConstant& s, size_t i) -> py::object {
+          "__getitem__", [](const PyParserAddConstant& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -27181,25 +27059,23 @@ redef_is_error :
       .def_readonly("call_found", &PyParserCallCheck::call_found)
       .def_readonly("err_flag", &PyParserCallCheck::err_flag)
       .def("__len__", [](const PyParserCallCheck&) { return 6; })
-      .def(
-          "__getitem__",
-          [](const PyParserCallCheck& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 6;
-            if (i == 0)
-              return py::cast(s.word);
-            if (i == 1)
-              return py::cast(s.ix_word);
-            if (i == 2)
-              return py::cast(s.delim);
-            if (i == 3)
-              return py::cast(s.delim_found);
-            if (i == 4)
-              return py::cast(s.call_found);
-            if (i == 5)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyParserCallCheck& s, int i) -> py::object {
+        if (i < 0)
+          i += 6;
+        if (i == 0)
+          return py::cast(s.word);
+        if (i == 1)
+          return py::cast(s.ix_word);
+        if (i == 2)
+          return py::cast(s.delim);
+        if (i == 3)
+          return py::cast(s.delim_found);
+        if (i == 4)
+          return py::cast(s.call_found);
+        if (i == 5)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "parser_fast_complex_read",
       &Bmad::parser_fast_complex_read,
@@ -27239,7 +27115,7 @@ is_ok : bool
       .def("__len__", [](const Bmad::ParserFastComplexRead&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::ParserFastComplexRead& s, size_t i) -> py::object {
+          [](const Bmad::ParserFastComplexRead& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -27273,7 +27149,7 @@ is_ok
       .def("__len__", [](const PyParserFastIntegerRead&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyParserFastIntegerRead& s, size_t i) -> py::object {
+          [](const PyParserFastIntegerRead& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -27332,7 +27208,7 @@ n_real : int
       .def("__len__", [](const Bmad::ParserFastRealRead&) { return 4; })
       .def(
           "__getitem__",
-          [](const Bmad::ParserFastRealRead& s, size_t i) -> py::object {
+          [](const Bmad::ParserFastRealRead& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -27370,25 +27246,23 @@ This subroutine is not intended for general use.
       .def_readonly(
           "abort_on_open_error", &PyParserFileStack::abort_on_open_error)
       .def("__len__", [](const PyParserFileStack&) { return 6; })
-      .def(
-          "__getitem__",
-          [](const PyParserFileStack& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 6;
-            if (i == 0)
-              return py::cast(s.how);
-            if (i == 1)
-              return py::cast(s.file_name_in);
-            if (i == 2)
-              return py::cast(s.finished);
-            if (i == 3)
-              return py::cast(s.err);
-            if (i == 4)
-              return py::cast(s.open_file);
-            if (i == 5)
-              return py::cast(s.abort_on_open_error);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyParserFileStack& s, int i) -> py::object {
+        if (i < 0)
+          i += 6;
+        if (i == 0)
+          return py::cast(s.how);
+        if (i == 1)
+          return py::cast(s.file_name_in);
+        if (i == 2)
+          return py::cast(s.finished);
+        if (i == 3)
+          return py::cast(s.err);
+        if (i == 4)
+          return py::cast(s.open_file);
+        if (i == 5)
+          return py::cast(s.abort_on_open_error);
+        throw py::index_error();
+      });
   m.def(
       "parser_get_integer",
       &python_parser_get_integer,
@@ -27424,29 +27298,27 @@ str2 :
       .def_readonly("str1", &PyParserGetInteger::str1)
       .def_readonly("str2", &PyParserGetInteger::str2)
       .def("__len__", [](const PyParserGetInteger&) { return 8; })
-      .def(
-          "__getitem__",
-          [](const PyParserGetInteger& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 8;
-            if (i == 0)
-              return py::cast(s.int_val);
-            if (i == 1)
-              return py::cast(s.word);
-            if (i == 2)
-              return py::cast(s.ix_word);
-            if (i == 3)
-              return py::cast(s.delim);
-            if (i == 4)
-              return py::cast(s.delim_found);
-            if (i == 5)
-              return py::cast(s.err);
-            if (i == 6)
-              return py::cast(s.str1);
-            if (i == 7)
-              return py::cast(s.str2);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyParserGetInteger& s, int i) -> py::object {
+        if (i < 0)
+          i += 8;
+        if (i == 0)
+          return py::cast(s.int_val);
+        if (i == 1)
+          return py::cast(s.word);
+        if (i == 2)
+          return py::cast(s.ix_word);
+        if (i == 3)
+          return py::cast(s.delim);
+        if (i == 4)
+          return py::cast(s.delim_found);
+        if (i == 5)
+          return py::cast(s.err);
+        if (i == 6)
+          return py::cast(s.str1);
+        if (i == 7)
+          return py::cast(s.str2);
+        throw py::index_error();
+      });
   m.def(
       "parser_get_logical",
       &python_parser_get_logical,
@@ -27476,25 +27348,23 @@ err :
       .def_readonly("delim_found", &PyParserGetLogical::delim_found)
       .def_readonly("err", &PyParserGetLogical::err)
       .def("__len__", [](const PyParserGetLogical&) { return 6; })
-      .def(
-          "__getitem__",
-          [](const PyParserGetLogical& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 6;
-            if (i == 0)
-              return py::cast(s.attrib_name);
-            if (i == 1)
-              return py::cast(s.this_logic);
-            if (i == 2)
-              return py::cast(s.ele_name);
-            if (i == 3)
-              return py::cast(s.delim);
-            if (i == 4)
-              return py::cast(s.delim_found);
-            if (i == 5)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyParserGetLogical& s, int i) -> py::object {
+        if (i < 0)
+          i += 6;
+        if (i == 0)
+          return py::cast(s.attrib_name);
+        if (i == 1)
+          return py::cast(s.this_logic);
+        if (i == 2)
+          return py::cast(s.ele_name);
+        if (i == 3)
+          return py::cast(s.delim);
+        if (i == 4)
+          return py::cast(s.delim_found);
+        if (i == 5)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "parser_identify_fork_to_element",
       &Bmad::parser_identify_fork_to_element,
@@ -27522,15 +27392,13 @@ This subroutine is not intended for general use.
       m, "ParserPrintLine", "Fortran routine parser_print_line return value")
       .def_readonly("end_of_file", &PyParserPrintLine::end_of_file)
       .def("__len__", [](const PyParserPrintLine&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyParserPrintLine& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.end_of_file);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyParserPrintLine& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.end_of_file);
+        throw py::index_error();
+      });
   m.def(
       "parser_read_lr_wake",
       &python_parser_read_lr_wake,
@@ -27554,19 +27422,17 @@ ele : EleStruct
       .def_readonly("delim_found", &PyParserReadLrWake::delim_found)
       .def_readonly("err_flag", &PyParserReadLrWake::err_flag)
       .def("__len__", [](const PyParserReadLrWake&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PyParserReadLrWake& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.delim);
-            if (i == 1)
-              return py::cast(s.delim_found);
-            if (i == 2)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyParserReadLrWake& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.delim);
+        if (i == 1)
+          return py::cast(s.delim_found);
+        if (i == 2)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "parser_read_old_format_lr_wake",
       &Bmad::parser_read_old_format_lr_wake,
@@ -27624,19 +27490,17 @@ ele : EleStruct
       .def_readonly("delim_found", &PyParserReadSrWake::delim_found)
       .def_readonly("err_flag", &PyParserReadSrWake::err_flag)
       .def("__len__", [](const PyParserReadSrWake&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PyParserReadSrWake& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.delim);
-            if (i == 1)
-              return py::cast(s.delim_found);
-            if (i == 2)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyParserReadSrWake& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.delim);
+        if (i == 1)
+          return py::cast(s.delim_found);
+        if (i == 2)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "parser_transfer_control_struct",
       &Bmad::parser_transfer_control_struct,
@@ -27716,7 +27580,7 @@ is_moving_backwards :
       .def("__len__", [](const PyParticleIsMovingBackwards&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyParticleIsMovingBackwards& s, size_t i) -> py::object {
+          [](const PyParticleIsMovingBackwards& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -27750,7 +27614,7 @@ is_moving_forward :
       .def("__len__", [](const PyParticleIsMovingForward&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyParticleIsMovingForward& s, size_t i) -> py::object {
+          [](const PyParticleIsMovingForward& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -27797,14 +27661,13 @@ time :
       m, "ParticleRfTime", "Fortran routine particle_rf_time return value")
       .def_readonly("time", &PyParticleRfTime::time)
       .def("__len__", [](const PyParticleRfTime&) { return 1; })
-      .def(
-          "__getitem__", [](const PyParticleRfTime& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.time);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyParticleRfTime& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.time);
+        throw py::index_error();
+      });
   m.def(
       "patch_flips_propagation_direction",
       &python_patch_flips_propagation_direction,
@@ -27831,8 +27694,7 @@ is_flip :
       .def("__len__", [](const PyPatchFlipsPropagationDirection&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyPatchFlipsPropagationDirection& s,
-             size_t i) -> py::object {
+          [](const PyPatchFlipsPropagationDirection& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -27859,7 +27721,7 @@ length :
       m, "PatchLength", "Fortran routine patch_length return value")
       .def_readonly("length", &PyPatchLength::length)
       .def("__len__", [](const PyPatchLength&) { return 1; })
-      .def("__getitem__", [](const PyPatchLength& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyPatchLength& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -27908,7 +27770,7 @@ err_flag : bool
       .def(
           "__getitem__",
           [](const Bmad::PhotonAbsorptionAndPhaseShift& s,
-             size_t i) -> py::object {
+             int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -27957,7 +27819,7 @@ pixel_pt : PixelPtStruct, optional
       .def("__len__", [](const PyPhotonAddToDetectorStatistics&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyPhotonAddToDetectorStatistics& s, size_t i) -> py::object {
+          [](const PyPhotonAddToDetectorStatistics& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -27997,7 +27859,7 @@ phi_out : float
       .def("__len__", [](const Bmad::PhotonReflection&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::PhotonReflection& s, size_t i) -> py::object {
+          [](const Bmad::PhotonReflection& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -28062,7 +27924,7 @@ rel_p_specular : float
       .def("__len__", [](const Bmad::PhotonReflectivity&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::PhotonReflectivity& s, size_t i) -> py::object {
+          [](const Bmad::PhotonReflectivity& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -28107,7 +27969,7 @@ corner : TargetPointStruct
       .def("__len__", [](const PyPhotonTargetCornerCalc&) { return 4; })
       .def(
           "__getitem__",
-          [](const PyPhotonTargetCornerCalc& s, size_t i) -> py::object {
+          [](const PyPhotonTargetCornerCalc& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -28179,14 +28041,13 @@ physical_end :
       m, "PhysicalEleEnd", "Fortran routine physical_ele_end return value")
       .def_readonly("physical_end", &PyPhysicalEleEnd::physical_end)
       .def("__len__", [](const PyPhysicalEleEnd&) { return 1; })
-      .def(
-          "__getitem__", [](const PyPhysicalEleEnd& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.physical_end);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyPhysicalEleEnd& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.physical_end);
+        throw py::index_error();
+      });
   m.def(
       "point_photon_emission",
       &Bmad::point_photon_emission,
@@ -28538,7 +28399,7 @@ negative length which of the possible elements is actually chosen is ill-defined
       .def("__len__", [](const Bmad::PointerToElementAtS&) { return 4; })
       .def(
           "__getitem__",
-          [](const Bmad::PointerToElementAtS& s, size_t i) -> py::object {
+          [](const Bmad::PointerToElementAtS& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -28622,8 +28483,7 @@ lord_ptr :
       .def_readonly("ix_ic", &Bmad::PointerToLord::ix_ic)
       .def("__len__", [](const Bmad::PointerToLord&) { return 4; })
       .def(
-          "__getitem__",
-          [](const Bmad::PointerToLord& s, size_t i) -> py::object {
+          "__getitem__", [](const Bmad::PointerToLord& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -28666,7 +28526,7 @@ multi_lord :
       .def("__len__", [](const Bmad::PointerToMultipassLord&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::PointerToMultipassLord& s, size_t i) -> py::object {
+          [](const Bmad::PointerToMultipassLord& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -28762,7 +28622,7 @@ pointer_to_lord pointer_to_super_lord pointer_to_ele num_lords
       .def("__len__", [](const Bmad::PointerToSlave&) { return 5; })
       .def(
           "__getitem__",
-          [](const Bmad::PointerToSlave& s, size_t i) -> py::object {
+          [](const Bmad::PointerToSlave& s, int i) -> py::object {
             if (i < 0)
               i += 5;
             if (i == 0)
@@ -28816,7 +28676,7 @@ lord_ptr :
       .def("__len__", [](const Bmad::PointerToSuperLord&) { return 4; })
       .def(
           "__getitem__",
-          [](const Bmad::PointerToSuperLord& s, size_t i) -> py::object {
+          [](const Bmad::PointerToSuperLord& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -28877,8 +28737,7 @@ pt : GridPointStruct
       .def("__len__", [](const PyPointerToSurfaceDisplacementPt&) { return 7; })
       .def(
           "__getitem__",
-          [](const PyPointerToSurfaceDisplacementPt& s,
-             size_t i) -> py::object {
+          [](const PyPointerToSurfaceDisplacementPt& s, int i) -> py::object {
             if (i < 0)
               i += 7;
             if (i == 0)
@@ -28945,7 +28804,7 @@ pt : GridPointStruct
       .def("__len__", [](const PyPointerToSurfaceSegmentedPt&) { return 7; })
       .def(
           "__getitem__",
-          [](const PyPointerToSurfaceSegmentedPt& s, size_t i) -> py::object {
+          [](const PyPointerToSurfaceSegmentedPt& s, int i) -> py::object {
             if (i < 0)
               i += 7;
             if (i == 0)
@@ -29012,7 +28871,7 @@ is_branch_wall : bool
       .def("__len__", [](const Bmad::PointerToWall3d&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::PointerToWall3d& s, size_t i) -> py::object {
+          [](const Bmad::PointerToWall3d& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -29072,7 +28931,7 @@ y :
       m, "PolyEval", "Fortran routine poly_eval return value")
       .def_readonly("y", &PyPolyEval::y)
       .def("__len__", [](const PyPolyEval&) { return 1; })
-      .def("__getitem__", [](const PyPolyEval& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyPolyEval& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -29096,15 +28955,13 @@ prob :
       m, "ProbabilityFunct", "Fortran routine probability_funct return value")
       .def_readonly("prob", &PyProbabilityFunct::prob)
       .def("__len__", [](const PyProbabilityFunct&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyProbabilityFunct& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.prob);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyProbabilityFunct& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.prob);
+        throw py::index_error();
+      });
   m.def(
       "projdd",
       &python_projdd,
@@ -29123,7 +28980,7 @@ projdd :
       m, "Projdd", "Fortran routine projdd return value")
       .def_readonly("func_retval__", &PyProjdd::func_retval__)
       .def("__len__", [](const PyProjdd&) { return 1; })
-      .def("__getitem__", [](const PyProjdd& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyProjdd& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -29176,7 +29033,7 @@ sigma_z : float
       .def("__len__", [](const Bmad::ProjectEmitToXyz&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::ProjectEmitToXyz& s, size_t i) -> py::object {
+          [](const Bmad::ProjectEmitToXyz& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -29271,17 +29128,15 @@ closed_orb : CoordStruct
       .def_readonly("norm_mode", &Bmad::PtcEmitCalc::norm_mode)
       .def_readonly("closed_orb", &Bmad::PtcEmitCalc::closed_orb)
       .def("__len__", [](const Bmad::PtcEmitCalc&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::PtcEmitCalc& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.norm_mode);
-            if (i == 1)
-              return py::cast(s.closed_orb);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::PtcEmitCalc& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.norm_mode);
+        if (i == 1)
+          return py::cast(s.closed_orb);
+        throw py::index_error();
+      });
   m.def(
       "ptc_layouts_resplit",
       &Bmad::ptc_layouts_resplit,
@@ -29404,17 +29259,15 @@ closed_orb : CoordStruct
       .def_readonly("norm_mode", &Bmad::PtcSpinCalc::norm_mode)
       .def_readonly("closed_orb", &Bmad::PtcSpinCalc::closed_orb)
       .def("__len__", [](const Bmad::PtcSpinCalc&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::PtcSpinCalc& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.norm_mode);
-            if (i == 1)
-              return py::cast(s.closed_orb);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::PtcSpinCalc& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.norm_mode);
+        if (i == 1)
+          return py::cast(s.closed_orb);
+        throw py::index_error();
+      });
   m.def(
       "ptc_track_all",
       &Bmad::ptc_track_all,
@@ -29442,17 +29295,15 @@ err_flag : bool
       .def_readonly("track_state", &Bmad::PtcTrackAll::track_state)
       .def_readonly("err_flag", &Bmad::PtcTrackAll::err_flag)
       .def("__len__", [](const Bmad::PtcTrackAll&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::PtcTrackAll& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.track_state);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::PtcTrackAll& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.track_state);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "ptc_transfer_map_with_spin",
       &Bmad::ptc_transfer_map_with_spin,
@@ -29751,7 +29602,7 @@ angle : float
       .def("__len__", [](const SimUtils::QuatToAxisAngle&) { return 2; })
       .def(
           "__getitem__",
-          [](const SimUtils::QuatToAxisAngle& s, size_t i) -> py::object {
+          [](const SimUtils::QuatToAxisAngle& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -29818,7 +29669,7 @@ ios :
       .def_readonly("ix", &PyQueryString::ix)
       .def_readonly("ios", &PyQueryString::ios)
       .def("__len__", [](const PyQueryString&) { return 5; })
-      .def("__getitem__", [](const PyQueryString& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyQueryString& s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -29850,7 +29701,7 @@ q_str :
       .def_readonly("str", &PyQuote::str)
       .def_readonly("q_str", &PyQuote::q_str)
       .def("__len__", [](const PyQuote&) { return 2; })
-      .def("__getitem__", [](const PyQuote& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyQuote& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -29910,7 +29761,7 @@ rad_int1 : RadInt1Struct
       .def("__len__", [](const Bmad::Rad1DampAndStocMats&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::Rad1DampAndStocMats& s, size_t i) -> py::object {
+          [](const Bmad::Rad1DampAndStocMats& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -29975,7 +29826,7 @@ err_flag : bool
       .def("__len__", [](const Bmad::RadDampAndStocMats&) { return 5; })
       .def(
           "__getitem__",
-          [](const Bmad::RadDampAndStocMats& s, size_t i) -> py::object {
+          [](const Bmad::RadDampAndStocMats& s, int i) -> py::object {
             if (i < 0)
               i += 5;
             if (i == 0)
@@ -30035,7 +29886,7 @@ int_g : float
       .def_readonly("int_g2", &PyRadGIntegrals::int_g2)
       .def_readonly("int_g3", &PyRadGIntegrals::int_g3)
       .def("__len__", [](const PyRadGIntegrals&) { return 3; })
-      .def("__getitem__", [](const PyRadGIntegrals& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyRadGIntegrals& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -30096,7 +29947,7 @@ rad_int_by_ele : RadIntAllEleStruct
       .def("__len__", [](const PyRadiationIntegrals&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyRadiationIntegrals& s, size_t i) -> py::object {
+          [](const PyRadiationIntegrals& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -30167,7 +30018,7 @@ value :
       .def_readonly("err_flag", &PyRamperValue::err_flag)
       .def_readonly("value", &PyRamperValue::value)
       .def("__len__", [](const PyRamperValue&) { return 2; })
-      .def("__getitem__", [](const PyRamperValue& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyRamperValue& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -30260,7 +30111,7 @@ get_sigma_cut : float
       .def("__len__", [](const SimUtils::RanGaussConverter&) { return 2; })
       .def(
           "__getitem__",
-          [](const SimUtils::RanGaussConverter& s, size_t i) -> py::object {
+          [](const SimUtils::RanGaussConverter& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -30305,16 +30156,15 @@ Overloaded versions:
       .def_readonly("harvest", &PyRanGaussScalar::harvest)
       .def_readonly("index_quasi", &PyRanGaussScalar::index_quasi)
       .def("__len__", [](const PyRanGaussScalar&) { return 2; })
-      .def(
-          "__getitem__", [](const PyRanGaussScalar& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.harvest);
-            if (i == 1)
-              return py::cast(s.index_quasi);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyRanGaussScalar& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.harvest);
+        if (i == 1)
+          return py::cast(s.index_quasi);
+        throw py::index_error();
+      });
   m.def(
       "ran_gauss_vector",
       &SimUtils::ran_gauss_vector,
@@ -30418,17 +30268,15 @@ Overloaded versions:
       .def_readonly("harvest", &PyRanUniformScalar::harvest)
       .def_readonly("index_quasi", &PyRanUniformScalar::index_quasi)
       .def("__len__", [](const PyRanUniformScalar&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyRanUniformScalar& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.harvest);
-            if (i == 1)
-              return py::cast(s.index_quasi);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyRanUniformScalar& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.harvest);
+        if (i == 1)
+          return py::cast(s.index_quasi);
+        throw py::index_error();
+      });
   m.def(
       "ran_uniform",
       py::overload_cast<optional_ref<RandomStateProxy>>(&SimUtils::ran_uniform),
@@ -30498,7 +30346,7 @@ out :
       .def_readonly("plc", &PyRchomp::plc)
       .def_readonly("out", &PyRchomp::out)
       .def("__len__", [](const PyRchomp&) { return 3; })
-      .def("__getitem__", [](const PyRchomp& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyRchomp& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -30538,8 +30386,7 @@ exact : bool, optional
       .def_readonly("init_val", &PyReAllocateCDouble::init_val)
       .def("__len__", [](const PyReAllocateCDouble&) { return 1; })
       .def(
-          "__getitem__",
-          [](const PyReAllocateCDouble& s, size_t i) -> py::object {
+          "__getitem__", [](const PyReAllocateCDouble& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -30593,7 +30440,7 @@ exact :
       .def("__len__", [](const PyReAllocateWall3dSectionArray&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyReAllocateWall3dSectionArray& s, size_t i) -> py::object {
+          [](const PyReAllocateWall3dSectionArray& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -30625,7 +30472,7 @@ exact :
       .def("__len__", [](const PyReAllocateWall3dVertexArray&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyReAllocateWall3dVertexArray& s, size_t i) -> py::object {
+          [](const PyReAllocateWall3dVertexArray& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -30665,7 +30512,7 @@ str_out :
       .def_readonly("rel", &PyReStrQp::rel)
       .def_readonly("str_out", &PyReStrQp::str_out)
       .def("__len__", [](const PyReStrQp&) { return 2; })
-      .def("__getitem__", [](const PyReStrQp& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyReStrQp& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -30691,7 +30538,7 @@ str_out :
       .def_readonly("rel", &PyReStrRp::rel)
       .def_readonly("str_out", &PyReStrRp::str_out)
       .def("__len__", [](const PyReStrRp&) { return 2; })
-      .def("__getitem__", [](const PyReStrRp& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyReStrRp& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -30742,8 +30589,7 @@ err_flag : bool
       .def_readonly("err_flag", &Bmad::ReadBeamAscii::err_flag)
       .def("__len__", [](const Bmad::ReadBeamAscii&) { return 2; })
       .def(
-          "__getitem__",
-          [](const Bmad::ReadBeamAscii& s, size_t i) -> py::object {
+          "__getitem__", [](const Bmad::ReadBeamAscii& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -30796,7 +30642,7 @@ err_flag : bool
       .def_readonly("err_flag", &PyReadBeamFile::err_flag)
       .def_readonly("conserve_momentum", &PyReadBeamFile::conserve_momentum)
       .def("__len__", [](const PyReadBeamFile&) { return 3; })
-      .def("__getitem__", [](const PyReadBeamFile& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyReadBeamFile& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -30910,7 +30756,7 @@ fmt_str :
       .def("__len__", [](const PyRealNumFortranFormat&) { return 4; })
       .def(
           "__getitem__",
-          [](const PyRealNumFortranFormat& s, size_t i) -> py::object {
+          [](const PyRealNumFortranFormat& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -30943,7 +30789,7 @@ is_ok :
       .def_readonly("path_out", &PyRealPath::path_out)
       .def_readonly("is_ok", &PyRealPath::is_ok)
       .def("__len__", [](const PyRealPath&) { return 3; })
-      .def("__getitem__", [](const PyRealPath& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyRealPath& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -30977,7 +30823,7 @@ str :
       .def_readonly("n_decimal", &PyRealStr::n_decimal)
       .def_readonly("str", &PyRealStr::str)
       .def("__len__", [](const PyRealStr&) { return 4; })
-      .def("__getitem__", [](const PyRealStr& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyRealStr& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -31016,7 +30862,7 @@ str :
       .def_readonly("n_decimal", &PyRealToString::n_decimal)
       .def_readonly("str", &PyRealToString::str)
       .def("__len__", [](const PyRealToString&) { return 5; })
-      .def("__getitem__", [](const PyRealToString& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyRealToString& s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -31056,14 +30902,13 @@ extend :
       m, "ReallocateBeam", "Fortran routine reallocate_beam return value")
       .def_readonly("extend", &PyReallocateBeam::extend)
       .def("__len__", [](const PyReallocateBeam&) { return 1; })
-      .def(
-          "__getitem__", [](const PyReallocateBeam& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.extend);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyReallocateBeam& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.extend);
+        throw py::index_error();
+      });
   m.def(
       "reallocate_bp_com_const",
       &Bmad::reallocate_bp_com_const,
@@ -31267,7 +31112,7 @@ rel_charge :
       .def("__len__", [](const PyRelTrackingChargeToMass&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyRelTrackingChargeToMass& s, size_t i) -> py::object {
+          [](const PyRelTrackingChargeToMass& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -31292,15 +31137,13 @@ relative_mode_flip :
       m, "RelativeModeFlip", "Fortran routine relative_mode_flip return value")
       .def_readonly("func_retval__", &PyRelativeModeFlip::func_retval__)
       .def("__len__", [](const PyRelativeModeFlip&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyRelativeModeFlip& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.func_retval__);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyRelativeModeFlip& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.func_retval__);
+        throw py::index_error();
+      });
   m.def(
       "release_rad_int_cache",
       &python_release_rad_int_cache,
@@ -31323,7 +31166,7 @@ ix_cache : int
       .def("__len__", [](const PyReleaseRadIntCache&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyReleaseRadIntCache& s, size_t i) -> py::object {
+          [](const PyReleaseRadIntCache& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -31365,7 +31208,7 @@ c0 : float
       .def("__len__", [](const Bmad::RemoveConstantTaylor&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::RemoveConstantTaylor& s, size_t i) -> py::object {
+          [](const Bmad::RemoveConstantTaylor& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -31512,7 +31355,7 @@ is_on :
       m, "RfIsOn", "Fortran routine rf_is_on return value")
       .def_readonly("is_on", &PyRfIsOn::is_on)
       .def("__len__", [](const PyRfIsOn&) { return 1; })
-      .def("__getitem__", [](const PyRfIsOn& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyRfIsOn& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -31539,15 +31382,13 @@ time :
       m, "RfRefTimeOffset", "Fortran routine rf_ref_time_offset return value")
       .def_readonly("time", &PyRfRefTimeOffset::time)
       .def("__len__", [](const PyRfRefTimeOffset&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyRfRefTimeOffset& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.time);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyRfRefTimeOffset& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.time);
+        throw py::index_error();
+      });
   m.def(
       "rfun",
       &python_rfun,
@@ -31589,7 +31430,7 @@ res :
       .def_readonly("j", &PyRfun::j)
       .def_readonly("res", &PyRfun::res)
       .def("__len__", [](const PyRfun&) { return 10; })
-      .def("__getitem__", [](const PyRfun& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyRfun& s, int i) -> py::object {
         if (i < 0)
           i += 10;
         if (i == 0)
@@ -31655,7 +31496,7 @@ extra_field :
       .def("__len__", [](const PyRkAdaptiveTimeStep&) { return 6; })
       .def(
           "__getitem__",
-          [](const PyRkAdaptiveTimeStep& s, size_t i) -> py::object {
+          [](const PyRkAdaptiveTimeStep& s, int i) -> py::object {
             if (i < 0)
               i += 6;
             if (i == 0)
@@ -31707,7 +31548,7 @@ extra_field :
       .def_readonly("err_flag", &PyRkTimeStep1::err_flag)
       .def_readonly("print_err", &PyRkTimeStep1::print_err)
       .def("__len__", [](const PyRkTimeStep1&) { return 3; })
-      .def("__getitem__", [](const PyRkTimeStep1& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyRkTimeStep1& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -31741,7 +31582,7 @@ rms_val :
       .def_readonly("ave_val", &PyRmsValue::ave_val)
       .def_readonly("rms_val", &PyRmsValue::rms_val)
       .def("__len__", [](const PyRmsValue&) { return 2; })
-      .def("__getitem__", [](const PyRmsValue& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyRmsValue& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -31784,7 +31625,7 @@ rvec :
       m, "Rotate3", "Fortran routine rotate3 return value")
       .def_readonly("angle", &PyRotate3::angle)
       .def("__len__", [](const PyRotate3&) { return 1; })
-      .def("__getitem__", [](const PyRotate3& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyRotate3& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -31830,7 +31671,7 @@ theta :
       m, "RotateFieldZx", "Fortran routine rotate_field_zx return value")
       .def_readonly("theta", &PyRotateFieldZx::theta)
       .def("__len__", [](const PyRotateFieldZx&) { return 1; })
-      .def("__getitem__", [](const PyRotateFieldZx& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyRotateFieldZx& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -32003,7 +31844,7 @@ time0 :
       .def_readonly("time", &PyRunTimer::time)
       .def_readonly("time0", &PyRunTimer::time0)
       .def("__len__", [](const PyRunTimer&) { return 3; })
-      .def("__getitem__", [](const PyRunTimer& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyRunTimer& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -32034,7 +31875,7 @@ s_body :
       m, "SBodyCalc", "Fortran routine s_body_calc return value")
       .def_readonly("s_body", &PySBodyCalc::s_body)
       .def("__len__", [](const PySBodyCalc&) { return 1; })
-      .def("__getitem__", [](const PySBodyCalc& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PySBodyCalc& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -32287,18 +32128,17 @@ dt_next : float
       .def_readonly("include_image", &PyScAdaptiveStep::include_image)
       .def_readonly("dt_step", &PyScAdaptiveStep::dt_step)
       .def("__len__", [](const PyScAdaptiveStep&) { return 3; })
-      .def(
-          "__getitem__", [](const PyScAdaptiveStep& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.dt_next);
-            if (i == 1)
-              return py::cast(s.include_image);
-            if (i == 2)
-              return py::cast(s.dt_step);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyScAdaptiveStep& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.dt_next);
+        if (i == 1)
+          return py::cast(s.include_image);
+        if (i == 2)
+          return py::cast(s.dt_step);
+        throw py::index_error();
+      });
   m.def(
       "sc_step",
       &python_sc_step,
@@ -32336,7 +32176,7 @@ n_emit : int
       .def_readonly("n_emit", &PyScStep::n_emit)
       .def_readonly("include_image", &PyScStep::include_image)
       .def("__len__", [](const PyScStep&) { return 2; })
-      .def("__getitem__", [](const PyScStep& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyScStep& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -32424,7 +32264,7 @@ err_id : int
       .def("__len__", [](const Bmad::SetEleAttribute&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::SetEleAttribute& s, size_t i) -> py::object {
+          [](const Bmad::SetEleAttribute& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -32511,7 +32351,7 @@ set_slaves : bool
       .def("__len__", [](const Bmad::SetEleStatusStale&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::SetEleStatusStale& s, size_t i) -> py::object {
+          [](const Bmad::SetEleStatusStale& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -32585,7 +32425,7 @@ Overloaded versions:
       .def(
           "__getitem__",
           [](const PySetFlagsForChangedIntegerAttribute& s,
-             size_t i) -> py::object {
+             int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -32704,7 +32544,7 @@ Overloaded versions:
       .def(
           "__getitem__",
           [](const PySetFlagsForChangedLogicalAttribute& s,
-             size_t i) -> py::object {
+             int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -32772,8 +32612,7 @@ Overloaded versions:
           "__len__", [](const PySetFlagsForChangedRealAttribute&) { return 1; })
       .def(
           "__getitem__",
-          [](const PySetFlagsForChangedRealAttribute& s,
-             size_t i) -> py::object {
+          [](const PySetFlagsForChangedRealAttribute& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -32802,14 +32641,13 @@ on_or_off : int
       m, "SetFringeOnOff", "Fortran routine set_fringe_on_off return value")
       .def_readonly("fringe_at", &PySetFringeOnOff::fringe_at)
       .def("__len__", [](const PySetFringeOnOff&) { return 1; })
-      .def(
-          "__getitem__", [](const PySetFringeOnOff& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.fringe_at);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PySetFringeOnOff& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.fringe_at);
+        throw py::index_error();
+      });
   m.def(
       "set_lords_status_stale",
       &Bmad::set_lords_status_stale,
@@ -32914,19 +32752,17 @@ save_val :
       .def_readonly("set_val", &PySetParameterInt::set_val)
       .def_readonly("save_val", &PySetParameterInt::save_val)
       .def("__len__", [](const PySetParameterInt&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PySetParameterInt& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.param_val);
-            if (i == 1)
-              return py::cast(s.set_val);
-            if (i == 2)
-              return py::cast(s.save_val);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PySetParameterInt& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.param_val);
+        if (i == 1)
+          return py::cast(s.set_val);
+        if (i == 2)
+          return py::cast(s.save_val);
+        throw py::index_error();
+      });
   m.def(
       "set_parameter",
       py::overload_cast<bool, bool, bool>(&python_set_parameter_logic),
@@ -32950,8 +32786,7 @@ save_val :
       .def_readonly("save_val", &PySetParameterLogic::save_val)
       .def("__len__", [](const PySetParameterLogic&) { return 3; })
       .def(
-          "__getitem__",
-          [](const PySetParameterLogic& s, size_t i) -> py::object {
+          "__getitem__", [](const PySetParameterLogic& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -32982,19 +32817,17 @@ save_val :
       .def_readonly("set_val", &PySetParameterReal::set_val)
       .def_readonly("save_val", &PySetParameterReal::save_val)
       .def("__len__", [](const PySetParameterReal&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PySetParameterReal& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.param_val);
-            if (i == 1)
-              return py::cast(s.set_val);
-            if (i == 2)
-              return py::cast(s.save_val);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PySetParameterReal& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.param_val);
+        if (i == 1)
+          return py::cast(s.set_val);
+        if (i == 2)
+          return py::cast(s.save_val);
+        throw py::index_error();
+      });
   m.def(
       "set_ptc",
       &Bmad::set_ptc,
@@ -33072,7 +32905,7 @@ old_val : int
       m, "SetPtcQuiet", "Fortran routine set_ptc_quiet return value")
       .def_readonly("old_val", &PySetPtcQuiet::old_val)
       .def("__len__", [](const PySetPtcQuiet&) { return 1; })
-      .def("__getitem__", [](const PySetPtcQuiet& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PySetPtcQuiet& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -33093,7 +32926,7 @@ on :
       m, "SetPtcVerbose", "Fortran routine set_ptc_verbose return value")
       .def_readonly("on", &PySetPtcVerbose::on)
       .def("__len__", [](const PySetPtcVerbose&) { return 1; })
-      .def("__getitem__", [](const PySetPtcVerbose& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PySetPtcVerbose& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -33199,7 +33032,7 @@ ok :
       m, "SetTune", "Fortran routine set_tune return value")
       .def_readonly("ok", &PySetTune::ok)
       .def("__len__", [](const PySetTune&) { return 1; })
-      .def("__getitem__", [](const PySetTune& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PySetTune& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -33243,7 +33076,7 @@ everything_ok :
       .def_readonly("mask", &PySetTune3d::mask)
       .def_readonly("everything_ok", &PySetTune3d::everything_ok)
       .def("__len__", [](const PySetTune3d&) { return 2; })
-      .def("__getitem__", [](const PySetTune3d& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PySetTune3d& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -33392,7 +33225,7 @@ is_different :
       .def("__len__", [](const PySignificantDifference&) { return 1; })
       .def(
           "__getitem__",
-          [](const PySignificantDifference& s, size_t i) -> py::object {
+          [](const PySignificantDifference& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -33417,7 +33250,7 @@ y :
       m, "Sinc", "Fortran routine sinc return value")
       .def_readonly("y", &PySinc::y)
       .def("__len__", [](const PySinc&) { return 1; })
-      .def("__getitem__", [](const PySinc& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PySinc& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -33442,7 +33275,7 @@ y :
       m, "Sincc", "Fortran routine sincc return value")
       .def_readonly("y", &PySincc::y)
       .def("__len__", [](const PySincc&) { return 1; })
-      .def("__getitem__", [](const PySincc& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PySincc& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -33467,7 +33300,7 @@ y :
       m, "SinhxX", "Fortran routine sinhx_x return value")
       .def_readonly("y", &PySinhxX::y)
       .def("__len__", [](const PySinhxX&) { return 1; })
-      .def("__getitem__", [](const PySinhxX& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PySinhxX& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -33490,14 +33323,13 @@ skip :
       m, "SkipEleBlender", "Fortran routine skip_ele_blender return value")
       .def_readonly("skip", &PySkipEleBlender::skip)
       .def("__len__", [](const PySkipEleBlender&) { return 1; })
-      .def(
-          "__getitem__", [](const PySkipEleBlender& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.skip);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PySkipEleBlender& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.skip);
+        throw py::index_error();
+      });
   m.def(
       "skip_header",
       &python_skip_header,
@@ -33515,7 +33347,7 @@ error_flag :
       .def_readonly("ix_unit", &PySkipHeader::ix_unit)
       .def_readonly("error_flag", &PySkipHeader::error_flag)
       .def("__len__", [](const PySkipHeader&) { return 2; })
-      .def("__getitem__", [](const PySkipHeader& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PySkipHeader& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -33616,17 +33448,15 @@ make_matrix : bool, optional
       .def_readonly("ks_in", &PySolQuadMat6Calc::ks_in)
       .def_readonly("k1_in", &PySolQuadMat6Calc::k1_in)
       .def("__len__", [](const PySolQuadMat6Calc&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PySolQuadMat6Calc& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.ks_in);
-            if (i == 1)
-              return py::cast(s.k1_in);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PySolQuadMat6Calc& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.ks_in);
+        if (i == 1)
+          return py::cast(s.k1_in);
+        throw py::index_error();
+      });
   m.def(
       "solve_psi_adaptive",
       &Bmad::solve_psi_adaptive,
@@ -33697,7 +33527,7 @@ p : float
       .def("__len__", [](const Bmad::SolvePsiFixedSteps&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::SolvePsiFixedSteps& s, size_t i) -> py::object {
+          [](const Bmad::SolvePsiFixedSteps& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -33898,8 +33728,7 @@ xi_diff : float
       .def("__len__", [](const Bmad::SpinMat8ResonanceStrengths&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::SpinMat8ResonanceStrengths& s,
-             size_t i) -> py::object {
+          [](const Bmad::SpinMat8ResonanceStrengths& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -33942,7 +33771,7 @@ error : bool
       .def("__len__", [](const Bmad::SpinMatToEigen&) { return 5; })
       .def(
           "__getitem__",
-          [](const Bmad::SpinMatToEigen& s, size_t i) -> py::object {
+          [](const Bmad::SpinMatToEigen& s, int i) -> py::object {
             if (i < 0)
               i += 5;
             if (i == 0)
@@ -34002,7 +33831,7 @@ omega :
       .def_readonly("sign_z_vel", &PySpinOmega::sign_z_vel)
       .def_readonly("phase_space_coords", &PySpinOmega::phase_space_coords)
       .def("__len__", [](const PySpinOmega&) { return 2; })
-      .def("__getitem__", [](const PySpinOmega& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PySpinOmega& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -34040,8 +33869,7 @@ xi_diff : float
       .def("__len__", [](const Bmad::SpinQuatResonanceStrengths&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::SpinQuatResonanceStrengths& s,
-             size_t i) -> py::object {
+          [](const Bmad::SpinQuatResonanceStrengths& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -34198,8 +34026,7 @@ dy : float
       .def("__len__", [](const SimUtils::SplineAkimaInterpolate&) { return 3; })
       .def(
           "__getitem__",
-          [](const SimUtils::SplineAkimaInterpolate& s,
-             size_t i) -> py::object {
+          [](const SimUtils::SplineAkimaInterpolate& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -34251,7 +34078,7 @@ spline_mod
       .def("__len__", [](const SimUtils::SplineEvaluate&) { return 3; })
       .def(
           "__getitem__",
-          [](const SimUtils::SplineEvaluate& s, size_t i) -> py::object {
+          [](const SimUtils::SplineEvaluate& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -34336,7 +34163,7 @@ ix_insert : int, optional
       .def_readonly("split_done", &Bmad::SplitLat::split_done)
       .def_readonly("err_flag", &Bmad::SplitLat::err_flag)
       .def("__len__", [](const Bmad::SplitLat&) { return 3; })
-      .def("__getitem__", [](const Bmad::SplitLat& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Bmad::SplitLat& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -34380,7 +34207,7 @@ y :
       m, "SqrtAlpha", "Fortran routine sqrt_alpha return value")
       .def_readonly("y", &PySqrtAlpha::y)
       .def("__len__", [](const PySqrtAlpha&) { return 1; })
-      .def("__getitem__", [](const PySqrtAlpha& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PySqrtAlpha& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -34405,7 +34232,7 @@ ds1 :
       m, "SqrtOne", "Fortran routine sqrt_one return value")
       .def_readonly("ds1", &PySqrtOne::ds1)
       .def("__len__", [](const PySqrtOne&) { return 1; })
-      .def("__getitem__", [](const PySqrtOne& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PySqrtOne& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -34582,7 +34409,7 @@ num :
       .def_readonly("match", &PyStrCount::match)
       .def_readonly("num", &PyStrCount::num)
       .def("__len__", [](const PyStrCount&) { return 3; })
-      .def("__getitem__", [](const PyStrCount& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyStrCount& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -34627,7 +34454,7 @@ ix_match :
       .def_readonly("ignore_clauses", &PyStrFirstInSet::ignore_clauses)
       .def_readonly("ix_match", &PyStrFirstInSet::ix_match)
       .def("__len__", [](const PyStrFirstInSet&) { return 4; })
-      .def("__getitem__", [](const PyStrFirstInSet& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyStrFirstInSet& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -34662,19 +34489,17 @@ ix_match :
       .def_readonly("set", &PyStrFirstNotInSet::set)
       .def_readonly("ix_match", &PyStrFirstNotInSet::ix_match)
       .def("__len__", [](const PyStrFirstNotInSet&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PyStrFirstNotInSet& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.line);
-            if (i == 1)
-              return py::cast(s.set);
-            if (i == 2)
-              return py::cast(s.ix_match);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyStrFirstNotInSet& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.line);
+        if (i == 1)
+          return py::cast(s.set);
+        if (i == 2)
+          return py::cast(s.ix_match);
+        throw py::index_error();
+      });
   m.def(
       "str_last_in_set",
       &python_str_last_in_set,
@@ -34695,7 +34520,7 @@ ix_match :
       .def_readonly("set", &PyStrLastInSet::set)
       .def_readonly("ix_match", &PyStrLastInSet::ix_match)
       .def("__len__", [](const PyStrLastInSet&) { return 3; })
-      .def("__getitem__", [](const PyStrLastInSet& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyStrLastInSet& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -34726,19 +34551,17 @@ ix_match :
       .def_readonly("set", &PyStrLastNotInSet::set)
       .def_readonly("ix_match", &PyStrLastNotInSet::ix_match)
       .def("__len__", [](const PyStrLastNotInSet&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PyStrLastNotInSet& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.line);
-            if (i == 1)
-              return py::cast(s.set);
-            if (i == 2)
-              return py::cast(s.ix_match);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyStrLastNotInSet& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.line);
+        if (i == 1)
+          return py::cast(s.set);
+        if (i == 2)
+          return py::cast(s.ix_match);
+        throw py::index_error();
+      });
   m.def(
       "str_match_wild",
       &python_str_match_wild,
@@ -34759,7 +34582,7 @@ a_match :
       .def_readonly("pat", &PyStrMatchWild::pat)
       .def_readonly("a_match", &PyStrMatchWild::a_match)
       .def("__len__", [](const PyStrMatchWild&) { return 3; })
-      .def("__getitem__", [](const PyStrMatchWild& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyStrMatchWild& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -34796,7 +34619,7 @@ ignore_escaped :
       .def_readonly("do_trim", &PyStrSubstitute::do_trim)
       .def_readonly("ignore_escaped", &PyStrSubstitute::ignore_escaped)
       .def("__len__", [](const PyStrSubstitute&) { return 5; })
-      .def("__getitem__", [](const PyStrSubstitute& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyStrSubstitute& s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -34842,7 +34665,7 @@ stream_end :
       m, "StreamEleEnd", "Fortran routine stream_ele_end return value")
       .def_readonly("stream_end", &PyStreamEleEnd::stream_end)
       .def("__len__", [](const PyStreamEleEnd&) { return 1; })
-      .def("__getitem__", [](const PyStreamEleEnd& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyStreamEleEnd& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -34898,7 +34721,7 @@ value :
       .def_readonly("err_print_flag", &PyStringToInt::err_print_flag)
       .def_readonly("value", &PyStringToInt::value)
       .def("__len__", [](const PyStringToInt&) { return 5; })
-      .def("__getitem__", [](const PyStringToInt& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyStringToInt& s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -34939,7 +34762,7 @@ value :
       .def_readonly("err_print_flag", &PyStringToReal::err_print_flag)
       .def_readonly("value", &PyStringToReal::value)
       .def("__len__", [](const PyStringToReal&) { return 5; })
-      .def("__getitem__", [](const PyStringToReal& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyStringToReal& s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -34974,7 +34797,7 @@ word_len :
       .def_readonly("out_string", &PyStringTrim::out_string)
       .def_readonly("word_len", &PyStringTrim::word_len)
       .def("__len__", [](const PyStringTrim&) { return 3; })
-      .def("__getitem__", [](const PyStringTrim& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyStringTrim& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -35014,7 +34837,7 @@ ix_next :
       .def_readonly("delim", &PyStringTrim2::delim)
       .def_readonly("ix_next", &PyStringTrim2::ix_next)
       .def("__len__", [](const PyStringTrim2&) { return 6; })
-      .def("__getitem__", [](const PyStringTrim2& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyStringTrim2& s, int i) -> py::object {
         if (i < 0)
           i += 6;
         if (i == 0)
@@ -35063,7 +34886,7 @@ dsigma_ds : float
       .def("__len__", [](const Bmad::StrongBeamSigmaCalc&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::StrongBeamSigmaCalc& s, size_t i) -> py::object {
+          [](const Bmad::StrongBeamSigmaCalc& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -35095,7 +34918,7 @@ strength :
       .def("__len__", [](const PyStrongBeamStrength&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyStrongBeamStrength& s, size_t i) -> py::object {
+          [](const PyStrongBeamStrength& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -35201,7 +35024,7 @@ ansy2 : float
       .def(
           "__getitem__",
           [](const SimUtils::SuperBicubicInterpolation& s,
-             size_t i) -> py::object {
+             int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -35237,7 +35060,7 @@ dy : float
       .def("__len__", [](const SimUtils::SuperPolint&) { return 2; })
       .def(
           "__getitem__",
-          [](const SimUtils::SuperPolint& s, size_t i) -> py::object {
+          [](const SimUtils::SuperPolint& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -35333,7 +35156,7 @@ dz_dxy : float, optional
       .def("__len__", [](const PySurfaceGridDisplacement&) { return 2; })
       .def(
           "__getitem__",
-          [](const PySurfaceGridDisplacement& s, size_t i) -> py::object {
+          [](const PySurfaceGridDisplacement& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -35393,7 +35216,7 @@ err_flag :
       .def_readonly("line", &PySystemCommand::line)
       .def_readonly("err_flag", &PySystemCommand::err_flag)
       .def("__len__", [](const PySystemCommand&) { return 2; })
-      .def("__getitem__", [](const PySystemCommand& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PySystemCommand& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -35436,7 +35259,7 @@ err_flag : bool
       .def_readonly("B3", &Bmad::T6ToB123::B3)
       .def_readonly("err_flag", &Bmad::T6ToB123::err_flag)
       .def("__len__", [](const Bmad::T6ToB123&) { return 4; })
-      .def("__getitem__", [](const Bmad::T6ToB123& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Bmad::T6ToB123& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -35516,7 +35339,7 @@ exact :
       .def("__len__", [](const PyTaoAllocateDataArray&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyTaoAllocateDataArray& s, size_t i) -> py::object {
+          [](const PyTaoAllocateDataArray& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -35542,17 +35365,15 @@ save_old :
       .def_readonly("n_v1", &PyTaoAllocateV1Var::n_v1)
       .def_readonly("save_old", &PyTaoAllocateV1Var::save_old)
       .def("__len__", [](const PyTaoAllocateV1Var&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyTaoAllocateV1Var& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.n_v1);
-            if (i == 1)
-              return py::cast(s.save_old);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoAllocateV1Var& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.n_v1);
+        if (i == 1)
+          return py::cast(s.save_old);
+        throw py::index_error();
+      });
   m.def(
       "tao_allocate_var_array",
       &python_tao_allocate_var_array,
@@ -35574,7 +35395,7 @@ n_var : int
       .def("__len__", [](const PyTaoAllocateVarArray&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyTaoAllocateVarArray& s, size_t i) -> py::object {
+          [](const PyTaoAllocateVarArray& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -35607,15 +35428,13 @@ emit :
       m, "TaoBeamEmitCalc", "Fortran routine tao_beam_emit_calc return value")
       .def_readonly("emit", &PyTaoBeamEmitCalc::emit)
       .def("__len__", [](const PyTaoBeamEmitCalc&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyTaoBeamEmitCalc& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.emit);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoBeamEmitCalc& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.emit);
+        throw py::index_error();
+      });
   m.def(
       "tao_beam_track",
       &Tao::tao_beam_track,
@@ -35684,14 +35503,13 @@ ix_this :
       m, "TaoBranchIndex", "Fortran routine tao_branch_index return value")
       .def_readonly("ix_this", &PyTaoBranchIndex::ix_this)
       .def("__len__", [](const PyTaoBranchIndex&) { return 1; })
-      .def(
-          "__getitem__", [](const PyTaoBranchIndex& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.ix_this);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoBranchIndex& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.ix_this);
+        throw py::index_error();
+      });
   m.def(
       "tao_c_out_io_buffer_reset",
       &Tao::tao_c_out_io_buffer_reset,
@@ -35721,8 +35539,7 @@ good :
       .def_readonly("comp_sign", &PyTaoCalcDataAtSPts::comp_sign)
       .def("__len__", [](const PyTaoCalcDataAtSPts&) { return 1; })
       .def(
-          "__getitem__",
-          [](const PyTaoCalcDataAtSPts& s, size_t i) -> py::object {
+          "__getitem__", [](const PyTaoCalcDataAtSPts& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -35763,7 +35580,7 @@ err_flag :
       .def_readonly("err_flag", &PyTaoChangeEle::err_flag)
       .def_readonly("update", &PyTaoChangeEle::update)
       .def("__len__", [](const PyTaoChangeEle&) { return 2; })
-      .def("__getitem__", [](const PyTaoChangeEle& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoChangeEle& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -35862,7 +35679,7 @@ do_chrom :
       .def("__len__", [](const PyTaoChromCalcNeeded&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyTaoChromCalcNeeded& s, size_t i) -> py::object {
+          [](const PyTaoChromCalcNeeded& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -35907,7 +35724,7 @@ value2 :
       .def_readonly("value1", &PyTaoClipCmd::value1)
       .def_readonly("value2", &PyTaoClipCmd::value2)
       .def("__len__", [](const PyTaoClipCmd&) { return 2; })
-      .def("__getitem__", [](const PyTaoClipCmd& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoClipCmd& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -35937,7 +35754,7 @@ value2 :
       .def("__len__", [](const PyTaoCmdHistoryRecord&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyTaoCmdHistoryRecord& s, size_t i) -> py::object {
+          [](const PyTaoCmdHistoryRecord& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -35964,7 +35781,7 @@ err_is_fatal : bool
       .def_readonly("err_is_fatal", &PyTaoCommand::err_is_fatal)
       .def_readonly("err", &PyTaoCommand::err)
       .def("__len__", [](const PyTaoCommand&) { return 2; })
-      .def("__getitem__", [](const PyTaoCommand& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoCommand& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -35994,7 +35811,7 @@ datum_name :
       .def("__len__", [](const PyTaoConstraintTypeName&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyTaoConstraintTypeName& s, size_t i) -> py::object {
+          [](const PyTaoConstraintTypeName& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -36125,14 +35942,13 @@ ele_track :
       m, "TaoCurveEleRef", "Fortran routine tao_curve_ele_ref return value")
       .def_readonly("point_to_ele_ref", &PyTaoCurveEleRef::point_to_ele_ref)
       .def("__len__", [](const PyTaoCurveEleRef&) { return 1; })
-      .def(
-          "__getitem__", [](const PyTaoCurveEleRef& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.point_to_ele_ref);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoCurveEleRef& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.point_to_ele_ref);
+        throw py::index_error();
+      });
   m.def(
       "tao_curve_ix_uni",
       &python_tao_curve_ix_uni,
@@ -36150,7 +35966,7 @@ ix_uni :
       m, "TaoCurveIxUni", "Fortran routine tao_curve_ix_uni return value")
       .def_readonly("ix_uni", &PyTaoCurveIxUni::ix_uni)
       .def("__len__", [](const PyTaoCurveIxUni&) { return 1; })
-      .def("__getitem__", [](const PyTaoCurveIxUni& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoCurveIxUni& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -36178,7 +35994,7 @@ curve_name :
       m, "TaoCurveName", "Fortran routine tao_curve_name return value")
       .def_readonly("curve_name", &PyTaoCurveName::curve_name)
       .def("__len__", [](const PyTaoCurveName&) { return 1; })
-      .def("__getitem__", [](const PyTaoCurveName& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoCurveName& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -36210,7 +36026,7 @@ mean : float
       .def("__len__", [](const Tao::TaoCurveRmsCalc&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoCurveRmsCalc& s, size_t i) -> py::object {
+          [](const Tao::TaoCurveRmsCalc& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -36239,7 +36055,7 @@ d2_d1_name :
       m, "TaoD2D1Name", "Fortran routine tao_d2_d1_name return value")
       .def_readonly("d2_d1_name", &PyTaoD2D1Name::d2_d1_name)
       .def("__len__", [](const PyTaoD2D1Name&) { return 1; })
-      .def("__getitem__", [](const PyTaoD2D1Name& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoD2D1Name& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -36265,17 +36081,15 @@ n_d1_data :
       .def_readonly("d2_name", &PyTaoD2DataStuffit::d2_name)
       .def_readonly("n_d1_data", &PyTaoD2DataStuffit::n_d1_data)
       .def("__len__", [](const PyTaoD2DataStuffit&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyTaoD2DataStuffit& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.d2_name);
-            if (i == 1)
-              return py::cast(s.n_d1_data);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoD2DataStuffit& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.d2_name);
+        if (i == 1)
+          return py::cast(s.n_d1_data);
+        throw py::index_error();
+      });
   m.def(
       "tao_data_check",
       &python_tao_data_check,
@@ -36290,7 +36104,7 @@ err :
       m, "TaoDataCheck", "Fortran routine tao_data_check return value")
       .def_readonly("err", &PyTaoDataCheck::err)
       .def("__len__", [](const PyTaoDataCheck&) { return 1; })
-      .def("__getitem__", [](const PyTaoDataCheck& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoDataCheck& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -36338,7 +36152,7 @@ is_valid :
       .def("__len__", [](const PyTaoDataSanityCheck&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyTaoDataSanityCheck& s, size_t i) -> py::object {
+          [](const PyTaoDataSanityCheck& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -36405,7 +36219,7 @@ most_invalid : unknown
       .def("__len__", [](const Tao::TaoDataUseitPlotCalc&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoDataUseitPlotCalc& s, size_t i) -> py::object {
+          [](const Tao::TaoDataUseitPlotCalc& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -36441,7 +36255,7 @@ has_associated_ele :
       .def("__len__", [](const PyTaoDatumHasAssociatedEle&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyTaoDatumHasAssociatedEle& s, size_t i) -> py::object {
+          [](const PyTaoDatumHasAssociatedEle& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -36487,7 +36301,7 @@ result : float
       .def("__len__", [](const Tao::TaoDatumIntegrate&) { return 3; })
       .def(
           "__getitem__",
-          [](const Tao::TaoDatumIntegrate& s, size_t i) -> py::object {
+          [](const Tao::TaoDatumIntegrate& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -36518,7 +36332,7 @@ datum_name :
       m, "TaoDatumName", "Fortran routine tao_datum_name return value")
       .def_readonly("datum_name", &PyTaoDatumName::datum_name)
       .def("__len__", [](const PyTaoDatumName&) { return 1; })
-      .def("__getitem__", [](const PyTaoDatumName& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoDatumName& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -36661,15 +36475,13 @@ have_data : bool
       m, "TaoDrawCurveData", "Fortran routine tao_draw_curve_data return value")
       .def_readonly("have_data", &PyTaoDrawCurveData::have_data)
       .def("__len__", [](const PyTaoDrawCurveData&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyTaoDrawCurveData& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.have_data);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoDrawCurveData& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.have_data);
+        throw py::index_error();
+      });
   m.def(
       "tao_draw_ele_for_floor_plan",
       &python_tao_draw_ele_for_floor_plan,
@@ -36711,7 +36523,7 @@ label_name : unknown
       .def("__len__", [](const PyTaoDrawEleForFloorPlan&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyTaoDrawEleForFloorPlan& s, size_t i) -> py::object {
+          [](const PyTaoDrawEleForFloorPlan& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -36780,7 +36592,7 @@ have_data : bool
       .def("__len__", [](const PyTaoDrawHistogramData&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyTaoDrawHistogramData& s, size_t i) -> py::object {
+          [](const PyTaoDrawHistogramData& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -36854,7 +36666,7 @@ value : float
       .def(
           "__getitem__",
           [](const Tao::TaoEleGeometryWithMisalignments& s,
-             size_t i) -> py::object {
+             int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -36902,23 +36714,21 @@ ix_shape_min : int, optional
       .def_readonly("y2", &PyTaoEleShapeInfo::y2)
       .def_readonly("ix_shape_min", &PyTaoEleShapeInfo::ix_shape_min)
       .def("__len__", [](const PyTaoEleShapeInfo&) { return 5; })
-      .def(
-          "__getitem__",
-          [](const PyTaoEleShapeInfo& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 5;
-            if (i == 0)
-              return py::cast(s.e_shape);
-            if (i == 1)
-              return py::cast(s.label_name);
-            if (i == 2)
-              return py::cast(s.y1);
-            if (i == 3)
-              return py::cast(s.y2);
-            if (i == 4)
-              return py::cast(s.ix_shape_min);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoEleShapeInfo& s, int i) -> py::object {
+        if (i < 0)
+          i += 5;
+        if (i == 0)
+          return py::cast(s.e_shape);
+        if (i == 1)
+          return py::cast(s.label_name);
+        if (i == 2)
+          return py::cast(s.y1);
+        if (i == 3)
+          return py::cast(s.y2);
+        if (i == 4)
+          return py::cast(s.ix_shape_min);
+        throw py::index_error();
+      });
   m.def(
       "tao_eval_floor_orbit",
       &Tao::tao_eval_floor_orbit,
@@ -36960,7 +36770,7 @@ value : float
       .def("__len__", [](const Tao::TaoEvalFloorOrbit&) { return 3; })
       .def(
           "__getitem__",
-          [](const Tao::TaoEvalFloorOrbit& s, size_t i) -> py::object {
+          [](const Tao::TaoEvalFloorOrbit& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -37011,7 +36821,7 @@ print_err : bool, optional
       .def("__len__", [](const Tao::TaoEvaluateADatum&) { return 3; })
       .def(
           "__getitem__",
-          [](const Tao::TaoEvaluateADatum& s, size_t i) -> py::object {
+          [](const Tao::TaoEvaluateADatum& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -37066,7 +36876,7 @@ value : float
       .def("__len__", [](const Tao::TaoEvaluateDatumAtS&) { return 3; })
       .def(
           "__getitem__",
-          [](const Tao::TaoEvaluateDatumAtS& s, size_t i) -> py::object {
+          [](const Tao::TaoEvaluateDatumAtS& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -37138,7 +36948,7 @@ values : float
       .def("__len__", [](const PyTaoEvaluateLatOrBeamData&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyTaoEvaluateLatOrBeamData& s, size_t i) -> py::object {
+          [](const PyTaoEvaluateLatOrBeamData& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -37172,15 +36982,13 @@ q_val :
       m, "TaoEvaluateTune", "Fortran routine tao_evaluate_tune return value")
       .def_readonly("q_val", &PyTaoEvaluateTune::q_val)
       .def("__len__", [](const PyTaoEvaluateTune&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyTaoEvaluateTune& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.q_val);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoEvaluateTune& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.q_val);
+        throw py::index_error();
+      });
   m.def(
       "tao_expression_hash_substitute",
       &Tao::tao_expression_hash_substitute,
@@ -37233,7 +37041,7 @@ print_flag : bool, optional
       .def("__len__", [](const Tao::TaoFindPlotRegion&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoFindPlotRegion& s, size_t i) -> py::object {
+          [](const Tao::TaoFindPlotRegion& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -37283,7 +37091,7 @@ y_screen : float
       .def("__len__", [](const Tao::TaoFloorToScreen&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoFloorToScreen& s, size_t i) -> py::object {
+          [](const Tao::TaoFloorToScreen& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -37350,7 +37158,7 @@ data_ix_dModel : int
       .def_readonly("data_meas_value", &Tao::TaoGetData::data_meas_value)
       .def_readonly("data_ix_dModel", &Tao::TaoGetData::data_ix_dModel)
       .def("__len__", [](const Tao::TaoGetData&) { return 4; })
-      .def("__getitem__", [](const Tao::TaoGetData& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Tao::TaoGetData& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -37398,27 +37206,25 @@ ignore_if_not_limited : bool
       .def_readonly(
           "ignore_if_not_limited", &Tao::TaoGetOptVars::ignore_if_not_limited)
       .def("__len__", [](const Tao::TaoGetOptVars&) { return 7; })
-      .def(
-          "__getitem__",
-          [](const Tao::TaoGetOptVars& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 7;
-            if (i == 0)
-              return py::cast(s.var_value);
-            if (i == 1)
-              return py::cast(s.var_step);
-            if (i == 2)
-              return py::cast(s.var_delta);
-            if (i == 3)
-              return py::cast(s.var_weight);
-            if (i == 4)
-              return py::cast(s.var_ix);
-            if (i == 5)
-              return py::cast(s.ignore_if_weight_is_zero);
-            if (i == 6)
-              return py::cast(s.ignore_if_not_limited);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Tao::TaoGetOptVars& s, int i) -> py::object {
+        if (i < 0)
+          i += 7;
+        if (i == 0)
+          return py::cast(s.var_value);
+        if (i == 1)
+          return py::cast(s.var_step);
+        if (i == 2)
+          return py::cast(s.var_delta);
+        if (i == 3)
+          return py::cast(s.var_weight);
+        if (i == 4)
+          return py::cast(s.var_ix);
+        if (i == 5)
+          return py::cast(s.ignore_if_weight_is_zero);
+        if (i == 6)
+          return py::cast(s.ignore_if_not_limited);
+        throw py::index_error();
+      });
   m.def(
       "tao_get_user_input",
       &Tao::tao_get_user_input,
@@ -37534,7 +37340,7 @@ graph_name :
       m, "TaoGraphName", "Fortran routine tao_graph_name return value")
       .def_readonly("graph_name", &PyTaoGraphName::graph_name)
       .def("__len__", [](const PyTaoGraphName&) { return 1; })
-      .def("__getitem__", [](const PyTaoGraphName& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoGraphName& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -37585,7 +37391,7 @@ s_max : float
       .def("__len__", [](const Tao::TaoGraphSMinMaxCalc&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoGraphSMinMaxCalc& s, size_t i) -> py::object {
+          [](const Tao::TaoGraphSMinMaxCalc& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -37644,7 +37450,7 @@ comb_ds_save :
       .def("__len__", [](const PyTaoInitBeamInUniverse&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyTaoInitBeamInUniverse& s, size_t i) -> py::object {
+          [](const PyTaoInitBeamInUniverse& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -37707,7 +37513,7 @@ keep_existing_data :
       .def("__len__", [](const PyTaoInitDataInUniverse&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyTaoInitDataInUniverse& s, size_t i) -> py::object {
+          [](const PyTaoInitDataInUniverse& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -37759,7 +37565,7 @@ found_one : bool
       .def("__len__", [](const Tao::TaoInitFindElements&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoInitFindElements& s, size_t i) -> py::object {
+          [](const Tao::TaoInitFindElements& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -37796,16 +37602,15 @@ err_flag :
       .def_readonly("lat_file", &PyTaoInitLattice::lat_file)
       .def_readonly("err_flag", &PyTaoInitLattice::err_flag)
       .def("__len__", [](const PyTaoInitLattice&) { return 2; })
-      .def(
-          "__getitem__", [](const PyTaoInitLattice& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.lat_file);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoInitLattice& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.lat_file);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "tao_init_plotting",
       &python_tao_init_plotting,
@@ -37820,15 +37625,13 @@ plot_file :
       m, "TaoInitPlotting", "Fortran routine tao_init_plotting return value")
       .def_readonly("plot_file", &PyTaoInitPlotting::plot_file)
       .def("__len__", [](const PyTaoInitPlotting&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyTaoInitPlotting& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.plot_file);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoInitPlotting& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.plot_file);
+        throw py::index_error();
+      });
   m.def(
       "tao_init_variables",
       &Tao::tao_init_variables,
@@ -37873,17 +37676,15 @@ init_ok : bool
       .def_readonly("beam", &Tao::TaoInjectBeam::beam)
       .def_readonly("init_ok", &Tao::TaoInjectBeam::init_ok)
       .def("__len__", [](const Tao::TaoInjectBeam&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Tao::TaoInjectBeam& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.beam);
-            if (i == 1)
-              return py::cast(s.init_ok);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Tao::TaoInjectBeam& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.beam);
+        if (i == 1)
+          return py::cast(s.init_ok);
+        throw py::index_error();
+      });
   m.def(
       "tao_inject_particle",
       &python_tao_inject_particle,
@@ -37905,8 +37706,7 @@ ix_branch :
       .def_readonly("ix_branch", &PyTaoInjectParticle::ix_branch)
       .def("__len__", [](const PyTaoInjectParticle&) { return 1; })
       .def(
-          "__getitem__",
-          [](const PyTaoInjectParticle& s, size_t i) -> py::object {
+          "__getitem__", [](const PyTaoInjectParticle& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -37933,16 +37733,15 @@ is_valid :
       .def_readonly("why_invalid", &PyTaoIsValidName::why_invalid)
       .def_readonly("is_valid", &PyTaoIsValidName::is_valid)
       .def("__len__", [](const PyTaoIsValidName&) { return 2; })
-      .def(
-          "__getitem__", [](const PyTaoIsValidName& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.why_invalid);
-            if (i == 1)
-              return py::cast(s.is_valid);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoIsValidName& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.why_invalid);
+        if (i == 1)
+          return py::cast(s.is_valid);
+        throw py::index_error();
+      });
   m.def(
       "tao_json_cmd",
       &Tao::tao_json_cmd,
@@ -37980,23 +37779,21 @@ header_str :
       .def_readonly("key_str", &PyTaoKeyInfoToStr::key_str)
       .def_readonly("header_str", &PyTaoKeyInfoToStr::header_str)
       .def("__len__", [](const PyTaoKeyInfoToStr&) { return 5; })
-      .def(
-          "__getitem__",
-          [](const PyTaoKeyInfoToStr& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 5;
-            if (i == 0)
-              return py::cast(s.ix_key);
-            if (i == 1)
-              return py::cast(s.ix_min_key);
-            if (i == 2)
-              return py::cast(s.ix_max_key);
-            if (i == 3)
-              return py::cast(s.key_str);
-            if (i == 4)
-              return py::cast(s.header_str);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoKeyInfoToStr& s, int i) -> py::object {
+        if (i < 0)
+          i += 5;
+        if (i == 0)
+          return py::cast(s.ix_key);
+        if (i == 1)
+          return py::cast(s.ix_min_key);
+        if (i == 2)
+          return py::cast(s.ix_max_key);
+        if (i == 3)
+          return py::cast(s.key_str);
+        if (i == 4)
+          return py::cast(s.header_str);
+        throw py::index_error();
+      });
   m.def(
       "tao_lat_bookkeeper",
       &Tao::tao_lat_bookkeeper,
@@ -38037,14 +37834,13 @@ emit :
       m, "TaoLatEmitCalc", "Fortran routine tao_lat_emit_calc return value")
       .def_readonly("emit", &PyTaoLatEmitCalc::emit)
       .def("__len__", [](const PyTaoLatEmitCalc&) { return 1; })
-      .def(
-          "__getitem__", [](const PyTaoLatEmitCalc& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.emit);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoLatEmitCalc& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.emit);
+        throw py::index_error();
+      });
   m.def(
       "tao_lat_sigma_calc_needed",
       &python_tao_lat_sigma_calc_needed,
@@ -38069,7 +37865,7 @@ do_lat_sigma :
       .def("__len__", [](const PyTaoLatSigmaCalcNeeded&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyTaoLatSigmaCalcNeeded& s, size_t i) -> py::object {
+          [](const PyTaoLatSigmaCalcNeeded& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -38135,8 +37931,7 @@ print_err : bool
       .def_readonly("print_err", &Tao::TaoLatticeCalc::print_err)
       .def("__len__", [](const Tao::TaoLatticeCalc&) { return 2; })
       .def(
-          "__getitem__",
-          [](const Tao::TaoLatticeCalc& s, size_t i) -> py::object {
+          "__getitem__", [](const Tao::TaoLatticeCalc& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -38227,19 +38022,17 @@ good :
       .def_readonly("valid_value", &PyTaoLoadThisDatum::valid_value)
       .def_readonly("why_invalid", &PyTaoLoadThisDatum::why_invalid)
       .def("__len__", [](const PyTaoLoadThisDatum&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PyTaoLoadThisDatum& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.datum_value);
-            if (i == 1)
-              return py::cast(s.valid_value);
-            if (i == 2)
-              return py::cast(s.why_invalid);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoLoadThisDatum& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.datum_value);
+        if (i == 1)
+          return py::cast(s.valid_value);
+        if (i == 2)
+          return py::cast(s.why_invalid);
+        throw py::index_error();
+      });
   m.def(
       "tao_locate_all_elements",
       &Tao::tao_locate_all_elements,
@@ -38269,7 +38062,7 @@ ignore_blank : bool, optional
       .def("__len__", [](const Tao::TaoLocateAllElements&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoLocateAllElements& s, size_t i) -> py::object {
+          [](const Tao::TaoLocateAllElements& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -38327,8 +38120,7 @@ multiple_eles_is_err : bool, optional
           "above_ubound_is_err", &PyTaoLocateElements::above_ubound_is_err)
       .def("__len__", [](const PyTaoLocateElements&) { return 3; })
       .def(
-          "__getitem__",
-          [](const PyTaoLocateElements& s, size_t i) -> py::object {
+          "__getitem__", [](const PyTaoLocateElements& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -38368,7 +38160,7 @@ this_merit :
       .def_readonly("calc_ok", &PyTaoMerit::calc_ok)
       .def_readonly("this_merit", &PyTaoMerit::this_merit)
       .def("__len__", [](const PyTaoMerit&) { return 2; })
-      .def("__getitem__", [](const PyTaoMerit& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoMerit& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -38403,7 +38195,7 @@ word : unknown
       .def_readonly("word", &PyTaoNextWord::word)
       .def_readonly("line", &PyTaoNextWord::line)
       .def("__len__", [](const PyTaoNextWord&) { return 2; })
-      .def("__getitem__", [](const PyTaoNextWord& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoNextWord& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -38439,7 +38231,7 @@ do_one_turn_map :
       .def("__len__", [](const PyTaoOneTurnMapCalcNeeded&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyTaoOneTurnMapCalcNeeded& s, size_t i) -> py::object {
+          [](const PyTaoOneTurnMapCalcNeeded& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -38477,7 +38269,7 @@ binary : bool, optional
       .def_readonly("iunit", &PyTaoOpenFile::iunit)
       .def_readonly("file", &PyTaoOpenFile::file)
       .def("__len__", [](const PyTaoOpenFile&) { return 2; })
-      .def("__getitem__", [](const PyTaoOpenFile& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoOpenFile& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -38507,7 +38299,7 @@ iu :
       .def("__len__", [](const PyTaoOpenScratchFile&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyTaoOpenScratchFile& s, size_t i) -> py::object {
+          [](const PyTaoOpenScratchFile& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -38537,7 +38329,7 @@ why_str :
       .def("__len__", [](const PyTaoOptimizationStatus&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyTaoOptimizationStatus& s, size_t i) -> py::object {
+          [](const PyTaoOptimizationStatus& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -38602,25 +38394,23 @@ value :
       .def_readonly("dat_name", &PyTaoParamValueAtS::dat_name)
       .def_readonly("value", &PyTaoParamValueAtS::value)
       .def("__len__", [](const PyTaoParamValueAtS&) { return 6; })
-      .def(
-          "__getitem__",
-          [](const PyTaoParamValueAtS& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 6;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.why_invalid);
-            if (i == 2)
-              return py::cast(s.print_err);
-            if (i == 3)
-              return py::cast(s.bad_datum);
-            if (i == 4)
-              return py::cast(s.dat_name);
-            if (i == 5)
-              return py::cast(s.value);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoParamValueAtS& s, int i) -> py::object {
+        if (i < 0)
+          i += 6;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.why_invalid);
+        if (i == 2)
+          return py::cast(s.print_err);
+        if (i == 3)
+          return py::cast(s.bad_datum);
+        if (i == 4)
+          return py::cast(s.dat_name);
+        if (i == 5)
+          return py::cast(s.value);
+        throw py::index_error();
+      });
   m.def(
       "tao_parse_command_args",
       &python_tao_parse_command_args,
@@ -38642,7 +38432,7 @@ cmd_line :
       .def("__len__", [](const PyTaoParseCommandArgs&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyTaoParseCommandArgs& s, size_t i) -> py::object {
+          [](const PyTaoParseCommandArgs& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -38689,7 +38479,7 @@ component : unknown
       .def("__len__", [](const Tao::TaoParseElementParamStr&) { return 6; })
       .def(
           "__getitem__",
-          [](const Tao::TaoParseElementParamStr& s, size_t i) -> py::object {
+          [](const Tao::TaoParseElementParamStr& s, int i) -> py::object {
             if (i < 0)
               i += 6;
             if (i == 0)
@@ -38744,7 +38534,7 @@ err : bool
       .def("__len__", [](const Tao::TaoParticleDataValue&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoParticleDataValue& s, size_t i) -> py::object {
+          [](const Tao::TaoParticleDataValue& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -38825,7 +38615,7 @@ pure_uni : bool, optional
       .def("__len__", [](const Tao::TaoPickUniverse&) { return 5; })
       .def(
           "__getitem__",
-          [](const Tao::TaoPickUniverse& s, size_t i) -> py::object {
+          [](const Tao::TaoPickUniverse& s, int i) -> py::object {
             if (i < 0)
               i += 5;
             if (i == 0)
@@ -39032,7 +38822,7 @@ why_invalid : unknown
       .def("__len__", [](const PyTaoPointerToDatumEle&) { return 4; })
       .def(
           "__getitem__",
-          [](const PyTaoPointerToDatumEle& s, size_t i) -> py::object {
+          [](const PyTaoPointerToDatumEle& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -39084,7 +38874,7 @@ e_shape :
       .def("__len__", [](const PyTaoPointerToEleShape&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyTaoPointerToEleShape& s, size_t i) -> py::object {
+          [](const PyTaoPointerToEleShape& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -39190,7 +38980,7 @@ Note: With a string argument, this routine can only handle single universe picks
       .def("__len__", [](const PyTaoPointerToUniverseStr&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyTaoPointerToUniverseStr& s, size_t i) -> py::object {
+          [](const PyTaoPointerToUniverseStr& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -39234,7 +39024,7 @@ dflt_uni : int, optional
       .def("__len__", [](const Tao::TaoPointerToUniverses&) { return 4; })
       .def(
           "__getitem__",
-          [](const Tao::TaoPointerToUniverses& s, size_t i) -> py::object {
+          [](const Tao::TaoPointerToUniverses& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -39366,7 +39156,7 @@ do_rad_int :
       .def("__len__", [](const PyTaoRadIntCalcNeeded&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyTaoRadIntCalcNeeded& s, size_t i) -> py::object {
+          [](const PyTaoRadIntCalcNeeded& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -39390,7 +39180,7 @@ do_rad_int :
       .def_readonly("string", &PyTaoReExecute::string)
       .def_readonly("err", &PyTaoReExecute::err)
       .def("__len__", [](const PyTaoReExecute&) { return 2; })
-      .def("__getitem__", [](const PyTaoReExecute& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoReExecute& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -39422,7 +39212,7 @@ silent : bool
       .def_readonly("which", &PyTaoReadCmd::which)
       .def_readonly("file", &PyTaoReadCmd::file)
       .def("__len__", [](const PyTaoReadCmd&) { return 2; })
-      .def("__getitem__", [](const PyTaoReadCmd& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoReadCmd& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -39460,7 +39250,7 @@ ix_ps :
       .def("__len__", [](const PyTaoReadPhaseSpaceIndex&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyTaoReadPhaseSpaceIndex& s, size_t i) -> py::object {
+          [](const PyTaoReadPhaseSpaceIndex& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -39496,7 +39286,7 @@ str : unknown
       .def("__len__", [](const PyTaoRemoveBlankCharacters&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyTaoRemoveBlankCharacters& s, size_t i) -> py::object {
+          [](const PyTaoRemoveBlankCharacters& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -39593,17 +39383,15 @@ y2_range : float
       .def_readonly("y_range", &Tao::TaoScaleGraph::y_range)
       .def_readonly("y2_range", &Tao::TaoScaleGraph::y2_range)
       .def("__len__", [](const Tao::TaoScaleGraph&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Tao::TaoScaleGraph& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.y_range);
-            if (i == 1)
-              return py::cast(s.y2_range);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Tao::TaoScaleGraph& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.y_range);
+        if (i == 1)
+          return py::cast(s.y2_range);
+        throw py::index_error();
+      });
   m.def(
       "tao_scale_ping_data",
       &Tao::tao_scale_ping_data,
@@ -39749,7 +39537,7 @@ value_str : unknown
       .def("__len__", [](const PyTaoSetCalculateCmd&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyTaoSetCalculateCmd& s, size_t i) -> py::object {
+          [](const PyTaoSetCalculateCmd& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -39810,7 +39598,7 @@ value_str : unknown
       m, "TaoSetDataCmd", "Fortran routine tao_set_data_cmd return value")
       .def_readonly("silent", &PyTaoSetDataCmd::silent)
       .def("__len__", [](const PyTaoSetDataCmd&) { return 1; })
-      .def("__getitem__", [](const PyTaoSetDataCmd& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoSetDataCmd& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -39898,8 +39686,7 @@ value : unknown
       .def_readonly("update", &PyTaoSetElementsCmd::update)
       .def("__len__", [](const PyTaoSetElementsCmd&) { return 1; })
       .def(
-          "__getitem__",
-          [](const PyTaoSetElementsCmd& s, size_t i) -> py::object {
+          "__getitem__", [](const PyTaoSetElementsCmd& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -39932,7 +39719,7 @@ which :
       .def("__len__", [](const PyTaoSetFloorPlanAxisLabel&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyTaoSetFloorPlanAxisLabel& s, size_t i) -> py::object {
+          [](const PyTaoSetFloorPlanAxisLabel& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -40026,7 +39813,7 @@ error : bool
       .def("__len__", [](const Tao::TaoSetIntegerValue&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoSetIntegerValue& s, size_t i) -> py::object {
+          [](const Tao::TaoSetIntegerValue& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -40121,7 +39908,7 @@ error : bool
       .def("__len__", [](const Tao::TaoSetLogicalValue&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoSetLogicalValue& s, size_t i) -> py::object {
+          [](const Tao::TaoSetLogicalValue& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -40270,7 +40057,7 @@ ix_uni : int
       .def("__len__", [](const Tao::TaoSetQpAxisStruct&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoSetQpAxisStruct& s, size_t i) -> py::object {
+          [](const Tao::TaoSetQpAxisStruct& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -40319,7 +40106,7 @@ ix_uni : int
       .def("__len__", [](const Tao::TaoSetQpPointStruct&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoSetQpPointStruct& s, size_t i) -> py::object {
+          [](const Tao::TaoSetQpPointStruct& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -40366,7 +40153,7 @@ ix_uni : int
       .def("__len__", [](const Tao::TaoSetQpRectStruct&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoSetQpRectStruct& s, size_t i) -> py::object {
+          [](const Tao::TaoSetQpRectStruct& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -40426,7 +40213,7 @@ error : bool
       .def("__len__", [](const Tao::TaoSetRealValue&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoSetRealValue& s, size_t i) -> py::object {
+          [](const Tao::TaoSetRealValue& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -40712,7 +40499,7 @@ do_calc :
       .def("__len__", [](const PyTaoSpinMatricesCalcNeeded&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyTaoSpinMatricesCalcNeeded& s, size_t i) -> py::object {
+          [](const PyTaoSpinMatricesCalcNeeded& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -40753,7 +40540,7 @@ err : bool
       .def("__len__", [](const Tao::TaoSplitComponent&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoSplitComponent& s, size_t i) -> py::object {
+          [](const Tao::TaoSplitComponent& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -40785,8 +40572,7 @@ do_srdt :
       .def_readonly("do_srdt", &PyTaoSrdtCalcNeeded::do_srdt)
       .def("__len__", [](const PyTaoSrdtCalcNeeded&) { return 3; })
       .def(
-          "__getitem__",
-          [](const PyTaoSrdtCalcNeeded& s, size_t i) -> py::object {
+          "__getitem__", [](const PyTaoSrdtCalcNeeded& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -40823,8 +40609,7 @@ ok :
       .def_readonly("ok", &PyTaoSubinUniNumber::ok)
       .def("__len__", [](const PyTaoSubinUniNumber&) { return 2; })
       .def(
-          "__getitem__",
-          [](const PyTaoSubinUniNumber& s, size_t i) -> py::object {
+          "__getitem__", [](const PyTaoSubinUniNumber& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -40896,8 +40681,7 @@ err :
       .def_readonly("err", &PyTaoToChangeNumber::err)
       .def("__len__", [](const PyTaoToChangeNumber&) { return 4; })
       .def(
-          "__getitem__",
-          [](const PyTaoToChangeNumber& s, size_t i) -> py::object {
+          "__getitem__", [](const PyTaoToChangeNumber& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -40927,7 +40711,7 @@ If the string str is blank then i_int = 0
       .def_readonly("i_int", &PyTaoToInt::i_int)
       .def_readonly("err", &PyTaoToInt::err)
       .def("__len__", [](const PyTaoToInt&) { return 3; })
-      .def("__getitem__", [](const PyTaoToInt& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoToInt& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -40970,7 +40754,7 @@ valid_value : bool
       .def("__len__", [](const PyTaoToPhaseAndCouplingReading&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyTaoToPhaseAndCouplingReading& s, size_t i) -> py::object {
+          [](const PyTaoToPhaseAndCouplingReading& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -41001,7 +40785,7 @@ err_flag : bool
       .def_readonly("value", &Tao::TaoToReal::value)
       .def_readonly("err_flag", &Tao::TaoToReal::err_flag)
       .def("__len__", [](const Tao::TaoToReal&) { return 2; })
-      .def("__getitem__", [](const Tao::TaoToReal& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Tao::TaoToReal& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -41032,7 +40816,7 @@ no_beam :
       .def("__len__", [](const PyTaoTooManyParticlesLost&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyTaoTooManyParticlesLost& s, size_t i) -> py::object {
+          [](const PyTaoTooManyParticlesLost& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -41104,7 +40888,7 @@ ix_ele : int
       .def("__len__", [](const Tao::TaoTrackingEleIndex&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoTrackingEleIndex& s, size_t i) -> py::object {
+          [](const Tao::TaoTrackingEleIndex& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -41160,15 +40944,13 @@ i_this_uni :
       m, "TaoUniverseIndex", "Fortran routine tao_universe_index return value")
       .def_readonly("i_this_uni", &PyTaoUniverseIndex::i_this_uni)
       .def("__len__", [](const PyTaoUniverseIndex&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyTaoUniverseIndex& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.i_this_uni);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoUniverseIndex& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.i_this_uni);
+        throw py::index_error();
+      });
   m.def(
       "tao_use_data",
       &Tao::tao_use_data,
@@ -41223,7 +41005,7 @@ var1_name :
       m, "TaoVar1Name", "Fortran routine tao_var1_name return value")
       .def_readonly("var1_name", &PyTaoVar1Name::var1_name)
       .def("__len__", [](const PyTaoVar1Name&) { return 1; })
-      .def("__getitem__", [](const PyTaoVar1Name& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoVar1Name& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -41247,15 +41029,13 @@ var_attrib_name :
       m, "TaoVarAttribName", "Fortran routine tao_var_attrib_name return value")
       .def_readonly("var_attrib_name", &PyTaoVarAttribName::var_attrib_name)
       .def("__len__", [](const PyTaoVarAttribName&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyTaoVarAttribName& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.var_attrib_name);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoVarAttribName& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.var_attrib_name);
+        throw py::index_error();
+      });
   m.def(
       "tao_var_check",
       &Tao::tao_var_check,
@@ -41363,7 +41143,7 @@ plot_place :
       m, "TaoWaveCmd", "Fortran routine tao_wave_cmd return value")
       .def_readonly("err_flag", &PyTaoWaveCmd::err_flag)
       .def("__len__", [](const PyTaoWaveCmd&) { return 1; })
-      .def("__getitem__", [](const PyTaoWaveCmd& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTaoWaveCmd& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -41413,7 +41193,7 @@ rms : float
       .def_readonly("coef", &Tao::TaoWaveFit::coef)
       .def_readonly("rms", &Tao::TaoWaveFit::rms)
       .def("__len__", [](const Tao::TaoWaveFit&) { return 2; })
-      .def("__getitem__", [](const Tao::TaoWaveFit& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Tao::TaoWaveFit& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -41510,20 +41290,19 @@ have_scaled :
       .def_readonly("include_wall", &PyTaoXScaleGraph::include_wall)
       .def_readonly("have_scaled", &PyTaoXScaleGraph::have_scaled)
       .def("__len__", [](const PyTaoXScaleGraph&) { return 4; })
-      .def(
-          "__getitem__", [](const PyTaoXScaleGraph& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.x_min);
-            if (i == 1)
-              return py::cast(s.x_max);
-            if (i == 2)
-              return py::cast(s.include_wall);
-            if (i == 3)
-              return py::cast(s.have_scaled);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTaoXScaleGraph& s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.x_min);
+        if (i == 1)
+          return py::cast(s.x_max);
+        if (i == 2)
+          return py::cast(s.include_wall);
+        if (i == 3)
+          return py::cast(s.have_scaled);
+        throw py::index_error();
+      });
   m.def(
       "tao_x_scale_plot",
       &Tao::tao_x_scale_plot,
@@ -41583,8 +41362,7 @@ err_flag :
       .def_readonly("err_flag", &PyTaperMagStrengths::err_flag)
       .def("__len__", [](const PyTaperMagStrengths&) { return 1; })
       .def(
-          "__getitem__",
-          [](const PyTaperMagStrengths& s, size_t i) -> py::object {
+          "__getitem__", [](const PyTaperMagStrengths& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -41624,21 +41402,19 @@ initial : bool, optional
       .def_readonly("phi_min", &PyTargetMinMaxCalc::phi_min)
       .def_readonly("phi_max", &PyTargetMinMaxCalc::phi_max)
       .def("__len__", [](const PyTargetMinMaxCalc&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const PyTargetMinMaxCalc& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.y_min);
-            if (i == 1)
-              return py::cast(s.y_max);
-            if (i == 2)
-              return py::cast(s.phi_min);
-            if (i == 3)
-              return py::cast(s.phi_max);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTargetMinMaxCalc& s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.y_min);
+        if (i == 1)
+          return py::cast(s.y_max);
+        if (i == 2)
+          return py::cast(s.phi_min);
+        if (i == 3)
+          return py::cast(s.phi_max);
+        throw py::index_error();
+      });
   m.def(
       "target_rot_mats",
       &Bmad::target_rot_mats,
@@ -41665,8 +41441,7 @@ w_to_ele : float
       .def_readonly("w_to_ele", &Bmad::TargetRotMats::w_to_ele)
       .def("__len__", [](const Bmad::TargetRotMats&) { return 2; })
       .def(
-          "__getitem__",
-          [](const Bmad::TargetRotMats& s, size_t i) -> py::object {
+          "__getitem__", [](const Bmad::TargetRotMats& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -41711,8 +41486,7 @@ err : bool
       .def_readonly("err", &Bmad::TaylorInverse::err)
       .def("__len__", [](const Bmad::TaylorInverse&) { return 2; })
       .def(
-          "__getitem__",
-          [](const Bmad::TaylorInverse& s, size_t i) -> py::object {
+          "__getitem__", [](const Bmad::TaylorInverse& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -41820,8 +41594,7 @@ arr_inout_opt :
           "__len__", [](const CppBmadTest::TestBunchStructArray&) { return 2; })
       .def(
           "__getitem__",
-          [](const CppBmadTest::TestBunchStructArray& s,
-             size_t i) -> py::object {
+          [](const CppBmadTest::TestBunchStructArray& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -41862,8 +41635,7 @@ val_inout_opt :
           [](const CppBmadTest::TestBunchStructScalar&) { return 2; })
       .def(
           "__getitem__",
-          [](const CppBmadTest::TestBunchStructScalar& s,
-             size_t i) -> py::object {
+          [](const CppBmadTest::TestBunchStructScalar& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -41901,7 +41673,7 @@ val_inout_opt :
       .def("__len__", [](const PyTestCharacterScalar&) { return 4; })
       .def(
           "__getitem__",
-          [](const PyTestCharacterScalar& s, size_t i) -> py::object {
+          [](const PyTestCharacterScalar& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -41941,7 +41713,7 @@ arr_inout_opt :
       .def("__len__", [](const CppBmadTest::TestComplexArray&) { return 2; })
       .def(
           "__getitem__",
-          [](const CppBmadTest::TestComplexArray& s, size_t i) -> py::object {
+          [](const CppBmadTest::TestComplexArray& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -41978,8 +41750,7 @@ val_inout_opt :
       .def_readonly("val_inout_opt", &PyTestComplexScalar::val_inout_opt)
       .def("__len__", [](const PyTestComplexScalar&) { return 4; })
       .def(
-          "__getitem__",
-          [](const PyTestComplexScalar& s, size_t i) -> py::object {
+          "__getitem__", [](const PyTestComplexScalar& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -42021,7 +41792,7 @@ arr_inout_opt :
       .def("__len__", [](const CppBmadTest::TestInteger8Array&) { return 2; })
       .def(
           "__getitem__",
-          [](const CppBmadTest::TestInteger8Array& s, size_t i) -> py::object {
+          [](const CppBmadTest::TestInteger8Array& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -42059,7 +41830,7 @@ val_inout_opt :
       .def("__len__", [](const PyTestInteger8Scalar&) { return 4; })
       .def(
           "__getitem__",
-          [](const PyTestInteger8Scalar& s, size_t i) -> py::object {
+          [](const PyTestInteger8Scalar& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -42099,7 +41870,7 @@ arr_inout_opt :
       .def("__len__", [](const CppBmadTest::TestIntegerArray&) { return 2; })
       .def(
           "__getitem__",
-          [](const CppBmadTest::TestIntegerArray& s, size_t i) -> py::object {
+          [](const CppBmadTest::TestIntegerArray& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -42136,8 +41907,7 @@ val_inout_opt :
       .def_readonly("val_inout_opt", &PyTestIntegerScalar::val_inout_opt)
       .def("__len__", [](const PyTestIntegerScalar&) { return 4; })
       .def(
-          "__getitem__",
-          [](const PyTestIntegerScalar& s, size_t i) -> py::object {
+          "__getitem__", [](const PyTestIntegerScalar& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -42177,7 +41947,7 @@ arr_inout_opt :
       .def("__len__", [](const CppBmadTest::TestLogicalArray&) { return 2; })
       .def(
           "__getitem__",
-          [](const CppBmadTest::TestLogicalArray& s, size_t i) -> py::object {
+          [](const CppBmadTest::TestLogicalArray& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -42214,8 +41984,7 @@ val_inout_opt :
       .def_readonly("val_inout_opt", &PyTestLogicalScalar::val_inout_opt)
       .def("__len__", [](const PyTestLogicalScalar&) { return 4; })
       .def(
-          "__getitem__",
-          [](const PyTestLogicalScalar& s, size_t i) -> py::object {
+          "__getitem__", [](const PyTestLogicalScalar& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -42255,7 +42024,7 @@ arr_inout_opt :
       .def("__len__", [](const CppBmadTest::TestReal16Array&) { return 2; })
       .def(
           "__getitem__",
-          [](const CppBmadTest::TestReal16Array& s, size_t i) -> py::object {
+          [](const CppBmadTest::TestReal16Array& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -42289,21 +42058,19 @@ val_inout_opt :
       .def_readonly("val_inout", &PyTestReal16Scalar::val_inout)
       .def_readonly("val_inout_opt", &PyTestReal16Scalar::val_inout_opt)
       .def("__len__", [](const PyTestReal16Scalar&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const PyTestReal16Scalar& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.val_out);
-            if (i == 1)
-              return py::cast(s.opt_status);
-            if (i == 2)
-              return py::cast(s.val_inout);
-            if (i == 3)
-              return py::cast(s.val_inout_opt);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTestReal16Scalar& s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.val_out);
+        if (i == 1)
+          return py::cast(s.opt_status);
+        if (i == 2)
+          return py::cast(s.val_inout);
+        if (i == 3)
+          return py::cast(s.val_inout_opt);
+        throw py::index_error();
+      });
   m.def(
       "test_real_array",
       &CppBmadTest::test_real_array,
@@ -42331,7 +42098,7 @@ arr_inout_opt :
       .def("__len__", [](const CppBmadTest::TestRealArray&) { return 2; })
       .def(
           "__getitem__",
-          [](const CppBmadTest::TestRealArray& s, size_t i) -> py::object {
+          [](const CppBmadTest::TestRealArray& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -42365,20 +42132,19 @@ val_inout_opt :
       .def_readonly("val_inout", &PyTestRealScalar::val_inout)
       .def_readonly("val_inout_opt", &PyTestRealScalar::val_inout_opt)
       .def("__len__", [](const PyTestRealScalar&) { return 4; })
-      .def(
-          "__getitem__", [](const PyTestRealScalar& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.val_out);
-            if (i == 1)
-              return py::cast(s.opt_status);
-            if (i == 2)
-              return py::cast(s.val_inout);
-            if (i == 3)
-              return py::cast(s.val_inout_opt);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTestRealScalar& s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.val_out);
+        if (i == 1)
+          return py::cast(s.opt_status);
+        if (i == 2)
+          return py::cast(s.val_inout);
+        if (i == 3)
+          return py::cast(s.val_inout_opt);
+        throw py::index_error();
+      });
   m.def(
       "tilt_coords",
       &Bmad::tilt_coords,
@@ -42477,17 +42243,15 @@ err : bool
       .def_readonly("reading", &Bmad::ToEtaReading::reading)
       .def_readonly("err", &Bmad::ToEtaReading::err)
       .def("__len__", [](const Bmad::ToEtaReading&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ToEtaReading& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.reading);
-            if (i == 1)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::ToEtaReading& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.reading);
+        if (i == 1)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "to_fieldmap_coords",
       &python_to_fieldmap_coords,
@@ -42534,23 +42298,21 @@ err_flag : bool
       .def_readonly("cos_ang", &PyToFieldmapCoords::cos_ang)
       .def_readonly("sin_ang", &PyToFieldmapCoords::sin_ang)
       .def("__len__", [](const PyToFieldmapCoords&) { return 5; })
-      .def(
-          "__getitem__",
-          [](const PyToFieldmapCoords& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 5;
-            if (i == 0)
-              return py::cast(s.x);
-            if (i == 1)
-              return py::cast(s.y);
-            if (i == 2)
-              return py::cast(s.z);
-            if (i == 3)
-              return py::cast(s.cos_ang);
-            if (i == 4)
-              return py::cast(s.sin_ang);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyToFieldmapCoords& s, int i) -> py::object {
+        if (i < 0)
+          i += 5;
+        if (i == 0)
+          return py::cast(s.x);
+        if (i == 1)
+          return py::cast(s.y);
+        if (i == 2)
+          return py::cast(s.z);
+        if (i == 3)
+          return py::cast(s.cos_ang);
+        if (i == 4)
+          return py::cast(s.sin_ang);
+        throw py::index_error();
+      });
   m.def(
       "to_orbit_reading",
       &Bmad::to_orbit_reading,
@@ -42591,7 +42353,7 @@ err : bool
       .def("__len__", [](const Bmad::ToOrbitReading&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::ToOrbitReading& s, size_t i) -> py::object {
+          [](const Bmad::ToOrbitReading& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -42637,7 +42399,7 @@ err : bool
       .def("__len__", [](const Bmad::ToPhaseAndCouplingReading&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::ToPhaseAndCouplingReading& s, size_t i) -> py::object {
+          [](const Bmad::ToPhaseAndCouplingReading& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -42685,7 +42447,7 @@ end subroutine
       .def_readonly("max_signif", &PyToStr::max_signif)
       .def_readonly("string", &PyToStr::string)
       .def("__len__", [](const PyToStr&) { return 3; })
-      .def("__getitem__", [](const PyToStr& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyToStr& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -42826,19 +42588,17 @@ s :
       .def_readonly("ix", &PyTouschekRate1Zap::ix)
       .def_readonly("s", &PyTouschekRate1Zap::s)
       .def("__len__", [](const PyTouschekRate1Zap&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PyTouschekRate1Zap& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.rate);
-            if (i == 1)
-              return py::cast(s.ix);
-            if (i == 2)
-              return py::cast(s.s);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTouschekRate1Zap& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.rate);
+        if (i == 1)
+          return py::cast(s.ix);
+        if (i == 2)
+          return py::cast(s.s);
+        throw py::index_error();
+      });
   m.def(
       "track1",
       &Bmad::track1,
@@ -42883,7 +42643,7 @@ init_to_edge : bool, optional
       .def_readonly("end_orb", &Bmad::Track1::end_orb)
       .def_readonly("err_flag", &Bmad::Track1::err_flag)
       .def("__len__", [](const Bmad::Track1&) { return 2; })
-      .def("__getitem__", [](const Bmad::Track1& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Bmad::Track1& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -42955,16 +42715,15 @@ make_matrix : bool, optional
       .def_readonly("err_flag", &Bmad::Track1Bmad::err_flag)
       .def_readonly("track", &Bmad::Track1Bmad::track)
       .def("__len__", [](const Bmad::Track1Bmad&) { return 2; })
-      .def(
-          "__getitem__", [](const Bmad::Track1Bmad& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.track);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::Track1Bmad& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.track);
+        throw py::index_error();
+      });
   m.def(
       "track1_bmad_photon",
       &Bmad::track1_bmad_photon,
@@ -43413,7 +43172,7 @@ make_matrix : bool, optional
       .def("__len__", [](const Bmad::Track1RungeKutta&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::Track1RungeKutta& s, size_t i) -> py::object {
+          [](const Bmad::Track1RungeKutta& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -43464,7 +43223,7 @@ make_quaternion :
       .def_readonly("end_orb", &PyTrack1Spin::end_orb)
       .def_readonly("make_quaternion", &PyTrack1Spin::make_quaternion)
       .def("__len__", [](const PyTrack1Spin&) { return 3; })
-      .def("__getitem__", [](const PyTrack1Spin& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTrack1Spin& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -43610,7 +43369,7 @@ dt_step : float, optional
       .def("__len__", [](const PyTrack1TimeRungeKutta&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyTrack1TimeRungeKutta& s, size_t i) -> py::object {
+          [](const PyTrack1TimeRungeKutta& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -43654,7 +43413,7 @@ make_matrix : bool, optional
       .def("__len__", [](const Bmad::TrackABeambeam&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::TrackABeambeam& s, size_t i) -> py::object {
+          [](const Bmad::TrackABeambeam& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -43810,7 +43569,7 @@ time : float, optional
       m, "TrackADrift", "Fortran routine track_a_drift return value")
       .def_readonly("time", &PyTrackADrift::time)
       .def("__len__", [](const PyTrackADrift&) { return 1; })
-      .def("__getitem__", [](const PyTrackADrift& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTrackADrift& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -43990,7 +43749,7 @@ make_matrix : bool, optional
       .def_readonly("mat6", &PyTrackAMatch::mat6)
       .def_readonly("err_flag", &PyTrackAMatch::err_flag)
       .def("__len__", [](const PyTrackAMatch&) { return 2; })
-      .def("__getitem__", [](const PyTrackAMatch& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTrackAMatch& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -44039,19 +43798,17 @@ make_matrix : bool, optional
       .def_readonly("ds_ref", &Bmad::TrackAPatch::ds_ref)
       .def_readonly("mat6", &Bmad::TrackAPatch::mat6)
       .def("__len__", [](const Bmad::TrackAPatch&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::TrackAPatch& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.s_ent);
-            if (i == 1)
-              return py::cast(s.ds_ref);
-            if (i == 2)
-              return py::cast(s.mat6);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const Bmad::TrackAPatch& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.s_ent);
+        if (i == 1)
+          return py::cast(s.ds_ref);
+        if (i == 2)
+          return py::cast(s.mat6);
+        throw py::index_error();
+      });
   m.def(
       "track_a_patch_photon",
       &Bmad::track_a_patch_photon,
@@ -44109,7 +43866,7 @@ make_matrix : bool, optional
       .def_readonly("mat6", &PyTrackAPickup::mat6)
       .def_readonly("err_flag", &PyTrackAPickup::err_flag)
       .def("__len__", [](const PyTrackAPickup&) { return 2; })
-      .def("__getitem__", [](const PyTrackAPickup& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTrackAPickup& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -44294,7 +44051,7 @@ track : TrackStruct
       .def("__len__", [](const Bmad::TrackAZeroLengthElement&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::TrackAZeroLengthElement& s, size_t i) -> py::object {
+          [](const Bmad::TrackAZeroLengthElement& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -44337,7 +44094,7 @@ init_lost : bool
       .def_readonly("err_flag", &Bmad::TrackAll::err_flag)
       .def_readonly("orbit0", &Bmad::TrackAll::orbit0)
       .def("__len__", [](const Bmad::TrackAll&) { return 3; })
-      .def("__getitem__", [](const Bmad::TrackAll& s, size_t i) -> py::object {
+      .def("__getitem__", [](const Bmad::TrackAll& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -44557,8 +44314,7 @@ ix_ele_end : int, optional
       .def_readonly("track_state", &Bmad::TrackFromSToS::track_state)
       .def("__len__", [](const Bmad::TrackFromSToS&) { return 3; })
       .def(
-          "__getitem__",
-          [](const Bmad::TrackFromSToS& s, size_t i) -> py::object {
+          "__getitem__", [](const Bmad::TrackFromSToS& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -44650,7 +44406,7 @@ track : TrackStruct
       .def("__len__", [](const Bmad::TrackUntilDead&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::TrackUntilDead& s, size_t i) -> py::object {
+          [](const Bmad::TrackUntilDead& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -44691,7 +44447,7 @@ err_flag : bool
       .def("__len__", [](const Bmad::TrackingRadMapSetup&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::TrackingRadMapSetup& s, size_t i) -> py::object {
+          [](const Bmad::TrackingRadMapSetup& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -44976,7 +44732,7 @@ err_flag : bool
       .def("__len__", [](const Bmad::TransferMapFromSToS&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::TransferMapFromSToS& s, size_t i) -> py::object {
+          [](const Bmad::TransferMapFromSToS& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -45132,7 +44888,7 @@ df_dz : complex
       .def("__len__", [](const SimUtils::TricubicCmplxEval&) { return 4; })
       .def(
           "__getitem__",
-          [](const SimUtils::TricubicCmplxEval& s, size_t i) -> py::object {
+          [](const SimUtils::TricubicCmplxEval& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -45195,7 +44951,7 @@ err : bool
       .def("__len__", [](const Bmad::Twiss1Propagate&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::Twiss1Propagate& s, size_t i) -> py::object {
+          [](const Bmad::Twiss1Propagate& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -45233,7 +44989,7 @@ tune3 : float
       .def_readonly("tune3", &PyTwiss3AtStart::tune3)
       .def_readonly("err_flag", &PyTwiss3AtStart::err_flag)
       .def("__len__", [](const PyTwiss3AtStart&) { return 2; })
-      .def("__getitem__", [](const PyTwiss3AtStart& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTwiss3AtStart& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -45276,15 +45032,13 @@ Subroutine from original mode3_mod.
       m, "Twiss3Propagate1", "Fortran routine twiss3_propagate1 return value")
       .def_readonly("err_flag", &PyTwiss3Propagate1::err_flag)
       .def("__len__", [](const PyTwiss3Propagate1&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyTwiss3Propagate1& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyTwiss3Propagate1& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "twiss3_propagate_all",
       &Bmad::twiss3_propagate_all,
@@ -45538,7 +45292,7 @@ compute_twiss : bool, optional
       .def("__len__", [](const Bmad::TwissAndTrackFromSToS&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::TwissAndTrackFromSToS& s, size_t i) -> py::object {
+          [](const Bmad::TwissAndTrackFromSToS& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -45615,7 +45369,7 @@ reuse_ele_end : bool, optional
       .def("__len__", [](const Bmad::TwissAndTrackIntraEle&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::TwissAndTrackIntraEle& s, size_t i) -> py::object {
+          [](const Bmad::TwissAndTrackIntraEle& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -45650,7 +45404,7 @@ average : EleStruct
       .def("__len__", [](const Bmad::TwissAtElement&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::TwissAtElement& s, size_t i) -> py::object {
+          [](const Bmad::TwissAtElement& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -45715,7 +45469,7 @@ d_orb : float, optional
       .def("__len__", [](const Bmad::TwissFromTracking&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::TwissFromTracking& s, size_t i) -> py::object {
+          [](const Bmad::TwissFromTracking& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -45831,7 +45585,7 @@ filename :
       m, "TypeThisFile", "Fortran routine type_this_file return value")
       .def_readonly("filename", &PyTypeThisFile::filename)
       .def("__len__", [](const PyTypeThisFile&) { return 1; })
-      .def("__getitem__", [](const PyTypeThisFile& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyTypeThisFile& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -45852,7 +45606,7 @@ string :
       m, "UpcaseString", "Fortran routine upcase_string return value")
       .def_readonly("string", &PyUpcaseString::string)
       .def("__len__", [](const PyUpcaseString&) { return 1; })
-      .def("__getitem__", [](const PyUpcaseString& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyUpcaseString& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -45925,14 +45679,13 @@ is_valid :
       m, "ValidFieldCalc", "Fortran routine valid_field_calc return value")
       .def_readonly("is_valid", &PyValidFieldCalc::is_valid)
       .def("__len__", [](const PyValidFieldCalc&) { return 1; })
-      .def(
-          "__getitem__", [](const PyValidFieldCalc& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_valid);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyValidFieldCalc& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_valid);
+        throw py::index_error();
+      });
   m.def(
       "valid_fringe_type",
       &python_valid_fringe_type,
@@ -45953,15 +45706,13 @@ is_valid :
       m, "ValidFringeType", "Fortran routine valid_fringe_type return value")
       .def_readonly("is_valid", &PyValidFringeType::is_valid)
       .def("__len__", [](const PyValidFringeType&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyValidFringeType& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_valid);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyValidFringeType& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_valid);
+        throw py::index_error();
+      });
   m.def(
       "valid_mat6_calc_method",
       &python_valid_mat6_calc_method,
@@ -45989,7 +45740,7 @@ is_valid :
       .def("__len__", [](const PyValidMat6CalcMethod&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyValidMat6CalcMethod& s, size_t i) -> py::object {
+          [](const PyValidMat6CalcMethod& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -46022,7 +45773,7 @@ is_valid :
       .def("__len__", [](const PyValidSpinTrackingMethod&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyValidSpinTrackingMethod& s, size_t i) -> py::object {
+          [](const PyValidSpinTrackingMethod& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -46056,7 +45807,7 @@ is_valid :
       .def("__len__", [](const PyValidTrackingMethod&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyValidTrackingMethod& s, size_t i) -> py::object {
+          [](const PyValidTrackingMethod& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -46092,17 +45843,15 @@ value :
       .def_readonly("err_flag", &PyValueOfAttribute::err_flag)
       .def_readonly("value", &PyValueOfAttribute::value)
       .def("__len__", [](const PyValueOfAttribute&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyValueOfAttribute& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.value);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyValueOfAttribute& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.value);
+        throw py::index_error();
+      });
   m.def(
       "value_to_line",
       &python_value_to_line,
@@ -46132,7 +45881,7 @@ use_comma :
       .def_readonly("ignore_if_zero", &PyValueToLine::ignore_if_zero)
       .def_readonly("use_comma", &PyValueToLine::use_comma)
       .def("__len__", [](const PyValueToLine&) { return 6; })
-      .def("__getitem__", [](const PyValueToLine& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyValueToLine& s, int i) -> py::object {
         if (i < 0)
           i += 6;
         if (i == 0)
@@ -46322,7 +46071,7 @@ angle : float
       .def("__len__", [](const SimUtils::WMatToAxisAngle&) { return 2; })
       .def(
           "__getitem__",
-          [](const SimUtils::WMatToAxisAngle& s, size_t i) -> py::object {
+          [](const SimUtils::WMatToAxisAngle& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -46401,8 +46150,7 @@ err_flag : bool
       .def_readonly("d_radius", &Bmad::Wall3dDRadius::d_radius)
       .def("__len__", [](const Bmad::Wall3dDRadius&) { return 7; })
       .def(
-          "__getitem__",
-          [](const Bmad::Wall3dDRadius& s, size_t i) -> py::object {
+          "__getitem__", [](const Bmad::Wall3dDRadius& s, int i) -> py::object {
             if (i < 0)
               i += 7;
             if (i == 0)
@@ -46501,7 +46249,7 @@ wlen :
       .def_readonly("wording", &PyWordLen::wording)
       .def_readonly("wlen", &PyWordLen::wlen)
       .def("__len__", [](const PyWordLen&) { return 2; })
-      .def("__getitem__", [](const PyWordLen& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyWordLen& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -46545,7 +46293,7 @@ ignore_interior :
       .def_readonly("out_str", &PyWordRead::out_str)
       .def_readonly("ignore_interior", &PyWordRead::ignore_interior)
       .def("__len__", [](const PyWordRead&) { return 8; })
-      .def("__getitem__", [](const PyWordRead& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyWordRead& s, int i) -> py::object {
         if (i < 0)
           i += 8;
         if (i == 0)
@@ -46590,7 +46338,7 @@ ele :
       .def_readonly("value", &PyWordToValue::value)
       .def_readonly("err_flag", &PyWordToValue::err_flag)
       .def("__len__", [](const PyWordToValue&) { return 3; })
-      .def("__getitem__", [](const PyWordToValue& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyWordToValue& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -46649,18 +46397,17 @@ d4 :
       .def_readonly("strength", &PyWriteAstraBend::strength)
       .def_readonly("id", &PyWriteAstraBend::id)
       .def("__len__", [](const PyWriteAstraBend&) { return 3; })
-      .def(
-          "__getitem__", [](const PyWriteAstraBend& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.iu);
-            if (i == 1)
-              return py::cast(s.strength);
-            if (i == 2)
-              return py::cast(s.id);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyWriteAstraBend& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.iu);
+        if (i == 1)
+          return py::cast(s.strength);
+        if (i == 2)
+          return py::cast(s.id);
+        throw py::index_error();
+      });
   m.def(
       "write_astra_field_grid_file",
       &Bmad::write_astra_field_grid_file,
@@ -46699,7 +46446,7 @@ err : bool
       .def("__len__", [](const Bmad::WriteAstraFieldGridFile&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::WriteAstraFieldGridFile& s, size_t i) -> py::object {
+          [](const Bmad::WriteAstraFieldGridFile& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -46753,7 +46500,7 @@ err : bool
       .def("__len__", [](const Bmad::WriteAstraFieldGridFile3d&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::WriteAstraFieldGridFile3d& s, size_t i) -> py::object {
+          [](const Bmad::WriteAstraFieldGridFile3d& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -46890,17 +46637,15 @@ old_format :
       .def_readonly("iu", &PyWriteBlenderEle::iu)
       .def_readonly("old_format", &PyWriteBlenderEle::old_format)
       .def("__len__", [](const PyWriteBlenderEle&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyWriteBlenderEle& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.iu);
-            if (i == 1)
-              return py::cast(s.old_format);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyWriteBlenderEle& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.iu);
+        if (i == 1)
+          return py::cast(s.old_format);
+        throw py::index_error();
+      });
   m.def(
       "write_blender_lat_layout",
       &python_write_blender_lat_layout,
@@ -46921,7 +46666,7 @@ lat :
       .def("__len__", [](const PyWriteBlenderLatLayout&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyWriteBlenderLatLayout& s, size_t i) -> py::object {
+          [](const PyWriteBlenderLatLayout& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -47009,7 +46754,7 @@ err : bool
       .def("__len__", [](const Bmad::WriteGptFieldGridFile1d&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::WriteGptFieldGridFile1d& s, size_t i) -> py::object {
+          [](const Bmad::WriteGptFieldGridFile1d& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -47066,7 +46811,7 @@ err : bool
       .def("__len__", [](const Bmad::WriteGptFieldGridFile2d&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::WriteGptFieldGridFile2d& s, size_t i) -> py::object {
+          [](const Bmad::WriteGptFieldGridFile2d& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -47122,7 +46867,7 @@ err : bool
       .def("__len__", [](const Bmad::WriteGptFieldGridFile3d&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::WriteGptFieldGridFile3d& s, size_t i) -> py::object {
+          [](const Bmad::WriteGptFieldGridFile3d& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -47167,7 +46912,7 @@ scibmad : bool, optional
       m, "WriteLatLine", "Fortran routine write_lat_line return value")
       .def_readonly("line", &PyWriteLatLine::line)
       .def("__len__", [](const PyWriteLatLine&) { return 1; })
-      .def("__getitem__", [](const PyWriteLatLine& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyWriteLatLine& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
@@ -47323,7 +47068,7 @@ err :
       .def("__len__", [](const PyWriteLatticeInSadFormat&) { return 4; })
       .def(
           "__getitem__",
-          [](const PyWriteLatticeInSadFormat& s, size_t i) -> py::object {
+          [](const PyWriteLatticeInSadFormat& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -47362,7 +47107,7 @@ err_flag : bool
       .def("__len__", [](const Bmad::WriteLatticeInScibmad&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::WriteLatticeInScibmad& s, size_t i) -> py::object {
+          [](const Bmad::WriteLatticeInScibmad& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -47392,17 +47137,15 @@ lat :
       .def_readonly("line", &PyWriteLineElement::line)
       .def_readonly("iu", &PyWriteLineElement::iu)
       .def("__len__", [](const PyWriteLineElement&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyWriteLineElement& s, size_t i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.line);
-            if (i == 1)
-              return py::cast(s.iu);
-            throw py::index_error();
-          });
+      .def("__getitem__", [](const PyWriteLineElement& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.line);
+        if (i == 1)
+          return py::cast(s.iu);
+        throw py::index_error();
+      });
   m.def(
       "write_opal_field_grid_file",
       &Bmad::write_opal_field_grid_file,
@@ -47440,7 +47183,7 @@ err : bool
       .def("__len__", [](const Bmad::WriteOpalFieldGridFile&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::WriteOpalFieldGridFile& s, size_t i) -> py::object {
+          [](const Bmad::WriteOpalFieldGridFile& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -47541,7 +47284,7 @@ res :
       .def_readonly("z", &PyXlafun::z)
       .def_readonly("res", &PyXlafun::res)
       .def("__len__", [](const PyXlafun&) { return 4; })
-      .def("__getitem__", [](const PyXlafun& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyXlafun& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -47595,7 +47338,7 @@ res :
       .def_readonly("z", &PyYlafun::z)
       .def_readonly("res", &PyYlafun::res)
       .def("__len__", [](const PyYlafun&) { return 4; })
-      .def("__getitem__", [](const PyYlafun& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyYlafun& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -47646,7 +47389,7 @@ Remember: +z points into the element.
       .def_readonly("x", &PyZAtSurface::x)
       .def_readonly("y", &PyZAtSurface::y)
       .def("__len__", [](const PyZAtSurface&) { return 5; })
-      .def("__getitem__", [](const PyZAtSurface& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyZAtSurface& s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -47717,7 +47460,7 @@ res :
       .def_readonly("z", &PyZlafun::z)
       .def_readonly("res", &PyZlafun::res)
       .def("__len__", [](const PyZlafun&) { return 4; })
-      .def("__getitem__", [](const PyZlafun& s, size_t i) -> py::object {
+      .def("__getitem__", [](const PyZlafun& s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
