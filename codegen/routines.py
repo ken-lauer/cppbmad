@@ -318,7 +318,7 @@ class FortranRoutine:
                 filename=self.filename,
                 lineno=-1,
                 routine_type=RoutineType.UNKNOWN,
-                description=["No docstring available"],
+                description=[],
                 inputs=[
                     DocstringParameter(
                         name=arg_name, is_input=True, is_output=True, is_optional=False, guessed=True

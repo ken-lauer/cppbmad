@@ -180,8 +180,8 @@ class RoutineDocstring:
         result += "\n"
 
         if self.description:
-            result += "\nDescription:\n"
-            for line in self.description:
+            desc = textwrap.dedent("\n".join(self.description))
+            for line in desc.splitlines():
                 result += f"  {line}\n"
 
         if self.notes:
@@ -223,11 +223,9 @@ class RoutineDocstring:
         lines = []
 
         if self.description:
-            lines.append(self.description[0])
+            desc = textwrap.dedent("\n".join(self.description))
+            lines.extend(desc.splitlines())
             lines.append("")
-            if len(self.description) > 1:
-                lines.extend(self.description[1:])
-                lines.append("")
 
         if self.inputs:
             lines.extend(["Parameters", "----------"])
@@ -415,18 +413,36 @@ def parse_routine_comment_block(
     if definition_line is None:
         return None
 
+    def clean_line(line: str) -> str:
+        line = line.strip()
+        m = re.match(r"^![-+]*(.*)$", line)
+        if m:
+            return m.groups()[0]
+        return ""
+
+    description = []
+    for line in lines:
+        line = clean_line(line)
+        if line.lower().strip() in (
+            "input:",
+            "output:",
+            "also see:",
+        ):
+            break
+        if line or description:
+            description.append(line)
+
     docstring = RoutineDocstring(
         filename=filename,
         lineno=definition_lineno,
         name=name,
         routine_type=routine_type,
         result_variable=result_var,
+        description=description or ["No docstring available."],
     )
 
     current_section = "description"
     current_param = None
-    in_note = False
-    current_note = ""
 
     i = lines.index(definition_line) + 1
 
@@ -443,17 +459,14 @@ def parse_routine_comment_block(
 
         if line.lower() == "input:":
             current_section = "inputs"
-            in_note = False
             i += 1
             continue
         if line.lower() == "output:":
             current_section = "outputs"
-            in_note = False
             i += 1
             continue
         if "also see:" in line.lower():
             current_section = "related"
-            in_note = False
             docstring.related_routines.extend(_extract_related_routines(line))
             i += 1
             continue
@@ -461,7 +474,6 @@ def parse_routine_comment_block(
         if current_section == "description":
             if "is an overloaded name for" in line.lower():
                 docstring.is_overloaded = True
-                in_note = False
                 i += 1
 
                 while i < len(lines):
@@ -475,24 +487,11 @@ def parse_routine_comment_block(
                     else:
                         break
 
-            elif re.match(r"^note(?:\s*\:|\s+that\b)", line.lower()):
-                in_note = True
-                current_note = line
-                i += 1
-
-            elif in_note:
-                current_note += " " + line
-                i += 1
             else:
                 if re.match(r"^remember(?:\s*\:|\s+)", line.lower()):
                     docstring.notes.append(line)
-                else:
-                    docstring.description.append(line)
                 i += 1
 
-            if in_note and (i >= len(lines) or lines[i].strip() == "" or ":" in lines[i]):
-                docstring.notes.append(current_note)
-                in_note = False
         elif current_section in {"inputs", "outputs"}:
             param_match = re.match(r"^(\w+)(?:\s*\(.*?\))?\s*--\s*(.*?)$", line)
             param_name = None
@@ -548,9 +547,6 @@ def parse_routine_comment_block(
             i += 1
         else:
             i += 1
-
-    if in_note and current_note:
-        docstring.notes.append(current_note)
 
     for arg in docstring.inputs + docstring.outputs:
         arg.fix()
