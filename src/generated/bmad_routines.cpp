@@ -209,7 +209,7 @@ Bmad::AddSuperimpose Bmad::add_superimpose(
     std::optional<bool> mangle_slave_names,
     std::optional<bool> wrap) {
   bool _err_flag{};
-  EleProxy _super_ele_out;
+  void* _super_ele_out;
   bool save_null_drift_lvalue;
   auto* _save_null_drift{&save_null_drift_lvalue};
   if (save_null_drift.has_value()) {
@@ -250,13 +250,13 @@ Bmad::AddSuperimpose Bmad::add_superimpose(
       /* void* */ super_ele_in.get_fortran_ptr(),
       /* int& */ ix_branch,
       /* bool& */ _err_flag,
-      /* void* */ _super_ele_out.get_fortran_ptr(),
+      /* void* */ &_super_ele_out,
       /* bool* */ _save_null_drift,
       /* bool* */ _create_jumbo_slave,
       /* int* */ _ix_insert,
       /* bool* */ _mangle_slave_names,
       /* bool* */ _wrap);
-  return AddSuperimpose{_err_flag, std::move(_super_ele_out)};
+  return AddSuperimpose{_err_flag, std::move(EleProxy(_super_ele_out))};
 }
 void Bmad::add_this_multipass(
     LatProxy& lat,
@@ -2177,19 +2177,19 @@ Bmad::CoordsFloorToCurvilinear Bmad::coords_floor_to_curvilinear(
     FloorPositionProxy& floor_coords,
     EleProxy& ele0,
     FloorPositionProxy& local_coords) {
-  EleProxy _ele1;
+  void* _ele1;
   int _status{};
   FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
   fortran_coords_floor_to_curvilinear(
       /* void* */ floor_coords.get_fortran_ptr(),
       /* void* */ ele0.get_fortran_ptr(),
-      /* void* */ _ele1.get_fortran_ptr(),
+      /* void* */ &_ele1,
       /* int& */ _status,
       /* double* */ _w_mat_vec,
       /* void* */ local_coords.get_fortran_ptr());
   vec_to_matrix(_w_mat_vec, w_mat);
-  return CoordsFloorToCurvilinear{std::move(_ele1), _status, w_mat};
+  return CoordsFloorToCurvilinear{std::move(EleProxy(_ele1)), _status, w_mat};
 }
 Bmad::CoordsFloorToLocalCurvilinear Bmad::coords_floor_to_local_curvilinear(
     FloorPositionProxy& global_position,
@@ -4465,8 +4465,8 @@ void Bmad::finalize_reflectivity_table(
 Bmad::FindElementEnds Bmad::find_element_ends(
     EleProxy& ele,
     std::optional<int> ix_multipass) {
-  EleProxy _ele1;
-  EleProxy _ele2;
+  void* _ele1;
+  void* _ele2;
   int ix_multipass_lvalue;
   auto* _ix_multipass{&ix_multipass_lvalue};
   if (ix_multipass.has_value()) {
@@ -4476,10 +4476,11 @@ Bmad::FindElementEnds Bmad::find_element_ends(
   }
   fortran_find_element_ends(
       /* void* */ ele.get_fortran_ptr(),
-      /* void* */ _ele1.get_fortran_ptr(),
-      /* void* */ _ele2.get_fortran_ptr(),
+      /* void* */ &_ele1,
+      /* void* */ &_ele2,
       /* int* */ _ix_multipass);
-  return FindElementEnds{std::move(_ele1), std::move(_ele2)};
+  return FindElementEnds{
+      std::move(EleProxy(_ele1)), std::move(EleProxy(_ele2))};
 }
 double Bmad::find_fwhm(double bound, FixedArray1D<Real, 8> args) {
   auto* _args = args.data(); // CppWrapperGeneralArgument
@@ -4494,7 +4495,7 @@ Bmad::FindMatchingFieldmap Bmad::find_matching_fieldmap(
     int fm_type,
     std::optional<bool> ignore_slaves) {
   auto _file_name = file_name.c_str();
-  EleProxy _match_ele;
+  void* _match_ele;
   int _ix_field{};
   bool ignore_slaves_lvalue;
   auto* _ignore_slaves{&ignore_slaves_lvalue};
@@ -4507,10 +4508,10 @@ Bmad::FindMatchingFieldmap Bmad::find_matching_fieldmap(
       /* const char* */ _file_name,
       /* void* */ ele.get_fortran_ptr(),
       /* int& */ fm_type,
-      /* void* */ _match_ele.get_fortran_ptr(),
+      /* void* */ &_match_ele,
       /* int& */ _ix_field,
       /* bool* */ _ignore_slaves);
-  return FindMatchingFieldmap{std::move(_match_ele), _ix_field};
+  return FindMatchingFieldmap{std::move(EleProxy(_match_ele)), _ix_field};
 }
 double Bmad::find_normalization(
     double bound,
@@ -5631,7 +5632,7 @@ WakeProxy Bmad::init_wake(
     int n_sr_z,
     int n_lr_mode,
     std::optional<bool> always_allocate) {
-  WakeProxy _wake;
+  void* _wake;
   bool always_allocate_lvalue;
   auto* _always_allocate{&always_allocate_lvalue};
   if (always_allocate.has_value()) {
@@ -5640,13 +5641,13 @@ WakeProxy Bmad::init_wake(
     _always_allocate = nullptr;
   }
   fortran_init_wake(
-      /* void* */ _wake.get_fortran_ptr(),
+      /* void* */ &_wake,
       /* int& */ n_sr_long,
       /* int& */ n_sr_trans,
       /* int& */ n_sr_z,
       /* int& */ n_lr_mode,
       /* bool* */ _always_allocate);
-  return std::move(_wake);
+  return std::move(WakeProxy(_wake));
 }
 void Bmad::insert_element(
     LatProxy& lat,
@@ -8337,11 +8338,10 @@ void Bmad::point_photon_emission(
       /* double* */ _w_to_surface_vec);
 }
 BranchProxy Bmad::pointer_to_branch(EleProxy& ele) {
-  BranchProxy _branch_ptr;
+  void* _branch_ptr;
   fortran_pointer_to_branch_given_ele(
-      /* void* */ ele.get_fortran_ptr(),
-      /* void* */ _branch_ptr.get_fortran_ptr());
-  return std::move(_branch_ptr);
+      /* void* */ ele.get_fortran_ptr(), /* void* */ &_branch_ptr);
+  return std::move(BranchProxy(_branch_ptr));
 }
 BranchProxy Bmad::pointer_to_branch(
     std::string branch_name,
@@ -8363,14 +8363,14 @@ BranchProxy Bmad::pointer_to_branch(
   } else {
     _blank_branch = nullptr;
   }
-  BranchProxy _branch_ptr;
+  void* _branch_ptr;
   fortran_pointer_to_branch_given_name(
       /* const char* */ _branch_name,
       /* void* */ lat.get_fortran_ptr(),
       /* bool* */ _parameter_is_branch0,
       /* int* */ _blank_branch,
-      /* void* */ _branch_ptr.get_fortran_ptr());
-  return std::move(_branch_ptr);
+      /* void* */ &_branch_ptr);
+  return std::move(BranchProxy(_branch_ptr));
 }
 EleProxy Bmad::pointer_to_ele(
     LatProxy& lat,
@@ -8383,38 +8383,38 @@ EleProxy Bmad::pointer_to_ele(
   } else {
     _ix_branch = nullptr;
   }
-  EleProxy _ele_ptr;
+  void* _ele_ptr;
   fortran_pointer_to_ele1(
       /* void* */ lat.get_fortran_ptr(),
       /* int& */ ix_ele,
       /* int* */ _ix_branch,
-      /* void* */ _ele_ptr.get_fortran_ptr());
-  return std::move(_ele_ptr);
+      /* void* */ &_ele_ptr);
+  return std::move(EleProxy(_ele_ptr));
 }
 EleProxy Bmad::pointer_to_ele(LatProxy& lat, LatEleLocProxy& ele_loc) {
-  EleProxy _ele_ptr;
+  void* _ele_ptr;
   fortran_pointer_to_ele2(
       /* void* */ lat.get_fortran_ptr(),
       /* void* */ ele_loc.get_fortran_ptr(),
-      /* void* */ _ele_ptr.get_fortran_ptr());
-  return std::move(_ele_ptr);
+      /* void* */ &_ele_ptr);
+  return std::move(EleProxy(_ele_ptr));
 }
 EleProxy Bmad::pointer_to_ele(LatProxy& lat, std::string ele_name) {
   auto _ele_name = ele_name.c_str();
-  EleProxy _ele_ptr;
+  void* _ele_ptr;
   fortran_pointer_to_ele3(
       /* void* */ lat.get_fortran_ptr(),
       /* const char* */ _ele_name,
-      /* void* */ _ele_ptr.get_fortran_ptr());
-  return std::move(_ele_ptr);
+      /* void* */ &_ele_ptr);
+  return std::move(EleProxy(_ele_ptr));
 }
 EleProxy Bmad::pointer_to_ele(LatProxy& lat, EleProxy& foreign_ele) {
-  EleProxy _ele_ptr;
+  void* _ele_ptr;
   fortran_pointer_to_ele4(
       /* void* */ lat.get_fortran_ptr(),
       /* void* */ foreign_ele.get_fortran_ptr(),
-      /* void* */ _ele_ptr.get_fortran_ptr());
-  return std::move(_ele_ptr);
+      /* void* */ &_ele_ptr);
+  return std::move(EleProxy(_ele_ptr));
 }
 Bmad::PointerToElementAtS Bmad::pointer_to_element_at_s(
     BranchProxy& branch,
@@ -8431,7 +8431,7 @@ Bmad::PointerToElementAtS Bmad::pointer_to_element_at_s(
   } else {
     _print_err = nullptr;
   }
-  EleProxy _ele;
+  void* _ele;
   fortran_pointer_to_element_at_s(
       /* void* */ branch.get_fortran_ptr(),
       /* double& */ s,
@@ -8440,9 +8440,9 @@ Bmad::PointerToElementAtS Bmad::pointer_to_element_at_s(
       /* double& */ _s_eff,
       /* void* */ _position.get_fortran_ptr(),
       /* bool* */ _print_err,
-      /* void* */ _ele.get_fortran_ptr());
+      /* void* */ &_ele);
   return PointerToElementAtS{
-      _err_flag, _s_eff, std::move(_position), std::move(_ele)};
+      _err_flag, _s_eff, std::move(_position), std::move(EleProxy(_ele))};
 }
 double Bmad::pointer_to_field_ele(
     EleProxy& ele,
@@ -8471,7 +8471,7 @@ Bmad::PointerToLord Bmad::pointer_to_lord(
     int ix_lord,
     std::optional<int> lord_type,
     EleProxy& lord_ptr) {
-  ControlProxy _control;
+  void* _control;
   int _ix_slave_back{};
   int lord_type_lvalue;
   auto* _lord_type{&lord_type_lvalue};
@@ -8486,27 +8486,27 @@ Bmad::PointerToLord Bmad::pointer_to_lord(
   fortran_pointer_to_lord(
       /* void* */ slave.get_fortran_ptr(),
       /* int& */ ix_lord,
-      /* void* */ _control.get_fortran_ptr(),
+      /* void* */ &_control,
       /* int& */ _ix_slave_back,
       /* int* */ _lord_type,
       /* int& */ _ix_control,
       /* int& */ _ix_ic,
       /* void* */ &lord_ptr);
   return PointerToLord{
-      std::move(_control), _ix_slave_back, _ix_control, _ix_ic};
+      std::move(ControlProxy(_control)), _ix_slave_back, _ix_control, _ix_ic};
 }
 Bmad::PointerToMultipassLord Bmad::pointer_to_multipass_lord(
     EleProxy& ele,
     EleProxy& multi_lord) {
   int _ix_pass{};
-  EleProxy _super_lord;
+  void* _super_lord;
   auto _multi_lord = &multi_lord; // input, required, pointer
   fortran_pointer_to_multipass_lord(
       /* void* */ ele.get_fortran_ptr(),
       /* int& */ _ix_pass,
-      /* void* */ _super_lord.get_fortran_ptr(),
+      /* void* */ &_super_lord,
       /* void* */ &multi_lord);
-  return PointerToMultipassLord{_ix_pass, std::move(_super_lord)};
+  return PointerToMultipassLord{_ix_pass, std::move(EleProxy(_super_lord))};
 }
 void Bmad::pointer_to_next_ele(
     EleProxy& this_ele,
@@ -8547,7 +8547,7 @@ Bmad::PointerToSlave Bmad::pointer_to_slave(
     EleProxy& lord,
     int ix_slave,
     std::optional<int> lord_type) {
-  ControlProxy _control;
+  void* _control;
   int lord_type_lvalue;
   auto* _lord_type{&lord_type_lvalue};
   if (lord_type.has_value()) {
@@ -8558,28 +8558,28 @@ Bmad::PointerToSlave Bmad::pointer_to_slave(
   int _ix_lord_back{};
   int _ix_control{};
   int _ix_ic{};
-  EleProxy _slave_ptr;
+  void* _slave_ptr;
   fortran_pointer_to_slave(
       /* void* */ lord.get_fortran_ptr(),
       /* int& */ ix_slave,
-      /* void* */ _control.get_fortran_ptr(),
+      /* void* */ &_control,
       /* int* */ _lord_type,
       /* int& */ _ix_lord_back,
       /* int& */ _ix_control,
       /* int& */ _ix_ic,
-      /* void* */ _slave_ptr.get_fortran_ptr());
+      /* void* */ &_slave_ptr);
   return PointerToSlave{
-      std::move(_control),
+      std::move(ControlProxy(_control)),
       _ix_lord_back,
       _ix_control,
       _ix_ic,
-      std::move(_slave_ptr)};
+      std::move(EleProxy(_slave_ptr))};
 }
 Bmad::PointerToSuperLord Bmad::pointer_to_super_lord(
     EleProxy& slave,
     std::optional<int> lord_type,
     EleProxy& lord_ptr) {
-  ControlProxy _control;
+  void* _control;
   int _ix_slave_back{};
   int _ix_control{};
   int _ix_ic{};
@@ -8593,14 +8593,14 @@ Bmad::PointerToSuperLord Bmad::pointer_to_super_lord(
   auto _lord_ptr = &lord_ptr; // input, required, pointer
   fortran_pointer_to_super_lord(
       /* void* */ slave.get_fortran_ptr(),
-      /* void* */ _control.get_fortran_ptr(),
+      /* void* */ &_control,
       /* int& */ _ix_slave_back,
       /* int& */ _ix_control,
       /* int& */ _ix_ic,
       /* int* */ _lord_type,
       /* void* */ &lord_ptr);
   return PointerToSuperLord{
-      std::move(_control), _ix_slave_back, _ix_control, _ix_ic};
+      std::move(ControlProxy(_control)), _ix_slave_back, _ix_control, _ix_ic};
 }
 SurfaceDisplacementPtProxy Bmad::pointer_to_surface_displacement_pt(
     EleProxy& ele,
@@ -8623,7 +8623,7 @@ SurfaceDisplacementPtProxy Bmad::pointer_to_surface_displacement_pt(
   }
   auto* _xx = xx.has_value() ? &xx->get() : nullptr; // inout, optional
   auto* _yy = yy.has_value() ? &yy->get() : nullptr; // inout, optional
-  SurfaceDisplacementPtProxy _pt;
+  void* _pt;
   fortran_pointer_to_surface_displacement_pt(
       /* void* */ ele.get_fortran_ptr(),
       /* bool& */ nearest,
@@ -8634,8 +8634,8 @@ SurfaceDisplacementPtProxy Bmad::pointer_to_surface_displacement_pt(
       /* bool* */ _extend_grid,
       /* double* */ _xx,
       /* double* */ _yy,
-      /* void* */ _pt.get_fortran_ptr());
-  return std::move(_pt);
+      /* void* */ &_pt);
+  return std::move(SurfaceDisplacementPtProxy(_pt));
 }
 SurfaceSegmentedPtProxy Bmad::pointer_to_surface_segmented_pt(
     EleProxy& ele,
@@ -8658,7 +8658,7 @@ SurfaceSegmentedPtProxy Bmad::pointer_to_surface_segmented_pt(
   }
   auto* _xx = xx.has_value() ? &xx->get() : nullptr; // inout, optional
   auto* _yy = yy.has_value() ? &yy->get() : nullptr; // inout, optional
-  SurfaceSegmentedPtProxy _pt;
+  void* _pt;
   fortran_pointer_to_surface_segmented_pt(
       /* void* */ ele.get_fortran_ptr(),
       /* bool& */ nearest,
@@ -8669,8 +8669,8 @@ SurfaceSegmentedPtProxy Bmad::pointer_to_surface_segmented_pt(
       /* bool* */ _extend_grid,
       /* double* */ _xx,
       /* double* */ _yy,
-      /* void* */ _pt.get_fortran_ptr());
-  return std::move(_pt);
+      /* void* */ &_pt);
+  return std::move(SurfaceSegmentedPtProxy(_pt));
 }
 double Bmad::pointer_to_wake_ele(EleProxy& ele, EleProxy& wake_ele) {
   double _delta_s{};
@@ -8693,14 +8693,15 @@ Bmad::PointerToWall3d Bmad::pointer_to_wall3d(
   }
   double _ds_offset{};
   bool _is_branch_wall{};
-  Wall3dProxy _wall3d;
+  void* _wall3d;
   fortran_pointer_to_wall3d(
       /* void* */ ele.get_fortran_ptr(),
       /* int* */ _ix_wall,
       /* double& */ _ds_offset,
       /* bool& */ _is_branch_wall,
-      /* void* */ _wall3d.get_fortran_ptr());
-  return PointerToWall3d{_ds_offset, _is_branch_wall, std::move(_wall3d)};
+      /* void* */ &_wall3d);
+  return PointerToWall3d{
+      _ds_offset, _is_branch_wall, std::move(Wall3dProxy(_wall3d))};
 }
 void Bmad::polar_to_spinor(
     SpinPolarProxy& polar,
@@ -12684,10 +12685,9 @@ Bmad::TrackingRadMapSetup Bmad::tracking_rad_map_setup(
 }
 AcKickerProxy Bmad::transfer_ac_kick(AcKickerProxy& ac_in) {
   auto _ac_in = &ac_in; // input, required, pointer
-  AcKickerProxy _ac_out;
-  fortran_transfer_ac_kick(
-      /* void* */ &ac_in, /* void* */ _ac_out.get_fortran_ptr());
-  return std::move(_ac_out);
+  void* _ac_out;
+  fortran_transfer_ac_kick(/* void* */ &ac_in, /* void* */ &_ac_out);
+  return std::move(AcKickerProxy(_ac_out));
 }
 BranchProxy Bmad::transfer_branch(BranchProxy& branch1) {
   BranchProxy _branch2;
@@ -13039,10 +13039,9 @@ EleProxy Bmad::transfer_twiss(EleProxy& ele_in, std::optional<bool> reverse) {
 }
 WakeProxy Bmad::transfer_wake(WakeProxy& wake_in) {
   auto _wake_in = &wake_in; // input, required, pointer
-  WakeProxy _wake_out;
-  fortran_transfer_wake(
-      /* void* */ &wake_in, /* void* */ _wake_out.get_fortran_ptr());
-  return std::move(_wake_out);
+  void* _wake_out;
+  fortran_transfer_wake(/* void* */ &wake_in, /* void* */ &_wake_out);
+  return std::move(WakeProxy(_wake_out));
 }
 ComplexTaylorProxyAlloc1D Bmad::truncate_complex_taylor_to_order(
     ComplexTaylorProxyAlloc1D& complex_taylor_in,

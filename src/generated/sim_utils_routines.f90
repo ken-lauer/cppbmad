@@ -3437,7 +3437,7 @@ subroutine fortran_pointer_to_ran_state (ran_state, ix_thread, ran_state_ptr) bi
   integer(c_int) :: f_ix_thread
   integer(c_int), pointer :: f_ix_thread_ptr
   ! ** Out parameters **
-  type(c_ptr), value :: ran_state_ptr  ! 0D_PTR_type
+  type(c_ptr) :: ran_state_ptr  ! 0D_PTR_type
   type(random_state_struct), pointer :: f_ran_state_ptr
   ! ** End of parameters **
   ! in: f_ran_state 0D_NOT_type
@@ -3448,10 +3448,10 @@ subroutine fortran_pointer_to_ran_state (ran_state, ix_thread, ran_state_ptr) bi
   else
     f_ix_thread_ptr => null()
   endif
-  f_ran_state_ptr = pointer_to_ran_state(f_ran_state, f_ix_thread_ptr)
+  f_ran_state_ptr => pointer_to_ran_state(f_ran_state, f_ix_thread_ptr)
 
   ! out: f_ran_state_ptr 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  ran_state_ptr = c_loc(f_ran_state_ptr)
 end subroutine
 subroutine fortran_poly_eval (poly, x, diff_coef, y) bind(c)
 

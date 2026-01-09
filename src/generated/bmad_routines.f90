@@ -695,7 +695,7 @@ subroutine fortran_add_superimpose (lat, super_ele_in, ix_branch, err_flag, supe
   type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
   logical(c_bool), pointer :: f_err_flag_ptr
-  type(c_ptr), value :: super_ele_out  ! 0D_PTR_type
+  type(c_ptr) :: super_ele_out  ! 0D_PTR_type
   type(ele_struct), pointer :: f_super_ele_out
   ! ** Inout parameters **
   type(c_ptr), value :: lat  ! 0D_NOT_type
@@ -765,7 +765,7 @@ subroutine fortran_add_superimpose (lat, super_ele_in, ix_branch, err_flag, supe
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
   ! out: f_super_ele_out 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  super_ele_out = c_loc(f_super_ele_out)
 end subroutine
 subroutine fortran_add_this_multipass (lat, m_slaves, lord_in) bind(c)
 
@@ -5250,7 +5250,7 @@ subroutine fortran_coords_floor_to_curvilinear (floor_coords, ele0, ele1, status
   type(c_ptr), value :: ele0  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele0
   ! ** Out parameters **
-  type(c_ptr), value :: ele1  ! 0D_PTR_type
+  type(c_ptr) :: ele1  ! 0D_PTR_type
   type(ele_struct), pointer :: f_ele1
   type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
   integer :: f_status
@@ -5274,7 +5274,7 @@ subroutine fortran_coords_floor_to_curvilinear (floor_coords, ele0, ele1, status
       f_w_mat)
 
   ! out: f_ele1 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  ele1 = c_loc(f_ele1)
   ! out: f_status 0D_NOT_integer
   call c_f_pointer(status, f_status_ptr)
   f_status_ptr = f_status
@@ -11651,9 +11651,9 @@ subroutine fortran_find_element_ends (ele, ele1, ele2, ix_multipass) bind(c)
   integer(c_int) :: f_ix_multipass
   integer(c_int), pointer :: f_ix_multipass_ptr
   ! ** Out parameters **
-  type(c_ptr), value :: ele1  ! 0D_PTR_type
+  type(c_ptr) :: ele1  ! 0D_PTR_type
   type(ele_struct), pointer :: f_ele1
-  type(c_ptr), value :: ele2  ! 0D_PTR_type
+  type(c_ptr) :: ele2  ! 0D_PTR_type
   type(ele_struct), pointer :: f_ele2
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
@@ -11674,9 +11674,9 @@ subroutine fortran_find_element_ends (ele, ele1, ele2, ix_multipass) bind(c)
   call find_element_ends(f_ele, f_ele1, f_ele2, f_ix_multipass_ptr)
 
   ! out: f_ele1 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  ele1 = c_loc(f_ele1)
   ! out: f_ele2 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  ele2 = c_loc(f_ele2)
 end subroutine
 subroutine fortran_find_fwhm (bound, args, fwhm) bind(c)
 
@@ -11726,7 +11726,7 @@ subroutine fortran_find_matching_fieldmap (file_name, ele, fm_type, match_ele, i
   logical, pointer :: f_ignore_slaves_native_ptr
   logical(c_bool), pointer :: f_ignore_slaves_ptr
   ! ** Out parameters **
-  type(c_ptr), value :: match_ele  ! 0D_PTR_type
+  type(c_ptr) :: match_ele  ! 0D_PTR_type
   type(ele_struct), pointer :: f_match_ele
   type(c_ptr), intent(in), value :: ix_field  ! 0D_NOT_integer
   integer :: f_ix_field
@@ -11756,7 +11756,7 @@ subroutine fortran_find_matching_fieldmap (file_name, ele, fm_type, match_ele, i
       f_ignore_slaves_native_ptr)
 
   ! out: f_match_ele 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  match_ele = c_loc(f_match_ele)
   ! out: f_ix_field 0D_NOT_integer
   call c_f_pointer(ix_field, f_ix_field_ptr)
   f_ix_field_ptr = f_ix_field
@@ -14476,7 +14476,7 @@ subroutine fortran_init_wake (wake, n_sr_long, n_sr_trans, n_sr_z, n_lr_mode, al
   logical, pointer :: f_always_allocate_native_ptr
   logical(c_bool), pointer :: f_always_allocate_ptr
   ! ** Out parameters **
-  type(c_ptr), value :: wake  ! 0D_PTR_type
+  type(c_ptr) :: wake  ! 0D_PTR_type
   type(wake_struct), pointer :: f_wake
   ! ** End of parameters **
   ! out: f_wake 0D_PTR_type
@@ -14502,7 +14502,7 @@ subroutine fortran_init_wake (wake, n_sr_long, n_sr_trans, n_sr_z, n_lr_mode, al
       f_always_allocate_native_ptr)
 
   ! out: f_wake 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  wake = c_loc(f_wake)
 end subroutine
 subroutine fortran_insert_element (lat, insert_ele, ix_ele, ix_branch, orbit) bind(c)
 
@@ -21870,16 +21870,16 @@ subroutine fortran_pointer_to_branch_given_ele (ele, branch_ptr) bind(c)
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
   ! ** Out parameters **
-  type(c_ptr), value :: branch_ptr  ! 0D_PTR_type
+  type(c_ptr) :: branch_ptr  ! 0D_PTR_type
   type(branch_struct), pointer :: f_branch_ptr
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  f_branch_ptr = pointer_to_branch(f_ele)
+  f_branch_ptr => pointer_to_branch(f_ele)
 
   ! out: f_branch_ptr 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  branch_ptr = c_loc(f_branch_ptr)
 end subroutine
 subroutine fortran_pointer_to_branch_given_name (branch_name, lat, parameter_is_branch0, &
     blank_branch, branch_ptr) bind(c)
@@ -21901,7 +21901,7 @@ subroutine fortran_pointer_to_branch_given_name (branch_name, lat, parameter_is_
   integer(c_int) :: f_blank_branch
   integer(c_int), pointer :: f_blank_branch_ptr
   ! ** Out parameters **
-  type(c_ptr), value :: branch_ptr  ! 0D_PTR_type
+  type(c_ptr) :: branch_ptr  ! 0D_PTR_type
   type(branch_struct), pointer :: f_branch_ptr
   ! ** End of parameters **
   ! in: f_branch_name 0D_NOT_character
@@ -21925,11 +21925,11 @@ subroutine fortran_pointer_to_branch_given_name (branch_name, lat, parameter_is_
   else
     f_blank_branch_ptr => null()
   endif
-  f_branch_ptr = pointer_to_branch(f_branch_name, f_lat, f_parameter_is_branch0_native_ptr, &
+  f_branch_ptr => pointer_to_branch(f_branch_name, f_lat, f_parameter_is_branch0_native_ptr, &
       f_blank_branch_ptr)
 
   ! out: f_branch_ptr 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  branch_ptr = c_loc(f_branch_ptr)
 end subroutine
 subroutine fortran_pointer_to_ele1 (lat, ix_ele, ix_branch, ele_ptr) bind(c)
 
@@ -21944,7 +21944,7 @@ subroutine fortran_pointer_to_ele1 (lat, ix_ele, ix_branch, ele_ptr) bind(c)
   integer(c_int) :: f_ix_branch
   integer(c_int), pointer :: f_ix_branch_ptr
   ! ** Out parameters **
-  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
+  type(c_ptr) :: ele_ptr  ! 0D_PTR_type
   type(ele_struct), pointer :: f_ele_ptr
   ! ** End of parameters **
   ! in: f_lat 0D_NOT_type
@@ -21958,10 +21958,10 @@ subroutine fortran_pointer_to_ele1 (lat, ix_ele, ix_branch, ele_ptr) bind(c)
   else
     f_ix_branch_ptr => null()
   endif
-  f_ele_ptr = pointer_to_ele(f_lat, f_ix_ele, f_ix_branch_ptr)
+  f_ele_ptr => pointer_to_ele(f_lat, f_ix_ele, f_ix_branch_ptr)
 
   ! out: f_ele_ptr 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  ele_ptr = c_loc(f_ele_ptr)
 end subroutine
 subroutine fortran_pointer_to_ele2 (lat, ele_loc, ele_ptr) bind(c)
 
@@ -21973,7 +21973,7 @@ subroutine fortran_pointer_to_ele2 (lat, ele_loc, ele_ptr) bind(c)
   type(c_ptr), value :: ele_loc  ! 0D_NOT_type
   type(lat_ele_loc_struct), pointer :: f_ele_loc
   ! ** Out parameters **
-  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
+  type(c_ptr) :: ele_ptr  ! 0D_PTR_type
   type(ele_struct), pointer :: f_ele_ptr
   ! ** End of parameters **
   ! in: f_lat 0D_NOT_type
@@ -21982,10 +21982,10 @@ subroutine fortran_pointer_to_ele2 (lat, ele_loc, ele_ptr) bind(c)
   ! in: f_ele_loc 0D_NOT_type
   if (.not. c_associated(ele_loc)) return
   call c_f_pointer(ele_loc, f_ele_loc)
-  f_ele_ptr = pointer_to_ele(f_lat, f_ele_loc)
+  f_ele_ptr => pointer_to_ele(f_lat, f_ele_loc)
 
   ! out: f_ele_ptr 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  ele_ptr = c_loc(f_ele_ptr)
 end subroutine
 subroutine fortran_pointer_to_ele3 (lat, ele_name, ele_ptr) bind(c)
 
@@ -21998,7 +21998,7 @@ subroutine fortran_pointer_to_ele3 (lat, ele_name, ele_ptr) bind(c)
   character(len=4096), target :: f_ele_name
   character(kind=c_char), pointer :: f_ele_name_ptr(:)
   ! ** Out parameters **
-  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
+  type(c_ptr) :: ele_ptr  ! 0D_PTR_type
   type(ele_struct), pointer :: f_ele_ptr
   ! ** End of parameters **
   ! in: f_lat 0D_NOT_type
@@ -22008,10 +22008,10 @@ subroutine fortran_pointer_to_ele3 (lat, ele_name, ele_ptr) bind(c)
   if (.not. c_associated(ele_name)) return
   call c_f_pointer(ele_name, f_ele_name_ptr, [huge(0)])
   call to_f_str(f_ele_name_ptr, f_ele_name)
-  f_ele_ptr = pointer_to_ele(f_lat, f_ele_name)
+  f_ele_ptr => pointer_to_ele(f_lat, f_ele_name)
 
   ! out: f_ele_ptr 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  ele_ptr = c_loc(f_ele_ptr)
 end subroutine
 subroutine fortran_pointer_to_ele4 (lat, foreign_ele, ele_ptr) bind(c)
 
@@ -22023,7 +22023,7 @@ subroutine fortran_pointer_to_ele4 (lat, foreign_ele, ele_ptr) bind(c)
   type(c_ptr), value :: foreign_ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_foreign_ele
   ! ** Out parameters **
-  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
+  type(c_ptr) :: ele_ptr  ! 0D_PTR_type
   type(ele_struct), pointer :: f_ele_ptr
   ! ** End of parameters **
   ! in: f_lat 0D_NOT_type
@@ -22032,10 +22032,10 @@ subroutine fortran_pointer_to_ele4 (lat, foreign_ele, ele_ptr) bind(c)
   ! in: f_foreign_ele 0D_NOT_type
   if (.not. c_associated(foreign_ele)) return
   call c_f_pointer(foreign_ele, f_foreign_ele)
-  f_ele_ptr = pointer_to_ele(f_lat, f_foreign_ele)
+  f_ele_ptr => pointer_to_ele(f_lat, f_foreign_ele)
 
   ! out: f_ele_ptr 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  ele_ptr = c_loc(f_ele_ptr)
 end subroutine
 subroutine fortran_pointer_to_element_at_s (branch, s, choose_max, err_flag, s_eff, position, &
     print_err, ele) bind(c)
@@ -22063,7 +22063,7 @@ subroutine fortran_pointer_to_element_at_s (branch, s, choose_max, err_flag, s_e
   real(c_double), pointer :: f_s_eff_ptr
   type(c_ptr), value :: position  ! 0D_NOT_type
   type(coord_struct), pointer :: f_position
-  type(c_ptr), value :: ele  ! 0D_PTR_type
+  type(c_ptr) :: ele  ! 0D_PTR_type
   type(ele_struct), pointer :: f_ele
   ! ** End of parameters **
   ! in: f_branch 0D_NOT_type
@@ -22099,8 +22099,8 @@ subroutine fortran_pointer_to_element_at_s (branch, s, choose_max, err_flag, s_e
   else
     f_print_err_native_ptr => null()
   endif
-  f_ele = pointer_to_element_at_s(f_branch, f_s, f_choose_max, f_err_flag, f_s_eff, f_position, &
-      f_print_err_native_ptr)
+  f_ele => pointer_to_element_at_s(f_branch, f_s, f_choose_max, f_err_flag, f_s_eff, &
+      f_position, f_print_err_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
   ! no output conversion for f_err_flag
@@ -22109,7 +22109,7 @@ subroutine fortran_pointer_to_element_at_s (branch, s, choose_max, err_flag, s_e
   ! out: f_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_ele 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  ele = c_loc(f_ele)
 end subroutine
 subroutine fortran_pointer_to_field_ele (ele, ix_field_ele, dz_offset, field_ele) bind(c)
 
@@ -22138,12 +22138,12 @@ subroutine fortran_pointer_to_field_ele (ele, ix_field_ele, dz_offset, field_ele
   else
     f_dz_offset_ptr => null()
   endif
-  f_field_ele = pointer_to_field_ele(f_ele, f_ix_field_ele, f_dz_offset)
+  f_field_ele => pointer_to_field_ele(f_ele, f_ix_field_ele, f_dz_offset)
 
   ! out: f_dz_offset 0D_NOT_real
   ! no output conversion for f_dz_offset
   ! out: f_field_ele 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  field_ele = c_loc(f_field_ele)
 end subroutine
 subroutine fortran_pointer_to_girder (ele, ix_slave_back, girder) bind(c)
 
@@ -22168,12 +22168,12 @@ subroutine fortran_pointer_to_girder (ele, ix_slave_back, girder) bind(c)
   else
     f_ix_slave_back_ptr => null()
   endif
-  f_girder = pointer_to_girder(f_ele, f_ix_slave_back)
+  f_girder => pointer_to_girder(f_ele, f_ix_slave_back)
 
   ! out: f_ix_slave_back 0D_NOT_integer
   ! no output conversion for f_ix_slave_back
   ! out: f_girder 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  girder = c_loc(f_girder)
 end subroutine
 subroutine fortran_pointer_to_lord (slave, ix_lord, control, ix_slave_back, lord_type, &
     ix_control, ix_ic, lord_ptr) bind(c)
@@ -22189,7 +22189,7 @@ subroutine fortran_pointer_to_lord (slave, ix_lord, control, ix_slave_back, lord
   integer(c_int) :: f_lord_type
   integer(c_int), pointer :: f_lord_type_ptr
   ! ** Out parameters **
-  type(c_ptr), value :: control  ! 0D_PTR_type
+  type(c_ptr) :: control  ! 0D_PTR_type
   type(control_struct), pointer :: f_control
   type(c_ptr), intent(in), value :: ix_slave_back  ! 0D_NOT_integer
   integer :: f_ix_slave_back
@@ -22234,11 +22234,11 @@ subroutine fortran_pointer_to_lord (slave, ix_lord, control, ix_slave_back, lord
   else
     f_ix_ic_ptr => null()
   endif
-  f_lord_ptr = pointer_to_lord(f_slave, f_ix_lord, f_control, f_ix_slave_back, f_lord_type_ptr, &
-      f_ix_control, f_ix_ic)
+  f_lord_ptr => pointer_to_lord(f_slave, f_ix_lord, f_control, f_ix_slave_back, &
+      f_lord_type_ptr, f_ix_control, f_ix_ic)
 
   ! out: f_control 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  control = c_loc(f_control)
   ! out: f_ix_slave_back 0D_NOT_integer
   ! no output conversion for f_ix_slave_back
   ! out: f_ix_control 0D_NOT_integer
@@ -22246,7 +22246,7 @@ subroutine fortran_pointer_to_lord (slave, ix_lord, control, ix_slave_back, lord
   ! out: f_ix_ic 0D_NOT_integer
   ! no output conversion for f_ix_ic
   ! out: f_lord_ptr 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  lord_ptr = c_loc(f_lord_ptr)
 end subroutine
 subroutine fortran_pointer_to_multipass_lord (ele, ix_pass, super_lord, multi_lord) bind(c)
 
@@ -22259,7 +22259,7 @@ subroutine fortran_pointer_to_multipass_lord (ele, ix_pass, super_lord, multi_lo
   type(c_ptr), intent(in), value :: ix_pass  ! 0D_NOT_integer
   integer :: f_ix_pass
   integer(c_int), pointer :: f_ix_pass_ptr
-  type(c_ptr), value :: super_lord  ! 0D_PTR_type
+  type(c_ptr) :: super_lord  ! 0D_PTR_type
   type(ele_struct), pointer :: f_super_lord
   type(c_ptr), value :: multi_lord  ! 0D_PTR_type
   type(ele_struct), pointer :: f_multi_lord
@@ -22275,14 +22275,14 @@ subroutine fortran_pointer_to_multipass_lord (ele, ix_pass, super_lord, multi_lo
   endif
   ! out: f_super_lord 0D_PTR_type
   if (c_associated(super_lord))   call c_f_pointer(super_lord, f_super_lord)
-  f_multi_lord = pointer_to_multipass_lord(f_ele, f_ix_pass, f_super_lord)
+  f_multi_lord => pointer_to_multipass_lord(f_ele, f_ix_pass, f_super_lord)
 
   ! out: f_ix_pass 0D_NOT_integer
   ! no output conversion for f_ix_pass
   ! out: f_super_lord 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  super_lord = c_loc(f_super_lord)
   ! out: f_multi_lord 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  multi_lord = c_loc(f_multi_lord)
 end subroutine
 subroutine fortran_pointer_to_next_ele (this_ele, offset, skip_beginning, follow_fork, &
     next_ele) bind(c)
@@ -22334,11 +22334,11 @@ subroutine fortran_pointer_to_next_ele (this_ele, offset, skip_beginning, follow
   else
     f_follow_fork_native_ptr => null()
   endif
-  f_next_ele = pointer_to_next_ele(f_this_ele, f_offset_ptr, f_skip_beginning_native_ptr, &
+  f_next_ele => pointer_to_next_ele(f_this_ele, f_offset_ptr, f_skip_beginning_native_ptr, &
       f_follow_fork_native_ptr)
 
   ! out: f_next_ele 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  next_ele = c_loc(f_next_ele)
 end subroutine
 subroutine fortran_pointer_to_slave (lord, ix_slave, control, lord_type, ix_lord_back, &
     ix_control, ix_ic, slave_ptr) bind(c)
@@ -22354,7 +22354,7 @@ subroutine fortran_pointer_to_slave (lord, ix_slave, control, lord_type, ix_lord
   integer(c_int) :: f_lord_type
   integer(c_int), pointer :: f_lord_type_ptr
   ! ** Out parameters **
-  type(c_ptr), value :: control  ! 0D_PTR_type
+  type(c_ptr) :: control  ! 0D_PTR_type
   type(control_struct), pointer :: f_control
   type(c_ptr), intent(in), value :: ix_lord_back  ! 0D_NOT_integer
   integer :: f_ix_lord_back
@@ -22365,7 +22365,7 @@ subroutine fortran_pointer_to_slave (lord, ix_slave, control, lord_type, ix_lord
   type(c_ptr), intent(in), value :: ix_ic  ! 0D_NOT_integer
   integer :: f_ix_ic
   integer(c_int), pointer :: f_ix_ic_ptr
-  type(c_ptr), value :: slave_ptr  ! 0D_PTR_type
+  type(c_ptr) :: slave_ptr  ! 0D_PTR_type
   type(ele_struct), pointer :: f_slave_ptr
   ! ** End of parameters **
   ! in: f_lord 0D_NOT_type
@@ -22399,11 +22399,11 @@ subroutine fortran_pointer_to_slave (lord, ix_slave, control, lord_type, ix_lord
   else
     f_ix_ic_ptr => null()
   endif
-  f_slave_ptr = pointer_to_slave(f_lord, f_ix_slave, f_control, f_lord_type_ptr, &
+  f_slave_ptr => pointer_to_slave(f_lord, f_ix_slave, f_control, f_lord_type_ptr, &
       f_ix_lord_back, f_ix_control, f_ix_ic)
 
   ! out: f_control 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  control = c_loc(f_control)
   ! out: f_ix_lord_back 0D_NOT_integer
   ! no output conversion for f_ix_lord_back
   ! out: f_ix_control 0D_NOT_integer
@@ -22411,7 +22411,7 @@ subroutine fortran_pointer_to_slave (lord, ix_slave, control, lord_type, ix_lord
   ! out: f_ix_ic 0D_NOT_integer
   ! no output conversion for f_ix_ic
   ! out: f_slave_ptr 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  slave_ptr = c_loc(f_slave_ptr)
 end subroutine
 subroutine fortran_pointer_to_super_lord (slave, control, ix_slave_back, ix_control, ix_ic, &
     lord_type, lord_ptr) bind(c)
@@ -22425,7 +22425,7 @@ subroutine fortran_pointer_to_super_lord (slave, control, ix_slave_back, ix_cont
   integer(c_int) :: f_lord_type
   integer(c_int), pointer :: f_lord_type_ptr
   ! ** Out parameters **
-  type(c_ptr), value :: control  ! 0D_PTR_type
+  type(c_ptr) :: control  ! 0D_PTR_type
   type(control_struct), pointer :: f_control
   type(c_ptr), intent(in), value :: ix_slave_back  ! 0D_NOT_integer
   integer :: f_ix_slave_back
@@ -22468,11 +22468,11 @@ subroutine fortran_pointer_to_super_lord (slave, control, ix_slave_back, ix_cont
   else
     f_lord_type_ptr => null()
   endif
-  f_lord_ptr = pointer_to_super_lord(f_slave, f_control, f_ix_slave_back, f_ix_control, &
+  f_lord_ptr => pointer_to_super_lord(f_slave, f_control, f_ix_slave_back, f_ix_control, &
       f_ix_ic, f_lord_type_ptr)
 
   ! out: f_control 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  control = c_loc(f_control)
   ! out: f_ix_slave_back 0D_NOT_integer
   ! no output conversion for f_ix_slave_back
   ! out: f_ix_control 0D_NOT_integer
@@ -22480,7 +22480,7 @@ subroutine fortran_pointer_to_super_lord (slave, control, ix_slave_back, ix_cont
   ! out: f_ix_ic 0D_NOT_integer
   ! no output conversion for f_ix_ic
   ! out: f_lord_ptr 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  lord_ptr = c_loc(f_lord_ptr)
 end subroutine
 subroutine fortran_pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, iy, extend_grid, &
     xx, yy, pt) bind(c)
@@ -22498,7 +22498,7 @@ subroutine fortran_pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, i
   logical, pointer :: f_extend_grid_native_ptr
   logical(c_bool), pointer :: f_extend_grid_ptr
   ! ** Out parameters **
-  type(c_ptr), value :: pt  ! 0D_PTR_type
+  type(c_ptr) :: pt  ! 0D_PTR_type
   type(surface_displacement_pt_struct), pointer :: f_pt
   ! ** Inout parameters **
   type(c_ptr), intent(in), value :: x  ! 0D_NOT_real
@@ -22569,7 +22569,7 @@ subroutine fortran_pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, i
   else
     f_yy_ptr => null()
   endif
-  f_pt = pointer_to_surface_displacement_pt(f_ele, f_nearest, f_x_ptr, f_y_ptr, f_ix_ptr, &
+  f_pt => pointer_to_surface_displacement_pt(f_ele, f_nearest, f_x_ptr, f_y_ptr, f_ix_ptr, &
       f_iy_ptr, f_extend_grid_native_ptr, f_xx_ptr, f_yy_ptr)
 
   ! inout: f_x 0D_NOT_real
@@ -22585,7 +22585,7 @@ subroutine fortran_pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, i
   ! inout: f_yy 0D_NOT_real
   ! no output conversion for f_yy
   ! out: f_pt 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  pt = c_loc(f_pt)
 end subroutine
 subroutine fortran_pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, extend_grid, &
     xx, yy, pt) bind(c)
@@ -22603,7 +22603,7 @@ subroutine fortran_pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, 
   logical, pointer :: f_extend_grid_native_ptr
   logical(c_bool), pointer :: f_extend_grid_ptr
   ! ** Out parameters **
-  type(c_ptr), value :: pt  ! 0D_PTR_type
+  type(c_ptr) :: pt  ! 0D_PTR_type
   type(surface_segmented_pt_struct), pointer :: f_pt
   ! ** Inout parameters **
   type(c_ptr), intent(in), value :: x  ! 0D_NOT_real
@@ -22674,7 +22674,7 @@ subroutine fortran_pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, 
   else
     f_yy_ptr => null()
   endif
-  f_pt = pointer_to_surface_segmented_pt(f_ele, f_nearest, f_x_ptr, f_y_ptr, f_ix_ptr, &
+  f_pt => pointer_to_surface_segmented_pt(f_ele, f_nearest, f_x_ptr, f_y_ptr, f_ix_ptr, &
       f_iy_ptr, f_extend_grid_native_ptr, f_xx_ptr, f_yy_ptr)
 
   ! inout: f_x 0D_NOT_real
@@ -22690,7 +22690,7 @@ subroutine fortran_pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, 
   ! inout: f_yy 0D_NOT_real
   ! no output conversion for f_yy
   ! out: f_pt 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  pt = c_loc(f_pt)
 end subroutine
 subroutine fortran_pointer_to_wake_ele (ele, delta_s, wake_ele) bind(c)
 
@@ -22715,12 +22715,12 @@ subroutine fortran_pointer_to_wake_ele (ele, delta_s, wake_ele) bind(c)
   else
     f_delta_s_ptr => null()
   endif
-  f_wake_ele = pointer_to_wake_ele(f_ele, f_delta_s)
+  f_wake_ele => pointer_to_wake_ele(f_ele, f_delta_s)
 
   ! out: f_delta_s 0D_NOT_real
   ! no output conversion for f_delta_s
   ! out: f_wake_ele 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  wake_ele = c_loc(f_wake_ele)
 end subroutine
 subroutine fortran_pointer_to_wall3d (ele, ix_wall, ds_offset, is_branch_wall, wall3d) bind(c)
 
@@ -22739,7 +22739,7 @@ subroutine fortran_pointer_to_wall3d (ele, ix_wall, ds_offset, is_branch_wall, w
   type(c_ptr), intent(in), value :: is_branch_wall  ! 0D_NOT_logical
   logical :: f_is_branch_wall
   logical(c_bool), pointer :: f_is_branch_wall_ptr
-  type(c_ptr), value :: wall3d  ! 0D_PTR_type
+  type(c_ptr) :: wall3d  ! 0D_PTR_type
   type(wall3d_struct), pointer :: f_wall3d
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
@@ -22763,14 +22763,14 @@ subroutine fortran_pointer_to_wall3d (ele, ix_wall, ds_offset, is_branch_wall, w
   else
     f_is_branch_wall_ptr => null()
   endif
-  f_wall3d = pointer_to_wall3d(f_ele, f_ix_wall_ptr, f_ds_offset, f_is_branch_wall)
+  f_wall3d => pointer_to_wall3d(f_ele, f_ix_wall_ptr, f_ds_offset, f_is_branch_wall)
 
   ! out: f_ds_offset 0D_NOT_real
   ! no output conversion for f_ds_offset
   ! out: f_is_branch_wall 0D_NOT_logical
   ! no output conversion for f_is_branch_wall
   ! out: f_wall3d 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  wall3d = c_loc(f_wall3d)
 end subroutine
 subroutine fortran_polar_to_spinor (polar, spinor) bind(c)
 
@@ -32060,7 +32060,7 @@ subroutine fortran_transfer_ac_kick (ac_in, ac_out) bind(c)
   type(c_ptr), value :: ac_in  ! 0D_PTR_type
   type(ac_kicker_struct), pointer :: f_ac_in
   ! ** Out parameters **
-  type(c_ptr), value :: ac_out  ! 0D_PTR_type
+  type(c_ptr) :: ac_out  ! 0D_PTR_type
   type(ac_kicker_struct), pointer :: f_ac_out
   ! ** End of parameters **
   ! in: f_ac_in 0D_PTR_type
@@ -32072,7 +32072,7 @@ subroutine fortran_transfer_ac_kick (ac_in, ac_out) bind(c)
   call transfer_ac_kick(f_ac_in, f_ac_out)
 
   ! out: f_ac_out 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  ac_out = c_loc(f_ac_out)
 end subroutine
 subroutine fortran_transfer_branch (branch1, branch2) bind(c)
 
@@ -32746,7 +32746,7 @@ subroutine fortran_transfer_wake (wake_in, wake_out) bind(c)
   type(c_ptr), value :: wake_in  ! 0D_PTR_type
   type(wake_struct), pointer :: f_wake_in
   ! ** Out parameters **
-  type(c_ptr), value :: wake_out  ! 0D_PTR_type
+  type(c_ptr) :: wake_out  ! 0D_PTR_type
   type(wake_struct), pointer :: f_wake_out
   ! ** End of parameters **
   ! in: f_wake_in 0D_PTR_type
@@ -32758,7 +32758,7 @@ subroutine fortran_transfer_wake (wake_in, wake_out) bind(c)
   call transfer_wake(f_wake_in, f_wake_out)
 
   ! out: f_wake_out 0D_PTR_type
-  ! TODO may require output conversion? 0D_PTR_type
+  wake_out = c_loc(f_wake_out)
 end subroutine
 subroutine fortran_truncate_complex_taylor_to_order (complex_taylor_in, order, &
     complex_taylor_out) bind(c)

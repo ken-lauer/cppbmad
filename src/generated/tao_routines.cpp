@@ -638,7 +638,7 @@ Tao::TaoEleShapeInfo Tao::tao_ele_shape_info(
     double& y2,
     optional_ref<int> ix_shape_min) {
   // intent=in allocatable type array
-  TaoEleShapeProxy _e_shape;
+  void* _e_shape;
   char _label_name[4096];
   auto* _ix_shape_min = ix_shape_min.has_value() ? &ix_shape_min->get()
                                                  : nullptr; // inout, optional
@@ -646,12 +646,12 @@ Tao::TaoEleShapeInfo Tao::tao_ele_shape_info(
       /* int& */ ix_uni,
       /* void* */ ele.get_fortran_ptr(),
       /* void* */ ele_shapes.get_fortran_ptr(),
-      /* void* */ _e_shape.get_fortran_ptr(),
+      /* void* */ &_e_shape,
       /* const char* */ _label_name,
       /* double& */ y1,
       /* double& */ y2,
       /* int* */ _ix_shape_min);
-  return TaoEleShapeInfo{std::move(_e_shape), _label_name};
+  return TaoEleShapeInfo{std::move(TaoEleShapeProxy(_e_shape)), _label_name};
 }
 Tao::TaoEvalFloorOrbit Tao::tao_eval_floor_orbit(
     TaoDataProxy& datum,
@@ -819,7 +819,7 @@ Tao::TaoFindPlotRegion Tao::tao_find_plot_region(
     std::optional<bool> print_flag) {
   bool _err{};
   auto _where = where.c_str();
-  TaoPlotRegionProxy _region;
+  void* _region;
   bool print_flag_lvalue;
   auto* _print_flag{&print_flag_lvalue};
   if (print_flag.has_value()) {
@@ -830,9 +830,9 @@ Tao::TaoFindPlotRegion Tao::tao_find_plot_region(
   fortran_tao_find_plot_region(
       /* bool& */ _err,
       /* const char* */ _where,
-      /* void* */ _region.get_fortran_ptr(),
+      /* void* */ &_region,
       /* bool* */ _print_flag);
-  return TaoFindPlotRegion{_err, std::move(_region)};
+  return TaoFindPlotRegion{_err, std::move(TaoPlotRegionProxy(_region))};
 }
 void Tao::tao_fixer(std::string switch_, std::string word1, std::string word2) {
   auto _switch_ = switch_.c_str();
@@ -1620,7 +1620,7 @@ Tao::TaoPointerToDatumEle Tao::tao_pointer_to_datum_ele(
   } else {
     _print_err = nullptr;
   }
-  EleProxy _ele;
+  void* _ele;
   fortran_tao_pointer_to_datum_ele(
       /* void* */ lat.get_fortran_ptr(),
       /* const char* */ _ele_name,
@@ -1629,8 +1629,8 @@ Tao::TaoPointerToDatumEle Tao::tao_pointer_to_datum_ele(
       /* bool& */ _valid,
       /* const char* */ _why_invalid,
       /* bool* */ _print_err,
-      /* void* */ _ele.get_fortran_ptr());
-  return TaoPointerToDatumEle{_valid, _why_invalid, std::move(_ele)};
+      /* void* */ &_ele);
+  return TaoPointerToDatumEle{_valid, _why_invalid, std::move(EleProxy(_ele))};
 }
 Tao::TaoPointerToEleShape Tao::tao_pointer_to_ele_shape(
     int ix_uni,
@@ -1681,12 +1681,10 @@ TaoUniverseProxy Tao::tao_pointer_to_universe(
   } else {
     _neg2_to_default = nullptr;
   }
-  TaoUniverseProxy _u;
+  void* _u;
   fortran_tao_pointer_to_universe_int(
-      /* int& */ ix_uni,
-      /* bool* */ _neg2_to_default,
-      /* void* */ _u.get_fortran_ptr());
-  return std::move(_u);
+      /* int& */ ix_uni, /* bool* */ _neg2_to_default, /* void* */ &_u);
+  return std::move(TaoUniverseProxy(_u));
 }
 TaoUniverseProxy Tao::tao_pointer_to_universe(
     std::string& string,
@@ -1699,12 +1697,10 @@ TaoUniverseProxy Tao::tao_pointer_to_universe(
   } else {
     _neg2_to_default = nullptr;
   }
-  TaoUniverseProxy _u;
+  void* _u;
   fortran_tao_pointer_to_universe_str(
-      /* const char* */ _string,
-      /* bool* */ _neg2_to_default,
-      /* void* */ _u.get_fortran_ptr());
-  return std::move(_u);
+      /* const char* */ _string, /* bool* */ _neg2_to_default, /* void* */ &_u);
+  return std::move(TaoUniverseProxy(_u));
 }
 Tao::TaoPointerToUniverses Tao::tao_pointer_to_universes(
     std::string name_in,

@@ -964,12 +964,12 @@ RandomStateProxy SimUtils::pointer_to_ran_state(
   } else {
     _ix_thread = nullptr;
   }
-  RandomStateProxy _ran_state_ptr;
+  void* _ran_state_ptr;
   fortran_pointer_to_ran_state(
       /* void* */ _ran_state,
       /* int* */ _ix_thread,
-      /* void* */ _ran_state_ptr.get_fortran_ptr());
-  return std::move(_ran_state_ptr);
+      /* void* */ &_ran_state_ptr);
+  return std::move(RandomStateProxy(_ran_state_ptr));
 }
 void SimUtils::poly_eval(
     RealAlloc1D& poly,
