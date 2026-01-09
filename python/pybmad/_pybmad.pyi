@@ -22206,6 +22206,8 @@ class Zlafun:
         ...
 def ab_multipole_kick(a: typing.SupportsFloat, b: typing.SupportsFloat, n: typing.SupportsInt, ref_species: typing.SupportsInt, ele_orientation: typing.SupportsInt, coord: CoordStruct, pole_type: typing.SupportsInt | None = None, scale: typing.SupportsFloat | None = None) -> ...:
     """
+    Subroutine ab_multipole_kick (a, b, n, ref_species, ele_orientation, coord, kx, ky, dk, pole_type, scale)
+    
     Subroutine to put in the kick due to an ab_multipole.
     
     Parameters
@@ -22240,10 +22242,12 @@ def ab_multipole_kick(a: typing.SupportsFloat, b: typing.SupportsFloat, n: typin
     """
 def ab_multipole_kicks(an: RealAlloc1D, bn: RealAlloc1D, ix_pole_max: typing.SupportsInt, ele: EleStruct, orbit: CoordStruct, pole_type: typing.SupportsInt | None = None, scale: typing.SupportsFloat | None = None, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Routine to put in the kick due to ab_multipole components in an element.
+    Subroutine ab_multipole_kicks (an, bn, ix_pole_max, ele, orbit, pole_type, scale, mat6, make_matrix)
     
+    Routine to put in the kick due to ab_multipole components in an element.
     The kick will be corrected for the orientation of the element and the particle direction of travel.
     Any difference between element p0c and orbit%p0c will be taken into account.
+    
     Also see the multipole_kicks routine.
     
     Parameters
@@ -22273,12 +22277,13 @@ def ab_multipole_kicks(an: RealAlloc1D, bn: RealAlloc1D, ix_pole_max: typing.Sup
     """
 def absolute_photon_position(e_orb: CoordStruct, photon_orb: CoordStruct) -> None:
     """
-    Routine to calculate the photon phase space coordinates given:
+    Subroutine absolute_photon_position (e_orb, photon_orb)
     
-    1) The phase space coords of the emitting charged particle and
-    2) The photon phase space coords relative to the emitting particle.
-    The photon (x, y, z) position is ignored (it is assumed the photon is emitted at
-    the charged particle position) and only the photon's (vx, vy, vz) velocity matters.
+    Routine to calculate the photon phase space coordinates given:
+      1) The phase space coords of the emitting charged particle and
+      2) The photon phase space coords relative to the emitting particle.
+         The photon (x, y, z) position is ignored (it is assumed the photon is emitted at
+         the charged particle position) and only the photon's (vx, vy, vz) velocity matters.
     
     Parameters
     ----------
@@ -22290,8 +22295,6 @@ def absolute_photon_position(e_orb: CoordStruct, photon_orb: CoordStruct) -> Non
     """
 def absolute_time_tracking(ele: EleStruct, is_abs_time: bool) -> PyAbsoluteTimeTracking:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -22300,8 +22303,6 @@ def absolute_time_tracking(ele: EleStruct, is_abs_time: bool) -> PyAbsoluteTimeT
     """
 def ac_kicker_amp(ele: EleStruct, orbit: CoordStruct, true_time: typing.SupportsFloat | None = None, ac_amp: typing.SupportsFloat) -> PyAcKickerAmp:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -22315,10 +22316,13 @@ def ac_kicker_amp(ele: EleStruct, orbit: CoordStruct, true_time: typing.Supports
     """
 def action_to_xyz(ring: LatStruct, ix: typing.SupportsInt, J: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]) -> ...:
     """
+    Subroutine action_to_xyz(ring, ix, J, X, err_flag)
+    
     Given the normal mode invariants and phases J of a particle, returns the canonical coordinates.
     
     The J vector looks like:
     J = (sqrt(2Ja)cos(phia), -sqrt(2Ja)sin(phia), sqrt(2Jb)cos(phib), -sqrt(2Jb)sin(phib), sqrt(2Jc)cos(phic), -sqrt(2Jc)sin(phic))
+    
     X is obtained from:
     X = N . J
     Where N is from the Eigen decomposition of the 1-turn transfer matrix.
@@ -22342,8 +22346,6 @@ def action_to_xyz(ring: LatStruct, ix: typing.SupportsInt, J: typing.Annotated[c
     """
 def add_lattice_control_structs(ele: EleStruct, n_add_slave: typing.SupportsInt | None = None, n_add_lord: typing.SupportsInt | None = None, n_add_slave_field: typing.SupportsInt | None = None, n_add_lord_field: typing.SupportsInt | None = None, add_at_end: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -22362,10 +22364,19 @@ def add_lattice_control_structs(ele: EleStruct, n_add_slave: typing.SupportsInt 
     """
 def add_superimpose(lat: LatStruct, super_ele_in: EleStruct, ix_branch: typing.SupportsInt, save_null_drift: bool | None = None, create_jumbo_slave: bool | None = None, ix_insert: typing.SupportsInt | None = None, mangle_slave_names: bool | None = None, wrap: bool | None = None) -> ...:
     """
-    save_null_drift, create_jumbo_slave, ix_insert, mangle_slave_names, wrap)
+    Subroutine add_superimpose (lat, super_ele_in, ix_branch, err_flag, super_ele_out,
+                   save_null_drift, create_jumbo_slave, ix_insert, mangle_slave_names, wrap)
     
     Routine to superimpose an element. If the element can be inserted
     into the lat without making a super_lord element then this will be done.
+    
+    Note: This routine, since it handles only one superposition, is not sufficient for
+      superposition in a multipass region. For historical reasons, the extra code needed
+      is buried in the parser_add_superimpose code. If you need to do multipass superpositions
+      please contact David Sagan and this situation will be rectified.
+    
+    Note: Bookkeeping like recalculating reference energies and recalculating transfer matrices
+      is *not* done by this routine.
     
     Parameters
     ----------
@@ -22408,8 +22419,6 @@ def add_superimpose(lat: LatStruct, super_ele_in: EleStruct, ix_branch: typing.S
     """
 def add_this_multipass(lat: LatStruct, m_slaves: LatEleLocStructAlloc1D, lord_in: _pybmad.EleStruct | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : 
@@ -22418,20 +22427,20 @@ def add_this_multipass(lat: LatStruct, m_slaves: LatEleLocStructAlloc1D, lord_in
     """
 def add_this_taylor_term(ele: EleStruct, i_out: typing.SupportsInt, coef: typing.SupportsFloat, expn: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(6)"]) -> PyAddThisTaylorTerm:
     """
-    Subroutine used by bmad_parser and bmad_parser2 to parse the input file.
+    Subroutine add_this_taylor_term (ele, i_out, coef, expn)
     
+    Subroutine used by bmad_parser and bmad_parser2 to parse the input file.
     This subroutine is not intended for general use.
     """
 def adjust_super_slave_names(lat: LatStruct, ix1_lord: typing.SupportsInt, ix2_lord: typing.SupportsInt, first_time: bool | None = None) -> PyAdjustSuperSlaveNames:
     """
-    Routine to adjust the names of the slaves.
+    Subroutine adjust_super_slave_names (lat, ix1_lord, ix2_lord, first_time)
     
+    Routine to adjust the names of the slaves.
     This routine is used by add_superimpose and is not meant for general use.
     """
 def allocate_branch_array(lat: LatStruct, upper_bound: typing.SupportsInt) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -22441,8 +22450,6 @@ def allocate_branch_array(lat: LatStruct, upper_bound: typing.SupportsInt) -> No
     """
 def allocate_lat_ele_array(lat: LatStruct, upper_bound: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None, do_ramper_slave_setup: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -22457,12 +22464,12 @@ def allocate_lat_ele_array(lat: LatStruct, upper_bound: typing.SupportsInt | Non
     """
 def allocate_thread_states() -> None:
     """
+    Subroutine allocate_thread_states()
+    
     Routine to allocate random number state structures when openMP is used.
     """
 def angle_between_polars(polar1: SpinPolarStruct, polar2: SpinPolarStruct, angle: typing.SupportsFloat) -> PyAngleBetweenPolars:
     """
-    No docstring available
-    
     Parameters
     ----------
     polar1 : 
@@ -22473,8 +22480,6 @@ def angle_between_polars(polar1: SpinPolarStruct, polar2: SpinPolarStruct, angle
     """
 def angle_to_canonical_coords(orbit: CoordStruct, coord_type: str | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -22486,6 +22491,8 @@ def angle_to_canonical_coords(orbit: CoordStruct, coord_type: str | None = None)
     """
 def anomalous_moment_of(species: typing.SupportsInt) -> float:
     """
+    Function anomalous_moment_of (species) result (moment)
+    
     Routine to return the anomolous moment for subatomic species type. Otherwise returns 0.
     
     Parameters
@@ -22500,8 +22507,9 @@ def anomalous_moment_of(species: typing.SupportsInt) -> float:
     """
 def antiparticle(species: typing.SupportsInt) -> int:
     """
-    Routine to return the antiparticle ID given the particle ID.
+    Function antiparticle (species) result (anti_species)
     
+    Routine to return the antiparticle ID given the particle ID.
     For a molecule the anti-species is just the molecude with the charge reversed.
     
     Parameters
@@ -22516,6 +22524,8 @@ def antiparticle(species: typing.SupportsInt) -> int:
     """
 def aperture_bookkeeper(ele: EleStruct) -> None:
     """
+    Subroutine aperture_bookkeeper (ele)
+    
     Routine to calculate aperture limits when ele%attribute_type is set to auto_aperture$
     
     Parameters
@@ -22526,15 +22536,19 @@ def aperture_bookkeeper(ele: EleStruct) -> None:
     """
 def apfft(rdata_in: RealAlloc1D, bounds: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], window: str, phase: typing.SupportsFloat, diag: typing.SupportsInt | None = None) -> PyApfft:
     """
+    subroutine apfft(rdata_in, bounds, window, phase, diag)
+    
     Implements the All Phase FFT method for obtaining accurate phase from signal data.
     
     The signal data is truncated to an odd length, and the phase is relative to the central point.
     """
 def apfft_corr(rdata_in: RealAlloc1D, bounds: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"] | None = None, window: str, diag: typing.SupportsInt | None = None) -> ...:
     """
-    For real signal rdata_in, computes phase, frequency, and amplitude
+    subroutine apfft_corr(rdata_in, bounds, window, phase, amp, freq, diag)
     
+    For real signal rdata_in, computes phase, frequency, and amplitude
     of peak found within bounds.  Algorithm is corrected all-phase FFT and should.
+    
     This routine finds only one peak:  the largest amplitude within the bound.  Signals with multiple
     components can be investigated by varying bounds appropriately.
     
@@ -22560,6 +22574,8 @@ def apfft_corr(rdata_in: RealAlloc1D, bounds: typing.Annotated[collections.abc.S
     """
 def apfft_ext(rdata: RealAlloc1D, bounds: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], window: str, phase: typing.SupportsFloat, amp: typing.SupportsFloat, freq: typing.SupportsFloat, diag: typing.SupportsInt | None = None) -> PyApfftExt:
     """
+    subroutine apfft_ext(rdata,bounds, window, phase, amp, freq, diag)
+    
     Implements the All Phase FFT method for obtaining accurate phase from signal data.
     
     This "extended" apfft subroutine returns the amplitudes and frequency as well, for use
@@ -22567,8 +22583,6 @@ def apfft_ext(rdata: RealAlloc1D, bounds: typing.Annotated[collections.abc.Seque
     """
 def apply_all_rampers(lat: LatStruct) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -22579,8 +22593,6 @@ def apply_all_rampers(lat: LatStruct) -> bool:
     """
 def apply_energy_kick(dE: typing.SupportsFloat, orbit: CoordStruct, ddE_dr: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     dE : float
@@ -22600,8 +22612,9 @@ def apply_energy_kick(dE: typing.SupportsFloat, orbit: CoordStruct, ddE_dr: typi
     """
 def apply_patch_to_ptc_fibre(ele: EleStruct) -> None:
     """
-    Routine to take the patch parameters from a Bmad patch element and
+    Subroutine apply_patch_to_ptc_fibre (ele)
     
+    Routine to take the patch parameters from a Bmad patch element and
     transfer them to the associated PTC fibre.
     
     Parameters
@@ -22611,8 +22624,6 @@ def apply_patch_to_ptc_fibre(ele: EleStruct) -> None:
     """
 def apply_rampers_to_slave(slave: EleStruct) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     slave : EleStruct
@@ -22622,8 +22633,6 @@ def apply_rampers_to_slave(slave: EleStruct) -> bool:
     """
 def array_re_str(arr: RealAlloc1D, parens_in: str | None = None, str_out: str) -> PyArrayReStr:
     """
-    No docstring available
-    
     Parameters
     ----------
     arr : 
@@ -22632,8 +22641,6 @@ def array_re_str(arr: RealAlloc1D, parens_in: str | None = None, str_out: str) -
     """
 def asinc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typing.SupportsFloat) -> PyAsinc:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : 
@@ -22642,8 +22649,6 @@ def asinc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typi
     """
 def assert_equal(int_arr: IntAlloc1D, err_str: str, ival: typing.SupportsInt) -> PyAssertEqual:
     """
-    No docstring available
-    
     Parameters
     ----------
     int_arr : 
@@ -22652,8 +22657,6 @@ def assert_equal(int_arr: IntAlloc1D, err_str: str, ival: typing.SupportsInt) ->
     """
 def astra_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct, field_value: typing.SupportsFloat) -> PyAstraMaxFieldReference:
     """
-    No docstring available
-    
     Parameters
     ----------
     pt0 : 
@@ -22662,8 +22665,6 @@ def astra_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct, field_val
     """
 def at_this_ele_end(now_at: typing.SupportsInt, where_at: typing.SupportsInt, is_at_this_end: bool) -> PyAtThisEleEnd:
     """
-    No docstring available
-    
     Parameters
     ----------
     now_at : int
@@ -22675,8 +22676,9 @@ def at_this_ele_end(now_at: typing.SupportsInt, where_at: typing.SupportsInt, is
     """
 def atomic_number(species: typing.SupportsInt) -> int:
     """
-    Routine to return the atomic number Z if species argument corresponds to an atomic particle  or is a proton.
+    Function atomic_number(species) result (atomic_num)
     
+    Routine to return the atomic number Z if species argument corresponds to an atomic particle  or is a proton.
     Set to the charge for atomic particles.
     Set to zero for molecules.
     
@@ -22692,6 +22694,8 @@ def atomic_number(species: typing.SupportsInt) -> int:
     """
 def atomic_species_id(charge: typing.SupportsInt, is_anti: bool, atomic_num: typing.SupportsInt, n_nuc: typing.SupportsInt) -> int:
     """
+    Function atomic_species_id(charge, is_anti, atomic_num, n_nuc) result (species_id)
+    
     Routine to return the species ID for an atom
     
     Parameters
@@ -22712,8 +22716,6 @@ def atomic_species_id(charge: typing.SupportsInt, is_anti: bool, atomic_num: typ
     """
 def attribute_bookkeeper(ele: EleStruct, force_bookkeeping: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -22728,20 +22730,24 @@ def attribute_bookkeeper(ele: EleStruct, force_bookkeeping: bool | None = None) 
 @typing.overload
 def attribute_free(ix_ele: typing.SupportsInt, attrib_name: str, lat: LatStruct, err_print_flag: bool | None = None, except_overlay: bool | None = None, dependent_attribs_free: bool | None = None) -> ...:
     """
-    Overloaded function for:
+    Function attribute_free
     
-    Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
-    except_overlay, dependent_attribs_free, why_not_free) result (free)
-    Function attribute_free2 (ele, attrib_name, err_print_flag,
-    except_overlay, dependent_attribs_free, why_not_free) result (free)
-    Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
-    except_overlay, why_not_free) result (free)
+    Overloaded function for:
+      Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
+                                   except_overlay, dependent_attribs_free, why_not_free) result (free)
+      Function attribute_free2 (ele, attrib_name, err_print_flag,
+                                   except_overlay, dependent_attribs_free, why_not_free) result (free)
+      Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
+                                   except_overlay, why_not_free) result (free)
+    
     Routine to check if an attribute is free to vary.
+    
     Attributes that cannot be changed directly include super_slave attributes (since
     these attributes are controlled by their super_lords) and attributes that
     are controlled by an overlay.
+    
     Also dependent variables such as the angle of a bend cannot be
-    freely variable.
+      freely variable.
     
     Parameters
     ----------
@@ -22778,20 +22784,24 @@ def attribute_free(ix_ele: typing.SupportsInt, attrib_name: str, lat: LatStruct,
 @typing.overload
 def attribute_free(ele: EleStruct, attrib_name: str, err_print_flag: bool | None = None, except_overlay: bool | None = None, dependent_attribs_free: bool | None = None) -> ...:
     """
-    Overloaded function for:
+    Function attribute_free
     
-    Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
-    except_overlay, dependent_attribs_free, why_not_free) result (free)
-    Function attribute_free2 (ele, attrib_name, err_print_flag,
-    except_overlay, dependent_attribs_free, why_not_free) result (free)
-    Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
-    except_overlay, why_not_free) result (free)
+    Overloaded function for:
+      Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
+                                   except_overlay, dependent_attribs_free, why_not_free) result (free)
+      Function attribute_free2 (ele, attrib_name, err_print_flag,
+                                   except_overlay, dependent_attribs_free, why_not_free) result (free)
+      Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
+                                   except_overlay, why_not_free) result (free)
+    
     Routine to check if an attribute is free to vary.
+    
     Attributes that cannot be changed directly include super_slave attributes (since
     these attributes are controlled by their super_lords) and attributes that
     are controlled by an overlay.
+    
     Also dependent variables such as the angle of a bend cannot be
-    freely variable.
+      freely variable.
     
     Parameters
     ----------
@@ -22828,20 +22838,24 @@ def attribute_free(ele: EleStruct, attrib_name: str, err_print_flag: bool | None
 @typing.overload
 def attribute_free(ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt, attrib_name: str, lat: LatStruct, err_print_flag: bool | None = None, except_overlay: bool | None = None, dependent_attribs_free: bool | None = None) -> ...:
     """
-    Overloaded function for:
+    Function attribute_free
     
-    Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
-    except_overlay, dependent_attribs_free, why_not_free) result (free)
-    Function attribute_free2 (ele, attrib_name, err_print_flag,
-    except_overlay, dependent_attribs_free, why_not_free) result (free)
-    Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
-    except_overlay, why_not_free) result (free)
+    Overloaded function for:
+      Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
+                                   except_overlay, dependent_attribs_free, why_not_free) result (free)
+      Function attribute_free2 (ele, attrib_name, err_print_flag,
+                                   except_overlay, dependent_attribs_free, why_not_free) result (free)
+      Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
+                                   except_overlay, why_not_free) result (free)
+    
     Routine to check if an attribute is free to vary.
+    
     Attributes that cannot be changed directly include super_slave attributes (since
     these attributes are controlled by their super_lords) and attributes that
     are controlled by an overlay.
+    
     Also dependent variables such as the angle of a bend cannot be
-    freely variable.
+      freely variable.
     
     Parameters
     ----------
@@ -22878,13 +22892,24 @@ def attribute_free(ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt, at
 @typing.overload
 def attribute_index(ele: EleStruct, name: str, can_abbreviate: bool | None = None, print_error: bool | None = None) -> ...:
     """
-    Function to return the index of a attribute for a given BMAD element type
+    Function attribute_index (...) result (attrib_index)
     
+    Function to return the index of a attribute for a given BMAD element type
     and the name of the attribute. Abbreviations are by default permitted but must be at
     least 3 characters. Exception: overlay and group varialbe names may not
     be abbreviated.
-    attribute_index1 (ele, name, full_name, can_abbreviate, print_error) result (attrib_index)
-    attribute_index2 (key, name, full_name, can_abbreviate, print_error) result (attrib_index)
+    
+    This routine is an overloaded name for:
+      attribute_index1 (ele, name, full_name, can_abbreviate, print_error) result (attrib_index)
+      attribute_index2 (key, name, full_name, can_abbreviate, print_error) result (attrib_index)
+    
+    Note:
+      If ele%key or key = 0 -> Entire name table will be searched.
+    
+    See also:
+      has_attribute
+      attribute_info
+      attribute_name
     
     Parameters
     ----------
@@ -22914,13 +22939,24 @@ def attribute_index(ele: EleStruct, name: str, can_abbreviate: bool | None = Non
 @typing.overload
 def attribute_index(key: typing.SupportsInt, name: str, can_abbreviate: bool | None = None, print_error: bool | None = None) -> ...:
     """
-    Function to return the index of a attribute for a given BMAD element type
+    Function attribute_index (...) result (attrib_index)
     
+    Function to return the index of a attribute for a given BMAD element type
     and the name of the attribute. Abbreviations are by default permitted but must be at
     least 3 characters. Exception: overlay and group varialbe names may not
     be abbreviated.
-    attribute_index1 (ele, name, full_name, can_abbreviate, print_error) result (attrib_index)
-    attribute_index2 (key, name, full_name, can_abbreviate, print_error) result (attrib_index)
+    
+    This routine is an overloaded name for:
+      attribute_index1 (ele, name, full_name, can_abbreviate, print_error) result (attrib_index)
+      attribute_index2 (key, name, full_name, can_abbreviate, print_error) result (attrib_index)
+    
+    Note:
+      If ele%key or key = 0 -> Entire name table will be searched.
+    
+    See also:
+      has_attribute
+      attribute_info
+      attribute_name
     
     Parameters
     ----------
@@ -22950,11 +22986,18 @@ def attribute_index(key: typing.SupportsInt, name: str, can_abbreviate: bool | N
 @typing.overload
 def attribute_name(key: typing.SupportsInt, ix_att: typing.SupportsInt, show_private: bool | None = None) -> str:
     """
-    Function to return the name of an attribute for a particular type of
+    Function attribute_name (...) result (attrib_name)
     
+    Function to return the name of an attribute for a particular type of
     Bmad element.
-    attribute_name1 (ele, ix_att, show_private) result (attrib_name)
-    attribute_name2 (key, ix_att, show_private) result (attrib_name)
+    
+    This routine is an overloaded name for:
+      attribute_name1 (ele, ix_att, show_private) result (attrib_name)
+      attribute_name2 (key, ix_att, show_private) result (attrib_name)
+    
+    
+    Note: attribute_name (key, ix_att) is not able to handle overlay/group control variables.
+    Use attributge_name (ele, ix_att) is this is needed.
     
     Parameters
     ----------
@@ -22982,11 +23025,18 @@ def attribute_name(key: typing.SupportsInt, ix_att: typing.SupportsInt, show_pri
 @typing.overload
 def attribute_name(ele: EleStruct, ix_att: typing.SupportsInt, show_private: bool | None = None) -> str:
     """
-    Function to return the name of an attribute for a particular type of
+    Function attribute_name (...) result (attrib_name)
     
+    Function to return the name of an attribute for a particular type of
     Bmad element.
-    attribute_name1 (ele, ix_att, show_private) result (attrib_name)
-    attribute_name2 (key, ix_att, show_private) result (attrib_name)
+    
+    This routine is an overloaded name for:
+      attribute_name1 (ele, ix_att, show_private) result (attrib_name)
+      attribute_name2 (key, ix_att, show_private) result (attrib_name)
+    
+    
+    Note: attribute_name (key, ix_att) is not able to handle overlay/group control variables.
+    Use attributge_name (ele, ix_att) is this is needed.
     
     Parameters
     ----------
@@ -23013,14 +23063,22 @@ def attribute_name(ele: EleStruct, ix_att: typing.SupportsInt, show_private: boo
     """
 def attribute_type(attrib_name: str, ele: _pybmad.EleStruct | None = None) -> int:
     """
+    Function attribute_type (attrib_name, ele) result (attrib_type)
+    
     Routine to return the logical type of an attribute.
     
     A "switch" attribute is an attribute whose value corresponds to some string.
     For example, the "COUPLER_AT" attirbute with value 1 corresponds to "ENTRANCE_END", etc.
+    
     A "struct" attribute is an attribute that is the name for a "structure". For example,
     CARTESIAN_MAP is the name of the structure hoding a Cartesian map.
+    
     If attrib_name corresponds to a switch attribute, The routine switch_attrib_value_name can
     be used to print the name corresponding to the attribute's value.
+    
+    Note: The "storage type" of an attribute is different from the "logical type" returned by
+    this routine. For example, the logical type of attribute "n_slice" is integer. However, the
+    value of "n_slice" is stored as a real number in the ele_struct [in ele%value(n_slice$)].
     
     Parameters
     ----------
@@ -23038,8 +23096,9 @@ def attribute_type(attrib_name: str, ele: _pybmad.EleStruct | None = None) -> in
     """
 def attribute_units(attrib_name: str, unrecognized_units: str | None = None) -> str:
     """
-    Routine to return the units associated with an attribute.
+    Function attribute_units (attrib_name, unrecognized_units) result (attrib_units)
     
+    Routine to return the units associated with an attribute.
     Example: attrib_units('P0C') -> 'eV'
     
     Parameters
@@ -23057,8 +23116,6 @@ def attribute_units(attrib_name: str, unrecognized_units: str | None = None) -> 
     """
 def autoscale_phase_and_amp(ele: EleStruct, param: LatParamStruct, scale_phase: bool | None = None, scale_amp: bool | None = None, call_bookkeeper: bool | None = None) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -23078,8 +23135,6 @@ def autoscale_phase_and_amp(ele: EleStruct, param: LatParamStruct, scale_phase: 
     """
 def average_twiss(frac1: typing.SupportsFloat, twiss1: TwissStruct, twiss2: TwissStruct, ave_twiss: TwissStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     frac1 : float
@@ -23091,6 +23146,8 @@ def average_twiss(frac1: typing.SupportsFloat, twiss1: TwissStruct, twiss2: Twis
     """
 def axis_angle_to_quat(axis: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], angle: typing.SupportsFloat) -> typing.Annotated[list[float], "FixedSize(4)"]:
     """
+    Function axis_angle_to_quat (axis, angle) result (quat)
+    
     Routine to convert from axis + angle representation to a quaternion.
     
     Parameters
@@ -23107,8 +23164,9 @@ def axis_angle_to_quat(axis: typing.Annotated[collections.abc.Sequence[typing.Su
     """
 def axis_angle_to_w_mat(axis: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], angle: typing.SupportsFloat) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(3)"]], "FixedSize(3)"]:
     """
-    Routine to construct the 3D rotation matrix w_mat given an axis of rotation
+    Subroutine axis_angle_to_w_mat (axis, angle, w_mat)
     
+    Routine to construct the 3D rotation matrix w_mat given an axis of rotation
     and a rotation angle.
     
     Parameters
@@ -23125,8 +23183,6 @@ def axis_angle_to_w_mat(axis: typing.Annotated[collections.abc.Sequence[typing.S
     """
 def bbi_kick(x: typing.SupportsFloat, y: typing.SupportsFloat, sigma: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"]) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : float
@@ -23159,8 +23215,6 @@ def bbi_kick(x: typing.SupportsFloat, y: typing.SupportsFloat, sigma: typing.Ann
     """
 def bbi_slice_calc(ele: EleStruct, n_slice: typing.SupportsInt) -> RealAlloc1D:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -23172,8 +23226,6 @@ def bbi_slice_calc(ele: EleStruct, n_slice: typing.SupportsInt) -> RealAlloc1D:
     """
 def bbu_add_a_bunch(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuParamStruct, beam_init: BeamInitStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : 
@@ -23183,8 +23235,6 @@ def bbu_add_a_bunch(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuParam
     """
 def bbu_hom_voltage_calc(lat: LatStruct, bbu_beam: BbuBeamStruct, n_period: typing.SupportsInt, ix_stage_last_tracked: typing.SupportsInt) -> PyBbuHomVoltageCalc:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : 
@@ -23194,16 +23244,12 @@ def bbu_hom_voltage_calc(lat: LatStruct, bbu_beam: BbuBeamStruct, n_period: typi
     """
 def bbu_remove_head_bunch(bbu_beam: BbuBeamStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     bbu_beam : 
     """
 def bbu_setup(lat: LatStruct, dt_bunch: typing.SupportsFloat, bbu_param: BbuParamStruct, bbu_beam: BbuBeamStruct) -> PyBbuSetup:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : 
@@ -23213,8 +23259,6 @@ def bbu_setup(lat: LatStruct, dt_bunch: typing.SupportsFloat, bbu_param: BbuPara
     """
 def bbu_track_a_stage(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuParamStruct, lost: bool, ix_stage_tracked: typing.SupportsInt) -> PyBbuTrackAStage:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : 
@@ -23225,8 +23269,6 @@ def bbu_track_a_stage(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuPar
     """
 def bbu_track_all(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuParamStruct, beam_init: BeamInitStruct, hom_voltage_normalized: typing.SupportsFloat, growth_rate: typing.SupportsFloat, lost: bool, irep: typing.SupportsInt) -> PyBbuTrackAll:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : 
@@ -23240,10 +23282,12 @@ def bbu_track_all(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuParamSt
     """
 def beam_envelope_ibs(sigma_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], tail_cut: bool, tau: typing.SupportsFloat, energy: typing.SupportsFloat, n_part: typing.SupportsFloat, species: typing.SupportsInt) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
-    This is a sigma matrix based IBS calculation.
+    Subroutine beam_envelope_ibs(sigma_mat, ibs_mat, tail_cut, tau, energy, n_part, species)
     
+    This is a sigma matrix based IBS calculation.
     It takes the beam sigma matrix and returns a matrix with changes to the 2nd order
     moments due to IBS.
+    
     Use ibs_mat to change the sigma matrix like this:
     sigma_matrix_updated = sigma_matrix + ibs_mat*element_length
     See subroutine transport_with_sr_and_ibs in this module.
@@ -23270,8 +23314,6 @@ def beam_envelope_ibs(sigma_mat: typing.Annotated[collections.abc.Sequence[typin
     """
 def beam_equal_beam(beam1: BeamStruct, beam2: BeamStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     beam1 : 
@@ -23279,8 +23321,6 @@ def beam_equal_beam(beam1: BeamStruct, beam2: BeamStruct) -> None:
     """
 def beam_init_setup(beam_init_in: BeamInitStruct, ele: EleStruct, species: typing.SupportsInt, modes: _pybmad.NormalModesStruct | None = None, err_flag: bool | None = None, beam_init_set: BeamInitStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     beam_init_in : BeamInitStruct
@@ -23296,16 +23336,20 @@ def beam_init_setup(beam_init_in: BeamInitStruct, ele: EleStruct, species: typin
     """
 def beam_tilts(S: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> ...:
     """
-    Given a 6x6 matrix of second-order moments, this routine returns
+    Subroutine beam_tilts(S, angle_xy, angle_xz, angle_yz, angle_xpz, angle_ypz)
     
+    Given a 6x6 matrix of second-order moments, this routine returns
     the beam tilts.
+    
     angle_xy is obtained from the projection of the beam envelop into the
     xy plane.  The angle is that between the major axis of the projected
     beam envelope and the +x axis.  Positive angles are measured towards the
     +y axis.
+    
     angle_xz is obtained from the projection of the beam envelop into the
     xy plane.  The angle is that between the major axis of the projected beam envelope
     and the +z axis.  Positive angles are measured towards the +x axis.
+    
     angle_yz is obtained from the projection of the beam envelop into the
     yz plane.  The angle is that between the major axis of the projected beam envelope
     and the +z axis.  Positive angles are measured towards the +y axis.
@@ -23330,8 +23374,9 @@ def beam_tilts(S: typing.Annotated[collections.abc.Sequence[typing.Annotated[col
     """
 def bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.SupportsInt, orb: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None, track_spin: bool | None = None) -> None:
     """
-    Subroutine to track through the edge field of an sbend.
+    Subroutine bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix, track_spin)
     
+    Subroutine to track through the edge field of an sbend.
     This routine is called by apply_element_edge_kick only.
     
     Parameters
@@ -23356,8 +23401,6 @@ def bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.Su
     """
 def bend_exact_multipole_field(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct, local_ref_frame: bool, calc_dfield: bool | None = None, calc_potential: bool | None = None) -> EmFieldStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : unknown
@@ -23377,8 +23420,6 @@ def bend_exact_multipole_field(ele: EleStruct, param: LatParamStruct, orbit: Coo
     """
 def bend_length_has_been_set(ele: EleStruct, is_set: bool) -> PyBendLengthHasBeenSet:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -23387,22 +23428,25 @@ def bend_length_has_been_set(ele: EleStruct, is_set: bool) -> PyBendLengthHasBee
     """
 def bend_photon_e_rel_init(r_in: typing.SupportsFloat | None = None) -> float:
     """
-    Routine to convert a random number in the interval [0,1] to a photon energy.
+    Function bend_photon_e_rel_init (r_in) result (E_rel)
     
+    Routine to convert a random number in the interval [0,1] to a photon energy.
     The photon probability spectrum is:
-    P(E_rel) = (3 / (5 * Pi)) * Integral_{E_rel}^{Infty} K_{5/3}(x) dx
+      P(E_rel) = (3 / (5 * Pi)) * Integral_{E_rel}^{Infty} K_{5/3}(x) dx
     Where
-    P(E_rel)) = Probability of finding a photon at relative energy E_rel.
-    E_rel     = Relative photon energy: E / E_crit, E_crit = Critical energy.
-    K_{5/3}   = Modified Bessel function.
+      P(E_rel)) = Probability of finding a photon at relative energy E_rel.
+      E_rel     = Relative photon energy: E / E_crit, E_crit = Critical energy.
+      K_{5/3}   = Modified Bessel function.
+    
     Notice that the P(E) is not the same as the distribution radiation energy since
     the photons must be energy weighted.
+    
     There is a cut-off built into the calculation so that E_rel will be in the
     range [0, 31.4]. The error in neglecting photons with E_rel > 31.4 translates
     to neglecting one photon for every 10^15 generated.
     If r_in is present:
-    r_in = 0 => E_rel = 0
-    r_in = 1 => E_rel = 31.4
+      r_in = 0 => E_rel = 0
+      r_in = 1 => E_rel = 31.4
     
     Parameters
     ----------
@@ -23416,8 +23460,9 @@ def bend_photon_e_rel_init(r_in: typing.SupportsFloat | None = None) -> float:
     """
 def bend_photon_energy_integ_prob(E_photon: typing.SupportsFloat, g_bend: typing.SupportsFloat, gamma: typing.SupportsFloat) -> float:
     """
-    Routine to find the integrated probability corresponding to emitting a photon
+    Function bend_photon_energy_integ_prob (E_photon, g_bend, gamma) result (integ_prob)
     
+    Routine to find the integrated probability corresponding to emitting a photon
     from a bend in the range [0, E_photon].
     
     Parameters
@@ -23436,10 +23481,11 @@ def bend_photon_energy_integ_prob(E_photon: typing.SupportsFloat, g_bend: typing
     """
 def bend_photon_energy_normalized_probability(E_rel: typing.SupportsFloat) -> float:
     """
-    Routine to return the normalized probability that a photon will be emitted in a bend with energy
+    Function bend_photon_energy_normalized_probability (E_rel) result (prob)
     
+    Routine to return the normalized probability that a photon will be emitted in a bend with energy
     E_rel relative to the critical energy. The probability is normalized such that
-    Integral[0,Infinity] dE_rel P(E_rel) = 1
+      Integral[0,Infinity] dE_rel P(E_rel) = 1
     
     Parameters
     ----------
@@ -23453,23 +23499,30 @@ def bend_photon_energy_normalized_probability(E_rel: typing.SupportsFloat) -> fl
     """
 def bend_photon_init(g_bend_x: typing.SupportsFloat, g_bend_y: typing.SupportsFloat, gamma: typing.SupportsFloat, E_min: typing.SupportsFloat | None = None, E_max: typing.SupportsFloat | None = None, E_integ_prob: typing.SupportsFloat | None = None, vert_angle_min: typing.SupportsFloat | None = None, vert_angle_max: typing.SupportsFloat | None = None, vert_angle_symmetric: bool | None = None, emit_probability: typing.SupportsFloat | None = None) -> CoordStruct:
     """
-    vert_angle_min, vert_angle_max, vert_angle_symmetric, emit_probability)
+    Subroutine bend_photon_init (g_bend_x, g_bend_y, gamma, orbit, E_min, E_max, E_integ_prob,
+                                            vert_angle_min, vert_angle_max, vert_angle_symmetric, emit_probability)
     
     Routine to initalize a photon for dipole bends and wigglers (but not undulators).
     The photon is initialized using the standard formulas for bending radiation.
+    
     The energy of the photon is calculated in one of two ways:
-    1) If E_integ_prob is present and non-negative, the photon energy E will be such that the integrated
-    probability  [E_min, E] relative to the integrated probability in the range [E_min, E_max] is E_integ_prob.
-    That is, E_integ_prob can be used to to give a set of photon energies equally spaced in terms of the
-    integrated probability distribution.
-    2) If E_integ_prob is not present, or is negative, the photon energy is chosen at random in
-    the range [E_min, E_max].
+    
+      1) If E_integ_prob is present and non-negative, the photon energy E will be such that the integrated
+          probability  [E_min, E] relative to the integrated probability in the range [E_min, E_max] is E_integ_prob.
+          That is, E_integ_prob can be used to to give a set of photon energies equally spaced in terms of the
+          integrated probability distribution.
+    
+      2) If E_integ_prob is not present, or is negative, the photon energy is chosen at random in
+          the range [E_min, E_max].
+    
     An E_integ_prob of zero means that the generated photon will have energy E_min.
     An E_integ_prob of one means that the generated photon will have energy E_max.
+    
     The photon's polarization, will have unit amplitude.
+    
     This routine assumes that the emitting charged particle is on-axis and moving in
     the forward direction. To correct for the actual charged particle postion use the routine
-    absolute_photon_position
+      absolute_photon_position
     
     Parameters
     ----------
@@ -23507,8 +23560,9 @@ def bend_photon_init(g_bend_x: typing.SupportsFloat, g_bend_y: typing.SupportsFl
     """
 def bend_photon_polarization_init(g_bend_x: typing.SupportsFloat, g_bend_y: typing.SupportsFloat, E_rel: typing.SupportsFloat, gamma_phi: typing.SupportsFloat) -> CoordStruct:
     """
-    Routine to set a photon's polarization.
+    Subroutine bend_photon_polarization_init (g_bend_x, g_bend_y, E_rel, gamma_phi, orbit)
     
+    Routine to set a photon's polarization.
     The photon's polarization will be either in the plane of the bend or out of the plane and
     the magnitude will be 1.
     
@@ -23531,8 +23585,9 @@ def bend_photon_polarization_init(g_bend_x: typing.SupportsFloat, g_bend_y: typi
     """
 def bend_photon_vert_angle_init(E_rel: typing.SupportsFloat, gamma: typing.SupportsFloat, r_in: typing.SupportsFloat | None = None, invert: bool | None = None) -> float:
     """
-    Routine to convert an integrated probability to a vertical angle for emitting a photon from a bend.
+    Function bend_photon_vert_angle_init (E_rel, gamma, r_in, invert) result (phi)
     
+    Routine to convert an integrated probability to a vertical angle for emitting a photon from a bend.
     The integrated probability is in the range [0,1] with 0 corresponding to a phi = -pi/2 and
     integrated probability of 1 corresponding to phi = pi/2.
     
@@ -23556,8 +23611,6 @@ def bend_photon_vert_angle_init(E_rel: typing.SupportsFloat, gamma: typing.Suppo
     """
 def bend_shift(position1: FloorPositionStruct, g: typing.SupportsFloat, delta_s: typing.SupportsFloat, ref_tilt: typing.SupportsFloat | None = None, position2: FloorPositionStruct) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(3)"]], "FixedSize(3)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     position1 : FloorPositionStruct
@@ -23574,9 +23627,13 @@ def bend_shift(position1: FloorPositionStruct, g: typing.SupportsFloat, delta_s:
     """
 def bend_vert_angle_integ_prob(vert_angle: typing.SupportsFloat, E_rel: typing.SupportsFloat, gamma: typing.SupportsFloat) -> float:
     """
-    Routine to find the integrated probability corresponding to emitting a photon
+    Function bend_vert_angle_integ_prob (vert_angle, E_rel, gamma) result (integ_prob)
     
+    Routine to find the integrated probability corresponding to emitting a photon
     from a bend and with relative energy E_rel in the vertical angle range [-pi/2, vert_angle/2].
+    
+    Note: vert_angle is allowed to be out of the range [-pi/2, pi/2]. In this case, integ_prob
+    will be set to 0 or 1 as appropriate.
     
     Parameters
     ----------
@@ -23594,9 +23651,14 @@ def bend_vert_angle_integ_prob(vert_angle: typing.SupportsFloat, E_rel: typing.S
     """
 def bicubic_cmplx_eval(x_norm: typing.SupportsFloat, y_norm: typing.SupportsFloat, bi_coef: BicubicCmplxCoefStruct) -> ...:
     """
+    Function bicubic_cmplx_eval (x_norm, y_norm, bi_coef, df_dx, df_dy) result (f_val)
+    
     Routine to evaluate a bicubic interpolating complex function.
     
     Use the routine bicubic_interpolation_cmplx_coefs to generate bi_coef.
+    
+    Note: In the equations below, the four points of the grid box being interpolated range
+    from (x0, y0) to (x0+dx, y0+dy).
     
     Parameters
     ----------
@@ -23618,6 +23680,8 @@ def bicubic_cmplx_eval(x_norm: typing.SupportsFloat, y_norm: typing.SupportsFloa
     """
 def bin_index(x: typing.SupportsFloat, bin1_x_min: typing.SupportsFloat, bin_delta: typing.SupportsFloat) -> int:
     """
+    Function bin_index(x, bin1_x_min, bin_delta) result (ix_bin)
+    
     Helper function to locate the appropriate histogram bin index.
     
     Parameters
@@ -23636,6 +23700,8 @@ def bin_index(x: typing.SupportsFloat, bin1_x_min: typing.SupportsFloat, bin_del
     """
 def bin_x_center(ix_bin: typing.SupportsInt, bin1_x_min: typing.SupportsFloat, bin_delta: typing.SupportsFloat) -> PyBinXCenter:
     """
+    Function bin_x_center (ix_bin, bin1_x_min, bin_delta) result(x_center)
+    
     Helper function to locate the center of a histogram bin.
     
     Parameters
@@ -23653,6 +23719,8 @@ def bin_x_center(ix_bin: typing.SupportsInt, bin1_x_min: typing.SupportsFloat, b
     """
 def bit_set(word: typing.SupportsInt, pos: typing.SupportsInt, set_to_1: bool) -> PyBitSet:
     """
+    Subroutine bit_set (word, pos, set_to_1)
+    
     Routine to set a bit in a word.
     
     Parameters
@@ -23667,8 +23735,9 @@ def bit_set(word: typing.SupportsInt, pos: typing.SupportsInt, set_to_1: bool) -
     """
 def bl_via_vlassov(current: typing.SupportsFloat, alpha: typing.SupportsFloat, Energy: typing.SupportsFloat, sigma_p: typing.SupportsFloat, Vrf: typing.SupportsFloat, omega: typing.SupportsFloat, U0: typing.SupportsFloat, circ: typing.SupportsFloat, R: typing.SupportsFloat, L: typing.SupportsFloat) -> float:
     """
-    This is a frontend for get_bl_from_fwhm from longitudinal_profile_mod.
+    Subroutine bl_via_vlassov(current,alpha,Energy,sigma_p,Vrf,omega,U0,circ,R,L,sigma_z)
     
+    This is a frontend for get_bl_from_fwhm from longitudinal_profile_mod.
     See longitudinal_profile_mod for details.  In short, this implements a model of potential well distortion
     based on the Vlassov equation which uses an effective Resistive, Inductive, and Capacitive impedance.
     
@@ -23702,8 +23771,6 @@ def bl_via_vlassov(current: typing.SupportsFloat, alpha: typing.SupportsFloat, E
     """
 def bmad_parser(lat_file: str, make_mats6: bool | None = None, use_line: str | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat_file : unknown
@@ -23728,8 +23795,6 @@ def bmad_parser(lat_file: str, make_mats6: bool | None = None, use_line: str | N
     """
 def bmad_parser2(lat_file: str, lat: LatStruct, orbit: _pybmad.CoordStructAlloc1D | None = None, make_mats6: bool | None = None, err_flag: bool | None = None, parse_lat: _pybmad.LatStruct | None = None) -> PyBmadParser2:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat_file : unknown
@@ -23749,25 +23814,22 @@ def bmad_parser2(lat_file: str, lat: LatStruct, orbit: _pybmad.CoordStructAlloc1
     """
 def bmad_patch_parameters_to_ptc(ang: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], exi: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ang : 
     exi : 
     """
 def bp_set_ran_status() -> None:
-    """
-    No docstring available
-    """
+    ...
 def bracket_index_for_spline(x_knot: RealAlloc1D, x: typing.SupportsFloat, strict: bool | None = None, print_err: bool | None = None) -> ...:
     """
-    Routine to find which interval to use for evaluating a spline.
+    Function bracket_index_for_spline (x_knot, x, ix0, strict, print_err) result (ok)
     
+    Routine to find which interval to use for evaluating a spline.
     If strict = False (default), x is in range if
-    x_knot(1) - (x_knot(2) - x_knot(1)) < x < x_knot(n) + (x_knot(n) - x_knot(n-1))
+          x_knot(1) - (x_knot(2) - x_knot(1)) < x < x_knot(n) + (x_knot(n) - x_knot(n-1))
     If stric = True, x is in range if
-    x_knot(1) <= x <= x_knot(n)
+          x_knot(1) <= x <= x_knot(n)
     where n = size(x_knot)
     
     Parameters
@@ -23790,8 +23852,6 @@ def bracket_index_for_spline(x_knot: RealAlloc1D, x: typing.SupportsFloat, stric
     """
 def branch_equal_branch(branch1: BranchStruct, branch2: BranchStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch1 : 
@@ -23799,8 +23859,6 @@ def branch_equal_branch(branch1: BranchStruct, branch2: BranchStruct) -> None:
     """
 def branch_name(branch: BranchStruct, name: str) -> PyBranchName:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch : BranchStruct
@@ -23809,8 +23867,18 @@ def branch_name(branch: BranchStruct, name: str) -> PyBranchName:
     """
 def branch_to_ptc_m_u(branch: BranchStruct) -> None:
     """
-    Subroutine to create a PTC layout from a Bmad lattice branch.
+    Subroutine branch_to_ptc_m_u (branch)
     
+    Subroutine to create a PTC layout from a Bmad lattice branch.
+    Note: If lat_to_ptc_layout has already been setup, you should first do a
+              call kill_ptc_layouts(lat)
+    This deallocates the pointers in PTC
+    
+    Note: If not already done, before you call this routine you need to first call:
+       call set_ptc (...)
+    [This is normally done in bmad_parser.]
+    
+    Note: If a Bmad element is using a hard edge model (EG: RFcavity element), there
     will be three corresponding PTC fibre elements: (drift, RF. drift) for example.
     In this case, ele%ptc_fibre will be set to point to the last PTC fibre. That is the
     exit end of ele will correspond to the exit end of ele%ptc_fibre.
@@ -23820,15 +23888,9 @@ def branch_to_ptc_m_u(branch: BranchStruct) -> None:
     branch : BranchStruct
         Input branch. branch(:).ptc              -- Pointers to generated layouts. branch(:).ele(:).ptc_fibre --
         Pointer to PTC fibres
-    
-    Notes
-    -----
-    Note: If a Bmad element is using a hard edge model (EG: RFcavity element), there
     """
 def bunch_equal_bunch(bunch1: BunchStruct, bunch2: BunchStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     bunch1 : 
@@ -23836,8 +23898,6 @@ def bunch_equal_bunch(bunch1: BunchStruct, bunch2: BunchStruct) -> None:
     """
 def c_to_cbar(ele: EleStruct) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(2)"]], "FixedSize(2)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -23848,13 +23908,17 @@ def c_to_cbar(ele: EleStruct) -> typing.Annotated[list[typing.Annotated[list[flo
     """
 def calc_bunch_params(bunch: BunchStruct, bunch_params: BunchParamsStruct, error: bool, print_err: bool | None = None, n_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, is_time_coords: bool | None = None, ele: _pybmad.EleStruct | None = None) -> None:
     """
-    Finds all bunch parameters defined in bunch_params_struct, both normal-mode
+    Subroutine calc_bunch_params (bunch, bunch_params, error, print_err, n_mat, is_time_coords, ele)
     
+    Finds all bunch parameters defined in bunch_params_struct, both normal-mode
     and projected. Projected parameters are found purely from the geometrical
     distribution of the beam. Normal-Mode parameters are found using the method
     developed in:
-    "Alternate approach to general coupled linear optics"
-    A. Wolski, PRST AB 9, 024001 (2006)
+      "Alternate approach to general coupled linear optics"
+       A. Wolski, PRST AB 9, 024001 (2006)
+    
+    Note: If less than two particle remain then the various parameters will be
+    set to zero.
     
     Parameters
     ----------
@@ -23875,6 +23939,8 @@ def calc_bunch_params(bunch: BunchStruct, bunch_params: BunchParamsStruct, error
     """
 def calc_bunch_params_slice(bunch: BunchStruct, bunch_params: BunchParamsStruct, plane: typing.SupportsInt, slice_center: typing.SupportsFloat, slice_spread: typing.SupportsFloat, err: bool, print_err: bool | None = None, is_time_coords: bool | None = None, ele: _pybmad.EleStruct | None = None) -> None:
     """
+    subroutine calc_bunch_params_slice (bunch, bunch_params, plane, slice_center, slice_spread, err, print_err, is_time_coords, ele)
+    
     Finds bunch parameters for a slice of the beam.
     
     Parameters
@@ -23900,6 +23966,8 @@ def calc_bunch_params_slice(bunch: BunchStruct, bunch_params: BunchParamsStruct,
     """
 def calc_bunch_params_z_slice(bunch: BunchStruct, bunch_params: BunchParamsStruct, slice_bounds: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], err: bool, print_err: bool | None = None, is_time_coords: bool | None = None, ele: _pybmad.EleStruct | None = None) -> None:
     """
+    subroutine calc_bunch_params_z_slice (bunch, bunch_params, slice_bounds, err, print_err, is_time_coords, ele)
+    
     Finds bunch parameters for a slice of the beam.
     
     The slice is specified in terms of percentage of particles ordered by z-position.
@@ -23925,6 +23993,8 @@ def calc_bunch_params_z_slice(bunch: BunchStruct, bunch_params: BunchParamsStruc
     """
 def calc_bunch_sigma_matrix_etc(particle: CoordStructAlloc1D, charge: RealAlloc1D, is_time_coords: bool | None = None, ele: _pybmad.EleStruct | None = None) -> PyCalcBunchSigmaMatrixEtc:
     """
+    Subroutine calc_bunch_sigma_matrix_etc (particle, charge, bunch_params, is_time_coords, ele)
+    
     Routine to find the sigma matrix elements of a particle distribution.
     
     Parameters
@@ -23941,8 +24011,9 @@ def calc_bunch_sigma_matrix_etc(particle: CoordStructAlloc1D, charge: RealAlloc1
     """
 def calc_emittances_and_twiss_from_sigma_matrix(sigma_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], print_err: bool | None = None) -> ...:
     """
-    Routine to calc emittances and Twiss function from a beam sigma matrix.
+    Subroutine calc_emittances_and_twiss_from_sigma_matrix(sigma_mat, bunch_params, error, print_err, n_mat)
     
+    Routine to calc emittances and Twiss function from a beam sigma matrix.
     See: Andy Wolski "Alternative approach to general coupled linear optics".
     
     Parameters
@@ -23964,8 +24035,6 @@ def calc_emittances_and_twiss_from_sigma_matrix(sigma_mat: typing.Annotated[coll
     """
 def calc_file_number(file_name: str, num_in: typing.SupportsInt, num_out: typing.SupportsInt, err_flag: bool) -> PyCalcFileNumber:
     """
-    No docstring available
-    
     Parameters
     ----------
     file_name : 
@@ -23975,6 +24044,8 @@ def calc_file_number(file_name: str, num_in: typing.SupportsInt, num_out: typing
     """
 def calc_spin_params(bunch: BunchStruct) -> BunchParamsStruct:
     """
+    Subroutine calc_spin_params (bunch, bunch_params)
+    
     Rotine to calculate spin averages
     
     Parameters
@@ -23989,8 +24060,6 @@ def calc_spin_params(bunch: BunchStruct) -> BunchParamsStruct:
     """
 def calc_super_slave_key(lord1: EleStruct, lord2: EleStruct, create_jumbo_slave: bool | None = None) -> EleStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     lord1 : EleStruct
@@ -24005,11 +24074,13 @@ def calc_super_slave_key(lord1: EleStruct, lord2: EleStruct, create_jumbo_slave:
     """
 def calc_wall_radius(v: Wall3DVertexStructAlloc1D, cos_ang: typing.SupportsFloat, sin_ang: typing.SupportsFloat) -> ...:
     """
-    Routine to calculate the wall radius at a given angle for a given cross-section
+    Subroutine calc_wall_radius (v, cos_ang, sin_ang, r_wall, dr_dtheta, ix_vertex)
     
+    Routine to calculate the wall radius at a given angle for a given cross-section
     Additionally, the transverse directional derivative is calculated.
+    
     Module needed:
-    use wall3d_mod
+      use wall3d_mod
     
     Parameters
     ----------
@@ -24032,8 +24103,6 @@ def calc_wall_radius(v: Wall3DVertexStructAlloc1D, cos_ang: typing.SupportsFloat
     """
 def calc_z_tune(branch: BranchStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch : BranchStruct
@@ -24041,8 +24110,6 @@ def calc_z_tune(branch: BranchStruct) -> None:
     """
 def canonical_to_angle_coords(orbit: CoordStruct, coord_type: str | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -24054,8 +24121,6 @@ def canonical_to_angle_coords(orbit: CoordStruct, coord_type: str | None = None)
     """
 def cbar_to_c(cbar_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"]], "FixedSize(2)"], a: TwissStruct, b: TwissStruct) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(2)"]], "FixedSize(2)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     cbar_mat : float
@@ -24069,8 +24134,6 @@ def cbar_to_c(cbar_mat: typing.Annotated[collections.abc.Sequence[typing.Annotat
     """
 def change_file_number(file_name: str, change: typing.SupportsInt) -> PyChangeFileNumber:
     """
-    No docstring available
-    
     Parameters
     ----------
     file_name : 
@@ -24078,6 +24141,8 @@ def change_file_number(file_name: str, change: typing.SupportsInt) -> PyChangeFi
     """
 def charge_of(species: typing.SupportsInt, default_: typing.SupportsInt | None = None) -> int:
     """
+    Function charge_of (species, default) result (charge)
+    
     Routine to return the charge, in units of e+, of a particle.
     
     Parameters
@@ -24094,6 +24159,8 @@ def charge_of(species: typing.SupportsInt, default_: typing.SupportsInt | None =
     """
 def charge_to_mass_of(species: typing.SupportsInt) -> float:
     """
+    Function charge_to_mass_of (species) result (charge_mass_ratio)
+    
     Routine to return the charge (in units of e+) to mass (in units of eV) ratio of a particle.
     
     Parameters
@@ -24108,8 +24175,6 @@ def charge_to_mass_of(species: typing.SupportsInt) -> float:
     """
 def check_aperture_limit(orb: CoordStruct, ele: EleStruct, particle_at: typing.SupportsInt, param: LatParamStruct, old_orb: _pybmad.CoordStruct | None = None, check_momentum: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     orb : CoordStruct
@@ -24128,8 +24193,6 @@ def check_aperture_limit(orb: CoordStruct, ele: EleStruct, particle_at: typing.S
     """
 def check_controller_controls(ele_key: typing.SupportsInt, contrl: ControlStructAlloc1D, name: str) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele_key : int
@@ -24143,21 +24206,21 @@ def check_controller_controls(ele_key: typing.SupportsInt, contrl: ControlStruct
     """
 def check_for_superimpose_problem(branch: BranchStruct, super_ele: EleStruct, err_flag: bool, ref_ele: _pybmad.EleStruct | None = None, wrap: bool) -> PyCheckForSuperimposeProblem:
     """
-    Subroutine to check if there is a problem superimposing an element when there is multipass.
+    Subroutine check_for_superimpose_problem (branch, super_ele, err_flag, ref_ele, wrap)
     
+    Subroutine to check if there is a problem superimposing an element when there is multipass.
     In particular will check that:
-    1) If the ref_ele is part of a multipass region then super_ele must be superimposed
-    within the region.
+      1) If the ref_ele is part of a multipass region then super_ele must be superimposed
+         within the region.
     Or:
-    2) If the ref_ele is not part of a multipass region then super_ele must also not
-    be part of a multipass region.
+      2) If the ref_ele is not part of a multipass region then super_ele must also not
+         be part of a multipass region.
+    
     This subroutine is used by bmad_parser and bmad_parser2.
     This subroutine is not intended for general use.
     """
 def check_if_s_in_bounds(branch: BranchStruct, s: typing.SupportsFloat, print_err: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch : BranchStruct
@@ -24173,8 +24236,6 @@ def check_if_s_in_bounds(branch: BranchStruct, s: typing.SupportsFloat, print_er
     """
 def check_rf_freq(lat: LatStruct, fb: typing.SupportsFloat) -> PyCheckRfFreq:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : 
@@ -24182,8 +24243,6 @@ def check_rf_freq(lat: LatStruct, fb: typing.SupportsFloat) -> PyCheckRfFreq:
     """
 def choose_quads_for_set_tune(branch: BranchStruct, mask: str | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch : BranchStruct
@@ -24200,8 +24259,6 @@ def choose_quads_for_set_tune(branch: BranchStruct, mask: str | None = None) -> 
     """
 def chrom_calc(lat: LatStruct, delta_e: typing.SupportsFloat, pz: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None, orb0: _pybmad.CoordStruct | None = None) -> PyChromCalc:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -24235,8 +24292,6 @@ def chrom_calc(lat: LatStruct, delta_e: typing.SupportsFloat, pz: typing.Support
     """
 def chrom_tune(lat: LatStruct, delta_e: typing.SupportsFloat, target_x: typing.SupportsFloat, target_y: typing.SupportsFloat, err_tol: typing.SupportsFloat) -> PyChromTune:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -24260,8 +24315,6 @@ def chrom_tune(lat: LatStruct, delta_e: typing.SupportsFloat, target_x: typing.S
     """
 def classical_radius(species: typing.SupportsInt, radius: typing.SupportsFloat) -> PyClassicalRadius:
     """
-    No docstring available
-    
     Parameters
     ----------
     species : int
@@ -24270,8 +24323,6 @@ def classical_radius(species: typing.SupportsInt, radius: typing.SupportsFloat) 
     """
 def clear_lat_1turn_mats() -> LatStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -24279,8 +24330,6 @@ def clear_lat_1turn_mats() -> LatStruct:
     """
 def clear_taylor_maps_from_elements(lat: LatStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -24289,8 +24338,6 @@ def clear_taylor_maps_from_elements(lat: LatStruct) -> None:
     """
 def closed_orbit_calc(lat: LatStruct, closed_orb: CoordStructAlloc1D, i_dim: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None, print_err: bool | None = None) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -24318,8 +24365,6 @@ def closed_orbit_calc(lat: LatStruct, closed_orb: CoordStructAlloc1D, i_dim: typ
     """
 def closed_orbit_from_tracking(lat: LatStruct, i_dim: typing.SupportsInt, eps_rel: _pybmad.RealAlloc1D | None = None, eps_abs: _pybmad.RealAlloc1D | None = None, init_guess: _pybmad.CoordStruct | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -24341,8 +24386,6 @@ def closed_orbit_from_tracking(lat: LatStruct, i_dim: typing.SupportsInt, eps_re
     """
 def cmplx_re_str(cmp: complex, str_out: str) -> PyCmplxReStr:
     """
-    No docstring available
-    
     Parameters
     ----------
     cmp : 
@@ -24350,8 +24393,9 @@ def cmplx_re_str(cmp: complex, str_out: str) -> PyCmplxReStr:
     """
 def coarse_frequency_estimate(data: RealAlloc1D, error: bool | None = None) -> PyCoarseFrequencyEstimate:
     """
-    Simple function to take periodic data and estimate
+    Function coarse_frequency_estimate(data, error) result(frequency)
     
+    Simple function to take periodic data and estimate
     the most dominant frequency by FFT.
     
     Parameters
@@ -24368,8 +24412,6 @@ def coarse_frequency_estimate(data: RealAlloc1D, error: bool | None = None) -> P
     """
 def combine_consecutive_elements(lat: LatStruct) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -24380,8 +24422,6 @@ def combine_consecutive_elements(lat: LatStruct) -> bool:
     """
 def complex_error_function(wr: typing.SupportsFloat, wi: typing.SupportsFloat, zr: typing.SupportsFloat, zi: typing.SupportsFloat) -> PyComplexErrorFunction:
     """
-    No docstring available
-    
     Parameters
     ----------
     wr : 
@@ -24391,8 +24431,6 @@ def complex_error_function(wr: typing.SupportsFloat, wi: typing.SupportsFloat, z
     """
 def complex_taylor_clean(complex_taylor: ComplexTaylorStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     complex_taylor : 
@@ -24400,79 +24438,83 @@ def complex_taylor_clean(complex_taylor: ComplexTaylorStruct) -> None:
 @typing.overload
 def complex_taylor_coef(complex_taylor: ComplexTaylorStruct, exp: IntAlloc1D, coef: complex) -> PyComplexTaylorCoef1:
     """
+    Function complex_taylor_coef (complex_taylor, exp)
     Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
     
     Function to return the coefficient for a particular complex_taylor term
     from a complex_taylor Series.
+    
+    Note: complex_taylor_coef is overloaded by:
+      complex_taylor_coef1 (complex_taylor, exp)
+      complex_taylor_coef2 (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
+    Using the complex_taylor_coef2 form limits obtaining coefficients to 9th order
     or less. Also: complex_taylor_coef2 does not check that all i1, ..., i9 are between
     1 and 6.
+    
     For example: To get the 2nd order term corresponding to
-    y(out) = Coef * p_z(in)^2
+      y(out) = Coef * p_z(in)^2
     [This is somtimes refered to as the T_366 term]
     The call would be:
-    type (complex_taylor_struct) complex_taylor(6)      ! complex_taylor Map
-    ...
-    coef = complex_taylor_coef (complex_taylor(3), 6, 6)  ! 1st possibility or ...
-    coef = complex_taylor_coef (complex_taylor(3), [0, 0, 0, 0, 0, 2 ])
+      type (complex_taylor_struct) complex_taylor(6)      ! complex_taylor Map
+      ...
+      coef = complex_taylor_coef (complex_taylor(3), 6, 6)  ! 1st possibility or ...
+      coef = complex_taylor_coef (complex_taylor(3), [0, 0, 0, 0, 0, 2 ])
+    
     Input (complex_taylor_coef1):
-    complex_taylor -- complex_taylor_struct: complex_taylor series.
-    exp(6)      -- Integer: Array of exponent indices.
+      complex_taylor -- complex_taylor_struct: complex_taylor series.
+      exp(6)      -- Integer: Array of exponent indices.
+    
     Input (complex_taylor_coef2):
-    complex_taylor -- complex_taylor_struct: complex_taylor series.
-    i1, ..., i9 -- Integer, optional: indexes (each between 1 and 6).
+      complex_taylor -- complex_taylor_struct: complex_taylor series.
+      i1, ..., i9 -- Integer, optional: indexes (each between 1 and 6).
     
     
     Returns
     -------
     complex_taylor_coef : complex
         Coefficient.
-    
-    Notes
-    -----
-    Note: complex_taylor_coef is overloaded by: complex_taylor_coef1 (complex_taylor, exp) complex_taylor_coef2
-    (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9) Using the complex_taylor_coef2 form limits obtaining
-    coefficients to 9th order
     """
 @typing.overload
 def complex_taylor_coef(complex_taylor: ComplexTaylorStruct, i1: typing.SupportsInt | None = None, i2: typing.SupportsInt | None = None, i3: typing.SupportsInt | None = None, i4: typing.SupportsInt | None = None, i5: typing.SupportsInt | None = None, i6: typing.SupportsInt | None = None, i7: typing.SupportsInt | None = None, i8: typing.SupportsInt | None = None, i9: typing.SupportsInt | None = None, coef: complex) -> PyComplexTaylorCoef2:
     """
+    Function complex_taylor_coef (complex_taylor, exp)
     Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
     
     Function to return the coefficient for a particular complex_taylor term
     from a complex_taylor Series.
+    
+    Note: complex_taylor_coef is overloaded by:
+      complex_taylor_coef1 (complex_taylor, exp)
+      complex_taylor_coef2 (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
+    Using the complex_taylor_coef2 form limits obtaining coefficients to 9th order
     or less. Also: complex_taylor_coef2 does not check that all i1, ..., i9 are between
     1 and 6.
+    
     For example: To get the 2nd order term corresponding to
-    y(out) = Coef * p_z(in)^2
+      y(out) = Coef * p_z(in)^2
     [This is somtimes refered to as the T_366 term]
     The call would be:
-    type (complex_taylor_struct) complex_taylor(6)      ! complex_taylor Map
-    ...
-    coef = complex_taylor_coef (complex_taylor(3), 6, 6)  ! 1st possibility or ...
-    coef = complex_taylor_coef (complex_taylor(3), [0, 0, 0, 0, 0, 2 ])
+      type (complex_taylor_struct) complex_taylor(6)      ! complex_taylor Map
+      ...
+      coef = complex_taylor_coef (complex_taylor(3), 6, 6)  ! 1st possibility or ...
+      coef = complex_taylor_coef (complex_taylor(3), [0, 0, 0, 0, 0, 2 ])
+    
     Input (complex_taylor_coef1):
-    complex_taylor -- complex_taylor_struct: complex_taylor series.
-    exp(6)      -- Integer: Array of exponent indices.
+      complex_taylor -- complex_taylor_struct: complex_taylor series.
+      exp(6)      -- Integer: Array of exponent indices.
+    
     Input (complex_taylor_coef2):
-    complex_taylor -- complex_taylor_struct: complex_taylor series.
-    i1, ..., i9 -- Integer, optional: indexes (each between 1 and 6).
+      complex_taylor -- complex_taylor_struct: complex_taylor series.
+      i1, ..., i9 -- Integer, optional: indexes (each between 1 and 6).
     
     
     Returns
     -------
     complex_taylor_coef : complex
         Coefficient.
-    
-    Notes
-    -----
-    Note: complex_taylor_coef is overloaded by: complex_taylor_coef1 (complex_taylor, exp) complex_taylor_coef2
-    (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9) Using the complex_taylor_coef2 form limits obtaining
-    coefficients to 9th order
     """
 def complex_taylor_equal_complex_taylor(complex_taylor1: ComplexTaylorStruct, complex_taylor2: ComplexTaylorStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     complex_taylor1 : 
@@ -24480,10 +24522,12 @@ def complex_taylor_equal_complex_taylor(complex_taylor1: ComplexTaylorStruct, co
     """
 def complex_taylor_exponent_index(expn: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(6)"]) -> int:
     """
+    Function complex_taylor_exponent_index(expn) result(index)
+    
     Function to associate a unique number with a complex_taylor exponent.
     
     The number associated with a complex_taylor_term that is used for the sort is:
-    number = sum(exp(i))*10^6 + exp(6)*10^5 + ... + exp(1)*10^0
+        number = sum(exp(i))*10^6 + exp(6)*10^5 + ... + exp(1)*10^0
     where exp(1) is the exponent for x, exp(2) is the exponent for P_x, etc.
     
     Parameters
@@ -24498,9 +24542,10 @@ def complex_taylor_exponent_index(expn: typing.Annotated[collections.abc.Sequenc
     """
 def complex_taylor_make_unit() -> ComplexTaylorStructAlloc1D:
     """
-    Subroutine to make the unit complex_taylor map:
+    Subroutine complex_taylor_make_unit (complex_taylor)
     
-    r(out) = Map * r(in) = r(in)
+    Subroutine to make the unit complex_taylor map:
+          r(out) = Map * r(in) = r(in)
     
     
     Returns
@@ -24510,9 +24555,10 @@ def complex_taylor_make_unit() -> ComplexTaylorStructAlloc1D:
     """
 def complex_taylor_to_mat6(a_complex_taylor: typing.Annotated[collections.abc.Sequence[ComplexTaylorStruct], "FixedSize(6)"], r_in: ComplexAlloc1D) -> ...:
     """
-    Subroutine to calculate, from a complex_taylor map and about some trajectory:
+    Subroutine complex_taylor_to_mat6 (a_complex_taylor, r_in, vec0, mat6, r_out)
     
-    The 1st order (Jacobian) transfer matrix.
+    Subroutine to calculate, from a complex_taylor map and about some trajectory:
+      The 1st order (Jacobian) transfer matrix.
     
     Parameters
     ----------
@@ -24532,8 +24578,6 @@ def complex_taylor_to_mat6(a_complex_taylor: typing.Annotated[collections.abc.Se
     """
 def complex_taylors_equal_complex_taylors(complex_taylor1: ComplexTaylorStructAlloc1D, complex_taylor2: ComplexTaylorStructAlloc1D) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     complex_taylor1 : 
@@ -24541,17 +24585,23 @@ def complex_taylors_equal_complex_taylors(complex_taylor1: ComplexTaylorStructAl
     """
 def compute_slave_coupler(slave: EleStruct) -> None:
     """
+    Subroutine compute_slave_coupler (slave)
+    
     This routine is not meant for general use.
     """
 def concat_ele_taylor(orb_taylor: TaylorStructAlloc1D, ele: EleStruct, err_flag: bool, spin_taylor: _pybmad.TaylorStructAlloc1D | None = None) -> None:
     """
-    Routine to concatinate an orbital taylor map and, optionally if present and
+    Subroutine concat_ele_taylor (orb_taylor, ele, err_flag, spin_taylor)
     
+    Routine to concatinate an orbital taylor map and, optionally if present and
     bmad_com%spin_tracking_on = T, a spin taylor map.
+    
     Transform:
-    orb_taylor[x] -> ele_taylor(orb_taylor[x])
+      orb_taylor[x] -> ele_taylor(orb_taylor[x])
     If ele%taylor_map_includes_offsets = True:  ele_taylor == ele%taylor
     If ele%taylor_map_includes_offsets = False: ele_taylor == ele%taylor + offset corrections.
+    
+    Also see: concat_taylor
     
     Parameters
     ----------
@@ -24575,9 +24625,13 @@ def concat_ele_taylor(orb_taylor: TaylorStructAlloc1D, ele: EleStruct, err_flag:
     """
 def concat_taylor(taylor1: TaylorStructAlloc1D, taylor2: TaylorStructAlloc1D, taylor3: TaylorStructAlloc1D) -> None:
     """
-    Subroutine to concatinate two taylor maps:
+    Subroutine concat_taylor (taylor1, taylor2, taylor3)
     
-    taylor3[x] = taylor2(taylor1[x])
+    Subroutine to concatinate two taylor maps:
+      taylor3[x] = taylor2(taylor1[x])
+    
+    Note: In general, if taylor2 is a component of an ele_struct, use
+    concat_ele_taylor instead.
     
     Parameters
     ----------
@@ -24590,10 +24644,11 @@ def concat_taylor(taylor1: TaylorStructAlloc1D, taylor2: TaylorStructAlloc1D, ta
     """
 def concat_transfer_mat(mat_1: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], vec_1: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], mat_0: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], vec_0: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], vec_out: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
-    Routine to concatinate two linear maps:
+    Subroutine concat_transfer_mat (mat_1, vec_1, mat_0, vec_0, mat_out, vec_out)
     
-    mat_out = matmul(mat_1, mat_0)
-    vec_out = matmul(mat_1, vec_0) + vec_1
+    Routine to concatinate two linear maps:
+      mat_out = matmul(mat_1, mat_0)
+      vec_out = matmul(mat_1, vec_0) + vec_1
     
     Parameters
     ----------
@@ -24609,8 +24664,6 @@ def concat_transfer_mat(mat_1: typing.Annotated[collections.abc.Sequence[typing.
     """
 def control_bookkeeper(lat: LatStruct, ele: _pybmad.EleStruct | None = None, err_flag: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -24623,8 +24676,6 @@ def control_bookkeeper(lat: LatStruct, ele: _pybmad.EleStruct | None = None, err
     """
 def convert_bend_exact_multipole(g: typing.SupportsFloat, out_type: typing.SupportsInt, an: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(21)"], bn: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(21)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     g : float
@@ -24640,8 +24691,6 @@ def convert_bend_exact_multipole(g: typing.SupportsFloat, out_type: typing.Suppo
     """
 def convert_coords(in_type_str: str, coord_in: CoordStruct, ele: EleStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     in_type_str : unknown
@@ -24663,6 +24712,8 @@ def convert_coords(in_type_str: str, coord_in: CoordStruct, ele: EleStruct) -> .
     """
 def convert_field_ele_to_lab(ele: EleStruct, s_here: typing.SupportsFloat, forward_transform: bool, calc_dfield: bool | None = None, calc_potential: bool | None = None) -> EmFieldStruct:
     """
+    Subroutine convert_field_ele_to_lab (ele, s_here, forward_transform, field, calc_dfield, calc_potential)
+    
     Convert fields: ele to lab coords
     
     Parameters
@@ -24686,8 +24737,6 @@ def convert_field_ele_to_lab(ele: EleStruct, s_here: typing.SupportsFloat, forwa
     """
 def convert_local_cartesian_to_local_curvilinear(x: typing.SupportsFloat, z: typing.SupportsFloat, g: typing.SupportsFloat, xout: typing.SupportsFloat, sout: typing.SupportsFloat) -> PyConvertLocalCartesianToLocalCurvilinear:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : 
@@ -24698,8 +24747,6 @@ def convert_local_cartesian_to_local_curvilinear(x: typing.SupportsFloat, z: typ
     """
 def convert_local_curvilinear_to_local_cartesian(x: typing.SupportsFloat, s: typing.SupportsFloat, g: typing.SupportsFloat, xout: typing.SupportsFloat, zout: typing.SupportsFloat) -> PyConvertLocalCurvilinearToLocalCartesian:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : 
@@ -24710,8 +24757,6 @@ def convert_local_curvilinear_to_local_cartesian(x: typing.SupportsFloat, s: typ
     """
 def convert_particle_coordinates_s_to_t(particle: CoordStruct, s_body: typing.SupportsFloat, orientation: typing.SupportsInt) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     particle : CoordStruct
@@ -24723,8 +24768,6 @@ def convert_particle_coordinates_s_to_t(particle: CoordStruct, s_body: typing.Su
     """
 def convert_particle_coordinates_t_to_s(particle: CoordStruct, ele: EleStruct, use_downstream_p0c: bool | None = None) -> float:
     """
-    No docstring available
-    
     Parameters
     ----------
     particle : CoordStruct
@@ -24739,8 +24782,6 @@ def convert_particle_coordinates_t_to_s(particle: CoordStruct, ele: EleStruct, u
     """
 def convert_pc_to(pc: typing.SupportsFloat, particle: typing.SupportsInt) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     pc : float
@@ -24764,8 +24805,6 @@ def convert_pc_to(pc: typing.SupportsFloat, particle: typing.SupportsInt) -> ...
     """
 def convert_total_energy_to(E_tot: typing.SupportsFloat, particle: typing.SupportsInt, print_err: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     E_tot : float
@@ -24791,8 +24830,6 @@ def convert_total_energy_to(E_tot: typing.SupportsFloat, particle: typing.Suppor
     """
 def converter_distribution_parser(ele: EleStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -24808,7 +24845,12 @@ def converter_distribution_parser(ele: EleStruct) -> ...:
     """
 def coord_equal_coord(coord2: CoordStruct) -> CoordStruct:
     """
-    Subroutine that is used to set one coord equal to another.
+     Subroutine coord_equal_coord (coord1, coord2)
+    
+     Subroutine that is used to set one coord equal to another.
+    
+     Note: This subroutine is called by the overloaded equal sign:
+    		coord1 = coord2
     
     Parameters
     ----------
@@ -24822,6 +24864,8 @@ def coord_equal_coord(coord2: CoordStruct) -> CoordStruct:
     """
 def coord_state_name(coord_state: typing.SupportsInt, one_word: bool | None = None) -> PyCoordStateName:
     """
+    Function coord_state_name (coord_state) result (state_str)
+    
     Routine to return the string representation of a coord%state state.
     
     Parameters
@@ -24836,8 +24880,6 @@ def coord_state_name(coord_state: typing.SupportsInt, one_word: bool | None = No
     """
 def coords_body_to_local(body_position: FloorPositionStruct, ele: EleStruct, w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"] | None = None, calculate_angles: bool | None = None, local_position: FloorPositionStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     body_position : FloorPositionStruct
@@ -24854,8 +24896,6 @@ def coords_body_to_local(body_position: FloorPositionStruct, ele: EleStruct, w_m
     """
 def coords_body_to_rel_exit(body_position: FloorPositionStruct, ele: EleStruct, w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"] | None = None, calculate_angles: bool | None = None, rel_exit: FloorPositionStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     body_position : FloorPositionStruct
@@ -24872,8 +24912,6 @@ def coords_body_to_rel_exit(body_position: FloorPositionStruct, ele: EleStruct, 
     """
 def coords_curvilinear_to_floor(xys: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], branch: BranchStruct, global: FloorPositionStruct) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     xys : float
@@ -24886,8 +24924,6 @@ def coords_curvilinear_to_floor(xys: typing.Annotated[collections.abc.Sequence[t
     """
 def coords_floor_to_curvilinear(floor_coords: FloorPositionStruct, ele0: EleStruct, local_coords: FloorPositionStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     floor_coords : FloorPositionStruct
@@ -24905,8 +24941,6 @@ def coords_floor_to_curvilinear(floor_coords: FloorPositionStruct, ele0: EleStru
     """
 def coords_floor_to_local_curvilinear(global_position: FloorPositionStruct, ele: EleStruct, relative_to: typing.SupportsInt | None = None, local_position: FloorPositionStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     global_position : FloorPositionStruct
@@ -24926,8 +24960,6 @@ def coords_floor_to_local_curvilinear(global_position: FloorPositionStruct, ele:
     """
 def coords_floor_to_relative(floor0: FloorPositionStruct, global_position: FloorPositionStruct, calculate_angles: bool | None = None, is_delta_position: bool | None = None, local_position: FloorPositionStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     floor0 : FloorPositionStruct
@@ -24944,8 +24976,6 @@ def coords_floor_to_relative(floor0: FloorPositionStruct, global_position: Floor
     """
 def coords_local_curvilinear_to_body(local_position: FloorPositionStruct, ele: EleStruct, w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"] | None = None, calculate_angles: bool | None = None, body_position: FloorPositionStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     local_position : FloorPositionStruct
@@ -24961,8 +24991,6 @@ def coords_local_curvilinear_to_body(local_position: FloorPositionStruct, ele: E
     """
 def coords_local_curvilinear_to_floor(local_position: FloorPositionStruct, ele: EleStruct, in_body_frame: bool | None = None, calculate_angles: bool | None = None, relative_to: typing.SupportsInt | None = None, global_position: FloorPositionStruct) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(3)"]], "FixedSize(3)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     local_position : FloorPositionStruct
@@ -24988,8 +25016,6 @@ def coords_local_curvilinear_to_floor(local_position: FloorPositionStruct, ele: 
     """
 def coords_relative_to_floor(floor0: FloorPositionStruct, dr: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], theta: typing.SupportsFloat | None = None, phi: typing.SupportsFloat | None = None, psi: typing.SupportsFloat | None = None, floor1: FloorPositionStruct) -> PyCoordsRelativeToFloor:
     """
-    No docstring available
-    
     Parameters
     ----------
     floor0 : FloorPositionStruct
@@ -25005,8 +25031,6 @@ def coords_relative_to_floor(floor0: FloorPositionStruct, dr: typing.Annotated[c
     """
 def cos_one(angle: typing.SupportsFloat, cos1: typing.SupportsFloat) -> PyCosOne:
     """
-    No docstring available
-    
     Parameters
     ----------
     angle : 
@@ -25014,8 +25038,6 @@ def cos_one(angle: typing.SupportsFloat, cos1: typing.SupportsFloat) -> PyCosOne
     """
 def cosc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typing.SupportsFloat) -> PyCosc:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : 
@@ -25024,8 +25046,6 @@ def cosc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typin
     """
 def coulombfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFloat, gam: typing.SupportsFloat, res: typing.SupportsFloat) -> PyCoulombfun:
     """
-    No docstring available
-    
     Parameters
     ----------
     u : 
@@ -25036,8 +25056,6 @@ def coulombfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.Suppo
     """
 def count_lines_in_file(file_name: str) -> int:
     """
-    No docstring available
-    
     Parameters
     ----------
     file_name : 
@@ -25045,12 +25063,14 @@ def count_lines_in_file(file_name: str) -> int:
     """
 def create_a_spline(r0: RealAlloc1D, r1: RealAlloc1D, slope0: typing.SupportsFloat, slope1: typing.SupportsFloat) -> SplineStruct:
     """
-    Routine to create a single spline given end point positions and slopes.
+    Function create_a_spline (r0, r1, slope0, slope1) result (spline)
     
+    Routine to create a single spline given end point positions and slopes.
     The spline will pass through the data points and have the given slopes
     at these points.
+    
     Modules used:
-    use spline_mod
+      use spline_mod
     
     Parameters
     ----------
@@ -25070,12 +25090,15 @@ def create_a_spline(r0: RealAlloc1D, r1: RealAlloc1D, slope0: typing.SupportsFlo
     """
 def create_concatenated_wall3d(lat: LatStruct, err: bool) -> PyCreateConcatenatedWall3d:
     """
-    Routine to concatinate lat%branch(i)ele(:)%wall3d%section(:) arrays into
+    Subroutine create_concatenated_wall3d (lat)
     
+    Routine to concatinate lat%branch(i)ele(:)%wall3d%section(:) arrays into
     one lat%branch(i)%wall3d%section(:) array.
+    
     Exceptions: capillary and aperture elements do not have their walls included.
+    
     Module needed:
-    use wall3d_mod
+      use wall3d_mod
     
     Parameters
     ----------
@@ -25090,8 +25113,6 @@ def create_concatenated_wall3d(lat: LatStruct, err: bool) -> PyCreateConcatenate
     """
 def create_element_slice(ele_in: EleStruct, l_slice: typing.SupportsFloat, offset: typing.SupportsFloat, param: LatParamStruct, include_upstream_end: bool, include_downstream_end: bool, old_slice: _pybmad.EleStruct | None = None, orb_in: _pybmad.CoordStruct | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     sliced_ele : EleStruct
@@ -25121,8 +25142,6 @@ def create_element_slice(ele_in: EleStruct, l_slice: typing.SupportsFloat, offse
     """
 def create_field_overlap(lat: LatStruct, lord_name: str, slave_name: str) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -25136,8 +25155,6 @@ def create_field_overlap(lat: LatStruct, lord_name: str, slave_name: str) -> boo
     """
 def create_girder(lat: LatStruct, ix_girder: typing.SupportsInt, contrl: ControlStructAlloc1D, girder_info: EleStruct, err_flag: bool) -> PyCreateGirder:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -25155,8 +25172,6 @@ def create_girder(lat: LatStruct, ix_girder: typing.SupportsInt, contrl: Control
     """
 def create_group(lord: EleStruct, contrl: ControlStructAlloc1D, err: bool) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lord : EleStruct
@@ -25172,8 +25187,6 @@ def create_group(lord: EleStruct, contrl: ControlStructAlloc1D, err: bool) -> No
     """
 def create_lat_ele_nametable(lat: LatStruct, nametable: NametableStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -25183,8 +25196,6 @@ def create_lat_ele_nametable(lat: LatStruct, nametable: NametableStruct) -> None
     """
 def create_overlay(lord: EleStruct, contrl: ControlStructAlloc1D, err: bool) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lord : EleStruct
@@ -25200,18 +25211,24 @@ def create_overlay(lord: EleStruct, contrl: ControlStructAlloc1D, err: bool) -> 
     """
 def create_planar_wiggler_model(wiggler_in: EleStruct, print_err: bool | None = None) -> ...:
     """
-    Routine to create series of bend and drift elements to serve as a replacement
+    Subroutine create_planar_wiggler_model (wiggler_in, lat, err_flag, print_err)
     
+    Routine to create series of bend and drift elements to serve as a replacement
     model for a planar wiggler.
+    
     This routine is helpful for translating bmad lattices to a language that does not
     implement the Bmad wiggler model.
+    
     This routine uses the mrqmin nonlinear optimizer to vary the parameters in the wiggler
     model to match:
-    Integral g^2 (I_2 radiation integral)
-    Integral g^3 (I_3 radiation integral)
-    Transfer matrix.
+      Integral g^2 (I_2 radiation integral)
+      Integral g^3 (I_3 radiation integral)
+      Transfer matrix.
     Also the endding horizontal transverse offset of the reference orbit (floor%r(1)) is
     matched to zero.
+    
+    Note: The resulting model does not have the vertical cubic nonlinearity that
+    the actual wiggler has.
     
     Parameters
     ----------
@@ -25232,8 +25249,6 @@ def create_planar_wiggler_model(wiggler_in: EleStruct, print_err: bool | None = 
     """
 def create_ramper(lord: EleStruct, contrl: ControlStructAlloc1D, err: bool) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lord : EleStruct
@@ -25248,17 +25263,18 @@ def create_ramper(lord: EleStruct, contrl: ControlStructAlloc1D, err: bool) -> N
     """
 def create_sol_quad_model(sol_quad: EleStruct, lat: LatStruct) -> None:
     """
-    Routine to create series of solenoid and quadrupole elements to serve as a replacement
+    Subroutine create_sol_quad_model (sol_quad, lat)
     
+    Routine to create series of solenoid and quadrupole elements to serve as a replacement
     model for a sol_quad element.
+    
     This routine is helpful for translating bmad lattices to a language that does not
     implement a combination solenoid/quadrupole.
+    
     Not yet implemented!
     """
 def create_unique_ele_names(lat: LatStruct, key: typing.SupportsInt, suffix: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -25271,8 +25287,6 @@ def create_unique_ele_names(lat: LatStruct, key: typing.SupportsInt, suffix: str
     """
 def create_wiggler_cartesian_map(ele: EleStruct) -> CartesianMapStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -25282,8 +25296,6 @@ def create_wiggler_cartesian_map(ele: EleStruct) -> CartesianMapStruct:
     """
 def cross_product(a: RealAlloc1D, b: RealAlloc1D, c: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     a : float
@@ -25293,8 +25305,6 @@ def cross_product(a: RealAlloc1D, b: RealAlloc1D, c: typing.Annotated[collection
     """
 def crystal_attribute_bookkeeper(ele: EleStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -25302,6 +25312,8 @@ def crystal_attribute_bookkeeper(ele: EleStruct) -> None:
     """
 def crystal_h_misalign(ele: EleStruct, orbit: CoordStruct, h_vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> None:
     """
+    Subroutine crystal_h_misalign (ele, orbit, h_vec)
+    
     Routine reorient the crystal H vector due to local imperfections in the crystal lattice.
     
     Parameters
@@ -25316,10 +25328,12 @@ def crystal_h_misalign(ele: EleStruct, orbit: CoordStruct, h_vec: typing.Annotat
     """
 def crystal_type_to_crystal_params(ele: EleStruct) -> bool:
     """
+    Subroutine crystal_type_to_crystal_params (ele, err_flag)
+    
     Routine to set the crystal parameters based upon the crystal type.
     
     Crystal types are of the form:
-    "ZZZ(ijk)"
+      "ZZZ(ijk)"
     Where "ZZZ" is the atomic formula of the crystal material and "ijk" is the reciprical lattice
     vetor specifying the diffraction plans.
     
@@ -25338,8 +25352,9 @@ def crystal_type_to_crystal_params(ele: EleStruct) -> bool:
     """
 def custom_attribute_ubound_index(ele_class: typing.SupportsInt) -> int:
     """
-    Routine to return, for a given element class, the upper bound index for the ele%custom(:)
+    Function custom_attribute_ubound_index(ele_class) result (ix_ubound)
     
+    Routine to return, for a given element class, the upper bound index for the ele%custom(:)
     array which is needed to accomodate the registered custom attributes for that class.
     
     Parameters
@@ -25354,8 +25369,6 @@ def custom_attribute_ubound_index(ele_class: typing.SupportsInt) -> int:
     """
 def damping_matrix_d(gamma: typing.SupportsFloat, g_tot: typing.SupportsFloat, B0: typing.SupportsFloat, B1: typing.SupportsFloat, delta: typing.SupportsFloat, species: typing.SupportsInt, mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> PyDampingMatrixD:
     """
-    No docstring available
-    
     Parameters
     ----------
     gamma : 
@@ -25368,8 +25381,6 @@ def damping_matrix_d(gamma: typing.SupportsFloat, g_tot: typing.SupportsFloat, B
     """
 def date_and_time_stamp(string: str, numeric_month: bool | None = None, include_zone: bool | None = None) -> PyDateAndTimeStamp:
     """
-    No docstring available
-    
     Parameters
     ----------
     string : 
@@ -25378,8 +25389,6 @@ def date_and_time_stamp(string: str, numeric_month: bool | None = None, include_
     """
 def deallocate_ele_pointers(ele: EleStruct, nullify_only: bool | None = None, nullify_branch: bool | None = None, dealloc_poles: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -25395,6 +25404,8 @@ def deallocate_ele_pointers(ele: EleStruct, nullify_only: bool | None = None, nu
     """
 def deallocate_expression_tree(tree: ExpressionTreeStruct) -> None:
     """
+    Subroutine deallocate_expression_tree(tree)
+    
     Routine to deallocate an expression tree.
     
     Parameters
@@ -25405,8 +25416,6 @@ def deallocate_expression_tree(tree: ExpressionTreeStruct) -> None:
     """
 def deallocate_lat_pointers(lat: LatStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -25415,8 +25424,6 @@ def deallocate_lat_pointers(lat: LatStruct) -> None:
     """
 def default_tracking_species(param: LatParamStruct, species: typing.SupportsInt) -> PyDefaultTrackingSpecies:
     """
-    No docstring available
-    
     Parameters
     ----------
     param : LatParamStruct
@@ -25425,22 +25432,20 @@ def default_tracking_species(param: LatParamStruct, species: typing.SupportsInt)
     """
 def destfixedwindowls(id: typing.SupportsInt) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     id : 
     """
 def detab(str: str) -> PyDetab:
     """
-    No docstring available
-    
     Parameters
     ----------
     str : 
     """
 def detector_pixel_pt(orbit: CoordStruct, ele: EleStruct) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
+    Function detector_pixel_pt (orbit, ele) result (ix_pix)
+    
     Routine to return the pixel a particle is hitting.
     
     Parameters
@@ -25457,8 +25462,6 @@ def detector_pixel_pt(orbit: CoordStruct, ele: EleStruct) -> typing.Annotated[li
     """
 def diffraction_plate_or_mask_hit_spot(ele: EleStruct, orbit: CoordStruct, ix_section: typing.SupportsInt) -> PyDiffractionPlateOrMaskHitSpot:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -25469,8 +25472,6 @@ def diffraction_plate_or_mask_hit_spot(ele: EleStruct, orbit: CoordStruct, ix_se
     """
 def diffusion_matrix_b(gamma: typing.SupportsFloat, g_tot: typing.SupportsFloat, species: typing.SupportsInt, mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> PyDiffusionMatrixB:
     """
-    No docstring available
-    
     Parameters
     ----------
     gamma : 
@@ -25480,8 +25481,6 @@ def diffusion_matrix_b(gamma: typing.SupportsFloat, g_tot: typing.SupportsFloat,
     """
 def display_size_and_resolution(ix_screen: typing.SupportsInt, x_size: typing.SupportsFloat, y_size: typing.SupportsFloat, x_res: typing.SupportsFloat, y_res: typing.SupportsFloat) -> PyDisplaySizeAndResolution:
     """
-    No docstring available
-    
     Parameters
     ----------
     ix_screen : 
@@ -25492,8 +25491,6 @@ def display_size_and_resolution(ix_screen: typing.SupportsInt, x_size: typing.Su
     """
 def distance_to_aperture(orbit: CoordStruct, particle_at: typing.SupportsInt, ele: EleStruct, dist: typing.SupportsFloat) -> PyDistanceToAperture:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -25508,8 +25505,6 @@ def distance_to_aperture(orbit: CoordStruct, particle_at: typing.SupportsInt, el
     """
 def dj_bessel(m: typing.SupportsInt, arg: typing.SupportsFloat, dj_bes: typing.SupportsFloat) -> PyDjBessel:
     """
-    No docstring available
-    
     Parameters
     ----------
     m : 
@@ -25518,8 +25513,6 @@ def dj_bessel(m: typing.SupportsInt, arg: typing.SupportsFloat, dj_bes: typing.S
     """
 def djb_hash(str: str, old_hash: typing.SupportsInt | None = None, hash: typing.SupportsInt) -> PyDjbHash:
     """
-    No docstring available
-    
     Parameters
     ----------
     str : 
@@ -25528,8 +25521,6 @@ def djb_hash(str: str, old_hash: typing.SupportsInt | None = None, hash: typing.
     """
 def djb_str_hash(in_str: str, hash_str: str) -> PyDjbStrHash:
     """
-    No docstring available
-    
     Parameters
     ----------
     in_str : 
@@ -25537,8 +25528,6 @@ def djb_str_hash(in_str: str, hash_str: str) -> PyDjbStrHash:
     """
 def do_mode_flip(ele: EleStruct) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -25549,16 +25538,12 @@ def do_mode_flip(ele: EleStruct) -> bool:
     """
 def downcase_string(string: str) -> PyDowncaseString:
     """
-    No docstring available
-    
     Parameters
     ----------
     string : 
     """
 def dpc_given_de(pc_old: typing.SupportsFloat, mass: typing.SupportsFloat, dE: typing.SupportsFloat, dpc: typing.SupportsFloat) -> PyDpcGivenDe:
     """
-    No docstring available
-    
     Parameters
     ----------
     pc_old : 
@@ -25568,11 +25553,12 @@ def dpc_given_de(pc_old: typing.SupportsFloat, mass: typing.SupportsFloat, dE: t
     """
 def drift_and_pipe_track_methods_adjustment(lat: LatStruct) -> None:
     """
-    Drift and pipe elements can be used in both photon and non-photon lines.
+    Subroutine drift_and_pipe_track_methods_adjustment(lat)
     
+    Drift and pipe elements can be used in both photon and non-photon lines.
     A problem occures if, for example, a lattice file with both photon and
     non-photon lines contains a line like:
-    drift::*[tracking_method] = taylor
+      drift::*[tracking_method] = taylor
     So this routine resets drift and pipe tracking_method and mat6_calc_method
     parameters in photon lines to bmad_standard if needed.
     
@@ -25585,19 +25571,18 @@ def drift_and_pipe_track_methods_adjustment(lat: LatStruct) -> None:
     """
 def drift_multipass_name_correction(lat: LatStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : 
     """
 def drift_orbit_time(orbit: CoordStruct, beta0: typing.SupportsFloat, delta_s: typing.SupportsFloat | None = None, delta_t: typing.SupportsFloat | None = None) -> None:
     """
-    Simple routine to drift a particle orbit in time-based coordinates by a distance delta_s
+    Subroutine drift_orbit_time(orbit, beta0, delta_s, delta_t)
     
-    or a time delta_t
-    If the particle has zero longitudinal velocity, then the particle is not drifted
-    and a warning is printed.
+    Simple routine to drift a particle orbit in time-based coordinates by a distance delta_s
+      or a time delta_t
+      If the particle has zero longitudinal velocity, then the particle is not drifted
+      and a warning is printed.
     
     Parameters
     ----------
@@ -25612,6 +25597,8 @@ def drift_orbit_time(orbit: CoordStruct, beta0: typing.SupportsFloat, delta_s: t
     """
 def drift_particle_to_s(p: CoordStruct, s: typing.SupportsFloat, branch: BranchStruct) -> None:
     """
+    Subroutine drift_particle_to_s (p, s, branch)
+    
     Drift a particle to a given s-coordinate
     
     Parameters
@@ -25626,6 +25613,8 @@ def drift_particle_to_s(p: CoordStruct, s: typing.SupportsFloat, branch: BranchS
     """
 def drift_particle_to_t(p: CoordStruct, t: typing.SupportsFloat, branch: BranchStruct) -> None:
     """
+    Subroutine drift_particle_to_t (p, t, branch)
+    
     Drift a particle to a given t-coordinate
     
     Parameters
@@ -25640,8 +25629,9 @@ def drift_particle_to_t(p: CoordStruct, t: typing.SupportsFloat, branch: BranchS
     """
 def dspline_len(s_chord0: typing.SupportsFloat, s_chord1: typing.SupportsFloat, spline: SplineStruct, dtheta_ref: typing.SupportsFloat | None = None) -> float:
     """
-    Routine to calculate the difference in length between the spline curve length and a referece line.
+    Function dspline_len (s_chord0, s_chord1, spline, dtheta_ref) result (dlen)
     
+    Routine to calculate the difference in length between the spline curve length and a referece line.
     Referece line is centroid chord (referece system of the spline) rotated by dtheta_ref.
     
     Parameters
@@ -25662,8 +25652,9 @@ def dspline_len(s_chord0: typing.SupportsFloat, s_chord1: typing.SupportsFloat, 
     """
 def dynamic_aperture_point(branch: BranchStruct, ele0: EleStruct, orb0: CoordStruct, theta_xy: typing.SupportsFloat, ap_param: ApertureParamStruct, check_xy_init: bool | None = None) -> AperturePointStruct:
     """
-    Subroutine to determine one dynamic aperture point by tracking.
+    Subroutine dynamic_aperture_point (branch, ele0, orb0, theta_xy, ap_param, ap_point, check_xy_init)
     
+    Subroutine to determine one dynamic aperture point by tracking.
     This routine works by determining where on a radial line y = const * x the aperture is.
     Here x and y are deviations from the reference orbit.
     
@@ -25688,6 +25679,8 @@ def dynamic_aperture_point(branch: BranchStruct, ele0: EleStruct, orb0: CoordStr
     """
 def dynamic_aperture_scan(aperture_param: ApertureParamStruct, pz_start: RealAlloc1D, lat: LatStruct, print_timing: bool | None = None) -> ApertureScanStructAlloc1D:
     """
+    Subroutine dynamic_aperture_scan(aperture_scan, aperture_param, pz_start, lat, print_timing)
+    
     Routine to do a set of dynamic aperture scans.
     
     Parameters
@@ -25708,8 +25701,6 @@ def dynamic_aperture_scan(aperture_param: ApertureParamStruct, pz_start: RealAll
     """
 def e_accel_field(ele: EleStruct, voltage_or_gradient: typing.SupportsInt, bmad_standard_tracking: bool | None = None, field: typing.SupportsFloat) -> PyEAccelField:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -25722,6 +25713,8 @@ def e_accel_field(ele: EleStruct, voltage_or_gradient: typing.SupportsInt, bmad_
     """
 def e_crit_photon(gamma: typing.SupportsFloat, g_bend: typing.SupportsFloat) -> float:
     """
+    Function E_crit_photon (gamma, g_bend) result (E_crit)
+    
     Routine to calculate the photon critical energy in a bend.
     
     Parameters
@@ -25738,8 +25731,9 @@ def e_crit_photon(gamma: typing.SupportsFloat, g_bend: typing.SupportsFloat) -> 
     """
 def eigen_decomp_6mat(mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> ...:
     """
-    Compute eigenvalues and eigenvectors of a real 6x6 matrix.
+    Subroutine eigen_decomp_6mat(mat, eval, evec, tunes, err_flag)
     
+    Compute eigenvalues and eigenvectors of a real 6x6 matrix.
     The evals and evecs are in general complex.
     
     Parameters
@@ -25760,8 +25754,6 @@ def eigen_decomp_6mat(mat: typing.Annotated[collections.abc.Sequence[typing.Anno
     """
 def ele_compute_ref_energy_and_time(ele0: EleStruct, ele: EleStruct, param: LatParamStruct, err_flag: bool) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele0 : EleStruct
@@ -25777,8 +25769,6 @@ def ele_compute_ref_energy_and_time(ele0: EleStruct, ele: EleStruct, param: LatP
     """
 def ele_equal_ele(ele_out: EleStruct, ele_in: EleStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele_out : 
@@ -25786,7 +25776,11 @@ def ele_equal_ele(ele_out: EleStruct, ele_in: EleStruct) -> None:
     """
 def ele_equals_ele(ele_in: EleStruct, update_nametable: bool) -> EleStruct:
     """
+    Subroutine ele_equals_ele (ele_out, ele_in, update_nametable)
+    
     Subroutine that is used to set an element equal to another.
+    Note: Use ele_equal_ele instead unless you know what you are doing.
+    
     
     Parameters
     ----------
@@ -25803,7 +25797,10 @@ def ele_equals_ele(ele_in: EleStruct, update_nametable: bool) -> EleStruct:
     """
 def ele_finalizer(ele: EleStruct) -> None:
     """
+    Subroutine ele_finalizer(ele)
+    
     Finalizer routine for ele_struct instances.
+    NOTE: Not currently used.
     
     Parameters
     ----------
@@ -25814,8 +25811,6 @@ def ele_finalizer(ele: EleStruct) -> None:
     """
 def ele_full_name(ele: EleStruct, template_: str | None = None, str: str) -> PyEleFullName:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -25826,8 +25821,6 @@ def ele_full_name(ele: EleStruct, template_: str | None = None, str: str) -> PyE
     """
 def ele_geometry(floor_start: FloorPositionStruct, ele: EleStruct, len_scale: typing.SupportsFloat | None = None, ignore_patch_err: bool | None = None) -> FloorPositionStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     floor_start : 
@@ -25847,8 +25840,6 @@ def ele_geometry(floor_start: FloorPositionStruct, ele: EleStruct, len_scale: ty
     """
 def ele_geometry_with_misalignments(ele: EleStruct, len_scale: typing.SupportsFloat | None = None, floor: FloorPositionStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -25860,8 +25851,6 @@ def ele_geometry_with_misalignments(ele: EleStruct, len_scale: typing.SupportsFl
     """
 def ele_has_constant_ds_dt_ref(ele: EleStruct, is_const: bool) -> PyEleHasConstantDsDtRef:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -25870,8 +25859,6 @@ def ele_has_constant_ds_dt_ref(ele: EleStruct, is_const: bool) -> PyEleHasConsta
     """
 def ele_has_nonzero_kick(has_kick: bool) -> PyEleHasNonzeroKick:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -25880,8 +25867,6 @@ def ele_has_nonzero_kick(has_kick: bool) -> PyEleHasNonzeroKick:
     """
 def ele_has_nonzero_offset(ele: EleStruct, has_offset: bool) -> PyEleHasNonzeroOffset:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : 
@@ -25889,8 +25874,9 @@ def ele_has_nonzero_offset(ele: EleStruct, has_offset: bool) -> PyEleHasNonzeroO
     """
 def ele_is_monitor(ele: EleStruct, print_warning: bool | None = None) -> bool:
     """
-    Routine to check that an element is either a detector, instrument, monitor, or marker.
+    Function ele_is_monitor (ele, print_warning) result (is_monitor)
     
+    Routine to check that an element is either a detector, instrument, monitor, or marker.
     These are the elements where measurement errors can be defined.
     
     Parameters
@@ -25907,8 +25893,6 @@ def ele_is_monitor(ele: EleStruct, print_warning: bool | None = None) -> bool:
     """
 def ele_loc(ele: EleStruct, loc: LatEleLocStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -25917,8 +25901,6 @@ def ele_loc(ele: EleStruct, loc: LatEleLocStruct) -> None:
     """
 def ele_loc_name(ele: EleStruct, show_branch0: bool | None = None, parens: str | None = None, str: str) -> PyEleLocName:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -25932,8 +25914,6 @@ def ele_loc_name(ele: EleStruct, show_branch0: bool | None = None, parens: str |
     """
 def ele_misalignment_l_s_calc(ele: EleStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : float
@@ -25945,8 +25925,6 @@ def ele_misalignment_l_s_calc(ele: EleStruct) -> ...:
     """
 def ele_nametable_index(ele: EleStruct, ix_nt: typing.SupportsInt) -> PyEleNametableIndex:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -25955,8 +25933,6 @@ def ele_nametable_index(ele: EleStruct, ix_nt: typing.SupportsInt) -> PyEleNamet
     """
 def ele_order_calc(lat: LatStruct) -> LatEleOrderStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -25966,8 +25942,6 @@ def ele_order_calc(lat: LatStruct) -> LatEleOrderStruct:
     """
 def ele_reference_energy_correction(ele: EleStruct, orbit: CoordStruct, particle_at: typing.SupportsInt, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -25987,8 +25961,6 @@ def ele_reference_energy_correction(ele: EleStruct, orbit: CoordStruct, particle
     """
 def ele_rf_step_index(E_ref: typing.SupportsFloat, s_rel: typing.SupportsFloat, ele: EleStruct, ix_step: typing.SupportsInt) -> PyEleRfStepIndex:
     """
-    No docstring available
-    
     Parameters
     ----------
     E_ref : float
@@ -26001,9 +25973,15 @@ def ele_rf_step_index(E_ref: typing.SupportsFloat, s_rel: typing.SupportsFloat, 
     """
 def ele_to_ptc_magnetic_bn_an(ele: EleStruct) -> ...:
     """
-    Routine to compute the a(n) and b(n) magnetic multipole components of a magnet.
+    Subroutine ele_to_ptc_magnetic_bn_an (ele, bn, an, n_max)
     
+    Routine to compute the a(n) and b(n) magnetic multipole components of a magnet.
     This is used to interface between eles and PTC fibres
+    
+    Note: The multipole index uses the PTC convention of starting from 1 instead of zero.
+    
+    Note: On the PTC side bn(1) is error field when creating a fibre but
+    is the total field when the fibre is being modified. This routine returns the error field.
     
     Parameters
     ----------
@@ -26021,8 +25999,6 @@ def ele_to_ptc_magnetic_bn_an(ele: EleStruct) -> ...:
     """
 def ele_to_spin_taylor(ele: EleStruct, param: LatParamStruct, orb0: CoordStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -26035,8 +26011,6 @@ def ele_to_spin_taylor(ele: EleStruct, param: LatParamStruct, orb0: CoordStruct)
     """
 def ele_to_taylor(ele: EleStruct, orb0: _pybmad.CoordStruct | None = None, taylor_map_includes_offsets: bool | None = None, include_damping: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : ElementStruct
@@ -26055,8 +26029,6 @@ def ele_to_taylor(ele: EleStruct, orb0: _pybmad.CoordStruct | None = None, taylo
     """
 def ele_unique_name(ele: EleStruct, order: LatEleOrderStruct, unique_name: str) -> PyEleUniqueName:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -26068,8 +26040,6 @@ def ele_unique_name(ele: EleStruct, order: LatEleOrderStruct, unique_name: str) 
     """
 def ele_value_has_changed(ele: EleStruct, list: IntAlloc1D, abs_tol: RealAlloc1D, set_old: bool, has_changed: bool) -> PyEleValueHasChanged:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -26087,8 +26057,6 @@ def ele_value_has_changed(ele: EleStruct, list: IntAlloc1D, abs_tol: RealAlloc1D
     """
 def ele_vec_equal_ele_vec(ele1: EleStructAlloc1D, ele2: EleStructAlloc1D) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele1 : 
@@ -26096,8 +26064,6 @@ def ele_vec_equal_ele_vec(ele1: EleStructAlloc1D, ele2: EleStructAlloc1D) -> Non
     """
 def elec_multipole_field(a: typing.SupportsFloat, b: typing.SupportsFloat, n: typing.SupportsInt, coord: CoordStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     a : float
@@ -26119,12 +26085,38 @@ def elec_multipole_field(a: typing.SupportsFloat, b: typing.SupportsFloat, n: ty
 @typing.overload
 def element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choose_max: bool, print_err: bool | None = None) -> ...:
     """
+    Function element_at_s (...) result (ix_ele)
+    
     Function to return the index of the element at position s.
     
-    function element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_eff, position, print_err) result (ix_ele)
-    function element_at_s_branch (branch, s, choose_max, err_flag, s_eff, position, print_err) result (ix_ele)
+    element_at_s is an overloaded name for:
+      function element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_eff, position, print_err) result (ix_ele)
+      function element_at_s_branch (branch, s, choose_max, err_flag, s_eff, position, print_err) result (ix_ele)
+    
     The differnce between these two routine is that with element_at_s_lat, the branch is given by the lat
-    and ix_ele arguments: branch = lat%branch(ix_ele). With element_at_s_branch, the branch is an argument.
+      and ix_ele arguments: branch = lat%branch(ix_ele). With element_at_s_branch, the branch is an argument.
+    
+    Also see: pointer_to_element_at_s
+    
+    ix_ele is choisen such that:
+    If choose_max = True:
+        If s = branch%ele(ix_end_of_branch): ix_ele = ix_end_of_branch
+        Else: branch%ele(ix_ele)%s_start <= s < branch%ele(ix_ele)%s
+    If choose_max = False:
+        If s = branch%ele(0)%s: ix_ele = 0
+        Else: branch%ele(ix_ele)%s_start < s <= branch%ele(ix_ele)%s
+    That is, if s corresponds to an element boundary between elements with indexes ix1 and ix2 = ix1 + 1:
+        choose_max = True  => ix_ele = ix2
+        choose_max = False => ix_ele = ix1
+    
+    The setting of choose_max only makes a difference when s corresponds to an element boundary.
+    
+    Note: For a circular lattice, s is evaluated at the effective s which
+    is modulo the branch length:
+        s_eff = s - branch_length * floor(s/branch_length)
+    
+    Note: If there are multiple elements that are at the given s position due to the presence of
+    an element with a negative length, which of the possible elements is actually chosen is ill-defined.
     
     Parameters
     ----------
@@ -26167,12 +26159,38 @@ def element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choose_max: bool
 @typing.overload
 def element_at_s(lat: LatStruct, s: typing.SupportsFloat, choose_max: bool, ix_branch: typing.SupportsInt | None = None, print_err: bool | None = None) -> ...:
     """
+    Function element_at_s (...) result (ix_ele)
+    
     Function to return the index of the element at position s.
     
-    function element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_eff, position, print_err) result (ix_ele)
-    function element_at_s_branch (branch, s, choose_max, err_flag, s_eff, position, print_err) result (ix_ele)
+    element_at_s is an overloaded name for:
+      function element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_eff, position, print_err) result (ix_ele)
+      function element_at_s_branch (branch, s, choose_max, err_flag, s_eff, position, print_err) result (ix_ele)
+    
     The differnce between these two routine is that with element_at_s_lat, the branch is given by the lat
-    and ix_ele arguments: branch = lat%branch(ix_ele). With element_at_s_branch, the branch is an argument.
+      and ix_ele arguments: branch = lat%branch(ix_ele). With element_at_s_branch, the branch is an argument.
+    
+    Also see: pointer_to_element_at_s
+    
+    ix_ele is choisen such that:
+    If choose_max = True:
+        If s = branch%ele(ix_end_of_branch): ix_ele = ix_end_of_branch
+        Else: branch%ele(ix_ele)%s_start <= s < branch%ele(ix_ele)%s
+    If choose_max = False:
+        If s = branch%ele(0)%s: ix_ele = 0
+        Else: branch%ele(ix_ele)%s_start < s <= branch%ele(ix_ele)%s
+    That is, if s corresponds to an element boundary between elements with indexes ix1 and ix2 = ix1 + 1:
+        choose_max = True  => ix_ele = ix2
+        choose_max = False => ix_ele = ix1
+    
+    The setting of choose_max only makes a difference when s corresponds to an element boundary.
+    
+    Note: For a circular lattice, s is evaluated at the effective s which
+    is modulo the branch length:
+        s_eff = s - branch_length * floor(s/branch_length)
+    
+    Note: If there are multiple elements that are at the given s position due to the presence of
+    an element with a negative length, which of the possible elements is actually chosen is ill-defined.
     
     Parameters
     ----------
@@ -26214,8 +26232,6 @@ def element_at_s(lat: LatStruct, s: typing.SupportsFloat, choose_max: bool, ix_b
     """
 def element_slice_iterator(ele: EleStruct, param: LatParamStruct, i_slice: typing.SupportsInt, n_slice_tot: typing.SupportsInt, sliced_ele: EleStruct, s_start: typing.SupportsFloat | None = None, s_end: typing.SupportsFloat | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -26233,13 +26249,9 @@ def element_slice_iterator(ele: EleStruct, param: LatParamStruct, i_slice: typin
         Ending edge of slice relative to beginning of element.
     """
 def ellipinc_test() -> None:
-    """
-    No docstring available
-    """
+    ...
 def em_field_calc(ele: EleStruct, param: LatParamStruct, s_pos: typing.SupportsFloat, orbit: CoordStruct, local_ref_frame: bool, calc_dfield: bool | None = None, calc_potential: bool | None = None, use_overlap: bool | None = None, grid_allow_s_out_of_bounds: bool | None = None, rf_time: typing.SupportsFloat | None = None, used_eles: _pybmad.ElePointerStructAlloc1D | None = None, print_err: bool | None = None, original_ele: _pybmad.EleStruct | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -26286,24 +26298,26 @@ def em_field_calc(ele: EleStruct, param: LatParamStruct, s_pos: typing.SupportsF
     """
 def em_field_derivatives(ele: EleStruct, param: LatParamStruct, s_pos: typing.SupportsFloat, orbit: CoordStruct, local_ref_frame: bool, grid_allow_s_out_of_bounds: bool | None = None, rf_time: typing.SupportsFloat | None = None) -> PyEmFieldDerivatives:
     """
-    Routine to calculate field derivatives.
+    Subroutine em_field_derivatives (ele, param, s_pos, orbit, local_ref_frame, dfield, grid_allow_s_out_of_bounds, rf_time)
     
+    Routine to calculate field derivatives.
     In theory this should be handled by em_filed_calc. In practice, em_field_calc is currently incomplete.
+    
     Input
-    ele             -- Ele_struct: Element
-    param           -- lat_param_struct: Lattice parameters.
-    s_pos           -- Real(rp): Longitudinal position relative to the upstream edge of the element.
-    time            -- Real(rp): Particle time.
-    For absolute time tracking this is the absolute time.
-    For relative time tracking this is relative to the reference particle entering the element.
-    orbit           -- Coord_struct: Transverse coordinates.
-    %vec(1), %vec(3)  -- Transverse coords. These are the only components used in the calculation.
-    local_ref_frame     -- Logical, If True then take the input coordinates and output fields
-    as being with respect to the frame of referene of the element (ignore misalignments).
-    grid_allow_s_out_of_bounds
-    -- logical, optional: For grids, allow s-coordinate to be grossly out of bounds
-    and return zero instead of an error? Default: False. Used internally for overlapping fields.
-    rf_time          -- real(rp), optional: RF clock time. If not present then the time will be calculated using the standard algorithm.
+      ele             -- Ele_struct: Element
+      param           -- lat_param_struct: Lattice parameters.
+      s_pos           -- Real(rp): Longitudinal position relative to the upstream edge of the element.
+      time            -- Real(rp): Particle time.
+                          For absolute time tracking this is the absolute time.
+                          For relative time tracking this is relative to the reference particle entering the element.
+      orbit           -- Coord_struct: Transverse coordinates.
+        %vec(1), %vec(3)  -- Transverse coords. These are the only components used in the calculation.
+      local_ref_frame     -- Logical, If True then take the input coordinates and output fields
+                                      as being with respect to the frame of referene of the element (ignore misalignments).
+      grid_allow_s_out_of_bounds
+                       -- logical, optional: For grids, allow s-coordinate to be grossly out of bounds
+                            and return zero instead of an error? Default: False. Used internally for overlapping fields.
+      rf_time          -- real(rp), optional: RF clock time. If not present then the time will be calculated using the standard algorithm.
     
     
     Returns
@@ -26313,6 +26327,8 @@ def em_field_derivatives(ele: EleStruct, param: LatParamStruct, s_pos: typing.Su
     """
 def em_field_kick_vector_time(ele: EleStruct, param: LatParamStruct, rf_time: typing.SupportsFloat, orbit: CoordStruct, err_flag: bool, print_err: bool | None = None, extra_field: _pybmad.EmFieldStruct | None = None) -> typing.Annotated[list[float], "FixedSize(10)"]:
     """
+    Subroutine em_field_kick_vector_time (ele, param, rf_time, orbit, dvec_dt, err_flag, print_err, extra_field))
+    
     Subroutine to convert particle coordinates from t-based to s-based system.
     
     Parameters
@@ -26339,8 +26355,6 @@ def em_field_kick_vector_time(ele: EleStruct, param: LatParamStruct, rf_time: ty
     """
 def em_field_plus_em_field(field1: EmFieldStruct, field2: EmFieldStruct, field_tot: EmFieldStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     field1 : 
@@ -26349,8 +26363,6 @@ def em_field_plus_em_field(field1: EmFieldStruct, field2: EmFieldStruct, field_t
     """
 def em_taylor_equal_em_taylor(em_taylor1: EmTaylorStruct, em_taylor2: EmTaylorStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     em_taylor1 : 
@@ -26358,8 +26370,6 @@ def em_taylor_equal_em_taylor(em_taylor1: EmTaylorStruct, em_taylor2: EmTaylorSt
     """
 def em_taylors_equal_em_taylors(em_taylor1: EmTaylorStructAlloc1D, em_taylor2: EmTaylorStructAlloc1D) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     em_taylor1 : 
@@ -26367,10 +26377,12 @@ def em_taylors_equal_em_taylors(em_taylor1: EmTaylorStructAlloc1D, em_taylor2: E
     """
 def emit_6d(ele_ref: EleStruct, include_opening_angle: bool, closed_orbit: _pybmad.CoordStructAlloc1D | None = None) -> ...:
     """
-    Routine to calculate the three normal mode emittances, damping partition numbers, radiation integrals, etc.
+    Subroutine emit_6d (ele_ref, include_opening_angle, mode, sigma_mat, closed_orbit, rad_int_by_ele)
     
+    Routine to calculate the three normal mode emittances, damping partition numbers, radiation integrals, etc.
     Since the emattances, etc. are only an invariant in the limit of zero damping, the calculated
     values will vary depending upon the reference element.
+    
     If the lattice geometry is open, only the radiation integrals is computed.
     
     Parameters
@@ -26394,6 +26406,8 @@ def emit_6d(ele_ref: EleStruct, include_opening_angle: bool, closed_orbit: _pybm
     """
 def end_akima_spline_calc(spline: SplineStructAlloc1D, which_end: typing.SupportsInt) -> None:
     """
+    Subroutine end_akima_spline_calc (spline, which_end)
+    
     Routine to calculate the slopes at the ends of a spline array
     
     Parameters
@@ -26407,8 +26421,6 @@ def end_akima_spline_calc(spline: SplineStructAlloc1D, which_end: typing.Support
     """
 def entering_element(orbit: CoordStruct, particle_at: typing.SupportsInt, is_entering: bool) -> PyEnteringElement:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -26419,25 +26431,32 @@ def entering_element(orbit: CoordStruct, particle_at: typing.SupportsInt, is_ent
     """
 def envelope_radints(Lambda: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"]], "FixedSize(6)"], Theta: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"]], "FixedSize(6)"], Iota: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"]], "FixedSize(6)"], alpha: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], emit: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> None:
     """
-    Calculates damping decrement and emittance of the three
+    subroutine envelope_radints(Lambda,Theta,Iota,alpha,emit)
     
+    Calculates damping decrement and emittance of the three
     normal modes from the integrate diffusion, damping, and vertical
     excitation matrices names Lambda, Theta, and Iota, respectively.
     These three matrices are obtained from the subroutine integrated_mats.
+    
     The damping times can obtained from alpha using:
-    tau = lattice_length/c_light/alpha
+       tau = lattice_length/c_light/alpha
     """
 def envelope_radints_ibs(Lambda: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"]], "FixedSize(6)"], Theta: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"]], "FixedSize(6)"], Iota: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"]], "FixedSize(6)"], eles: EleStructAlloc1D, mode: NormalModesStruct, tail_cut: bool, npart: typing.SupportsFloat, species: typing.SupportsInt) -> ...:
     """
-    Calculates damping decrement and emittance of the three
+    subroutine envelope_radints_ibs(Lambda, Theta, Iota, eles, alpha, emit, mode, tail_cut, npart, species)
     
+    Calculates damping decrement and emittance of the three
     normal modes by integrating the IBS, SR diffusion, and SR damping matrices.
+    
     The IBS depends on the envelope, and so this routine iterates to
     locate the equilibrium beam envelope. This iterative process can fail to converge.
+    
     The damping times can obtained from alpha using:
-    tau = lattice_length/c_light/alpha
+       tau = lattice_length/c_light/alpha
+    
     alpha and emit are quantities for the three normal modes.
     alpha and emit are ordered by plane dominance.
+    
     Only radiation from sbends and rbends is taken into account.
     The one-turn transfer matrix at each element (slice) is obtained
     by concatenating the individual element transfer matrices.
@@ -26473,8 +26492,6 @@ def envelope_radints_ibs(Lambda: typing.Annotated[collections.abc.Sequence[typin
     """
 def eq_ac_kicker(f1: AcKickerStruct, f2: AcKickerStruct, is_eq: bool) -> PyEqAcKicker:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26483,8 +26500,6 @@ def eq_ac_kicker(f1: AcKickerStruct, f2: AcKickerStruct, is_eq: bool) -> PyEqAcK
     """
 def eq_ac_kicker_freq(f1: AcKickerFreqStruct, f2: AcKickerFreqStruct, is_eq: bool) -> PyEqAcKickerFreq:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26493,8 +26508,6 @@ def eq_ac_kicker_freq(f1: AcKickerFreqStruct, f2: AcKickerFreqStruct, is_eq: boo
     """
 def eq_ac_kicker_time(f1: AcKickerTimeStruct, f2: AcKickerTimeStruct, is_eq: bool) -> PyEqAcKickerTime:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26503,8 +26516,6 @@ def eq_ac_kicker_time(f1: AcKickerTimeStruct, f2: AcKickerTimeStruct, is_eq: boo
     """
 def eq_anormal_mode(f1: AnormalModeStruct, f2: AnormalModeStruct, is_eq: bool) -> PyEqAnormalMode:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26513,8 +26524,6 @@ def eq_anormal_mode(f1: AnormalModeStruct, f2: AnormalModeStruct, is_eq: bool) -
     """
 def eq_aperture_param(f1: ApertureParamStruct, f2: ApertureParamStruct, is_eq: bool) -> PyEqApertureParam:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26523,8 +26532,6 @@ def eq_aperture_param(f1: ApertureParamStruct, f2: ApertureParamStruct, is_eq: b
     """
 def eq_aperture_point(f1: AperturePointStruct, f2: AperturePointStruct, is_eq: bool) -> PyEqAperturePoint:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26533,8 +26540,6 @@ def eq_aperture_point(f1: AperturePointStruct, f2: AperturePointStruct, is_eq: b
     """
 def eq_aperture_scan(f1: ApertureScanStruct, f2: ApertureScanStruct, is_eq: bool) -> PyEqApertureScan:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26543,8 +26548,6 @@ def eq_aperture_scan(f1: ApertureScanStruct, f2: ApertureScanStruct, is_eq: bool
     """
 def eq_beam(f1: BeamStruct, f2: BeamStruct, is_eq: bool) -> PyEqBeam:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26553,8 +26556,6 @@ def eq_beam(f1: BeamStruct, f2: BeamStruct, is_eq: bool) -> PyEqBeam:
     """
 def eq_beam_init(f1: BeamInitStruct, f2: BeamInitStruct, is_eq: bool) -> PyEqBeamInit:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26563,8 +26564,6 @@ def eq_beam_init(f1: BeamInitStruct, f2: BeamInitStruct, is_eq: bool) -> PyEqBea
     """
 def eq_bmad_common(f1: BmadCommonStruct, f2: BmadCommonStruct, is_eq: bool) -> PyEqBmadCommon:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26573,8 +26572,6 @@ def eq_bmad_common(f1: BmadCommonStruct, f2: BmadCommonStruct, is_eq: bool) -> P
     """
 def eq_bookkeeping_state(f1: BookkeepingStateStruct, f2: BookkeepingStateStruct, is_eq: bool) -> PyEqBookkeepingState:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26583,8 +26580,6 @@ def eq_bookkeeping_state(f1: BookkeepingStateStruct, f2: BookkeepingStateStruct,
     """
 def eq_bpm_phase_coupling(f1: BpmPhaseCouplingStruct, f2: BpmPhaseCouplingStruct, is_eq: bool) -> PyEqBpmPhaseCoupling:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26593,8 +26588,6 @@ def eq_bpm_phase_coupling(f1: BpmPhaseCouplingStruct, f2: BpmPhaseCouplingStruct
     """
 def eq_branch(f1: BranchStruct, f2: BranchStruct, is_eq: bool) -> PyEqBranch:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26603,8 +26596,6 @@ def eq_branch(f1: BranchStruct, f2: BranchStruct, is_eq: bool) -> PyEqBranch:
     """
 def eq_bunch(f1: BunchStruct, f2: BunchStruct, is_eq: bool) -> PyEqBunch:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26613,8 +26604,6 @@ def eq_bunch(f1: BunchStruct, f2: BunchStruct, is_eq: bool) -> PyEqBunch:
     """
 def eq_bunch_params(f1: BunchParamsStruct, f2: BunchParamsStruct, is_eq: bool) -> PyEqBunchParams:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26623,8 +26612,6 @@ def eq_bunch_params(f1: BunchParamsStruct, f2: BunchParamsStruct, is_eq: bool) -
     """
 def eq_cartesian_map(f1: CartesianMapStruct, f2: CartesianMapStruct, is_eq: bool) -> PyEqCartesianMap:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26633,8 +26620,6 @@ def eq_cartesian_map(f1: CartesianMapStruct, f2: CartesianMapStruct, is_eq: bool
     """
 def eq_cartesian_map_term(f1: CartesianMapTermStruct, f2: CartesianMapTermStruct, is_eq: bool) -> PyEqCartesianMapTerm:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26643,8 +26628,6 @@ def eq_cartesian_map_term(f1: CartesianMapTermStruct, f2: CartesianMapTermStruct
     """
 def eq_cartesian_map_term1(f1: CartesianMapTerm1Struct, f2: CartesianMapTerm1Struct, is_eq: bool) -> PyEqCartesianMapTerm1:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26653,8 +26636,6 @@ def eq_cartesian_map_term1(f1: CartesianMapTerm1Struct, f2: CartesianMapTerm1Str
     """
 def eq_complex_taylor(f1: ComplexTaylorStruct, f2: ComplexTaylorStruct, is_eq: bool) -> PyEqComplexTaylor:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26663,8 +26644,6 @@ def eq_complex_taylor(f1: ComplexTaylorStruct, f2: ComplexTaylorStruct, is_eq: b
     """
 def eq_complex_taylor_term(f1: ComplexTaylorTermStruct, f2: ComplexTaylorTermStruct, is_eq: bool) -> PyEqComplexTaylorTerm:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26673,8 +26652,6 @@ def eq_complex_taylor_term(f1: ComplexTaylorTermStruct, f2: ComplexTaylorTermStr
     """
 def eq_control(f1: ControlStruct, f2: ControlStruct, is_eq: bool) -> PyEqControl:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26683,8 +26660,6 @@ def eq_control(f1: ControlStruct, f2: ControlStruct, is_eq: bool) -> PyEqControl
     """
 def eq_control_ramp1(f1: ControlRamp1Struct, f2: ControlRamp1Struct, is_eq: bool) -> PyEqControlRamp1:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26693,8 +26668,6 @@ def eq_control_ramp1(f1: ControlRamp1Struct, f2: ControlRamp1Struct, is_eq: bool
     """
 def eq_control_var1(f1: ControlVar1Struct, f2: ControlVar1Struct, is_eq: bool) -> PyEqControlVar1:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26703,8 +26676,6 @@ def eq_control_var1(f1: ControlVar1Struct, f2: ControlVar1Struct, is_eq: bool) -
     """
 def eq_controller(f1: ControllerStruct, f2: ControllerStruct, is_eq: bool) -> PyEqController:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26713,8 +26684,6 @@ def eq_controller(f1: ControllerStruct, f2: ControllerStruct, is_eq: bool) -> Py
     """
 def eq_coord(f1: CoordStruct, f2: CoordStruct, is_eq: bool) -> PyEqCoord:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26723,8 +26692,6 @@ def eq_coord(f1: CoordStruct, f2: CoordStruct, is_eq: bool) -> PyEqCoord:
     """
 def eq_coord_array(f1: CoordArrayStruct, f2: CoordArrayStruct, is_eq: bool) -> PyEqCoordArray:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26733,8 +26700,6 @@ def eq_coord_array(f1: CoordArrayStruct, f2: CoordArrayStruct, is_eq: bool) -> P
     """
 def eq_cylindrical_map(f1: CylindricalMapStruct, f2: CylindricalMapStruct, is_eq: bool) -> PyEqCylindricalMap:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26743,8 +26708,6 @@ def eq_cylindrical_map(f1: CylindricalMapStruct, f2: CylindricalMapStruct, is_eq
     """
 def eq_cylindrical_map_term(f1: CylindricalMapTermStruct, f2: CylindricalMapTermStruct, is_eq: bool) -> PyEqCylindricalMapTerm:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26753,8 +26716,6 @@ def eq_cylindrical_map_term(f1: CylindricalMapTermStruct, f2: CylindricalMapTerm
     """
 def eq_cylindrical_map_term1(f1: CylindricalMapTerm1Struct, f2: CylindricalMapTerm1Struct, is_eq: bool) -> PyEqCylindricalMapTerm1:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26763,8 +26724,6 @@ def eq_cylindrical_map_term1(f1: CylindricalMapTerm1Struct, f2: CylindricalMapTe
     """
 def eq_ele(f1: EleStruct, f2: EleStruct, is_eq: bool) -> PyEqEle:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26773,8 +26732,6 @@ def eq_ele(f1: EleStruct, f2: EleStruct, is_eq: bool) -> PyEqEle:
     """
 def eq_ellipse_beam_init(f1: EllipseBeamInitStruct, f2: EllipseBeamInitStruct, is_eq: bool) -> PyEqEllipseBeamInit:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26783,8 +26740,6 @@ def eq_ellipse_beam_init(f1: EllipseBeamInitStruct, f2: EllipseBeamInitStruct, i
     """
 def eq_em_field(f1: EmFieldStruct, f2: EmFieldStruct, is_eq: bool) -> PyEqEmField:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26793,8 +26748,6 @@ def eq_em_field(f1: EmFieldStruct, f2: EmFieldStruct, is_eq: bool) -> PyEqEmFiel
     """
 def eq_em_taylor(f1: EmTaylorStruct, f2: EmTaylorStruct, is_eq: bool) -> PyEqEmTaylor:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26803,8 +26756,6 @@ def eq_em_taylor(f1: EmTaylorStruct, f2: EmTaylorStruct, is_eq: bool) -> PyEqEmT
     """
 def eq_em_taylor_term(f1: EmTaylorTermStruct, f2: EmTaylorTermStruct, is_eq: bool) -> PyEqEmTaylorTerm:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26813,8 +26764,6 @@ def eq_em_taylor_term(f1: EmTaylorTermStruct, f2: EmTaylorTermStruct, is_eq: boo
     """
 def eq_expression_atom(f1: ExpressionAtomStruct, f2: ExpressionAtomStruct, is_eq: bool) -> PyEqExpressionAtom:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26823,8 +26772,6 @@ def eq_expression_atom(f1: ExpressionAtomStruct, f2: ExpressionAtomStruct, is_eq
     """
 def eq_floor_position(f1: FloorPositionStruct, f2: FloorPositionStruct, is_eq: bool) -> PyEqFloorPosition:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26833,8 +26780,6 @@ def eq_floor_position(f1: FloorPositionStruct, f2: FloorPositionStruct, is_eq: b
     """
 def eq_gen_grad1(f1: GenGrad1Struct, f2: GenGrad1Struct, is_eq: bool) -> PyEqGenGrad1:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26843,8 +26788,6 @@ def eq_gen_grad1(f1: GenGrad1Struct, f2: GenGrad1Struct, is_eq: bool) -> PyEqGen
     """
 def eq_gen_grad_map(f1: GenGradMapStruct, f2: GenGradMapStruct, is_eq: bool) -> PyEqGenGradMap:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26853,8 +26796,6 @@ def eq_gen_grad_map(f1: GenGradMapStruct, f2: GenGradMapStruct, is_eq: bool) -> 
     """
 def eq_grid_beam_init(f1: GridBeamInitStruct, f2: GridBeamInitStruct, is_eq: bool) -> PyEqGridBeamInit:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26863,8 +26804,6 @@ def eq_grid_beam_init(f1: GridBeamInitStruct, f2: GridBeamInitStruct, is_eq: boo
     """
 def eq_grid_field(f1: GridFieldStruct, f2: GridFieldStruct, is_eq: bool) -> PyEqGridField:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26873,8 +26812,6 @@ def eq_grid_field(f1: GridFieldStruct, f2: GridFieldStruct, is_eq: bool) -> PyEq
     """
 def eq_grid_field_pt(f1: GridFieldPtStruct, f2: GridFieldPtStruct, is_eq: bool) -> PyEqGridFieldPt:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26883,8 +26820,6 @@ def eq_grid_field_pt(f1: GridFieldPtStruct, f2: GridFieldPtStruct, is_eq: bool) 
     """
 def eq_grid_field_pt1(f1: GridFieldPt1Struct, f2: GridFieldPt1Struct, is_eq: bool) -> PyEqGridFieldPt1:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26893,8 +26828,6 @@ def eq_grid_field_pt1(f1: GridFieldPt1Struct, f2: GridFieldPt1Struct, is_eq: boo
     """
 def eq_high_energy_space_charge(f1: HighEnergySpaceChargeStruct, f2: HighEnergySpaceChargeStruct, is_eq: bool) -> PyEqHighEnergySpaceCharge:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26903,8 +26836,6 @@ def eq_high_energy_space_charge(f1: HighEnergySpaceChargeStruct, f2: HighEnergyS
     """
 def eq_interval1_coef(f1: Interval1CoefStruct, f2: Interval1CoefStruct, is_eq: bool) -> PyEqInterval1Coef:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26913,8 +26844,6 @@ def eq_interval1_coef(f1: Interval1CoefStruct, f2: Interval1CoefStruct, is_eq: b
     """
 def eq_kv_beam_init(f1: KvBeamInitStruct, f2: KvBeamInitStruct, is_eq: bool) -> PyEqKvBeamInit:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26923,8 +26852,6 @@ def eq_kv_beam_init(f1: KvBeamInitStruct, f2: KvBeamInitStruct, is_eq: bool) -> 
     """
 def eq_lat(f1: LatStruct, f2: LatStruct, is_eq: bool) -> PyEqLat:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26933,8 +26860,6 @@ def eq_lat(f1: LatStruct, f2: LatStruct, is_eq: bool) -> PyEqLat:
     """
 def eq_lat_ele_loc(f1: LatEleLocStruct, f2: LatEleLocStruct, is_eq: bool) -> PyEqLatEleLoc:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26943,8 +26868,6 @@ def eq_lat_ele_loc(f1: LatEleLocStruct, f2: LatEleLocStruct, is_eq: bool) -> PyE
     """
 def eq_lat_param(f1: LatParamStruct, f2: LatParamStruct, is_eq: bool) -> PyEqLatParam:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26953,8 +26876,6 @@ def eq_lat_param(f1: LatParamStruct, f2: LatParamStruct, is_eq: bool) -> PyEqLat
     """
 def eq_linac_normal_mode(f1: LinacNormalModeStruct, f2: LinacNormalModeStruct, is_eq: bool) -> PyEqLinacNormalMode:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26963,8 +26884,6 @@ def eq_linac_normal_mode(f1: LinacNormalModeStruct, f2: LinacNormalModeStruct, i
     """
 def eq_mode3(f1: Mode3Struct, f2: Mode3Struct, is_eq: bool) -> PyEqMode3:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26973,8 +26892,6 @@ def eq_mode3(f1: Mode3Struct, f2: Mode3Struct, is_eq: bool) -> PyEqMode3:
     """
 def eq_mode_info(f1: ModeInfoStruct, f2: ModeInfoStruct, is_eq: bool) -> PyEqModeInfo:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26983,8 +26900,6 @@ def eq_mode_info(f1: ModeInfoStruct, f2: ModeInfoStruct, is_eq: bool) -> PyEqMod
     """
 def eq_normal_modes(f1: NormalModesStruct, f2: NormalModesStruct, is_eq: bool) -> PyEqNormalModes:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -26993,8 +26908,6 @@ def eq_normal_modes(f1: NormalModesStruct, f2: NormalModesStruct, is_eq: bool) -
     """
 def eq_photon_element(f1: PhotonElementStruct, f2: PhotonElementStruct, is_eq: bool) -> PyEqPhotonElement:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27003,8 +26916,6 @@ def eq_photon_element(f1: PhotonElementStruct, f2: PhotonElementStruct, is_eq: b
     """
 def eq_photon_material(f1: PhotonMaterialStruct, f2: PhotonMaterialStruct, is_eq: bool) -> PyEqPhotonMaterial:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27013,8 +26924,6 @@ def eq_photon_material(f1: PhotonMaterialStruct, f2: PhotonMaterialStruct, is_eq
     """
 def eq_photon_reflect_surface(f1: PhotonReflectSurfaceStruct, f2: PhotonReflectSurfaceStruct, is_eq: bool) -> PyEqPhotonReflectSurface:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27023,8 +26932,6 @@ def eq_photon_reflect_surface(f1: PhotonReflectSurfaceStruct, f2: PhotonReflectS
     """
 def eq_photon_reflect_table(f1: PhotonReflectTableStruct, f2: PhotonReflectTableStruct, is_eq: bool) -> PyEqPhotonReflectTable:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27033,8 +26940,6 @@ def eq_photon_reflect_table(f1: PhotonReflectTableStruct, f2: PhotonReflectTable
     """
 def eq_photon_target(f1: PhotonTargetStruct, f2: PhotonTargetStruct, is_eq: bool) -> PyEqPhotonTarget:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27043,8 +26948,6 @@ def eq_photon_target(f1: PhotonTargetStruct, f2: PhotonTargetStruct, is_eq: bool
     """
 def eq_pixel_detec(f1: PixelDetecStruct, f2: PixelDetecStruct, is_eq: bool) -> PyEqPixelDetec:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27053,8 +26956,6 @@ def eq_pixel_detec(f1: PixelDetecStruct, f2: PixelDetecStruct, is_eq: bool) -> P
     """
 def eq_pixel_pt(f1: PixelPtStruct, f2: PixelPtStruct, is_eq: bool) -> PyEqPixelPt:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27063,8 +26964,6 @@ def eq_pixel_pt(f1: PixelPtStruct, f2: PixelPtStruct, is_eq: bool) -> PyEqPixelP
     """
 def eq_pre_tracker(f1: PreTrackerStruct, f2: PreTrackerStruct, is_eq: bool) -> PyEqPreTracker:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27073,8 +26972,6 @@ def eq_pre_tracker(f1: PreTrackerStruct, f2: PreTrackerStruct, is_eq: bool) -> P
     """
 def eq_rad_int1(f1: RadInt1Struct, f2: RadInt1Struct, is_eq: bool) -> PyEqRadInt1:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27083,8 +26980,6 @@ def eq_rad_int1(f1: RadInt1Struct, f2: RadInt1Struct, is_eq: bool) -> PyEqRadInt
     """
 def eq_rad_int_all_ele(f1: RadIntAllEleStruct, f2: RadIntAllEleStruct, is_eq: bool) -> PyEqRadIntAllEle:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27093,8 +26988,6 @@ def eq_rad_int_all_ele(f1: RadIntAllEleStruct, f2: RadIntAllEleStruct, is_eq: bo
     """
 def eq_rad_int_branch(f1: RadIntBranchStruct, f2: RadIntBranchStruct, is_eq: bool) -> PyEqRadIntBranch:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27103,8 +26996,6 @@ def eq_rad_int_branch(f1: RadIntBranchStruct, f2: RadIntBranchStruct, is_eq: boo
     """
 def eq_rad_map(f1: RadMapStruct, f2: RadMapStruct, is_eq: bool) -> PyEqRadMap:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27113,8 +27004,6 @@ def eq_rad_map(f1: RadMapStruct, f2: RadMapStruct, is_eq: bool) -> PyEqRadMap:
     """
 def eq_rad_map_ele(f1: RadMapEleStruct, f2: RadMapEleStruct, is_eq: bool) -> PyEqRadMapEle:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27123,8 +27012,6 @@ def eq_rad_map_ele(f1: RadMapEleStruct, f2: RadMapEleStruct, is_eq: bool) -> PyE
     """
 def eq_ramper_lord(f1: RamperLordStruct, f2: RamperLordStruct, is_eq: bool) -> PyEqRamperLord:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27133,8 +27020,6 @@ def eq_ramper_lord(f1: RamperLordStruct, f2: RamperLordStruct, is_eq: bool) -> P
     """
 def eq_space_charge_common(f1: SpaceChargeCommonStruct, f2: SpaceChargeCommonStruct, is_eq: bool) -> PyEqSpaceChargeCommon:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27143,8 +27028,6 @@ def eq_space_charge_common(f1: SpaceChargeCommonStruct, f2: SpaceChargeCommonStr
     """
 def eq_spin_polar(f1: SpinPolarStruct, f2: SpinPolarStruct, is_eq: bool) -> PyEqSpinPolar:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27153,8 +27036,6 @@ def eq_spin_polar(f1: SpinPolarStruct, f2: SpinPolarStruct, is_eq: bool) -> PyEq
     """
 def eq_spline(f1: SplineStruct, f2: SplineStruct, is_eq: bool) -> PyEqSpline:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27163,8 +27044,6 @@ def eq_spline(f1: SplineStruct, f2: SplineStruct, is_eq: bool) -> PyEqSpline:
     """
 def eq_strong_beam(f1: StrongBeamStruct, f2: StrongBeamStruct, is_eq: bool) -> PyEqStrongBeam:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27173,8 +27052,6 @@ def eq_strong_beam(f1: StrongBeamStruct, f2: StrongBeamStruct, is_eq: bool) -> P
     """
 def eq_surface_curvature(f1: SurfaceCurvatureStruct, f2: SurfaceCurvatureStruct, is_eq: bool) -> PyEqSurfaceCurvature:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27183,8 +27060,6 @@ def eq_surface_curvature(f1: SurfaceCurvatureStruct, f2: SurfaceCurvatureStruct,
     """
 def eq_surface_displacement(f1: SurfaceDisplacementStruct, f2: SurfaceDisplacementStruct, is_eq: bool) -> PyEqSurfaceDisplacement:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27193,8 +27068,6 @@ def eq_surface_displacement(f1: SurfaceDisplacementStruct, f2: SurfaceDisplaceme
     """
 def eq_surface_displacement_pt(f1: SurfaceDisplacementPtStruct, f2: SurfaceDisplacementPtStruct, is_eq: bool) -> PyEqSurfaceDisplacementPt:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27203,8 +27076,6 @@ def eq_surface_displacement_pt(f1: SurfaceDisplacementPtStruct, f2: SurfaceDispl
     """
 def eq_surface_h_misalign(f1: SurfaceHMisalignStruct, f2: SurfaceHMisalignStruct, is_eq: bool) -> PyEqSurfaceHMisalign:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27213,8 +27084,6 @@ def eq_surface_h_misalign(f1: SurfaceHMisalignStruct, f2: SurfaceHMisalignStruct
     """
 def eq_surface_h_misalign_pt(f1: SurfaceHMisalignPtStruct, f2: SurfaceHMisalignPtStruct, is_eq: bool) -> PyEqSurfaceHMisalignPt:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27223,8 +27092,6 @@ def eq_surface_h_misalign_pt(f1: SurfaceHMisalignPtStruct, f2: SurfaceHMisalignP
     """
 def eq_surface_segmented(f1: SurfaceSegmentedStruct, f2: SurfaceSegmentedStruct, is_eq: bool) -> PyEqSurfaceSegmented:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27233,8 +27100,6 @@ def eq_surface_segmented(f1: SurfaceSegmentedStruct, f2: SurfaceSegmentedStruct,
     """
 def eq_surface_segmented_pt(f1: SurfaceSegmentedPtStruct, f2: SurfaceSegmentedPtStruct, is_eq: bool) -> PyEqSurfaceSegmentedPt:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27243,8 +27108,6 @@ def eq_surface_segmented_pt(f1: SurfaceSegmentedPtStruct, f2: SurfaceSegmentedPt
     """
 def eq_target_point(f1: TargetPointStruct, f2: TargetPointStruct, is_eq: bool) -> PyEqTargetPoint:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27253,8 +27116,6 @@ def eq_target_point(f1: TargetPointStruct, f2: TargetPointStruct, is_eq: bool) -
     """
 def eq_taylor(f1: TaylorStruct, f2: TaylorStruct, is_eq: bool) -> PyEqTaylor:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27263,8 +27124,6 @@ def eq_taylor(f1: TaylorStruct, f2: TaylorStruct, is_eq: bool) -> PyEqTaylor:
     """
 def eq_taylor_term(f1: TaylorTermStruct, f2: TaylorTermStruct, is_eq: bool) -> PyEqTaylorTerm:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27273,8 +27132,6 @@ def eq_taylor_term(f1: TaylorTermStruct, f2: TaylorTermStruct, is_eq: bool) -> P
     """
 def eq_track(f1: TrackStruct, f2: TrackStruct, is_eq: bool) -> PyEqTrack:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27283,8 +27140,6 @@ def eq_track(f1: TrackStruct, f2: TrackStruct, is_eq: bool) -> PyEqTrack:
     """
 def eq_track_point(f1: TrackPointStruct, f2: TrackPointStruct, is_eq: bool) -> PyEqTrackPoint:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27293,8 +27148,6 @@ def eq_track_point(f1: TrackPointStruct, f2: TrackPointStruct, is_eq: bool) -> P
     """
 def eq_twiss(f1: TwissStruct, f2: TwissStruct, is_eq: bool) -> PyEqTwiss:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27303,8 +27156,6 @@ def eq_twiss(f1: TwissStruct, f2: TwissStruct, is_eq: bool) -> PyEqTwiss:
     """
 def eq_wake(f1: WakeStruct, f2: WakeStruct, is_eq: bool) -> PyEqWake:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27313,8 +27164,6 @@ def eq_wake(f1: WakeStruct, f2: WakeStruct, is_eq: bool) -> PyEqWake:
     """
 def eq_wake_lr(f1: WakeLrStruct, f2: WakeLrStruct, is_eq: bool) -> PyEqWakeLr:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27323,8 +27172,6 @@ def eq_wake_lr(f1: WakeLrStruct, f2: WakeLrStruct, is_eq: bool) -> PyEqWakeLr:
     """
 def eq_wake_lr_mode(f1: WakeLrModeStruct, f2: WakeLrModeStruct, is_eq: bool) -> PyEqWakeLrMode:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27333,8 +27180,6 @@ def eq_wake_lr_mode(f1: WakeLrModeStruct, f2: WakeLrModeStruct, is_eq: bool) -> 
     """
 def eq_wake_sr(f1: WakeSrStruct, f2: WakeSrStruct, is_eq: bool) -> PyEqWakeSr:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27343,8 +27188,6 @@ def eq_wake_sr(f1: WakeSrStruct, f2: WakeSrStruct, is_eq: bool) -> PyEqWakeSr:
     """
 def eq_wake_sr_mode(f1: WakeSrModeStruct, f2: WakeSrModeStruct, is_eq: bool) -> PyEqWakeSrMode:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27353,8 +27196,6 @@ def eq_wake_sr_mode(f1: WakeSrModeStruct, f2: WakeSrModeStruct, is_eq: bool) -> 
     """
 def eq_wake_sr_z_long(f1: WakeSrZLongStruct, f2: WakeSrZLongStruct, is_eq: bool) -> PyEqWakeSrZLong:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27363,8 +27204,6 @@ def eq_wake_sr_z_long(f1: WakeSrZLongStruct, f2: WakeSrZLongStruct, is_eq: bool)
     """
 def eq_wall3d(f1: Wall3DStruct, f2: Wall3DStruct, is_eq: bool) -> PyEqWall3d:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27373,8 +27212,6 @@ def eq_wall3d(f1: Wall3DStruct, f2: Wall3DStruct, is_eq: bool) -> PyEqWall3d:
     """
 def eq_wall3d_section(f1: Wall3DSectionStruct, f2: Wall3DSectionStruct, is_eq: bool) -> PyEqWall3dSection:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27383,8 +27220,6 @@ def eq_wall3d_section(f1: Wall3DSectionStruct, f2: Wall3DSectionStruct, is_eq: b
     """
 def eq_wall3d_vertex(f1: Wall3DVertexStruct, f2: Wall3DVertexStruct, is_eq: bool) -> PyEqWall3dVertex:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27393,8 +27228,6 @@ def eq_wall3d_vertex(f1: Wall3DVertexStruct, f2: Wall3DVertexStruct, is_eq: bool
     """
 def eq_xy_disp(f1: XyDispStruct, f2: XyDispStruct, is_eq: bool) -> PyEqXyDisp:
     """
-    No docstring available
-    
     Parameters
     ----------
     f1 : 
@@ -27403,8 +27236,6 @@ def eq_xy_disp(f1: XyDispStruct, f2: XyDispStruct, is_eq: bool) -> PyEqXyDisp:
     """
 def equal_sign_here(ele: EleStruct, delim: str, is_here: bool) -> PyEqualSignHere:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : 
@@ -27413,8 +27244,6 @@ def equal_sign_here(ele: EleStruct, delim: str, is_here: bool) -> PyEqualSignHer
     """
 def equivalent_taylor_attributes(ele_taylor: EleStruct, ele2: EleStruct, equiv: bool) -> PyEquivalentTaylorAttributes:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele_taylor : EleStruct
@@ -27425,16 +27254,12 @@ def equivalent_taylor_attributes(ele_taylor: EleStruct, ele2: EleStruct, equiv: 
     """
 def err_exit(err_str: str | None = None) -> PyErrExit:
     """
-    No docstring available
-    
     Parameters
     ----------
     err_str : 
     """
 def etdiv(A: typing.SupportsFloat, B: typing.SupportsFloat, C: typing.SupportsFloat, D: typing.SupportsFloat, E: typing.SupportsFloat, F: typing.SupportsFloat) -> PyEtdiv:
     """
-    No docstring available
-    
     Parameters
     ----------
     A : 
@@ -27446,10 +27271,11 @@ def etdiv(A: typing.SupportsFloat, B: typing.SupportsFloat, C: typing.SupportsFl
     """
 def evaluate_array_index(delim_list1: str, delim_list2: str) -> ...:
     """
-    Function of evaluate the index of an array. Typically the text being parsed looks like:
+    Function evaluate_array_index (err_flag, delim_list1, word2, delim_list2, delim2) result (this_index)
     
-    "5) = ..."         or
-    "6).COMP = ..."
+    Function of evaluate the index of an array. Typically the text being parsed looks like:
+         "5) = ..."         or
+         "6).COMP = ..."
     
     Parameters
     ----------
@@ -27471,12 +27297,13 @@ def evaluate_array_index(delim_list1: str, delim_list2: str) -> ...:
     """
 def evaluate_logical(word: str) -> ...:
     """
-    Function of convert a string into a logical value.
+    Function evaluate_logical (word, iostat) result (this_logic)
     
+    Function of convert a string into a logical value.
     Accepted possibilities are:
-    .TRUE.  .FALSE.
-    TRUE    FALSE
-    T       F
+      .TRUE.  .FALSE.
+       TRUE    FALSE
+       T       F
     
     Parameters
     ----------
@@ -27492,8 +27319,9 @@ def evaluate_logical(word: str) -> ...:
     """
 def exact_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.SupportsInt, orb: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Subroutine to track through the edge field of an sbend.
+    Subroutine exact_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix)
     
+    Subroutine to track through the edge field of an sbend.
     Uses routines adapted from PTC
     
     Parameters
@@ -27514,6 +27342,8 @@ def exact_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typ
     """
 def exp_bessi0(t: typing.SupportsFloat, B1: typing.SupportsFloat, B2: typing.SupportsFloat) -> float:
     """
+    Function exp_bessi0(t, B1, B2)
+    
     This is essentially the Numercal Recipes bessi0 function multiplied by exp(-B1*t).
     
     This overcomes an issue where exp(B2*t) may be huge and exp(-B1*t) may be small.
@@ -27531,10 +27361,13 @@ def exp_bessi0(t: typing.SupportsFloat, B1: typing.SupportsFloat, B2: typing.Sup
     """
 def expect_one_of(delim_list: str, check_input_delim: bool, ele_name: str, delim: str, delim_found: bool, is_ok: bool) -> PyExpectOneOf:
     """
-    Routine to check either that the current delimitor or the next character in the parse stream is the
+    Function expect_one_of (delim_list, check_input_delim, ele_name, delim, delim_found) result (is_ok)
     
+    Routine to check either that the current delimitor or the next character in the parse stream is the
     expected delimitor.
     This routine is used for Bmad lattice file parsing and is not meant for general use.
+    
+    Also see: expect_this
     
     Parameters
     ----------
@@ -27563,10 +27396,13 @@ def expect_one_of(delim_list: str, check_input_delim: bool, ele_name: str, delim
     """
 def expect_this(expecting: str, check_delim: bool, call_check: bool, err_str: str, ele: EleStruct) -> ...:
     """
-    Checks that the next character or characters in the parse stream corresponds to the
+    Function expect_this (expecting, check_delim, call_check, err_str, ele, delim, delim_found) result (is_ok)
     
+    Checks that the next character or characters in the parse stream corresponds to the
     characters in the expecting argument. For example, if expecting is ')={' these three characters
     should be the next non-blank characters in the parse stream.
+    
+    Also see: expect_one_of
     
     Parameters
     ----------
@@ -27596,6 +27432,8 @@ def expect_this(expecting: str, check_delim: bool, call_check: bool, err_str: st
     """
 def expression_stack_to_string(stack: ExpressionAtomStructAlloc1D, polish: bool | None = None) -> str:
     """
+    Function expression_stack_to_string (stack, polish) result (str)
+    
     Routine to convert an expression stack to a string
     
     Parameters
@@ -27612,9 +27450,13 @@ def expression_stack_to_string(stack: ExpressionAtomStructAlloc1D, polish: bool 
     """
 def expression_stack_value(stack: ExpressionAtomStructAlloc1D, var: _pybmad.ControlVar1StructAlloc1D | None = None, use_old: bool | None = None) -> ...:
     """
-    Routine to evaluate a mathematical expression represented by an "expression stack".
+    Function expression_stack_value (stack, err_flag, err_str, var, use_old) result (value)
     
+    Routine to evaluate a mathematical expression represented by an "expression stack".
     Expression stacks are created by expression_string_to_stack.
+    
+    Note: Stack elements with stack(i)%type == variable$ need to be evalauated before
+    calling this routine and the value placed in stack(i)%value.
     
     Parameters
     ----------
@@ -27641,10 +27483,13 @@ def expression_stack_value(stack: ExpressionAtomStructAlloc1D, var: _pybmad.Cont
     """
 def expression_string_to_stack(string: str) -> ...:
     """
-    This routine creates an expression stack array which can be used
+    Subroutine expression_string_to_stack (string, stack, n_stack, err_flag, err_str)
     
+    This routine creates an expression stack array which can be used
     to evaluate an arithmethic expression.
+    
     Stack end elements not used are marked stack(i)%type = end_stack$
+    
     Stack elements with stack(i)%type = variable$ are elements that need
     to be evaluated before calling expression_stack_value.
     
@@ -27671,8 +27516,9 @@ def expression_string_to_stack(string: str) -> ...:
     """
 def expression_string_to_tree(string: str, root_tree: ExpressionTreeStruct) -> ...:
     """
-    Routine to create an expression tree array which can be used
+    Subroutine expression_string_to_tree (string, root_tree, err_flag, err_str)
     
+    Routine to create an expression tree array which can be used
     to evaluate an arithmethic expression.
     
     Parameters
@@ -27713,6 +27559,8 @@ def expression_string_to_tree(string: str, root_tree: ExpressionTreeStruct) -> .
     """
 def expression_tree_to_string(tree: ExpressionTreeStruct, include_root: bool | None = None, n_node: typing.SupportsInt | None = None, parent: _pybmad.ExpressionTreeStruct | None = None) -> str:
     """
+    Function expression_tree_to_string (tree, include_root, n_node, parent) result(str_out)
+    
     Routine to convert an expression tree to a expression string.
     
     Parameters
@@ -27734,6 +27582,8 @@ def expression_tree_to_string(tree: ExpressionTreeStruct, include_root: bool | N
     """
 def expression_value(expression: str, var: _pybmad.ControlVar1StructAlloc1D | None = None, use_old: bool | None = None) -> ...:
     """
+    Function expression_value (expression, err_flag, err_str, var, use_old) result (value)
+    
     Routine to evaluate a mathematical expression encoded in a string.
     
     Parameters
@@ -27761,8 +27611,6 @@ def expression_value(expression: str, var: _pybmad.ControlVar1StructAlloc1D | No
     """
 def factorial(n: typing.SupportsInt, fact: typing.SupportsFloat) -> PyFactorial:
     """
-    No docstring available
-    
     Parameters
     ----------
     n : 
@@ -27770,8 +27618,6 @@ def factorial(n: typing.SupportsInt, fact: typing.SupportsFloat) -> PyFactorial:
     """
 def faddeeva_function(z: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], w: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], dw: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"]], "FixedSize(2)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     z : 
@@ -27780,8 +27626,6 @@ def faddeeva_function(z: typing.Annotated[collections.abc.Sequence[typing.Suppor
     """
 def fft1(a: RealAlloc1D, b: RealAlloc1D, n: typing.SupportsInt, isn: typing.SupportsInt) -> int:
     """
-    No docstring available
-    
     Parameters
     ----------
     a : 
@@ -27792,10 +27636,11 @@ def fft1(a: RealAlloc1D, b: RealAlloc1D, n: typing.SupportsInt, isn: typing.Supp
     """
 def fft_1d(arr: ComplexAlloc1D, isign: typing.SupportsInt) -> None:
     """
-    implicit none
-    
-    character(*) line
-    logical error
+    no longer exists
+    subroutine fff_sub(line, error)
+      implicit none
+      character(*) line
+      logical error
     end subroutine
     
     Parameters
@@ -27808,10 +27653,13 @@ def fft_1d(arr: ComplexAlloc1D, isign: typing.SupportsInt) -> None:
     """
 def field_attribute_free(ele: EleStruct, attrib_name: str) -> bool:
     """
+    Function field_attribute_free (ele, attrib_name) result (free)
+    
     Routine to check if a field attribute is free to vary.
     
     Field attributes are either normalized (EG K2 of a sextupole) or unnormalized (EG B2_GRADIENT of a sextupole).
     Whether normalized or unnormalized attributes are free to vary will depend on the setting  of ele%field_master.
+    
     Generally, this routine should not be called directly. Use the routine attribute_free instead.
     
     Parameters
@@ -27828,8 +27676,6 @@ def field_attribute_free(ele: EleStruct, attrib_name: str) -> bool:
     """
 def file_directorizer(in_file: str, out_file: str, directory: str, add_switch: bool) -> PyFileDirectorizer:
     """
-    No docstring available
-    
     Parameters
     ----------
     in_file : 
@@ -27839,8 +27685,6 @@ def file_directorizer(in_file: str, out_file: str, directory: str, add_switch: b
     """
 def file_get(string: str, dflt_file_name: str, file_name: str) -> PyFileGet:
     """
-    No docstring available
-    
     Parameters
     ----------
     string : 
@@ -27849,8 +27693,6 @@ def file_get(string: str, dflt_file_name: str, file_name: str) -> PyFileGet:
     """
 def file_get_open(string: str, dflt_file_name: str, file_name: str, file_unit: typing.SupportsInt, readonly: bool) -> PyFileGetOpen:
     """
-    No docstring available
-    
     Parameters
     ----------
     string : 
@@ -27861,8 +27703,6 @@ def file_get_open(string: str, dflt_file_name: str, file_name: str, file_unit: t
     """
 def file_suffixer(in_file_name: str, out_file_name: str, suffix: str, add_switch: bool) -> PyFileSuffixer:
     """
-    No docstring available
-    
     Parameters
     ----------
     in_file_name : 
@@ -27872,6 +27712,8 @@ def file_suffixer(in_file_name: str, out_file_name: str, suffix: str, add_switch
     """
 def finalize_reflectivity_table(table: PhotonReflectTableStruct, in_degrees: bool) -> None:
     """
+    Subroutine finalize_reflectivity_table (table, in_degrees)
+    
     Routine to finalize the construction of the reflectivity tables for a surface.
     
     Parameters
@@ -27884,8 +27726,6 @@ def finalize_reflectivity_table(table: PhotonReflectTableStruct, in_degrees: boo
     """
 def find_element_ends(ele: EleStruct, ix_multipass: typing.SupportsInt | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -27902,14 +27742,16 @@ def find_element_ends(ele: EleStruct, ix_multipass: typing.SupportsInt | None = 
     """
 def find_fwhm(bound: typing.SupportsFloat, args: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(8)"]) -> float:
     """
+    Subroutine find_fwhm(bound,args,fwhm)
+    
     Finds the full width at half max of psi(t).  fwhm * c_light / TwoRtTwoLnTwo is taken as the bunch length.
     
     Steps followed:
-    Find value for p(0) that normalizes the solution to dpsi/dt.
-    Find max value of p(t) for the value of p(0) found in the previous step.
-    Find find tlower, tlower < 0, such that p(tlower) = pmax/2.
-    Find find tupper, tupper > 0, such that p(tupper) = pmax/2.
-    fwhm is tupper-tlower
+      Find value for p(0) that normalizes the solution to dpsi/dt.
+      Find max value of p(t) for the value of p(0) found in the previous step.
+      Find find tlower, tlower < 0, such that p(tlower) = pmax/2.
+      Find find tupper, tupper > 0, such that p(tupper) = pmax/2.
+      fwhm is tupper-tlower
     
     Parameters
     ----------
@@ -27926,8 +27768,6 @@ def find_fwhm(bound: typing.SupportsFloat, args: typing.Annotated[collections.ab
 @typing.overload
 def find_location(arr: IntAlloc1D, value: typing.SupportsInt, ix_match: typing.SupportsInt) -> PyFindLocationInt:
     """
-    No docstring available
-    
     Parameters
     ----------
     arr : 
@@ -27937,8 +27777,6 @@ def find_location(arr: IntAlloc1D, value: typing.SupportsInt, ix_match: typing.S
 @typing.overload
 def find_location(arr: BoolAlloc1D, value: bool, ix_match: typing.SupportsInt) -> PyFindLocationLogic:
     """
-    No docstring available
-    
     Parameters
     ----------
     arr : 
@@ -27948,8 +27786,6 @@ def find_location(arr: BoolAlloc1D, value: bool, ix_match: typing.SupportsInt) -
 @typing.overload
 def find_location(arr: RealAlloc1D, value: typing.SupportsFloat, ix_match: typing.SupportsInt) -> PyFindLocationReal:
     """
-    No docstring available
-    
     Parameters
     ----------
     arr : 
@@ -27960,8 +27796,6 @@ def find_location(arr: RealAlloc1D, value: typing.SupportsFloat, ix_match: typin
     """
 def find_matching_fieldmap(file_name: str, ele: EleStruct, fm_type: typing.SupportsInt, ignore_slaves: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     file_name : unknown
@@ -27980,8 +27814,9 @@ def find_matching_fieldmap(file_name: str, ele: EleStruct, fm_type: typing.Suppo
     """
 def find_normalization(bound: typing.SupportsFloat, p0: typing.SupportsFloat, args: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(8)"]) -> float:
     """
-    Finds value for boundary condition psi(0) that results in integral
+    Subroutine find_normalization(bound,p0,args,pnrml)
     
+    Finds value for boundary condition psi(0) that results in integral
     of psi(t) from -bound to +bound to be 1.0.  This is done with the secant method.
     Repeadedly calls integrate_psi with different values for psi(0).
     
@@ -28001,8 +27836,9 @@ def find_normalization(bound: typing.SupportsFloat, p0: typing.SupportsFloat, ar
     """
 def fine_frequency_estimate(data: RealAlloc1D) -> float:
     """
-    Uses Laskar's method to accurately find the most dominant frequency
+    Function fine_frequency_estimate(data) result(frequency)
     
+    Uses Laskar's method to accurately find the most dominant frequency
     A coarse estimate is first made by FFT.
     
     Parameters
@@ -28017,19 +27853,19 @@ def fine_frequency_estimate(data: RealAlloc1D) -> float:
     """
 def fixedwindowls(ynew: typing.SupportsFloat, id: typing.SupportsInt, z: typing.SupportsFloat) -> PyFixedwindowls:
     """
-    Main function of the windowLS modult.  Each call to this function adds a data point to the fit
+    Function fixedWindowLS
     
+    Main function of the windowLS modult.  Each call to this function adds a data point to the fit
     and returns the derivative evaluated at the end of the window.  It is assumed that all data points
     are separeted by the same interval.
     This module is initialized with zeros for all data points, and so the results are unreliable until
     a number of data points equal to N has been entered.
+    
     initFixedWindowLS must be called prior to calling this function.  destFixedWindowLS should be
     called when the instance is no longer needed.
     """
 def floor_angles_to_w_mat(theta: typing.SupportsFloat, phi: typing.SupportsFloat, psi: typing.SupportsFloat) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     theta : float
@@ -28045,8 +27881,6 @@ def floor_angles_to_w_mat(theta: typing.SupportsFloat, phi: typing.SupportsFloat
     """
 def floor_w_mat_to_angles(w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"], floor0: _pybmad.FloorPositionStruct | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     w_mat : float
@@ -28063,9 +27897,10 @@ def floor_w_mat_to_angles(w_mat: typing.Annotated[collections.abc.Sequence[typin
     """
 def form_complex_taylor(re_taylor: TaylorStruct, im_taylor: TaylorStruct) -> ComplexTaylorStruct:
     """
-    Subroutine to form a complex taylor from two taylor series representing
+    Subroutine form_complex_taylor (re_taylor, im_taylor, complex_taylor)
     
-    the real and imaginary parts
+    Subroutine to form a complex taylor from two taylor series representing
+      the real and imaginary parts
     
     Parameters
     ----------
@@ -28081,12 +27916,14 @@ def form_complex_taylor(re_taylor: TaylorStruct, im_taylor: TaylorStruct) -> Com
     """
 def form_digested_bmad_file_name(lat_file: str, use_line: str | None = None) -> ...:
     """
-    Subroutine to form the standard name of the Bmad digested file.
+    Subroutine form_digested_bmad_file_name (lat_file, digested_file, full_lat_file, use_line)
     
+    Subroutine to form the standard name of the Bmad digested file.
     The standard digested file name has the suffix added to the file name:
-    suffix = '.digested' + bmad_inc_version$
+        suffix = '.digested' + bmad_inc_version$
     Exception: If the use_line argument is present and not blank, the suffix will be:
-    suffix = '.' + use_line + '.digested' + bmad_inc_version$
+        suffix = '.' + use_line + '.digested' + bmad_inc_version$
+    
     
     Parameters
     ----------
@@ -28105,11 +27942,12 @@ def form_digested_bmad_file_name(lat_file: str, use_line: str | None = None) -> 
     """
 def fourier_amplitude(data: RealAlloc1D, frequency: typing.SupportsFloat) -> ...:
     """
-    Computes cos_amp = (1/N) * sum_n=0^{N-1} data(n-1) cos(twopi*frequency*n)
+    Subroutine fourier_amplitude(data, frequency, cos_amp, sin_amp, dcos_amp, dsin_amp)
     
-    and  sin_amp = (1/N) * sum_n=0^{N-1} data(n-1) sin(twopi*frequency*n)
-    and optionally dcos_amp = d/dfrequency cos_amp
-    dsin_amp = d/dfrequency sin_amp
+    Computes cos_amp = (1/N) * sum_n=0^{N-1} data(n-1) cos(twopi*frequency*n)
+        and  sin_amp = (1/N) * sum_n=0^{N-1} data(n-1) sin(twopi*frequency*n)
+        and optionally dcos_amp = d/dfrequency cos_amp
+                       dsin_amp = d/dfrequency sin_amp
     
     Parameters
     ----------
@@ -28131,8 +27969,6 @@ def fourier_amplitude(data: RealAlloc1D, frequency: typing.SupportsFloat) -> ...
     """
 def fringe_here(ele: EleStruct, orbit: CoordStruct, particle_at: typing.SupportsInt, is_here: bool) -> PyFringeHere:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -28145,8 +27981,9 @@ def fringe_here(ele: EleStruct, orbit: CoordStruct, particle_at: typing.Supports
     """
 def g_bend_from_em_field(b: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], e: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], orbit: CoordStruct) -> typing.Annotated[list[float], "FixedSize(3)"]:
     """
-    Routine to calculate the bending strength (1/bending_radius) for a given particle for a given field.
+    Function g_bend_from_em_field (B, E, orbit) result (g_bend)
     
+    Routine to calculate the bending strength (1/bending_radius) for a given particle for a given field.
     This will include the dipole bending field of an sbend.
     
     Parameters
@@ -28165,8 +28002,6 @@ def g_bend_from_em_field(b: typing.Annotated[collections.abc.Sequence[typing.Sup
     """
 def g_bending_strength_from_em_field(ele: EleStruct, param: LatParamStruct, s_rel: typing.SupportsFloat, orbit: CoordStruct, local_ref_frame: bool) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -28187,8 +28022,6 @@ def g_bending_strength_from_em_field(ele: EleStruct, param: LatParamStruct, s_re
     """
 def g_integrals_calc(lat: LatStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -28196,8 +28029,6 @@ def g_integrals_calc(lat: LatStruct) -> None:
     """
 def gamma_ref(ele: EleStruct, gamma: typing.SupportsFloat) -> PyGammaRef:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -28206,8 +28037,6 @@ def gamma_ref(ele: EleStruct, gamma: typing.SupportsFloat) -> PyGammaRef:
     """
 def gen_complete_elliptic(kc: typing.SupportsFloat, p: typing.SupportsFloat, c: typing.SupportsFloat, s: typing.SupportsFloat, err_tol: typing.SupportsFloat | None = None, value: typing.SupportsFloat) -> PyGenCompleteElliptic:
     """
-    No docstring available
-    
     Parameters
     ----------
     kc : 
@@ -28219,8 +28048,6 @@ def gen_complete_elliptic(kc: typing.SupportsFloat, p: typing.SupportsFloat, c: 
     """
 def gen_grad1_to_em_taylor(ele: EleStruct, gen_grad: GenGradMapStruct, iz: typing.SupportsInt) -> EmTaylorStructArray1D:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : unknown
@@ -28234,8 +28061,6 @@ def gen_grad1_to_em_taylor(ele: EleStruct, gen_grad: GenGradMapStruct, iz: typin
     """
 def gen_grad_at_s_to_em_taylor(ele: EleStruct, gen_grad: GenGradMapStruct, s_pos: typing.SupportsFloat) -> EmTaylorStructArray1D:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : unknown
@@ -28249,8 +28074,6 @@ def gen_grad_at_s_to_em_taylor(ele: EleStruct, gen_grad: GenGradMapStruct, s_pos
     """
 def gen_grad_field(deriv: RealAlloc1D, gg: GenGrad1Struct, rho: typing.SupportsFloat, theta: typing.SupportsFloat, field: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> PyGenGradField:
     """
-    No docstring available
-    
     Parameters
     ----------
     deriv : 
@@ -28261,8 +28084,9 @@ def gen_grad_field(deriv: RealAlloc1D, gg: GenGrad1Struct, rho: typing.SupportsF
     """
 def get_bl_from_fwhm(bound: typing.SupportsFloat, args: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(8)"]) -> float:
     """
-    Calculate bunch length as fwhm * c_light / TwoRtTwoLnTwo.
+    Subroutine get_bl_from_fwhm(bound,args,sigma)
     
+    Calculate bunch length as fwhm * c_light / TwoRtTwoLnTwo.
     Where fwhm is full width at half max of solution to dpsi/dt.
     
     Parameters
@@ -28283,8 +28107,6 @@ def get_bmad_com() -> BmadCommonStruct:
     """
 def get_called_file(delim: str, call_file: str, err: bool) -> PyGetCalledFile:
     """
-    No docstring available
-    
     Parameters
     ----------
     delim : 
@@ -28293,20 +28115,24 @@ def get_called_file(delim: str, call_file: str, err: bool) -> PyGetCalledFile:
     """
 def get_emit_from_sigma_mat(sigma_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], Nmat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None) -> ...:
     """
-    Given a beam envelop sigma matrix sigma_mat, this returns the 3 normal mode
+    Subroutine get_emit_from_sigma_mat(sigma_mat, normal, Nmat, err_flag)
     
+    Given a beam envelop sigma matrix sigma_mat, this returns the 3 normal mode
     emittances.
+    
     The normal mode emittance of the sigma matrix are the eigenvalues of
     sigma_mat . S
+    
     If Nmat is present, then the modes are ordered such that the eigensystem most
     closely resembles Nmat.  If Nmat is not present, then the modes are ordered
     according to which plane they dominate.
-    / 0  1  0  0  0  0 \\
-    |-1  0  0  0  0  0 |
+    
+        / 0  1  0  0  0  0 \\
+        |-1  0  0  0  0  0 |
     S = | 0  0  0  1  0  0 |
-    | 0  0 -1  0  0  0 |
-    | 0  0  0  0  0  1 |
-    \\ 0  0  0  0 -1  0 /
+        | 0  0 -1  0  0  0 |
+        | 0  0  0  0  0  1 |
+        \\ 0  0  0  0 -1  0 /
     
     Parameters
     ----------
@@ -28324,8 +28150,6 @@ def get_emit_from_sigma_mat(sigma_mat: typing.Annotated[collections.abc.Sequence
     """
 def get_file_number(file_name: str, cnum_in: str, num_out: typing.SupportsInt, err_flag: bool) -> PyGetFileNumber:
     """
-    No docstring available
-    
     Parameters
     ----------
     file_name : 
@@ -28335,17 +28159,19 @@ def get_file_number(file_name: str, cnum_in: str, num_out: typing.SupportsInt, e
     """
 def get_file_time_stamp(file: str, time_stamp: str) -> PyGetFileTimeStamp:
     """
-    implicit none
-    
-    character(*) filein
-    character(*) cnum
-    integer digits
+    no longer exists
+    subroutine get_next_number (filein, cnum, digits)
+      implicit none
+      character(*) filein
+      character(*) cnum
+      integer digits
     end subroutine
     """
 def get_next_word(word: str, ix_word: typing.SupportsInt, delim_list: str, delim: str, delim_found: bool, upper_case_word: bool | None = None, call_check: bool | None = None, err_flag: bool | None = None) -> None:
     """
-    Subroutine to get the next word from the input stream.
+    Subroutine get_next_word (word, ix_word, delim_list, delim, delim_found, upper_case_word, call_check, err_flag)
     
+    Subroutine to get the next word from the input stream.
     This subroutine is used by bmad_parser and bmad_parser2.
     This subroutine is not intended for general use.
     
@@ -28370,8 +28196,6 @@ def get_next_word(word: str, ix_word: typing.SupportsInt, delim_list: str, delim
     """
 def get_slave_list(lord: EleStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     lord : EleStruct
@@ -28391,8 +28215,6 @@ def get_super_universe() -> TaoSuperUniverseStruct:
     """
 def gpt_field_grid_scaling(ele: EleStruct, dimensions: typing.SupportsInt, field_scale: typing.SupportsFloat, ref_time: typing.SupportsFloat) -> PyGptFieldGridScaling:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : 
@@ -28402,8 +28224,6 @@ def gpt_field_grid_scaling(ele: EleStruct, dimensions: typing.SupportsInt, field
     """
 def gpt_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct, field_value: typing.SupportsFloat) -> PyGptMaxFieldReference:
     """
-    No docstring available
-    
     Parameters
     ----------
     pt0 : 
@@ -28412,7 +28232,10 @@ def gpt_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct, field_value
     """
 def gpt_to_particle_bunch(gpt_file: str, ele: EleStruct) -> ...:
     """
+    Subroutine gpt_to_particle_bunch (gpt_file, ele, bunch, err_flag)
+    
     Routine to initialize a bunch of particles from a GPT screen file.
+    
     
     Parameters
     ----------
@@ -28430,8 +28253,6 @@ def gpt_to_particle_bunch(gpt_file: str, ele: EleStruct) -> ...:
     """
 def gradient_shift_sr_wake(ele: EleStruct, param: LatParamStruct, grad_shift: typing.SupportsFloat) -> PyGradientShiftSrWake:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -28442,7 +28263,8 @@ def gradient_shift_sr_wake(ele: EleStruct, param: LatParamStruct, grad_shift: ty
     """
 def grid_field_interpolate(ele: EleStruct, orbit: CoordStruct, grid: GridFieldStruct, err_flag: bool, x1: typing.SupportsFloat, x2: typing.SupportsFloat | None = None, x3: typing.SupportsFloat | None = None, allow_s_out_of_bounds: bool | None = None, print_err: bool | None = None) -> GridFieldPt1Struct:
     """
-    allow_s_out_of_bounds, print_err)
+    Subroutine grid_field_interpolate (ele, orbit, grid, field, err_flag, x1, x2, x3, &
+                                                                 allow_s_out_of_bounds, print_err)
     
     Subroutine to interpolate the E and B fields on a rectilinear grid.
     
@@ -28475,8 +28297,6 @@ def grid_field_interpolate(ele: EleStruct, orbit: CoordStruct, grid: GridFieldSt
     """
 def hanhan(N: typing.SupportsInt, hh: RealAlloc1D) -> PyHanhan:
     """
-    No docstring available
-    
     Parameters
     ----------
     N : 
@@ -28484,11 +28304,14 @@ def hanhan(N: typing.SupportsInt, hh: RealAlloc1D) -> PyHanhan:
     """
 def hard_multipole_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.SupportsInt, orbit: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Routine to track through the hard edge field of a multipole.
+    Subroutine hard_multipole_edge_kick (ele, param, particle_at, orbit, mat6, make_matrix)
     
+    Routine to track through the hard edge field of a multipole.
     The dipole component is ignored and only quadrupole and higher multipoles are included.
+    
     This routine handles elements of type:
-    sad_mult, sbend, quadrupole, sextupole
+      sad_mult, sbend, quadrupole, sextupole
+    
     For sad_mult elements, ele%a_pole and ele%b_pole ae used for the multipole values.
     For the other elements, k1 or k2 is used and it is assumed that we are in the element
     frame of reference so tilt = 0.
@@ -28513,8 +28336,6 @@ def hard_multipole_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at:
     """
 def has_attribute(ele: EleStruct, attrib: str, has_it: bool) -> PyHasAttribute:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : 
@@ -28523,6 +28344,8 @@ def has_attribute(ele: EleStruct, attrib: str, has_it: bool) -> PyHasAttribute:
     """
 def has_curvature(phot_ele: PhotonElementStruct) -> bool:
     """
+    Function has_curvature (phot_ele) result (curved)
+    
     Routine to determine if a surface is potentially curved or is flat.
     
     Parameters
@@ -28537,7 +28360,10 @@ def has_curvature(phot_ele: PhotonElementStruct) -> bool:
     """
 def has_orientation_attributes(ele: EleStruct) -> bool:
     """
+    Function has_orientation_attributes (ele) result (has_attribs)
+    
     Routine to determine whether an element has orientation attributes like x_offset, etc.
+    Also see: has_attribute function.
     
     Parameters
     ----------
@@ -28556,8 +28382,6 @@ def has_orientation_attributes(ele: EleStruct) -> bool:
     """
 def hdf5_write_beam(file_name: str, bunches: BunchStructAlloc1D, append: bool, error: bool, lat: _pybmad.LatStruct | None = None, alive_only: bool | None = None) -> PyHdf5WriteBeam:
     """
-    No docstring available
-    
     Parameters
     ----------
     file_name : 
@@ -28569,8 +28393,6 @@ def hdf5_write_beam(file_name: str, bunches: BunchStructAlloc1D, append: bool, e
     """
 def hdf5_write_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldStructAlloc1D, err_flag: bool) -> PyHdf5WriteGridField:
     """
-    No docstring available
-    
     Parameters
     ----------
     file_name : 
@@ -28580,8 +28402,6 @@ def hdf5_write_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldStru
     """
 def hom_voltage(lr_wake: WakeLrModeStruct, voltage: typing.SupportsFloat) -> PyHomVoltage:
     """
-    No docstring available
-    
     Parameters
     ----------
     lr_wake : 
@@ -28589,12 +28409,13 @@ def hom_voltage(lr_wake: WakeLrModeStruct, voltage: typing.SupportsFloat) -> PyH
     """
 def hwang_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.SupportsInt, orb: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Subroutine to track through the edge field of an sbend using a 2nd order map.
+    Subroutine hwang_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix)
     
+    Subroutine to track through the edge field of an sbend using a 2nd order map.
     Adapted from:
-    Hwang and S. Y. Lee,
-    "Dipole Fringe Field Thin Map for Compact Synchrotrons",
-    Phys. Rev. ST Accel. Beams, 12, 122401, (2015).
+      Hwang and S. Y. Lee,
+      "Dipole Fringe Field Thin Map for Compact Synchrotrons",
+      Phys. Rev. ST Accel. Beams, 12, 122401, (2015).
     See the Bmad manual for details.
     
     Parameters
@@ -28617,8 +28438,6 @@ def hwang_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typ
     """
 def i_bessel(m: typing.SupportsInt, arg: typing.SupportsFloat, i_bes: typing.SupportsFloat) -> PyIBessel:
     """
-    No docstring available
-    
     Parameters
     ----------
     m : 
@@ -28627,8 +28446,6 @@ def i_bessel(m: typing.SupportsInt, arg: typing.SupportsFloat, i_bes: typing.Sup
     """
 def i_bessel_extended(m: typing.SupportsInt, arg: typing.SupportsFloat, i_bes: complex) -> PyIBesselExtended:
     """
-    No docstring available
-    
     Parameters
     ----------
     m : 
@@ -28637,8 +28454,6 @@ def i_bessel_extended(m: typing.SupportsInt, arg: typing.SupportsFloat, i_bes: c
     """
 def ibs_matrix_c(sigma_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], tail_cut: bool, tau: typing.SupportsFloat, energy: typing.SupportsFloat, n_part: typing.SupportsFloat, species: typing.SupportsInt, ibs_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> PyIbsMatrixC:
     """
-    No docstring available
-    
     Parameters
     ----------
     sigma_mat : 
@@ -28651,8 +28466,6 @@ def ibs_matrix_c(sigma_mat: typing.Annotated[collections.abc.Sequence[typing.Ann
     """
 def igfcoulombfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFloat, gam: typing.SupportsFloat, dx: typing.SupportsFloat, dy: typing.SupportsFloat, dz: typing.SupportsFloat, res: typing.SupportsFloat) -> PyIgfcoulombfun:
     """
-    No docstring available
-    
     Parameters
     ----------
     u : 
@@ -28666,8 +28479,6 @@ def igfcoulombfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.Su
     """
 def igfexfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFloat, gam: typing.SupportsFloat, dx: typing.SupportsFloat, dy: typing.SupportsFloat, dz: typing.SupportsFloat, res: typing.SupportsFloat) -> PyIgfexfun:
     """
-    No docstring available
-    
     Parameters
     ----------
     u : 
@@ -28681,8 +28492,6 @@ def igfexfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.Support
     """
 def igfeyfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFloat, gam: typing.SupportsFloat, dx: typing.SupportsFloat, dy: typing.SupportsFloat, dz: typing.SupportsFloat, res: typing.SupportsFloat) -> PyIgfeyfun:
     """
-    No docstring available
-    
     Parameters
     ----------
     u : 
@@ -28696,8 +28505,6 @@ def igfeyfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.Support
     """
 def igfezfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFloat, gam: typing.SupportsFloat, dx: typing.SupportsFloat, dy: typing.SupportsFloat, dz: typing.SupportsFloat, res: typing.SupportsFloat) -> PyIgfezfun:
     """
-    No docstring available
-    
     Parameters
     ----------
     u : 
@@ -28711,8 +28518,6 @@ def igfezfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.Support
     """
 def increment_file_number(file_name: str, digits: typing.SupportsInt, number: typing.SupportsInt, cnumber: str) -> PyIncrementFileNumber:
     """
-    No docstring available
-    
     Parameters
     ----------
     file_name : 
@@ -28722,8 +28527,6 @@ def increment_file_number(file_name: str, digits: typing.SupportsInt, number: ty
     """
 def index_nocase(string1: str, string2: str, indx: typing.SupportsInt) -> PyIndexNocase:
     """
-    No docstring available
-    
     Parameters
     ----------
     string1 : 
@@ -28732,6 +28535,8 @@ def index_nocase(string1: str, string2: str, indx: typing.SupportsInt) -> PyInde
     """
 def init_attribute_name1(ix_key: typing.SupportsInt, ix_attrib: typing.SupportsInt, name: str, attrib_state: typing.SupportsInt | None = None, override: bool | None = None) -> None:
     """
+    Subroutine init_attribute_name1 (ix_key, ix_attrib, name, attrib_state, override)
+    
     Routine to initialize a single name in the element attribute name table.
     
     Parameters
@@ -28751,16 +28556,30 @@ def init_attribute_name1(ix_key: typing.SupportsInt, ix_attrib: typing.SupportsI
     """
 def init_attribute_name_array() -> None:
     """
-    Private routine to initialize the attribute name array used by routines
+    Subroutine init_attribute_name_array ()
     
+    Private routine to initialize the attribute name array used by routines
     in attribute_mod. Not meant for general use.
     """
 def init_beam_distribution(ele: EleStruct, param: LatParamStruct, beam_init: BeamInitStruct, modes: _pybmad.NormalModesStruct | None = None, print_p0c_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> PyInitBeamDistribution:
     """
-    print_p0c_shift_warning, conserve_momentum)
+    Subroutine init_beam_distribution (ele, param, beam_init, beam, err_flag, modes, beam_init_set,
+                                                                        print_p0c_shift_warning, conserve_momentum)
     
     Subroutine to initialize a beam of particles.
     Initialization uses the downstream parameters of ele.
+    
+    Note: This routine sets the random number generator according to the settings
+    in beam_int and at the end resets things to their initial state.
+    
+    For more information on individual bunch initialization, see the
+    init_bunch_distribution routine.
+    
+    Note: The optional "modes" argument generally is used to pass in normal mode parameters as
+    calculated from the lattice. If present, and if a parameter like beam_init%a_emit are
+    set negative, then the corresponding parameter in the modes structure is used.
+    If not present, a warning message is issued and the parameter is set to zero.
+    This is only used for parameters that cannot be negative.
     
     Parameters
     ----------
@@ -28788,31 +28607,46 @@ def init_beam_distribution(ele: EleStruct, param: LatParamStruct, beam_init: Bea
         different from beam_init.a_emit if this is set negative).
     """
 def init_bmad() -> None:
-    """
-    No docstring available
-    """
+    ...
 def init_bmad_parser_common(lat: _pybmad.LatStruct | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : 
     """
 def init_bunch_distribution(ele: EleStruct, param: LatParamStruct, beam_init: BeamInitStruct, ix_bunch: typing.SupportsInt, modes: _pybmad.NormalModesStruct | None = None, print_p0c_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> PyInitBunchDistribution:
     """
-    print_p0c_shift_warning, conserve_momentum)
+    Subroutine init_bunch_distribution (ele, param, beam_init, ix_bunch, bunch, err_flag, modes, beam_init_used,
+                                                                             print_p0c_shift_warning, conserve_momentum)
     
     Subroutine to initialize a distribution of particles of a bunch.
     Initialization uses the downstream parameters of ele.
+    
     There are four distributions available:
-    '', or 'ran_gauss' -- Random gaussian distribution.
-    'ellipse'  -- concentric ellipses representing a Gaussian distribution
-    'grid'     -- uniform rectangular grid
-    'KV'       -- Kapchinsky-Vladimirsky distribution
+      '', or 'ran_gauss' -- Random gaussian distribution.
+      'ellipse'  -- concentric ellipses representing a Gaussian distribution
+      'grid'     -- uniform rectangular grid
+      'KV'       -- Kapchinsky-Vladimirsky distribution
     See the Bmad manual for more information.
+    
     The distribution is matched to the Twiss parameters, centroid position, and Energy - z
     correlation as specified. Coupling in the element ele is incorporated into the distribution.
+    
+    Note: Except for the random number seed, the random number generator
+    parameters used for this routine are set from the beam_init argument.
+    That is, these parameters are independent of what is used everywhere else.
+    
+    Note: Make sure: |beam_init%dpz_dz| < mode%sigE_E / mode%sig_z
+    
+    Note: The optional "modes" argument generally is used to pass in normal mode parameters as
+    calculated from the lattice. If present, and if a parameter like beam_init%a_emit are
+    set negative, then the corresponding parameter in the modes structure is used.
+    If not present, a warning message is issued and the parameter is set to zero.
+    This is only used for parameters that cannot be negative.
+    
+    Note: To get good results, It is important to make sure that for
+    circular rings that beam_init%center is the correct closed orbit.
+    The closed orbit will shift if, for example, radiation damping is turned on.
     
     Parameters
     ----------
@@ -28844,8 +28678,9 @@ def init_bunch_distribution(ele: EleStruct, param: LatParamStruct, beam_init: Be
     """
 def init_complex_taylor_series(complex_taylor: ComplexTaylorStruct, n_term: typing.SupportsInt, save: bool | None = None) -> None:
     """
-    Subroutine to initialize a Bmad complex_taylor series (6 of these series make
+    Subroutine init_complex_taylor_series (complex_taylor, n_term, save)
     
+    Subroutine to initialize a Bmad complex_taylor series (6 of these series make
     a complex_taylor map). Note: This routine does not zero the structure. The calling
     routine is responsible for setting all values.
     
@@ -28862,11 +28697,26 @@ def init_complex_taylor_series(complex_taylor: ComplexTaylorStruct, n_term: typi
 @typing.overload
 def init_coord(orb: CoordStruct, vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], ele: _pybmad.EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, s_pos: typing.SupportsFloat | None = None, random_on: bool | None = None) -> None:
     """
+    Subroutine init_coord (...)
+    
     Routine to initialize a coord_struct.
     
-    Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-    Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-    Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+    This routine is an overloaded name for:
+      Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+      Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+      Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+    
+    Note: Unless shift_vec6 is set to False, if ele is a beginning_ele (IE, the element at the beginning of the lattice),
+    or e_gun, orb%vec(6) is shifted so that a particle with orb%vec(6) = 0 will end up with a value of orb%vec(6)
+    corresponding to the beginning_ele's value of ele%value(p0c_start$).
+    
+    Note: For non-photons, if orb_in%vec(5) is set to real_garbage$, orb_in%t will be used to set orb%vec(5) instead
+    of the standard which is to set orb%t from orb%vec(5).
+    
+    For photons:
+      orb%vec(5) is set depending upon where the photon is relative to the element.
+      If orb is a photon, and orb_in is not a photon, photon is launched in same direciton as particle
+          except if direction is set.
     
     Parameters
     ----------
@@ -28914,11 +28764,26 @@ def init_coord(orb: CoordStruct, vec: typing.Annotated[collections.abc.Sequence[
 @typing.overload
 def init_coord(orb_in: CoordStruct, ele: _pybmad.EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, s_pos: typing.SupportsFloat | None = None, random_on: bool | None = None) -> CoordStruct:
     """
+    Subroutine init_coord (...)
+    
     Routine to initialize a coord_struct.
     
-    Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-    Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-    Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+    This routine is an overloaded name for:
+      Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+      Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+      Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+    
+    Note: Unless shift_vec6 is set to False, if ele is a beginning_ele (IE, the element at the beginning of the lattice),
+    or e_gun, orb%vec(6) is shifted so that a particle with orb%vec(6) = 0 will end up with a value of orb%vec(6)
+    corresponding to the beginning_ele's value of ele%value(p0c_start$).
+    
+    Note: For non-photons, if orb_in%vec(5) is set to real_garbage$, orb_in%t will be used to set orb%vec(5) instead
+    of the standard which is to set orb%t from orb%vec(5).
+    
+    For photons:
+      orb%vec(5) is set depending upon where the photon is relative to the element.
+      If orb is a photon, and orb_in is not a photon, photon is launched in same direciton as particle
+          except if direction is set.
     
     Parameters
     ----------
@@ -28969,11 +28834,26 @@ def init_coord(orb_in: CoordStruct, ele: _pybmad.EleStruct | None = None, elemen
 @typing.overload
 def init_coord(orb: CoordStruct, ele: _pybmad.EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None) -> None:
     """
+    Subroutine init_coord (...)
+    
     Routine to initialize a coord_struct.
     
-    Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-    Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-    Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+    This routine is an overloaded name for:
+      Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+      Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+      Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+    
+    Note: Unless shift_vec6 is set to False, if ele is a beginning_ele (IE, the element at the beginning of the lattice),
+    or e_gun, orb%vec(6) is shifted so that a particle with orb%vec(6) = 0 will end up with a value of orb%vec(6)
+    corresponding to the beginning_ele's value of ele%value(p0c_start$).
+    
+    Note: For non-photons, if orb_in%vec(5) is set to real_garbage$, orb_in%t will be used to set orb%vec(5) instead
+    of the standard which is to set orb%t from orb%vec(5).
+    
+    For photons:
+      orb%vec(5) is set depending upon where the photon is relative to the element.
+      If orb is a photon, and orb_in is not a photon, photon is launched in same direciton as particle
+          except if direction is set.
     
     Parameters
     ----------
@@ -29020,16 +28900,12 @@ def init_coord(orb: CoordStruct, ele: _pybmad.EleStruct | None = None, element_e
     """
 def init_custom(lat: LatStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : 
     """
 def init_ele(key: typing.SupportsInt | None = None, sub_key: typing.SupportsInt | None = None, ix_ele: typing.SupportsInt | None = None, branch: _pybmad.BranchStruct | None = None) -> EleStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -29045,8 +28921,9 @@ def init_ele(key: typing.SupportsInt | None = None, sub_key: typing.SupportsInt 
     """
 def init_em_taylor_series(em_taylor: EmTaylorStruct, n_term: typing.SupportsInt, save_old: bool | None = None) -> None:
     """
-    Subroutine to initialize a Bmad Em_taylor series (6 of these series make
+    Subroutine init_em_taylor_series (em_taylor, n_term, save_old)
     
+    Subroutine to initialize a Bmad Em_taylor series (6 of these series make
     a Em_taylor map). Note: This routine does not zero the structure. The calling
     routine is responsible for setting all values.
     
@@ -29062,8 +28939,6 @@ def init_em_taylor_series(em_taylor: EmTaylorStruct, n_term: typing.SupportsInt,
     """
 def init_lat(n: typing.SupportsInt | None = None, init_beginning_ele: bool | None = None) -> LatStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -29075,8 +28950,6 @@ def init_lat(n: typing.SupportsInt | None = None, init_beginning_ele: bool | Non
     """
 def init_multipole_cache(ele: EleStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -29085,8 +28958,6 @@ def init_multipole_cache(ele: EleStruct) -> None:
     """
 def init_photon_from_a_photon_init_ele(ele: EleStruct, param: LatParamStruct, random_on: bool | None = None) -> CoordStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -29100,7 +28971,8 @@ def init_photon_from_a_photon_init_ele(ele: EleStruct, param: LatParamStruct, ra
     """
 def init_photon_integ_prob(gamma: typing.SupportsFloat, g: typing.SupportsFloat, E_min: typing.SupportsFloat, E_max: typing.SupportsFloat, vert_angle_min: typing.SupportsFloat | None = None, vert_angle_max: typing.SupportsFloat | None = None, vert_angle_symmetric: bool | None = None, energy_integ_prob: typing.SupportsFloat | None = None) -> ...:
     """
-    vert_angle_max, vert_angle_symmetric, energy_integ_prob, E_photon) result (integ_prob)
+    Function init_photon_integ_prob(gamma, g, E_min, E_max, vert_angle_min,
+                 vert_angle_max, vert_angle_symmetric, energy_integ_prob, E_photon) result (integ_prob)
     
     Routine to calcuate the integrated probability of emitting a photon in a given vertical angle range
     and in a given energy range
@@ -29136,6 +29008,8 @@ def init_photon_integ_prob(gamma: typing.SupportsFloat, g: typing.SupportsFloat,
     """
 def init_spin_distribution(beam_init: BeamInitStruct, ele: EleStruct) -> BunchStruct:
     """
+    Subroutine init_spin_distribution (beam_init, bunch, ele)
+    
     Initializes a spin distribution according to beam_init%spin.
     
     Parameters
@@ -29150,6 +29024,8 @@ def init_spin_distribution(beam_init: BeamInitStruct, ele: EleStruct) -> BunchSt
     """
 def init_surface_segment(phot: PhotonElementStruct, ix: typing.SupportsInt, iy: typing.SupportsInt) -> PyInitSurfaceSegment:
     """
+    Subroutine init_surface_segment (phot, ix, iy)
+    
     Routine to init the componentes in ele%photon%segmented%pt(ix,iy) for use with segmented surface calculations.
     
     Parameters
@@ -29159,8 +29035,6 @@ def init_surface_segment(phot: PhotonElementStruct, ix: typing.SupportsInt, iy: 
     """
 def init_taylor_series(bmad_taylor: TaylorStruct, n_term: typing.SupportsInt, save_old: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     bmad_taylor : TaylorStruct
@@ -29174,8 +29048,6 @@ def init_taylor_series(bmad_taylor: TaylorStruct, n_term: typing.SupportsInt, sa
     """
 def init_wake(n_sr_long: typing.SupportsInt, n_sr_trans: typing.SupportsInt, n_sr_z: typing.SupportsInt, n_lr_mode: typing.SupportsInt, always_allocate: bool | None = None) -> WakeStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     wake : WakeStruct
@@ -29193,8 +29065,9 @@ def init_wake(n_sr_long: typing.SupportsInt, n_sr_trans: typing.SupportsInt, n_s
     """
 def initfixedwindowls(N: typing.SupportsInt, dt: typing.SupportsFloat, order: typing.SupportsInt, der: typing.SupportsInt) -> int:
     """
-    Initializes an instance of the fixed window least squares module.
+    Function initFixedWindowLS
     
+    Initializes an instance of the fixed window least squares module.
     See module documentation (getf windowLS_mod) for use details.
     Any instance of windowLS created with this module should be destroyed with destFixedWindowLS.
     
@@ -29212,8 +29085,6 @@ def initfixedwindowls(N: typing.SupportsInt, dt: typing.SupportsFloat, order: ty
     """
 def insert_element(lat: LatStruct, insert_ele: EleStruct, ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt | None = None, orbit: _pybmad.CoordStructAlloc1D | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -29232,8 +29103,6 @@ def insert_element(lat: LatStruct, insert_ele: EleStruct, ix_ele: typing.Support
     """
 def insert_phase_trombone(branch: BranchStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch : BranchStruct
@@ -29243,8 +29112,6 @@ def insert_phase_trombone(branch: BranchStruct) -> None:
     """
 def int_str(int_: typing.SupportsInt, width: typing.SupportsInt | None = None, str: str) -> PyIntStr:
     """
-    No docstring available
-    
     Parameters
     ----------
     int : 
@@ -29253,11 +29120,14 @@ def int_str(int_: typing.SupportsInt, width: typing.SupportsInt | None = None, s
     """
 def integrand_base(t: typing.SupportsFloat, args: RealAlloc1D, func_retval__: typing.SupportsFloat) -> PyIntegrandBase:
     """
+    Function integrand_base(t)
+    
     This vectorized private function is the integrand in equation 31 of Piwinski's paper.
     
     This intetegrand has a sharp exponential decay, and so a change of variables from t to y where t=exp(y)
     is applied.  This COV makes the integrand more evenly distributed over the domain of integration,
     which makes it easier for qtrap to integrate.
+    
     The change of variables is done using integrand_base_cov, which is then integrated
     using qtrap.
     
@@ -29269,8 +29139,6 @@ def integrand_base(t: typing.SupportsFloat, args: RealAlloc1D, func_retval__: ty
     """
 def integrate_max(ix_start: typing.SupportsInt, ix_ele: typing.SupportsInt, datum_value: typing.SupportsFloat, ix_m: typing.SupportsInt, branch: BranchStruct, vec: RealAlloc1D, datum: TaoDataStruct) -> PyIntegrateMax:
     """
-    No docstring available
-    
     Parameters
     ----------
     ix_start : 
@@ -29283,8 +29151,6 @@ def integrate_max(ix_start: typing.SupportsInt, ix_ele: typing.SupportsInt, datu
     """
 def integrate_min(ix_start: typing.SupportsInt, ix_ele: typing.SupportsInt, datum_value: typing.SupportsFloat, ix_m: typing.SupportsInt, branch: BranchStruct, vec: RealAlloc1D, datum: TaoDataStruct) -> PyIntegrateMin:
     """
-    No docstring available
-    
     Parameters
     ----------
     ix_start : 
@@ -29297,8 +29163,9 @@ def integrate_min(ix_start: typing.SupportsInt, ix_ele: typing.SupportsInt, datu
     """
 def integrate_psi(bound: typing.SupportsFloat, p0: typing.SupportsFloat, args: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(8)"]) -> float:
     """
-    Integrate psi(t) from -bound to +bound.  The integration is done in two parts.  First from 0 to -bound, then from
+    Subroutine integrate_psi(bound,p0,args,result)
     
+    Integrate psi(t) from -bound to +bound.  The integration is done in two parts.  First from 0 to -bound, then from
     0 to +bound.
     
     Parameters
@@ -29316,11 +29183,11 @@ def integrate_psi(bound: typing.SupportsFloat, p0: typing.SupportsFloat, args: t
         Integral of psi from -bound to +bound.
     """
 def integrated_mats(eles: EleStructAlloc1D, coos: CoordStructAlloc1D, Lambda: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"]], "FixedSize(6)"], Theta: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"]], "FixedSize(6)"], Iota: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"]], "FixedSize(6)"], mode: NormalModesStruct) -> None:
-    ...
+    """
+    subroutine integrated_mats(eles,coos,Lambda,Theta,Iota,mode)
+    """
 def integration_timer(ele: EleStruct, param: LatParamStruct, start: CoordStruct, orb_max: CoordStruct, tol: typing.SupportsFloat) -> PyIntegrationTimerEle:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : 
@@ -29331,8 +29198,9 @@ def integration_timer(ele: EleStruct, param: LatParamStruct, start: CoordStruct,
     """
 def interpolated_fft(cdata: ComplexAlloc1D, calc_ok: bool, opt_dump_spectrum: typing.SupportsInt | None = None, opt_dump_index: typing.SupportsInt | None = None, this_fft: typing.SupportsFloat) -> PyInterpolatedFft:
     """
-    Windows the complex data and used Numerical Recipes four1 to find the peak in the spectrum.
+    Function interpolated_fft (cdata, calc_ok, opt_dump_spectrum, opt_dump_index) result (this_fft)
     
+    Windows the complex data and used Numerical Recipes four1 to find the peak in the spectrum.
     The result is interpolated to improve the accuracy.  Hanning and Gaussian windowing are
     available.
     
@@ -29343,15 +29211,14 @@ def interpolated_fft(cdata: ComplexAlloc1D, calc_ok: bool, opt_dump_spectrum: ty
     """
 def interpolated_fft_gsl(cdata: ComplexAlloc1D, calc_ok: bool, opt_dump_spectrum: typing.SupportsInt | None = None, opt_dump_index: typing.SupportsInt | None = None, this_fft: typing.SupportsFloat) -> PyInterpolatedFftGsl:
     """
-    Windows the complex data and uses a mixed-radix GSL routine to find the peak in the spectrum.
+    function interpolated_fft_gsl
     
+    Windows the complex data and uses a mixed-radix GSL routine to find the peak in the spectrum.
     The result is interpolated to improve the accuracy.  Hanning and Gaussian windowing are
     available.
     """
 def ion_kick(orbit: CoordStruct, r_beam: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], n_beam_part: typing.SupportsFloat, a_twiss: TwissStruct, b_twiss: TwissStruct, sig_ee: typing.SupportsFloat) -> typing.Annotated[list[float], "FixedSize(3)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -29371,11 +29238,12 @@ def ion_kick(orbit: CoordStruct, r_beam: typing.Annotated[collections.abc.Sequen
     """
 def is_alphabetic(string: str, valid_chars: str | None = None, is_alpha: bool) -> PyIsAlphabetic:
     """
-    import
-    
-    implicit none
-    real(rp) prob
-    real(rp) val
+    no longer exists
+    function inverse_prob (val) result (prob)
+      import
+      implicit none
+      real(rp) prob
+      real(rp) val
     end function
     
     
@@ -29385,6 +29253,8 @@ def is_alphabetic(string: str, valid_chars: str | None = None, is_alpha: bool) -
     """
 def is_attribute(ix_attrib: typing.SupportsInt, which: typing.SupportsInt) -> bool:
     """
+    Function is_attribute (ix_attrib, which) result (is_attrib)
+    
     Routine to determine if an attribute index corresponds to a control variable for overlys/groups.
     
     Parameters
@@ -29401,8 +29271,6 @@ def is_attribute(ix_attrib: typing.SupportsInt, which: typing.SupportsInt) -> bo
     """
 def is_decreasing_sequence(array: RealAlloc1D, strict: bool | None = None, is_decreasing: bool) -> PyIsDecreasingSequence:
     """
-    No docstring available
-    
     Parameters
     ----------
     array : float
@@ -29413,9 +29281,16 @@ def is_decreasing_sequence(array: RealAlloc1D, strict: bool | None = None, is_de
     """
 def is_false(param: typing.SupportsFloat) -> bool:
     """
-    Routine to translate from a real number to a boolian True or False.
+    Function is_false (param) result (this_false)
     
+    Routine to translate from a real number to a boolian True or False.
     Translation: 0 = False, nonzero = True
+    
+    Also see: is_true and int_logic
+    
+    The typical use of this routine is for parameters in ele_struct%value(:) which
+    is a real array. Some of the elements in the %value array are used to specify
+    boolian attributes. For example, quadrupoles use ele%value(scale_multipoles$).
     
     Parameters
     ----------
@@ -29435,8 +29310,6 @@ def is_false(param: typing.SupportsFloat) -> bool:
     """
 def is_increasing_sequence(array: RealAlloc1D, strict: bool | None = None, is_increasing: bool) -> PyIsIncreasingSequence:
     """
-    No docstring available
-    
     Parameters
     ----------
     array : float
@@ -29447,8 +29320,6 @@ def is_increasing_sequence(array: RealAlloc1D, strict: bool | None = None, is_in
     """
 def is_integer(string: str, int_: typing.SupportsInt | None = None, delims: str | None = None, ix_word: typing.SupportsInt | None = None, valid: bool) -> PyIsInteger:
     """
-    No docstring available
-    
     Parameters
     ----------
     string : 
@@ -29459,8 +29330,6 @@ def is_integer(string: str, int_: typing.SupportsInt | None = None, delims: str 
     """
 def is_logical(string: str, ignore: bool | None = None, valid: bool) -> PyIsLogical:
     """
-    No docstring available
-    
     Parameters
     ----------
     string : 
@@ -29469,8 +29338,6 @@ def is_logical(string: str, ignore: bool | None = None, valid: bool) -> PyIsLogi
     """
 def is_real(string: str, ignore: bool | None = None, real_num: typing.SupportsFloat | None = None, valid: bool) -> PyIsReal:
     """
-    No docstring available
-    
     Parameters
     ----------
     string : 
@@ -29480,6 +29347,8 @@ def is_real(string: str, ignore: bool | None = None, real_num: typing.SupportsFl
     """
 def is_subatomic_species(species: typing.SupportsInt) -> bool:
     """
+    Function is_subatomic_species(species) result (is_subatomic)
+    
     Routine to return True if species argument corresponds to a subatomic particle.
     
     Parameters
@@ -29494,9 +29363,16 @@ def is_subatomic_species(species: typing.SupportsInt) -> bool:
     """
 def is_true(param: typing.SupportsFloat) -> bool:
     """
-    Routine to translate from a real number to a boolian True or False.
+    Function is_true (param) result (this_true)
     
+    Routine to translate from a real number to a boolian True or False.
     Translation: 0 = False, nonzero = True
+    
+    Also see: is_false and int_logic
+    
+    The typical use of this routine is for parameters in ele_struct%value(:) which
+    is a real array. Some of the elements in the %value array are used to specify
+    boolian attributes. For example, quadrupoles use ele%value(scale_multipoles$).
     
     Parameters
     ----------
@@ -29516,8 +29392,6 @@ def is_true(param: typing.SupportsFloat) -> bool:
     """
 def j_bessel(m: typing.SupportsInt, arg: typing.SupportsFloat, j_bes: typing.SupportsFloat) -> PyJBessel:
     """
-    No docstring available
-    
     Parameters
     ----------
     m : 
@@ -29526,8 +29400,6 @@ def j_bessel(m: typing.SupportsInt, arg: typing.SupportsFloat, j_bes: typing.Sup
     """
 def key_name_to_key_index(key_str: str, abbrev_allowed: bool | None = None, key_index: typing.SupportsInt) -> PyKeyNameToKeyIndex:
     """
-    No docstring available
-    
     Parameters
     ----------
     key_str : unknown
@@ -29539,34 +29411,49 @@ def key_name_to_key_index(key_str: str, abbrev_allowed: bool | None = None, key_
     """
 def kick_vector_calc(ele: EleStruct, param: LatParamStruct, s_body: typing.SupportsFloat, orbit: CoordStruct, print_err: bool | None = None) -> PyKickVectorCalc:
     """
-    Subroutine to calculate the dr/ds "kick vector" where
+    Subroutine kick_vector_calc (ele, param, s_rel, orbit, dr_ds, field, err, print_err)
     
-    r = [x, p_x, y, p_y, z, p_z, t, spin_x,y,z]
+    Subroutine to calculate the dr/ds "kick vector" where
+        r = [x, p_x, y, p_y, z, p_z, t, spin_x,y,z]
+    
+    Remember: In order to simplify the calculation, in the body of any element, P0 is taken to be
     the P0 at the exit end of the element.
-    dr(1)/ds = dx/ds = dx/dt * dt/ds
-    where:
-    dx/dt = v_x = p_x / (1 + p_z)
-    dt/ds = (1 + g*x) / v_s
-    g = 1/rho, rho = bending radius (nonzero only in a dipole)
-    dr(2)/ds = dp_x/ds = dP_x/dt * dt/ds / P0 + g_x * P_z
-    where:
-    dP_x/dt = EM_Force_x
-    g_x = bending in x-plane.
-    dr(3)/ds = dy/ds = dy/dt * dt/ds
-    where:
-    dy/dt = v_x
-    dr(4)/ds = dp_y/ds = dP_y/dt * ds/dt / P0 + g_y * P_z
-    where:
-    dP_y/dt = EM_Force_y
-    g_y = bending in y-plane.
-    where:
-    dt/ds(ref) = 1 / beta(ref)
-    dr(6)/ds = dp_z/ds = d(EM_Force dot v_hat) * dt/ds / P0
-    where:
-    v_hat = velocity normalized to 1.
-    dr(7)/ds = dt/ds
-    dr(8:10)/ds = Spin omega vector
-    dr(11)/ds = dt_ref/ds
+    
+      dr(1)/ds = dx/ds = dx/dt * dt/ds
+      where:
+        dx/dt = v_x = p_x / (1 + p_z)
+        dt/ds = (1 + g*x) / v_s
+        g = 1/rho, rho = bending radius (nonzero only in a dipole)
+    
+      dr(2)/ds = dp_x/ds = dP_x/dt * dt/ds / P0 + g_x * P_z
+      where:
+        dP_x/dt = EM_Force_x
+        g_x = bending in x-plane.
+    
+      dr(3)/ds = dy/ds = dy/dt * dt/ds
+      where:
+        dy/dt = v_x
+    
+      dr(4)/ds = dp_y/ds = dP_y/dt * ds/dt / P0 + g_y * P_z
+      where:
+        dP_y/dt = EM_Force_y
+        g_y = bending in y-plane.
+    
+      NOTE: dr(5)/ds IS IGNORED WHEN CALCULATING Z. SEE TRANSFER_THIS_ORBIT ABOVE.
+      dr(5)/ds = dz/ds = beta * c_light * [dt/ds(ref) - dt/ds] + dbeta/ds * c_light * [t(ref) - t]
+                       = beta * c_light * [dt/ds(ref) - dt/ds] + dbeta/ds * vec(5) / beta
+      where:
+        dt/ds(ref) = 1 / beta(ref)
+    
+      dr(6)/ds = dp_z/ds = d(EM_Force dot v_hat) * dt/ds / P0
+      where:
+         v_hat = velocity normalized to 1.
+    
+      dr(7)/ds = dt/ds
+    
+      dr(8:10)/ds = Spin omega vector
+    
+      dr(11)/ds = dt_ref/ds
     
     Parameters
     ----------
@@ -29594,12 +29481,11 @@ def kick_vector_calc(ele: EleStruct, param: LatParamStruct, s_body: typing.Suppo
     Notes
     -----
     Remember: In order to simplify the calculation, in the body of any element, P0 is taken to be
-    NOTE: dr(5)/ds IS IGNORED WHEN CALCULATING Z. SEE TRANSFER_THIS_ORBIT ABOVE. dr(5)/ds = dz/ds = beta * c_light
-    * [dt/ds(ref) - dt/ds] + dbeta/ds * c_light * [t(ref) - t] = beta * c_light * [dt/ds(ref) - dt/ds] + dbeta/ds
-    * vec(5) / beta
     """
 def kill_complex_taylor(complex_taylor: ComplexTaylorStructAlloc1D) -> None:
     """
+    Subroutine kill_complex_taylor (complex_taylor)
+    
     Subroutine to deallocate a Bmad complex_taylor map.
     
     Parameters
@@ -29611,8 +29497,6 @@ def kill_complex_taylor(complex_taylor: ComplexTaylorStructAlloc1D) -> None:
     """
 def kill_ptc_layouts(lat: LatStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -29620,8 +29504,6 @@ def kill_ptc_layouts(lat: LatStruct) -> None:
     """
 def kill_taylor(bmad_taylor: TaylorStructAlloc1D) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     bmad_taylor : TaylorStruct
@@ -29630,6 +29512,8 @@ def kill_taylor(bmad_taylor: TaylorStructAlloc1D) -> None:
     """
 def kind_name(this_kind: typing.SupportsInt) -> str:
     """
+    Function kind_name (this_kind) result (kind_str)
+    
     function to return the name of a PTC kind.
     
     Parameters
@@ -29644,8 +29528,6 @@ def kind_name(this_kind: typing.SupportsInt) -> str:
     """
 def knot_interpolate(x_knot: RealAlloc1D, y_knot: RealAlloc1D, x_pt: typing.SupportsFloat, interpolation: typing.SupportsInt, y_pt: typing.SupportsFloat) -> PyKnotInterpolate:
     """
-    No docstring available
-    
     Parameters
     ----------
     x_knot : float
@@ -29662,8 +29544,6 @@ def knot_interpolate(x_knot: RealAlloc1D, y_knot: RealAlloc1D, x_pt: typing.Supp
     """
 def knots_to_string(x_knot: RealAlloc1D, y_knot: RealAlloc1D, str: str) -> PyKnotsToString:
     """
-    No docstring available
-    
     Parameters
     ----------
     x_knot : 
@@ -29672,8 +29552,6 @@ def knots_to_string(x_knot: RealAlloc1D, y_knot: RealAlloc1D, str: str) -> PyKno
     """
 def lafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsFloat, res: typing.SupportsFloat) -> PyLafun:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : 
@@ -29683,8 +29561,6 @@ def lafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsFl
     """
 def lat_compute_ref_energy_and_time(lat: LatStruct) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -29694,8 +29570,6 @@ def lat_compute_ref_energy_and_time(lat: LatStruct) -> bool:
     """
 def lat_ele_locator(loc_str: str, lat: LatStruct, eles: ElePointerStructAlloc1D, n_loc: typing.SupportsInt, above_ubound_is_err: bool | None = None, ix_dflt_branch: typing.SupportsInt | None = None, order_by_index: bool | None = None, append_eles: bool | None = None) -> PyLatEleLocator:
     """
-    No docstring available
-    
     Parameters
     ----------
     loc_str : unknown
@@ -29727,8 +29601,6 @@ def lat_ele_locator(loc_str: str, lat: LatStruct, eles: ElePointerStructAlloc1D,
     """
 def lat_equal_lat(lat_out: LatStruct, lat_in: LatStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat_out : 
@@ -29736,8 +29608,6 @@ def lat_equal_lat(lat_out: LatStruct, lat_in: LatStruct) -> None:
     """
 def lat_geometry(lat: LatStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -29745,8 +29615,6 @@ def lat_geometry(lat: LatStruct) -> None:
     """
 def lat_make_mat6(lat: LatStruct, ix_ele: typing.SupportsInt | None = None, ref_orb: _pybmad.CoordStructAlloc1D | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -29764,8 +29632,6 @@ def lat_make_mat6(lat: LatStruct, ix_ele: typing.SupportsInt | None = None, ref_
     """
 def lat_sanity_check(lat: LatStruct) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -29775,8 +29641,6 @@ def lat_sanity_check(lat: LatStruct) -> bool:
     """
 def lat_to_ptc_layout(lat: LatStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -29785,8 +29649,6 @@ def lat_to_ptc_layout(lat: LatStruct) -> None:
     """
 def lat_vec_equal_lat_vec(lat1: LatStructAlloc1D, lat2: LatStructAlloc1D) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat1 : 
@@ -29794,8 +29656,6 @@ def lat_vec_equal_lat_vec(lat1: LatStructAlloc1D, lat2: LatStructAlloc1D) -> Non
     """
 def lattice_bookkeeper(lat: LatStruct) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -29806,8 +29666,6 @@ def lattice_bookkeeper(lat: LatStruct) -> bool:
     """
 def lcavity_rf_step_setup(ele: EleStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -29817,8 +29675,9 @@ def lcavity_rf_step_setup(ele: EleStruct) -> None:
     """
 def linear_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.SupportsInt, orb: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Subroutine to track through the edge field of an sbend.
+    Subroutine linear_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix)
     
+    Subroutine to track through the edge field of an sbend.
     Apply only the first order kick, which is edge focusing.
     
     Parameters
@@ -29841,6 +29700,8 @@ def linear_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: ty
     """
 def linear_coef(stack: ExpressionAtomStructAlloc1D) -> ...:
     """
+    Function linear_coef (stack, err_flag) result (coef)
+    
     Routine to return the linear coefficient of a linear expression.
     
     Parameters
@@ -29857,8 +29718,6 @@ def linear_coef(stack: ExpressionAtomStructAlloc1D) -> ...:
     """
 def linear_fit(x: RealAlloc1D, y: RealAlloc1D, n_data: typing.SupportsInt, a: typing.SupportsFloat, b: typing.SupportsFloat, sig_a: typing.SupportsFloat, sig_b: typing.SupportsFloat) -> PyLinearFit:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : 
@@ -29871,8 +29730,6 @@ def linear_fit(x: RealAlloc1D, y: RealAlloc1D, n_data: typing.SupportsInt, a: ty
     """
 def linear_fit_2d(x: RealAlloc1D, y: RealAlloc1D, z: RealAlloc1D) -> typing.Annotated[list[float], "FixedSize(3)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : float
@@ -29886,8 +29743,6 @@ def linear_fit_2d(x: RealAlloc1D, y: RealAlloc1D, z: RealAlloc1D) -> typing.Anno
     """
 def linear_to_spin_taylor(q_map: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(7)"]], "FixedSize(4)"]) -> TaylorStructArray1D:
     """
-    No docstring available
-    
     Parameters
     ----------
     q_map : float
@@ -29897,8 +29752,9 @@ def linear_to_spin_taylor(q_map: typing.Annotated[collections.abc.Sequence[typin
     """
 def load_parse_line(action: str, ix_start: typing.SupportsInt) -> ...:
     """
-    Subroutine to load characters from the input file.
+    Subroutine load_parse_line (action, ix_start, end_of_file, err_flag)
     
+    Subroutine to load characters from the input file.
     This subroutine is used by bmad_parser and bmad_parser2.
     This subroutine is not intended for general use.
     
@@ -29918,8 +29774,6 @@ def load_parse_line(action: str, ix_start: typing.SupportsInt) -> ...:
     """
 def logic_str(logic: bool, str: str) -> PyLogicStr:
     """
-    No docstring available
-    
     Parameters
     ----------
     logic : 
@@ -29927,8 +29781,6 @@ def logic_str(logic: bool, str: str) -> PyLogicStr:
     """
 def logical_to_python(logic: bool, string: str) -> PyLogicalToPython:
     """
-    No docstring available
-    
     Parameters
     ----------
     logic : 
@@ -29936,8 +29788,6 @@ def logical_to_python(logic: bool, string: str) -> PyLogicalToPython:
     """
 def lord_edge_aligned(slave: EleStruct, slave_edge: typing.SupportsInt, lord: EleStruct, is_aligned: bool) -> PyLordEdgeAligned:
     """
-    No docstring available
-    
     Parameters
     ----------
     slave : EleStruct
@@ -29950,8 +29800,6 @@ def lord_edge_aligned(slave: EleStruct, slave_edge: typing.SupportsInt, lord: El
     """
 def low_energy_z_correction(orbit: CoordStruct, ele: EleStruct, ds: typing.SupportsFloat, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None, dz: typing.SupportsFloat) -> PyLowEnergyZCorrection:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -29970,16 +29818,15 @@ def low_energy_z_correction(orbit: CoordStruct, ele: EleStruct, ds: typing.Suppo
     """
 def lunget() -> int:
     """
-    No docstring available
-    
     Parameters
     ----------
     lunget : 
     """
 def mad_add_offsets_and_multipoles(ele: EleStruct) -> MadMapStruct:
     """
-    Subroutine to add in the effect of element offsets and/or multipoles
+    Subroutine mad_add_offsets_and_multipoles (ele, map)
     
+    Subroutine to add in the effect of element offsets and/or multipoles
     on the 2nd order transport map for the element.
     
     Parameters
@@ -29996,9 +29843,10 @@ def mad_add_offsets_and_multipoles(ele: EleStruct) -> MadMapStruct:
     """
 def mad_concat_map2(map1: MadMapStruct, map2: MadMapStruct) -> MadMapStruct:
     """
-    Subroutine to concatinate two 2nd order transport maps.
+    Subroutine mad_concat_map2 (map1, map2, map3)
     
-    map3 = map2(map1)
+    Subroutine to concatinate two 2nd order transport maps.
+        map3 = map2(map1)
     The equivalent MAD-8 routine is: TMCAT1
     
     Parameters
@@ -30015,8 +29863,9 @@ def mad_concat_map2(map1: MadMapStruct, map2: MadMapStruct) -> MadMapStruct:
     """
 def mad_drift(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
-    Subroutine to make a transport map for a drift space.
+    Subroutine mad_drift (ele, energy, map)
     
+    Subroutine to make a transport map for a drift space.
     The equivalent MAD-8 routine is: TMDRF
     
     Parameters
@@ -30033,8 +29882,9 @@ def mad_drift(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
 def mad_elsep(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
-    Subroutine to make a transport map for an electric separator.
+    Subroutine mad_elsep (ele, energy, map)
     
+    Subroutine to make a transport map for an electric separator.
     The equivalent MAD-8 routine is: TMSEP
     
     Parameters
@@ -30051,8 +29901,9 @@ def mad_elsep(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
 def mad_map_to_taylor(map: MadMapStruct, energy: MadEnergyStruct) -> TaylorStructAlloc1D:
     """
-    Subroutine to convert a MAD order 2 map to a Bmad taylor map.
+    Subroutine mad_map_to_taylor (map, energy, taylor)
     
+    Subroutine to convert a MAD order 2 map to a Bmad taylor map.
     The conversion will also convert between MAD's (t, dE) and Bmad's (beta*t, dP) coords.
     
     Parameters
@@ -30069,8 +29920,9 @@ def mad_map_to_taylor(map: MadMapStruct, energy: MadEnergyStruct) -> TaylorStruc
     """
 def mad_quadrupole(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
-    Subroutine to make a transport map for an quadrupole element.
+    Subroutine mad_quadrupole (ele, energy, map)
     
+    Subroutine to make a transport map for an quadrupole element.
     The equivalent MAD-8 routine is: TMSEXT
     
     Parameters
@@ -30087,8 +29939,9 @@ def mad_quadrupole(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
 def mad_rfcavity(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
-    Subroutine to make a transport map for an rfcavity element.
+    Subroutine mad_rfcavity (ele, energy, map)
     
+    Subroutine to make a transport map for an rfcavity element.
     The equivalent MAD-8 routine is: TMRF
     
     Parameters
@@ -30105,8 +29958,9 @@ def mad_rfcavity(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
 def mad_sbend(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
-    Subroutine to make a transport map for a sector bend element.
+    Subroutine mad_sbend (ele, energy, map)
     
+    Subroutine to make a transport map for a sector bend element.
     The equivalent MAD-8 routine is: TMBEND
     
     Parameters
@@ -30123,8 +29977,9 @@ def mad_sbend(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
 def mad_sbend_body(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
-    Subroutine to make a transport map for the body of a sector dipole.
+    Subroutine mad_sbend_body (ele, energy, map)
     
+    Subroutine to make a transport map for the body of a sector dipole.
     The equivalent MAD-8 routine is: TMSECT
     
     Parameters
@@ -30143,8 +29998,9 @@ def mad_sbend_body(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
 def mad_sbend_fringe(ele: EleStruct, energy: MadEnergyStruct, into: bool) -> MadMapStruct:
     """
-    Subroutine to make a transport map for the fringe field of a dipole.
+    Subroutine mad_sbend_fringe (ele, energy, into, map)
     
+    Subroutine to make a transport map for the fringe field of a dipole.
     The equivalent MAD-8 routine is: TMFRNG
     
     Parameters
@@ -30163,8 +30019,9 @@ def mad_sbend_fringe(ele: EleStruct, energy: MadEnergyStruct, into: bool) -> Mad
     """
 def mad_sextupole(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
-    Subroutine to make a transport map for an sextupole.
+    Subroutine mad_sextupole (ele, energy, map)
     
+    Subroutine to make a transport map for an sextupole.
     The equivalent MAD-8 routine is: TMSEXT
     
     Parameters
@@ -30181,8 +30038,9 @@ def mad_sextupole(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
 def mad_solenoid(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
-    Subroutine to make a transport map for an solenoid.
+    Subroutine mad_solenoid (ele, energy, map)
     
+    Subroutine to make a transport map for an solenoid.
     The equivalent MAD-8 routine is: TMSEXT
     
     Parameters
@@ -30199,8 +30057,9 @@ def mad_solenoid(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
 def mad_tmfoc(el: typing.SupportsFloat, sk1: typing.SupportsFloat) -> ...:
     """
-    Subroutine to compute the linear focussing functions.
+    Subroutine mad_tmfoc (el, sk1, c, s, d, f)
     
+    Subroutine to compute the linear focussing functions.
     The equivalent MAD-8 routine is: TMFOC
     
     Parameters
@@ -30223,8 +30082,9 @@ def mad_tmfoc(el: typing.SupportsFloat, sk1: typing.SupportsFloat) -> ...:
     """
 def mad_tmsymm(te: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]], "FixedSize(6)"]) -> None:
     """
-    subroutine to symmertrize the 2nd order map t.
+    subroutine mad_tmsymm (te)
     
+    subroutine to symmertrize the 2nd order map t.
     The equivalent MAD-8 routine is: tmsymm
     
     Parameters
@@ -30235,8 +30095,9 @@ def mad_tmsymm(te: typing.Annotated[collections.abc.Sequence[typing.Annotated[co
     """
 def mad_tmtilt(map: MadMapStruct, tilt: typing.SupportsFloat) -> None:
     """
-    Subroutine to apply a tilt to a transport map.
+    Subroutine mad_tmtilt (map, tilt)
     
+    Subroutine to apply a tilt to a transport map.
     The equivalent MAD-8 routine is: TMTILT
     
     Parameters
@@ -30250,8 +30111,9 @@ def mad_tmtilt(map: MadMapStruct, tilt: typing.SupportsFloat) -> None:
     """
 def mad_track1(c0: CoordStruct, map: MadMapStruct) -> CoordStruct:
     """
-    Subroutine to track through a 2nd order transfer map.
+    Subroutine mad_track1 (c0, map, c1)
     
+    Subroutine to track through a 2nd order transfer map.
     The equivalent MAD-8 routine is: TMTRAK
     
     Parameters
@@ -30268,8 +30130,6 @@ def mad_track1(c0: CoordStruct, map: MadMapStruct) -> CoordStruct:
     """
 def make_g2_mats(twiss: TwissStruct, g2_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"]], "FixedSize(2)"], g2_inv_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"]], "FixedSize(2)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     twiss : TwissStruct
@@ -30279,8 +30139,6 @@ def make_g2_mats(twiss: TwissStruct, g2_mat: typing.Annotated[collections.abc.Se
     """
 def make_g_mats(ele: EleStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -30292,11 +30150,14 @@ def make_g_mats(ele: EleStruct) -> ...:
     """
 def make_hvbp(N: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> ...:
     """
-    Parameterizes the eigen-decomposition of the 6x6 transfer matrix into HVBP as defined in:
+    Subroutine make_HVBP(N, B, V, H, Vbar, Hbar)
     
+    Parameterizes the eigen-decomposition of the 6x6 transfer matrix into HVBP as defined in:
     "From the beam-envelop matrix to synchrotron-radiation integrals" by Ohmi, Hirata, and Oide.
+    
     This routine takes N, which is usually made from make_N (also in this module), and decomposes
     it into H, V, B, and P.
+    
     N is defined by:
     M = N.U.Inverse[N] where U is block diagonal and the blocks are 2x2 rotation matrices.
     and it is decomposed by this subroutine as,
@@ -30304,9 +30165,10 @@ def make_hvbp(N: typing.Annotated[collections.abc.Sequence[typing.Annotated[coll
     P has the same free parameters as B
     B "Twiss matrix" has 6 free parameters (Twiss alphas and betas)
     B blocks have the form /     sqrt(beta)         0       \\
-    \\ -alpha/sqrt(beta) 1/sqrt(beta) /
+                           \\ -alpha/sqrt(beta) 1/sqrt(beta) /
     V "Teng matrix" has 4 free parameters (xy, xpy, ypx, and pxpy coupling)
     H "Dispersion matrix" has 8 free parameters (xz, xpz, pxz, pxpz, yz, ypz, pyz, pypz coupling)
+    
     
     Parameters
     ----------
@@ -30328,8 +30190,6 @@ def make_hvbp(N: typing.Annotated[collections.abc.Sequence[typing.Annotated[coll
     """
 def make_hybrid_lat(lat_in: LatStruct, use_taylor: bool | None = None, orb0_arr: _pybmad.CoordArrayStructAlloc1D | None = None) -> LatStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat_in : LatStruct
@@ -30345,8 +30205,6 @@ def make_hybrid_lat(lat_in: LatStruct, use_taylor: bool | None = None, orb0_arr:
     """
 def make_legal_comment(comment_in: str, comment_out: str) -> PyMakeLegalComment:
     """
-    No docstring available
-    
     Parameters
     ----------
     comment_in : 
@@ -30354,6 +30212,8 @@ def make_legal_comment(comment_in: str, comment_out: str) -> PyMakeLegalComment:
     """
 def make_mad_map(ele: EleStruct, param: LatParamStruct) -> ...:
     """
+    Subroutine make_mad_map (ele, param, energy, map)
+    
     Subroutine to make a 2nd order transport map a la MAD.
     
     Parameters
@@ -30372,8 +30232,6 @@ def make_mad_map(ele: EleStruct, param: LatParamStruct) -> ...:
     """
 def make_mat6(ele: EleStruct, param: LatParamStruct, start_orb: _pybmad.CoordStruct | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -30389,8 +30247,6 @@ def make_mat6(ele: EleStruct, param: LatParamStruct, start_orb: _pybmad.CoordStr
     """
 def make_mat6_bmad(ele: EleStruct, param: LatParamStruct, start_orb: CoordStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -30407,8 +30263,6 @@ def make_mat6_bmad(ele: EleStruct, param: LatParamStruct, start_orb: CoordStruct
     """
 def make_mat6_bmad_photon(ele: EleStruct, param: LatParamStruct, start_orb: CoordStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -30425,8 +30279,9 @@ def make_mat6_bmad_photon(ele: EleStruct, param: LatParamStruct, start_orb: Coor
     """
 def make_mat6_high_energy_space_charge(ele: EleStruct, param: LatParamStruct) -> None:
     """
-    Routine to add the ultra relativistic space charge kick to the element transfer matrix.
+    Subroutine make_mat6_high_energy_space_charge (ele, param)
     
+    Routine to add the ultra relativistic space charge kick to the element transfer matrix.
     The routine setup_space_charge_calc must be called
     initially before any tracking is done. This routine assumes a Gaussian
     bunch and is only valid with relativistic particles where the effect
@@ -30445,8 +30300,9 @@ def make_mat6_high_energy_space_charge(ele: EleStruct, param: LatParamStruct) ->
     """
 def make_mat6_mad(ele: EleStruct, param: LatParamStruct, c0: CoordStruct) -> CoordStruct:
     """
-    Subroutine to make the 6x6 transfer matrix for an element from the
+    Subroutine make_mat6_mad (ele, param, c0, c1)
     
+    Subroutine to make the 6x6 transfer matrix for an element from the
     2nd order MAD transport map. The map is stored in ele%taylor.
     If the map exists then it is simply used to calculate ele%mat6.
     If ele%taylor doesn't exist then calculate it.
@@ -30469,8 +30325,6 @@ def make_mat6_mad(ele: EleStruct, param: LatParamStruct, c0: CoordStruct) -> Coo
     """
 def make_mat6_symp_lie_ptc(ele: EleStruct, start_orb: CoordStruct) -> CoordStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -30483,8 +30337,6 @@ def make_mat6_symp_lie_ptc(ele: EleStruct, start_orb: CoordStruct) -> CoordStruc
     """
 def make_mat6_taylor(ele: EleStruct, start_orb: CoordStruct, err_flag: bool | None = None) -> PyMakeMat6Taylor:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -30498,8 +30350,6 @@ def make_mat6_taylor(ele: EleStruct, start_orb: CoordStruct, err_flag: bool | No
     """
 def make_mat6_tracking(ele: EleStruct, param: LatParamStruct, start_orb: CoordStruct, spin_only: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -30518,15 +30368,19 @@ def make_mat6_tracking(ele: EleStruct, param: LatParamStruct, start_orb: CoordSt
     """
 def make_n(t6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], abz_tunes: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None) -> ...:
     """
-    Given a 1-turn transfer matrix, this returns the matrix N.
+    Subroutine make_N(t6, N, err_flag, abz_tunes, tunes_out, U)
     
+    Given a 1-turn transfer matrix, this returns the matrix N.
     N converts between normal invarients and phases and canonical coordinates:
     X = N.J
+    
     N is obtained from the Eigen decomposition of the 1-turn transfer matrix.
     It is obtained by applying certain normalizations to the matrix of Eigen vectors, then making
     the result real using Q.
+    
     If abz_tunes is present, then the eigensystem is ordered by matching the tunes.
     If abz_tunes is not present, then the eigensystem is ordered by plane dominance.
+    
     It is assumed that the synchrotron tune is less than pi.
     
     Parameters
@@ -30549,9 +30403,13 @@ def make_n(t6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collec
     """
 def make_pbrh(M: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], abz_tunes: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> ...:
     """
-    Decomposes the 1-turn transfer matrix into normal mode twiss-like parameters,
+    subroutine make_PBRH(M, P, Bp, R, H, abz_tunes)
     
+    Decomposes the 1-turn transfer matrix into normal mode twiss-like parameters,
     according to Sec. IIIB of Ohmi, Hirata, and Oide paper.
+    
+    Note:  The Twiss parameters generated by this function are identical to those delivered
+           by mode3_mod.
     
     Parameters
     ----------
@@ -30573,14 +30431,17 @@ def make_pbrh(M: typing.Annotated[collections.abc.Sequence[typing.Annotated[coll
     """
 def make_smat_from_abc(t6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], mode: NormalModesStruct) -> ...:
     """
-    Given the 1-turn transfer matrix and a normal_modes_struct containing the normal mode
+    Subroutine make_smat_from_abc(t6, mode, sigma_mat, err_flag, Nout)
     
+    Given the 1-turn transfer matrix and a normal_modes_struct containing the normal mode
     emittances, this routine returns the beam envelop sigma matrix.
+    
     sigma_mat = N.D.transpose(N)
     equivalent to: sigma_mat.S = N.D.mat_symp_conj(N)
+    
     One way to populate mode%a%tune and mode%b%tune:
-    mode%a%tune = mod(lat%ele(lat%n_ele_track)%a%phi, twopi)
-    mode%b%tune = mod(lat%ele(lat%n_ele_track)%b%phi, twopi)
+      mode%a%tune = mod(lat%ele(lat%n_ele_track)%a%phi, twopi)
+      mode%b%tune = mod(lat%ele(lat%n_ele_track)%b%phi, twopi)
     
     Parameters
     ----------
@@ -30604,6 +30465,8 @@ def make_smat_from_abc(t6: typing.Annotated[collections.abc.Sequence[typing.Anno
     """
 def make_unit_mad_map(map: MadMapStruct) -> None:
     """
+    Subroutine make_unit_mad_map (map)
+    
     Subroutine to initialize a 2nd order transport map to unity.
     
     Parameters
@@ -30614,15 +30477,14 @@ def make_unit_mad_map(map: MadMapStruct) -> None:
     """
 def make_v(M: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], V: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"]], "FixedSize(6)"], abz_tunes: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> None:
     """
-    For a one-turn transfer matrix M, this routine find the eigen matrix V.
+    subroutine make_V(M,V,abz_tunes)
     
+    For a one-turn transfer matrix M, this routine find the eigen matrix V.
     V is ordered such that the per turn phase advance of its column pairs agree with abz_tunes.
     It is normalized to be symplectic.
     """
 def make_v_mats(ele: EleStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -30634,29 +30496,37 @@ def make_v_mats(ele: EleStruct) -> ...:
     """
 def makeup_control_slave(lat: LatStruct, slave: EleStruct, err_flag: bool) -> PyMakeupControlSlave:
     """
+    Subroutine makeup_control_slave (lat, slave, err_flag)
+    
     This routine is not meant for general use.
     """
 def makeup_group_lord(lat: LatStruct, lord: EleStruct, err_flag: bool) -> PyMakeupGroupLord:
     """
-    Subroutine to calculate the attributes of group slave elements.
+    Subroutine makeup_group_lord (lat, lord, err_flag)
     
+    Subroutine to calculate the attributes of group slave elements.
     This routine is private to bookkeeper_mod.
     """
 def makeup_multipass_slave(lat: LatStruct, slave: EleStruct, err_flag: bool) -> PyMakeupMultipassSlave:
     """
-    Subroutine to calcualte the attributes of multipass slave elements.
+    Subroutine makeup_multipass_slave (lat, slave, err_flag)
     
+    Subroutine to calcualte the attributes of multipass slave elements.
     This routine is not meant for guse.
     """
 def makeup_super_slave(lat: LatStruct, slave: EleStruct, err_flag: bool) -> PyMakeupSuperSlave:
     """
-    Subroutine to calcualte the attributes of superposition slave elements.
+    Subroutine makeup_super_slave (lat, slave, err_flag)
     
+    Subroutine to calcualte the attributes of superposition slave elements.
     This routine is not meant for general use.
     """
 def makeup_super_slave1(slave: EleStruct, lord: EleStruct, offset: typing.SupportsFloat, param: LatParamStruct, include_upstream_end: bool, include_downstream_end: bool) -> bool:
     """
+    Subroutine makeup_super_slave1 (slave, lord, offset, param, include_upstream_end, include_downstream_end)
+    
     Routine to construct a super_slave from a super_lord when the slave has only one lord.
+    Note: Reference energy and times are not computed in this routine.
     
     Parameters
     ----------
@@ -30682,8 +30552,6 @@ def makeup_super_slave1(slave: EleStruct, lord: EleStruct, offset: typing.Suppor
     """
 def map1_inverse(map1: SpinOrbitMap1Struct, inv_map1: SpinOrbitMap1Struct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     map1 : SpinOrbitMap1Struct
@@ -30692,8 +30560,6 @@ def map1_inverse(map1: SpinOrbitMap1Struct, inv_map1: SpinOrbitMap1Struct) -> No
     """
 def map1_make_unit() -> SpinOrbitMap1Struct:
     """
-    No docstring available
-    
     Parameters
     ----------
     map1 : SpinOrbitMap1Struct
@@ -30701,8 +30567,6 @@ def map1_make_unit() -> SpinOrbitMap1Struct:
     """
 def map1_times_map1(map2: SpinOrbitMap1Struct, map1: SpinOrbitMap1Struct, map_out: SpinOrbitMap1Struct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     map2 : 
@@ -30711,8 +30575,6 @@ def map1_times_map1(map2: SpinOrbitMap1Struct, map1: SpinOrbitMap1Struct, map_ou
     """
 def map_to_angle_coords(t_canon: typing.Annotated[collections.abc.Sequence[TaylorStruct], "FixedSize(6)"]) -> TaylorStructArray1D:
     """
-    No docstring available
-    
     Parameters
     ----------
     t_canon : TaylorStruct
@@ -30722,8 +30584,9 @@ def map_to_angle_coords(t_canon: typing.Annotated[collections.abc.Sequence[Taylo
     """
 def mark_patch_regions(branch: BranchStruct) -> None:
     """
-    Routine to mark which regions in a wall3d structure contain patch elements.
+    Subroutine mark_patch_regions (branch)
     
+    Routine to mark which regions in a wall3d structure contain patch elements.
     This routine should be called by any routine that creates a beam chamber wall.
     
     Parameters
@@ -30735,9 +30598,13 @@ def mark_patch_regions(branch: BranchStruct) -> None:
     """
 def mass_of(species: typing.SupportsInt) -> float:
     """
-    Routine to return the mass, in units of eV/c^2, of a particle.
+    Function mass_of (species) result (mass)
     
+    Routine to return the mass, in units of eV/c^2, of a particle.
     To convert to AMU divide mass_of value by the constant atomic_mass_unit.
+    
+    Note: For atoms where the isotopic number is given, the mass is calculated using the neutral atomic mass
+    adjusted by the weight of any added or missing electrons. The calculated mass is off very slightly due to
     binding energy effects. Exception: For #1H+ (proton) and #2H+ (deuteron) the exact mass is used since it is known.
     
     Parameters
@@ -30749,16 +30616,9 @@ def mass_of(species: typing.SupportsInt) -> float:
     -------
     mass : float
         particle mass. Set to real_garbage$ if species value is invalid.
-    
-    Notes
-    -----
-    Note: For atoms where the isotopic number is given, the mass is calculated using the neutral atomic mass
-    adjusted by the weight of any added or missing electrons. The calculated mass is off very slightly due to
     """
 def master_parameter_value(master_parameter: typing.SupportsInt, ele: EleStruct, value: typing.SupportsFloat) -> PyMasterParameterValue:
     """
-    No docstring available
-    
     Parameters
     ----------
     master_parameter : int
@@ -30769,8 +30629,6 @@ def master_parameter_value(master_parameter: typing.SupportsInt, ele: EleStruct,
     """
 def mat4_multipole(knl: typing.SupportsFloat, tilt: typing.SupportsFloat, n: typing.SupportsInt, orbit: CoordStruct) -> PyMat4Multipole:
     """
-    No docstring available
-    
     Parameters
     ----------
     knl : float
@@ -30785,8 +30643,6 @@ def mat4_multipole(knl: typing.SupportsFloat, tilt: typing.SupportsFloat, n: typ
     """
 def mat6_add_offsets(ele: EleStruct, param: LatParamStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -30798,8 +30654,6 @@ def mat6_add_offsets(ele: EleStruct, param: LatParamStruct) -> None:
     """
 def mat6_add_pitch(x_pitch_tot: typing.SupportsFloat, y_pitch_tot: typing.SupportsFloat, orientation: typing.SupportsInt, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     x_pitch_tot : float
@@ -30814,8 +30668,9 @@ def mat6_add_pitch(x_pitch_tot: typing.SupportsFloat, y_pitch_tot: typing.Suppor
     """
 def mat6_to_complex_taylor(vec0: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"], mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"]], "FixedSize(6)"]) -> ComplexTaylorStructArray1D:
     """
-    Subroutine to form a first order complex_taylor map from the 6x6 transfer
+    Subroutine mat6_to_complex_taylor (vec0, mat6, complex_taylor)
     
+    Subroutine to form a first order complex_taylor map from the 6x6 transfer
     matrix and the 0th order transfer vector.
     
     Parameters
@@ -30832,8 +30687,6 @@ def mat6_to_complex_taylor(vec0: typing.Annotated[collections.abc.Sequence[compl
     """
 def mat_symp_decouple(t0: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]], "FixedSize(4)"], U: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]], "FixedSize(4)"], V: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]], "FixedSize(4)"], Ubar: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]], "FixedSize(4)"], Vbar: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]], "FixedSize(4)"], G: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]], "FixedSize(4)"], type_out: bool) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     t0 : float
@@ -30857,8 +30710,6 @@ def mat_symp_decouple(t0: typing.Annotated[collections.abc.Sequence[typing.Annot
     """
 def match_ele_to_mat6(ele: EleStruct, start_orb: CoordStruct, include_delta_time: bool | None = None, set_trombone: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -30879,8 +30730,6 @@ def match_ele_to_mat6(ele: EleStruct, start_orb: CoordStruct, include_delta_time
     """
 def match_reg(str: str, pat: str, is_match: bool) -> PyMatchReg:
     """
-    No docstring available
-    
     Parameters
     ----------
     str : 
@@ -30889,8 +30738,6 @@ def match_reg(str: str, pat: str, is_match: bool) -> PyMatchReg:
     """
 def match_wild(string: str, template_: str, is_match: bool) -> PyMatchWild:
     """
-    No docstring available
-    
     Parameters
     ----------
     string : 
@@ -30899,14 +30746,13 @@ def match_wild(string: str, template_: str, is_match: bool) -> PyMatchWild:
     """
 def maximize_projection(seed: typing.SupportsFloat, cdata: ComplexAlloc1D, func_retval__: typing.SupportsFloat) -> PyMaximizeProjection:
     """
-    Optimizer that uses Numerical Recipes brent to find a local maximum,
+    function maximize_projection
     
+    Optimizer that uses Numerical Recipes brent to find a local maximum,
     which is the frequency that maximizes the projection.
     """
 def mexp(x: typing.SupportsFloat, m: typing.SupportsInt, this_exp: typing.SupportsFloat) -> PyMexp:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : float
@@ -30917,8 +30763,6 @@ def mexp(x: typing.SupportsFloat, m: typing.SupportsInt, this_exp: typing.Suppor
     """
 def mfft1(a: RealAlloc1D, b: RealAlloc1D, n: IntAlloc1D, ndim: typing.SupportsInt, isn: typing.SupportsInt) -> int:
     """
-    No docstring available
-    
     Parameters
     ----------
     a : 
@@ -30930,16 +30774,12 @@ def mfft1(a: RealAlloc1D, b: RealAlloc1D, n: IntAlloc1D, ndim: typing.SupportsIn
     """
 def milli_sleep(milli_sec: typing.SupportsInt) -> PyMilliSleep:
     """
-    No docstring available
-    
     Parameters
     ----------
     milli_sec : 
     """
 def momentum_compaction(branch: BranchStruct, mom_comp: typing.SupportsFloat) -> PyMomentumCompaction:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch : BranchStruct
@@ -30948,8 +30788,6 @@ def momentum_compaction(branch: BranchStruct, mom_comp: typing.SupportsFloat) ->
     """
 def multi_turn_tracking_analysis(track: CoordStructAlloc1D, i_dim: typing.SupportsInt) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     track : CooordStruct
@@ -30975,10 +30813,12 @@ def multi_turn_tracking_analysis(track: CoordStructAlloc1D, i_dim: typing.Suppor
     """
 def multilayer_type_to_multilayer_params(ele: EleStruct) -> bool:
     """
+    Subroutine multilayer_type_to_multilayer_params (ele, err_flag)
+    
     Routine to set the multilayer parameters based upon the multilayer type.
     
     Multilayer types are of the form:
-    "AAA:BBB"
+      "AAA:BBB"
     Where "AAA" is the atomic formula for the top layer crystal and "BBB" is the second layer atomic formula.
     
     Parameters
@@ -30994,8 +30834,6 @@ def multilayer_type_to_multilayer_params(ele: EleStruct) -> bool:
     """
 def multipass_chain(ele: EleStruct, ix_pass: typing.SupportsInt, n_links: typing.SupportsInt, chain_ele: _pybmad.ElePointerStructAlloc1D | None = None, use_super_lord: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : ElePointerStruct
@@ -31012,8 +30850,6 @@ def multipass_chain(ele: EleStruct, ix_pass: typing.SupportsInt, n_links: typing
     """
 def multipole1_ab_to_kt(an: typing.SupportsFloat, bn: typing.SupportsFloat, n: typing.SupportsInt) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     an : float
@@ -31029,8 +30865,6 @@ def multipole1_ab_to_kt(an: typing.SupportsFloat, bn: typing.SupportsFloat, n: t
     """
 def multipole1_kt_to_ab(knl: typing.SupportsFloat, knsl: typing.SupportsFloat, tn: typing.SupportsFloat, n: typing.SupportsInt) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     knl : float
@@ -31048,8 +30882,6 @@ def multipole1_kt_to_ab(knl: typing.SupportsFloat, knsl: typing.SupportsFloat, t
     """
 def multipole_ab_to_kt(an: RealAlloc1D, bn: RealAlloc1D) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     an : float
@@ -31063,8 +30895,6 @@ def multipole_ab_to_kt(an: RealAlloc1D, bn: RealAlloc1D) -> ...:
     """
 def multipole_ele_to_ab(ele: EleStruct, use_ele_tilt: bool, pole_type: typing.SupportsInt | None = None, include_kicks: typing.SupportsInt | None = None, original: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -31095,8 +30925,6 @@ def multipole_ele_to_ab(ele: EleStruct, use_ele_tilt: bool, pole_type: typing.Su
     """
 def multipole_ele_to_kt(ele: EleStruct, use_ele_tilt: bool, pole_type: typing.SupportsInt | None = None, include_kicks: typing.SupportsInt | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -31119,8 +30947,6 @@ def multipole_ele_to_kt(ele: EleStruct, use_ele_tilt: bool, pole_type: typing.Su
     """
 def multipole_init(who: typing.SupportsInt, zero: bool | None = None) -> EleStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -31134,7 +30960,10 @@ def multipole_init(who: typing.SupportsInt, zero: bool | None = None) -> EleStru
     """
 def multipole_kick(knl: typing.SupportsFloat, tilt: typing.SupportsFloat, n: typing.SupportsInt, ref_species: typing.SupportsInt, ele_orientation: typing.SupportsInt, coord: CoordStruct, pole_type: typing.SupportsInt | None = None, ref_orb_offset: bool | None = None) -> None:
     """
+    Subroutine multipole_kick (knl, tilt, n, ref_species, ele_orientation, coord, pole_type, ref_orb_offset)
+    
     Subroutine to put in the kick due to a multipole.
+    Note: The kick for an electric multipole does not include any energy change.
     
     Parameters
     ----------
@@ -31158,8 +30987,6 @@ def multipole_kick(knl: typing.SupportsFloat, tilt: typing.SupportsFloat, n: typ
     """
 def multipole_kick_mat(knl: RealAlloc1D, tilt: RealAlloc1D, ref_species: typing.SupportsInt, ele: EleStruct, orbit: CoordStruct, factor: typing.SupportsFloat) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     knl : float
@@ -31179,8 +31006,9 @@ def multipole_kick_mat(knl: RealAlloc1D, tilt: RealAlloc1D, ref_species: typing.
     """
 def multipole_kicks(knl: RealAlloc1D, tilt: RealAlloc1D, ele: EleStruct, orbit: CoordStruct, pole_type: typing.SupportsInt | None = None, ref_orb_offset: bool | None = None) -> None:
     """
-    Subroutine to put in the kick due to a multipole element.
+    Subroutine multipole_kicks (knl, tilt, ele, orbit, pole_type, ref_orb_offset)
     
+    Subroutine to put in the kick due to a multipole element.
     Also see the ab_multipole_kicks routine.
     
     Parameters
@@ -31201,8 +31029,6 @@ def multipole_kicks(knl: RealAlloc1D, tilt: RealAlloc1D, ele: EleStruct, orbit: 
     """
 def multipole_kt_to_ab(knl: RealAlloc1D, knsl: RealAlloc1D, tn: RealAlloc1D) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     knl : float
@@ -31218,8 +31044,6 @@ def multipole_kt_to_ab(knl: RealAlloc1D, knsl: RealAlloc1D, tn: RealAlloc1D) -> 
     """
 def multipole_spin_tracking(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -31231,8 +31055,6 @@ def multipole_spin_tracking(ele: EleStruct, param: LatParamStruct, orbit: CoordS
     """
 def mytan(y: typing.SupportsFloat, x: typing.SupportsFloat, arg: typing.SupportsFloat) -> PyMytan:
     """
-    No docstring available
-    
     Parameters
     ----------
     y : 
@@ -31241,8 +31063,9 @@ def mytan(y: typing.SupportsFloat, x: typing.SupportsFloat, arg: typing.Supports
     """
 def n_attrib_string_max_len() -> int:
     """
-    Routine to return the the maximum number of characters in any attribute
+    Function n_attrib_string_max_len () result (max_len)
     
+    Routine to return the the maximum number of characters in any attribute
     name known to bmad.
     
     
@@ -31252,11 +31075,11 @@ def n_attrib_string_max_len() -> int:
         Maximum number of characters in any attribute name.
     """
 def n_bins_automatic(n_data: typing.SupportsInt, n: typing.SupportsInt) -> PyNBinsAutomatic:
-    ...
+    """
+    Function to automatically select the number of bins
+    """
 def n_choose_k(n: typing.SupportsInt, k: typing.SupportsInt, nck: typing.SupportsFloat) -> PyNChooseK:
     """
-    No docstring available
-    
     Parameters
     ----------
     n : 
@@ -31265,8 +31088,6 @@ def n_choose_k(n: typing.SupportsInt, k: typing.SupportsInt, nck: typing.Support
     """
 def n_spline_create(deriv0: RealAlloc1D, deriv1: RealAlloc1D, x1: typing.SupportsFloat) -> RealAlloc1D:
     """
-    No docstring available
-    
     Parameters
     ----------
     deriv0 : float
@@ -31280,18 +31101,20 @@ def n_spline_create(deriv0: RealAlloc1D, deriv1: RealAlloc1D, x1: typing.Support
     """
 def naff(cdata: ComplexAlloc1D, freqs: RealAlloc1D, amps: ComplexAlloc1D, opt_dump_spectra: typing.SupportsInt | None = None, opt_zero_first: bool | None = None) -> PyNaff:
     """
-    This subroutine implements the NAFF algorithm for calculating the spectra
+    subroutine naff(cdata,freqs,amps,opt_dump_spectra,opt_zero_first)
     
+    This subroutine implements the NAFF algorithm for calculating the spectra
     of periodic data.
+    
     See naff_mod documentation for details.
+    
     Frequencies returned are in units of 2pi. That is, freqs ranges from 0 to 1.
+    
     freqs and amps must be allocated before hand.  This subroutine will repeat the
     decomposition loop until all elements of freqs and amps are populated.
     """
 def nametable_add(nametable: NametableStruct, name: str, ix_name: typing.SupportsInt) -> PyNametableAdd:
     """
-    No docstring available
-    
     Parameters
     ----------
     nametable : 
@@ -31300,8 +31123,6 @@ def nametable_add(nametable: NametableStruct, name: str, ix_name: typing.Support
     """
 def nametable_bracket_indexx(nametable: NametableStruct, name: str, n_match: typing.SupportsInt | None = None, ix_max: typing.SupportsInt) -> PyNametableBracketIndexx:
     """
-    No docstring available
-    
     Parameters
     ----------
     nametable : 
@@ -31311,8 +31132,6 @@ def nametable_bracket_indexx(nametable: NametableStruct, name: str, n_match: typ
     """
 def nametable_change1(nametable: NametableStruct, name: str, ix_name: typing.SupportsInt) -> PyNametableChange1:
     """
-    No docstring available
-    
     Parameters
     ----------
     nametable : 
@@ -31321,8 +31140,6 @@ def nametable_change1(nametable: NametableStruct, name: str, ix_name: typing.Sup
     """
 def nametable_init(nametable: NametableStruct, n_min: typing.SupportsInt | None = None, n_max: typing.SupportsInt | None = None) -> PyNametableInit:
     """
-    No docstring available
-    
     Parameters
     ----------
     nametable : 
@@ -31331,8 +31148,6 @@ def nametable_init(nametable: NametableStruct, n_min: typing.SupportsInt | None 
     """
 def nametable_remove(nametable: NametableStruct, ix_name: typing.SupportsInt) -> PyNametableRemove:
     """
-    No docstring available
-    
     Parameters
     ----------
     nametable : 
@@ -31340,8 +31155,6 @@ def nametable_remove(nametable: NametableStruct, ix_name: typing.SupportsInt) ->
     """
 def new_control(lat: LatStruct, ix_ele: typing.SupportsInt, ele_name: str | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -31353,8 +31166,9 @@ def new_control(lat: LatStruct, ix_ele: typing.SupportsInt, ele_name: str | None
     """
 def nint_chk(re_val: typing.SupportsFloat) -> int:
     """
-    Returns the nearest integer to re_val.
+    Function nint_chk (re_val) result (int_val)
     
+    Returns the nearest integer to re_val.
     Also does out-of-bounds error checking.
     Used with bmad parsing.
     
@@ -31370,8 +31184,6 @@ def nint_chk(re_val: typing.SupportsFloat) -> int:
     """
 def normal_form_complex_taylors(one_turn_taylor: typing.Annotated[collections.abc.Sequence[TaylorStruct], "FixedSize(6)"], rf_on: bool, F: typing.Annotated[collections.abc.Sequence[ComplexTaylorStruct], "FixedSize(6)"] | None = None, L: typing.Annotated[collections.abc.Sequence[ComplexTaylorStruct], "FixedSize(6)"] | None = None, A: typing.Annotated[collections.abc.Sequence[TaylorStruct], "FixedSize(6)"] | None = None, A_inverse: typing.Annotated[collections.abc.Sequence[TaylorStruct], "FixedSize(6)"] | None = None, order: typing.SupportsInt | None = None) -> PyNormalFormComplexTaylors:
     """
-    No docstring available
-    
     Parameters
     ----------
     one_turn_taylor : 
@@ -31384,19 +31196,22 @@ def normal_form_complex_taylors(one_turn_taylor: typing.Annotated[collections.ab
     """
 def normal_form_taylors(one_turn_taylor: typing.Annotated[collections.abc.Sequence[TaylorStruct], "FixedSize(6)"], rf_on: bool) -> ...:
     """
-    Do a normal form decomposition on a one-turn taylor map M:
+    Subroutine normal_form_taylors(one_turn_taylor, rf_on, dhdj, A, A_inverse)
     
-    M = A o R o A_inverse
+    Do a normal form decomposition on a one-turn taylor map M:
+      M = A o R o A_inverse
     where A maps Floquet (fully normalized) coordinates to lab coordinates.
     In Floquet coordinates, the amplitudes are defined as J_i = (1/2) (x_i^2 + p_i^2).
     The map R = exp(:h:) is a pure rotation with h = h(J) is a function of the amplitudes only.
     The angles (phase advances) are given by phi_i = 2pi*dh/dJ_i.
     The taylor terms of dhdj are therefore the tunes, chromaticities, amplitude dependent tune shifts, etc.
+    
     The mapping procedure for one turn is:
-    z_Floquet_in = A_inverse o z_Lab_in
-    [phi_a, phi_b, phi_c] = 2 pi * dhdj o z_Floquet_in
-    z_Floquet_out = RotationMatrix(phi_a, phi_b, phi_c) . z_Floquet_in
-    z_Lab_out = A o z_Floquet_out
+     z_Floquet_in = A_inverse o z_Lab_in
+     [phi_a, phi_b, phi_c] = 2 pi * dhdj o z_Floquet_in
+     z_Floquet_out = RotationMatrix(phi_a, phi_b, phi_c) . z_Floquet_in
+     z_Lab_out = A o z_Floquet_out
+    
     
     Parameters
     ----------
@@ -31416,9 +31231,11 @@ def normal_form_taylors(one_turn_taylor: typing.Annotated[collections.abc.Sequen
     """
 def normal_mode3_calc(t6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], above_transition: bool | None = None, abz_tunes: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None) -> ...:
     """
-    Does an Eigen decomposition of the 1-turn transfer matrix (mat) and generates
+    Subroutine normal_mode3_calc (mat, tune, B, HV, above_transition)
     
+    Does an Eigen decomposition of the 1-turn transfer matrix (mat) and generates
     B, V, H.
+    
     If the above_transition argument is present and false, then the 3rd (z) mode is assumed
     to have a positive slip factor (z-mode rotates counter clockwise in phase space).
     Default is True ==> z-mode has a negative slip factor so the mode rotates clock-wise in phase space.
@@ -31443,8 +31260,6 @@ def normal_mode3_calc(t6: typing.Annotated[collections.abc.Sequence[typing.Annot
     """
 def normal_mode_dispersion(ele: EleStruct, reverse: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -31456,6 +31271,8 @@ def normal_mode_dispersion(ele: EleStruct, reverse: bool | None = None) -> None:
     """
 def normalize_evecs(evec: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"]], "FixedSize(6)"]) -> bool:
     """
+    Subroutine normalize_evecs(evec, err_flag)
+    
     Normalizes eigenvectors such that transpose(E).S.E = iS, where E = evec_r + i evec_i
     
     Parameters
@@ -31472,8 +31289,6 @@ def normalize_evecs(evec: typing.Annotated[collections.abc.Sequence[typing.Annot
     """
 def num_field_eles(ele: EleStruct, n_field_ele: typing.SupportsInt) -> PyNumFieldEles:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -31482,8 +31297,6 @@ def num_field_eles(ele: EleStruct, n_field_ele: typing.SupportsInt) -> PyNumFiel
     """
 def num_lords(slave: EleStruct, lord_type: typing.SupportsInt, num: typing.SupportsInt) -> PyNumLords:
     """
-    No docstring available
-    
     Parameters
     ----------
     slave : EleStruct
@@ -31495,12 +31308,18 @@ def num_lords(slave: EleStruct, lord_type: typing.SupportsInt, num: typing.Suppo
     """
 def odeint_bmad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, s1_body: typing.SupportsFloat, s2_body: typing.SupportsFloat, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> ...:
     """
-    Subroutine to do Runge Kutta tracking. This routine is adapted from Numerical
+    Subroutine odeint_bmad (orbit, ele, param, s1_body, s2_body, err_flag, track, mat6, make_matrix)
     
+    Subroutine to do Runge Kutta tracking. This routine is adapted from Numerical
     Recipes.  See the NR book for more details.
+    
     Notice that this routine has an two tolerances:
-    bmad_com%rel_tol_adaptive_tracking
-    bmad_com%abs_tol_adaptive_tracking
+      bmad_com%rel_tol_adaptive_tracking
+      bmad_com%abs_tol_adaptive_tracking
+    
+    Note: For elements where the reference energy is not constant (lcavity, etc.), and
+    with elements where the reference particle does not follow the reference trajectory (wigglers for example),
+    the calculation of z is "off" while the particle is inside the element. At the ends there is no problem.
     
     Parameters
     ----------
@@ -31532,9 +31351,11 @@ def odeint_bmad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, s1_bo
     """
 def odeint_bmad_time(orb: CoordStruct, ele: EleStruct, param: LatParamStruct, t_dir: typing.SupportsInt, rf_time: typing.SupportsFloat, track: _pybmad.TrackStruct | None = None, t_end: typing.SupportsFloat | None = None, extra_field: _pybmad.EmFieldStruct | None = None) -> PyOdeintBmadTime:
     """
-    Subroutine to do Runge Kutta tracking in time. This routine is adapted from Numerical
+    Subroutine odeint_bmad_time (orb, ele, param, t_dir, rf_time, err_flag, track, t_end, dt_step, extra_field)
     
+    Subroutine to do Runge Kutta tracking in time. This routine is adapted from Numerical
     Recipes.  See the NR book for more details.
+    
     Tracking is done until the particle is lost or exits the element.
     
     Parameters
@@ -31571,8 +31392,6 @@ def odeint_bmad_time(orb: CoordStruct, ele: EleStruct, param: LatParamStruct, t_
     """
 def offset_particle(ele: EleStruct, set: bool, orbit: CoordStruct, set_tilt: bool | None = None, set_hvkicks: bool | None = None, drift_to_edge: typing.SupportsInt | None = None, s_pos: typing.SupportsFloat | None = None, set_spin: bool | None = None, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None, time: typing.SupportsFloat | None = None) -> PyOffsetParticle:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -31614,8 +31433,6 @@ def offset_particle(ele: EleStruct, set: bool, orbit: CoordStruct, set_tilt: boo
     """
 def offset_photon(ele: EleStruct, orbit: CoordStruct, set: bool, offset_position_only: bool | None = None, rot_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"] | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -31634,6 +31451,8 @@ def offset_photon(ele: EleStruct, orbit: CoordStruct, set: bool, offset_position
     """
 def omega_to_quat(omega: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> typing.Annotated[list[float], "FixedSize(4)"]:
     """
+    Function omega_to_quat (omega) result (quat)
+    
     Routine to convert from omega + angle representation to a quaternion.
     
     Parameters
@@ -31648,8 +31467,6 @@ def omega_to_quat(omega: typing.Annotated[collections.abc.Sequence[typing.Suppor
     """
 def one_turn_mat_at_ele(ele: EleStruct, phi_a: typing.SupportsFloat, phi_b: typing.SupportsFloat) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(4)"]], "FixedSize(4)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -31664,6 +31481,8 @@ def one_turn_mat_at_ele(ele: EleStruct, phi_a: typing.SupportsFloat, phi_b: typi
     """
 def open_binary_file(file_name: str, action: str, r_name: str) -> ...:
     """
+    Function open_binary_file (file_name, action, iu, r_name, iver) result (is_ok)
+    
     Routine to open a binary file for reading or writing.
     
     Parameters
@@ -31686,7 +31505,11 @@ def open_binary_file(file_name: str, action: str, r_name: str) -> ...:
     """
 def openpmd_species_name(species: typing.SupportsInt) -> str:
     """
+    Function openpmd_species_name (species) result(pmd_name)
+    
     Routine to return the openPMD name of a particle species given the Bmad species ID.
+    Note: the pmd_name does not include the particle charge. For example, if species
+    corresponds to He+ then the pmd_name will be "He".
     
     Parameters
     ----------
@@ -31700,8 +31523,6 @@ def openpmd_species_name(species: typing.SupportsInt) -> str:
     """
 def orbit_amplitude_calc(ele: EleStruct, orb: CoordStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -31719,8 +31540,6 @@ def orbit_amplitude_calc(ele: EleStruct, orb: CoordStruct) -> ...:
     """
 def orbit_reference_energy_correction(orbit: CoordStruct, p0c_new: typing.SupportsFloat, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -31736,8 +31555,6 @@ def orbit_reference_energy_correction(orbit: CoordStruct, p0c_new: typing.Suppor
     """
 def orbit_to_floor_phase_space(orbit: CoordStruct, ele: EleStruct, floor_phase_space: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -31748,8 +31565,6 @@ def orbit_to_floor_phase_space(orbit: CoordStruct, ele: EleStruct, floor_phase_s
     """
 def orbit_to_local_curvilinear(orbit: CoordStruct, ele: EleStruct, z_direction: typing.SupportsInt | None = None, relative_to: typing.SupportsInt | None = None, local_position: FloorPositionStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -31765,8 +31580,6 @@ def orbit_to_local_curvilinear(orbit: CoordStruct, ele: EleStruct, z_direction: 
     """
 def orbit_too_large(orbit: CoordStruct, check_momentum: bool | None = None, is_too_large: bool) -> PyOrbitTooLarge:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -31779,8 +31592,9 @@ def orbit_too_large(orbit: CoordStruct, check_momentum: bool | None = None, is_t
     """
 def order_evecs_by_n_similarity(eval: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"], mat_tunes: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], Nmat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> ...:
     """
-    This subroutine orderes the eigensystem such that Nmat.mat_symp_conj(N) is closest
+    Subroutine order_evecs_by_N_similarity(evec, eval, mat_tunes, Nmat, err_flag)
     
+    This subroutine orderes the eigensystem such that Nmat.mat_symp_conj(N) is closest
     to the identity.  Nmat is supplied externally.
     
     Parameters
@@ -31805,8 +31619,9 @@ def order_evecs_by_n_similarity(eval: typing.Annotated[collections.abc.Sequence[
     """
 def order_evecs_by_plane_dominance(evec: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"]], "FixedSize(6)"], eval: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"], mat_tunes: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None) -> None:
     """
-    This subroutine orderes the eigensystem according to which modes dominate the horizontal,
+    Subroutine order_evecs_by_plane_dominance(evec, eval, mat_tunes)
     
+    This subroutine orderes the eigensystem according to which modes dominate the horizontal,
     vertical, and longitudinal planes.  This subroutine works well in machines
     that are not strongly coupled.  In machines with strong coupling, where the relation
     between the three eigenmodes a, b, c and the three lab coordinates x, y, z can change
@@ -31826,8 +31641,9 @@ def order_evecs_by_plane_dominance(evec: typing.Annotated[collections.abc.Sequen
     """
 def order_evecs_by_tune(evec: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"]], "FixedSize(6)"], eval: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"], mat_tunes: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], abz_tunes: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> bool:
     """
-    This subroutine orders the eigensystem by matching the tunes of the eigensystem to
+    Subroutine order_evecs_by_tune(evec, eval, mat_tunes, abz_tunes, err_flag)
     
+    This subroutine orders the eigensystem by matching the tunes of the eigensystem to
     externally supplied tunes abz_tunes.  abz_tunes is in radians.
     
     Parameters
@@ -31850,8 +31666,9 @@ def order_evecs_by_tune(evec: typing.Annotated[collections.abc.Sequence[typing.A
     """
 def order_particles_in_z(bunch: BunchStruct) -> None:
     """
-    Routine to order the particles longitudinally in terms of decreasing %vec(5).
+    Subroutine order_particles_in_z (bunch)
     
+    Routine to order the particles longitudinally in terms of decreasing %vec(5).
     That is from large z (head of bunch) to small z.
     Only live particles are ordered.
     
@@ -31862,8 +31679,6 @@ def order_particles_in_z(bunch: BunchStruct) -> None:
     """
 def order_super_lord_slaves(lat: LatStruct, ix_lord: typing.SupportsInt) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -31873,8 +31688,6 @@ def order_super_lord_slaves(lat: LatStruct, ix_lord: typing.SupportsInt) -> None
     """
 def ordinal_str(n: typing.SupportsInt, str: str) -> PyOrdinalStr:
     """
-    No docstring available
-    
     Parameters
     ----------
     n : 
@@ -31882,8 +31695,6 @@ def ordinal_str(n: typing.SupportsInt, str: str) -> PyOrdinalStr:
     """
 def osc_alloc_freespace_array(nlo: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], nhi: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], npad: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     nlo : 
@@ -31892,8 +31703,6 @@ def osc_alloc_freespace_array(nlo: typing.Annotated[collections.abc.Sequence[typ
     """
 def osc_alloc_image_array(nlo: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], nhi: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], npad: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     nlo : 
@@ -31902,8 +31711,6 @@ def osc_alloc_image_array(nlo: typing.Annotated[collections.abc.Sequence[typing.
     """
 def osc_alloc_rectpipe_arrays(nlo: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], nhi: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], npad: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     nlo : 
@@ -31912,8 +31719,6 @@ def osc_alloc_rectpipe_arrays(nlo: typing.Annotated[collections.abc.Sequence[typ
     """
 def osc_getgrnpipe(gam: typing.SupportsFloat, a: typing.SupportsFloat, b: typing.SupportsFloat, delta: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], umin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], npad: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"]) -> PyOscGetgrnpipe:
     """
-    No docstring available
-    
     Parameters
     ----------
     gam : 
@@ -31924,13 +31729,9 @@ def osc_getgrnpipe(gam: typing.SupportsFloat, a: typing.SupportsFloat, b: typing
     npad : 
     """
 def osc_read_rectpipe_grn() -> None:
-    """
-    No docstring available
-    """
+    ...
 def osc_write_rectpipe_grn(apipe: typing.SupportsFloat, bpipe: typing.SupportsFloat, delta: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], umin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], umax: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], nlo: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], nhi: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], gamma: typing.SupportsFloat) -> PyOscWriteRectpipeGrn:
     """
-    No docstring available
-    
     Parameters
     ----------
     apipe : 
@@ -31944,23 +31745,23 @@ def osc_write_rectpipe_grn(apipe: typing.SupportsFloat, bpipe: typing.SupportsFl
     """
 def parse_cartesian_map(ct_map: CartesianMapStruct, ele: EleStruct, lat: LatStruct, delim: str, delim_found: bool, err_flag: bool) -> PyParseCartesianMap:
     """
+    Subroutine parse_cartesian_map (ct_map, ele, lat, delim, delim_found, err_flag)
+    
     Subroutine to parse a "cartesian_map = {}" construct
     
     This subroutine is used by bmad_parser and bmad_parser2.
     This subroutine is private to bmad_parser_mod.
     This must read in:
     {type = ,
-    dr = ,
-    r0 = ,
-    pt(i,j,k) = ( (ex_re, ex_im), .... (bz_re, bz_im) )
-    .
-    .
-    . ) },
+       dr = ,
+       r0 = ,
+       pt(i,j,k) = ( (ex_re, ex_im), .... (bz_re, bz_im) )
+       .
+       .
+       . ) },
     """
 def parse_cylindrical_map(cl_map: CylindricalMapStruct, ele: EleStruct, lat: LatStruct, delim: str, delim_found: bool, err_flag: bool) -> PyParseCylindricalMap:
     """
-    No docstring available
-    
     Parameters
     ----------
     cl_map : 
@@ -31972,8 +31773,6 @@ def parse_cylindrical_map(cl_map: CylindricalMapStruct, ele: EleStruct, lat: Lat
     """
 def parse_fortran_format(format_str: str, n_repeat: typing.SupportsInt, power: typing.SupportsInt, descrip: str, width: typing.SupportsInt, digits: typing.SupportsInt) -> PyParseFortranFormat:
     """
-    No docstring available
-    
     Parameters
     ----------
     format_str : 
@@ -31985,12 +31784,12 @@ def parse_fortran_format(format_str: str, n_repeat: typing.SupportsInt, power: t
     """
 def parse_gen_grad_map(gg_map: GenGradMapStruct, ele: EleStruct, lat: LatStruct, delim: str, delim_found: bool, err_flag: bool) -> PyParseGenGradMap:
     """
+    Subroutine parse_gen_grad_map (gg_map, ele, lat, delim, delim_found, err_flag)
+    
     Subroutine to parse a "gen_grad_map = {}" construct
     """
 def parse_grid_field(g_field: GridFieldStruct, ele: EleStruct, lat: LatStruct, delim: str, delim_found: bool, err_flag: bool) -> PyParseGridField:
     """
-    No docstring available
-    
     Parameters
     ----------
     g_field : 
@@ -32002,20 +31801,23 @@ def parse_grid_field(g_field: GridFieldStruct, ele: EleStruct, lat: LatStruct, d
     """
 def parse_integer_list(err_str: str, lat: LatStruct, int_array: IntAlloc1D, exact_size: bool, delim: str, delim_found: bool, open_delim: str | None = None, separator: str | None = None, close_delim: str | None = None, default_value: typing.SupportsInt | None = None, is_ok: bool) -> PyParseIntegerList:
     """
-    separator, close_delim, default_value) result (is_ok)
+    Function parse_integer_list (err_str, lat, int_array, exact_size, delim, delim_found, open_delim,
+                                          separator, close_delim, default_value) result (is_ok)
     
     Routine to parse a list of integers of the form:
-    open_delim integer_1 separator integer_2 . . . close_delim
+       open_delim integer_1 separator integer_2 . . . close_delim
     Example:   "(1.2, 2.3, 4.4, 8.5)"
+    
     Similar to parse_integer_list2 except does not use allocatable array.
     See parse_integer_list2 for more details
     """
 def parse_integer_list2(err_str: str, lat: LatStruct, int_array: IntAlloc1D, num_expected: typing.SupportsInt | None = None, open_delim: str | None = None, separator: str | None = None, close_delim: str | None = None, default_value: typing.SupportsInt | None = None) -> PyParseIntegerList2:
     """
-    open_delim, separator, close_delim, default_value) result (is_ok)
+    Function parse_integer_list2 (err_str, lat, int_array, num_found, delim, delim_found, num_expected,
+                                           open_delim, separator, close_delim, default_value) result (is_ok)
     
     Routine to parse a list of integers of the form
-    open_delim integer_1 separator integer_2 . . . close_delim
+       open_delim integer_1 separator integer_2 . . . close_delim
     Example:   (1, 2, 4, 8)
     
     Parameters
@@ -32044,12 +31846,15 @@ def parse_integer_list2(err_str: str, lat: LatStruct, int_array: IntAlloc1D, num
     """
 def parse_real_list(lat: LatStruct, err_str: str, exact_size: bool, open_delim: str | None = None, separator: str | None = None, close_delim: str | None = None, default_value: typing.SupportsFloat | None = None) -> ...:
     """
-    separator, close_delim, default_value, num_found) result (is_ok)
+    Function parse_real_list (lat, err_str, real_array, exact_size, delim, delim_found, open_delim,
+                                   separator, close_delim, default_value, num_found) result (is_ok)
     
     Routine to parse a list of reals of the form:
-    open_delim real_1 separator real_2 . . . close_delim
+       open_delim real_1 separator real_2 . . . close_delim
     Example:   "(1.2, 2.3, 4.4, 8.5)"
+    
     Similar to parse_real_list2 except does not use allocatable array.
+    Also see: parse_real_matrix.
     
     Parameters
     ----------
@@ -32077,10 +31882,11 @@ def parse_real_list(lat: LatStruct, err_str: str, exact_size: bool, open_delim: 
     """
 def parse_real_list2(lat: LatStruct, err_str: str, real_array: RealAlloc1D, num_expected: typing.SupportsInt | None = None, open_brace: str | None = None, separator: str | None = None, close_brace: str | None = None, default_value: typing.SupportsFloat | None = None, single_value: bool | None = None) -> PyParseRealList2:
     """
-    open_delim, separator, close_delim, default_value, single_value) result (is_ok)
+    Function parse_real_list2 (lat, err_str, real_array, num_found, delim, delim_found, num_expected,
+                               open_delim, separator, close_delim, default_value, single_value) result (is_ok)
     
     Routine to parse a list of reals of the form:
-    open_brace real_1 separator real_2 . . . close_brace
+       open_brace real_1 separator real_2 . . . close_brace
     Example:   "(1.2, 2.3, 4.4, 8.5)"
     
     Parameters
@@ -32116,8 +31922,6 @@ def parse_real_list2(lat: LatStruct, err_str: str, real_array: RealAlloc1D, num_
     """
 def parser_add_constant(word: str, lat: LatStruct, redef_is_error: bool) -> PyParserAddConstant:
     """
-    No docstring available
-    
     Parameters
     ----------
     word : 
@@ -32126,10 +31930,14 @@ def parser_add_constant(word: str, lat: LatStruct, redef_is_error: bool) -> PyPa
     """
 def parser_call_check(word: str, ix_word: typing.SupportsInt, delim: str, delim_found: bool, call_found: bool, err_flag: bool | None = None) -> PyParserCallCheck:
     """
+    Subroutine parser_call_check(word, ix_word, delim, delim_found, call_found, err_flag))
+    
     Routine to check if there is a "call::XXX" construct in the input stream.
     """
 def parser_fast_complex_read(ele: EleStruct, err_str: str) -> ...:
     """
+    Function parser_fast_complex_read (cmplx_vec, ele, delim, err_str)  result (is_ok)
+    
     Routine to read an array of complex numbers.
     
     This routine assumes that the array values are pure numbers in the form "<re>" or "(<re> <im>)"
@@ -32154,17 +31962,24 @@ def parser_fast_complex_read(ele: EleStruct, err_str: str) -> ...:
     """
 def parser_fast_integer_read(int_vec: IntAlloc1D, ele: EleStruct, delim_wanted: str, err_str: str, is_ok: bool) -> PyParserFastIntegerRead:
     """
+    Function parser_fast_integer_read (int_vec, ele, delim_wanted, err_str)  result (is_ok)
+    
+    
     Returns
     -------
     is_ok
     """
 def parser_fast_real_read(ele: EleStruct, end_delims: str, err_str: str, exact_size: bool | None = None) -> ...:
     """
+    Function parser_fast_real_read (real_vec, ele, end_delims, delim, err_str, exact_size, n_real)  result (is_ok)
+    
     Routine to read an array of real numbers.
     
     This routine assumes that the array values are pure numbers in the form "<re1> <re2> ...,"
     where <re1>, <re2>, etc. are real numbers (not expressions) and there are no commas except possibly,
     at the end of the array.
+    
+    Note: if end_delim is "," and next character is a delim but not ",", the next character is taken as the delim.
     
     Parameters
     ----------
@@ -32190,15 +32005,14 @@ def parser_fast_real_read(ele: EleStruct, end_delims: str, err_str: str, exact_s
     """
 def parser_file_stack(how: str, file_name_in: str | None = None, finished: bool | None = None, err: bool | None = None, open_file: bool | None = None, abort_on_open_error: bool | None = None) -> PyParserFileStack:
     """
-    Subroutine to keep track of the files that are opened for reading.
+    Subroutine parser_file_stack (how, file_name_in, finished, err, open_file, abort_on_open_error)
     
+    Subroutine to keep track of the files that are opened for reading.
     This subroutine is used by bmad_parser and bmad_parser2.
     This subroutine is not intended for general use.
     """
 def parser_get_integer(int_val: typing.SupportsInt, word: str, ix_word: typing.SupportsInt, delim: str, delim_found: bool, err: bool, str1: str | None = None, str2: str | None = None) -> PyParserGetInteger:
     """
-    No docstring available
-    
     Parameters
     ----------
     int_val : 
@@ -32212,8 +32026,6 @@ def parser_get_integer(int_val: typing.SupportsInt, word: str, ix_word: typing.S
     """
 def parser_get_logical(attrib_name: str, this_logic: bool, ele_name: str, delim: str, delim_found: bool, err: bool) -> PyParserGetLogical:
     """
-    No docstring available
-    
     Parameters
     ----------
     attrib_name : 
@@ -32225,21 +32037,28 @@ def parser_get_logical(attrib_name: str, this_logic: bool, ele_name: str, delim:
     """
 def parser_identify_fork_to_element(lat: LatStruct) -> None:
     """
+    Subroutine parser_identify_fork_to_element (lat)
+    
     Routine to identify the elements the forks in a lattice are branching to.
     
     This subroutine is used by bmad_parser and bmad_parser2.
     This subroutine is not intended for general use.
     """
 def parser_init_custom_elements(lat: LatStruct) -> None:
-    ...
+    """
+    Subroutine parser_init_custom_elements (lat)
+    """
 def parser_print_line(lat: LatStruct, end_of_file: bool) -> PyParserPrintLine:
     """
+    Subroutine parser_print_line(end_of_file)
+    
     This routine is called when a print statement is found in the lattice file.
     """
 def parser_read_lr_wake(ele: EleStruct, delim: str, delim_found: bool, err_flag: bool) -> PyParserReadLrWake:
     """
-    Subroutine to read in a long-range wake field from an external file.
+    Subroutine parser_read_lr_wake (ele, delim, delim_found, err_flag)
     
+    Subroutine to read in a long-range wake field from an external file.
     This subroutine is used by bmad_parser and bmad_parser2.
     
     Parameters
@@ -32250,8 +32069,9 @@ def parser_read_lr_wake(ele: EleStruct, delim: str, delim_found: bool, err_flag:
     """
 def parser_read_old_format_lr_wake(ele: EleStruct, lr_file_name: str) -> None:
     """
-    Subroutine to read in a long-range wake field from an external file.
+    Subroutine parser_read_old_format_lr_wake (ele, lr_file_name)
     
+    Subroutine to read in a long-range wake field from an external file.
     This subroutine is used by bmad_parser and bmad_parser2.
     
     Parameters
@@ -32264,8 +32084,9 @@ def parser_read_old_format_lr_wake(ele: EleStruct, lr_file_name: str) -> None:
     """
 def parser_read_old_format_sr_wake(ele: EleStruct, sr_file_name: str) -> None:
     """
-    Subroutine to read in a short-range wake field from an external file.
+    Subroutine parser_read_old_format_sr_wake (ele, sr_file_name)
     
+    Subroutine to read in a short-range wake field from an external file.
     This subroutine is used by bmad_parser and bmad_parser2.
     
     Parameters
@@ -32278,8 +32099,9 @@ def parser_read_old_format_sr_wake(ele: EleStruct, sr_file_name: str) -> None:
     """
 def parser_read_sr_wake(ele: EleStruct, delim: str, delim_found: bool, err_flag: bool) -> PyParserReadSrWake:
     """
-    Subroutine to read in a short-range wake field.
+    Subroutine parser_read_sr_wake (ele, delim, delim_found, err_flag)
     
+    Subroutine to read in a short-range wake field.
     This subroutine is used by bmad_parser and bmad_parser2.
     
     Parameters
@@ -32290,8 +32112,9 @@ def parser_read_sr_wake(ele: EleStruct, delim: str, delim_found: bool, err_flag:
     """
 def parser_transfer_control_struct(con_in: ControlStruct, lord: EleStruct, ix_var: typing.SupportsInt) -> ControlStruct:
     """
-    Routine to transfer the information from an input control_struct (which stores
+    Subroutine parser_transfer_control_struct (con_in, con_out, lord, ix_var)
     
+    Routine to transfer the information from an input control_struct (which stores
     the user input parameters) to a control_struct that will be stored in the lat%control
     or lord%control%ramp for a ramper.
     
@@ -32312,6 +32135,8 @@ def parser_transfer_control_struct(con_in: ControlStruct, lord: EleStruct, ix_va
     """
 def particle_in_global_frame(orb: CoordStruct, branch: BranchStruct, in_time_coordinates: bool | None = None, in_body_frame: bool | None = None, w_mat_out: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"] | None = None, particle: CoordStruct) -> None:
     """
+    Function particle_in_global_frame (orb, in_time_coordinates, in_body_frame, w_mat_out) result (particle)
+    
     Returns the particle in global time coordinates given is coordinates orb in lattice lat.
     
     Parameters
@@ -32333,8 +32158,6 @@ def particle_in_global_frame(orb: CoordStruct, branch: BranchStruct, in_time_coo
     """
 def particle_is_moving_backwards(orbit: CoordStruct, is_moving_backwards: bool) -> PyParticleIsMovingBackwards:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -32343,8 +32166,6 @@ def particle_is_moving_backwards(orbit: CoordStruct, is_moving_backwards: bool) 
     """
 def particle_is_moving_forward(orbit: CoordStruct, dir: typing.SupportsInt | None = None, is_moving_forward: bool) -> PyParticleIsMovingForward:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -32355,8 +32176,6 @@ def particle_is_moving_forward(orbit: CoordStruct, dir: typing.SupportsInt | Non
     """
 def particle_rf_time(orbit: CoordStruct, ele: EleStruct, reference_active_edge: bool | None = None, s_rel: typing.SupportsFloat | None = None, time_coords: bool | None = None, rf_freq: typing.SupportsFloat | None = None, abs_time: bool | None = None, time: typing.SupportsFloat) -> PyParticleRfTime:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -32382,8 +32201,6 @@ def particle_rf_time(orbit: CoordStruct, ele: EleStruct, reference_active_edge: 
     """
 def patch_flips_propagation_direction(x_pitch: typing.SupportsFloat, y_pitch: typing.SupportsFloat, is_flip: bool) -> PyPatchFlipsPropagationDirection:
     """
-    No docstring available
-    
     Parameters
     ----------
     x_pitch : float
@@ -32394,8 +32211,6 @@ def patch_flips_propagation_direction(x_pitch: typing.SupportsFloat, y_pitch: ty
     """
 def patch_length(patch: EleStruct, ref_coords: typing.SupportsInt | None = None, length: typing.SupportsFloat) -> PyPatchLength:
     """
-    No docstring available
-    
     Parameters
     ----------
     patch : EleStruct
@@ -32406,8 +32221,9 @@ def patch_length(patch: EleStruct, ref_coords: typing.SupportsInt | None = None,
     """
 def photon_absorption_and_phase_shift(material: str, Energy: typing.SupportsFloat) -> ...:
     """
-    Routine to calcualte the absorption and phase shift values for a photon with a given
+    Subroutine photon_absorption_and_phase_shift (material, Energy, absorption, phase_shift, err_flag)
     
+    Routine to calcualte the absorption and phase shift values for a photon with a given
     energy going through a particular material.
     
     Parameters
@@ -32428,6 +32244,8 @@ def photon_absorption_and_phase_shift(material: str, Energy: typing.SupportsFloa
     """
 def photon_add_to_detector_statistics(orbit0: CoordStruct, orbit: CoordStruct, ele: EleStruct, ix_pt: typing.SupportsInt | None = None, iy_pt: typing.SupportsInt | None = None, pixel_pt: _pybmad.PixelPtStruct | None = None) -> PyPhotonAddToDetectorStatistics:
     """
+    Subroutine photon_add_to_detector_statistics (orbit0, orbit, ele, ix_pt, iy_pt, pixel_pt)
+    
     Routine to add photon statistics to the appropriate pixel of a "detector" grid.
     
     It is assumed that track_to_surface has been called so that the photon is at the
@@ -32448,6 +32266,8 @@ def photon_add_to_detector_statistics(orbit0: CoordStruct, orbit: CoordStruct, e
     """
 def photon_reflection(graze_angle_in: typing.SupportsFloat, energy: typing.SupportsFloat, surface: PhotonReflectSurfaceStruct) -> ...:
     """
+    Subroutine photon_reflection (graze_angle_in, energy, surface, graze_angle_out, phi_out)
+    
     Routine to reflect a photon from a surface including both diffuse and specular reflections.
     
     Parameters
@@ -32468,8 +32288,9 @@ def photon_reflection(graze_angle_in: typing.SupportsFloat, energy: typing.Suppo
     """
 def photon_reflection_std_surface_init() -> PhotonReflectSurfaceStruct:
     """
-    Routine to initialize the standard proton reflection probability tables.
+    Subroutine photon_reflection_std_surface_init (surface)
     
+    Routine to initialize the standard proton reflection probability tables.
     The standard tables are for 10 nm C film on Al substrate.
     The surface roughness for diffuse scattering is 200 nm and the
     the surface roughness correlation length is 5.5 um.
@@ -32482,12 +32303,14 @@ def photon_reflection_std_surface_init() -> PhotonReflectSurfaceStruct:
     """
 def photon_reflectivity(angle: typing.SupportsFloat, energy: typing.SupportsFloat, surface: PhotonReflectSurfaceStruct) -> ...:
     """
-    Routine to evaluate the photon reflectivity.
+    Subroutine photon_reflectivity (angle, energy, surface, p_reflect, rel_p_specular)
     
-    probability of absorption          = 1 - p_reflect
-    probability of reflection          = p_reflect
-    probability of specular reflection = p_reflect * rel_p_specular
-    probability of diffuse reflection  = p_reflect * (1 - rel_p_specular)
+    Routine to evaluate the photon reflectivity.
+      probability of absorption          = 1 - p_reflect
+      probability of reflection          = p_reflect
+      probability of specular reflection = p_reflect * rel_p_specular
+      probability of diffuse reflection  = p_reflect * (1 - rel_p_specular)
+    
     Use photon_reflection_std_surface_init or read_surface_reflection_file to get surface info.
     
     Parameters
@@ -32508,6 +32331,8 @@ def photon_reflectivity(angle: typing.SupportsFloat, energy: typing.SupportsFloa
     """
 def photon_target_corner_calc(aperture_ele: EleStruct, x_lim: typing.SupportsFloat, y_lim: typing.SupportsFloat, z_lim: typing.SupportsFloat, source_ele: EleStruct) -> PyPhotonTargetCornerCalc:
     """
+    Subroutine photon_target_corner_calc (aperture_ele, x_lim, y_lim, z_lim, source_ele, corner)
+    
     Routine to calculate the corner coords in the source_ele ref frame.
     
     Parameters
@@ -32525,9 +32350,11 @@ def photon_target_corner_calc(aperture_ele: EleStruct, x_lim: typing.SupportsFlo
     """
 def photon_target_setup(ele: EleStruct) -> None:
     """
-    Routine to calculate and store the parmeters needed for photon targeting.
+    Subroutine photon_target_setup (ele)
     
+    Routine to calculate and store the parmeters needed for photon targeting.
     This routine is called by Bmad parsing routines and is not meant for general use.
+    
     Photon initialization with targeting is done by the routine init_photon_from_a_photon_init_ele
     Which is called by init_coord.
     
@@ -32540,6 +32367,8 @@ def photon_target_setup(ele: EleStruct) -> None:
     """
 def photon_type(ele: EleStruct) -> int:
     """
+    Function photon_type (ele) result (e_type)
+    
     Routine to return the type of photon to be tracked: coherent$ or incoherent$.
     
     Parameters
@@ -32554,8 +32383,6 @@ def photon_type(ele: EleStruct) -> int:
     """
 def physical_ele_end(track_end: typing.SupportsInt, orbit: CoordStruct, ele_orientation: typing.SupportsInt, return_stream_end: bool | None = None, physical_end: typing.SupportsInt) -> PyPhysicalEleEnd:
     """
-    No docstring available
-    
     Parameters
     ----------
     track_end : int
@@ -32570,8 +32397,9 @@ def physical_ele_end(track_end: typing.SupportsInt, orbit: CoordStruct, ele_orie
     """
 def point_photon_emission(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct, direction: typing.SupportsInt, max_target_area: typing.SupportsFloat, w_to_surface: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"] | None = None) -> None:
     """
-    Routine to emit a photon from a point that may be on a surface.
+    Subroutine point_photon_emission (ele, param, orbit, direction, max_target_area, w_to_surface)
     
+    Routine to emit a photon from a point that may be on a surface.
     If there is a downstream target, the emission calc will take this into account.
     
     Parameters
@@ -32594,15 +32422,23 @@ def point_photon_emission(ele: EleStruct, param: LatParamStruct, orbit: CoordStr
 @typing.overload
 def pointer_to_branch(ele: EleStruct) -> BranchStruct:
     """
-    Routine to return a pointer to the lattice branch associated with a given name
+    Function pointer_to_branch
     
+    Routine to return a pointer to the lattice branch associated with a given name
     or a given element.
-    pointer_to_branch_given_ele (ele) result (branch_ptr))
-    pointer_to_branch_given_name (branch_name, lat, parameter_is_branch0, blank_branch) result (branch_ptr)
+    
+    This routine is an overloaded name for:
+      pointer_to_branch_given_ele (ele) result (branch_ptr))
+      pointer_to_branch_given_name (branch_name, lat, parameter_is_branch0, blank_branch) result (branch_ptr)
+    
     The lattice branch *associated* with a given element is not necessarily the
     branch where the element is *located*. For example, all lords live in branch #0.
     But the branch associated with a super_lord element is the branch of its slaves.
+    
     To get the branch where the element is located, simply use ele%ix_branch.
+    
+    Note: Result is ambiguous if ele argument is associated with multiple branches
+    which can happen, for example, with overlay elements.
     
     Parameters
     ----------
@@ -32629,15 +32465,23 @@ def pointer_to_branch(ele: EleStruct) -> BranchStruct:
 @typing.overload
 def pointer_to_branch(branch_name: str, lat: LatStruct, parameter_is_branch0: bool | None = None, blank_branch: typing.SupportsInt | None = None) -> BranchStruct:
     """
-    Routine to return a pointer to the lattice branch associated with a given name
+    Function pointer_to_branch
     
+    Routine to return a pointer to the lattice branch associated with a given name
     or a given element.
-    pointer_to_branch_given_ele (ele) result (branch_ptr))
-    pointer_to_branch_given_name (branch_name, lat, parameter_is_branch0, blank_branch) result (branch_ptr)
+    
+    This routine is an overloaded name for:
+      pointer_to_branch_given_ele (ele) result (branch_ptr))
+      pointer_to_branch_given_name (branch_name, lat, parameter_is_branch0, blank_branch) result (branch_ptr)
+    
     The lattice branch *associated* with a given element is not necessarily the
     branch where the element is *located*. For example, all lords live in branch #0.
     But the branch associated with a super_lord element is the branch of its slaves.
+    
     To get the branch where the element is located, simply use ele%ix_branch.
+    
+    Note: Result is ambiguous if ele argument is associated with multiple branches
+    which can happen, for example, with overlay elements.
     
     Parameters
     ----------
@@ -32664,13 +32508,22 @@ def pointer_to_branch(branch_name: str, lat: LatStruct, parameter_is_branch0: bo
 @typing.overload
 def pointer_to_ele(lat: LatStruct, ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt | None = None) -> EleStruct:
     """
+    Function pointer_to_ele (...)
+    
     Routine to return a pointer to an element.
+    pointer_to_ele is an overloaded name for:
+        Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr)
+        Function pointer_to_ele2 (lat, ele_loc) result (ele_ptr)
+        Function pointer_to_ele3 (lat, ele_name) result (ele_ptr)
+        Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
     
     pointer_to_ele4(lat, foreign_ele) is useful when foreign_ele is associated with a separate
     lattice that has an identical layout. pointer_to_ele4 will then return the corresponding
     element in lat.
+    
+    Note that using ele_name to locate an element is potentially dangerous if there
     are multiple elements that have the same name. Better in this case is to use:
-    lat_ele_locator
+      lat_ele_locator
     
     Parameters
     ----------
@@ -32696,7 +32549,6 @@ def pointer_to_ele(lat: LatStruct, ix_ele: typing.SupportsInt, ix_branch: typing
     
     Notes
     -----
-    Note that using ele_name to locate an element is potentially dangerous if there
     Related routines:
     pointer_to_slave pointer_to_lord
     Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
@@ -32706,13 +32558,22 @@ def pointer_to_ele(lat: LatStruct, ix_ele: typing.SupportsInt, ix_branch: typing
 @typing.overload
 def pointer_to_ele(lat: LatStruct, ele_loc: LatEleLocStruct) -> EleStruct:
     """
+    Function pointer_to_ele (...)
+    
     Routine to return a pointer to an element.
+    pointer_to_ele is an overloaded name for:
+        Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr)
+        Function pointer_to_ele2 (lat, ele_loc) result (ele_ptr)
+        Function pointer_to_ele3 (lat, ele_name) result (ele_ptr)
+        Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
     
     pointer_to_ele4(lat, foreign_ele) is useful when foreign_ele is associated with a separate
     lattice that has an identical layout. pointer_to_ele4 will then return the corresponding
     element in lat.
+    
+    Note that using ele_name to locate an element is potentially dangerous if there
     are multiple elements that have the same name. Better in this case is to use:
-    lat_ele_locator
+      lat_ele_locator
     
     Parameters
     ----------
@@ -32738,7 +32599,6 @@ def pointer_to_ele(lat: LatStruct, ele_loc: LatEleLocStruct) -> EleStruct:
     
     Notes
     -----
-    Note that using ele_name to locate an element is potentially dangerous if there
     Related routines:
     pointer_to_slave pointer_to_lord
     Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
@@ -32748,13 +32608,22 @@ def pointer_to_ele(lat: LatStruct, ele_loc: LatEleLocStruct) -> EleStruct:
 @typing.overload
 def pointer_to_ele(lat: LatStruct, ele_name: str) -> EleStruct:
     """
+    Function pointer_to_ele (...)
+    
     Routine to return a pointer to an element.
+    pointer_to_ele is an overloaded name for:
+        Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr)
+        Function pointer_to_ele2 (lat, ele_loc) result (ele_ptr)
+        Function pointer_to_ele3 (lat, ele_name) result (ele_ptr)
+        Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
     
     pointer_to_ele4(lat, foreign_ele) is useful when foreign_ele is associated with a separate
     lattice that has an identical layout. pointer_to_ele4 will then return the corresponding
     element in lat.
+    
+    Note that using ele_name to locate an element is potentially dangerous if there
     are multiple elements that have the same name. Better in this case is to use:
-    lat_ele_locator
+      lat_ele_locator
     
     Parameters
     ----------
@@ -32780,7 +32649,6 @@ def pointer_to_ele(lat: LatStruct, ele_name: str) -> EleStruct:
     
     Notes
     -----
-    Note that using ele_name to locate an element is potentially dangerous if there
     Related routines:
     pointer_to_slave pointer_to_lord
     Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
@@ -32790,13 +32658,22 @@ def pointer_to_ele(lat: LatStruct, ele_name: str) -> EleStruct:
 @typing.overload
 def pointer_to_ele(lat: LatStruct, foreign_ele: EleStruct) -> EleStruct:
     """
+    Function pointer_to_ele (...)
+    
     Routine to return a pointer to an element.
+    pointer_to_ele is an overloaded name for:
+        Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr)
+        Function pointer_to_ele2 (lat, ele_loc) result (ele_ptr)
+        Function pointer_to_ele3 (lat, ele_name) result (ele_ptr)
+        Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
     
     pointer_to_ele4(lat, foreign_ele) is useful when foreign_ele is associated with a separate
     lattice that has an identical layout. pointer_to_ele4 will then return the corresponding
     element in lat.
+    
+    Note that using ele_name to locate an element is potentially dangerous if there
     are multiple elements that have the same name. Better in this case is to use:
-    lat_ele_locator
+      lat_ele_locator
     
     Parameters
     ----------
@@ -32822,7 +32699,6 @@ def pointer_to_ele(lat: LatStruct, foreign_ele: EleStruct) -> EleStruct:
     
     Notes
     -----
-    Note that using ele_name to locate an element is potentially dangerous if there
     Related routines:
     pointer_to_slave pointer_to_lord
     Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
@@ -32831,18 +32707,30 @@ def pointer_to_ele(lat: LatStruct, foreign_ele: EleStruct) -> EleStruct:
     """
 def pointer_to_element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choose_max: bool, print_err: bool | None = None) -> ...:
     """
-    Function to return a pointer to the element at position s.
+    Function pointer_to_element_at_s (branch, s, choose_max, err_flag, s_eff, position) result (ele)
     
+    Function to return a pointer to the element at position s.
     That is, return ele => branch%ele(ix_ele) such that:
     If choose_max = True:
-    If s = branch%ele(ix_end_of_branch): ix_ele = ix_end_of_branch
-    Else: branch%ele(ix_ele)%s_strat <= s < branch%ele(ix_ele)%s
+        If s = branch%ele(ix_end_of_branch): ix_ele = ix_end_of_branch
+        Else: branch%ele(ix_ele)%s_strat <= s < branch%ele(ix_ele)%s
     If choose_max = False:
-    If s = branch%ele(0): ix_ele = 0
-    Else: branch%ele(ix_ele)%s_start < s <= branch%ele(ix_ele)%s
+        If s = branch%ele(0): ix_ele = 0
+        Else: branch%ele(ix_ele)%s_start < s <= branch%ele(ix_ele)%s
     That is, if s corresponds to an element boundary between elements with indexes ix1 and ix2 = ix1 + 1:
-    choose_max = True  => ix_ele = ix2
-    choose_max = False => ix_ele = ix1
+        choose_max = True  => ix_ele = ix2
+        choose_max = False => ix_ele = ix1
+    
+    Also see: element_at_s
+    
+    The setting of choose_max only makes a difference when s corresponds to an element boundary.
+    
+    Note: For a circular lattice, s is evaluated at the effective s which
+    is modulo the branch length:
+        s_eff = s - branch_length * floor(s/branch_length)
+    
+    Note: If there are multiple elements that are at the given s position due to the presence of
+    an element with a negative length, which of the possible elements is actually chosen is ill-defined.
     
     Parameters
     ----------
@@ -32877,8 +32765,6 @@ def pointer_to_element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choos
     """
 def pointer_to_field_ele(ele: EleStruct, ix_field_ele: typing.SupportsInt, field_ele: EleStruct) -> float:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -32891,8 +32777,6 @@ def pointer_to_field_ele(ele: EleStruct, ix_field_ele: typing.SupportsInt, field
     """
 def pointer_to_girder(ele: EleStruct, girder: EleStruct) -> int:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -32904,8 +32788,6 @@ def pointer_to_girder(ele: EleStruct, girder: EleStruct) -> int:
     """
 def pointer_to_lord(slave: EleStruct, ix_lord: typing.SupportsInt, lord_type: typing.SupportsInt | None = None, lord_ptr: EleStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     slave : EleStruct
@@ -32928,8 +32810,6 @@ def pointer_to_lord(slave: EleStruct, ix_lord: typing.SupportsInt, lord_type: ty
     """
 def pointer_to_multipass_lord(ele: EleStruct, multi_lord: EleStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -32944,8 +32824,6 @@ def pointer_to_multipass_lord(ele: EleStruct, multi_lord: EleStruct) -> ...:
     """
 def pointer_to_next_ele(this_ele: EleStruct, offset: typing.SupportsInt | None = None, skip_beginning: bool | None = None, follow_fork: bool | None = None, next_ele: EleStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     this_ele : EleStruct
@@ -32960,6 +32838,8 @@ def pointer_to_next_ele(this_ele: EleStruct, offset: typing.SupportsInt | None =
     """
 def pointer_to_ran_state(ran_state: _pybmad.RandomStateStruct | None = None, ix_thread: typing.SupportsInt | None = None) -> RandomStateStruct:
     """
+    Function pointer_to_ran_state(ran_state, ix_thread) result (ran_state_ptr)
+    
     Routine to point to the appropriate state structure for generating random numbers
     
     Parameters
@@ -32976,7 +32856,17 @@ def pointer_to_ran_state(ran_state: _pybmad.RandomStateStruct | None = None, ix_
     """
 def pointer_to_slave(lord: EleStruct, ix_slave: typing.SupportsInt, lord_type: typing.SupportsInt | None = None) -> ...:
     """
+    Function pointer_to_slave (lord, ix_slave, control, lord_type, ix_lord_back, ix_control, ix_ic) result (slave_ptr)
+    
     Function to point to a slave of a lord.
+    Note: Ramper lords do not have any associated slaves (slaves are assigned dynamically at run time).
+    
+    If lord_type = all$ (the default) the range for ix_slave is:
+      1 to lord%n_slave                                 for "regular" slaves.
+      lord%n_slave+1 to lord%n_slave+lord%n_slave_field for field overlap slaves.
+    
+    If lord_type = field_lord$, only the field overlap slaves may be accessed and the range for ix_slave is:
+      1 to lord%n_slave_field
     
     Parameters
     ----------
@@ -33008,8 +32898,6 @@ def pointer_to_slave(lord: EleStruct, ix_slave: typing.SupportsInt, lord_type: t
     """
 def pointer_to_super_lord(slave: EleStruct, lord_type: typing.SupportsInt | None = None, lord_ptr: EleStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     slave : EleStruct
@@ -33030,7 +32918,11 @@ def pointer_to_super_lord(slave: EleStruct, lord_type: typing.SupportsInt | None
     """
 def pointer_to_surface_displacement_pt(ele: EleStruct, nearest: bool, x: typing.SupportsFloat, y: typing.SupportsFloat, ix: typing.SupportsInt | None = None, iy: typing.SupportsInt | None = None, extend_grid: bool | None = None, xx: typing.SupportsFloat | None = None, yy: typing.SupportsFloat | None = None) -> PyPointerToSurfaceDisplacementPt:
     """
+    Function pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
+    
     Routine to point to the grid point struct associated with point (x,y).
+    
+    Note: If nearest = True, the grid boundary is a length dr/2 from the boundary grid points.
     
     Parameters
     ----------
@@ -33052,7 +32944,11 @@ def pointer_to_surface_displacement_pt(ele: EleStruct, nearest: bool, x: typing.
     """
 def pointer_to_surface_segmented_pt(ele: EleStruct, nearest: bool, x: typing.SupportsFloat, y: typing.SupportsFloat, ix: typing.SupportsInt | None = None, iy: typing.SupportsInt | None = None, extend_grid: bool | None = None, xx: typing.SupportsFloat | None = None, yy: typing.SupportsFloat | None = None) -> PyPointerToSurfaceSegmentedPt:
     """
+    Function pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
+    
     Routine to point to the grid point struct associated with point (x,y).
+    
+    Note: If nearest = True, the grid boundary is a length dr/2 from the boundary grid points.
     
     Parameters
     ----------
@@ -33074,8 +32970,6 @@ def pointer_to_surface_segmented_pt(ele: EleStruct, nearest: bool, x: typing.Sup
     """
 def pointer_to_wake_ele(ele: EleStruct, wake_ele: EleStruct) -> float:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -33086,9 +32980,12 @@ def pointer_to_wake_ele(ele: EleStruct, wake_ele: EleStruct) -> float:
     """
 def pointer_to_wall3d(ele: EleStruct, ix_wall: typing.SupportsInt | None = None) -> ...:
     """
-    Function to return a pointer to a wall3d structure associated
+    Function pointer_to_wall3d (ele, ix_wall, ds_offset, is_branch_wall) result (wall3d)
     
+    Function to return a pointer to a wall3d structure associated
     with a given lattice element.
+    
+    Note: The wall associated with a the vacuum chamber is the branch%wall3d.
     
     Parameters
     ----------
@@ -33108,8 +33005,6 @@ def pointer_to_wall3d(ele: EleStruct, ix_wall: typing.SupportsInt | None = None)
     """
 def polar_to_spinor(polar: SpinPolarStruct, spinor: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(2)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     polar : SpinPolarStruct
@@ -33118,8 +33013,6 @@ def polar_to_spinor(polar: SpinPolarStruct, spinor: typing.Annotated[collections
     """
 def polar_to_vec(polar: SpinPolarStruct, vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     polar : 
@@ -33128,8 +33021,6 @@ def polar_to_vec(polar: SpinPolarStruct, vec: typing.Annotated[collections.abc.S
     """
 def poly_eval(poly: RealAlloc1D, x: typing.SupportsFloat, diff_coef: bool | None = None, y: typing.SupportsFloat) -> PyPolyEval:
     """
-    No docstring available
-    
     Parameters
     ----------
     poly : float
@@ -33142,8 +33033,6 @@ def poly_eval(poly: RealAlloc1D, x: typing.SupportsFloat, diff_coef: bool | None
     """
 def probability_funct(x: typing.SupportsFloat, prob: typing.SupportsFloat) -> PyProbabilityFunct:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : float
@@ -33152,8 +33041,6 @@ def probability_funct(x: typing.SupportsFloat, prob: typing.SupportsFloat) -> Py
     """
 def projdd(a: ComplexAlloc1D, b: ComplexAlloc1D, func_retval__: complex) -> PyProjdd:
     """
-    No docstring available
-    
     Parameters
     ----------
     a : 
@@ -33162,13 +33049,17 @@ def projdd(a: ComplexAlloc1D, b: ComplexAlloc1D, func_retval__: complex) -> PyPr
     """
 def project_emit_to_xyz(ring: LatStruct, ix: typing.SupportsInt, mode: NormalModesStruct) -> ...:
     """
-    Obtains the projected x, y, and z beamsizes by building the sigma matrix
+    Subroutine project_emit_to_xyz(ring, ix, mode, sigma_x, sigma_y, sigma_z)
     
+    Obtains the projected x, y, and z beamsizes by building the sigma matrix
     from the normal mode emittances and 1-turn transfer matrix.
     These projectes beamsize are what would be seen by instrumentation.
+    
     This method of projecting takes into account transverse and longitudinal coupling.
+    
     This method of obtaining the projected beam sizes is from "Alternitive approach to general
     coupled linear optics" by Andrzej Wolski.
+    
     The normal mode emittances used to generate a beam envelop sigma matrix from the
     1-turn transfer matrix.  The projected sizes are from the 1, 1 3, 3 and 5, 5 elements of
     the sigma matrix.
@@ -33196,6 +33087,8 @@ def project_emit_to_xyz(ring: LatStruct, ix: typing.SupportsInt, mode: NormalMod
     """
 def psi_prime_sca(t: typing.SupportsFloat, p: typing.SupportsFloat, args: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(8)"]) -> float:
     """
+    Subroutine psi_prime_sca(t, p, dpdt, args)
+    
     This wraps the array-valued psi_prime function as a scalar.
     
     See psi_prime comments for details.
@@ -33216,8 +33109,6 @@ def psi_prime_sca(t: typing.SupportsFloat, p: typing.SupportsFloat, args: typing
     """
 def ptc_bookkeeper(lat: LatStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -33225,8 +33116,9 @@ def ptc_bookkeeper(lat: LatStruct) -> None:
     """
 def ptc_closed_orbit_calc(branch: BranchStruct, radiation_damping_on: bool | None = None) -> CoordStructAlloc1D:
     """
-    Routine to calculate the closed orbit of a lattice branch using PTC.
+    Subroutine ptc_closed_orbit_calc (branch, closed_orbit, radiation_damping_on)
     
+    Routine to calculate the closed orbit of a lattice branch using PTC.
     This routine assumes the associated PTC layout has been crated
     with lat_to_ptc_layout.
     
@@ -33245,7 +33137,11 @@ def ptc_closed_orbit_calc(branch: BranchStruct, radiation_damping_on: bool | Non
     """
 def ptc_emit_calc(ele: EleStruct, sigma_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> ...:
     """
+    Subroutine ptc_emit_calc (ele, norm_mode, sigma_mat, closed_orb)
+    
     Routine to calculate emittances, etc.
+    
+    Note: This routine calls the PTC init_all routine.
     
     Parameters
     ----------
@@ -33263,7 +33159,8 @@ def ptc_emit_calc(ele: EleStruct, sigma_mat: typing.Annotated[collections.abc.Se
     """
 def ptc_layouts_resplit(dKL_max: typing.SupportsFloat, l_max: typing.SupportsFloat, l_max_drift_only: bool, bend_dorb: typing.SupportsFloat, sex_dx: typing.SupportsFloat, even: bool | None = None, crossover: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(2)"] | None = None, crossover_wiggler: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(2)"] | None = None) -> None:
     """
-    even, crossover, crossover_wiggler)
+    Subroutine ptc_layouts_resplit (dKL_max, l_max, l_max_drift_only, bend_dorb, sex_dx,
+                                                              even, crossover, crossover_wiggler)
     
     Routine to resplit (that is, recalculate the number of integration steps for an element)
     For the fibres in all layouts. After doing a resplit, the tune (and any other relavent
@@ -33302,9 +33199,12 @@ def ptc_layouts_resplit(dKL_max: typing.SupportsFloat, l_max: typing.SupportsFlo
     """
 def ptc_one_turn_mat_and_closed_orbit_calc(branch: BranchStruct, pz: typing.SupportsFloat | None = None) -> None:
     """
-    Routine to compute the transfer matrices for the individual elements and closed orbit
+    Subroutine ptc_one_turn_mat_and_closed_orbit_calc (branch, pz)
     
+    Routine to compute the transfer matrices for the individual elements and closed orbit
     for a lattice branch with closed geometry.
+    
+    Note: PTC itself does not compute Twiss parameters. Use twiss_from_mat6 to compute this.
     
     Parameters
     ----------
@@ -33317,8 +33217,6 @@ def ptc_one_turn_mat_and_closed_orbit_calc(branch: BranchStruct, pz: typing.Supp
     """
 def ptc_ran_seed_put(iseed: typing.SupportsInt) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     iseed : int
@@ -33326,8 +33224,6 @@ def ptc_ran_seed_put(iseed: typing.SupportsInt) -> None:
     """
 def ptc_set_rf_state_for_c_normal(nocavity: bool) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     nocavity : bool
@@ -33335,12 +33231,15 @@ def ptc_set_rf_state_for_c_normal(nocavity: bool) -> None:
     """
 def ptc_set_taylor_order_if_needed() -> None:
     """
-    Routine to see if the taylor_order for PTC needs to be set/changed.
+    Subroutine ptc_set_taylor_order_if_needed()
     
+    Routine to see if the taylor_order for PTC needs to be set/changed.
     For example, for a change in bmad_com%taylor_order.
     """
 def ptc_spin_calc(ele: EleStruct, sigma_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> ...:
     """
+    Subroutine ptc_spin_calc (ele, norm_mode, sigma_mat, closed_orb)
+    
     Routine to equilibrium polarizations, etc.
     
     Parameters
@@ -33359,6 +33258,8 @@ def ptc_spin_calc(ele: EleStruct, sigma_mat: typing.Annotated[collections.abc.Se
     """
 def ptc_track_all(branch: BranchStruct, orbit: CoordStructAlloc1D) -> ...:
     """
+    Subroutine ptc_track_all (branch, orbit, track_state, err_flag)
+    
     Routine to track from the start to the end of a lattice branch.
     
     Parameters
@@ -33378,8 +33279,6 @@ def ptc_track_all(branch: BranchStruct, orbit: CoordStructAlloc1D) -> ...:
     """
 def ptc_transfer_map_with_spin(branch: BranchStruct, t_map: typing.Annotated[collections.abc.Sequence[TaylorStruct], "FixedSize(6)"], s_map: typing.Annotated[collections.abc.Sequence[TaylorStruct], "FixedSize(4)"], orb0: CoordStruct, ix1: typing.SupportsInt | None = None, ix2: typing.SupportsInt | None = None, one_turn: bool | None = None, unit_start: bool | None = None) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch : BranchStruct
@@ -33406,9 +33305,11 @@ def ptc_transfer_map_with_spin(branch: BranchStruct, t_map: typing.Annotated[col
     """
 def pwd_mat(lat: LatStruct, t6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], inductance: typing.SupportsFloat, sig_z: typing.SupportsFloat) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
-    Calculates potential well distortion as RF defocusing.  Calculates t6_pwd=t6.Mpwd,
+    Function pwd_mat(t6, inductance, sig_z) result (t6_pwd)
     
+    Calculates potential well distortion as RF defocusing.  Calculates t6_pwd=t6.Mpwd,
     where Mpwd is identity with 65 element proportional to the inductance.
+    
     Vpwd = -inductance * lat%param%n_part * e_charge * c_light**3 / SQRT(twopi) / sig_z**3 / omega_RF  !effective RF voltage from PWD
     Mpwd(6,5) = omega_RF * Vpwd / c_light / lat%ele(0)%value(E_TOT$) * branch%ele(i)%value(l$) / lat%param%total_length
     
@@ -33430,8 +33331,6 @@ def pwd_mat(lat: LatStruct, t6: typing.Annotated[collections.abc.Sequence[typing
     """
 def quadratic_roots(coefs: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], root: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(2)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     coefs : float
@@ -33441,11 +33340,12 @@ def quadratic_roots(coefs: typing.Annotated[collections.abc.Sequence[typing.Supp
 @typing.overload
 def quat_conj(q_in: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(4)"]) -> typing.Annotated[list[complex], "FixedSize(4)"]:
     """
-    Overloaded name to create the conjugate of a quaternian.
+    Function quat_conj (q_in) result (q_out)
     
+    Overloaded name to create the conjugate of a quaternian.
     Overloaded functions are:
-    Function quat_conj_real (q_in) result (q_out)
-    Function quat_conj_complex (q_in) result (q_out)
+      Function quat_conj_real (q_in) result (q_out)
+      Function quat_conj_complex (q_in) result (q_out)
     
     Parameters
     ----------
@@ -33460,11 +33360,12 @@ def quat_conj(q_in: typing.Annotated[collections.abc.Sequence[complex], "FixedSi
 @typing.overload
 def quat_conj(q_in: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]) -> typing.Annotated[list[float], "FixedSize(4)"]:
     """
-    Overloaded name to create the conjugate of a quaternian.
+    Function quat_conj (q_in) result (q_out)
     
+    Overloaded name to create the conjugate of a quaternian.
     Overloaded functions are:
-    Function quat_conj_real (q_in) result (q_out)
-    Function quat_conj_complex (q_in) result (q_out)
+      Function quat_conj_real (q_in) result (q_out)
+      Function quat_conj_complex (q_in) result (q_out)
     
     Parameters
     ----------
@@ -33478,6 +33379,8 @@ def quat_conj(q_in: typing.Annotated[collections.abc.Sequence[typing.SupportsFlo
     """
 def quat_inverse(q_in: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]) -> typing.Annotated[list[float], "FixedSize(4)"]:
     """
+    Function quat_inverse (q_in) result (q_out)
+    
     Routine to create the inverse of a quaternian.
     
     Parameters
@@ -33493,11 +33396,13 @@ def quat_inverse(q_in: typing.Annotated[collections.abc.Sequence[typing.Supports
 @typing.overload
 def quat_mul(q1: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(4)"], q2: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(4)"], q3: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(4)"] | None = None, q4: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(4)"] | None = None, q5: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(4)"] | None = None, q6: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(4)"] | None = None, q7: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(4)"] | None = None, q8: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(4)"] | None = None, q9: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(4)"] | None = None) -> typing.Annotated[list[complex], "FixedSize(4)"]:
     """
-    Overloaded name to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
+    Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
     
+    Overloaded name to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
+    Note: q_out = q1 * q2 represents a rotation of q2 first followed by q1.
     Overloaded functions are:
-    Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
-    Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
+      Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
+      Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
     
     Parameters
     ----------
@@ -33510,19 +33415,17 @@ def quat_mul(q1: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(
     -------
     q_out : float
         Resultant q1 * q2
-    
-    Notes
-    -----
-    Note: q_out = q1 * q2 represents a rotation of q2 first followed by q1.
     """
 @typing.overload
 def quat_mul(q1: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"], q2: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"], q3: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"] | None = None, q4: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"] | None = None, q5: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"] | None = None, q6: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"] | None = None, q7: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"] | None = None, q8: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"] | None = None, q9: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"] | None = None) -> typing.Annotated[list[float], "FixedSize(4)"]:
     """
-    Overloaded name to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
+    Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
     
+    Overloaded name to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
+    Note: q_out = q1 * q2 represents a rotation of q2 first followed by q1.
     Overloaded functions are:
-    Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
-    Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
+      Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
+      Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
     
     Parameters
     ----------
@@ -33535,19 +33438,16 @@ def quat_mul(q1: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat]
     -------
     q_out : float
         Resultant q1 * q2
-    
-    Notes
-    -----
-    Note: q_out = q1 * q2 represents a rotation of q2 first followed by q1.
     """
 @typing.overload
 def quat_rotate(quat: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(4)"], vec_in: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(3)"]) -> typing.Annotated[list[complex], "FixedSize(3)"]:
     """
-    Overloaded name to rotate a vector using a quaternion..
+    Function quat_rotate (quat, vec_in) result (vec_out)
     
+    Overloaded name to rotate a vector using a quaternion..
     Overloaded functions are:
-    Function quat_rotate_real (quat, vec_in) result (vec_out)
-    Function quat_rotate_complex (quat, vec_in) result (vec_out)
+      Function quat_rotate_real (quat, vec_in) result (vec_out)
+      Function quat_rotate_complex (quat, vec_in) result (vec_out)
     
     Parameters
     ----------
@@ -33564,11 +33464,12 @@ def quat_rotate(quat: typing.Annotated[collections.abc.Sequence[complex], "Fixed
 @typing.overload
 def quat_rotate(quat: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"], vec_in: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> typing.Annotated[list[float], "FixedSize(3)"]:
     """
-    Overloaded name to rotate a vector using a quaternion..
+    Function quat_rotate (quat, vec_in) result (vec_out)
     
+    Overloaded name to rotate a vector using a quaternion..
     Overloaded functions are:
-    Function quat_rotate_real (quat, vec_in) result (vec_out)
-    Function quat_rotate_complex (quat, vec_in) result (vec_out)
+      Function quat_rotate_real (quat, vec_in) result (vec_out)
+      Function quat_rotate_complex (quat, vec_in) result (vec_out)
     
     Parameters
     ----------
@@ -33584,8 +33485,9 @@ def quat_rotate(quat: typing.Annotated[collections.abc.Sequence[typing.SupportsF
     """
 def quat_to_axis_angle(quat: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]) -> ...:
     """
-    Routine to convert from quaternion to axis + angle representation.
+    Subroutine quat_to_axis_angle (quat, axis, angle)
     
+    Routine to convert from quaternion to axis + angle representation.
     The angle will be in the range 0 <= angle <= pi.
     
     Parameters
@@ -33602,6 +33504,8 @@ def quat_to_axis_angle(quat: typing.Annotated[collections.abc.Sequence[typing.Su
     """
 def quat_to_omega(quat: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]) -> typing.Annotated[list[float], "FixedSize(3)"]:
     """
+    Function quat_to_omega (quat) result (omega)
+    
     Routine to convert rotation from quaternion representation to omega (axis + angle).
     
     Parameters
@@ -33616,6 +33520,8 @@ def quat_to_omega(quat: typing.Annotated[collections.abc.Sequence[typing.Support
     """
 def quat_to_w_mat(quat: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(3)"]], "FixedSize(3)"]:
     """
+    Function quat_to_w_mat (quat) result (w_mat)
+    
     Routine to construct the 3D rotation matrix w_mat given a rotation quaternion
     
     Parameters
@@ -33630,8 +33536,6 @@ def quat_to_w_mat(quat: typing.Annotated[collections.abc.Sequence[typing.Support
     """
 def query_string(query_str: str, upcase: bool, return_str: str, ix: typing.SupportsInt, ios: typing.SupportsInt) -> PyQueryString:
     """
-    No docstring available
-    
     Parameters
     ----------
     query_str : 
@@ -33642,8 +33546,6 @@ def query_string(query_str: str, upcase: bool, return_str: str, ix: typing.Suppo
     """
 def quote(str: str, q_str: str) -> PyQuote:
     """
-    No docstring available
-    
     Parameters
     ----------
     str : 
@@ -33651,6 +33553,8 @@ def quote(str: str, q_str: str) -> PyQuote:
     """
 def rad1_damp_and_stoc_mats(ele: EleStruct, include_opening_angle: bool, orb_in: CoordStruct, orb_out: CoordStruct, g2_tol: typing.SupportsFloat, g3_tol: typing.SupportsFloat, ele0: _pybmad.EleStruct | None = None) -> ...:
     """
+    Subroutine rad1_damp_and_stoc_mats (ele, include_opening_angle, orb_in, orb_out, rad_map, g2_tol, g3_tol, err_flag, ele0, rad_int1)
+    
     Routine to calculate the damping and stochastic matrices for a given lattice element.
     
     Parameters
@@ -33682,11 +33586,16 @@ def rad1_damp_and_stoc_mats(ele: EleStruct, include_opening_angle: bool, orb_in:
     """
 def rad_damp_and_stoc_mats(ele1: EleStruct, ele2: EleStruct, include_opening_angle: bool, closed_orbit: _pybmad.CoordStructAlloc1D | None = None) -> ...:
     """
-    Routine to calculate the damping and stochastic variance matrices from exit end of ele1
+    Subroutine rad_damp_and_stoc_mats (ele1, ele2, include_opening_angle, rmap, mode, xfer_nodamp_mat, err_flag, closed_orbit, rad_int_branch)
     
+    Routine to calculate the damping and stochastic variance matrices from exit end of ele1
     to the exit end of ele2. Use ele1 = ele2 to get 1-turn matrices.
+    
     If ele2 is before ele1 the integration range if from ele1 to the branch end plus
     from the beginning to ele2.
+    
+    Note: The ele%mat6 matrices will be remade. By convention, these matrices
+    do not include damping.
     
     Parameters
     ----------
@@ -33716,8 +33625,9 @@ def rad_damp_and_stoc_mats(ele1: EleStruct, ele2: EleStruct, include_opening_ang
     """
 def rad_g_integrals(ele: EleStruct, where: typing.SupportsInt, orb_in: CoordStruct, orb_out: CoordStruct, int_g2: typing.SupportsFloat, int_g3: typing.SupportsFloat, g_tol: typing.SupportsFloat, g2_tol: typing.SupportsFloat, g3_tol: typing.SupportsFloat) -> PyRadGIntegrals:
     """
-    Routine to calculate bending strength integrals (g(s) = 1/trajectory_bending_radius(s)) in
+    Subroutine rad_g_integrals (ele, where, orb_in, orb_out, int_g, int_g2, int_g3, g_tol, g2_tol, g3_tol)
     
+    Routine to calculate bending strength integrals (g(s) = 1/trajectory_bending_radius(s)) in
     laboratory coords.
     
     Parameters
@@ -33745,8 +33655,6 @@ def rad_g_integrals(ele: EleStruct, where: typing.SupportsInt, orb_in: CoordStru
     """
 def radiation_integrals(lat: LatStruct, orbit: CoordStructAlloc1D, ix_cache: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None) -> PyRadiationIntegrals:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -33780,6 +33688,8 @@ def radiation_integrals(lat: LatStruct, orbit: CoordStructAlloc1D, ix_cache: typ
     """
 def radiation_map_setup(ele: EleStruct, ref_orbit_in: _pybmad.CoordStruct | None = None) -> bool:
     """
+    Subroutine radiation_map_setup (ele, err_flag, ref_orbit_in)
+    
     Routine to calculate the radiation kick for a lattice element.
     
     Parameters
@@ -33797,8 +33707,6 @@ def radiation_map_setup(ele: EleStruct, ref_orbit_in: _pybmad.CoordStruct | None
     """
 def ramper_slave_setup(lat: LatStruct, force_setup: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -33811,8 +33719,6 @@ def ramper_slave_setup(lat: LatStruct, force_setup: bool | None = None) -> None:
     """
 def ramper_value(ramper: EleStruct, r1: ControlRamp1Struct, value: typing.SupportsFloat) -> PyRamperValue:
     """
-    No docstring available
-    
     Parameters
     ----------
     ramper : EleStruct
@@ -33825,8 +33731,9 @@ def ramper_value(ramper: EleStruct, r1: ControlRamp1Struct, value: typing.Suppor
     """
 def ran_default_state(set_state: _pybmad.RandomStateStruct | None = None) -> RandomStateStruct:
     """
-    Routine to set or get the state of the default random number generator.
+    Subroutine ran_default_state (set_state, get_state)
     
+    Routine to set or get the state of the default random number generator.
     See the ran_seed_put documentation for more details
     
     Parameters
@@ -33841,8 +33748,9 @@ def ran_default_state(set_state: _pybmad.RandomStateStruct | None = None) -> Ran
     """
 def ran_engine(set: str | None = None, get: str | None = None, ran_state: _pybmad.RandomStateStruct | None = None) -> None:
     """
-    Routine to set what random number generator algorithm is used.
+    Subroutine ran_engine (set, get, ran_state)
     
+    Routine to set what random number generator algorithm is used.
     If this routine is never called then pseudo_random$ is used.
     With sobseq quasi-random numbers the maximum dimension is 6.
     
@@ -33858,15 +33766,24 @@ def ran_engine(set: str | None = None, get: str | None = None, ran_state: _pybma
     """
 def ran_gauss_converter(set: str | None = None, set_sigma_cut: typing.SupportsFloat | None = None, ran_state: _pybmad.RandomStateStruct | None = None) -> ...:
     """
-    Routine to set what conversion routine is used for converting
+    Subroutine ran_gauss_converter (set, set_sigma_cut, get, get_sigma_cut, ran_state)
     
+    Routine to set what conversion routine is used for converting
     uniformly distributed random numbers to Gaussian distributed random numbers.
+    
     If this routine is not called then exact_gaussian$ is used.
+    
     exact_gaussian$ is a straight forward converter as explained in Numerical recipes.
+    
     quick_gaussian$ is a quick a dirty approximation with a cutoff so that no
     numbers will be generated beyound what is set for sigma_cut.
+    
     A negative sigma_cut means that the exact_gaussian$ will not be limited
     and the quick_gaussian$ will use a default of 10.0
+    
+    Note: Because of technical issues, when using the quasi_random$ number generator
+    (see the ran_engine routine), the quick_gaussian$ method will automatically be
+    used independent of what was set with this routine.
     
     Parameters
     ----------
@@ -33887,11 +33804,18 @@ def ran_gauss_converter(set: str | None = None, set_sigma_cut: typing.SupportsFl
     """
 def ran_gauss_scalar(ran_state: _pybmad.RandomStateStruct | None = None, sigma_cut: typing.SupportsFloat | None = None, index_quasi: typing.SupportsInt | None = None) -> PyRanGaussScalar:
     """
-    Routine to return a gaussian distributed random number with unit sigma.
+    Subroutine ran_gauss (harvest, ran_state, sigma_cut)
     
+    Routine to return a gaussian distributed random number with unit sigma.
     This routine uses the same algorithm as gasdev from Numerical Recipes.
-    ran_gauss_scalar   ! harvest is a scalar
-    ran_gauss_vector   ! harvest is a 1-D array.
+    
+    Note: ran_gauss is an overloaded name for:
+        ran_gauss_scalar   ! harvest is a scalar
+        ran_gauss_vector   ! harvest is a 1-D array.
+    
+    Note: Use ran_seed_put for initialization.
+    Note: Use ran_engine to set which random number generator to use.
+    Note: Use ran_gauss_converter to set which conversion routine to use.
     
     Parameters
     ----------
@@ -33908,17 +33832,22 @@ def ran_gauss_scalar(ran_state: _pybmad.RandomStateStruct | None = None, sigma_c
     
     Notes
     -----
-    Note: Use ran_seed_put for initialization.
-    Note: Use ran_engine to set which random number generator to use.
     Overloaded versions:
     """
 def ran_gauss_vector(ran_state: _pybmad.RandomStateStruct | None = None, sigma_cut: typing.SupportsFloat | None = None) -> RealAlloc1D:
     """
-    Routine to return a gaussian distributed random number with unit sigma.
+    Subroutine ran_gauss (harvest, ran_state, sigma_cut)
     
+    Routine to return a gaussian distributed random number with unit sigma.
     This routine uses the same algorithm as gasdev from Numerical Recipes.
-    ran_gauss_scalar   ! harvest is a scalar
-    ran_gauss_vector   ! harvest is a 1-D array.
+    
+    Note: ran_gauss is an overloaded name for:
+        ran_gauss_scalar   ! harvest is a scalar
+        ran_gauss_vector   ! harvest is a 1-D array.
+    
+    Note: Use ran_seed_put for initialization.
+    Note: Use ran_engine to set which random number generator to use.
+    Note: Use ran_gauss_converter to set which conversion routine to use.
     
     Parameters
     ----------
@@ -33935,12 +33864,12 @@ def ran_gauss_vector(ran_state: _pybmad.RandomStateStruct | None = None, sigma_c
     
     Notes
     -----
-    Note: Use ran_seed_put for initialization.
-    Note: Use ran_engine to set which random number generator to use.
     Overloaded versions:
     """
 def ran_seed_get() -> int:
     """
+    Subroutine ran_seed_get (seed)
+    
     Routine to return the seed used for the random number generator.
     
     Parameters
@@ -33955,10 +33884,16 @@ def ran_seed_get() -> int:
     """
 def ran_seed_put(seed: typing.SupportsInt, mpi_offset: typing.SupportsInt | None = None) -> None:
     """
+    Subroutine ran_seed_put (seed, mpi_offset)
+    
     Routine to seed a random number generator.
     
     If a program never calls ran_seed_put, or ran_seed_put is called with seed = 0,
     the system clock will be used to generate the seed.
+    
+    Note: The seed is only used with the pseudo_random$ engine.
+    Note: Use the subroutine ran_seed_get(seed) to get the seed used.
+    Note: Use pointer_to_ran_state() to access the ran state directly.
     
     Parameters
     ----------
@@ -33967,22 +33902,23 @@ def ran_seed_put(seed: typing.SupportsInt, mpi_offset: typing.SupportsInt | None
     mpi_offset : int, optional
         Offset added to seed. Default is zero. Used with MPI processes ensure different threads use different
         random numbers.
-    
-    Notes
-    -----
-    Note: The seed is only used with the pseudo_random$ engine.
-    Note: Use the subroutine ran_seed_get(seed) to get the seed used.
     """
 @typing.overload
 def ran_uniform(ran_state: _pybmad.RandomStateStruct | None = None, index_quasi: typing.SupportsInt | None = None) -> PyRanUniformScalar:
     """
-    Routine to return a random number uniformly distributed in the
+    Subroutine ran_uniform (harvest, ran_state)
     
+    Routine to return a random number uniformly distributed in the
     interval [0, 1]. This routine uses the same algorithm as ran or sobseq
     from Numberical Recipes in Fortran90.
     See ran_engine.
-    ran_uniform_scalar   ! harvest is a scalar
-    ran_uniform_vector   ! harvest is a 1-D array.
+    
+    Note: ran_uniform is an overloaded name for:
+        ran_uniform_scalar   ! harvest is a scalar
+        ran_uniform_vector   ! harvest is a 1-D array.
+    
+    Note: Use ran_seed_put for initialization.
+    Note: Use ran_engine to set which random number generator to use.
     
     Parameters
     ----------
@@ -33997,19 +33933,24 @@ def ran_uniform(ran_state: _pybmad.RandomStateStruct | None = None, index_quasi:
     
     Notes
     -----
-    Note: Use ran_seed_put for initialization.
     Overloaded versions:
     """
 @typing.overload
 def ran_uniform(ran_state: _pybmad.RandomStateStruct | None = None) -> RealAlloc1D:
     """
-    Routine to return a random number uniformly distributed in the
+    Subroutine ran_uniform (harvest, ran_state)
     
+    Routine to return a random number uniformly distributed in the
     interval [0, 1]. This routine uses the same algorithm as ran or sobseq
     from Numberical Recipes in Fortran90.
     See ran_engine.
-    ran_uniform_scalar   ! harvest is a scalar
-    ran_uniform_vector   ! harvest is a 1-D array.
+    
+    Note: ran_uniform is an overloaded name for:
+        ran_uniform_scalar   ! harvest is a scalar
+        ran_uniform_vector   ! harvest is a 1-D array.
+    
+    Note: Use ran_seed_put for initialization.
+    Note: Use ran_engine to set which random number generator to use.
     
     Parameters
     ----------
@@ -34024,14 +33965,14 @@ def ran_uniform(ran_state: _pybmad.RandomStateStruct | None = None) -> RealAlloc
     
     Notes
     -----
-    Note: Use ran_seed_put for initialization.
     Overloaded versions:
     """
 def randomize_lr_wake_frequencies(ele: EleStruct) -> bool:
     """
-    Routine to randomize the frequencies of the lr wake HOMs according to:
+    Subroutine randomize_lr_wake_frequencies (ele, set_done)
     
-    freq = freq_in * (1 + lr_freq_spread) * rr)
+    Routine to randomize the frequencies of the lr wake HOMs according to:
+      freq = freq_in * (1 + lr_freq_spread) * rr)
     where rr is a Gaussian distributed random number with unit variance.
     
     Parameters
@@ -34048,8 +33989,6 @@ def randomize_lr_wake_frequencies(ele: EleStruct) -> bool:
     """
 def rchomp(rel: typing.SupportsFloat, plc: typing.SupportsInt, out: str) -> PyRchomp:
     """
-    No docstring available
-    
     Parameters
     ----------
     rel : 
@@ -34059,8 +33998,6 @@ def rchomp(rel: typing.SupportsFloat, plc: typing.SupportsInt, out: str) -> PyRc
 @typing.overload
 def re_allocate(section: Wall3DSectionStructAlloc1D, n: typing.SupportsInt, exact: bool | None = None) -> PyReAllocateWall3dSectionArray:
     """
-    No docstring available
-    
     Parameters
     ----------
     section : 
@@ -34070,8 +34007,6 @@ def re_allocate(section: Wall3DSectionStructAlloc1D, n: typing.SupportsInt, exac
 @typing.overload
 def re_allocate(v: Wall3DVertexStructAlloc1D, n: typing.SupportsInt, exact: bool | None = None) -> PyReAllocateWall3dVertexArray:
     """
-    No docstring available
-    
     Parameters
     ----------
     v : 
@@ -34080,9 +34015,12 @@ def re_allocate(v: Wall3DVertexStructAlloc1D, n: typing.SupportsInt, exact: bool
     """
 def re_allocate_c_double(re: RealAlloc1D, n: typing.SupportsInt, exact: bool | None = None, init_val: typing.SupportsFloat | None = None) -> PyReAllocateCDouble:
     """
-    Routine to reallocate an array of c_double reals.
+    Subroutine re_allocate_c_double (re, n, exact, init_val)
     
+    Routine to reallocate an array of c_double reals.
     This is modeled after the reallocate functions in Numerical Recipes.
+    Note: The data of the array is preserved but data at the end of the
+    array will be lost if n is less than the original size of the array
     
     Parameters
     ----------
@@ -34097,8 +34035,6 @@ def re_allocate_c_double(re: RealAlloc1D, n: typing.SupportsInt, exact: bool | N
     """
 def re_allocate_eles(eles: ElePointerStructAlloc1D, n: typing.SupportsInt, save_old: bool | None = None, exact: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     eles : ElePointerStruct
@@ -34114,7 +34050,12 @@ def re_allocate_eles(eles: ElePointerStructAlloc1D, n: typing.SupportsInt, save_
     """
 def re_associate_node_array(tree: ExpressionTreeStruct, n: typing.SupportsInt, exact: bool | None = None) -> None:
     """
+    Subroutine re_associate_node_array(tree, n, exact)
+    
     Routine to resize the tree%node(:) array.
+    
+    Note: The data of the array is preserved but data at the end of the
+    array will be lost if n is less than the original size of the array
     
     Parameters
     ----------
@@ -34127,8 +34068,6 @@ def re_associate_node_array(tree: ExpressionTreeStruct, n: typing.SupportsInt, e
 @typing.overload
 def re_str(rel: typing.SupportsFloat, str_out: str) -> PyReStrQp:
     """
-    No docstring available
-    
     Parameters
     ----------
     rel : 
@@ -34137,8 +34076,6 @@ def re_str(rel: typing.SupportsFloat, str_out: str) -> PyReStrQp:
 @typing.overload
 def re_str(rel: typing.SupportsFloat, str_out: str) -> PyReStrRp:
     """
-    No docstring available
-    
     Parameters
     ----------
     rel : 
@@ -34146,12 +34083,14 @@ def re_str(rel: typing.SupportsFloat, str_out: str) -> PyReStrRp:
     """
 def read_beam_ascii(file_name: str, beam_init: BeamInitStruct) -> ...:
     """
-    Subroutine to read in a beam definition file.
+    Subroutine read_beam_ascii (file_name, beam, beam_init, err_flag, ele, print_mom_shift_warning, conserve_momentum)
     
+    Subroutine to read in a beam definition file.
     If non_zero, the following components of beam_init are used to rescale the beam:
-    %n_bunch
-    %n_particle
-    %charge_tot
+        %n_bunch
+        %n_particle
+        %charge_tot
+    
     If the beam file has '.h5' or '.hdf5' suffix then the file is taken to be an HDF5 file.
     Otherwise the file is assumed to be ASCII.
     
@@ -34179,13 +34118,15 @@ def read_beam_ascii(file_name: str, beam_init: BeamInitStruct) -> ...:
     """
 def read_beam_file(file_name: str, beam_init: BeamInitStruct, ele: _pybmad.EleStruct | None = None, print_mom_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> PyReadBeamFile:
     """
-    Subroutine to read in a beam definition file.
+    Subroutine read_beam_file (file_name, beam, beam_init, err_flag, ele, print_mom_shift_warning, conserve_momentum)
     
+    Subroutine to read in a beam definition file.
     If non_zero, the following components of beam_init are used to rescale the beam:
-    %n_bunch
-    %n_particle
-    %bunch_charge -> charge_tot
-    %species
+        %n_bunch
+        %n_particle
+        %bunch_charge -> charge_tot
+        %species
+    
     If the beam file has '.h5' or '.hdf5' suffix then the file is taken to be an HDF5 file.
     Otherwise the file is assumed to be ASCII.
     
@@ -34211,6 +34152,8 @@ def read_beam_file(file_name: str, beam_init: BeamInitStruct, ele: _pybmad.EleSt
     """
 def read_binary_cartesian_map(file_name: str, ele: EleStruct, cart_map: CartesianMapStruct, err_flag: bool) -> None:
     """
+    Subroutine read_binary_cartesian_map (file_name, ele, cart_map, err_flag)
+    
     Routine to read a binary cartesian_map structure.
     
     Parameters
@@ -34226,6 +34169,8 @@ def read_binary_cartesian_map(file_name: str, ele: EleStruct, cart_map: Cartesia
     """
 def read_binary_cylindrical_map(file_name: str, ele: EleStruct, cl_map: CylindricalMapStruct, err_flag: bool) -> None:
     """
+    Subroutine read_binary_cylindrical_map (file_name, ele, cl_map, err_flag)
+    
     Routine to read a binary cylindrical_map structure.
     
     Parameters
@@ -34241,6 +34186,8 @@ def read_binary_cylindrical_map(file_name: str, ele: EleStruct, cl_map: Cylindri
     """
 def read_binary_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldStruct, err_flag: bool) -> None:
     """
+    Subroutine read_binary_grid_field (file_name, ele, g_field, err_flag)
+    
     Routine to read a binary grid_field structure.
     
     Parameters
@@ -34256,6 +34203,8 @@ def read_binary_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldStr
     """
 def read_surface_reflection_file(file_name: str) -> PhotonReflectSurfaceStruct:
     """
+    Subroutine read_surface_reflection_file (file_name, surface)
+    
     Routine to read the reflection probability data for a given type of surface from a file.
     
     Parameters
@@ -34270,8 +34219,6 @@ def read_surface_reflection_file(file_name: str) -> PhotonReflectSurfaceStruct:
     """
 def real_num_fortran_format(number: typing.SupportsFloat, width: typing.SupportsInt, n_blanks: typing.SupportsInt | None = None, fmt_str: str) -> PyRealNumFortranFormat:
     """
-    No docstring available
-    
     Parameters
     ----------
     number : 
@@ -34281,8 +34228,6 @@ def real_num_fortran_format(number: typing.SupportsFloat, width: typing.Supports
     """
 def real_path(path_in: str, path_out: str, is_ok: bool) -> PyRealPath:
     """
-    No docstring available
-    
     Parameters
     ----------
     path_in : 
@@ -34291,8 +34236,6 @@ def real_path(path_in: str, path_out: str, is_ok: bool) -> PyRealPath:
     """
 def real_str(r_num: typing.SupportsFloat, n_signif: typing.SupportsInt | None = None, n_decimal: typing.SupportsInt | None = None, str: str) -> PyRealStr:
     """
-    No docstring available
-    
     Parameters
     ----------
     r_num : 
@@ -34302,8 +34245,6 @@ def real_str(r_num: typing.SupportsFloat, n_signif: typing.SupportsInt | None = 
     """
 def real_to_string(real_num: typing.SupportsFloat, width: typing.SupportsInt, n_signif: typing.SupportsInt | None = None, n_decimal: typing.SupportsInt | None = None, str: str) -> PyRealToString:
     """
-    No docstring available
-    
     Parameters
     ----------
     real_num : 
@@ -34314,8 +34255,6 @@ def real_to_string(real_num: typing.SupportsFloat, width: typing.SupportsInt, n_
     """
 def reallocate_beam(beam: BeamStruct, n_bunch: typing.SupportsInt, n_particle: typing.SupportsInt | None = None, extend: bool | None = None) -> PyReallocateBeam:
     """
-    No docstring available
-    
     Parameters
     ----------
     beam : BeamStruct
@@ -34329,13 +34268,9 @@ def reallocate_beam(beam: BeamStruct, n_bunch: typing.SupportsInt, n_particle: t
     extend : 
     """
 def reallocate_bp_com_const() -> None:
-    """
-    No docstring available
-    """
+    ...
 def reallocate_bunch(n_particle: typing.SupportsInt, save: bool | None = None) -> BunchStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     bunch : BunchStruct
@@ -34347,8 +34282,6 @@ def reallocate_bunch(n_particle: typing.SupportsInt, save: bool | None = None) -
     """
 def reallocate_control(lat: LatStruct, n: typing.SupportsInt) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -34359,13 +34292,17 @@ def reallocate_control(lat: LatStruct, n: typing.SupportsInt) -> None:
 @typing.overload
 def reallocate_coord(coord_array: CoordArrayStructAlloc1D, lat: LatStruct) -> None:
     """
-    Routine to allocate or reallocate at allocatable coord_struct array.
+    Subroutine reallocate_coord (...)
     
-    reallocate_coord_n (coord, n_coord)
-    reallocate_coord_lat (coord, lat, ix_branch)
+    Routine to allocate or reallocate at allocatable coord_struct array.
+    reallocate_coord is an overloaded name for:
+      reallocate_coord_n (coord, n_coord)
+      reallocate_coord_lat (coord, lat, ix_branch)
+    
     Subroutine to allocate an allocatable coord_struct array to at least:
-    coord(0:n_coord)                            if n_coord arg is used.
-    coord(0:lat%branch(ix_branch)%n_ele_max)    if lat arg is used.
+        coord(0:n_coord)                            if n_coord arg is used.
+        coord(0:lat%branch(ix_branch)%n_ele_max)    if lat arg is used.
+    
     The old coordinates are saved
     If, at input, coord(:) is not allocated, coord(0)%vec is set to zero.
     In any case, coord(n)%vec for n > 0 is set to zero.
@@ -34389,13 +34326,17 @@ def reallocate_coord(coord_array: CoordArrayStructAlloc1D, lat: LatStruct) -> No
 @typing.overload
 def reallocate_coord(coord: CoordStructAlloc1D, lat: LatStruct, ix_branch: typing.SupportsInt | None = None) -> None:
     """
-    Routine to allocate or reallocate at allocatable coord_struct array.
+    Subroutine reallocate_coord (...)
     
-    reallocate_coord_n (coord, n_coord)
-    reallocate_coord_lat (coord, lat, ix_branch)
+    Routine to allocate or reallocate at allocatable coord_struct array.
+    reallocate_coord is an overloaded name for:
+      reallocate_coord_n (coord, n_coord)
+      reallocate_coord_lat (coord, lat, ix_branch)
+    
     Subroutine to allocate an allocatable coord_struct array to at least:
-    coord(0:n_coord)                            if n_coord arg is used.
-    coord(0:lat%branch(ix_branch)%n_ele_max)    if lat arg is used.
+        coord(0:n_coord)                            if n_coord arg is used.
+        coord(0:lat%branch(ix_branch)%n_ele_max)    if lat arg is used.
+    
     The old coordinates are saved
     If, at input, coord(:) is not allocated, coord(0)%vec is set to zero.
     In any case, coord(n)%vec for n > 0 is set to zero.
@@ -34419,13 +34360,17 @@ def reallocate_coord(coord: CoordStructAlloc1D, lat: LatStruct, ix_branch: typin
 @typing.overload
 def reallocate_coord(coord: CoordStructAlloc1D, n_coord: typing.SupportsInt) -> None:
     """
-    Routine to allocate or reallocate at allocatable coord_struct array.
+    Subroutine reallocate_coord (...)
     
-    reallocate_coord_n (coord, n_coord)
-    reallocate_coord_lat (coord, lat, ix_branch)
+    Routine to allocate or reallocate at allocatable coord_struct array.
+    reallocate_coord is an overloaded name for:
+      reallocate_coord_n (coord, n_coord)
+      reallocate_coord_lat (coord, lat, ix_branch)
+    
     Subroutine to allocate an allocatable coord_struct array to at least:
-    coord(0:n_coord)                            if n_coord arg is used.
-    coord(0:lat%branch(ix_branch)%n_ele_max)    if lat arg is used.
+        coord(0:n_coord)                            if n_coord arg is used.
+        coord(0:lat%branch(ix_branch)%n_ele_max)    if lat arg is used.
+    
     The old coordinates are saved
     If, at input, coord(:) is not allocated, coord(0)%vec is set to zero.
     In any case, coord(n)%vec for n > 0 is set to zero.
@@ -34448,8 +34393,6 @@ def reallocate_coord(coord: CoordStructAlloc1D, n_coord: typing.SupportsInt) -> 
     """
 def reallocate_expression_stack(stack: ExpressionAtomStructAlloc1D, n: typing.SupportsInt, exact: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     stack : unknown
@@ -34462,10 +34405,12 @@ def reallocate_expression_stack(stack: ExpressionAtomStructAlloc1D, n: typing.Su
     """
 def reallocate_spline(spline: SplineStructAlloc1D, n: typing.SupportsInt, n_min: typing.SupportsInt | None = None, exact: bool | None = None) -> None:
     """
-    Subroutine to allocate an allocatable spline_struct array.
+    Subroutine reallocate_spline (spline, n, n_min, exact)
     
+    Subroutine to allocate an allocatable spline_struct array.
     The data of the array is preserved but data at the end of the
     array will be lost if n is less than the original size of the array
+    
     
     Parameters
     ----------
@@ -34481,8 +34426,6 @@ def reallocate_spline(spline: SplineStructAlloc1D, n: typing.SupportsInt, n_min:
     """
 def rel_tracking_charge_to_mass(orbit: CoordStruct, ref_species: typing.SupportsInt, rel_charge: typing.SupportsFloat) -> PyRelTrackingChargeToMass:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -34493,8 +34436,6 @@ def rel_tracking_charge_to_mass(orbit: CoordStruct, ref_species: typing.Supports
     """
 def relative_mode_flip(ele1: EleStruct, ele2: EleStruct, func_retval__: bool) -> PyRelativeModeFlip:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele1 : 
@@ -34503,8 +34444,9 @@ def relative_mode_flip(ele1: EleStruct, ele2: EleStruct, func_retval__: bool) ->
     """
 def release_rad_int_cache(ix_cache: typing.SupportsInt) -> PyReleaseRadIntCache:
     """
-    Subroutine to release the memory associated with caching wiggler values.
+    Subroutine release_rad_int_cache (ix_cache)
     
+    Subroutine to release the memory associated with caching wiggler values.
     See the radiation_integrals routine for further details.
     
     Parameters
@@ -34515,10 +34457,15 @@ def release_rad_int_cache(ix_cache: typing.SupportsInt) -> PyReleaseRadIntCache:
     """
 def remove_constant_taylor(taylor_in: TaylorStructAlloc1D, remove_higher_order_terms: bool) -> ...:
     """
-    Subroutine to remove the constant part of a taylor map.
+    Subroutine remove_constant_taylor (taylor_in, taylor_out, c0, remove_higher_order_terms)
     
+    Subroutine to remove the constant part of a taylor map.
     Optionally terms that are higher order than bmad_com%taylor_order can
     be removed.
+    
+    Note: It is assumed that taylor_out has been deallocated before the call to
+    this routine. Calling this routine with the first two actual arguments the
+    same is prohibited.
     
     Parameters
     ----------
@@ -34536,8 +34483,6 @@ def remove_constant_taylor(taylor_in: TaylorStructAlloc1D, remove_higher_order_t
     """
 def remove_dead_from_bunch(bunch_in: BunchStruct) -> BunchStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     bunch_in : BunchStruct
@@ -34548,8 +34493,6 @@ def remove_dead_from_bunch(bunch_in: BunchStruct) -> BunchStruct:
     """
 def remove_eles_from_lat(lat: LatStruct, check_sanity: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -34560,8 +34503,6 @@ def remove_eles_from_lat(lat: LatStruct, check_sanity: bool | None = None) -> No
     """
 def remove_lord_slave_link(lord: EleStruct, slave: EleStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lord : EleStruct
@@ -34575,8 +34516,6 @@ def remove_lord_slave_link(lord: EleStruct, slave: EleStruct) -> None:
     """
 def reverse_lat(lat_in: LatStruct, track_antiparticle: bool | None = None) -> LatStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat_in : LatStruct
@@ -34588,20 +34527,19 @@ def reverse_lat(lat_in: LatStruct, track_antiparticle: bool | None = None) -> La
     """
 def rf_cav_names(lat: LatStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : 
     """
 def rf_coupler_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.SupportsInt, phase: typing.SupportsFloat, orbit: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    import
-    
-    implicit none
-    type (branch_struct), target :: branch
-    integer n_rf_included, n_rf_excluded
-    logical ok
+    No longer in the codebase
+    function rf_clock_setup (branch, n_rf_included, n_rf_excluded) result (ok)
+      import
+      implicit none
+      type (branch_struct), target :: branch
+      integer n_rf_included, n_rf_excluded
+      logical ok
     end function
     
     Parameters
@@ -34630,8 +34568,6 @@ def rf_coupler_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.S
     """
 def rf_is_on(branch: BranchStruct, ix_ele1: typing.SupportsInt | None = None, ix_ele2: typing.SupportsInt | None = None, is_on: bool) -> PyRfIsOn:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch : BranchStruct
@@ -34644,8 +34580,6 @@ def rf_is_on(branch: BranchStruct, ix_ele1: typing.SupportsInt | None = None, ix
     """
 def rf_ref_time_offset(ele: EleStruct, ds: typing.SupportsFloat | None = None, time: typing.SupportsFloat) -> PyRfRefTimeOffset:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -34656,8 +34590,6 @@ def rf_ref_time_offset(ele: EleStruct, ds: typing.SupportsFloat | None = None, t
     """
 def rfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFloat, gam: typing.SupportsFloat, a: typing.SupportsFloat, b: typing.SupportsFloat, hz: typing.SupportsFloat, i: typing.SupportsInt, j: typing.SupportsInt, res: typing.SupportsFloat) -> PyRfun:
     """
-    No docstring available
-    
     Parameters
     ----------
     u : 
@@ -34673,8 +34605,6 @@ def rfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFlo
     """
 def rk_adaptive_time_step(ele: EleStruct, param: LatParamStruct, orb: CoordStruct, t_dir: typing.SupportsInt, rf_time: typing.SupportsFloat, dt_try: typing.SupportsFloat, dt_did: typing.SupportsFloat, dt_next: typing.SupportsFloat, err_flag: bool, extra_field: _pybmad.EmFieldStruct | None = None) -> PyRkAdaptiveTimeStep:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : 
@@ -34690,8 +34620,6 @@ def rk_adaptive_time_step(ele: EleStruct, param: LatParamStruct, orb: CoordStruc
     """
 def rk_time_step1(ele: EleStruct, param: LatParamStruct, rf_time: typing.SupportsFloat, orb: CoordStruct, dt: typing.SupportsFloat, new_orb: CoordStruct, dr_dt: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(10)"] | None = None, err_flag: bool, print_err: bool | None = None, extra_field: _pybmad.EmFieldStruct | None = None) -> PyRkTimeStep1:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : 
@@ -34708,8 +34636,6 @@ def rk_time_step1(ele: EleStruct, param: LatParamStruct, rf_time: typing.Support
     """
 def rms_value(val_arr: RealAlloc1D, good_val: _pybmad.BoolAlloc1D | None = None, rms_val: typing.SupportsFloat) -> PyRmsValue:
     """
-    No docstring available
-    
     Parameters
     ----------
     val_arr : float
@@ -34722,8 +34648,6 @@ def rms_value(val_arr: RealAlloc1D, good_val: _pybmad.BoolAlloc1D | None = None,
     """
 def rot_2d(vec_in: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], angle: typing.SupportsFloat, vec_out: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     vec_in : float
@@ -34734,8 +34658,6 @@ def rot_2d(vec_in: typing.Annotated[collections.abc.Sequence[typing.SupportsFloa
     """
 def rotate3(vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], angle: typing.SupportsFloat, rvec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> PyRotate3:
     """
-    No docstring available
-    
     Parameters
     ----------
     vec : 
@@ -34744,6 +34666,8 @@ def rotate3(vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat]
     """
 def rotate_em_field(field: EmFieldStruct, w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"], w_inv: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"], calc_dfield: bool | None = None, calc_potential: bool | None = None) -> None:
     """
+    Subroutine rotate_em_field (field, w_mat, w_inv, calc_dfield, calc_potential)
+    
     Routine to transform the fields using the given rotation matrices.
     
     Parameters
@@ -34761,8 +34685,6 @@ def rotate_em_field(field: EmFieldStruct, w_mat: typing.Annotated[collections.ab
     """
 def rotate_field_zx(field: EmFieldStruct, theta: typing.SupportsFloat) -> PyRotateFieldZx:
     """
-    No docstring available
-    
     Parameters
     ----------
     field : 
@@ -34770,8 +34692,6 @@ def rotate_field_zx(field: EmFieldStruct, theta: typing.SupportsFloat) -> PyRota
     """
 def rotate_for_curved_surface(ele: EleStruct, orbit: CoordStruct, set: bool, rot_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -34788,8 +34708,6 @@ def rotate_for_curved_surface(ele: EleStruct, orbit: CoordStruct, set: bool, rot
     """
 def rotate_spin(rot_vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> typing.Annotated[list[float], "FixedSize(4)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     rot_vec : float
@@ -34802,8 +34720,6 @@ def rotate_spin(rot_vec: typing.Annotated[collections.abc.Sequence[typing.Suppor
     """
 def rotate_spin_a_step(orbit: CoordStruct, field: EmFieldStruct, ele: EleStruct, ds: typing.SupportsFloat) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -34818,8 +34734,6 @@ def rotate_spin_a_step(orbit: CoordStruct, field: EmFieldStruct, ele: EleStruct,
     """
 def rotate_spin_given_field(orbit: CoordStruct, sign_z_vel: typing.SupportsInt, BL: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, EL: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, qrot: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"] | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -34838,6 +34752,8 @@ def rotate_spin_given_field(orbit: CoordStruct, sign_z_vel: typing.SupportsInt, 
     """
 def rotate_vec(vec: RealAlloc1D, axis: typing.SupportsInt, angle: typing.SupportsFloat) -> None:
     """
+    Subroutine rotate_vec (vec, axis, angle)
+    
     Basic routine to rotate vector components around the x, y, or z axis.
     
     Parameters
@@ -34852,6 +34768,8 @@ def rotate_vec(vec: RealAlloc1D, axis: typing.SupportsInt, angle: typing.Support
     """
 def rotate_vec_given_axis_angle(vec_in: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], axis: RealAlloc1D, angle: typing.SupportsFloat) -> typing.Annotated[list[float], "FixedSize(3)"]:
     """
+    Function rotate_vec_given_axis_angle (vec_in, axis, angle) result (vec_out)
+    
     Routine to rotate a vector.
     
     Parameters
@@ -34870,8 +34788,9 @@ def rotate_vec_given_axis_angle(vec_in: typing.Annotated[collections.abc.Sequenc
     """
 def rp8(int_in: typing.SupportsInt) -> float:
     """
-    Routine to convert from integer to real of type rp.
+    Function rp8(int_in) result (re_out)
     
+    Routine to convert from integer to real of type rp.
     This routine is used to avoid the implicit integer to single precision that happens when
     multiplying int*real(rp).
     
@@ -34887,8 +34806,6 @@ def rp8(int_in: typing.SupportsInt) -> float:
     """
 def run_timer(command: str, time: typing.SupportsFloat | None = None, time0: typing.SupportsFloat | None = None) -> PyRunTimer:
     """
-    No docstring available
-    
     Parameters
     ----------
     command : 
@@ -34897,8 +34814,6 @@ def run_timer(command: str, time: typing.SupportsFloat | None = None, time0: typ
     """
 def s_body_calc(orbit: CoordStruct, ele: EleStruct, s_body: typing.SupportsFloat) -> PySBodyCalc:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -34909,19 +34824,20 @@ def s_body_calc(orbit: CoordStruct, ele: EleStruct, s_body: typing.SupportsFloat
     """
 def s_calc(lat: LatStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
     """
 def sad_mult_hard_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.SupportsInt, orbit: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Routine to track through the hard edge bend fringe field for a bend or sad_mult element.
+    Subroutine sad_mult_hard_bend_edge_kick (ele, param, particle_at, orbit, mat6, make_matrix)
     
+    Routine to track through the hard edge bend fringe field for a bend or sad_mult element.
     Only the bend field is taken into account here. Higher order multipolse must be handled elsewhere.
+    
     This routine assumes that the particle coordinates are with respect to the actual magnet face.
     Thus finite e1/e2 must be taken into account by other routines.
+    
     SAD calls this the "linear" fringe even though it is nonlinear.
     
     Parameters
@@ -34944,6 +34860,8 @@ def sad_mult_hard_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle
     """
 def sad_soft_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.SupportsInt, orb: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
+    Subroutine sad_soft_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix)
+    
     Subroutine to track through the ("linear") bend soft edge field of an sbend or sad_mult.
     
     Parameters
@@ -34969,8 +34887,6 @@ def sad_soft_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: 
     """
 def save_a_beam_step(ele: EleStruct, beam: BeamStruct, bunch_tracks: _pybmad.BunchTrackStructAlloc1D | None = None, s_body: typing.SupportsFloat | None = None, is_time_coords: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -34987,8 +34903,6 @@ def save_a_beam_step(ele: EleStruct, beam: BeamStruct, bunch_tracks: _pybmad.Bun
     """
 def save_a_bunch_step(ele: EleStruct, bunch: BunchStruct, bunch_track: _pybmad.BunchTrackStruct | None = None, s_body: typing.SupportsFloat | None = None, is_time_coords: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -35005,8 +34919,6 @@ def save_a_bunch_step(ele: EleStruct, bunch: BunchStruct, bunch_track: _pybmad.B
     """
 def save_a_step(track: TrackStruct, ele: EleStruct, param: LatParamStruct, local_ref_frame: bool, orb: CoordStruct, s_rel: typing.SupportsFloat, save_field: bool | None = None, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None, rf_time: typing.SupportsFloat | None = None, strong_beam: _pybmad.StrongBeamStruct | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     track : TrackStruct
@@ -35036,8 +34948,6 @@ def save_a_step(track: TrackStruct, ele: EleStruct, param: LatParamStruct, local
     """
 def sbend_body_with_k1_map(ele: EleStruct, dg: typing.SupportsFloat, b1: typing.SupportsFloat, param: LatParamStruct, n_step: typing.SupportsInt, orbit: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -35062,8 +34972,9 @@ def sbend_body_with_k1_map(ele: EleStruct, dg: typing.SupportsFloat, b1: typing.
     """
 def sc_adaptive_step(bunch: BunchStruct, ele: EleStruct, include_image: bool, t_now: typing.SupportsFloat, dt_step: typing.SupportsFloat, sc_field: EmFieldStructAlloc1D) -> PyScAdaptiveStep:
     """
-    Routine to track a bunch of particles with space charge for one step using
+    Subroutine sc_adaptive_step(bunch, ele, include_image, t_now, dt_step, dt_next)
     
+    Routine to track a bunch of particles with space charge for one step using
     adaptive step size control and determine appropriate step size for the next step
     
     Parameters
@@ -35093,6 +35004,8 @@ def sc_adaptive_step(bunch: BunchStruct, ele: EleStruct, include_image: bool, t_
     """
 def sc_step(bunch: BunchStruct, ele: EleStruct, include_image: bool, t_end: typing.SupportsFloat, sc_field: EmFieldStructAlloc1D) -> PyScStep:
     """
+    Subroutine sc_step(bunch, ele, include_image, t_end, n_emit)
+    
     Subroutine to track a bunch through a given time step with space charge
     
     Parameters
@@ -35119,9 +35032,11 @@ def sc_step(bunch: BunchStruct, ele: EleStruct, include_image: bool, t_end: typi
     """
 def set_active_fixer(fixer: EleStruct, turn_on: bool | None = None) -> CoordStruct:
     """
-    Set the acvitive fixer element.
+    Subroutine set_active_fixer(fixer, turn_on, orbit)
     
+    Set the acvitive fixer element.
     All other fixer/beginning_ele elements in the branch will be deactivated.
+    
     If turn_on is True (default), the fixer argument becomes the active fixer.
     If turn_on is False, and fixer%is_on is also False, there is nothing to be done.
     If turn_on is False, and fixer%is_on is True, turn this fixer off and turn on the beginning element.
@@ -35141,6 +35056,8 @@ def set_active_fixer(fixer: EleStruct, turn_on: bool | None = None) -> CoordStru
     """
 def set_custom_attribute_name(custom_name: str, custom_index: typing.SupportsInt | None = None) -> bool:
     """
+    Subroutine set_custom_attribute_name (custom_name, err_flag, custom_index)
+    
     Routine to add custom element attributes to the element attribute name table.
     
     Parameters
@@ -35159,8 +35076,6 @@ def set_custom_attribute_name(custom_name: str, custom_index: typing.SupportsInt
     """
 def set_ele_attribute(ele: EleStruct, set_string: str, err_print_flag: bool | None = None, set_lords: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -35180,8 +35095,6 @@ def set_ele_attribute(ele: EleStruct, set_string: str, err_print_flag: bool | No
     """
 def set_ele_defaults(ele: EleStruct, do_allocate: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -35192,8 +35105,6 @@ def set_ele_defaults(ele: EleStruct, do_allocate: bool | None = None) -> None:
     """
 def set_ele_name(ele: EleStruct, name: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -35204,8 +35115,6 @@ def set_ele_name(ele: EleStruct, name: str) -> None:
     """
 def set_ele_real_attribute(ele: EleStruct, attrib_name: str, value: typing.SupportsFloat, err_print_flag: bool | None = None) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -35222,8 +35131,6 @@ def set_ele_real_attribute(ele: EleStruct, attrib_name: str, value: typing.Suppo
     """
 def set_ele_status_stale() -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -35237,20 +35144,29 @@ def set_ele_status_stale() -> ...:
 @typing.overload
 def set_flags_for_changed_attribute(ele: EleStruct, attrib: typing.SupportsInt, set_dependent: bool | None = None) -> PySetFlagsForChangedIntegerAttribute:
     """
-    Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
+    Subroutine set_flags_for_changed_attribute (...)
     
+    Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
     Also will do some dependent variable bookkeeping when a particular attribute has
     been altered.
+    
     This routine should be called after the attribute has been set.
-    set_flags_for_changed_lat_attribute (lat, set_dependent)
-    set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
-    set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
-    set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
-    set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+    
+    set_flags_for_changed_attribute is an overloaded name for:
+      set_flags_for_changed_lat_attribute (lat, set_dependent)
+      set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
+      set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
+      set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
+      set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+    
     The set_flags_for_changed_lat_attribute (lat) routine is used when one
     does not know what has changed and wants a complete bookkeeping done.
+    
+    NOTE: The attribute argument MUST be the component that was changed. For example:
+        ele%value(x_offset$) = off_value
+        call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
     And NOT:
-    call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
+        call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
     
     Parameters
     ----------
@@ -35276,27 +35192,34 @@ def set_flags_for_changed_attribute(ele: EleStruct, attrib: typing.SupportsInt, 
     
     Notes
     -----
-    NOTE: The attribute argument MUST be the component that was changed. For example: ele%value(x_offset$) =
-    off_value call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
     Overloaded versions:
     """
 @typing.overload
 def set_flags_for_changed_attribute(lat: LatStruct, set_dependent: bool | None = None) -> None:
     """
-    Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
+    Subroutine set_flags_for_changed_attribute (...)
     
+    Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
     Also will do some dependent variable bookkeeping when a particular attribute has
     been altered.
+    
     This routine should be called after the attribute has been set.
-    set_flags_for_changed_lat_attribute (lat, set_dependent)
-    set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
-    set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
-    set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
-    set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+    
+    set_flags_for_changed_attribute is an overloaded name for:
+      set_flags_for_changed_lat_attribute (lat, set_dependent)
+      set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
+      set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
+      set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
+      set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+    
     The set_flags_for_changed_lat_attribute (lat) routine is used when one
     does not know what has changed and wants a complete bookkeeping done.
+    
+    NOTE: The attribute argument MUST be the component that was changed. For example:
+        ele%value(x_offset$) = off_value
+        call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
     And NOT:
-    call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
+        call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
     
     Parameters
     ----------
@@ -35322,27 +35245,34 @@ def set_flags_for_changed_attribute(lat: LatStruct, set_dependent: bool | None =
     
     Notes
     -----
-    NOTE: The attribute argument MUST be the component that was changed. For example: ele%value(x_offset$) =
-    off_value call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
     Overloaded versions:
     """
 @typing.overload
 def set_flags_for_changed_attribute(ele: EleStruct, attrib: bool, set_dependent: bool | None = None) -> PySetFlagsForChangedLogicalAttribute:
     """
-    Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
+    Subroutine set_flags_for_changed_attribute (...)
     
+    Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
     Also will do some dependent variable bookkeeping when a particular attribute has
     been altered.
+    
     This routine should be called after the attribute has been set.
-    set_flags_for_changed_lat_attribute (lat, set_dependent)
-    set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
-    set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
-    set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
-    set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+    
+    set_flags_for_changed_attribute is an overloaded name for:
+      set_flags_for_changed_lat_attribute (lat, set_dependent)
+      set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
+      set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
+      set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
+      set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+    
     The set_flags_for_changed_lat_attribute (lat) routine is used when one
     does not know what has changed and wants a complete bookkeeping done.
+    
+    NOTE: The attribute argument MUST be the component that was changed. For example:
+        ele%value(x_offset$) = off_value
+        call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
     And NOT:
-    call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
+        call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
     
     Parameters
     ----------
@@ -35368,27 +35298,34 @@ def set_flags_for_changed_attribute(ele: EleStruct, attrib: bool, set_dependent:
     
     Notes
     -----
-    NOTE: The attribute argument MUST be the component that was changed. For example: ele%value(x_offset$) =
-    off_value call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
     Overloaded versions:
     """
 @typing.overload
 def set_flags_for_changed_attribute(ele: EleStruct, attrib: typing.SupportsFloat | None = None, set_dependent: bool | None = None) -> PySetFlagsForChangedRealAttribute:
     """
-    Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
+    Subroutine set_flags_for_changed_attribute (...)
     
+    Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
     Also will do some dependent variable bookkeeping when a particular attribute has
     been altered.
+    
     This routine should be called after the attribute has been set.
-    set_flags_for_changed_lat_attribute (lat, set_dependent)
-    set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
-    set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
-    set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
-    set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+    
+    set_flags_for_changed_attribute is an overloaded name for:
+      set_flags_for_changed_lat_attribute (lat, set_dependent)
+      set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
+      set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
+      set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
+      set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+    
     The set_flags_for_changed_lat_attribute (lat) routine is used when one
     does not know what has changed and wants a complete bookkeeping done.
+    
+    NOTE: The attribute argument MUST be the component that was changed. For example:
+        ele%value(x_offset$) = off_value
+        call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
     And NOT:
-    call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
+        call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
     
     Parameters
     ----------
@@ -35414,14 +35351,10 @@ def set_flags_for_changed_attribute(ele: EleStruct, attrib: typing.SupportsFloat
     
     Notes
     -----
-    NOTE: The attribute argument MUST be the component that was changed. For example: ele%value(x_offset$) =
-    off_value call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
     Overloaded versions:
     """
 def set_fringe_on_off(fringe_at: typing.SupportsFloat, ele_end: typing.SupportsInt, on_or_off: typing.SupportsInt) -> PySetFringeOnOff:
     """
-    No docstring available
-    
     Parameters
     ----------
     fringe_at : float
@@ -35434,8 +35367,6 @@ def set_fringe_on_off(fringe_at: typing.SupportsFloat, ele_end: typing.SupportsI
     """
 def set_lords_status_stale(ele: EleStruct, stat_group: typing.SupportsInt, control_bookkeeping: bool | None = None, flag: typing.SupportsInt | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -35451,8 +35382,6 @@ def set_lords_status_stale(ele: EleStruct, stat_group: typing.SupportsInt, contr
     """
 def set_on_off(key: typing.SupportsInt, lat: LatStruct, switch_: typing.SupportsInt, orb: _pybmad.CoordStructAlloc1D | None = None, use_ref_orb: bool | None = None, ix_branch: typing.SupportsInt | None = None, saved_values: _pybmad.RealAlloc1D | None = None, attribute: str | None = None, set_val: typing.SupportsInt | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     key : int
@@ -35484,8 +35413,6 @@ def set_on_off(key: typing.SupportsInt, lat: LatStruct, switch_: typing.Supports
     """
 def set_orbit_to_zero(n1: typing.SupportsInt, n2: typing.SupportsInt, ix_noset: typing.SupportsInt | None = None) -> CoordStructAlloc1D:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -35500,8 +35427,6 @@ def set_orbit_to_zero(n1: typing.SupportsInt, n2: typing.SupportsInt, ix_noset: 
 @typing.overload
 def set_parameter(param_val: typing.SupportsInt, set_val: typing.SupportsInt, save_val: typing.SupportsInt) -> PySetParameterInt:
     """
-    No docstring available
-    
     Parameters
     ----------
     param_val : 
@@ -35511,8 +35436,6 @@ def set_parameter(param_val: typing.SupportsInt, set_val: typing.SupportsInt, sa
 @typing.overload
 def set_parameter(param_val: bool, set_val: bool, save_val: bool) -> PySetParameterLogic:
     """
-    No docstring available
-    
     Parameters
     ----------
     param_val : 
@@ -35522,8 +35445,6 @@ def set_parameter(param_val: bool, set_val: bool, save_val: bool) -> PySetParame
 @typing.overload
 def set_parameter(param_val: typing.SupportsFloat, set_val: typing.SupportsFloat, save_val: typing.SupportsFloat) -> PySetParameterReal:
     """
-    No docstring available
-    
     Parameters
     ----------
     param_val : 
@@ -35532,8 +35453,6 @@ def set_parameter(param_val: typing.SupportsFloat, set_val: typing.SupportsFloat
     """
 def set_ptc(e_tot: typing.SupportsFloat | None = None, particle: typing.SupportsInt | None = None, taylor_order: typing.SupportsInt | None = None, integ_order: typing.SupportsInt | None = None, n_step: typing.SupportsInt | None = None, no_cavity: bool | None = None, force_init: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     e_tot : float, optional
@@ -35554,8 +35473,6 @@ def set_ptc(e_tot: typing.SupportsFloat | None = None, particle: typing.Supports
     """
 def set_ptc_base_state(component: str, set_val: bool) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     component : unknown
@@ -35568,13 +35485,18 @@ def set_ptc_base_state(component: str, set_val: bool) -> bool:
     """
 def set_ptc_com_pointers() -> None:
     """
+    Subroutine set_ptc_com_pointers ()
+    
     Routine to set ptc_com pointers to PTC global variables.
     """
 def set_ptc_quiet(channel: typing.SupportsInt, set: bool, old_val: typing.SupportsInt) -> PySetPtcQuiet:
     """
-    Routine to set the lielib_print(:) array or c_verbose logical to suppress informational messages
+    Subroutine set_ptc_quiet (channel, set, old_val)
     
+    Routine to set the lielib_print(:) array or c_verbose logical to suppress informational messages
     that can clutter the output from a program using PTC.
+    
+    Note: Only suppress printing if ptc_com%print_info_messages = F.
     
     Parameters
     ----------
@@ -35588,16 +35510,15 @@ def set_ptc_quiet(channel: typing.SupportsInt, set: bool, old_val: typing.Suppor
     """
 def set_ptc_verbose(on: bool) -> PySetPtcVerbose:
     """
-    No docstring available
-    
     Parameters
     ----------
     on : 
     """
 def set_pwd_ele(lat: LatStruct, mode0: NormalModesStruct, inductance: typing.SupportsFloat) -> None:
     """
-    Simulates the effect of potential well distortion by adjusting lat%ele(ix_pwd)%taylor(6)%term(2)%coef for an
+    Subroutine set_pwd_ele(lat,mode0,inductance)
     
+    Simulates the effect of potential well distortion by adjusting lat%ele(ix_pwd)%taylor(6)%term(2)%coef for an
     element in the lattice.  This element will apply a pz kick based on the z coordinate.
     Element is assumed to be at lat%ele(1).  The ibs_ring driver program
     inserts a taylor element into lat%ele(1) if set to perform pwd calculations.
@@ -35618,8 +35539,9 @@ def set_pwd_ele(lat: LatStruct, mode0: NormalModesStruct, inductance: typing.Sup
     """
 def set_species_charge(species_in: typing.SupportsInt, charge: typing.SupportsInt) -> int:
     """
-    Routine to return the ID for a particle of the same type as species_in but with a different charge.
+    Function set_species_charge(species_in, charge) result(species_charged)
     
+    Routine to return the ID for a particle of the same type as species_in but with a different charge.
     Exception: If species_in corresponds to a subatomic particle, the charge argument is ignored and
     species_charged will be set equal to species_in.
     
@@ -35637,8 +35559,6 @@ def set_species_charge(species_in: typing.SupportsInt, charge: typing.SupportsIn
     """
 def set_status_flags(stat: typing.SupportsInt) -> BookkeepingStateStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     bookkeeping_state : BookkeepingStateStruct
@@ -35647,8 +35567,6 @@ def set_status_flags(stat: typing.SupportsInt) -> BookkeepingStateStruct:
     """
 def set_tune(phi_a_set: typing.SupportsFloat, phi_b_set: typing.SupportsFloat, dk1: RealAlloc1D, eles: ElePointerStructAlloc1D, branch: BranchStruct, orb: CoordStructAlloc1D, print_err: bool | None = None, ok: bool) -> PySetTune:
     """
-    No docstring available
-    
     Parameters
     ----------
     phi_a_set : float
@@ -35673,8 +35591,6 @@ def set_tune(phi_a_set: typing.SupportsFloat, phi_b_set: typing.SupportsFloat, d
     """
 def set_tune_3d(branch: BranchStruct, target_tunes: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], mask: str | None = None, use_phase_trombone: bool | None = None, z_tune_set: bool | None = None, group_knobs: typing.Annotated[collections.abc.Sequence[str], "FixedSize(2)"] | None = None, print_err: bool | None = None, everything_ok: bool) -> PySetTune3d:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch : BranchStruct
@@ -35696,8 +35612,6 @@ def set_tune_3d(branch: BranchStruct, target_tunes: typing.Annotated[collections
     """
 def set_twiss(branch: BranchStruct, twiss_ele: EleStruct, ix_ele: typing.SupportsInt, match_deta_ds: bool, err_flag: bool, print_err: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch : BranchStruct
@@ -35715,8 +35629,6 @@ def set_twiss(branch: BranchStruct, twiss_ele: EleStruct, ix_ele: typing.Support
     """
 def set_z_tune(branch: BranchStruct, z_tune: typing.SupportsFloat, print_err: bool | None = None) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch : BranchStruct
@@ -35732,6 +35644,8 @@ def set_z_tune(branch: BranchStruct, z_tune: typing.SupportsFloat, print_err: bo
     """
 def settable_dep_var_bookkeeping(ele: EleStruct) -> None:
     """
+    Subroutine settable_dep_var_bookkeeping (ele)
+    
     Subroutine to initialize dependent variables in an element.
     
     This subroutine is used by bmad_parser and bmad_parser2.
@@ -35739,8 +35653,9 @@ def settable_dep_var_bookkeeping(ele: EleStruct) -> None:
     """
 def setup_high_energy_space_charge_calc(calc_on: bool, branch: BranchStruct, n_part: typing.SupportsFloat, mode: NormalModesStruct, closed_orb: _pybmad.CoordStructAlloc1D | None = None) -> None:
     """
-    Routine to initialize constants needed by the ultra relativistic space charge
+    Subroutine setup_high_energy_space_charge_calc (calc_on, branch, n_part, mode, closed_orb, beam_init)
     
+    Routine to initialize constants needed by the ultra relativistic space charge
     tracking routine track1_high_energy_space_charge. This setup routine must be called if
     the lattice or any of the other input parameters are changed.
     
@@ -35761,9 +35676,11 @@ def setup_high_energy_space_charge_calc(calc_on: bool, branch: BranchStruct, n_p
     """
 def sigma_mat_ptc_to_bmad(sigma_mat_ptc: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], beta0: typing.SupportsFloat) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
-    Routine to convert a PTC sigma matrix to a Bmad sigma matrix.
+    Subroutine sigma_mat_ptc_to_bmad (sigma_mat_ptc, beta0, sigma_mat_bmad)
     
+    Routine to convert a PTC sigma matrix to a Bmad sigma matrix.
     The conversion includes the conversion between Bmad and PTC time coordinate systems.
+    
     Since PTC uses delta_E/P0c and Bmad uses delta_P/P0c coordinates, and since
     the relationship between delta_E and delta_P is nonlinear, this routine
     simplifies the calculation and assumes that the particle beta is constant
@@ -35783,8 +35700,6 @@ def sigma_mat_ptc_to_bmad(sigma_mat_ptc: typing.Annotated[collections.abc.Sequen
     """
 def significant_difference(value1: typing.SupportsFloat, value2: typing.SupportsFloat, abs_tol: typing.SupportsFloat | None = None, rel_tol: typing.SupportsFloat | None = None, is_different: bool) -> PySignificantDifference:
     """
-    No docstring available
-    
     Parameters
     ----------
     value1 : float
@@ -35799,8 +35714,6 @@ def significant_difference(value1: typing.SupportsFloat, value2: typing.Supports
     """
 def sinc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typing.SupportsFloat) -> PySinc:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : 
@@ -35809,8 +35722,6 @@ def sinc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typin
     """
 def sincc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typing.SupportsFloat) -> PySincc:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : 
@@ -35819,8 +35730,6 @@ def sincc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typi
     """
 def sinhx_x(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typing.SupportsFloat) -> PySinhxX:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : 
@@ -35829,8 +35738,6 @@ def sinhx_x(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: ty
     """
 def skip_ele_blender(ele: EleStruct, skip: bool) -> PySkipEleBlender:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : 
@@ -35838,8 +35745,6 @@ def skip_ele_blender(ele: EleStruct, skip: bool) -> PySkipEleBlender:
     """
 def skip_header(ix_unit: typing.SupportsInt, error_flag: bool) -> PySkipHeader:
     """
-    No docstring available
-    
     Parameters
     ----------
     ix_unit : 
@@ -35847,8 +35752,6 @@ def skip_header(ix_unit: typing.SupportsInt, error_flag: bool) -> PySkipHeader:
     """
 def slice_lattice(lat: LatStruct, ele_list: str, do_bookkeeping: bool | None = None) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -35866,8 +35769,9 @@ def slice_lattice(lat: LatStruct, ele_list: str, do_bookkeeping: bool | None = N
     """
 def soft_quadrupole_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.SupportsInt, orbit: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Routine to add the SAD "linear" soft edge (for finite f1 or f2).
+    Subroutine soft_quadrupole_edge_kick (ele, param, particle_at, orbit, mat6, make_matrix)
     
+    Routine to add the SAD "linear" soft edge (for finite f1 or f2).
     This routine assumes that the particle orbit has been rotated to the element reference frame.
     This routine is called with sad_mult and quadrupole elements.
     
@@ -35891,8 +35795,6 @@ def soft_quadrupole_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at
     """
 def sol_quad_mat6_calc(ks_in: typing.SupportsFloat, k1_in: typing.SupportsFloat, tilt: typing.SupportsFloat, length: typing.SupportsFloat, ele: EleStruct, orbit: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> PySolQuadMat6Calc:
     """
-    No docstring available
-    
     Parameters
     ----------
     ks_in : 
@@ -35914,9 +35816,11 @@ def sol_quad_mat6_calc(ks_in: typing.SupportsFloat, k1_in: typing.SupportsFloat,
     """
 def solve_psi_adaptive(t0: typing.SupportsFloat, t1: typing.SupportsFloat, p0: typing.SupportsFloat, args: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(8)"]) -> float:
     """
-    Solve dpsi/dt for psi(t1) using adaptive steps and method:
+    Subroutine solve_psi_adaptive(t0,t1,p0,args,p1)
     
-    "Implicit Bulirsch-Stoer method of Bader and Deuflhard."
+    Solve dpsi/dt for psi(t1) using adaptive steps and method:
+      "Implicit Bulirsch-Stoer method of Bader and Deuflhard."
+    
     The boundary condition p0 is psi(t0)
     
     Parameters
@@ -35937,10 +35841,13 @@ def solve_psi_adaptive(t0: typing.SupportsFloat, t1: typing.SupportsFloat, p0: t
     """
 def solve_psi_fixed_steps(t0: typing.SupportsFloat, t1: typing.SupportsFloat, p0: typing.SupportsFloat, args: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(8)"]) -> ...:
     """
-    Solve dpsi/dt for psi(t1) using fixed steps and method:
+    Subroutine solve_psi_fixed_steps(t0,t1,p0,args,t,p)
     
-    "Implicit Bulirsch-Stoer method of Bader and Deuflhard."
+    Solve dpsi/dt for psi(t1) using fixed steps and method:
+      "Implicit Bulirsch-Stoer method of Bader and Deuflhard."
+    
     The boundary condition p0 is psi(t0).
+    
     Number of steps is determined by SIZE(p).
     
     Parameters
@@ -35963,11 +35870,17 @@ def solve_psi_fixed_steps(t0: typing.SupportsFloat, t1: typing.SupportsFloat, p0
     """
 def sort_complex_taylor_terms(complex_taylor_in: ComplexTaylorStruct) -> ComplexTaylorStruct:
     """
-    Subroutine to sort the complex_taylor terms from "lowest" to "highest" of
+    subroutine sort_complex_taylor_terms (complex_taylor_in, complex_taylor_sorted)
     
+    Subroutine to sort the complex_taylor terms from "lowest" to "highest" of
     a complex_taylor series.
     This subroutine is needed because what comes out of PTC is not sorted.
+    
     Uses function complex_taylor_exponent_index to sort.
+    
+    Note: complex_taylor_sorted needs to have been initialized.
+    Note: complex_taylor_sorted cannot be complex_taylor_in. That is it is not legal to write:
+              call sort_complex_taylor_terms (this_complex_taylor, this_complex_taylor)
     
     Parameters
     ----------
@@ -35978,13 +35891,11 @@ def sort_complex_taylor_terms(complex_taylor_in: ComplexTaylorStruct) -> Complex
     -------
     complex_taylor_sorted : ComplexTaylorStruct
         Sorted complex_taylor series.
-    
-    Notes
-    -----
-    Note: complex_taylor_sorted needs to have been initialized.
     """
 def species_id(name: str, default_: typing.SupportsInt | None = None, print_err: bool | None = None) -> int:
     """
+    Function species_id (name, default, print_err) result(species)
+    
     Routine to return the integer ID index of a particle species given the name.
     
     For subatomic particles, the case does not matter.
@@ -36006,7 +35917,10 @@ def species_id(name: str, default_: typing.SupportsInt | None = None, print_err:
     """
 def species_id_from_openpmd(pmd_name: str, charge: typing.SupportsInt) -> int:
     """
+    Function species_id_from_openpmd (pmd_name, charge) result(species)
+    
     Routine to return the Bmad species ID given the openPMD species name and given particle charge.
+    Note: If pmd_name corresponds to a subatomic particle, the charge argument is ignored.
     
     Parameters
     ----------
@@ -36022,6 +35936,8 @@ def species_id_from_openpmd(pmd_name: str, charge: typing.SupportsInt) -> int:
     """
 def species_name(species: typing.SupportsInt) -> str:
     """
+    Function species_name (species) result(name)
+    
     Routine to return the name of a particle species given the integer index.
     
     Parameters
@@ -36036,7 +35952,10 @@ def species_name(species: typing.SupportsInt) -> str:
     """
 def species_of(mass: typing.SupportsFloat, charge: typing.SupportsInt) -> int:
     """
+    Function species_of (mass, charge) result (species)
+    
     Routine to return the integer ID index of a particle species given the mass and charge.
+    Note: Currently this routine only works for subatomic particles and is used for decoding PTC flat files.
     
     Parameters
     ----------
@@ -36052,8 +35971,6 @@ def species_of(mass: typing.SupportsFloat, charge: typing.SupportsInt) -> int:
     """
 def spin_dn_dpz_from_mat8(mat_1turn: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(8)"]], "FixedSize(8)"], dn_dpz_partial: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"] | None = None, dn_dpz: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     mat_1turn : float
@@ -36067,8 +35984,6 @@ def spin_dn_dpz_from_mat8(mat_1turn: typing.Annotated[collections.abc.Sequence[t
     """
 def spin_dn_dpz_from_qmap(orb_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], q_map: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(7)"]], "FixedSize(4)"], dn_dpz_partial: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"], dn_dpz_partial2: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"], n0: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, dn_dpz: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     orb_mat : float
@@ -36089,8 +36004,6 @@ def spin_dn_dpz_from_qmap(orb_mat: typing.Annotated[collections.abc.Sequence[typ
     """
 def spin_map1_normalize(spin1: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(7)"]], "FixedSize(4)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     spin1 : float
@@ -36099,8 +36012,6 @@ def spin_map1_normalize(spin1: typing.Annotated[collections.abc.Sequence[typing.
     """
 def spin_mat8_resonance_strengths(orb_evec: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"], mat8: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     orb_evec : complex
@@ -36114,8 +36025,6 @@ def spin_mat8_resonance_strengths(orb_evec: typing.Annotated[collections.abc.Seq
     """
 def spin_mat_to_eigen(orb_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], spin_map: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(7)"]], "FixedSize(4)"]) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     orb_mat : float
@@ -36135,8 +36044,9 @@ def spin_mat_to_eigen(orb_mat: typing.Annotated[collections.abc.Sequence[typing.
     """
 def spin_of(species: typing.SupportsInt, non_subatomic_default: typing.SupportsFloat | None = None) -> float:
     """
-    Routine to return the spin, in units of hbar, of a particle.
+    Function spin_of (species, non_subatomic_default) result (spin)
     
+    Routine to return the spin, in units of hbar, of a particle.
     This routine is only valid for subatomic particles.
     For all other particles, the returned spin value will be the value of non_subatomic_default.
     
@@ -36154,8 +36064,6 @@ def spin_of(species: typing.SupportsInt, non_subatomic_default: typing.SupportsF
     """
 def spin_omega(field: EmFieldStruct, orbit: CoordStruct, sign_z_vel: typing.SupportsInt, phase_space_coords: bool | None = None, omega: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> PySpinOmega:
     """
-    No docstring available
-    
     Parameters
     ----------
     field : 
@@ -36166,8 +36074,6 @@ def spin_omega(field: EmFieldStruct, orbit: CoordStruct, sign_z_vel: typing.Supp
     """
 def spin_quat_resonance_strengths(orb_evec: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"], spin_q: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(7)"]], "FixedSize(4)"]) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     orb_evec : complex
@@ -36181,8 +36087,6 @@ def spin_quat_resonance_strengths(orb_evec: typing.Annotated[collections.abc.Seq
     """
 def spin_taylor_to_linear(spin_taylor: typing.Annotated[collections.abc.Sequence[TaylorStruct], "FixedSize(4)"], normalize: bool, dref_orb: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], is_on: bool, spin_map1: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(7)"]], "FixedSize(4)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     spin_taylor : TaylorStruct
@@ -36197,8 +36101,6 @@ def spin_taylor_to_linear(spin_taylor: typing.Annotated[collections.abc.Sequence
     """
 def spinor_to_polar(spinor: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(2)"], polar: SpinPolarStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     spinor : complex
@@ -36207,8 +36109,6 @@ def spinor_to_polar(spinor: typing.Annotated[collections.abc.Sequence[complex], 
     """
 def spinor_to_vec(spinor: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(2)"], vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     spinor : complex
@@ -36217,6 +36117,8 @@ def spinor_to_vec(spinor: typing.Annotated[collections.abc.Sequence[complex], "F
     """
 def spline1(a_spline: SplineStruct, x: typing.SupportsFloat, n: typing.SupportsInt | None = None) -> float:
     """
+    Function spline1 (a_spline, x, n) result (y)
+    
     Function for spline evaluation using a single spline (instead of a spline array).
     
     Parameters
@@ -36241,18 +36143,21 @@ def spline1(a_spline: SplineStruct, x: typing.SupportsFloat, n: typing.SupportsI
     """
 def spline_akima(spline: SplineStructAlloc1D) -> bool:
     """
-    Given a set of (x,y) points we want to interpolate between the points.
+    Subroutine spline_akima (spline, ok)
     
+    Given a set of (x,y) points we want to interpolate between the points.
     This subroutine computes the semi-hermite cubic spline developed by
     Hiroshi Akima. The spline goes thorugh all the points (that is, it is
     not a smoothing spline). For interpolation use:
-    spline_evaluate
-    spline_akima_interpolate ! You do not need to call spline_akima if you use this routine.
+      spline_evaluate
+      spline_akima_interpolate ! You do not need to call spline_akima if you use this routine.
+    
     Reference:
-    H Akima, "A New Method of Interpolation and Smooth Curve Fitting Based
-    on Local Procedures", J. Assoc. Comp. Mach., Vol 17(4), 589-602 (1970).
+      H Akima, "A New Method of Interpolation and Smooth Curve Fitting Based
+      on Local Procedures", J. Assoc. Comp. Mach., Vol 17(4), 589-602 (1970).
+    
     Modules used:
-    use spline_mod
+      use spline_mod
     
     Parameters
     ----------
@@ -36266,12 +36171,16 @@ def spline_akima(spline: SplineStructAlloc1D) -> bool:
     """
 def spline_akima_interpolate(x_knot: RealAlloc1D, y_knot: RealAlloc1D, x: typing.SupportsFloat) -> ...:
     """
+    Subroutine spline_akima_interpolate (x_knot, y_knot, x, ok, y, dy)
+    
     Routine to interpolate using an akima spline.
     
     When evaluating at enough points, this routine is slower than calling spline_akima to
     first evaluate the spline coefficients and then repeatedly calling spline_evaluate.
+    
     The advantage of this routine is that only the (x, y) knot points need to be stored
     and it will be faster if the number of evaluations is small.
+    
     This routine will extrapolate past the range of x_knot(:) up to a distance equal to the
     length between an end point and the point just inside the end point.
     
@@ -36295,6 +36204,8 @@ def spline_akima_interpolate(x_knot: RealAlloc1D, y_knot: RealAlloc1D, x: typing
     """
 def spline_evaluate(spline: SplineStructAlloc1D, x: typing.SupportsFloat) -> ...:
     """
+    Subroutine spline_evaluate (spline, x, ok, y, dy)
+    
     Subroutine to evalueate a spline at a set of points.
     
     A point outside of the range of knot points is an error.
@@ -36323,8 +36234,6 @@ def spline_evaluate(spline: SplineStructAlloc1D, x: typing.SupportsFloat) -> ...
     """
 def spline_fit_orbit(start_orb: CoordStruct, end_orb: CoordStruct, spline_x: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"], spline_y: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     start_orb : CoordStruct
@@ -36338,8 +36247,6 @@ def spline_fit_orbit(start_orb: CoordStruct, end_orb: CoordStruct, spline_x: typ
     """
 def split_lat(lat: LatStruct, s_split: typing.SupportsFloat, ix_branch: typing.SupportsInt, add_suffix: bool | None = None, check_sanity: bool | None = None, save_null_drift: bool | None = None, choose_max: bool | None = None, ix_insert: typing.SupportsInt | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -36377,8 +36284,6 @@ def split_lat(lat: LatStruct, s_split: typing.SupportsFloat, ix_branch: typing.S
     """
 def sprint_spin_taylor_map(ele: EleStruct, start_orbit: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"] | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -36389,8 +36294,6 @@ def sprint_spin_taylor_map(ele: EleStruct, start_orbit: typing.Annotated[collect
     """
 def sqrt_alpha(alpha: typing.SupportsFloat, x: typing.SupportsFloat, y: typing.SupportsFloat) -> PySqrtAlpha:
     """
-    No docstring available
-    
     Parameters
     ----------
     alpha : 
@@ -36399,8 +36302,6 @@ def sqrt_alpha(alpha: typing.SupportsFloat, x: typing.SupportsFloat, y: typing.S
     """
 def sqrt_one(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, ds1: typing.SupportsFloat) -> PySqrtOne:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : 
@@ -36409,8 +36310,9 @@ def sqrt_one(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, ds1:
     """
 def sr_longitudinal_wake_particle(ele: EleStruct, orbit: CoordStruct) -> None:
     """
-    Routine to apply the short-range wake longitudinal component kick to a particle and then add
+    Subroutine sr_longitudinal_wake_particle (ele, orbit)
     
+    Routine to apply the short-range wake longitudinal component kick to a particle and then add
     to the existing longitudinal wake the contribution from the particle.
     
     Parameters
@@ -36423,8 +36325,9 @@ def sr_longitudinal_wake_particle(ele: EleStruct, orbit: CoordStruct) -> None:
     """
 def sr_transverse_wake_particle(ele: EleStruct, orbit: CoordStruct) -> None:
     """
-    Subroutine to apply the short-range wake transverse component of the kick to a particle and then add
+    Subroutine sr_transverse_wake_particle (ele, orbit)
     
+    Subroutine to apply the short-range wake transverse component of the kick to a particle and then add
     to the existing transverse wake the contribution from the particle.
     
     Parameters
@@ -36437,6 +36340,8 @@ def sr_transverse_wake_particle(ele: EleStruct, orbit: CoordStruct) -> None:
     """
 def sr_z_long_wake(ele: EleStruct, bunch: BunchStruct, z_ave: typing.SupportsFloat) -> None:
     """
+    Subroutine sr_z_long_wake (ele, bunch, z_ave)
+    
     Subroutine to apply the short-range z-wake kick to a particle.
     
     Parameters
@@ -36455,11 +36360,14 @@ def sr_z_long_wake(ele: EleStruct, bunch: BunchStruct, z_ave: typing.SupportsFlo
     """
 def srdt_calc(lat: LatStruct, order: typing.SupportsInt, n_slices_gen_opt: typing.SupportsInt | None = None, n_slices_sxt_opt: typing.SupportsInt | None = None, per_ele_out: _pybmad.SummationRdtStructAlloc1D | None = None) -> SummationRdtStruct:
     """
-    Calculate summation RDT terms up to order=1 or order=2 while slicing sextupoles
+    Subroutine srdt_calc(lat, srdt_sums, order, n_slices_gen_opt, n_slices_sxt_opt)
     
+    Calculate summation RDT terms up to order=1 or order=2 while slicing sextupoles
     n_slices_sxt_opt times and all other elements n_slices_gen_opt times.
+    
     These formulas are documented in "The Sextupole Scheme for the Swiss Light Source (SLS): An Analytic Approach"
     by Johan Bengtsson.  SLS Note 9/97.
+    
     The 2nd order formulas are documented in "Second-order driving terms due to sextupoles and
     chromatic effects of quadrupoles" by Chun-xi Wang.  AOP-TN-2009-020.
     
@@ -36481,12 +36389,18 @@ def srdt_calc(lat: LatStruct, order: typing.SupportsInt, n_slices_gen_opt: typin
     """
 def srdt_lsq_solution(lat: LatStruct, var_indexes: IntAlloc1D, n_slices_gen_opt: typing.SupportsInt | None = None, n_slices_sxt_opt: typing.SupportsInt | None = None, chrom_set_x_opt: typing.SupportsFloat | None = None, chrom_set_y_opt: typing.SupportsFloat | None = None, weight_in: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(10)"] | None = None) -> RealAlloc1D:
     """
-    chrom_set_x_opt, chrom_set_y_opt, weight_in)
+    Subroutine srdt_lsq_solution(lat, var_indexes, ls_soln, n_slices_gen_opt, n_slices_sxt_opt,
+                                                        chrom_set_x_opt, chrom_set_y_opt, weight_in)
     
     Given lat, finds K2 moments that set the chromaticity and zeros-out the real
     and complex parts of the first order driving terms, that minimizes the sum of the squares
     of the K2 moments.  i.e. the weakest sextupole scheme that sets chromaticity
     and zeros out the first order terms.
+    
+    Note:  This subroutine does not, in its present form, work well with knobs, overlays, or in lattices where
+           multiple elements have the same name.
+    
+    This subroutine assumes that Nsext > 18.
     
     Parameters
     ----------
@@ -36514,8 +36428,6 @@ def srdt_lsq_solution(lat: LatStruct, var_indexes: IntAlloc1D, n_slices_gen_opt:
     """
 def start_branch_at(lat: LatStruct, ele_start: str, move_end_marker: bool) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -36531,8 +36443,6 @@ def start_branch_at(lat: LatStruct, ele_start: str, move_end_marker: bool) -> bo
     """
 def str_count(str: str, match: str, num: typing.SupportsInt) -> PyStrCount:
     """
-    No docstring available
-    
     Parameters
     ----------
     str : 
@@ -36541,8 +36451,6 @@ def str_count(str: str, match: str, num: typing.SupportsInt) -> PyStrCount:
     """
 def str_downcase(src: str) -> str:
     """
-    No docstring available
-    
     Parameters
     ----------
     dst : 
@@ -36550,8 +36458,6 @@ def str_downcase(src: str) -> str:
     """
 def str_first_in_set(line: str, set: str, ignore_clauses: bool | None = None, ix_match: typing.SupportsInt) -> PyStrFirstInSet:
     """
-    No docstring available
-    
     Parameters
     ----------
     line : 
@@ -36561,8 +36467,6 @@ def str_first_in_set(line: str, set: str, ignore_clauses: bool | None = None, ix
     """
 def str_first_not_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> PyStrFirstNotInSet:
     """
-    No docstring available
-    
     Parameters
     ----------
     line : 
@@ -36571,8 +36475,6 @@ def str_first_not_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> P
     """
 def str_last_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> PyStrLastInSet:
     """
-    No docstring available
-    
     Parameters
     ----------
     line : 
@@ -36581,8 +36483,6 @@ def str_last_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> PyStrL
     """
 def str_last_not_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> PyStrLastNotInSet:
     """
-    No docstring available
-    
     Parameters
     ----------
     line : 
@@ -36591,8 +36491,6 @@ def str_last_not_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> Py
     """
 def str_match_wild(str: str, pat: str, a_match: bool) -> PyStrMatchWild:
     """
-    No docstring available
-    
     Parameters
     ----------
     str : 
@@ -36601,8 +36499,6 @@ def str_match_wild(str: str, pat: str, a_match: bool) -> PyStrMatchWild:
     """
 def str_substitute(string: str, str_match: str | None = None, str_replace: str | None = None, do_trim: bool | None = None, ignore_escaped: bool | None = None) -> PyStrSubstitute:
     """
-    No docstring available
-    
     Parameters
     ----------
     string : 
@@ -36613,8 +36509,6 @@ def str_substitute(string: str, str_match: str | None = None, str_replace: str |
     """
 def str_upcase(src: str) -> str:
     """
-    No docstring available
-    
     Parameters
     ----------
     dst : 
@@ -36622,8 +36516,6 @@ def str_upcase(src: str) -> str:
     """
 def stream_ele_end(physical_end: typing.SupportsInt, ele_orientation: typing.SupportsInt, stream_end: typing.SupportsInt) -> PyStreamEleEnd:
     """
-    No docstring available
-    
     Parameters
     ----------
     physical_end : int
@@ -36634,11 +36526,13 @@ def stream_ele_end(physical_end: typing.SupportsInt, ele_orientation: typing.Sup
     """
 def string_attrib(attrib_name: str, ele: EleStruct) -> str:
     """
-    Routine to return the value of a string attribute of a lattice element.
+    Subroutine string_attrib (attrib_name, ele, attrib_value)
     
+    Routine to return the value of a string attribute of a lattice element.
     This routine is useful when attrib_name is specified by the program user.
+    
     For example:
-    call string_attrib ('NAME', ele, attrib_value)  ! Will return attrib_value = ele%name
+      call string_attrib ('NAME', ele, attrib_value)  ! Will return attrib_value = ele%name
     
     Parameters
     ----------
@@ -36654,8 +36548,6 @@ def string_attrib(attrib_name: str, ele: EleStruct) -> str:
     """
 def string_to_int(line: str, default_: typing.SupportsInt, err_flag: bool, err_print_flag: bool | None = None, value: typing.SupportsInt) -> PyStringToInt:
     """
-    No docstring available
-    
     Parameters
     ----------
     line : 
@@ -36666,8 +36558,6 @@ def string_to_int(line: str, default_: typing.SupportsInt, err_flag: bool, err_p
     """
 def string_to_real(line: str, default_: typing.SupportsFloat, err_flag: bool, err_print_flag: bool | None = None, value: typing.SupportsFloat) -> PyStringToReal:
     """
-    No docstring available
-    
     Parameters
     ----------
     line : 
@@ -36678,8 +36568,6 @@ def string_to_real(line: str, default_: typing.SupportsFloat, err_flag: bool, er
     """
 def string_trim(in_string: str, out_string: str, word_len: typing.SupportsInt) -> PyStringTrim:
     """
-    No docstring available
-    
     Parameters
     ----------
     in_string : 
@@ -36688,8 +36576,6 @@ def string_trim(in_string: str, out_string: str, word_len: typing.SupportsInt) -
     """
 def string_trim2(in_str: str, delimitors: str, out_str: str, ix_word: typing.SupportsInt, delim: str, ix_next: typing.SupportsInt) -> PyStringTrim2:
     """
-    No docstring available
-    
     Parameters
     ----------
     in_str : 
@@ -36701,8 +36587,6 @@ def string_trim2(in_str: str, delimitors: str, out_str: str, ix_word: typing.Sup
     """
 def strong_beam_sigma_calc(ele: EleStruct, s_pos: typing.SupportsFloat) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -36718,8 +36602,6 @@ def strong_beam_sigma_calc(ele: EleStruct, s_pos: typing.SupportsFloat) -> ...:
     """
 def strong_beam_strength(ele: EleStruct, strength: typing.SupportsFloat) -> PyStrongBeamStrength:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -36728,8 +36610,9 @@ def strong_beam_strength(ele: EleStruct, strength: typing.SupportsFloat) -> PySt
     """
 def super_bicubic_coef(y: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"], y1: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"], y2: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"], y12: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"], d1: typing.SupportsFloat, d2: typing.SupportsFloat) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(4)"]], "FixedSize(4)"]:
     """
-    Routine to compute coefficients for bicubic interpolation.
+    Subroutine super_bicubic_coef(y, y1, y2, y12, d1, d2, c)
     
+    Routine to compute coefficients for bicubic interpolation.
     This is from NR bcucof.
     
     Parameters
@@ -36754,9 +36637,11 @@ def super_bicubic_coef(y: typing.Annotated[collections.abc.Sequence[typing.Suppo
     """
 def super_bicubic_interpolation(y: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"], y1: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"], y2: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"], y12: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"], x1l: typing.SupportsFloat, x1u: typing.SupportsFloat, x2l: typing.SupportsFloat, x2u: typing.SupportsFloat, x1: typing.SupportsFloat, x2: typing.SupportsFloat) -> ...:
     """
-    Routine to do bicubic interpolation.
+    Subroutine super_bicubic_interpolation(y, y1, y2, y12, x1l, x1u, x2l, x2u, x1, x2, ansy, ansy1, ansy2)
     
+    Routine to do bicubic interpolation.
     This is from NR bcuint.
+    
     Note! The four grid points are arrayed in counter-clockwise order beginning from the lower left.
     So, for example, y = [y_ll, y_lu, y_uu, y_ul] where "l" = lower, "u" = upper index.
     
@@ -36794,6 +36679,8 @@ def super_bicubic_interpolation(y: typing.Annotated[collections.abc.Sequence[typ
     """
 def super_polint(xa: RealAlloc1D, ya: RealAlloc1D, x: typing.SupportsFloat) -> ...:
     """
+    Function super_polint (xa, ya, x, y, dy)
+    
     This is essentially polint from Numerical Recipes.
     
     Parameters
@@ -36808,6 +36695,8 @@ def super_polint(xa: RealAlloc1D, ya: RealAlloc1D, x: typing.SupportsFloat) -> .
     """
 def super_poly(x: typing.SupportsFloat, coeffs: RealAlloc1D) -> float:
     """
+    Function super_poly (x, coef) result (value)
+    
     Routine to compute Sum: coef(i)*x^i
     
     Parameters
@@ -36824,8 +36713,9 @@ def super_poly(x: typing.SupportsFloat, coeffs: RealAlloc1D) -> float:
     """
 def super_sobseq(ran_state: _pybmad.RandomStateStruct | None = None) -> RealAlloc1D:
     """
-    Routine patterened after sobseq in Numerical Recipes.
+    Subroutine super_sobseq (x, ran_state)
     
+    Routine patterened after sobseq in Numerical Recipes.
     Difference is that this version has an argument for the internal state.
     
     Parameters
@@ -36840,8 +36730,9 @@ def super_sobseq(ran_state: _pybmad.RandomStateStruct | None = None) -> RealAllo
     """
 def super_sort(arr: IntAlloc1D) -> None:
     """
-    Routine to sort an integer array in place.
+    Subroutine super_sort(arr)
     
+    Routine to sort an integer array in place.
     This is the NR routine sort modified to sort integers.
     
     Parameters
@@ -36852,6 +36743,8 @@ def super_sort(arr: IntAlloc1D) -> None:
     """
 def surface_grid_displacement(ele: EleStruct, x: typing.SupportsFloat, y: typing.SupportsFloat, err_flag: bool, z: typing.SupportsFloat, dz_dxy: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"] | None = None, extend_grid: bool | None = None) -> PySurfaceGridDisplacement:
     """
+    Subroutine surface_grid_displacement (ele, x, y, err_flag, z, dz_dxy, extend_grid)
+    
     Routine to add in the z displacement defined by the grid
     
     Parameters
@@ -36869,8 +36762,6 @@ def surface_grid_displacement(ele: EleStruct, x: typing.SupportsFloat, y: typing
     """
 def symp_lie_bmad(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None, offset_ele: bool | None = None) -> TrackStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -36896,8 +36787,6 @@ def symp_lie_bmad(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct, mat
     """
 def system_command(line: str, err_flag: bool | None = None) -> PySystemCommand:
     """
-    No docstring available
-    
     Parameters
     ----------
     line : 
@@ -36905,9 +36794,12 @@ def system_command(line: str, err_flag: bool | None = None) -> PySystemCommand:
     """
 def t6_to_b123(t6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], abz_tunes: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> ...:
     """
-    This decomposes the one-turn matrix according to Equation 56 from
+    Subroutine t6_to_B123(N, abz_tunes, B1, B2, B3, err_flag)
     
+    This decomposes the one-turn matrix according to Equation 56 from
     "Alternative approach to general coupled linear optics" by A. Wolski. PRSTAB.
+    
+    Note that a sigma matrix can be assembeled from:  sigma = B1*emit_a + B2*emit_b + B3*emit_c
     
     Parameters
     ----------
@@ -36929,8 +36821,6 @@ def t6_to_b123(t6: typing.Annotated[collections.abc.Sequence[typing.Annotated[co
     """
 def tao_abort_command_file(force_abort: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     force_abort : bool, optional
@@ -36938,8 +36828,9 @@ def tao_abort_command_file(force_abort: bool | None = None) -> None:
     """
 def tao_add_to_normal_mode_h_array(h_str: str) -> ResonanceHStructAlloc1D:
     """
-    Routine to add on to the "h(:)" array holding the list of normal form
+    Subroutine tao_add_to_normal_mode_h_array(h_str, h_array)
     
+    Routine to add on to the "h(:)" array holding the list of normal form
     resonance driving terms to calculate.
     If h_str is already in the h_array(:) list, nothing is done.
     
@@ -36955,8 +36846,6 @@ def tao_add_to_normal_mode_h_array(h_str: str) -> ResonanceHStructAlloc1D:
     """
 def tao_alias_cmd(alias: str, string: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     alias : 
@@ -36966,8 +36855,6 @@ def tao_alias_cmd(alias: str, string: str) -> None:
     """
 def tao_allocate_data_array(u: TaoUniverseStruct, n_data: typing.SupportsInt, exact: bool | None = None) -> PyTaoAllocateDataArray:
     """
-    No docstring available
-    
     Parameters
     ----------
     u : 
@@ -36976,8 +36863,6 @@ def tao_allocate_data_array(u: TaoUniverseStruct, n_data: typing.SupportsInt, ex
     """
 def tao_allocate_v1_var(n_v1: typing.SupportsInt, save_old: bool) -> PyTaoAllocateV1Var:
     """
-    No docstring available
-    
     Parameters
     ----------
     n_v1 : 
@@ -36985,6 +36870,8 @@ def tao_allocate_v1_var(n_v1: typing.SupportsInt, save_old: bool) -> PyTaoAlloca
     """
 def tao_allocate_var_array(n_var: typing.SupportsInt, default_good_user: bool) -> PyTaoAllocateVarArray:
     """
+    Subroutine tao_allocate_var_array (n_var, default_good_user)
+    
     Routine to increase the s%var(:) array size.
     
     Parameters
@@ -36994,8 +36881,6 @@ def tao_allocate_var_array(n_var: typing.SupportsInt, default_good_user: bool) -
     """
 def tao_beam_emit_calc(plane: typing.SupportsInt, emit_type: typing.SupportsInt, ele: EleStruct, bunch_params: BunchParamsStruct, emit: typing.SupportsFloat) -> PyTaoBeamEmitCalc:
     """
-    No docstring available
-    
     Parameters
     ----------
     plane : int
@@ -37010,6 +36895,8 @@ def tao_beam_emit_calc(plane: typing.SupportsInt, emit_type: typing.SupportsInt,
     """
 def tao_beam_track(u: TaoUniverseStruct, tao_lat: TaoLatticeStruct, ix_branch: typing.SupportsInt, beam: BeamStruct) -> bool:
     """
+    Subroutine tao_beam_track (u, tao_lat, ix_branch, beam, calc_ok)
+    
     Routine to track a a beam of particles.
     
     Parameters
@@ -37031,8 +36918,6 @@ def tao_beam_track(u: TaoUniverseStruct, tao_lat: TaoLatticeStruct, ix_branch: t
     """
 def tao_beam_track_endpoint(ele_id: str, lat: LatStruct, branch_str: str, where: str, u: TaoUniverseStruct, ele: EleStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele_id : unknown
@@ -37049,8 +36934,6 @@ def tao_beam_track_endpoint(ele_id: str, lat: LatStruct, branch_str: str, where:
     """
 def tao_branch_index(ix_branch: typing.SupportsInt, ix_this: typing.SupportsInt) -> PyTaoBranchIndex:
     """
-    No docstring available
-    
     Parameters
     ----------
     ix_branch : int
@@ -37059,12 +36942,12 @@ def tao_branch_index(ix_branch: typing.SupportsInt, ix_this: typing.SupportsInt)
     """
 def tao_c_out_io_buffer_reset() -> None:
     """
+    Subroutine tao_c_out_io_buffer_reset() bind(c)
+    
     Routine to reset the buffer.
     """
 def tao_calc_data_at_s_pts(tao_lat: TaoLatticeStruct, curve: TaoCurveStruct, comp_sign: typing.SupportsFloat, good: BoolAlloc1D) -> PyTaoCalcDataAtSPts:
     """
-    No docstring available
-    
     Parameters
     ----------
     tao_lat : 
@@ -37073,9 +36956,13 @@ def tao_calc_data_at_s_pts(tao_lat: TaoLatticeStruct, curve: TaoCurveStruct, com
     good : 
     """
 def tao_cbar_wave_anal(plot: TaoPlotStruct) -> None:
-    ...
+    """
+    Subroutine tao_cbar_wave_anal (plot)
+    """
 def tao_change_ele(ele_name: str, attrib_name: str, num_str: str, update: bool) -> PyTaoChangeEle:
     """
+    Subroutine tao_change_ele (ele_name, attrib_name, num_str, update, err_flag)
+    
     Routine to change a variable in the model lattice.
     
     Parameters
@@ -37095,6 +36982,8 @@ def tao_change_ele(ele_name: str, attrib_name: str, num_str: str, update: bool) 
     """
 def tao_change_tune(branch_str: str, mask_str: str, print_list: bool, dqa_str: str, dqb_str: str) -> bool:
     """
+    Subroutine tao_change_tune (branch_str, mask_str, print_list, dqa_str, dqb_str, err_flag)
+    
     Parameters
     ----------
     branch_str : unknown
@@ -37115,6 +37004,8 @@ def tao_change_tune(branch_str: str, mask_str: str, print_list: bool, dqa_str: s
     """
 def tao_change_var(name: str, num_str: str, silent: bool) -> bool:
     """
+    Subroutine tao_change_var (name, num_str, silent, err_flag)
+    
     Routine to change a variable in the model lattice.
     
     Parameters
@@ -37134,6 +37025,8 @@ def tao_change_var(name: str, num_str: str, silent: bool) -> bool:
     """
 def tao_change_z_tune(branch_str: str, dq_str: str) -> bool:
     """
+    Subroutine tao_change_z_tune (branch_str, dq_str, err_flag)
+    
     Parameters
     ----------
     branch_str : unknown
@@ -37148,8 +37041,6 @@ def tao_change_z_tune(branch_str: str, dq_str: str) -> bool:
     """
 def tao_chrom_calc_needed(data_type: str, data_source: str, do_chrom: bool) -> PyTaoChromCalcNeeded:
     """
-    No docstring available
-    
     Parameters
     ----------
     data_type : 
@@ -37158,8 +37049,6 @@ def tao_chrom_calc_needed(data_type: str, data_source: str, do_chrom: bool) -> P
     """
 def tao_clear_cmd(cmd_line: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     cmd_line : unknown
@@ -37167,8 +37056,6 @@ def tao_clear_cmd(cmd_line: str) -> None:
     """
 def tao_clip_cmd(gang: bool, where: str, value1: typing.SupportsFloat, value2: typing.SupportsFloat) -> PyTaoClipCmd:
     """
-    No docstring available
-    
     Parameters
     ----------
     gang : bool
@@ -37179,17 +37066,15 @@ def tao_clip_cmd(gang: bool, where: str, value1: typing.SupportsFloat, value2: t
     value2 : 
     """
 def tao_close_command_file() -> None:
-    """
-    No docstring available
-    """
+    ...
 def tao_cmd_history_record(cmd: str) -> PyTaoCmdHistoryRecord:
     """
+    Subroutine tao_cmd_history_record (cmd)
+    
     Subroutine to record a cmd in the command history stack
     """
 def tao_command(command_line: str, err: bool) -> PyTaoCommand:
     """
-    No docstring available
-    
     Parameters
     ----------
     command_line : unknown
@@ -37200,8 +37085,6 @@ def tao_command(command_line: str, err: bool) -> PyTaoCommand:
     """
 def tao_constraint_type_name(datum: TaoDataStruct, datum_name: str) -> PyTaoConstraintTypeName:
     """
-    No docstring available
-    
     Parameters
     ----------
     datum : TaoDataStruct
@@ -37210,8 +37093,6 @@ def tao_constraint_type_name(datum: TaoDataStruct, datum_name: str) -> PyTaoCons
     """
 def tao_control_tree_list(ele: EleStruct, tree: ElePointerStructAlloc1D) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -37221,8 +37102,6 @@ def tao_control_tree_list(ele: EleStruct, tree: ElePointerStructAlloc1D) -> None
     """
 def tao_count_strings(string: str, pattern: str) -> int:
     """
-    No docstring available
-    
     Parameters
     ----------
     string : unknown
@@ -37234,20 +37113,21 @@ def tao_count_strings(string: str, pattern: str) -> int:
     """
 def tao_create_plot_window() -> None:
     """
-    Subroutine to create the plot window.
+    Subroutine tao_create_plot_window ()
     
+    Subroutine to create the plot window.
     This soubroutine knows not to create a second window if one already exists.
     """
 def tao_curve_beam_ellipse_setup(curve: TaoCurveStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     curve : 
     """
 def tao_curve_check_universe(curve: TaoCurveStruct, uni: TaoUniverseStruct) -> bool:
     """
+    Function tao_curve_check_universe (curve, uni) result (is_ok)
+    
     Routine to check if the universe associated with a curve exists and is on.
     
     Parameters
@@ -37266,8 +37146,6 @@ def tao_curve_check_universe(curve: TaoCurveStruct, uni: TaoUniverseStruct) -> b
     """
 def tao_curve_data_setup(plot: TaoPlotStruct, graph: TaoGraphStruct, curve: TaoCurveStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     plot : 
@@ -37276,8 +37154,9 @@ def tao_curve_data_setup(plot: TaoPlotStruct, graph: TaoGraphStruct, curve: TaoC
     """
 def tao_curve_datum_calc(eles: ElePointerStructAlloc1D, plot: TaoPlotStruct, curve: TaoCurveStruct, who: str) -> None:
     """
-    Routine to calculate datum values.
+    Subroutine tao_curve_datum_calc (eles, plot, curve, who)
     
+    Routine to calculate datum values.
     The values are calculated at the end of each eles(:)%ele element.
     
     Parameters
@@ -37293,8 +37172,6 @@ def tao_curve_datum_calc(eles: ElePointerStructAlloc1D, plot: TaoPlotStruct, cur
     """
 def tao_curve_ele_ref(curve: TaoCurveStruct, point_to_ele_ref: bool, ele_track: EleStruct) -> PyTaoCurveEleRef:
     """
-    No docstring available
-    
     Parameters
     ----------
     curve : TaoCurveStruct
@@ -37304,8 +37181,6 @@ def tao_curve_ele_ref(curve: TaoCurveStruct, point_to_ele_ref: bool, ele_track: 
     """
 def tao_curve_ix_uni(curve: TaoCurveStruct, ix_uni: typing.SupportsInt) -> PyTaoCurveIxUni:
     """
-    No docstring available
-    
     Parameters
     ----------
     curve : TaoCurveStruct
@@ -37314,8 +37189,6 @@ def tao_curve_ix_uni(curve: TaoCurveStruct, ix_uni: typing.SupportsInt) -> PyTao
     """
 def tao_curve_name(curve: TaoCurveStruct, use_region: bool | None = None, curve_name: str) -> PyTaoCurveName:
     """
-    No docstring available
-    
     Parameters
     ----------
     curve : TaoCurveStruct
@@ -37327,8 +37200,6 @@ def tao_curve_name(curve: TaoCurveStruct, use_region: bool | None = None, curve_
     """
 def tao_curve_rms_calc(curve: TaoCurveStruct, who: str) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     curve : TaoCurveStruct
@@ -37342,8 +37213,6 @@ def tao_curve_rms_calc(curve: TaoCurveStruct, who: str) -> ...:
     """
 def tao_d2_d1_name(d1: TaoD1DataStruct, show_universe: bool | None = None, d2_d1_name: str) -> PyTaoD2D1Name:
     """
-    No docstring available
-    
     Parameters
     ----------
     d1 : TaoD1DataStruct
@@ -37354,8 +37223,6 @@ def tao_d2_d1_name(d1: TaoD1DataStruct, show_universe: bool | None = None, d2_d1
     """
 def tao_d2_data_stuffit(u: TaoUniverseStruct, d2_name: str, n_d1_data: typing.SupportsInt) -> PyTaoD2DataStuffit:
     """
-    No docstring available
-    
     Parameters
     ----------
     u : 
@@ -37364,16 +37231,12 @@ def tao_d2_data_stuffit(u: TaoUniverseStruct, d2_name: str, n_d1_data: typing.Su
     """
 def tao_data_check(err: bool) -> PyTaoDataCheck:
     """
-    No docstring available
-    
     Parameters
     ----------
     err : 
     """
 def tao_data_coupling_init(branch: BranchStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch : BranchStruct
@@ -37381,8 +37244,6 @@ def tao_data_coupling_init(branch: BranchStruct) -> None:
     """
 def tao_data_sanity_check(datum: TaoDataStruct, print_err: bool, default_data_type: str, uni: _pybmad.TaoUniverseStruct | None = None, is_valid: bool) -> PyTaoDataSanityCheck:
     """
-    No docstring available
-    
     Parameters
     ----------
     datum : TaoDataStruct
@@ -37397,9 +37258,11 @@ def tao_data_sanity_check(datum: TaoDataStruct, print_err: bool, default_data_ty
     """
 def tao_data_type_substitute(template_: str, curve: TaoCurveStruct, graph: TaoGraphStruct) -> str:
     """
-    Routine substitute the appropriate data type string for instances of "#ref" and
+    Subroutine tao_data_type_substitute (template, str_out, curve, graph)
     
+    Routine substitute the appropriate data type string for instances of "#ref" and
     "#comp" in template.
+    
     Additionally, if template does not have a "|" character,
     the string "|" + component will be added at the end of str_out.
     
@@ -37418,6 +37281,8 @@ def tao_data_type_substitute(template_: str, curve: TaoCurveStruct, graph: TaoGr
     """
 def tao_data_useit_plot_calc(curve: TaoCurveStruct, graph: TaoGraphStruct, check_s_position: bool) -> ...:
     """
+    Subroutine tao_data_useit_plot_calc (curve, graph, data, check_s_position, most_invalid)
+    
     Routine to set the data for plotting.
     
     Parameters
@@ -37438,8 +37303,6 @@ def tao_data_useit_plot_calc(curve: TaoCurveStruct, graph: TaoGraphStruct, check
     """
 def tao_datum_has_associated_ele(data_type: str, branch_geometry: typing.SupportsInt | None = None, has_associated_ele: typing.SupportsInt) -> PyTaoDatumHasAssociatedEle:
     """
-    No docstring available
-    
     Parameters
     ----------
     data_type : unknown
@@ -37450,6 +37313,8 @@ def tao_datum_has_associated_ele(data_type: str, branch_geometry: typing.Support
     """
 def tao_datum_integrate(datum: TaoDataStruct, branch: BranchStruct, s_pos: RealAlloc1D, values: RealAlloc1D) -> ...:
     """
+    Function tao_datum_integrate (datum, branch, s_pos, values, valid_value, why_invalid) result (result)
+    
     Routine to calculate the integral, rms, or average of an array of values associated with a datum.
     
     Parameters
@@ -37474,8 +37339,6 @@ def tao_datum_integrate(datum: TaoDataStruct, branch: BranchStruct, s_pos: RealA
     """
 def tao_datum_name(datum: TaoDataStruct, show_universe: bool | None = None, datum_name: str) -> PyTaoDatumName:
     """
-    No docstring available
-    
     Parameters
     ----------
     datum : TaoDataStruct
@@ -37486,6 +37349,8 @@ def tao_datum_name(datum: TaoDataStruct, show_universe: bool | None = None, datu
     """
 def tao_datum_s_position(datum: TaoDataStruct, ele: EleStruct) -> float:
     """
+    Function tao_datum_s_position (datum, ele) result (s_pos)
+    
     Routine to calculate the longitudinal position associated with a datum.
     
     Parameters
@@ -37503,8 +37368,6 @@ def tao_datum_s_position(datum: TaoDataStruct, ele: EleStruct) -> float:
     """
 def tao_de_optimizer() -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     abort : bool
@@ -37512,20 +37375,20 @@ def tao_de_optimizer() -> bool:
     """
 def tao_deallocate_plot_cache(plot_cache: TaoPlotCacheStructAlloc1D) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     plot_cache : 
     """
 def tao_destroy_plot_window() -> None:
-    """
-    No docstring available
-    """
-def tao_dmerit_calc() -> None:
     ...
+def tao_dmerit_calc() -> None:
+    """
+    Subroutine tao_dmerit_calc ()
+    """
 def tao_dmodel_dvar_calc(force_calc: bool) -> bool:
     """
+    Subroutine tao_dModel_dVar_calc (force_calc, err_flag)
+    
     Subroutine to calculate the dModel_dVar derivative matrix.
     
     Parameters
@@ -37545,10 +37408,12 @@ def tao_dmodel_dvar_calc(force_calc: bool) -> bool:
     """
 def tao_do_wire_scan(ele: EleStruct, theta: typing.SupportsFloat, beam: BeamStruct) -> float:
     """
-    Returns the beam's second moment using the wire along the specified angle.
+    Subroutine tao_do_wire_scan (ele, wire_params, theta, beam) result (moment)
     
+    Returns the beam's second moment using the wire along the specified angle.
     Keep in mind that the actual correlation axis is 90 degrees off of the
     wire angle
+    
     This simulates a fast wire scanner that performs the scan over only one
     bunch. Obviously, this isn't realistic. Any dynamic effects will not be
     accounted for!
@@ -37569,6 +37434,10 @@ def tao_do_wire_scan(ele: EleStruct, theta: typing.SupportsFloat, beam: BeamStru
     """
 def tao_draw_beam_chamber_wall(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
+    NOTE: THIS ROUTINE IS NOT CURRENTLY ACITVE (NOT CALLED BY ANY OTHER ROUTINE).
+    
+    Subroutine tao_draw_beam_chamber_wall (plot, graph)
+    
     Routine to draw the beam chamber wall.
     
     Parameters
@@ -37580,6 +37449,8 @@ def tao_draw_beam_chamber_wall(plot: TaoPlotStruct, graph: TaoGraphStruct) -> No
     """
 def tao_draw_curve_data(plot: TaoPlotStruct, graph: TaoGraphStruct, curve: TaoCurveStruct, have_data: bool) -> PyTaoDrawCurveData:
     """
+    Subroutine tao_draw_curve_data (plot, graph, curve, have_data)
+    
     Routine to draw a graph with data and/or variable curves.
     
     Parameters
@@ -37597,6 +37468,8 @@ def tao_draw_curve_data(plot: TaoPlotStruct, graph: TaoGraphStruct, curve: TaoCu
     """
 def tao_draw_ele_for_floor_plan(plot: TaoPlotStruct, graph: TaoGraphStruct, tao_lat: TaoLatticeStruct, ele: EleStruct, ele_shape: TaoEleShapeStruct, label_name: str, offset1: typing.SupportsFloat, offset2: typing.SupportsFloat) -> PyTaoDrawEleForFloorPlan:
     """
+    Subroutine tao_draw_ele_for_floor_plan (plot, graph, tao_lat, ele, ele_shape, label_name, offset1, offset2)
+    
     Routine to draw one lattice element or one datum location for the floor plan graph.
     
     Parameters
@@ -37618,6 +37491,8 @@ def tao_draw_ele_for_floor_plan(plot: TaoPlotStruct, graph: TaoGraphStruct, tao_
     """
 def tao_draw_floor_plan(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
+    Subroutine tao_draw_floor_plan (plot, graph)
+    
     Routine to draw a floor plan graph.
     
     Parameters
@@ -37629,8 +37504,9 @@ def tao_draw_floor_plan(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
 def tao_draw_graph_axes(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
-    Routine to draw a just the graph part of a data graph.
+    Subroutine tao_draw_graph_axes (plot, graph)
     
+    Routine to draw a just the graph part of a data graph.
     The calling routine takes care of drawing any curves.
     
     Parameters
@@ -37642,6 +37518,8 @@ def tao_draw_graph_axes(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
 def tao_draw_histogram_data(plot: TaoPlotStruct, graph: TaoGraphStruct, curve: TaoCurveStruct, have_data: bool) -> PyTaoDrawHistogramData:
     """
+    Subroutine tao_draw_histogram_data (plot, graph, curve, have_data)
+    
     Routine to draw a graph with data and/or variable histograms.
     
     Parameters
@@ -37659,6 +37537,8 @@ def tao_draw_histogram_data(plot: TaoPlotStruct, graph: TaoGraphStruct, curve: T
     """
 def tao_draw_lat_layout(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
+    Subroutine tao_draw_lat_layout (plot, graph)
+    
     Routine to draw a lattice layout graph.
     
     Parameters
@@ -37670,6 +37550,8 @@ def tao_draw_lat_layout(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
 def tao_draw_plots(do_clear: bool | None = None) -> None:
     """
+    Subroutine tao_draw_plots (do_clear)
+    
     Subroutine to draw the plots on the plot window.
     
     Parameters
@@ -37679,8 +37561,9 @@ def tao_draw_plots(do_clear: bool | None = None) -> None:
     """
 def tao_ele_geometry_with_misalignments(datum: TaoDataStruct, ele: EleStruct) -> ...:
     """
-    Routine to evaluate a floor position with misalignments at a given element.
+    Function tao_ele_geometry_with_misalignments (datum, ele, valid_value, why_invalid) result (value)
     
+    Routine to evaluate a floor position with misalignments at a given element.
     This routine is private and not for general use.
     
     Parameters
@@ -37701,8 +37584,6 @@ def tao_ele_geometry_with_misalignments(datum: TaoDataStruct, ele: EleStruct) ->
     """
 def tao_ele_shape_info(ix_uni: typing.SupportsInt, ele: EleStruct, ele_shapes: TaoEleShapeStructAlloc1D, y1: typing.SupportsFloat, y2: typing.SupportsFloat, ix_shape_min: typing.SupportsInt | None = None) -> PyTaoEleShapeInfo:
     """
-    No docstring available
-    
     Parameters
     ----------
     ix_uni : int
@@ -37723,8 +37604,9 @@ def tao_ele_shape_info(ix_uni: typing.SupportsInt, ele: EleStruct, ele_shapes: T
     """
 def tao_eval_floor_orbit(datum: TaoDataStruct, ele: EleStruct, orbit: CoordStruct, bunch_params: BunchParamsStruct) -> ...:
     """
-    Routine to evaluate a floor_orbit datum at a given element.
+    Function tao_eval_floor_orbit (datum, ele, orbit, bunch_params, valid_value, why_invalid) result (value)
     
+    Routine to evaluate a floor_orbit datum at a given element.
     This routine is private and not for general use.
     
     Parameters
@@ -37749,8 +37631,6 @@ def tao_eval_floor_orbit(datum: TaoDataStruct, ele: EleStruct, orbit: CoordStruc
     """
 def tao_evaluate_a_datum(datum: TaoDataStruct, u: TaoUniverseStruct, tao_lat: TaoLatticeStruct, called_from_lat_calc: bool | None = None, print_err: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     datum : TaoDataStruct
@@ -37773,6 +37653,8 @@ def tao_evaluate_a_datum(datum: TaoDataStruct, u: TaoUniverseStruct, tao_lat: Ta
     """
 def tao_evaluate_datum_at_s(datum: TaoDataStruct, tao_lat: TaoLatticeStruct, ele: EleStruct, ele_ref: EleStruct, valid_value: bool) -> ...:
     """
+    Function tao_evaluate_datum_at_s (datum, tao_lat, ele, ele_ref, valid_value, err_str, bad_datum) result(value)
+    
     Routine to evaluate a datum at a given s-position in the lattice
     
     Parameters
@@ -37799,10 +37681,17 @@ def tao_evaluate_datum_at_s(datum: TaoDataStruct, tao_lat: TaoLatticeStruct, ele
     """
 def tao_evaluate_lat_or_beam_data(data_name: str, print_err: bool, default_source: str, dflt_ele_ref: _pybmad.EleStruct | None = None, dflt_ele_start: _pybmad.EleStruct | None = None, dflt_ele: _pybmad.EleStruct | None = None, dflt_component: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None) -> PyTaoEvaluateLatOrBeamData:
     """
-    dflt_ele_ref, dflt_ele_start, dflt_ele, dflt_component, dflt_uni, dflt_eval_point, dflt_s_offset)
+    ! private tao_scratch_values_calc, tao_eval_floor_orbit, tao_ele_geometry_with_misalignments
     
-    Routine to evaluate data with a lat or beam source of the form:
-    <universe>@lat::<data_type>[<ix_ele_start>&<ix_ele>]|<component>
+    
+    
+    
+    
+     Subroutine tao_evaluate_lat_or_beam_data (err, data_name, values, print_err, default_source, default_source,
+                   dflt_ele_ref, dflt_ele_start, dflt_ele, dflt_component, dflt_uni, dflt_eval_point, dflt_s_offset)
+    
+     Routine to evaluate data with a lat or beam source of the form:
+         <universe>@lat::<data_type>[<ix_ele_start>&<ix_ele>]|<component>
     
     Parameters
     ----------
@@ -37836,8 +37725,6 @@ def tao_evaluate_lat_or_beam_data(data_name: str, print_err: bool, default_sourc
     """
 def tao_evaluate_tune(q_str: str, q0: typing.SupportsFloat, delta_input: bool, q_val: typing.SupportsFloat) -> PyTaoEvaluateTune:
     """
-    No docstring available
-    
     Parameters
     ----------
     q_str : unknown
@@ -37850,13 +37737,15 @@ def tao_evaluate_tune(q_str: str, q0: typing.SupportsFloat, delta_input: bool, q
     """
 def tao_expression_hash_substitute(expression_in: str, eval_ele: _pybmad.EleStruct | None = None) -> str:
     """
-    Routine to, in the expression, substitute the evaluation lattice element name in place
+    Subroutine tao_expression_hash_substitute(expression_in, expression_out, eval_ele)
     
+    Routine to, in the expression, substitute the evaluation lattice element name in place
     of hash ("#") characters. Care is taken to only do this where it makes sense.
     For example, "Q1##3" where here "##3" means the third instance of Q1, does not qualify.
+    
     Specifically, a substitution will be done if the character before the hash and the
     character after are one of:
-    [,]-*+/:|@<>, or a blank character, or the beginning or end of the expression
+      [,]-*+/:|@<>, or a blank character, or the beginning or end of the expression
     
     Parameters
     ----------
@@ -37872,8 +37761,6 @@ def tao_expression_hash_substitute(expression_in: str, eval_ele: _pybmad.EleStru
     """
 def tao_find_plot_region(where: str, print_flag: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     err : bool
@@ -37887,8 +37774,6 @@ def tao_find_plot_region(where: str, print_flag: bool | None = None) -> ...:
     """
 def tao_fixer(switch_: str, word1: str, word2: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     switch : unknown
@@ -37900,8 +37785,6 @@ def tao_fixer(switch_: str, word1: str, word2: str) -> None:
     """
 def tao_floor_to_screen(graph: TaoGraphStruct, r_floor: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     graph : TaoGraphStruct
@@ -37914,8 +37797,6 @@ def tao_floor_to_screen(graph: TaoGraphStruct, r_floor: typing.Annotated[collect
     """
 def tao_floor_to_screen_coords(graph: TaoGraphStruct, floor: FloorPositionStruct) -> FloorPositionStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     graph : TaoGraphStruct
@@ -37928,9 +37809,11 @@ def tao_floor_to_screen_coords(graph: TaoGraphStruct, floor: FloorPositionStruct
     """
 def tao_geodesic_lm_optimizer() -> bool:
     """
-    Routine to minimize the merit function by varying variables until
+    Subroutine tao_geodesic_lm_optimizer (abort)
     
+    Routine to minimize the merit function by varying variables until
     the "data" as calculated from the model matches the measured data.
+    
     This subroutine is a wrapper for the "geodesic"
     Levenburg - Marquardt method.
     
@@ -37942,8 +37825,9 @@ def tao_geodesic_lm_optimizer() -> bool:
     """
 def tao_get_data() -> ...:
     """
-    Subroutine to get the values of the data used in optimization and put them
+    Subroutine tao_get_data (data_value, data_weight, data_meas_value, dat_ix_dModel)
     
+    Subroutine to get the values of the data used in optimization and put them
     in an array. The data is ordered starting with the first universe
     
     
@@ -37960,8 +37844,6 @@ def tao_get_data() -> ...:
     """
 def tao_get_opt_vars() -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     var_value : float
@@ -37981,17 +37863,22 @@ def tao_get_opt_vars() -> ...:
     """
 def tao_get_user_input(prompt_str: str | None = None, wait_flag: bool | None = None, cmd_in: str | None = None) -> str:
     """
-    Subroutine to get the next Tao command. In order of precedence, input may come from:
+    Subroutine tao_get_user_input (cmd_out, prompt_str, wait_flag, cmd_in)
     
-    1) s%com%cmd string (if s%com%use_cmd_here is set to True).
-    Used for recalling commands from the history stack.
-    2) A saved command string.
-    3) A command file.
-    4) The cmd_in argument (if present). Used, for example, when interfacing with Python.
-    5) The terminal.
+    Subroutine to get the next Tao command. In order of precedence, input may come from:
+      1) s%com%cmd string (if s%com%use_cmd_here is set to True).
+         Used for recalling commands from the history stack.
+      2) A saved command string.
+      3) A command file.
+      4) The cmd_in argument (if present). Used, for example, when interfacing with Python.
+      5) The terminal.
+    
+    Note: A saved command string is present if a prior input string contained multiple commands.
     For example, the following string is read from a command file or terminal or passed via cmd_in:
-    "show ele 1; set opti de; run"
+            "show ele 1; set opti de; run"
     Then cmd_out would be "show ele 1" and "set opti de; run" would be saved for the next call to this routine.
+    
+    Note: In single character mode, the input precedence order is ignored and input is taken from the terminal.
     
     Parameters
     ----------
@@ -38006,23 +37893,15 @@ def tao_get_user_input(prompt_str: str | None = None, wait_flag: bool | None = N
     -------
     cmd_out : unknown
         Command from the user.
-    
-    Notes
-    -----
-    Note: A saved command string is present if a prior input string contained multiple commands.
     """
 def tao_graph_controller_setup(graph: TaoGraphStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     graph : 
     """
 def tao_graph_data_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     plot : 
@@ -38030,8 +37909,6 @@ def tao_graph_data_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
 def tao_graph_data_slice_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     plot : 
@@ -38039,8 +37916,6 @@ def tao_graph_data_slice_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> No
     """
 def tao_graph_dynamic_aperture_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     plot : 
@@ -38048,8 +37923,6 @@ def tao_graph_dynamic_aperture_setup(plot: TaoPlotStruct, graph: TaoGraphStruct)
     """
 def tao_graph_histogram_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     plot : 
@@ -38057,8 +37930,6 @@ def tao_graph_histogram_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> Non
     """
 def tao_graph_name(graph: TaoGraphStruct, use_region: bool | None = None, graph_name: str) -> PyTaoGraphName:
     """
-    No docstring available
-    
     Parameters
     ----------
     graph : TaoGraphStruct
@@ -38070,8 +37941,6 @@ def tao_graph_name(graph: TaoGraphStruct, use_region: bool | None = None, graph_
     """
 def tao_graph_phase_space_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     plot : 
@@ -38079,6 +37948,8 @@ def tao_graph_phase_space_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> N
     """
 def tao_graph_s_min_max_calc(graph: TaoGraphStruct, branch: BranchStruct) -> ...:
     """
+    Subroutine tao_graph_s_min_max_calc(graph, branch, s_min, s_max)
+    
     Routine to calculate min and max for a graph when plot%x_axis_type is set to "s".
     
     Parameters
@@ -38097,8 +37968,6 @@ def tao_graph_s_min_max_calc(graph: TaoGraphStruct, branch: BranchStruct) -> ...
     """
 def tao_graph_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     plot : 
@@ -38106,8 +37975,6 @@ def tao_graph_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
 def tao_init() -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     err_flag : bool
@@ -38115,8 +37982,6 @@ def tao_init() -> bool:
     """
 def tao_init_beam_in_universe(u: TaoUniverseStruct, beam_init: BeamInitStruct, track_start: str, track_end: str, comb_ds_save: typing.SupportsFloat) -> PyTaoInitBeamInUniverse:
     """
-    No docstring available
-    
     Parameters
     ----------
     u : 
@@ -38127,6 +37992,8 @@ def tao_init_beam_in_universe(u: TaoUniverseStruct, beam_init: BeamInitStruct, t
     """
 def tao_init_beams(init_file: str) -> None:
     """
+    Subroutine tao_init_beams (init_file)
+    
     Subroutine to initialize beam stuff.
     
     Parameters
@@ -38136,6 +38003,8 @@ def tao_init_beams(init_file: str) -> None:
     """
 def tao_init_data(data_file: str) -> None:
     """
+    Subroutine tao_init_data (data_file)
+    
     Subroutine to initialize the tao data structures.
     
     Parameters
@@ -38144,13 +38013,9 @@ def tao_init_data(data_file: str) -> None:
         Tao data initialization file. If blank, there is no file so just use the defaults.
     """
 def tao_init_data_end_stuff() -> None:
-    """
-    No docstring available
-    """
+    ...
 def tao_init_data_in_universe(u: TaoUniverseStruct, n_d2_add: typing.SupportsInt, keep_existing_data: bool | None = None) -> PyTaoInitDataInUniverse:
     """
-    No docstring available
-    
     Parameters
     ----------
     u : 
@@ -38159,6 +38024,8 @@ def tao_init_data_in_universe(u: TaoUniverseStruct, n_d2_add: typing.SupportsInt
     """
 def tao_init_dynamic_aperture(init_file: str) -> None:
     """
+    Subroutine tao_init_dynamic_aperture (init_file)
+    
     Routine to initalize dynamic aperture simulations.
     
     Parameters
@@ -38168,8 +38035,6 @@ def tao_init_dynamic_aperture(init_file: str) -> None:
     """
 def tao_init_find_elements(u: TaoUniverseStruct, search_string: str, attribute: str | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     u : TaoUniverseStruct
@@ -38185,6 +38050,8 @@ def tao_init_find_elements(u: TaoUniverseStruct, search_string: str, attribute: 
     """
 def tao_init_global(init_file: str) -> None:
     """
+    Subroutine tao_init_global (init_file)
+    
     Subroutine to initialize the tao global structures.
     
     Parameters
@@ -38194,8 +38061,6 @@ def tao_init_global(init_file: str) -> None:
     """
 def tao_init_lattice(lat_file: str, err_flag: bool) -> PyTaoInitLattice:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat_file : 
@@ -38203,14 +38068,14 @@ def tao_init_lattice(lat_file: str, err_flag: bool) -> PyTaoInitLattice:
     """
 def tao_init_plotting(plot_file: str) -> PyTaoInitPlotting:
     """
-    No docstring available
-    
     Parameters
     ----------
     plot_file : 
     """
 def tao_init_variables(var_file: str) -> None:
     """
+    Subroutine tao_init_variables (var_file)
+    
     Subroutine to initialize the tao variable structures.
     
     Parameters
@@ -38220,6 +38085,8 @@ def tao_init_variables(var_file: str) -> None:
     """
 def tao_inject_beam(u: TaoUniverseStruct, model: TaoLatticeStruct, ix_branch: typing.SupportsInt) -> ...:
     """
+    Subroutine tao_inject_beam (u, model, ix_branch, beam, init_ok)
+    
     This will initialize the beam for a given lattice branch.
     
     Trying to inject a beam of one species into a branch with a different ref species
@@ -38244,8 +38111,6 @@ def tao_inject_beam(u: TaoUniverseStruct, model: TaoLatticeStruct, ix_branch: ty
     """
 def tao_inject_particle(u: TaoUniverseStruct, model: TaoLatticeStruct, ix_branch: typing.SupportsInt) -> PyTaoInjectParticle:
     """
-    No docstring available
-    
     Parameters
     ----------
     u : 
@@ -38254,8 +38119,6 @@ def tao_inject_particle(u: TaoUniverseStruct, model: TaoLatticeStruct, ix_branch
     """
 def tao_is_valid_name(name: str, is_valid: bool) -> PyTaoIsValidName:
     """
-    No docstring available
-    
     Parameters
     ----------
     name : unknown
@@ -38266,8 +38129,6 @@ def tao_is_valid_name(name: str, is_valid: bool) -> PyTaoIsValidName:
     """
 def tao_json_cmd(input_str: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     input_str : unknown
@@ -38275,8 +38136,6 @@ def tao_json_cmd(input_str: str) -> None:
     """
 def tao_key_info_to_str(ix_key: typing.SupportsInt, ix_min_key: typing.SupportsInt, ix_max_key: typing.SupportsInt, key_str: str, header_str: str) -> PyTaoKeyInfoToStr:
     """
-    No docstring available
-    
     Parameters
     ----------
     ix_key : 
@@ -38287,8 +38146,6 @@ def tao_key_info_to_str(ix_key: typing.SupportsInt, ix_min_key: typing.SupportsI
     """
 def tao_lat_bookkeeper(u: TaoUniverseStruct, tao_lat: TaoLatticeStruct) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     u : TaoUniverseStruct
@@ -38298,8 +38155,6 @@ def tao_lat_bookkeeper(u: TaoUniverseStruct, tao_lat: TaoLatticeStruct) -> bool:
     """
 def tao_lat_emit_calc(plane: typing.SupportsInt, emit_type: typing.SupportsInt, ele: EleStruct, modes: NormalModesStruct, emit: typing.SupportsFloat) -> PyTaoLatEmitCalc:
     """
-    No docstring available
-    
     Parameters
     ----------
     plane : int
@@ -38314,8 +38169,6 @@ def tao_lat_emit_calc(plane: typing.SupportsInt, emit_type: typing.SupportsInt, 
     """
 def tao_lat_sigma_calc_needed(data_type: str, data_source: str, do_lat_sigma: bool) -> PyTaoLatSigmaCalcNeeded:
     """
-    No docstring available
-    
     Parameters
     ----------
     data_type : 
@@ -38324,6 +38177,8 @@ def tao_lat_sigma_calc_needed(data_type: str, data_source: str, do_lat_sigma: bo
     """
 def tao_lat_sigma_track(tao_lat: TaoLatticeStruct, ix_branch: typing.SupportsInt, print_err: bool | None = None, force_calc: bool | None = None) -> bool:
     """
+    Subroutine tao_lat_sigma_track (tao_lat, calc_ok, ix_branch, print_err, force_calc)
+    
     Routine to track the 6x6 sigma matrix through the lattice using the lattice linear transfer matrices.
     
     Parameters
@@ -38344,8 +38199,6 @@ def tao_lat_sigma_track(tao_lat: TaoLatticeStruct, ix_branch: typing.SupportsInt
     """
 def tao_lattice_branches_equal_tao_lattice_branches(tlb1: TaoLatticeBranchStructAlloc1D, tlb2: TaoLatticeBranchStructAlloc1D) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     tlb1 : 
@@ -38353,8 +38206,6 @@ def tao_lattice_branches_equal_tao_lattice_branches(tlb1: TaoLatticeBranchStruct
     """
 def tao_lattice_calc() -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     calc_ok : bool
@@ -38364,8 +38215,6 @@ def tao_lattice_calc() -> ...:
     """
 def tao_lattice_equal_tao_lattice(lat1: TaoLatticeStruct, lat2: TaoLatticeStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat1 : 
@@ -38373,8 +38222,6 @@ def tao_lattice_equal_tao_lattice(lat1: TaoLatticeStruct, lat2: TaoLatticeStruct
     """
 def tao_limit_calc() -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     limited : bool
@@ -38382,9 +38229,11 @@ def tao_limit_calc() -> bool:
     """
 def tao_lm_optimizer() -> bool:
     """
-    Routine to minimize the merit function by varying variables until
+    Subroutine tao_lm_optimizer (abort)
     
+    Routine to minimize the merit function by varying variables until
     the "data" as calculated from the model matches the measured data.
+    
     This subroutine is a wrapper for the mrqmin routine of Numerical Recipes.
     See the Numerical Recipes writeup for more details.
     'lm' stands for Levenburg - Marquardt. Otherwise known as LMDIF.
@@ -38397,8 +38246,6 @@ def tao_lm_optimizer() -> bool:
     """
 def tao_lmdif_optimizer() -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     abort : bool
@@ -38406,8 +38253,6 @@ def tao_lmdif_optimizer() -> bool:
     """
 def tao_load_this_datum(vec: RealAlloc1D, ele_ref: EleStruct, ele_start: EleStruct, ele: EleStruct, datum_value: typing.SupportsFloat, valid_value: bool, datum: TaoDataStruct, branch: BranchStruct, why_invalid: str | None = None, good: _pybmad.BoolAlloc1D | None = None) -> PyTaoLoadThisDatum:
     """
-    No docstring available
-    
     Parameters
     ----------
     vec : 
@@ -38423,8 +38268,6 @@ def tao_load_this_datum(vec: RealAlloc1D, ele_ref: EleStruct, ele_start: EleStru
     """
 def tao_locate_all_elements(ele_list: str, ignore_blank: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele_list : unknown
@@ -38438,8 +38281,6 @@ def tao_locate_all_elements(ele_list: str, ignore_blank: bool | None = None) -> 
     """
 def tao_locate_elements(ele_list: str, ix_universe: typing.SupportsInt, lat_type: typing.SupportsInt | None = None, ignore_blank: bool | None = None, err_stat_level: typing.SupportsInt | None = None, above_ubound_is_err: bool | None = None, ix_branch: typing.SupportsInt | None = None, multiple_eles_is_err: bool | None = None) -> PyTaoLocateElements:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele_list : unknown
@@ -38468,8 +38309,6 @@ def tao_locate_elements(ele_list: str, ix_universe: typing.SupportsInt, lat_type
     """
 def tao_mark_lattice_ele(lat: LatStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -38478,8 +38317,6 @@ def tao_mark_lattice_ele(lat: LatStruct) -> None:
     """
 def tao_merit(this_merit: typing.SupportsFloat) -> PyTaoMerit:
     """
-    No docstring available
-    
     Parameters
     ----------
     calc_ok : bool
@@ -38488,6 +38325,8 @@ def tao_merit(this_merit: typing.SupportsFloat) -> PyTaoMerit:
     """
 def tao_next_word(line: str) -> PyTaoNextWord:
     """
+    Subroutine tao_next_word (line, word)
+    
     Routine to return the next word in a line.
     
     Words are delimited by a space character except if the space is within quotes.
@@ -38507,8 +38346,6 @@ def tao_next_word(line: str) -> PyTaoNextWord:
     """
 def tao_one_turn_map_calc_needed(data_type: str, data_source: str, do_one_turn_map: bool) -> PyTaoOneTurnMapCalcNeeded:
     """
-    No docstring available
-    
     Parameters
     ----------
     data_type : 
@@ -38517,8 +38354,6 @@ def tao_one_turn_map_calc_needed(data_type: str, data_source: str, do_one_turn_m
     """
 def tao_open_file(file: str, file_name: str, error_severity: typing.SupportsInt, binary: bool | None = None) -> PyTaoOpenFile:
     """
-    No docstring available
-    
     Parameters
     ----------
     file : 
@@ -38534,8 +38369,6 @@ def tao_open_file(file: str, file_name: str, error_severity: typing.SupportsInt,
     """
 def tao_open_scratch_file(iu: typing.SupportsInt) -> PyTaoOpenScratchFile:
     """
-    No docstring available
-    
     Parameters
     ----------
     err : bool
@@ -38544,8 +38377,6 @@ def tao_open_scratch_file(iu: typing.SupportsInt) -> PyTaoOpenScratchFile:
     """
 def tao_optimization_status(datum: TaoDataStruct, why_str: str) -> PyTaoOptimizationStatus:
     """
-    No docstring available
-    
     Parameters
     ----------
     datum : TaoDataStruct
@@ -38553,11 +38384,11 @@ def tao_optimization_status(datum: TaoDataStruct, why_str: str) -> PyTaoOptimiza
     why_str : 
     """
 def tao_orbit_beta_wave_anal(plot: TaoPlotStruct) -> None:
-    ...
+    """
+    Subroutine tao_orbit_beta_wave_anal (plot)
+    """
 def tao_oreint_building_wall_pt(pt_in: TaoBuildingWallPointStruct, pt_out: TaoBuildingWallPointStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     pt_in : TaoBuildingWallPointStruct
@@ -38566,8 +38397,6 @@ def tao_oreint_building_wall_pt(pt_in: TaoBuildingWallPointStruct, pt_out: TaoBu
     """
 def tao_param_value_at_s(dat_name: str, ele_to_s: EleStruct, ele_here: EleStruct, orbit: CoordStruct, value: typing.SupportsFloat) -> PyTaoParamValueAtS:
     """
-    No docstring available
-    
     Parameters
     ----------
     dat_name : 
@@ -38589,8 +38418,6 @@ def tao_param_value_at_s(dat_name: str, ele_to_s: EleStruct, ele_here: EleStruct
     """
 def tao_parse_command_args(cmd_line: str | None = None) -> PyTaoParseCommandArgs:
     """
-    No docstring available
-    
     Parameters
     ----------
     error : bool
@@ -38599,8 +38426,6 @@ def tao_parse_command_args(cmd_line: str | None = None) -> PyTaoParseCommandArgs
     """
 def tao_parse_element_param_str(in_str: str) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     err : bool
@@ -38620,6 +38445,8 @@ def tao_parse_element_param_str(in_str: str) -> ...:
     """
 def tao_particle_data_value(data_type: str, p: CoordStructAlloc1D, ele: EleStruct, ix_bunch: typing.SupportsInt) -> ...:
     """
+    Subroutine tao_particle_data_value (data_type, p, value, err, ele, ix_bunch)
+    
     Routine to calculate the value array of a data_type for an array of particles.
     
     Parameters
@@ -38642,8 +38469,6 @@ def tao_particle_data_value(data_type: str, p: CoordStructAlloc1D, ele: EleStruc
     """
 def tao_pause_cmd(time: typing.SupportsFloat) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     time : float
@@ -38651,6 +38476,8 @@ def tao_pause_cmd(time: typing.SupportsFloat) -> None:
     """
 def tao_phase_space_axis_index(data_type: str, err: bool) -> int:
     """
+    Function tao_phase_space_axis_index (data_type, err) result (ix_axis)
+    
     Routine to calculate the phase space axis index for a given data type.
     
     Parameters
@@ -38666,11 +38493,11 @@ def tao_phase_space_axis_index(data_type: str, err: bool) -> int:
         Axis index.
     """
 def tao_phase_wave_anal(plot: TaoPlotStruct) -> None:
-    ...
+    """
+    Subroutine tao_phase_wave_anal (plot)
+    """
 def tao_pick_universe(name_in: str, dflt_uni: typing.SupportsInt | None = None, pure_uni: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     name_in : unknown
@@ -38692,8 +38519,6 @@ def tao_pick_universe(name_in: str, dflt_uni: typing.SupportsInt | None = None, 
     """
 def tao_pipe_cmd(input_str: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     input_str : unknown
@@ -38701,8 +38526,6 @@ def tao_pipe_cmd(input_str: str) -> None:
     """
 def tao_place_cmd(where: str, who: str, no_buffer: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     where : unknown
@@ -38715,8 +38538,6 @@ def tao_place_cmd(where: str, who: str, no_buffer: bool | None = None) -> None:
     """
 def tao_plot_cmd(where: str, component: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     where : unknown
@@ -38726,6 +38547,8 @@ def tao_plot_cmd(where: str, component: str) -> None:
     """
 def tao_plot_data(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
+    Subroutine tao_plot_data (plot, graph)
+    
     Routine to draw a graph with data and/or variable curves.
     
     Parameters
@@ -38737,6 +38560,8 @@ def tao_plot_data(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
 def tao_plot_histogram(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
+    Subroutine tao_plot_histogram (plot, graph)
+    
     Routine to draw one graph for the histogram analysis plot.
     
     Parameters
@@ -38748,6 +38573,8 @@ def tao_plot_histogram(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
 def tao_plot_key_table(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
+    Subroutine tao_plot_key_table (plot, graph)
+    
     Routine to draw a key table graph.
     
     Parameters
@@ -38758,13 +38585,9 @@ def tao_plot_key_table(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
         Graph to plot.
     """
 def tao_plot_setup() -> None:
-    """
-    No docstring available
-    """
+    ...
 def tao_plot_struct_transfer(plot_in: TaoPlotStruct) -> TaoPlotStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     plot_in : TaoPlotStruct
@@ -38774,6 +38597,8 @@ def tao_plot_struct_transfer(plot_in: TaoPlotStruct) -> TaoPlotStruct:
     """
 def tao_plot_wave(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
+    Subroutine tao_plot_wave (plot, graph)
+    
     Routine to draw one graph for the wave analysis plot.
     
     Parameters
@@ -38785,8 +38610,6 @@ def tao_plot_wave(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
 def tao_pointer_to_building_wall_shape(wall_name: str, e_shape: TaoEleShapeStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     wall_name : unknown
@@ -38795,8 +38618,6 @@ def tao_pointer_to_building_wall_shape(wall_name: str, e_shape: TaoEleShapeStruc
     """
 def tao_pointer_to_datum(d1: TaoD1DataStruct, ele_name: str, datum_ptr: TaoDataStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     d1 : TaoD1DataStruct
@@ -38807,9 +38628,11 @@ def tao_pointer_to_datum(d1: TaoD1DataStruct, ele_name: str, datum_ptr: TaoDataS
     """
 def tao_pointer_to_datum_ele(lat: LatStruct, ele_name: str, ix_ele: typing.SupportsInt, datum: TaoDataStruct, print_err: bool | None = None) -> PyTaoPointerToDatumEle:
     """
-    Routine to see if an element index corresponds to an element with a definite
+    Function tao_pointer_to_datum_ele (lat, ele_name, ix_ele, datum, valid, why_invalid, print_err) result (ele)
     
+    Routine to see if an element index corresponds to an element with a definite
     location such as an overlay or multipass element.
+    
     If the element is a super_lord then the super_slave element at the exit end
     of the lord will be returned. Otherwise ix_loc will be set to ix_ele.
     
@@ -38835,8 +38658,6 @@ def tao_pointer_to_datum_ele(lat: LatStruct, ele_name: str, ix_ele: typing.Suppo
     """
 def tao_pointer_to_ele_shape(ix_uni: typing.SupportsInt, ele: EleStruct, ele_shape: TaoEleShapeStructAlloc1D, ix_shape_min: typing.SupportsInt | None = None, e_shape: TaoEleShapeStruct) -> PyTaoPointerToEleShape:
     """
-    No docstring available
-    
     Parameters
     ----------
     ix_uni : int
@@ -38858,8 +38679,6 @@ def tao_pointer_to_ele_shape(ix_uni: typing.SupportsInt, ele: EleStruct, ele_sha
     """
 def tao_pointer_to_tao_lat(u: TaoUniverseStruct, lat_type: typing.SupportsInt | None = None, tao_lat: TaoLatticeStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     u : TaoUniverseStruct
@@ -38871,13 +38690,17 @@ def tao_pointer_to_tao_lat(u: TaoUniverseStruct, lat_type: typing.SupportsInt | 
 @typing.overload
 def tao_pointer_to_universe(ix_uni: typing.SupportsInt, neg2_to_default: bool | None = None) -> TaoUniverseStruct:
     """
+    Function tao_pointer_to_universe (...) result (u)
+    
     Routine to set a pointer to a universe.
     
     This is an overloaded routine for the:
-    tao_pointer_to_universe_int (ix_uni, neg2_to_default) result (u)
-    tao_pointer_to_universe_str (string, neg2_to_default) result (u)
+     tao_pointer_to_universe_int (ix_uni, neg2_to_default) result (u)
+     tao_pointer_to_universe_str (string, neg2_to_default) result (u)
+    
+    Note: With a string argument, this routine can only handle single universe picks.
     That is, it cannot handlle something like "[1,3,4]@...". To handle multiple universe picks, use:
-    tao_pointer_to_universes
+      tao_pointer_to_universes
     
     Parameters
     ----------
@@ -38894,21 +38717,21 @@ def tao_pointer_to_universe(ix_uni: typing.SupportsInt, neg2_to_default: bool | 
     -------
     u : TaoUniverseStruct
         Universe pointer. u will be nullified if there is an error and an error message will be printed.
-    
-    Notes
-    -----
-    Note: With a string argument, this routine can only handle single universe picks.
     """
 @typing.overload
 def tao_pointer_to_universe(string: str, neg2_to_default: bool | None = None) -> PyTaoPointerToUniverseStr:
     """
+    Function tao_pointer_to_universe (...) result (u)
+    
     Routine to set a pointer to a universe.
     
     This is an overloaded routine for the:
-    tao_pointer_to_universe_int (ix_uni, neg2_to_default) result (u)
-    tao_pointer_to_universe_str (string, neg2_to_default) result (u)
+     tao_pointer_to_universe_int (ix_uni, neg2_to_default) result (u)
+     tao_pointer_to_universe_str (string, neg2_to_default) result (u)
+    
+    Note: With a string argument, this routine can only handle single universe picks.
     That is, it cannot handlle something like "[1,3,4]@...". To handle multiple universe picks, use:
-    tao_pointer_to_universes
+      tao_pointer_to_universes
     
     Parameters
     ----------
@@ -38925,15 +38748,9 @@ def tao_pointer_to_universe(string: str, neg2_to_default: bool | None = None) ->
     -------
     u : TaoUniverseStruct
         Universe pointer. u will be nullified if there is an error and an error message will be printed.
-    
-    Notes
-    -----
-    Note: With a string argument, this routine can only handle single universe picks.
     """
 def tao_pointer_to_universes(name_in: str, dflt_uni: typing.SupportsInt | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     name_in : unknown
@@ -38951,8 +38768,9 @@ def tao_pointer_to_universes(name_in: str, dflt_uni: typing.SupportsInt | None =
     """
 def tao_pointer_to_var_in_lattice(var: TaoVarStruct, ix_uni: typing.SupportsInt, ele: EleStruct) -> bool:
     """
-    Routine to add a pointer from a given Tao variable
+    Subroutine tao_pointer_to_var_in_lattice (var, ix_uni, ele, err)
     
+    Routine to add a pointer from a given Tao variable
     to the appropriate variable in a lattice.
     
     Parameters
@@ -38972,8 +38790,9 @@ def tao_pointer_to_var_in_lattice(var: TaoVarStruct, ix_uni: typing.SupportsInt,
     """
 def tao_pointer_to_var_in_lattice2(var: TaoVarStruct, ix_uni: typing.SupportsInt) -> bool:
     """
-    Routine to add a pointer from a given Tao variable
+    Subroutine tao_pointer_to_var_in_lattice2 (var, ix_uni, err)
     
+    Routine to add a pointer from a given Tao variable
     to the appropriate variable in a lattice.
     
     Parameters
@@ -38990,13 +38809,9 @@ def tao_pointer_to_var_in_lattice2(var: TaoVarStruct, ix_uni: typing.SupportsInt
         Set True if there is an error. False otherwise.
     """
 def tao_print_command_line_info() -> None:
-    """
-    No docstring available
-    """
+    ...
 def tao_ptc_normal_form(do_calc: bool, tao_lat: TaoLatticeStruct, ix_branch: typing.SupportsInt, rf_on: typing.SupportsInt | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     do_calc : bool
@@ -39010,8 +38825,6 @@ def tao_ptc_normal_form(do_calc: bool, tao_lat: TaoLatticeStruct, ix_branch: typ
     """
 def tao_python_cmd(input_str: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     input_str : unknown
@@ -39019,8 +38832,6 @@ def tao_python_cmd(input_str: str) -> None:
     """
 def tao_quiet_set(set: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     set : bool
@@ -39028,8 +38839,6 @@ def tao_quiet_set(set: str) -> None:
     """
 def tao_rad_int_calc_needed(data_type: str, data_source: str, do_rad_int: bool) -> PyTaoRadIntCalcNeeded:
     """
-    No docstring available
-    
     Parameters
     ----------
     data_type : 
@@ -39038,12 +38847,12 @@ def tao_rad_int_calc_needed(data_type: str, data_source: str, do_rad_int: bool) 
     """
 def tao_re_execute(string: str, err: bool) -> PyTaoReExecute:
     """
+    Subroutine tao_re_exectue (string, err)
+    
     Subroutine to execute a previous command.
     """
 def tao_read_cmd(which: str, unis: str, file: str, silent: bool) -> PyTaoReadCmd:
     """
-    No docstring available
-    
     Parameters
     ----------
     which : 
@@ -39055,8 +38864,6 @@ def tao_read_cmd(which: str, unis: str, file: str, silent: bool) -> PyTaoReadCmd
     """
 def tao_read_phase_space_index(name: str, ixc: typing.SupportsInt, print_err: bool | None = None, ix_ps: typing.SupportsInt) -> PyTaoReadPhaseSpaceIndex:
     """
-    No docstring available
-    
     Parameters
     ----------
     name : unknown
@@ -39068,13 +38875,9 @@ def tao_read_phase_space_index(name: str, ixc: typing.SupportsInt, print_err: bo
     ix_ps : 
     """
 def tao_regression_test() -> None:
-    """
-    No docstring available
-    """
+    ...
 def tao_remove_blank_characters(str: str) -> PyTaoRemoveBlankCharacters:
     """
-    No docstring available
-    
     Parameters
     ----------
     str : unknown
@@ -39084,8 +38887,6 @@ def tao_remove_blank_characters(str: str) -> PyTaoRemoveBlankCharacters:
     """
 def tao_run_cmd(which: str) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     which : unknown
@@ -39097,8 +38898,9 @@ def tao_run_cmd(which: str) -> bool:
     """
 def tao_scale_cmd(where: str, y_min_in: typing.SupportsFloat, y_max_in: typing.SupportsFloat, axis: str | None = None, include_wall: bool | None = None, gang: str | None = None, exact: bool | None = None, turn_autoscale_off: bool | None = None) -> None:
     """
-    Routine to scale a plot.
+    Subroutine tao_scale_cmd (where, y_min_in, y_max_in, axis, include_wall, gang, exact, turn_autoscale_off)
     
+    Routine to scale a plot.
     If y_min = y_max, the scales will be chosen to show all the data.
     
     Parameters
@@ -39124,9 +38926,11 @@ def tao_scale_cmd(where: str, y_min_in: typing.SupportsFloat, y_max_in: typing.S
     """
 def tao_scale_graph(graph: TaoGraphStruct, y_min: typing.SupportsFloat, y_max: typing.SupportsFloat, axis: str | None = None, include_wall: bool | None = None) -> ...:
     """
-    Routine to scale the y-axis and/or y2-axis of a graph
+    Subroutine tao_scale_graph (graph, y_min, y_max, axis, include_wall, y_range, y2_range)
     
+    Routine to scale the y-axis and/or y2-axis of a graph
     If y_min = y_max then autoscaling will be done and the particular value of y_min and y_max is ignored.
+    Note: y_min/y_max is ignored if scaling y2-axis and graph%y2_mirrors_y = T.
     
     Parameters
     ----------
@@ -39152,16 +38956,15 @@ def tao_scale_graph(graph: TaoGraphStruct, y_min: typing.SupportsFloat, y_max: t
     """
 def tao_scale_ping_data(u: TaoUniverseStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     u : 
     """
 def tao_scale_plot(plot: TaoPlotStruct, y_min_in: typing.SupportsFloat, y_max_in: typing.SupportsFloat, axis: str | None = None, include_wall: bool | None = None, gang: str | None = None, skip_lat_layout: bool | None = None) -> None:
     """
-    Routine to scale the y-axis and/or y2-axis of the graphs of the plot.
+    Subroutine tao_scale_plot (plot, y_min_in, y_max_in, axis, include_wall, gang, skip_lat_layout)
     
+    Routine to scale the y-axis and/or y2-axis of the graphs of the plot.
     If y_min_in = y_max_in then autoscaling will be done and the particular value
     of y_min_in and y_max_in is ignored.
     
@@ -39187,8 +38990,6 @@ def tao_scale_plot(plot: TaoPlotStruct, y_min_in: typing.SupportsFloat, y_max_in
     """
 def tao_scratch_values_calc(ele_ref: EleStruct, ele_start: EleStruct, ele: EleStruct, datum: TaoDataStruct, branch: BranchStruct, orbit: CoordStructAlloc1D) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele_ref : 
@@ -39200,6 +39001,8 @@ def tao_scratch_values_calc(ele_ref: EleStruct, ele_start: EleStruct, ele: EleSt
     """
 def tao_set_beam_cmd(who: str, value_str: str, branch_str: str) -> None:
     """
+    Subroutine tao_set_beam_cmd (who, value_str, branch_str)
+    
     Routine to set various beam parameters.
     
     Parameters
@@ -39213,6 +39016,8 @@ def tao_set_beam_cmd(who: str, value_str: str, branch_str: str) -> None:
     """
 def tao_set_beam_init_cmd(who: str, value_str: str, branch_str: str) -> None:
     """
+    Subroutine tao_set_beam_init_cmd (who, value_str, branch_str)
+    
     Routine to set beam_init variables
     
     Parameters
@@ -39226,6 +39031,8 @@ def tao_set_beam_init_cmd(who: str, value_str: str, branch_str: str) -> None:
     """
 def tao_set_bmad_com_cmd(who: str, value_str: str) -> None:
     """
+    Subroutine tao_set_bmad_com_cmd (who, value_str)
+    
     Routine to set bmad_com variables
     
     Parameters
@@ -39237,6 +39044,8 @@ def tao_set_bmad_com_cmd(who: str, value_str: str) -> None:
     """
 def tao_set_branch_cmd(branch_str: str, component_str: str, value_str: str) -> None:
     """
+    Subroutine tao_set_branch_cmd (branch_str, component_str, value_str)
+    
     Routine to set lattice branch values.
     
     Parameters
@@ -39250,10 +39059,14 @@ def tao_set_branch_cmd(branch_str: str, component_str: str, value_str: str) -> N
     """
 def tao_set_calculate_cmd(switch_: str | None = None) -> PyTaoSetCalculateCmd:
     """
+    Subroutine tao_set_calculate_cmd (switch)
+    
     Toggles off lattice calc and plotting.
     """
 def tao_set_curve_cmd(curve_name: str, component: str, value_str: str) -> None:
     """
+    Subroutine tao_set_curve_cmd (curve_name, component, value_str)
+    
     Routine to set var values.
     
     Parameters
@@ -39267,6 +39080,8 @@ def tao_set_curve_cmd(curve_name: str, component: str, value_str: str) -> None:
     """
 def tao_set_curve_invalid(curve: TaoCurveStruct, why_invalid: str, print_err: bool | None = None) -> None:
     """
+    Subroutine tao_set_curve_invalid (curve, why_invalid, print_err)
+    
     Routine to set curve%valid to False.
     
     Parameters
@@ -39281,6 +39096,8 @@ def tao_set_curve_invalid(curve: TaoCurveStruct, why_invalid: str, print_err: bo
     """
 def tao_set_data_cmd(who_str: str, value_str: str, silent: bool | None = None) -> PyTaoSetDataCmd:
     """
+    Subroutine tao_set_data_cmd (who_str, value_str, silent)
+    
     Routine to set data values.
     
     Parameters
@@ -39292,8 +39109,6 @@ def tao_set_data_cmd(who_str: str, value_str: str, silent: bool | None = None) -
     """
 def tao_set_data_useit_opt(data: _pybmad.TaoDataStructAlloc1D | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     data : TaoDataStruct, optional
@@ -39301,6 +39116,8 @@ def tao_set_data_useit_opt(data: _pybmad.TaoDataStructAlloc1D | None = None) -> 
     """
 def tao_set_default_cmd(who_str: str, value_str: str) -> None:
     """
+    Subroutine tao_set_default_cmd (who_str, value_str)
+    
     Routine to set default values.
     
     Parameters
@@ -39312,6 +39129,8 @@ def tao_set_default_cmd(who_str: str, value_str: str) -> None:
     """
 def tao_set_drawing_cmd(drawing: TaoDrawingStruct, component: str, value_str: str) -> None:
     """
+    Subroutine tao_set_drawing_cmd (drawing, component, value_str)
+    
     Routine to set floor_plan and lat_layout parameters.
     
     Parameters
@@ -39325,6 +39144,8 @@ def tao_set_drawing_cmd(drawing: TaoDrawingStruct, component: str, value_str: st
     """
 def tao_set_dynamic_aperture_cmd(who: str, value_str: str) -> None:
     """
+    Subroutine tao_set_dynamic_aperture_cmd (who, value_str)
+    
     Sets dynamic aperture parameters.
     
     Parameters
@@ -39336,6 +39157,8 @@ def tao_set_dynamic_aperture_cmd(who: str, value_str: str) -> None:
     """
 def tao_set_elements_cmd(ele_list: str, attribute: str, value: str, update: bool) -> PyTaoSetElementsCmd:
     """
+    Subroutine tao_set_elements_cmd (ele_list, attribute, value, update)
+    
     Sets element parameters.
     
     Parameters
@@ -39349,8 +39172,6 @@ def tao_set_elements_cmd(ele_list: str, attribute: str, value: str, update: bool
     """
 def tao_set_floor_plan_axis_label(graph: TaoGraphStruct, axis_in: QpAxisStruct, axis_out: QpAxisStruct, which: str) -> PyTaoSetFloorPlanAxisLabel:
     """
-    No docstring available
-    
     Parameters
     ----------
     graph : 
@@ -39360,6 +39181,8 @@ def tao_set_floor_plan_axis_label(graph: TaoGraphStruct, axis_in: QpAxisStruct, 
     """
 def tao_set_geodesic_lm_cmd(who: str, value_str: str) -> None:
     """
+    Subroutine tao_set_geodesic_lm_cmd (who, value_str)
+    
     Routine to set geodesic_lm variables
     
     Parameters
@@ -39371,6 +39194,8 @@ def tao_set_geodesic_lm_cmd(who: str, value_str: str) -> None:
     """
 def tao_set_global_cmd(who: str, value_str: str) -> None:
     """
+    Subroutine tao_set_global_cmd (who, value_str)
+    
     Routine to set global variables
     
     Parameters
@@ -39382,6 +39207,8 @@ def tao_set_global_cmd(who: str, value_str: str) -> None:
     """
 def tao_set_graph_cmd(graph_name: str, component: str, value_str: str) -> None:
     """
+    Subroutine tao_set_graph_cmd (graph_name, component, value_str)
+    
     Routine to set var values.
     
     Parameters
@@ -39395,6 +39222,8 @@ def tao_set_graph_cmd(graph_name: str, component: str, value_str: str) -> None:
     """
 def tao_set_integer_value(var_str: str, value_str: str, min_val: typing.SupportsInt | None = None, max_val: typing.SupportsInt | None = None, print_err: bool | None = None) -> ...:
     """
+    Subroutine tao_set_integer_value (var, var_str, value_str, error, min_val, max_val, print_err)
+    
     Subroutine to read and set the value of an integer varialbe.
     
     If the value is out of the range [min_val, max_val] then an error message will
@@ -39422,8 +39251,6 @@ def tao_set_integer_value(var_str: str, value_str: str, min_val: typing.Supports
     """
 def tao_set_invalid(datum: TaoDataStruct, message: str, exterminate: bool | None = None, err_level: typing.SupportsInt | None = None, print_err: bool | None = None) -> str:
     """
-    No docstring available
-    
     Parameters
     ----------
     datum : TaoDataStruct
@@ -39441,6 +39268,8 @@ def tao_set_invalid(datum: TaoDataStruct, message: str, exterminate: bool | None
     """
 def tao_set_key_cmd(key_str: str, cmd_str: str) -> None:
     """
+    Subroutine tao_set_key_cmd (key_str, cmd_str)
+    
     Associates a command with a key press for single mode.
     
     Parameters
@@ -39452,6 +39281,8 @@ def tao_set_key_cmd(key_str: str, cmd_str: str) -> None:
     """
 def tao_set_lattice_cmd(dest_lat: str, source_lat: str) -> None:
     """
+    Subroutine tao_set_lattice_cmd (dest_lat, source_lat)
+    
     Sets a lattice equal to another. This will also update the data structs
     
     Parameters
@@ -39463,6 +39294,8 @@ def tao_set_lattice_cmd(dest_lat: str, source_lat: str) -> None:
     """
 def tao_set_logical_value(var_str: str, value_str: str) -> ...:
     """
+    Subroutine tao_set_logical_value (var, var_str, value_str, error)
+    
     Subroutine to read and set the value of an logical varialbe.
     
     If the value is out of the range [min_val, max_val] then an error message will
@@ -39484,6 +39317,8 @@ def tao_set_logical_value(var_str: str, value_str: str) -> ...:
     """
 def tao_set_openmp_n_threads(n_threads: typing.SupportsInt) -> None:
     """
+    Subroutine tao_set_openmp_n_threads (n_threads)
+    
     Routine to set OpenMP thread count.  Errors if OpenMP is not available.
     
     Parameters
@@ -39493,8 +39328,6 @@ def tao_set_openmp_n_threads(n_threads: typing.SupportsInt) -> None:
     """
 def tao_set_opt_vars(var_vec: RealAlloc1D, print_limit_warning: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     var_vec : float
@@ -39505,6 +39338,8 @@ def tao_set_opt_vars(var_vec: RealAlloc1D, print_limit_warning: bool | None = No
     """
 def tao_set_opti_de_param_cmd(who: str, value_str: str) -> None:
     """
+    Subroutine tao_set_opti_de_param_cmd (who, value_str)
+    
     Routine to set opti_de_param variables
     
     Parameters
@@ -39516,6 +39351,8 @@ def tao_set_opti_de_param_cmd(who: str, value_str: str) -> None:
     """
 def tao_set_particle_start_cmd(who: str, value_str: str) -> None:
     """
+    Subroutine tao_set_particle_start_cmd (who, value_str)
+    
     Routine to set particle_start variables.
     
     Parameters
@@ -39527,6 +39364,8 @@ def tao_set_particle_start_cmd(who: str, value_str: str) -> None:
     """
 def tao_set_plot_cmd(plot_name: str, component: str, value_str: str) -> None:
     """
+    Subroutine tao_set_plot_cmd (plot_name, component, value_str)
+    
     Routine to set plot parameters.
     
     Parameters
@@ -39540,7 +39379,9 @@ def tao_set_plot_cmd(plot_name: str, component: str, value_str: str) -> None:
     """
 def tao_set_plot_page_cmd(component: str, value_str: str, value_str2: str | None = None) -> None:
     """
-    Set various aspects of the plotting window
+    Subroutine tao_set_plot_page_cmd (component, value_str, value_str2)
+    
+     Set various aspects of the plotting window
     
     Parameters
     ----------
@@ -39553,6 +39394,8 @@ def tao_set_plot_page_cmd(component: str, value_str: str, value_str2: str | None
     """
 def tao_set_ptc_com_cmd(who: str, value_str: str) -> None:
     """
+    Subroutine tao_set_ptc_com_cmd (who, value_str)
+    
     Routine to set ptc_com variables
     
     Parameters
@@ -39564,6 +39407,8 @@ def tao_set_ptc_com_cmd(who: str, value_str: str) -> None:
     """
 def tao_set_qp_axis_struct(qp_axis_name: str, component: str, qp_axis: QpAxisStruct, value: str) -> ...:
     """
+    Subroutine tao_set_qp_axis_struct (qp_axis_name, component, qp_axis, value, error, ix_uni)
+    
     Routine to set qp_axis_names of a qp_axis_struct.
     
     Parameters
@@ -39588,6 +39433,8 @@ def tao_set_qp_axis_struct(qp_axis_name: str, component: str, qp_axis: QpAxisStr
     """
 def tao_set_qp_point_struct(qp_point_name: str, component: str, qp_point: QpPointStruct, value: str) -> ...:
     """
+    Subroutine tao_set_qp_point_struct (qp_point_name, component, qp_point, value, error, ix_uni)
+    
     Routine to set qp_point_names of a qp_point_struct.
     
     Parameters
@@ -39612,6 +39459,8 @@ def tao_set_qp_point_struct(qp_point_name: str, component: str, qp_point: QpPoin
     """
 def tao_set_qp_rect_struct(qp_rect_name: str, component: str, qp_rect: QpRectStruct, value: str) -> ...:
     """
+    Subroutine tao_set_qp_rect_struct (qp_rect_name, component, qp_rect, value, error, ix_uni)
+    
     Routine to set qp_rect_names of a qp_rect_struct.
     
     Parameters
@@ -39636,6 +39485,8 @@ def tao_set_qp_rect_struct(qp_rect_name: str, component: str, qp_rect: QpRectStr
     """
 def tao_set_ran_state_cmd(state_string: str) -> None:
     """
+    Subroutine tao_set_ran_state_cmd (state_string)
+    
     Sets the random number generator state.
     
     Parameters
@@ -39645,6 +39496,8 @@ def tao_set_ran_state_cmd(state_string: str) -> None:
     """
 def tao_set_real_value(var_str: str, value_str: str, min_val: typing.SupportsFloat | None = None, max_val: typing.SupportsFloat | None = None, dflt_uni: typing.SupportsInt | None = None) -> ...:
     """
+    Subroutine tao_set_real_value (var, var_str, value_str, error, min_val, max_val, dflt_uni)
+    
     Subroutine to read and set the value of a real variable.
     
     If the value is out of the range [min_val, max_val] then an error message will
@@ -39672,6 +39525,8 @@ def tao_set_real_value(var_str: str, value_str: str, min_val: typing.SupportsFlo
     """
 def tao_set_region_cmd(region_name: str, component: str, value_str: str) -> None:
     """
+    Subroutine tao_set_region_cmd (region_name, component, value_str)
+    
     Routine to set region parameters.
     
     Parameters
@@ -39685,6 +39540,8 @@ def tao_set_region_cmd(region_name: str, component: str, value_str: str) -> None
     """
 def tao_set_space_charge_com_cmd(who: str, value_str: str) -> None:
     """
+    Subroutine tao_set_space_charge_com_cmd (who, value_str)
+    
     Routine to set space_charge_com variables
     
     Parameters
@@ -39701,7 +39558,10 @@ def tao_set_space_charge_com_cmd(who: str, value_str: str) -> None:
     """
 def tao_set_symbolic_number_cmd(sym_str: str, num_str: str | None = None, val: typing.SupportsFloat | None = None) -> None:
     """
+    Subroutine tao_set_symbolic_number_cmd (sym_str, num_str, val)
+    
     Associates a given symbol with a given number.
+    Note: Either num_str or val argument must be present.
     
     Parameters
     ----------
@@ -39714,6 +39574,8 @@ def tao_set_symbolic_number_cmd(sym_str: str, num_str: str | None = None, val: t
     """
 def tao_set_tune_cmd(branch_str: str, mask_str: str, print_list: bool, qa_str: str, qb_str: str, delta_input: bool) -> None:
     """
+    Subroutine tao_set_tune_cmd (branch_str, mask_str, print_list, qa_str, qb_str, delta_input)
+    
     Routine to set the transverse tunes.
     
     Parameters
@@ -39733,6 +39595,8 @@ def tao_set_tune_cmd(branch_str: str, mask_str: str, print_list: bool, qa_str: s
     """
 def tao_set_universe_cmd(uni: str, who: str, what: str) -> None:
     """
+    Subroutine tao_set_universe_cmd (uni, who, what)
+    
     Sets a universe on or off, or sets the recalculate or twiss_calc logicals, etc.
     
     Parameters
@@ -39746,6 +39610,8 @@ def tao_set_universe_cmd(uni: str, who: str, what: str) -> None:
     """
 def tao_set_var_cmd(var_str: str, value_str: str) -> None:
     """
+    Subroutine tao_set_var_cmd (var_str, value_str)
+    
     Routine to set var values.
     
     Parameters
@@ -39757,8 +39623,6 @@ def tao_set_var_cmd(var_str: str, value_str: str) -> None:
     """
 def tao_set_var_model_value(var: TaoVarStruct, value: typing.SupportsFloat, print_limit_warning: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     var : TaoVarStruct
@@ -39770,11 +39634,11 @@ def tao_set_var_model_value(var: TaoVarStruct, value: typing.SupportsFloat, prin
         value is past the variable's limits. Default is True.
     """
 def tao_set_var_useit_opt() -> None:
-    """
-    No docstring available
-    """
+    ...
 def tao_set_wave_cmd(who: str, value_str: str) -> bool:
     """
+    Subroutine tao_set_wave_cmd (who, value_str, err)
+    
     Routine to set wave variables
     
     Parameters
@@ -39791,6 +39655,8 @@ def tao_set_wave_cmd(who: str, value_str: str) -> bool:
     """
 def tao_set_z_tune_cmd(branch_str: str, q_str: str, delta_input: bool) -> None:
     """
+    Subroutine tao_set_z_tune_cmd (branch_str, q_str, delta_input)
+    
     Routine to set the z-tune.
     
     Parameters
@@ -39803,13 +39669,9 @@ def tao_set_z_tune_cmd(branch_str: str, q_str: str, delta_input: bool) -> None:
         If true then qa_str and qb_str are deltas from present tune.
     """
 def tao_setup_key_table() -> None:
-    """
-    No docstring available
-    """
+    ...
 def tao_shape_init(shape: TaoEleShapeStruct, print_err: bool | None = None) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     shape : TaoEleShapeStruct
@@ -39821,8 +39683,6 @@ def tao_shape_init(shape: TaoEleShapeStruct, print_err: bool | None = None) -> b
     """
 def tao_show_cmd(what: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     what : unknown
@@ -39830,6 +39690,8 @@ def tao_show_cmd(what: str) -> None:
     """
 def tao_show_constraints(iunit: typing.SupportsInt, form: str) -> None:
     """
+    Subroutine tao_show_constraints (iunit, form)
+    
     Routine to show a list of datums and variables and how they contribute to the merit function.
     
     Parameters
@@ -39842,8 +39704,6 @@ def tao_show_constraints(iunit: typing.SupportsInt, form: str) -> None:
     """
 def tao_single_mode(char_: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     char : unknown
@@ -39851,6 +39711,8 @@ def tao_single_mode(char_: str) -> None:
     """
 def tao_single_track(tao_lat: TaoLatticeStruct, ix_branch: typing.SupportsInt, print_err: bool | None = None) -> bool:
     """
+    Subroutine tao_single_track (tao_lat, calc_ok, ix_branch, print_err)
+    
     Routine to track a single particle and calculate lattice functions through a lattice.
     
     Parameters
@@ -39869,8 +39731,6 @@ def tao_single_track(tao_lat: TaoLatticeStruct, ix_branch: typing.SupportsInt, p
     """
 def tao_spin_matrices_calc_needed(data_type: str, data_source: str, do_calc: bool) -> PyTaoSpinMatricesCalcNeeded:
     """
-    No docstring available
-    
     Parameters
     ----------
     data_type : 
@@ -39878,13 +39738,9 @@ def tao_spin_matrices_calc_needed(data_type: str, data_source: str, do_calc: boo
     do_calc : 
     """
 def tao_spin_tracking_turn_on() -> None:
-    """
-    No docstring available
-    """
+    ...
 def tao_split_component(comp_str: str) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     comp_str : unknown
@@ -39896,8 +39752,6 @@ def tao_split_component(comp_str: str) -> ...:
     """
 def tao_srdt_calc_needed(data_type: str, data_source: str, do_srdt: typing.SupportsInt) -> PyTaoSrdtCalcNeeded:
     """
-    No docstring available
-    
     Parameters
     ----------
     data_type : 
@@ -39906,8 +39760,6 @@ def tao_srdt_calc_needed(data_type: str, data_source: str, do_srdt: typing.Suppo
     """
 def tao_subin_uni_number(name_in: str, ix_uni: typing.SupportsInt, ok: bool) -> PyTaoSubinUniNumber:
     """
-    No docstring available
-    
     Parameters
     ----------
     name_in : unknown
@@ -39920,6 +39772,8 @@ def tao_subin_uni_number(name_in: str, ix_uni: typing.SupportsInt, ok: bool) -> 
     """
 def tao_svd_optimizer() -> bool:
     """
+    Subroutine tao_svd_optimizer (abort)
+    
     Routine to minimize the merit function using svd.
     
     
@@ -39930,16 +39784,12 @@ def tao_svd_optimizer() -> bool:
     """
 def tao_symbol_import_from_lat(lat: LatStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : 
     """
 def tao_taper_cmd(except: str, uni_names: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     except : unknown
@@ -39949,8 +39799,6 @@ def tao_taper_cmd(except: str, uni_names: str) -> None:
     """
 def tao_to_change_number(num_str: str, n_size: typing.SupportsInt, change_number: RealAlloc1D, abs_or_rel: str, err: bool) -> PyTaoToChangeNumber:
     """
-    No docstring available
-    
     Parameters
     ----------
     num_str : 
@@ -39961,12 +39809,16 @@ def tao_to_change_number(num_str: str, n_size: typing.SupportsInt, change_number
     """
 def tao_to_int(str: str, i_int: typing.SupportsInt, err: bool) -> PyTaoToInt:
     """
+    Subroutine tao_to_int (str, i_int, err)
+    
     Converts a string to an integer
     
     If the string str is blank then i_int = 0
     """
 def tao_to_phase_and_coupling_reading(ele: EleStruct, why_invalid: str, datum: TaoDataStruct) -> PyTaoToPhaseAndCouplingReading:
     """
+    Subroutine tao_to_phase_and_coupling_reading (ele, bpm_data, valid_value)
+    
     Buffer routine for to_phase_and_coupling_reading.
     
     Parameters
@@ -39983,8 +39835,6 @@ def tao_to_phase_and_coupling_reading(ele: EleStruct, why_invalid: str, datum: T
     """
 def tao_to_real(expression: str) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     expression : unknown
@@ -39996,8 +39846,6 @@ def tao_to_real(expression: str) -> ...:
     """
 def tao_too_many_particles_lost(beam: BeamStruct, no_beam: bool) -> PyTaoTooManyParticlesLost:
     """
-    No docstring available
-    
     Parameters
     ----------
     beam : 
@@ -40005,12 +39853,15 @@ def tao_too_many_particles_lost(beam: BeamStruct, no_beam: bool) -> PyTaoTooMany
     """
 def tao_top10_derivative_print() -> None:
     """
+    Subroutine tao_top10_derivative_print ()
+    
     Routine to print out the top10 contributors to the merit function.
     """
 def tao_top10_merit_categories_print(iunit: typing.SupportsInt) -> None:
     """
-    Routine to print the top data and variable categories that contribute to
+    Subroutine tao_top10_merit_categories_print (iunit)
     
+    Routine to print the top data and variable categories that contribute to
     the merit function.
     
     Parameters
@@ -40020,8 +39871,6 @@ def tao_top10_merit_categories_print(iunit: typing.SupportsInt) -> None:
     """
 def tao_top_level(command: str | None = None) -> int:
     """
-    No docstring available
-    
     Parameters
     ----------
     command : unknown, optional
@@ -40032,6 +39881,8 @@ def tao_top_level(command: str | None = None) -> int:
     """
 def tao_tracking_ele_index(ele: EleStruct, datum: TaoDataStruct) -> ...:
     """
+    Function tao_tracking_ele_index(ele, datum, ix_branch) result (ix_ele)
+    
     Routine to return the index in the tracking part of a lattice that corresponds to ele.
     
     Parameters
@@ -40049,17 +39900,17 @@ def tao_tracking_ele_index(ele: EleStruct, datum: TaoDataStruct) -> ...:
         Element index associated with ele.
     """
 def tao_turn_on_special_calcs_if_needed_for_plotting() -> None:
-    """
-    No docstring available
-    """
+    ...
 def tao_uni_atsign_index(string: str) -> int:
     """
-    Routine to return the index of an atsign ("@") character in a string if the atsign is
+    Function tao_uni_atsign_index(string) result (ix_amp)
     
+    Routine to return the index of an atsign ("@") character in a string if the atsign is
     being used as a separator between a universe spec and the rest of the string.
+    
     For example:
-    string = "[1:3]@orbit.x[5] => ix_amp = 6
-    string = "orbit.x[5@0.2]   => ix_amp = 0 (no universe "@" present)
+      string = "[1:3]@orbit.x[5] => ix_amp = 6
+      string = "orbit.x[5@0.2]   => ix_amp = 0 (no universe "@" present)
     
     Parameters
     ----------
@@ -40073,8 +39924,6 @@ def tao_uni_atsign_index(string: str) -> int:
     """
 def tao_universe_index(i_uni: typing.SupportsInt, neg2_to_default: bool | None = None, i_this_uni: typing.SupportsInt) -> PyTaoUniverseIndex:
     """
-    No docstring available
-    
     Parameters
     ----------
     i_uni : int
@@ -40085,8 +39934,6 @@ def tao_universe_index(i_uni: typing.SupportsInt, neg2_to_default: bool | None =
     """
 def tao_use_data(action: str, data_name: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     action : unknown
@@ -40096,8 +39943,6 @@ def tao_use_data(action: str, data_name: str) -> None:
     """
 def tao_use_var(action: str, var_name: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     action : unknown
@@ -40107,16 +39952,12 @@ def tao_use_var(action: str, var_name: str) -> None:
     """
 def tao_user_is_terminating_optimization() -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     is_terminating : 
     """
 def tao_var1_name(var: TaoVarStruct, var1_name: str) -> PyTaoVar1Name:
     """
-    No docstring available
-    
     Parameters
     ----------
     var : TaoVarStruct
@@ -40125,8 +39966,6 @@ def tao_var1_name(var: TaoVarStruct, var1_name: str) -> PyTaoVar1Name:
     """
 def tao_var_attrib_name(var: TaoVarStruct, var_attrib_name: str) -> PyTaoVarAttribName:
     """
-    No docstring available
-    
     Parameters
     ----------
     var : TaoVarStruct
@@ -40135,8 +39974,6 @@ def tao_var_attrib_name(var: TaoVarStruct, var_attrib_name: str) -> PyTaoVarAttr
     """
 def tao_var_check(eles: ElePointerStructAlloc1D, attribute: str, silent: bool) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     eles : ElePointerStruct
@@ -40147,17 +39984,11 @@ def tao_var_check(eles: ElePointerStructAlloc1D, attribute: str, silent: bool) -
         If True and the problem can be fixed, do not issue an error message.
     """
 def tao_var_repoint() -> None:
-    """
-    No docstring available
-    """
+    ...
 def tao_var_target_calc() -> None:
-    """
-    No docstring available
-    """
+    ...
 def tao_var_useit_plot_calc(graph: TaoGraphStruct) -> TaoVarStructAlloc1D:
     """
-    No docstring available
-    
     Parameters
     ----------
     graph : 
@@ -40166,14 +39997,16 @@ def tao_var_useit_plot_calc(graph: TaoGraphStruct) -> TaoVarStructAlloc1D:
     """
 def tao_var_write(out_file: str, show_good_opt_only: bool | None = None, tao_format: bool | None = None) -> None:
     """
-    Routine to write the optimized variables. One file will be created for each universe.
+    Subroutine tao_var_write (out_file, show_good_opt_only, tao_format)
     
+    Routine to write the optimized variables. One file will be created for each universe.
     The created file will have three sections:
-    1) The variable values
-    2) The list of constraints.
-    3) A list of the top 10 constraints.
+      1) The variable values
+      2) The list of constraints.
+      3) A list of the top 10 constraints.
     If out_file = '' the information will be dumped to the terminal.
     In this case, only the variable values will be printed.
+    
     When tao_format = True, the output is in the form "set variable <name> = <value>"
     so the file can be used as a Tao command file. If tao_format = False, the format
     is suitable for inclusion in a Bmad lattice file.
@@ -40189,10 +40022,14 @@ def tao_var_write(out_file: str, show_good_opt_only: bool | None = None, tao_for
     """
 def tao_veto_vars_with_zero_dmodel() -> None:
     """
+    Subroutine tao_veto_vars_with_zero_dmodel ()
+    
     Routine to veto all variables with zero effect on data used in the merit function.
     """
 def tao_wave_analysis(plot: TaoPlotStruct) -> None:
     """
+    Subroutine tao_wave_analysis (plot)
+    
     Routine to do a wave anaysis.
     
     Parameters
@@ -40203,8 +40040,9 @@ def tao_wave_analysis(plot: TaoPlotStruct) -> None:
     """
 def tao_wave_cmd(curve_name: str, plot_place: str, err_flag: bool) -> PyTaoWaveCmd:
     """
-    Routine to do the initial setup for wave plotting.
+    Subroutine tao_wave_cmd (curve_name, plot_place, err_flag)
     
+    Routine to do the initial setup for wave plotting.
     The wave analysis is done by the routine tao_wave_analysis.
     
     Parameters
@@ -40216,8 +40054,9 @@ def tao_wave_cmd(curve_name: str, plot_place: str, err_flag: bool) -> PyTaoWaveC
     """
 def tao_wave_fit(curve: TaoCurveStruct, ix1: typing.SupportsInt, n_dat: typing.SupportsInt, f1: RealAlloc1D, f2: _pybmad.RealAlloc1D | None = None, f3: _pybmad.RealAlloc1D | None = None, f4: _pybmad.RealAlloc1D | None = None) -> ...:
     """
-    Routine for fitting the curve data to up to four functions using a least squares
+    Subroutine tao_wave_fit (curve, ix1, n_dat, coef, rms, f1, f2, f3, f4)
     
+    Routine for fitting the curve data to up to four functions using a least squares
     SVD fit.
     
     Parameters
@@ -40246,8 +40085,6 @@ def tao_wave_fit(curve: TaoCurveStruct, ix1: typing.SupportsInt, n_dat: typing.S
     """
 def tao_write_cmd(what: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     what : unknown
@@ -40255,8 +40092,6 @@ def tao_write_cmd(what: str) -> None:
     """
 def tao_x_axis_cmd(where: str, what: str) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     where : unknown
@@ -40266,8 +40101,9 @@ def tao_x_axis_cmd(where: str, what: str) -> None:
     """
 def tao_x_scale_cmd(where: str, x_min_in: typing.SupportsFloat, x_max_in: typing.SupportsFloat, include_wall: bool | None = None, gang: str | None = None, exact: bool | None = None, turn_autoscale_off: bool | None = None) -> bool:
     """
-    Routine to scale a plot. If x_min = x_max
+    Subroutine tao_x_scale_cmd (where, x_min_in, x_max_in, err, include_wall, gang, exact, turn_autoscale_off)
     
+    Routine to scale a plot. If x_min = x_max
     Then the scales will be chosen to show all the data.
     
     Parameters
@@ -40296,8 +40132,6 @@ def tao_x_scale_cmd(where: str, x_min_in: typing.SupportsFloat, x_max_in: typing
     """
 def tao_x_scale_graph(graph: TaoGraphStruct, x_min: typing.SupportsFloat, x_max: typing.SupportsFloat, include_wall: bool | None = None, have_scaled: bool | None = None) -> PyTaoXScaleGraph:
     """
-    No docstring available
-    
     Parameters
     ----------
     graph : 
@@ -40308,8 +40142,9 @@ def tao_x_scale_graph(graph: TaoGraphStruct, x_min: typing.SupportsFloat, x_max:
     """
 def tao_x_scale_plot(plot: TaoPlotStruct, x_min_in: typing.SupportsFloat, x_max_in: typing.SupportsFloat, include_wall: bool | None = None, gang: str | None = None) -> bool:
     """
-    Routine to scale a plot. If x_min = x_max
+    Subroutine tao_x_scale_plot (plot, x_min_in, x_max_in, include_wall, gang, have_scaled)
     
+    Routine to scale a plot. If x_min = x_max
     Then the scales will be chosen to show all the data.
     
     Parameters
@@ -40333,8 +40168,6 @@ def tao_x_scale_plot(plot: TaoPlotStruct, x_min_in: typing.SupportsFloat, x_max_
     """
 def taper_mag_strengths(lat: LatStruct, ref_lat: _pybmad.LatStruct | None = None, except: str | None = None, err_flag: bool | None = None) -> PyTaperMagStrengths:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -40349,8 +40182,9 @@ def taper_mag_strengths(lat: LatStruct, ref_lat: _pybmad.LatStruct | None = None
     """
 def target_min_max_calc(r_corner1: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], r_corner2: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], y_min: typing.SupportsFloat, y_max: typing.SupportsFloat, phi_min: typing.SupportsFloat, phi_max: typing.SupportsFloat, initial: bool | None = None) -> PyTargetMinMaxCalc:
     """
-    Routine to calculate the min/max values for (y, phi).
+    Subroutine target_min_max_calc (r_corner1, r_corner2, y_min, y_max, phi_min, phi_max, initial)
     
+    Routine to calculate the min/max values for (y, phi).
     min/max values are cumulative.
     
     Parameters
@@ -40367,8 +40201,9 @@ def target_min_max_calc(r_corner1: typing.Annotated[collections.abc.Sequence[typ
     """
 def target_rot_mats(r_center: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> ...:
     """
-    Routine to calculate the rotation matrices between ele coords and "target" coords.
+    Subroutine target_rot_mats (r_center, w_to_target, w_to_ele)
     
+    Routine to calculate the rotation matrices between ele coords and "target" coords.
     By definition, in target coords r_center = [0, 0, 1].
     
     Parameters
@@ -40385,8 +40220,6 @@ def target_rot_mats(r_center: typing.Annotated[collections.abc.Sequence[typing.S
     """
 def taylor_equal_taylor(taylor1: TaylorStruct, taylor2: TaylorStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     taylor1 : 
@@ -40394,6 +40227,8 @@ def taylor_equal_taylor(taylor1: TaylorStruct, taylor2: TaylorStruct) -> None:
     """
 def taylor_inverse(taylor_in: TaylorStructAlloc1D) -> ...:
     """
+    Subroutine taylor_inverse (taylor_in, taylor_inv, err)
+    
     Subroutine to invert a taylor map. Since the inverse map is truncated, it is not exact.
     
     Parameters
@@ -40410,10 +40245,12 @@ def taylor_inverse(taylor_in: TaylorStructAlloc1D) -> ...:
     """
 def taylor_propagate1(orb_taylor: TaylorStructAlloc1D, ele: EleStruct, param: LatParamStruct, ref_in: _pybmad.CoordStruct | None = None, spin_taylor: _pybmad.TaylorStructAlloc1D | None = None) -> bool:
     """
-    Subroutine to track (symplectic integration) a orbital map, and optionally a spin map, through an element.
+    Subroutine taylor_propagate1 (orb_taylor, ele, param, err_flag, ref_in, spin_taylor)
     
+    Subroutine to track (symplectic integration) a orbital map, and optionally a spin map, through an element.
     The spin tracking is only done if spin_taylor is present and bmad_com%spin_tracking_on = T.
     The alternative routine, if ele has a taylor map, is concat_taylor.
+    
     This routine will fail if there is no corresponding ptc fibre for this
     element. In general, the transfer_map_calc routine should be used instead.
     
@@ -40439,8 +40276,9 @@ def taylor_propagate1(orb_taylor: TaylorStructAlloc1D, ele: EleStruct, param: La
     """
 def taylor_to_mad_map(taylor: TaylorStructAlloc1D, energy: MadEnergyStruct) -> MadMapStruct:
     """
-    Subroutine to convert a Taylor map to a mad order 2 map.
+    Subroutine taylor_to_mad_map (taylor, energy, map)
     
+    Subroutine to convert a Taylor map to a mad order 2 map.
     If any of the Taylor terms have order greater than 2 they are ignored.
     
     Parameters
@@ -40457,8 +40295,6 @@ def taylor_to_mad_map(taylor: TaylorStructAlloc1D, energy: MadEnergyStruct) -> M
     """
 def taylors_equal_taylors(taylor1: TaylorStructAlloc1D, taylor2: TaylorStructAlloc1D) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     taylor1 : 
@@ -40466,8 +40302,6 @@ def taylors_equal_taylors(taylor1: TaylorStructAlloc1D, taylor2: TaylorStructAll
     """
 def test_bunch_struct_array(arr_in: BunchStructAlloc1D, arr_inout: BunchStructAlloc1D, arr_in_opt: _pybmad.BunchStructAlloc1D | None = None, arr_inout_opt: _pybmad.BunchStructAlloc1D | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     arr_in : 
@@ -40479,8 +40313,6 @@ def test_bunch_struct_array(arr_in: BunchStructAlloc1D, arr_inout: BunchStructAl
     """
 def test_bunch_struct_scalar(val_in: BunchStruct, val_inout: BunchStruct, val_in_opt: _pybmad.BunchStruct | None = None, val_inout_opt: _pybmad.BunchStruct | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     val_in : 
@@ -40492,8 +40324,6 @@ def test_bunch_struct_scalar(val_in: BunchStruct, val_inout: BunchStruct, val_in
     """
 def test_character_scalar(val_in: str, val_inout: str, val_in_opt: str | None = None, val_inout_opt: str | None = None) -> PyTestCharacterScalar:
     """
-    No docstring available
-    
     Parameters
     ----------
     val_in : 
@@ -40505,8 +40335,6 @@ def test_character_scalar(val_in: str, val_inout: str, val_in_opt: str | None = 
     """
 def test_complex_array(arr_in: ComplexAlloc1D, arr_inout: ComplexAlloc1D, arr_in_opt: _pybmad.ComplexAlloc1D | None = None, arr_inout_opt: _pybmad.ComplexAlloc1D | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     arr_in : 
@@ -40518,8 +40346,6 @@ def test_complex_array(arr_in: ComplexAlloc1D, arr_inout: ComplexAlloc1D, arr_in
     """
 def test_complex_scalar(val_in: complex, val_inout: complex, val_in_opt: complex | None = None, val_inout_opt: complex | None = None) -> PyTestComplexScalar:
     """
-    No docstring available
-    
     Parameters
     ----------
     val_in : 
@@ -40531,8 +40357,6 @@ def test_complex_scalar(val_in: complex, val_inout: complex, val_in_opt: complex
     """
 def test_integer8_array(arr_in: Int8Alloc1D, arr_inout: Int8Alloc1D, arr_in_opt: _pybmad.Int8Alloc1D | None = None, arr_inout_opt: _pybmad.Int8Alloc1D | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     arr_in : 
@@ -40544,8 +40368,6 @@ def test_integer8_array(arr_in: Int8Alloc1D, arr_inout: Int8Alloc1D, arr_in_opt:
     """
 def test_integer8_scalar(val_in: typing.SupportsInt, val_inout: typing.SupportsInt, val_in_opt: typing.SupportsInt | None = None, val_inout_opt: typing.SupportsInt | None = None) -> PyTestInteger8Scalar:
     """
-    No docstring available
-    
     Parameters
     ----------
     val_in : 
@@ -40557,8 +40379,6 @@ def test_integer8_scalar(val_in: typing.SupportsInt, val_inout: typing.SupportsI
     """
 def test_integer_array(arr_in: IntAlloc1D, arr_inout: IntAlloc1D, arr_in_opt: _pybmad.IntAlloc1D | None = None, arr_inout_opt: _pybmad.IntAlloc1D | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     arr_in : 
@@ -40570,8 +40390,6 @@ def test_integer_array(arr_in: IntAlloc1D, arr_inout: IntAlloc1D, arr_in_opt: _p
     """
 def test_integer_scalar(val_in: typing.SupportsInt, val_inout: typing.SupportsInt, val_in_opt: typing.SupportsInt | None = None, val_inout_opt: typing.SupportsInt | None = None) -> PyTestIntegerScalar:
     """
-    No docstring available
-    
     Parameters
     ----------
     val_in : 
@@ -40583,8 +40401,6 @@ def test_integer_scalar(val_in: typing.SupportsInt, val_inout: typing.SupportsIn
     """
 def test_logical_array(arr_in: BoolAlloc1D, arr_inout: BoolAlloc1D, arr_in_opt: _pybmad.BoolAlloc1D | None = None, arr_inout_opt: _pybmad.BoolAlloc1D | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     arr_in : 
@@ -40596,8 +40412,6 @@ def test_logical_array(arr_in: BoolAlloc1D, arr_inout: BoolAlloc1D, arr_in_opt: 
     """
 def test_logical_scalar(val_in: bool, val_inout: bool, val_in_opt: bool | None = None, val_inout_opt: bool | None = None) -> PyTestLogicalScalar:
     """
-    No docstring available
-    
     Parameters
     ----------
     val_in : 
@@ -40609,8 +40423,6 @@ def test_logical_scalar(val_in: bool, val_inout: bool, val_in_opt: bool | None =
     """
 def test_real16_array(arr_in: Real16Alloc1D, arr_inout: Real16Alloc1D, arr_in_opt: _pybmad.Real16Alloc1D | None = None, arr_inout_opt: _pybmad.Real16Alloc1D | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     arr_in : 
@@ -40622,8 +40434,6 @@ def test_real16_array(arr_in: Real16Alloc1D, arr_inout: Real16Alloc1D, arr_in_op
     """
 def test_real16_scalar(val_in: typing.SupportsFloat, val_inout: typing.SupportsFloat, val_in_opt: typing.SupportsFloat | None = None, val_inout_opt: typing.SupportsFloat | None = None) -> PyTestReal16Scalar:
     """
-    No docstring available
-    
     Parameters
     ----------
     val_in : 
@@ -40635,8 +40445,6 @@ def test_real16_scalar(val_in: typing.SupportsFloat, val_inout: typing.SupportsF
     """
 def test_real_array(arr_in: RealAlloc1D, arr_inout: RealAlloc1D, arr_in_opt: _pybmad.RealAlloc1D | None = None, arr_inout_opt: _pybmad.RealAlloc1D | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     arr_in : 
@@ -40648,8 +40456,6 @@ def test_real_array(arr_in: RealAlloc1D, arr_inout: RealAlloc1D, arr_in_opt: _py
     """
 def test_real_scalar(val_in: typing.SupportsFloat, val_inout: typing.SupportsFloat, val_in_opt: typing.SupportsFloat | None = None, val_inout_opt: typing.SupportsFloat | None = None) -> PyTestRealScalar:
     """
-    No docstring available
-    
     Parameters
     ----------
     val_in : 
@@ -40661,8 +40467,6 @@ def test_real_scalar(val_in: typing.SupportsFloat, val_inout: typing.SupportsFlo
     """
 def tilt_coords(tilt_val: typing.SupportsFloat, coord: RealAlloc1D, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     tilt_val : float
@@ -40680,8 +40484,6 @@ def tilt_coords(tilt_val: typing.SupportsFloat, coord: RealAlloc1D, mat6: typing
     """
 def tilt_coords_photon(tilt_val: typing.SupportsFloat, coord: RealAlloc1D, w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"] | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     tilt_val : float
@@ -40696,8 +40498,6 @@ def tilt_coords_photon(tilt_val: typing.SupportsFloat, coord: RealAlloc1D, w_mat
     """
 def tilt_mat6(mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], tilt: typing.SupportsFloat) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     mat6 : float
@@ -40708,9 +40508,11 @@ def tilt_mat6(mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[c
     """
 def to_eta_reading(eta_actual: RealAlloc1D, ele: EleStruct, axis: typing.SupportsInt, add_noise: bool) -> ...:
     """
-    Compute the measured dispersion reading given the true dispersion and the
+    Subroutine to_eta_reading (eta, ele, axis, add_noise, reading, err)
     
+    Compute the measured dispersion reading given the true dispersion and the
     monitor offsets, noise, etc.
+    
     This routine will only give a nonzero reading for Bmad markers,
     monitors, and instruments.
     
@@ -40737,7 +40539,8 @@ def to_eta_reading(eta_actual: RealAlloc1D, ele: EleStruct, axis: typing.Support
     """
 def to_fieldmap_coords(ele: EleStruct, local_orb: CoordStruct, s_body: typing.SupportsFloat, ele_anchor_pt: typing.SupportsInt, r0: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], curved_ref_frame: bool, x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsFloat, cos_ang: typing.SupportsFloat, sin_ang: typing.SupportsFloat, err_flag: bool) -> PyToFieldmapCoords:
     """
-    x, y, z, cos_ang, sin_ang, err_flag)
+    Subroutine to_fieldmap_coords (ele, local_orb, s_body, ele_anchor_pt, r0, curved_ref_frame,
+                                                                  x, y, z, cos_ang, sin_ang, err_flag)
     
     Routine to return the (x,y,s) position relative to a field map.
     
@@ -40762,9 +40565,11 @@ def to_fieldmap_coords(ele: EleStruct, local_orb: CoordStruct, s_body: typing.Su
     """
 def to_orbit_reading(orb: CoordStruct, ele: EleStruct, axis: typing.SupportsInt, add_noise: bool) -> ...:
     """
-    Calculate the measured reading on a bpm given the actual orbit and the
+    Subroutine to_orbit_reading (orb, ele, axis, add_noise, reading, err)
     
+    Calculate the measured reading on a bpm given the actual orbit and the
     BPM's offsets, noise, etc.
+    
     This routine will only give a nonzero reading for Bmad markers,
     monitors, and instruments.
     
@@ -40790,6 +40595,8 @@ def to_orbit_reading(orb: CoordStruct, ele: EleStruct, axis: typing.SupportsInt,
     """
 def to_phase_and_coupling_reading(ele: EleStruct, add_noise: bool) -> ...:
     """
+    Subroutine to_phase_and_coupling_reading (ele, add_noise, reading, err)
+    
     Find the measured coupling values given the actual ones
     
     This routine will only give a nonzero reading for Bmad markers,
@@ -40813,9 +40620,10 @@ def to_phase_and_coupling_reading(ele: EleStruct, add_noise: bool) -> ...:
     """
 def to_photon_angle_coords(orb_in: CoordStruct, ele: EleStruct) -> CoordStruct:
     """
-    Routine to convert from standard photon coords to "angle" coords defined as:
+    Function to_photon_angle_coords (orb_in, ele) result (orb_out)
     
-    x, angle_x, y, angle_y, z, E-E_ref
+    Routine to convert from standard photon coords to "angle" coords defined as:
+          x, angle_x, y, angle_y, z, E-E_ref
     
     Parameters
     ----------
@@ -40831,15 +40639,14 @@ def to_photon_angle_coords(orb_in: CoordStruct, ele: EleStruct) -> CoordStruct:
     """
 def to_str(num: typing.SupportsFloat, max_signif: typing.SupportsInt | None = None, string: str) -> PyToStr:
     """
-    implicit none
-    
-    logical tracker_locked(2)
+    no longer exists
+    subroutine test_tune_tracker_lock (tracker_locked)
+      implicit none
+      logical tracker_locked(2)
     end subroutine
     """
 def to_surface_coords(lab_orbit: CoordStruct, ele: EleStruct) -> CoordStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     lab_orbit : CoordStruct
@@ -40852,20 +40659,25 @@ def to_surface_coords(lab_orbit: CoordStruct, ele: EleStruct) -> CoordStruct:
     """
 def touschek_lifetime(mode: NormalModesStruct, lat: LatStruct) -> float:
     """
-    Calculates the touschek lifetime for a lattice by calling touschek_rate1
+    Subroutine touschek_lifetime(mode, Tl, lat)
     
+    Calculates the touschek lifetime for a lattice by calling touschek_rate1
     for each element.
     The loss rate at each element is averaged over one turn to obtain the lifetime.
+    
     This function assumes that the twiss parameters and closed orbit have
     been calculated, and that mode has been populated.
+    
     This subroutine assumes a fixed momentum aperture.  The loss rate at each element
     uses the same momentum aperture, mode%pz_aperture.
+    
     A common way to call this function is to first populate mode using
     radiation integrals.  If an ideal lattice is used, the vertical
     emittance must also be set to a reasonable value.  If the vertical
     emittance is due only to quantum excitation, then it will likely be
     several orders of magnitude smaller than any real physical situation, in which
     case the integral in this function will have problems converging.
+    
     In addition to setting mode, also set lat%param%n_part to the number of particles
     per bunch.
     
@@ -40883,13 +40695,16 @@ def touschek_lifetime(mode: NormalModesStruct, lat: LatStruct) -> float:
     """
 def touschek_rate1(mode: NormalModesStruct, lat: LatStruct, ix: typing.SupportsInt | None = None, s: typing.SupportsFloat | None = None) -> float:
     """
-    Calculates the touschek rate at the location specified by s or ix
+    Subroutine touschek_rate1(mode, rate, lat, ix, s)
     
+    Calculates the touschek rate at the location specified by s or ix
     This calculation is based on Piwinski 1998 "The Touschek Effect In
     Strong Focusing Storage Rings".  This is the most general case, equation
     31.
+    
     This function uses twiss_and_track_at_s to determine the Twiss parameters
     at the location s or element index ix.
+    
     A common way to call this function is to first populate mode using
     radiation integrals.  If an ideal lattice is used, the vertical
     emittance must also be set to a reasonable value.  If the vertical
@@ -40897,23 +40712,26 @@ def touschek_rate1(mode: NormalModesStruct, lat: LatStruct, ix: typing.SupportsI
     several orders of magnitude smaller than any real physical situation, in which
     case the integral in this function will have problems converging.
     Additionally, mode%pz_aperture needs to be set to the momentum aperture.
+    
     In addition to setting mode, also set lat%param%n_part to the number of particles
     per bunch.
+    
     IMPORTANT NOTE: If the lattice type is a circular lattice, then
-    mode%a%emittance and mode%b%emittance are assumed to
-    contain the normalized emittences.  If lattice geometry is
-    open, the emittances are assumed to be
-    unnormalized.
+                    mode%a%emittance and mode%b%emittance are assumed to
+                    contain the normalized emittences.  If lattice geometry is
+                    open, the emittances are assumed to be
+                    unnormalized.
+    
     IMPORTANT NOTE: The output of this subroutine is the loss rate assuming
-    that two particles are lost per collision, one with too
-    much energy, and one with too little energy.  This agrees
-    with Piwinski's original derivation, which assumes that the
-    positive energy aperture is equal in magnitude to the
-    negative energy aperture.  If you are studying an
-    accelerator with a non-symmetric energy aperture, then
-    this subroutine should be called twice, once with the positive
-    aperture, and once with the negative aperture, and rate from
-    each call should be halved and summed.
+                    that two particles are lost per collision, one with too
+                    much energy, and one with too little energy.  This agrees
+                    with Piwinski's original derivation, which assumes that the
+                    positive energy aperture is equal in magnitude to the
+                    negative energy aperture.  If you are studying an
+                    accelerator with a non-symmetric energy aperture, then
+                    this subroutine should be called twice, once with the positive
+                    aperture, and once with the negative aperture, and rate from
+                    each call should be halved and summed.
     
     Parameters
     ----------
@@ -40933,8 +40751,6 @@ def touschek_rate1(mode: NormalModesStruct, lat: LatStruct, ix: typing.SupportsI
     """
 def touschek_rate1_zap(mode: NormalModesStruct, rate: typing.SupportsFloat, lat: LatStruct, ix: typing.SupportsInt | None = None, s: typing.SupportsFloat | None = None) -> PyTouschekRate1Zap:
     """
-    No docstring available
-    
     Parameters
     ----------
     mode : 
@@ -40945,8 +40761,6 @@ def touschek_rate1_zap(mode: NormalModesStruct, rate: typing.SupportsFloat, lat:
     """
 def track1(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct, track: _pybmad.TrackStruct | None = None, ignore_radiation: bool | None = None, make_map1: bool | None = None, init_to_edge: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     start_orb : CoordStruct
@@ -40976,6 +40790,8 @@ def track1(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct, track:
     """
 def track1_beam(beam: BeamStruct, ele: EleStruct, centroid: _pybmad.CoordStructAlloc1D | None = None, direction: typing.SupportsInt | None = None) -> bool:
     """
+    Subroutine track1_beam (beam, ele, err, centroid, direction)
+    
     Subroutine to track a beam of particles through an element.
     
     Parameters
@@ -40998,8 +40814,6 @@ def track1_beam(beam: BeamStruct, ele: EleStruct, centroid: _pybmad.CoordStructA
     """
 def track1_bmad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41023,8 +40837,6 @@ def track1_bmad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6:
     """
 def track1_bmad_photon(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41038,6 +40850,8 @@ def track1_bmad_photon(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct
     """
 def track1_bunch(bunch: BunchStruct, ele: EleStruct, centroid: _pybmad.CoordStructAlloc1D | None = None, direction: typing.SupportsInt | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
     """
+    Subroutine track1_bunch (bunch, ele, err, centroid, direction, bunch_track)
+    
     Subroutine to track a bunch of particles through an element.
     
     Parameters
@@ -41064,6 +40878,8 @@ def track1_bunch(bunch: BunchStruct, ele: EleStruct, centroid: _pybmad.CoordStru
     """
 def track1_bunch_csr(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructAlloc1D, s_start: typing.SupportsFloat | None = None, s_end: typing.SupportsFloat | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
     """
+    Subroutine track1_bunch_csr (bunch, ele, centroid, err, s_start, s_end, bunch_track)
+    
     Routine to track a bunch of particles through an element with csr radiation effects.
     
     Parameters
@@ -41092,10 +40908,13 @@ def track1_bunch_csr(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructAl
     """
 def track1_bunch_csr3d(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructAlloc1D, s_start: typing.SupportsFloat | None = None, s_end: typing.SupportsFloat | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
     """
+    Subroutine track1_bunch_csr3d (bunch, ele, centroid, err, bunch_track)
+    
     EXPERIMENTAL. NOT CURRENTLY OPERATIONAL!
     
     Routine to track a bunch of particles through an element using
     steady-state 3D CSR.
+    
     
     Parameters
     ----------
@@ -41123,6 +40942,8 @@ def track1_bunch_csr3d(bunch: BunchStruct, ele: EleStruct, centroid: CoordStruct
     """
 def track1_bunch_hom(bunch: BunchStruct, ele: EleStruct, direction: typing.SupportsInt | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> None:
     """
+    Subroutine track1_bunch_hom (bunch, ele, direction, bunch_track)
+    
     Subroutine to track a bunch of particles through an element including wakefields.
     
     Parameters
@@ -41141,8 +40962,6 @@ def track1_bunch_hom(bunch: BunchStruct, ele: EleStruct, direction: typing.Suppo
     """
 def track1_bunch_space_charge(bunch: BunchStruct, ele: EleStruct, track_to_same_s: bool | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     bunch : BunchStruct
@@ -41161,6 +40980,8 @@ def track1_bunch_space_charge(bunch: BunchStruct, ele: EleStruct, track_to_same_
     """
 def track1_crystal(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> None:
     """
+    Subroutine track1_crystal (ele, param, orbit)
+    
     Routine to track diffraction from a crystal.
     
     Parameters
@@ -41175,6 +40996,8 @@ def track1_crystal(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) ->
     """
 def track1_diffraction_plate_or_mask(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> None:
     """
+    Subroutine track1_diffraction_plate_or_mask (ele, param, orbit)
+    
     Routine to track through diffraction plate and mask elements.
     
     Parameters
@@ -41189,8 +41012,9 @@ def track1_diffraction_plate_or_mask(ele: EleStruct, param: LatParamStruct, orbi
     """
 def track1_high_energy_space_charge(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> None:
     """
-    Routine to apply the ultra-relative space charge kick to a particle at the end of an element.
+    Subroutine track1_high_energy_space_charge (ele, param, orbit)
     
+    Routine to apply the ultra-relative space charge kick to a particle at the end of an element.
     The routine setup_high_energy_space_charge_calc must be called initially before any tracking is done.
     This routine assumes a Gaussian bunch and is only valid with relativistic particles where the
     effect of the space charge is small.
@@ -41206,6 +41030,8 @@ def track1_high_energy_space_charge(ele: EleStruct, param: LatParamStruct, orbit
     """
 def track1_lens(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> None:
     """
+    Subroutine track1_lens (ele, param, orbit)
+    
     Routine to track through a lens.
     
     Parameters
@@ -41220,8 +41046,6 @@ def track1_lens(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> No
     """
 def track1_linear(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41233,6 +41057,8 @@ def track1_linear(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> 
     """
 def track1_lr_wake(bunch: BunchStruct, ele: EleStruct) -> None:
     """
+    Subroutine track1_lr_wake (bunch, ele)
+    
     Subroutine to put in the long-range wakes for particle tracking.
     
     Parameters
@@ -41247,7 +41073,10 @@ def track1_lr_wake(bunch: BunchStruct, ele: EleStruct) -> None:
     """
 def track1_mad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> None:
     """
+    Subroutine track1_mad (orbit, ele, param)
+    
     Subroutine to track through an element using a 2nd order transfer map.
+    Note: If map does not exist then one will be created.
     
     Parameters
     ----------
@@ -41261,6 +41090,8 @@ def track1_mad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> Non
     """
 def track1_mirror(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> None:
     """
+    Subroutine track1_mirror (ele, param, orbit)
+    
     Routine to track reflection from a mirror.
     
     Parameters
@@ -41275,6 +41106,8 @@ def track1_mirror(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> 
     """
 def track1_mosaic_crystal(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> None:
     """
+    Subroutine track1_mosaic_crystal (ele, param, orbit)
+    
     Routine to track diffraction from a crystal.
     
     Parameters
@@ -41289,8 +41122,9 @@ def track1_mosaic_crystal(ele: EleStruct, param: LatParamStruct, orbit: CoordStr
     """
 def track1_multilayer_mirror(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> None:
     """
-    Routine to track reflection from a multilayer_mirror.
+    Subroutine track1_multilayer_mirror (ele, param, orbit)
     
+    Routine to track reflection from a multilayer_mirror.
     Basic equations are from Kohn, "On the Theory of Reflectivity of an X-Ray Multilayer Mirror".
     
     Parameters
@@ -41305,12 +41139,16 @@ def track1_multilayer_mirror(ele: EleStruct, param: LatParamStruct, orbit: Coord
     """
 def track1_radiation(orbit: CoordStruct, ele: EleStruct, edge: typing.SupportsInt) -> None:
     """
+    Subroutine track1_radiation (orbit, ele, edge)
+    
     Subroutine to apply a kick to a particle to account for radiation dampling and/or fluctuations.
     
     For tracking through a given element, this routine should be called initially when
     the particle is at the entrance end and at the end when the particle is at the exit end, when
     the orbit is with respect to laboratory (not element body) coordinates.
     That is, each time this routine is called it applies half the radiation kick for the entire element.
+    
+    Note: This routine is called by track1.
     
     Parameters
     ----------
@@ -41325,9 +41163,12 @@ def track1_radiation(orbit: CoordStruct, ele: EleStruct, edge: typing.SupportsIn
     """
 def track1_radiation_center(orbit: CoordStruct, ele1: EleStruct, ele2: EleStruct, rad_damp: bool | None = None, rad_fluct: bool | None = None) -> None:
     """
-    Used for elements that have been split in half: This routine applies a kick to a particle
+    Subroutine track1_radiation_center (orbit, ele1, ele2, rad_damp, rad_fluct)
     
+    Used for elements that have been split in half: This routine applies a kick to a particle
     to account for radiation dampling and/or fluctuations.
+    
+    Also see: track1_radiation.
     
     Parameters
     ----------
@@ -41351,8 +41192,6 @@ def track1_radiation_center(orbit: CoordStruct, ele1: EleStruct, ele2: EleStruct
     """
 def track1_runge_kutta(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41375,6 +41214,8 @@ def track1_runge_kutta(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct
     """
 def track1_sample(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> None:
     """
+    Subroutine track1_sample (ele, param, orbit)
+    
     Routine to track reflection from a sample element.
     
     Parameters
@@ -41389,8 +41230,6 @@ def track1_sample(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> 
     """
 def track1_spin(start_orb: CoordStruct, param: LatParamStruct, make_quaternion: bool | None = None) -> PyTrack1Spin:
     """
-    No docstring available
-    
     Parameters
     ----------
     start_orb : 
@@ -41403,8 +41242,6 @@ def track1_spin(start_orb: CoordStruct, param: LatParamStruct, make_quaternion: 
     """
 def track1_spin_integration(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct) -> CoordStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     start_orb : 
@@ -41415,8 +41252,6 @@ def track1_spin_integration(start_orb: CoordStruct, ele: EleStruct, param: LatPa
     """
 def track1_spin_taylor(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct) -> CoordStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     start_orb : 
@@ -41427,6 +41262,8 @@ def track1_spin_taylor(start_orb: CoordStruct, ele: EleStruct, param: LatParamSt
     """
 def track1_sr_wake(bunch: BunchStruct, ele: EleStruct) -> None:
     """
+    Subroutine track1_sr_wake (bunch, ele)
+    
     Subroutine to apply the short range wake fields to a bunch.
     
     Parameters
@@ -41440,8 +41277,6 @@ def track1_sr_wake(bunch: BunchStruct, ele: EleStruct) -> None:
     """
 def track1_symp_lie_ptc(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> TrackStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41455,8 +41290,6 @@ def track1_symp_lie_ptc(orbit: CoordStruct, ele: EleStruct, param: LatParamStruc
     """
 def track1_taylor(orbit: CoordStruct, ele: EleStruct, taylor: typing.Annotated[collections.abc.Sequence[TaylorStruct], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41473,8 +41306,6 @@ def track1_taylor(orbit: CoordStruct, ele: EleStruct, taylor: typing.Annotated[c
     """
 def track1_time_runge_kutta(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, t_end: typing.SupportsFloat | None = None, dt_step: typing.SupportsFloat | None = None) -> PyTrack1TimeRungeKutta:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41502,8 +41333,6 @@ def track1_time_runge_kutta(orbit: CoordStruct, ele: EleStruct, param: LatParamS
     """
 def track_a_beambeam(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41523,8 +41352,6 @@ def track_a_beambeam(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, 
     """
 def track_a_bend(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41543,8 +41370,9 @@ def track_a_bend(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6
     """
 def track_a_bend_photon(orb: CoordStruct, ele: EleStruct, length: typing.SupportsFloat) -> None:
     """
-    Routine to track a photon through a dipole bend.
+    Subroutine track_a_bend_photon (orb, ele, length)
     
+    Routine to track a photon through a dipole bend.
     The photon is traveling in a straight line but the reference frame
     is curved in a circular shape.
     
@@ -41560,6 +41388,8 @@ def track_a_bend_photon(orb: CoordStruct, ele: EleStruct, length: typing.Support
     """
 def track_a_capillary(orb: CoordStruct, ele: EleStruct) -> None:
     """
+    Subroutine track_a_capillary (orb, ele)
+    
     Routine to track through a capillary.
     
     Parameters
@@ -41572,8 +41402,6 @@ def track_a_capillary(orb: CoordStruct, ele: EleStruct) -> None:
     """
 def track_a_converter(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41590,8 +41418,6 @@ def track_a_converter(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct,
     """
 def track_a_crab_cavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41608,8 +41434,6 @@ def track_a_crab_cavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruc
     """
 def track_a_drift(orb: CoordStruct, length: typing.SupportsFloat, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None, ele_orientation: typing.SupportsInt | None = None, include_ref_motion: bool | None = None, time: typing.SupportsFloat | None = None) -> PyTrackADrift:
     """
-    No docstring available
-    
     Parameters
     ----------
     orb : CoordStruct
@@ -41635,8 +41459,6 @@ def track_a_drift(orb: CoordStruct, length: typing.SupportsFloat, mat6: typing.A
     """
 def track_a_drift_photon(orb: CoordStruct, length: typing.SupportsFloat, phase_relative_to_ref: bool) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     orb : CoordStruct
@@ -41650,8 +41472,6 @@ def track_a_drift_photon(orb: CoordStruct, length: typing.SupportsFloat, phase_r
     """
 def track_a_foil(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41668,8 +41488,6 @@ def track_a_foil(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make
     """
 def track_a_gkicker(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41688,8 +41506,6 @@ def track_a_gkicker(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, m
     """
 def track_a_lcavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41708,8 +41524,6 @@ def track_a_lcavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, m
     """
 def track_a_lcavity_old(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41728,8 +41542,6 @@ def track_a_lcavity_old(orbit: CoordStruct, ele: EleStruct, param: LatParamStruc
     """
 def track_a_mask(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41746,8 +41558,6 @@ def track_a_mask(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make
     """
 def track_a_match(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, err_flag: bool | None = None, make_matrix: bool | None = None) -> PyTrackAMatch:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41765,8 +41575,6 @@ def track_a_match(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, err
     """
 def track_a_patch(ele: EleStruct, orbit: CoordStruct, drift_to_exit: bool | None = None, track_spin: bool | None = None, make_matrix: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -41793,11 +41601,12 @@ def track_a_patch(ele: EleStruct, orbit: CoordStruct, drift_to_exit: bool | None
     """
 def track_a_patch_photon(ele: EleStruct, orbit: CoordStruct, drift_to_exit: bool | None = None, use_z_pos: bool | None = None) -> None:
     """
-    Routine to track through a patch element with a photon.
+    Subroutine track_a_patch_photon (ele, orbit, drift_to_exit, use_z_pos)
     
+    Routine to track through a patch element with a photon.
     The steps for tracking are:
-    1) Transform from entrance to exit coordinates.
-    2) Drift particle from the entrance to the exit coordinants.
+      1) Transform from entrance to exit coordinates.
+      2) Drift particle from the entrance to the exit coordinants.
     
     Parameters
     ----------
@@ -41815,8 +41624,6 @@ def track_a_patch_photon(ele: EleStruct, orbit: CoordStruct, drift_to_exit: bool
     """
 def track_a_pickup(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, err_flag: bool | None = None, make_matrix: bool | None = None) -> PyTrackAPickup:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41834,8 +41641,6 @@ def track_a_pickup(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, er
     """
 def track_a_quadrupole(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41852,8 +41657,6 @@ def track_a_quadrupole(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct
     """
 def track_a_rfcavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41870,8 +41673,6 @@ def track_a_rfcavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, 
     """
 def track_a_sad_mult(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41889,8 +41690,6 @@ def track_a_sad_mult(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, 
     """
 def track_a_sol_quad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41907,8 +41706,6 @@ def track_a_sol_quad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, 
     """
 def track_a_thick_multipole(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41927,8 +41724,6 @@ def track_a_thick_multipole(orbit: CoordStruct, ele: EleStruct, param: LatParamS
     """
 def track_a_wiggler(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41945,8 +41740,6 @@ def track_a_wiggler(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, m
     """
 def track_a_zero_length_element(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     orbit : CoordStruct
@@ -41963,8 +41756,6 @@ def track_a_zero_length_element(orbit: CoordStruct, ele: EleStruct, param: LatPa
     """
 def track_all(lat: LatStruct, orbit: CoordStructAlloc1D, ix_branch: typing.SupportsInt | None = None, init_lost: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -41986,9 +41777,12 @@ def track_all(lat: LatStruct, orbit: CoordStructAlloc1D, ix_branch: typing.Suppo
     """
 def track_beam(lat: LatStruct, beam: BeamStruct, ele1: _pybmad.EleStruct | None = None, ele2: _pybmad.EleStruct | None = None, centroid: _pybmad.CoordStructAlloc1D | None = None, direction: typing.SupportsInt | None = None, bunch_tracks: _pybmad.BunchTrackStructAlloc1D | None = None) -> bool:
     """
-    Subroutine to track a beam of particles from the end of
+    Subroutine track_beam (lat, beam, ele1, ele2, err, centroid, direction, bunch_tracks)
     
+    Subroutine to track a beam of particles from the end of
     ele1 Through to the end of ele2. Both must be in the same lattice branch.
+    
+    Note: To zero wakes between runs, zero_lr_wakes_in_lat needs to be called.
     
     Parameters
     ----------
@@ -42018,11 +41812,14 @@ def track_beam(lat: LatStruct, beam: BeamStruct, ele1: _pybmad.EleStruct | None 
     """
 def track_bunch(lat: LatStruct, bunch: BunchStruct, ele1: _pybmad.EleStruct | None = None, ele2: _pybmad.EleStruct | None = None, centroid: _pybmad.CoordStructAlloc1D | None = None, direction: typing.SupportsInt | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
     """
-    Subroutine to track a particle bunch from the end of ele1 Through to the end of ele2.
+    Subroutine track_bunch (lat, bunch, ele1, ele2, err, centroid, direction, bunch_track)
     
+    Subroutine to track a particle bunch from the end of ele1 Through to the end of ele2.
     Both must be in the same lattice branch.
     With forward tracking, if ele2 is at or before ele1, the tracking will "wrap" around
     the ends of the lattice.
+    
+    Note: To zero wakes between runs, zero_lr_wakes_in_lat needs to be called.
     
     Parameters
     ----------
@@ -42052,8 +41849,6 @@ def track_bunch(lat: LatStruct, bunch: BunchStruct, ele1: _pybmad.EleStruct | No
     """
 def track_bunch_time(bunch: BunchStruct, branch: BranchStruct, t_end: typing.SupportsFloat, s_end: typing.SupportsFloat, dt_step: _pybmad.RealAlloc1D | None = None, extra_field: _pybmad.EmFieldStructAlloc1D | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     bunch : BunchStruct
@@ -42075,6 +41870,8 @@ def track_bunch_time(bunch: BunchStruct, branch: BranchStruct, t_end: typing.Sup
     """
 def track_bunch_to_s(bunch: BunchStruct, s: typing.SupportsFloat, branch: BranchStruct) -> None:
     """
+    Subroutine track_bunch_to_s (bunch, s, branch)
+    
     Drift a bunch of particles to the same s coordinate
     
     Parameters
@@ -42090,6 +41887,8 @@ def track_bunch_to_s(bunch: BunchStruct, s: typing.SupportsFloat, branch: Branch
     """
 def track_bunch_to_t(bunch: BunchStruct, t_target: typing.SupportsFloat, branch: BranchStruct) -> None:
     """
+    Subroutine track_bunch_to_t (bunch, t_target, branch)
+    
     Drift a bunch of particles to the same t coordinate
     
     Parameters
@@ -42105,6 +41904,8 @@ def track_bunch_to_t(bunch: BunchStruct, t_target: typing.SupportsFloat, branch:
     """
 def track_complex_taylor(start_orb: ComplexAlloc1D, complex_taylor: ComplexTaylorStructAlloc1D) -> ComplexAlloc1D:
     """
+    Subroutine track_complex_taylor (start_orb, complex_taylor, end_orb)
+    
     Subroutine to track using a complex_taylor map.
     
     Parameters
@@ -42121,8 +41922,6 @@ def track_complex_taylor(start_orb: ComplexAlloc1D, complex_taylor: ComplexTaylo
     """
 def track_from_s_to_s(lat: LatStruct, s_start: typing.SupportsFloat, s_end: typing.SupportsFloat, orbit_start: CoordStruct, ix_branch: typing.SupportsInt | None = None, ix_ele_end: typing.SupportsInt | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -42147,8 +41946,6 @@ def track_from_s_to_s(lat: LatStruct, s_start: typing.SupportsFloat, s_end: typi
     """
 def track_many(lat: LatStruct, orbit: CoordStructAlloc1D, ix_start: typing.SupportsInt, ix_end: typing.SupportsInt, direction: typing.SupportsInt, ix_branch: typing.SupportsInt | None = None) -> int:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -42169,8 +41966,6 @@ def track_many(lat: LatStruct, orbit: CoordStructAlloc1D, ix_start: typing.Suppo
     """
 def track_to_surface(ele: EleStruct, orbit: CoordStruct, param: LatParamStruct) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(3)"]], "FixedSize(3)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -42186,10 +41981,12 @@ def track_to_surface(ele: EleStruct, orbit: CoordStruct, param: LatParamStruct) 
     """
 def track_until_dead(start_orb: CoordStruct, lat: LatStruct) -> ...:
     """
-    Subroutine to track a particle arbitrarily through a lattice, forwards or backwards,
+    subroutine track_until_dead (start_orb, lat, end_orb, track)
     
-    until it is lost or exits the lattice.
-    The starting element is located using start_orb%s.
+    Subroutine to track a particle arbitrarily through a lattice, forwards or backwards,
+      until it is lost or exits the lattice.
+    
+      The starting element is located using start_orb%s.
     
     Parameters
     ----------
@@ -42207,8 +42004,6 @@ def track_until_dead(start_orb: CoordStruct, lat: LatStruct) -> ...:
     """
 def tracking_rad_map_setup(ele: EleStruct, tollerance: typing.SupportsFloat, ref_edge: typing.SupportsInt) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -42224,8 +42019,6 @@ def tracking_rad_map_setup(ele: EleStruct, tollerance: typing.SupportsFloat, ref
     """
 def transfer_ac_kick(ac_in: AcKickerStruct) -> AcKickerStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     ac_in : AcKickerStruct
@@ -42235,8 +42028,6 @@ def transfer_ac_kick(ac_in: AcKickerStruct) -> AcKickerStruct:
     """
 def transfer_branch(branch1: BranchStruct) -> BranchStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch1 : BranchStruct
@@ -42244,8 +42035,6 @@ def transfer_branch(branch1: BranchStruct) -> BranchStruct:
     """
 def transfer_branch_parameters(branch_in: BranchStruct) -> BranchStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch_in : BranchStruct
@@ -42255,8 +42044,6 @@ def transfer_branch_parameters(branch_in: BranchStruct) -> BranchStruct:
     """
 def transfer_branches(branch1: BranchStructAlloc1D) -> BranchStructAlloc1D:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch1 : BranchStruct
@@ -42264,8 +42051,6 @@ def transfer_branches(branch1: BranchStructAlloc1D) -> BranchStructAlloc1D:
     """
 def transfer_ele(ele1: EleStruct, nullify_pointers: bool | None = None) -> EleStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele1 : EleStruct
@@ -42277,8 +42062,6 @@ def transfer_ele(ele1: EleStruct, nullify_pointers: bool | None = None) -> EleSt
     """
 def transfer_ele_taylor(ele_in: EleStruct, taylor_order: typing.SupportsInt | None = None) -> EleStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele_in : EleStruct
@@ -42290,8 +42073,6 @@ def transfer_ele_taylor(ele_in: EleStruct, taylor_order: typing.SupportsInt | No
     """
 def transfer_eles(ele1: EleStructAlloc1D) -> EleStructAlloc1D:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele1 : EleStruct
@@ -42299,8 +42080,6 @@ def transfer_eles(ele1: EleStructAlloc1D) -> EleStructAlloc1D:
     """
 def transfer_fieldmap(ele_in: EleStruct, who: typing.SupportsInt) -> EleStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele_in : EleStruct
@@ -42312,6 +42091,8 @@ def transfer_fieldmap(ele_in: EleStruct, who: typing.SupportsInt) -> EleStruct:
     """
 def transfer_fixer_params(fixer: EleStruct, to_stored: bool, orbit: _pybmad.CoordStruct | None = None, who: str | None = None) -> bool:
     """
+    Function transfer_fixer_params(fixer, to_stored, orbit, who) result (is_ok)
+    
     Set parameters of fixer.
     
     Parameters
@@ -42335,8 +42116,6 @@ def transfer_fixer_params(fixer: EleStruct, to_stored: bool, orbit: _pybmad.Coor
     """
 def transfer_lat(lat1: LatStruct) -> LatStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat1 : LatStruct
@@ -42344,8 +42123,6 @@ def transfer_lat(lat1: LatStruct) -> LatStruct:
     """
 def transfer_lat_parameters(lat_in: LatStruct) -> LatStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat_in : LatStruct
@@ -42355,8 +42132,6 @@ def transfer_lat_parameters(lat_in: LatStruct) -> LatStruct:
     """
 def transfer_map_calc(lat: LatStruct, orb_map: TaylorStructAlloc1D, ix1: typing.SupportsInt | None = None, ix2: typing.SupportsInt | None = None, ref_orb: _pybmad.CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, one_turn: bool | None = None, unit_start: bool | None = None, concat_if_possible: bool | None = None, spin_map: _pybmad.TaylorStructAlloc1D | None = None) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -42390,14 +42165,18 @@ def transfer_map_calc(lat: LatStruct, orb_map: TaylorStructAlloc1D, ix1: typing.
     """
 def transfer_map_from_s_to_s(lat: LatStruct, t_map: TaylorStructAlloc1D, s1: typing.SupportsFloat | None = None, s2: typing.SupportsFloat | None = None, ref_orb_in: _pybmad.CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, one_turn: bool | None = None, unit_start: bool | None = None, concat_if_possible: bool | None = None, spin_map: _pybmad.TaylorStructAlloc1D | None = None) -> ...:
     """
-    one_turn, unit_start, err_flag, concat_if_possible, spin_map)
+    Subroutine transfer_map_from_s_to_s (lat, t_map, s1, s2, ref_orb_in, ref_orb_out, ix_branch,
+                                             one_turn, unit_start, err_flag, concat_if_possible, spin_map)
     
     Subroutine to calculate the transfer map between longitudinal positions s1 to s2.
+    
     If s2 < s1 and lat%param%geometry is closed$ then the
     calculation will 'wrap around' the lattice end.
     For example, if s1 = 900 and s2 = 10 then the t_map is the map from
     element 900 to the lattice end plus from 0 through 10.
+    
     If s2 < s1 and lat%param%geometry is open$ then the inverse of the forward map of s2 -> s1 is computed.
+    
     If s2 = s1 then you get the unit map except if one_turn = True and the lattice is circular.
     
     Parameters
@@ -42439,8 +42218,6 @@ def transfer_map_from_s_to_s(lat: LatStruct, t_map: TaylorStructAlloc1D, s1: typ
     """
 def transfer_mat2_from_twiss(twiss1: TwissStruct, twiss2: TwissStruct) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(2)"]], "FixedSize(2)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     twiss1 : TwissStruct
@@ -42454,8 +42231,6 @@ def transfer_mat2_from_twiss(twiss1: TwissStruct, twiss2: TwissStruct) -> typing
     """
 def transfer_mat_from_twiss(ele1: EleStruct, ele2: EleStruct, orb1: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], orb2: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele1 : EleStruct
@@ -42474,8 +42249,6 @@ def transfer_mat_from_twiss(ele1: EleStruct, ele2: EleStruct, orb1: typing.Annot
     """
 def transfer_matrix_calc(lat: LatStruct, xfer_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], xfer_vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"] | None = None, ix1: typing.SupportsInt | None = None, ix2: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None, one_turn: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -42495,8 +42268,6 @@ def transfer_matrix_calc(lat: LatStruct, xfer_mat: typing.Annotated[collections.
     """
 def transfer_twiss(ele_in: EleStruct, reverse: bool | None = None) -> EleStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele_in : EleStruct
@@ -42508,8 +42279,6 @@ def transfer_twiss(ele_in: EleStruct, reverse: bool | None = None) -> EleStruct:
     """
 def transfer_wake(wake_in: WakeStruct) -> WakeStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     wake_in : WakeStruct
@@ -42519,9 +42288,14 @@ def transfer_wake(wake_in: WakeStruct) -> WakeStruct:
     """
 def tricubic_cmplx_eval(x_norm: typing.SupportsFloat, y_norm: typing.SupportsFloat, z_norm: typing.SupportsFloat, tri_coef: TricubicCmplxCoefStruct) -> ...:
     """
+    Function tricubic_cmplx_eval (x_norm, y_norm, z_norm, tri_coef, df_dx, df_dy, df_dz) result (f_val)
+    
     Routine to evaluate a tricubic interpolating complex function.
     
     Use the routine tricubic_interpolation_cmplx_coefs to generate tri_coef.
+    
+    Note: In the equations below, the eight points of the grid box being interpolated range
+    from (x0, y0, z0) to (x0+dx, y0+dy, z0+dz).
     
     Parameters
     ----------
@@ -42547,6 +42321,8 @@ def tricubic_cmplx_eval(x_norm: typing.SupportsFloat, y_norm: typing.SupportsFlo
     """
 def truncate_complex_taylor_to_order(complex_taylor_in: ComplexTaylorStructAlloc1D, order: typing.SupportsInt) -> ComplexTaylorStructAlloc1D:
     """
+    Subroutine truncate_complex_taylor_to_order (complex_taylor_in, order, complex_taylor_out)
+    
     Subroutine to throw out all terms in a complex_taylor map that are above a certain order.
     
     Parameters
@@ -42563,8 +42339,6 @@ def truncate_complex_taylor_to_order(complex_taylor_in: ComplexTaylorStructAlloc
     """
 def twiss1_propagate(twiss1: TwissStruct, mat2: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"]], "FixedSize(2)"], ele_key: typing.SupportsInt, length: typing.SupportsFloat) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     twiss1 : TwissStruct
@@ -42582,9 +42356,12 @@ def twiss1_propagate(twiss1: TwissStruct, mat2: typing.Annotated[collections.abc
     """
 def twiss3_at_start(lat: LatStruct, err_flag: bool, ix_branch: typing.SupportsInt | None = None) -> PyTwiss3AtStart:
     """
-    Subroutine to calculate the 3D twiss parameters of the three modes of the full 6D 1-turn transfer matrix.
+    Subroutine twiss3_at_start (lat, error, ix_branch, tune3)
     
+    Subroutine to calculate the 3D twiss parameters of the three modes of the full 6D 1-turn transfer matrix.
     This routine is for lattices with closed geometries. For open lattices see: twiss3_from_twiss2.
+    
+    Note: The rf must be on for this calculation.
     
     Parameters
     ----------
@@ -42602,9 +42379,11 @@ def twiss3_at_start(lat: LatStruct, err_flag: bool, ix_branch: typing.SupportsIn
     """
 def twiss3_from_twiss2(ele: EleStruct) -> None:
     """
-    Routine to calculate the 3D Twiss parameters given the 2D transverse Twiss parameters and some
+    Subroutine twiss3_from_twiss2 (ele)
     
+    Routine to calculate the 3D Twiss parameters given the 2D transverse Twiss parameters and some
     longitudinal parameters.
+    Also see: twiss3_at_start
     
     Parameters
     ----------
@@ -42619,14 +42398,16 @@ def twiss3_from_twiss2(ele: EleStruct) -> None:
     """
 def twiss3_propagate1(ele1: EleStruct, ele2: EleStruct, err_flag: bool) -> PyTwiss3Propagate1:
     """
-    Subroutine to propagate the twiss parameters using all three normal modes.
+    Subroutine twiss3_propagate1 (ele1, ele2, err_flag)
     
+    Subroutine to propagate the twiss parameters using all three normal modes.
     Subroutine from original mode3_mod.
     """
 def twiss3_propagate_all(lat: LatStruct, ix_branch: typing.SupportsInt | None = None) -> None:
     """
-    Subroutine to propagate the twiss parameters using all three normal modes.
+    Subroutine twiss3_propagate_all (lat, ix_branch)
     
+    Subroutine to propagate the twiss parameters using all three normal modes.
     Subroutine from original mode3_mod.
     
     Parameters
@@ -42639,17 +42420,35 @@ def twiss3_propagate_all(lat: LatStruct, ix_branch: typing.SupportsInt | None = 
 @typing.overload
 def twiss_and_track(lat: LatStruct, orb_array: CoordArrayStructAlloc1D, print_err: bool | None = None, calc_chrom: bool | None = None) -> int:
     """
-    Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
+    Subroutine twiss_and_track
+    
+    This routine is an overloaded name for:
+      Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start)
+      Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
     
     Routine to calculate the twiss parameters, transport matrices and orbit.
+    
     The essential difference between these two procedures is that
     twiss_and_track_branch only does the main branch while twiss_and_track_all
     does everything but the photon_fork elements.
+    
+    Note: This is not necessarily the fastest way to do things since this
+    routine does the entire calculation from scratch.
+    
+    For a circular ring: If the RF is on, the computed orbit will be the 6D closed orbit.
+    If the RF is off, the 4D transverse closed orbit using orbi(0)%vec(6) is computed.
+    
+    For an open lattice, the orbit will be computed using orb(0) as
+    starting conditions.
+    
+    If there is a problem the status argument settings are: in_stop_band$,
+    unstable$, non_symplectic$, in_stop_band$, non_symplectic$, xfer_mat_clac_failure$,
     twiss_propagate_failure$, no_complete_orbit$, or no_closed_orbit$. Note: in_stop_band$, unstable$,
     and non_symplectic$ refer to the 1-turn matrix which is computed with closed lattices.
     For an open geometry branch, status = no_complete_orbit$ is for
     where the particle is lost in tracking. A negative sign is used to differentiate an
     error occuring in the first call to twiss_at_start from the second call to twiss_at_start.
+    
     If there is a problem in an open geometry branch, status argument setting is -N where N is the element
     where the particle was lost in tracking (negative numbers are used here to avoid confusion with ok$
     which is mapped to 1.
@@ -42684,29 +42483,39 @@ def twiss_and_track(lat: LatStruct, orb_array: CoordArrayStructAlloc1D, print_er
     -------
     status : int
         Set ok$ if everything is OK and set to something else otherwise. See above for more details.
-    
-    Notes
-    -----
-    Note: This is not necessarily the fastest way to do things since this routine does the entire calculation from
-    scratch. For a circular ring: If the RF is on, the computed orbit will be the 6D closed orbit. If the RF is
-    off, the 4D transverse closed orbit using orbi(0)%vec(6) is computed. For an open lattice, the orbit will be
-    computed using orb(0) as starting conditions. If there is a problem the status argument settings are:
-    in_stop_band$, unstable$, non_symplectic$, in_stop_band$, non_symplectic$, xfer_mat_clac_failure$,
     """
 @typing.overload
 def twiss_and_track(lat: LatStruct, orb: CoordStructAlloc1D, ix_branch: typing.SupportsInt | None = None, print_err: bool | None = None, calc_chrom: bool | None = None, orb_start: _pybmad.CoordStruct | None = None) -> int:
     """
-    Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
+    Subroutine twiss_and_track
+    
+    This routine is an overloaded name for:
+      Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start)
+      Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
     
     Routine to calculate the twiss parameters, transport matrices and orbit.
+    
     The essential difference between these two procedures is that
     twiss_and_track_branch only does the main branch while twiss_and_track_all
     does everything but the photon_fork elements.
+    
+    Note: This is not necessarily the fastest way to do things since this
+    routine does the entire calculation from scratch.
+    
+    For a circular ring: If the RF is on, the computed orbit will be the 6D closed orbit.
+    If the RF is off, the 4D transverse closed orbit using orbi(0)%vec(6) is computed.
+    
+    For an open lattice, the orbit will be computed using orb(0) as
+    starting conditions.
+    
+    If there is a problem the status argument settings are: in_stop_band$,
+    unstable$, non_symplectic$, in_stop_band$, non_symplectic$, xfer_mat_clac_failure$,
     twiss_propagate_failure$, no_complete_orbit$, or no_closed_orbit$. Note: in_stop_band$, unstable$,
     and non_symplectic$ refer to the 1-turn matrix which is computed with closed lattices.
     For an open geometry branch, status = no_complete_orbit$ is for
     where the particle is lost in tracking. A negative sign is used to differentiate an
     error occuring in the first call to twiss_at_start from the second call to twiss_at_start.
+    
     If there is a problem in an open geometry branch, status argument setting is -N where N is the element
     where the particle was lost in tracking (negative numbers are used here to avoid confusion with ok$
     which is mapped to 1.
@@ -42741,29 +42550,26 @@ def twiss_and_track(lat: LatStruct, orb: CoordStructAlloc1D, ix_branch: typing.S
     -------
     status : int
         Set ok$ if everything is OK and set to something else otherwise. See above for more details.
-    
-    Notes
-    -----
-    Note: This is not necessarily the fastest way to do things since this routine does the entire calculation from
-    scratch. For a circular ring: If the RF is on, the computed orbit will be the 6D closed orbit. If the RF is
-    off, the 4D transverse closed orbit using orbi(0)%vec(6) is computed. For an open lattice, the orbit will be
-    computed using orb(0) as starting conditions. If there is a problem the status argument settings are:
-    in_stop_band$, unstable$, non_symplectic$, in_stop_band$, non_symplectic$, xfer_mat_clac_failure$,
     """
 def twiss_and_track_at_s(lat: LatStruct, s: typing.SupportsFloat, ele_at_s: _pybmad.EleStruct | None = None, orb: _pybmad.CoordStructAlloc1D | None = None, orb_at_s: _pybmad.CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, use_last: bool | None = None, compute_floor_coords: bool | None = None) -> bool:
     """
-    Subroutine to return the twiss parameters and particle orbit at a
+    Subroutine twiss_and_track_at_s (lat, s, ele_at_s, orb, orb_at_s, ix_branch, err, use_last, compute_floor_coords)
     
+    Subroutine to return the twiss parameters and particle orbit at a
     given longitudinal position.
+    
     When calculating the Twiss parameters, this routine assumes
     that the lattice elements already contain the Twiss parameters calculated
     for the ends of the elements.
+    
     Additionally, the orbit at the ends of the elements (contained in orb(:)) must be
     precomputed when orb_at_s is present.
+    
     Precomputation of Twiss and orbit at the element ends may be done with the twiss_and_track routine.
+    
     See also:
-    twiss_and_track_from_s_to_s
-    twiss_and_track_intra_ele
+      twiss_and_track_from_s_to_s
+      twiss_and_track_intra_ele
     
     Parameters
     ----------
@@ -42800,8 +42606,6 @@ def twiss_and_track_at_s(lat: LatStruct, s: typing.SupportsFloat, ele_at_s: _pyb
     """
 def twiss_and_track_from_s_to_s(branch: BranchStruct, orbit_start: CoordStruct, s_end: typing.SupportsFloat, ele_start: _pybmad.EleStruct | None = None, compute_floor_coords: bool | None = None, compute_twiss: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     branch : BranchStruct
@@ -42827,8 +42631,6 @@ def twiss_and_track_from_s_to_s(branch: BranchStruct, orbit_start: CoordStruct, 
     """
 def twiss_and_track_intra_ele(ele: EleStruct, param: LatParamStruct, l_start: typing.SupportsFloat, l_end: typing.SupportsFloat, track_upstream_end: bool, track_downstream_end: bool, orbit_start: _pybmad.CoordStruct | None = None, ele_start: _pybmad.EleStruct | None = None, ele_end: _pybmad.EleStruct | None = None, compute_floor_coords: bool | None = None, compute_twiss: bool | None = None, reuse_ele_end: bool | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -42869,8 +42671,6 @@ def twiss_and_track_intra_ele(ele: EleStruct, param: LatParamStruct, l_start: ty
     """
 def twiss_at_element(ele: EleStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -42885,8 +42685,6 @@ def twiss_at_element(ele: EleStruct) -> ...:
     """
 def twiss_at_start(lat: LatStruct, ix_branch: typing.SupportsInt | None = None, type_out: bool | None = None) -> int:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -42902,8 +42700,6 @@ def twiss_at_start(lat: LatStruct, ix_branch: typing.SupportsInt | None = None, 
     """
 def twiss_from_tracking(lat: LatStruct, ref_orb0: CoordStruct, d_orb: _pybmad.RealAlloc1D | None = None) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -42922,8 +42718,6 @@ def twiss_from_tracking(lat: LatStruct, ref_orb0: CoordStruct, d_orb: _pybmad.Re
     """
 def twiss_propagate1(ele1: EleStruct, ele2: EleStruct, forward: bool | None = None) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele1 : EleStruct
@@ -42943,8 +42737,6 @@ def twiss_propagate1(ele1: EleStruct, ele2: EleStruct, forward: bool | None = No
     """
 def twiss_propagate_all(lat: LatStruct, ix_branch: typing.SupportsInt | None = None, ie_start: typing.SupportsInt | None = None, ie_end: typing.SupportsInt | None = None) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : LatStruct
@@ -42963,8 +42755,6 @@ def twiss_propagate_all(lat: LatStruct, ix_branch: typing.SupportsInt | None = N
     """
 def twiss_to_1_turn_mat(twiss: TwissStruct, phi: typing.SupportsFloat) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(2)"]], "FixedSize(2)"]:
     """
-    No docstring available
-    
     Parameters
     ----------
     twiss : TwissStruct
@@ -42976,8 +42766,6 @@ def twiss_to_1_turn_mat(twiss: TwissStruct, phi: typing.SupportsFloat) -> typing
     """
 def type_coord(coord: CoordStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     coord : CoordStruct
@@ -42985,8 +42773,9 @@ def type_coord(coord: CoordStruct) -> None:
     """
 def type_expression_tree(tree: ExpressionTreeStruct, indent: typing.SupportsInt | None = None) -> None:
     """
-    Routine to print an expression tree in tree form.
+    Subroutine type_expression_tree (tree, indent)
     
+    Routine to print an expression tree in tree form.
     Good for debugging.
     
     Parameters
@@ -42998,23 +42787,22 @@ def type_expression_tree(tree: ExpressionTreeStruct, indent: typing.SupportsInt 
     """
 def type_this_file(filename: str) -> PyTypeThisFile:
     """
-    No docstring available
-    
     Parameters
     ----------
     filename : 
     """
 def upcase_string(string: str) -> PyUpcaseString:
     """
-    No docstring available
-    
     Parameters
     ----------
     string : 
     """
 def update_ele_from_fibre(ele: EleStruct) -> None:
     """
+    Subroutine update_ele_from_fibre (ele)
+    
     Routine to update a bmad lattice element when the associated PTC fibre has been modified.
+    Remember to call lattice_bookkeeper after calling this routine.
     
     Parameters
     ----------
@@ -43028,8 +42816,6 @@ def update_ele_from_fibre(ele: EleStruct) -> None:
     """
 def update_fibre_from_ele(ele: EleStruct) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -43040,8 +42826,6 @@ def update_fibre_from_ele(ele: EleStruct) -> bool:
     """
 def update_floor_angles(floor: FloorPositionStruct, floor0: _pybmad.FloorPositionStruct | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     floor : FloorPositionStruct
@@ -43053,8 +42837,6 @@ def update_floor_angles(floor: FloorPositionStruct, floor0: _pybmad.FloorPositio
     """
 def valid_field_calc(ele: EleStruct, field_calc: typing.SupportsInt, is_valid: bool) -> PyValidFieldCalc:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -43065,8 +42847,6 @@ def valid_field_calc(ele: EleStruct, field_calc: typing.SupportsInt, is_valid: b
     """
 def valid_fringe_type(ele: EleStruct, fringe_type: typing.SupportsInt, is_valid: bool) -> PyValidFringeType:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -43077,8 +42857,6 @@ def valid_fringe_type(ele: EleStruct, fringe_type: typing.SupportsInt, is_valid:
     """
 def valid_mat6_calc_method(ele: EleStruct, species: typing.SupportsInt, mat6_calc_method: typing.SupportsInt, is_valid: bool) -> PyValidMat6CalcMethod:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -43091,8 +42869,6 @@ def valid_mat6_calc_method(ele: EleStruct, species: typing.SupportsInt, mat6_cal
     """
 def valid_spin_tracking_method(ele: EleStruct, spin_tracking_method: typing.SupportsInt, is_valid: bool) -> PyValidSpinTrackingMethod:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -43103,8 +42879,6 @@ def valid_spin_tracking_method(ele: EleStruct, spin_tracking_method: typing.Supp
     """
 def valid_tracking_method(ele: EleStruct, species: typing.SupportsInt, tracking_method: typing.SupportsInt, is_valid: bool) -> PyValidTrackingMethod:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -43117,8 +42891,6 @@ def valid_tracking_method(ele: EleStruct, species: typing.SupportsInt, tracking_
     """
 def value_of_attribute(ele: EleStruct, attrib_name: str, err_print_flag: bool | None = None, err_value: typing.SupportsFloat | None = None, value: typing.SupportsFloat) -> PyValueOfAttribute:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -43135,8 +42907,6 @@ def value_of_attribute(ele: EleStruct, attrib_name: str, err_print_flag: bool | 
     """
 def value_to_line(line: str, value: typing.SupportsFloat, str: str, typ: str, ignore_if_zero: bool | None = None, use_comma: bool | None = None) -> PyValueToLine:
     """
-    No docstring available
-    
     Parameters
     ----------
     line : 
@@ -43148,8 +42918,6 @@ def value_to_line(line: str, value: typing.SupportsFloat, str: str, typ: str, ig
     """
 def vec_to_polar(vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], phase: typing.SupportsFloat | None = None, polar: SpinPolarStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     vec : float
@@ -43160,8 +42928,6 @@ def vec_to_polar(vec: typing.Annotated[collections.abc.Sequence[typing.SupportsF
     """
 def vec_to_spinor(vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], phase: typing.SupportsFloat | None = None, spinor: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(2)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     vec : float
@@ -43172,15 +42938,18 @@ def vec_to_spinor(vec: typing.Annotated[collections.abc.Sequence[typing.Supports
     """
 def verify_valid_name(name: str, ix_name: typing.SupportsInt, pure_name: bool | None = None, include_wild: bool | None = None) -> bool:
     """
-    Routine to check if a name is well formed. Examples:
+    Function verify_valid_name (name, ix_name, pure_name, include_wild) result (is_valid)
     
-    "0>>Q0"                           -- Invalid (will only be valid after lattice expansion).
-    "Q1##1"                           -- Invalid (double hash not accepted).
-    "Q2A_C.\\7#"                       -- Pure name (no "[", "]", "(", ")", "%" characters present).
-    "Q3[GRID_FIELD(1)%FIELD_SCALE]"   -- Valid but not a pure name.
-    "RFCAVITY::*"                     -- Valid if include_wild = True.
+    Routine to check if a name is well formed. Examples:
+      "0>>Q0"                           -- Invalid (will only be valid after lattice expansion).
+      "Q1##1"                           -- Invalid (double hash not accepted).
+      "Q2A_C.\\7#"                       -- Pure name (no "[", "]", "(", ")", "%" characters present).
+      "Q3[GRID_FIELD(1)%FIELD_SCALE]"   -- Valid but not a pure name.
+      "RFCAVITY::*"                     -- Valid if include_wild = True.
+    
     This subroutine is used by bmad_parser and bmad_parser2.
     This subroutine is not intended for general use.
+    
     
     Parameters
     ----------
@@ -43200,16 +42969,12 @@ def verify_valid_name(name: str, ix_name: typing.SupportsInt, pure_name: bool | 
     """
 def virtual_memory_usage() -> int:
     """
-    No docstring available
-    
     Parameters
     ----------
     usage : 
     """
 def w_mat_for_bend_angle(angle: typing.SupportsFloat, ref_tilt: typing.SupportsFloat, r_vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     angle : float
@@ -43224,8 +42989,6 @@ def w_mat_for_bend_angle(angle: typing.SupportsFloat, ref_tilt: typing.SupportsF
     """
 def w_mat_for_tilt(tilt: typing.SupportsFloat, return_inverse: bool | None = None, w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     tilt : float
@@ -43236,8 +42999,6 @@ def w_mat_for_tilt(tilt: typing.SupportsFloat, return_inverse: bool | None = Non
     """
 def w_mat_for_x_pitch(x_pitch: typing.SupportsFloat, return_inverse: bool | None = None, w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     x_pitch : float
@@ -43248,8 +43009,6 @@ def w_mat_for_x_pitch(x_pitch: typing.SupportsFloat, return_inverse: bool | None
     """
 def w_mat_for_y_pitch(y_pitch: typing.SupportsFloat, return_inverse: bool | None = None, w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"]) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     y_pitch : float
@@ -43260,9 +43019,11 @@ def w_mat_for_y_pitch(y_pitch: typing.SupportsFloat, return_inverse: bool | None
     """
 def w_mat_to_axis_angle(w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"]) -> ...:
     """
-    Routine to find the rotation axis and rotation angle corresponding to a given
+    Subroutine w_mat_to_axis_angle (w_mat, axis, angle)
     
+    Routine to find the rotation axis and rotation angle corresponding to a given
     3D rotation matrix.
+    
     The rotation angle is chosen in the range [0, pi].
     
     Parameters
@@ -43279,6 +43040,8 @@ def w_mat_to_axis_angle(w_mat: typing.Annotated[collections.abc.Sequence[typing.
     """
 def w_mat_to_quat(w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"]) -> typing.Annotated[list[float], "FixedSize(4)"]:
     """
+    Function w_mat_to_quat (w_mat) result (quat)
+    
     Routine to find the quaternion corresponding to a given 3D rotation matrix.
     
     Parameters
@@ -43293,14 +43056,16 @@ def w_mat_to_quat(w_mat: typing.Annotated[collections.abc.Sequence[typing.Annota
     """
 def wall3d_d_radius(position: RealAlloc1D, ele: EleStruct, ix_wall: typing.SupportsInt | None = None) -> ...:
     """
-    no_wall_here, origin, radius_wall, err_flag) result (d_radius)
+    Function wall3d_d_radius (position, ele, ix_wall, perp, ix_section,
+                                         no_wall_here, origin, radius_wall, err_flag) result (d_radius)
     
     Routine to calculate the difference radius = particle_radius - wall_radius.
     Radiuses are measured along a line from the wall origin with the line passing through
     the particle position.
     The wall origin itself lies on a line connecting the centers of the bounding sections.
+    
     Module needed:
-    use wall3d_mod
+      use wall3d_mod
     
     Parameters
     ----------
@@ -43332,11 +43097,12 @@ def wall3d_d_radius(position: RealAlloc1D, ele: EleStruct, ix_wall: typing.Suppo
     """
 def wall3d_initializer(wall3d: Wall3DStruct) -> bool:
     """
-    Routine to initialize a wall3d_struct
+    Subroutine wall3d_initializer (wall3d, err)
     
-    1) Add vertex points if there is symmetry.
-    2) Compute circular and elliptical centers.
-    3) Compute spline coefficients, etc.
+    Routine to initialize a wall3d_struct
+      1) Add vertex points if there is symmetry.
+      2) Compute circular and elliptical centers.
+      3) Compute spline coefficients, etc.
     
     Parameters
     ----------
@@ -43351,10 +43117,11 @@ def wall3d_initializer(wall3d: Wall3DStruct) -> bool:
     """
 def wall3d_section_initializer(section: Wall3DSectionStruct) -> bool:
     """
-    Routine to initialize a wall3d_section_struct:
+    Subroutine wall3d_section_initializer (section, err)
     
-    1) Add vertex points if there is symmetry.
-    2) Compute circular and elliptical centers.
+    Routine to initialize a wall3d_section_struct:
+      1) Add vertex points if there is symmetry.
+      2) Compute circular and elliptical centers.
     
     Parameters
     ----------
@@ -43369,6 +43136,8 @@ def wall3d_section_initializer(section: Wall3DSectionStruct) -> bool:
     """
 def wall3d_to_position(orbit: CoordStruct, ele: EleStruct) -> typing.Annotated[list[float], "FixedSize(6)"]:
     """
+    Function wall3d_to_position (orbit, ele) result (position)
+    
     Routine to return the suitable postion to be used in calling wall3d_d_radius
     
     This routine assumes that if in a patch the coordinates of orbit are with respect
@@ -43388,8 +43157,6 @@ def wall3d_to_position(orbit: CoordStruct, ele: EleStruct) -> typing.Annotated[l
     """
 def word_len(wording: str, wlen: typing.SupportsInt) -> PyWordLen:
     """
-    No docstring available
-    
     Parameters
     ----------
     wording : 
@@ -43397,8 +43164,6 @@ def word_len(wording: str, wlen: typing.SupportsInt) -> PyWordLen:
     """
 def word_read(in_str: str, delim_list: str, word: str, ix_word: typing.SupportsInt, delim: str, delim_found: bool, out_str: str, ignore_interior: bool | None = None) -> PyWordRead:
     """
-    No docstring available
-    
     Parameters
     ----------
     in_str : 
@@ -43412,8 +43177,6 @@ def word_read(in_str: str, delim_list: str, word: str, ix_word: typing.SupportsI
     """
 def word_to_value(word: str, lat: LatStruct, value: typing.SupportsFloat, err_flag: bool, ele: _pybmad.EleStruct | None = None) -> PyWordToValue:
     """
-    No docstring available
-    
     Parameters
     ----------
     word : 
@@ -43424,6 +43187,8 @@ def word_to_value(word: str, lat: LatStruct, value: typing.SupportsFloat, err_fl
     """
 def write_ascii_beam_file(file_name: str, beam: BeamStruct, new_file: bool | None = None, alive_only: bool | None = None) -> None:
     """
+    Subroutine write_ascii_beam_file (file_name, beam, new_file, alive_only)
+    
     Routine to write a beam file in ASCII format (version 4).
     
     Parameters
@@ -43439,8 +43204,6 @@ def write_ascii_beam_file(file_name: str, beam: BeamStruct, new_file: bool | Non
     """
 def write_astra_bend(iu: typing.SupportsInt, strength: typing.SupportsFloat, id: typing.SupportsInt, d1: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], d2: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], d3: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], d4: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"]) -> PyWriteAstraBend:
     """
-    No docstring available
-    
     Parameters
     ----------
     iu : 
@@ -43453,10 +43216,13 @@ def write_astra_bend(iu: typing.SupportsInt, strength: typing.SupportsFloat, id:
     """
 def write_astra_field_grid_file(astra_file_unit: typing.SupportsInt, ele: EleStruct, dz: typing.SupportsFloat | None = None) -> ...:
     """
-    Write 1-D field map files for Astra. The format is:
+    Subroutine write_astra_field_grid_file (astra_file_unit, ele, maxfield, err)
     
-    z field
-    ...
+      Write 1-D field map files for Astra. The format is:
+      z field
+      ...
+    
+      Note: Simplified from write_opal_field_grid_file
     
     Parameters
     ----------
@@ -43476,16 +43242,20 @@ def write_astra_field_grid_file(astra_file_unit: typing.SupportsInt, ele: EleStr
     """
 def write_astra_field_grid_file_3d(base_filename: str, ele: EleStruct, dz: typing.SupportsFloat | None = None) -> ...:
     """
-    Writes 3-D field map files for Astra. The format is:
+    Subroutine write_astra_field_grid_file_3D (base_filename, ele, maxfield, dz, err)
     
-    Nx x[1] x[2] ....... x[Nx-1] x[Nx]
-    Ny y[1] y[2] ....... y[Ny-1] y[Ny]
-    Nz z[1] z[2] ....... z[Nz-1] z[Nz]
-    <field values>
-    where field values are produced from a loop as in:
-    do iz = 1, Nz
-    do iy = 1, Ny
-    write single line: field(:, iy, iz)
+      Writes 3-D field map files for Astra. The format is:
+      Nx x[1] x[2] ....... x[Nx-1] x[Nx]
+      Ny y[1] y[2] ....... y[Ny-1] y[Ny]
+      Nz z[1] z[2] ....... z[Nz-1] z[Nz]
+      <field values>
+      where field values are produced from a loop as in:
+      do iz = 1, Nz
+        do iy = 1, Ny
+          write single line: field(:, iy, iz)
+    
+    
+      Note: similar to write_astra_field_grid_file
     
     Parameters
     ----------
@@ -43506,6 +43276,8 @@ def write_astra_field_grid_file_3d(base_filename: str, ele: EleStruct, dz: typin
     """
 def write_beam_file(file_name: str, beam: BeamStruct, new_file: bool | None = None, file_format: typing.SupportsInt | None = None, lat: _pybmad.LatStruct | None = None, alive_only: bool | None = None) -> None:
     """
+    Subroutine write_beam_file (file_name, beam, new_file, file_format, lat, alive_only)
+    
     Routine to write a beam file.
     
     A '.h5' suffix will be appended to the created file if hdf5$ format is used and file_name does not
@@ -43528,8 +43300,6 @@ def write_beam_file(file_name: str, beam: BeamStruct, new_file: bool | None = No
     """
 def write_beam_floor_positions(file_name: str, beam: BeamStruct, ele: EleStruct, new_file: bool | None = None) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     file_name : unknown
@@ -43543,7 +43313,10 @@ def write_beam_floor_positions(file_name: str, beam: BeamStruct, ele: EleStruct,
     """
 def write_binary_cartesian_map(file_name: str, ele: EleStruct, cart_map: CartesianMapStruct, err_flag: bool) -> None:
     """
+    Subroutine write_binary_cartesian_map (file_name, ele, cart_map, err_flag)
+    
     Routine to write a binary cartesian_map structure.
+    Note: The file name should have a ".bin" suffix.
     
     Parameters
     ----------
@@ -43558,7 +43331,10 @@ def write_binary_cartesian_map(file_name: str, ele: EleStruct, cart_map: Cartesi
     """
 def write_binary_cylindrical_map(file_name: str, ele: EleStruct, cl_map: CylindricalMapStruct, err_flag: bool) -> None:
     """
+    Subroutine write_binary_cylindrical_map (file_name, ele, cl_map, err_flag)
+    
     Routine to write a binary cylindrical_map structure.
+    Note: The file name should have a ".bin" suffix.
     
     Parameters
     ----------
@@ -43573,7 +43349,10 @@ def write_binary_cylindrical_map(file_name: str, ele: EleStruct, cl_map: Cylindr
     """
 def write_binary_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldStruct, err_flag: bool) -> None:
     """
+    Subroutine write_binary_grid_field (file_name, ele, g_field, err_flag)
+    
     Routine to write a binary grid_field structure.
+    Note: The file name should have a ".bin" suffix.
     
     Parameters
     ----------
@@ -43588,8 +43367,6 @@ def write_binary_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldSt
     """
 def write_blender_ele(iu: typing.SupportsInt, ele: EleStruct, old_format: bool | None = None) -> PyWriteBlenderEle:
     """
-    No docstring available
-    
     Parameters
     ----------
     iu : 
@@ -43598,8 +43375,6 @@ def write_blender_ele(iu: typing.SupportsInt, ele: EleStruct, old_format: bool |
     """
 def write_blender_lat_layout(file_name: str, lat: LatStruct) -> PyWriteBlenderLatLayout:
     """
-    No docstring available
-    
     Parameters
     ----------
     file_name : 
@@ -43607,8 +43382,6 @@ def write_blender_lat_layout(file_name: str, lat: LatStruct) -> PyWriteBlenderLa
     """
 def write_bmad_lattice_file(bmad_file: str, lat: LatStruct, output_form: typing.SupportsInt | None = None, orbit0: _pybmad.CoordStruct | None = None) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     bmad_file : unknown
@@ -43626,8 +43399,6 @@ def write_bmad_lattice_file(bmad_file: str, lat: LatStruct, output_form: typing.
     """
 def write_bunch_by_bunch_info(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuParamStruct, this_stage: BbuStageStruct) -> None:
     """
-    No docstring available
-    
     Parameters
     ----------
     lat : 
@@ -43637,10 +43408,13 @@ def write_bunch_by_bunch_info(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param
     """
 def write_gpt_field_grid_file_1d(gpt_file_unit: typing.SupportsInt, ele: EleStruct, dz: typing.SupportsFloat | None = None) -> ...:
     """
-    Write 1-D field map files for gpt. The format is:
+    Subroutine write_gpt_field_grid_file_1D (gpt_file_unit, ele, maxfield, ref_time, dz, err)
     
-    z field
-    ...
+      Write 1-D field map files for gpt. The format is:
+      z field
+      ...
+    
+      Note: Simplified from write_opal_field_grid_file
     
     Parameters
     ----------
@@ -43662,9 +43436,11 @@ def write_gpt_field_grid_file_1d(gpt_file_unit: typing.SupportsInt, ele: EleStru
     """
 def write_gpt_field_grid_file_2d(gpt_file_unit: typing.SupportsInt, ele: EleStruct, dr: typing.SupportsFloat | None = None, dz: typing.SupportsFloat | None = None, r_max: typing.SupportsFloat | None = None) -> ...:
     """
-    Subroutine to write an GPT lattice file using the information in
+    Subroutine write_gpt_field_grid_file_2D (gpt_file_unit, ele, maxfield, ref_time, dr, dz,  err)
     
+    Subroutine to write an GPT lattice file using the information in
     a lat_struct. Optionally only part of the lattice can be generated.
+    
     
     Parameters
     ----------
@@ -43690,13 +43466,18 @@ def write_gpt_field_grid_file_2d(gpt_file_unit: typing.SupportsInt, ele: EleStru
     """
 def write_gpt_field_grid_file_3d(base_filename: str, ele: EleStruct, dz: typing.SupportsFloat | None = None) -> ...:
     """
-    Writes 3-D field map files for gpt. The format is:
+    Subroutine write_gpt_field_grid_file_3D (base_filename, ele, maxfield, ref_time, dz, err)
     
-    E-fields:
-    'x', 'y', 'z', 'ExRe', 'EyRe', 'EzRe', 'ExIm ', 'EyIm ', 'EzIm '
-    H-fields
-    'x', 'y', 'z', 'HxRe', 'HyRe', 'HzRe', 'HxIm ', 'HyIm ', 'HzIm '
-    where the fields oscillate as exp(+i \\omega t)
+      Writes 3-D field map files for gpt. The format is:
+    
+      E-fields:
+      'x', 'y', 'z', 'ExRe', 'EyRe', 'EzRe', 'ExIm ', 'EyIm ', 'EzIm '
+      H-fields
+      'x', 'y', 'z', 'HxRe', 'HyRe', 'HzRe', 'HxIm ', 'HyIm ', 'HzIm '
+    
+      where the fields oscillate as exp(+i \\omega t)
+    
+      Note: similar to write_gpt_field_grid_file
     
     Parameters
     ----------
@@ -43719,10 +43500,12 @@ def write_gpt_field_grid_file_3d(base_filename: str, ele: EleStruct, dz: typing.
     """
 def write_lat_line(line: str, iu: typing.SupportsInt, end_is_neigh: bool, do_split: bool | None = None, scibmad: bool | None = None) -> PyWriteLatLine:
     """
-    Routine to write strings to a lattice file.
+    Subroutine write_lat_line (line, iu, end_is_neigh, do_split)
     
+    Routine to write strings to a lattice file.
     This routine will break the string up into multiple lines
     if the string is too long and add a continuation character if needed.
+    
     If the "line" arg does not represent a full "sentence" (end_is_neigh = False),
     then only part of the line may be written and the part not written will be returned.
     
@@ -43743,8 +43526,6 @@ def write_lat_line(line: str, iu: typing.SupportsInt, end_is_neigh: bool, do_spl
     """
 def write_lattice_in_elegant_format(out_file_name: str, lat: LatStruct, ref_orbit: _pybmad.CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     out_file_name : unknown
@@ -43772,8 +43553,6 @@ def write_lattice_in_elegant_format(out_file_name: str, lat: LatStruct, ref_orbi
     """
 def write_lattice_in_foreign_format(out_type: str, out_file_name: str, lat: LatStruct, ref_orbit: _pybmad.CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     out_type : unknown
@@ -43803,8 +43582,6 @@ def write_lattice_in_foreign_format(out_type: str, out_file_name: str, lat: LatS
     """
 def write_lattice_in_mad_format(out_type: str, out_file_name: str, lat: LatStruct, ref_orbit: _pybmad.CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
-    No docstring available
-    
     Parameters
     ----------
     out_type : unknown
@@ -43834,8 +43611,6 @@ def write_lattice_in_mad_format(out_type: str, out_file_name: str, lat: LatStruc
     """
 def write_lattice_in_sad_format(out_file_name: str, lat: LatStruct, include_apertures: bool | None = None, ix_branch: typing.SupportsInt | None = None, err: bool | None = None) -> PyWriteLatticeInSadFormat:
     """
-    No docstring available
-    
     Parameters
     ----------
     out_file_name : 
@@ -43846,8 +43621,6 @@ def write_lattice_in_sad_format(out_file_name: str, lat: LatStruct, include_aper
     """
 def write_lattice_in_scibmad(lat: LatStruct) -> ...:
     """
-    No docstring available
-    
     Parameters
     ----------
     scibmad_file : unknown
@@ -43859,8 +43632,6 @@ def write_lattice_in_scibmad(lat: LatStruct) -> ...:
     """
 def write_line_element(line: str, iu: typing.SupportsInt, ele: EleStruct, lat: LatStruct) -> PyWriteLineElement:
     """
-    No docstring available
-    
     Parameters
     ----------
     line : 
@@ -43870,9 +43641,11 @@ def write_line_element(line: str, iu: typing.SupportsInt, ele: EleStruct, lat: L
     """
 def write_opal_field_grid_file(opal_file_unit: typing.SupportsInt, ele: EleStruct, param: LatParamStruct) -> ...:
     """
-    Subroutine to write an OPAL lattice file using the information in
+    Subroutine write_opal_field_grid_file (opal_file_unit, ele, param, maxfield, err)
     
+    Subroutine to write an OPAL lattice file using the information in
     a lat_struct. Optionally only part of the lattice can be generated.
+    
     
     Parameters
     ----------
@@ -43892,8 +43665,9 @@ def write_opal_field_grid_file(opal_file_unit: typing.SupportsInt, ele: EleStruc
     """
 def write_opal_lattice_file(opal_file_unit: typing.SupportsInt, lat: LatStruct) -> bool:
     """
-    Subroutine to write an OPAL lattice file using the information in
+    Subroutine write_opal_lattice_file (opal_file_unit, lat, err)
     
+    Subroutine to write an OPAL lattice file using the information in
     a lat_struct. Optionally only part of the lattice can be generated.
     
     Parameters
@@ -43910,7 +43684,23 @@ def write_opal_lattice_file(opal_file_unit: typing.SupportsInt, lat: LatStruct) 
     """
 def write_time_particle_distribution(time_file_unit: typing.SupportsInt, bunch: BunchStruct, ele: EleStruct, style: str | None = None, branch: _pybmad.BranchStruct | None = None, format: str | None = None) -> bool:
     """
+    Subroutine write_time_particle_distribution  (time_file_unit, bunch, ele, style, branch, format, err)
+    
     Subroutine to write a time-based bunch from a standard Bmad bunch
+    
+    Note: 'BMAD' style (absolute curvilinear coordinates):
+          n_particles_alive
+          x/m  m*c^2 \\beta_x*\\gamma/eV y/m m*c^2\\beta_y*\\gamma/eV s/m m*c^2\\beta_z*\\gamma/eV time/s charge/C
+    
+          'OPAL' style (absolute curvilinear coordinates):
+          n_particles_alive
+          x/m  \\beta_x*\\gamma  y/m \\beta_y*\\gamma s/m \\beta_s*\\gamma
+    
+          'ASTRA' style (global Cartesian coordinates, first line is the reference particle used for z, pz, and t calculation):
+          x/m y/m  z/m  m*c^2 \\beta_x*\\gamma/eV m*c^2 \\beta_y*\\gamma/eV m*c^2 \\beta_z*\\gamma/eV time/ns charge/nC species status
+    
+          'GPT' style (global Cartesian coordinates, with header labeling the columns)
+          x/m y/m z/m \\beta_x*\\gamma \\beta_y*\\gamma \\beta_z*\\gamma t/s elementary_charge/C charge/elementary_charge
     
     Parameters
     ----------
@@ -43934,6 +43724,8 @@ def write_time_particle_distribution(time_file_unit: typing.SupportsInt, bunch: 
     """
 def x0_radiation_length(species: typing.SupportsInt) -> float:
     """
+    Function x0_radiation_length(species) result (x0)
+    
     Routine to return the X0 raidation length for atomes.
     
     Parameters
@@ -43949,8 +43741,6 @@ def x0_radiation_length(species: typing.SupportsInt) -> float:
     """
 def xlafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsFloat, res: typing.SupportsFloat) -> PyXlafun:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : 
@@ -43960,8 +43750,9 @@ def xlafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsF
     """
 def xraylib_nist_compound(name: str) -> int:
     """
-    Routine to return the xraylib index for a given NIST compound.
+    Function xraylib_nist_compound (name) result (indx)
     
+    Routine to return the xraylib index for a given NIST compound.
     Taken from file xraylib/include/xraylib-nist_compounds.h
     
     Parameters
@@ -43976,8 +43767,6 @@ def xraylib_nist_compound(name: str) -> int:
     """
 def ylafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsFloat, res: typing.SupportsFloat) -> PyYlafun:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : 
@@ -43987,7 +43776,10 @@ def ylafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsF
     """
 def z_at_surface(ele: EleStruct, x: typing.SupportsFloat, y: typing.SupportsFloat, extend_grid: bool | None = None) -> PyZAtSurface:
     """
+    Function z_at_surface (ele, x, y, err_flag, extend_grid, dz_dxy) result (z)
+    
     Routine return the height (z) of the surface for a particular (x,y) position.
+    Remember: +z points into the element.
     
     Parameters
     ----------
@@ -44012,8 +43804,6 @@ def z_at_surface(ele: EleStruct, x: typing.SupportsFloat, y: typing.SupportsFloa
     """
 def zero_ele_kicks() -> EleStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -44021,8 +43811,6 @@ def zero_ele_kicks() -> EleStruct:
     """
 def zero_ele_offsets() -> EleStruct:
     """
-    No docstring available
-    
     Parameters
     ----------
     ele : EleStruct
@@ -44030,8 +43818,9 @@ def zero_ele_offsets() -> EleStruct:
     """
 def zero_lr_wakes_in_lat(lat: LatStruct) -> None:
     """
-    Routine to zero the long range wake amplitudes for the elements that have
+    Subroutine zero_lr_wakes_in_lat (lat)
     
+    Routine to zero the long range wake amplitudes for the elements that have
     long range wakes in a lattice.
     
     Parameters
@@ -44041,8 +43830,6 @@ def zero_lr_wakes_in_lat(lat: LatStruct) -> None:
     """
 def zlafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsFloat, res: typing.SupportsFloat) -> PyZlafun:
     """
-    No docstring available
-    
     Parameters
     ----------
     x : 

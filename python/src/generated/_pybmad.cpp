@@ -8581,7 +8581,9 @@ PYBIND11_MODULE(_pybmad, m) {
       py::arg("coord"),
       py::arg("pole_type") = py::none(),
       py::arg("scale") = py::none(),
-      R"""(Subroutine to put in the kick due to an ab_multipole.
+      R"""(Subroutine ab_multipole_kick (a, b, n, ref_species, ele_orientation, coord, kx, ky, dk, pole_type, scale)
+
+Subroutine to put in the kick due to an ab_multipole.
 
 Parameters
 ----------
@@ -8644,10 +8646,12 @@ dk : float
       py::arg("scale") = py::none(),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(Routine to put in the kick due to ab_multipole components in an element.
+      R"""(Subroutine ab_multipole_kicks (an, bn, ix_pole_max, ele, orbit, pole_type, scale, mat6, make_matrix)
 
+Routine to put in the kick due to ab_multipole components in an element.
 The kick will be corrected for the orientation of the element and the particle direction of travel.
 Any difference between element p0c and orbit%p0c will be taken into account.
+
 Also see the multipole_kicks routine.
 
 Parameters
@@ -8680,12 +8684,13 @@ make_matrix : bool, optional
       &Bmad::absolute_photon_position,
       py::arg("e_orb"),
       py::arg("photon_orb"),
-      R"""(Routine to calculate the photon phase space coordinates given:
+      R"""(Subroutine absolute_photon_position (e_orb, photon_orb)
 
-1) The phase space coords of the emitting charged particle and
-2) The photon phase space coords relative to the emitting particle.
-The photon (x, y, z) position is ignored (it is assumed the photon is emitted at
-the charged particle position) and only the photon's (vx, vy, vz) velocity matters.
+Routine to calculate the photon phase space coordinates given:
+  1) The phase space coords of the emitting charged particle and
+  2) The photon phase space coords relative to the emitting particle.
+     The photon (x, y, z) position is ignored (it is assumed the photon is emitted at
+     the charged particle position) and only the photon's (vx, vy, vz) velocity matters.
 
 Parameters
 ----------
@@ -8700,9 +8705,7 @@ photon_orb : CoordStruct
       &python_absolute_time_tracking,
       py::arg("ele"),
       py::arg("is_abs_time"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element being tracked through.
@@ -8730,9 +8733,7 @@ is_abs_time :
       py::arg("orbit"),
       py::arg("true_time") = py::none(),
       py::arg("ac_amp"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     ac_kicker element.
@@ -8760,10 +8761,13 @@ ac_amp :
       py::arg("ring"),
       py::arg("ix"),
       py::arg("J"),
-      R"""(Given the normal mode invariants and phases J of a particle, returns the canonical coordinates.
+      R"""(Subroutine action_to_xyz(ring, ix, J, X, err_flag)
+
+Given the normal mode invariants and phases J of a particle, returns the canonical coordinates.
 
 The J vector looks like:
 J = (sqrt(2Ja)cos(phia), -sqrt(2Ja)sin(phia), sqrt(2Jb)cos(phib), -sqrt(2Jb)sin(phib), sqrt(2Jc)cos(phic), -sqrt(2Jc)sin(phic))
+
 X is obtained from:
 X = N . J
 Where N is from the Eigen decomposition of the 1-turn transfer matrix.
@@ -8808,9 +8812,7 @@ err_flag : bool
       py::arg("n_add_slave_field") = py::none(),
       py::arg("n_add_lord_field") = py::none(),
       py::arg("add_at_end") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lord or slave element that needs extra control elements.
@@ -8837,10 +8839,19 @@ add_at_end : bool, optional
       py::arg("ix_insert") = py::none(),
       py::arg("mangle_slave_names") = py::none(),
       py::arg("wrap") = py::none(),
-      R"""(save_null_drift, create_jumbo_slave, ix_insert, mangle_slave_names, wrap)
+      R"""(Subroutine add_superimpose (lat, super_ele_in, ix_branch, err_flag, super_ele_out,
+               save_null_drift, create_jumbo_slave, ix_insert, mangle_slave_names, wrap)
 
 Routine to superimpose an element. If the element can be inserted
 into the lat without making a super_lord element then this will be done.
+
+Note: This routine, since it handles only one superposition, is not sufficient for
+  superposition in a multipass region. For historical reasons, the extra code needed
+  is buried in the parser_add_superimpose code. If you need to do multipass superpositions
+  please contact David Sagan and this situation will be rectified.
+
+Note: Bookkeeping like recalculating reference energies and recalculating transfer matrices
+  is *not* done by this routine.
 
 Parameters
 ----------
@@ -8903,9 +8914,7 @@ super_ele_out : EleStruct
       py::arg("lat"),
       py::arg("m_slaves"),
       py::arg("lord_in") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : 
 m_slaves : 
@@ -8918,8 +8927,9 @@ lord_in :
       py::arg("i_out"),
       py::arg("coef"),
       py::arg("expn"),
-      R"""(Subroutine used by bmad_parser and bmad_parser2 to parse the input file.
+      R"""(Subroutine add_this_taylor_term (ele, i_out, coef, expn)
 
+Subroutine used by bmad_parser and bmad_parser2 to parse the input file.
 This subroutine is not intended for general use.
 
 )""");
@@ -8947,8 +8957,9 @@ This subroutine is not intended for general use.
       py::arg("ix1_lord"),
       py::arg("ix2_lord"),
       py::arg("first_time") = py::none(),
-      R"""(Routine to adjust the names of the slaves.
+      R"""(Subroutine adjust_super_slave_names (lat, ix1_lord, ix2_lord, first_time)
 
+Routine to adjust the names of the slaves.
 This routine is used by add_superimpose and is not meant for general use.
 
 )""");
@@ -8978,9 +8989,7 @@ This routine is used by add_superimpose and is not meant for general use.
       &Bmad::allocate_branch_array,
       py::arg("lat"),
       py::arg("upper_bound"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     .branch(:)  -- Branch array to be allocated.
@@ -8994,9 +9003,7 @@ upper_bound : int
       py::arg("upper_bound") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::arg("do_ramper_slave_setup") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice with element array. .branch(ix_branch).ele(:)  -- Element array to reallocate.
@@ -9011,7 +9018,9 @@ do_ramper_slave_setup : bool, optional
   m.def(
       "allocate_thread_states",
       &SimUtils::allocate_thread_states,
-      R"""(Routine to allocate random number state structures when openMP is used.
+      R"""(Subroutine allocate_thread_states()
+
+Routine to allocate random number state structures when openMP is used.
 
 )""");
   m.def(
@@ -9020,9 +9029,7 @@ do_ramper_slave_setup : bool, optional
       py::arg("polar1"),
       py::arg("polar2"),
       py::arg("angle"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 polar1 : 
     (spin_polar_struct)
@@ -9050,9 +9057,7 @@ angle :
       &Bmad::angle_to_canonical_coords,
       py::arg("orbit"),
       py::arg("coord_type") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Orbit in angular coordinates.
@@ -9065,7 +9070,9 @@ coord_type : unknown, optional
       "anomalous_moment_of",
       &SimUtils::anomalous_moment_of,
       py::arg("species"),
-      R"""(Routine to return the anomolous moment for subatomic species type. Otherwise returns 0.
+      R"""(Function anomalous_moment_of (species) result (moment)
+
+Routine to return the anomolous moment for subatomic species type. Otherwise returns 0.
 
 Parameters
 ----------
@@ -9081,8 +9088,9 @@ moment : float
       "antiparticle",
       &SimUtils::antiparticle,
       py::arg("species"),
-      R"""(Routine to return the antiparticle ID given the particle ID.
+      R"""(Function antiparticle (species) result (anti_species)
 
+Routine to return the antiparticle ID given the particle ID.
 For a molecule the anti-species is just the molecude with the charge reversed.
 
 Parameters
@@ -9099,7 +9107,9 @@ anti_species : int
       "aperture_bookkeeper",
       &Bmad::aperture_bookkeeper,
       py::arg("ele"),
-      R"""(Routine to calculate aperture limits when ele%attribute_type is set to auto_aperture$
+      R"""(Subroutine aperture_bookkeeper (ele)
+
+Routine to calculate aperture limits when ele%attribute_type is set to auto_aperture$
 
 Parameters
 ----------
@@ -9115,7 +9125,9 @@ ele : EleStruct
       py::arg("window"),
       py::arg("phase"),
       py::arg("diag") = py::none(),
-      R"""(Implements the All Phase FFT method for obtaining accurate phase from signal data.
+      R"""(subroutine apfft(rdata_in, bounds, window, phase, diag)
+
+Implements the All Phase FFT method for obtaining accurate phase from signal data.
 
 The signal data is truncated to an odd length, and the phase is relative to the central point.
 
@@ -9144,9 +9156,11 @@ The signal data is truncated to an odd length, and the phase is relative to the 
       py::arg("bounds") = py::none(),
       py::arg("window"),
       py::arg("diag") = py::none(),
-      R"""(For real signal rdata_in, computes phase, frequency, and amplitude
+      R"""(subroutine apfft_corr(rdata_in, bounds, window, phase, amp, freq, diag)
 
+For real signal rdata_in, computes phase, frequency, and amplitude
 of peak found within bounds.  Algorithm is corrected all-phase FFT and should.
+
 This routine finds only one peak:  the largest amplitude within the bound.  Signals with multiple
 components can be investigated by varying bounds appropriately.
 
@@ -9198,7 +9212,9 @@ amp : float
       py::arg("amp"),
       py::arg("freq"),
       py::arg("diag") = py::none(),
-      R"""(Implements the All Phase FFT method for obtaining accurate phase from signal data.
+      R"""(subroutine apfft_ext(rdata,bounds, window, phase, amp, freq, diag)
+
+Implements the All Phase FFT method for obtaining accurate phase from signal data.
 
 This "extended" apfft subroutine returns the amplitudes and frequency as well, for use
 by the corrected apfft subroutine in this module.
@@ -9231,9 +9247,7 @@ by the corrected apfft subroutine in this module.
       "apply_all_rampers",
       &Bmad::apply_all_rampers,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice.
@@ -9249,9 +9263,7 @@ err_flag : bool
       py::arg("ddE_dr"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 dE : float
     Energy change
@@ -9272,8 +9284,9 @@ make_matrix : bool, optional
       "apply_patch_to_ptc_fibre",
       &Bmad::apply_patch_to_ptc_fibre,
       py::arg("ele"),
-      R"""(Routine to take the patch parameters from a Bmad patch element and
+      R"""(Subroutine apply_patch_to_ptc_fibre (ele)
 
+Routine to take the patch parameters from a Bmad patch element and
 transfer them to the associated PTC fibre.
 
 Parameters
@@ -9285,9 +9298,7 @@ ele : EleStruct
       "apply_rampers_to_slave",
       &Bmad::apply_rampers_to_slave,
       py::arg("slave"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 slave : EleStruct
     Element to apply ramper elements to.
@@ -9300,9 +9311,7 @@ err_flag : bool
       py::arg("arr"),
       py::arg("parens_in") = py::none(),
       py::arg("str_out"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 arr : 
 parens_in : 
@@ -9328,9 +9337,7 @@ str_out :
       py::arg("x"),
       py::arg("nd") = py::none(),
       py::arg("y"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : 
 nd : 
@@ -9353,9 +9360,7 @@ y :
       py::arg("int_arr"),
       py::arg("err_str"),
       py::arg("ival"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 int_arr : 
 err_str : 
@@ -9381,9 +9386,7 @@ ival :
       py::arg("pt0"),
       py::arg("ele"),
       py::arg("field_value"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 pt0 : 
 ele : 
@@ -9412,9 +9415,7 @@ field_value :
       py::arg("now_at"),
       py::arg("where_at"),
       py::arg("is_at_this_end"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 now_at : int
     Which end is under consideration: entrance_end$, exit_end$, surface$, or in_between$.
@@ -9438,8 +9439,9 @@ is_at_this_end :
       "atomic_number",
       &SimUtils::atomic_number,
       py::arg("species"),
-      R"""(Routine to return the atomic number Z if species argument corresponds to an atomic particle  or is a proton.
+      R"""(Function atomic_number(species) result (atomic_num)
 
+Routine to return the atomic number Z if species argument corresponds to an atomic particle  or is a proton.
 Set to the charge for atomic particles.
 Set to zero for molecules.
 
@@ -9460,7 +9462,9 @@ atomic_num : int
       py::arg("is_anti"),
       py::arg("atomic_num"),
       py::arg("n_nuc"),
-      R"""(Routine to return the species ID for an atom
+      R"""(Function atomic_species_id(charge, is_anti, atomic_num, n_nuc) result (species_id)
+
+Routine to return the species ID for an atom
 
 Parameters
 ----------
@@ -9483,9 +9487,7 @@ species_id : int
       &Bmad::attribute_bookkeeper,
       py::arg("ele"),
       py::arg("force_bookkeeping") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element with attributes
@@ -9511,20 +9513,24 @@ force_bookkeeping : bool, optional
       py::arg("err_print_flag") = py::none(),
       py::arg("except_overlay") = py::none(),
       py::arg("dependent_attribs_free") = py::none(),
-      R"""(Overloaded function for:
+      R"""(Function attribute_free
 
-Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
-except_overlay, dependent_attribs_free, why_not_free) result (free)
-Function attribute_free2 (ele, attrib_name, err_print_flag,
-except_overlay, dependent_attribs_free, why_not_free) result (free)
-Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
-except_overlay, why_not_free) result (free)
+Overloaded function for:
+  Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
+                               except_overlay, dependent_attribs_free, why_not_free) result (free)
+  Function attribute_free2 (ele, attrib_name, err_print_flag,
+                               except_overlay, dependent_attribs_free, why_not_free) result (free)
+  Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
+                               except_overlay, why_not_free) result (free)
+
 Routine to check if an attribute is free to vary.
+
 Attributes that cannot be changed directly include super_slave attributes (since
 these attributes are controlled by their super_lords) and attributes that
 are controlled by an overlay.
+
 Also dependent variables such as the angle of a bend cannot be
-freely variable.
+  freely variable.
 
 Parameters
 ----------
@@ -9587,20 +9593,24 @@ why_not_free : int
       py::arg("err_print_flag") = py::none(),
       py::arg("except_overlay") = py::none(),
       py::arg("dependent_attribs_free") = py::none(),
-      R"""(Overloaded function for:
+      R"""(Function attribute_free
 
-Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
-except_overlay, dependent_attribs_free, why_not_free) result (free)
-Function attribute_free2 (ele, attrib_name, err_print_flag,
-except_overlay, dependent_attribs_free, why_not_free) result (free)
-Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
-except_overlay, why_not_free) result (free)
+Overloaded function for:
+  Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
+                               except_overlay, dependent_attribs_free, why_not_free) result (free)
+  Function attribute_free2 (ele, attrib_name, err_print_flag,
+                               except_overlay, dependent_attribs_free, why_not_free) result (free)
+  Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
+                               except_overlay, why_not_free) result (free)
+
 Routine to check if an attribute is free to vary.
+
 Attributes that cannot be changed directly include super_slave attributes (since
 these attributes are controlled by their super_lords) and attributes that
 are controlled by an overlay.
+
 Also dependent variables such as the angle of a bend cannot be
-freely variable.
+  freely variable.
 
 Parameters
 ----------
@@ -9667,20 +9677,24 @@ why_not_free : int
       py::arg("err_print_flag") = py::none(),
       py::arg("except_overlay") = py::none(),
       py::arg("dependent_attribs_free") = py::none(),
-      R"""(Overloaded function for:
+      R"""(Function attribute_free
 
-Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
-except_overlay, dependent_attribs_free, why_not_free) result (free)
-Function attribute_free2 (ele, attrib_name, err_print_flag,
-except_overlay, dependent_attribs_free, why_not_free) result (free)
-Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
-except_overlay, why_not_free) result (free)
+Overloaded function for:
+  Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
+                               except_overlay, dependent_attribs_free, why_not_free) result (free)
+  Function attribute_free2 (ele, attrib_name, err_print_flag,
+                               except_overlay, dependent_attribs_free, why_not_free) result (free)
+  Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
+                               except_overlay, why_not_free) result (free)
+
 Routine to check if an attribute is free to vary.
+
 Attributes that cannot be changed directly include super_slave attributes (since
 these attributes are controlled by their super_lords) and attributes that
 are controlled by an overlay.
+
 Also dependent variables such as the angle of a bend cannot be
-freely variable.
+  freely variable.
 
 Parameters
 ----------
@@ -9741,13 +9755,24 @@ why_not_free : int
       py::arg("name"),
       py::arg("can_abbreviate") = py::none(),
       py::arg("print_error") = py::none(),
-      R"""(Function to return the index of a attribute for a given BMAD element type
+      R"""(Function attribute_index (...) result (attrib_index)
 
+Function to return the index of a attribute for a given BMAD element type
 and the name of the attribute. Abbreviations are by default permitted but must be at
 least 3 characters. Exception: overlay and group varialbe names may not
 be abbreviated.
-attribute_index1 (ele, name, full_name, can_abbreviate, print_error) result (attrib_index)
-attribute_index2 (key, name, full_name, can_abbreviate, print_error) result (attrib_index)
+
+This routine is an overloaded name for:
+  attribute_index1 (ele, name, full_name, can_abbreviate, print_error) result (attrib_index)
+  attribute_index2 (key, name, full_name, can_abbreviate, print_error) result (attrib_index)
+
+Note:
+  If ele%key or key = 0 -> Entire name table will be searched.
+
+See also:
+  has_attribute
+  attribute_info
+  attribute_name
 
 Parameters
 ----------
@@ -9801,13 +9826,24 @@ Overloaded versions:
       py::arg("name"),
       py::arg("can_abbreviate") = py::none(),
       py::arg("print_error") = py::none(),
-      R"""(Function to return the index of a attribute for a given BMAD element type
+      R"""(Function attribute_index (...) result (attrib_index)
 
+Function to return the index of a attribute for a given BMAD element type
 and the name of the attribute. Abbreviations are by default permitted but must be at
 least 3 characters. Exception: overlay and group varialbe names may not
 be abbreviated.
-attribute_index1 (ele, name, full_name, can_abbreviate, print_error) result (attrib_index)
-attribute_index2 (key, name, full_name, can_abbreviate, print_error) result (attrib_index)
+
+This routine is an overloaded name for:
+  attribute_index1 (ele, name, full_name, can_abbreviate, print_error) result (attrib_index)
+  attribute_index2 (key, name, full_name, can_abbreviate, print_error) result (attrib_index)
+
+Note:
+  If ele%key or key = 0 -> Entire name table will be searched.
+
+See also:
+  has_attribute
+  attribute_info
+  attribute_name
 
 Parameters
 ----------
@@ -9856,11 +9892,18 @@ Overloaded versions:
       py::arg("key"),
       py::arg("ix_att"),
       py::arg("show_private") = py::none(),
-      R"""(Function to return the name of an attribute for a particular type of
+      R"""(Function attribute_name (...) result (attrib_name)
 
+Function to return the name of an attribute for a particular type of
 Bmad element.
-attribute_name1 (ele, ix_att, show_private) result (attrib_name)
-attribute_name2 (key, ix_att, show_private) result (attrib_name)
+
+This routine is an overloaded name for:
+  attribute_name1 (ele, ix_att, show_private) result (attrib_name)
+  attribute_name2 (key, ix_att, show_private) result (attrib_name)
+
+
+Note: attribute_name (key, ix_att) is not able to handle overlay/group control variables.
+Use attributge_name (ele, ix_att) is this is needed.
 
 Parameters
 ----------
@@ -9892,11 +9935,18 @@ Overloaded versions:
       py::arg("ele"),
       py::arg("ix_att"),
       py::arg("show_private") = py::none(),
-      R"""(Function to return the name of an attribute for a particular type of
+      R"""(Function attribute_name (...) result (attrib_name)
 
+Function to return the name of an attribute for a particular type of
 Bmad element.
-attribute_name1 (ele, ix_att, show_private) result (attrib_name)
-attribute_name2 (key, ix_att, show_private) result (attrib_name)
+
+This routine is an overloaded name for:
+  attribute_name1 (ele, ix_att, show_private) result (attrib_name)
+  attribute_name2 (key, ix_att, show_private) result (attrib_name)
+
+
+Note: attribute_name (key, ix_att) is not able to handle overlay/group control variables.
+Use attributge_name (ele, ix_att) is this is needed.
 
 Parameters
 ----------
@@ -9926,14 +9976,22 @@ Overloaded versions:
       &Bmad::attribute_type,
       py::arg("attrib_name"),
       py::arg("ele") = py::none(),
-      R"""(Routine to return the logical type of an attribute.
+      R"""(Function attribute_type (attrib_name, ele) result (attrib_type)
+
+Routine to return the logical type of an attribute.
 
 A "switch" attribute is an attribute whose value corresponds to some string.
 For example, the "COUPLER_AT" attirbute with value 1 corresponds to "ENTRANCE_END", etc.
+
 A "struct" attribute is an attribute that is the name for a "structure". For example,
 CARTESIAN_MAP is the name of the structure hoding a Cartesian map.
+
 If attrib_name corresponds to a switch attribute, The routine switch_attrib_value_name can
 be used to print the name corresponding to the attribute's value.
+
+Note: The "storage type" of an attribute is different from the "logical type" returned by
+this routine. For example, the logical type of attribute "n_slice" is integer. However, the
+value of "n_slice" is stored as a real number in the ele_struct [in ele%value(n_slice$)].
 
 Parameters
 ----------
@@ -9954,8 +10012,9 @@ attrib_type : int
       &Bmad::attribute_units,
       py::arg("attrib_name"),
       py::arg("unrecognized_units") = py::none(),
-      R"""(Routine to return the units associated with an attribute.
+      R"""(Function attribute_units (attrib_name, unrecognized_units) result (attrib_units)
 
+Routine to return the units associated with an attribute.
 Example: attrib_units('P0C') -> 'eV'
 
 Parameters
@@ -9979,9 +10038,7 @@ attrib_units : unknown
       py::arg("scale_phase") = py::none(),
       py::arg("scale_amp") = py::none(),
       py::arg("call_bookkeeper") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     RF element or e_gun.
@@ -10005,9 +10062,7 @@ call_bookkeeper : bool, optional
       py::arg("twiss1"),
       py::arg("twiss2"),
       py::arg("ave_twiss"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 frac1 : float
     Fraction of twiss1 to use in the average.
@@ -10021,7 +10076,9 @@ ave_twiss :
       &SimUtils::axis_angle_to_quat,
       py::arg("axis"),
       py::arg("angle"),
-      R"""(Routine to convert from axis + angle representation to a quaternion.
+      R"""(Function axis_angle_to_quat (axis, angle) result (quat)
+
+Routine to convert from axis + angle representation to a quaternion.
 
 Parameters
 ----------
@@ -10040,8 +10097,9 @@ quat : float
       &SimUtils::axis_angle_to_w_mat,
       py::arg("axis"),
       py::arg("angle"),
-      R"""(Routine to construct the 3D rotation matrix w_mat given an axis of rotation
+      R"""(Subroutine axis_angle_to_w_mat (axis, angle, w_mat)
 
+Routine to construct the 3D rotation matrix w_mat given an axis of rotation
 and a rotation angle.
 
 Parameters
@@ -10062,9 +10120,7 @@ w_mat : float
       py::arg("x"),
       py::arg("y"),
       py::arg("sigma"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : float
     X coordinate.
@@ -10113,9 +10169,7 @@ dnk : float
       &Bmad::bbi_slice_calc,
       py::arg("ele"),
       py::arg("n_slice"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     beambeam element
@@ -10131,9 +10185,7 @@ z_slice : float
       py::arg("bbu_beam"),
       py::arg("bbu_param"),
       py::arg("beam_init"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : 
 bbu_beam : 
@@ -10147,9 +10199,7 @@ beam_init :
       py::arg("bbu_beam"),
       py::arg("n_period"),
       py::arg("ix_stage_last_tracked"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : 
 bbu_beam : 
@@ -10178,9 +10228,7 @@ ix_stage_last_tracked :
       "bbu_remove_head_bunch",
       &bsim::bbu_remove_head_bunch,
       py::arg("bbu_beam"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 bbu_beam : 
 )""");
@@ -10191,9 +10239,7 @@ bbu_beam :
       py::arg("dt_bunch"),
       py::arg("bbu_param"),
       py::arg("bbu_beam"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : 
 dt_bunch : 
@@ -10219,9 +10265,7 @@ bbu_beam :
       py::arg("bbu_param"),
       py::arg("lost"),
       py::arg("ix_stage_tracked"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : 
 bbu_beam : 
@@ -10254,9 +10298,7 @@ ix_stage_tracked :
       py::arg("growth_rate"),
       py::arg("lost"),
       py::arg("irep"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : 
 bbu_beam : 
@@ -10297,10 +10339,12 @@ irep :
       py::arg("energy"),
       py::arg("n_part"),
       py::arg("species"),
-      R"""(This is a sigma matrix based IBS calculation.
+      R"""(Subroutine beam_envelope_ibs(sigma_mat, ibs_mat, tail_cut, tau, energy, n_part, species)
 
+This is a sigma matrix based IBS calculation.
 It takes the beam sigma matrix and returns a matrix with changes to the 2nd order
 moments due to IBS.
+
 Use ibs_mat to change the sigma matrix like this:
 sigma_matrix_updated = sigma_matrix + ibs_mat*element_length
 See subroutine transport_with_sr_and_ibs in this module.
@@ -10330,9 +10374,7 @@ ibs_mat : float
       &Bmad::beam_equal_beam,
       py::arg("beam1"),
       py::arg("beam2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 beam1 : 
 beam2 : 
@@ -10346,9 +10388,7 @@ beam2 :
       py::arg("modes") = py::none(),
       py::arg("err_flag") = py::none(),
       py::arg("beam_init_set"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 beam_init_in : BeamInitStruct
     Input parameters
@@ -10365,16 +10405,20 @@ beam_init_set :
       "beam_tilts",
       &Bmad::beam_tilts,
       py::arg("S"),
-      R"""(Given a 6x6 matrix of second-order moments, this routine returns
+      R"""(Subroutine beam_tilts(S, angle_xy, angle_xz, angle_yz, angle_xpz, angle_ypz)
 
+Given a 6x6 matrix of second-order moments, this routine returns
 the beam tilts.
+
 angle_xy is obtained from the projection of the beam envelop into the
 xy plane.  The angle is that between the major axis of the projected
 beam envelope and the +x axis.  Positive angles are measured towards the
 +y axis.
+
 angle_xz is obtained from the projection of the beam envelop into the
 xy plane.  The angle is that between the major axis of the projected beam envelope
 and the +z axis.  Positive angles are measured towards the +x axis.
+
 angle_yz is obtained from the projection of the beam envelop into the
 yz plane.  The angle is that between the major axis of the projected beam envelope
 and the +z axis.  Positive angles are measured towards the +y axis.
@@ -10430,8 +10474,9 @@ angle_ypz : float
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
       py::arg("track_spin") = py::none(),
-      R"""(Subroutine to track through the edge field of an sbend.
+      R"""(Subroutine bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix, track_spin)
 
+Subroutine to track through the edge field of an sbend.
 This routine is called by apply_element_edge_kick only.
 
 Parameters
@@ -10463,9 +10508,7 @@ track_spin : bool, optional
       py::arg("local_ref_frame"),
       py::arg("calc_dfield") = py::none(),
       py::arg("calc_potential") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : unknown
     Bend element.
@@ -10487,9 +10530,7 @@ calc_potential : bool, optional
       &python_bend_length_has_been_set,
       py::arg("ele"),
       py::arg("is_set"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element to be checked. Ouput:
@@ -10514,22 +10555,25 @@ is_set :
       "bend_photon_e_rel_init",
       &Bmad::bend_photon_e_rel_init,
       py::arg("r_in") = py::none(),
-      R"""(Routine to convert a random number in the interval [0,1] to a photon energy.
+      R"""(Function bend_photon_e_rel_init (r_in) result (E_rel)
 
+Routine to convert a random number in the interval [0,1] to a photon energy.
 The photon probability spectrum is:
-P(E_rel) = (3 / (5 * Pi)) * Integral_{E_rel}^{Infty} K_{5/3}(x) dx
+  P(E_rel) = (3 / (5 * Pi)) * Integral_{E_rel}^{Infty} K_{5/3}(x) dx
 Where
-P(E_rel)) = Probability of finding a photon at relative energy E_rel.
-E_rel     = Relative photon energy: E / E_crit, E_crit = Critical energy.
-K_{5/3}   = Modified Bessel function.
+  P(E_rel)) = Probability of finding a photon at relative energy E_rel.
+  E_rel     = Relative photon energy: E / E_crit, E_crit = Critical energy.
+  K_{5/3}   = Modified Bessel function.
+
 Notice that the P(E) is not the same as the distribution radiation energy since
 the photons must be energy weighted.
+
 There is a cut-off built into the calculation so that E_rel will be in the
 range [0, 31.4]. The error in neglecting photons with E_rel > 31.4 translates
 to neglecting one photon for every 10^15 generated.
 If r_in is present:
-r_in = 0 => E_rel = 0
-r_in = 1 => E_rel = 31.4
+  r_in = 0 => E_rel = 0
+  r_in = 1 => E_rel = 31.4
 
 Parameters
 ----------
@@ -10547,8 +10591,9 @@ E_rel : float
       py::arg("E_photon"),
       py::arg("g_bend"),
       py::arg("gamma"),
-      R"""(Routine to find the integrated probability corresponding to emitting a photon
+      R"""(Function bend_photon_energy_integ_prob (E_photon, g_bend, gamma) result (integ_prob)
 
+Routine to find the integrated probability corresponding to emitting a photon
 from a bend in the range [0, E_photon].
 
 Parameters
@@ -10569,10 +10614,11 @@ integ_prob : float
       "bend_photon_energy_normalized_probability",
       &Bmad::bend_photon_energy_normalized_probability,
       py::arg("E_rel"),
-      R"""(Routine to return the normalized probability that a photon will be emitted in a bend with energy
+      R"""(Function bend_photon_energy_normalized_probability (E_rel) result (prob)
 
+Routine to return the normalized probability that a photon will be emitted in a bend with energy
 E_rel relative to the critical energy. The probability is normalized such that
-Integral[0,Infinity] dE_rel P(E_rel) = 1
+  Integral[0,Infinity] dE_rel P(E_rel) = 1
 
 Parameters
 ----------
@@ -10597,23 +10643,30 @@ prob : float
       py::arg("vert_angle_max") = py::none(),
       py::arg("vert_angle_symmetric") = py::none(),
       py::arg("emit_probability") = py::none(),
-      R"""(vert_angle_min, vert_angle_max, vert_angle_symmetric, emit_probability)
+      R"""(Subroutine bend_photon_init (g_bend_x, g_bend_y, gamma, orbit, E_min, E_max, E_integ_prob,
+                                        vert_angle_min, vert_angle_max, vert_angle_symmetric, emit_probability)
 
 Routine to initalize a photon for dipole bends and wigglers (but not undulators).
 The photon is initialized using the standard formulas for bending radiation.
+
 The energy of the photon is calculated in one of two ways:
-1) If E_integ_prob is present and non-negative, the photon energy E will be such that the integrated
-probability  [E_min, E] relative to the integrated probability in the range [E_min, E_max] is E_integ_prob.
-That is, E_integ_prob can be used to to give a set of photon energies equally spaced in terms of the
-integrated probability distribution.
-2) If E_integ_prob is not present, or is negative, the photon energy is chosen at random in
-the range [E_min, E_max].
+
+  1) If E_integ_prob is present and non-negative, the photon energy E will be such that the integrated
+      probability  [E_min, E] relative to the integrated probability in the range [E_min, E_max] is E_integ_prob.
+      That is, E_integ_prob can be used to to give a set of photon energies equally spaced in terms of the
+      integrated probability distribution.
+
+  2) If E_integ_prob is not present, or is negative, the photon energy is chosen at random in
+      the range [E_min, E_max].
+
 An E_integ_prob of zero means that the generated photon will have energy E_min.
 An E_integ_prob of one means that the generated photon will have energy E_max.
+
 The photon's polarization, will have unit amplitude.
+
 This routine assumes that the emitting charged particle is on-axis and moving in
 the forward direction. To correct for the actual charged particle postion use the routine
-absolute_photon_position
+  absolute_photon_position
 
 Parameters
 ----------
@@ -10656,8 +10709,9 @@ orbit : CoordStruct
       py::arg("g_bend_y"),
       py::arg("E_rel"),
       py::arg("gamma_phi"),
-      R"""(Routine to set a photon's polarization.
+      R"""(Subroutine bend_photon_polarization_init (g_bend_x, g_bend_y, E_rel, gamma_phi, orbit)
 
+Routine to set a photon's polarization.
 The photon's polarization will be either in the plane of the bend or out of the plane and
 the magnitude will be 1.
 
@@ -10685,8 +10739,9 @@ orbit : CoordStruct
       py::arg("gamma"),
       py::arg("r_in") = py::none(),
       py::arg("invert") = py::none(),
-      R"""(Routine to convert an integrated probability to a vertical angle for emitting a photon from a bend.
+      R"""(Function bend_photon_vert_angle_init (E_rel, gamma, r_in, invert) result (phi)
 
+Routine to convert an integrated probability to a vertical angle for emitting a photon from a bend.
 The integrated probability is in the range [0,1] with 0 corresponding to a phi = -pi/2 and
 integrated probability of 1 corresponding to phi = pi/2.
 
@@ -10716,9 +10771,7 @@ phi : float
       py::arg("delta_s"),
       py::arg("ref_tilt") = py::none(),
       py::arg("position2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 position1 : FloorPositionStruct
     Position of particle in inital coordinate frame.
@@ -10738,9 +10791,13 @@ position2 :
       py::arg("vert_angle"),
       py::arg("E_rel"),
       py::arg("gamma"),
-      R"""(Routine to find the integrated probability corresponding to emitting a photon
+      R"""(Function bend_vert_angle_integ_prob (vert_angle, E_rel, gamma) result (integ_prob)
 
+Routine to find the integrated probability corresponding to emitting a photon
 from a bend and with relative energy E_rel in the vertical angle range [-pi/2, vert_angle/2].
+
+Note: vert_angle is allowed to be out of the range [-pi/2, pi/2]. In this case, integ_prob
+will be set to 0 or 1 as appropriate.
 
 Parameters
 ----------
@@ -10762,9 +10819,14 @@ integ_prob : float
       py::arg("x_norm"),
       py::arg("y_norm"),
       py::arg("bi_coef"),
-      R"""(Routine to evaluate a bicubic interpolating complex function.
+      R"""(Function bicubic_cmplx_eval (x_norm, y_norm, bi_coef, df_dx, df_dy) result (f_val)
+
+Routine to evaluate a bicubic interpolating complex function.
 
 Use the routine bicubic_interpolation_cmplx_coefs to generate bi_coef.
+
+Note: In the equations below, the four points of the grid box being interpolated range
+from (x0, y0) to (x0+dx, y0+dy).
 
 Parameters
 ----------
@@ -10811,7 +10873,9 @@ df_dy : complex
       py::arg("x"),
       py::arg("bin1_x_min"),
       py::arg("bin_delta"),
-      R"""(Helper function to locate the appropriate histogram bin index.
+      R"""(Function bin_index(x, bin1_x_min, bin_delta) result (ix_bin)
+
+Helper function to locate the appropriate histogram bin index.
 
 Parameters
 ----------
@@ -10833,7 +10897,9 @@ ix_bin : int
       py::arg("ix_bin"),
       py::arg("bin1_x_min"),
       py::arg("bin_delta"),
-      R"""(Helper function to locate the center of a histogram bin.
+      R"""(Function bin_x_center (ix_bin, bin1_x_min, bin_delta) result(x_center)
+
+Helper function to locate the center of a histogram bin.
 
 Parameters
 ----------
@@ -10868,7 +10934,9 @@ x_center
       py::arg("word"),
       py::arg("pos"),
       py::arg("set_to_1"),
-      R"""(Routine to set a bit in a word.
+      R"""(Subroutine bit_set (word, pos, set_to_1)
+
+Routine to set a bit in a word.
 
 Parameters
 ----------
@@ -10904,8 +10972,9 @@ set_to_1 : bool
       py::arg("circ"),
       py::arg("R"),
       py::arg("L"),
-      R"""(This is a frontend for get_bl_from_fwhm from longitudinal_profile_mod.
+      R"""(Subroutine bl_via_vlassov(current,alpha,Energy,sigma_p,Vrf,omega,U0,circ,R,L,sigma_z)
 
+This is a frontend for get_bl_from_fwhm from longitudinal_profile_mod.
 See longitudinal_profile_mod for details.  In short, this implements a model of potential well distortion
 based on the Vlassov equation which uses an effective Resistive, Inductive, and Capacitive impedance.
 
@@ -10943,9 +11012,7 @@ sigma_z : float
       py::arg("lat_file"),
       py::arg("make_mats6") = py::none(),
       py::arg("use_line") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat_file : unknown
     Name of the input file.
@@ -10996,9 +11063,7 @@ parse_lat : LatStruct
       py::arg("make_mats6") = py::none(),
       py::arg("err_flag") = py::none(),
       py::arg("parse_lat") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat_file : unknown
     Input file name.
@@ -11031,19 +11096,12 @@ parse_lat : LatStruct, optional
       &Bmad::bmad_patch_parameters_to_ptc,
       py::arg("ang"),
       py::arg("exi"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ang : 
 exi : 
 )""");
-  m.def(
-      "bp_set_ran_status",
-      &Bmad::bp_set_ran_status,
-      R"""(No docstring available
-
-)""");
+  m.def("bp_set_ran_status", &Bmad::bp_set_ran_status, R"""()""");
   m.def(
       "bracket_index_for_spline",
       &SimUtils::bracket_index_for_spline,
@@ -11051,12 +11109,13 @@ exi :
       py::arg("x"),
       py::arg("strict") = py::none(),
       py::arg("print_err") = py::none(),
-      R"""(Routine to find which interval to use for evaluating a spline.
+      R"""(Function bracket_index_for_spline (x_knot, x, ix0, strict, print_err) result (ok)
 
+Routine to find which interval to use for evaluating a spline.
 If strict = False (default), x is in range if
-x_knot(1) - (x_knot(2) - x_knot(1)) < x < x_knot(n) + (x_knot(n) - x_knot(n-1))
+      x_knot(1) - (x_knot(2) - x_knot(1)) < x < x_knot(n) + (x_knot(n) - x_knot(n-1))
 If stric = True, x is in range if
-x_knot(1) <= x <= x_knot(n)
+      x_knot(1) <= x <= x_knot(n)
 where n = size(x_knot)
 
 Parameters
@@ -11102,9 +11161,7 @@ ok : bool
       &Bmad::branch_equal_branch,
       py::arg("branch1"),
       py::arg("branch2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch1 : 
 branch2 : 
@@ -11114,9 +11171,7 @@ branch2 :
       &python_branch_name,
       py::arg("branch"),
       py::arg("name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch : BranchStruct
     Lattice branch
@@ -11137,8 +11192,18 @@ name :
       "branch_to_ptc_m_u",
       &Bmad::branch_to_ptc_m_u,
       py::arg("branch"),
-      R"""(Subroutine to create a PTC layout from a Bmad lattice branch.
+      R"""(Subroutine branch_to_ptc_m_u (branch)
 
+Subroutine to create a PTC layout from a Bmad lattice branch.
+Note: If lat_to_ptc_layout has already been setup, you should first do a
+          call kill_ptc_layouts(lat)
+This deallocates the pointers in PTC
+
+Note: If not already done, before you call this routine you need to first call:
+   call set_ptc (...)
+[This is normally done in bmad_parser.]
+
+Note: If a Bmad element is using a hard edge model (EG: RFcavity element), there
 will be three corresponding PTC fibre elements: (drift, RF. drift) for example.
 In this case, ele%ptc_fibre will be set to point to the last PTC fibre. That is the
 exit end of ele will correspond to the exit end of ele%ptc_fibre.
@@ -11148,19 +11213,13 @@ Parameters
 branch : BranchStruct
     Input branch. branch(:).ptc              -- Pointers to generated layouts. branch(:).ele(:).ptc_fibre --
     Pointer to PTC fibres
-
-Notes
------
-Note: If a Bmad element is using a hard edge model (EG: RFcavity element), there
 )""");
   m.def(
       "bunch_equal_bunch",
       &Bmad::bunch_equal_bunch,
       py::arg("bunch1"),
       py::arg("bunch2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 bunch1 : 
 bunch2 : 
@@ -11169,9 +11228,7 @@ bunch2 :
       "c_to_cbar",
       &Bmad::c_to_cbar,
       py::arg("ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element with C matrix and Twiss parameters. .c_mat(2,2) -- C matrix. .a          -- a-mode Twiss
@@ -11189,13 +11246,17 @@ cbar_mat : float
       py::arg("n_mat") = py::none(),
       py::arg("is_time_coords") = py::none(),
       py::arg("ele") = py::none(),
-      R"""(Finds all bunch parameters defined in bunch_params_struct, both normal-mode
+      R"""(Subroutine calc_bunch_params (bunch, bunch_params, error, print_err, n_mat, is_time_coords, ele)
 
+Finds all bunch parameters defined in bunch_params_struct, both normal-mode
 and projected. Projected parameters are found purely from the geometrical
 distribution of the beam. Normal-Mode parameters are found using the method
 developed in:
-"Alternate approach to general coupled linear optics"
-A. Wolski, PRST AB 9, 024001 (2006)
+  "Alternate approach to general coupled linear optics"
+   A. Wolski, PRST AB 9, 024001 (2006)
+
+Note: If less than two particle remain then the various parameters will be
+set to zero.
 
 Parameters
 ----------
@@ -11226,7 +11287,9 @@ n_mat : float, optional
       py::arg("print_err") = py::none(),
       py::arg("is_time_coords") = py::none(),
       py::arg("ele") = py::none(),
-      R"""(Finds bunch parameters for a slice of the beam.
+      R"""(subroutine calc_bunch_params_slice (bunch, bunch_params, plane, slice_center, slice_spread, err, print_err, is_time_coords, ele)
+
+Finds bunch parameters for a slice of the beam.
 
 Parameters
 ----------
@@ -11259,7 +11322,9 @@ err : bool
       py::arg("print_err") = py::none(),
       py::arg("is_time_coords") = py::none(),
       py::arg("ele") = py::none(),
-      R"""(Finds bunch parameters for a slice of the beam.
+      R"""(subroutine calc_bunch_params_z_slice (bunch, bunch_params, slice_bounds, err, print_err, is_time_coords, ele)
+
+Finds bunch parameters for a slice of the beam.
 
 The slice is specified in terms of percentage of particles ordered by z-position.
 For example, slice_bounds = [0.0, 0.5] specifies the trailing half of the bunch
@@ -11289,7 +11354,9 @@ err : bool
       py::arg("charge"),
       py::arg("is_time_coords") = py::none(),
       py::arg("ele") = py::none(),
-      R"""(Routine to find the sigma matrix elements of a particle distribution.
+      R"""(Subroutine calc_bunch_sigma_matrix_etc (particle, charge, bunch_params, is_time_coords, ele)
+
+Routine to find the sigma matrix elements of a particle distribution.
 
 Parameters
 ----------
@@ -11329,8 +11396,9 @@ bunch_params : BunchParamsStruct
       &Bmad::calc_emittances_and_twiss_from_sigma_matrix,
       py::arg("sigma_mat"),
       py::arg("print_err") = py::none(),
-      R"""(Routine to calc emittances and Twiss function from a beam sigma matrix.
+      R"""(Subroutine calc_emittances_and_twiss_from_sigma_matrix(sigma_mat, bunch_params, error, print_err, n_mat)
 
+Routine to calc emittances and Twiss function from a beam sigma matrix.
 See: Andy Wolski "Alternative approach to general coupled linear optics".
 
 Parameters
@@ -11387,9 +11455,7 @@ n_mat : float
       py::arg("num_in"),
       py::arg("num_out"),
       py::arg("err_flag"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 file_name : 
 num_in : 
@@ -11420,7 +11486,9 @@ err_flag :
       "calc_spin_params",
       &Bmad::calc_spin_params,
       py::arg("bunch"),
-      R"""(Rotine to calculate spin averages
+      R"""(Subroutine calc_spin_params (bunch, bunch_params)
+
+Rotine to calculate spin averages
 
 Parameters
 ----------
@@ -11438,9 +11506,7 @@ bunch_params : BunchParamStruct
       py::arg("lord1"),
       py::arg("lord2"),
       py::arg("create_jumbo_slave") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lord1 : EleStruct
     First slave. .key .sub_key
@@ -11458,11 +11524,13 @@ create_jumbo_slave : bool, optional
       py::arg("v"),
       py::arg("cos_ang"),
       py::arg("sin_ang"),
-      R"""(Routine to calculate the wall radius at a given angle for a given cross-section
+      R"""(Subroutine calc_wall_radius (v, cos_ang, sin_ang, r_wall, dr_dtheta, ix_vertex)
 
+Routine to calculate the wall radius at a given angle for a given cross-section
 Additionally, the transverse directional derivative is calculated.
+
 Module needed:
-use wall3d_mod
+  use wall3d_mod
 
 Parameters
 ----------
@@ -11506,9 +11574,7 @@ ix_vertex : int
       "calc_z_tune",
       &Bmad::calc_z_tune,
       py::arg("branch"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch : BranchStruct
     Lattice branch
@@ -11518,9 +11584,7 @@ branch : BranchStruct
       &Bmad::canonical_to_angle_coords,
       py::arg("orbit"),
       py::arg("coord_type") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Orbit in canonical coordinates.
@@ -11535,9 +11599,7 @@ coord_type : unknown, optional
       py::arg("cbar_mat"),
       py::arg("a"),
       py::arg("b"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 cbar_mat : float
     Cbar matrix.
@@ -11553,9 +11615,7 @@ c_mat : float
       &python_change_file_number,
       py::arg("file_name"),
       py::arg("change"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 file_name : 
 change : 
@@ -11579,7 +11639,9 @@ change :
       &SimUtils::charge_of,
       py::arg("species"),
       py::arg("default_") = py::none(),
-      R"""(Routine to return the charge, in units of e+, of a particle.
+      R"""(Function charge_of (species, default) result (charge)
+
+Routine to return the charge, in units of e+, of a particle.
 
 Parameters
 ----------
@@ -11597,7 +11659,9 @@ charge : int
       "charge_to_mass_of",
       &SimUtils::charge_to_mass_of,
       py::arg("species"),
-      R"""(Routine to return the charge (in units of e+) to mass (in units of eV) ratio of a particle.
+      R"""(Function charge_to_mass_of (species) result (charge_mass_ratio)
+
+Routine to return the charge (in units of e+) to mass (in units of eV) ratio of a particle.
 
 Parameters
 ----------
@@ -11618,9 +11682,7 @@ charge_mass_ratio : float
       py::arg("param"),
       py::arg("old_orb") = py::none(),
       py::arg("check_momentum") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orb : CoordStruct
     coordinates of a particle.
@@ -11642,9 +11704,7 @@ check_momentum : bool, optional
       py::arg("ele_key"),
       py::arg("contrl"),
       py::arg("name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele_key : int
     Element type. overlay$, etc.
@@ -11663,14 +11723,16 @@ err : bool
       py::arg("err_flag"),
       py::arg("ref_ele") = py::none(),
       py::arg("wrap"),
-      R"""(Subroutine to check if there is a problem superimposing an element when there is multipass.
+      R"""(Subroutine check_for_superimpose_problem (branch, super_ele, err_flag, ref_ele, wrap)
 
+Subroutine to check if there is a problem superimposing an element when there is multipass.
 In particular will check that:
-1) If the ref_ele is part of a multipass region then super_ele must be superimposed
-within the region.
+  1) If the ref_ele is part of a multipass region then super_ele must be superimposed
+     within the region.
 Or:
-2) If the ref_ele is not part of a multipass region then super_ele must also not
-be part of a multipass region.
+  2) If the ref_ele is not part of a multipass region then super_ele must also not
+     be part of a multipass region.
+
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
 
@@ -11701,9 +11763,7 @@ This subroutine is not intended for general use.
       py::arg("branch"),
       py::arg("s"),
       py::arg("print_err") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch : BranchStruct
     Branch
@@ -11739,9 +11799,7 @@ print_err : bool, optional
       &python_check_rf_freq,
       py::arg("lat"),
       py::arg("fb"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : 
 fb : 
@@ -11762,9 +11820,7 @@ fb :
       &Bmad::choose_quads_for_set_tune,
       py::arg("branch"),
       py::arg("mask") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch : BranchStruct
     Lattice branch.
@@ -11809,9 +11865,7 @@ err_flag : bool
       py::arg("pz") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::arg("orb0") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lat
@@ -11882,9 +11936,7 @@ orb0 : CoordStruct, optional
       py::arg("target_x"),
       py::arg("target_y"),
       py::arg("err_tol"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lat to use,
@@ -11924,9 +11976,7 @@ err_flag : bool
       &python_classical_radius,
       py::arg("species"),
       py::arg("radius"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 species : int
     Species of particle.
@@ -11946,9 +11996,7 @@ radius :
   m.def(
       "clear_lat_1turn_mats",
       &Bmad::clear_lat_1turn_mats,
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lat with 1-turn matrices cleared.
@@ -11957,9 +12005,7 @@ lat : LatStruct
       "clear_taylor_maps_from_elements",
       &Bmad::clear_taylor_maps_from_elements,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice
@@ -11974,9 +12020,7 @@ lat : LatStruct
       py::arg("direction") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::arg("print_err") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lat to track through.
@@ -12009,9 +12053,7 @@ print_err : bool, optional
       py::arg("eps_rel") = py::none(),
       py::arg("eps_abs") = py::none(),
       py::arg("init_guess") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lat to track through.
@@ -12055,9 +12097,7 @@ err_flag : bool
       &python_cmplx_re_str,
       py::arg("cmp"),
       py::arg("str_out"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 cmp : 
 str_out : 
@@ -12081,8 +12121,9 @@ str_out :
       &python_coarse_frequency_estimate,
       py::arg("data"),
       py::arg("error") = py::none(),
-      R"""(Simple function to take periodic data and estimate
+      R"""(Function coarse_frequency_estimate(data, error) result(frequency)
 
+Simple function to take periodic data and estimate
 the most dominant frequency by FFT.
 
 Parameters
@@ -12121,9 +12162,7 @@ err : bool
       "combine_consecutive_elements",
       &Bmad::combine_consecutive_elements,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice.
@@ -12138,9 +12177,7 @@ error : bool
       py::arg("wi"),
       py::arg("zr"),
       py::arg("zi"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 wr : 
 wi : 
@@ -12175,9 +12212,7 @@ zi :
       "complex_taylor_clean",
       &Bmad::complex_taylor_clean,
       py::arg("complex_taylor"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 complex_taylor : 
 )""");
@@ -12188,38 +12223,41 @@ complex_taylor :
       py::arg("complex_taylor"),
       py::arg("exp"),
       py::arg("coef"),
-      R"""(Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
+      R"""(Function complex_taylor_coef (complex_taylor, exp)
+Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
 
 Function to return the coefficient for a particular complex_taylor term
 from a complex_taylor Series.
+
+Note: complex_taylor_coef is overloaded by:
+  complex_taylor_coef1 (complex_taylor, exp)
+  complex_taylor_coef2 (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
+Using the complex_taylor_coef2 form limits obtaining coefficients to 9th order
 or less. Also: complex_taylor_coef2 does not check that all i1, ..., i9 are between
 1 and 6.
+
 For example: To get the 2nd order term corresponding to
-y(out) = Coef * p_z(in)^2
+  y(out) = Coef * p_z(in)^2
 [This is somtimes refered to as the T_366 term]
 The call would be:
-type (complex_taylor_struct) complex_taylor(6)      ! complex_taylor Map
-...
-coef = complex_taylor_coef (complex_taylor(3), 6, 6)  ! 1st possibility or ...
-coef = complex_taylor_coef (complex_taylor(3), [0, 0, 0, 0, 0, 2 ])
+  type (complex_taylor_struct) complex_taylor(6)      ! complex_taylor Map
+  ...
+  coef = complex_taylor_coef (complex_taylor(3), 6, 6)  ! 1st possibility or ...
+  coef = complex_taylor_coef (complex_taylor(3), [0, 0, 0, 0, 0, 2 ])
+
 Input (complex_taylor_coef1):
-complex_taylor -- complex_taylor_struct: complex_taylor series.
-exp(6)      -- Integer: Array of exponent indices.
+  complex_taylor -- complex_taylor_struct: complex_taylor series.
+  exp(6)      -- Integer: Array of exponent indices.
+
 Input (complex_taylor_coef2):
-complex_taylor -- complex_taylor_struct: complex_taylor series.
-i1, ..., i9 -- Integer, optional: indexes (each between 1 and 6).
+  complex_taylor -- complex_taylor_struct: complex_taylor series.
+  i1, ..., i9 -- Integer, optional: indexes (each between 1 and 6).
 
 
 Returns
 -------
 complex_taylor_coef : complex
     Coefficient.
-
-Notes
------
-Note: complex_taylor_coef is overloaded by: complex_taylor_coef1 (complex_taylor, exp) complex_taylor_coef2
-(complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9) Using the complex_taylor_coef2 form limits obtaining
-coefficients to 9th order
 )""");
   py::class_<PyComplexTaylorCoef1, std::unique_ptr<PyComplexTaylorCoef1>>(
       m,
@@ -12261,38 +12299,41 @@ coefficients to 9th order
       py::arg("i8") = py::none(),
       py::arg("i9") = py::none(),
       py::arg("coef"),
-      R"""(Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
+      R"""(Function complex_taylor_coef (complex_taylor, exp)
+Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
 
 Function to return the coefficient for a particular complex_taylor term
 from a complex_taylor Series.
+
+Note: complex_taylor_coef is overloaded by:
+  complex_taylor_coef1 (complex_taylor, exp)
+  complex_taylor_coef2 (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
+Using the complex_taylor_coef2 form limits obtaining coefficients to 9th order
 or less. Also: complex_taylor_coef2 does not check that all i1, ..., i9 are between
 1 and 6.
+
 For example: To get the 2nd order term corresponding to
-y(out) = Coef * p_z(in)^2
+  y(out) = Coef * p_z(in)^2
 [This is somtimes refered to as the T_366 term]
 The call would be:
-type (complex_taylor_struct) complex_taylor(6)      ! complex_taylor Map
-...
-coef = complex_taylor_coef (complex_taylor(3), 6, 6)  ! 1st possibility or ...
-coef = complex_taylor_coef (complex_taylor(3), [0, 0, 0, 0, 0, 2 ])
+  type (complex_taylor_struct) complex_taylor(6)      ! complex_taylor Map
+  ...
+  coef = complex_taylor_coef (complex_taylor(3), 6, 6)  ! 1st possibility or ...
+  coef = complex_taylor_coef (complex_taylor(3), [0, 0, 0, 0, 0, 2 ])
+
 Input (complex_taylor_coef1):
-complex_taylor -- complex_taylor_struct: complex_taylor series.
-exp(6)      -- Integer: Array of exponent indices.
+  complex_taylor -- complex_taylor_struct: complex_taylor series.
+  exp(6)      -- Integer: Array of exponent indices.
+
 Input (complex_taylor_coef2):
-complex_taylor -- complex_taylor_struct: complex_taylor series.
-i1, ..., i9 -- Integer, optional: indexes (each between 1 and 6).
+  complex_taylor -- complex_taylor_struct: complex_taylor series.
+  i1, ..., i9 -- Integer, optional: indexes (each between 1 and 6).
 
 
 Returns
 -------
 complex_taylor_coef : complex
     Coefficient.
-
-Notes
------
-Note: complex_taylor_coef is overloaded by: complex_taylor_coef1 (complex_taylor, exp) complex_taylor_coef2
-(complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9) Using the complex_taylor_coef2 form limits obtaining
-coefficients to 9th order
 )""");
   py::class_<PyComplexTaylorCoef2, std::unique_ptr<PyComplexTaylorCoef2>>(
       m,
@@ -12314,9 +12355,7 @@ coefficients to 9th order
       &Bmad::complex_taylor_equal_complex_taylor,
       py::arg("complex_taylor1"),
       py::arg("complex_taylor2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 complex_taylor1 : 
 complex_taylor2 : 
@@ -12325,10 +12364,12 @@ complex_taylor2 :
       "complex_taylor_exponent_index",
       &Bmad::complex_taylor_exponent_index,
       py::arg("expn"),
-      R"""(Function to associate a unique number with a complex_taylor exponent.
+      R"""(Function complex_taylor_exponent_index(expn) result(index)
+
+Function to associate a unique number with a complex_taylor exponent.
 
 The number associated with a complex_taylor_term that is used for the sort is:
-number = sum(exp(i))*10^6 + exp(6)*10^5 + ... + exp(1)*10^0
+    number = sum(exp(i))*10^6 + exp(6)*10^5 + ... + exp(1)*10^0
 where exp(1) is the exponent for x, exp(2) is the exponent for P_x, etc.
 
 Parameters
@@ -12344,9 +12385,10 @@ index : int
   m.def(
       "complex_taylor_make_unit",
       &Bmad::complex_taylor_make_unit,
-      R"""(Subroutine to make the unit complex_taylor map:
+      R"""(Subroutine complex_taylor_make_unit (complex_taylor)
 
-r(out) = Map * r(in) = r(in)
+Subroutine to make the unit complex_taylor map:
+      r(out) = Map * r(in) = r(in)
 
 
 Returns
@@ -12359,9 +12401,10 @@ complex_taylor : ComplexTaylorStruct
       &Bmad::complex_taylor_to_mat6,
       py::arg("a_complex_taylor"),
       py::arg("r_in"),
-      R"""(Subroutine to calculate, from a complex_taylor map and about some trajectory:
+      R"""(Subroutine complex_taylor_to_mat6 (a_complex_taylor, r_in, vec0, mat6, r_out)
 
-The 1st order (Jacobian) transfer matrix.
+Subroutine to calculate, from a complex_taylor map and about some trajectory:
+  The 1st order (Jacobian) transfer matrix.
 
 Parameters
 ----------
@@ -12407,9 +12450,7 @@ r_out : complex
       &Bmad::complex_taylors_equal_complex_taylors,
       py::arg("complex_taylor1"),
       py::arg("complex_taylor2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 complex_taylor1 : 
 complex_taylor2 : 
@@ -12418,7 +12459,9 @@ complex_taylor2 :
       "compute_slave_coupler",
       &Bmad::compute_slave_coupler,
       py::arg("slave"),
-      R"""(This routine is not meant for general use.
+      R"""(Subroutine compute_slave_coupler (slave)
+
+This routine is not meant for general use.
 
 )""");
   m.def(
@@ -12428,13 +12471,17 @@ complex_taylor2 :
       py::arg("ele"),
       py::arg("err_flag"),
       py::arg("spin_taylor") = py::none(),
-      R"""(Routine to concatinate an orbital taylor map and, optionally if present and
+      R"""(Subroutine concat_ele_taylor (orb_taylor, ele, err_flag, spin_taylor)
 
+Routine to concatinate an orbital taylor map and, optionally if present and
 bmad_com%spin_tracking_on = T, a spin taylor map.
+
 Transform:
-orb_taylor[x] -> ele_taylor(orb_taylor[x])
+  orb_taylor[x] -> ele_taylor(orb_taylor[x])
 If ele%taylor_map_includes_offsets = True:  ele_taylor == ele%taylor
 If ele%taylor_map_includes_offsets = False: ele_taylor == ele%taylor + offset corrections.
+
+Also see: concat_taylor
 
 Parameters
 ----------
@@ -12462,9 +12509,13 @@ concat_taylor
       py::arg("taylor1"),
       py::arg("taylor2"),
       py::arg("taylor3"),
-      R"""(Subroutine to concatinate two taylor maps:
+      R"""(Subroutine concat_taylor (taylor1, taylor2, taylor3)
 
-taylor3[x] = taylor2(taylor1[x])
+Subroutine to concatinate two taylor maps:
+  taylor3[x] = taylor2(taylor1[x])
+
+Note: In general, if taylor2 is a component of an ele_struct, use
+concat_ele_taylor instead.
 
 Parameters
 ----------
@@ -12483,10 +12534,11 @@ taylor3 : TaylorStruct
       py::arg("mat_0"),
       py::arg("vec_0"),
       py::arg("vec_out"),
-      R"""(Routine to concatinate two linear maps:
+      R"""(Subroutine concat_transfer_mat (mat_1, vec_1, mat_0, vec_0, mat_out, vec_out)
 
-mat_out = matmul(mat_1, mat_0)
-vec_out = matmul(mat_1, vec_0) + vec_1
+Routine to concatinate two linear maps:
+  mat_out = matmul(mat_1, mat_0)
+  vec_out = matmul(mat_1, vec_0) + vec_1
 
 Parameters
 ----------
@@ -12506,9 +12558,7 @@ mat_out : float
       py::arg("lat"),
       py::arg("ele") = py::none(),
       py::arg("err_flag") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     lattice to be used
@@ -12525,9 +12575,7 @@ err_flag : bool, optional
       py::arg("out_type"),
       py::arg("an"),
       py::arg("bn"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 g : float
     1/rho bending strength.
@@ -12546,9 +12594,7 @@ bn : float
       py::arg("in_type_str"),
       py::arg("coord_in"),
       py::arg("ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 in_type_str : unknown
     type of the input coords.
@@ -12593,7 +12639,9 @@ err_flag : bool
       py::arg("forward_transform"),
       py::arg("calc_dfield") = py::none(),
       py::arg("calc_potential") = py::none(),
-      R"""(Convert fields: ele to lab coords
+      R"""(Subroutine convert_field_ele_to_lab (ele, s_here, forward_transform, field, calc_dfield, calc_potential)
+
+Convert fields: ele to lab coords
 
 Parameters
 ----------
@@ -12622,9 +12670,7 @@ field : EmFieldStruct
       py::arg("g"),
       py::arg("xout"),
       py::arg("sout"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : 
 z : 
@@ -12672,9 +12718,7 @@ sout :
       py::arg("g"),
       py::arg("xout"),
       py::arg("zout"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : 
 s : 
@@ -12720,9 +12764,7 @@ zout :
       py::arg("particle"),
       py::arg("s_body"),
       py::arg("orientation"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 particle : CoordStruct
     Particle with .vec(:) in s-coords.
@@ -12737,9 +12779,7 @@ orientation : int
       py::arg("particle"),
       py::arg("ele"),
       py::arg("use_downstream_p0c") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 particle : CoordStruct
     Particle with .vec(:) in t-coords.
@@ -12756,9 +12796,7 @@ use_downstream_p0c : bool, optional
       &Bmad::convert_pc_to,
       py::arg("pc"),
       py::arg("particle"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 pc : float
     Particle momentum
@@ -12814,9 +12852,7 @@ err_flag : bool
       py::arg("E_tot"),
       py::arg("particle"),
       py::arg("print_err") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 E_tot : float
     Total energy of the particle.
@@ -12878,9 +12914,7 @@ print_err : bool, optional
       "converter_distribution_parser",
       &Bmad::converter_distribution_parser,
       py::arg("ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Converter element.
@@ -12922,7 +12956,12 @@ err_flag : bool
       "coord_equal_coord",
       &Bmad::coord_equal_coord,
       py::arg("coord2"),
-      R"""(Subroutine that is used to set one coord equal to another.
+      R"""( Subroutine coord_equal_coord (coord1, coord2)
+
+ Subroutine that is used to set one coord equal to another.
+
+ Note: This subroutine is called by the overloaded equal sign:
+		coord1 = coord2
 
 Parameters
 ----------
@@ -12939,7 +12978,9 @@ coord1 : CoordStruct
       &python_coord_state_name,
       py::arg("coord_state"),
       py::arg("one_word") = py::none(),
-      R"""(Routine to return the string representation of a coord%state state.
+      R"""(Function coord_state_name (coord_state) result (state_str)
+
+Routine to return the string representation of a coord%state state.
 
 Parameters
 ----------
@@ -12973,9 +13014,7 @@ state_str : unknown
       py::arg("w_mat") = py::none(),
       py::arg("calculate_angles") = py::none(),
       py::arg("local_position"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 body_position : FloorPositionStruct
     Element body frame coordinates. .r(3)               [x, y, s] position with s = Position from entrance end
@@ -12997,9 +13036,7 @@ local_position :
       py::arg("w_mat") = py::none(),
       py::arg("calculate_angles") = py::none(),
       py::arg("rel_exit"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 body_position : FloorPositionStruct
     Element body frame coordinates. .r                  [x, y, s] position with s = Position from entrance end
@@ -13019,9 +13056,7 @@ rel_exit :
       py::arg("xys"),
       py::arg("branch"),
       py::arg("global"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 xys : float
     (x, y, s) lab frame position vector.
@@ -13037,9 +13072,7 @@ global :
       py::arg("floor_coords"),
       py::arg("ele0"),
       py::arg("local_coords"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 floor_coords : FloorPositionStruct
     .r = [X, Y, Z] position in global coordinates
@@ -13084,9 +13117,7 @@ local_coords :
       py::arg("ele"),
       py::arg("relative_to") = py::none(),
       py::arg("local_position"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 global_position : FloorPositionStruct
     .r = [X, Y, Z] position in global coordinates
@@ -13134,9 +13165,7 @@ local_position :
       py::arg("calculate_angles") = py::none(),
       py::arg("is_delta_position") = py::none(),
       py::arg("local_position"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 floor0 : FloorPositionStruct
     reference position
@@ -13158,9 +13187,7 @@ local_position :
       py::arg("w_mat") = py::none(),
       py::arg("calculate_angles") = py::none(),
       py::arg("body_position"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 local_position : FloorPositionStruct
     local coordinates. .r(3)               [x, y, s] position with s = Position from entrance end of element.
@@ -13182,9 +13209,7 @@ body_position :
       py::arg("calculate_angles") = py::none(),
       py::arg("relative_to") = py::none(),
       py::arg("global_position"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 local_position : FloorPositionStruct
     Floor position in local curvilinear coordinates, with .r = [x, y, z_local] where z_local is wrt the
@@ -13216,9 +13241,7 @@ global_position :
       py::arg("phi") = py::none(),
       py::arg("psi") = py::none(),
       py::arg("floor1"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 floor0 : FloorPositionStruct
     Initial reference frame.
@@ -13257,9 +13280,7 @@ floor1 :
       &python_cos_one,
       py::arg("angle"),
       py::arg("cos1"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 angle : 
 cos1 : 
@@ -13281,9 +13302,7 @@ cos1 :
       py::arg("x"),
       py::arg("nd") = py::none(),
       py::arg("y"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : 
 nd : 
@@ -13308,9 +13327,7 @@ y :
       py::arg("w"),
       py::arg("gam"),
       py::arg("res"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 u : 
 v : 
@@ -13345,9 +13362,7 @@ res :
       "count_lines_in_file",
       &bsim::count_lines_in_file,
       py::arg("file_name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 file_name : 
 lines : 
@@ -13359,12 +13374,14 @@ lines :
       py::arg("r1"),
       py::arg("slope0"),
       py::arg("slope1"),
-      R"""(Routine to create a single spline given end point positions and slopes.
+      R"""(Function create_a_spline (r0, r1, slope0, slope1) result (spline)
 
+Routine to create a single spline given end point positions and slopes.
 The spline will pass through the data points and have the given slopes
 at these points.
+
 Modules used:
-use spline_mod
+  use spline_mod
 
 Parameters
 ----------
@@ -13387,12 +13404,15 @@ spline : SplineStruct
       &python_create_concatenated_wall3d,
       py::arg("lat"),
       py::arg("err"),
-      R"""(Routine to concatinate lat%branch(i)ele(:)%wall3d%section(:) arrays into
+      R"""(Subroutine create_concatenated_wall3d (lat)
 
+Routine to concatinate lat%branch(i)ele(:)%wall3d%section(:) arrays into
 one lat%branch(i)%wall3d%section(:) array.
+
 Exceptions: capillary and aperture elements do not have their walls included.
+
 Module needed:
-use wall3d_mod
+  use wall3d_mod
 
 Parameters
 ----------
@@ -13433,9 +13453,7 @@ err_flag : bool
       py::arg("include_downstream_end"),
       py::arg("old_slice") = py::none(),
       py::arg("orb_in") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 sliced_ele : EleStruct
     Sliced_ele element with appropriate values set.
@@ -13488,9 +13506,7 @@ orb_in : CoordStruct, optional
       py::arg("lat"),
       py::arg("lord_name"),
       py::arg("slave_name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice
@@ -13509,9 +13525,7 @@ err_flag : bool
       py::arg("contrl"),
       py::arg("girder_info"),
       py::arg("err_flag"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lat to modify.
@@ -13543,9 +13557,7 @@ err_flag :
       py::arg("lord"),
       py::arg("contrl"),
       py::arg("err"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lord : EleStruct
     Group element. .control.type
@@ -13563,9 +13575,7 @@ err : bool
       &Bmad::create_lat_ele_nametable,
       py::arg("lat"),
       py::arg("nametable"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice. Ouput:
@@ -13578,9 +13588,7 @@ nametable : NametableStruct
       py::arg("lord"),
       py::arg("contrl"),
       py::arg("err"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lord : EleStruct
     Overlay element. .control.type
@@ -13598,18 +13606,24 @@ err : bool
       &Bmad::create_planar_wiggler_model,
       py::arg("wiggler_in"),
       py::arg("print_err") = py::none(),
-      R"""(Routine to create series of bend and drift elements to serve as a replacement
+      R"""(Subroutine create_planar_wiggler_model (wiggler_in, lat, err_flag, print_err)
 
+Routine to create series of bend and drift elements to serve as a replacement
 model for a planar wiggler.
+
 This routine is helpful for translating bmad lattices to a language that does not
 implement the Bmad wiggler model.
+
 This routine uses the mrqmin nonlinear optimizer to vary the parameters in the wiggler
 model to match:
-Integral g^2 (I_2 radiation integral)
-Integral g^3 (I_3 radiation integral)
-Transfer matrix.
+  Integral g^2 (I_2 radiation integral)
+  Integral g^3 (I_3 radiation integral)
+  Transfer matrix.
 Also the endding horizontal transverse offset of the reference orbit (floor%r(1)) is
 matched to zero.
+
+Note: The resulting model does not have the vertical cubic nonlinearity that
+the actual wiggler has.
 
 Parameters
 ----------
@@ -13654,9 +13668,7 @@ err_flag : bool
       py::arg("lord"),
       py::arg("contrl"),
       py::arg("err"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lord : EleStruct
     Ramper element. .control.type
@@ -13673,11 +13685,14 @@ err : bool
       &Bmad::create_sol_quad_model,
       py::arg("sol_quad"),
       py::arg("lat"),
-      R"""(Routine to create series of solenoid and quadrupole elements to serve as a replacement
+      R"""(Subroutine create_sol_quad_model (sol_quad, lat)
 
+Routine to create series of solenoid and quadrupole elements to serve as a replacement
 model for a sol_quad element.
+
 This routine is helpful for translating bmad lattices to a language that does not
 implement a combination solenoid/quadrupole.
+
 Not yet implemented!
 
 )""");
@@ -13687,9 +13702,7 @@ Not yet implemented!
       py::arg("lat"),
       py::arg("key"),
       py::arg("suffix"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice holding the elements.
@@ -13703,9 +13716,7 @@ suffix : unknown
       "create_wiggler_cartesian_map",
       &Bmad::create_wiggler_cartesian_map,
       py::arg("ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Wiggler or undulator element.
@@ -13718,9 +13729,7 @@ cart_map : CartesianMapStruct
       py::arg("a"),
       py::arg("b"),
       py::arg("c"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 a : float
     Input vectors.
@@ -13731,9 +13740,7 @@ c :
       "crystal_attribute_bookkeeper",
       &Bmad::crystal_attribute_bookkeeper,
       py::arg("ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Crystal element. .value(bragg_angle_in$) .value(bragg_angle_out$) .value(tilt_corr$) ... etc.
@@ -13744,7 +13751,9 @@ ele : EleStruct
       py::arg("ele"),
       py::arg("orbit"),
       py::arg("h_vec"),
-      R"""(Routine reorient the crystal H vector due to local imperfections in the crystal lattice.
+      R"""(Subroutine crystal_h_misalign (ele, orbit, h_vec)
+
+Routine reorient the crystal H vector due to local imperfections in the crystal lattice.
 
 Parameters
 ----------
@@ -13760,10 +13769,12 @@ h_vec : float
       "crystal_type_to_crystal_params",
       &Bmad::crystal_type_to_crystal_params,
       py::arg("ele"),
-      R"""(Routine to set the crystal parameters based upon the crystal type.
+      R"""(Subroutine crystal_type_to_crystal_params (ele, err_flag)
+
+Routine to set the crystal parameters based upon the crystal type.
 
 Crystal types are of the form:
-"ZZZ(ijk)"
+  "ZZZ(ijk)"
 Where "ZZZ" is the atomic formula of the crystal material and "ijk" is the reciprical lattice
 vetor specifying the diffraction plans.
 
@@ -13784,8 +13795,9 @@ err_flag : bool
       "custom_attribute_ubound_index",
       &Bmad::custom_attribute_ubound_index,
       py::arg("ele_class"),
-      R"""(Routine to return, for a given element class, the upper bound index for the ele%custom(:)
+      R"""(Function custom_attribute_ubound_index(ele_class) result (ix_ubound)
 
+Routine to return, for a given element class, the upper bound index for the ele%custom(:)
 array which is needed to accomodate the registered custom attributes for that class.
 
 Parameters
@@ -13808,9 +13820,7 @@ ix_ubound : int
       py::arg("delta"),
       py::arg("species"),
       py::arg("mat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 gamma : 
 g_tot : 
@@ -13852,9 +13862,7 @@ mat :
       py::arg("string"),
       py::arg("numeric_month") = py::none(),
       py::arg("include_zone") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 string : 
 numeric_month : 
@@ -13884,9 +13892,7 @@ include_zone :
       py::arg("nullify_only") = py::none(),
       py::arg("nullify_branch") = py::none(),
       py::arg("dealloc_poles") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element with pointers.
@@ -13903,7 +13909,9 @@ dealloc_poles : bool, optional
       "deallocate_expression_tree",
       &Bmad::deallocate_expression_tree,
       py::arg("tree"),
-      R"""(Routine to deallocate an expression tree.
+      R"""(Subroutine deallocate_expression_tree(tree)
+
+Routine to deallocate an expression tree.
 
 Parameters
 ----------
@@ -13915,9 +13923,7 @@ tree : ExpressionTreeStruct
       "deallocate_lat_pointers",
       &Bmad::deallocate_lat_pointers,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lat with pointers.
@@ -13928,9 +13934,7 @@ lat : LatStruct
       &python_default_tracking_species,
       py::arg("param"),
       py::arg("species"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 param : LatParamStruct
     Parameters for a lattice branch.
@@ -13957,9 +13961,7 @@ species :
       "destfixedwindowls",
       &SimUtils::destfixedwindowls,
       py::arg("id"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 id : 
 )""");
@@ -13967,9 +13969,7 @@ id :
       "detab",
       &python_detab,
       py::arg("str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 str : 
 )""");
@@ -13989,7 +13989,9 @@ str :
       &Bmad::detector_pixel_pt,
       py::arg("orbit"),
       py::arg("ele"),
-      R"""(Routine to return the pixel a particle is hitting.
+      R"""(Function detector_pixel_pt (orbit, ele) result (ix_pix)
+
+Routine to return the pixel a particle is hitting.
 
 Parameters
 ----------
@@ -14009,9 +14011,7 @@ ix_pix : int
       py::arg("ele"),
       py::arg("orbit"),
       py::arg("ix_section"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     diffraction_plate or mask element.
@@ -14043,9 +14043,7 @@ ix_section :
       py::arg("g_tot"),
       py::arg("species"),
       py::arg("mat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 gamma : 
 g_tot : 
@@ -14077,9 +14075,7 @@ mat :
       py::arg("y_size"),
       py::arg("x_res"),
       py::arg("y_res"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ix_screen : 
 x_size : 
@@ -14123,9 +14119,7 @@ y_res :
       py::arg("particle_at"),
       py::arg("ele"),
       py::arg("dist"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Particle position.
@@ -14161,9 +14155,7 @@ dist :
       py::arg("m"),
       py::arg("arg"),
       py::arg("dj_bes"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 m : 
 arg : 
@@ -14192,9 +14184,7 @@ dj_bes :
       py::arg("str"),
       py::arg("old_hash") = py::none(),
       py::arg("hash"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 str : 
 old_hash : 
@@ -14222,9 +14212,7 @@ hash :
       &python_djb_str_hash,
       py::arg("in_str"),
       py::arg("hash_str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 in_str : 
 hash_str : 
@@ -14247,9 +14235,7 @@ hash_str :
       "do_mode_flip",
       &Bmad::do_mode_flip,
       py::arg("ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Starting Element
@@ -14261,9 +14247,7 @@ err_flag : bool
       "downcase_string",
       &python_downcase_string,
       py::arg("string"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 string : 
 )""");
@@ -14285,9 +14269,7 @@ string :
       py::arg("mass"),
       py::arg("dE"),
       py::arg("dpc"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 pc_old : 
 mass : 
@@ -14318,11 +14300,12 @@ dpc :
       "drift_and_pipe_track_methods_adjustment",
       &Bmad::drift_and_pipe_track_methods_adjustment,
       py::arg("lat"),
-      R"""(Drift and pipe elements can be used in both photon and non-photon lines.
+      R"""(Subroutine drift_and_pipe_track_methods_adjustment(lat)
 
+Drift and pipe elements can be used in both photon and non-photon lines.
 A problem occures if, for example, a lattice file with both photon and
 non-photon lines contains a line like:
-drift::*[tracking_method] = taylor
+  drift::*[tracking_method] = taylor
 So this routine resets drift and pipe tracking_method and mat6_calc_method
 parameters in photon lines to bmad_standard if needed.
 
@@ -14337,9 +14320,7 @@ lat : LatStruct
       "drift_multipass_name_correction",
       &Bmad::drift_multipass_name_correction,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : 
 )""");
@@ -14350,11 +14331,12 @@ lat :
       py::arg("beta0"),
       py::arg("delta_s") = py::none(),
       py::arg("delta_t") = py::none(),
-      R"""(Simple routine to drift a particle orbit in time-based coordinates by a distance delta_s
+      R"""(Subroutine drift_orbit_time(orbit, beta0, delta_s, delta_t)
 
-or a time delta_t
-If the particle has zero longitudinal velocity, then the particle is not drifted
-and a warning is printed.
+Simple routine to drift a particle orbit in time-based coordinates by a distance delta_s
+  or a time delta_t
+  If the particle has zero longitudinal velocity, then the particle is not drifted
+  and a warning is printed.
 
 Parameters
 ----------
@@ -14373,7 +14355,9 @@ delta_t : float, optional
       py::arg("p"),
       py::arg("s"),
       py::arg("branch"),
-      R"""(Drift a particle to a given s-coordinate
+      R"""(Subroutine drift_particle_to_s (p, s, branch)
+
+Drift a particle to a given s-coordinate
 
 Parameters
 ----------
@@ -14391,7 +14375,9 @@ branch : BranchStruct
       py::arg("p"),
       py::arg("t"),
       py::arg("branch"),
-      R"""(Drift a particle to a given t-coordinate
+      R"""(Subroutine drift_particle_to_t (p, t, branch)
+
+Drift a particle to a given t-coordinate
 
 Parameters
 ----------
@@ -14410,8 +14396,9 @@ branch : BranchStruct
       py::arg("s_chord1"),
       py::arg("spline"),
       py::arg("dtheta_ref") = py::none(),
-      R"""(Routine to calculate the difference in length between the spline curve length and a referece line.
+      R"""(Function dspline_len (s_chord0, s_chord1, spline, dtheta_ref) result (dlen)
 
+Routine to calculate the difference in length between the spline curve length and a referece line.
 Referece line is centroid chord (referece system of the spline) rotated by dtheta_ref.
 
 Parameters
@@ -14439,8 +14426,9 @@ dlen : float
       py::arg("theta_xy"),
       py::arg("ap_param"),
       py::arg("check_xy_init") = py::none(),
-      R"""(Subroutine to determine one dynamic aperture point by tracking.
+      R"""(Subroutine dynamic_aperture_point (branch, ele0, orb0, theta_xy, ap_param, ap_point, check_xy_init)
 
+Subroutine to determine one dynamic aperture point by tracking.
 This routine works by determining where on a radial line y = const * x the aperture is.
 Here x and y are deviations from the reference orbit.
 
@@ -14470,7 +14458,9 @@ ap_point : AperturePointStruct
       py::arg("pz_start"),
       py::arg("lat"),
       py::arg("print_timing") = py::none(),
-      R"""(Routine to do a set of dynamic aperture scans.
+      R"""(Subroutine dynamic_aperture_scan(aperture_scan, aperture_param, pz_start, lat, print_timing)
+
+Routine to do a set of dynamic aperture scans.
 
 Parameters
 ----------
@@ -14495,9 +14485,7 @@ aperture_scan : ApertureScanStruct
       py::arg("voltage_or_gradient"),
       py::arg("bmad_standard_tracking") = py::none(),
       py::arg("field"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lcavity or rfcavity element.
@@ -14523,7 +14511,9 @@ field :
       &Bmad::e_crit_photon,
       py::arg("gamma"),
       py::arg("g_bend"),
-      R"""(Routine to calculate the photon critical energy in a bend.
+      R"""(Function E_crit_photon (gamma, g_bend) result (E_crit)
+
+Routine to calculate the photon critical energy in a bend.
 
 Parameters
 ----------
@@ -14541,8 +14531,9 @@ E_crit : float
       "eigen_decomp_6mat",
       &Bmad::eigen_decomp_6mat,
       py::arg("mat"),
-      R"""(Compute eigenvalues and eigenvectors of a real 6x6 matrix.
+      R"""(Subroutine eigen_decomp_6mat(mat, eval, evec, tunes, err_flag)
 
+Compute eigenvalues and eigenvectors of a real 6x6 matrix.
 The evals and evecs are in general complex.
 
 Parameters
@@ -14590,9 +14581,7 @@ tunes : float
       py::arg("ele"),
       py::arg("param"),
       py::arg("err_flag"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele0 : EleStruct
     Previous element in lattice with starting energy and time values.
@@ -14610,9 +14599,7 @@ err_flag : bool
       &Bmad::ele_equal_ele,
       py::arg("ele_out"),
       py::arg("ele_in"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele_out : 
 ele_in : 
@@ -14622,7 +14609,11 @@ ele_in :
       &Bmad::ele_equals_ele,
       py::arg("ele_in"),
       py::arg("update_nametable"),
-      R"""(Subroutine that is used to set an element equal to another.
+      R"""(Subroutine ele_equals_ele (ele_out, ele_in, update_nametable)
+
+Subroutine that is used to set an element equal to another.
+Note: Use ele_equal_ele instead unless you know what you are doing.
+
 
 Parameters
 ----------
@@ -14641,7 +14632,10 @@ ele_out : EleStruct
       "ele_finalizer",
       &Bmad::ele_finalizer,
       py::arg("ele"),
-      R"""(Finalizer routine for ele_struct instances.
+      R"""(Subroutine ele_finalizer(ele)
+
+Finalizer routine for ele_struct instances.
+NOTE: Not currently used.
 
 Parameters
 ----------
@@ -14656,9 +14650,7 @@ ele : EleStruct
       py::arg("ele"),
       py::arg("template_") = py::none(),
       py::arg("str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element in a lattice
@@ -14684,9 +14676,7 @@ str :
       py::arg("ele"),
       py::arg("len_scale") = py::none(),
       py::arg("ignore_patch_err") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 floor_start : 
     Starting floor coordinates at upstream end. Not used for fiducial and girder elements.
@@ -14709,9 +14699,7 @@ ignore_patch_err : bool, optional
       py::arg("ele"),
       py::arg("len_scale") = py::none(),
       py::arg("floor"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element under consideration.
@@ -14725,9 +14713,7 @@ floor :
       &python_ele_has_constant_ds_dt_ref,
       py::arg("ele"),
       py::arg("is_const"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element.
@@ -14752,9 +14738,7 @@ is_const :
       "ele_has_nonzero_kick",
       &python_ele_has_nonzero_kick,
       py::arg("has_kick"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element with no kicks.
@@ -14782,9 +14766,7 @@ has_kick :
       &python_ele_has_nonzero_offset,
       py::arg("ele"),
       py::arg("has_offset"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : 
 has_offset : 
@@ -14809,8 +14791,9 @@ has_offset :
       &Bmad::ele_is_monitor,
       py::arg("ele"),
       py::arg("print_warning") = py::none(),
-      R"""(Routine to check that an element is either a detector, instrument, monitor, or marker.
+      R"""(Function ele_is_monitor (ele, print_warning) result (is_monitor)
 
+Routine to check that an element is either a detector, instrument, monitor, or marker.
 These are the elements where measurement errors can be defined.
 
 Parameters
@@ -14830,9 +14813,7 @@ is_monitor : bool
       &Bmad::ele_loc,
       py::arg("ele"),
       py::arg("loc"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element to be identified
@@ -14845,9 +14826,7 @@ loc :
       py::arg("show_branch0") = py::none(),
       py::arg("parens") = py::none(),
       py::arg("str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element in a lattice
@@ -14873,9 +14852,7 @@ str :
       "ele_misalignment_l_s_calc",
       &Bmad::ele_misalignment_l_s_calc,
       py::arg("ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : float
     Element
@@ -14909,9 +14886,7 @@ S_mis : float
       &python_ele_nametable_index,
       py::arg("ele"),
       py::arg("ix_nt"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element in a lattice.
@@ -14935,9 +14910,7 @@ ix_nt :
       "ele_order_calc",
       &Bmad::ele_order_calc,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice to analyze.
@@ -14952,9 +14925,7 @@ order : LatEleOrderStruct
       py::arg("particle_at"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element being tracked through.
@@ -14978,9 +14949,7 @@ make_matrix : bool, optional
       py::arg("s_rel"),
       py::arg("ele"),
       py::arg("ix_step"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 E_ref : float
     Reference energy of step. If negative, ignore and use s_rel.
@@ -15005,9 +14974,15 @@ ix_step :
       "ele_to_ptc_magnetic_bn_an",
       &Bmad::ele_to_ptc_magnetic_bn_an,
       py::arg("ele"),
-      R"""(Routine to compute the a(n) and b(n) magnetic multipole components of a magnet.
+      R"""(Subroutine ele_to_ptc_magnetic_bn_an (ele, bn, an, n_max)
 
+Routine to compute the a(n) and b(n) magnetic multipole components of a magnet.
 This is used to interface between eles and PTC fibres
+
+Note: The multipole index uses the PTC convention of starting from 1 instead of zero.
+
+Note: On the PTC side bn(1) is error field when creating a fibre but
+is the total field when the fibre is being modified. This routine returns the error field.
 
 Parameters
 ----------
@@ -15052,9 +15027,7 @@ n_max : int
       py::arg("ele"),
       py::arg("param"),
       py::arg("orb0"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element.
@@ -15071,9 +15044,7 @@ orb0 : CoordStruct
       py::arg("orb0") = py::none(),
       py::arg("taylor_map_includes_offsets") = py::none(),
       py::arg("include_damping") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : ElementStruct
     Element to construct map for.
@@ -15109,9 +15080,7 @@ spin_taylor : TaylorStruct
       py::arg("ele"),
       py::arg("order"),
       py::arg("unique_name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element to construct a unique name for.
@@ -15139,9 +15108,7 @@ unique_name :
       py::arg("abs_tol"),
       py::arg("set_old"),
       py::arg("has_changed"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element under consideration.
@@ -15176,9 +15143,7 @@ has_changed :
       &Bmad::ele_vec_equal_ele_vec,
       py::arg("ele1"),
       py::arg("ele2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele1 : 
 ele2 : 
@@ -15190,9 +15155,7 @@ ele2 :
       py::arg("b"),
       py::arg("n"),
       py::arg("coord"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 a : float
     Multipole skew component.
@@ -15244,12 +15207,38 @@ compute_dE : bool
       py::arg("s"),
       py::arg("choose_max"),
       py::arg("print_err") = py::none(),
-      R"""(Function to return the index of the element at position s.
+      R"""(Function element_at_s (...) result (ix_ele)
 
-function element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_eff, position, print_err) result (ix_ele)
-function element_at_s_branch (branch, s, choose_max, err_flag, s_eff, position, print_err) result (ix_ele)
+Function to return the index of the element at position s.
+
+element_at_s is an overloaded name for:
+  function element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_eff, position, print_err) result (ix_ele)
+  function element_at_s_branch (branch, s, choose_max, err_flag, s_eff, position, print_err) result (ix_ele)
+
 The differnce between these two routine is that with element_at_s_lat, the branch is given by the lat
-and ix_ele arguments: branch = lat%branch(ix_ele). With element_at_s_branch, the branch is an argument.
+  and ix_ele arguments: branch = lat%branch(ix_ele). With element_at_s_branch, the branch is an argument.
+
+Also see: pointer_to_element_at_s
+
+ix_ele is choisen such that:
+If choose_max = True:
+    If s = branch%ele(ix_end_of_branch): ix_ele = ix_end_of_branch
+    Else: branch%ele(ix_ele)%s_start <= s < branch%ele(ix_ele)%s
+If choose_max = False:
+    If s = branch%ele(0)%s: ix_ele = 0
+    Else: branch%ele(ix_ele)%s_start < s <= branch%ele(ix_ele)%s
+That is, if s corresponds to an element boundary between elements with indexes ix1 and ix2 = ix1 + 1:
+    choose_max = True  => ix_ele = ix2
+    choose_max = False => ix_ele = ix1
+
+The setting of choose_max only makes a difference when s corresponds to an element boundary.
+
+Note: For a circular lattice, s is evaluated at the effective s which
+is modulo the branch length:
+    s_eff = s - branch_length * floor(s/branch_length)
+
+Note: If there are multiple elements that are at the given s position due to the presence of
+an element with a negative length, which of the possible elements is actually chosen is ill-defined.
 
 Parameters
 ----------
@@ -15324,12 +15313,38 @@ Overloaded versions:
       py::arg("choose_max"),
       py::arg("ix_branch") = py::none(),
       py::arg("print_err") = py::none(),
-      R"""(Function to return the index of the element at position s.
+      R"""(Function element_at_s (...) result (ix_ele)
 
-function element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_eff, position, print_err) result (ix_ele)
-function element_at_s_branch (branch, s, choose_max, err_flag, s_eff, position, print_err) result (ix_ele)
+Function to return the index of the element at position s.
+
+element_at_s is an overloaded name for:
+  function element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_eff, position, print_err) result (ix_ele)
+  function element_at_s_branch (branch, s, choose_max, err_flag, s_eff, position, print_err) result (ix_ele)
+
 The differnce between these two routine is that with element_at_s_lat, the branch is given by the lat
-and ix_ele arguments: branch = lat%branch(ix_ele). With element_at_s_branch, the branch is an argument.
+  and ix_ele arguments: branch = lat%branch(ix_ele). With element_at_s_branch, the branch is an argument.
+
+Also see: pointer_to_element_at_s
+
+ix_ele is choisen such that:
+If choose_max = True:
+    If s = branch%ele(ix_end_of_branch): ix_ele = ix_end_of_branch
+    Else: branch%ele(ix_ele)%s_start <= s < branch%ele(ix_ele)%s
+If choose_max = False:
+    If s = branch%ele(0)%s: ix_ele = 0
+    Else: branch%ele(ix_ele)%s_start < s <= branch%ele(ix_ele)%s
+That is, if s corresponds to an element boundary between elements with indexes ix1 and ix2 = ix1 + 1:
+    choose_max = True  => ix_ele = ix2
+    choose_max = False => ix_ele = ix1
+
+The setting of choose_max only makes a difference when s corresponds to an element boundary.
+
+Note: For a circular lattice, s is evaluated at the effective s which
+is modulo the branch length:
+    s_eff = s - branch_length * floor(s/branch_length)
+
+Note: If there are multiple elements that are at the given s position due to the presence of
+an element with a negative length, which of the possible elements is actually chosen is ill-defined.
 
 Parameters
 ----------
@@ -15400,9 +15415,7 @@ Overloaded versions:
       py::arg("sliced_ele"),
       py::arg("s_start") = py::none(),
       py::arg("s_end") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element to slice and dice.
@@ -15418,12 +15431,7 @@ s_start : float, optional
 s_end : float, optional
     Ending edge of slice relative to beginning of element.
 )""");
-  m.def(
-      "ellipinc_test",
-      &Bmad::ellipinc_test,
-      R"""(No docstring available
-
-)""");
+  m.def("ellipinc_test", &Bmad::ellipinc_test, R"""()""");
   m.def(
       "em_field_calc",
       &Bmad::em_field_calc,
@@ -15440,9 +15448,7 @@ s_end : float, optional
       py::arg("used_eles") = py::none(),
       py::arg("print_err") = py::none(),
       py::arg("original_ele") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element.
@@ -15510,24 +15516,26 @@ original_ele : EleStruct, optional
       py::arg("local_ref_frame"),
       py::arg("grid_allow_s_out_of_bounds") = py::none(),
       py::arg("rf_time") = py::none(),
-      R"""(Routine to calculate field derivatives.
+      R"""(Subroutine em_field_derivatives (ele, param, s_pos, orbit, local_ref_frame, dfield, grid_allow_s_out_of_bounds, rf_time)
 
+Routine to calculate field derivatives.
 In theory this should be handled by em_filed_calc. In practice, em_field_calc is currently incomplete.
+
 Input
-ele             -- Ele_struct: Element
-param           -- lat_param_struct: Lattice parameters.
-s_pos           -- Real(rp): Longitudinal position relative to the upstream edge of the element.
-time            -- Real(rp): Particle time.
-For absolute time tracking this is the absolute time.
-For relative time tracking this is relative to the reference particle entering the element.
-orbit           -- Coord_struct: Transverse coordinates.
-%vec(1), %vec(3)  -- Transverse coords. These are the only components used in the calculation.
-local_ref_frame     -- Logical, If True then take the input coordinates and output fields
-as being with respect to the frame of referene of the element (ignore misalignments).
-grid_allow_s_out_of_bounds
--- logical, optional: For grids, allow s-coordinate to be grossly out of bounds
-and return zero instead of an error? Default: False. Used internally for overlapping fields.
-rf_time          -- real(rp), optional: RF clock time. If not present then the time will be calculated using the standard algorithm.
+  ele             -- Ele_struct: Element
+  param           -- lat_param_struct: Lattice parameters.
+  s_pos           -- Real(rp): Longitudinal position relative to the upstream edge of the element.
+  time            -- Real(rp): Particle time.
+                      For absolute time tracking this is the absolute time.
+                      For relative time tracking this is relative to the reference particle entering the element.
+  orbit           -- Coord_struct: Transverse coordinates.
+    %vec(1), %vec(3)  -- Transverse coords. These are the only components used in the calculation.
+  local_ref_frame     -- Logical, If True then take the input coordinates and output fields
+                                  as being with respect to the frame of referene of the element (ignore misalignments).
+  grid_allow_s_out_of_bounds
+                   -- logical, optional: For grids, allow s-coordinate to be grossly out of bounds
+                        and return zero instead of an error? Default: False. Used internally for overlapping fields.
+  rf_time          -- real(rp), optional: RF clock time. If not present then the time will be calculated using the standard algorithm.
 
 
 Returns
@@ -15574,7 +15582,9 @@ dfield : EmFieldStruct
       py::arg("err_flag"),
       py::arg("print_err") = py::none(),
       py::arg("extra_field") = py::none(),
-      R"""(Subroutine to convert particle coordinates from t-based to s-based system.
+      R"""(Subroutine em_field_kick_vector_time (ele, param, rf_time, orbit, dvec_dt, err_flag, print_err, extra_field))
+
+Subroutine to convert particle coordinates from t-based to s-based system.
 
 Parameters
 ----------
@@ -15604,9 +15614,7 @@ dvec_dt : float
       py::arg("field1"),
       py::arg("field2"),
       py::arg("field_tot"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 field1 : 
 field2 : 
@@ -15617,9 +15625,7 @@ field_tot :
       &Bmad::em_taylor_equal_em_taylor,
       py::arg("em_taylor1"),
       py::arg("em_taylor2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 em_taylor1 : 
 em_taylor2 : 
@@ -15629,9 +15635,7 @@ em_taylor2 :
       &Bmad::em_taylors_equal_em_taylors,
       py::arg("em_taylor1"),
       py::arg("em_taylor2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 em_taylor1 : 
 em_taylor2 : 
@@ -15642,10 +15646,12 @@ em_taylor2 :
       py::arg("ele_ref"),
       py::arg("include_opening_angle"),
       py::arg("closed_orbit") = py::none(),
-      R"""(Routine to calculate the three normal mode emittances, damping partition numbers, radiation integrals, etc.
+      R"""(Subroutine emit_6d (ele_ref, include_opening_angle, mode, sigma_mat, closed_orbit, rad_int_by_ele)
 
+Routine to calculate the three normal mode emittances, damping partition numbers, radiation integrals, etc.
 Since the emattances, etc. are only an invariant in the limit of zero damping, the calculated
 values will vary depending upon the reference element.
+
 If the lattice geometry is open, only the radiation integrals is computed.
 
 Parameters
@@ -15689,7 +15695,9 @@ rad_int_by_ele : RadIntAllEleStruct
       &SimUtils::end_akima_spline_calc,
       py::arg("spline"),
       py::arg("which_end"),
-      R"""(Routine to calculate the slopes at the ends of a spline array
+      R"""(Subroutine end_akima_spline_calc (spline, which_end)
+
+Routine to calculate the slopes at the ends of a spline array
 
 Parameters
 ----------
@@ -15706,9 +15714,7 @@ which_end : int
       py::arg("orbit"),
       py::arg("particle_at"),
       py::arg("is_entering"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Particle orbit.
@@ -15735,13 +15741,15 @@ is_entering :
       py::arg("Iota"),
       py::arg("alpha"),
       py::arg("emit"),
-      R"""(Calculates damping decrement and emittance of the three
+      R"""(subroutine envelope_radints(Lambda,Theta,Iota,alpha,emit)
 
+Calculates damping decrement and emittance of the three
 normal modes from the integrate diffusion, damping, and vertical
 excitation matrices names Lambda, Theta, and Iota, respectively.
 These three matrices are obtained from the subroutine integrated_mats.
+
 The damping times can obtained from alpha using:
-tau = lattice_length/c_light/alpha
+   tau = lattice_length/c_light/alpha
 
 )""");
   m.def(
@@ -15755,15 +15763,20 @@ tau = lattice_length/c_light/alpha
       py::arg("tail_cut"),
       py::arg("npart"),
       py::arg("species"),
-      R"""(Calculates damping decrement and emittance of the three
+      R"""(subroutine envelope_radints_ibs(Lambda, Theta, Iota, eles, alpha, emit, mode, tail_cut, npart, species)
 
+Calculates damping decrement and emittance of the three
 normal modes by integrating the IBS, SR diffusion, and SR damping matrices.
+
 The IBS depends on the envelope, and so this routine iterates to
 locate the equilibrium beam envelope. This iterative process can fail to converge.
+
 The damping times can obtained from alpha using:
-tau = lattice_length/c_light/alpha
+   tau = lattice_length/c_light/alpha
+
 alpha and emit are quantities for the three normal modes.
 alpha and emit are ordered by plane dominance.
+
 Only radiation from sbends and rbends is taken into account.
 The one-turn transfer matrix at each element (slice) is obtained
 by concatenating the individual element transfer matrices.
@@ -15823,9 +15836,7 @@ emit : float
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -15848,9 +15859,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -15873,9 +15882,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -15898,9 +15905,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -15923,9 +15928,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -15948,9 +15951,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -15973,9 +15974,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -15998,9 +15997,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16023,9 +16020,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16048,9 +16043,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16073,9 +16066,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16102,9 +16093,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16131,9 +16120,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16156,9 +16143,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16181,9 +16166,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16206,9 +16189,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16231,9 +16212,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16260,9 +16239,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16289,9 +16266,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16314,9 +16289,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16343,9 +16316,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16368,9 +16339,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16393,9 +16362,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16418,9 +16385,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16443,9 +16408,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16468,9 +16431,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16493,9 +16454,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16518,9 +16477,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16547,9 +16504,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16576,9 +16531,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16601,9 +16554,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16629,9 +16580,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16654,9 +16603,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16679,9 +16626,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16704,9 +16649,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16729,9 +16672,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16754,9 +16695,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16779,9 +16718,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16804,9 +16741,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16829,9 +16764,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16854,9 +16787,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16879,9 +16810,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16904,9 +16833,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16935,9 +16862,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16960,9 +16885,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -16985,9 +16908,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17010,9 +16931,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17035,9 +16954,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17060,9 +16977,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17088,9 +17003,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17113,9 +17026,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17138,9 +17049,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17163,9 +17072,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17188,9 +17095,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17213,9 +17118,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17244,9 +17147,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17273,9 +17174,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17298,9 +17197,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17323,9 +17220,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17348,9 +17243,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17373,9 +17266,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17398,9 +17289,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17423,9 +17312,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17448,9 +17335,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17473,9 +17358,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17498,9 +17381,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17523,9 +17404,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17552,9 +17431,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17577,9 +17454,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17602,9 +17477,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17627,9 +17500,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17656,9 +17527,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17685,9 +17554,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17716,9 +17583,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17745,9 +17610,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17774,9 +17637,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17803,9 +17664,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17832,9 +17691,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17857,9 +17714,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17882,9 +17737,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17907,9 +17760,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17932,9 +17783,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17957,9 +17806,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -17982,9 +17829,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -18007,9 +17852,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -18032,9 +17875,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -18057,9 +17898,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -18082,9 +17921,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -18107,9 +17944,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -18132,9 +17967,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -18157,9 +17990,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -18182,9 +18013,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -18207,9 +18036,7 @@ is_eq :
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 f1 : 
 f2 : 
@@ -18232,9 +18059,7 @@ is_eq :
       py::arg("ele"),
       py::arg("delim"),
       py::arg("is_here"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : 
 delim : 
@@ -18260,9 +18085,7 @@ is_here :
       py::arg("ele_taylor"),
       py::arg("ele2"),
       py::arg("equiv"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele_taylor : EleStruct
     Element with a Taylor map
@@ -18291,9 +18114,7 @@ equiv :
       "err_exit",
       &python_err_exit,
       py::arg("err_str") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 err_str : 
 )""");
@@ -18317,9 +18138,7 @@ err_str :
       py::arg("D"),
       py::arg("E"),
       py::arg("F"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 A : 
 B : 
@@ -18359,10 +18178,11 @@ F :
       &Bmad::evaluate_array_index,
       py::arg("delim_list1"),
       py::arg("delim_list2"),
-      R"""(Function of evaluate the index of an array. Typically the text being parsed looks like:
+      R"""(Function evaluate_array_index (err_flag, delim_list1, word2, delim_list2, delim2) result (this_index)
 
-"5) = ..."         or
-"6).COMP = ..."
+Function of evaluate the index of an array. Typically the text being parsed looks like:
+     "5) = ..."         or
+     "6).COMP = ..."
 
 Parameters
 ----------
@@ -18412,12 +18232,13 @@ this_index : int
       "evaluate_logical",
       &Bmad::evaluate_logical,
       py::arg("word"),
-      R"""(Function of convert a string into a logical value.
+      R"""(Function evaluate_logical (word, iostat) result (this_logic)
 
+Function of convert a string into a logical value.
 Accepted possibilities are:
-.TRUE.  .FALSE.
-TRUE    FALSE
-T       F
+  .TRUE.  .FALSE.
+   TRUE    FALSE
+   T       F
 
 Parameters
 ----------
@@ -18456,8 +18277,9 @@ iostat : int
       py::arg("orb"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(Subroutine to track through the edge field of an sbend.
+      R"""(Subroutine exact_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix)
 
+Subroutine to track through the edge field of an sbend.
 Uses routines adapted from PTC
 
 Parameters
@@ -18482,7 +18304,9 @@ make_matrix : float, optional
       py::arg("t"),
       py::arg("B1"),
       py::arg("B2"),
-      R"""(This is essentially the Numercal Recipes bessi0 function multiplied by exp(-B1*t).
+      R"""(Function exp_bessi0(t, B1, B2)
+
+This is essentially the Numercal Recipes bessi0 function multiplied by exp(-B1*t).
 
 This overcomes an issue where exp(B2*t) may be huge and exp(-B1*t) may be small.
 Evaluating exp(B2*t) may result in overflow, but exp((B2-B1)*t) has a moderate value.
@@ -18506,10 +18330,13 @@ B2 : float
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("is_ok"),
-      R"""(Routine to check either that the current delimitor or the next character in the parse stream is the
+      R"""(Function expect_one_of (delim_list, check_input_delim, ele_name, delim, delim_found) result (is_ok)
 
+Routine to check either that the current delimitor or the next character in the parse stream is the
 expected delimitor.
 This routine is used for Bmad lattice file parsing and is not meant for general use.
+
+Also see: expect_this
 
 Parameters
 ----------
@@ -18561,10 +18388,13 @@ expect_this
       py::arg("call_check"),
       py::arg("err_str"),
       py::arg("ele"),
-      R"""(Checks that the next character or characters in the parse stream corresponds to the
+      R"""(Function expect_this (expecting, check_delim, call_check, err_str, ele, delim, delim_found) result (is_ok)
 
+Checks that the next character or characters in the parse stream corresponds to the
 characters in the expecting argument. For example, if expecting is ')={' these three characters
 should be the next non-blank characters in the parse stream.
+
+Also see: expect_one_of
 
 Parameters
 ----------
@@ -18614,7 +18444,9 @@ expect_one_of
       &Bmad::expression_stack_to_string,
       py::arg("stack"),
       py::arg("polish") = py::none(),
-      R"""(Routine to convert an expression stack to a string
+      R"""(Function expression_stack_to_string (stack, polish) result (str)
+
+Routine to convert an expression stack to a string
 
 Parameters
 ----------
@@ -18634,9 +18466,13 @@ str : unknown
       py::arg("stack"),
       py::arg("var") = py::none(),
       py::arg("use_old") = py::none(),
-      R"""(Routine to evaluate a mathematical expression represented by an "expression stack".
+      R"""(Function expression_stack_value (stack, err_flag, err_str, var, use_old) result (value)
 
+Routine to evaluate a mathematical expression represented by an "expression stack".
 Expression stacks are created by expression_string_to_stack.
+
+Note: Stack elements with stack(i)%type == variable$ need to be evalauated before
+calling this routine and the value placed in stack(i)%value.
 
 Parameters
 ----------
@@ -18688,10 +18524,13 @@ expression_value expression_string_to_stack
       "expression_string_to_stack",
       &Bmad::expression_string_to_stack,
       py::arg("string"),
-      R"""(This routine creates an expression stack array which can be used
+      R"""(Subroutine expression_string_to_stack (string, stack, n_stack, err_flag, err_str)
 
+This routine creates an expression stack array which can be used
 to evaluate an arithmethic expression.
+
 Stack end elements not used are marked stack(i)%type = end_stack$
+
 Stack elements with stack(i)%type = variable$ are elements that need
 to be evaluated before calling expression_stack_value.
 
@@ -18747,8 +18586,9 @@ expression_value expression_stack_value
       &Bmad::expression_string_to_tree,
       py::arg("string"),
       py::arg("root_tree"),
-      R"""(Routine to create an expression tree array which can be used
+      R"""(Subroutine expression_string_to_tree (string, root_tree, err_flag, err_str)
 
+Routine to create an expression tree array which can be used
 to evaluate an arithmethic expression.
 
 Parameters
@@ -18814,7 +18654,9 @@ construct "mass_of(He++)" will not get split will get marked as a species_const$
       py::arg("include_root") = py::none(),
       py::arg("n_node") = py::none(),
       py::arg("parent") = py::none(),
-      R"""(Routine to convert an expression tree to a expression string.
+      R"""(Function expression_tree_to_string (tree, include_root, n_node, parent) result(str_out)
+
+Routine to convert an expression tree to a expression string.
 
 Parameters
 ----------
@@ -18839,7 +18681,9 @@ str_out : unknown
       py::arg("expression"),
       py::arg("var") = py::none(),
       py::arg("use_old") = py::none(),
-      R"""(Routine to evaluate a mathematical expression encoded in a string.
+      R"""(Function expression_value (expression, err_flag, err_str, var, use_old) result (value)
+
+Routine to evaluate a mathematical expression encoded in a string.
 
 Parameters
 ----------
@@ -18888,9 +18732,7 @@ expression_string_to_stack expression_stack_value
       &python_factorial,
       py::arg("n"),
       py::arg("fact"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 n : 
 fact : 
@@ -18915,9 +18757,7 @@ fact :
       py::arg("z"),
       py::arg("w"),
       py::arg("dw"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 z : 
 w : 
@@ -18930,9 +18770,7 @@ dw :
       py::arg("b"),
       py::arg("n"),
       py::arg("isn"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 a : 
 b : 
@@ -18945,10 +18783,11 @@ ierr :
       &SimUtils::fft_1d,
       py::arg("arr"),
       py::arg("isign"),
-      R"""(implicit none
-
-character(*) line
-logical error
+      R"""(no longer exists
+subroutine fff_sub(line, error)
+  implicit none
+  character(*) line
+  logical error
 end subroutine
 
 Parameters
@@ -18964,10 +18803,13 @@ isign : int
       &Bmad::field_attribute_free,
       py::arg("ele"),
       py::arg("attrib_name"),
-      R"""(Routine to check if a field attribute is free to vary.
+      R"""(Function field_attribute_free (ele, attrib_name) result (free)
+
+Routine to check if a field attribute is free to vary.
 
 Field attributes are either normalized (EG K2 of a sextupole) or unnormalized (EG B2_GRADIENT of a sextupole).
 Whether normalized or unnormalized attributes are free to vary will depend on the setting  of ele%field_master.
+
 Generally, this routine should not be called directly. Use the routine attribute_free instead.
 
 Parameters
@@ -18989,9 +18831,7 @@ free : bool
       py::arg("out_file"),
       py::arg("directory"),
       py::arg("add_switch"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 in_file : 
 out_file : 
@@ -19024,9 +18864,7 @@ add_switch :
       py::arg("string"),
       py::arg("dflt_file_name"),
       py::arg("file_name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 string : 
 dflt_file_name : 
@@ -19057,9 +18895,7 @@ file_name :
       py::arg("file_name"),
       py::arg("file_unit"),
       py::arg("readonly"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 string : 
 dflt_file_name : 
@@ -19097,9 +18933,7 @@ readonly :
       py::arg("out_file_name"),
       py::arg("suffix"),
       py::arg("add_switch"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 in_file_name : 
 out_file_name : 
@@ -19131,7 +18965,9 @@ add_switch :
       &Bmad::finalize_reflectivity_table,
       py::arg("table"),
       py::arg("in_degrees"),
-      R"""(Routine to finalize the construction of the reflectivity tables for a surface.
+      R"""(Subroutine finalize_reflectivity_table (table, in_degrees)
+
+Routine to finalize the construction of the reflectivity tables for a surface.
 
 Parameters
 ----------
@@ -19146,9 +18982,7 @@ in_degrees : bool
       &Bmad::find_element_ends,
       py::arg("ele"),
       py::arg("ix_multipass") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element to find the ends for.
@@ -19183,14 +19017,16 @@ ix_multipass : int, optional
       &Bmad::find_fwhm,
       py::arg("bound"),
       py::arg("args"),
-      R"""(Finds the full width at half max of psi(t).  fwhm * c_light / TwoRtTwoLnTwo is taken as the bunch length.
+      R"""(Subroutine find_fwhm(bound,args,fwhm)
+
+Finds the full width at half max of psi(t).  fwhm * c_light / TwoRtTwoLnTwo is taken as the bunch length.
 
 Steps followed:
-Find value for p(0) that normalizes the solution to dpsi/dt.
-Find max value of p(t) for the value of p(0) found in the previous step.
-Find find tlower, tlower < 0, such that p(tlower) = pmax/2.
-Find find tupper, tupper > 0, such that p(tupper) = pmax/2.
-fwhm is tupper-tlower
+  Find value for p(0) that normalizes the solution to dpsi/dt.
+  Find max value of p(t) for the value of p(0) found in the previous step.
+  Find find tlower, tlower < 0, such that p(tlower) = pmax/2.
+  Find find tupper, tupper > 0, such that p(tupper) = pmax/2.
+  fwhm is tupper-tlower
 
 Parameters
 ----------
@@ -19210,9 +19046,7 @@ fwhm : float
       py::arg("arr"),
       py::arg("value"),
       py::arg("ix_match"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 arr : 
 value : 
@@ -19238,9 +19072,7 @@ ix_match :
       py::arg("arr"),
       py::arg("value"),
       py::arg("ix_match"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 arr : 
 value : 
@@ -19269,9 +19101,7 @@ ix_match :
       py::arg("arr"),
       py::arg("value"),
       py::arg("ix_match"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 arr : 
     real(rp), logical, or integer
@@ -19297,9 +19127,7 @@ ix_match :
       py::arg("ele"),
       py::arg("fm_type"),
       py::arg("ignore_slaves") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 file_name : unknown
     File name associated with field to match to.
@@ -19341,8 +19169,9 @@ ignore_slaves : bool, optional
       py::arg("bound"),
       py::arg("p0"),
       py::arg("args"),
-      R"""(Finds value for boundary condition psi(0) that results in integral
+      R"""(Subroutine find_normalization(bound,p0,args,pnrml)
 
+Finds value for boundary condition psi(0) that results in integral
 of psi(t) from -bound to +bound to be 1.0.  This is done with the secant method.
 Repeadedly calls integrate_psi with different values for psi(0).
 
@@ -19364,8 +19193,9 @@ pnrml : float
       "fine_frequency_estimate",
       &SimUtils::fine_frequency_estimate,
       py::arg("data"),
-      R"""(Uses Laskar's method to accurately find the most dominant frequency
+      R"""(Function fine_frequency_estimate(data) result(frequency)
 
+Uses Laskar's method to accurately find the most dominant frequency
 A coarse estimate is first made by FFT.
 
 Parameters
@@ -19384,12 +19214,14 @@ frequency : float
       py::arg("ynew"),
       py::arg("id"),
       py::arg("z"),
-      R"""(Main function of the windowLS modult.  Each call to this function adds a data point to the fit
+      R"""(Function fixedWindowLS
 
+Main function of the windowLS modult.  Each call to this function adds a data point to the fit
 and returns the derivative evaluated at the end of the window.  It is assumed that all data points
 are separeted by the same interval.
 This module is initialized with zeros for all data points, and so the results are unreliable until
 a number of data points equal to N has been entered.
+
 initFixedWindowLS must be called prior to calling this function.  destFixedWindowLS should be
 called when the instance is no longer needed.
 
@@ -19411,9 +19243,7 @@ called when the instance is no longer needed.
       py::arg("theta"),
       py::arg("phi"),
       py::arg("psi"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 theta : float
     Azimuth angle.
@@ -19449,9 +19279,7 @@ w_mat_inv : float
       &Bmad::floor_w_mat_to_angles,
       py::arg("w_mat"),
       py::arg("floor0") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 w_mat : float
     Orientation matrix.
@@ -19491,9 +19319,10 @@ floor0 : FloorPositionStruct, optional
       &Bmad::form_complex_taylor,
       py::arg("re_taylor"),
       py::arg("im_taylor"),
-      R"""(Subroutine to form a complex taylor from two taylor series representing
+      R"""(Subroutine form_complex_taylor (re_taylor, im_taylor, complex_taylor)
 
-the real and imaginary parts
+Subroutine to form a complex taylor from two taylor series representing
+  the real and imaginary parts
 
 Parameters
 ----------
@@ -19512,12 +19341,14 @@ complex_taylor : ComplexTaylorStruct
       &Bmad::form_digested_bmad_file_name,
       py::arg("lat_file"),
       py::arg("use_line") = py::none(),
-      R"""(Subroutine to form the standard name of the Bmad digested file.
+      R"""(Subroutine form_digested_bmad_file_name (lat_file, digested_file, full_lat_file, use_line)
 
+Subroutine to form the standard name of the Bmad digested file.
 The standard digested file name has the suffix added to the file name:
-suffix = '.digested' + bmad_inc_version$
+    suffix = '.digested' + bmad_inc_version$
 Exception: If the use_line argument is present and not blank, the suffix will be:
-suffix = '.' + use_line + '.digested' + bmad_inc_version$
+    suffix = '.' + use_line + '.digested' + bmad_inc_version$
+
 
 Parameters
 ----------
@@ -19561,11 +19392,12 @@ full_lat_file : unknown
       &SimUtils::fourier_amplitude,
       py::arg("data"),
       py::arg("frequency"),
-      R"""(Computes cos_amp = (1/N) * sum_n=0^{N-1} data(n-1) cos(twopi*frequency*n)
+      R"""(Subroutine fourier_amplitude(data, frequency, cos_amp, sin_amp, dcos_amp, dsin_amp)
 
-and  sin_amp = (1/N) * sum_n=0^{N-1} data(n-1) sin(twopi*frequency*n)
-and optionally dcos_amp = d/dfrequency cos_amp
-dsin_amp = d/dfrequency sin_amp
+Computes cos_amp = (1/N) * sum_n=0^{N-1} data(n-1) cos(twopi*frequency*n)
+    and  sin_amp = (1/N) * sum_n=0^{N-1} data(n-1) sin(twopi*frequency*n)
+    and optionally dcos_amp = d/dfrequency cos_amp
+                   dsin_amp = d/dfrequency sin_amp
 
 Parameters
 ----------
@@ -19616,9 +19448,7 @@ dsin_amp : float
       py::arg("orbit"),
       py::arg("particle_at"),
       py::arg("is_here"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element.
@@ -19645,8 +19475,9 @@ is_here :
       py::arg("b"),
       py::arg("e"),
       py::arg("orbit"),
-      R"""(Routine to calculate the bending strength (1/bending_radius) for a given particle for a given field.
+      R"""(Function g_bend_from_em_field (B, E, orbit) result (g_bend)
 
+Routine to calculate the bending strength (1/bending_radius) for a given particle for a given field.
 This will include the dipole bending field of an sbend.
 
 Parameters
@@ -19671,9 +19502,7 @@ g_bend : float
       py::arg("s_rel"),
       py::arg("orbit"),
       py::arg("local_ref_frame"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element being tracked thorugh.
@@ -19716,9 +19545,7 @@ dg : float
       "g_integrals_calc",
       &Bmad::g_integrals_calc,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice to integrate through.
@@ -19728,9 +19555,7 @@ lat : LatStruct
       &python_gamma_ref,
       py::arg("ele"),
       py::arg("gamma"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element to evaluate at.
@@ -19756,9 +19581,7 @@ gamma :
       py::arg("s"),
       py::arg("err_tol") = py::none(),
       py::arg("value"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 kc : 
 p : 
@@ -19803,9 +19626,7 @@ value :
       py::arg("ele"),
       py::arg("gen_grad"),
       py::arg("iz"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : unknown
     Element containing the map.
@@ -19822,9 +19643,7 @@ em_taylor : EmTaylorStruct
       py::arg("ele"),
       py::arg("gen_grad"),
       py::arg("s_pos"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : unknown
     Element containing the map.
@@ -19843,9 +19662,7 @@ em_taylor : EmTaylorStruct
       py::arg("rho"),
       py::arg("theta"),
       py::arg("field"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 deriv : 
 gg : 
@@ -19872,8 +19689,9 @@ field :
       &Bmad::get_bl_from_fwhm,
       py::arg("bound"),
       py::arg("args"),
-      R"""(Calculate bunch length as fwhm * c_light / TwoRtTwoLnTwo.
+      R"""(Subroutine get_bl_from_fwhm(bound,args,sigma)
 
+Calculate bunch length as fwhm * c_light / TwoRtTwoLnTwo.
 Where fwhm is full width at half max of solution to dpsi/dt.
 
 Parameters
@@ -19894,9 +19712,7 @@ sigma : float
       py::arg("delim"),
       py::arg("call_file"),
       py::arg("err"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 delim : 
 call_file : 
@@ -19924,20 +19740,24 @@ err :
       &Bmad::get_emit_from_sigma_mat,
       py::arg("sigma_mat"),
       py::arg("Nmat") = py::none(),
-      R"""(Given a beam envelop sigma matrix sigma_mat, this returns the 3 normal mode
+      R"""(Subroutine get_emit_from_sigma_mat(sigma_mat, normal, Nmat, err_flag)
 
+Given a beam envelop sigma matrix sigma_mat, this returns the 3 normal mode
 emittances.
+
 The normal mode emittance of the sigma matrix are the eigenvalues of
 sigma_mat . S
+
 If Nmat is present, then the modes are ordered such that the eigensystem most
 closely resembles Nmat.  If Nmat is not present, then the modes are ordered
 according to which plane they dominate.
-/ 0  1  0  0  0  0 \
-|-1  0  0  0  0  0 |
+
+    / 0  1  0  0  0  0 \
+    |-1  0  0  0  0  0 |
 S = | 0  0  0  1  0  0 |
-| 0  0 -1  0  0  0 |
-| 0  0  0  0  0  1 |
-\ 0  0  0  0 -1  0 /
+    | 0  0 -1  0  0  0 |
+    | 0  0  0  0  0  1 |
+    \ 0  0  0  0 -1  0 /
 
 Parameters
 ----------
@@ -19980,9 +19800,7 @@ err_flag : bool
       py::arg("cnum_in"),
       py::arg("num_out"),
       py::arg("err_flag"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 file_name : 
 cnum_in : 
@@ -20014,11 +19832,12 @@ err_flag :
       &python_get_file_time_stamp,
       py::arg("file"),
       py::arg("time_stamp"),
-      R"""(implicit none
-
-character(*) filein
-character(*) cnum
-integer digits
+      R"""(no longer exists
+subroutine get_next_number (filein, cnum, digits)
+  implicit none
+  character(*) filein
+  character(*) cnum
+  integer digits
 end subroutine
 
 )""");
@@ -20047,8 +19866,9 @@ end subroutine
       py::arg("upper_case_word") = py::none(),
       py::arg("call_check") = py::none(),
       py::arg("err_flag") = py::none(),
-      R"""(Subroutine to get the next word from the input stream.
+      R"""(Subroutine get_next_word (word, ix_word, delim_list, delim, delim_found, upper_case_word, call_check, err_flag)
 
+Subroutine to get the next word from the input stream.
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
 
@@ -20075,9 +19895,7 @@ err_flag : bool, optional
       "get_slave_list",
       &Bmad::get_slave_list,
       py::arg("lord"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lord : EleStruct
     The lord element.
@@ -20107,9 +19925,7 @@ n_slave : int
       py::arg("dimensions"),
       py::arg("field_scale"),
       py::arg("ref_time"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : 
 dimensions : 
@@ -20143,9 +19959,7 @@ ref_time :
       py::arg("pt0"),
       py::arg("ele"),
       py::arg("field_value"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 pt0 : 
 ele : 
@@ -20171,7 +19985,10 @@ field_value :
       &Bmad::gpt_to_particle_bunch,
       py::arg("gpt_file"),
       py::arg("ele"),
-      R"""(Routine to initialize a bunch of particles from a GPT screen file.
+      R"""(Subroutine gpt_to_particle_bunch (gpt_file, ele, bunch, err_flag)
+
+Routine to initialize a bunch of particles from a GPT screen file.
+
 
 Parameters
 ----------
@@ -20213,9 +20030,7 @@ err_flag : bool
       py::arg("ele"),
       py::arg("param"),
       py::arg("grad_shift"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lcavity element.
@@ -20250,7 +20065,8 @@ grad_shift :
       py::arg("x3") = py::none(),
       py::arg("allow_s_out_of_bounds") = py::none(),
       py::arg("print_err") = py::none(),
-      R"""(allow_s_out_of_bounds, print_err)
+      R"""(Subroutine grid_field_interpolate (ele, orbit, grid, field, err_flag, x1, x2, x3, &
+                                                             allow_s_out_of_bounds, print_err)
 
 Subroutine to interpolate the E and B fields on a rectilinear grid.
 
@@ -20286,9 +20102,7 @@ field : GridFieldPtStruct
       &python_hanhan,
       py::arg("N"),
       py::arg("hh"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 N : 
 hh : 
@@ -20313,11 +20127,14 @@ hh :
       py::arg("orbit"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(Routine to track through the hard edge field of a multipole.
+      R"""(Subroutine hard_multipole_edge_kick (ele, param, particle_at, orbit, mat6, make_matrix)
 
+Routine to track through the hard edge field of a multipole.
 The dipole component is ignored and only quadrupole and higher multipoles are included.
+
 This routine handles elements of type:
-sad_mult, sbend, quadrupole, sextupole
+  sad_mult, sbend, quadrupole, sextupole
+
 For sad_mult elements, ele%a_pole and ele%b_pole ae used for the multipole values.
 For the other elements, k1 or k2 is used and it is assumed that we are in the element
 frame of reference so tilt = 0.
@@ -20346,9 +20163,7 @@ make_matrix : float, optional
       py::arg("ele"),
       py::arg("attrib"),
       py::arg("has_it"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : 
 attrib : 
@@ -20372,7 +20187,9 @@ has_it :
       "has_curvature",
       &Bmad::has_curvature,
       py::arg("phot_ele"),
-      R"""(Routine to determine if a surface is potentially curved or is flat.
+      R"""(Function has_curvature (phot_ele) result (curved)
+
+Routine to determine if a surface is potentially curved or is flat.
 
 Parameters
 ----------
@@ -20388,7 +20205,10 @@ curved : bool
       "has_orientation_attributes",
       &Bmad::has_orientation_attributes,
       py::arg("ele"),
-      R"""(Routine to determine whether an element has orientation attributes like x_offset, etc.
+      R"""(Function has_orientation_attributes (ele) result (has_attribs)
+
+Routine to determine whether an element has orientation attributes like x_offset, etc.
+Also see: has_attribute function.
 
 Parameters
 ----------
@@ -20414,9 +20234,7 @@ has_attribute function.
       py::arg("error"),
       py::arg("lat") = py::none(),
       py::arg("alive_only") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 file_name : 
 bunches : 
@@ -20452,9 +20270,7 @@ alive_only :
       py::arg("ele"),
       py::arg("g_field"),
       py::arg("err_flag"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 file_name : 
 ele : 
@@ -20484,9 +20300,7 @@ err_flag :
       &python_hom_voltage,
       py::arg("lr_wake"),
       py::arg("voltage"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lr_wake : 
 voltage : 
@@ -20511,12 +20325,13 @@ voltage :
       py::arg("orb"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(Subroutine to track through the edge field of an sbend using a 2nd order map.
+      R"""(Subroutine hwang_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix)
 
+Subroutine to track through the edge field of an sbend using a 2nd order map.
 Adapted from:
-Hwang and S. Y. Lee,
-"Dipole Fringe Field Thin Map for Compact Synchrotrons",
-Phys. Rev. ST Accel. Beams, 12, 122401, (2015).
+  Hwang and S. Y. Lee,
+  "Dipole Fringe Field Thin Map for Compact Synchrotrons",
+  Phys. Rev. ST Accel. Beams, 12, 122401, (2015).
 See the Bmad manual for details.
 
 Parameters
@@ -20543,9 +20358,7 @@ make_matrix : float, optional
       py::arg("m"),
       py::arg("arg"),
       py::arg("i_bes"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 m : 
 arg : 
@@ -20574,9 +20387,7 @@ i_bes :
       py::arg("m"),
       py::arg("arg"),
       py::arg("i_bes"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 m : 
 arg : 
@@ -20609,9 +20420,7 @@ i_bes :
       py::arg("n_part"),
       py::arg("species"),
       py::arg("ibs_mat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 sigma_mat : 
 tail_cut : 
@@ -20655,9 +20464,7 @@ ibs_mat :
       py::arg("dy"),
       py::arg("dz"),
       py::arg("res"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 u : 
 v : 
@@ -20711,9 +20518,7 @@ res :
       py::arg("dy"),
       py::arg("dz"),
       py::arg("res"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 u : 
 v : 
@@ -20767,9 +20572,7 @@ res :
       py::arg("dy"),
       py::arg("dz"),
       py::arg("res"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 u : 
 v : 
@@ -20823,9 +20626,7 @@ res :
       py::arg("dy"),
       py::arg("dz"),
       py::arg("res"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 u : 
 v : 
@@ -20875,9 +20676,7 @@ res :
       py::arg("digits"),
       py::arg("number"),
       py::arg("cnumber"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 file_name : 
 digits : 
@@ -20914,9 +20713,7 @@ cnumber :
       py::arg("string1"),
       py::arg("string2"),
       py::arg("indx"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 string1 : 
 string2 : 
@@ -20947,7 +20744,9 @@ indx :
       py::arg("name"),
       py::arg("attrib_state") = py::none(),
       py::arg("override") = py::none(),
-      R"""(Routine to initialize a single name in the element attribute name table.
+      R"""(Subroutine init_attribute_name1 (ix_key, ix_attrib, name, attrib_state, override)
+
+Routine to initialize a single name in the element attribute name table.
 
 Parameters
 ----------
@@ -20967,8 +20766,9 @@ override : bool, optional
   m.def(
       "init_attribute_name_array",
       &Bmad::init_attribute_name_array,
-      R"""(Private routine to initialize the attribute name array used by routines
+      R"""(Subroutine init_attribute_name_array ()
 
+Private routine to initialize the attribute name array used by routines
 in attribute_mod. Not meant for general use.
 
 )""");
@@ -20981,10 +20781,23 @@ in attribute_mod. Not meant for general use.
       py::arg("modes") = py::none(),
       py::arg("print_p0c_shift_warning") = py::none(),
       py::arg("conserve_momentum") = py::none(),
-      R"""(print_p0c_shift_warning, conserve_momentum)
+      R"""(Subroutine init_beam_distribution (ele, param, beam_init, beam, err_flag, modes, beam_init_set,
+                                                                    print_p0c_shift_warning, conserve_momentum)
 
 Subroutine to initialize a beam of particles.
 Initialization uses the downstream parameters of ele.
+
+Note: This routine sets the random number generator according to the settings
+in beam_int and at the end resets things to their initial state.
+
+For more information on individual bunch initialization, see the
+init_bunch_distribution routine.
+
+Note: The optional "modes" argument generally is used to pass in normal mode parameters as
+calculated from the lattice. If present, and if a parameter like beam_init%a_emit are
+set negative, then the corresponding parameter in the modes structure is used.
+If not present, a warning message is issued and the parameter is set to zero.
+This is only used for parameters that cannot be negative.
 
 Parameters
 ----------
@@ -21036,19 +20849,12 @@ beam_init_set : BeamInitStruct
               return py::cast(s.conserve_momentum);
             throw py::index_error();
           });
-  m.def(
-      "init_bmad",
-      &Bmad::init_bmad,
-      R"""(No docstring available
-
-)""");
+  m.def("init_bmad", &Bmad::init_bmad, R"""()""");
   m.def(
       "init_bmad_parser_common",
       &Bmad::init_bmad_parser_common,
       py::arg("lat") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : 
 )""");
@@ -21062,18 +20868,37 @@ lat :
       py::arg("modes") = py::none(),
       py::arg("print_p0c_shift_warning") = py::none(),
       py::arg("conserve_momentum") = py::none(),
-      R"""(print_p0c_shift_warning, conserve_momentum)
+      R"""(Subroutine init_bunch_distribution (ele, param, beam_init, ix_bunch, bunch, err_flag, modes, beam_init_used,
+                                                                         print_p0c_shift_warning, conserve_momentum)
 
 Subroutine to initialize a distribution of particles of a bunch.
 Initialization uses the downstream parameters of ele.
+
 There are four distributions available:
-'', or 'ran_gauss' -- Random gaussian distribution.
-'ellipse'  -- concentric ellipses representing a Gaussian distribution
-'grid'     -- uniform rectangular grid
-'KV'       -- Kapchinsky-Vladimirsky distribution
+  '', or 'ran_gauss' -- Random gaussian distribution.
+  'ellipse'  -- concentric ellipses representing a Gaussian distribution
+  'grid'     -- uniform rectangular grid
+  'KV'       -- Kapchinsky-Vladimirsky distribution
 See the Bmad manual for more information.
+
 The distribution is matched to the Twiss parameters, centroid position, and Energy - z
 correlation as specified. Coupling in the element ele is incorporated into the distribution.
+
+Note: Except for the random number seed, the random number generator
+parameters used for this routine are set from the beam_init argument.
+That is, these parameters are independent of what is used everywhere else.
+
+Note: Make sure: |beam_init%dpz_dz| < mode%sigE_E / mode%sig_z
+
+Note: The optional "modes" argument generally is used to pass in normal mode parameters as
+calculated from the lattice. If present, and if a parameter like beam_init%a_emit are
+set negative, then the corresponding parameter in the modes structure is used.
+If not present, a warning message is issued and the parameter is set to zero.
+This is only used for parameters that cannot be negative.
+
+Note: To get good results, It is important to make sure that for
+circular rings that beam_init%center is the correct closed orbit.
+The closed orbit will shift if, for example, radiation damping is turned on.
 
 Parameters
 ----------
@@ -21134,8 +20959,9 @@ beam_init_used : BeamInitStruct
       py::arg("complex_taylor"),
       py::arg("n_term"),
       py::arg("save") = py::none(),
-      R"""(Subroutine to initialize a Bmad complex_taylor series (6 of these series make
+      R"""(Subroutine init_complex_taylor_series (complex_taylor, n_term, save)
 
+Subroutine to initialize a Bmad complex_taylor series (6 of these series make
 a complex_taylor map). Note: This routine does not zero the structure. The calling
 routine is responsible for setting all values.
 
@@ -21176,11 +21002,26 @@ save : bool, optional
       py::arg("spin") = py::none(),
       py::arg("s_pos") = py::none(),
       py::arg("random_on") = py::none(),
-      R"""(Routine to initialize a coord_struct.
+      R"""(Subroutine init_coord (...)
 
-Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+Routine to initialize a coord_struct.
+
+This routine is an overloaded name for:
+  Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+  Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+  Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+
+Note: Unless shift_vec6 is set to False, if ele is a beginning_ele (IE, the element at the beginning of the lattice),
+or e_gun, orb%vec(6) is shifted so that a particle with orb%vec(6) = 0 will end up with a value of orb%vec(6)
+corresponding to the beginning_ele's value of ele%value(p0c_start$).
+
+Note: For non-photons, if orb_in%vec(5) is set to real_garbage$, orb_in%t will be used to set orb%vec(5) instead
+of the standard which is to set orb%t from orb%vec(5).
+
+For photons:
+  orb%vec(5) is set depending upon where the photon is relative to the element.
+  If orb is a photon, and orb_in is not a photon, photon is launched in same direciton as particle
+      except if direction is set.
 
 Parameters
 ----------
@@ -21250,11 +21091,26 @@ Overloaded versions:
       py::arg("spin") = py::none(),
       py::arg("s_pos") = py::none(),
       py::arg("random_on") = py::none(),
-      R"""(Routine to initialize a coord_struct.
+      R"""(Subroutine init_coord (...)
 
-Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+Routine to initialize a coord_struct.
+
+This routine is an overloaded name for:
+  Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+  Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+  Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+
+Note: Unless shift_vec6 is set to False, if ele is a beginning_ele (IE, the element at the beginning of the lattice),
+or e_gun, orb%vec(6) is shifted so that a particle with orb%vec(6) = 0 will end up with a value of orb%vec(6)
+corresponding to the beginning_ele's value of ele%value(p0c_start$).
+
+Note: For non-photons, if orb_in%vec(5) is set to real_garbage$, orb_in%t will be used to set orb%vec(5) instead
+of the standard which is to set orb%t from orb%vec(5).
+
+For photons:
+  orb%vec(5) is set depending upon where the photon is relative to the element.
+  If orb is a photon, and orb_in is not a photon, photon is launched in same direciton as particle
+      except if direction is set.
 
 Parameters
 ----------
@@ -21323,11 +21179,26 @@ Overloaded versions:
       py::arg("t_offset") = py::none(),
       py::arg("shift_vec6") = py::none(),
       py::arg("spin") = py::none(),
-      R"""(Routine to initialize a coord_struct.
+      R"""(Subroutine init_coord (...)
 
-Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+Routine to initialize a coord_struct.
+
+This routine is an overloaded name for:
+  Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+  Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+  Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+
+Note: Unless shift_vec6 is set to False, if ele is a beginning_ele (IE, the element at the beginning of the lattice),
+or e_gun, orb%vec(6) is shifted so that a particle with orb%vec(6) = 0 will end up with a value of orb%vec(6)
+corresponding to the beginning_ele's value of ele%value(p0c_start$).
+
+Note: For non-photons, if orb_in%vec(5) is set to real_garbage$, orb_in%t will be used to set orb%vec(5) instead
+of the standard which is to set orb%t from orb%vec(5).
+
+For photons:
+  orb%vec(5) is set depending upon where the photon is relative to the element.
+  If orb is a photon, and orb_in is not a photon, photon is launched in same direciton as particle
+      except if direction is set.
 
 Parameters
 ----------
@@ -21376,9 +21247,7 @@ Overloaded versions:
       "init_custom",
       &Bmad::init_custom,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : 
 )""");
@@ -21389,9 +21258,7 @@ lat :
       py::arg("sub_key") = py::none(),
       py::arg("ix_ele") = py::none(),
       py::arg("branch") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Initialized element.
@@ -21410,8 +21277,9 @@ branch : BranchStruct, optional
       py::arg("em_taylor"),
       py::arg("n_term"),
       py::arg("save_old") = py::none(),
-      R"""(Subroutine to initialize a Bmad Em_taylor series (6 of these series make
+      R"""(Subroutine init_em_taylor_series (em_taylor, n_term, save_old)
 
+Subroutine to initialize a Bmad Em_taylor series (6 of these series make
 a Em_taylor map). Note: This routine does not zero the structure. The calling
 routine is responsible for setting all values.
 
@@ -21430,9 +21298,7 @@ save_old : bool, optional
       &Bmad::init_lat,
       py::arg("n") = py::none(),
       py::arg("init_beginning_ele") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Initialized lat.
@@ -21445,9 +21311,7 @@ init_beginning_ele : bool, optional
       "init_multipole_cache",
       &Bmad::init_multipole_cache,
       py::arg("ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element to init
@@ -21459,9 +21323,7 @@ ele : EleStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("random_on") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     patch element.
@@ -21483,7 +21345,8 @@ random_on : bool, optional
       py::arg("vert_angle_max") = py::none(),
       py::arg("vert_angle_symmetric") = py::none(),
       py::arg("energy_integ_prob") = py::none(),
-      R"""(vert_angle_max, vert_angle_symmetric, energy_integ_prob, E_photon) result (integ_prob)
+      R"""(Function init_photon_integ_prob(gamma, g, E_min, E_max, vert_angle_min,
+             vert_angle_max, vert_angle_symmetric, energy_integ_prob, E_photon) result (integ_prob)
 
 Routine to calcuate the integrated probability of emitting a photon in a given vertical angle range
 and in a given energy range
@@ -21542,7 +21405,9 @@ integ_prob : float
       &Bmad::init_spin_distribution,
       py::arg("beam_init"),
       py::arg("ele"),
-      R"""(Initializes a spin distribution according to beam_init%spin.
+      R"""(Subroutine init_spin_distribution (beam_init, bunch, ele)
+
+Initializes a spin distribution according to beam_init%spin.
 
 Parameters
 ----------
@@ -21560,7 +21425,9 @@ bunch : BunchStruct
       py::arg("phot"),
       py::arg("ix"),
       py::arg("iy"),
-      R"""(Routine to init the componentes in ele%photon%segmented%pt(ix,iy) for use with segmented surface calculations.
+      R"""(Subroutine init_surface_segment (phot, ix, iy)
+
+Routine to init the componentes in ele%photon%segmented%pt(ix,iy) for use with segmented surface calculations.
 
 Parameters
 ----------
@@ -21591,9 +21458,7 @@ phot : unknown
       py::arg("bmad_taylor"),
       py::arg("n_term"),
       py::arg("save_old") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 bmad_taylor : TaylorStruct
     Old structure.
@@ -21612,9 +21477,7 @@ save_old : bool, optional
       py::arg("n_sr_z"),
       py::arg("n_lr_mode"),
       py::arg("always_allocate") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 wake : WakeStruct
     Initialized structure.
@@ -21636,8 +21499,9 @@ always_allocate : bool, optional
       py::arg("dt"),
       py::arg("order"),
       py::arg("der"),
-      R"""(Initializes an instance of the fixed window least squares module.
+      R"""(Function initFixedWindowLS
 
+Initializes an instance of the fixed window least squares module.
 See module documentation (getf windowLS_mod) for use details.
 Any instance of windowLS created with this module should be destroyed with destFixedWindowLS.
 
@@ -21661,9 +21525,7 @@ der : int
       py::arg("ix_ele"),
       py::arg("ix_branch") = py::none(),
       py::arg("orbit") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     lattice that will be modified
@@ -21683,9 +21545,7 @@ orbit : CoordStruct, optional
       "insert_phase_trombone",
       &bsim::insert_phase_trombone,
       py::arg("branch"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch : BranchStruct
     Lattice branch.
@@ -21698,9 +21558,7 @@ branch : BranchStruct
       py::arg("int_"),
       py::arg("width") = py::none(),
       py::arg("str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 int : 
 width : 
@@ -21729,11 +21587,14 @@ str :
       py::arg("t"),
       py::arg("args"),
       py::arg("func_retval__"),
-      R"""(This vectorized private function is the integrand in equation 31 of Piwinski's paper.
+      R"""(Function integrand_base(t)
+
+This vectorized private function is the integrand in equation 31 of Piwinski's paper.
 
 This intetegrand has a sharp exponential decay, and so a change of variables from t to y where t=exp(y)
 is applied.  This COV makes the integrand more evenly distributed over the domain of integration,
 which makes it easier for qtrap to integrate.
+
 The change of variables is done using integrand_base_cov, which is then integrated
 using qtrap.
 
@@ -21764,9 +21625,7 @@ t : float
       py::arg("branch"),
       py::arg("vec"),
       py::arg("datum"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ix_start : 
 ix_ele : 
@@ -21806,9 +21665,7 @@ datum :
       py::arg("branch"),
       py::arg("vec"),
       py::arg("datum"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ix_start : 
 ix_ele : 
@@ -21844,8 +21701,9 @@ datum :
       py::arg("bound"),
       py::arg("p0"),
       py::arg("args"),
-      R"""(Integrate psi(t) from -bound to +bound.  The integration is done in two parts.  First from 0 to -bound, then from
+      R"""(Subroutine integrate_psi(bound,p0,args,result)
 
+Integrate psi(t) from -bound to +bound.  The integration is done in two parts.  First from 0 to -bound, then from
 0 to +bound.
 
 Parameters
@@ -21871,7 +21729,9 @@ result : float
       py::arg("Theta"),
       py::arg("Iota"),
       py::arg("mode"),
-      R"""()""");
+      R"""(subroutine integrated_mats(eles,coos,Lambda,Theta,Iota,mode)
+
+)""");
   m.def(
       "integration_timer",
       &python_integration_timer_ele,
@@ -21880,9 +21740,7 @@ result : float
       py::arg("start"),
       py::arg("orb_max"),
       py::arg("tol"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : 
 param : 
@@ -21913,8 +21771,9 @@ tol :
       py::arg("opt_dump_spectrum") = py::none(),
       py::arg("opt_dump_index") = py::none(),
       py::arg("this_fft"),
-      R"""(Windows the complex data and used Numerical Recipes four1 to find the peak in the spectrum.
+      R"""(Function interpolated_fft (cdata, calc_ok, opt_dump_spectrum, opt_dump_index) result (this_fft)
 
+Windows the complex data and used Numerical Recipes four1 to find the peak in the spectrum.
 The result is interpolated to improve the accuracy.  Hanning and Gaussian windowing are
 available.
 
@@ -21951,8 +21810,9 @@ this_fft
       py::arg("opt_dump_spectrum") = py::none(),
       py::arg("opt_dump_index") = py::none(),
       py::arg("this_fft"),
-      R"""(Windows the complex data and uses a mixed-radix GSL routine to find the peak in the spectrum.
+      R"""(function interpolated_fft_gsl
 
+Windows the complex data and uses a mixed-radix GSL routine to find the peak in the spectrum.
 The result is interpolated to improve the accuracy.  Hanning and Gaussian windowing are
 available.
 
@@ -21991,9 +21851,7 @@ available.
       py::arg("a_twiss"),
       py::arg("b_twiss"),
       py::arg("sig_ee"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Ion position.
@@ -22016,11 +21874,12 @@ kick : float
       py::arg("string"),
       py::arg("valid_chars") = py::none(),
       py::arg("is_alpha"),
-      R"""(import
-
-implicit none
-real(rp) prob
-real(rp) val
+      R"""(no longer exists
+function inverse_prob (val) result (prob)
+  import
+  implicit none
+  real(rp) prob
+  real(rp) val
 end function
 
 
@@ -22050,7 +21909,9 @@ prob
       &Bmad::is_attribute,
       py::arg("ix_attrib"),
       py::arg("which"),
-      R"""(Routine to determine if an attribute index corresponds to a control variable for overlys/groups.
+      R"""(Function is_attribute (ix_attrib, which) result (is_attrib)
+
+Routine to determine if an attribute index corresponds to a control variable for overlys/groups.
 
 Parameters
 ----------
@@ -22070,9 +21931,7 @@ is_attrib : bool
       py::arg("array"),
       py::arg("strict") = py::none(),
       py::arg("is_decreasing"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 array : float
     Sequence.
@@ -22099,9 +21958,16 @@ is_decreasing :
       "is_false",
       &SimUtils::is_false,
       py::arg("param"),
-      R"""(Routine to translate from a real number to a boolian True or False.
+      R"""(Function is_false (param) result (this_false)
 
+Routine to translate from a real number to a boolian True or False.
 Translation: 0 = False, nonzero = True
+
+Also see: is_true and int_logic
+
+The typical use of this routine is for parameters in ele_struct%value(:) which
+is a real array. Some of the elements in the %value array are used to specify
+boolian attributes. For example, quadrupoles use ele%value(scale_multipoles$).
 
 Parameters
 ----------
@@ -22125,9 +21991,7 @@ boolian attributes. For example quadrupoles use ele%value(scale_multipoles$).
       py::arg("array"),
       py::arg("strict") = py::none(),
       py::arg("is_increasing"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 array : float
     Sequence.
@@ -22158,9 +22022,7 @@ is_increasing :
       py::arg("delims") = py::none(),
       py::arg("ix_word") = py::none(),
       py::arg("valid"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 string : 
 int : 
@@ -22197,9 +22059,7 @@ valid :
       py::arg("string"),
       py::arg("ignore") = py::none(),
       py::arg("valid"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 string : 
 ignore : 
@@ -22229,9 +22089,7 @@ valid :
       py::arg("ignore") = py::none(),
       py::arg("real_num") = py::none(),
       py::arg("valid"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 string : 
 ignore : 
@@ -22262,7 +22120,9 @@ valid :
       "is_subatomic_species",
       &SimUtils::is_subatomic_species,
       py::arg("species"),
-      R"""(Routine to return True if species argument corresponds to a subatomic particle.
+      R"""(Function is_subatomic_species(species) result (is_subatomic)
+
+Routine to return True if species argument corresponds to a subatomic particle.
 
 Parameters
 ----------
@@ -22278,9 +22138,16 @@ is_subatomic : bool
       "is_true",
       &SimUtils::is_true,
       py::arg("param"),
-      R"""(Routine to translate from a real number to a boolian True or False.
+      R"""(Function is_true (param) result (this_true)
 
+Routine to translate from a real number to a boolian True or False.
 Translation: 0 = False, nonzero = True
+
+Also see: is_false and int_logic
+
+The typical use of this routine is for parameters in ele_struct%value(:) which
+is a real array. Some of the elements in the %value array are used to specify
+boolian attributes. For example, quadrupoles use ele%value(scale_multipoles$).
 
 Parameters
 ----------
@@ -22304,9 +22171,7 @@ boolian attributes. For example quadrupoles use ele%value(scale_multipoles$).
       py::arg("m"),
       py::arg("arg"),
       py::arg("j_bes"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 m : 
 arg : 
@@ -22335,9 +22200,7 @@ j_bes :
       py::arg("key_str"),
       py::arg("abbrev_allowed") = py::none(),
       py::arg("key_index"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 key_str : unknown
     Name of the key. Result is case insensitive.
@@ -22368,34 +22231,49 @@ key_index :
       py::arg("s_body"),
       py::arg("orbit"),
       py::arg("print_err") = py::none(),
-      R"""(Subroutine to calculate the dr/ds "kick vector" where
+      R"""(Subroutine kick_vector_calc (ele, param, s_rel, orbit, dr_ds, field, err, print_err)
 
-r = [x, p_x, y, p_y, z, p_z, t, spin_x,y,z]
+Subroutine to calculate the dr/ds "kick vector" where
+    r = [x, p_x, y, p_y, z, p_z, t, spin_x,y,z]
+
+Remember: In order to simplify the calculation, in the body of any element, P0 is taken to be
 the P0 at the exit end of the element.
-dr(1)/ds = dx/ds = dx/dt * dt/ds
-where:
-dx/dt = v_x = p_x / (1 + p_z)
-dt/ds = (1 + g*x) / v_s
-g = 1/rho, rho = bending radius (nonzero only in a dipole)
-dr(2)/ds = dp_x/ds = dP_x/dt * dt/ds / P0 + g_x * P_z
-where:
-dP_x/dt = EM_Force_x
-g_x = bending in x-plane.
-dr(3)/ds = dy/ds = dy/dt * dt/ds
-where:
-dy/dt = v_x
-dr(4)/ds = dp_y/ds = dP_y/dt * ds/dt / P0 + g_y * P_z
-where:
-dP_y/dt = EM_Force_y
-g_y = bending in y-plane.
-where:
-dt/ds(ref) = 1 / beta(ref)
-dr(6)/ds = dp_z/ds = d(EM_Force dot v_hat) * dt/ds / P0
-where:
-v_hat = velocity normalized to 1.
-dr(7)/ds = dt/ds
-dr(8:10)/ds = Spin omega vector
-dr(11)/ds = dt_ref/ds
+
+  dr(1)/ds = dx/ds = dx/dt * dt/ds
+  where:
+    dx/dt = v_x = p_x / (1 + p_z)
+    dt/ds = (1 + g*x) / v_s
+    g = 1/rho, rho = bending radius (nonzero only in a dipole)
+
+  dr(2)/ds = dp_x/ds = dP_x/dt * dt/ds / P0 + g_x * P_z
+  where:
+    dP_x/dt = EM_Force_x
+    g_x = bending in x-plane.
+
+  dr(3)/ds = dy/ds = dy/dt * dt/ds
+  where:
+    dy/dt = v_x
+
+  dr(4)/ds = dp_y/ds = dP_y/dt * ds/dt / P0 + g_y * P_z
+  where:
+    dP_y/dt = EM_Force_y
+    g_y = bending in y-plane.
+
+  NOTE: dr(5)/ds IS IGNORED WHEN CALCULATING Z. SEE TRANSFER_THIS_ORBIT ABOVE.
+  dr(5)/ds = dz/ds = beta * c_light * [dt/ds(ref) - dt/ds] + dbeta/ds * c_light * [t(ref) - t]
+                   = beta * c_light * [dt/ds(ref) - dt/ds] + dbeta/ds * vec(5) / beta
+  where:
+    dt/ds(ref) = 1 / beta(ref)
+
+  dr(6)/ds = dp_z/ds = d(EM_Force dot v_hat) * dt/ds / P0
+  where:
+     v_hat = velocity normalized to 1.
+
+  dr(7)/ds = dt/ds
+
+  dr(8:10)/ds = Spin omega vector
+
+  dr(11)/ds = dt_ref/ds
 
 Parameters
 ----------
@@ -22423,9 +22301,6 @@ err : bool
 Notes
 -----
 Remember: In order to simplify the calculation, in the body of any element, P0 is taken to be
-NOTE: dr(5)/ds IS IGNORED WHEN CALCULATING Z. SEE TRANSFER_THIS_ORBIT ABOVE. dr(5)/ds = dz/ds = beta * c_light
-* [dt/ds(ref) - dt/ds] + dbeta/ds * c_light * [t(ref) - t] = beta * c_light * [dt/ds(ref) - dt/ds] + dbeta/ds
-* vec(5) / beta
 )""");
   py::class_<PyKickVectorCalc, std::unique_ptr<PyKickVectorCalc>>(
       m, "KickVectorCalc", "Fortran routine kick_vector_calc return value")
@@ -22448,7 +22323,9 @@ NOTE: dr(5)/ds IS IGNORED WHEN CALCULATING Z. SEE TRANSFER_THIS_ORBIT ABOVE. dr(
       "kill_complex_taylor",
       &Bmad::kill_complex_taylor,
       py::arg("complex_taylor"),
-      R"""(Subroutine to deallocate a Bmad complex_taylor map.
+      R"""(Subroutine kill_complex_taylor (complex_taylor)
+
+Subroutine to deallocate a Bmad complex_taylor map.
 
 Parameters
 ----------
@@ -22461,9 +22338,7 @@ complex_taylor : ComplexTaylorStruct
       "kill_ptc_layouts",
       &Bmad::kill_ptc_layouts,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Bmad lattice with associated layouts.
@@ -22472,9 +22347,7 @@ lat : LatStruct
       "kill_taylor",
       &Bmad::kill_taylor,
       py::arg("bmad_taylor"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 bmad_taylor : TaylorStruct
     Taylor to be deallocated.
@@ -22484,7 +22357,9 @@ bmad_taylor : TaylorStruct
       "kind_name",
       &Bmad::kind_name,
       py::arg("this_kind"),
-      R"""(function to return the name of a PTC kind.
+      R"""(Function kind_name (this_kind) result (kind_str)
+
+function to return the name of a PTC kind.
 
 Parameters
 ----------
@@ -22504,9 +22379,7 @@ kind_str : unknown
       py::arg("x_pt"),
       py::arg("interpolation"),
       py::arg("y_pt"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x_knot : float
     Knot x-values.
@@ -22540,9 +22413,7 @@ y_pt :
       py::arg("x_knot"),
       py::arg("y_knot"),
       py::arg("str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x_knot : 
 y_knot : 
@@ -22566,9 +22437,7 @@ str :
       py::arg("y"),
       py::arg("z"),
       py::arg("res"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : 
 y : 
@@ -22599,9 +22468,7 @@ res :
       "lat_compute_ref_energy_and_time",
       &Bmad::lat_compute_ref_energy_and_time,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Input lattice. .ele(0).value(E_tot$) -- Energy at the start of the lattice.
@@ -22619,9 +22486,7 @@ err_flag : bool
       py::arg("ix_dflt_branch") = py::none(),
       py::arg("order_by_index") = py::none(),
       py::arg("append_eles") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 loc_str : unknown
     Element names or indexes. May be lower case.
@@ -22669,9 +22534,7 @@ append_eles : bool, optional
       &Bmad::lat_equal_lat,
       py::arg("lat_out"),
       py::arg("lat_in"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat_out : 
 lat_in : 
@@ -22680,9 +22543,7 @@ lat_in :
       "lat_geometry",
       &Bmad::lat_geometry,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     The lattice. .ele(0).floor  -- Floor_position_struct: The starting point for the calculations.
@@ -22694,9 +22555,7 @@ lat : LatStruct
       py::arg("ix_ele") = py::none(),
       py::arg("ref_orb") = py::none(),
       py::arg("ix_branch") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lat containing the elements.
@@ -22715,9 +22574,7 @@ err_flag : bool
       "lat_sanity_check",
       &Bmad::lat_sanity_check,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice to check
@@ -22728,9 +22585,7 @@ err_flag : bool
       "lat_to_ptc_layout",
       &Bmad::lat_to_ptc_layout,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Input lattice lat.branch(:).ptc              -- Pointers to generated layouts.
@@ -22741,9 +22596,7 @@ lat : LatStruct
       &Bmad::lat_vec_equal_lat_vec,
       py::arg("lat1"),
       py::arg("lat2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat1 : 
 lat2 : 
@@ -22752,9 +22605,7 @@ lat2 :
       "lattice_bookkeeper",
       &Bmad::lattice_bookkeeper,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice needing bookkeeping.
@@ -22766,9 +22617,7 @@ err_flag : bool
       "lcavity_rf_step_setup",
       &Bmad::lcavity_rf_step_setup,
       py::arg("ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lcavity element.
@@ -22784,8 +22633,9 @@ ele : EleStruct
       py::arg("orb"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(Subroutine to track through the edge field of an sbend.
+      R"""(Subroutine linear_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix)
 
+Subroutine to track through the edge field of an sbend.
 Apply only the first order kick, which is edge focusing.
 
 Parameters
@@ -22810,7 +22660,9 @@ make_matrix : float, optional
       "linear_coef",
       &Bmad::linear_coef,
       py::arg("stack"),
-      R"""(Routine to return the linear coefficient of a linear expression.
+      R"""(Function linear_coef (stack, err_flag) result (coef)
+
+Routine to return the linear coefficient of a linear expression.
 
 Parameters
 ----------
@@ -22848,9 +22700,7 @@ coef : float
       py::arg("b"),
       py::arg("sig_a"),
       py::arg("sig_b"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : 
 y : 
@@ -22889,9 +22739,7 @@ sig_b :
       py::arg("x"),
       py::arg("y"),
       py::arg("z"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : float
     Array of x-values.
@@ -22906,9 +22754,7 @@ coef : float
       "linear_to_spin_taylor",
       &Bmad::linear_to_spin_taylor,
       py::arg("q_map"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 q_map : float
     Linear quaternion map.
@@ -22920,8 +22766,9 @@ spin_taylor : TaylorStruct
       &Bmad::load_parse_line,
       py::arg("action"),
       py::arg("ix_start"),
-      R"""(Subroutine to load characters from the input file.
+      R"""(Subroutine load_parse_line (action, ix_start, end_of_file, err_flag)
 
+Subroutine to load characters from the input file.
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
 
@@ -22959,9 +22806,7 @@ err_flag : bool
       &python_logic_str,
       py::arg("logic"),
       py::arg("str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 logic : 
 str : 
@@ -22985,9 +22830,7 @@ str :
       &python_logical_to_python,
       py::arg("logic"),
       py::arg("string"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 logic : 
 string : 
@@ -23013,9 +22856,7 @@ string :
       py::arg("slave_edge"),
       py::arg("lord"),
       py::arg("is_aligned"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 slave : EleStruct
     Slave element.
@@ -23045,9 +22886,7 @@ is_aligned :
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
       py::arg("dz"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Position before correction
@@ -23081,9 +22920,7 @@ dz :
   m.def(
       "lunget",
       &SimUtils::lunget,
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lunget : 
 )""");
@@ -23091,8 +22928,9 @@ lunget :
       "mad_add_offsets_and_multipoles",
       &Bmad::mad_add_offsets_and_multipoles,
       py::arg("ele"),
-      R"""(Subroutine to add in the effect of element offsets and/or multipoles
+      R"""(Subroutine mad_add_offsets_and_multipoles (ele, map)
 
+Subroutine to add in the effect of element offsets and/or multipoles
 on the 2nd order transport map for the element.
 
 Parameters
@@ -23112,9 +22950,10 @@ map : MadMapStruct
       &Bmad::mad_concat_map2,
       py::arg("map1"),
       py::arg("map2"),
-      R"""(Subroutine to concatinate two 2nd order transport maps.
+      R"""(Subroutine mad_concat_map2 (map1, map2, map3)
 
-map3 = map2(map1)
+Subroutine to concatinate two 2nd order transport maps.
+    map3 = map2(map1)
 The equivalent MAD-8 routine is: TMCAT1
 
 Parameters
@@ -23134,8 +22973,9 @@ map3 : MadMapStruct
       &Bmad::mad_drift,
       py::arg("ele"),
       py::arg("energy"),
-      R"""(Subroutine to make a transport map for a drift space.
+      R"""(Subroutine mad_drift (ele, energy, map)
 
+Subroutine to make a transport map for a drift space.
 The equivalent MAD-8 routine is: TMDRF
 
 Parameters
@@ -23155,8 +22995,9 @@ map : MadMapStruct
       &Bmad::mad_elsep,
       py::arg("ele"),
       py::arg("energy"),
-      R"""(Subroutine to make a transport map for an electric separator.
+      R"""(Subroutine mad_elsep (ele, energy, map)
 
+Subroutine to make a transport map for an electric separator.
 The equivalent MAD-8 routine is: TMSEP
 
 Parameters
@@ -23176,8 +23017,9 @@ map : MadMapStruct
       &Bmad::mad_map_to_taylor,
       py::arg("map"),
       py::arg("energy"),
-      R"""(Subroutine to convert a MAD order 2 map to a Bmad taylor map.
+      R"""(Subroutine mad_map_to_taylor (map, energy, taylor)
 
+Subroutine to convert a MAD order 2 map to a Bmad taylor map.
 The conversion will also convert between MAD's (t, dE) and Bmad's (beta*t, dP) coords.
 
 Parameters
@@ -23197,8 +23039,9 @@ taylor : TaylorStruct
       &Bmad::mad_quadrupole,
       py::arg("ele"),
       py::arg("energy"),
-      R"""(Subroutine to make a transport map for an quadrupole element.
+      R"""(Subroutine mad_quadrupole (ele, energy, map)
 
+Subroutine to make a transport map for an quadrupole element.
 The equivalent MAD-8 routine is: TMSEXT
 
 Parameters
@@ -23218,8 +23061,9 @@ map : MadMapStruct
       &Bmad::mad_rfcavity,
       py::arg("ele"),
       py::arg("energy"),
-      R"""(Subroutine to make a transport map for an rfcavity element.
+      R"""(Subroutine mad_rfcavity (ele, energy, map)
 
+Subroutine to make a transport map for an rfcavity element.
 The equivalent MAD-8 routine is: TMRF
 
 Parameters
@@ -23239,8 +23083,9 @@ map : MadMapStruct
       &Bmad::mad_sbend,
       py::arg("ele"),
       py::arg("energy"),
-      R"""(Subroutine to make a transport map for a sector bend element.
+      R"""(Subroutine mad_sbend (ele, energy, map)
 
+Subroutine to make a transport map for a sector bend element.
 The equivalent MAD-8 routine is: TMBEND
 
 Parameters
@@ -23260,8 +23105,9 @@ map : MadMapStruct
       &Bmad::mad_sbend_body,
       py::arg("ele"),
       py::arg("energy"),
-      R"""(Subroutine to make a transport map for the body of a sector dipole.
+      R"""(Subroutine mad_sbend_body (ele, energy, map)
 
+Subroutine to make a transport map for the body of a sector dipole.
 The equivalent MAD-8 routine is: TMSECT
 
 Parameters
@@ -23284,8 +23130,9 @@ map : MadMapStruct
       py::arg("ele"),
       py::arg("energy"),
       py::arg("into"),
-      R"""(Subroutine to make a transport map for the fringe field of a dipole.
+      R"""(Subroutine mad_sbend_fringe (ele, energy, into, map)
 
+Subroutine to make a transport map for the fringe field of a dipole.
 The equivalent MAD-8 routine is: TMFRNG
 
 Parameters
@@ -23307,8 +23154,9 @@ map : MadMapStruct
       &Bmad::mad_sextupole,
       py::arg("ele"),
       py::arg("energy"),
-      R"""(Subroutine to make a transport map for an sextupole.
+      R"""(Subroutine mad_sextupole (ele, energy, map)
 
+Subroutine to make a transport map for an sextupole.
 The equivalent MAD-8 routine is: TMSEXT
 
 Parameters
@@ -23328,8 +23176,9 @@ map : MadMapStruct
       &Bmad::mad_solenoid,
       py::arg("ele"),
       py::arg("energy"),
-      R"""(Subroutine to make a transport map for an solenoid.
+      R"""(Subroutine mad_solenoid (ele, energy, map)
 
+Subroutine to make a transport map for an solenoid.
 The equivalent MAD-8 routine is: TMSEXT
 
 Parameters
@@ -23349,8 +23198,9 @@ map : MadMapStruct
       &Bmad::mad_tmfoc,
       py::arg("el"),
       py::arg("sk1"),
-      R"""(Subroutine to compute the linear focussing functions.
+      R"""(Subroutine mad_tmfoc (el, sk1, c, s, d, f)
 
+Subroutine to compute the linear focussing functions.
 The equivalent MAD-8 routine is: TMFOC
 
 Parameters
@@ -23395,8 +23245,9 @@ f : float
       "mad_tmsymm",
       &Bmad::mad_tmsymm,
       py::arg("te"),
-      R"""(subroutine to symmertrize the 2nd order map t.
+      R"""(subroutine mad_tmsymm (te)
 
+subroutine to symmertrize the 2nd order map t.
 The equivalent MAD-8 routine is: tmsymm
 
 Parameters
@@ -23410,8 +23261,9 @@ te : float
       &Bmad::mad_tmtilt,
       py::arg("map"),
       py::arg("tilt"),
-      R"""(Subroutine to apply a tilt to a transport map.
+      R"""(Subroutine mad_tmtilt (map, tilt)
 
+Subroutine to apply a tilt to a transport map.
 The equivalent MAD-8 routine is: TMTILT
 
 Parameters
@@ -23428,8 +23280,9 @@ tilt : float
       &Bmad::mad_track1,
       py::arg("c0"),
       py::arg("map"),
-      R"""(Subroutine to track through a 2nd order transfer map.
+      R"""(Subroutine mad_track1 (c0, map, c1)
 
+Subroutine to track through a 2nd order transfer map.
 The equivalent MAD-8 routine is: TMTRAK
 
 Parameters
@@ -23450,9 +23303,7 @@ c1 : CoordStruct
       py::arg("twiss"),
       py::arg("g2_mat"),
       py::arg("g2_inv_mat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 twiss : TwissStruct
     Twiss parameters.
@@ -23463,9 +23314,7 @@ g2_inv_mat :
       "make_g_mats",
       &Bmad::make_g_mats,
       py::arg("ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element
@@ -23492,11 +23341,14 @@ g_inv_mat : float
       "make_hvbp",
       &Bmad::make_hvbp,
       py::arg("N"),
-      R"""(Parameterizes the eigen-decomposition of the 6x6 transfer matrix into HVBP as defined in:
+      R"""(Subroutine make_HVBP(N, B, V, H, Vbar, Hbar)
 
+Parameterizes the eigen-decomposition of the 6x6 transfer matrix into HVBP as defined in:
 "From the beam-envelop matrix to synchrotron-radiation integrals" by Ohmi, Hirata, and Oide.
+
 This routine takes N, which is usually made from make_N (also in this module), and decomposes
 it into H, V, B, and P.
+
 N is defined by:
 M = N.U.Inverse[N] where U is block diagonal and the blocks are 2x2 rotation matrices.
 and it is decomposed by this subroutine as,
@@ -23504,9 +23356,10 @@ N = H.V.B.P
 P has the same free parameters as B
 B "Twiss matrix" has 6 free parameters (Twiss alphas and betas)
 B blocks have the form /     sqrt(beta)         0       \
-\ -alpha/sqrt(beta) 1/sqrt(beta) /
+                       \ -alpha/sqrt(beta) 1/sqrt(beta) /
 V "Teng matrix" has 4 free parameters (xy, xpy, ypx, and pxpy coupling)
 H "Dispersion matrix" has 8 free parameters (xz, xpz, pxz, pxpz, yz, ypz, pyz, pypz coupling)
+
 
 Parameters
 ----------
@@ -23555,9 +23408,7 @@ Hbar : float
       py::arg("lat_in"),
       py::arg("use_taylor") = py::none(),
       py::arg("orb0_arr") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat_in : LatStruct
     Input lattice. .branch(:).ele(:).select  -- Roughly: Set True to keep and False to hybridize. See above.
@@ -23575,9 +23426,7 @@ orb0_arr : CoordArrayStruct, optional
       &python_make_legal_comment,
       py::arg("comment_in"),
       py::arg("comment_out"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 comment_in : 
 comment_out : 
@@ -23601,7 +23450,9 @@ comment_out :
       &Bmad::make_mad_map,
       py::arg("ele"),
       py::arg("param"),
-      R"""(Subroutine to make a 2nd order transport map a la MAD.
+      R"""(Subroutine make_mad_map (ele, param, energy, map)
+
+Subroutine to make a 2nd order transport map a la MAD.
 
 Parameters
 ----------
@@ -23637,9 +23488,7 @@ map : MadMapStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("start_orb") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element holding the transfer matrix.
@@ -23672,9 +23521,7 @@ err_flag : bool
       py::arg("ele"),
       py::arg("param"),
       py::arg("start_orb"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element to track through.
@@ -23708,9 +23555,7 @@ err : bool
       py::arg("ele"),
       py::arg("param"),
       py::arg("start_orb"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element with transfer matrix
@@ -23749,8 +23594,9 @@ err : bool
       &Bmad::make_mat6_high_energy_space_charge,
       py::arg("ele"),
       py::arg("param"),
-      R"""(Routine to add the ultra relativistic space charge kick to the element transfer matrix.
+      R"""(Subroutine make_mat6_high_energy_space_charge (ele, param)
 
+Routine to add the ultra relativistic space charge kick to the element transfer matrix.
 The routine setup_space_charge_calc must be called
 initially before any tracking is done. This routine assumes a Gaussian
 bunch and is only valid with relativistic particles where the effect
@@ -23773,8 +23619,9 @@ end : CoordStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("c0"),
-      R"""(Subroutine to make the 6x6 transfer matrix for an element from the
+      R"""(Subroutine make_mat6_mad (ele, param, c0, c1)
 
+Subroutine to make the 6x6 transfer matrix for an element from the
 2nd order MAD transport map. The map is stored in ele%taylor.
 If the map exists then it is simply used to calculate ele%mat6.
 If ele%taylor doesn't exist then calculate it.
@@ -23800,9 +23647,7 @@ c1 : CoordStruct
       &Bmad::make_mat6_symp_lie_ptc,
       py::arg("ele"),
       py::arg("start_orb"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element with transfer matrix
@@ -23818,9 +23663,7 @@ end_orb : CoordStruct
       py::arg("ele"),
       py::arg("start_orb"),
       py::arg("err_flag") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element to track through.
@@ -23852,9 +23695,7 @@ err_flag :
       py::arg("param"),
       py::arg("start_orb"),
       py::arg("spin_only") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element with transfer matrix
@@ -23891,15 +23732,19 @@ spin_only : bool, optional
       &Bmad::make_n,
       py::arg("t6"),
       py::arg("abz_tunes") = py::none(),
-      R"""(Given a 1-turn transfer matrix, this returns the matrix N.
+      R"""(Subroutine make_N(t6, N, err_flag, abz_tunes, tunes_out, U)
 
+Given a 1-turn transfer matrix, this returns the matrix N.
 N converts between normal invarients and phases and canonical coordinates:
 X = N.J
+
 N is obtained from the Eigen decomposition of the 1-turn transfer matrix.
 It is obtained by applying certain normalizations to the matrix of Eigen vectors, then making
 the result real using Q.
+
 If abz_tunes is present, then the eigensystem is ordered by matching the tunes.
 If abz_tunes is not present, then the eigensystem is ordered by plane dominance.
+
 It is assumed that the synchrotron tune is less than pi.
 
 Parameters
@@ -23945,9 +23790,13 @@ U : float
       &Bmad::make_pbrh,
       py::arg("M"),
       py::arg("abz_tunes"),
-      R"""(Decomposes the 1-turn transfer matrix into normal mode twiss-like parameters,
+      R"""(subroutine make_PBRH(M, P, Bp, R, H, abz_tunes)
 
+Decomposes the 1-turn transfer matrix into normal mode twiss-like parameters,
 according to Sec. IIIB of Ohmi, Hirata, and Oide paper.
+
+Note:  The Twiss parameters generated by this function are identical to those delivered
+       by mode3_mod.
 
 Parameters
 ----------
@@ -23992,14 +23841,17 @@ H : complex
       &Bmad::make_smat_from_abc,
       py::arg("t6"),
       py::arg("mode"),
-      R"""(Given the 1-turn transfer matrix and a normal_modes_struct containing the normal mode
+      R"""(Subroutine make_smat_from_abc(t6, mode, sigma_mat, err_flag, Nout)
 
+Given the 1-turn transfer matrix and a normal_modes_struct containing the normal mode
 emittances, this routine returns the beam envelop sigma matrix.
+
 sigma_mat = N.D.transpose(N)
 equivalent to: sigma_mat.S = N.D.mat_symp_conj(N)
+
 One way to populate mode%a%tune and mode%b%tune:
-mode%a%tune = mod(lat%ele(lat%n_ele_track)%a%phi, twopi)
-mode%b%tune = mod(lat%ele(lat%n_ele_track)%b%phi, twopi)
+  mode%a%tune = mod(lat%ele(lat%n_ele_track)%a%phi, twopi)
+  mode%b%tune = mod(lat%ele(lat%n_ele_track)%b%phi, twopi)
 
 Parameters
 ----------
@@ -24044,7 +23896,9 @@ Nout : float
       "make_unit_mad_map",
       &Bmad::make_unit_mad_map,
       py::arg("map"),
-      R"""(Subroutine to initialize a 2nd order transport map to unity.
+      R"""(Subroutine make_unit_mad_map (map)
+
+Subroutine to initialize a 2nd order transport map to unity.
 
 Parameters
 ----------
@@ -24058,8 +23912,9 @@ map : MadMapStruct
       py::arg("M"),
       py::arg("V"),
       py::arg("abz_tunes"),
-      R"""(For a one-turn transfer matrix M, this routine find the eigen matrix V.
+      R"""(subroutine make_V(M,V,abz_tunes)
 
+For a one-turn transfer matrix M, this routine find the eigen matrix V.
 V is ordered such that the per turn phase advance of its column pairs agree with abz_tunes.
 It is normalized to be symplectic.
 
@@ -24068,9 +23923,7 @@ It is normalized to be symplectic.
       "make_v_mats",
       &Bmad::make_v_mats,
       py::arg("ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element
@@ -24099,7 +23952,9 @@ v_inv_mat : float
       py::arg("lat"),
       py::arg("slave"),
       py::arg("err_flag"),
-      R"""(This routine is not meant for general use.
+      R"""(Subroutine makeup_control_slave (lat, slave, err_flag)
+
+This routine is not meant for general use.
 
 )""");
   py::class_<PyMakeupControlSlave, std::unique_ptr<PyMakeupControlSlave>>(
@@ -24123,8 +23978,9 @@ v_inv_mat : float
       py::arg("lat"),
       py::arg("lord"),
       py::arg("err_flag"),
-      R"""(Subroutine to calculate the attributes of group slave elements.
+      R"""(Subroutine makeup_group_lord (lat, lord, err_flag)
 
+Subroutine to calculate the attributes of group slave elements.
 This routine is private to bookkeeper_mod.
 
 )""");
@@ -24145,8 +24001,9 @@ This routine is private to bookkeeper_mod.
       py::arg("lat"),
       py::arg("slave"),
       py::arg("err_flag"),
-      R"""(Subroutine to calcualte the attributes of multipass slave elements.
+      R"""(Subroutine makeup_multipass_slave (lat, slave, err_flag)
 
+Subroutine to calcualte the attributes of multipass slave elements.
 This routine is not meant for guse.
 
 )""");
@@ -24171,8 +24028,9 @@ This routine is not meant for guse.
       py::arg("lat"),
       py::arg("slave"),
       py::arg("err_flag"),
-      R"""(Subroutine to calcualte the attributes of superposition slave elements.
+      R"""(Subroutine makeup_super_slave (lat, slave, err_flag)
 
+Subroutine to calcualte the attributes of superposition slave elements.
 This routine is not meant for general use.
 
 )""");
@@ -24196,7 +24054,10 @@ This routine is not meant for general use.
       py::arg("param"),
       py::arg("include_upstream_end"),
       py::arg("include_downstream_end"),
-      R"""(Routine to construct a super_slave from a super_lord when the slave has only one lord.
+      R"""(Subroutine makeup_super_slave1 (slave, lord, offset, param, include_upstream_end, include_downstream_end)
+
+Routine to construct a super_slave from a super_lord when the slave has only one lord.
+Note: Reference energy and times are not computed in this routine.
 
 Parameters
 ----------
@@ -24225,9 +24086,7 @@ err_flag : bool
       &Bmad::map1_inverse,
       py::arg("map1"),
       py::arg("inv_map1"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 map1 : SpinOrbitMap1Struct
     Input map.
@@ -24236,9 +24095,7 @@ inv_map1 :
   m.def(
       "map1_make_unit",
       &Bmad::map1_make_unit,
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 map1 : SpinOrbitMap1Struct
     Unit map.
@@ -24249,9 +24106,7 @@ map1 : SpinOrbitMap1Struct
       py::arg("map2"),
       py::arg("map1"),
       py::arg("map_out"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 map2 : 
 map1 : 
@@ -24261,9 +24116,7 @@ map_out :
       "map_to_angle_coords",
       &Bmad::map_to_angle_coords,
       py::arg("t_canon"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 t_canon : TaylorStruct
     Taylor map in canonical coords.
@@ -24274,8 +24127,9 @@ t_angle : TaylorStruct
       "mark_patch_regions",
       &Bmad::mark_patch_regions,
       py::arg("branch"),
-      R"""(Routine to mark which regions in a wall3d structure contain patch elements.
+      R"""(Subroutine mark_patch_regions (branch)
 
+Routine to mark which regions in a wall3d structure contain patch elements.
 This routine should be called by any routine that creates a beam chamber wall.
 
 Parameters
@@ -24289,9 +24143,13 @@ branch : BranchStruct
       "mass_of",
       &SimUtils::mass_of,
       py::arg("species"),
-      R"""(Routine to return the mass, in units of eV/c^2, of a particle.
+      R"""(Function mass_of (species) result (mass)
 
+Routine to return the mass, in units of eV/c^2, of a particle.
 To convert to AMU divide mass_of value by the constant atomic_mass_unit.
+
+Note: For atoms where the isotopic number is given, the mass is calculated using the neutral atomic mass
+adjusted by the weight of any added or missing electrons. The calculated mass is off very slightly due to
 binding energy effects. Exception: For #1H+ (proton) and #2H+ (deuteron) the exact mass is used since it is known.
 
 Parameters
@@ -24303,11 +24161,6 @@ Returns
 -------
 mass : float
     particle mass. Set to real_garbage$ if species value is invalid.
-
-Notes
------
-Note: For atoms where the isotopic number is given, the mass is calculated using the neutral atomic mass
-adjusted by the weight of any added or missing electrons. The calculated mass is off very slightly due to
 )""");
   m.def(
       "master_parameter_value",
@@ -24315,9 +24168,7 @@ adjusted by the weight of any added or missing electrons. The calculated mass is
       py::arg("master_parameter"),
       py::arg("ele"),
       py::arg("value"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 master_parameter : int
     Index of the master parameter.
@@ -24347,9 +24198,7 @@ value :
       py::arg("tilt"),
       py::arg("n"),
       py::arg("orbit"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 knl : float
     Strength of multipole
@@ -24380,9 +24229,7 @@ kick_mat : float
       &Bmad::mat6_add_offsets,
       py::arg("ele"),
       py::arg("param"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element with given orientation. .vec0(6)         -- 0th order part of the transfer map. .mat6(6,6)
@@ -24398,9 +24245,7 @@ param : LatParamStruct
       py::arg("y_pitch_tot"),
       py::arg("orientation"),
       py::arg("mat6"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x_pitch_tot : float
     Horizontal pitch
@@ -24417,8 +24262,9 @@ mat6 : float
       &Bmad::mat6_to_complex_taylor,
       py::arg("vec0"),
       py::arg("mat6"),
-      R"""(Subroutine to form a first order complex_taylor map from the 6x6 transfer
+      R"""(Subroutine mat6_to_complex_taylor (vec0, mat6, complex_taylor)
 
+Subroutine to form a first order complex_taylor map from the 6x6 transfer
 matrix and the 0th order transfer vector.
 
 Parameters
@@ -24443,9 +24289,7 @@ complex_taylor : ComplexTaylorStruct
       py::arg("Vbar"),
       py::arg("G"),
       py::arg("type_out"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 t0 : float
     Input matrix
@@ -24495,9 +24339,7 @@ type_out : bool
       py::arg("start_orb"),
       py::arg("include_delta_time") = py::none(),
       py::arg("set_trombone") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Match element.
@@ -24540,9 +24382,7 @@ set_trombone : bool, optional
       py::arg("str"),
       py::arg("pat"),
       py::arg("is_match"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 str : 
 pat : 
@@ -24571,9 +24411,7 @@ is_match :
       py::arg("string"),
       py::arg("template_"),
       py::arg("is_match"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 string : 
 template : 
@@ -24602,9 +24440,11 @@ is_match :
       py::arg("seed"),
       py::arg("cdata"),
       py::arg("func_retval__"),
-      R"""(Optimizer that uses Numerical Recipes brent to find a local maximum,
+      R"""(function maximize_projection
 
+Optimizer that uses Numerical Recipes brent to find a local maximum,
 which is the frequency that maximizes the projection.
+
 
 )""");
   py::class_<PyMaximizeProjection, std::unique_ptr<PyMaximizeProjection>>(
@@ -24631,9 +24471,7 @@ which is the frequency that maximizes the projection.
       py::arg("x"),
       py::arg("m"),
       py::arg("this_exp"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : float
     Number.
@@ -24660,9 +24498,7 @@ this_exp :
       py::arg("n"),
       py::arg("ndim"),
       py::arg("isn"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 a : 
 b : 
@@ -24675,9 +24511,7 @@ ierr :
       "milli_sleep",
       &python_milli_sleep,
       py::arg("milli_sec"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 milli_sec : 
 )""");
@@ -24697,9 +24531,7 @@ milli_sec :
       &python_momentum_compaction,
       py::arg("branch"),
       py::arg("mom_comp"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch : BranchStruct
     Lattice branch to calculate on.
@@ -24725,9 +24557,7 @@ mom_comp :
       &Bmad::multi_turn_tracking_analysis,
       py::arg("track"),
       py::arg("i_dim"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 track : CooordStruct
     multi-turn tracking data to analyze. track(i) is the particle position at a given point in the lat on the
@@ -24787,10 +24617,12 @@ err_flag : bool
       "multilayer_type_to_multilayer_params",
       &Bmad::multilayer_type_to_multilayer_params,
       py::arg("ele"),
-      R"""(Routine to set the multilayer parameters based upon the multilayer type.
+      R"""(Subroutine multilayer_type_to_multilayer_params (ele, err_flag)
+
+Routine to set the multilayer parameters based upon the multilayer type.
 
 Multilayer types are of the form:
-"AAA:BBB"
+  "AAA:BBB"
 Where "AAA" is the atomic formula for the top layer crystal and "BBB" is the second layer atomic formula.
 
 Parameters
@@ -24812,9 +24644,7 @@ err_flag : bool
       py::arg("n_links"),
       py::arg("chain_ele") = py::none(),
       py::arg("use_super_lord") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : ElePointerStruct
     Element in a multipass chain.
@@ -24834,9 +24664,7 @@ use_super_lord : bool, optional
       py::arg("an"),
       py::arg("bn"),
       py::arg("n"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 an : float
     Skew multipole component.
@@ -24872,9 +24700,7 @@ tn : float
       py::arg("knsl"),
       py::arg("tn"),
       py::arg("n"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 knl : float
     Normal multitude component.
@@ -24910,9 +24736,7 @@ bn : float
       &Bmad::multipole_ab_to_kt,
       py::arg("an"),
       py::arg("bn"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 an : float
     Skew multipole component.
@@ -24947,9 +24771,7 @@ tn : float
       py::arg("pole_type") = py::none(),
       py::arg("include_kicks") = py::none(),
       py::arg("original") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element. .value()      -- ab_multipole values.
@@ -25006,9 +24828,7 @@ original : bool, optional
       py::arg("use_ele_tilt"),
       py::arg("pole_type") = py::none(),
       py::arg("include_kicks") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element.
@@ -25052,9 +24872,7 @@ include_kicks : int, optional
       &Bmad::multipole_init,
       py::arg("who"),
       py::arg("zero") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element holding the multipoles. .a_pole(0:n_pole_maxx) -- Multipole An array .b_pole(0:n_pole_maxx) --
@@ -25076,7 +24894,10 @@ zero : bool, optional
       py::arg("coord"),
       py::arg("pole_type") = py::none(),
       py::arg("ref_orb_offset") = py::none(),
-      R"""(Subroutine to put in the kick due to a multipole.
+      R"""(Subroutine multipole_kick (knl, tilt, n, ref_species, ele_orientation, coord, pole_type, ref_orb_offset)
+
+Subroutine to put in the kick due to a multipole.
+Note: The kick for an electric multipole does not include any energy change.
 
 Parameters
 ----------
@@ -25107,9 +24928,7 @@ ref_orb_offset : bool, optional
       py::arg("ele"),
       py::arg("orbit"),
       py::arg("factor"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 knl : float
     Strength of multipoles
@@ -25135,8 +24954,9 @@ mat6 : float
       py::arg("orbit"),
       py::arg("pole_type") = py::none(),
       py::arg("ref_orb_offset") = py::none(),
-      R"""(Subroutine to put in the kick due to a multipole element.
+      R"""(Subroutine multipole_kicks (knl, tilt, ele, orbit, pole_type, ref_orb_offset)
 
+Subroutine to put in the kick due to a multipole element.
 Also see the ab_multipole_kicks routine.
 
 Parameters
@@ -25161,9 +24981,7 @@ ref_orb_offset : bool, optional
       py::arg("knl"),
       py::arg("knsl"),
       py::arg("tn"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 knl : float
     Normal multitude component.
@@ -25198,9 +25016,7 @@ bn : float
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element
@@ -25215,9 +25031,7 @@ orbit : CoordStruct
       py::arg("y"),
       py::arg("x"),
       py::arg("arg"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 y : 
 x : 
@@ -25243,8 +25057,9 @@ arg :
   m.def(
       "n_attrib_string_max_len",
       &Bmad::n_attrib_string_max_len,
-      R"""(Routine to return the the maximum number of characters in any attribute
+      R"""(Function n_attrib_string_max_len () result (max_len)
 
+Routine to return the the maximum number of characters in any attribute
 name known to bmad.
 
 
@@ -25258,7 +25073,9 @@ max_len : int
       &python_n_bins_automatic,
       py::arg("n_data"),
       py::arg("n"),
-      R"""()""");
+      R"""(Function to automatically select the number of bins
+
+)""");
   py::class_<PyNBinsAutomatic, std::unique_ptr<PyNBinsAutomatic>>(
       m, "NBinsAutomatic", "Fortran routine n_bins_automatic return value")
       .def_readonly("n_data", &PyNBinsAutomatic::n_data)
@@ -25279,9 +25096,7 @@ max_len : int
       py::arg("n"),
       py::arg("k"),
       py::arg("nck"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 n : 
 k : 
@@ -25310,9 +25125,7 @@ nck :
       py::arg("deriv0"),
       py::arg("deriv1"),
       py::arg("x1"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 deriv0 : float
     Derivative vector from order 0 to some order n at x = 0.
@@ -25331,11 +25144,15 @@ n_spline :
       py::arg("amps"),
       py::arg("opt_dump_spectra") = py::none(),
       py::arg("opt_zero_first") = py::none(),
-      R"""(This subroutine implements the NAFF algorithm for calculating the spectra
+      R"""(subroutine naff(cdata,freqs,amps,opt_dump_spectra,opt_zero_first)
 
+This subroutine implements the NAFF algorithm for calculating the spectra
 of periodic data.
+
 See naff_mod documentation for details.
+
 Frequencies returned are in units of 2pi. That is, freqs ranges from 0 to 1.
+
 freqs and amps must be allocated before hand.  This subroutine will repeat the
 decomposition loop until all elements of freqs and amps are populated.
 
@@ -25360,9 +25177,7 @@ decomposition loop until all elements of freqs and amps are populated.
       py::arg("nametable"),
       py::arg("name"),
       py::arg("ix_name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 nametable : 
 name : 
@@ -25389,9 +25204,7 @@ ix_name :
       py::arg("name"),
       py::arg("n_match") = py::none(),
       py::arg("ix_max"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 nametable : 
 name : 
@@ -25427,9 +25240,7 @@ ix_max :
       py::arg("nametable"),
       py::arg("name"),
       py::arg("ix_name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 nametable : 
 name : 
@@ -25455,9 +25266,7 @@ ix_name :
       py::arg("nametable"),
       py::arg("n_min") = py::none(),
       py::arg("n_max") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 nametable : 
 n_min : 
@@ -25482,9 +25291,7 @@ n_max :
       &python_nametable_remove,
       py::arg("nametable"),
       py::arg("ix_name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 nametable : 
 ix_name : 
@@ -25506,9 +25313,7 @@ ix_name :
       py::arg("lat"),
       py::arg("ix_ele"),
       py::arg("ele_name") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lat used
@@ -25521,8 +25326,9 @@ ele_name : unknown, optional
       "nint_chk",
       &Bmad::nint_chk,
       py::arg("re_val"),
-      R"""(Returns the nearest integer to re_val.
+      R"""(Function nint_chk (re_val) result (int_val)
 
+Returns the nearest integer to re_val.
 Also does out-of-bounds error checking.
 Used with bmad parsing.
 
@@ -25546,9 +25352,7 @@ int_val : int
       py::arg("A") = py::none(),
       py::arg("A_inverse") = py::none(),
       py::arg("order") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 one_turn_taylor : 
 rf_on : 
@@ -25583,19 +25387,22 @@ order :
       &Bmad::normal_form_taylors,
       py::arg("one_turn_taylor"),
       py::arg("rf_on"),
-      R"""(Do a normal form decomposition on a one-turn taylor map M:
+      R"""(Subroutine normal_form_taylors(one_turn_taylor, rf_on, dhdj, A, A_inverse)
 
-M = A o R o A_inverse
+Do a normal form decomposition on a one-turn taylor map M:
+  M = A o R o A_inverse
 where A maps Floquet (fully normalized) coordinates to lab coordinates.
 In Floquet coordinates, the amplitudes are defined as J_i = (1/2) (x_i^2 + p_i^2).
 The map R = exp(:h:) is a pure rotation with h = h(J) is a function of the amplitudes only.
 The angles (phase advances) are given by phi_i = 2pi*dh/dJ_i.
 The taylor terms of dhdj are therefore the tunes, chromaticities, amplitude dependent tune shifts, etc.
+
 The mapping procedure for one turn is:
-z_Floquet_in = A_inverse o z_Lab_in
-[phi_a, phi_b, phi_c] = 2 pi * dhdj o z_Floquet_in
-z_Floquet_out = RotationMatrix(phi_a, phi_b, phi_c) . z_Floquet_in
-z_Lab_out = A o z_Floquet_out
+ z_Floquet_in = A_inverse o z_Lab_in
+ [phi_a, phi_b, phi_c] = 2 pi * dhdj o z_Floquet_in
+ z_Floquet_out = RotationMatrix(phi_a, phi_b, phi_c) . z_Floquet_in
+ z_Lab_out = A o z_Floquet_out
+
 
 Parameters
 ----------
@@ -25640,9 +25447,11 @@ dhdj : TaylorStruct
       py::arg("t6"),
       py::arg("above_transition") = py::none(),
       py::arg("abz_tunes") = py::none(),
-      R"""(Does an Eigen decomposition of the 1-turn transfer matrix (mat) and generates
+      R"""(Subroutine normal_mode3_calc (mat, tune, B, HV, above_transition)
 
+Does an Eigen decomposition of the 1-turn transfer matrix (mat) and generates
 B, V, H.
+
 If the above_transition argument is present and false, then the 3rd (z) mode is assumed
 to have a positive slip factor (z-mode rotates counter clockwise in phase space).
 Default is True ==> z-mode has a negative slip factor so the mode rotates clock-wise in phase space.
@@ -25689,9 +25498,7 @@ HV : float
       &Bmad::normal_mode_dispersion,
       py::arg("ele"),
       py::arg("reverse") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element whose dispersions are to be adjusted.
@@ -25704,7 +25511,9 @@ reverse : bool, optional
       "normalize_evecs",
       &Bmad::normalize_evecs,
       py::arg("evec"),
-      R"""(Normalizes eigenvectors such that transpose(E).S.E = iS, where E = evec_r + i evec_i
+      R"""(Subroutine normalize_evecs(evec, err_flag)
+
+Normalizes eigenvectors such that transpose(E).S.E = iS, where E = evec_r + i evec_i
 
 Parameters
 ----------
@@ -25723,9 +25532,7 @@ err_flag : bool
       &python_num_field_eles,
       py::arg("ele"),
       py::arg("n_field_ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element with sum number of associated field elements.
@@ -25748,9 +25555,7 @@ n_field_ele :
       py::arg("slave"),
       py::arg("lord_type"),
       py::arg("num"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 slave : EleStruct
     Slave element.
@@ -25780,12 +25585,18 @@ num :
       py::arg("s2_body"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(Subroutine to do Runge Kutta tracking. This routine is adapted from Numerical
+      R"""(Subroutine odeint_bmad (orbit, ele, param, s1_body, s2_body, err_flag, track, mat6, make_matrix)
 
+Subroutine to do Runge Kutta tracking. This routine is adapted from Numerical
 Recipes.  See the NR book for more details.
+
 Notice that this routine has an two tolerances:
-bmad_com%rel_tol_adaptive_tracking
-bmad_com%abs_tol_adaptive_tracking
+  bmad_com%rel_tol_adaptive_tracking
+  bmad_com%abs_tol_adaptive_tracking
+
+Note: For elements where the reference energy is not constant (lcavity, etc.), and
+with elements where the reference particle does not follow the reference trajectory (wigglers for example),
+the calculation of z is "off" while the particle is inside the element. At the ends there is no problem.
 
 Parameters
 ----------
@@ -25840,9 +25651,11 @@ track : TrackStruct
       py::arg("track") = py::none(),
       py::arg("t_end") = py::none(),
       py::arg("extra_field") = py::none(),
-      R"""(Subroutine to do Runge Kutta tracking in time. This routine is adapted from Numerical
+      R"""(Subroutine odeint_bmad_time (orb, ele, param, t_dir, rf_time, err_flag, track, t_end, dt_step, extra_field)
 
+Subroutine to do Runge Kutta tracking in time. This routine is adapted from Numerical
 Recipes.  See the NR book for more details.
+
 Tracking is done until the particle is lost or exits the element.
 
 Parameters
@@ -25908,9 +25721,7 @@ dt_step : float
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
       py::arg("time") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element
@@ -25974,9 +25785,7 @@ time : float, optional
       py::arg("set"),
       py::arg("offset_position_only") = py::none(),
       py::arg("rot_mat") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element
@@ -25996,7 +25805,9 @@ rot_mat : float, optional
       "omega_to_quat",
       &SimUtils::omega_to_quat,
       py::arg("omega"),
-      R"""(Routine to convert from omega + angle representation to a quaternion.
+      R"""(Function omega_to_quat (omega) result (quat)
+
+Routine to convert from omega + angle representation to a quaternion.
 
 Parameters
 ----------
@@ -26014,9 +25825,7 @@ quat : float
       py::arg("ele"),
       py::arg("phi_a"),
       py::arg("phi_b"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Reference element. .a       -- "a" mode Twiss parameter structure. .b       -- "b" mode Twiss parameter
@@ -26034,7 +25843,9 @@ mat4 : float
       py::arg("file_name"),
       py::arg("action"),
       py::arg("r_name"),
-      R"""(Routine to open a binary file for reading or writing.
+      R"""(Function open_binary_file (file_name, action, iu, r_name, iver) result (is_ok)
+
+Routine to open a binary file for reading or writing.
 
 Parameters
 ----------
@@ -26077,7 +25888,11 @@ is_ok : bool
       "openpmd_species_name",
       &SimUtils::openpmd_species_name,
       py::arg("species"),
-      R"""(Routine to return the openPMD name of a particle species given the Bmad species ID.
+      R"""(Function openpmd_species_name (species) result(pmd_name)
+
+Routine to return the openPMD name of a particle species given the Bmad species ID.
+Note: the pmd_name does not include the particle charge. For example, if species
+corresponds to He+ then the pmd_name will be "He".
 
 Parameters
 ----------
@@ -26094,9 +25909,7 @@ pmd_name : unknown
       &Bmad::orbit_amplitude_calc,
       py::arg("ele"),
       py::arg("orb"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element holding the Twiss parameters, dispersion and coupling info.
@@ -26144,9 +25957,7 @@ amp_nb : float
       py::arg("p0c_new"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Coordinates to correct.
@@ -26165,9 +25976,7 @@ make_matrix : bool, optional
       py::arg("orbit"),
       py::arg("ele"),
       py::arg("floor_phase_space"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Particle orbit in local (not element) coordinates.
@@ -26183,9 +25992,7 @@ floor_phase_space :
       py::arg("z_direction") = py::none(),
       py::arg("relative_to") = py::none(),
       py::arg("local_position"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Particle orbit in laboratory (not body) coordinates.
@@ -26204,9 +26011,7 @@ local_position :
       py::arg("orbit"),
       py::arg("check_momentum") = py::none(),
       py::arg("is_too_large"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Particle orbit.
@@ -26236,8 +26041,9 @@ is_too_large :
       py::arg("eval"),
       py::arg("mat_tunes"),
       py::arg("Nmat"),
-      R"""(This subroutine orderes the eigensystem such that Nmat.mat_symp_conj(N) is closest
+      R"""(Subroutine order_evecs_by_N_similarity(evec, eval, mat_tunes, Nmat, err_flag)
 
+This subroutine orderes the eigensystem such that Nmat.mat_symp_conj(N) is closest
 to the identity.  Nmat is supplied externally.
 
 Parameters
@@ -26286,8 +26092,9 @@ err_flag : bool
       py::arg("evec"),
       py::arg("eval"),
       py::arg("mat_tunes") = py::none(),
-      R"""(This subroutine orderes the eigensystem according to which modes dominate the horizontal,
+      R"""(Subroutine order_evecs_by_plane_dominance(evec, eval, mat_tunes)
 
+This subroutine orderes the eigensystem according to which modes dominate the horizontal,
 vertical, and longitudinal planes.  This subroutine works well in machines
 that are not strongly coupled.  In machines with strong coupling, where the relation
 between the three eigenmodes a, b, c and the three lab coordinates x, y, z can change
@@ -26312,8 +26119,9 @@ mat_tunes : float, optional
       py::arg("eval"),
       py::arg("mat_tunes"),
       py::arg("abz_tunes"),
-      R"""(This subroutine orders the eigensystem by matching the tunes of the eigensystem to
+      R"""(Subroutine order_evecs_by_tune(evec, eval, mat_tunes, abz_tunes, err_flag)
 
+This subroutine orders the eigensystem by matching the tunes of the eigensystem to
 externally supplied tunes abz_tunes.  abz_tunes is in radians.
 
 Parameters
@@ -26338,8 +26146,9 @@ err_flag : bool
       "order_particles_in_z",
       &Bmad::order_particles_in_z,
       py::arg("bunch"),
-      R"""(Routine to order the particles longitudinally in terms of decreasing %vec(5).
+      R"""(Subroutine order_particles_in_z (bunch)
 
+Routine to order the particles longitudinally in terms of decreasing %vec(5).
 That is from large z (head of bunch) to small z.
 Only live particles are ordered.
 
@@ -26353,9 +26162,7 @@ bunch : BunchStruct
       &Bmad::order_super_lord_slaves,
       py::arg("lat"),
       py::arg("ix_lord"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lat with fixed controls.
@@ -26367,9 +26174,7 @@ ix_lord : int
       &python_ordinal_str,
       py::arg("n"),
       py::arg("str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 n : 
 str : 
@@ -26394,9 +26199,7 @@ str :
       py::arg("nlo"),
       py::arg("nhi"),
       py::arg("npad"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 nlo : 
 nhi : 
@@ -26408,9 +26211,7 @@ npad :
       py::arg("nlo"),
       py::arg("nhi"),
       py::arg("npad"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 nlo : 
 nhi : 
@@ -26422,9 +26223,7 @@ npad :
       py::arg("nlo"),
       py::arg("nhi"),
       py::arg("npad"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 nlo : 
 nhi : 
@@ -26439,9 +26238,7 @@ npad :
       py::arg("delta"),
       py::arg("umin"),
       py::arg("npad"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 gam : 
 a : 
@@ -26467,12 +26264,7 @@ npad :
           return py::cast(s.b);
         throw py::index_error();
       });
-  m.def(
-      "osc_read_rectpipe_grn",
-      &Bmad::osc_read_rectpipe_grn,
-      R"""(No docstring available
-
-)""");
+  m.def("osc_read_rectpipe_grn", &Bmad::osc_read_rectpipe_grn, R"""()""");
   m.def(
       "osc_write_rectpipe_grn",
       &python_osc_write_rectpipe_grn,
@@ -26484,9 +26276,7 @@ npad :
       py::arg("nlo"),
       py::arg("nhi"),
       py::arg("gamma"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 apipe : 
 bpipe : 
@@ -26527,18 +26317,20 @@ gamma :
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err_flag"),
-      R"""(Subroutine to parse a "cartesian_map = {}" construct
+      R"""(Subroutine parse_cartesian_map (ct_map, ele, lat, delim, delim_found, err_flag)
+
+Subroutine to parse a "cartesian_map = {}" construct
 
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is private to bmad_parser_mod.
 This must read in:
 {type = ,
-dr = ,
-r0 = ,
-pt(i,j,k) = ( (ex_re, ex_im), .... (bz_re, bz_im) )
-.
-.
-. ) },
+   dr = ,
+   r0 = ,
+   pt(i,j,k) = ( (ex_re, ex_im), .... (bz_re, bz_im) )
+   .
+   .
+   . ) },
 
 )""");
   py::class_<PyParseCartesianMap, std::unique_ptr<PyParseCartesianMap>>(
@@ -26570,9 +26362,7 @@ pt(i,j,k) = ( (ex_re, ex_im), .... (bz_re, bz_im) )
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err_flag"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 cl_map : 
 ele : 
@@ -26611,9 +26401,7 @@ err_flag :
       py::arg("descrip"),
       py::arg("width"),
       py::arg("digits"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 format_str : 
 n_repeat : 
@@ -26661,7 +26449,9 @@ digits :
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err_flag"),
-      R"""(Subroutine to parse a "gen_grad_map = {}" construct
+      R"""(Subroutine parse_gen_grad_map (gg_map, ele, lat, delim, delim_found, err_flag)
+
+Subroutine to parse a "gen_grad_map = {}" construct
 
 )""");
   py::class_<PyParseGenGradMap, std::unique_ptr<PyParseGenGradMap>>(
@@ -26690,9 +26480,7 @@ digits :
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err_flag"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 g_field : 
 ele : 
@@ -26732,11 +26520,13 @@ err_flag :
       py::arg("close_delim") = py::none(),
       py::arg("default_value") = py::none(),
       py::arg("is_ok"),
-      R"""(separator, close_delim, default_value) result (is_ok)
+      R"""(Function parse_integer_list (err_str, lat, int_array, exact_size, delim, delim_found, open_delim,
+                                      separator, close_delim, default_value) result (is_ok)
 
 Routine to parse a list of integers of the form:
-open_delim integer_1 separator integer_2 . . . close_delim
+   open_delim integer_1 separator integer_2 . . . close_delim
 Example:   "(1.2, 2.3, 4.4, 8.5)"
+
 Similar to parse_integer_list2 except does not use allocatable array.
 See parse_integer_list2 for more details
 
@@ -26787,10 +26577,11 @@ See parse_integer_list2 for more details
       py::arg("separator") = py::none(),
       py::arg("close_delim") = py::none(),
       py::arg("default_value") = py::none(),
-      R"""(open_delim, separator, close_delim, default_value) result (is_ok)
+      R"""(Function parse_integer_list2 (err_str, lat, int_array, num_found, delim, delim_found, num_expected,
+                                       open_delim, separator, close_delim, default_value) result (is_ok)
 
 Routine to parse a list of integers of the form
-open_delim integer_1 separator integer_2 . . . close_delim
+   open_delim integer_1 separator integer_2 . . . close_delim
 Example:   (1, 2, 4, 8)
 
 Parameters
@@ -26865,12 +26656,15 @@ delim_found : bool
       py::arg("separator") = py::none(),
       py::arg("close_delim") = py::none(),
       py::arg("default_value") = py::none(),
-      R"""(separator, close_delim, default_value, num_found) result (is_ok)
+      R"""(Function parse_real_list (lat, err_str, real_array, exact_size, delim, delim_found, open_delim,
+                               separator, close_delim, default_value, num_found) result (is_ok)
 
 Routine to parse a list of reals of the form:
-open_delim real_1 separator real_2 . . . close_delim
+   open_delim real_1 separator real_2 . . . close_delim
 Example:   "(1.2, 2.3, 4.4, 8.5)"
+
 Similar to parse_real_list2 except does not use allocatable array.
+Also see: parse_real_matrix.
 
 Parameters
 ----------
@@ -26932,10 +26726,11 @@ parse_real_matrix.
       py::arg("close_brace") = py::none(),
       py::arg("default_value") = py::none(),
       py::arg("single_value") = py::none(),
-      R"""(open_delim, separator, close_delim, default_value, single_value) result (is_ok)
+      R"""(Function parse_real_list2 (lat, err_str, real_array, num_found, delim, delim_found, num_expected,
+                           open_delim, separator, close_delim, default_value, single_value) result (is_ok)
 
 Routine to parse a list of reals of the form:
-open_brace real_1 separator real_2 . . . close_brace
+   open_brace real_1 separator real_2 . . . close_brace
 Example:   "(1.2, 2.3, 4.4, 8.5)"
 
 Parameters
@@ -27013,9 +26808,7 @@ pase_real_list parse_real_matrix.
       py::arg("word"),
       py::arg("lat"),
       py::arg("redef_is_error"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 word : 
 lat : 
@@ -27047,7 +26840,9 @@ redef_is_error :
       py::arg("delim_found"),
       py::arg("call_found"),
       py::arg("err_flag") = py::none(),
-      R"""(Routine to check if there is a "call::XXX" construct in the input stream.
+      R"""(Subroutine parser_call_check(word, ix_word, delim, delim_found, call_found, err_flag))
+
+Routine to check if there is a "call::XXX" construct in the input stream.
 
 )""");
   py::class_<PyParserCallCheck, std::unique_ptr<PyParserCallCheck>>(
@@ -27081,7 +26876,9 @@ redef_is_error :
       &Bmad::parser_fast_complex_read,
       py::arg("ele"),
       py::arg("err_str"),
-      R"""(Routine to read an array of complex numbers.
+      R"""(Function parser_fast_complex_read (cmplx_vec, ele, delim, err_str)  result (is_ok)
+
+Routine to read an array of complex numbers.
 
 This routine assumes that the array values are pure numbers in the form "<re>" or "(<re> <im>)"
 where <re> and <im> are real numbers (not expressions) and there are no commas except possibly
@@ -27134,7 +26931,9 @@ is_ok : bool
       py::arg("delim_wanted"),
       py::arg("err_str"),
       py::arg("is_ok"),
-      R"""(
+      R"""(Function parser_fast_integer_read (int_vec, ele, delim_wanted, err_str)  result (is_ok)
+
+
 Returns
 -------
 is_ok
@@ -27167,11 +26966,15 @@ is_ok
       py::arg("end_delims"),
       py::arg("err_str"),
       py::arg("exact_size") = py::none(),
-      R"""(Routine to read an array of real numbers.
+      R"""(Function parser_fast_real_read (real_vec, ele, end_delims, delim, err_str, exact_size, n_real)  result (is_ok)
+
+Routine to read an array of real numbers.
 
 This routine assumes that the array values are pure numbers in the form "<re1> <re2> ...,"
 where <re1>, <re2>, etc. are real numbers (not expressions) and there are no commas except possibly,
 at the end of the array.
+
+Note: if end_delim is "," and next character is a delim but not ",", the next character is taken as the delim.
 
 Parameters
 ----------
@@ -27230,8 +27033,9 @@ n_real : int
       py::arg("err") = py::none(),
       py::arg("open_file") = py::none(),
       py::arg("abort_on_open_error") = py::none(),
-      R"""(Subroutine to keep track of the files that are opened for reading.
+      R"""(Subroutine parser_file_stack (how, file_name_in, finished, err, open_file, abort_on_open_error)
 
+Subroutine to keep track of the files that are opened for reading.
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
 
@@ -27274,9 +27078,7 @@ This subroutine is not intended for general use.
       py::arg("err"),
       py::arg("str1") = py::none(),
       py::arg("str2") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 int_val : 
 word : 
@@ -27328,9 +27130,7 @@ str2 :
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 attrib_name : 
 this_logic : 
@@ -27369,7 +27169,9 @@ err :
       "parser_identify_fork_to_element",
       &Bmad::parser_identify_fork_to_element,
       py::arg("lat"),
-      R"""(Routine to identify the elements the forks in a lattice are branching to.
+      R"""(Subroutine parser_identify_fork_to_element (lat)
+
+Routine to identify the elements the forks in a lattice are branching to.
 
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
@@ -27379,13 +27181,17 @@ This subroutine is not intended for general use.
       "parser_init_custom_elements",
       &Bmad::parser_init_custom_elements,
       py::arg("lat"),
-      R"""()""");
+      R"""(Subroutine parser_init_custom_elements (lat)
+
+)""");
   m.def(
       "parser_print_line",
       &python_parser_print_line,
       py::arg("lat"),
       py::arg("end_of_file"),
-      R"""(This routine is called when a print statement is found in the lattice file.
+      R"""(Subroutine parser_print_line(end_of_file)
+
+This routine is called when a print statement is found in the lattice file.
 
 )""");
   py::class_<PyParserPrintLine, std::unique_ptr<PyParserPrintLine>>(
@@ -27406,8 +27212,9 @@ This subroutine is not intended for general use.
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err_flag"),
-      R"""(Subroutine to read in a long-range wake field from an external file.
+      R"""(Subroutine parser_read_lr_wake (ele, delim, delim_found, err_flag)
 
+Subroutine to read in a long-range wake field from an external file.
 This subroutine is used by bmad_parser and bmad_parser2.
 
 Parameters
@@ -27438,8 +27245,9 @@ ele : EleStruct
       &Bmad::parser_read_old_format_lr_wake,
       py::arg("ele"),
       py::arg("lr_file_name"),
-      R"""(Subroutine to read in a long-range wake field from an external file.
+      R"""(Subroutine parser_read_old_format_lr_wake (ele, lr_file_name)
 
+Subroutine to read in a long-range wake field from an external file.
 This subroutine is used by bmad_parser and bmad_parser2.
 
 Parameters
@@ -27455,8 +27263,9 @@ lr_file_name : unknown
       &Bmad::parser_read_old_format_sr_wake,
       py::arg("ele"),
       py::arg("sr_file_name"),
-      R"""(Subroutine to read in a short-range wake field from an external file.
+      R"""(Subroutine parser_read_old_format_sr_wake (ele, sr_file_name)
 
+Subroutine to read in a short-range wake field from an external file.
 This subroutine is used by bmad_parser and bmad_parser2.
 
 Parameters
@@ -27474,8 +27283,9 @@ sr_file_name : unknown
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err_flag"),
-      R"""(Subroutine to read in a short-range wake field.
+      R"""(Subroutine parser_read_sr_wake (ele, delim, delim_found, err_flag)
 
+Subroutine to read in a short-range wake field.
 This subroutine is used by bmad_parser and bmad_parser2.
 
 Parameters
@@ -27507,8 +27317,9 @@ ele : EleStruct
       py::arg("con_in"),
       py::arg("lord"),
       py::arg("ix_var"),
-      R"""(Routine to transfer the information from an input control_struct (which stores
+      R"""(Subroutine parser_transfer_control_struct (con_in, con_out, lord, ix_var)
 
+Routine to transfer the information from an input control_struct (which stores
 the user input parameters) to a control_struct that will be stored in the lat%control
 or lord%control%ramp for a ramper.
 
@@ -27536,7 +27347,9 @@ con_out : ControlStruct
       py::arg("in_body_frame") = py::none(),
       py::arg("w_mat_out") = py::none(),
       py::arg("particle"),
-      R"""(Returns the particle in global time coordinates given is coordinates orb in lattice lat.
+      R"""(Function particle_in_global_frame (orb, in_time_coordinates, in_body_frame, w_mat_out) result (particle)
+
+Returns the particle in global time coordinates given is coordinates orb in lattice lat.
 
 Parameters
 ----------
@@ -27560,9 +27373,7 @@ particle
       &python_particle_is_moving_backwards,
       py::arg("orbit"),
       py::arg("is_moving_backwards"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Particle coordinates
@@ -27593,9 +27404,7 @@ is_moving_backwards :
       py::arg("orbit"),
       py::arg("dir") = py::none(),
       py::arg("is_moving_forward"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Particle coordinates
@@ -27632,9 +27441,7 @@ is_moving_forward :
       py::arg("rf_freq") = py::none(),
       py::arg("abs_time") = py::none(),
       py::arg("time"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Particle coordinates
@@ -27674,9 +27481,7 @@ time :
       py::arg("x_pitch"),
       py::arg("y_pitch"),
       py::arg("is_flip"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x_pitch : float
     Rotaion around y-axis
@@ -27707,9 +27512,7 @@ is_flip :
       py::arg("patch"),
       py::arg("ref_coords") = py::none(),
       py::arg("length"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 patch : EleStruct
     Patch element.
@@ -27733,8 +27536,9 @@ length :
       &Bmad::photon_absorption_and_phase_shift,
       py::arg("material"),
       py::arg("Energy"),
-      R"""(Routine to calcualte the absorption and phase shift values for a photon with a given
+      R"""(Subroutine photon_absorption_and_phase_shift (material, Energy, absorption, phase_shift, err_flag)
 
+Routine to calcualte the absorption and phase shift values for a photon with a given
 energy going through a particular material.
 
 Parameters
@@ -27790,7 +27594,9 @@ err_flag : bool
       py::arg("ix_pt") = py::none(),
       py::arg("iy_pt") = py::none(),
       py::arg("pixel_pt") = py::none(),
-      R"""(Routine to add photon statistics to the appropriate pixel of a "detector" grid.
+      R"""(Subroutine photon_add_to_detector_statistics (orbit0, orbit, ele, ix_pt, iy_pt, pixel_pt)
+
+Routine to add photon statistics to the appropriate pixel of a "detector" grid.
 
 It is assumed that track_to_surface has been called so that the photon is at the
 detector surface and that orbit%vec(1) and %vec(3) are in surface coords (needed for curved detectors).
@@ -27834,7 +27640,9 @@ pixel_pt : PixelPtStruct, optional
       py::arg("graze_angle_in"),
       py::arg("energy"),
       py::arg("surface"),
-      R"""(Routine to reflect a photon from a surface including both diffuse and specular reflections.
+      R"""(Subroutine photon_reflection (graze_angle_in, energy, surface, graze_angle_out, phi_out)
+
+Routine to reflect a photon from a surface including both diffuse and specular reflections.
 
 Parameters
 ----------
@@ -27871,8 +27679,9 @@ phi_out : float
   m.def(
       "photon_reflection_std_surface_init",
       &Bmad::photon_reflection_std_surface_init,
-      R"""(Routine to initialize the standard proton reflection probability tables.
+      R"""(Subroutine photon_reflection_std_surface_init (surface)
 
+Routine to initialize the standard proton reflection probability tables.
 The standard tables are for 10 nm C film on Al substrate.
 The surface roughness for diffuse scattering is 200 nm and the
 the surface roughness correlation length is 5.5 um.
@@ -27889,12 +27698,14 @@ surface :
       py::arg("angle"),
       py::arg("energy"),
       py::arg("surface"),
-      R"""(Routine to evaluate the photon reflectivity.
+      R"""(Subroutine photon_reflectivity (angle, energy, surface, p_reflect, rel_p_specular)
 
-probability of absorption          = 1 - p_reflect
-probability of reflection          = p_reflect
-probability of specular reflection = p_reflect * rel_p_specular
-probability of diffuse reflection  = p_reflect * (1 - rel_p_specular)
+Routine to evaluate the photon reflectivity.
+  probability of absorption          = 1 - p_reflect
+  probability of reflection          = p_reflect
+  probability of specular reflection = p_reflect * rel_p_specular
+  probability of diffuse reflection  = p_reflect * (1 - rel_p_specular)
+
 Use photon_reflection_std_surface_init or read_surface_reflection_file to get surface info.
 
 Parameters
@@ -27941,7 +27752,9 @@ rel_p_specular : float
       py::arg("y_lim"),
       py::arg("z_lim"),
       py::arg("source_ele"),
-      R"""(Routine to calculate the corner coords in the source_ele ref frame.
+      R"""(Subroutine photon_target_corner_calc (aperture_ele, x_lim, y_lim, z_lim, source_ele, corner)
+
+Routine to calculate the corner coords in the source_ele ref frame.
 
 Parameters
 ----------
@@ -27986,9 +27799,11 @@ corner : TargetPointStruct
       "photon_target_setup",
       &Bmad::photon_target_setup,
       py::arg("ele"),
-      R"""(Routine to calculate and store the parmeters needed for photon targeting.
+      R"""(Subroutine photon_target_setup (ele)
 
+Routine to calculate and store the parmeters needed for photon targeting.
 This routine is called by Bmad parsing routines and is not meant for general use.
+
 Photon initialization with targeting is done by the routine init_photon_from_a_photon_init_ele
 Which is called by init_coord.
 
@@ -28003,7 +27818,9 @@ ele : EleStruct
       "photon_type",
       &Bmad::photon_type,
       py::arg("ele"),
-      R"""(Routine to return the type of photon to be tracked: coherent$ or incoherent$.
+      R"""(Function photon_type (ele) result (e_type)
+
+Routine to return the type of photon to be tracked: coherent$ or incoherent$.
 
 Parameters
 ----------
@@ -28023,9 +27840,7 @@ e_type : int
       py::arg("ele_orientation"),
       py::arg("return_stream_end") = py::none(),
       py::arg("physical_end"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 track_end : int
     first_track_edge$, second_track_edge$, surface$, or in_between$
@@ -28057,8 +27872,9 @@ physical_end :
       py::arg("direction"),
       py::arg("max_target_area"),
       py::arg("w_to_surface") = py::none(),
-      R"""(Routine to emit a photon from a point that may be on a surface.
+      R"""(Subroutine point_photon_emission (ele, param, orbit, direction, max_target_area, w_to_surface)
 
+Routine to emit a photon from a point that may be on a surface.
 If there is a downstream target, the emission calc will take this into account.
 
 Parameters
@@ -28082,15 +27898,23 @@ w_to_surface : float, optional
       "pointer_to_branch",
       py::overload_cast<EleProxy&>(&Bmad::pointer_to_branch),
       py::arg("ele"),
-      R"""(Routine to return a pointer to the lattice branch associated with a given name
+      R"""(Function pointer_to_branch
 
+Routine to return a pointer to the lattice branch associated with a given name
 or a given element.
-pointer_to_branch_given_ele (ele) result (branch_ptr))
-pointer_to_branch_given_name (branch_name, lat, parameter_is_branch0, blank_branch) result (branch_ptr)
+
+This routine is an overloaded name for:
+  pointer_to_branch_given_ele (ele) result (branch_ptr))
+  pointer_to_branch_given_name (branch_name, lat, parameter_is_branch0, blank_branch) result (branch_ptr)
+
 The lattice branch *associated* with a given element is not necessarily the
 branch where the element is *located*. For example, all lords live in branch #0.
 But the branch associated with a super_lord element is the branch of its slaves.
+
 To get the branch where the element is located, simply use ele%ix_branch.
+
+Note: Result is ambiguous if ele argument is associated with multiple branches
+which can happen, for example, with overlay elements.
 
 Parameters
 ----------
@@ -28125,15 +27949,23 @@ Overloaded versions:
       py::arg("lat"),
       py::arg("parameter_is_branch0") = py::none(),
       py::arg("blank_branch") = py::none(),
-      R"""(Routine to return a pointer to the lattice branch associated with a given name
+      R"""(Function pointer_to_branch
 
+Routine to return a pointer to the lattice branch associated with a given name
 or a given element.
-pointer_to_branch_given_ele (ele) result (branch_ptr))
-pointer_to_branch_given_name (branch_name, lat, parameter_is_branch0, blank_branch) result (branch_ptr)
+
+This routine is an overloaded name for:
+  pointer_to_branch_given_ele (ele) result (branch_ptr))
+  pointer_to_branch_given_name (branch_name, lat, parameter_is_branch0, blank_branch) result (branch_ptr)
+
 The lattice branch *associated* with a given element is not necessarily the
 branch where the element is *located*. For example, all lords live in branch #0.
 But the branch associated with a super_lord element is the branch of its slaves.
+
 To get the branch where the element is located, simply use ele%ix_branch.
+
+Note: Result is ambiguous if ele argument is associated with multiple branches
+which can happen, for example, with overlay elements.
 
 Parameters
 ----------
@@ -28164,13 +27996,22 @@ Overloaded versions:
       py::arg("lat"),
       py::arg("ix_ele"),
       py::arg("ix_branch") = py::none(),
-      R"""(Routine to return a pointer to an element.
+      R"""(Function pointer_to_ele (...)
+
+Routine to return a pointer to an element.
+pointer_to_ele is an overloaded name for:
+    Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr)
+    Function pointer_to_ele2 (lat, ele_loc) result (ele_ptr)
+    Function pointer_to_ele3 (lat, ele_name) result (ele_ptr)
+    Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
 
 pointer_to_ele4(lat, foreign_ele) is useful when foreign_ele is associated with a separate
 lattice that has an identical layout. pointer_to_ele4 will then return the corresponding
 element in lat.
+
+Note that using ele_name to locate an element is potentially dangerous if there
 are multiple elements that have the same name. Better in this case is to use:
-lat_ele_locator
+  lat_ele_locator
 
 Parameters
 ----------
@@ -28196,7 +28037,6 @@ ele_ptr : EleStruct
 
 Notes
 -----
-Note that using ele_name to locate an element is potentially dangerous if there
 Related routines:
 pointer_to_slave pointer_to_lord
 Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
@@ -28208,13 +28048,22 @@ Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
       py::overload_cast<LatProxy&, LatEleLocProxy&>(&Bmad::pointer_to_ele),
       py::arg("lat"),
       py::arg("ele_loc"),
-      R"""(Routine to return a pointer to an element.
+      R"""(Function pointer_to_ele (...)
+
+Routine to return a pointer to an element.
+pointer_to_ele is an overloaded name for:
+    Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr)
+    Function pointer_to_ele2 (lat, ele_loc) result (ele_ptr)
+    Function pointer_to_ele3 (lat, ele_name) result (ele_ptr)
+    Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
 
 pointer_to_ele4(lat, foreign_ele) is useful when foreign_ele is associated with a separate
 lattice that has an identical layout. pointer_to_ele4 will then return the corresponding
 element in lat.
+
+Note that using ele_name to locate an element is potentially dangerous if there
 are multiple elements that have the same name. Better in this case is to use:
-lat_ele_locator
+  lat_ele_locator
 
 Parameters
 ----------
@@ -28240,7 +28089,6 @@ ele_ptr : EleStruct
 
 Notes
 -----
-Note that using ele_name to locate an element is potentially dangerous if there
 Related routines:
 pointer_to_slave pointer_to_lord
 Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
@@ -28252,13 +28100,22 @@ Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
       py::overload_cast<LatProxy&, std::string>(&Bmad::pointer_to_ele),
       py::arg("lat"),
       py::arg("ele_name"),
-      R"""(Routine to return a pointer to an element.
+      R"""(Function pointer_to_ele (...)
+
+Routine to return a pointer to an element.
+pointer_to_ele is an overloaded name for:
+    Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr)
+    Function pointer_to_ele2 (lat, ele_loc) result (ele_ptr)
+    Function pointer_to_ele3 (lat, ele_name) result (ele_ptr)
+    Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
 
 pointer_to_ele4(lat, foreign_ele) is useful when foreign_ele is associated with a separate
 lattice that has an identical layout. pointer_to_ele4 will then return the corresponding
 element in lat.
+
+Note that using ele_name to locate an element is potentially dangerous if there
 are multiple elements that have the same name. Better in this case is to use:
-lat_ele_locator
+  lat_ele_locator
 
 Parameters
 ----------
@@ -28284,7 +28141,6 @@ ele_ptr : EleStruct
 
 Notes
 -----
-Note that using ele_name to locate an element is potentially dangerous if there
 Related routines:
 pointer_to_slave pointer_to_lord
 Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
@@ -28296,13 +28152,22 @@ Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
       py::overload_cast<LatProxy&, EleProxy&>(&Bmad::pointer_to_ele),
       py::arg("lat"),
       py::arg("foreign_ele"),
-      R"""(Routine to return a pointer to an element.
+      R"""(Function pointer_to_ele (...)
+
+Routine to return a pointer to an element.
+pointer_to_ele is an overloaded name for:
+    Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr)
+    Function pointer_to_ele2 (lat, ele_loc) result (ele_ptr)
+    Function pointer_to_ele3 (lat, ele_name) result (ele_ptr)
+    Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
 
 pointer_to_ele4(lat, foreign_ele) is useful when foreign_ele is associated with a separate
 lattice that has an identical layout. pointer_to_ele4 will then return the corresponding
 element in lat.
+
+Note that using ele_name to locate an element is potentially dangerous if there
 are multiple elements that have the same name. Better in this case is to use:
-lat_ele_locator
+  lat_ele_locator
 
 Parameters
 ----------
@@ -28328,7 +28193,6 @@ ele_ptr : EleStruct
 
 Notes
 -----
-Note that using ele_name to locate an element is potentially dangerous if there
 Related routines:
 pointer_to_slave pointer_to_lord
 Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
@@ -28342,18 +28206,30 @@ Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
       py::arg("s"),
       py::arg("choose_max"),
       py::arg("print_err") = py::none(),
-      R"""(Function to return a pointer to the element at position s.
+      R"""(Function pointer_to_element_at_s (branch, s, choose_max, err_flag, s_eff, position) result (ele)
 
+Function to return a pointer to the element at position s.
 That is, return ele => branch%ele(ix_ele) such that:
 If choose_max = True:
-If s = branch%ele(ix_end_of_branch): ix_ele = ix_end_of_branch
-Else: branch%ele(ix_ele)%s_strat <= s < branch%ele(ix_ele)%s
+    If s = branch%ele(ix_end_of_branch): ix_ele = ix_end_of_branch
+    Else: branch%ele(ix_ele)%s_strat <= s < branch%ele(ix_ele)%s
 If choose_max = False:
-If s = branch%ele(0): ix_ele = 0
-Else: branch%ele(ix_ele)%s_start < s <= branch%ele(ix_ele)%s
+    If s = branch%ele(0): ix_ele = 0
+    Else: branch%ele(ix_ele)%s_start < s <= branch%ele(ix_ele)%s
 That is, if s corresponds to an element boundary between elements with indexes ix1 and ix2 = ix1 + 1:
-choose_max = True  => ix_ele = ix2
-choose_max = False => ix_ele = ix1
+    choose_max = True  => ix_ele = ix2
+    choose_max = False => ix_ele = ix1
+
+Also see: element_at_s
+
+The setting of choose_max only makes a difference when s corresponds to an element boundary.
+
+Note: For a circular lattice, s is evaluated at the effective s which
+is modulo the branch length:
+    s_eff = s - branch_length * floor(s/branch_length)
+
+Note: If there are multiple elements that are at the given s position due to the presence of
+an element with a negative length, which of the possible elements is actually chosen is ill-defined.
 
 Parameters
 ----------
@@ -28418,9 +28294,7 @@ negative length which of the possible elements is actually chosen is ill-defined
       py::arg("ele"),
       py::arg("ix_field_ele"),
       py::arg("field_ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element with sum number of associated field elements.
@@ -28435,9 +28309,7 @@ field_ele :
       &Bmad::pointer_to_girder,
       py::arg("ele"),
       py::arg("girder"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element to check.
@@ -28453,9 +28325,7 @@ girder :
       py::arg("ix_lord"),
       py::arg("lord_type") = py::none(),
       py::arg("lord_ptr"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 slave : EleStruct
     Slave element.
@@ -28501,9 +28371,7 @@ lord_ptr :
       &Bmad::pointer_to_multipass_lord,
       py::arg("ele"),
       py::arg("multi_lord"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element.
@@ -28543,9 +28411,7 @@ multi_lord :
       py::arg("skip_beginning") = py::none(),
       py::arg("follow_fork") = py::none(),
       py::arg("next_ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 this_ele : EleStruct
     Starting element.
@@ -28562,7 +28428,9 @@ next_ele :
       &SimUtils::pointer_to_ran_state,
       py::arg("ran_state") = py::none(),
       py::arg("ix_thread") = py::none(),
-      R"""(Routine to point to the appropriate state structure for generating random numbers
+      R"""(Function pointer_to_ran_state(ran_state, ix_thread) result (ran_state_ptr)
+
+Routine to point to the appropriate state structure for generating random numbers
 
 Parameters
 ----------
@@ -28582,7 +28450,17 @@ ran_state_ptr : RandomStateStruct
       py::arg("lord"),
       py::arg("ix_slave"),
       py::arg("lord_type") = py::none(),
-      R"""(Function to point to a slave of a lord.
+      R"""(Function pointer_to_slave (lord, ix_slave, control, lord_type, ix_lord_back, ix_control, ix_ic) result (slave_ptr)
+
+Function to point to a slave of a lord.
+Note: Ramper lords do not have any associated slaves (slaves are assigned dynamically at run time).
+
+If lord_type = all$ (the default) the range for ix_slave is:
+  1 to lord%n_slave                                 for "regular" slaves.
+  lord%n_slave+1 to lord%n_slave+lord%n_slave_field for field overlap slaves.
+
+If lord_type = field_lord$, only the field overlap slaves may be accessed and the range for ix_slave is:
+  1 to lord%n_slave_field
 
 Parameters
 ----------
@@ -28643,9 +28521,7 @@ pointer_to_lord pointer_to_super_lord pointer_to_ele num_lords
       py::arg("slave"),
       py::arg("lord_type") = py::none(),
       py::arg("lord_ptr"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 slave : EleStruct
     Slave element.
@@ -28701,7 +28577,11 @@ lord_ptr :
       py::arg("extend_grid") = py::none(),
       py::arg("xx") = py::none(),
       py::arg("yy") = py::none(),
-      R"""(Routine to point to the grid point struct associated with point (x,y).
+      R"""(Function pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
+
+Routine to point to the grid point struct associated with point (x,y).
+
+Note: If nearest = True, the grid boundary is a length dr/2 from the boundary grid points.
 
 Parameters
 ----------
@@ -28768,7 +28648,11 @@ pt : GridPointStruct
       py::arg("extend_grid") = py::none(),
       py::arg("xx") = py::none(),
       py::arg("yy") = py::none(),
-      R"""(Routine to point to the grid point struct associated with point (x,y).
+      R"""(Function pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
+
+Routine to point to the grid point struct associated with point (x,y).
+
+Note: If nearest = True, the grid boundary is a length dr/2 from the boundary grid points.
 
 Parameters
 ----------
@@ -28828,9 +28712,7 @@ pt : GridPointStruct
       &Bmad::pointer_to_wake_ele,
       py::arg("ele"),
       py::arg("wake_ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element.
@@ -28843,9 +28725,12 @@ wake_ele :
       &Bmad::pointer_to_wall3d,
       py::arg("ele"),
       py::arg("ix_wall") = py::none(),
-      R"""(Function to return a pointer to a wall3d structure associated
+      R"""(Function pointer_to_wall3d (ele, ix_wall, ds_offset, is_branch_wall) result (wall3d)
 
+Function to return a pointer to a wall3d structure associated
 with a given lattice element.
+
+Note: The wall associated with a the vacuum chamber is the branch%wall3d.
 
 Parameters
 ----------
@@ -28887,9 +28772,7 @@ is_branch_wall : bool
       &Bmad::polar_to_spinor,
       py::arg("polar"),
       py::arg("spinor"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 polar : SpinPolarStruct
     includes polar phase
@@ -28900,9 +28783,7 @@ spinor :
       &Bmad::polar_to_vec,
       py::arg("polar"),
       py::arg("vec"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 polar : 
     Spin_polar_struct
@@ -28915,9 +28796,7 @@ vec :
       py::arg("x"),
       py::arg("diff_coef") = py::none(),
       py::arg("y"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 poly : float
     Polynomial
@@ -28943,9 +28822,7 @@ y :
       &python_probability_funct,
       py::arg("x"),
       py::arg("prob"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : float
     Function argument.
@@ -28968,9 +28845,7 @@ prob :
       py::arg("a"),
       py::arg("b"),
       py::arg("func_retval__"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 a : 
 b : 
@@ -28993,13 +28868,17 @@ projdd :
       py::arg("ring"),
       py::arg("ix"),
       py::arg("mode"),
-      R"""(Obtains the projected x, y, and z beamsizes by building the sigma matrix
+      R"""(Subroutine project_emit_to_xyz(ring, ix, mode, sigma_x, sigma_y, sigma_z)
 
+Obtains the projected x, y, and z beamsizes by building the sigma matrix
 from the normal mode emittances and 1-turn transfer matrix.
 These projectes beamsize are what would be seen by instrumentation.
+
 This method of projecting takes into account transverse and longitudinal coupling.
+
 This method of obtaining the projected beam sizes is from "Alternitive approach to general
 coupled linear optics" by Andrzej Wolski.
+
 The normal mode emittances used to generate a beam envelop sigma matrix from the
 1-turn transfer matrix.  The projected sizes are from the 1, 1 3, 3 and 5, 5 elements of
 the sigma matrix.
@@ -29050,7 +28929,9 @@ sigma_z : float
       py::arg("t"),
       py::arg("p"),
       py::arg("args"),
-      R"""(This wraps the array-valued psi_prime function as a scalar.
+      R"""(Subroutine psi_prime_sca(t, p, dpdt, args)
+
+This wraps the array-valued psi_prime function as a scalar.
 
 See psi_prime comments for details.
 
@@ -29072,9 +28953,7 @@ dpdt : float
       "ptc_bookkeeper",
       &Bmad::ptc_bookkeeper,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Bmad lattice.
@@ -29084,8 +28963,9 @@ lat : LatStruct
       &Bmad::ptc_closed_orbit_calc,
       py::arg("branch"),
       py::arg("radiation_damping_on") = py::none(),
-      R"""(Routine to calculate the closed orbit of a lattice branch using PTC.
+      R"""(Subroutine ptc_closed_orbit_calc (branch, closed_orbit, radiation_damping_on)
 
+Routine to calculate the closed orbit of a lattice branch using PTC.
 This routine assumes the associated PTC layout has been crated
 with lat_to_ptc_layout.
 
@@ -29107,7 +28987,11 @@ closed_orbit : CoordStruct
       &Bmad::ptc_emit_calc,
       py::arg("ele"),
       py::arg("sigma_mat"),
-      R"""(Routine to calculate emittances, etc.
+      R"""(Subroutine ptc_emit_calc (ele, norm_mode, sigma_mat, closed_orb)
+
+Routine to calculate emittances, etc.
+
+Note: This routine calls the PTC init_all routine.
 
 Parameters
 ----------
@@ -29148,7 +29032,8 @@ closed_orb : CoordStruct
       py::arg("even") = py::none(),
       py::arg("crossover") = py::none(),
       py::arg("crossover_wiggler") = py::none(),
-      R"""(even, crossover, crossover_wiggler)
+      R"""(Subroutine ptc_layouts_resplit (dKL_max, l_max, l_max_drift_only, bend_dorb, sex_dx,
+                                                          even, crossover, crossover_wiggler)
 
 Routine to resplit (that is, recalculate the number of integration steps for an element)
 For the fibres in all layouts. After doing a resplit, the tune (and any other relavent
@@ -29190,9 +29075,12 @@ crossover_wiggler(2) : int, optional
       &Bmad::ptc_one_turn_mat_and_closed_orbit_calc,
       py::arg("branch"),
       py::arg("pz") = py::none(),
-      R"""(Routine to compute the transfer matrices for the individual elements and closed orbit
+      R"""(Subroutine ptc_one_turn_mat_and_closed_orbit_calc (branch, pz)
 
+Routine to compute the transfer matrices for the individual elements and closed orbit
 for a lattice branch with closed geometry.
+
+Note: PTC itself does not compute Twiss parameters. Use twiss_from_mat6 to compute this.
 
 Parameters
 ----------
@@ -29207,9 +29095,7 @@ pz : float, optional
       "ptc_ran_seed_put",
       &Bmad::ptc_ran_seed_put,
       py::arg("iseed"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 iseed : int
     0 -> Use system clock.
@@ -29218,9 +29104,7 @@ iseed : int
       "ptc_set_rf_state_for_c_normal",
       &Bmad::ptc_set_rf_state_for_c_normal,
       py::arg("nocavity"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 nocavity : bool
     True -> RF is off and vice versa.
@@ -29228,8 +29112,9 @@ nocavity : bool
   m.def(
       "ptc_set_taylor_order_if_needed",
       &Bmad::ptc_set_taylor_order_if_needed,
-      R"""(Routine to see if the taylor_order for PTC needs to be set/changed.
+      R"""(Subroutine ptc_set_taylor_order_if_needed()
 
+Routine to see if the taylor_order for PTC needs to be set/changed.
 For example, for a change in bmad_com%taylor_order.
 
 )""");
@@ -29238,7 +29123,9 @@ For example, for a change in bmad_com%taylor_order.
       &Bmad::ptc_spin_calc,
       py::arg("ele"),
       py::arg("sigma_mat"),
-      R"""(Routine to equilibrium polarizations, etc.
+      R"""(Subroutine ptc_spin_calc (ele, norm_mode, sigma_mat, closed_orb)
+
+Routine to equilibrium polarizations, etc.
 
 Parameters
 ----------
@@ -29273,7 +29160,9 @@ closed_orb : CoordStruct
       &Bmad::ptc_track_all,
       py::arg("branch"),
       py::arg("orbit"),
-      R"""(Routine to track from the start to the end of a lattice branch.
+      R"""(Subroutine ptc_track_all (branch, orbit, track_state, err_flag)
+
+Routine to track from the start to the end of a lattice branch.
 
 Parameters
 ----------
@@ -29315,9 +29204,7 @@ err_flag : bool
       py::arg("ix2") = py::none(),
       py::arg("one_turn") = py::none(),
       py::arg("unit_start") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch : BranchStruct
     Lattice branch used in the calculation.
@@ -29348,9 +29235,11 @@ unit_start : bool, optional
       py::arg("t6"),
       py::arg("inductance"),
       py::arg("sig_z"),
-      R"""(Calculates potential well distortion as RF defocusing.  Calculates t6_pwd=t6.Mpwd,
+      R"""(Function pwd_mat(t6, inductance, sig_z) result (t6_pwd)
 
+Calculates potential well distortion as RF defocusing.  Calculates t6_pwd=t6.Mpwd,
 where Mpwd is identity with 65 element proportional to the inductance.
+
 Vpwd = -inductance * lat%param%n_part * e_charge * c_light**3 / SQRT(twopi) / sig_z**3 / omega_RF  !effective RF voltage from PWD
 Mpwd(6,5) = omega_RF * Vpwd / c_light / lat%ele(0)%value(E_TOT$) * branch%ele(i)%value(l$) / lat%param%total_length
 
@@ -29375,9 +29264,7 @@ t6_pwd : float
       &SimUtils::quadratic_roots,
       py::arg("coefs"),
       py::arg("root"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 coefs : float
     Coefficients of the quadratic equation with 0 = coefs(1) + coefs(2) * x + coefs(3) * x^2
@@ -29387,11 +29274,12 @@ root :
       "quat_conj",
       py::overload_cast<FixedArray1D<Complex, 4>>(&SimUtils::quat_conj),
       py::arg("q_in"),
-      R"""(Overloaded name to create the conjugate of a quaternian.
+      R"""(Function quat_conj (q_in) result (q_out)
 
+Overloaded name to create the conjugate of a quaternian.
 Overloaded functions are:
-Function quat_conj_real (q_in) result (q_out)
-Function quat_conj_complex (q_in) result (q_out)
+  Function quat_conj_real (q_in) result (q_out)
+  Function quat_conj_complex (q_in) result (q_out)
 
 Parameters
 ----------
@@ -29407,11 +29295,12 @@ q_out : float
       "quat_conj",
       py::overload_cast<FixedArray1D<Real, 4>>(&SimUtils::quat_conj),
       py::arg("q_in"),
-      R"""(Overloaded name to create the conjugate of a quaternian.
+      R"""(Function quat_conj (q_in) result (q_out)
 
+Overloaded name to create the conjugate of a quaternian.
 Overloaded functions are:
-Function quat_conj_real (q_in) result (q_out)
-Function quat_conj_complex (q_in) result (q_out)
+  Function quat_conj_real (q_in) result (q_out)
+  Function quat_conj_complex (q_in) result (q_out)
 
 Parameters
 ----------
@@ -29427,7 +29316,9 @@ q_out : float
       "quat_inverse",
       &SimUtils::quat_inverse,
       py::arg("q_in"),
-      R"""(Routine to create the inverse of a quaternian.
+      R"""(Function quat_inverse (q_in) result (q_out)
+
+Routine to create the inverse of a quaternian.
 
 Parameters
 ----------
@@ -29460,11 +29351,13 @@ q_out : float
       py::arg("q7") = py::none(),
       py::arg("q8") = py::none(),
       py::arg("q9") = py::none(),
-      R"""(Overloaded name to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
+      R"""(Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
 
+Overloaded name to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
+Note: q_out = q1 * q2 represents a rotation of q2 first followed by q1.
 Overloaded functions are:
-Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
-Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
+  Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
+  Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
 
 Parameters
 ----------
@@ -29477,10 +29370,6 @@ Returns
 -------
 q_out : float
     Resultant q1 * q2
-
-Notes
------
-Note: q_out = q1 * q2 represents a rotation of q2 first followed by q1.
 )""");
   m.def(
       "quat_mul",
@@ -29503,11 +29392,13 @@ Note: q_out = q1 * q2 represents a rotation of q2 first followed by q1.
       py::arg("q7") = py::none(),
       py::arg("q8") = py::none(),
       py::arg("q9") = py::none(),
-      R"""(Overloaded name to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
+      R"""(Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
 
+Overloaded name to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
+Note: q_out = q1 * q2 represents a rotation of q2 first followed by q1.
 Overloaded functions are:
-Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
-Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
+  Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
+  Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
 
 Parameters
 ----------
@@ -29520,10 +29411,6 @@ Returns
 -------
 q_out : float
     Resultant q1 * q2
-
-Notes
------
-Note: q_out = q1 * q2 represents a rotation of q2 first followed by q1.
 )""");
   m.def(
       "quat_rotate",
@@ -29531,11 +29418,12 @@ Note: q_out = q1 * q2 represents a rotation of q2 first followed by q1.
           &SimUtils::quat_rotate),
       py::arg("quat"),
       py::arg("vec_in"),
-      R"""(Overloaded name to rotate a vector using a quaternion..
+      R"""(Function quat_rotate (quat, vec_in) result (vec_out)
 
+Overloaded name to rotate a vector using a quaternion..
 Overloaded functions are:
-Function quat_rotate_real (quat, vec_in) result (vec_out)
-Function quat_rotate_complex (quat, vec_in) result (vec_out)
+  Function quat_rotate_real (quat, vec_in) result (vec_out)
+  Function quat_rotate_complex (quat, vec_in) result (vec_out)
 
 Parameters
 ----------
@@ -29555,11 +29443,12 @@ vec_out : float
           &SimUtils::quat_rotate),
       py::arg("quat"),
       py::arg("vec_in"),
-      R"""(Overloaded name to rotate a vector using a quaternion..
+      R"""(Function quat_rotate (quat, vec_in) result (vec_out)
 
+Overloaded name to rotate a vector using a quaternion..
 Overloaded functions are:
-Function quat_rotate_real (quat, vec_in) result (vec_out)
-Function quat_rotate_complex (quat, vec_in) result (vec_out)
+  Function quat_rotate_real (quat, vec_in) result (vec_out)
+  Function quat_rotate_complex (quat, vec_in) result (vec_out)
 
 Parameters
 ----------
@@ -29577,8 +29466,9 @@ vec_out : float
       "quat_to_axis_angle",
       &SimUtils::quat_to_axis_angle,
       py::arg("quat"),
-      R"""(Routine to convert from quaternion to axis + angle representation.
+      R"""(Subroutine quat_to_axis_angle (quat, axis, angle)
 
+Routine to convert from quaternion to axis + angle representation.
 The angle will be in the range 0 <= angle <= pi.
 
 Parameters
@@ -29615,7 +29505,9 @@ angle : float
       "quat_to_omega",
       &SimUtils::quat_to_omega,
       py::arg("quat"),
-      R"""(Routine to convert rotation from quaternion representation to omega (axis + angle).
+      R"""(Function quat_to_omega (quat) result (omega)
+
+Routine to convert rotation from quaternion representation to omega (axis + angle).
 
 Parameters
 ----------
@@ -29631,7 +29523,9 @@ omega : float
       "quat_to_w_mat",
       &SimUtils::quat_to_w_mat,
       py::arg("quat"),
-      R"""(Routine to construct the 3D rotation matrix w_mat given a rotation quaternion
+      R"""(Function quat_to_w_mat (quat) result (w_mat)
+
+Routine to construct the 3D rotation matrix w_mat given a rotation quaternion
 
 Parameters
 ----------
@@ -29651,9 +29545,7 @@ w_mat : float
       py::arg("return_str"),
       py::arg("ix"),
       py::arg("ios"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 query_str : 
 upcase : 
@@ -29689,9 +29581,7 @@ ios :
       &python_quote,
       py::arg("str"),
       py::arg("q_str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 str : 
 q_str : 
@@ -29720,7 +29610,9 @@ q_str :
       py::arg("g2_tol"),
       py::arg("g3_tol"),
       py::arg("ele0") = py::none(),
-      R"""(Routine to calculate the damping and stochastic matrices for a given lattice element.
+      R"""(Subroutine rad1_damp_and_stoc_mats (ele, include_opening_angle, orb_in, orb_out, rad_map, g2_tol, g3_tol, err_flag, ele0, rad_int1)
+
+Routine to calculate the damping and stochastic matrices for a given lattice element.
 
 Parameters
 ----------
@@ -29779,11 +29671,16 @@ rad_int1 : RadInt1Struct
       py::arg("ele2"),
       py::arg("include_opening_angle"),
       py::arg("closed_orbit") = py::none(),
-      R"""(Routine to calculate the damping and stochastic variance matrices from exit end of ele1
+      R"""(Subroutine rad_damp_and_stoc_mats (ele1, ele2, include_opening_angle, rmap, mode, xfer_nodamp_mat, err_flag, closed_orbit, rad_int_branch)
 
+Routine to calculate the damping and stochastic variance matrices from exit end of ele1
 to the exit end of ele2. Use ele1 = ele2 to get 1-turn matrices.
+
 If ele2 is before ele1 the integration range if from ele1 to the branch end plus
 from the beginning to ele2.
+
+Note: The ele%mat6 matrices will be remade. By convention, these matrices
+do not include damping.
 
 Parameters
 ----------
@@ -29853,8 +29750,9 @@ err_flag : bool
       py::arg("g_tol"),
       py::arg("g2_tol"),
       py::arg("g3_tol"),
-      R"""(Routine to calculate bending strength integrals (g(s) = 1/trajectory_bending_radius(s)) in
+      R"""(Subroutine rad_g_integrals (ele, where, orb_in, orb_out, int_g, int_g2, int_g3, g_tol, g2_tol, g3_tol)
 
+Routine to calculate bending strength integrals (g(s) = 1/trajectory_bending_radius(s)) in
 laboratory coords.
 
 Parameters
@@ -29904,9 +29802,7 @@ int_g : float
       py::arg("orbit"),
       py::arg("ix_cache") = py::none(),
       py::arg("ix_branch") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice to use. The calculation assumes that the Twiss parameters have been calculated.
@@ -29963,7 +29859,9 @@ rad_int_by_ele : RadIntAllEleStruct
       &Bmad::radiation_map_setup,
       py::arg("ele"),
       py::arg("ref_orbit_in") = py::none(),
-      R"""(Routine to calculate the radiation kick for a lattice element.
+      R"""(Subroutine radiation_map_setup (ele, err_flag, ref_orbit_in)
+
+Routine to calculate the radiation kick for a lattice element.
 
 Parameters
 ----------
@@ -29983,9 +29881,7 @@ err_flag : bool
       &Bmad::ramper_slave_setup,
       py::arg("lat"),
       py::arg("force_setup") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice to be setup.
@@ -30001,9 +29897,7 @@ force_setup : bool, optional
       py::arg("ramper"),
       py::arg("r1"),
       py::arg("value"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ramper : EleStruct
     Ramper lord.
@@ -30031,8 +29925,9 @@ value :
       "ran_default_state",
       &SimUtils::ran_default_state,
       py::arg("set_state") = py::none(),
-      R"""(Routine to set or get the state of the default random number generator.
+      R"""(Subroutine ran_default_state (set_state, get_state)
 
+Routine to set or get the state of the default random number generator.
 See the ran_seed_put documentation for more details
 
 Parameters
@@ -30051,8 +29946,9 @@ get_state : RandomStateStruct
       py::arg("set") = py::none(),
       py::arg("get") = py::none(),
       py::arg("ran_state") = py::none(),
-      R"""(Routine to set what random number generator algorithm is used.
+      R"""(Subroutine ran_engine (set, get, ran_state)
 
+Routine to set what random number generator algorithm is used.
 If this routine is never called then pseudo_random$ is used.
 With sobseq quasi-random numbers the maximum dimension is 6.
 
@@ -30072,15 +29968,24 @@ ran_state : RandomStateStruct, optional
       py::arg("set") = py::none(),
       py::arg("set_sigma_cut") = py::none(),
       py::arg("ran_state") = py::none(),
-      R"""(Routine to set what conversion routine is used for converting
+      R"""(Subroutine ran_gauss_converter (set, set_sigma_cut, get, get_sigma_cut, ran_state)
 
+Routine to set what conversion routine is used for converting
 uniformly distributed random numbers to Gaussian distributed random numbers.
+
 If this routine is not called then exact_gaussian$ is used.
+
 exact_gaussian$ is a straight forward converter as explained in Numerical recipes.
+
 quick_gaussian$ is a quick a dirty approximation with a cutoff so that no
 numbers will be generated beyound what is set for sigma_cut.
+
 A negative sigma_cut means that the exact_gaussian$ will not be limited
 and the quick_gaussian$ will use a default of 10.0
+
+Note: Because of technical issues, when using the quasi_random$ number generator
+(see the ran_engine routine), the quick_gaussian$ method will automatically be
+used independent of what was set with this routine.
 
 Parameters
 ----------
@@ -30126,11 +30031,18 @@ get_sigma_cut : float
       py::arg("ran_state") = py::none(),
       py::arg("sigma_cut") = py::none(),
       py::arg("index_quasi") = py::none(),
-      R"""(Routine to return a gaussian distributed random number with unit sigma.
+      R"""(Subroutine ran_gauss (harvest, ran_state, sigma_cut)
 
+Routine to return a gaussian distributed random number with unit sigma.
 This routine uses the same algorithm as gasdev from Numerical Recipes.
-ran_gauss_scalar   ! harvest is a scalar
-ran_gauss_vector   ! harvest is a 1-D array.
+
+Note: ran_gauss is an overloaded name for:
+    ran_gauss_scalar   ! harvest is a scalar
+    ran_gauss_vector   ! harvest is a 1-D array.
+
+Note: Use ran_seed_put for initialization.
+Note: Use ran_engine to set which random number generator to use.
+Note: Use ran_gauss_converter to set which conversion routine to use.
 
 Parameters
 ----------
@@ -30147,8 +30059,6 @@ harvest : float
 
 Notes
 -----
-Note: Use ran_seed_put for initialization.
-Note: Use ran_engine to set which random number generator to use.
 Overloaded versions:
 )""");
   py::class_<PyRanGaussScalar, std::unique_ptr<PyRanGaussScalar>>(
@@ -30170,11 +30080,18 @@ Overloaded versions:
       &SimUtils::ran_gauss_vector,
       py::arg("ran_state") = py::none(),
       py::arg("sigma_cut") = py::none(),
-      R"""(Routine to return a gaussian distributed random number with unit sigma.
+      R"""(Subroutine ran_gauss (harvest, ran_state, sigma_cut)
 
+Routine to return a gaussian distributed random number with unit sigma.
 This routine uses the same algorithm as gasdev from Numerical Recipes.
-ran_gauss_scalar   ! harvest is a scalar
-ran_gauss_vector   ! harvest is a 1-D array.
+
+Note: ran_gauss is an overloaded name for:
+    ran_gauss_scalar   ! harvest is a scalar
+    ran_gauss_vector   ! harvest is a 1-D array.
+
+Note: Use ran_seed_put for initialization.
+Note: Use ran_engine to set which random number generator to use.
+Note: Use ran_gauss_converter to set which conversion routine to use.
 
 Parameters
 ----------
@@ -30191,14 +30108,14 @@ harvest : float
 
 Notes
 -----
-Note: Use ran_seed_put for initialization.
-Note: Use ran_engine to set which random number generator to use.
 Overloaded versions:
 )""");
   m.def(
       "ran_seed_get",
       &SimUtils::ran_seed_get,
-      R"""(Routine to return the seed used for the random number generator.
+      R"""(Subroutine ran_seed_get (seed)
+
+Routine to return the seed used for the random number generator.
 
 Parameters
 ----------
@@ -30215,10 +30132,16 @@ seed : int
       &SimUtils::ran_seed_put,
       py::arg("seed"),
       py::arg("mpi_offset") = py::none(),
-      R"""(Routine to seed a random number generator.
+      R"""(Subroutine ran_seed_put (seed, mpi_offset)
+
+Routine to seed a random number generator.
 
 If a program never calls ran_seed_put, or ran_seed_put is called with seed = 0,
 the system clock will be used to generate the seed.
+
+Note: The seed is only used with the pseudo_random$ engine.
+Note: Use the subroutine ran_seed_get(seed) to get the seed used.
+Note: Use pointer_to_ran_state() to access the ran state directly.
 
 Parameters
 ----------
@@ -30227,11 +30150,6 @@ seed : int
 mpi_offset : int, optional
     Offset added to seed. Default is zero. Used with MPI processes ensure different threads use different
     random numbers.
-
-Notes
------
-Note: The seed is only used with the pseudo_random$ engine.
-Note: Use the subroutine ran_seed_get(seed) to get the seed used.
 )""");
   m.def(
       "ran_uniform",
@@ -30239,13 +30157,19 @@ Note: Use the subroutine ran_seed_get(seed) to get the seed used.
           &python_ran_uniform_scalar),
       py::arg("ran_state") = py::none(),
       py::arg("index_quasi") = py::none(),
-      R"""(Routine to return a random number uniformly distributed in the
+      R"""(Subroutine ran_uniform (harvest, ran_state)
 
+Routine to return a random number uniformly distributed in the
 interval [0, 1]. This routine uses the same algorithm as ran or sobseq
 from Numberical Recipes in Fortran90.
 See ran_engine.
-ran_uniform_scalar   ! harvest is a scalar
-ran_uniform_vector   ! harvest is a 1-D array.
+
+Note: ran_uniform is an overloaded name for:
+    ran_uniform_scalar   ! harvest is a scalar
+    ran_uniform_vector   ! harvest is a 1-D array.
+
+Note: Use ran_seed_put for initialization.
+Note: Use ran_engine to set which random number generator to use.
 
 Parameters
 ----------
@@ -30260,7 +30184,6 @@ harvest : float
 
 Notes
 -----
-Note: Use ran_seed_put for initialization.
 Overloaded versions:
 )""");
   py::class_<PyRanUniformScalar, std::unique_ptr<PyRanUniformScalar>>(
@@ -30281,13 +30204,19 @@ Overloaded versions:
       "ran_uniform",
       py::overload_cast<optional_ref<RandomStateProxy>>(&SimUtils::ran_uniform),
       py::arg("ran_state") = py::none(),
-      R"""(Routine to return a random number uniformly distributed in the
+      R"""(Subroutine ran_uniform (harvest, ran_state)
 
+Routine to return a random number uniformly distributed in the
 interval [0, 1]. This routine uses the same algorithm as ran or sobseq
 from Numberical Recipes in Fortran90.
 See ran_engine.
-ran_uniform_scalar   ! harvest is a scalar
-ran_uniform_vector   ! harvest is a 1-D array.
+
+Note: ran_uniform is an overloaded name for:
+    ran_uniform_scalar   ! harvest is a scalar
+    ran_uniform_vector   ! harvest is a 1-D array.
+
+Note: Use ran_seed_put for initialization.
+Note: Use ran_engine to set which random number generator to use.
 
 Parameters
 ----------
@@ -30302,16 +30231,16 @@ harvest : float
 
 Notes
 -----
-Note: Use ran_seed_put for initialization.
 Overloaded versions:
 )""");
   m.def(
       "randomize_lr_wake_frequencies",
       &Bmad::randomize_lr_wake_frequencies,
       py::arg("ele"),
-      R"""(Routine to randomize the frequencies of the lr wake HOMs according to:
+      R"""(Subroutine randomize_lr_wake_frequencies (ele, set_done)
 
-freq = freq_in * (1 + lr_freq_spread) * rr)
+Routine to randomize the frequencies of the lr wake HOMs according to:
+  freq = freq_in * (1 + lr_freq_spread) * rr)
 where rr is a Gaussian distributed random number with unit variance.
 
 Parameters
@@ -30332,9 +30261,7 @@ set_done : bool
       py::arg("rel"),
       py::arg("plc"),
       py::arg("out"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 rel : 
 plc : 
@@ -30364,9 +30291,12 @@ out :
       py::arg("n"),
       py::arg("exact") = py::none(),
       py::arg("init_val") = py::none(),
-      R"""(Routine to reallocate an array of c_double reals.
+      R"""(Subroutine re_allocate_c_double (re, n, exact, init_val)
 
+Routine to reallocate an array of c_double reals.
 This is modeled after the reallocate functions in Numerical Recipes.
+Note: The data of the array is preserved but data at the end of the
+array will be lost if n is less than the original size of the array
 
 Parameters
 ----------
@@ -30400,9 +30330,7 @@ exact : bool, optional
       py::arg("n"),
       py::arg("save_old") = py::none(),
       py::arg("exact") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 eles : ElePointerStruct
     Array of element pointers with possible old data.
@@ -30422,9 +30350,7 @@ exact : bool, optional
       py::arg("section"),
       py::arg("n"),
       py::arg("exact") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 section : 
 n : 
@@ -30454,9 +30380,7 @@ exact :
       py::arg("v"),
       py::arg("n"),
       py::arg("exact") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 v : 
 n : 
@@ -30485,7 +30409,12 @@ exact :
       py::arg("tree"),
       py::arg("n"),
       py::arg("exact") = py::none(),
-      R"""(Routine to resize the tree%node(:) array.
+      R"""(Subroutine re_associate_node_array(tree, n, exact)
+
+Routine to resize the tree%node(:) array.
+
+Note: The data of the array is preserved but data at the end of the
+array will be lost if n is less than the original size of the array
 
 Parameters
 ----------
@@ -30500,9 +30429,7 @@ exact : bool, optional
       py::overload_cast<long double, std::string>(&python_re_str_qp),
       py::arg("rel"),
       py::arg("str_out"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 rel : 
 str_out : 
@@ -30526,9 +30453,7 @@ str_out :
       py::overload_cast<double, std::string>(&python_re_str_rp),
       py::arg("rel"),
       py::arg("str_out"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 rel : 
 str_out : 
@@ -30552,12 +30477,14 @@ str_out :
       &Bmad::read_beam_ascii,
       py::arg("file_name"),
       py::arg("beam_init"),
-      R"""(Subroutine to read in a beam definition file.
+      R"""(Subroutine read_beam_ascii (file_name, beam, beam_init, err_flag, ele, print_mom_shift_warning, conserve_momentum)
 
+Subroutine to read in a beam definition file.
 If non_zero, the following components of beam_init are used to rescale the beam:
-%n_bunch
-%n_particle
-%charge_tot
+    %n_bunch
+    %n_particle
+    %charge_tot
+
 If the beam file has '.h5' or '.hdf5' suffix then the file is taken to be an HDF5 file.
 Otherwise the file is assumed to be ASCII.
 
@@ -30606,13 +30533,15 @@ err_flag : bool
       py::arg("ele") = py::none(),
       py::arg("print_mom_shift_warning") = py::none(),
       py::arg("conserve_momentum") = py::none(),
-      R"""(Subroutine to read in a beam definition file.
+      R"""(Subroutine read_beam_file (file_name, beam, beam_init, err_flag, ele, print_mom_shift_warning, conserve_momentum)
 
+Subroutine to read in a beam definition file.
 If non_zero, the following components of beam_init are used to rescale the beam:
-%n_bunch
-%n_particle
-%bunch_charge -> charge_tot
-%species
+    %n_bunch
+    %n_particle
+    %bunch_charge -> charge_tot
+    %species
+
 If the beam file has '.h5' or '.hdf5' suffix then the file is taken to be an HDF5 file.
 Otherwise the file is assumed to be ASCII.
 
@@ -30660,7 +30589,9 @@ err_flag : bool
       py::arg("ele"),
       py::arg("cart_map"),
       py::arg("err_flag"),
-      R"""(Routine to read a binary cartesian_map structure.
+      R"""(Subroutine read_binary_cartesian_map (file_name, ele, cart_map, err_flag)
+
+Routine to read a binary cartesian_map structure.
 
 Parameters
 ----------
@@ -30680,7 +30611,9 @@ err_flag : bool
       py::arg("ele"),
       py::arg("cl_map"),
       py::arg("err_flag"),
-      R"""(Routine to read a binary cylindrical_map structure.
+      R"""(Subroutine read_binary_cylindrical_map (file_name, ele, cl_map, err_flag)
+
+Routine to read a binary cylindrical_map structure.
 
 Parameters
 ----------
@@ -30700,7 +30633,9 @@ err_flag : bool
       py::arg("ele"),
       py::arg("g_field"),
       py::arg("err_flag"),
-      R"""(Routine to read a binary grid_field structure.
+      R"""(Subroutine read_binary_grid_field (file_name, ele, g_field, err_flag)
+
+Routine to read a binary grid_field structure.
 
 Parameters
 ----------
@@ -30717,7 +30652,9 @@ err_flag : bool
       "read_surface_reflection_file",
       &Bmad::read_surface_reflection_file,
       py::arg("file_name"),
-      R"""(Routine to read the reflection probability data for a given type of surface from a file.
+      R"""(Subroutine read_surface_reflection_file (file_name, surface)
+
+Routine to read the reflection probability data for a given type of surface from a file.
 
 Parameters
 ----------
@@ -30736,9 +30673,7 @@ surface : PhotonReflectSurfaceStruct
       py::arg("width"),
       py::arg("n_blanks") = py::none(),
       py::arg("fmt_str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 number : 
 width : 
@@ -30775,9 +30710,7 @@ fmt_str :
       py::arg("path_in"),
       py::arg("path_out"),
       py::arg("is_ok"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 path_in : 
 path_out : 
@@ -30807,9 +30740,7 @@ is_ok :
       py::arg("n_signif") = py::none(),
       py::arg("n_decimal") = py::none(),
       py::arg("str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 r_num : 
 n_signif : 
@@ -30844,9 +30775,7 @@ str :
       py::arg("n_signif") = py::none(),
       py::arg("n_decimal") = py::none(),
       py::arg("str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 real_num : 
 width : 
@@ -30884,9 +30813,7 @@ str :
       py::arg("n_bunch"),
       py::arg("n_particle") = py::none(),
       py::arg("extend") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 beam : BeamStruct
     Beam bunches are saved if save = True.
@@ -30909,20 +30836,13 @@ extend :
           return py::cast(s.extend);
         throw py::index_error();
       });
-  m.def(
-      "reallocate_bp_com_const",
-      &Bmad::reallocate_bp_com_const,
-      R"""(No docstring available
-
-)""");
+  m.def("reallocate_bp_com_const", &Bmad::reallocate_bp_com_const, R"""()""");
   m.def(
       "reallocate_bunch",
       &Bmad::reallocate_bunch,
       py::arg("n_particle"),
       py::arg("save") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 bunch : BunchStruct
     Allocated bunch_struct structure.
@@ -30936,9 +30856,7 @@ save : bool, optional
       &Bmad::reallocate_control,
       py::arg("lat"),
       py::arg("n"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice.
@@ -30951,13 +30869,17 @@ n : int
           &Bmad::reallocate_coord),
       py::arg("coord_array"),
       py::arg("lat"),
-      R"""(Routine to allocate or reallocate at allocatable coord_struct array.
+      R"""(Subroutine reallocate_coord (...)
 
-reallocate_coord_n (coord, n_coord)
-reallocate_coord_lat (coord, lat, ix_branch)
+Routine to allocate or reallocate at allocatable coord_struct array.
+reallocate_coord is an overloaded name for:
+  reallocate_coord_n (coord, n_coord)
+  reallocate_coord_lat (coord, lat, ix_branch)
+
 Subroutine to allocate an allocatable coord_struct array to at least:
-coord(0:n_coord)                            if n_coord arg is used.
-coord(0:lat%branch(ix_branch)%n_ele_max)    if lat arg is used.
+    coord(0:n_coord)                            if n_coord arg is used.
+    coord(0:lat%branch(ix_branch)%n_ele_max)    if lat arg is used.
+
 The old coordinates are saved
 If, at input, coord(:) is not allocated, coord(0)%vec is set to zero.
 In any case, coord(n)%vec for n > 0 is set to zero.
@@ -30985,13 +30907,17 @@ Overloaded versions:
       py::arg("coord"),
       py::arg("lat"),
       py::arg("ix_branch") = py::none(),
-      R"""(Routine to allocate or reallocate at allocatable coord_struct array.
+      R"""(Subroutine reallocate_coord (...)
 
-reallocate_coord_n (coord, n_coord)
-reallocate_coord_lat (coord, lat, ix_branch)
+Routine to allocate or reallocate at allocatable coord_struct array.
+reallocate_coord is an overloaded name for:
+  reallocate_coord_n (coord, n_coord)
+  reallocate_coord_lat (coord, lat, ix_branch)
+
 Subroutine to allocate an allocatable coord_struct array to at least:
-coord(0:n_coord)                            if n_coord arg is used.
-coord(0:lat%branch(ix_branch)%n_ele_max)    if lat arg is used.
+    coord(0:n_coord)                            if n_coord arg is used.
+    coord(0:lat%branch(ix_branch)%n_ele_max)    if lat arg is used.
+
 The old coordinates are saved
 If, at input, coord(:) is not allocated, coord(0)%vec is set to zero.
 In any case, coord(n)%vec for n > 0 is set to zero.
@@ -31017,13 +30943,17 @@ Overloaded versions:
       py::overload_cast<CoordProxyAlloc1D&, int>(&Bmad::reallocate_coord),
       py::arg("coord"),
       py::arg("n_coord"),
-      R"""(Routine to allocate or reallocate at allocatable coord_struct array.
+      R"""(Subroutine reallocate_coord (...)
 
-reallocate_coord_n (coord, n_coord)
-reallocate_coord_lat (coord, lat, ix_branch)
+Routine to allocate or reallocate at allocatable coord_struct array.
+reallocate_coord is an overloaded name for:
+  reallocate_coord_n (coord, n_coord)
+  reallocate_coord_lat (coord, lat, ix_branch)
+
 Subroutine to allocate an allocatable coord_struct array to at least:
-coord(0:n_coord)                            if n_coord arg is used.
-coord(0:lat%branch(ix_branch)%n_ele_max)    if lat arg is used.
+    coord(0:n_coord)                            if n_coord arg is used.
+    coord(0:lat%branch(ix_branch)%n_ele_max)    if lat arg is used.
+
 The old coordinates are saved
 If, at input, coord(:) is not allocated, coord(0)%vec is set to zero.
 In any case, coord(n)%vec for n > 0 is set to zero.
@@ -31050,9 +30980,7 @@ Overloaded versions:
       py::arg("stack"),
       py::arg("n"),
       py::arg("exact") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 stack : unknown
     Existing stack array.
@@ -31069,10 +30997,12 @@ exact : bool, optional
       py::arg("n"),
       py::arg("n_min") = py::none(),
       py::arg("exact") = py::none(),
-      R"""(Subroutine to allocate an allocatable spline_struct array.
+      R"""(Subroutine reallocate_spline (spline, n, n_min, exact)
 
+Subroutine to allocate an allocatable spline_struct array.
 The data of the array is preserved but data at the end of the
 array will be lost if n is less than the original size of the array
+
 
 Parameters
 ----------
@@ -31092,9 +31022,7 @@ exact : bool, optional
       py::arg("orbit"),
       py::arg("ref_species"),
       py::arg("rel_charge"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Particle position structure.
@@ -31125,9 +31053,7 @@ rel_charge :
       py::arg("ele1"),
       py::arg("ele2"),
       py::arg("func_retval__"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele1 : 
 ele2 : 
@@ -31148,8 +31074,9 @@ relative_mode_flip :
       "release_rad_int_cache",
       &python_release_rad_int_cache,
       py::arg("ix_cache"),
-      R"""(Subroutine to release the memory associated with caching wiggler values.
+      R"""(Subroutine release_rad_int_cache (ix_cache)
 
+Subroutine to release the memory associated with caching wiggler values.
 See the radiation_integrals routine for further details.
 
 Parameters
@@ -31178,10 +31105,15 @@ ix_cache : int
       &Bmad::remove_constant_taylor,
       py::arg("taylor_in"),
       py::arg("remove_higher_order_terms"),
-      R"""(Subroutine to remove the constant part of a taylor map.
+      R"""(Subroutine remove_constant_taylor (taylor_in, taylor_out, c0, remove_higher_order_terms)
 
+Subroutine to remove the constant part of a taylor map.
 Optionally terms that are higher order than bmad_com%taylor_order can
 be removed.
+
+Note: It is assumed that taylor_out has been deallocated before the call to
+this routine. Calling this routine with the first two actual arguments the
+same is prohibited.
 
 Parameters
 ----------
@@ -31221,9 +31153,7 @@ c0 : float
       "remove_dead_from_bunch",
       &Bmad::remove_dead_from_bunch,
       py::arg("bunch_in"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 bunch_in : BunchStruct
     Input bunch with alive and dead particles.
@@ -31236,9 +31166,7 @@ bunch_out : BunchStruct
       &Bmad::remove_eles_from_lat,
       py::arg("lat"),
       py::arg("check_sanity") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice to compress.
@@ -31251,9 +31179,7 @@ check_sanity : bool, optional
       &Bmad::remove_lord_slave_link,
       py::arg("lord"),
       py::arg("slave"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lord : EleStruct
     Lord element
@@ -31269,9 +31195,7 @@ slave : EleStruct
       &Bmad::reverse_lat,
       py::arg("lat_in"),
       py::arg("track_antiparticle") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat_in : LatStruct
     Input lattice to reverse.
@@ -31284,9 +31208,7 @@ track_antiparticle : bool, optional
       "rf_cav_names",
       &bsim::rf_cav_names,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : 
 )""");
@@ -31300,12 +31222,13 @@ lat :
       py::arg("orbit"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(import
-
-implicit none
-type (branch_struct), target :: branch
-integer n_rf_included, n_rf_excluded
-logical ok
+      R"""(No longer in the codebase
+function rf_clock_setup (branch, n_rf_included, n_rf_excluded) result (ok)
+  import
+  implicit none
+  type (branch_struct), target :: branch
+  integer n_rf_included, n_rf_excluded
+  logical ok
 end function
 
 Parameters
@@ -31339,9 +31262,7 @@ ok
       py::arg("ix_ele1") = py::none(),
       py::arg("ix_ele2") = py::none(),
       py::arg("is_on"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch : BranchStruct
     Lattice branch to check.
@@ -31368,9 +31289,7 @@ is_on :
       py::arg("ele"),
       py::arg("ds") = py::none(),
       py::arg("time"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     RF Element being tracked through.
@@ -31402,9 +31321,7 @@ time :
       py::arg("i"),
       py::arg("j"),
       py::arg("res"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 u : 
 v : 
@@ -31468,9 +31385,7 @@ res :
       py::arg("dt_next"),
       py::arg("err_flag"),
       py::arg("extra_field") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : 
 param : 
@@ -31526,9 +31441,7 @@ extra_field :
       py::arg("err_flag"),
       py::arg("print_err") = py::none(),
       py::arg("extra_field") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : 
 param : 
@@ -31565,9 +31478,7 @@ extra_field :
       py::arg("val_arr"),
       py::arg("good_val") = py::none(),
       py::arg("rms_val"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 val_arr : float
     Array of reals.
@@ -31597,9 +31508,7 @@ rms_val :
       py::arg("vec_in"),
       py::arg("angle"),
       py::arg("vec_out"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 vec_in : float
     Init vec
@@ -31613,9 +31522,7 @@ vec_out :
       py::arg("vec"),
       py::arg("angle"),
       py::arg("rvec"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 vec : 
 angle : 
@@ -31640,7 +31547,9 @@ rvec :
       py::arg("w_inv"),
       py::arg("calc_dfield") = py::none(),
       py::arg("calc_potential") = py::none(),
-      R"""(Routine to transform the fields using the given rotation matrices.
+      R"""(Subroutine rotate_em_field (field, w_mat, w_inv, calc_dfield, calc_potential)
+
+Routine to transform the fields using the given rotation matrices.
 
 Parameters
 ----------
@@ -31660,9 +31569,7 @@ calc_potential : bool, optional
       &python_rotate_field_zx,
       py::arg("field"),
       py::arg("theta"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 field : 
 theta : 
@@ -31685,9 +31592,7 @@ theta :
       py::arg("orbit"),
       py::arg("set"),
       py::arg("rot_mat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     reflecting element
@@ -31706,9 +31611,7 @@ rot_mat : float
       &Bmad::rotate_spin,
       py::arg("rot_vec"),
       py::arg("spin"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 rot_vec : float
     Rotation axis. Magnitude of rot_vec is the rotation angle.
@@ -31725,9 +31628,7 @@ qrot : float
       py::arg("field"),
       py::arg("ele"),
       py::arg("ds"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Initial orbit.
@@ -31747,9 +31648,7 @@ ds : float
       py::arg("BL") = py::none(),
       py::arg("EL") = py::none(),
       py::arg("qrot") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Initial orbit.
@@ -31771,7 +31670,9 @@ qrot : float, optional
       py::arg("vec"),
       py::arg("axis"),
       py::arg("angle"),
-      R"""(Basic routine to rotate vector components around the x, y, or z axis.
+      R"""(Subroutine rotate_vec (vec, axis, angle)
+
+Basic routine to rotate vector components around the x, y, or z axis.
 
 Parameters
 ----------
@@ -31789,7 +31690,9 @@ angle : float
       py::arg("vec_in"),
       py::arg("axis"),
       py::arg("angle"),
-      R"""(Routine to rotate a vector.
+      R"""(Function rotate_vec_given_axis_angle (vec_in, axis, angle) result (vec_out)
+
+Routine to rotate a vector.
 
 Parameters
 ----------
@@ -31809,8 +31712,9 @@ vec_out : float
       "rp8",
       &SimUtils::rp8,
       py::arg("int_in"),
-      R"""(Routine to convert from integer to real of type rp.
+      R"""(Function rp8(int_in) result (re_out)
 
+Routine to convert from integer to real of type rp.
 This routine is used to avoid the implicit integer to single precision that happens when
 multiplying int*real(rp).
 
@@ -31830,9 +31734,7 @@ re_out : float
       py::arg("command"),
       py::arg("time") = py::none(),
       py::arg("time0") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 command : 
 time : 
@@ -31861,9 +31763,7 @@ time0 :
       py::arg("orbit"),
       py::arg("ele"),
       py::arg("s_body"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Particle coordinates.
@@ -31886,9 +31786,7 @@ s_body :
       "s_calc",
       &Bmad::s_calc,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
 )""");
@@ -31901,11 +31799,14 @@ lat : LatStruct
       py::arg("orbit"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(Routine to track through the hard edge bend fringe field for a bend or sad_mult element.
+      R"""(Subroutine sad_mult_hard_bend_edge_kick (ele, param, particle_at, orbit, mat6, make_matrix)
 
+Routine to track through the hard edge bend fringe field for a bend or sad_mult element.
 Only the bend field is taken into account here. Higher order multipolse must be handled elsewhere.
+
 This routine assumes that the particle coordinates are with respect to the actual magnet face.
 Thus finite e1/e2 must be taken into account by other routines.
+
 SAD calls this the "linear" fringe even though it is nonlinear.
 
 Parameters
@@ -31935,7 +31836,9 @@ make_matrix : float, optional
       py::arg("orb"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(Subroutine to track through the ("linear") bend soft edge field of an sbend or sad_mult.
+      R"""(Subroutine sad_soft_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix)
+
+Subroutine to track through the ("linear") bend soft edge field of an sbend or sad_mult.
 
 Parameters
 ----------
@@ -31966,9 +31869,7 @@ t0 : float, optional
       py::arg("bunch_tracks") = py::none(),
       py::arg("s_body") = py::none(),
       py::arg("is_time_coords") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element being tracked through.
@@ -31990,9 +31891,7 @@ is_time_coords : bool, optional
       py::arg("bunch_track") = py::none(),
       py::arg("s_body") = py::none(),
       py::arg("is_time_coords") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element being tracked through.
@@ -32020,9 +31919,7 @@ is_time_coords : bool, optional
       py::arg("make_matrix") = py::none(),
       py::arg("rf_time") = py::none(),
       py::arg("strong_beam") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 track : TrackStruct
     Track with current position appended on.
@@ -32060,9 +31957,7 @@ strong_beam : StrongBeambeamStruct, optional
       py::arg("orbit"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Sbend element.
@@ -32093,8 +31988,9 @@ make_matrix : bool, optional
       py::arg("t_now"),
       py::arg("dt_step"),
       py::arg("sc_field"),
-      R"""(Routine to track a bunch of particles with space charge for one step using
+      R"""(Subroutine sc_adaptive_step(bunch, ele, include_image, t_now, dt_step, dt_next)
 
+Routine to track a bunch of particles with space charge for one step using
 adaptive step size control and determine appropriate step size for the next step
 
 Parameters
@@ -32147,7 +32043,9 @@ dt_next : float
       py::arg("include_image"),
       py::arg("t_end"),
       py::arg("sc_field"),
-      R"""(Subroutine to track a bunch through a given time step with space charge
+      R"""(Subroutine sc_step(bunch, ele, include_image, t_end, n_emit)
+
+Subroutine to track a bunch through a given time step with space charge
 
 Parameters
 ----------
@@ -32190,9 +32088,11 @@ n_emit : int
       &Bmad::set_active_fixer,
       py::arg("fixer"),
       py::arg("turn_on") = py::none(),
-      R"""(Set the acvitive fixer element.
+      R"""(Subroutine set_active_fixer(fixer, turn_on, orbit)
 
+Set the acvitive fixer element.
 All other fixer/beginning_ele elements in the branch will be deactivated.
+
 If turn_on is True (default), the fixer argument becomes the active fixer.
 If turn_on is False, and fixer%is_on is also False, there is nothing to be done.
 If turn_on is False, and fixer%is_on is True, turn this fixer off and turn on the beginning element.
@@ -32215,7 +32115,9 @@ orbit : CoordStruct
       &Bmad::set_custom_attribute_name,
       py::arg("custom_name"),
       py::arg("custom_index") = py::none(),
-      R"""(Routine to add custom element attributes to the element attribute name table.
+      R"""(Subroutine set_custom_attribute_name (custom_name, err_flag, custom_index)
+
+Routine to add custom element attributes to the element attribute name table.
 
 Parameters
 ----------
@@ -32238,9 +32140,7 @@ err_flag : bool
       py::arg("set_string"),
       py::arg("err_print_flag") = py::none(),
       py::arg("set_lords") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element with attribute to set.
@@ -32278,9 +32178,7 @@ err_id : int
       &Bmad::set_ele_defaults,
       py::arg("ele"),
       py::arg("do_allocate") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element to init. .key          -- Type of element.
@@ -32293,9 +32191,7 @@ do_allocate : bool, optional
       &Bmad::set_ele_name,
       py::arg("ele"),
       py::arg("name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element whose name is to be set.
@@ -32310,9 +32206,7 @@ name : unknown
       py::arg("attrib_name"),
       py::arg("value"),
       py::arg("err_print_flag") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element with attribute to set.
@@ -32329,9 +32223,7 @@ err_print_flag : bool, optional
   m.def(
       "set_ele_status_stale",
       &Bmad::set_ele_status_stale,
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element. .bookkeeping_state   -- Status block to set.
@@ -32369,20 +32261,29 @@ set_slaves : bool
       py::arg("ele"),
       py::arg("attrib"),
       py::arg("set_dependent") = py::none(),
-      R"""(Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
+      R"""(Subroutine set_flags_for_changed_attribute (...)
 
+Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
 Also will do some dependent variable bookkeeping when a particular attribute has
 been altered.
+
 This routine should be called after the attribute has been set.
-set_flags_for_changed_lat_attribute (lat, set_dependent)
-set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
-set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
-set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
-set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+
+set_flags_for_changed_attribute is an overloaded name for:
+  set_flags_for_changed_lat_attribute (lat, set_dependent)
+  set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
+  set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
+  set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
+  set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+
 The set_flags_for_changed_lat_attribute (lat) routine is used when one
 does not know what has changed and wants a complete bookkeeping done.
+
+NOTE: The attribute argument MUST be the component that was changed. For example:
+    ele%value(x_offset$) = off_value
+    call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
 And NOT:
-call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
+    call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
 
 Parameters
 ----------
@@ -32408,8 +32309,6 @@ set_dependent : bool, optional
 
 Notes
 -----
-NOTE: The attribute argument MUST be the component that was changed. For example: ele%value(x_offset$) =
-off_value call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
 Overloaded versions:
 )""");
   py::class_<
@@ -32438,20 +32337,29 @@ Overloaded versions:
           &Bmad::set_flags_for_changed_attribute),
       py::arg("lat"),
       py::arg("set_dependent") = py::none(),
-      R"""(Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
+      R"""(Subroutine set_flags_for_changed_attribute (...)
 
+Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
 Also will do some dependent variable bookkeeping when a particular attribute has
 been altered.
+
 This routine should be called after the attribute has been set.
-set_flags_for_changed_lat_attribute (lat, set_dependent)
-set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
-set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
-set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
-set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+
+set_flags_for_changed_attribute is an overloaded name for:
+  set_flags_for_changed_lat_attribute (lat, set_dependent)
+  set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
+  set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
+  set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
+  set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+
 The set_flags_for_changed_lat_attribute (lat) routine is used when one
 does not know what has changed and wants a complete bookkeeping done.
+
+NOTE: The attribute argument MUST be the component that was changed. For example:
+    ele%value(x_offset$) = off_value
+    call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
 And NOT:
-call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
+    call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
 
 Parameters
 ----------
@@ -32477,8 +32385,6 @@ set_dependent : bool, optional
 
 Notes
 -----
-NOTE: The attribute argument MUST be the component that was changed. For example: ele%value(x_offset$) =
-off_value call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
 Overloaded versions:
 )""");
   m.def(
@@ -32488,20 +32394,29 @@ Overloaded versions:
       py::arg("ele"),
       py::arg("attrib"),
       py::arg("set_dependent") = py::none(),
-      R"""(Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
+      R"""(Subroutine set_flags_for_changed_attribute (...)
 
+Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
 Also will do some dependent variable bookkeeping when a particular attribute has
 been altered.
+
 This routine should be called after the attribute has been set.
-set_flags_for_changed_lat_attribute (lat, set_dependent)
-set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
-set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
-set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
-set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+
+set_flags_for_changed_attribute is an overloaded name for:
+  set_flags_for_changed_lat_attribute (lat, set_dependent)
+  set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
+  set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
+  set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
+  set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+
 The set_flags_for_changed_lat_attribute (lat) routine is used when one
 does not know what has changed and wants a complete bookkeeping done.
+
+NOTE: The attribute argument MUST be the component that was changed. For example:
+    ele%value(x_offset$) = off_value
+    call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
 And NOT:
-call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
+    call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
 
 Parameters
 ----------
@@ -32527,8 +32442,6 @@ set_dependent : bool, optional
 
 Notes
 -----
-NOTE: The attribute argument MUST be the component that was changed. For example: ele%value(x_offset$) =
-off_value call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
 Overloaded versions:
 )""");
   py::class_<
@@ -32558,20 +32471,29 @@ Overloaded versions:
       py::arg("ele"),
       py::arg("attrib") = py::none(),
       py::arg("set_dependent") = py::none(),
-      R"""(Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
+      R"""(Subroutine set_flags_for_changed_attribute (...)
 
+Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
 Also will do some dependent variable bookkeeping when a particular attribute has
 been altered.
+
 This routine should be called after the attribute has been set.
-set_flags_for_changed_lat_attribute (lat, set_dependent)
-set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
-set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
-set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
-set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+
+set_flags_for_changed_attribute is an overloaded name for:
+  set_flags_for_changed_lat_attribute (lat, set_dependent)
+  set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
+  set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
+  set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
+  set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+
 The set_flags_for_changed_lat_attribute (lat) routine is used when one
 does not know what has changed and wants a complete bookkeeping done.
+
+NOTE: The attribute argument MUST be the component that was changed. For example:
+    ele%value(x_offset$) = off_value
+    call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
 And NOT:
-call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
+    call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
 
 Parameters
 ----------
@@ -32597,8 +32519,6 @@ set_dependent : bool, optional
 
 Notes
 -----
-NOTE: The attribute argument MUST be the component that was changed. For example: ele%value(x_offset$) =
-off_value call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
 Overloaded versions:
 )""");
   py::class_<
@@ -32625,9 +32545,7 @@ Overloaded versions:
       py::arg("fringe_at"),
       py::arg("ele_end"),
       py::arg("on_or_off"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 fringe_at : float
     Present fringe_at setting. entrance_end$, exit_end$, both_ends$, or no_end$
@@ -32655,9 +32573,7 @@ on_or_off : int
       py::arg("stat_group"),
       py::arg("control_bookkeeping") = py::none(),
       py::arg("flag") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element
@@ -32682,9 +32598,7 @@ flag : int, optional
       py::arg("saved_values") = py::none(),
       py::arg("attribute") = py::none(),
       py::arg("set_val") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 key : int
     Class name of elements to be turned on or off. [quadrupole$, etc.]
@@ -32719,9 +32633,7 @@ set_val : int, optional
       py::arg("n1"),
       py::arg("n2"),
       py::arg("ix_noset") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Array with particle positions in the range orbit(n1:n2) set to zero except for orbit(ix_noset).
@@ -32738,9 +32650,7 @@ ix_noset : int, optional
       py::arg("param_val"),
       py::arg("set_val"),
       py::arg("save_val"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 param_val : 
 set_val : 
@@ -32769,9 +32679,7 @@ save_val :
       py::arg("param_val"),
       py::arg("set_val"),
       py::arg("save_val"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 param_val : 
 set_val : 
@@ -32803,9 +32711,7 @@ save_val :
       py::arg("param_val"),
       py::arg("set_val"),
       py::arg("save_val"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 param_val : 
 set_val : 
@@ -32838,9 +32744,7 @@ save_val :
       py::arg("n_step") = py::none(),
       py::arg("no_cavity") = py::none(),
       py::arg("force_init") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 e_tot : float, optional
     Energy in eV.
@@ -32863,9 +32767,7 @@ force_init : bool, optional
       &Bmad::set_ptc_base_state,
       py::arg("component"),
       py::arg("set_val"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 component : unknown
     Name of component. "TOTALPATH", "SPIN", "NOCAVITY", "TIME", etc. See the PTC internal_state structure for
@@ -32878,7 +32780,9 @@ old_val : bool
   m.def(
       "set_ptc_com_pointers",
       &Bmad::set_ptc_com_pointers,
-      R"""(Routine to set ptc_com pointers to PTC global variables.
+      R"""(Subroutine set_ptc_com_pointers ()
+
+Routine to set ptc_com pointers to PTC global variables.
 
 )""");
   m.def(
@@ -32887,9 +32791,12 @@ old_val : bool
       py::arg("channel"),
       py::arg("set"),
       py::arg("old_val"),
-      R"""(Routine to set the lielib_print(:) array or c_verbose logical to suppress informational messages
+      R"""(Subroutine set_ptc_quiet (channel, set, old_val)
 
+Routine to set the lielib_print(:) array or c_verbose logical to suppress informational messages
 that can clutter the output from a program using PTC.
+
+Note: Only suppress printing if ptc_com%print_info_messages = F.
 
 Parameters
 ----------
@@ -32916,9 +32823,7 @@ old_val : int
       "set_ptc_verbose",
       &python_set_ptc_verbose,
       py::arg("on"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 on : 
 )""");
@@ -32939,8 +32844,9 @@ on :
       py::arg("lat"),
       py::arg("mode0"),
       py::arg("inductance"),
-      R"""(Simulates the effect of potential well distortion by adjusting lat%ele(ix_pwd)%taylor(6)%term(2)%coef for an
+      R"""(Subroutine set_pwd_ele(lat,mode0,inductance)
 
+Simulates the effect of potential well distortion by adjusting lat%ele(ix_pwd)%taylor(6)%term(2)%coef for an
 element in the lattice.  This element will apply a pz kick based on the z coordinate.
 Element is assumed to be at lat%ele(1).  The ibs_ring driver program
 inserts a taylor element into lat%ele(1) if set to perform pwd calculations.
@@ -32964,8 +32870,9 @@ sigma : float
       &SimUtils::set_species_charge,
       py::arg("species_in"),
       py::arg("charge"),
-      R"""(Routine to return the ID for a particle of the same type as species_in but with a different charge.
+      R"""(Function set_species_charge(species_in, charge) result(species_charged)
 
+Routine to return the ID for a particle of the same type as species_in but with a different charge.
 Exception: If species_in corresponds to a subatomic particle, the charge argument is ignored and
 species_charged will be set equal to species_in.
 
@@ -32985,9 +32892,7 @@ species_charged : int
       "set_status_flags",
       &Bmad::set_status_flags,
       py::arg("stat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 bookkeeping_state : BookkeepingStateStruct
 stat : int
@@ -33004,9 +32909,7 @@ stat : int
       py::arg("orb"),
       py::arg("print_err") = py::none(),
       py::arg("ok"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 phi_a_set : float
     Horizontal set tune (radians)
@@ -33050,9 +32953,7 @@ ok :
       py::arg("group_knobs") = py::none(),
       py::arg("print_err") = py::none(),
       py::arg("everything_ok"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch : BranchStruct
     This parameter is an input/output and is modified in-place. As an output: with adjusted quads and RF to
@@ -33094,9 +32995,7 @@ everything_ok :
       py::arg("match_deta_ds"),
       py::arg("err_flag"),
       py::arg("print_err") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch : BranchStruct
     Branch to modify.
@@ -33117,9 +33016,7 @@ print_err : bool, optional
       py::arg("branch"),
       py::arg("z_tune"),
       py::arg("print_err") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch : BranchStruct
 z_tune : float
@@ -33136,7 +33033,9 @@ print_err : bool, optional
       "settable_dep_var_bookkeeping",
       &Bmad::settable_dep_var_bookkeeping,
       py::arg("ele"),
-      R"""(Subroutine to initialize dependent variables in an element.
+      R"""(Subroutine settable_dep_var_bookkeeping (ele)
+
+Subroutine to initialize dependent variables in an element.
 
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
@@ -33150,8 +33049,9 @@ This subroutine is not intended for general use.
       py::arg("n_part"),
       py::arg("mode"),
       py::arg("closed_orb") = py::none(),
-      R"""(Routine to initialize constants needed by the ultra relativistic space charge
+      R"""(Subroutine setup_high_energy_space_charge_calc (calc_on, branch, n_part, mode, closed_orb, beam_init)
 
+Routine to initialize constants needed by the ultra relativistic space charge
 tracking routine track1_high_energy_space_charge. This setup routine must be called if
 the lattice or any of the other input parameters are changed.
 
@@ -33175,9 +33075,11 @@ closed_orb : CoordStruct, optional
       &Bmad::sigma_mat_ptc_to_bmad,
       py::arg("sigma_mat_ptc"),
       py::arg("beta0"),
-      R"""(Routine to convert a PTC sigma matrix to a Bmad sigma matrix.
+      R"""(Subroutine sigma_mat_ptc_to_bmad (sigma_mat_ptc, beta0, sigma_mat_bmad)
 
+Routine to convert a PTC sigma matrix to a Bmad sigma matrix.
 The conversion includes the conversion between Bmad and PTC time coordinate systems.
+
 Since PTC uses delta_E/P0c and Bmad uses delta_P/P0c coordinates, and since
 the relationship between delta_E and delta_P is nonlinear, this routine
 simplifies the calculation and assumes that the particle beta is constant
@@ -33203,9 +33105,7 @@ sigma_mat_bmad : float
       py::arg("abs_tol") = py::none(),
       py::arg("rel_tol") = py::none(),
       py::arg("is_different"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 value1 : float
     First value.
@@ -33238,9 +33138,7 @@ is_different :
       py::arg("x"),
       py::arg("nd") = py::none(),
       py::arg("y"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : 
 nd : 
@@ -33263,9 +33161,7 @@ y :
       py::arg("x"),
       py::arg("nd") = py::none(),
       py::arg("y"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : 
 nd : 
@@ -33288,9 +33184,7 @@ y :
       py::arg("x"),
       py::arg("nd") = py::none(),
       py::arg("y"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : 
 nd : 
@@ -33312,9 +33206,7 @@ y :
       &python_skip_ele_blender,
       py::arg("ele"),
       py::arg("skip"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : 
 skip : 
@@ -33335,9 +33227,7 @@ skip :
       &python_skip_header,
       py::arg("ix_unit"),
       py::arg("error_flag"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ix_unit : 
 error_flag : 
@@ -33362,9 +33252,7 @@ error_flag :
       py::arg("lat"),
       py::arg("ele_list"),
       py::arg("do_bookkeeping") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice to slice.
@@ -33388,8 +33276,9 @@ do_bookkeeping : bool, optional
       py::arg("orbit"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(Routine to add the SAD "linear" soft edge (for finite f1 or f2).
+      R"""(Subroutine soft_quadrupole_edge_kick (ele, param, particle_at, orbit, mat6, make_matrix)
 
+Routine to add the SAD "linear" soft edge (for finite f1 or f2).
 This routine assumes that the particle orbit has been rotated to the element reference frame.
 This routine is called with sad_mult and quadrupole elements.
 
@@ -33422,9 +33311,7 @@ make_matrix : float, optional
       py::arg("orbit"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ks_in : 
 k1_in : 
@@ -33464,9 +33351,11 @@ make_matrix : bool, optional
       py::arg("t1"),
       py::arg("p0"),
       py::arg("args"),
-      R"""(Solve dpsi/dt for psi(t1) using adaptive steps and method:
+      R"""(Subroutine solve_psi_adaptive(t0,t1,p0,args,p1)
 
-"Implicit Bulirsch-Stoer method of Bader and Deuflhard."
+Solve dpsi/dt for psi(t1) using adaptive steps and method:
+  "Implicit Bulirsch-Stoer method of Bader and Deuflhard."
+
 The boundary condition p0 is psi(t0)
 
 Parameters
@@ -33492,10 +33381,13 @@ p1 : float
       py::arg("t1"),
       py::arg("p0"),
       py::arg("args"),
-      R"""(Solve dpsi/dt for psi(t1) using fixed steps and method:
+      R"""(Subroutine solve_psi_fixed_steps(t0,t1,p0,args,t,p)
 
-"Implicit Bulirsch-Stoer method of Bader and Deuflhard."
+Solve dpsi/dt for psi(t1) using fixed steps and method:
+  "Implicit Bulirsch-Stoer method of Bader and Deuflhard."
+
 The boundary condition p0 is psi(t0).
+
 Number of steps is determined by SIZE(p).
 
 Parameters
@@ -33540,11 +33432,17 @@ p : float
       "sort_complex_taylor_terms",
       &Bmad::sort_complex_taylor_terms,
       py::arg("complex_taylor_in"),
-      R"""(Subroutine to sort the complex_taylor terms from "lowest" to "highest" of
+      R"""(subroutine sort_complex_taylor_terms (complex_taylor_in, complex_taylor_sorted)
 
+Subroutine to sort the complex_taylor terms from "lowest" to "highest" of
 a complex_taylor series.
 This subroutine is needed because what comes out of PTC is not sorted.
+
 Uses function complex_taylor_exponent_index to sort.
+
+Note: complex_taylor_sorted needs to have been initialized.
+Note: complex_taylor_sorted cannot be complex_taylor_in. That is it is not legal to write:
+          call sort_complex_taylor_terms (this_complex_taylor, this_complex_taylor)
 
 Parameters
 ----------
@@ -33555,10 +33453,6 @@ Returns
 -------
 complex_taylor_sorted : ComplexTaylorStruct
     Sorted complex_taylor series.
-
-Notes
------
-Note: complex_taylor_sorted needs to have been initialized.
 )""");
   m.def(
       "species_id",
@@ -33566,7 +33460,9 @@ Note: complex_taylor_sorted needs to have been initialized.
       py::arg("name"),
       py::arg("default_") = py::none(),
       py::arg("print_err") = py::none(),
-      R"""(Routine to return the integer ID index of a particle species given the name.
+      R"""(Function species_id (name, default, print_err) result(species)
+
+Routine to return the integer ID index of a particle species given the name.
 
 For subatomic particles, the case does not matter.
 For all other types of particles, the case does matter.
@@ -33590,7 +33486,10 @@ species : int
       &SimUtils::species_id_from_openpmd,
       py::arg("pmd_name"),
       py::arg("charge"),
-      R"""(Routine to return the Bmad species ID given the openPMD species name and given particle charge.
+      R"""(Function species_id_from_openpmd (pmd_name, charge) result(species)
+
+Routine to return the Bmad species ID given the openPMD species name and given particle charge.
+Note: If pmd_name corresponds to a subatomic particle, the charge argument is ignored.
 
 Parameters
 ----------
@@ -33608,7 +33507,9 @@ species : int
       "species_name",
       &SimUtils::species_name,
       py::arg("species"),
-      R"""(Routine to return the name of a particle species given the integer index.
+      R"""(Function species_name (species) result(name)
+
+Routine to return the name of a particle species given the integer index.
 
 Parameters
 ----------
@@ -33625,7 +33526,10 @@ name : unknown
       &SimUtils::species_of,
       py::arg("mass"),
       py::arg("charge"),
-      R"""(Routine to return the integer ID index of a particle species given the mass and charge.
+      R"""(Function species_of (mass, charge) result (species)
+
+Routine to return the integer ID index of a particle species given the mass and charge.
+Note: Currently this routine only works for subatomic particles and is used for decoding PTC flat files.
 
 Parameters
 ----------
@@ -33645,9 +33549,7 @@ species : int
       py::arg("mat_1turn"),
       py::arg("dn_dpz_partial") = py::none(),
       py::arg("dn_dpz"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 mat_1turn : float
     Spin-orbital matrix.
@@ -33667,9 +33569,7 @@ dn_dpz :
       py::arg("dn_dpz_partial2"),
       py::arg("n0") = py::none(),
       py::arg("dn_dpz"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orb_mat : float
     1-turn orbital matrix.
@@ -33691,9 +33591,7 @@ dn_dpz :
       "spin_map1_normalize",
       &Bmad::spin_map1_normalize,
       py::arg("spin1"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 spin1 : float
     Unnormalized spin map.
@@ -33704,9 +33602,7 @@ spin1 : float
       &Bmad::spin_mat8_resonance_strengths,
       py::arg("orb_evec"),
       py::arg("mat8"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orb_evec : complex
     Orbital eigenvector.
@@ -33742,9 +33638,7 @@ xi_diff : float
       &Bmad::spin_mat_to_eigen,
       py::arg("orb_mat"),
       py::arg("spin_map"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orb_mat : float
     Orbital matrix.
@@ -33791,8 +33685,9 @@ error : bool
       &SimUtils::spin_of,
       py::arg("species"),
       py::arg("non_subatomic_default") = py::none(),
-      R"""(Routine to return the spin, in units of hbar, of a particle.
+      R"""(Function spin_of (species, non_subatomic_default) result (spin)
 
+Routine to return the spin, in units of hbar, of a particle.
 This routine is only valid for subatomic particles.
 For all other particles, the returned spin value will be the value of non_subatomic_default.
 
@@ -33816,9 +33711,7 @@ spin : float
       py::arg("sign_z_vel"),
       py::arg("phase_space_coords") = py::none(),
       py::arg("omega"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 field : 
 orbit : 
@@ -33845,9 +33738,7 @@ omega :
       &Bmad::spin_quat_resonance_strengths,
       py::arg("orb_evec"),
       py::arg("spin_q"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orb_evec : complex
     Orbital eigenvector.
@@ -33886,9 +33777,7 @@ xi_diff : float
       py::arg("dref_orb"),
       py::arg("is_on"),
       py::arg("spin_map1"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 spin_taylor : TaylorStruct
     Taylor spin map.
@@ -33905,9 +33794,7 @@ spin_map1 :
       &Bmad::spinor_to_polar,
       py::arg("spinor"),
       py::arg("polar"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 spinor : complex
     Spinor
@@ -33918,9 +33805,7 @@ polar :
       &Bmad::spinor_to_vec,
       py::arg("spinor"),
       py::arg("vec"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 spinor : complex
     Spinor Output
@@ -33932,7 +33817,9 @@ vec :
       py::arg("a_spline"),
       py::arg("x"),
       py::arg("n") = py::none(),
-      R"""(Function for spline evaluation using a single spline (instead of a spline array).
+      R"""(Function spline1 (a_spline, x, n) result (y)
+
+Function for spline evaluation using a single spline (instead of a spline array).
 
 Parameters
 ----------
@@ -33958,18 +33845,21 @@ spline_evaluate spline_akima_interpolate use spline_mod
       "spline_akima",
       &SimUtils::spline_akima,
       py::arg("spline"),
-      R"""(Given a set of (x,y) points we want to interpolate between the points.
+      R"""(Subroutine spline_akima (spline, ok)
 
+Given a set of (x,y) points we want to interpolate between the points.
 This subroutine computes the semi-hermite cubic spline developed by
 Hiroshi Akima. The spline goes thorugh all the points (that is, it is
 not a smoothing spline). For interpolation use:
-spline_evaluate
-spline_akima_interpolate ! You do not need to call spline_akima if you use this routine.
+  spline_evaluate
+  spline_akima_interpolate ! You do not need to call spline_akima if you use this routine.
+
 Reference:
-H Akima, "A New Method of Interpolation and Smooth Curve Fitting Based
-on Local Procedures", J. Assoc. Comp. Mach., Vol 17(4), 589-602 (1970).
+  H Akima, "A New Method of Interpolation and Smooth Curve Fitting Based
+  on Local Procedures", J. Assoc. Comp. Mach., Vol 17(4), 589-602 (1970).
+
 Modules used:
-use spline_mod
+  use spline_mod
 
 Parameters
 ----------
@@ -33987,12 +33877,16 @@ ok : bool
       py::arg("x_knot"),
       py::arg("y_knot"),
       py::arg("x"),
-      R"""(Routine to interpolate using an akima spline.
+      R"""(Subroutine spline_akima_interpolate (x_knot, y_knot, x, ok, y, dy)
+
+Routine to interpolate using an akima spline.
 
 When evaluating at enough points, this routine is slower than calling spline_akima to
 first evaluate the spline coefficients and then repeatedly calling spline_evaluate.
+
 The advantage of this routine is that only the (x, y) knot points need to be stored
 and it will be faster if the number of evaluations is small.
+
 This routine will extrapolate past the range of x_knot(:) up to a distance equal to the
 length between an end point and the point just inside the end point.
 
@@ -34042,7 +33936,9 @@ dy : float
       &SimUtils::spline_evaluate,
       py::arg("spline"),
       py::arg("x"),
-      R"""(Subroutine to evalueate a spline at a set of points.
+      R"""(Subroutine spline_evaluate (spline, x, ok, y, dy)
+
+Subroutine to evalueate a spline at a set of points.
 
 A point outside of the range of knot points is an error.
 
@@ -34096,9 +33992,7 @@ spline_mod
       py::arg("end_orb"),
       py::arg("spline_x"),
       py::arg("spline_y"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 start_orb : CoordStruct
     Starting coords.
@@ -34120,9 +34014,7 @@ spline_y : float
       py::arg("save_null_drift") = py::none(),
       py::arg("choose_max") = py::none(),
       py::arg("ix_insert") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Original lat structure.
@@ -34179,9 +34071,7 @@ ix_insert : int, optional
       &Bmad::sprint_spin_taylor_map,
       py::arg("ele"),
       py::arg("start_orbit") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element to form map for.
@@ -34195,9 +34085,7 @@ start_orbit : float, optional
       py::arg("alpha"),
       py::arg("x"),
       py::arg("y"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 alpha : 
 x : 
@@ -34220,9 +34108,7 @@ y :
       py::arg("x"),
       py::arg("nd") = py::none(),
       py::arg("ds1"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : 
 nd : 
@@ -34244,8 +34130,9 @@ ds1 :
       &Bmad::sr_longitudinal_wake_particle,
       py::arg("ele"),
       py::arg("orbit"),
-      R"""(Routine to apply the short-range wake longitudinal component kick to a particle and then add
+      R"""(Subroutine sr_longitudinal_wake_particle (ele, orbit)
 
+Routine to apply the short-range wake longitudinal component kick to a particle and then add
 to the existing longitudinal wake the contribution from the particle.
 
 Parameters
@@ -34261,8 +34148,9 @@ orbit : CoordStruct
       &Bmad::sr_transverse_wake_particle,
       py::arg("ele"),
       py::arg("orbit"),
-      R"""(Subroutine to apply the short-range wake transverse component of the kick to a particle and then add
+      R"""(Subroutine sr_transverse_wake_particle (ele, orbit)
 
+Subroutine to apply the short-range wake transverse component of the kick to a particle and then add
 to the existing transverse wake the contribution from the particle.
 
 Parameters
@@ -34279,7 +34167,9 @@ orbit : CoordStruct
       py::arg("ele"),
       py::arg("bunch"),
       py::arg("z_ave"),
-      R"""(Subroutine to apply the short-range z-wake kick to a particle.
+      R"""(Subroutine sr_z_long_wake (ele, bunch, z_ave)
+
+Subroutine to apply the short-range z-wake kick to a particle.
 
 Parameters
 ----------
@@ -34303,11 +34193,14 @@ orbit : CoordStruct
       py::arg("n_slices_gen_opt") = py::none(),
       py::arg("n_slices_sxt_opt") = py::none(),
       py::arg("per_ele_out") = py::none(),
-      R"""(Calculate summation RDT terms up to order=1 or order=2 while slicing sextupoles
+      R"""(Subroutine srdt_calc(lat, srdt_sums, order, n_slices_gen_opt, n_slices_sxt_opt)
 
+Calculate summation RDT terms up to order=1 or order=2 while slicing sextupoles
 n_slices_sxt_opt times and all other elements n_slices_gen_opt times.
+
 These formulas are documented in "The Sextupole Scheme for the Swiss Light Source (SLS): An Analytic Approach"
 by Johan Bengtsson.  SLS Note 9/97.
+
 The 2nd order formulas are documented in "Second-order driving terms due to sextupoles and
 chromatic effects of quadrupoles" by Chun-xi Wang.  AOP-TN-2009-020.
 
@@ -34337,12 +34230,18 @@ srdt_sums : SummationRdtStruct
       py::arg("chrom_set_x_opt") = py::none(),
       py::arg("chrom_set_y_opt") = py::none(),
       py::arg("weight_in") = py::none(),
-      R"""(chrom_set_x_opt, chrom_set_y_opt, weight_in)
+      R"""(Subroutine srdt_lsq_solution(lat, var_indexes, ls_soln, n_slices_gen_opt, n_slices_sxt_opt,
+                                                    chrom_set_x_opt, chrom_set_y_opt, weight_in)
 
 Given lat, finds K2 moments that set the chromaticity and zeros-out the real
 and complex parts of the first order driving terms, that minimizes the sum of the squares
 of the K2 moments.  i.e. the weakest sextupole scheme that sets chromaticity
 and zeros out the first order terms.
+
+Note:  This subroutine does not, in its present form, work well with knobs, overlays, or in lattices where
+       multiple elements have the same name.
+
+This subroutine assumes that Nsext > 18.
 
 Parameters
 ----------
@@ -34374,9 +34273,7 @@ ls_soln : float
       py::arg("lat"),
       py::arg("ele_start"),
       py::arg("move_end_marker"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice to modify.
@@ -34395,9 +34292,7 @@ error : bool
       py::arg("str"),
       py::arg("match"),
       py::arg("num"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 str : 
 match : 
@@ -34424,9 +34319,7 @@ num :
       "str_downcase",
       &SimUtils::str_downcase,
       py::arg("src"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 dst : 
 src : 
@@ -34438,9 +34331,7 @@ src :
       py::arg("set"),
       py::arg("ignore_clauses") = py::none(),
       py::arg("ix_match"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 line : 
 set : 
@@ -34473,9 +34364,7 @@ ix_match :
       py::arg("line"),
       py::arg("set"),
       py::arg("ix_match"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 line : 
 set : 
@@ -34506,9 +34395,7 @@ ix_match :
       py::arg("line"),
       py::arg("set"),
       py::arg("ix_match"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 line : 
 set : 
@@ -34537,9 +34424,7 @@ ix_match :
       py::arg("line"),
       py::arg("set"),
       py::arg("ix_match"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 line : 
 set : 
@@ -34568,9 +34453,7 @@ ix_match :
       py::arg("str"),
       py::arg("pat"),
       py::arg("a_match"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 str : 
 pat : 
@@ -34601,9 +34484,7 @@ a_match :
       py::arg("str_replace") = py::none(),
       py::arg("do_trim") = py::none(),
       py::arg("ignore_escaped") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 string : 
 str_match : 
@@ -34638,9 +34519,7 @@ ignore_escaped :
       "str_upcase",
       &SimUtils::str_upcase,
       py::arg("src"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 dst : 
 src : 
@@ -34651,9 +34530,7 @@ src :
       py::arg("physical_end"),
       py::arg("ele_orientation"),
       py::arg("stream_end"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 physical_end : int
     entrance_end$, exit_end$, surface$, etc.
@@ -34677,11 +34554,13 @@ stream_end :
       &Bmad::string_attrib,
       py::arg("attrib_name"),
       py::arg("ele"),
-      R"""(Routine to return the value of a string attribute of a lattice element.
+      R"""(Subroutine string_attrib (attrib_name, ele, attrib_value)
 
+Routine to return the value of a string attribute of a lattice element.
 This routine is useful when attrib_name is specified by the program user.
+
 For example:
-call string_attrib ('NAME', ele, attrib_value)  ! Will return attrib_value = ele%name
+  call string_attrib ('NAME', ele, attrib_value)  ! Will return attrib_value = ele%name
 
 Parameters
 ----------
@@ -34703,9 +34582,7 @@ attrib_value : unknown
       py::arg("err_flag"),
       py::arg("err_print_flag") = py::none(),
       py::arg("value"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 line : 
 default : 
@@ -34744,9 +34621,7 @@ value :
       py::arg("err_flag"),
       py::arg("err_print_flag") = py::none(),
       py::arg("value"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 line : 
 default : 
@@ -34783,9 +34658,7 @@ value :
       py::arg("in_string"),
       py::arg("out_string"),
       py::arg("word_len"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 in_string : 
 out_string : 
@@ -34817,9 +34690,7 @@ word_len :
       py::arg("ix_word"),
       py::arg("delim"),
       py::arg("ix_next"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 in_str : 
 delimitors : 
@@ -34859,9 +34730,7 @@ ix_next :
       &Bmad::strong_beam_sigma_calc,
       py::arg("ele"),
       py::arg("s_pos"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Beambeam element.
@@ -34902,9 +34771,7 @@ dsigma_ds : float
       &python_strong_beam_strength,
       py::arg("ele"),
       py::arg("strength"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Beambeam element.
@@ -34934,8 +34801,9 @@ strength :
       py::arg("y12"),
       py::arg("d1"),
       py::arg("d2"),
-      R"""(Routine to compute coefficients for bicubic interpolation.
+      R"""(Subroutine super_bicubic_coef(y, y1, y2, y12, d1, d2, c)
 
+Routine to compute coefficients for bicubic interpolation.
 This is from NR bcucof.
 
 Parameters
@@ -34971,9 +34839,11 @@ c : float
       py::arg("x2u"),
       py::arg("x1"),
       py::arg("x2"),
-      R"""(Routine to do bicubic interpolation.
+      R"""(Subroutine super_bicubic_interpolation(y, y1, y2, y12, x1l, x1u, x2l, x2u, x1, x2, ansy, ansy1, ansy2)
 
+Routine to do bicubic interpolation.
 This is from NR bcuint.
+
 Note! The four grid points are arrayed in counter-clockwise order beginning from the lower left.
 So, for example, y = [y_ll, y_lu, y_uu, y_ul] where "l" = lower, "u" = upper index.
 
@@ -35041,7 +34911,9 @@ ansy2 : float
       py::arg("xa"),
       py::arg("ya"),
       py::arg("x"),
-      R"""(This is essentially polint from Numerical Recipes.
+      R"""(Function super_polint (xa, ya, x, y, dy)
+
+This is essentially polint from Numerical Recipes.
 
 Parameters
 ----------
@@ -35074,7 +34946,9 @@ dy : float
       &SimUtils::super_poly,
       py::arg("x"),
       py::arg("coeffs"),
-      R"""(Routine to compute Sum: coef(i)*x^i
+      R"""(Function super_poly (x, coef) result (value)
+
+Routine to compute Sum: coef(i)*x^i
 
 Parameters
 ----------
@@ -35092,8 +34966,9 @@ value : float
       "super_sobseq",
       &SimUtils::super_sobseq,
       py::arg("ran_state") = py::none(),
-      R"""(Routine patterened after sobseq in Numerical Recipes.
+      R"""(Subroutine super_sobseq (x, ran_state)
 
+Routine patterened after sobseq in Numerical Recipes.
 Difference is that this version has an argument for the internal state.
 
 Parameters
@@ -35110,8 +34985,9 @@ x : float
       "super_sort",
       &SimUtils::super_sort,
       py::arg("arr"),
-      R"""(Routine to sort an integer array in place.
+      R"""(Subroutine super_sort(arr)
 
+Routine to sort an integer array in place.
 This is the NR routine sort modified to sort integers.
 
 Parameters
@@ -35130,7 +35006,9 @@ arr : int
       py::arg("z"),
       py::arg("dz_dxy") = py::none(),
       py::arg("extend_grid") = py::none(),
-      R"""(Routine to add in the z displacement defined by the grid
+      R"""(Subroutine surface_grid_displacement (ele, x, y, err_flag, z, dz_dxy, extend_grid)
+
+Routine to add in the z displacement defined by the grid
 
 Parameters
 ----------
@@ -35174,9 +35052,7 @@ dz_dxy : float, optional
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
       py::arg("offset_ele") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element with transfer matrix
@@ -35204,9 +35080,7 @@ offset_ele : bool, optional
       &python_system_command,
       py::arg("line"),
       py::arg("err_flag") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 line : 
 err_flag : 
@@ -35230,9 +35104,12 @@ err_flag :
       &Bmad::t6_to_b123,
       py::arg("t6"),
       py::arg("abz_tunes"),
-      R"""(This decomposes the one-turn matrix according to Equation 56 from
+      R"""(Subroutine t6_to_B123(N, abz_tunes, B1, B2, B3, err_flag)
 
+This decomposes the one-turn matrix according to Equation 56 from
 "Alternative approach to general coupled linear optics" by A. Wolski. PRSTAB.
+
+Note that a sigma matrix can be assembeled from:  sigma = B1*emit_a + B2*emit_b + B3*emit_c
 
 Parameters
 ----------
@@ -35276,9 +35153,7 @@ err_flag : bool
       "tao_abort_command_file",
       &Tao::tao_abort_command_file,
       py::arg("force_abort") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 force_abort : bool, optional
     : If present and True, ignore s.global.cmd_file_abort_on_error and abort any open command files.
@@ -35287,8 +35162,9 @@ force_abort : bool, optional
       "tao_add_to_normal_mode_h_array",
       &Tao::tao_add_to_normal_mode_h_array,
       py::arg("h_str"),
-      R"""(Routine to add on to the "h(:)" array holding the list of normal form
+      R"""(Subroutine tao_add_to_normal_mode_h_array(h_str, h_array)
 
+Routine to add on to the "h(:)" array holding the list of normal form
 resonance driving terms to calculate.
 If h_str is already in the h_array(:) list, nothing is done.
 
@@ -35307,9 +35183,7 @@ h_array : ResonanceHStruct
       &Tao::tao_alias_cmd,
       py::arg("alias"),
       py::arg("string"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 alias : 
     Name of the tao command file.
@@ -35322,9 +35196,7 @@ string :
       py::arg("u"),
       py::arg("n_data"),
       py::arg("exact") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 u : 
 n_data : 
@@ -35353,9 +35225,7 @@ exact :
       &python_tao_allocate_v1_var,
       py::arg("n_v1"),
       py::arg("save_old"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 n_v1 : 
 save_old : 
@@ -35379,7 +35249,9 @@ save_old :
       &python_tao_allocate_var_array,
       py::arg("n_var"),
       py::arg("default_good_user"),
-      R"""(Routine to increase the s%var(:) array size.
+      R"""(Subroutine tao_allocate_var_array (n_var, default_good_user)
+
+Routine to increase the s%var(:) array size.
 
 Parameters
 ----------
@@ -35410,9 +35282,7 @@ n_var : int
       py::arg("ele"),
       py::arg("bunch_params"),
       py::arg("emit"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 plane : int
     x_plane$ or y_plane$.
@@ -35442,7 +35312,9 @@ emit :
       py::arg("tao_lat"),
       py::arg("ix_branch"),
       py::arg("beam"),
-      R"""(Routine to track a a beam of particles.
+      R"""(Subroutine tao_beam_track (u, tao_lat, ix_branch, beam, calc_ok)
+
+Routine to track a a beam of particles.
 
 Parameters
 ----------
@@ -35470,9 +35342,7 @@ calc_ok : bool
       py::arg("where"),
       py::arg("u"),
       py::arg("ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele_id : unknown
     Name or index of the element.
@@ -35491,9 +35361,7 @@ ele :
       &python_tao_branch_index,
       py::arg("ix_branch"),
       py::arg("ix_this"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ix_branch : int
     Nominal branch number.
@@ -35513,7 +35381,9 @@ ix_this :
   m.def(
       "tao_c_out_io_buffer_reset",
       &Tao::tao_c_out_io_buffer_reset,
-      R"""(Routine to reset the buffer.
+      R"""(Subroutine tao_c_out_io_buffer_reset() bind(c)
+
+Routine to reset the buffer.
 
 )""");
   m.def(
@@ -35523,9 +35393,7 @@ ix_this :
       py::arg("curve"),
       py::arg("comp_sign"),
       py::arg("good"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 tao_lat : 
 curve : 
@@ -35550,7 +35418,10 @@ good :
       "tao_cbar_wave_anal",
       &Tao::tao_cbar_wave_anal,
       py::arg("plot"),
-      R"""()""");
+      R"""(Subroutine tao_cbar_wave_anal (plot)
+
+
+)""");
   m.def(
       "tao_change_ele",
       &python_tao_change_ele,
@@ -35558,7 +35429,9 @@ good :
       py::arg("attrib_name"),
       py::arg("num_str"),
       py::arg("update"),
-      R"""(Routine to change a variable in the model lattice.
+      R"""(Subroutine tao_change_ele (ele_name, attrib_name, num_str, update, err_flag)
+
+Routine to change a variable in the model lattice.
 
 Parameters
 ----------
@@ -35597,7 +35470,9 @@ err_flag :
       py::arg("print_list"),
       py::arg("dqa_str"),
       py::arg("dqb_str"),
-      R"""(Parameters
+      R"""(Subroutine tao_change_tune (branch_str, mask_str, print_list, dqa_str, dqb_str, err_flag)
+
+Parameters
 ----------
 branch_str : unknown
     List of branches to apply tune set to.
@@ -35621,7 +35496,9 @@ err_flag :
       py::arg("name"),
       py::arg("num_str"),
       py::arg("silent"),
-      R"""(Routine to change a variable in the model lattice.
+      R"""(Subroutine tao_change_var (name, num_str, silent, err_flag)
+
+Routine to change a variable in the model lattice.
 
 Parameters
 ----------
@@ -35643,7 +35520,9 @@ err_flag :
       &Tao::tao_change_z_tune,
       py::arg("branch_str"),
       py::arg("dq_str"),
-      R"""(Parameters
+      R"""(Subroutine tao_change_z_tune (branch_str, dq_str, err_flag)
+
+Parameters
 ----------
 branch_str : unknown
     List of branches to apply tune set to.
@@ -35661,9 +35540,7 @@ err_flag :
       py::arg("data_type"),
       py::arg("data_source"),
       py::arg("do_chrom"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 data_type : 
 data_source : 
@@ -35694,9 +35571,7 @@ do_chrom :
       "tao_clear_cmd",
       &Tao::tao_clear_cmd,
       py::arg("cmd_line"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 cmd_line : unknown
     Should be set to 'maps'.
@@ -35708,9 +35583,7 @@ cmd_line : unknown
       py::arg("where"),
       py::arg("value1"),
       py::arg("value2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 gang : bool
     Gang all data d1 arrays together.
@@ -35733,17 +35606,14 @@ value2 :
           return py::cast(s.value2);
         throw py::index_error();
       });
-  m.def(
-      "tao_close_command_file",
-      &Tao::tao_close_command_file,
-      R"""(No docstring available
-
-)""");
+  m.def("tao_close_command_file", &Tao::tao_close_command_file, R"""()""");
   m.def(
       "tao_cmd_history_record",
       &python_tao_cmd_history_record,
       py::arg("cmd"),
-      R"""(Subroutine to record a cmd in the command history stack
+      R"""(Subroutine tao_cmd_history_record (cmd)
+
+Subroutine to record a cmd in the command history stack
 
 )""");
   py::class_<PyTaoCmdHistoryRecord, std::unique_ptr<PyTaoCmdHistoryRecord>>(
@@ -35766,9 +35636,7 @@ value2 :
       &python_tao_command,
       py::arg("command_line"),
       py::arg("err"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 command_line : unknown
     command line
@@ -35795,9 +35663,7 @@ err_is_fatal : bool
       &python_tao_constraint_type_name,
       py::arg("datum"),
       py::arg("datum_name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 datum : TaoDataStruct
     Datum
@@ -35823,9 +35689,7 @@ datum_name :
       &Tao::tao_control_tree_list,
       py::arg("ele"),
       py::arg("tree"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element to start at. Ouput:
@@ -35837,9 +35701,7 @@ tree : ElePointerStruct
       &Tao::tao_count_strings,
       py::arg("string"),
       py::arg("pattern"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 string : unknown
     the string to look at
@@ -35851,8 +35713,9 @@ num : int
   m.def(
       "tao_create_plot_window",
       &Tao::tao_create_plot_window,
-      R"""(Subroutine to create the plot window.
+      R"""(Subroutine tao_create_plot_window ()
 
+Subroutine to create the plot window.
 This soubroutine knows not to create a second window if one already exists.
 
 )""");
@@ -35860,9 +35723,7 @@ This soubroutine knows not to create a second window if one already exists.
       "tao_curve_beam_ellipse_setup",
       &Tao::tao_curve_beam_ellipse_setup,
       py::arg("curve"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 curve : 
 )""");
@@ -35871,7 +35732,9 @@ curve :
       &Tao::tao_curve_check_universe,
       py::arg("curve"),
       py::arg("uni"),
-      R"""(Routine to check if the universe associated with a curve exists and is on.
+      R"""(Function tao_curve_check_universe (curve, uni) result (is_ok)
+
+Routine to check if the universe associated with a curve exists and is on.
 
 Parameters
 ----------
@@ -35893,9 +35756,7 @@ is_ok : bool
       py::arg("plot"),
       py::arg("graph"),
       py::arg("curve"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 plot : 
 graph : 
@@ -35908,8 +35769,9 @@ curve :
       py::arg("plot"),
       py::arg("curve"),
       py::arg("who"),
-      R"""(Routine to calculate datum values.
+      R"""(Subroutine tao_curve_datum_calc (eles, plot, curve, who)
 
+Routine to calculate datum values.
 The values are calculated at the end of each eles(:)%ele element.
 
 Parameters
@@ -35929,9 +35791,7 @@ who : unknown
       py::arg("curve"),
       py::arg("point_to_ele_ref"),
       py::arg("ele_track"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 curve : TaoCurveStruct
     Curve with ref ele.
@@ -35954,9 +35814,7 @@ ele_track :
       &python_tao_curve_ix_uni,
       py::arg("curve"),
       py::arg("ix_uni"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 curve : TaoCurveStruct
     Curve.
@@ -35979,9 +35837,7 @@ ix_uni :
       py::arg("curve"),
       py::arg("use_region") = py::none(),
       py::arg("curve_name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 curve : TaoCurveStruct
     Curve
@@ -36006,9 +35862,7 @@ curve_name :
       &Tao::tao_curve_rms_calc,
       py::arg("curve"),
       py::arg("who"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 curve : TaoCurveStruct
     Curve to analyze.
@@ -36041,9 +35895,7 @@ mean : float
       py::arg("d1"),
       py::arg("show_universe") = py::none(),
       py::arg("d2_d1_name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 d1 : TaoD1DataStruct
     Data array.
@@ -36068,9 +35920,7 @@ d2_d1_name :
       py::arg("u"),
       py::arg("d2_name"),
       py::arg("n_d1_data"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 u : 
 d2_name : 
@@ -36094,9 +35944,7 @@ n_d1_data :
       "tao_data_check",
       &python_tao_data_check,
       py::arg("err"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 err : 
 )""");
@@ -36115,9 +35963,7 @@ err :
       "tao_data_coupling_init",
       &Tao::tao_data_coupling_init,
       py::arg("branch"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch : BranchStruct
     New lattice branch.
@@ -36130,9 +35976,7 @@ branch : BranchStruct
       py::arg("default_data_type"),
       py::arg("uni") = py::none(),
       py::arg("is_valid"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 datum : TaoDataStruct
     Datum to check.
@@ -36165,9 +36009,11 @@ is_valid :
       py::arg("template_"),
       py::arg("curve"),
       py::arg("graph"),
-      R"""(Routine substitute the appropriate data type string for instances of "#ref" and
+      R"""(Subroutine tao_data_type_substitute (template, str_out, curve, graph)
 
+Routine substitute the appropriate data type string for instances of "#ref" and
 "#comp" in template.
+
 Additionally, if template does not have a "|" character,
 the string "|" + component will be added at the end of str_out.
 
@@ -36190,7 +36036,9 @@ str_out : unknown
       py::arg("curve"),
       py::arg("graph"),
       py::arg("check_s_position"),
-      R"""(Routine to set the data for plotting.
+      R"""(Subroutine tao_data_useit_plot_calc (curve, graph, data, check_s_position, most_invalid)
+
+Routine to set the data for plotting.
 
 Parameters
 ----------
@@ -36234,9 +36082,7 @@ most_invalid : unknown
       py::arg("data_type"),
       py::arg("branch_geometry") = py::none(),
       py::arg("has_associated_ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 data_type : unknown
     Type of data.
@@ -36269,7 +36115,9 @@ has_associated_ele :
       py::arg("branch"),
       py::arg("s_pos"),
       py::arg("values"),
-      R"""(Routine to calculate the integral, rms, or average of an array of values associated with a datum.
+      R"""(Function tao_datum_integrate (datum, branch, s_pos, values, valid_value, why_invalid) result (result)
+
+Routine to calculate the integral, rms, or average of an array of values associated with a datum.
 
 Parameters
 ----------
@@ -36318,9 +36166,7 @@ result : float
       py::arg("datum"),
       py::arg("show_universe") = py::none(),
       py::arg("datum_name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 datum : TaoDataStruct
     Datum
@@ -36344,7 +36190,9 @@ datum_name :
       &Tao::tao_datum_s_position,
       py::arg("datum"),
       py::arg("ele"),
-      R"""(Routine to calculate the longitudinal position associated with a datum.
+      R"""(Function tao_datum_s_position (datum, ele) result (s_pos)
+
+Routine to calculate the longitudinal position associated with a datum.
 
 Parameters
 ----------
@@ -36362,9 +36210,7 @@ s_pos
   m.def(
       "tao_de_optimizer",
       &Tao::tao_de_optimizer,
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 abort : bool
     Set True if an user stop signal detected.
@@ -36373,24 +36219,24 @@ abort : bool
       "tao_deallocate_plot_cache",
       &Tao::tao_deallocate_plot_cache,
       py::arg("plot_cache"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 plot_cache : 
 )""");
+  m.def("tao_destroy_plot_window", &Tao::tao_destroy_plot_window, R"""()""");
   m.def(
-      "tao_destroy_plot_window",
-      &Tao::tao_destroy_plot_window,
-      R"""(No docstring available
+      "tao_dmerit_calc",
+      &Tao::tao_dmerit_calc,
+      R"""(Subroutine tao_dmerit_calc ()
 
 )""");
-  m.def("tao_dmerit_calc", &Tao::tao_dmerit_calc, R"""()""");
   m.def(
       "tao_dmodel_dvar_calc",
       &Tao::tao_dmodel_dvar_calc,
       py::arg("force_calc"),
-      R"""(Subroutine to calculate the dModel_dVar derivative matrix.
+      R"""(Subroutine tao_dModel_dVar_calc (force_calc, err_flag)
+
+Subroutine to calculate the dModel_dVar derivative matrix.
 
 Parameters
 ----------
@@ -36413,10 +36259,12 @@ err_flag : bool
       py::arg("ele"),
       py::arg("theta"),
       py::arg("beam"),
-      R"""(Returns the beam's second moment using the wire along the specified angle.
+      R"""(Subroutine tao_do_wire_scan (ele, wire_params, theta, beam) result (moment)
 
+Returns the beam's second moment using the wire along the specified angle.
 Keep in mind that the actual correlation axis is 90 degrees off of the
 wire angle
+
 This simulates a fast wire scanner that performs the scan over only one
 bunch. Obviously, this isn't realistic. Any dynamic effects will not be
 accounted for!
@@ -36440,7 +36288,11 @@ moment : float
       &Tao::tao_draw_beam_chamber_wall,
       py::arg("plot"),
       py::arg("graph"),
-      R"""(Routine to draw the beam chamber wall.
+      R"""(NOTE: THIS ROUTINE IS NOT CURRENTLY ACITVE (NOT CALLED BY ANY OTHER ROUTINE).
+
+Subroutine tao_draw_beam_chamber_wall (plot, graph)
+
+Routine to draw the beam chamber wall.
 
 Parameters
 ----------
@@ -36456,7 +36308,9 @@ graph : TaoGraphStruct
       py::arg("graph"),
       py::arg("curve"),
       py::arg("have_data"),
-      R"""(Routine to draw a graph with data and/or variable curves.
+      R"""(Subroutine tao_draw_curve_data (plot, graph, curve, have_data)
+
+Routine to draw a graph with data and/or variable curves.
 
 Parameters
 ----------
@@ -36493,7 +36347,9 @@ have_data : bool
       py::arg("label_name"),
       py::arg("offset1"),
       py::arg("offset2"),
-      R"""(Routine to draw one lattice element or one datum location for the floor plan graph.
+      R"""(Subroutine tao_draw_ele_for_floor_plan (plot, graph, tao_lat, ele, ele_shape, label_name, offset1, offset2)
+
+Routine to draw one lattice element or one datum location for the floor plan graph.
 
 Parameters
 ----------
@@ -36537,7 +36393,9 @@ label_name : unknown
       &Tao::tao_draw_floor_plan,
       py::arg("plot"),
       py::arg("graph"),
-      R"""(Routine to draw a floor plan graph.
+      R"""(Subroutine tao_draw_floor_plan (plot, graph)
+
+Routine to draw a floor plan graph.
 
 Parameters
 ----------
@@ -36551,8 +36409,9 @@ graph : TaoGraphStruct
       &Tao::tao_draw_graph_axes,
       py::arg("plot"),
       py::arg("graph"),
-      R"""(Routine to draw a just the graph part of a data graph.
+      R"""(Subroutine tao_draw_graph_axes (plot, graph)
 
+Routine to draw a just the graph part of a data graph.
 The calling routine takes care of drawing any curves.
 
 Parameters
@@ -36569,7 +36428,9 @@ graph : TaoGraphStruct
       py::arg("graph"),
       py::arg("curve"),
       py::arg("have_data"),
-      R"""(Routine to draw a graph with data and/or variable histograms.
+      R"""(Subroutine tao_draw_histogram_data (plot, graph, curve, have_data)
+
+Routine to draw a graph with data and/or variable histograms.
 
 Parameters
 ----------
@@ -36604,7 +36465,9 @@ have_data : bool
       &Tao::tao_draw_lat_layout,
       py::arg("plot"),
       py::arg("graph"),
-      R"""(Routine to draw a lattice layout graph.
+      R"""(Subroutine tao_draw_lat_layout (plot, graph)
+
+Routine to draw a lattice layout graph.
 
 Parameters
 ----------
@@ -36617,7 +36480,9 @@ graph : TaoGraphStruct
       "tao_draw_plots",
       &Tao::tao_draw_plots,
       py::arg("do_clear") = py::none(),
-      R"""(Subroutine to draw the plots on the plot window.
+      R"""(Subroutine tao_draw_plots (do_clear)
+
+Subroutine to draw the plots on the plot window.
 
 Parameters
 ----------
@@ -36629,8 +36494,9 @@ do_clear : bool, optional
       &Tao::tao_ele_geometry_with_misalignments,
       py::arg("datum"),
       py::arg("ele"),
-      R"""(Routine to evaluate a floor position with misalignments at a given element.
+      R"""(Function tao_ele_geometry_with_misalignments (datum, ele, valid_value, why_invalid) result (value)
 
+Routine to evaluate a floor position with misalignments at a given element.
 This routine is private and not for general use.
 
 Parameters
@@ -36686,9 +36552,7 @@ value : float
       py::arg("y1"),
       py::arg("y2"),
       py::arg("ix_shape_min") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ix_uni : int
     Universe index.
@@ -36736,8 +36600,9 @@ ix_shape_min : int, optional
       py::arg("ele"),
       py::arg("orbit"),
       py::arg("bunch_params"),
-      R"""(Routine to evaluate a floor_orbit datum at a given element.
+      R"""(Function tao_eval_floor_orbit (datum, ele, orbit, bunch_params, valid_value, why_invalid) result (value)
 
+Routine to evaluate a floor_orbit datum at a given element.
 This routine is private and not for general use.
 
 Parameters
@@ -36789,9 +36654,7 @@ value : float
       py::arg("tao_lat"),
       py::arg("called_from_lat_calc") = py::none(),
       py::arg("print_err") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 datum : TaoDataStruct
     What type of datum
@@ -36840,7 +36703,9 @@ print_err : bool, optional
       py::arg("ele"),
       py::arg("ele_ref"),
       py::arg("valid_value"),
-      R"""(Routine to evaluate a datum at a given s-position in the lattice
+      R"""(Function tao_evaluate_datum_at_s (datum, tao_lat, ele, ele_ref, valid_value, err_str, bad_datum) result(value)
+
+Routine to evaluate a datum at a given s-position in the lattice
 
 Parameters
 ----------
@@ -36900,10 +36765,17 @@ value : float
       py::arg("dflt_uni") = py::none(),
       py::arg("dflt_eval_point") = py::none(),
       py::arg("dflt_s_offset") = py::none(),
-      R"""(dflt_ele_ref, dflt_ele_start, dflt_ele, dflt_component, dflt_uni, dflt_eval_point, dflt_s_offset)
+      R"""(! private tao_scratch_values_calc, tao_eval_floor_orbit, tao_ele_geometry_with_misalignments
 
-Routine to evaluate data with a lat or beam source of the form:
-<universe>@lat::<data_type>[<ix_ele_start>&<ix_ele>]|<component>
+
+
+
+
+ Subroutine tao_evaluate_lat_or_beam_data (err, data_name, values, print_err, default_source, default_source,
+               dflt_ele_ref, dflt_ele_start, dflt_ele, dflt_component, dflt_uni, dflt_eval_point, dflt_s_offset)
+
+ Routine to evaluate data with a lat or beam source of the form:
+     <universe>@lat::<data_type>[<ix_ele_start>&<ix_ele>]|<component>
 
 Parameters
 ----------
@@ -36966,9 +36838,7 @@ values : float
       py::arg("q0"),
       py::arg("delta_input"),
       py::arg("q_val"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 q_str : unknown
     String expression.
@@ -36994,13 +36864,15 @@ q_val :
       &Tao::tao_expression_hash_substitute,
       py::arg("expression_in"),
       py::arg("eval_ele") = py::none(),
-      R"""(Routine to, in the expression, substitute the evaluation lattice element name in place
+      R"""(Subroutine tao_expression_hash_substitute(expression_in, expression_out, eval_ele)
 
+Routine to, in the expression, substitute the evaluation lattice element name in place
 of hash ("#") characters. Care is taken to only do this where it makes sense.
 For example, "Q1##3" where here "##3" means the third instance of Q1, does not qualify.
+
 Specifically, a substitution will be done if the character before the hash and the
 character after are one of:
-[,]-*+/:|@<>, or a blank character, or the beginning or end of the expression
+  [,]-*+/:|@<>, or a blank character, or the beginning or end of the expression
 
 Parameters
 ----------
@@ -37019,9 +36891,7 @@ expression_out : unknown
       &Tao::tao_find_plot_region,
       py::arg("where"),
       py::arg("print_flag") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 err : bool
     Set True on error. False otherwise.
@@ -37056,9 +36926,7 @@ print_flag : bool, optional
       py::arg("switch_"),
       py::arg("word1"),
       py::arg("word2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 switch : unknown
     Action to take. One on : 'activate', 'save', 'write'.
@@ -37072,9 +36940,7 @@ word2 : unknown
       &Tao::tao_floor_to_screen,
       py::arg("graph"),
       py::arg("r_floor"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 graph : TaoGraphStruct
     Graph defining the projection plane.
@@ -37105,9 +36971,7 @@ y_screen : float
       &Tao::tao_floor_to_screen_coords,
       py::arg("graph"),
       py::arg("floor"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 graph : TaoGraphStruct
     Graph defining the projection plane.
@@ -37120,9 +36984,11 @@ screen : FloorPositionStruct
   m.def(
       "tao_geodesic_lm_optimizer",
       &Tao::tao_geodesic_lm_optimizer,
-      R"""(Routine to minimize the merit function by varying variables until
+      R"""(Subroutine tao_geodesic_lm_optimizer (abort)
 
+Routine to minimize the merit function by varying variables until
 the "data" as calculated from the model matches the measured data.
+
 This subroutine is a wrapper for the "geodesic"
 Levenburg - Marquardt method.
 
@@ -37135,8 +37001,9 @@ abort : bool
   m.def(
       "tao_get_data",
       &Tao::tao_get_data,
-      R"""(Subroutine to get the values of the data used in optimization and put them
+      R"""(Subroutine tao_get_data (data_value, data_weight, data_meas_value, dat_ix_dModel)
 
+Subroutine to get the values of the data used in optimization and put them
 in an array. The data is ordered starting with the first universe
 
 
@@ -37174,9 +37041,7 @@ data_ix_dModel : int
   m.def(
       "tao_get_opt_vars",
       &Tao::tao_get_opt_vars,
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 var_value : float
     Variable model values.
@@ -37231,17 +37096,22 @@ ignore_if_not_limited : bool
       py::arg("prompt_str") = py::none(),
       py::arg("wait_flag") = py::none(),
       py::arg("cmd_in") = py::none(),
-      R"""(Subroutine to get the next Tao command. In order of precedence, input may come from:
+      R"""(Subroutine tao_get_user_input (cmd_out, prompt_str, wait_flag, cmd_in)
 
-1) s%com%cmd string (if s%com%use_cmd_here is set to True).
-Used for recalling commands from the history stack.
-2) A saved command string.
-3) A command file.
-4) The cmd_in argument (if present). Used, for example, when interfacing with Python.
-5) The terminal.
+Subroutine to get the next Tao command. In order of precedence, input may come from:
+  1) s%com%cmd string (if s%com%use_cmd_here is set to True).
+     Used for recalling commands from the history stack.
+  2) A saved command string.
+  3) A command file.
+  4) The cmd_in argument (if present). Used, for example, when interfacing with Python.
+  5) The terminal.
+
+Note: A saved command string is present if a prior input string contained multiple commands.
 For example, the following string is read from a command file or terminal or passed via cmd_in:
-"show ele 1; set opti de; run"
+        "show ele 1; set opti de; run"
 Then cmd_out would be "show ele 1" and "set opti de; run" would be saved for the next call to this routine.
+
+Note: In single character mode, the input precedence order is ignored and input is taken from the terminal.
 
 Parameters
 ----------
@@ -37256,18 +37126,12 @@ Returns
 -------
 cmd_out : unknown
     Command from the user.
-
-Notes
------
-Note: A saved command string is present if a prior input string contained multiple commands.
 )""");
   m.def(
       "tao_graph_controller_setup",
       &Tao::tao_graph_controller_setup,
       py::arg("graph"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 graph : 
 )""");
@@ -37276,9 +37140,7 @@ graph :
       &Tao::tao_graph_data_setup,
       py::arg("plot"),
       py::arg("graph"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 plot : 
 graph : 
@@ -37288,9 +37150,7 @@ graph :
       &Tao::tao_graph_data_slice_setup,
       py::arg("plot"),
       py::arg("graph"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 plot : 
 graph : 
@@ -37300,9 +37160,7 @@ graph :
       &Tao::tao_graph_dynamic_aperture_setup,
       py::arg("plot"),
       py::arg("graph"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 plot : 
 graph : 
@@ -37312,9 +37170,7 @@ graph :
       &Tao::tao_graph_histogram_setup,
       py::arg("plot"),
       py::arg("graph"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 plot : 
 graph : 
@@ -37325,9 +37181,7 @@ graph :
       py::arg("graph"),
       py::arg("use_region") = py::none(),
       py::arg("graph_name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 graph : TaoGraphStruct
     Graph
@@ -37352,9 +37206,7 @@ graph_name :
       &Tao::tao_graph_phase_space_setup,
       py::arg("plot"),
       py::arg("graph"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 plot : 
 graph : 
@@ -37364,7 +37216,9 @@ graph :
       &Tao::tao_graph_s_min_max_calc,
       py::arg("graph"),
       py::arg("branch"),
-      R"""(Routine to calculate min and max for a graph when plot%x_axis_type is set to "s".
+      R"""(Subroutine tao_graph_s_min_max_calc(graph, branch, s_min, s_max)
+
+Routine to calculate min and max for a graph when plot%x_axis_type is set to "s".
 
 Parameters
 ----------
@@ -37405,9 +37259,7 @@ s_max : float
       &Tao::tao_graph_setup,
       py::arg("plot"),
       py::arg("graph"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 plot : 
 graph : 
@@ -37415,9 +37267,7 @@ graph :
   m.def(
       "tao_init",
       &Tao::tao_init,
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 err_flag : bool
     Set Treu if there is an error. False otherwise.
@@ -37430,9 +37280,7 @@ err_flag : bool
       py::arg("track_start"),
       py::arg("track_end"),
       py::arg("comb_ds_save"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 u : 
 beam_init : 
@@ -37465,7 +37313,9 @@ comb_ds_save :
       "tao_init_beams",
       &Tao::tao_init_beams,
       py::arg("init_file"),
-      R"""(Subroutine to initialize beam stuff.
+      R"""(Subroutine tao_init_beams (init_file)
+
+Subroutine to initialize beam stuff.
 
 Parameters
 ----------
@@ -37476,28 +37326,23 @@ init_file : unknown
       "tao_init_data",
       &Tao::tao_init_data,
       py::arg("data_file"),
-      R"""(Subroutine to initialize the tao data structures.
+      R"""(Subroutine tao_init_data (data_file)
+
+Subroutine to initialize the tao data structures.
 
 Parameters
 ----------
 data_file : unknown
     Tao data initialization file. If blank, there is no file so just use the defaults.
 )""");
-  m.def(
-      "tao_init_data_end_stuff",
-      &Tao::tao_init_data_end_stuff,
-      R"""(No docstring available
-
-)""");
+  m.def("tao_init_data_end_stuff", &Tao::tao_init_data_end_stuff, R"""()""");
   m.def(
       "tao_init_data_in_universe",
       &python_tao_init_data_in_universe,
       py::arg("u"),
       py::arg("n_d2_add"),
       py::arg("keep_existing_data") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 u : 
 n_d2_add : 
@@ -37526,7 +37371,9 @@ keep_existing_data :
       "tao_init_dynamic_aperture",
       &Tao::tao_init_dynamic_aperture,
       py::arg("init_file"),
-      R"""(Routine to initalize dynamic aperture simulations.
+      R"""(Subroutine tao_init_dynamic_aperture (init_file)
+
+Routine to initalize dynamic aperture simulations.
 
 Parameters
 ----------
@@ -37539,9 +37386,7 @@ init_file : unknown
       py::arg("u"),
       py::arg("search_string"),
       py::arg("attribute") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 u : TaoUniverseStruct
     Universe to search
@@ -37578,7 +37423,9 @@ found_one : bool
       "tao_init_global",
       &Tao::tao_init_global,
       py::arg("init_file"),
-      R"""(Subroutine to initialize the tao global structures.
+      R"""(Subroutine tao_init_global (init_file)
+
+Subroutine to initialize the tao global structures.
 
 Parameters
 ----------
@@ -37590,9 +37437,7 @@ init_file : unknown
       &python_tao_init_lattice,
       py::arg("lat_file"),
       py::arg("err_flag"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat_file : 
 err_flag : 
@@ -37615,9 +37460,7 @@ err_flag :
       "tao_init_plotting",
       &python_tao_init_plotting,
       py::arg("plot_file"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 plot_file : 
 )""");
@@ -37636,7 +37479,9 @@ plot_file :
       "tao_init_variables",
       &Tao::tao_init_variables,
       py::arg("var_file"),
-      R"""(Subroutine to initialize the tao variable structures.
+      R"""(Subroutine tao_init_variables (var_file)
+
+Subroutine to initialize the tao variable structures.
 
 Parameters
 ----------
@@ -37649,7 +37494,9 @@ var_file : unknown
       py::arg("u"),
       py::arg("model"),
       py::arg("ix_branch"),
-      R"""(This will initialize the beam for a given lattice branch.
+      R"""(Subroutine tao_inject_beam (u, model, ix_branch, beam, init_ok)
+
+This will initialize the beam for a given lattice branch.
 
 Trying to inject a beam of one species into a branch with a different ref species
 (example: electron bunch into photon branch) is problematical. To avoid problems, Tao
@@ -37691,9 +37538,7 @@ init_ok : bool
       py::arg("u"),
       py::arg("model"),
       py::arg("ix_branch"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 u : 
 model : 
@@ -37718,9 +37563,7 @@ ix_branch :
       &python_tao_is_valid_name,
       py::arg("name"),
       py::arg("is_valid"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 name : unknown
     Name to be checked.
@@ -37746,9 +37589,7 @@ is_valid :
       "tao_json_cmd",
       &Tao::tao_json_cmd,
       py::arg("input_str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 input_str : unknown
     What to show.
@@ -37761,9 +37602,7 @@ input_str : unknown
       py::arg("ix_max_key"),
       py::arg("key_str"),
       py::arg("header_str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ix_key : 
 ix_min_key : 
@@ -37799,9 +37638,7 @@ header_str :
       &Tao::tao_lat_bookkeeper,
       py::arg("u"),
       py::arg("tao_lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 u : TaoUniverseStruct
 tao_lat : TaoLatticeStruct
@@ -37816,9 +37653,7 @@ err_flag : bool
       py::arg("ele"),
       py::arg("modes"),
       py::arg("emit"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 plane : int
     x_plane$ or y_plane$.
@@ -37847,9 +37682,7 @@ emit :
       py::arg("data_type"),
       py::arg("data_source"),
       py::arg("do_lat_sigma"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 data_type : 
 data_source : 
@@ -37883,7 +37716,9 @@ do_lat_sigma :
       py::arg("ix_branch"),
       py::arg("print_err") = py::none(),
       py::arg("force_calc") = py::none(),
-      R"""(Routine to track the 6x6 sigma matrix through the lattice using the lattice linear transfer matrices.
+      R"""(Subroutine tao_lat_sigma_track (tao_lat, calc_ok, ix_branch, print_err, force_calc)
+
+Routine to track the 6x6 sigma matrix through the lattice using the lattice linear transfer matrices.
 
 Parameters
 ----------
@@ -37906,9 +37741,7 @@ calc_ok : bool
       &Tao::tao_lattice_branches_equal_tao_lattice_branches,
       py::arg("tlb1"),
       py::arg("tlb2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 tlb1 : 
 tlb2 : 
@@ -37916,9 +37749,7 @@ tlb2 :
   m.def(
       "tao_lattice_calc",
       &Tao::tao_lattice_calc,
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 calc_ok : bool
     Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
@@ -37945,9 +37776,7 @@ print_err : bool
       &Tao::tao_lattice_equal_tao_lattice,
       py::arg("lat1"),
       py::arg("lat2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat1 : 
 lat2 : 
@@ -37955,9 +37784,7 @@ lat2 :
   m.def(
       "tao_limit_calc",
       &Tao::tao_limit_calc,
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 limited : bool
     Set True if a variable is past a limit.
@@ -37965,9 +37792,11 @@ limited : bool
   m.def(
       "tao_lm_optimizer",
       &Tao::tao_lm_optimizer,
-      R"""(Routine to minimize the merit function by varying variables until
+      R"""(Subroutine tao_lm_optimizer (abort)
 
+Routine to minimize the merit function by varying variables until
 the "data" as calculated from the model matches the measured data.
+
 This subroutine is a wrapper for the mrqmin routine of Numerical Recipes.
 See the Numerical Recipes writeup for more details.
 'lm' stands for Levenburg - Marquardt. Otherwise known as LMDIF.
@@ -37981,9 +37810,7 @@ abort : bool
   m.def(
       "tao_lmdif_optimizer",
       &Tao::tao_lmdif_optimizer,
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 abort : bool
     Set True if an user stop signal detected or there is a problem with calculating the merit function.
@@ -38001,9 +37828,7 @@ abort : bool
       py::arg("branch"),
       py::arg("why_invalid") = py::none(),
       py::arg("good") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 vec : 
 ele_ref : 
@@ -38038,9 +37863,7 @@ good :
       &Tao::tao_locate_all_elements,
       py::arg("ele_list"),
       py::arg("ignore_blank") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele_list : unknown
     String with element names using element list format.
@@ -38082,9 +37905,7 @@ ignore_blank : bool, optional
       py::arg("above_ubound_is_err") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::arg("multiple_eles_is_err") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele_list : unknown
     String with element names using element list format.
@@ -38135,9 +37956,7 @@ multiple_eles_is_err : bool, optional
       "tao_mark_lattice_ele",
       &Tao::tao_mark_lattice_ele,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Input lattice
@@ -38147,9 +37966,7 @@ lat : LatStruct
       "tao_merit",
       &python_tao_merit,
       py::arg("this_merit"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 calc_ok : bool
     Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
@@ -38173,7 +37990,9 @@ this_merit :
       "tao_next_word",
       &python_tao_next_word,
       py::arg("line"),
-      R"""(Routine to return the next word in a line.
+      R"""(Subroutine tao_next_word (line, word)
+
+Routine to return the next word in a line.
 
 Words are delimited by a space character except if the space is within quotes.
 Additionally, spaces within brackets "(...)", "{...}", and "[...]" are ignored.
@@ -38210,9 +38029,7 @@ word : unknown
       py::arg("data_type"),
       py::arg("data_source"),
       py::arg("do_one_turn_map"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 data_type : 
 data_source : 
@@ -38249,9 +38066,7 @@ do_one_turn_map :
       py::arg("file_name"),
       py::arg("error_severity"),
       py::arg("binary") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 file : 
 iunit : int
@@ -38282,9 +38097,7 @@ binary : bool, optional
       "tao_open_scratch_file",
       &python_tao_open_scratch_file,
       py::arg("iu"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 err : bool
     Set True if there is an error. False otherwise.
@@ -38313,9 +38126,7 @@ iu :
       &python_tao_optimization_status,
       py::arg("datum"),
       py::arg("why_str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 datum : TaoDataStruct
     Datum to evaluate.
@@ -38340,15 +38151,16 @@ why_str :
       "tao_orbit_beta_wave_anal",
       &Tao::tao_orbit_beta_wave_anal,
       py::arg("plot"),
-      R"""()""");
+      R"""(Subroutine tao_orbit_beta_wave_anal (plot)
+
+
+)""");
   m.def(
       "tao_oreint_building_wall_pt",
       &Tao::tao_oreint_building_wall_pt,
       py::arg("pt_in"),
       py::arg("pt_out"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 pt_in : TaoBuildingWallPointStruct
     Building wall point.
@@ -38362,9 +38174,7 @@ pt_out :
       py::arg("ele_here"),
       py::arg("orbit"),
       py::arg("value"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 dat_name : 
 ele_to_s : EleStruct
@@ -38415,9 +38225,7 @@ value :
       "tao_parse_command_args",
       &python_tao_parse_command_args,
       py::arg("cmd_line") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 error : bool
     Set True if there is an error. False otherwise.
@@ -38445,9 +38253,7 @@ cmd_line :
       "tao_parse_element_param_str",
       &Tao::tao_parse_element_param_str,
       py::arg("in_str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 err : bool
     Set True if there is a parse error. False otherwise.
@@ -38503,7 +38309,9 @@ component : unknown
       py::arg("p"),
       py::arg("ele"),
       py::arg("ix_bunch"),
-      R"""(Routine to calculate the value array of a data_type for an array of particles.
+      R"""(Subroutine tao_particle_data_value (data_type, p, value, err, ele, ix_bunch)
+
+Routine to calculate the value array of a data_type for an array of particles.
 
 Parameters
 ----------
@@ -38547,9 +38355,7 @@ err : bool
       "tao_pause_cmd",
       &Tao::tao_pause_cmd,
       py::arg("time"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 time : float
     Time to pause in seconds.
@@ -38559,7 +38365,9 @@ time : float
       &Tao::tao_phase_space_axis_index,
       py::arg("data_type"),
       py::arg("err"),
-      R"""(Routine to calculate the phase space axis index for a given data type.
+      R"""(Function tao_phase_space_axis_index (data_type, err) result (ix_axis)
+
+Routine to calculate the phase space axis index for a given data type.
 
 Parameters
 ----------
@@ -38577,16 +38385,17 @@ ix_axis : int
       "tao_phase_wave_anal",
       &Tao::tao_phase_wave_anal,
       py::arg("plot"),
-      R"""()""");
+      R"""(Subroutine tao_phase_wave_anal (plot)
+
+
+)""");
   m.def(
       "tao_pick_universe",
       &Tao::tao_pick_universe,
       py::arg("name_in"),
       py::arg("dflt_uni") = py::none(),
       py::arg("pure_uni") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 name_in : unknown
     data name with possible universe spec.
@@ -38634,9 +38443,7 @@ pure_uni : bool, optional
       "tao_pipe_cmd",
       &Tao::tao_pipe_cmd,
       py::arg("input_str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 input_str : unknown
     What to show.
@@ -38647,9 +38454,7 @@ input_str : unknown
       py::arg("where"),
       py::arg("who"),
       py::arg("no_buffer") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 where : unknown
     Region where the plot goes. Eg: 'top'.
@@ -38664,9 +38469,7 @@ no_buffer : bool, optional
       &Tao::tao_plot_cmd,
       py::arg("where"),
       py::arg("component"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 where : unknown
     Region name to identify the plot to set.
@@ -38678,7 +38481,9 @@ component : unknown
       &Tao::tao_plot_data,
       py::arg("plot"),
       py::arg("graph"),
-      R"""(Routine to draw a graph with data and/or variable curves.
+      R"""(Subroutine tao_plot_data (plot, graph)
+
+Routine to draw a graph with data and/or variable curves.
 
 Parameters
 ----------
@@ -38692,7 +38497,9 @@ graph : TaoGraphStruct
       &Tao::tao_plot_histogram,
       py::arg("plot"),
       py::arg("graph"),
-      R"""(Routine to draw one graph for the histogram analysis plot.
+      R"""(Subroutine tao_plot_histogram (plot, graph)
+
+Routine to draw one graph for the histogram analysis plot.
 
 Parameters
 ----------
@@ -38706,7 +38513,9 @@ graph : TaoGraphStruct
       &Tao::tao_plot_key_table,
       py::arg("plot"),
       py::arg("graph"),
-      R"""(Routine to draw a key table graph.
+      R"""(Subroutine tao_plot_key_table (plot, graph)
+
+Routine to draw a key table graph.
 
 Parameters
 ----------
@@ -38715,19 +38524,12 @@ plot : TaoPlotStruct
 graph : TaoGraphStruct
     Graph to plot.
 )""");
-  m.def(
-      "tao_plot_setup",
-      &Tao::tao_plot_setup,
-      R"""(No docstring available
-
-)""");
+  m.def("tao_plot_setup", &Tao::tao_plot_setup, R"""()""");
   m.def(
       "tao_plot_struct_transfer",
       &Tao::tao_plot_struct_transfer,
       py::arg("plot_in"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 plot_in : TaoPlotStruct
     Input structure.
@@ -38739,7 +38541,9 @@ plot_out : TaoPlotStruct
       &Tao::tao_plot_wave,
       py::arg("plot"),
       py::arg("graph"),
-      R"""(Routine to draw one graph for the wave analysis plot.
+      R"""(Subroutine tao_plot_wave (plot, graph)
+
+Routine to draw one graph for the wave analysis plot.
 
 Parameters
 ----------
@@ -38753,9 +38557,7 @@ graph : TaoGraphStruct
       &Tao::tao_pointer_to_building_wall_shape,
       py::arg("wall_name"),
       py::arg("e_shape"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 wall_name : unknown
     Name of the wall.
@@ -38767,9 +38569,7 @@ e_shape :
       py::arg("d1"),
       py::arg("ele_name"),
       py::arg("datum_ptr"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 d1 : TaoD1DataStruct
     D1 data struct to search.
@@ -38785,9 +38585,11 @@ datum_ptr :
       py::arg("ix_ele"),
       py::arg("datum"),
       py::arg("print_err") = py::none(),
-      R"""(Routine to see if an element index corresponds to an element with a definite
+      R"""(Function tao_pointer_to_datum_ele (lat, ele_name, ix_ele, datum, valid, why_invalid, print_err) result (ele)
 
+Routine to see if an element index corresponds to an element with a definite
 location such as an overlay or multipass element.
+
 If the element is a super_lord then the super_slave element at the exit end
 of the lord will be returned. Otherwise ix_loc will be set to ix_ele.
 
@@ -38843,9 +38645,7 @@ why_invalid : unknown
       py::arg("ele_shape"),
       py::arg("ix_shape_min") = py::none(),
       py::arg("e_shape"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ix_uni : int
     Universe index.
@@ -38891,9 +38691,7 @@ e_shape :
       py::arg("u"),
       py::arg("lat_type") = py::none(),
       py::arg("tao_lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 u : TaoUniverseStruct
     Universe to work with
@@ -38907,13 +38705,17 @@ tao_lat :
           &Tao::tao_pointer_to_universe),
       py::arg("ix_uni"),
       py::arg("neg2_to_default") = py::none(),
-      R"""(Routine to set a pointer to a universe.
+      R"""(Function tao_pointer_to_universe (...) result (u)
+
+Routine to set a pointer to a universe.
 
 This is an overloaded routine for the:
-tao_pointer_to_universe_int (ix_uni, neg2_to_default) result (u)
-tao_pointer_to_universe_str (string, neg2_to_default) result (u)
+ tao_pointer_to_universe_int (ix_uni, neg2_to_default) result (u)
+ tao_pointer_to_universe_str (string, neg2_to_default) result (u)
+
+Note: With a string argument, this routine can only handle single universe picks.
 That is, it cannot handlle something like "[1,3,4]@...". To handle multiple universe picks, use:
-tao_pointer_to_universes
+  tao_pointer_to_universes
 
 Parameters
 ----------
@@ -38930,10 +38732,6 @@ Returns
 -------
 u : TaoUniverseStruct
     Universe pointer. u will be nullified if there is an error and an error message will be printed.
-
-Notes
------
-Note: With a string argument, this routine can only handle single universe picks.
 )""");
   m.def(
       "tao_pointer_to_universe",
@@ -38941,13 +38739,17 @@ Note: With a string argument, this routine can only handle single universe picks
           &python_tao_pointer_to_universe_str),
       py::arg("string"),
       py::arg("neg2_to_default") = py::none(),
-      R"""(Routine to set a pointer to a universe.
+      R"""(Function tao_pointer_to_universe (...) result (u)
+
+Routine to set a pointer to a universe.
 
 This is an overloaded routine for the:
-tao_pointer_to_universe_int (ix_uni, neg2_to_default) result (u)
-tao_pointer_to_universe_str (string, neg2_to_default) result (u)
+ tao_pointer_to_universe_int (ix_uni, neg2_to_default) result (u)
+ tao_pointer_to_universe_str (string, neg2_to_default) result (u)
+
+Note: With a string argument, this routine can only handle single universe picks.
 That is, it cannot handlle something like "[1,3,4]@...". To handle multiple universe picks, use:
-tao_pointer_to_universes
+  tao_pointer_to_universes
 
 Parameters
 ----------
@@ -38964,10 +38766,6 @@ Returns
 -------
 u : TaoUniverseStruct
     Universe pointer. u will be nullified if there is an error and an error message will be printed.
-
-Notes
------
-Note: With a string argument, this routine can only handle single universe picks.
 )""");
   py::class_<
       PyTaoPointerToUniverseStr,
@@ -38994,9 +38792,7 @@ Note: With a string argument, this routine can only handle single universe picks
       &Tao::tao_pointer_to_universes,
       py::arg("name_in"),
       py::arg("dflt_uni") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 name_in : unknown
     data name with possible universe spec.
@@ -39043,8 +38839,9 @@ dflt_uni : int, optional
       py::arg("var"),
       py::arg("ix_uni"),
       py::arg("ele"),
-      R"""(Routine to add a pointer from a given Tao variable
+      R"""(Subroutine tao_pointer_to_var_in_lattice (var, ix_uni, ele, err)
 
+Routine to add a pointer from a given Tao variable
 to the appropriate variable in a lattice.
 
 Parameters
@@ -39067,8 +38864,9 @@ err : bool
       &Tao::tao_pointer_to_var_in_lattice2,
       py::arg("var"),
       py::arg("ix_uni"),
-      R"""(Routine to add a pointer from a given Tao variable
+      R"""(Subroutine tao_pointer_to_var_in_lattice2 (var, ix_uni, err)
 
+Routine to add a pointer from a given Tao variable
 to the appropriate variable in a lattice.
 
 Parameters
@@ -39087,9 +38885,7 @@ err : bool
   m.def(
       "tao_print_command_line_info",
       &Tao::tao_print_command_line_info,
-      R"""(No docstring available
-
-)""");
+      R"""()""");
   m.def(
       "tao_ptc_normal_form",
       &Tao::tao_ptc_normal_form,
@@ -39097,9 +38893,7 @@ err : bool
       py::arg("tao_lat"),
       py::arg("ix_branch"),
       py::arg("rf_on") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 do_calc : bool
     Set True to do the calculation.
@@ -39114,9 +38908,7 @@ rf_on : int, optional
       "tao_python_cmd",
       &Tao::tao_python_cmd,
       py::arg("input_str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 input_str : unknown
     What to show.
@@ -39125,9 +38917,7 @@ input_str : unknown
       "tao_quiet_set",
       &Tao::tao_quiet_set,
       py::arg("set"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 set : bool
     True is silent running is wanted.
@@ -39138,9 +38928,7 @@ set : bool
       py::arg("data_type"),
       py::arg("data_source"),
       py::arg("do_rad_int"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 data_type : 
 data_source : 
@@ -39172,7 +38960,9 @@ do_rad_int :
       &python_tao_re_execute,
       py::arg("string"),
       py::arg("err"),
-      R"""(Subroutine to execute a previous command.
+      R"""(Subroutine tao_re_exectue (string, err)
+
+Subroutine to execute a previous command.
 
 )""");
   py::class_<PyTaoReExecute, std::unique_ptr<PyTaoReExecute>>(
@@ -39196,9 +38986,7 @@ do_rad_int :
       py::arg("unis"),
       py::arg("file"),
       py::arg("silent"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 which : 
 unis : unknown
@@ -39228,9 +39016,7 @@ silent : bool
       py::arg("ixc"),
       py::arg("print_err") = py::none(),
       py::arg("ix_ps"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 name : unknown
     character array holding the index. Must be in the range 1-6.
@@ -39257,19 +39043,12 @@ ix_ps :
               return py::cast(s.ix_ps);
             throw py::index_error();
           });
-  m.def(
-      "tao_regression_test",
-      &Tao::tao_regression_test,
-      R"""(No docstring available
-
-)""");
+  m.def("tao_regression_test", &Tao::tao_regression_test, R"""()""");
   m.def(
       "tao_remove_blank_characters",
       &python_tao_remove_blank_characters,
       py::arg("str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 str : unknown
     Input string.
@@ -39297,9 +39076,7 @@ str : unknown
       "tao_run_cmd",
       &Tao::tao_run_cmd,
       py::arg("which"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 which : unknown
     which optimizer to use. ' '        -- Same as last time 'de'       -- Differential Evolution. 'lm'
@@ -39319,8 +39096,9 @@ abort : bool
       py::arg("gang") = py::none(),
       py::arg("exact") = py::none(),
       py::arg("turn_autoscale_off") = py::none(),
-      R"""(Routine to scale a plot.
+      R"""(Subroutine tao_scale_cmd (where, y_min_in, y_max_in, axis, include_wall, gang, exact, turn_autoscale_off)
 
+Routine to scale a plot.
 If y_min = y_max, the scales will be chosen to show all the data.
 
 Parameters
@@ -39352,9 +39130,11 @@ turn_autoscale_off : bool, optional
       py::arg("y_max"),
       py::arg("axis") = py::none(),
       py::arg("include_wall") = py::none(),
-      R"""(Routine to scale the y-axis and/or y2-axis of a graph
+      R"""(Subroutine tao_scale_graph (graph, y_min, y_max, axis, include_wall, y_range, y2_range)
 
+Routine to scale the y-axis and/or y2-axis of a graph
 If y_min = y_max then autoscaling will be done and the particular value of y_min and y_max is ignored.
+Note: y_min/y_max is ignored if scaling y2-axis and graph%y2_mirrors_y = T.
 
 Parameters
 ----------
@@ -39396,9 +39176,7 @@ y2_range : float
       "tao_scale_ping_data",
       &Tao::tao_scale_ping_data,
       py::arg("u"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 u : 
 )""");
@@ -39412,8 +39190,9 @@ u :
       py::arg("include_wall") = py::none(),
       py::arg("gang") = py::none(),
       py::arg("skip_lat_layout") = py::none(),
-      R"""(Routine to scale the y-axis and/or y2-axis of the graphs of the plot.
+      R"""(Subroutine tao_scale_plot (plot, y_min_in, y_max_in, axis, include_wall, gang, skip_lat_layout)
 
+Routine to scale the y-axis and/or y2-axis of the graphs of the plot.
 If y_min_in = y_max_in then autoscaling will be done and the particular value
 of y_min_in and y_max_in is ignored.
 
@@ -39446,9 +39225,7 @@ skip_lat_layout : bool, optional
       py::arg("datum"),
       py::arg("branch"),
       py::arg("orbit"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele_ref : 
 ele_start : 
@@ -39463,7 +39240,9 @@ orbit :
       py::arg("who"),
       py::arg("value_str"),
       py::arg("branch_str"),
-      R"""(Routine to set various beam parameters.
+      R"""(Subroutine tao_set_beam_cmd (who, value_str, branch_str)
+
+Routine to set various beam parameters.
 
 Parameters
 ----------
@@ -39480,7 +39259,9 @@ branch_str : unknown
       py::arg("who"),
       py::arg("value_str"),
       py::arg("branch_str"),
-      R"""(Routine to set beam_init variables
+      R"""(Subroutine tao_set_beam_init_cmd (who, value_str, branch_str)
+
+Routine to set beam_init variables
 
 Parameters
 ----------
@@ -39496,7 +39277,9 @@ branch_str : unknown
       &Tao::tao_set_bmad_com_cmd,
       py::arg("who"),
       py::arg("value_str"),
-      R"""(Routine to set bmad_com variables
+      R"""(Subroutine tao_set_bmad_com_cmd (who, value_str)
+
+Routine to set bmad_com variables
 
 Parameters
 ----------
@@ -39511,7 +39294,9 @@ value_str : unknown
       py::arg("branch_str"),
       py::arg("component_str"),
       py::arg("value_str"),
-      R"""(Routine to set lattice branch values.
+      R"""(Subroutine tao_set_branch_cmd (branch_str, component_str, value_str)
+
+Routine to set lattice branch values.
 
 Parameters
 ----------
@@ -39526,7 +39311,9 @@ value_str : unknown
       "tao_set_calculate_cmd",
       &python_tao_set_calculate_cmd,
       py::arg("switch_") = py::none(),
-      R"""(Toggles off lattice calc and plotting.
+      R"""(Subroutine tao_set_calculate_cmd (switch)
+
+Toggles off lattice calc and plotting.
 
 )""");
   py::class_<PyTaoSetCalculateCmd, std::unique_ptr<PyTaoSetCalculateCmd>>(
@@ -39550,7 +39337,9 @@ value_str : unknown
       py::arg("curve_name"),
       py::arg("component"),
       py::arg("value_str"),
-      R"""(Routine to set var values.
+      R"""(Subroutine tao_set_curve_cmd (curve_name, component, value_str)
+
+Routine to set var values.
 
 Parameters
 ----------
@@ -39567,7 +39356,9 @@ value_str : unknown
       py::arg("curve"),
       py::arg("why_invalid"),
       py::arg("print_err") = py::none(),
-      R"""(Routine to set curve%valid to False.
+      R"""(Subroutine tao_set_curve_invalid (curve, why_invalid, print_err)
+
+Routine to set curve%valid to False.
 
 Parameters
 ----------
@@ -39585,7 +39376,9 @@ print_err : bool, optional
       py::arg("who_str"),
       py::arg("value_str"),
       py::arg("silent") = py::none(),
-      R"""(Routine to set data values.
+      R"""(Subroutine tao_set_data_cmd (who_str, value_str, silent)
+
+Routine to set data values.
 
 Parameters
 ----------
@@ -39609,9 +39402,7 @@ value_str : unknown
       "tao_set_data_useit_opt",
       &Tao::tao_set_data_useit_opt,
       py::arg("data") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 data : TaoDataStruct, optional
     Data to work on. Default is all data in all universes.
@@ -39621,7 +39412,9 @@ data : TaoDataStruct, optional
       &Tao::tao_set_default_cmd,
       py::arg("who_str"),
       py::arg("value_str"),
-      R"""(Routine to set default values.
+      R"""(Subroutine tao_set_default_cmd (who_str, value_str)
+
+Routine to set default values.
 
 Parameters
 ----------
@@ -39636,7 +39429,9 @@ value_str : unknown
       py::arg("drawing"),
       py::arg("component"),
       py::arg("value_str"),
-      R"""(Routine to set floor_plan and lat_layout parameters.
+      R"""(Subroutine tao_set_drawing_cmd (drawing, component, value_str)
+
+Routine to set floor_plan and lat_layout parameters.
 
 Parameters
 ----------
@@ -39652,7 +39447,9 @@ value_str : unknown
       &Tao::tao_set_dynamic_aperture_cmd,
       py::arg("who"),
       py::arg("value_str"),
-      R"""(Sets dynamic aperture parameters.
+      R"""(Subroutine tao_set_dynamic_aperture_cmd (who, value_str)
+
+Sets dynamic aperture parameters.
 
 Parameters
 ----------
@@ -39668,7 +39465,9 @@ value_str : unknown
       py::arg("attribute"),
       py::arg("value"),
       py::arg("update"),
-      R"""(Sets element parameters.
+      R"""(Subroutine tao_set_elements_cmd (ele_list, attribute, value, update)
+
+Sets element parameters.
 
 Parameters
 ----------
@@ -39700,9 +39499,7 @@ value : unknown
       py::arg("axis_in"),
       py::arg("axis_out"),
       py::arg("which"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 graph : 
 axis_in : 
@@ -39731,7 +39528,9 @@ which :
       &Tao::tao_set_geodesic_lm_cmd,
       py::arg("who"),
       py::arg("value_str"),
-      R"""(Routine to set geodesic_lm variables
+      R"""(Subroutine tao_set_geodesic_lm_cmd (who, value_str)
+
+Routine to set geodesic_lm variables
 
 Parameters
 ----------
@@ -39745,7 +39544,9 @@ value_str : unknown
       &Tao::tao_set_global_cmd,
       py::arg("who"),
       py::arg("value_str"),
-      R"""(Routine to set global variables
+      R"""(Subroutine tao_set_global_cmd (who, value_str)
+
+Routine to set global variables
 
 Parameters
 ----------
@@ -39760,7 +39561,9 @@ value_str : unknown
       py::arg("graph_name"),
       py::arg("component"),
       py::arg("value_str"),
-      R"""(Routine to set var values.
+      R"""(Subroutine tao_set_graph_cmd (graph_name, component, value_str)
+
+Routine to set var values.
 
 Parameters
 ----------
@@ -39779,7 +39582,9 @@ value_str : unknown
       py::arg("min_val") = py::none(),
       py::arg("max_val") = py::none(),
       py::arg("print_err") = py::none(),
-      R"""(Subroutine to read and set the value of an integer varialbe.
+      R"""(Subroutine tao_set_integer_value (var, var_str, value_str, error, min_val, max_val, print_err)
+
+Subroutine to read and set the value of an integer varialbe.
 
 If the value is out of the range [min_val, max_val] then an error message will
 be generated and the variable will not be set.
@@ -39830,9 +39635,7 @@ error : bool
       py::arg("exterminate") = py::none(),
       py::arg("err_level") = py::none(),
       py::arg("print_err") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 datum : TaoDataStruct
     Bad datum.
@@ -39852,7 +39655,9 @@ print_err : bool, optional
       &Tao::tao_set_key_cmd,
       py::arg("key_str"),
       py::arg("cmd_str"),
-      R"""(Associates a command with a key press for single mode.
+      R"""(Subroutine tao_set_key_cmd (key_str, cmd_str)
+
+Associates a command with a key press for single mode.
 
 Parameters
 ----------
@@ -39866,7 +39671,9 @@ cmd_str : unknown
       &Tao::tao_set_lattice_cmd,
       py::arg("dest_lat"),
       py::arg("source_lat"),
-      R"""(Sets a lattice equal to another. This will also update the data structs
+      R"""(Subroutine tao_set_lattice_cmd (dest_lat, source_lat)
+
+Sets a lattice equal to another. This will also update the data structs
 
 Parameters
 ----------
@@ -39880,7 +39687,9 @@ source_lat : unknown
       &Tao::tao_set_logical_value,
       py::arg("var_str"),
       py::arg("value_str"),
-      R"""(Subroutine to read and set the value of an logical varialbe.
+      R"""(Subroutine tao_set_logical_value (var, var_str, value_str, error)
+
+Subroutine to read and set the value of an logical varialbe.
 
 If the value is out of the range [min_val, max_val] then an error message will
 be generated and the variable will not be set.
@@ -39921,7 +39730,9 @@ error : bool
       "tao_set_openmp_n_threads",
       &Tao::tao_set_openmp_n_threads,
       py::arg("n_threads"),
-      R"""(Routine to set OpenMP thread count.  Errors if OpenMP is not available.
+      R"""(Subroutine tao_set_openmp_n_threads (n_threads)
+
+Routine to set OpenMP thread count.  Errors if OpenMP is not available.
 
 Parameters
 ----------
@@ -39933,9 +39744,7 @@ n_threads : int
       &Tao::tao_set_opt_vars,
       py::arg("var_vec"),
       py::arg("print_limit_warning") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 var_vec : float
     Vector of variables.
@@ -39948,7 +39757,9 @@ print_limit_warning : bool, optional
       &Tao::tao_set_opti_de_param_cmd,
       py::arg("who"),
       py::arg("value_str"),
-      R"""(Routine to set opti_de_param variables
+      R"""(Subroutine tao_set_opti_de_param_cmd (who, value_str)
+
+Routine to set opti_de_param variables
 
 Parameters
 ----------
@@ -39962,7 +39773,9 @@ value_str : unknown
       &Tao::tao_set_particle_start_cmd,
       py::arg("who"),
       py::arg("value_str"),
-      R"""(Routine to set particle_start variables.
+      R"""(Subroutine tao_set_particle_start_cmd (who, value_str)
+
+Routine to set particle_start variables.
 
 Parameters
 ----------
@@ -39977,7 +39790,9 @@ value_str : unknown
       py::arg("plot_name"),
       py::arg("component"),
       py::arg("value_str"),
-      R"""(Routine to set plot parameters.
+      R"""(Subroutine tao_set_plot_cmd (plot_name, component, value_str)
+
+Routine to set plot parameters.
 
 Parameters
 ----------
@@ -39994,7 +39809,9 @@ value_str : unknown
       py::arg("component"),
       py::arg("value_str"),
       py::arg("value_str2") = py::none(),
-      R"""(Set various aspects of the plotting window
+      R"""(Subroutine tao_set_plot_page_cmd (component, value_str, value_str2)
+
+ Set various aspects of the plotting window
 
 Parameters
 ----------
@@ -40010,7 +39827,9 @@ value_str2 : unknown
       &Tao::tao_set_ptc_com_cmd,
       py::arg("who"),
       py::arg("value_str"),
-      R"""(Routine to set ptc_com variables
+      R"""(Subroutine tao_set_ptc_com_cmd (who, value_str)
+
+Routine to set ptc_com variables
 
 Parameters
 ----------
@@ -40026,7 +39845,9 @@ value_str : unknown
       py::arg("component"),
       py::arg("qp_axis"),
       py::arg("value"),
-      R"""(Routine to set qp_axis_names of a qp_axis_struct.
+      R"""(Subroutine tao_set_qp_axis_struct (qp_axis_name, component, qp_axis, value, error, ix_uni)
+
+Routine to set qp_axis_names of a qp_axis_struct.
 
 Parameters
 ----------
@@ -40073,7 +39894,9 @@ ix_uni : int
       py::arg("component"),
       py::arg("qp_point"),
       py::arg("value"),
-      R"""(Routine to set qp_point_names of a qp_point_struct.
+      R"""(Subroutine tao_set_qp_point_struct (qp_point_name, component, qp_point, value, error, ix_uni)
+
+Routine to set qp_point_names of a qp_point_struct.
 
 Parameters
 ----------
@@ -40122,7 +39945,9 @@ ix_uni : int
       py::arg("component"),
       py::arg("qp_rect"),
       py::arg("value"),
-      R"""(Routine to set qp_rect_names of a qp_rect_struct.
+      R"""(Subroutine tao_set_qp_rect_struct (qp_rect_name, component, qp_rect, value, error, ix_uni)
+
+Routine to set qp_rect_names of a qp_rect_struct.
 
 Parameters
 ----------
@@ -40166,7 +39991,9 @@ ix_uni : int
       "tao_set_ran_state_cmd",
       &Tao::tao_set_ran_state_cmd,
       py::arg("state_string"),
-      R"""(Sets the random number generator state.
+      R"""(Subroutine tao_set_ran_state_cmd (state_string)
+
+Sets the random number generator state.
 
 Parameters
 ----------
@@ -40181,7 +40008,9 @@ state_string : unknown
       py::arg("min_val") = py::none(),
       py::arg("max_val") = py::none(),
       py::arg("dflt_uni") = py::none(),
-      R"""(Subroutine to read and set the value of a real variable.
+      R"""(Subroutine tao_set_real_value (var, var_str, value_str, error, min_val, max_val, dflt_uni)
+
+Subroutine to read and set the value of a real variable.
 
 If the value is out of the range [min_val, max_val] then an error message will
 be generated and the variable will not be set.
@@ -40228,7 +40057,9 @@ error : bool
       py::arg("region_name"),
       py::arg("component"),
       py::arg("value_str"),
-      R"""(Routine to set region parameters.
+      R"""(Subroutine tao_set_region_cmd (region_name, component, value_str)
+
+Routine to set region parameters.
 
 Parameters
 ----------
@@ -40244,7 +40075,9 @@ value_str : unknown
       &Tao::tao_set_space_charge_com_cmd,
       py::arg("who"),
       py::arg("value_str"),
-      R"""(Routine to set space_charge_com variables
+      R"""(Subroutine tao_set_space_charge_com_cmd (who, value_str)
+
+Routine to set space_charge_com variables
 
 Parameters
 ----------
@@ -40264,7 +40097,10 @@ space_charge_com :
       py::arg("sym_str"),
       py::arg("num_str") = py::none(),
       py::arg("val") = py::none(),
-      R"""(Associates a given symbol with a given number.
+      R"""(Subroutine tao_set_symbolic_number_cmd (sym_str, num_str, val)
+
+Associates a given symbol with a given number.
+Note: Either num_str or val argument must be present.
 
 Parameters
 ----------
@@ -40284,7 +40120,9 @@ val : float, optional
       py::arg("qa_str"),
       py::arg("qb_str"),
       py::arg("delta_input"),
-      R"""(Routine to set the transverse tunes.
+      R"""(Subroutine tao_set_tune_cmd (branch_str, mask_str, print_list, qa_str, qb_str, delta_input)
+
+Routine to set the transverse tunes.
 
 Parameters
 ----------
@@ -40307,7 +40145,9 @@ delta_input : bool
       py::arg("uni"),
       py::arg("who"),
       py::arg("what"),
-      R"""(Sets a universe on or off, or sets the recalculate or twiss_calc logicals, etc.
+      R"""(Subroutine tao_set_universe_cmd (uni, who, what)
+
+Sets a universe on or off, or sets the recalculate or twiss_calc logicals, etc.
 
 Parameters
 ----------
@@ -40323,7 +40163,9 @@ what : unknown
       &Tao::tao_set_var_cmd,
       py::arg("var_str"),
       py::arg("value_str"),
-      R"""(Routine to set var values.
+      R"""(Subroutine tao_set_var_cmd (var_str, value_str)
+
+Routine to set var values.
 
 Parameters
 ----------
@@ -40338,9 +40180,7 @@ value_str : unknown
       py::arg("var"),
       py::arg("value"),
       py::arg("print_limit_warning") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 var : TaoVarStruct
     Variable to set
@@ -40350,18 +40190,15 @@ print_limit_warning : bool, optional
     Print a warning if the value is past the variable's limits. -- Logical, optional: Print a warning if the
     value is past the variable's limits. Default is True.
 )""");
-  m.def(
-      "tao_set_var_useit_opt",
-      &Tao::tao_set_var_useit_opt,
-      R"""(No docstring available
-
-)""");
+  m.def("tao_set_var_useit_opt", &Tao::tao_set_var_useit_opt, R"""()""");
   m.def(
       "tao_set_wave_cmd",
       &Tao::tao_set_wave_cmd,
       py::arg("who"),
       py::arg("value_str"),
-      R"""(Routine to set wave variables
+      R"""(Subroutine tao_set_wave_cmd (who, value_str, err)
+
+Routine to set wave variables
 
 Parameters
 ----------
@@ -40381,7 +40218,9 @@ err : bool
       py::arg("branch_str"),
       py::arg("q_str"),
       py::arg("delta_input"),
-      R"""(Routine to set the z-tune.
+      R"""(Subroutine tao_set_z_tune_cmd (branch_str, q_str, delta_input)
+
+Routine to set the z-tune.
 
 Parameters
 ----------
@@ -40392,20 +40231,13 @@ q_str : unknown
 delta_input : bool
     If true then qa_str and qb_str are deltas from present tune.
 )""");
-  m.def(
-      "tao_setup_key_table",
-      &Tao::tao_setup_key_table,
-      R"""(No docstring available
-
-)""");
+  m.def("tao_setup_key_table", &Tao::tao_setup_key_table, R"""()""");
   m.def(
       "tao_shape_init",
       &Tao::tao_shape_init,
       py::arg("shape"),
       py::arg("print_err") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 shape : TaoEleShapeStruct
     Shape
@@ -40418,9 +40250,7 @@ print_err : bool, optional
       "tao_show_cmd",
       &Tao::tao_show_cmd,
       py::arg("what"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 what : unknown
     What to show.
@@ -40430,7 +40260,9 @@ what : unknown
       &Tao::tao_show_constraints,
       py::arg("iunit"),
       py::arg("form"),
-      R"""(Routine to show a list of datums and variables and how they contribute to the merit function.
+      R"""(Subroutine tao_show_constraints (iunit, form)
+
+Routine to show a list of datums and variables and how they contribute to the merit function.
 
 Parameters
 ----------
@@ -40444,9 +40276,7 @@ form : unknown
       "tao_single_mode",
       &Tao::tao_single_mode,
       py::arg("char_"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 char : unknown
     Command. If more characters are needed to complete the command then this routine will get them.
@@ -40457,7 +40287,9 @@ char : unknown
       py::arg("tao_lat"),
       py::arg("ix_branch"),
       py::arg("print_err") = py::none(),
-      R"""(Routine to track a single particle and calculate lattice functions through a lattice.
+      R"""(Subroutine tao_single_track (tao_lat, calc_ok, ix_branch, print_err)
+
+Routine to track a single particle and calculate lattice functions through a lattice.
 
 Parameters
 ----------
@@ -40479,9 +40311,7 @@ calc_ok : bool
       py::arg("data_type"),
       py::arg("data_source"),
       py::arg("do_calc"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 data_type : 
 data_source : 
@@ -40511,18 +40341,12 @@ do_calc :
             throw py::index_error();
           });
   m.def(
-      "tao_spin_tracking_turn_on",
-      &Tao::tao_spin_tracking_turn_on,
-      R"""(No docstring available
-
-)""");
+      "tao_spin_tracking_turn_on", &Tao::tao_spin_tracking_turn_on, R"""()""");
   m.def(
       "tao_split_component",
       &Tao::tao_split_component,
       py::arg("comp_str"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 comp_str : unknown
     Components. EG: 'meas - design'
@@ -40555,9 +40379,7 @@ err : bool
       py::arg("data_type"),
       py::arg("data_source"),
       py::arg("do_srdt"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 data_type : 
 data_source : 
@@ -40589,9 +40411,7 @@ do_srdt :
       py::arg("name_in"),
       py::arg("ix_uni"),
       py::arg("ok"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 name_in : unknown
     Input name with "#" character
@@ -40621,7 +40441,9 @@ ok :
   m.def(
       "tao_svd_optimizer",
       &Tao::tao_svd_optimizer,
-      R"""(Routine to minimize the merit function using svd.
+      R"""(Subroutine tao_svd_optimizer (abort)
+
+Routine to minimize the merit function using svd.
 
 
 Returns
@@ -40633,9 +40455,7 @@ abort : bool
       "tao_symbol_import_from_lat",
       &Tao::tao_symbol_import_from_lat,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : 
 )""");
@@ -40644,9 +40464,7 @@ lat :
       &Tao::tao_taper_cmd,
       py::arg("except"),
       py::arg("uni_names"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 except : unknown
     List of elements not to vary.
@@ -40661,9 +40479,7 @@ uni_names : unknown
       py::arg("change_number"),
       py::arg("abs_or_rel"),
       py::arg("err"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 num_str : 
 n_size : 
@@ -40700,7 +40516,9 @@ err :
       py::arg("str"),
       py::arg("i_int"),
       py::arg("err"),
-      R"""(Converts a string to an integer
+      R"""(Subroutine tao_to_int (str, i_int, err)
+
+Converts a string to an integer
 
 If the string str is blank then i_int = 0
 
@@ -40728,7 +40546,9 @@ If the string str is blank then i_int = 0
       py::arg("ele"),
       py::arg("why_invalid"),
       py::arg("datum"),
-      R"""(Buffer routine for to_phase_and_coupling_reading.
+      R"""(Subroutine tao_to_phase_and_coupling_reading (ele, bpm_data, valid_value)
+
+Buffer routine for to_phase_and_coupling_reading.
 
 Parameters
 ----------
@@ -40769,9 +40589,7 @@ valid_value : bool
       "tao_to_real",
       &Tao::tao_to_real,
       py::arg("expression"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 expression : unknown
     arithmetic expression
@@ -40799,9 +40617,7 @@ err_flag : bool
       &python_tao_too_many_particles_lost,
       py::arg("beam"),
       py::arg("no_beam"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 beam : 
 no_beam : 
@@ -40826,15 +40642,18 @@ no_beam :
   m.def(
       "tao_top10_derivative_print",
       &Tao::tao_top10_derivative_print,
-      R"""(Routine to print out the top10 contributors to the merit function.
+      R"""(Subroutine tao_top10_derivative_print ()
+
+Routine to print out the top10 contributors to the merit function.
 
 )""");
   m.def(
       "tao_top10_merit_categories_print",
       &Tao::tao_top10_merit_categories_print,
       py::arg("iunit"),
-      R"""(Routine to print the top data and variable categories that contribute to
+      R"""(Subroutine tao_top10_merit_categories_print (iunit)
 
+Routine to print the top data and variable categories that contribute to
 the merit function.
 
 Parameters
@@ -40846,9 +40665,7 @@ iunit : int
       "tao_top_level",
       &Tao::tao_top_level,
       py::arg("command") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 command : unknown, optional
     Tao command string. If present, getting user input from the terminal is bypassed. This is used when
@@ -40861,7 +40678,9 @@ errcode : int
       &Tao::tao_tracking_ele_index,
       py::arg("ele"),
       py::arg("datum"),
-      R"""(Routine to return the index in the tracking part of a lattice that corresponds to ele.
+      R"""(Function tao_tracking_ele_index(ele, datum, ix_branch) result (ix_ele)
+
+Routine to return the index in the tracking part of a lattice that corresponds to ele.
 
 Parameters
 ----------
@@ -40900,19 +40719,19 @@ ix_ele : int
   m.def(
       "tao_turn_on_special_calcs_if_needed_for_plotting",
       &Tao::tao_turn_on_special_calcs_if_needed_for_plotting,
-      R"""(No docstring available
-
-)""");
+      R"""()""");
   m.def(
       "tao_uni_atsign_index",
       &Tao::tao_uni_atsign_index,
       py::arg("string"),
-      R"""(Routine to return the index of an atsign ("@") character in a string if the atsign is
+      R"""(Function tao_uni_atsign_index(string) result (ix_amp)
 
+Routine to return the index of an atsign ("@") character in a string if the atsign is
 being used as a separator between a universe spec and the rest of the string.
+
 For example:
-string = "[1:3]@orbit.x[5] => ix_amp = 6
-string = "orbit.x[5@0.2]   => ix_amp = 0 (no universe "@" present)
+  string = "[1:3]@orbit.x[5] => ix_amp = 6
+  string = "orbit.x[5@0.2]   => ix_amp = 0 (no universe "@" present)
 
 Parameters
 ----------
@@ -40930,9 +40749,7 @@ ix_amp : int
       py::arg("i_uni"),
       py::arg("neg2_to_default") = py::none(),
       py::arg("i_this_uni"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 i_uni : int
     Nominal universe number.
@@ -40956,9 +40773,7 @@ i_this_uni :
       &Tao::tao_use_data,
       py::arg("action"),
       py::arg("data_name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 action : unknown
     veto, use or restore
@@ -40970,9 +40785,7 @@ data_name : unknown
       &Tao::tao_use_var,
       py::arg("action"),
       py::arg("var_name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 action : unknown
     'use', 'veto', or 'restore'
@@ -40982,9 +40795,7 @@ var_name : unknown
   m.def(
       "tao_user_is_terminating_optimization",
       &Tao::tao_user_is_terminating_optimization,
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 is_terminating : 
 )""");
@@ -40993,9 +40804,7 @@ is_terminating :
       &python_tao_var1_name,
       py::arg("var"),
       py::arg("var1_name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 var : TaoVarStruct
     Variable
@@ -41017,9 +40826,7 @@ var1_name :
       &python_tao_var_attrib_name,
       py::arg("var"),
       py::arg("var_attrib_name"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 var : TaoVarStruct
     Variable
@@ -41042,9 +40849,7 @@ var_attrib_name :
       py::arg("eles"),
       py::arg("attribute"),
       py::arg("silent"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 eles : ElePointerStruct
     Array of elements which have a changed attribute.
@@ -41053,25 +40858,13 @@ attribute : unknown
 silent : bool
     If True and the problem can be fixed, do not issue an error message.
 )""");
-  m.def(
-      "tao_var_repoint",
-      &Tao::tao_var_repoint,
-      R"""(No docstring available
-
-)""");
-  m.def(
-      "tao_var_target_calc",
-      &Tao::tao_var_target_calc,
-      R"""(No docstring available
-
-)""");
+  m.def("tao_var_repoint", &Tao::tao_var_repoint, R"""()""");
+  m.def("tao_var_target_calc", &Tao::tao_var_target_calc, R"""()""");
   m.def(
       "tao_var_useit_plot_calc",
       &Tao::tao_var_useit_plot_calc,
       py::arg("graph"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 graph : 
 var : TaoVarStruct
@@ -41083,14 +40876,16 @@ var : TaoVarStruct
       py::arg("out_file"),
       py::arg("show_good_opt_only") = py::none(),
       py::arg("tao_format") = py::none(),
-      R"""(Routine to write the optimized variables. One file will be created for each universe.
+      R"""(Subroutine tao_var_write (out_file, show_good_opt_only, tao_format)
 
+Routine to write the optimized variables. One file will be created for each universe.
 The created file will have three sections:
-1) The variable values
-2) The list of constraints.
-3) A list of the top 10 constraints.
+  1) The variable values
+  2) The list of constraints.
+  3) A list of the top 10 constraints.
 If out_file = '' the information will be dumped to the terminal.
 In this case, only the variable values will be printed.
+
 When tao_format = True, the output is in the form "set variable <name> = <value>"
 so the file can be used as a Tao command file. If tao_format = False, the format
 is suitable for inclusion in a Bmad lattice file.
@@ -41107,14 +40902,18 @@ tao_format : bool, optional
   m.def(
       "tao_veto_vars_with_zero_dmodel",
       &Tao::tao_veto_vars_with_zero_dmodel,
-      R"""(Routine to veto all variables with zero effect on data used in the merit function.
+      R"""(Subroutine tao_veto_vars_with_zero_dmodel ()
+
+Routine to veto all variables with zero effect on data used in the merit function.
 
 )""");
   m.def(
       "tao_wave_analysis",
       &Tao::tao_wave_analysis,
       py::arg("plot"),
-      R"""(Routine to do a wave anaysis.
+      R"""(Subroutine tao_wave_analysis (plot)
+
+Routine to do a wave anaysis.
 
 Parameters
 ----------
@@ -41128,8 +40927,9 @@ plot : TaoPlotStruct
       py::arg("curve_name"),
       py::arg("plot_place"),
       py::arg("err_flag"),
-      R"""(Routine to do the initial setup for wave plotting.
+      R"""(Subroutine tao_wave_cmd (curve_name, plot_place, err_flag)
 
+Routine to do the initial setup for wave plotting.
 The wave analysis is done by the routine tao_wave_analysis.
 
 Parameters
@@ -41160,8 +40960,9 @@ plot_place :
       py::arg("f2") = py::none(),
       py::arg("f3") = py::none(),
       py::arg("f4") = py::none(),
-      R"""(Routine for fitting the curve data to up to four functions using a least squares
+      R"""(Subroutine tao_wave_fit (curve, ix1, n_dat, coef, rms, f1, f2, f3, f4)
 
+Routine for fitting the curve data to up to four functions using a least squares
 SVD fit.
 
 Parameters
@@ -41206,9 +41007,7 @@ rms : float
       "tao_write_cmd",
       &Tao::tao_write_cmd,
       py::arg("what"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 what : unknown
     What to output. See the code for more details.
@@ -41218,9 +41017,7 @@ what : unknown
       &Tao::tao_x_axis_cmd,
       py::arg("where"),
       py::arg("what"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 where : unknown
     Region to axis. Eg: "top"
@@ -41237,8 +41034,9 @@ what : unknown
       py::arg("gang") = py::none(),
       py::arg("exact") = py::none(),
       py::arg("turn_autoscale_off") = py::none(),
-      R"""(Routine to scale a plot. If x_min = x_max
+      R"""(Subroutine tao_x_scale_cmd (where, x_min_in, x_max_in, err, include_wall, gang, exact, turn_autoscale_off)
 
+Routine to scale a plot. If x_min = x_max
 Then the scales will be chosen to show all the data.
 
 Parameters
@@ -41273,9 +41071,7 @@ err : bool
       py::arg("x_max"),
       py::arg("include_wall") = py::none(),
       py::arg("have_scaled") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 graph : 
 x_min : 
@@ -41311,8 +41107,9 @@ have_scaled :
       py::arg("x_max_in"),
       py::arg("include_wall") = py::none(),
       py::arg("gang") = py::none(),
-      R"""(Routine to scale a plot. If x_min = x_max
+      R"""(Subroutine tao_x_scale_plot (plot, x_min_in, x_max_in, include_wall, gang, have_scaled)
 
+Routine to scale a plot. If x_min = x_max
 Then the scales will be chosen to show all the data.
 
 Parameters
@@ -41341,9 +41138,7 @@ have_scaled : bool
       py::arg("ref_lat") = py::none(),
       py::arg("except") = py::none(),
       py::arg("err_flag") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice to vary.
@@ -41379,8 +41174,9 @@ err_flag :
       py::arg("phi_min"),
       py::arg("phi_max"),
       py::arg("initial") = py::none(),
-      R"""(Routine to calculate the min/max values for (y, phi).
+      R"""(Subroutine target_min_max_calc (r_corner1, r_corner2, y_min, y_max, phi_min, phi_max, initial)
 
+Routine to calculate the min/max values for (y, phi).
 min/max values are cumulative.
 
 Parameters
@@ -41419,8 +41215,9 @@ initial : bool, optional
       "target_rot_mats",
       &Bmad::target_rot_mats,
       py::arg("r_center"),
-      R"""(Routine to calculate the rotation matrices between ele coords and "target" coords.
+      R"""(Subroutine target_rot_mats (r_center, w_to_target, w_to_ele)
 
+Routine to calculate the rotation matrices between ele coords and "target" coords.
 By definition, in target coords r_center = [0, 0, 1].
 
 Parameters
@@ -41455,9 +41252,7 @@ w_to_ele : float
       &Bmad::taylor_equal_taylor,
       py::arg("taylor1"),
       py::arg("taylor2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 taylor1 : 
 taylor2 : 
@@ -41466,7 +41261,9 @@ taylor2 :
       "taylor_inverse",
       &Bmad::taylor_inverse,
       py::arg("taylor_in"),
-      R"""(Subroutine to invert a taylor map. Since the inverse map is truncated, it is not exact.
+      R"""(Subroutine taylor_inverse (taylor_in, taylor_inv, err)
+
+Subroutine to invert a taylor map. Since the inverse map is truncated, it is not exact.
 
 Parameters
 ----------
@@ -41503,10 +41300,12 @@ err : bool
       py::arg("param"),
       py::arg("ref_in") = py::none(),
       py::arg("spin_taylor") = py::none(),
-      R"""(Subroutine to track (symplectic integration) a orbital map, and optionally a spin map, through an element.
+      R"""(Subroutine taylor_propagate1 (orb_taylor, ele, param, err_flag, ref_in, spin_taylor)
 
+Subroutine to track (symplectic integration) a orbital map, and optionally a spin map, through an element.
 The spin tracking is only done if spin_taylor is present and bmad_com%spin_tracking_on = T.
 The alternative routine, if ele has a taylor map, is concat_taylor.
+
 This routine will fail if there is no corresponding ptc fibre for this
 element. In general, the transfer_map_calc routine should be used instead.
 
@@ -41535,8 +41334,9 @@ err_flag : bool
       &Bmad::taylor_to_mad_map,
       py::arg("taylor"),
       py::arg("energy"),
-      R"""(Subroutine to convert a Taylor map to a mad order 2 map.
+      R"""(Subroutine taylor_to_mad_map (taylor, energy, map)
 
+Subroutine to convert a Taylor map to a mad order 2 map.
 If any of the Taylor terms have order greater than 2 they are ignored.
 
 Parameters
@@ -41556,9 +41356,7 @@ map : MadMapStruct
       &Bmad::taylors_equal_taylors,
       py::arg("taylor1"),
       py::arg("taylor2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 taylor1 : 
 taylor2 : 
@@ -41570,9 +41368,7 @@ taylor2 :
       py::arg("arr_inout"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 arr_in : 
 arr_inout : 
@@ -41610,9 +41406,7 @@ arr_inout_opt :
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 val_in : 
 val_inout : 
@@ -41651,9 +41445,7 @@ val_inout_opt :
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 val_in : 
 val_inout : 
@@ -41693,9 +41485,7 @@ val_inout_opt :
       py::arg("arr_inout"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 arr_in : 
 arr_inout : 
@@ -41729,9 +41519,7 @@ arr_inout_opt :
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 val_in : 
 val_inout : 
@@ -41770,9 +41558,7 @@ val_inout_opt :
       py::arg("arr_inout"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 arr_in : 
 arr_inout : 
@@ -41808,9 +41594,7 @@ arr_inout_opt :
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 val_in : 
 val_inout : 
@@ -41850,9 +41634,7 @@ val_inout_opt :
       py::arg("arr_inout"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 arr_in : 
 arr_inout : 
@@ -41886,9 +41668,7 @@ arr_inout_opt :
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 val_in : 
 val_inout : 
@@ -41927,9 +41707,7 @@ val_inout_opt :
       py::arg("arr_inout"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 arr_in : 
 arr_inout : 
@@ -41963,9 +41741,7 @@ arr_inout_opt :
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 val_in : 
 val_inout : 
@@ -42004,9 +41780,7 @@ val_inout_opt :
       py::arg("arr_inout"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 arr_in : 
 arr_inout : 
@@ -42040,9 +41814,7 @@ arr_inout_opt :
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 val_in : 
 val_inout : 
@@ -42078,9 +41850,7 @@ val_inout_opt :
       py::arg("arr_inout"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 arr_in : 
 arr_inout : 
@@ -42114,9 +41884,7 @@ arr_inout_opt :
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 val_in : 
 val_inout : 
@@ -42152,9 +41920,7 @@ val_inout_opt :
       py::arg("coord"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 tilt_val : float
     Tilt value (could be the roll value for a bend)
@@ -42175,9 +41941,7 @@ make_matrix : bool, optional
       py::arg("tilt_val"),
       py::arg("coord"),
       py::arg("w_mat") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 tilt_val : float
     Tilt value (could be the roll value for a bend)
@@ -42194,9 +41958,7 @@ w_mat : float, optional
       &Bmad::tilt_mat6,
       py::arg("mat6"),
       py::arg("tilt"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 mat6 : float
     Untilted matrix.
@@ -42211,9 +41973,11 @@ tilt : float
       py::arg("ele"),
       py::arg("axis"),
       py::arg("add_noise"),
-      R"""(Compute the measured dispersion reading given the true dispersion and the
+      R"""(Subroutine to_eta_reading (eta, ele, axis, add_noise, reading, err)
 
+Compute the measured dispersion reading given the true dispersion and the
 monitor offsets, noise, etc.
+
 This routine will only give a nonzero reading for Bmad markers,
 monitors, and instruments.
 
@@ -42267,7 +42031,8 @@ err : bool
       py::arg("cos_ang"),
       py::arg("sin_ang"),
       py::arg("err_flag"),
-      R"""(x, y, z, cos_ang, sin_ang, err_flag)
+      R"""(Subroutine to_fieldmap_coords (ele, local_orb, s_body, ele_anchor_pt, r0, curved_ref_frame,
+                                                              x, y, z, cos_ang, sin_ang, err_flag)
 
 Routine to return the (x,y,s) position relative to a field map.
 
@@ -42320,9 +42085,11 @@ err_flag : bool
       py::arg("ele"),
       py::arg("axis"),
       py::arg("add_noise"),
-      R"""(Calculate the measured reading on a bpm given the actual orbit and the
+      R"""(Subroutine to_orbit_reading (orb, ele, axis, add_noise, reading, err)
 
+Calculate the measured reading on a bpm given the actual orbit and the
 BPM's offsets, noise, etc.
+
 This routine will only give a nonzero reading for Bmad markers,
 monitors, and instruments.
 
@@ -42367,7 +42134,9 @@ err : bool
       &Bmad::to_phase_and_coupling_reading,
       py::arg("ele"),
       py::arg("add_noise"),
-      R"""(Find the measured coupling values given the actual ones
+      R"""(Subroutine to_phase_and_coupling_reading (ele, add_noise, reading, err)
+
+Find the measured coupling values given the actual ones
 
 This routine will only give a nonzero reading for Bmad markers,
 monitors, and instruments.
@@ -42413,9 +42182,10 @@ err : bool
       &Bmad::to_photon_angle_coords,
       py::arg("orb_in"),
       py::arg("ele"),
-      R"""(Routine to convert from standard photon coords to "angle" coords defined as:
+      R"""(Function to_photon_angle_coords (orb_in, ele) result (orb_out)
 
-x, angle_x, y, angle_y, z, E-E_ref
+Routine to convert from standard photon coords to "angle" coords defined as:
+      x, angle_x, y, angle_y, z, E-E_ref
 
 Parameters
 ----------
@@ -42435,9 +42205,10 @@ orb_out : CoordStruct
       py::arg("num"),
       py::arg("max_signif") = py::none(),
       py::arg("string"),
-      R"""(implicit none
-
-logical tracker_locked(2)
+      R"""(no longer exists
+subroutine test_tune_tracker_lock (tracker_locked)
+  implicit none
+  logical tracker_locked(2)
 end subroutine
 
 )""");
@@ -42463,9 +42234,7 @@ end subroutine
       &Bmad::to_surface_coords,
       py::arg("lab_orbit"),
       py::arg("ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lab_orbit : CoordStruct
     Photon position in laboratory coords.
@@ -42480,20 +42249,25 @@ surface_orbit : CoordStruct
       &Bmad::touschek_lifetime,
       py::arg("mode"),
       py::arg("lat"),
-      R"""(Calculates the touschek lifetime for a lattice by calling touschek_rate1
+      R"""(Subroutine touschek_lifetime(mode, Tl, lat)
 
+Calculates the touschek lifetime for a lattice by calling touschek_rate1
 for each element.
 The loss rate at each element is averaged over one turn to obtain the lifetime.
+
 This function assumes that the twiss parameters and closed orbit have
 been calculated, and that mode has been populated.
+
 This subroutine assumes a fixed momentum aperture.  The loss rate at each element
 uses the same momentum aperture, mode%pz_aperture.
+
 A common way to call this function is to first populate mode using
 radiation integrals.  If an ideal lattice is used, the vertical
 emittance must also be set to a reasonable value.  If the vertical
 emittance is due only to quantum excitation, then it will likely be
 several orders of magnitude smaller than any real physical situation, in which
 case the integral in this function will have problems converging.
+
 In addition to setting mode, also set lat%param%n_part to the number of particles
 per bunch.
 
@@ -42516,13 +42290,16 @@ Tl : float
       py::arg("lat"),
       py::arg("ix") = py::none(),
       py::arg("s") = py::none(),
-      R"""(Calculates the touschek rate at the location specified by s or ix
+      R"""(Subroutine touschek_rate1(mode, rate, lat, ix, s)
 
+Calculates the touschek rate at the location specified by s or ix
 This calculation is based on Piwinski 1998 "The Touschek Effect In
 Strong Focusing Storage Rings".  This is the most general case, equation
 31.
+
 This function uses twiss_and_track_at_s to determine the Twiss parameters
 at the location s or element index ix.
+
 A common way to call this function is to first populate mode using
 radiation integrals.  If an ideal lattice is used, the vertical
 emittance must also be set to a reasonable value.  If the vertical
@@ -42530,23 +42307,26 @@ emittance is due only to quantum excitation, then it will likely be
 several orders of magnitude smaller than any real physical situation, in which
 case the integral in this function will have problems converging.
 Additionally, mode%pz_aperture needs to be set to the momentum aperture.
+
 In addition to setting mode, also set lat%param%n_part to the number of particles
 per bunch.
+
 IMPORTANT NOTE: If the lattice type is a circular lattice, then
-mode%a%emittance and mode%b%emittance are assumed to
-contain the normalized emittences.  If lattice geometry is
-open, the emittances are assumed to be
-unnormalized.
+                mode%a%emittance and mode%b%emittance are assumed to
+                contain the normalized emittences.  If lattice geometry is
+                open, the emittances are assumed to be
+                unnormalized.
+
 IMPORTANT NOTE: The output of this subroutine is the loss rate assuming
-that two particles are lost per collision, one with too
-much energy, and one with too little energy.  This agrees
-with Piwinski's original derivation, which assumes that the
-positive energy aperture is equal in magnitude to the
-negative energy aperture.  If you are studying an
-accelerator with a non-symmetric energy aperture, then
-this subroutine should be called twice, once with the positive
-aperture, and once with the negative aperture, and rate from
-each call should be halved and summed.
+                that two particles are lost per collision, one with too
+                much energy, and one with too little energy.  This agrees
+                with Piwinski's original derivation, which assumes that the
+                positive energy aperture is equal in magnitude to the
+                negative energy aperture.  If you are studying an
+                accelerator with a non-symmetric energy aperture, then
+                this subroutine should be called twice, once with the positive
+                aperture, and once with the negative aperture, and rate from
+                each call should be halved and summed.
 
 Parameters
 ----------
@@ -42572,9 +42352,7 @@ rate : float
       py::arg("lat"),
       py::arg("ix") = py::none(),
       py::arg("s") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 mode : 
 rate : 
@@ -42609,9 +42387,7 @@ s :
       py::arg("ignore_radiation") = py::none(),
       py::arg("make_map1") = py::none(),
       py::arg("init_to_edge") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 start_orb : CoordStruct
     Starting position.
@@ -42659,7 +42435,9 @@ init_to_edge : bool, optional
       py::arg("ele"),
       py::arg("centroid") = py::none(),
       py::arg("direction") = py::none(),
-      R"""(Subroutine to track a beam of particles through an element.
+      R"""(Subroutine track1_beam (beam, ele, err, centroid, direction)
+
+Subroutine to track a beam of particles through an element.
 
 Parameters
 ----------
@@ -42687,9 +42465,7 @@ err : bool
       py::arg("param"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position
@@ -42730,9 +42506,7 @@ make_matrix : bool, optional
       py::arg("orbit"),
       py::arg("ele"),
       py::arg("param"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position
@@ -42751,7 +42525,9 @@ err_flag : bool
       py::arg("centroid") = py::none(),
       py::arg("direction") = py::none(),
       py::arg("bunch_track") = py::none(),
-      R"""(Subroutine to track a bunch of particles through an element.
+      R"""(Subroutine track1_bunch (bunch, ele, err, centroid, direction, bunch_track)
+
+Subroutine to track a bunch of particles through an element.
 
 Parameters
 ----------
@@ -42784,7 +42560,9 @@ err : bool
       py::arg("s_start") = py::none(),
       py::arg("s_end") = py::none(),
       py::arg("bunch_track") = py::none(),
-      R"""(Routine to track a bunch of particles through an element with csr radiation effects.
+      R"""(Subroutine track1_bunch_csr (bunch, ele, centroid, err, s_start, s_end, bunch_track)
+
+Routine to track a bunch of particles through an element with csr radiation effects.
 
 Parameters
 ----------
@@ -42819,10 +42597,13 @@ err : bool
       py::arg("s_start") = py::none(),
       py::arg("s_end") = py::none(),
       py::arg("bunch_track") = py::none(),
-      R"""(EXPERIMENTAL. NOT CURRENTLY OPERATIONAL!
+      R"""(Subroutine track1_bunch_csr3d (bunch, ele, centroid, err, bunch_track)
+
+EXPERIMENTAL. NOT CURRENTLY OPERATIONAL!
 
 Routine to track a bunch of particles through an element using
 steady-state 3D CSR.
+
 
 Parameters
 ----------
@@ -42855,7 +42636,9 @@ err : bool
       py::arg("ele"),
       py::arg("direction") = py::none(),
       py::arg("bunch_track") = py::none(),
-      R"""(Subroutine to track a bunch of particles through an element including wakefields.
+      R"""(Subroutine track1_bunch_hom (bunch, ele, direction, bunch_track)
+
+Subroutine to track a bunch of particles through an element including wakefields.
 
 Parameters
 ----------
@@ -42878,9 +42661,7 @@ bunch_track : BunchTrackStruct, optional
       py::arg("ele"),
       py::arg("track_to_same_s") = py::none(),
       py::arg("bunch_track") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 bunch : BunchStruct
     Starting bunch position.
@@ -42902,7 +42683,9 @@ bunch_track : BunchTrackStruct, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
-      R"""(Routine to track diffraction from a crystal.
+      R"""(Subroutine track1_crystal (ele, param, orbit)
+
+Routine to track diffraction from a crystal.
 
 Parameters
 ----------
@@ -42920,7 +42703,9 @@ orbit : CoordStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
-      R"""(Routine to track through diffraction plate and mask elements.
+      R"""(Subroutine track1_diffraction_plate_or_mask (ele, param, orbit)
+
+Routine to track through diffraction plate and mask elements.
 
 Parameters
 ----------
@@ -42938,8 +42723,9 @@ orbit : CoordStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
-      R"""(Routine to apply the ultra-relative space charge kick to a particle at the end of an element.
+      R"""(Subroutine track1_high_energy_space_charge (ele, param, orbit)
 
+Routine to apply the ultra-relative space charge kick to a particle at the end of an element.
 The routine setup_high_energy_space_charge_calc must be called initially before any tracking is done.
 This routine assumes a Gaussian bunch and is only valid with relativistic particles where the
 effect of the space charge is small.
@@ -42959,7 +42745,9 @@ param : LatParamStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
-      R"""(Routine to track through a lens.
+      R"""(Subroutine track1_lens (ele, param, orbit)
+
+Routine to track through a lens.
 
 Parameters
 ----------
@@ -42977,9 +42765,7 @@ orbit : CoordStruct
       py::arg("orbit"),
       py::arg("ele"),
       py::arg("param"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position
@@ -42993,7 +42779,9 @@ param : LatParamStruct
       &Bmad::track1_lr_wake,
       py::arg("bunch"),
       py::arg("ele"),
-      R"""(Subroutine to put in the long-range wakes for particle tracking.
+      R"""(Subroutine track1_lr_wake (bunch, ele)
+
+Subroutine to put in the long-range wakes for particle tracking.
 
 Parameters
 ----------
@@ -43011,7 +42799,10 @@ bunch : BunchStruct
       py::arg("orbit"),
       py::arg("ele"),
       py::arg("param"),
-      R"""(Subroutine to track through an element using a 2nd order transfer map.
+      R"""(Subroutine track1_mad (orbit, ele, param)
+
+Subroutine to track through an element using a 2nd order transfer map.
+Note: If map does not exist then one will be created.
 
 Parameters
 ----------
@@ -43029,7 +42820,9 @@ param : LatParamStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
-      R"""(Routine to track reflection from a mirror.
+      R"""(Subroutine track1_mirror (ele, param, orbit)
+
+Routine to track reflection from a mirror.
 
 Parameters
 ----------
@@ -43047,7 +42840,9 @@ orbit : CoordStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
-      R"""(Routine to track diffraction from a crystal.
+      R"""(Subroutine track1_mosaic_crystal (ele, param, orbit)
+
+Routine to track diffraction from a crystal.
 
 Parameters
 ----------
@@ -43065,8 +42860,9 @@ orbit : CoordStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
-      R"""(Routine to track reflection from a multilayer_mirror.
+      R"""(Subroutine track1_multilayer_mirror (ele, param, orbit)
 
+Routine to track reflection from a multilayer_mirror.
 Basic equations are from Kohn, "On the Theory of Reflectivity of an X-Ray Multilayer Mirror".
 
 Parameters
@@ -43085,12 +42881,16 @@ orbit : CoordStruct
       py::arg("orbit"),
       py::arg("ele"),
       py::arg("edge"),
-      R"""(Subroutine to apply a kick to a particle to account for radiation dampling and/or fluctuations.
+      R"""(Subroutine track1_radiation (orbit, ele, edge)
+
+Subroutine to apply a kick to a particle to account for radiation dampling and/or fluctuations.
 
 For tracking through a given element, this routine should be called initially when
 the particle is at the entrance end and at the end when the particle is at the exit end, when
 the orbit is with respect to laboratory (not element body) coordinates.
 That is, each time this routine is called it applies half the radiation kick for the entire element.
+
+Note: This routine is called by track1.
 
 Parameters
 ----------
@@ -43111,9 +42911,12 @@ edge : int
       py::arg("ele2"),
       py::arg("rad_damp") = py::none(),
       py::arg("rad_fluct") = py::none(),
-      R"""(Used for elements that have been split in half: This routine applies a kick to a particle
+      R"""(Subroutine track1_radiation_center (orbit, ele1, ele2, rad_damp, rad_fluct)
 
+Used for elements that have been split in half: This routine applies a kick to a particle
 to account for radiation dampling and/or fluctuations.
+
+Also see: track1_radiation.
 
 Parameters
 ----------
@@ -43143,9 +42946,7 @@ track1_radiation.
       py::arg("param"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting coords.
@@ -43187,7 +42988,9 @@ make_matrix : bool, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
-      R"""(Routine to track reflection from a sample element.
+      R"""(Subroutine track1_sample (ele, param, orbit)
+
+Routine to track reflection from a sample element.
 
 Parameters
 ----------
@@ -43205,9 +43008,7 @@ orbit : CoordStruct
       py::arg("start_orb"),
       py::arg("param"),
       py::arg("make_quaternion") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 start_orb : 
 ele : EleStruct
@@ -43240,9 +43041,7 @@ make_quaternion :
       py::arg("start_orb"),
       py::arg("ele"),
       py::arg("param"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 start_orb : 
 ele : 
@@ -43256,9 +43055,7 @@ end_orb : CoordStruct
       py::arg("start_orb"),
       py::arg("ele"),
       py::arg("param"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 start_orb : 
 ele : 
@@ -43271,7 +43068,9 @@ end_orb : CoordStruct
       &Bmad::track1_sr_wake,
       py::arg("bunch"),
       py::arg("ele"),
-      R"""(Subroutine to apply the short range wake fields to a bunch.
+      R"""(Subroutine track1_sr_wake (bunch, ele)
+
+Subroutine to apply the short range wake fields to a bunch.
 
 Parameters
 ----------
@@ -43288,9 +43087,7 @@ ele : EleStruct
       py::arg("orbit"),
       py::arg("ele"),
       py::arg("param"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position
@@ -43308,9 +43105,7 @@ track : TrackStruct
       py::arg("ele"),
       py::arg("taylor") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting coords.
@@ -43332,9 +43127,7 @@ make_matrix : bool, optional
       py::arg("param"),
       py::arg("t_end") = py::none(),
       py::arg("dt_step") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     starting position, z-based coords
@@ -43387,9 +43180,7 @@ dt_step : float, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -43430,9 +43221,7 @@ make_matrix : bool, optional
       py::arg("param"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -43454,8 +43243,9 @@ make_matrix : bool, optional
       py::arg("orb"),
       py::arg("ele"),
       py::arg("length"),
-      R"""(Routine to track a photon through a dipole bend.
+      R"""(Subroutine track_a_bend_photon (orb, ele, length)
 
+Routine to track a photon through a dipole bend.
 The photon is traveling in a straight line but the reference frame
 is curved in a circular shape.
 
@@ -43474,7 +43264,9 @@ length : float
       &Bmad::track_a_capillary,
       py::arg("orb"),
       py::arg("ele"),
-      R"""(Routine to track through a capillary.
+      R"""(Subroutine track_a_capillary (orb, ele)
+
+Routine to track through a capillary.
 
 Parameters
 ----------
@@ -43491,9 +43283,7 @@ ele : EleStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -43514,9 +43304,7 @@ make_matrix : bool, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -43540,9 +43328,7 @@ make_matrix : bool, optional
       py::arg("ele_orientation") = py::none(),
       py::arg("include_ref_motion") = py::none(),
       py::arg("time") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orb : CoordStruct
     Orbit at start of the drift.
@@ -43582,9 +43368,7 @@ time : float, optional
       py::arg("orb"),
       py::arg("length"),
       py::arg("phase_relative_to_ref"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orb : CoordStruct
     Orbit at start of the drift.
@@ -43602,9 +43386,7 @@ phase_relative_to_ref : bool
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -43626,9 +43408,7 @@ make_matrix : bool, optional
       py::arg("param"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -43652,9 +43432,7 @@ make_matrix : bool, optional
       py::arg("param"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -43678,9 +43456,7 @@ make_matrix : bool, optional
       py::arg("param"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -43703,9 +43479,7 @@ make_matrix : bool, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -43727,9 +43501,7 @@ make_matrix : bool, optional
       py::arg("param"),
       py::arg("err_flag") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -43766,9 +43538,7 @@ make_matrix : bool, optional
       py::arg("drift_to_exit") = py::none(),
       py::arg("track_spin") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     patch element.
@@ -43816,11 +43586,12 @@ make_matrix : bool, optional
       py::arg("orbit"),
       py::arg("drift_to_exit") = py::none(),
       py::arg("use_z_pos") = py::none(),
-      R"""(Routine to track through a patch element with a photon.
+      R"""(Subroutine track_a_patch_photon (ele, orbit, drift_to_exit, use_z_pos)
 
+Routine to track through a patch element with a photon.
 The steps for tracking are:
-1) Transform from entrance to exit coordinates.
-2) Drift particle from the entrance to the exit coordinants.
+  1) Transform from entrance to exit coordinates.
+  2) Drift particle from the entrance to the exit coordinants.
 
 Parameters
 ----------
@@ -43844,9 +43615,7 @@ use_z_pos : unknown, optional
       py::arg("param"),
       py::arg("err_flag") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -43882,9 +43651,7 @@ make_matrix : bool, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -43905,9 +43672,7 @@ make_matrix : bool, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -43929,9 +43694,7 @@ make_matrix : bool, optional
       py::arg("param"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -43953,9 +43716,7 @@ make_matrix : bool, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -43977,9 +43738,7 @@ make_matrix : bool, optional
       py::arg("param"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -44002,9 +43761,7 @@ make_matrix : bool, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting position.
@@ -44024,9 +43781,7 @@ make_matrix : bool, optional
       py::arg("orbit"),
       py::arg("ele"),
       py::arg("param"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 orbit : CoordStruct
     Starting coords.
@@ -44067,9 +43822,7 @@ track : TrackStruct
       py::arg("orbit"),
       py::arg("ix_branch") = py::none(),
       py::arg("init_lost") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lat to track through.
@@ -44115,9 +43868,12 @@ init_lost : bool
       py::arg("centroid") = py::none(),
       py::arg("direction") = py::none(),
       py::arg("bunch_tracks") = py::none(),
-      R"""(Subroutine to track a beam of particles from the end of
+      R"""(Subroutine track_beam (lat, beam, ele1, ele2, err, centroid, direction, bunch_tracks)
 
+Subroutine to track a beam of particles from the end of
 ele1 Through to the end of ele2. Both must be in the same lattice branch.
+
+Note: To zero wakes between runs, zero_lr_wakes_in_lat needs to be called.
 
 Parameters
 ----------
@@ -44155,11 +43911,14 @@ err : bool
       py::arg("centroid") = py::none(),
       py::arg("direction") = py::none(),
       py::arg("bunch_track") = py::none(),
-      R"""(Subroutine to track a particle bunch from the end of ele1 Through to the end of ele2.
+      R"""(Subroutine track_bunch (lat, bunch, ele1, ele2, err, centroid, direction, bunch_track)
 
+Subroutine to track a particle bunch from the end of ele1 Through to the end of ele2.
 Both must be in the same lattice branch.
 With forward tracking, if ele2 is at or before ele1, the tracking will "wrap" around
 the ends of the lattice.
+
+Note: To zero wakes between runs, zero_lr_wakes_in_lat needs to be called.
 
 Parameters
 ----------
@@ -44196,9 +43955,7 @@ err : bool
       py::arg("s_end"),
       py::arg("dt_step") = py::none(),
       py::arg("extra_field") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 bunch : BunchStruct
     Coordinates must be time-coords in element body frame.
@@ -44223,7 +43980,9 @@ extra_field : EmFieldStruct, optional
       py::arg("bunch"),
       py::arg("s"),
       py::arg("branch"),
-      R"""(Drift a bunch of particles to the same s coordinate
+      R"""(Subroutine track_bunch_to_s (bunch, s, branch)
+
+Drift a bunch of particles to the same s coordinate
 
 Parameters
 ----------
@@ -44242,7 +44001,9 @@ branch : BranchStruct
       py::arg("bunch"),
       py::arg("t_target"),
       py::arg("branch"),
-      R"""(Drift a bunch of particles to the same t coordinate
+      R"""(Subroutine track_bunch_to_t (bunch, t_target, branch)
+
+Drift a bunch of particles to the same t coordinate
 
 Parameters
 ----------
@@ -44260,7 +44021,9 @@ branch : BranchStruct
       &Bmad::track_complex_taylor,
       py::arg("start_orb"),
       py::arg("complex_taylor"),
-      R"""(Subroutine to track using a complex_taylor map.
+      R"""(Subroutine track_complex_taylor (start_orb, complex_taylor, end_orb)
+
+Subroutine to track using a complex_taylor map.
 
 Parameters
 ----------
@@ -44283,9 +44046,7 @@ end_orb : complex
       py::arg("orbit_start"),
       py::arg("ix_branch") = py::none(),
       py::arg("ix_ele_end") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice to track through
@@ -44334,9 +44095,7 @@ ix_ele_end : int, optional
       py::arg("ix_end"),
       py::arg("direction"),
       py::arg("ix_branch") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lat to track through.
@@ -44360,9 +44119,7 @@ track_state : int
       py::arg("ele"),
       py::arg("orbit"),
       py::arg("param"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element
@@ -44380,10 +44137,12 @@ w_surface :
       &Bmad::track_until_dead,
       py::arg("start_orb"),
       py::arg("lat"),
-      R"""(Subroutine to track a particle arbitrarily through a lattice, forwards or backwards,
+      R"""(subroutine track_until_dead (start_orb, lat, end_orb, track)
 
-until it is lost or exits the lattice.
-The starting element is located using start_orb%s.
+Subroutine to track a particle arbitrarily through a lattice, forwards or backwards,
+  until it is lost or exits the lattice.
+
+  The starting element is located using start_orb%s.
 
 Parameters
 ----------
@@ -44421,9 +44180,7 @@ track : TrackStruct
       py::arg("ele"),
       py::arg("tollerance"),
       py::arg("ref_edge"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element to setup. Matrices will be with respect to the map reference orbit.
@@ -44460,9 +44217,7 @@ err_flag : bool
       "transfer_ac_kick",
       &Bmad::transfer_ac_kick,
       py::arg("ac_in"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ac_in : AcKickerStruct
     Input
@@ -44473,9 +44228,7 @@ ac_out : AcKickerStruct
       "transfer_branch",
       &Bmad::transfer_branch,
       py::arg("branch1"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch1 : BranchStruct
 branch2 : BranchStruct
@@ -44484,9 +44237,7 @@ branch2 : BranchStruct
       "transfer_branch_parameters",
       &Bmad::transfer_branch_parameters,
       py::arg("branch_in"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch_in : BranchStruct
     Input branch.
@@ -44497,9 +44248,7 @@ branch_out : BranchStruct
       "transfer_branches",
       &Bmad::transfer_branches,
       py::arg("branch1"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch1 : BranchStruct
 branch2 : BranchStruct
@@ -44509,9 +44258,7 @@ branch2 : BranchStruct
       &Bmad::transfer_ele,
       py::arg("ele1"),
       py::arg("nullify_pointers") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele1 : EleStruct
 ele2 : EleStruct
@@ -44525,9 +44272,7 @@ nullify_pointers : bool, optional
       &Bmad::transfer_ele_taylor,
       py::arg("ele_in"),
       py::arg("taylor_order") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele_in : EleStruct
     Element with the Taylor map.
@@ -44540,9 +44285,7 @@ taylor_order : int, optional
       "transfer_eles",
       &Bmad::transfer_eles,
       py::arg("ele1"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele1 : EleStruct
 ele2 : EleStruct
@@ -44552,9 +44295,7 @@ ele2 : EleStruct
       &Bmad::transfer_fieldmap,
       py::arg("ele_in"),
       py::arg("who"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele_in : EleStruct
     Input element.
@@ -44570,7 +44311,9 @@ who : int
       py::arg("to_stored"),
       py::arg("orbit") = py::none(),
       py::arg("who") = py::none(),
-      R"""(Set parameters of fixer.
+      R"""(Function transfer_fixer_params(fixer, to_stored, orbit, who) result (is_ok)
+
+Set parameters of fixer.
 
 Parameters
 ----------
@@ -44595,9 +44338,7 @@ is_ok :
       "transfer_lat",
       &Bmad::transfer_lat,
       py::arg("lat1"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat1 : LatStruct
 lat2 : LatStruct
@@ -44606,9 +44347,7 @@ lat2 : LatStruct
       "transfer_lat_parameters",
       &Bmad::transfer_lat_parameters,
       py::arg("lat_in"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat_in : LatStruct
     Input lat.
@@ -44628,9 +44367,7 @@ lat_out : LatStruct
       py::arg("unit_start") = py::none(),
       py::arg("concat_if_possible") = py::none(),
       py::arg("spin_map") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice used in the calculation.
@@ -44674,14 +44411,18 @@ spin_map : TaylorStruct, optional
       py::arg("unit_start") = py::none(),
       py::arg("concat_if_possible") = py::none(),
       py::arg("spin_map") = py::none(),
-      R"""(one_turn, unit_start, err_flag, concat_if_possible, spin_map)
+      R"""(Subroutine transfer_map_from_s_to_s (lat, t_map, s1, s2, ref_orb_in, ref_orb_out, ix_branch,
+                                         one_turn, unit_start, err_flag, concat_if_possible, spin_map)
 
 Subroutine to calculate the transfer map between longitudinal positions s1 to s2.
+
 If s2 < s1 and lat%param%geometry is closed$ then the
 calculation will 'wrap around' the lattice end.
 For example, if s1 = 900 and s2 = 10 then the t_map is the map from
 element 900 to the lattice end plus from 0 through 10.
+
 If s2 < s1 and lat%param%geometry is open$ then the inverse of the forward map of s2 -> s1 is computed.
+
 If s2 = s1 then you get the unit map except if one_turn = True and the lattice is circular.
 
 Parameters
@@ -44746,9 +44487,7 @@ err_flag : bool
       &Bmad::transfer_mat2_from_twiss,
       py::arg("twiss1"),
       py::arg("twiss2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 twiss1 : TwissStruct
     Twiss parameters at the initial point. .beta   -- Beta parameter. .alpha  -- Alpha parameter. .phi    --
@@ -44766,9 +44505,7 @@ mat : float
       py::arg("ele2"),
       py::arg("orb1"),
       py::arg("orb2"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele1 : EleStruct
     Element with twiss parameters for the starting point. .a, .b       -- a-mode and b-mode Twiss paramters
@@ -44794,9 +44531,7 @@ m : float
       py::arg("ix2") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::arg("one_turn") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lattice used in the calculation. .ele(:).mat6  -- Transfer matrices used in the calculation.
@@ -44818,9 +44553,7 @@ one_turn : bool, optional
       &Bmad::transfer_twiss,
       py::arg("ele_in"),
       py::arg("reverse") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele_in : EleStruct
     Element with existing Twiss parameters.
@@ -44833,9 +44566,7 @@ reverse : bool, optional
       "transfer_wake",
       &Bmad::transfer_wake,
       py::arg("wake_in"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 wake_in : WakeStruct
     Input wake.
@@ -44849,9 +44580,14 @@ wake_out : WakeStruct
       py::arg("y_norm"),
       py::arg("z_norm"),
       py::arg("tri_coef"),
-      R"""(Routine to evaluate a tricubic interpolating complex function.
+      R"""(Function tricubic_cmplx_eval (x_norm, y_norm, z_norm, tri_coef, df_dx, df_dy, df_dz) result (f_val)
+
+Routine to evaluate a tricubic interpolating complex function.
 
 Use the routine tricubic_interpolation_cmplx_coefs to generate tri_coef.
+
+Note: In the equations below, the eight points of the grid box being interpolated range
+from (x0, y0, z0) to (x0+dx, y0+dy, z0+dz).
 
 Parameters
 ----------
@@ -44906,7 +44642,9 @@ df_dz : complex
       &Bmad::truncate_complex_taylor_to_order,
       py::arg("complex_taylor_in"),
       py::arg("order"),
-      R"""(Subroutine to throw out all terms in a complex_taylor map that are above a certain order.
+      R"""(Subroutine truncate_complex_taylor_to_order (complex_taylor_in, order, complex_taylor_out)
+
+Subroutine to throw out all terms in a complex_taylor map that are above a certain order.
 
 Parameters
 ----------
@@ -44927,9 +44665,7 @@ complex_taylor_out : ComplexTaylorStruct
       py::arg("mat2"),
       py::arg("ele_key"),
       py::arg("length"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 twiss1 : TwissStruct
     Input Twiss parameters.
@@ -44966,9 +44702,12 @@ err : bool
       py::arg("lat"),
       py::arg("err_flag"),
       py::arg("ix_branch") = py::none(),
-      R"""(Subroutine to calculate the 3D twiss parameters of the three modes of the full 6D 1-turn transfer matrix.
+      R"""(Subroutine twiss3_at_start (lat, error, ix_branch, tune3)
 
+Subroutine to calculate the 3D twiss parameters of the three modes of the full 6D 1-turn transfer matrix.
 This routine is for lattices with closed geometries. For open lattices see: twiss3_from_twiss2.
+
+Note: The rf must be on for this calculation.
 
 Parameters
 ----------
@@ -45002,9 +44741,11 @@ tune3 : float
       "twiss3_from_twiss2",
       &Bmad::twiss3_from_twiss2,
       py::arg("ele"),
-      R"""(Routine to calculate the 3D Twiss parameters given the 2D transverse Twiss parameters and some
+      R"""(Subroutine twiss3_from_twiss2 (ele)
 
+Routine to calculate the 3D Twiss parameters given the 2D transverse Twiss parameters and some
 longitudinal parameters.
+Also see: twiss3_at_start
 
 Parameters
 ----------
@@ -45023,8 +44764,9 @@ twiss3_at_start
       py::arg("ele1"),
       py::arg("ele2"),
       py::arg("err_flag"),
-      R"""(Subroutine to propagate the twiss parameters using all three normal modes.
+      R"""(Subroutine twiss3_propagate1 (ele1, ele2, err_flag)
 
+Subroutine to propagate the twiss parameters using all three normal modes.
 Subroutine from original mode3_mod.
 
 )""");
@@ -45044,8 +44786,9 @@ Subroutine from original mode3_mod.
       &Bmad::twiss3_propagate_all,
       py::arg("lat"),
       py::arg("ix_branch") = py::none(),
-      R"""(Subroutine to propagate the twiss parameters using all three normal modes.
+      R"""(Subroutine twiss3_propagate_all (lat, ix_branch)
 
+Subroutine to propagate the twiss parameters using all three normal modes.
 Subroutine from original mode3_mod.
 
 Parameters
@@ -45066,17 +44809,35 @@ ix_branch : int, optional
       py::arg("orb_array"),
       py::arg("print_err") = py::none(),
       py::arg("calc_chrom") = py::none(),
-      R"""(Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
+      R"""(Subroutine twiss_and_track
+
+This routine is an overloaded name for:
+  Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start)
+  Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
 
 Routine to calculate the twiss parameters, transport matrices and orbit.
+
 The essential difference between these two procedures is that
 twiss_and_track_branch only does the main branch while twiss_and_track_all
 does everything but the photon_fork elements.
+
+Note: This is not necessarily the fastest way to do things since this
+routine does the entire calculation from scratch.
+
+For a circular ring: If the RF is on, the computed orbit will be the 6D closed orbit.
+If the RF is off, the 4D transverse closed orbit using orbi(0)%vec(6) is computed.
+
+For an open lattice, the orbit will be computed using orb(0) as
+starting conditions.
+
+If there is a problem the status argument settings are: in_stop_band$,
+unstable$, non_symplectic$, in_stop_band$, non_symplectic$, xfer_mat_clac_failure$,
 twiss_propagate_failure$, no_complete_orbit$, or no_closed_orbit$. Note: in_stop_band$, unstable$,
 and non_symplectic$ refer to the 1-turn matrix which is computed with closed lattices.
 For an open geometry branch, status = no_complete_orbit$ is for
 where the particle is lost in tracking. A negative sign is used to differentiate an
 error occuring in the first call to twiss_at_start from the second call to twiss_at_start.
+
 If there is a problem in an open geometry branch, status argument setting is -N where N is the element
 where the particle was lost in tracking (negative numbers are used here to avoid confusion with ok$
 which is mapped to 1.
@@ -45111,14 +44872,6 @@ Returns
 -------
 status : int
     Set ok$ if everything is OK and set to something else otherwise. See above for more details.
-
-Notes
------
-Note: This is not necessarily the fastest way to do things since this routine does the entire calculation from
-scratch. For a circular ring: If the RF is on, the computed orbit will be the 6D closed orbit. If the RF is
-off, the 4D transverse closed orbit using orbi(0)%vec(6) is computed. For an open lattice, the orbit will be
-computed using orb(0) as starting conditions. If there is a problem the status argument settings are:
-in_stop_band$, unstable$, non_symplectic$, in_stop_band$, non_symplectic$, xfer_mat_clac_failure$,
 )""");
   m.def(
       "twiss_and_track_at_s",
@@ -45131,18 +44884,23 @@ in_stop_band$, unstable$, non_symplectic$, in_stop_band$, non_symplectic$, xfer_
       py::arg("ix_branch") = py::none(),
       py::arg("use_last") = py::none(),
       py::arg("compute_floor_coords") = py::none(),
-      R"""(Subroutine to return the twiss parameters and particle orbit at a
+      R"""(Subroutine twiss_and_track_at_s (lat, s, ele_at_s, orb, orb_at_s, ix_branch, err, use_last, compute_floor_coords)
 
+Subroutine to return the twiss parameters and particle orbit at a
 given longitudinal position.
+
 When calculating the Twiss parameters, this routine assumes
 that the lattice elements already contain the Twiss parameters calculated
 for the ends of the elements.
+
 Additionally, the orbit at the ends of the elements (contained in orb(:)) must be
 precomputed when orb_at_s is present.
+
 Precomputation of Twiss and orbit at the element ends may be done with the twiss_and_track routine.
+
 See also:
-twiss_and_track_from_s_to_s
-twiss_and_track_intra_ele
+  twiss_and_track_from_s_to_s
+  twiss_and_track_intra_ele
 
 Parameters
 ----------
@@ -45192,17 +44950,35 @@ err : bool
       py::arg("print_err") = py::none(),
       py::arg("calc_chrom") = py::none(),
       py::arg("orb_start") = py::none(),
-      R"""(Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
+      R"""(Subroutine twiss_and_track
+
+This routine is an overloaded name for:
+  Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start)
+  Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
 
 Routine to calculate the twiss parameters, transport matrices and orbit.
+
 The essential difference between these two procedures is that
 twiss_and_track_branch only does the main branch while twiss_and_track_all
 does everything but the photon_fork elements.
+
+Note: This is not necessarily the fastest way to do things since this
+routine does the entire calculation from scratch.
+
+For a circular ring: If the RF is on, the computed orbit will be the 6D closed orbit.
+If the RF is off, the 4D transverse closed orbit using orbi(0)%vec(6) is computed.
+
+For an open lattice, the orbit will be computed using orb(0) as
+starting conditions.
+
+If there is a problem the status argument settings are: in_stop_band$,
+unstable$, non_symplectic$, in_stop_band$, non_symplectic$, xfer_mat_clac_failure$,
 twiss_propagate_failure$, no_complete_orbit$, or no_closed_orbit$. Note: in_stop_band$, unstable$,
 and non_symplectic$ refer to the 1-turn matrix which is computed with closed lattices.
 For an open geometry branch, status = no_complete_orbit$ is for
 where the particle is lost in tracking. A negative sign is used to differentiate an
 error occuring in the first call to twiss_at_start from the second call to twiss_at_start.
+
 If there is a problem in an open geometry branch, status argument setting is -N where N is the element
 where the particle was lost in tracking (negative numbers are used here to avoid confusion with ok$
 which is mapped to 1.
@@ -45237,14 +45013,6 @@ Returns
 -------
 status : int
     Set ok$ if everything is OK and set to something else otherwise. See above for more details.
-
-Notes
------
-Note: This is not necessarily the fastest way to do things since this routine does the entire calculation from
-scratch. For a circular ring: If the RF is on, the computed orbit will be the 6D closed orbit. If the RF is
-off, the 4D transverse closed orbit using orbi(0)%vec(6) is computed. For an open lattice, the orbit will be
-computed using orb(0) as starting conditions. If there is a problem the status argument settings are:
-in_stop_band$, unstable$, non_symplectic$, in_stop_band$, non_symplectic$, xfer_mat_clac_failure$,
 )""");
   m.def(
       "twiss_and_track_from_s_to_s",
@@ -45255,9 +45023,7 @@ in_stop_band$, unstable$, non_symplectic$, in_stop_band$, non_symplectic$, xfer_
       py::arg("ele_start") = py::none(),
       py::arg("compute_floor_coords") = py::none(),
       py::arg("compute_twiss") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 branch : BranchStruct
     Lattice branch to track through.
@@ -45318,9 +45084,7 @@ compute_twiss : bool, optional
       py::arg("compute_floor_coords") = py::none(),
       py::arg("compute_twiss") = py::none(),
       py::arg("reuse_ele_end") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element to track through.
@@ -45382,9 +45146,7 @@ reuse_ele_end : bool, optional
       "twiss_at_element",
       &Bmad::twiss_at_element,
       py::arg("ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element to be averaged
@@ -45421,9 +45183,7 @@ average : EleStruct
       py::arg("lat"),
       py::arg("ix_branch") = py::none(),
       py::arg("type_out") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lat
@@ -45442,9 +45202,7 @@ type_out : bool, optional
       py::arg("lat"),
       py::arg("ref_orb0"),
       py::arg("d_orb") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     Lat to track through.
@@ -45484,9 +45242,7 @@ d_orb : float, optional
       py::arg("ele1"),
       py::arg("ele2"),
       py::arg("forward") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele1 : EleStruct
     Element holding the starting Twiss parameters for forwards propagation.
@@ -45510,9 +45266,7 @@ forward : bool, optional
       py::arg("ix_branch") = py::none(),
       py::arg("ie_start") = py::none(),
       py::arg("ie_end") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : LatStruct
     lattice. .branch(ix_branch).ele(0) -- Branch beginning element with the starting parameters.
@@ -45533,9 +45287,7 @@ ie_end : int, optional
       &Bmad::twiss_to_1_turn_mat,
       py::arg("twiss"),
       py::arg("phi"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 twiss : TwissStruct
     Structure holding the Twiss parameters. .beta .alpha
@@ -45548,9 +45300,7 @@ mat2 : float
       "type_coord",
       &Bmad::type_coord,
       py::arg("coord"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 coord : CoordStruct
     Coordinate
@@ -45560,8 +45310,9 @@ coord : CoordStruct
       &Bmad::type_expression_tree,
       py::arg("tree"),
       py::arg("indent") = py::none(),
-      R"""(Routine to print an expression tree in tree form.
+      R"""(Subroutine type_expression_tree (tree, indent)
 
+Routine to print an expression tree in tree form.
 Good for debugging.
 
 Parameters
@@ -45575,9 +45326,7 @@ indent : int, optional
       "type_this_file",
       &python_type_this_file,
       py::arg("filename"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 filename : 
 )""");
@@ -45596,9 +45345,7 @@ filename :
       "upcase_string",
       &python_upcase_string,
       py::arg("string"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 string : 
 )""");
@@ -45617,7 +45364,10 @@ string :
       "update_ele_from_fibre",
       &Bmad::update_ele_from_fibre,
       py::arg("ele"),
-      R"""(Routine to update a bmad lattice element when the associated PTC fibre has been modified.
+      R"""(Subroutine update_ele_from_fibre (ele)
+
+Routine to update a bmad lattice element when the associated PTC fibre has been modified.
+Remember to call lattice_bookkeeper after calling this routine.
 
 Parameters
 ----------
@@ -45633,9 +45383,7 @@ Remember to call lattice_bookkeeper after calling this routine.
       "update_fibre_from_ele",
       &Bmad::update_fibre_from_ele,
       py::arg("ele"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element with corresponding PTC fibre. ele.ptc_fibre -- PTC fibre.
@@ -45648,9 +45396,7 @@ survey_needed : bool
       &Bmad::update_floor_angles,
       py::arg("floor"),
       py::arg("floor0") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 floor : FloorPositionStruct
     Position with input w matrix. .w      -- w matrix.
@@ -45665,9 +45411,7 @@ floor0 : FloorPositionStruct, optional
       py::arg("ele"),
       py::arg("field_calc"),
       py::arg("is_valid"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element.
@@ -45692,9 +45436,7 @@ is_valid :
       py::arg("ele"),
       py::arg("fringe_type"),
       py::arg("is_valid"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element.
@@ -45720,9 +45462,7 @@ is_valid :
       py::arg("species"),
       py::arg("mat6_calc_method"),
       py::arg("is_valid"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element.
@@ -45753,9 +45493,7 @@ is_valid :
       py::arg("ele"),
       py::arg("spin_tracking_method"),
       py::arg("is_valid"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element.
@@ -45787,9 +45525,7 @@ is_valid :
       py::arg("species"),
       py::arg("tracking_method"),
       py::arg("is_valid"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element.
@@ -45822,9 +45558,7 @@ is_valid :
       py::arg("err_print_flag") = py::none(),
       py::arg("err_value") = py::none(),
       py::arg("value"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     After this routine finishes Ptr_attrib will point to a variable within this element.
@@ -45861,9 +45595,7 @@ value :
       py::arg("typ"),
       py::arg("ignore_if_zero") = py::none(),
       py::arg("use_comma") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 line : 
 value : 
@@ -45904,9 +45636,7 @@ use_comma :
       py::arg("vec"),
       py::arg("phase") = py::none(),
       py::arg("polar"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 vec : float
     unitary spin vector
@@ -45920,9 +45650,7 @@ polar :
       py::arg("vec"),
       py::arg("phase") = py::none(),
       py::arg("spinor"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 vec : float
     Spin vector in cartesian coordinates
@@ -45937,15 +45665,18 @@ spinor :
       py::arg("ix_name"),
       py::arg("pure_name") = py::none(),
       py::arg("include_wild") = py::none(),
-      R"""(Routine to check if a name is well formed. Examples:
+      R"""(Function verify_valid_name (name, ix_name, pure_name, include_wild) result (is_valid)
 
-"0>>Q0"                           -- Invalid (will only be valid after lattice expansion).
-"Q1##1"                           -- Invalid (double hash not accepted).
-"Q2A_C.\7#"                       -- Pure name (no "[", "]", "(", ")", "%" characters present).
-"Q3[GRID_FIELD(1)%FIELD_SCALE]"   -- Valid but not a pure name.
-"RFCAVITY::*"                     -- Valid if include_wild = True.
+Routine to check if a name is well formed. Examples:
+  "0>>Q0"                           -- Invalid (will only be valid after lattice expansion).
+  "Q1##1"                           -- Invalid (double hash not accepted).
+  "Q2A_C.\7#"                       -- Pure name (no "[", "]", "(", ")", "%" characters present).
+  "Q3[GRID_FIELD(1)%FIELD_SCALE]"   -- Valid but not a pure name.
+  "RFCAVITY::*"                     -- Valid if include_wild = True.
+
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
+
 
 Parameters
 ----------
@@ -45966,9 +45697,7 @@ is_valid : bool
   m.def(
       "virtual_memory_usage",
       &SimUtils::virtual_memory_usage,
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 usage : 
 )""");
@@ -45979,9 +45708,7 @@ usage :
       py::arg("ref_tilt"),
       py::arg("r_vec") = py::none(),
       py::arg("w_mat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 angle : float
     Bending angle.
@@ -45999,9 +45726,7 @@ w_mat :
       py::arg("tilt"),
       py::arg("return_inverse") = py::none(),
       py::arg("w_mat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 tilt : float
     pitch angle
@@ -46015,9 +45740,7 @@ w_mat :
       py::arg("x_pitch"),
       py::arg("return_inverse") = py::none(),
       py::arg("w_mat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x_pitch : float
     pitch angle
@@ -46031,9 +45754,7 @@ w_mat :
       py::arg("y_pitch"),
       py::arg("return_inverse") = py::none(),
       py::arg("w_mat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 y_pitch : float
     pitch angle
@@ -46045,9 +45766,11 @@ w_mat :
       "w_mat_to_axis_angle",
       &SimUtils::w_mat_to_axis_angle,
       py::arg("w_mat"),
-      R"""(Routine to find the rotation axis and rotation angle corresponding to a given
+      R"""(Subroutine w_mat_to_axis_angle (w_mat, axis, angle)
 
+Routine to find the rotation axis and rotation angle corresponding to a given
 3D rotation matrix.
+
 The rotation angle is chosen in the range [0, pi].
 
 Parameters
@@ -46084,7 +45807,9 @@ angle : float
       "w_mat_to_quat",
       &SimUtils::w_mat_to_quat,
       py::arg("w_mat"),
-      R"""(Routine to find the quaternion corresponding to a given 3D rotation matrix.
+      R"""(Function w_mat_to_quat (w_mat) result (quat)
+
+Routine to find the quaternion corresponding to a given 3D rotation matrix.
 
 Parameters
 ----------
@@ -46102,14 +45827,16 @@ quat : float
       py::arg("position"),
       py::arg("ele"),
       py::arg("ix_wall") = py::none(),
-      R"""(no_wall_here, origin, radius_wall, err_flag) result (d_radius)
+      R"""(Function wall3d_d_radius (position, ele, ix_wall, perp, ix_section,
+                                     no_wall_here, origin, radius_wall, err_flag) result (d_radius)
 
 Routine to calculate the difference radius = particle_radius - wall_radius.
 Radiuses are measured along a line from the wall origin with the line passing through
 the particle position.
 The wall origin itself lies on a line connecting the centers of the bounding sections.
+
 Module needed:
-use wall3d_mod
+  use wall3d_mod
 
 Parameters
 ----------
@@ -46173,11 +45900,12 @@ err_flag : bool
       "wall3d_initializer",
       &Bmad::wall3d_initializer,
       py::arg("wall3d"),
-      R"""(Routine to initialize a wall3d_struct
+      R"""(Subroutine wall3d_initializer (wall3d, err)
 
-1) Add vertex points if there is symmetry.
-2) Compute circular and elliptical centers.
-3) Compute spline coefficients, etc.
+Routine to initialize a wall3d_struct
+  1) Add vertex points if there is symmetry.
+  2) Compute circular and elliptical centers.
+  3) Compute spline coefficients, etc.
 
 Parameters
 ----------
@@ -46194,10 +45922,11 @@ err : bool
       "wall3d_section_initializer",
       &Bmad::wall3d_section_initializer,
       py::arg("section"),
-      R"""(Routine to initialize a wall3d_section_struct:
+      R"""(Subroutine wall3d_section_initializer (section, err)
 
-1) Add vertex points if there is symmetry.
-2) Compute circular and elliptical centers.
+Routine to initialize a wall3d_section_struct:
+  1) Add vertex points if there is symmetry.
+  2) Compute circular and elliptical centers.
 
 Parameters
 ----------
@@ -46215,7 +45944,9 @@ err : bool
       &Bmad::wall3d_to_position,
       py::arg("orbit"),
       py::arg("ele"),
-      R"""(Routine to return the suitable postion to be used in calling wall3d_d_radius
+      R"""(Function wall3d_to_position (orbit, ele) result (position)
+
+Routine to return the suitable postion to be used in calling wall3d_d_radius
 
 This routine assumes that if in a patch the coordinates of orbit are with respect
 to the downstream end if orbit%direction*orbit%time_dir = 1 and vice versa.
@@ -46237,9 +45968,7 @@ position : float
       &python_word_len,
       py::arg("wording"),
       py::arg("wlen"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 wording : 
 wlen : 
@@ -46269,9 +45998,7 @@ wlen :
       py::arg("delim_found"),
       py::arg("out_str"),
       py::arg("ignore_interior") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 in_str : 
 delim_list : 
@@ -46322,9 +46049,7 @@ ignore_interior :
       py::arg("value"),
       py::arg("err_flag"),
       py::arg("ele") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 word : 
 lat : 
@@ -46356,7 +46081,9 @@ ele :
       py::arg("beam"),
       py::arg("new_file") = py::none(),
       py::arg("alive_only") = py::none(),
-      R"""(Routine to write a beam file in ASCII format (version 4).
+      R"""(Subroutine write_ascii_beam_file (file_name, beam, new_file, alive_only)
+
+Routine to write a beam file in ASCII format (version 4).
 
 Parameters
 ----------
@@ -46379,9 +46106,7 @@ alive_only : bool, optional
       py::arg("d2"),
       py::arg("d3"),
       py::arg("d4"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 iu : 
 strength : 
@@ -46414,10 +46139,13 @@ d4 :
       py::arg("astra_file_unit"),
       py::arg("ele"),
       py::arg("dz") = py::none(),
-      R"""(Write 1-D field map files for Astra. The format is:
+      R"""(Subroutine write_astra_field_grid_file (astra_file_unit, ele, maxfield, err)
 
-z field
-...
+  Write 1-D field map files for Astra. The format is:
+  z field
+  ...
+
+  Note: Simplified from write_opal_field_grid_file
 
 Parameters
 ----------
@@ -46461,16 +46189,20 @@ err : bool
       py::arg("base_filename"),
       py::arg("ele"),
       py::arg("dz") = py::none(),
-      R"""(Writes 3-D field map files for Astra. The format is:
+      R"""(Subroutine write_astra_field_grid_file_3D (base_filename, ele, maxfield, dz, err)
 
-Nx x[1] x[2] ....... x[Nx-1] x[Nx]
-Ny y[1] y[2] ....... y[Ny-1] y[Ny]
-Nz z[1] z[2] ....... z[Nz-1] z[Nz]
-<field values>
-where field values are produced from a loop as in:
-do iz = 1, Nz
-do iy = 1, Ny
-write single line: field(:, iy, iz)
+  Writes 3-D field map files for Astra. The format is:
+  Nx x[1] x[2] ....... x[Nx-1] x[Nx]
+  Ny y[1] y[2] ....... y[Ny-1] y[Ny]
+  Nz z[1] z[2] ....... z[Nz-1] z[Nz]
+  <field values>
+  where field values are produced from a loop as in:
+  do iz = 1, Nz
+    do iy = 1, Ny
+      write single line: field(:, iy, iz)
+
+
+  Note: similar to write_astra_field_grid_file
 
 Parameters
 ----------
@@ -46518,7 +46250,9 @@ err : bool
       py::arg("file_format") = py::none(),
       py::arg("lat") = py::none(),
       py::arg("alive_only") = py::none(),
-      R"""(Routine to write a beam file.
+      R"""(Subroutine write_beam_file (file_name, beam, new_file, file_format, lat, alive_only)
+
+Routine to write a beam file.
 
 A '.h5' suffix will be appended to the created file if hdf5$ format is used and file_name does not
 already have a '.h5' or '.hdf5' suffix.
@@ -46545,9 +46279,7 @@ alive_only : bool, optional
       py::arg("beam"),
       py::arg("ele"),
       py::arg("new_file") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 file_name : unknown
     Name of file.
@@ -46565,7 +46297,10 @@ new_file : bool, optional
       py::arg("ele"),
       py::arg("cart_map"),
       py::arg("err_flag"),
-      R"""(Routine to write a binary cartesian_map structure.
+      R"""(Subroutine write_binary_cartesian_map (file_name, ele, cart_map, err_flag)
+
+Routine to write a binary cartesian_map structure.
+Note: The file name should have a ".bin" suffix.
 
 Parameters
 ----------
@@ -46585,7 +46320,10 @@ err_flag : bool
       py::arg("ele"),
       py::arg("cl_map"),
       py::arg("err_flag"),
-      R"""(Routine to write a binary cylindrical_map structure.
+      R"""(Subroutine write_binary_cylindrical_map (file_name, ele, cl_map, err_flag)
+
+Routine to write a binary cylindrical_map structure.
+Note: The file name should have a ".bin" suffix.
 
 Parameters
 ----------
@@ -46605,7 +46343,10 @@ err_flag : bool
       py::arg("ele"),
       py::arg("g_field"),
       py::arg("err_flag"),
-      R"""(Routine to write a binary grid_field structure.
+      R"""(Subroutine write_binary_grid_field (file_name, ele, g_field, err_flag)
+
+Routine to write a binary grid_field structure.
+Note: The file name should have a ".bin" suffix.
 
 Parameters
 ----------
@@ -46624,9 +46365,7 @@ err_flag : bool
       py::arg("iu"),
       py::arg("ele"),
       py::arg("old_format") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 iu : 
 ele : 
@@ -46651,9 +46390,7 @@ old_format :
       &python_write_blender_lat_layout,
       py::arg("file_name"),
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 file_name : 
 lat : 
@@ -46680,9 +46417,7 @@ lat :
       py::arg("lat"),
       py::arg("output_form") = py::none(),
       py::arg("orbit0") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 bmad_file : unknown
     Name of the output lattice file.
@@ -46704,9 +46439,7 @@ orbit0 : CoordStruct, optional
       py::arg("bbu_beam"),
       py::arg("bbu_param"),
       py::arg("this_stage"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 lat : 
 bbu_beam : 
@@ -46719,10 +46452,13 @@ this_stage :
       py::arg("gpt_file_unit"),
       py::arg("ele"),
       py::arg("dz") = py::none(),
-      R"""(Write 1-D field map files for gpt. The format is:
+      R"""(Subroutine write_gpt_field_grid_file_1D (gpt_file_unit, ele, maxfield, ref_time, dz, err)
 
-z field
-...
+  Write 1-D field map files for gpt. The format is:
+  z field
+  ...
+
+  Note: Simplified from write_opal_field_grid_file
 
 Parameters
 ----------
@@ -46773,9 +46509,11 @@ err : bool
       py::arg("dr") = py::none(),
       py::arg("dz") = py::none(),
       py::arg("r_max") = py::none(),
-      R"""(Subroutine to write an GPT lattice file using the information in
+      R"""(Subroutine write_gpt_field_grid_file_2D (gpt_file_unit, ele, maxfield, ref_time, dr, dz,  err)
 
+Subroutine to write an GPT lattice file using the information in
 a lat_struct. Optionally only part of the lattice can be generated.
+
 
 Parameters
 ----------
@@ -46828,13 +46566,18 @@ err : bool
       py::arg("base_filename"),
       py::arg("ele"),
       py::arg("dz") = py::none(),
-      R"""(Writes 3-D field map files for gpt. The format is:
+      R"""(Subroutine write_gpt_field_grid_file_3D (base_filename, ele, maxfield, ref_time, dz, err)
 
-E-fields:
-'x', 'y', 'z', 'ExRe', 'EyRe', 'EzRe', 'ExIm ', 'EyIm ', 'EzIm '
-H-fields
-'x', 'y', 'z', 'HxRe', 'HyRe', 'HzRe', 'HxIm ', 'HyIm ', 'HzIm '
-where the fields oscillate as exp(+i \omega t)
+  Writes 3-D field map files for gpt. The format is:
+
+  E-fields:
+  'x', 'y', 'z', 'ExRe', 'EyRe', 'EzRe', 'ExIm ', 'EyIm ', 'EzIm '
+  H-fields
+  'x', 'y', 'z', 'HxRe', 'HyRe', 'HzRe', 'HxIm ', 'HyIm ', 'HzIm '
+
+  where the fields oscillate as exp(+i \omega t)
+
+  Note: similar to write_gpt_field_grid_file
 
 Parameters
 ----------
@@ -46886,10 +46629,12 @@ err : bool
       py::arg("end_is_neigh"),
       py::arg("do_split") = py::none(),
       py::arg("scibmad") = py::none(),
-      R"""(Routine to write strings to a lattice file.
+      R"""(Subroutine write_lat_line (line, iu, end_is_neigh, do_split)
 
+Routine to write strings to a lattice file.
 This routine will break the string up into multiple lines
 if the string is too long and add a continuation character if needed.
+
 If the "line" arg does not represent a full "sentence" (end_is_neigh = False),
 then only part of the line may be written and the part not written will be returned.
 
@@ -46929,9 +46674,7 @@ scibmad : bool, optional
       py::arg("include_apertures") = py::none(),
       py::arg("dr12_drift_max") = py::none(),
       py::arg("ix_branch") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 out_file_name : unknown
     Name of the mad output lattice file.
@@ -46967,9 +46710,7 @@ err : bool
       py::arg("include_apertures") = py::none(),
       py::arg("dr12_drift_max") = py::none(),
       py::arg("ix_branch") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 out_type : unknown
     Either 'ELEGANT', 'MAD-8', 'MAD-X', 'SAD', or 'OPAL-T', 'SCIBMAD'.
@@ -47007,9 +46748,7 @@ err : bool
       py::arg("include_apertures") = py::none(),
       py::arg("dr12_drift_max") = py::none(),
       py::arg("ix_branch") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 out_type : unknown
     Either 'MAD-8', or 'MAD-X'
@@ -47044,9 +46783,7 @@ err : bool
       py::arg("include_apertures") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::arg("err") = py::none(),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 out_file_name : 
 lat : 
@@ -47085,9 +46822,7 @@ err :
       "write_lattice_in_scibmad",
       &Bmad::write_lattice_in_scibmad,
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 scibmad_file : unknown
     SciBmad lattice file name.
@@ -47123,9 +46858,7 @@ err_flag : bool
       py::arg("iu"),
       py::arg("ele"),
       py::arg("lat"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 line : 
 iu : 
@@ -47152,9 +46885,11 @@ lat :
       py::arg("opal_file_unit"),
       py::arg("ele"),
       py::arg("param"),
-      R"""(Subroutine to write an OPAL lattice file using the information in
+      R"""(Subroutine write_opal_field_grid_file (opal_file_unit, ele, param, maxfield, err)
 
+Subroutine to write an OPAL lattice file using the information in
 a lat_struct. Optionally only part of the lattice can be generated.
+
 
 Parameters
 ----------
@@ -47197,8 +46932,9 @@ err : bool
       &Bmad::write_opal_lattice_file,
       py::arg("opal_file_unit"),
       py::arg("lat"),
-      R"""(Subroutine to write an OPAL lattice file using the information in
+      R"""(Subroutine write_opal_lattice_file (opal_file_unit, lat, err)
 
+Subroutine to write an OPAL lattice file using the information in
 a lat_struct. Optionally only part of the lattice can be generated.
 
 Parameters
@@ -47222,7 +46958,23 @@ err : bool
       py::arg("style") = py::none(),
       py::arg("branch") = py::none(),
       py::arg("format") = py::none(),
-      R"""(Subroutine to write a time-based bunch from a standard Bmad bunch
+      R"""(Subroutine write_time_particle_distribution  (time_file_unit, bunch, ele, style, branch, format, err)
+
+Subroutine to write a time-based bunch from a standard Bmad bunch
+
+Note: 'BMAD' style (absolute curvilinear coordinates):
+      n_particles_alive
+      x/m  m*c^2 \beta_x*\gamma/eV y/m m*c^2\beta_y*\gamma/eV s/m m*c^2\beta_z*\gamma/eV time/s charge/C
+
+      'OPAL' style (absolute curvilinear coordinates):
+      n_particles_alive
+      x/m  \beta_x*\gamma  y/m \beta_y*\gamma s/m \beta_s*\gamma
+
+      'ASTRA' style (global Cartesian coordinates, first line is the reference particle used for z, pz, and t calculation):
+      x/m y/m  z/m  m*c^2 \beta_x*\gamma/eV m*c^2 \beta_y*\gamma/eV m*c^2 \beta_z*\gamma/eV time/ns charge/nC species status
+
+      'GPT' style (global Cartesian coordinates, with header labeling the columns)
+      x/m y/m z/m \beta_x*\gamma \beta_y*\gamma \beta_z*\gamma t/s elementary_charge/C charge/elementary_charge
 
 Parameters
 ----------
@@ -47248,7 +47000,9 @@ err : bool
       "x0_radiation_length",
       &SimUtils::x0_radiation_length,
       py::arg("species"),
-      R"""(Routine to return the X0 raidation length for atomes.
+      R"""(Function x0_radiation_length(species) result (x0)
+
+Routine to return the X0 raidation length for atomes.
 
 Parameters
 ----------
@@ -47268,9 +47022,7 @@ x0 : float
       py::arg("y"),
       py::arg("z"),
       py::arg("res"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : 
 y : 
@@ -47301,8 +47053,9 @@ res :
       "xraylib_nist_compound",
       &Bmad::xraylib_nist_compound,
       py::arg("name"),
-      R"""(Routine to return the xraylib index for a given NIST compound.
+      R"""(Function xraylib_nist_compound (name) result (indx)
 
+Routine to return the xraylib index for a given NIST compound.
 Taken from file xraylib/include/xraylib-nist_compounds.h
 
 Parameters
@@ -47322,9 +47075,7 @@ indx : int
       py::arg("y"),
       py::arg("z"),
       py::arg("res"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : 
 y : 
@@ -47358,7 +47109,10 @@ res :
       py::arg("x"),
       py::arg("y"),
       py::arg("extend_grid") = py::none(),
-      R"""(Routine return the height (z) of the surface for a particular (x,y) position.
+      R"""(Function z_at_surface (ele, x, y, err_flag, extend_grid, dz_dxy) result (z)
+
+Routine return the height (z) of the surface for a particular (x,y) position.
+Remember: +z points into the element.
 
 Parameters
 ----------
@@ -47407,9 +47161,7 @@ Remember: +z points into the element.
   m.def(
       "zero_ele_kicks",
       &Bmad::zero_ele_kicks,
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element with no kicks.
@@ -47417,9 +47169,7 @@ ele : EleStruct
   m.def(
       "zero_ele_offsets",
       &Bmad::zero_ele_offsets,
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 ele : EleStruct
     Element with no (mis)orientation.
@@ -47428,8 +47178,9 @@ ele : EleStruct
       "zero_lr_wakes_in_lat",
       &Bmad::zero_lr_wakes_in_lat,
       py::arg("lat"),
-      R"""(Routine to zero the long range wake amplitudes for the elements that have
+      R"""(Subroutine zero_lr_wakes_in_lat (lat)
 
+Routine to zero the long range wake amplitudes for the elements that have
 long range wakes in a lattice.
 
 Parameters
@@ -47444,9 +47195,7 @@ lat : LatStruct
       py::arg("y"),
       py::arg("z"),
       py::arg("res"),
-      R"""(No docstring available
-
-Parameters
+      R"""(Parameters
 ----------
 x : 
 y : 
