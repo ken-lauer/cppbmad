@@ -303,10 +303,15 @@ def get_type_transform(
     fortran_type = info.fortran_type
     # Note: Attributes like pointer, allocatable, value, intent are handled in fortran.py
     # based on the argument properties, but we can store the base type here.
+    #
 
     fortran_native_type = info.fortran_native_type or ""
     if ft.type == "type" and kind:
         fortran_native_type = f"type({kind})"
+
+    if intent == "out" and ft.ptr == PTR:
+        # need to pass back a pointer to C++
+        fortran_type = fortran_type.replace(", value", "")
 
     return Transform(
         fortran_type=fortran_type,

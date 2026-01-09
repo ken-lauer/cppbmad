@@ -201,21 +201,25 @@ class CppWrapperTypeArgument(CppWrapperArgument):
                 )
             )
         elif intent == "out":
-            lines.append(f"{self.arg.c_class} {self.fortran_call_arg_name};")
+            if self.arg.member.type_info.pointer:
+                lines.append(f"void *{self.fortran_call_arg_name};")
+            else:
+                lines.append(f"{self.arg.c_class} {self.fortran_call_arg_name};")
 
         return lines
 
     def call_argument(self) -> str:
-        arg = self.arg
-        intent = arg.intent
+        intent = self.arg.intent
 
-        if intent in {"in", "inout"} and not arg.is_optional:
+        if intent in {"in", "inout"} and not self.arg.is_optional:
             if self.arg.member.type_info.pointer:
                 return "&" + self.arg.c_name
             return f"{self.arg.c_name}.get_fortran_ptr()"
-        if intent in {"in", "inout"} and arg.is_optional:
+        if intent in {"in", "inout"} and self.arg.is_optional:
             return self.fortran_call_arg_name
         if intent == "out":
+            if self.arg.member.type_info.pointer:
+                return f"&{self.fortran_call_arg_name}"
             return f"{self.fortran_call_arg_name}.get_fortran_ptr()"
         return ""
 
@@ -223,6 +227,8 @@ class CppWrapperTypeArgument(CppWrapperArgument):
     def output_arg_name(self) -> str | None:
         if self.arg.intent == "in":
             return self.arg.c_name
+        if self.arg.intent == "out" and self.arg.member.type_info.pointer:
+            return f"{self.arg.c_class}({self.fortran_call_arg_name})"
         return self.fortran_call_arg_name
 
     def struct_decl(self, ignore_intent: bool = False) -> tuple[str, str] | None:
