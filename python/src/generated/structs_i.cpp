@@ -1,0 +1,52 @@
+#include "pybmad/generated/structs_i.hpp"
+#include "bmad/generated/proxy.hpp"
+#include "bmad/generated/to_string.hpp"
+#include "bmad/to_string.hpp"
+#include "pybmad/arrays.hpp"
+
+using namespace Pybmad;
+namespace py = pybind11;
+
+// =============================================================================
+// interval1_coef_struct
+void init_interval1_coef_struct(
+    py::module& m,
+    py::class_<Interval1CoefProxy>& cls) {
+  cls.def(py::init<>())
+      // Interval1CoefProxy.c0 (0D_NOT_real -
+      .def_property("c0", &Interval1CoefProxy::c0, &Interval1CoefProxy::set_c0)
+      // Interval1CoefProxy.c1 (0D_NOT_real -
+      .def_property("c1", &Interval1CoefProxy::c1, &Interval1CoefProxy::set_c1)
+      // Interval1CoefProxy.n_exp (0D_NOT_real -
+      .def_property(
+          "n_exp", &Interval1CoefProxy::n_exp, &Interval1CoefProxy::set_n_exp)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return Interval1CoefProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
+
+      .def(
+          "__repr__",
+          [](const Interval1CoefProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const Interval1CoefProxy& self) {
+            return Interval1CoefProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const Interval1CoefProxy& self, py::dict& memo) {
+            return Interval1CoefProxy(self);
+          })
+
+      ;
+
+  bind_FTypeArrayND<Interval1CoefProxyArray1D>(m, "Interval1CoefStructArray1D");
+  bind_FTypeAlloc1D<Interval1CoefProxyAlloc1D>(m, "Interval1CoefStructAlloc1D");
+  // 2D Interval1CoefProxy arrays are not used in structs/routines
+  // 3D Interval1CoefProxy arrays are not used in structs/routines
+}

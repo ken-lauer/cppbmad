@@ -1,17 +1,14 @@
-#pragma once
-
-#include <functional>
-
+#include "pybmad/generated/Tao_routines_c.hpp"
 #include <pybind11/complex.h>
 #include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include <pybind11/stl_bind.h>
-
-#include "bmad/routines.hpp"
 #include "pybmad/arrays.hpp"
+#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
+using namespace Pybmad;
 
-namespace Pybmad {} // namespace Pybmad
+// Wrappers
+
+void init_Tao_routines_c(py::module& m) {}

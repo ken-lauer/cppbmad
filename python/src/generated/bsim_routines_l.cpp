@@ -1,0 +1,48 @@
+#include "pybmad/generated/bsim_routines_l.hpp"
+#include <pybind11/complex.h>
+#include <pybind11/numpy.h>
+#include <pybind11/stl.h>
+#include "pybmad/arrays.hpp"
+#include "pybmad/util.hpp"
+
+namespace py = pybind11;
+using namespace pybind11::literals;
+using namespace Pybmad;
+
+// Wrappers
+struct PyLogicalToPython {
+  bool logic;
+  std::string string;
+};
+PyLogicalToPython python_logical_to_python(bool logic, std::string string) {
+  bsim::logical_to_python(logic, string);
+  auto py_result{PyLogicalToPython{logic, string}};
+  return py_result;
+}
+
+void init_bsim_routines_l(py::module& m) {
+  m.def(
+      "logical_to_python",
+      &python_logical_to_python,
+      py::arg("logic"),
+      py::arg("string"),
+      R"""(Parameters
+  ----------
+  logic : 
+  string : 
+  )""");
+  py::class_<PyLogicalToPython, std::unique_ptr<PyLogicalToPython>>(
+      m, "LogicalToPython", "Fortran routine logical_to_python return value")
+      .def_readonly("logic", &PyLogicalToPython::logic)
+      .def_readonly("string", &PyLogicalToPython::string)
+      .def("__len__", [](const PyLogicalToPython&) { return 2; })
+      .def("__getitem__", [](const PyLogicalToPython& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.logic);
+        if (i == 1)
+          return py::cast(s.string);
+        throw py::index_error();
+      });
+}
