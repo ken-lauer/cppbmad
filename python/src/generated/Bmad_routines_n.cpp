@@ -1,19 +1,9 @@
 #include "pybmad/generated/Bmad_routines_n.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyNormalFormComplexTaylors {
-  bool rf_on;
-  std::optional<int> order;
-};
 PyNormalFormComplexTaylors python_normal_form_complex_taylors(
     FixedArray1D<TaylorProxy, 6> one_turn_taylor,
     bool rf_on,
@@ -27,17 +17,11 @@ PyNormalFormComplexTaylors python_normal_form_complex_taylors(
   auto py_result{PyNormalFormComplexTaylors{rf_on, order}};
   return py_result;
 }
-struct PyNumFieldEles {
-  int n_field_ele;
-};
 PyNumFieldEles python_num_field_eles(EleProxy& ele, int n_field_ele) {
   Bmad::num_field_eles(ele, n_field_ele);
   auto py_result{PyNumFieldEles{n_field_ele}};
   return py_result;
 }
-struct PyNumLords {
-  int num;
-};
 PyNumLords python_num_lords(EleProxy& slave, int lord_type, int num) {
   Bmad::num_lords(slave, lord_type, num);
   auto py_result{PyNumLords{num}};
@@ -94,6 +78,26 @@ void init_Bmad_routines_n(py::module& m) {
   int_val : int
       Output nearest integer.
   )""");
+  py::class_<
+      PyNormalFormComplexTaylors,
+      std::unique_ptr<PyNormalFormComplexTaylors>>(
+      m,
+      "NormalFormComplexTaylors",
+      "Fortran routine normal_form_complex_taylors return value")
+      .def_readonly("rf_on", &PyNormalFormComplexTaylors::rf_on)
+      .def_readonly("order", &PyNormalFormComplexTaylors::order)
+      .def("__len__", [](const PyNormalFormComplexTaylors&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const PyNormalFormComplexTaylors& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.rf_on);
+            if (i == 1)
+              return py::cast(s.order);
+            throw py::index_error();
+          });
   m.def(
       "normal_form_complex_taylors",
       &python_normal_form_complex_taylors,
@@ -114,24 +118,25 @@ void init_Bmad_routines_n(py::module& m) {
   A_inverse : 
   order : 
   )""");
-  py::class_<
-      PyNormalFormComplexTaylors,
-      std::unique_ptr<PyNormalFormComplexTaylors>>(
+  py::class_<Bmad::NormalFormTaylors, std::unique_ptr<Bmad::NormalFormTaylors>>(
       m,
-      "NormalFormComplexTaylors",
-      "Fortran routine normal_form_complex_taylors return value")
-      .def_readonly("rf_on", &PyNormalFormComplexTaylors::rf_on)
-      .def_readonly("order", &PyNormalFormComplexTaylors::order)
-      .def("__len__", [](const PyNormalFormComplexTaylors&) { return 2; })
+      "NormalFormTaylors",
+      "Fortran routine normal_form_taylors return value")
+      .def_readonly("dhdj", &Bmad::NormalFormTaylors::dhdj)
+      .def_readonly("A", &Bmad::NormalFormTaylors::A)
+      .def_readonly("A_inverse", &Bmad::NormalFormTaylors::A_inverse)
+      .def("__len__", [](const Bmad::NormalFormTaylors&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyNormalFormComplexTaylors& s, int i) -> py::object {
+          [](const Bmad::NormalFormTaylors& s, int i) -> py::object {
             if (i < 0)
-              i += 2;
+              i += 3;
             if (i == 0)
-              return py::cast(s.rf_on);
+              return py::cast(s.dhdj);
             if (i == 1)
-              return py::cast(s.order);
+              return py::cast(s.A);
+            if (i == 2)
+              return py::cast(s.A_inverse);
             throw py::index_error();
           });
   m.def(
@@ -172,25 +177,23 @@ void init_Bmad_routines_n(py::module& m) {
   dhdj : TaylorStruct
       Map from Floquet coordinates to phase advances
   )""");
-  py::class_<Bmad::NormalFormTaylors, std::unique_ptr<Bmad::NormalFormTaylors>>(
-      m,
-      "NormalFormTaylors",
-      "Fortran routine normal_form_taylors return value")
-      .def_readonly("dhdj", &Bmad::NormalFormTaylors::dhdj)
-      .def_readonly("A", &Bmad::NormalFormTaylors::A)
-      .def_readonly("A_inverse", &Bmad::NormalFormTaylors::A_inverse)
-      .def("__len__", [](const Bmad::NormalFormTaylors&) { return 3; })
+  py::class_<Bmad::NormalMode3Calc, std::unique_ptr<Bmad::NormalMode3Calc>>(
+      m, "NormalMode3Calc", "Fortran routine normal_mode3_calc return value")
+      .def_readonly("tune", &Bmad::NormalMode3Calc::tune)
+      .def_readonly("B", &Bmad::NormalMode3Calc::B)
+      .def_readonly("HV", &Bmad::NormalMode3Calc::HV)
+      .def("__len__", [](const Bmad::NormalMode3Calc&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::NormalFormTaylors& s, int i) -> py::object {
+          [](const Bmad::NormalMode3Calc& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
-              return py::cast(s.dhdj);
+              return py::cast(s.tune);
             if (i == 1)
-              return py::cast(s.A);
+              return py::cast(s.B);
             if (i == 2)
-              return py::cast(s.A_inverse);
+              return py::cast(s.HV);
             throw py::index_error();
           });
   m.def(
@@ -226,25 +229,6 @@ void init_Bmad_routines_n(py::module& m) {
   HV : float
       Transforms from normal mode coordinates to canonical coordinates: x = H.V.a
   )""");
-  py::class_<Bmad::NormalMode3Calc, std::unique_ptr<Bmad::NormalMode3Calc>>(
-      m, "NormalMode3Calc", "Fortran routine normal_mode3_calc return value")
-      .def_readonly("tune", &Bmad::NormalMode3Calc::tune)
-      .def_readonly("B", &Bmad::NormalMode3Calc::B)
-      .def_readonly("HV", &Bmad::NormalMode3Calc::HV)
-      .def("__len__", [](const Bmad::NormalMode3Calc&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::NormalMode3Calc& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.tune);
-            if (i == 1)
-              return py::cast(s.B);
-            if (i == 2)
-              return py::cast(s.HV);
-            throw py::index_error();
-          });
   m.def(
       "normal_mode_dispersion",
       &Bmad::normal_mode_dispersion,
@@ -279,6 +263,17 @@ void init_Bmad_routines_n(py::module& m) {
   err_flag : bool
       Set true of normalization is not possible due to amplitude is zero.
   )""");
+  py::class_<PyNumFieldEles, std::unique_ptr<PyNumFieldEles>>(
+      m, "NumFieldEles", "Fortran routine num_field_eles return value")
+      .def_readonly("n_field_ele", &PyNumFieldEles::n_field_ele)
+      .def("__len__", [](const PyNumFieldEles&) { return 1; })
+      .def("__getitem__", [](const PyNumFieldEles& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.n_field_ele);
+        throw py::index_error();
+      });
   m.def(
       "num_field_eles",
       &python_num_field_eles,
@@ -290,15 +285,15 @@ void init_Bmad_routines_n(py::module& m) {
       Element with sum number of associated field elements.
   n_field_ele : 
   )""");
-  py::class_<PyNumFieldEles, std::unique_ptr<PyNumFieldEles>>(
-      m, "NumFieldEles", "Fortran routine num_field_eles return value")
-      .def_readonly("n_field_ele", &PyNumFieldEles::n_field_ele)
-      .def("__len__", [](const PyNumFieldEles&) { return 1; })
-      .def("__getitem__", [](const PyNumFieldEles& s, int i) -> py::object {
+  py::class_<PyNumLords, std::unique_ptr<PyNumLords>>(
+      m, "NumLords", "Fortran routine num_lords return value")
+      .def_readonly("num", &PyNumLords::num)
+      .def("__len__", [](const PyNumLords&) { return 1; })
+      .def("__getitem__", [](const PyNumLords& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
-          return py::cast(s.n_field_ele);
+          return py::cast(s.num);
         throw py::index_error();
       });
   m.def(
@@ -316,15 +311,4 @@ void init_Bmad_routines_n(py::module& m) {
       group + overlay + control + girder)
   num : 
   )""");
-  py::class_<PyNumLords, std::unique_ptr<PyNumLords>>(
-      m, "NumLords", "Fortran routine num_lords return value")
-      .def_readonly("num", &PyNumLords::num)
-      .def("__len__", [](const PyNumLords&) { return 1; })
-      .def("__getitem__", [](const PyNumLords& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.num);
-        throw py::index_error();
-      });
 }

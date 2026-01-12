@@ -1,19 +1,9 @@
 #include "pybmad/generated/Tao_routines_t.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyTaoAllocateDataArray {
-  int n_data;
-  std::optional<bool> exact;
-};
 PyTaoAllocateDataArray python_tao_allocate_data_array(
     TaoUniverseProxy& u,
     int n_data,
@@ -22,18 +12,11 @@ PyTaoAllocateDataArray python_tao_allocate_data_array(
   auto py_result{PyTaoAllocateDataArray{n_data, exact}};
   return py_result;
 }
-struct PyTaoAllocateV1Var {
-  int n_v1;
-  bool save_old;
-};
 PyTaoAllocateV1Var python_tao_allocate_v1_var(int n_v1, bool save_old) {
   Tao::tao_allocate_v1_var(n_v1, save_old);
   auto py_result{PyTaoAllocateV1Var{n_v1, save_old}};
   return py_result;
 }
-struct PyTaoAllocateVarArray {
-  bool default_good_user;
-};
 PyTaoAllocateVarArray python_tao_allocate_var_array(
     int n_var,
     bool default_good_user) {
@@ -41,9 +24,6 @@ PyTaoAllocateVarArray python_tao_allocate_var_array(
   auto py_result{PyTaoAllocateVarArray{default_good_user}};
   return py_result;
 }
-struct PyTaoBeamEmitCalc {
-  double emit;
-};
 PyTaoBeamEmitCalc python_tao_beam_emit_calc(
     int plane,
     int emit_type,
@@ -54,17 +34,11 @@ PyTaoBeamEmitCalc python_tao_beam_emit_calc(
   auto py_result{PyTaoBeamEmitCalc{emit}};
   return py_result;
 }
-struct PyTaoBranchIndex {
-  int ix_this;
-};
 PyTaoBranchIndex python_tao_branch_index(int ix_branch, int ix_this) {
   Tao::tao_branch_index(ix_branch, ix_this);
   auto py_result{PyTaoBranchIndex{ix_this}};
   return py_result;
 }
-struct PyTaoCalcDataAtSPts {
-  double comp_sign;
-};
 PyTaoCalcDataAtSPts python_tao_calc_data_at_s_pts(
     TaoLatticeProxy& tao_lat,
     TaoCurveProxy& curve,
@@ -74,11 +48,6 @@ PyTaoCalcDataAtSPts python_tao_calc_data_at_s_pts(
   auto py_result{PyTaoCalcDataAtSPts{comp_sign}};
   return py_result;
 }
-
-struct PyTaoChangeEle {
-  bool err_flag;
-  bool update;
-};
 PyTaoChangeEle python_tao_change_ele(
     std::string ele_name,
     std::string attrib_name,
@@ -88,11 +57,6 @@ PyTaoChangeEle python_tao_change_ele(
   auto py_result{PyTaoChangeEle{_result, update}};
   return py_result;
 }
-struct PyTaoChromCalcNeeded {
-  std::string data_type;
-  std::string data_source;
-  bool do_chrom;
-};
 PyTaoChromCalcNeeded python_tao_chrom_calc_needed(
     std::string data_type,
     std::string data_source,
@@ -101,10 +65,6 @@ PyTaoChromCalcNeeded python_tao_chrom_calc_needed(
   auto py_result{PyTaoChromCalcNeeded{data_type, data_source, do_chrom}};
   return py_result;
 }
-struct PyTaoClipCmd {
-  double value1;
-  double value2;
-};
 PyTaoClipCmd python_tao_clip_cmd(
     bool gang,
     std::string where,
@@ -114,27 +74,16 @@ PyTaoClipCmd python_tao_clip_cmd(
   auto py_result{PyTaoClipCmd{value1, value2}};
   return py_result;
 }
-struct PyTaoCmdHistoryRecord {
-  std::string cmd;
-};
 PyTaoCmdHistoryRecord python_tao_cmd_history_record(std::string cmd) {
   Tao::tao_cmd_history_record(cmd);
   auto py_result{PyTaoCmdHistoryRecord{cmd}};
   return py_result;
 }
-
-struct PyTaoCommand {
-  bool err_is_fatal;
-  bool err;
-};
 PyTaoCommand python_tao_command(std::string command_line, bool err) {
   auto _result = Tao::tao_command(command_line, err);
   auto py_result{PyTaoCommand{_result, err}};
   return py_result;
 }
-struct PyTaoConstraintTypeName {
-  std::string datum_name;
-};
 PyTaoConstraintTypeName python_tao_constraint_type_name(
     TaoDataProxy& datum,
     std::string datum_name) {
@@ -142,9 +91,6 @@ PyTaoConstraintTypeName python_tao_constraint_type_name(
   auto py_result{PyTaoConstraintTypeName{datum_name}};
   return py_result;
 }
-struct PyTaoCurveEleRef {
-  bool point_to_ele_ref;
-};
 PyTaoCurveEleRef python_tao_curve_ele_ref(
     TaoCurveProxy& curve,
     bool point_to_ele_ref,
@@ -153,17 +99,11 @@ PyTaoCurveEleRef python_tao_curve_ele_ref(
   auto py_result{PyTaoCurveEleRef{point_to_ele_ref}};
   return py_result;
 }
-struct PyTaoCurveIxUni {
-  int ix_uni;
-};
 PyTaoCurveIxUni python_tao_curve_ix_uni(TaoCurveProxy& curve, int ix_uni) {
   Tao::tao_curve_ix_uni(curve, ix_uni);
   auto py_result{PyTaoCurveIxUni{ix_uni}};
   return py_result;
 }
-struct PyTaoCurveName {
-  std::string curve_name;
-};
 PyTaoCurveName python_tao_curve_name(
     TaoCurveProxy& curve,
     std::optional<bool> use_region,
@@ -172,9 +112,6 @@ PyTaoCurveName python_tao_curve_name(
   auto py_result{PyTaoCurveName{curve_name}};
   return py_result;
 }
-struct PyTaoD2D1Name {
-  std::string d2_d1_name;
-};
 PyTaoD2D1Name python_tao_d2_d1_name(
     TaoD1DataProxy& d1,
     std::optional<bool> show_universe,
@@ -183,10 +120,6 @@ PyTaoD2D1Name python_tao_d2_d1_name(
   auto py_result{PyTaoD2D1Name{d2_d1_name}};
   return py_result;
 }
-struct PyTaoD2DataStuffit {
-  std::string d2_name;
-  int n_d1_data;
-};
 PyTaoD2DataStuffit python_tao_d2_data_stuffit(
     TaoUniverseProxy& u,
     std::string d2_name,
@@ -195,17 +128,11 @@ PyTaoD2DataStuffit python_tao_d2_data_stuffit(
   auto py_result{PyTaoD2DataStuffit{d2_name, n_d1_data}};
   return py_result;
 }
-struct PyTaoDataCheck {
-  bool err;
-};
 PyTaoDataCheck python_tao_data_check(bool err) {
   Tao::tao_data_check(err);
   auto py_result{PyTaoDataCheck{err}};
   return py_result;
 }
-struct PyTaoDataSanityCheck {
-  bool is_valid;
-};
 PyTaoDataSanityCheck python_tao_data_sanity_check(
     TaoDataProxy& datum,
     bool print_err,
@@ -217,9 +144,6 @@ PyTaoDataSanityCheck python_tao_data_sanity_check(
   auto py_result{PyTaoDataSanityCheck{is_valid}};
   return py_result;
 }
-struct PyTaoDatumHasAssociatedEle {
-  int has_associated_ele;
-};
 PyTaoDatumHasAssociatedEle python_tao_datum_has_associated_ele(
     std::string data_type,
     std::optional<int> branch_geometry,
@@ -229,9 +153,6 @@ PyTaoDatumHasAssociatedEle python_tao_datum_has_associated_ele(
   auto py_result{PyTaoDatumHasAssociatedEle{has_associated_ele}};
   return py_result;
 }
-struct PyTaoDatumName {
-  std::string datum_name;
-};
 PyTaoDatumName python_tao_datum_name(
     TaoDataProxy& datum,
     std::optional<bool> show_universe,
@@ -240,9 +161,6 @@ PyTaoDatumName python_tao_datum_name(
   auto py_result{PyTaoDatumName{datum_name}};
   return py_result;
 }
-struct PyTaoDrawCurveData {
-  bool have_data;
-};
 PyTaoDrawCurveData python_tao_draw_curve_data(
     TaoPlotProxy& plot,
     TaoGraphProxy& graph,
@@ -252,10 +170,6 @@ PyTaoDrawCurveData python_tao_draw_curve_data(
   auto py_result{PyTaoDrawCurveData{have_data}};
   return py_result;
 }
-struct PyTaoDrawEleForFloorPlan {
-  double offset1;
-  double offset2;
-};
 PyTaoDrawEleForFloorPlan python_tao_draw_ele_for_floor_plan(
     TaoPlotProxy& plot,
     TaoGraphProxy& graph,
@@ -270,9 +184,6 @@ PyTaoDrawEleForFloorPlan python_tao_draw_ele_for_floor_plan(
   auto py_result{PyTaoDrawEleForFloorPlan{offset1, offset2}};
   return py_result;
 }
-struct PyTaoDrawHistogramData {
-  bool have_data;
-};
 PyTaoDrawHistogramData python_tao_draw_histogram_data(
     TaoPlotProxy& plot,
     TaoGraphProxy& graph,
@@ -282,20 +193,6 @@ PyTaoDrawHistogramData python_tao_draw_histogram_data(
   auto py_result{PyTaoDrawHistogramData{have_data}};
   return py_result;
 }
-struct PyTaoEleShapeInfo : public Tao::TaoEleShapeInfo {
-  double y1;
-  double y2;
-  std::optional<int> ix_shape_min;
-  PyTaoEleShapeInfo(
-      Tao::TaoEleShapeInfo _base,
-      double y1,
-      double y2,
-      std::optional<int> ix_shape_min)
-      : Tao::TaoEleShapeInfo(std::move(_base)),
-        y1(y1),
-        y2(y2),
-        ix_shape_min(ix_shape_min) {}
-};
 PyTaoEleShapeInfo python_tao_ele_shape_info(
     int ix_uni,
     EleProxy& ele,
@@ -308,14 +205,6 @@ PyTaoEleShapeInfo python_tao_ele_shape_info(
   auto py_result{PyTaoEleShapeInfo{_result, y1, y2, ix_shape_min}};
   return py_result;
 }
-struct PyTaoEvaluateLatOrBeamData : public Tao::TaoEvaluateLatOrBeamData {
-  std::string default_source;
-  PyTaoEvaluateLatOrBeamData(
-      Tao::TaoEvaluateLatOrBeamData _base,
-      std::string default_source)
-      : Tao::TaoEvaluateLatOrBeamData(std::move(_base)),
-        default_source(default_source) {}
-};
 PyTaoEvaluateLatOrBeamData python_tao_evaluate_lat_or_beam_data(
     std::string data_name,
     bool print_err,
@@ -341,9 +230,6 @@ PyTaoEvaluateLatOrBeamData python_tao_evaluate_lat_or_beam_data(
   auto py_result{PyTaoEvaluateLatOrBeamData{_result, default_source}};
   return py_result;
 }
-struct PyTaoEvaluateTune {
-  double q_val;
-};
 PyTaoEvaluateTune python_tao_evaluate_tune(
     std::string q_str,
     double q0,
@@ -353,9 +239,6 @@ PyTaoEvaluateTune python_tao_evaluate_tune(
   auto py_result{PyTaoEvaluateTune{q_val}};
   return py_result;
 }
-struct PyTaoGraphName {
-  std::string graph_name;
-};
 PyTaoGraphName python_tao_graph_name(
     TaoGraphProxy& graph,
     std::optional<bool> use_region,
@@ -364,11 +247,6 @@ PyTaoGraphName python_tao_graph_name(
   auto py_result{PyTaoGraphName{graph_name}};
   return py_result;
 }
-struct PyTaoInitBeamInUniverse {
-  std::string track_start;
-  std::string track_end;
-  double comb_ds_save;
-};
 PyTaoInitBeamInUniverse python_tao_init_beam_in_universe(
     TaoUniverseProxy& u,
     BeamInitProxy& beam_init,
@@ -380,10 +258,6 @@ PyTaoInitBeamInUniverse python_tao_init_beam_in_universe(
   auto py_result{PyTaoInitBeamInUniverse{track_start, track_end, comb_ds_save}};
   return py_result;
 }
-struct PyTaoInitDataInUniverse {
-  int n_d2_add;
-  std::optional<bool> keep_existing_data;
-};
 PyTaoInitDataInUniverse python_tao_init_data_in_universe(
     TaoUniverseProxy& u,
     int n_d2_add,
@@ -392,26 +266,16 @@ PyTaoInitDataInUniverse python_tao_init_data_in_universe(
   auto py_result{PyTaoInitDataInUniverse{n_d2_add, keep_existing_data}};
   return py_result;
 }
-struct PyTaoInitLattice {
-  std::string lat_file;
-  bool err_flag;
-};
 PyTaoInitLattice python_tao_init_lattice(std::string lat_file, bool err_flag) {
   Tao::tao_init_lattice(lat_file, err_flag);
   auto py_result{PyTaoInitLattice{lat_file, err_flag}};
   return py_result;
 }
-struct PyTaoInitPlotting {
-  std::string plot_file;
-};
 PyTaoInitPlotting python_tao_init_plotting(std::string plot_file) {
   Tao::tao_init_plotting(plot_file);
   auto py_result{PyTaoInitPlotting{plot_file}};
   return py_result;
 }
-struct PyTaoInjectParticle {
-  int ix_branch;
-};
 PyTaoInjectParticle python_tao_inject_particle(
     TaoUniverseProxy& u,
     TaoLatticeProxy& model,
@@ -420,23 +284,11 @@ PyTaoInjectParticle python_tao_inject_particle(
   auto py_result{PyTaoInjectParticle{ix_branch}};
   return py_result;
 }
-
-struct PyTaoIsValidName {
-  std::string why_invalid;
-  bool is_valid;
-};
 PyTaoIsValidName python_tao_is_valid_name(std::string name, bool is_valid) {
   auto _result = Tao::tao_is_valid_name(name, is_valid);
   auto py_result{PyTaoIsValidName{_result, is_valid}};
   return py_result;
 }
-struct PyTaoKeyInfoToStr {
-  int ix_key;
-  int ix_min_key;
-  int ix_max_key;
-  std::string key_str;
-  std::string header_str;
-};
 PyTaoKeyInfoToStr python_tao_key_info_to_str(
     int ix_key,
     int ix_min_key,
@@ -448,9 +300,6 @@ PyTaoKeyInfoToStr python_tao_key_info_to_str(
       PyTaoKeyInfoToStr{ix_key, ix_min_key, ix_max_key, key_str, header_str}};
   return py_result;
 }
-struct PyTaoLatEmitCalc {
-  double emit;
-};
 PyTaoLatEmitCalc python_tao_lat_emit_calc(
     int plane,
     int emit_type,
@@ -461,11 +310,6 @@ PyTaoLatEmitCalc python_tao_lat_emit_calc(
   auto py_result{PyTaoLatEmitCalc{emit}};
   return py_result;
 }
-struct PyTaoLatSigmaCalcNeeded {
-  std::string data_type;
-  std::string data_source;
-  bool do_lat_sigma;
-};
 PyTaoLatSigmaCalcNeeded python_tao_lat_sigma_calc_needed(
     std::string data_type,
     std::string data_source,
@@ -474,11 +318,6 @@ PyTaoLatSigmaCalcNeeded python_tao_lat_sigma_calc_needed(
   auto py_result{PyTaoLatSigmaCalcNeeded{data_type, data_source, do_lat_sigma}};
   return py_result;
 }
-struct PyTaoLoadThisDatum {
-  double datum_value;
-  bool valid_value;
-  std::optional<std::string> why_invalid;
-};
 PyTaoLoadThisDatum python_tao_load_this_datum(
     RealAlloc1D& vec,
     EleProxy& ele_ref,
@@ -504,14 +343,6 @@ PyTaoLoadThisDatum python_tao_load_this_datum(
   auto py_result{PyTaoLoadThisDatum{datum_value, valid_value, why_invalid}};
   return py_result;
 }
-struct PyTaoLocateElements : public Tao::TaoLocateElements {
-  std::optional<bool> above_ubound_is_err;
-  PyTaoLocateElements(
-      Tao::TaoLocateElements _base,
-      std::optional<bool> above_ubound_is_err)
-      : Tao::TaoLocateElements(std::move(_base)),
-        above_ubound_is_err(above_ubound_is_err) {}
-};
 PyTaoLocateElements python_tao_locate_elements(
     std::string ele_list,
     int ix_universe,
@@ -533,31 +364,16 @@ PyTaoLocateElements python_tao_locate_elements(
   auto py_result{PyTaoLocateElements{_result, above_ubound_is_err}};
   return py_result;
 }
-
-struct PyTaoMerit {
-  bool calc_ok;
-  double this_merit;
-};
 PyTaoMerit python_tao_merit(double this_merit) {
   auto _result = Tao::tao_merit(this_merit);
   auto py_result{PyTaoMerit{_result, this_merit}};
   return py_result;
 }
-
-struct PyTaoNextWord {
-  std::string word;
-  std::string line;
-};
 PyTaoNextWord python_tao_next_word(std::string line) {
   auto _result = Tao::tao_next_word(line);
   auto py_result{PyTaoNextWord{_result, line}};
   return py_result;
 }
-struct PyTaoOneTurnMapCalcNeeded {
-  std::string data_type;
-  std::string data_source;
-  bool do_one_turn_map;
-};
 PyTaoOneTurnMapCalcNeeded python_tao_one_turn_map_calc_needed(
     std::string data_type,
     std::string data_source,
@@ -567,11 +383,6 @@ PyTaoOneTurnMapCalcNeeded python_tao_one_turn_map_calc_needed(
       PyTaoOneTurnMapCalcNeeded{data_type, data_source, do_one_turn_map}};
   return py_result;
 }
-
-struct PyTaoOpenFile {
-  int iunit;
-  std::string file;
-};
 PyTaoOpenFile python_tao_open_file(
     std::string file,
     std::string file_name,
@@ -581,19 +392,11 @@ PyTaoOpenFile python_tao_open_file(
   auto py_result{PyTaoOpenFile{_result, file}};
   return py_result;
 }
-
-struct PyTaoOpenScratchFile {
-  bool err;
-  int iu;
-};
 PyTaoOpenScratchFile python_tao_open_scratch_file(int iu) {
   auto _result = Tao::tao_open_scratch_file(iu);
   auto py_result{PyTaoOpenScratchFile{_result, iu}};
   return py_result;
 }
-struct PyTaoOptimizationStatus {
-  std::string why_str;
-};
 PyTaoOptimizationStatus python_tao_optimization_status(
     TaoDataProxy& datum,
     std::string why_str) {
@@ -601,17 +404,6 @@ PyTaoOptimizationStatus python_tao_optimization_status(
   auto py_result{PyTaoOptimizationStatus{why_str}};
   return py_result;
 }
-struct PyTaoParamValueAtS : public Tao::TaoParamValueAtS {
-  std::string dat_name;
-  double value;
-  PyTaoParamValueAtS(
-      Tao::TaoParamValueAtS _base,
-      std::string dat_name,
-      double value)
-      : Tao::TaoParamValueAtS(std::move(_base)),
-        dat_name(dat_name),
-        value(value) {}
-};
 PyTaoParamValueAtS python_tao_param_value_at_s(
     std::string dat_name,
     EleProxy& ele_to_s,
@@ -623,22 +415,12 @@ PyTaoParamValueAtS python_tao_param_value_at_s(
   auto py_result{PyTaoParamValueAtS{_result, dat_name, value}};
   return py_result;
 }
-
-struct PyTaoParseCommandArgs {
-  bool error;
-  std::optional<std::string> cmd_line;
-};
 PyTaoParseCommandArgs python_tao_parse_command_args(
     std::optional<std::string> cmd_line = std::nullopt) {
   auto _result = Tao::tao_parse_command_args(make_opt_ref(cmd_line));
   auto py_result{PyTaoParseCommandArgs{_result, cmd_line}};
   return py_result;
 }
-struct PyTaoPointerToDatumEle : public Tao::TaoPointerToDatumEle {
-  std::string ele_name;
-  PyTaoPointerToDatumEle(Tao::TaoPointerToDatumEle _base, std::string ele_name)
-      : Tao::TaoPointerToDatumEle(std::move(_base)), ele_name(ele_name) {}
-};
 PyTaoPointerToDatumEle python_tao_pointer_to_datum_ele(
     LatProxy& lat,
     std::string ele_name,
@@ -650,14 +432,6 @@ PyTaoPointerToDatumEle python_tao_pointer_to_datum_ele(
   auto py_result{PyTaoPointerToDatumEle{_result, ele_name}};
   return py_result;
 }
-struct PyTaoPointerToEleShape : public Tao::TaoPointerToEleShape {
-  std::optional<int> ix_shape_min;
-  PyTaoPointerToEleShape(
-      Tao::TaoPointerToEleShape _base,
-      std::optional<int> ix_shape_min)
-      : Tao::TaoPointerToEleShape(std::move(_base)),
-        ix_shape_min(ix_shape_min) {}
-};
 PyTaoPointerToEleShape python_tao_pointer_to_ele_shape(
     int ix_uni,
     EleProxy& ele,
@@ -669,11 +443,6 @@ PyTaoPointerToEleShape python_tao_pointer_to_ele_shape(
   auto py_result{PyTaoPointerToEleShape{_result, ix_shape_min}};
   return py_result;
 }
-
-struct PyTaoPointerToUniverseStr {
-  TaoUniverseProxy u;
-  std::string string;
-};
 PyTaoPointerToUniverseStr python_tao_pointer_to_universe_str(
     std::string string,
     std::optional<bool> neg2_to_default = std::nullopt) {
@@ -681,11 +450,6 @@ PyTaoPointerToUniverseStr python_tao_pointer_to_universe_str(
   auto py_result{PyTaoPointerToUniverseStr{_result, string}};
   return py_result;
 }
-struct PyTaoRadIntCalcNeeded {
-  std::string data_type;
-  std::string data_source;
-  bool do_rad_int;
-};
 PyTaoRadIntCalcNeeded python_tao_rad_int_calc_needed(
     std::string data_type,
     std::string data_source,
@@ -694,19 +458,11 @@ PyTaoRadIntCalcNeeded python_tao_rad_int_calc_needed(
   auto py_result{PyTaoRadIntCalcNeeded{data_type, data_source, do_rad_int}};
   return py_result;
 }
-struct PyTaoReExecute {
-  std::string string;
-  bool err;
-};
 PyTaoReExecute python_tao_re_execute(std::string string, bool err) {
   Tao::tao_re_execute(string, err);
   auto py_result{PyTaoReExecute{string, err}};
   return py_result;
 }
-struct PyTaoReadCmd {
-  std::string which;
-  std::string file;
-};
 PyTaoReadCmd python_tao_read_cmd(
     std::string which,
     std::string unis,
@@ -716,9 +472,6 @@ PyTaoReadCmd python_tao_read_cmd(
   auto py_result{PyTaoReadCmd{which, file}};
   return py_result;
 }
-struct PyTaoReadPhaseSpaceIndex {
-  int ix_ps;
-};
 PyTaoReadPhaseSpaceIndex python_tao_read_phase_space_index(
     std::string name,
     int ixc,
@@ -728,26 +481,17 @@ PyTaoReadPhaseSpaceIndex python_tao_read_phase_space_index(
   auto py_result{PyTaoReadPhaseSpaceIndex{ix_ps}};
   return py_result;
 }
-struct PyTaoRemoveBlankCharacters {
-  std::string str;
-};
 PyTaoRemoveBlankCharacters python_tao_remove_blank_characters(std::string str) {
   Tao::tao_remove_blank_characters(str);
   auto py_result{PyTaoRemoveBlankCharacters{str}};
   return py_result;
 }
-struct PyTaoSetCalculateCmd {
-  std::optional<std::string> switch_;
-};
 PyTaoSetCalculateCmd python_tao_set_calculate_cmd(
     std::optional<std::string> switch_ = std::nullopt) {
   Tao::tao_set_calculate_cmd(make_opt_ref(switch_));
   auto py_result{PyTaoSetCalculateCmd{switch_}};
   return py_result;
 }
-struct PyTaoSetDataCmd {
-  std::optional<bool> silent;
-};
 PyTaoSetDataCmd python_tao_set_data_cmd(
     std::string who_str,
     std::string value_str,
@@ -756,9 +500,6 @@ PyTaoSetDataCmd python_tao_set_data_cmd(
   auto py_result{PyTaoSetDataCmd{silent}};
   return py_result;
 }
-struct PyTaoSetElementsCmd {
-  bool update;
-};
 PyTaoSetElementsCmd python_tao_set_elements_cmd(
     std::string ele_list,
     std::string attribute,
@@ -768,9 +509,6 @@ PyTaoSetElementsCmd python_tao_set_elements_cmd(
   auto py_result{PyTaoSetElementsCmd{update}};
   return py_result;
 }
-struct PyTaoSetFloorPlanAxisLabel {
-  std::string which;
-};
 PyTaoSetFloorPlanAxisLabel python_tao_set_floor_plan_axis_label(
     TaoGraphProxy& graph,
     QpAxisProxy& axis_in,
@@ -780,11 +518,6 @@ PyTaoSetFloorPlanAxisLabel python_tao_set_floor_plan_axis_label(
   auto py_result{PyTaoSetFloorPlanAxisLabel{which}};
   return py_result;
 }
-struct PyTaoSpinMatricesCalcNeeded {
-  std::string data_type;
-  std::string data_source;
-  bool do_calc;
-};
 PyTaoSpinMatricesCalcNeeded python_tao_spin_matrices_calc_needed(
     std::string data_type,
     std::string data_source,
@@ -793,11 +526,6 @@ PyTaoSpinMatricesCalcNeeded python_tao_spin_matrices_calc_needed(
   auto py_result{PyTaoSpinMatricesCalcNeeded{data_type, data_source, do_calc}};
   return py_result;
 }
-struct PyTaoSrdtCalcNeeded {
-  std::string data_type;
-  std::string data_source;
-  int do_srdt;
-};
 PyTaoSrdtCalcNeeded python_tao_srdt_calc_needed(
     std::string data_type,
     std::string data_source,
@@ -806,11 +534,6 @@ PyTaoSrdtCalcNeeded python_tao_srdt_calc_needed(
   auto py_result{PyTaoSrdtCalcNeeded{data_type, data_source, do_srdt}};
   return py_result;
 }
-
-struct PyTaoSubinUniNumber {
-  std::string name_out;
-  bool ok;
-};
 PyTaoSubinUniNumber python_tao_subin_uni_number(
     std::string name_in,
     int ix_uni,
@@ -819,12 +542,6 @@ PyTaoSubinUniNumber python_tao_subin_uni_number(
   auto py_result{PyTaoSubinUniNumber{_result, ok}};
   return py_result;
 }
-struct PyTaoToChangeNumber {
-  std::string num_str;
-  int n_size;
-  std::string abs_or_rel;
-  bool err;
-};
 PyTaoToChangeNumber python_tao_to_change_number(
     std::string num_str,
     int n_size,
@@ -835,25 +552,11 @@ PyTaoToChangeNumber python_tao_to_change_number(
   auto py_result{PyTaoToChangeNumber{num_str, n_size, abs_or_rel, err}};
   return py_result;
 }
-struct PyTaoToInt {
-  std::string str;
-  int i_int;
-  bool err;
-};
 PyTaoToInt python_tao_to_int(std::string str, int i_int, bool err) {
   Tao::tao_to_int(str, i_int, err);
   auto py_result{PyTaoToInt{str, i_int, err}};
   return py_result;
 }
-struct PyTaoToPhaseAndCouplingReading
-    : public Tao::TaoToPhaseAndCouplingReading {
-  std::string why_invalid;
-  PyTaoToPhaseAndCouplingReading(
-      Tao::TaoToPhaseAndCouplingReading _base,
-      std::string why_invalid)
-      : Tao::TaoToPhaseAndCouplingReading(std::move(_base)),
-        why_invalid(why_invalid) {}
-};
 PyTaoToPhaseAndCouplingReading python_tao_to_phase_and_coupling_reading(
     EleProxy& ele,
     std::string why_invalid,
@@ -863,9 +566,6 @@ PyTaoToPhaseAndCouplingReading python_tao_to_phase_and_coupling_reading(
   auto py_result{PyTaoToPhaseAndCouplingReading{_result, why_invalid}};
   return py_result;
 }
-struct PyTaoTooManyParticlesLost {
-  bool no_beam;
-};
 PyTaoTooManyParticlesLost python_tao_too_many_particles_lost(
     BeamProxy& beam,
     bool no_beam) {
@@ -873,9 +573,6 @@ PyTaoTooManyParticlesLost python_tao_too_many_particles_lost(
   auto py_result{PyTaoTooManyParticlesLost{no_beam}};
   return py_result;
 }
-struct PyTaoUniverseIndex {
-  int i_this_uni;
-};
 PyTaoUniverseIndex python_tao_universe_index(
     int i_uni,
     std::optional<bool> neg2_to_default,
@@ -884,17 +581,11 @@ PyTaoUniverseIndex python_tao_universe_index(
   auto py_result{PyTaoUniverseIndex{i_this_uni}};
   return py_result;
 }
-struct PyTaoVar1Name {
-  std::string var1_name;
-};
 PyTaoVar1Name python_tao_var1_name(TaoVarProxy& var, std::string var1_name) {
   Tao::tao_var1_name(var, var1_name);
   auto py_result{PyTaoVar1Name{var1_name}};
   return py_result;
 }
-struct PyTaoVarAttribName {
-  std::string var_attrib_name;
-};
 PyTaoVarAttribName python_tao_var_attrib_name(
     TaoVarProxy& var,
     std::string var_attrib_name) {
@@ -902,9 +593,6 @@ PyTaoVarAttribName python_tao_var_attrib_name(
   auto py_result{PyTaoVarAttribName{var_attrib_name}};
   return py_result;
 }
-struct PyTaoWaveCmd {
-  bool err_flag;
-};
 PyTaoWaveCmd python_tao_wave_cmd(
     std::string curve_name,
     std::string plot_place,
@@ -913,12 +601,6 @@ PyTaoWaveCmd python_tao_wave_cmd(
   auto py_result{PyTaoWaveCmd{err_flag}};
   return py_result;
 }
-struct PyTaoXScaleGraph {
-  double x_min;
-  double x_max;
-  std::optional<bool> include_wall;
-  std::optional<bool> have_scaled;
-};
 PyTaoXScaleGraph python_tao_x_scale_graph(
     TaoGraphProxy& graph,
     double x_min,
@@ -977,18 +659,6 @@ void init_Tao_routines_t(py::module& m) {
   string : 
       Command file arguments.
   )""");
-  m.def(
-      "tao_allocate_data_array",
-      &python_tao_allocate_data_array,
-      py::arg("u"),
-      py::arg("n_data"),
-      py::arg("exact") = py::none(),
-      R"""(Parameters
-  ----------
-  u : 
-  n_data : 
-  exact : 
-  )""");
   py::class_<PyTaoAllocateDataArray, std::unique_ptr<PyTaoAllocateDataArray>>(
       m,
       "TaoAllocateDataArray",
@@ -1008,14 +678,16 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "tao_allocate_v1_var",
-      &python_tao_allocate_v1_var,
-      py::arg("n_v1"),
-      py::arg("save_old"),
+      "tao_allocate_data_array",
+      &python_tao_allocate_data_array,
+      py::arg("u"),
+      py::arg("n_data"),
+      py::arg("exact") = py::none(),
       R"""(Parameters
   ----------
-  n_v1 : 
-  save_old : 
+  u : 
+  n_data : 
+  exact : 
   )""");
   py::class_<PyTaoAllocateV1Var, std::unique_ptr<PyTaoAllocateV1Var>>(
       m, "TaoAllocateV1Var", "Fortran routine tao_allocate_v1_var return value")
@@ -1032,18 +704,14 @@ void init_Tao_routines_t(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "tao_allocate_var_array",
-      &python_tao_allocate_var_array,
-      py::arg("n_var"),
-      py::arg("default_good_user"),
-      R"""(Subroutine tao_allocate_var_array (n_var, default_good_user)
-
-  Routine to increase the s%var(:) array size.
-
-  Parameters
+      "tao_allocate_v1_var",
+      &python_tao_allocate_v1_var,
+      py::arg("n_v1"),
+      py::arg("save_old"),
+      R"""(Parameters
   ----------
-  n_var : int
-      Size of s.var(:) wanted.
+  n_v1 : 
+  save_old : 
   )""");
   py::class_<PyTaoAllocateVarArray, std::unique_ptr<PyTaoAllocateVarArray>>(
       m,
@@ -1061,6 +729,31 @@ void init_Tao_routines_t(py::module& m) {
               return py::cast(s.default_good_user);
             throw py::index_error();
           });
+  m.def(
+      "tao_allocate_var_array",
+      &python_tao_allocate_var_array,
+      py::arg("n_var"),
+      py::arg("default_good_user"),
+      R"""(Subroutine tao_allocate_var_array (n_var, default_good_user)
+
+  Routine to increase the s%var(:) array size.
+
+  Parameters
+  ----------
+  n_var : int
+      Size of s.var(:) wanted.
+  )""");
+  py::class_<PyTaoBeamEmitCalc, std::unique_ptr<PyTaoBeamEmitCalc>>(
+      m, "TaoBeamEmitCalc", "Fortran routine tao_beam_emit_calc return value")
+      .def_readonly("emit", &PyTaoBeamEmitCalc::emit)
+      .def("__len__", [](const PyTaoBeamEmitCalc&) { return 1; })
+      .def("__getitem__", [](const PyTaoBeamEmitCalc& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.emit);
+        throw py::index_error();
+      });
   m.def(
       "tao_beam_emit_calc",
       &python_tao_beam_emit_calc,
@@ -1081,17 +774,6 @@ void init_Tao_routines_t(py::module& m) {
       Bunch sigma matrix
   emit : 
   )""");
-  py::class_<PyTaoBeamEmitCalc, std::unique_ptr<PyTaoBeamEmitCalc>>(
-      m, "TaoBeamEmitCalc", "Fortran routine tao_beam_emit_calc return value")
-      .def_readonly("emit", &PyTaoBeamEmitCalc::emit)
-      .def("__len__", [](const PyTaoBeamEmitCalc&) { return 1; })
-      .def("__getitem__", [](const PyTaoBeamEmitCalc& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.emit);
-        throw py::index_error();
-      });
   m.def(
       "tao_beam_track",
       &Tao::tao_beam_track,
@@ -1143,17 +825,6 @@ void init_Tao_routines_t(py::module& m) {
       Universe beam is being tracked in.
   ele : 
   )""");
-  m.def(
-      "tao_branch_index",
-      &python_tao_branch_index,
-      py::arg("ix_branch"),
-      py::arg("ix_this"),
-      R"""(Parameters
-  ----------
-  ix_branch : int
-      Nominal branch number.
-  ix_this : 
-  )""");
   py::class_<PyTaoBranchIndex, std::unique_ptr<PyTaoBranchIndex>>(
       m, "TaoBranchIndex", "Fortran routine tao_branch_index return value")
       .def_readonly("ix_this", &PyTaoBranchIndex::ix_this)
@@ -1166,26 +837,23 @@ void init_Tao_routines_t(py::module& m) {
         throw py::index_error();
       });
   m.def(
+      "tao_branch_index",
+      &python_tao_branch_index,
+      py::arg("ix_branch"),
+      py::arg("ix_this"),
+      R"""(Parameters
+  ----------
+  ix_branch : int
+      Nominal branch number.
+  ix_this : 
+  )""");
+  m.def(
       "tao_c_out_io_buffer_reset",
       &Tao::tao_c_out_io_buffer_reset,
       R"""(Subroutine tao_c_out_io_buffer_reset() bind(c)
 
   Routine to reset the buffer.
 
-  )""");
-  m.def(
-      "tao_calc_data_at_s_pts",
-      &python_tao_calc_data_at_s_pts,
-      py::arg("tao_lat"),
-      py::arg("curve"),
-      py::arg("comp_sign"),
-      py::arg("good"),
-      R"""(Parameters
-  ----------
-  tao_lat : 
-  curve : 
-  comp_sign : 
-  good : 
   )""");
   py::class_<PyTaoCalcDataAtSPts, std::unique_ptr<PyTaoCalcDataAtSPts>>(
       m,
@@ -1202,6 +870,20 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "tao_calc_data_at_s_pts",
+      &python_tao_calc_data_at_s_pts,
+      py::arg("tao_lat"),
+      py::arg("curve"),
+      py::arg("comp_sign"),
+      py::arg("good"),
+      R"""(Parameters
+  ----------
+  tao_lat : 
+  curve : 
+  comp_sign : 
+  good : 
+  )""");
+  m.def(
       "tao_cbar_wave_anal",
       &Tao::tao_cbar_wave_anal,
       py::arg("plot"),
@@ -1209,6 +891,20 @@ void init_Tao_routines_t(py::module& m) {
 
 
   )""");
+  py::class_<PyTaoChangeEle, std::unique_ptr<PyTaoChangeEle>>(
+      m, "TaoChangeEle", "Fortran routine tao_change_ele return value")
+      .def_readonly("err_flag", &PyTaoChangeEle::err_flag)
+      .def_readonly("update", &PyTaoChangeEle::update)
+      .def("__len__", [](const PyTaoChangeEle&) { return 2; })
+      .def("__getitem__", [](const PyTaoChangeEle& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.update);
+        throw py::index_error();
+      });
   m.def(
       "tao_change_ele",
       &python_tao_change_ele,
@@ -1235,20 +931,6 @@ void init_Tao_routines_t(py::module& m) {
       logical, Set true if there is an error, false otherwise. s%u(s%global%default_universe)%model -- model
       lattice where the variable lives.
   )""");
-  py::class_<PyTaoChangeEle, std::unique_ptr<PyTaoChangeEle>>(
-      m, "TaoChangeEle", "Fortran routine tao_change_ele return value")
-      .def_readonly("err_flag", &PyTaoChangeEle::err_flag)
-      .def_readonly("update", &PyTaoChangeEle::update)
-      .def("__len__", [](const PyTaoChangeEle&) { return 2; })
-      .def("__getitem__", [](const PyTaoChangeEle& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.err_flag);
-        if (i == 1)
-          return py::cast(s.update);
-        throw py::index_error();
-      });
   m.def(
       "tao_change_tune",
       &Tao::tao_change_tune,
@@ -1321,18 +1003,6 @@ void init_Tao_routines_t(py::module& m) {
   err_flag : 
       logical, Set true if there is an error, false otherwise.
   )""");
-  m.def(
-      "tao_chrom_calc_needed",
-      &python_tao_chrom_calc_needed,
-      py::arg("data_type"),
-      py::arg("data_source"),
-      py::arg("do_chrom"),
-      R"""(Parameters
-  ----------
-  data_type : 
-  data_source : 
-  do_chrom : 
-  )""");
   py::class_<PyTaoChromCalcNeeded, std::unique_ptr<PyTaoChromCalcNeeded>>(
       m,
       "TaoChromCalcNeeded",
@@ -1355,6 +1025,18 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "tao_chrom_calc_needed",
+      &python_tao_chrom_calc_needed,
+      py::arg("data_type"),
+      py::arg("data_source"),
+      py::arg("do_chrom"),
+      R"""(Parameters
+  ----------
+  data_type : 
+  data_source : 
+  do_chrom : 
+  )""");
+  m.def(
       "tao_clear_cmd",
       &Tao::tao_clear_cmd,
       py::arg("cmd_line"),
@@ -1363,6 +1045,20 @@ void init_Tao_routines_t(py::module& m) {
   cmd_line : unknown
       Should be set to 'maps'.
   )""");
+  py::class_<PyTaoClipCmd, std::unique_ptr<PyTaoClipCmd>>(
+      m, "TaoClipCmd", "Fortran routine tao_clip_cmd return value")
+      .def_readonly("value1", &PyTaoClipCmd::value1)
+      .def_readonly("value2", &PyTaoClipCmd::value2)
+      .def("__len__", [](const PyTaoClipCmd&) { return 2; })
+      .def("__getitem__", [](const PyTaoClipCmd& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.value1);
+        if (i == 1)
+          return py::cast(s.value2);
+        throw py::index_error();
+      });
   m.def(
       "tao_clip_cmd",
       &python_tao_clip_cmd,
@@ -1379,30 +1075,7 @@ void init_Tao_routines_t(py::module& m) {
   value1 : 
   value2 : 
   )""");
-  py::class_<PyTaoClipCmd, std::unique_ptr<PyTaoClipCmd>>(
-      m, "TaoClipCmd", "Fortran routine tao_clip_cmd return value")
-      .def_readonly("value1", &PyTaoClipCmd::value1)
-      .def_readonly("value2", &PyTaoClipCmd::value2)
-      .def("__len__", [](const PyTaoClipCmd&) { return 2; })
-      .def("__getitem__", [](const PyTaoClipCmd& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.value1);
-        if (i == 1)
-          return py::cast(s.value2);
-        throw py::index_error();
-      });
   m.def("tao_close_command_file", &Tao::tao_close_command_file, R"""()""");
-  m.def(
-      "tao_cmd_history_record",
-      &python_tao_cmd_history_record,
-      py::arg("cmd"),
-      R"""(Subroutine tao_cmd_history_record (cmd)
-
-  Subroutine to record a cmd in the command history stack
-
-  )""");
   py::class_<PyTaoCmdHistoryRecord, std::unique_ptr<PyTaoCmdHistoryRecord>>(
       m,
       "TaoCmdHistoryRecord",
@@ -1419,17 +1092,13 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "tao_command",
-      &python_tao_command,
-      py::arg("command_line"),
-      py::arg("err"),
-      R"""(Parameters
-  ----------
-  command_line : unknown
-      command line
-  err : 
-  err_is_fatal : bool
-      Set True on non-recoverable error. False otherwise
+      "tao_cmd_history_record",
+      &python_tao_cmd_history_record,
+      py::arg("cmd"),
+      R"""(Subroutine tao_cmd_history_record (cmd)
+
+  Subroutine to record a cmd in the command history stack
+
   )""");
   py::class_<PyTaoCommand, std::unique_ptr<PyTaoCommand>>(
       m, "TaoCommand", "Fortran routine tao_command return value")
@@ -1446,15 +1115,17 @@ void init_Tao_routines_t(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "tao_constraint_type_name",
-      &python_tao_constraint_type_name,
-      py::arg("datum"),
-      py::arg("datum_name"),
+      "tao_command",
+      &python_tao_command,
+      py::arg("command_line"),
+      py::arg("err"),
       R"""(Parameters
   ----------
-  datum : TaoDataStruct
-      Datum
-  datum_name : 
+  command_line : unknown
+      command line
+  err : 
+  err_is_fatal : bool
+      Set True on non-recoverable error. False otherwise
   )""");
   py::class_<PyTaoConstraintTypeName, std::unique_ptr<PyTaoConstraintTypeName>>(
       m,
@@ -1471,6 +1142,17 @@ void init_Tao_routines_t(py::module& m) {
               return py::cast(s.datum_name);
             throw py::index_error();
           });
+  m.def(
+      "tao_constraint_type_name",
+      &python_tao_constraint_type_name,
+      py::arg("datum"),
+      py::arg("datum_name"),
+      R"""(Parameters
+  ----------
+  datum : TaoDataStruct
+      Datum
+  datum_name : 
+  )""");
   m.def(
       "tao_control_tree_list",
       &Tao::tao_control_tree_list,
@@ -1572,6 +1254,17 @@ void init_Tao_routines_t(py::module& m) {
   who : unknown
       Where to put the data. Either: "SYMBOL" or "LINE".
   )""");
+  py::class_<PyTaoCurveEleRef, std::unique_ptr<PyTaoCurveEleRef>>(
+      m, "TaoCurveEleRef", "Fortran routine tao_curve_ele_ref return value")
+      .def_readonly("point_to_ele_ref", &PyTaoCurveEleRef::point_to_ele_ref)
+      .def("__len__", [](const PyTaoCurveEleRef&) { return 1; })
+      .def("__getitem__", [](const PyTaoCurveEleRef& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.point_to_ele_ref);
+        throw py::index_error();
+      });
   m.def(
       "tao_curve_ele_ref",
       &python_tao_curve_ele_ref,
@@ -1585,15 +1278,15 @@ void init_Tao_routines_t(py::module& m) {
   point_to_ele_ref : 
   ele_track : 
   )""");
-  py::class_<PyTaoCurveEleRef, std::unique_ptr<PyTaoCurveEleRef>>(
-      m, "TaoCurveEleRef", "Fortran routine tao_curve_ele_ref return value")
-      .def_readonly("point_to_ele_ref", &PyTaoCurveEleRef::point_to_ele_ref)
-      .def("__len__", [](const PyTaoCurveEleRef&) { return 1; })
-      .def("__getitem__", [](const PyTaoCurveEleRef& s, int i) -> py::object {
+  py::class_<PyTaoCurveIxUni, std::unique_ptr<PyTaoCurveIxUni>>(
+      m, "TaoCurveIxUni", "Fortran routine tao_curve_ix_uni return value")
+      .def_readonly("ix_uni", &PyTaoCurveIxUni::ix_uni)
+      .def("__len__", [](const PyTaoCurveIxUni&) { return 1; })
+      .def("__getitem__", [](const PyTaoCurveIxUni& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
-          return py::cast(s.point_to_ele_ref);
+          return py::cast(s.ix_uni);
         throw py::index_error();
       });
   m.def(
@@ -1607,15 +1300,15 @@ void init_Tao_routines_t(py::module& m) {
       Curve.
   ix_uni : 
   )""");
-  py::class_<PyTaoCurveIxUni, std::unique_ptr<PyTaoCurveIxUni>>(
-      m, "TaoCurveIxUni", "Fortran routine tao_curve_ix_uni return value")
-      .def_readonly("ix_uni", &PyTaoCurveIxUni::ix_uni)
-      .def("__len__", [](const PyTaoCurveIxUni&) { return 1; })
-      .def("__getitem__", [](const PyTaoCurveIxUni& s, int i) -> py::object {
+  py::class_<PyTaoCurveName, std::unique_ptr<PyTaoCurveName>>(
+      m, "TaoCurveName", "Fortran routine tao_curve_name return value")
+      .def_readonly("curve_name", &PyTaoCurveName::curve_name)
+      .def("__len__", [](const PyTaoCurveName&) { return 1; })
+      .def("__getitem__", [](const PyTaoCurveName& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
-          return py::cast(s.ix_uni);
+          return py::cast(s.curve_name);
         throw py::index_error();
       });
   m.def(
@@ -1632,33 +1325,6 @@ void init_Tao_routines_t(py::module& m) {
       If present and True then use the region name instead of the plot name. Region name is 'NULL_REGION' if
       there is no assocaited region.
   curve_name : 
-  )""");
-  py::class_<PyTaoCurveName, std::unique_ptr<PyTaoCurveName>>(
-      m, "TaoCurveName", "Fortran routine tao_curve_name return value")
-      .def_readonly("curve_name", &PyTaoCurveName::curve_name)
-      .def("__len__", [](const PyTaoCurveName&) { return 1; })
-      .def("__getitem__", [](const PyTaoCurveName& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.curve_name);
-        throw py::index_error();
-      });
-  m.def(
-      "tao_curve_rms_calc",
-      &Tao::tao_curve_rms_calc,
-      py::arg("curve"),
-      py::arg("who"),
-      R"""(Parameters
-  ----------
-  curve : TaoCurveStruct
-      Curve to analyze.
-  who : unknown
-      "LINE" or "SYMBOL".
-  rms : float
-      RMS. -1 => Curve has no data.
-  mean : float
-      Mean.
   )""");
   py::class_<Tao::TaoCurveRmsCalc, std::unique_ptr<Tao::TaoCurveRmsCalc>>(
       m, "TaoCurveRmsCalc", "Fortran routine tao_curve_rms_calc return value")
@@ -1677,18 +1343,20 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "tao_d2_d1_name",
-      &python_tao_d2_d1_name,
-      py::arg("d1"),
-      py::arg("show_universe") = py::none(),
-      py::arg("d2_d1_name"),
+      "tao_curve_rms_calc",
+      &Tao::tao_curve_rms_calc,
+      py::arg("curve"),
+      py::arg("who"),
       R"""(Parameters
   ----------
-  d1 : TaoD1DataStruct
-      Data array.
-  show_universe : bool, optional
-      Show the datum's universe. Default is True.
-  d2_d1_name : 
+  curve : TaoCurveStruct
+      Curve to analyze.
+  who : unknown
+      "LINE" or "SYMBOL".
+  rms : float
+      RMS. -1 => Curve has no data.
+  mean : float
+      Mean.
   )""");
   py::class_<PyTaoD2D1Name, std::unique_ptr<PyTaoD2D1Name>>(
       m, "TaoD2D1Name", "Fortran routine tao_d2_d1_name return value")
@@ -1702,16 +1370,18 @@ void init_Tao_routines_t(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "tao_d2_data_stuffit",
-      &python_tao_d2_data_stuffit,
-      py::arg("u"),
-      py::arg("d2_name"),
-      py::arg("n_d1_data"),
+      "tao_d2_d1_name",
+      &python_tao_d2_d1_name,
+      py::arg("d1"),
+      py::arg("show_universe") = py::none(),
+      py::arg("d2_d1_name"),
       R"""(Parameters
   ----------
-  u : 
-  d2_name : 
-  n_d1_data : 
+  d1 : TaoD1DataStruct
+      Data array.
+  show_universe : bool, optional
+      Show the datum's universe. Default is True.
+  d2_d1_name : 
   )""");
   py::class_<PyTaoD2DataStuffit, std::unique_ptr<PyTaoD2DataStuffit>>(
       m, "TaoD2DataStuffit", "Fortran routine tao_d2_data_stuffit return value")
@@ -1728,12 +1398,16 @@ void init_Tao_routines_t(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "tao_data_check",
-      &python_tao_data_check,
-      py::arg("err"),
+      "tao_d2_data_stuffit",
+      &python_tao_d2_data_stuffit,
+      py::arg("u"),
+      py::arg("d2_name"),
+      py::arg("n_d1_data"),
       R"""(Parameters
   ----------
-  err : 
+  u : 
+  d2_name : 
+  n_d1_data : 
   )""");
   py::class_<PyTaoDataCheck, std::unique_ptr<PyTaoDataCheck>>(
       m, "TaoDataCheck", "Fortran routine tao_data_check return value")
@@ -1747,6 +1421,14 @@ void init_Tao_routines_t(py::module& m) {
         throw py::index_error();
       });
   m.def(
+      "tao_data_check",
+      &python_tao_data_check,
+      py::arg("err"),
+      R"""(Parameters
+  ----------
+  err : 
+  )""");
+  m.def(
       "tao_data_coupling_init",
       &Tao::tao_data_coupling_init,
       py::arg("branch"),
@@ -1755,6 +1437,21 @@ void init_Tao_routines_t(py::module& m) {
   branch : BranchStruct
       New lattice branch.
   )""");
+  py::class_<PyTaoDataSanityCheck, std::unique_ptr<PyTaoDataSanityCheck>>(
+      m,
+      "TaoDataSanityCheck",
+      "Fortran routine tao_data_sanity_check return value")
+      .def_readonly("is_valid", &PyTaoDataSanityCheck::is_valid)
+      .def("__len__", [](const PyTaoDataSanityCheck&) { return 1; })
+      .def(
+          "__getitem__",
+          [](const PyTaoDataSanityCheck& s, int i) -> py::object {
+            if (i < 0)
+              i += 1;
+            if (i == 0)
+              return py::cast(s.is_valid);
+            throw py::index_error();
+          });
   m.def(
       "tao_data_sanity_check",
       &python_tao_data_sanity_check,
@@ -1775,21 +1472,6 @@ void init_Tao_routines_t(py::module& m) {
       Universe to use instead of datum.d1.d2.ix_universe
   is_valid : 
   )""");
-  py::class_<PyTaoDataSanityCheck, std::unique_ptr<PyTaoDataSanityCheck>>(
-      m,
-      "TaoDataSanityCheck",
-      "Fortran routine tao_data_sanity_check return value")
-      .def_readonly("is_valid", &PyTaoDataSanityCheck::is_valid)
-      .def("__len__", [](const PyTaoDataSanityCheck&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyTaoDataSanityCheck& s, int i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_valid);
-            throw py::index_error();
-          });
   m.def(
       "tao_data_type_substitute",
       &Tao::tao_data_type_substitute,
@@ -1817,6 +1499,26 @@ void init_Tao_routines_t(py::module& m) {
   str_out : unknown
       String with substitutions.
   )""");
+  py::class_<
+      Tao::TaoDataUseitPlotCalc,
+      std::unique_ptr<Tao::TaoDataUseitPlotCalc>>(
+      m,
+      "TaoDataUseitPlotCalc",
+      "Fortran routine tao_data_useit_plot_calc return value")
+      .def_readonly("data", &Tao::TaoDataUseitPlotCalc::data)
+      .def_readonly("most_invalid", &Tao::TaoDataUseitPlotCalc::most_invalid)
+      .def("__len__", [](const Tao::TaoDataUseitPlotCalc&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Tao::TaoDataUseitPlotCalc& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.data);
+            if (i == 1)
+              return py::cast(s.most_invalid);
+            throw py::index_error();
+          });
   m.def(
       "tao_data_useit_plot_calc",
       &Tao::tao_data_useit_plot_calc,
@@ -1844,23 +1546,21 @@ void init_Tao_routines_t(py::module& m) {
       String documenting biggest invalid data problem.
   )""");
   py::class_<
-      Tao::TaoDataUseitPlotCalc,
-      std::unique_ptr<Tao::TaoDataUseitPlotCalc>>(
+      PyTaoDatumHasAssociatedEle,
+      std::unique_ptr<PyTaoDatumHasAssociatedEle>>(
       m,
-      "TaoDataUseitPlotCalc",
-      "Fortran routine tao_data_useit_plot_calc return value")
-      .def_readonly("data", &Tao::TaoDataUseitPlotCalc::data)
-      .def_readonly("most_invalid", &Tao::TaoDataUseitPlotCalc::most_invalid)
-      .def("__len__", [](const Tao::TaoDataUseitPlotCalc&) { return 2; })
+      "TaoDatumHasAssociatedEle",
+      "Fortran routine tao_datum_has_associated_ele return value")
+      .def_readonly(
+          "has_associated_ele", &PyTaoDatumHasAssociatedEle::has_associated_ele)
+      .def("__len__", [](const PyTaoDatumHasAssociatedEle&) { return 1; })
       .def(
           "__getitem__",
-          [](const Tao::TaoDataUseitPlotCalc& s, int i) -> py::object {
+          [](const PyTaoDatumHasAssociatedEle& s, int i) -> py::object {
             if (i < 0)
-              i += 2;
+              i += 1;
             if (i == 0)
-              return py::cast(s.data);
-            if (i == 1)
-              return py::cast(s.most_invalid);
+              return py::cast(s.has_associated_ele);
             throw py::index_error();
           });
   m.def(
@@ -1877,22 +1577,25 @@ void init_Tao_routines_t(py::module& m) {
       Geometry of the associated lattice branch. open$ or closed$.
   has_associated_ele : 
   )""");
-  py::class_<
-      PyTaoDatumHasAssociatedEle,
-      std::unique_ptr<PyTaoDatumHasAssociatedEle>>(
+  py::class_<Tao::TaoDatumIntegrate, std::unique_ptr<Tao::TaoDatumIntegrate>>(
       m,
-      "TaoDatumHasAssociatedEle",
-      "Fortran routine tao_datum_has_associated_ele return value")
-      .def_readonly(
-          "has_associated_ele", &PyTaoDatumHasAssociatedEle::has_associated_ele)
-      .def("__len__", [](const PyTaoDatumHasAssociatedEle&) { return 1; })
+      "TaoDatumIntegrate",
+      "Fortran routine tao_datum_integrate return value")
+      .def_readonly("valid_value", &Tao::TaoDatumIntegrate::valid_value)
+      .def_readonly("why_invalid", &Tao::TaoDatumIntegrate::why_invalid)
+      .def_readonly("result", &Tao::TaoDatumIntegrate::result)
+      .def("__len__", [](const Tao::TaoDatumIntegrate&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyTaoDatumHasAssociatedEle& s, int i) -> py::object {
+          [](const Tao::TaoDatumIntegrate& s, int i) -> py::object {
             if (i < 0)
-              i += 1;
+              i += 3;
             if (i == 0)
-              return py::cast(s.has_associated_ele);
+              return py::cast(s.valid_value);
+            if (i == 1)
+              return py::cast(s.why_invalid);
+            if (i == 2)
+              return py::cast(s.result);
             throw py::index_error();
           });
   m.def(
@@ -1926,27 +1629,17 @@ void init_Tao_routines_t(py::module& m) {
   result : float
       Integral, rms, or average depending upon datum.merit_type.
   )""");
-  py::class_<Tao::TaoDatumIntegrate, std::unique_ptr<Tao::TaoDatumIntegrate>>(
-      m,
-      "TaoDatumIntegrate",
-      "Fortran routine tao_datum_integrate return value")
-      .def_readonly("valid_value", &Tao::TaoDatumIntegrate::valid_value)
-      .def_readonly("why_invalid", &Tao::TaoDatumIntegrate::why_invalid)
-      .def_readonly("result", &Tao::TaoDatumIntegrate::result)
-      .def("__len__", [](const Tao::TaoDatumIntegrate&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Tao::TaoDatumIntegrate& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.valid_value);
-            if (i == 1)
-              return py::cast(s.why_invalid);
-            if (i == 2)
-              return py::cast(s.result);
-            throw py::index_error();
-          });
+  py::class_<PyTaoDatumName, std::unique_ptr<PyTaoDatumName>>(
+      m, "TaoDatumName", "Fortran routine tao_datum_name return value")
+      .def_readonly("datum_name", &PyTaoDatumName::datum_name)
+      .def("__len__", [](const PyTaoDatumName&) { return 1; })
+      .def("__getitem__", [](const PyTaoDatumName& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.datum_name);
+        throw py::index_error();
+      });
   m.def(
       "tao_datum_name",
       &python_tao_datum_name,
@@ -1961,17 +1654,6 @@ void init_Tao_routines_t(py::module& m) {
       Show the datum's universe. Default is True.
   datum_name : 
   )""");
-  py::class_<PyTaoDatumName, std::unique_ptr<PyTaoDatumName>>(
-      m, "TaoDatumName", "Fortran routine tao_datum_name return value")
-      .def_readonly("datum_name", &PyTaoDatumName::datum_name)
-      .def("__len__", [](const PyTaoDatumName&) { return 1; })
-      .def("__getitem__", [](const PyTaoDatumName& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.datum_name);
-        throw py::index_error();
-      });
   m.def(
       "tao_datum_s_position",
       &Tao::tao_datum_s_position,
@@ -2088,6 +1770,17 @@ void init_Tao_routines_t(py::module& m) {
   graph : TaoGraphStruct
       Graph to plot.
   )""");
+  py::class_<PyTaoDrawCurveData, std::unique_ptr<PyTaoDrawCurveData>>(
+      m, "TaoDrawCurveData", "Fortran routine tao_draw_curve_data return value")
+      .def_readonly("have_data", &PyTaoDrawCurveData::have_data)
+      .def("__len__", [](const PyTaoDrawCurveData&) { return 1; })
+      .def("__getitem__", [](const PyTaoDrawCurveData& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.have_data);
+        throw py::index_error();
+      });
   m.def(
       "tao_draw_curve_data",
       &python_tao_draw_curve_data,
@@ -2112,17 +1805,26 @@ void init_Tao_routines_t(py::module& m) {
       This parameter is an input/output and is modified in-place. As an output: Is there any data to plot? Set
       True if so.
   )""");
-  py::class_<PyTaoDrawCurveData, std::unique_ptr<PyTaoDrawCurveData>>(
-      m, "TaoDrawCurveData", "Fortran routine tao_draw_curve_data return value")
-      .def_readonly("have_data", &PyTaoDrawCurveData::have_data)
-      .def("__len__", [](const PyTaoDrawCurveData&) { return 1; })
-      .def("__getitem__", [](const PyTaoDrawCurveData& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.have_data);
-        throw py::index_error();
-      });
+  py::class_<
+      PyTaoDrawEleForFloorPlan,
+      std::unique_ptr<PyTaoDrawEleForFloorPlan>>(
+      m,
+      "TaoDrawEleForFloorPlan",
+      "Fortran routine tao_draw_ele_for_floor_plan return value")
+      .def_readonly("offset1", &PyTaoDrawEleForFloorPlan::offset1)
+      .def_readonly("offset2", &PyTaoDrawEleForFloorPlan::offset2)
+      .def("__len__", [](const PyTaoDrawEleForFloorPlan&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const PyTaoDrawEleForFloorPlan& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.offset1);
+            if (i == 1)
+              return py::cast(s.offset2);
+            throw py::index_error();
+          });
   m.def(
       "tao_draw_ele_for_floor_plan",
       &python_tao_draw_ele_for_floor_plan,
@@ -2155,26 +1857,6 @@ void init_Tao_routines_t(py::module& m) {
       Shape label. offset1, offset2  -- real(rp): Transverse distances used to scale the drawing of the element
       shape.
   )""");
-  py::class_<
-      PyTaoDrawEleForFloorPlan,
-      std::unique_ptr<PyTaoDrawEleForFloorPlan>>(
-      m,
-      "TaoDrawEleForFloorPlan",
-      "Fortran routine tao_draw_ele_for_floor_plan return value")
-      .def_readonly("offset1", &PyTaoDrawEleForFloorPlan::offset1)
-      .def_readonly("offset2", &PyTaoDrawEleForFloorPlan::offset2)
-      .def("__len__", [](const PyTaoDrawEleForFloorPlan&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyTaoDrawEleForFloorPlan& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.offset1);
-            if (i == 1)
-              return py::cast(s.offset2);
-            throw py::index_error();
-          });
   m.def(
       "tao_draw_floor_plan",
       &Tao::tao_draw_floor_plan,
@@ -2208,6 +1890,21 @@ void init_Tao_routines_t(py::module& m) {
   graph : TaoGraphStruct
       Graph to plot.
   )""");
+  py::class_<PyTaoDrawHistogramData, std::unique_ptr<PyTaoDrawHistogramData>>(
+      m,
+      "TaoDrawHistogramData",
+      "Fortran routine tao_draw_histogram_data return value")
+      .def_readonly("have_data", &PyTaoDrawHistogramData::have_data)
+      .def("__len__", [](const PyTaoDrawHistogramData&) { return 1; })
+      .def(
+          "__getitem__",
+          [](const PyTaoDrawHistogramData& s, int i) -> py::object {
+            if (i < 0)
+              i += 1;
+            if (i == 0)
+              return py::cast(s.have_data);
+            throw py::index_error();
+          });
   m.def(
       "tao_draw_histogram_data",
       &python_tao_draw_histogram_data,
@@ -2232,21 +1929,6 @@ void init_Tao_routines_t(py::module& m) {
       This parameter is an input/output and is modified in-place. As an output: Is there any data to plot? Set
       True if so.
   )""");
-  py::class_<PyTaoDrawHistogramData, std::unique_ptr<PyTaoDrawHistogramData>>(
-      m,
-      "TaoDrawHistogramData",
-      "Fortran routine tao_draw_histogram_data return value")
-      .def_readonly("have_data", &PyTaoDrawHistogramData::have_data)
-      .def("__len__", [](const PyTaoDrawHistogramData&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyTaoDrawHistogramData& s, int i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.have_data);
-            throw py::index_error();
-          });
   m.def(
       "tao_draw_lat_layout",
       &Tao::tao_draw_lat_layout,
@@ -2275,32 +1957,6 @@ void init_Tao_routines_t(py::module& m) {
   ----------
   do_clear : bool, optional
       If present and False then call qp_clear_page. This argument is used when drawing PS or GIF.
-  )""");
-  m.def(
-      "tao_ele_geometry_with_misalignments",
-      &Tao::tao_ele_geometry_with_misalignments,
-      py::arg("datum"),
-      py::arg("ele"),
-      R"""(Function tao_ele_geometry_with_misalignments (datum, ele, valid_value, why_invalid) result (value)
-
-  Routine to evaluate a floor position with misalignments at a given element.
-  This routine is private and not for general use.
-
-  Parameters
-  ----------
-  datum : unknown
-      Datum info
-  ele : EleStruct
-      Lattice element to evaluate at.
-
-  Returns
-  -------
-  valid_value : bool
-      Was able to evalute the datum?
-  why_invalid : unknown
-      If not valid, why not.
-  value : float
-      Datum value.
   )""");
   py::class_<
       Tao::TaoEleGeometryWithMisalignments,
@@ -2331,6 +1987,55 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "tao_ele_geometry_with_misalignments",
+      &Tao::tao_ele_geometry_with_misalignments,
+      py::arg("datum"),
+      py::arg("ele"),
+      R"""(Function tao_ele_geometry_with_misalignments (datum, ele, valid_value, why_invalid) result (value)
+
+  Routine to evaluate a floor position with misalignments at a given element.
+  This routine is private and not for general use.
+
+  Parameters
+  ----------
+  datum : unknown
+      Datum info
+  ele : EleStruct
+      Lattice element to evaluate at.
+
+  Returns
+  -------
+  valid_value : bool
+      Was able to evalute the datum?
+  why_invalid : unknown
+      If not valid, why not.
+  value : float
+      Datum value.
+  )""");
+  py::class_<PyTaoEleShapeInfo, std::unique_ptr<PyTaoEleShapeInfo>>(
+      m, "TaoEleShapeInfo", "Fortran routine tao_ele_shape_info return value")
+      .def_readonly("e_shape", &PyTaoEleShapeInfo::e_shape)
+      .def_readonly("label_name", &PyTaoEleShapeInfo::label_name)
+      .def_readonly("y1", &PyTaoEleShapeInfo::y1)
+      .def_readonly("y2", &PyTaoEleShapeInfo::y2)
+      .def_readonly("ix_shape_min", &PyTaoEleShapeInfo::ix_shape_min)
+      .def("__len__", [](const PyTaoEleShapeInfo&) { return 5; })
+      .def("__getitem__", [](const PyTaoEleShapeInfo& s, int i) -> py::object {
+        if (i < 0)
+          i += 5;
+        if (i == 0)
+          return py::cast(s.e_shape);
+        if (i == 1)
+          return py::cast(s.label_name);
+        if (i == 2)
+          return py::cast(s.y1);
+        if (i == 3)
+          return py::cast(s.y2);
+        if (i == 4)
+          return py::cast(s.ix_shape_min);
+        throw py::index_error();
+      });
+  m.def(
       "tao_ele_shape_info",
       &python_tao_ele_shape_info,
       py::arg("ix_uni"),
@@ -2357,29 +2062,27 @@ void init_Tao_routines_t(py::module& m) {
       Index of minimum ele_shape(:) index to start search from. Default is 1.
       This parameter is an input/output and is modified in-place. As an output: Ele_shape(
   )""");
-  py::class_<PyTaoEleShapeInfo, std::unique_ptr<PyTaoEleShapeInfo>>(
-      m, "TaoEleShapeInfo", "Fortran routine tao_ele_shape_info return value")
-      .def_readonly("e_shape", &PyTaoEleShapeInfo::e_shape)
-      .def_readonly("label_name", &PyTaoEleShapeInfo::label_name)
-      .def_readonly("y1", &PyTaoEleShapeInfo::y1)
-      .def_readonly("y2", &PyTaoEleShapeInfo::y2)
-      .def_readonly("ix_shape_min", &PyTaoEleShapeInfo::ix_shape_min)
-      .def("__len__", [](const PyTaoEleShapeInfo&) { return 5; })
-      .def("__getitem__", [](const PyTaoEleShapeInfo& s, int i) -> py::object {
-        if (i < 0)
-          i += 5;
-        if (i == 0)
-          return py::cast(s.e_shape);
-        if (i == 1)
-          return py::cast(s.label_name);
-        if (i == 2)
-          return py::cast(s.y1);
-        if (i == 3)
-          return py::cast(s.y2);
-        if (i == 4)
-          return py::cast(s.ix_shape_min);
-        throw py::index_error();
-      });
+  py::class_<Tao::TaoEvalFloorOrbit, std::unique_ptr<Tao::TaoEvalFloorOrbit>>(
+      m,
+      "TaoEvalFloorOrbit",
+      "Fortran routine tao_eval_floor_orbit return value")
+      .def_readonly("valid_value", &Tao::TaoEvalFloorOrbit::valid_value)
+      .def_readonly("why_invalid", &Tao::TaoEvalFloorOrbit::why_invalid)
+      .def_readonly("value", &Tao::TaoEvalFloorOrbit::value)
+      .def("__len__", [](const Tao::TaoEvalFloorOrbit&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const Tao::TaoEvalFloorOrbit& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.valid_value);
+            if (i == 1)
+              return py::cast(s.why_invalid);
+            if (i == 2)
+              return py::cast(s.value);
+            throw py::index_error();
+          });
   m.def(
       "tao_eval_floor_orbit",
       &Tao::tao_eval_floor_orbit,
@@ -2412,25 +2115,25 @@ void init_Tao_routines_t(py::module& m) {
   value : float
       Datum value.
   )""");
-  py::class_<Tao::TaoEvalFloorOrbit, std::unique_ptr<Tao::TaoEvalFloorOrbit>>(
+  py::class_<Tao::TaoEvaluateADatum, std::unique_ptr<Tao::TaoEvaluateADatum>>(
       m,
-      "TaoEvalFloorOrbit",
-      "Fortran routine tao_eval_floor_orbit return value")
-      .def_readonly("valid_value", &Tao::TaoEvalFloorOrbit::valid_value)
-      .def_readonly("why_invalid", &Tao::TaoEvalFloorOrbit::why_invalid)
-      .def_readonly("value", &Tao::TaoEvalFloorOrbit::value)
-      .def("__len__", [](const Tao::TaoEvalFloorOrbit&) { return 3; })
+      "TaoEvaluateADatum",
+      "Fortran routine tao_evaluate_a_datum return value")
+      .def_readonly("datum_value", &Tao::TaoEvaluateADatum::datum_value)
+      .def_readonly("valid_value", &Tao::TaoEvaluateADatum::valid_value)
+      .def_readonly("why_invalid", &Tao::TaoEvaluateADatum::why_invalid)
+      .def("__len__", [](const Tao::TaoEvaluateADatum&) { return 3; })
       .def(
           "__getitem__",
-          [](const Tao::TaoEvalFloorOrbit& s, int i) -> py::object {
+          [](const Tao::TaoEvaluateADatum& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
-              return py::cast(s.valid_value);
+              return py::cast(s.datum_value);
             if (i == 1)
-              return py::cast(s.why_invalid);
+              return py::cast(s.valid_value);
             if (i == 2)
-              return py::cast(s.value);
+              return py::cast(s.why_invalid);
             throw py::index_error();
           });
   m.def(
@@ -2461,25 +2164,27 @@ void init_Tao_routines_t(py::module& m) {
   print_err : bool, optional
       Default is True. If False, do not print an error message.
   )""");
-  py::class_<Tao::TaoEvaluateADatum, std::unique_ptr<Tao::TaoEvaluateADatum>>(
+  py::class_<
+      Tao::TaoEvaluateDatumAtS,
+      std::unique_ptr<Tao::TaoEvaluateDatumAtS>>(
       m,
-      "TaoEvaluateADatum",
-      "Fortran routine tao_evaluate_a_datum return value")
-      .def_readonly("datum_value", &Tao::TaoEvaluateADatum::datum_value)
-      .def_readonly("valid_value", &Tao::TaoEvaluateADatum::valid_value)
-      .def_readonly("why_invalid", &Tao::TaoEvaluateADatum::why_invalid)
-      .def("__len__", [](const Tao::TaoEvaluateADatum&) { return 3; })
+      "TaoEvaluateDatumAtS",
+      "Fortran routine tao_evaluate_datum_at_s return value")
+      .def_readonly("err_str", &Tao::TaoEvaluateDatumAtS::err_str)
+      .def_readonly("bad_datum", &Tao::TaoEvaluateDatumAtS::bad_datum)
+      .def_readonly("value", &Tao::TaoEvaluateDatumAtS::value)
+      .def("__len__", [](const Tao::TaoEvaluateDatumAtS&) { return 3; })
       .def(
           "__getitem__",
-          [](const Tao::TaoEvaluateADatum& s, int i) -> py::object {
+          [](const Tao::TaoEvaluateDatumAtS& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
-              return py::cast(s.datum_value);
+              return py::cast(s.err_str);
             if (i == 1)
-              return py::cast(s.valid_value);
+              return py::cast(s.bad_datum);
             if (i == 2)
-              return py::cast(s.why_invalid);
+              return py::cast(s.value);
             throw py::index_error();
           });
   m.def(
@@ -2517,26 +2222,27 @@ void init_Tao_routines_t(py::module& m) {
       Datum value.
   )""");
   py::class_<
-      Tao::TaoEvaluateDatumAtS,
-      std::unique_ptr<Tao::TaoEvaluateDatumAtS>>(
+      PyTaoEvaluateLatOrBeamData,
+      std::unique_ptr<PyTaoEvaluateLatOrBeamData>>(
       m,
-      "TaoEvaluateDatumAtS",
-      "Fortran routine tao_evaluate_datum_at_s return value")
-      .def_readonly("err_str", &Tao::TaoEvaluateDatumAtS::err_str)
-      .def_readonly("bad_datum", &Tao::TaoEvaluateDatumAtS::bad_datum)
-      .def_readonly("value", &Tao::TaoEvaluateDatumAtS::value)
-      .def("__len__", [](const Tao::TaoEvaluateDatumAtS&) { return 3; })
+      "TaoEvaluateLatOrBeamData",
+      "Fortran routine tao_evaluate_lat_or_beam_data return value")
+      .def_readonly("err", &PyTaoEvaluateLatOrBeamData::err)
+      .def_readonly("values", &PyTaoEvaluateLatOrBeamData::values)
+      .def_readonly(
+          "default_source", &PyTaoEvaluateLatOrBeamData::default_source)
+      .def("__len__", [](const PyTaoEvaluateLatOrBeamData&) { return 3; })
       .def(
           "__getitem__",
-          [](const Tao::TaoEvaluateDatumAtS& s, int i) -> py::object {
+          [](const PyTaoEvaluateLatOrBeamData& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
-              return py::cast(s.err_str);
+              return py::cast(s.err);
             if (i == 1)
-              return py::cast(s.bad_datum);
+              return py::cast(s.values);
             if (i == 2)
-              return py::cast(s.value);
+              return py::cast(s.default_source);
             throw py::index_error();
           });
   m.def(
@@ -2594,30 +2300,17 @@ void init_Tao_routines_t(py::module& m) {
   values : float
       Array of datum valuse.
   )""");
-  py::class_<
-      PyTaoEvaluateLatOrBeamData,
-      std::unique_ptr<PyTaoEvaluateLatOrBeamData>>(
-      m,
-      "TaoEvaluateLatOrBeamData",
-      "Fortran routine tao_evaluate_lat_or_beam_data return value")
-      .def_readonly("err", &PyTaoEvaluateLatOrBeamData::err)
-      .def_readonly("values", &PyTaoEvaluateLatOrBeamData::values)
-      .def_readonly(
-          "default_source", &PyTaoEvaluateLatOrBeamData::default_source)
-      .def("__len__", [](const PyTaoEvaluateLatOrBeamData&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PyTaoEvaluateLatOrBeamData& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.err);
-            if (i == 1)
-              return py::cast(s.values);
-            if (i == 2)
-              return py::cast(s.default_source);
-            throw py::index_error();
-          });
+  py::class_<PyTaoEvaluateTune, std::unique_ptr<PyTaoEvaluateTune>>(
+      m, "TaoEvaluateTune", "Fortran routine tao_evaluate_tune return value")
+      .def_readonly("q_val", &PyTaoEvaluateTune::q_val)
+      .def("__len__", [](const PyTaoEvaluateTune&) { return 1; })
+      .def("__getitem__", [](const PyTaoEvaluateTune& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.q_val);
+        throw py::index_error();
+      });
   m.def(
       "tao_evaluate_tune",
       &python_tao_evaluate_tune,
@@ -2635,17 +2328,6 @@ void init_Tao_routines_t(py::module& m) {
       If true then qa_str and qb_str are deltas from present tune. Outut:
   q_val : 
   )""");
-  py::class_<PyTaoEvaluateTune, std::unique_ptr<PyTaoEvaluateTune>>(
-      m, "TaoEvaluateTune", "Fortran routine tao_evaluate_tune return value")
-      .def_readonly("q_val", &PyTaoEvaluateTune::q_val)
-      .def("__len__", [](const PyTaoEvaluateTune&) { return 1; })
-      .def("__getitem__", [](const PyTaoEvaluateTune& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.q_val);
-        throw py::index_error();
-      });
   m.def(
       "tao_expression_hash_substitute",
       &Tao::tao_expression_hash_substitute,
@@ -2673,22 +2355,6 @@ void init_Tao_routines_t(py::module& m) {
   expression_out : unknown
       Expression with substitutions made.
   )""");
-  m.def(
-      "tao_find_plot_region",
-      &Tao::tao_find_plot_region,
-      py::arg("where"),
-      py::arg("print_flag") = py::none(),
-      R"""(Parameters
-  ----------
-  err : bool
-      Set True on error. False otherwise.
-  where : unknown
-      Region name.
-  region : TaoPlotRegionStruct
-      Region found.
-  print_flag : bool, optional
-      If present and False then surpress error messages. Default is True.
-  )""");
   py::class_<Tao::TaoFindPlotRegion, std::unique_ptr<Tao::TaoFindPlotRegion>>(
       m,
       "TaoFindPlotRegion",
@@ -2708,6 +2374,22 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "tao_find_plot_region",
+      &Tao::tao_find_plot_region,
+      py::arg("where"),
+      py::arg("print_flag") = py::none(),
+      R"""(Parameters
+  ----------
+  err : bool
+      Set True on error. False otherwise.
+  where : unknown
+      Region name.
+  region : TaoPlotRegionStruct
+      Region found.
+  print_flag : bool, optional
+      If present and False then surpress error messages. Default is True.
+  )""");
+  m.def(
       "tao_fixer",
       &Tao::tao_fixer,
       py::arg("switch_"),
@@ -2721,21 +2403,6 @@ void init_Tao_routines_t(py::module& m) {
       First word of command.
   word2 : unknown
       Secton word of command.
-  )""");
-  m.def(
-      "tao_floor_to_screen",
-      &Tao::tao_floor_to_screen,
-      py::arg("graph"),
-      py::arg("r_floor"),
-      R"""(Parameters
-  ----------
-  graph : TaoGraphStruct
-      Graph defining the projection plane.
-  r_floor : 
-  x_screen : float
-      x-coordinate of projected point.
-  y_screen : float
-      y-coordinate of projected point.
   )""");
   py::class_<Tao::TaoFloorToScreen, std::unique_ptr<Tao::TaoFloorToScreen>>(
       m, "TaoFloorToScreen", "Fortran routine tao_floor_to_screen return value")
@@ -2753,6 +2420,21 @@ void init_Tao_routines_t(py::module& m) {
               return py::cast(s.y_screen);
             throw py::index_error();
           });
+  m.def(
+      "tao_floor_to_screen",
+      &Tao::tao_floor_to_screen,
+      py::arg("graph"),
+      py::arg("r_floor"),
+      R"""(Parameters
+  ----------
+  graph : TaoGraphStruct
+      Graph defining the projection plane.
+  r_floor : 
+  x_screen : float
+      x-coordinate of projected point.
+  y_screen : float
+      y-coordinate of projected point.
+  )""");
   m.def(
       "tao_floor_to_screen_coords",
       &Tao::tao_floor_to_screen_coords,
@@ -2785,26 +2467,6 @@ void init_Tao_routines_t(py::module& m) {
   abort : bool
       Set True if an user stop signal detected.
   )""");
-  m.def(
-      "tao_get_data",
-      &Tao::tao_get_data,
-      R"""(Subroutine tao_get_data (data_value, data_weight, data_meas_value, dat_ix_dModel)
-
-  Subroutine to get the values of the data used in optimization and put them
-  in an array. The data is ordered starting with the first universe
-
-
-  Returns
-  -------
-  data_value : float
-      Data model values.
-  data_weight : float
-      Data weights in the merit function.
-  data_meas_value : float
-      Data values when the data was taken.
-  data_ix_dModel : int
-      Data ix_dModel indices
-  )""");
   py::class_<Tao::TaoGetData, std::unique_ptr<Tao::TaoGetData>>(
       m, "TaoGetData", "Fortran routine tao_get_data return value")
       .def_readonly("data_value", &Tao::TaoGetData::data_value)
@@ -2826,24 +2488,24 @@ void init_Tao_routines_t(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "tao_get_opt_vars",
-      &Tao::tao_get_opt_vars,
-      R"""(Parameters
-  ----------
-  var_value : float
-      Variable model values.
-  var_step : float
-      Variable step sizes.
-  var_delta : float
-      Variable Merit deltas.
-  var_weight : float
-      Variable weights in the merit function.
-  var_ix : int
-      Variable s.var(:) indexes
-  ignore_if_weight_is_zero : bool
-      If present and True then ignore all variables whose merit weight is zero.
-  ignore_if_not_limited : bool
-      If present and True then ignore all variables with limit constraint that are not limited.
+      "tao_get_data",
+      &Tao::tao_get_data,
+      R"""(Subroutine tao_get_data (data_value, data_weight, data_meas_value, dat_ix_dModel)
+
+  Subroutine to get the values of the data used in optimization and put them
+  in an array. The data is ordered starting with the first universe
+
+
+  Returns
+  -------
+  data_value : float
+      Data model values.
+  data_weight : float
+      Data weights in the merit function.
+  data_meas_value : float
+      Data values when the data was taken.
+  data_ix_dModel : int
+      Data ix_dModel indices
   )""");
   py::class_<Tao::TaoGetOptVars, std::unique_ptr<Tao::TaoGetOptVars>>(
       m, "TaoGetOptVars", "Fortran routine tao_get_opt_vars return value")
@@ -2877,6 +2539,26 @@ void init_Tao_routines_t(py::module& m) {
           return py::cast(s.ignore_if_not_limited);
         throw py::index_error();
       });
+  m.def(
+      "tao_get_opt_vars",
+      &Tao::tao_get_opt_vars,
+      R"""(Parameters
+  ----------
+  var_value : float
+      Variable model values.
+  var_step : float
+      Variable step sizes.
+  var_delta : float
+      Variable Merit deltas.
+  var_weight : float
+      Variable weights in the merit function.
+  var_ix : int
+      Variable s.var(:) indexes
+  ignore_if_weight_is_zero : bool
+      If present and True then ignore all variables whose merit weight is zero.
+  ignore_if_not_limited : bool
+      If present and True then ignore all variables with limit constraint that are not limited.
+  )""");
   m.def(
       "tao_get_user_input",
       &Tao::tao_get_user_input,
@@ -2962,6 +2644,17 @@ void init_Tao_routines_t(py::module& m) {
   plot : 
   graph : 
   )""");
+  py::class_<PyTaoGraphName, std::unique_ptr<PyTaoGraphName>>(
+      m, "TaoGraphName", "Fortran routine tao_graph_name return value")
+      .def_readonly("graph_name", &PyTaoGraphName::graph_name)
+      .def("__len__", [](const PyTaoGraphName&) { return 1; })
+      .def("__getitem__", [](const PyTaoGraphName& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.graph_name);
+        throw py::index_error();
+      });
   m.def(
       "tao_graph_name",
       &python_tao_graph_name,
@@ -2977,17 +2670,6 @@ void init_Tao_routines_t(py::module& m) {
       there is no assocaited region.
   graph_name : 
   )""");
-  py::class_<PyTaoGraphName, std::unique_ptr<PyTaoGraphName>>(
-      m, "TaoGraphName", "Fortran routine tao_graph_name return value")
-      .def_readonly("graph_name", &PyTaoGraphName::graph_name)
-      .def("__len__", [](const PyTaoGraphName&) { return 1; })
-      .def("__getitem__", [](const PyTaoGraphName& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.graph_name);
-        throw py::index_error();
-      });
   m.def(
       "tao_graph_phase_space_setup",
       &Tao::tao_graph_phase_space_setup,
@@ -2998,6 +2680,26 @@ void init_Tao_routines_t(py::module& m) {
   plot : 
   graph : 
   )""");
+  py::class_<
+      Tao::TaoGraphSMinMaxCalc,
+      std::unique_ptr<Tao::TaoGraphSMinMaxCalc>>(
+      m,
+      "TaoGraphSMinMaxCalc",
+      "Fortran routine tao_graph_s_min_max_calc return value")
+      .def_readonly("s_min", &Tao::TaoGraphSMinMaxCalc::s_min)
+      .def_readonly("s_max", &Tao::TaoGraphSMinMaxCalc::s_max)
+      .def("__len__", [](const Tao::TaoGraphSMinMaxCalc&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Tao::TaoGraphSMinMaxCalc& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.s_min);
+            if (i == 1)
+              return py::cast(s.s_max);
+            throw py::index_error();
+          });
   m.def(
       "tao_graph_s_min_max_calc",
       &Tao::tao_graph_s_min_max_calc,
@@ -3021,26 +2723,6 @@ void init_Tao_routines_t(py::module& m) {
   s_max : float
       Graph max.
   )""");
-  py::class_<
-      Tao::TaoGraphSMinMaxCalc,
-      std::unique_ptr<Tao::TaoGraphSMinMaxCalc>>(
-      m,
-      "TaoGraphSMinMaxCalc",
-      "Fortran routine tao_graph_s_min_max_calc return value")
-      .def_readonly("s_min", &Tao::TaoGraphSMinMaxCalc::s_min)
-      .def_readonly("s_max", &Tao::TaoGraphSMinMaxCalc::s_max)
-      .def("__len__", [](const Tao::TaoGraphSMinMaxCalc&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Tao::TaoGraphSMinMaxCalc& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.s_min);
-            if (i == 1)
-              return py::cast(s.s_max);
-            throw py::index_error();
-          });
   m.def(
       "tao_graph_setup",
       &Tao::tao_graph_setup,
@@ -3058,22 +2740,6 @@ void init_Tao_routines_t(py::module& m) {
   ----------
   err_flag : bool
       Set Treu if there is an error. False otherwise.
-  )""");
-  m.def(
-      "tao_init_beam_in_universe",
-      &python_tao_init_beam_in_universe,
-      py::arg("u"),
-      py::arg("beam_init"),
-      py::arg("track_start"),
-      py::arg("track_end"),
-      py::arg("comb_ds_save"),
-      R"""(Parameters
-  ----------
-  u : 
-  beam_init : 
-  track_start : 
-  track_end : 
-  comb_ds_save : 
   )""");
   py::class_<PyTaoInitBeamInUniverse, std::unique_ptr<PyTaoInitBeamInUniverse>>(
       m,
@@ -3096,6 +2762,22 @@ void init_Tao_routines_t(py::module& m) {
               return py::cast(s.comb_ds_save);
             throw py::index_error();
           });
+  m.def(
+      "tao_init_beam_in_universe",
+      &python_tao_init_beam_in_universe,
+      py::arg("u"),
+      py::arg("beam_init"),
+      py::arg("track_start"),
+      py::arg("track_end"),
+      py::arg("comb_ds_save"),
+      R"""(Parameters
+  ----------
+  u : 
+  beam_init : 
+  track_start : 
+  track_end : 
+  comb_ds_save : 
+  )""");
   m.def(
       "tao_init_beams",
       &Tao::tao_init_beams,
@@ -3123,18 +2805,6 @@ void init_Tao_routines_t(py::module& m) {
       Tao data initialization file. If blank, there is no file so just use the defaults.
   )""");
   m.def("tao_init_data_end_stuff", &Tao::tao_init_data_end_stuff, R"""()""");
-  m.def(
-      "tao_init_data_in_universe",
-      &python_tao_init_data_in_universe,
-      py::arg("u"),
-      py::arg("n_d2_add"),
-      py::arg("keep_existing_data") = py::none(),
-      R"""(Parameters
-  ----------
-  u : 
-  n_d2_add : 
-  keep_existing_data : 
-  )""");
   py::class_<PyTaoInitDataInUniverse, std::unique_ptr<PyTaoInitDataInUniverse>>(
       m,
       "TaoInitDataInUniverse",
@@ -3155,6 +2825,18 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "tao_init_data_in_universe",
+      &python_tao_init_data_in_universe,
+      py::arg("u"),
+      py::arg("n_d2_add"),
+      py::arg("keep_existing_data") = py::none(),
+      R"""(Parameters
+  ----------
+  u : 
+  n_d2_add : 
+  keep_existing_data : 
+  )""");
+  m.def(
       "tao_init_dynamic_aperture",
       &Tao::tao_init_dynamic_aperture,
       py::arg("init_file"),
@@ -3166,25 +2848,6 @@ void init_Tao_routines_t(py::module& m) {
   ----------
   init_file : unknown
       File setting dynamic_aperture parameters.
-  )""");
-  m.def(
-      "tao_init_find_elements",
-      &Tao::tao_init_find_elements,
-      py::arg("u"),
-      py::arg("search_string"),
-      py::arg("attribute") = py::none(),
-      R"""(Parameters
-  ----------
-  u : TaoUniverseStruct
-      Universe to search
-  search_string : unknown
-      What to search for
-  eles : ElePointerStruct
-      List of matching elements. Size is zero if no elements found.
-  attribute : unknown, optional
-      Check that attribute of element is free to vary.
-  found_one : bool
-      Set True if a matching element is found. However: Not set if no matching element found.
   )""");
   py::class_<
       Tao::TaoInitFindElements,
@@ -3207,6 +2870,25 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "tao_init_find_elements",
+      &Tao::tao_init_find_elements,
+      py::arg("u"),
+      py::arg("search_string"),
+      py::arg("attribute") = py::none(),
+      R"""(Parameters
+  ----------
+  u : TaoUniverseStruct
+      Universe to search
+  search_string : unknown
+      What to search for
+  eles : ElePointerStruct
+      List of matching elements. Size is zero if no elements found.
+  attribute : unknown, optional
+      Check that attribute of element is free to vary.
+  found_one : bool
+      Set True if a matching element is found. However: Not set if no matching element found.
+  )""");
+  m.def(
       "tao_init_global",
       &Tao::tao_init_global,
       py::arg("init_file"),
@@ -3218,16 +2900,6 @@ void init_Tao_routines_t(py::module& m) {
   ----------
   init_file : unknown
       Tao initialization file. If blank, there is no file so just use the defaults.
-  )""");
-  m.def(
-      "tao_init_lattice",
-      &python_tao_init_lattice,
-      py::arg("lat_file"),
-      py::arg("err_flag"),
-      R"""(Parameters
-  ----------
-  lat_file : 
-  err_flag : 
   )""");
   py::class_<PyTaoInitLattice, std::unique_ptr<PyTaoInitLattice>>(
       m, "TaoInitLattice", "Fortran routine tao_init_lattice return value")
@@ -3244,12 +2916,14 @@ void init_Tao_routines_t(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "tao_init_plotting",
-      &python_tao_init_plotting,
-      py::arg("plot_file"),
+      "tao_init_lattice",
+      &python_tao_init_lattice,
+      py::arg("lat_file"),
+      py::arg("err_flag"),
       R"""(Parameters
   ----------
-  plot_file : 
+  lat_file : 
+  err_flag : 
   )""");
   py::class_<PyTaoInitPlotting, std::unique_ptr<PyTaoInitPlotting>>(
       m, "TaoInitPlotting", "Fortran routine tao_init_plotting return value")
@@ -3263,6 +2937,14 @@ void init_Tao_routines_t(py::module& m) {
         throw py::index_error();
       });
   m.def(
+      "tao_init_plotting",
+      &python_tao_init_plotting,
+      py::arg("plot_file"),
+      R"""(Parameters
+  ----------
+  plot_file : 
+  )""");
+  m.def(
       "tao_init_variables",
       &Tao::tao_init_variables,
       py::arg("var_file"),
@@ -3275,6 +2957,20 @@ void init_Tao_routines_t(py::module& m) {
   var_file : unknown
       Tao variable initialization file. If blank, there is no file so just use the defaults.
   )""");
+  py::class_<Tao::TaoInjectBeam, std::unique_ptr<Tao::TaoInjectBeam>>(
+      m, "TaoInjectBeam", "Fortran routine tao_inject_beam return value")
+      .def_readonly("beam", &Tao::TaoInjectBeam::beam)
+      .def_readonly("init_ok", &Tao::TaoInjectBeam::init_ok)
+      .def("__len__", [](const Tao::TaoInjectBeam&) { return 2; })
+      .def("__getitem__", [](const Tao::TaoInjectBeam& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.beam);
+        if (i == 1)
+          return py::cast(s.init_ok);
+        throw py::index_error();
+      });
   m.def(
       "tao_inject_beam",
       &Tao::tao_inject_beam,
@@ -3305,32 +3001,6 @@ void init_Tao_routines_t(py::module& m) {
   init_ok : bool
       Set False if there are problems. True otherwise.
   )""");
-  py::class_<Tao::TaoInjectBeam, std::unique_ptr<Tao::TaoInjectBeam>>(
-      m, "TaoInjectBeam", "Fortran routine tao_inject_beam return value")
-      .def_readonly("beam", &Tao::TaoInjectBeam::beam)
-      .def_readonly("init_ok", &Tao::TaoInjectBeam::init_ok)
-      .def("__len__", [](const Tao::TaoInjectBeam&) { return 2; })
-      .def("__getitem__", [](const Tao::TaoInjectBeam& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.beam);
-        if (i == 1)
-          return py::cast(s.init_ok);
-        throw py::index_error();
-      });
-  m.def(
-      "tao_inject_particle",
-      &python_tao_inject_particle,
-      py::arg("u"),
-      py::arg("model"),
-      py::arg("ix_branch"),
-      R"""(Parameters
-  ----------
-  u : 
-  model : 
-  ix_branch : 
-  )""");
   py::class_<PyTaoInjectParticle, std::unique_ptr<PyTaoInjectParticle>>(
       m,
       "TaoInjectParticle",
@@ -3346,17 +3016,16 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "tao_is_valid_name",
-      &python_tao_is_valid_name,
-      py::arg("name"),
-      py::arg("is_valid"),
+      "tao_inject_particle",
+      &python_tao_inject_particle,
+      py::arg("u"),
+      py::arg("model"),
+      py::arg("ix_branch"),
       R"""(Parameters
   ----------
-  name : unknown
-      Name to be checked.
-  why_invalid : unknown
-      Why invalid description.
-  is_valid : 
+  u : 
+  model : 
+  ix_branch : 
   )""");
   py::class_<PyTaoIsValidName, std::unique_ptr<PyTaoIsValidName>>(
       m, "TaoIsValidName", "Fortran routine tao_is_valid_name return value")
@@ -3373,6 +3042,19 @@ void init_Tao_routines_t(py::module& m) {
         throw py::index_error();
       });
   m.def(
+      "tao_is_valid_name",
+      &python_tao_is_valid_name,
+      py::arg("name"),
+      py::arg("is_valid"),
+      R"""(Parameters
+  ----------
+  name : unknown
+      Name to be checked.
+  why_invalid : unknown
+      Why invalid description.
+  is_valid : 
+  )""");
+  m.def(
       "tao_json_cmd",
       &Tao::tao_json_cmd,
       py::arg("input_str"),
@@ -3380,22 +3062,6 @@ void init_Tao_routines_t(py::module& m) {
   ----------
   input_str : unknown
       What to show.
-  )""");
-  m.def(
-      "tao_key_info_to_str",
-      &python_tao_key_info_to_str,
-      py::arg("ix_key"),
-      py::arg("ix_min_key"),
-      py::arg("ix_max_key"),
-      py::arg("key_str"),
-      py::arg("header_str"),
-      R"""(Parameters
-  ----------
-  ix_key : 
-  ix_min_key : 
-  ix_max_key : 
-  key_str : 
-  header_str : 
   )""");
   py::class_<PyTaoKeyInfoToStr, std::unique_ptr<PyTaoKeyInfoToStr>>(
       m, "TaoKeyInfoToStr", "Fortran routine tao_key_info_to_str return value")
@@ -3421,6 +3087,22 @@ void init_Tao_routines_t(py::module& m) {
         throw py::index_error();
       });
   m.def(
+      "tao_key_info_to_str",
+      &python_tao_key_info_to_str,
+      py::arg("ix_key"),
+      py::arg("ix_min_key"),
+      py::arg("ix_max_key"),
+      py::arg("key_str"),
+      py::arg("header_str"),
+      R"""(Parameters
+  ----------
+  ix_key : 
+  ix_min_key : 
+  ix_max_key : 
+  key_str : 
+  header_str : 
+  )""");
+  m.def(
       "tao_lat_bookkeeper",
       &Tao::tao_lat_bookkeeper,
       py::arg("u"),
@@ -3432,6 +3114,17 @@ void init_Tao_routines_t(py::module& m) {
   err_flag : bool
       Set True if there is a problem. False otherwise.
   )""");
+  py::class_<PyTaoLatEmitCalc, std::unique_ptr<PyTaoLatEmitCalc>>(
+      m, "TaoLatEmitCalc", "Fortran routine tao_lat_emit_calc return value")
+      .def_readonly("emit", &PyTaoLatEmitCalc::emit)
+      .def("__len__", [](const PyTaoLatEmitCalc&) { return 1; })
+      .def("__getitem__", [](const PyTaoLatEmitCalc& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.emit);
+        throw py::index_error();
+      });
   m.def(
       "tao_lat_emit_calc",
       &python_tao_lat_emit_calc,
@@ -3451,29 +3144,6 @@ void init_Tao_routines_t(py::module& m) {
   modes : NormalModesStruct
       Structure holding the emittances
   emit : 
-  )""");
-  py::class_<PyTaoLatEmitCalc, std::unique_ptr<PyTaoLatEmitCalc>>(
-      m, "TaoLatEmitCalc", "Fortran routine tao_lat_emit_calc return value")
-      .def_readonly("emit", &PyTaoLatEmitCalc::emit)
-      .def("__len__", [](const PyTaoLatEmitCalc&) { return 1; })
-      .def("__getitem__", [](const PyTaoLatEmitCalc& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.emit);
-        throw py::index_error();
-      });
-  m.def(
-      "tao_lat_sigma_calc_needed",
-      &python_tao_lat_sigma_calc_needed,
-      py::arg("data_type"),
-      py::arg("data_source"),
-      py::arg("do_lat_sigma"),
-      R"""(Parameters
-  ----------
-  data_type : 
-  data_source : 
-  do_lat_sigma : 
   )""");
   py::class_<PyTaoLatSigmaCalcNeeded, std::unique_ptr<PyTaoLatSigmaCalcNeeded>>(
       m,
@@ -3496,6 +3166,18 @@ void init_Tao_routines_t(py::module& m) {
               return py::cast(s.do_lat_sigma);
             throw py::index_error();
           });
+  m.def(
+      "tao_lat_sigma_calc_needed",
+      &python_tao_lat_sigma_calc_needed,
+      py::arg("data_type"),
+      py::arg("data_source"),
+      py::arg("do_lat_sigma"),
+      R"""(Parameters
+  ----------
+  data_type : 
+  data_source : 
+  do_lat_sigma : 
+  )""");
   m.def(
       "tao_lat_sigma_track",
       &Tao::tao_lat_sigma_track,
@@ -3533,16 +3215,6 @@ void init_Tao_routines_t(py::module& m) {
   tlb1 : 
   tlb2 : 
   )""");
-  m.def(
-      "tao_lattice_calc",
-      &Tao::tao_lattice_calc,
-      R"""(Parameters
-  ----------
-  calc_ok : bool
-      Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
-  print_err : bool
-      Default True. If False, do not print error messages if, for example, the lattice is unstable.
-  )""");
   py::class_<Tao::TaoLatticeCalc, std::unique_ptr<Tao::TaoLatticeCalc>>(
       m, "TaoLatticeCalc", "Fortran routine tao_lattice_calc return value")
       .def_readonly("calc_ok", &Tao::TaoLatticeCalc::calc_ok)
@@ -3558,6 +3230,16 @@ void init_Tao_routines_t(py::module& m) {
               return py::cast(s.print_err);
             throw py::index_error();
           });
+  m.def(
+      "tao_lattice_calc",
+      &Tao::tao_lattice_calc,
+      R"""(Parameters
+  ----------
+  calc_ok : bool
+      Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
+  print_err : bool
+      Default True. If False, do not print error messages if, for example, the lattice is unstable.
+  )""");
   m.def(
       "tao_lattice_equal_tao_lattice",
       &Tao::tao_lattice_equal_tao_lattice,
@@ -3602,6 +3284,23 @@ void init_Tao_routines_t(py::module& m) {
   abort : bool
       Set True if an user stop signal detected or there is a problem with calculating the merit function.
   )""");
+  py::class_<PyTaoLoadThisDatum, std::unique_ptr<PyTaoLoadThisDatum>>(
+      m, "TaoLoadThisDatum", "Fortran routine tao_load_this_datum return value")
+      .def_readonly("datum_value", &PyTaoLoadThisDatum::datum_value)
+      .def_readonly("valid_value", &PyTaoLoadThisDatum::valid_value)
+      .def_readonly("why_invalid", &PyTaoLoadThisDatum::why_invalid)
+      .def("__len__", [](const PyTaoLoadThisDatum&) { return 3; })
+      .def("__getitem__", [](const PyTaoLoadThisDatum& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.datum_value);
+        if (i == 1)
+          return py::cast(s.valid_value);
+        if (i == 2)
+          return py::cast(s.why_invalid);
+        throw py::index_error();
+      });
   m.def(
       "tao_load_this_datum",
       &python_tao_load_this_datum,
@@ -3628,39 +3327,6 @@ void init_Tao_routines_t(py::module& m) {
   why_invalid : 
   good : 
   )""");
-  py::class_<PyTaoLoadThisDatum, std::unique_ptr<PyTaoLoadThisDatum>>(
-      m, "TaoLoadThisDatum", "Fortran routine tao_load_this_datum return value")
-      .def_readonly("datum_value", &PyTaoLoadThisDatum::datum_value)
-      .def_readonly("valid_value", &PyTaoLoadThisDatum::valid_value)
-      .def_readonly("why_invalid", &PyTaoLoadThisDatum::why_invalid)
-      .def("__len__", [](const PyTaoLoadThisDatum&) { return 3; })
-      .def("__getitem__", [](const PyTaoLoadThisDatum& s, int i) -> py::object {
-        if (i < 0)
-          i += 3;
-        if (i == 0)
-          return py::cast(s.datum_value);
-        if (i == 1)
-          return py::cast(s.valid_value);
-        if (i == 2)
-          return py::cast(s.why_invalid);
-        throw py::index_error();
-      });
-  m.def(
-      "tao_locate_all_elements",
-      &Tao::tao_locate_all_elements,
-      py::arg("ele_list"),
-      py::arg("ignore_blank") = py::none(),
-      R"""(Parameters
-  ----------
-  ele_list : unknown
-      String with element names using element list format.
-  eles : unknown
-      : Array of elements in the model lat. .id  -- Set to universe number.
-  err : bool
-      Set true on error.
-  ignore_blank : bool, optional
-      If present and true then do nothing if ele_list is blank. otherwise a blank is treated as an error.
-  )""");
   py::class_<
       Tao::TaoLocateAllElements,
       std::unique_ptr<Tao::TaoLocateAllElements>>(
@@ -3679,6 +3345,43 @@ void init_Tao_routines_t(py::module& m) {
               return py::cast(s.eles);
             if (i == 1)
               return py::cast(s.err);
+            throw py::index_error();
+          });
+  m.def(
+      "tao_locate_all_elements",
+      &Tao::tao_locate_all_elements,
+      py::arg("ele_list"),
+      py::arg("ignore_blank") = py::none(),
+      R"""(Parameters
+  ----------
+  ele_list : unknown
+      String with element names using element list format.
+  eles : unknown
+      : Array of elements in the model lat. .id  -- Set to universe number.
+  err : bool
+      Set true on error.
+  ignore_blank : bool, optional
+      If present and true then do nothing if ele_list is blank. otherwise a blank is treated as an error.
+  )""");
+  py::class_<PyTaoLocateElements, std::unique_ptr<PyTaoLocateElements>>(
+      m,
+      "TaoLocateElements",
+      "Fortran routine tao_locate_elements return value")
+      .def_readonly("eles", &PyTaoLocateElements::eles)
+      .def_readonly("err", &PyTaoLocateElements::err)
+      .def_readonly(
+          "above_ubound_is_err", &PyTaoLocateElements::above_ubound_is_err)
+      .def("__len__", [](const PyTaoLocateElements&) { return 3; })
+      .def(
+          "__getitem__", [](const PyTaoLocateElements& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.eles);
+            if (i == 1)
+              return py::cast(s.err);
+            if (i == 2)
+              return py::cast(s.above_ubound_is_err);
             throw py::index_error();
           });
   m.def(
@@ -3718,27 +3421,6 @@ void init_Tao_routines_t(py::module& m) {
       If present and True then matching to more than one element is an error. -- logical, optional: If present
       and True then matching to more than one element is an error.
   )""");
-  py::class_<PyTaoLocateElements, std::unique_ptr<PyTaoLocateElements>>(
-      m,
-      "TaoLocateElements",
-      "Fortran routine tao_locate_elements return value")
-      .def_readonly("eles", &PyTaoLocateElements::eles)
-      .def_readonly("err", &PyTaoLocateElements::err)
-      .def_readonly(
-          "above_ubound_is_err", &PyTaoLocateElements::above_ubound_is_err)
-      .def("__len__", [](const PyTaoLocateElements&) { return 3; })
-      .def(
-          "__getitem__", [](const PyTaoLocateElements& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.eles);
-            if (i == 1)
-              return py::cast(s.err);
-            if (i == 2)
-              return py::cast(s.above_ubound_is_err);
-            throw py::index_error();
-          });
   m.def(
       "tao_mark_lattice_ele",
       &Tao::tao_mark_lattice_ele,
@@ -3748,16 +3430,6 @@ void init_Tao_routines_t(py::module& m) {
   lat : LatStruct
       Input lattice
       This parameter is an input/output and is modified in-place. As an output: Lattice with elements marked.
-  )""");
-  m.def(
-      "tao_merit",
-      &python_tao_merit,
-      py::arg("this_merit"),
-      R"""(Parameters
-  ----------
-  calc_ok : bool
-      Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
-  this_merit : 
   )""");
   py::class_<PyTaoMerit, std::unique_ptr<PyTaoMerit>>(
       m, "TaoMerit", "Fortran routine tao_merit return value")
@@ -3771,6 +3443,30 @@ void init_Tao_routines_t(py::module& m) {
           return py::cast(s.calc_ok);
         if (i == 1)
           return py::cast(s.this_merit);
+        throw py::index_error();
+      });
+  m.def(
+      "tao_merit",
+      &python_tao_merit,
+      py::arg("this_merit"),
+      R"""(Parameters
+  ----------
+  calc_ok : bool
+      Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
+  this_merit : 
+  )""");
+  py::class_<PyTaoNextWord, std::unique_ptr<PyTaoNextWord>>(
+      m, "TaoNextWord", "Fortran routine tao_next_word return value")
+      .def_readonly("word", &PyTaoNextWord::word)
+      .def_readonly("line", &PyTaoNextWord::line)
+      .def("__len__", [](const PyTaoNextWord&) { return 2; })
+      .def("__getitem__", [](const PyTaoNextWord& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.word);
+        if (i == 1)
+          return py::cast(s.line);
         throw py::index_error();
       });
   m.def(
@@ -3795,32 +3491,6 @@ void init_Tao_routines_t(py::module& m) {
   -------
   word : unknown
       First word of line.
-  )""");
-  py::class_<PyTaoNextWord, std::unique_ptr<PyTaoNextWord>>(
-      m, "TaoNextWord", "Fortran routine tao_next_word return value")
-      .def_readonly("word", &PyTaoNextWord::word)
-      .def_readonly("line", &PyTaoNextWord::line)
-      .def("__len__", [](const PyTaoNextWord&) { return 2; })
-      .def("__getitem__", [](const PyTaoNextWord& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.word);
-        if (i == 1)
-          return py::cast(s.line);
-        throw py::index_error();
-      });
-  m.def(
-      "tao_one_turn_map_calc_needed",
-      &python_tao_one_turn_map_calc_needed,
-      py::arg("data_type"),
-      py::arg("data_source"),
-      py::arg("do_one_turn_map"),
-      R"""(Parameters
-  ----------
-  data_type : 
-  data_source : 
-  do_one_turn_map : 
   )""");
   py::class_<
       PyTaoOneTurnMapCalcNeeded,
@@ -3847,6 +3517,32 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "tao_one_turn_map_calc_needed",
+      &python_tao_one_turn_map_calc_needed,
+      py::arg("data_type"),
+      py::arg("data_source"),
+      py::arg("do_one_turn_map"),
+      R"""(Parameters
+  ----------
+  data_type : 
+  data_source : 
+  do_one_turn_map : 
+  )""");
+  py::class_<PyTaoOpenFile, std::unique_ptr<PyTaoOpenFile>>(
+      m, "TaoOpenFile", "Fortran routine tao_open_file return value")
+      .def_readonly("iunit", &PyTaoOpenFile::iunit)
+      .def_readonly("file", &PyTaoOpenFile::file)
+      .def("__len__", [](const PyTaoOpenFile&) { return 2; })
+      .def("__getitem__", [](const PyTaoOpenFile& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.iunit);
+        if (i == 1)
+          return py::cast(s.file);
+        throw py::index_error();
+      });
+  m.def(
       "tao_open_file",
       &python_tao_open_file,
       py::arg("file"),
@@ -3865,30 +3561,6 @@ void init_Tao_routines_t(py::module& m) {
       details. Use -1 to not print a message if file cannot be opened.
   binary : bool, optional
       If present and True then open a binary file, Defaut is False.
-  )""");
-  py::class_<PyTaoOpenFile, std::unique_ptr<PyTaoOpenFile>>(
-      m, "TaoOpenFile", "Fortran routine tao_open_file return value")
-      .def_readonly("iunit", &PyTaoOpenFile::iunit)
-      .def_readonly("file", &PyTaoOpenFile::file)
-      .def("__len__", [](const PyTaoOpenFile&) { return 2; })
-      .def("__getitem__", [](const PyTaoOpenFile& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.iunit);
-        if (i == 1)
-          return py::cast(s.file);
-        throw py::index_error();
-      });
-  m.def(
-      "tao_open_scratch_file",
-      &python_tao_open_scratch_file,
-      py::arg("iu"),
-      R"""(Parameters
-  ----------
-  err : bool
-      Set True if there is an error. False otherwise.
-  iu : 
   )""");
   py::class_<PyTaoOpenScratchFile, std::unique_ptr<PyTaoOpenScratchFile>>(
       m,
@@ -3909,15 +3581,14 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "tao_optimization_status",
-      &python_tao_optimization_status,
-      py::arg("datum"),
-      py::arg("why_str"),
+      "tao_open_scratch_file",
+      &python_tao_open_scratch_file,
+      py::arg("iu"),
       R"""(Parameters
   ----------
-  datum : TaoDataStruct
-      Datum to evaluate.
-  why_str : 
+  err : bool
+      Set True if there is an error. False otherwise.
+  iu : 
   )""");
   py::class_<PyTaoOptimizationStatus, std::unique_ptr<PyTaoOptimizationStatus>>(
       m,
@@ -3934,6 +3605,17 @@ void init_Tao_routines_t(py::module& m) {
               return py::cast(s.why_str);
             throw py::index_error();
           });
+  m.def(
+      "tao_optimization_status",
+      &python_tao_optimization_status,
+      py::arg("datum"),
+      py::arg("why_str"),
+      R"""(Parameters
+  ----------
+  datum : TaoDataStruct
+      Datum to evaluate.
+  why_str : 
+  )""");
   m.def(
       "tao_orbit_beta_wave_anal",
       &Tao::tao_orbit_beta_wave_anal,
@@ -3952,33 +3634,6 @@ void init_Tao_routines_t(py::module& m) {
   pt_in : TaoBuildingWallPointStruct
       Building wall point.
   pt_out : 
-  )""");
-  m.def(
-      "tao_param_value_at_s",
-      &python_tao_param_value_at_s,
-      py::arg("dat_name"),
-      py::arg("ele_to_s"),
-      py::arg("ele_here"),
-      py::arg("orbit"),
-      py::arg("value"),
-      R"""(Parameters
-  ----------
-  dat_name : 
-  ele_to_s : EleStruct
-      Element whose exit end is at the evaluation s-position.
-  ele_here : EleStruct
-      Lattice element that overlaps the s-position ele.s.
-  orbit : CoordStruct
-      Orbit at the evaluation s-position.
-  err_flag : bool
-      Set true if parameter cannot be evaluated.
-  why_invalid : unknown
-      Set if  err_flag = True to document why is there a problem.
-  print_err : bool
-      Print error message on error? Default is True.
-  bad_datum : bool
-      Data_type is malformed.
-  value : 
   )""");
   py::class_<PyTaoParamValueAtS, std::unique_ptr<PyTaoParamValueAtS>>(
       m,
@@ -4009,14 +3664,31 @@ void init_Tao_routines_t(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "tao_parse_command_args",
-      &python_tao_parse_command_args,
-      py::arg("cmd_line") = py::none(),
+      "tao_param_value_at_s",
+      &python_tao_param_value_at_s,
+      py::arg("dat_name"),
+      py::arg("ele_to_s"),
+      py::arg("ele_here"),
+      py::arg("orbit"),
+      py::arg("value"),
       R"""(Parameters
   ----------
-  error : bool
-      Set True if there is an error. False otherwise.
-  cmd_line : 
+  dat_name : 
+  ele_to_s : EleStruct
+      Element whose exit end is at the evaluation s-position.
+  ele_here : EleStruct
+      Lattice element that overlaps the s-position ele.s.
+  orbit : CoordStruct
+      Orbit at the evaluation s-position.
+  err_flag : bool
+      Set true if parameter cannot be evaluated.
+  why_invalid : unknown
+      Set if  err_flag = True to document why is there a problem.
+  print_err : bool
+      Print error message on error? Default is True.
+  bad_datum : bool
+      Data_type is malformed.
+  value : 
   )""");
   py::class_<PyTaoParseCommandArgs, std::unique_ptr<PyTaoParseCommandArgs>>(
       m,
@@ -4037,25 +3709,14 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "tao_parse_element_param_str",
-      &Tao::tao_parse_element_param_str,
-      py::arg("in_str"),
+      "tao_parse_command_args",
+      &python_tao_parse_command_args,
+      py::arg("cmd_line") = py::none(),
       R"""(Parameters
   ----------
-  err : bool
-      Set True if there is a parse error. False otherwise.
-  in_str : unknown
-      String specifying a parameter of an element or elements.
-  uni : unknown
-      Universe substring.
-  element : unknown
-      Element name.
-  parameter : unknown
-      Element parameter name.
-  where : int
-      One of not_set$, anchor_beginning$, anchor_center$, or anchor_end$.
-  component : unknown
-      One of "model", "design", or "base".
+  error : bool
+      Set True if there is an error. False otherwise.
+  cmd_line : 
   )""");
   py::class_<
       Tao::TaoParseElementParamStr,
@@ -4090,6 +3751,47 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "tao_parse_element_param_str",
+      &Tao::tao_parse_element_param_str,
+      py::arg("in_str"),
+      R"""(Parameters
+  ----------
+  err : bool
+      Set True if there is a parse error. False otherwise.
+  in_str : unknown
+      String specifying a parameter of an element or elements.
+  uni : unknown
+      Universe substring.
+  element : unknown
+      Element name.
+  parameter : unknown
+      Element parameter name.
+  where : int
+      One of not_set$, anchor_beginning$, anchor_center$, or anchor_end$.
+  component : unknown
+      One of "model", "design", or "base".
+  )""");
+  py::class_<
+      Tao::TaoParticleDataValue,
+      std::unique_ptr<Tao::TaoParticleDataValue>>(
+      m,
+      "TaoParticleDataValue",
+      "Fortran routine tao_particle_data_value return value")
+      .def_readonly("value", &Tao::TaoParticleDataValue::value)
+      .def_readonly("err", &Tao::TaoParticleDataValue::err)
+      .def("__len__", [](const Tao::TaoParticleDataValue&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Tao::TaoParticleDataValue& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.value);
+            if (i == 1)
+              return py::cast(s.err);
+            throw py::index_error();
+          });
+  m.def(
       "tao_particle_data_value",
       &Tao::tao_particle_data_value,
       py::arg("data_type"),
@@ -4118,26 +3820,6 @@ void init_Tao_routines_t(py::module& m) {
   err : bool
       Set True if there is an error. False otherwise.
   )""");
-  py::class_<
-      Tao::TaoParticleDataValue,
-      std::unique_ptr<Tao::TaoParticleDataValue>>(
-      m,
-      "TaoParticleDataValue",
-      "Fortran routine tao_particle_data_value return value")
-      .def_readonly("value", &Tao::TaoParticleDataValue::value)
-      .def_readonly("err", &Tao::TaoParticleDataValue::err)
-      .def("__len__", [](const Tao::TaoParticleDataValue&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Tao::TaoParticleDataValue& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.value);
-            if (i == 1)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
   m.def(
       "tao_pause_cmd",
       &Tao::tao_pause_cmd,
@@ -4176,31 +3858,6 @@ void init_Tao_routines_t(py::module& m) {
 
 
   )""");
-  m.def(
-      "tao_pick_universe",
-      &Tao::tao_pick_universe,
-      py::arg("name_in"),
-      py::arg("dflt_uni") = py::none(),
-      py::arg("pure_uni") = py::none(),
-      R"""(Parameters
-  ----------
-  name_in : unknown
-      data name with possible universe spec.
-  name_out : unknown
-      name_in without any "n@" beginning.
-  picked : bool
-      Array showing picked universes. The array will be resized if necessary.
-  err : bool
-      Set True if an error is detected.
-  ix_uni : int
-      Set to the picked universe with the highest index.
-  explicit_uni : bool
-      Set True if name_in has explicit universe "n@" specification.
-  dflt_uni : int, optional
-      Default universe to use. Set to -1 if explicit universe is required.
-  pure_uni : bool, optional
-      Default is False. See above
-  )""");
   py::class_<Tao::TaoPickUniverse, std::unique_ptr<Tao::TaoPickUniverse>>(
       m, "TaoPickUniverse", "Fortran routine tao_pick_universe return value")
       .def_readonly("name_out", &Tao::TaoPickUniverse::name_out)
@@ -4226,6 +3883,31 @@ void init_Tao_routines_t(py::module& m) {
               return py::cast(s.explicit_uni);
             throw py::index_error();
           });
+  m.def(
+      "tao_pick_universe",
+      &Tao::tao_pick_universe,
+      py::arg("name_in"),
+      py::arg("dflt_uni") = py::none(),
+      py::arg("pure_uni") = py::none(),
+      R"""(Parameters
+  ----------
+  name_in : unknown
+      data name with possible universe spec.
+  name_out : unknown
+      name_in without any "n@" beginning.
+  picked : bool
+      Array showing picked universes. The array will be resized if necessary.
+  err : bool
+      Set True if an error is detected.
+  ix_uni : int
+      Set to the picked universe with the highest index.
+  explicit_uni : bool
+      Set True if name_in has explicit universe "n@" specification.
+  dflt_uni : int, optional
+      Default universe to use. Set to -1 if explicit universe is required.
+  pure_uni : bool, optional
+      Default is False. See above
+  )""");
   m.def(
       "tao_pipe_cmd",
       &Tao::tao_pipe_cmd,
@@ -4364,6 +4046,30 @@ void init_Tao_routines_t(py::module& m) {
       Name of lattice element to match to. Ouput:
   datum_ptr : 
   )""");
+  py::class_<PyTaoPointerToDatumEle, std::unique_ptr<PyTaoPointerToDatumEle>>(
+      m,
+      "TaoPointerToDatumEle",
+      "Fortran routine tao_pointer_to_datum_ele return value")
+      .def_readonly("valid", &PyTaoPointerToDatumEle::valid)
+      .def_readonly("why_invalid", &PyTaoPointerToDatumEle::why_invalid)
+      .def_readonly("ele", &PyTaoPointerToDatumEle::ele)
+      .def_readonly("ele_name", &PyTaoPointerToDatumEle::ele_name)
+      .def("__len__", [](const PyTaoPointerToDatumEle&) { return 4; })
+      .def(
+          "__getitem__",
+          [](const PyTaoPointerToDatumEle& s, int i) -> py::object {
+            if (i < 0)
+              i += 4;
+            if (i == 0)
+              return py::cast(s.valid);
+            if (i == 1)
+              return py::cast(s.why_invalid);
+            if (i == 2)
+              return py::cast(s.ele);
+            if (i == 3)
+              return py::cast(s.ele_name);
+            throw py::index_error();
+          });
   m.def(
       "tao_pointer_to_datum_ele",
       &python_tao_pointer_to_datum_ele,
@@ -4400,28 +4106,25 @@ void init_Tao_routines_t(py::module& m) {
   why_invalid : unknown
       Tells why datum value is invalid.
   )""");
-  py::class_<PyTaoPointerToDatumEle, std::unique_ptr<PyTaoPointerToDatumEle>>(
+  py::class_<PyTaoPointerToEleShape, std::unique_ptr<PyTaoPointerToEleShape>>(
       m,
-      "TaoPointerToDatumEle",
-      "Fortran routine tao_pointer_to_datum_ele return value")
-      .def_readonly("valid", &PyTaoPointerToDatumEle::valid)
-      .def_readonly("why_invalid", &PyTaoPointerToDatumEle::why_invalid)
-      .def_readonly("ele", &PyTaoPointerToDatumEle::ele)
-      .def_readonly("ele_name", &PyTaoPointerToDatumEle::ele_name)
-      .def("__len__", [](const PyTaoPointerToDatumEle&) { return 4; })
+      "TaoPointerToEleShape",
+      "Fortran routine tao_pointer_to_ele_shape return value")
+      .def_readonly("dat_var_name", &PyTaoPointerToEleShape::dat_var_name)
+      .def_readonly("dat_var_value", &PyTaoPointerToEleShape::dat_var_value)
+      .def_readonly("ix_shape_min", &PyTaoPointerToEleShape::ix_shape_min)
+      .def("__len__", [](const PyTaoPointerToEleShape&) { return 3; })
       .def(
           "__getitem__",
-          [](const PyTaoPointerToDatumEle& s, int i) -> py::object {
+          [](const PyTaoPointerToEleShape& s, int i) -> py::object {
             if (i < 0)
-              i += 4;
+              i += 3;
             if (i == 0)
-              return py::cast(s.valid);
+              return py::cast(s.dat_var_name);
             if (i == 1)
-              return py::cast(s.why_invalid);
+              return py::cast(s.dat_var_value);
             if (i == 2)
-              return py::cast(s.ele);
-            if (i == 3)
-              return py::cast(s.ele_name);
+              return py::cast(s.ix_shape_min);
             throw py::index_error();
           });
   m.def(
@@ -4451,27 +4154,6 @@ void init_Tao_routines_t(py::module& m) {
       This parameter is an input/output and is modified in-place. As an output: Ele_shape(
   e_shape : 
   )""");
-  py::class_<PyTaoPointerToEleShape, std::unique_ptr<PyTaoPointerToEleShape>>(
-      m,
-      "TaoPointerToEleShape",
-      "Fortran routine tao_pointer_to_ele_shape return value")
-      .def_readonly("dat_var_name", &PyTaoPointerToEleShape::dat_var_name)
-      .def_readonly("dat_var_value", &PyTaoPointerToEleShape::dat_var_value)
-      .def_readonly("ix_shape_min", &PyTaoPointerToEleShape::ix_shape_min)
-      .def("__len__", [](const PyTaoPointerToEleShape&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PyTaoPointerToEleShape& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.dat_var_name);
-            if (i == 1)
-              return py::cast(s.dat_var_value);
-            if (i == 2)
-              return py::cast(s.ix_shape_min);
-            throw py::index_error();
-          });
   m.def(
       "tao_pointer_to_tao_lat",
       &Tao::tao_pointer_to_tao_lat,
@@ -4491,40 +4173,6 @@ void init_Tao_routines_t(py::module& m) {
       py::overload_cast<int, std::optional<bool>>(
           &Tao::tao_pointer_to_universe),
       py::arg("ix_uni"),
-      py::arg("neg2_to_default") = py::none(),
-      R"""(Function tao_pointer_to_universe (...) result (u)
-
-  Routine to set a pointer to a universe.
-
-  This is an overloaded routine for the:
-   tao_pointer_to_universe_int (ix_uni, neg2_to_default) result (u)
-   tao_pointer_to_universe_str (string, neg2_to_default) result (u)
-
-  Note: With a string argument, this routine can only handle single universe picks.
-  That is, it cannot handlle something like "[1,3,4]@...". To handle multiple universe picks, use:
-    tao_pointer_to_universes
-
-  Parameters
-  ----------
-  ix_uni : int
-      Index to the s.u(:) array If ix_uni is -1 -> u(s.global.default_universe) will be used.
-  string : unknown
-      String in the form "<ix_uni>@..." or, if no "@" is present, u will point to the default universe.
-      This parameter is an input/output and is modified in-place. As an output: String with universe prefix
-      stripped off.
-  neg2_to_default : bool, optional
-      i_uni = -2 (all universes) maps to the default uni? Default if False.
-
-  Returns
-  -------
-  u : TaoUniverseStruct
-      Universe pointer. u will be nullified if there is an error and an error message will be printed.
-  )""");
-  m.def(
-      "tao_pointer_to_universe",
-      py::overload_cast<std::string, std::optional<bool>>(
-          &python_tao_pointer_to_universe_str),
-      py::arg("string"),
       py::arg("neg2_to_default") = py::none(),
       R"""(Function tao_pointer_to_universe (...) result (u)
 
@@ -4575,24 +4223,38 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "tao_pointer_to_universes",
-      &Tao::tao_pointer_to_universes,
-      py::arg("name_in"),
-      py::arg("dflt_uni") = py::none(),
-      R"""(Parameters
+      "tao_pointer_to_universe",
+      py::overload_cast<std::string, std::optional<bool>>(
+          &python_tao_pointer_to_universe_str),
+      py::arg("string"),
+      py::arg("neg2_to_default") = py::none(),
+      R"""(Function tao_pointer_to_universe (...) result (u)
+
+  Routine to set a pointer to a universe.
+
+  This is an overloaded routine for the:
+   tao_pointer_to_universe_int (ix_uni, neg2_to_default) result (u)
+   tao_pointer_to_universe_str (string, neg2_to_default) result (u)
+
+  Note: With a string argument, this routine can only handle single universe picks.
+  That is, it cannot handlle something like "[1,3,4]@...". To handle multiple universe picks, use:
+    tao_pointer_to_universes
+
+  Parameters
   ----------
-  name_in : unknown
-      data name with possible universe spec.
-  unis : TaoUniversePointerStruct
-      Array of pointers to picked universes. The array will be resized if necessary.
-  err : bool
-      Set True if an error is detected.
-  name_out : unknown
-      name_in without any "n@" beginning.
-  explicit_uni : bool
-      Set True if name_in has explicit universe "n@" specification.
-  dflt_uni : int, optional
-      Default universe to use. Set to -1 if explicit universe is required.
+  ix_uni : int
+      Index to the s.u(:) array If ix_uni is -1 -> u(s.global.default_universe) will be used.
+  string : unknown
+      String in the form "<ix_uni>@..." or, if no "@" is present, u will point to the default universe.
+      This parameter is an input/output and is modified in-place. As an output: String with universe prefix
+      stripped off.
+  neg2_to_default : bool, optional
+      i_uni = -2 (all universes) maps to the default uni? Default if False.
+
+  Returns
+  -------
+  u : TaoUniverseStruct
+      Universe pointer. u will be nullified if there is an error and an error message will be printed.
   )""");
   py::class_<
       Tao::TaoPointerToUniverses,
@@ -4620,6 +4282,26 @@ void init_Tao_routines_t(py::module& m) {
               return py::cast(s.explicit_uni);
             throw py::index_error();
           });
+  m.def(
+      "tao_pointer_to_universes",
+      &Tao::tao_pointer_to_universes,
+      py::arg("name_in"),
+      py::arg("dflt_uni") = py::none(),
+      R"""(Parameters
+  ----------
+  name_in : unknown
+      data name with possible universe spec.
+  unis : TaoUniversePointerStruct
+      Array of pointers to picked universes. The array will be resized if necessary.
+  err : bool
+      Set True if an error is detected.
+  name_out : unknown
+      name_in without any "n@" beginning.
+  explicit_uni : bool
+      Set True if name_in has explicit universe "n@" specification.
+  dflt_uni : int, optional
+      Default universe to use. Set to -1 if explicit universe is required.
+  )""");
   m.def(
       "tao_pointer_to_var_in_lattice",
       &Tao::tao_pointer_to_var_in_lattice,
@@ -4709,18 +4391,6 @@ void init_Tao_routines_t(py::module& m) {
   set : bool
       True is silent running is wanted.
   )""");
-  m.def(
-      "tao_rad_int_calc_needed",
-      &python_tao_rad_int_calc_needed,
-      py::arg("data_type"),
-      py::arg("data_source"),
-      py::arg("do_rad_int"),
-      R"""(Parameters
-  ----------
-  data_type : 
-  data_source : 
-  do_rad_int : 
-  )""");
   py::class_<PyTaoRadIntCalcNeeded, std::unique_ptr<PyTaoRadIntCalcNeeded>>(
       m,
       "TaoRadIntCalcNeeded",
@@ -4743,14 +4413,16 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "tao_re_execute",
-      &python_tao_re_execute,
-      py::arg("string"),
-      py::arg("err"),
-      R"""(Subroutine tao_re_exectue (string, err)
-
-  Subroutine to execute a previous command.
-
+      "tao_rad_int_calc_needed",
+      &python_tao_rad_int_calc_needed,
+      py::arg("data_type"),
+      py::arg("data_source"),
+      py::arg("do_rad_int"),
+      R"""(Parameters
+  ----------
+  data_type : 
+  data_source : 
+  do_rad_int : 
   )""");
   py::class_<PyTaoReExecute, std::unique_ptr<PyTaoReExecute>>(
       m, "TaoReExecute", "Fortran routine tao_re_execute return value")
@@ -4764,6 +4436,30 @@ void init_Tao_routines_t(py::module& m) {
           return py::cast(s.string);
         if (i == 1)
           return py::cast(s.err);
+        throw py::index_error();
+      });
+  m.def(
+      "tao_re_execute",
+      &python_tao_re_execute,
+      py::arg("string"),
+      py::arg("err"),
+      R"""(Subroutine tao_re_exectue (string, err)
+
+  Subroutine to execute a previous command.
+
+  )""");
+  py::class_<PyTaoReadCmd, std::unique_ptr<PyTaoReadCmd>>(
+      m, "TaoReadCmd", "Fortran routine tao_read_cmd return value")
+      .def_readonly("which", &PyTaoReadCmd::which)
+      .def_readonly("file", &PyTaoReadCmd::file)
+      .def("__len__", [](const PyTaoReadCmd&) { return 2; })
+      .def("__getitem__", [](const PyTaoReadCmd& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.which);
+        if (i == 1)
+          return py::cast(s.file);
         throw py::index_error();
       });
   m.def(
@@ -4782,37 +4478,6 @@ void init_Tao_routines_t(py::module& m) {
   silent : bool
       Silent
   )""");
-  py::class_<PyTaoReadCmd, std::unique_ptr<PyTaoReadCmd>>(
-      m, "TaoReadCmd", "Fortran routine tao_read_cmd return value")
-      .def_readonly("which", &PyTaoReadCmd::which)
-      .def_readonly("file", &PyTaoReadCmd::file)
-      .def("__len__", [](const PyTaoReadCmd&) { return 2; })
-      .def("__getitem__", [](const PyTaoReadCmd& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.which);
-        if (i == 1)
-          return py::cast(s.file);
-        throw py::index_error();
-      });
-  m.def(
-      "tao_read_phase_space_index",
-      &python_tao_read_phase_space_index,
-      py::arg("name"),
-      py::arg("ixc"),
-      py::arg("print_err") = py::none(),
-      py::arg("ix_ps"),
-      R"""(Parameters
-  ----------
-  name : unknown
-      character array holding the index. Must be in the range 1-6.
-  ixc : int
-      location within <name> to evaluate index.
-  print_err : bool, optional
-      If present and False then do not print an error message
-  ix_ps : 
-  )""");
   py::class_<
       PyTaoReadPhaseSpaceIndex,
       std::unique_ptr<PyTaoReadPhaseSpaceIndex>>(
@@ -4830,18 +4495,24 @@ void init_Tao_routines_t(py::module& m) {
               return py::cast(s.ix_ps);
             throw py::index_error();
           });
-  m.def("tao_regression_test", &Tao::tao_regression_test, R"""()""");
   m.def(
-      "tao_remove_blank_characters",
-      &python_tao_remove_blank_characters,
-      py::arg("str"),
+      "tao_read_phase_space_index",
+      &python_tao_read_phase_space_index,
+      py::arg("name"),
+      py::arg("ixc"),
+      py::arg("print_err") = py::none(),
+      py::arg("ix_ps"),
       R"""(Parameters
   ----------
-  str : unknown
-      Input string.
-      This parameter is an input/output and is modified in-place. As an output: String with blank characters
-      removed.
+  name : unknown
+      character array holding the index. Must be in the range 1-6.
+  ixc : int
+      location within <name> to evaluate index.
+  print_err : bool, optional
+      If present and False then do not print an error message
+  ix_ps : 
   )""");
+  m.def("tao_regression_test", &Tao::tao_regression_test, R"""()""");
   py::class_<
       PyTaoRemoveBlankCharacters,
       std::unique_ptr<PyTaoRemoveBlankCharacters>>(
@@ -4859,6 +4530,17 @@ void init_Tao_routines_t(py::module& m) {
               return py::cast(s.str);
             throw py::index_error();
           });
+  m.def(
+      "tao_remove_blank_characters",
+      &python_tao_remove_blank_characters,
+      py::arg("str"),
+      R"""(Parameters
+  ----------
+  str : unknown
+      Input string.
+      This parameter is an input/output and is modified in-place. As an output: String with blank characters
+      removed.
+  )""");
   m.def(
       "tao_run_cmd",
       &Tao::tao_run_cmd,
@@ -4909,6 +4591,20 @@ void init_Tao_routines_t(py::module& m) {
   turn_autoscale_off : bool, optional
       If True (default) then turn off plot.autoscale_y logical for all plots that are scaled.
   )""");
+  py::class_<Tao::TaoScaleGraph, std::unique_ptr<Tao::TaoScaleGraph>>(
+      m, "TaoScaleGraph", "Fortran routine tao_scale_graph return value")
+      .def_readonly("y_range", &Tao::TaoScaleGraph::y_range)
+      .def_readonly("y2_range", &Tao::TaoScaleGraph::y2_range)
+      .def("__len__", [](const Tao::TaoScaleGraph&) { return 2; })
+      .def("__getitem__", [](const Tao::TaoScaleGraph& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.y_range);
+        if (i == 1)
+          return py::cast(s.y2_range);
+        throw py::index_error();
+      });
   m.def(
       "tao_scale_graph",
       &Tao::tao_scale_graph,
@@ -4945,20 +4641,6 @@ void init_Tao_routines_t(py::module& m) {
   y2_range : float
       Only used by tao_scale_plot when ganging graphs.
   )""");
-  py::class_<Tao::TaoScaleGraph, std::unique_ptr<Tao::TaoScaleGraph>>(
-      m, "TaoScaleGraph", "Fortran routine tao_scale_graph return value")
-      .def_readonly("y_range", &Tao::TaoScaleGraph::y_range)
-      .def_readonly("y2_range", &Tao::TaoScaleGraph::y2_range)
-      .def("__len__", [](const Tao::TaoScaleGraph&) { return 2; })
-      .def("__getitem__", [](const Tao::TaoScaleGraph& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.y_range);
-        if (i == 1)
-          return py::cast(s.y2_range);
-        throw py::index_error();
-      });
   m.def(
       "tao_scale_ping_data",
       &Tao::tao_scale_ping_data,
@@ -5094,15 +4776,6 @@ void init_Tao_routines_t(py::module& m) {
   value_str : unknown
       What value to set it to.
   )""");
-  m.def(
-      "tao_set_calculate_cmd",
-      &python_tao_set_calculate_cmd,
-      py::arg("switch_") = py::none(),
-      R"""(Subroutine tao_set_calculate_cmd (switch)
-
-  Toggles off lattice calc and plotting.
-
-  )""");
   py::class_<PyTaoSetCalculateCmd, std::unique_ptr<PyTaoSetCalculateCmd>>(
       m,
       "TaoSetCalculateCmd",
@@ -5118,6 +4791,15 @@ void init_Tao_routines_t(py::module& m) {
               return py::cast(s.switch_);
             throw py::index_error();
           });
+  m.def(
+      "tao_set_calculate_cmd",
+      &python_tao_set_calculate_cmd,
+      py::arg("switch_") = py::none(),
+      R"""(Subroutine tao_set_calculate_cmd (switch)
+
+  Toggles off lattice calc and plotting.
+
+  )""");
   m.def(
       "tao_set_curve_cmd",
       &Tao::tao_set_curve_cmd,
@@ -5157,6 +4839,17 @@ void init_Tao_routines_t(py::module& m) {
   print_err : bool, optional
       If present and True then also print an error message.
   )""");
+  py::class_<PyTaoSetDataCmd, std::unique_ptr<PyTaoSetDataCmd>>(
+      m, "TaoSetDataCmd", "Fortran routine tao_set_data_cmd return value")
+      .def_readonly("silent", &PyTaoSetDataCmd::silent)
+      .def("__len__", [](const PyTaoSetDataCmd&) { return 1; })
+      .def("__getitem__", [](const PyTaoSetDataCmd& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.silent);
+        throw py::index_error();
+      });
   m.def(
       "tao_set_data_cmd",
       &python_tao_set_data_cmd,
@@ -5174,17 +4867,6 @@ void init_Tao_routines_t(py::module& m) {
   value_str : unknown
       What value to set it to.
   )""");
-  py::class_<PyTaoSetDataCmd, std::unique_ptr<PyTaoSetDataCmd>>(
-      m, "TaoSetDataCmd", "Fortran routine tao_set_data_cmd return value")
-      .def_readonly("silent", &PyTaoSetDataCmd::silent)
-      .def("__len__", [](const PyTaoSetDataCmd&) { return 1; })
-      .def("__getitem__", [](const PyTaoSetDataCmd& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.silent);
-        throw py::index_error();
-      });
   m.def(
       "tao_set_data_useit_opt",
       &Tao::tao_set_data_useit_opt,
@@ -5245,6 +4927,20 @@ void init_Tao_routines_t(py::module& m) {
   value_str : unknown
       Value to set to.
   )""");
+  py::class_<PyTaoSetElementsCmd, std::unique_ptr<PyTaoSetElementsCmd>>(
+      m,
+      "TaoSetElementsCmd",
+      "Fortran routine tao_set_elements_cmd return value")
+      .def_readonly("update", &PyTaoSetElementsCmd::update)
+      .def("__len__", [](const PyTaoSetElementsCmd&) { return 1; })
+      .def(
+          "__getitem__", [](const PyTaoSetElementsCmd& s, int i) -> py::object {
+            if (i < 0)
+              i += 1;
+            if (i == 0)
+              return py::cast(s.update);
+            throw py::index_error();
+          });
   m.def(
       "tao_set_elements_cmd",
       &python_tao_set_elements_cmd,
@@ -5265,34 +4961,6 @@ void init_Tao_routines_t(py::module& m) {
   value : unknown
       Value to set.
   )""");
-  py::class_<PyTaoSetElementsCmd, std::unique_ptr<PyTaoSetElementsCmd>>(
-      m,
-      "TaoSetElementsCmd",
-      "Fortran routine tao_set_elements_cmd return value")
-      .def_readonly("update", &PyTaoSetElementsCmd::update)
-      .def("__len__", [](const PyTaoSetElementsCmd&) { return 1; })
-      .def(
-          "__getitem__", [](const PyTaoSetElementsCmd& s, int i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.update);
-            throw py::index_error();
-          });
-  m.def(
-      "tao_set_floor_plan_axis_label",
-      &python_tao_set_floor_plan_axis_label,
-      py::arg("graph"),
-      py::arg("axis_in"),
-      py::arg("axis_out"),
-      py::arg("which"),
-      R"""(Parameters
-  ----------
-  graph : 
-  axis_in : 
-  axis_out : 
-  which : 
-  )""");
   py::class_<
       PyTaoSetFloorPlanAxisLabel,
       std::unique_ptr<PyTaoSetFloorPlanAxisLabel>>(
@@ -5310,6 +4978,20 @@ void init_Tao_routines_t(py::module& m) {
               return py::cast(s.which);
             throw py::index_error();
           });
+  m.def(
+      "tao_set_floor_plan_axis_label",
+      &python_tao_set_floor_plan_axis_label,
+      py::arg("graph"),
+      py::arg("axis_in"),
+      py::arg("axis_out"),
+      py::arg("which"),
+      R"""(Parameters
+  ----------
+  graph : 
+  axis_in : 
+  axis_out : 
+  which : 
+  )""");
   m.def(
       "tao_set_geodesic_lm_cmd",
       &Tao::tao_set_geodesic_lm_cmd,
@@ -5361,6 +5043,24 @@ void init_Tao_routines_t(py::module& m) {
   value_str : unknown
       What value to set it to.
   )""");
+  py::class_<Tao::TaoSetIntegerValue, std::unique_ptr<Tao::TaoSetIntegerValue>>(
+      m,
+      "TaoSetIntegerValue",
+      "Fortran routine tao_set_integer_value return value")
+      .def_readonly("var", &Tao::TaoSetIntegerValue::var)
+      .def_readonly("error", &Tao::TaoSetIntegerValue::error)
+      .def("__len__", [](const Tao::TaoSetIntegerValue&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Tao::TaoSetIntegerValue& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.var);
+            if (i == 1)
+              return py::cast(s.error);
+            throw py::index_error();
+          });
   m.def(
       "tao_set_integer_value",
       &Tao::tao_set_integer_value,
@@ -5396,24 +5096,6 @@ void init_Tao_routines_t(py::module& m) {
   error : bool
       Set True on an error. False otherwise.
   )""");
-  py::class_<Tao::TaoSetIntegerValue, std::unique_ptr<Tao::TaoSetIntegerValue>>(
-      m,
-      "TaoSetIntegerValue",
-      "Fortran routine tao_set_integer_value return value")
-      .def_readonly("var", &Tao::TaoSetIntegerValue::var)
-      .def_readonly("error", &Tao::TaoSetIntegerValue::error)
-      .def("__len__", [](const Tao::TaoSetIntegerValue&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Tao::TaoSetIntegerValue& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.var);
-            if (i == 1)
-              return py::cast(s.error);
-            throw py::index_error();
-          });
   m.def(
       "tao_set_invalid",
       &Tao::tao_set_invalid,
@@ -5469,6 +5151,24 @@ void init_Tao_routines_t(py::module& m) {
   source_lat : unknown
       Maybe: 'model', 'design', or 'base' s.u(n) -- lat_struct: changes specified lattice in specified universe
   )""");
+  py::class_<Tao::TaoSetLogicalValue, std::unique_ptr<Tao::TaoSetLogicalValue>>(
+      m,
+      "TaoSetLogicalValue",
+      "Fortran routine tao_set_logical_value return value")
+      .def_readonly("var", &Tao::TaoSetLogicalValue::var)
+      .def_readonly("error", &Tao::TaoSetLogicalValue::error)
+      .def("__len__", [](const Tao::TaoSetLogicalValue&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Tao::TaoSetLogicalValue& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.var);
+            if (i == 1)
+              return py::cast(s.error);
+            throw py::index_error();
+          });
   m.def(
       "tao_set_logical_value",
       &Tao::tao_set_logical_value,
@@ -5495,24 +5195,6 @@ void init_Tao_routines_t(py::module& m) {
   error : bool
       Set True on an error. False otherwise.
   )""");
-  py::class_<Tao::TaoSetLogicalValue, std::unique_ptr<Tao::TaoSetLogicalValue>>(
-      m,
-      "TaoSetLogicalValue",
-      "Fortran routine tao_set_logical_value return value")
-      .def_readonly("var", &Tao::TaoSetLogicalValue::var)
-      .def_readonly("error", &Tao::TaoSetLogicalValue::error)
-      .def("__len__", [](const Tao::TaoSetLogicalValue&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Tao::TaoSetLogicalValue& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.var);
-            if (i == 1)
-              return py::cast(s.error);
-            throw py::index_error();
-          });
   m.def(
       "tao_set_openmp_n_threads",
       &Tao::tao_set_openmp_n_threads,
@@ -5625,6 +5307,24 @@ void init_Tao_routines_t(py::module& m) {
   value_str : unknown
       Value to set to.
   )""");
+  py::class_<Tao::TaoSetQpAxisStruct, std::unique_ptr<Tao::TaoSetQpAxisStruct>>(
+      m,
+      "TaoSetQpAxisStruct",
+      "Fortran routine tao_set_qp_axis_struct return value")
+      .def_readonly("error", &Tao::TaoSetQpAxisStruct::error)
+      .def_readonly("ix_uni", &Tao::TaoSetQpAxisStruct::ix_uni)
+      .def("__len__", [](const Tao::TaoSetQpAxisStruct&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Tao::TaoSetQpAxisStruct& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.error);
+            if (i == 1)
+              return py::cast(s.ix_uni);
+            throw py::index_error();
+          });
   m.def(
       "tao_set_qp_axis_struct",
       &Tao::tao_set_qp_axis_struct,
@@ -5656,16 +5356,18 @@ void init_Tao_routines_t(py::module& m) {
   ix_uni : int
       Tao universe number in case the value depends upon a parameter of a particular universe.
   )""");
-  py::class_<Tao::TaoSetQpAxisStruct, std::unique_ptr<Tao::TaoSetQpAxisStruct>>(
+  py::class_<
+      Tao::TaoSetQpPointStruct,
+      std::unique_ptr<Tao::TaoSetQpPointStruct>>(
       m,
-      "TaoSetQpAxisStruct",
-      "Fortran routine tao_set_qp_axis_struct return value")
-      .def_readonly("error", &Tao::TaoSetQpAxisStruct::error)
-      .def_readonly("ix_uni", &Tao::TaoSetQpAxisStruct::ix_uni)
-      .def("__len__", [](const Tao::TaoSetQpAxisStruct&) { return 2; })
+      "TaoSetQpPointStruct",
+      "Fortran routine tao_set_qp_point_struct return value")
+      .def_readonly("error", &Tao::TaoSetQpPointStruct::error)
+      .def_readonly("ix_uni", &Tao::TaoSetQpPointStruct::ix_uni)
+      .def("__len__", [](const Tao::TaoSetQpPointStruct&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoSetQpAxisStruct& s, int i) -> py::object {
+          [](const Tao::TaoSetQpPointStruct& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -5705,18 +5407,16 @@ void init_Tao_routines_t(py::module& m) {
   ix_uni : int
       Tao universe number in case the value depends upon a parameter of a particular universe.
   )""");
-  py::class_<
-      Tao::TaoSetQpPointStruct,
-      std::unique_ptr<Tao::TaoSetQpPointStruct>>(
+  py::class_<Tao::TaoSetQpRectStruct, std::unique_ptr<Tao::TaoSetQpRectStruct>>(
       m,
-      "TaoSetQpPointStruct",
-      "Fortran routine tao_set_qp_point_struct return value")
-      .def_readonly("error", &Tao::TaoSetQpPointStruct::error)
-      .def_readonly("ix_uni", &Tao::TaoSetQpPointStruct::ix_uni)
-      .def("__len__", [](const Tao::TaoSetQpPointStruct&) { return 2; })
+      "TaoSetQpRectStruct",
+      "Fortran routine tao_set_qp_rect_struct return value")
+      .def_readonly("error", &Tao::TaoSetQpRectStruct::error)
+      .def_readonly("ix_uni", &Tao::TaoSetQpRectStruct::ix_uni)
+      .def("__len__", [](const Tao::TaoSetQpRectStruct&) { return 2; })
       .def(
           "__getitem__",
-          [](const Tao::TaoSetQpPointStruct& s, int i) -> py::object {
+          [](const Tao::TaoSetQpRectStruct& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -5756,24 +5456,6 @@ void init_Tao_routines_t(py::module& m) {
   ix_uni : int
       Tao universe number in case the value depends upon a parameter of a particular universe.
   )""");
-  py::class_<Tao::TaoSetQpRectStruct, std::unique_ptr<Tao::TaoSetQpRectStruct>>(
-      m,
-      "TaoSetQpRectStruct",
-      "Fortran routine tao_set_qp_rect_struct return value")
-      .def_readonly("error", &Tao::TaoSetQpRectStruct::error)
-      .def_readonly("ix_uni", &Tao::TaoSetQpRectStruct::ix_uni)
-      .def("__len__", [](const Tao::TaoSetQpRectStruct&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Tao::TaoSetQpRectStruct& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.error);
-            if (i == 1)
-              return py::cast(s.ix_uni);
-            throw py::index_error();
-          });
   m.def(
       "tao_set_ran_state_cmd",
       &Tao::tao_set_ran_state_cmd,
@@ -5787,6 +5469,22 @@ void init_Tao_routines_t(py::module& m) {
   state_string : unknown
       Encoded random number state.
   )""");
+  py::class_<Tao::TaoSetRealValue, std::unique_ptr<Tao::TaoSetRealValue>>(
+      m, "TaoSetRealValue", "Fortran routine tao_set_real_value return value")
+      .def_readonly("var", &Tao::TaoSetRealValue::var)
+      .def_readonly("error", &Tao::TaoSetRealValue::error)
+      .def("__len__", [](const Tao::TaoSetRealValue&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Tao::TaoSetRealValue& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.var);
+            if (i == 1)
+              return py::cast(s.error);
+            throw py::index_error();
+          });
   m.def(
       "tao_set_real_value",
       &Tao::tao_set_real_value,
@@ -5822,22 +5520,6 @@ void init_Tao_routines_t(py::module& m) {
   error : bool
       Set True on an error. False otherwise.
   )""");
-  py::class_<Tao::TaoSetRealValue, std::unique_ptr<Tao::TaoSetRealValue>>(
-      m, "TaoSetRealValue", "Fortran routine tao_set_real_value return value")
-      .def_readonly("var", &Tao::TaoSetRealValue::var)
-      .def_readonly("error", &Tao::TaoSetRealValue::error)
-      .def("__len__", [](const Tao::TaoSetRealValue&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Tao::TaoSetRealValue& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.var);
-            if (i == 1)
-              return py::cast(s.error);
-            throw py::index_error();
-          });
   m.def(
       "tao_set_region_cmd",
       &Tao::tao_set_region_cmd,
@@ -6092,18 +5774,6 @@ void init_Tao_routines_t(py::module& m) {
   calc_ok : bool
       Set True if there were no problems, False otherwise.
   )""");
-  m.def(
-      "tao_spin_matrices_calc_needed",
-      &python_tao_spin_matrices_calc_needed,
-      py::arg("data_type"),
-      py::arg("data_source"),
-      py::arg("do_calc"),
-      R"""(Parameters
-  ----------
-  data_type : 
-  data_source : 
-  do_calc : 
-  )""");
   py::class_<
       PyTaoSpinMatricesCalcNeeded,
       std::unique_ptr<PyTaoSpinMatricesCalcNeeded>>(
@@ -6128,20 +5798,19 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "tao_spin_tracking_turn_on", &Tao::tao_spin_tracking_turn_on, R"""()""");
-  m.def(
-      "tao_split_component",
-      &Tao::tao_split_component,
-      py::arg("comp_str"),
+      "tao_spin_matrices_calc_needed",
+      &python_tao_spin_matrices_calc_needed,
+      py::arg("data_type"),
+      py::arg("data_source"),
+      py::arg("do_calc"),
       R"""(Parameters
   ----------
-  comp_str : unknown
-      Components. EG: 'meas - design'
-  comp : TaoDataVarComponentStruct
-      Array of individual components.
-  err : bool
-      Set True if there is an error, False otherwise.
+  data_type : 
+  data_source : 
+  do_calc : 
   )""");
+  m.def(
+      "tao_spin_tracking_turn_on", &Tao::tao_spin_tracking_turn_on, R"""()""");
   py::class_<Tao::TaoSplitComponent, std::unique_ptr<Tao::TaoSplitComponent>>(
       m,
       "TaoSplitComponent",
@@ -6161,16 +5830,17 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "tao_srdt_calc_needed",
-      &python_tao_srdt_calc_needed,
-      py::arg("data_type"),
-      py::arg("data_source"),
-      py::arg("do_srdt"),
+      "tao_split_component",
+      &Tao::tao_split_component,
+      py::arg("comp_str"),
       R"""(Parameters
   ----------
-  data_type : 
-  data_source : 
-  do_srdt : 
+  comp_str : unknown
+      Components. EG: 'meas - design'
+  comp : TaoDataVarComponentStruct
+      Array of individual components.
+  err : bool
+      Set True if there is an error, False otherwise.
   )""");
   py::class_<PyTaoSrdtCalcNeeded, std::unique_ptr<PyTaoSrdtCalcNeeded>>(
       m,
@@ -6193,20 +5863,16 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "tao_subin_uni_number",
-      &python_tao_subin_uni_number,
-      py::arg("name_in"),
-      py::arg("ix_uni"),
-      py::arg("ok"),
+      "tao_srdt_calc_needed",
+      &python_tao_srdt_calc_needed,
+      py::arg("data_type"),
+      py::arg("data_source"),
+      py::arg("do_srdt"),
       R"""(Parameters
   ----------
-  name_in : unknown
-      Input name with "#" character
-  ix_uni : int
-      Universe index.
-  name_out : unknown
-      Output name.
-  ok : 
+  data_type : 
+  data_source : 
+  do_srdt : 
   )""");
   py::class_<PyTaoSubinUniNumber, std::unique_ptr<PyTaoSubinUniNumber>>(
       m,
@@ -6225,6 +5891,22 @@ void init_Tao_routines_t(py::module& m) {
               return py::cast(s.ok);
             throw py::index_error();
           });
+  m.def(
+      "tao_subin_uni_number",
+      &python_tao_subin_uni_number,
+      py::arg("name_in"),
+      py::arg("ix_uni"),
+      py::arg("ok"),
+      R"""(Parameters
+  ----------
+  name_in : unknown
+      Input name with "#" character
+  ix_uni : int
+      Universe index.
+  name_out : unknown
+      Output name.
+  ok : 
+  )""");
   m.def(
       "tao_svd_optimizer",
       &Tao::tao_svd_optimizer,
@@ -6258,22 +5940,6 @@ void init_Tao_routines_t(py::module& m) {
   uni_names : unknown
       Universes to taper.
   )""");
-  m.def(
-      "tao_to_change_number",
-      &python_tao_to_change_number,
-      py::arg("num_str"),
-      py::arg("n_size"),
-      py::arg("change_number"),
-      py::arg("abs_or_rel"),
-      py::arg("err"),
-      R"""(Parameters
-  ----------
-  num_str : 
-  n_size : 
-  change_number : 
-  abs_or_rel : 
-  err : 
-  )""");
   py::class_<PyTaoToChangeNumber, std::unique_ptr<PyTaoToChangeNumber>>(
       m,
       "TaoToChangeNumber",
@@ -6298,17 +5964,20 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "tao_to_int",
-      &python_tao_to_int,
-      py::arg("str"),
-      py::arg("i_int"),
+      "tao_to_change_number",
+      &python_tao_to_change_number,
+      py::arg("num_str"),
+      py::arg("n_size"),
+      py::arg("change_number"),
+      py::arg("abs_or_rel"),
       py::arg("err"),
-      R"""(Subroutine tao_to_int (str, i_int, err)
-
-  Converts a string to an integer
-
-  If the string str is blank then i_int = 0
-
+      R"""(Parameters
+  ----------
+  num_str : 
+  n_size : 
+  change_number : 
+  abs_or_rel : 
+  err : 
   )""");
   py::class_<PyTaoToInt, std::unique_ptr<PyTaoToInt>>(
       m, "TaoToInt", "Fortran routine tao_to_int return value")
@@ -6328,26 +5997,17 @@ void init_Tao_routines_t(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "tao_to_phase_and_coupling_reading",
-      &python_tao_to_phase_and_coupling_reading,
-      py::arg("ele"),
-      py::arg("why_invalid"),
-      py::arg("datum"),
-      R"""(Subroutine tao_to_phase_and_coupling_reading (ele, bpm_data, valid_value)
+      "tao_to_int",
+      &python_tao_to_int,
+      py::arg("str"),
+      py::arg("i_int"),
+      py::arg("err"),
+      R"""(Subroutine tao_to_int (str, i_int, err)
 
-  Buffer routine for to_phase_and_coupling_reading.
+  Converts a string to an integer
 
-  Parameters
-  ----------
-  ele : EleStruct
-      The monitor.
+  If the string str is blank then i_int = 0
 
-  Returns
-  -------
-  bpm_data : BpmPhaseCouplingStruct
-      Monitor values
-  valid_value : bool
-      Valid data value?
   )""");
   py::class_<
       PyTaoToPhaseAndCouplingReading,
@@ -6373,17 +6033,26 @@ void init_Tao_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "tao_to_real",
-      &Tao::tao_to_real,
-      py::arg("expression"),
-      R"""(Parameters
+      "tao_to_phase_and_coupling_reading",
+      &python_tao_to_phase_and_coupling_reading,
+      py::arg("ele"),
+      py::arg("why_invalid"),
+      py::arg("datum"),
+      R"""(Subroutine tao_to_phase_and_coupling_reading (ele, bpm_data, valid_value)
+
+  Buffer routine for to_phase_and_coupling_reading.
+
+  Parameters
   ----------
-  expression : unknown
-      arithmetic expression
-  value : float
-      Value of arithmetic expression.
-  err_flag : bool
-      TRUE on error.
+  ele : EleStruct
+      The monitor.
+
+  Returns
+  -------
+  bpm_data : BpmPhaseCouplingStruct
+      Monitor values
+  valid_value : bool
+      Valid data value?
   )""");
   py::class_<Tao::TaoToReal, std::unique_ptr<Tao::TaoToReal>>(
       m, "TaoToReal", "Fortran routine tao_to_real return value")
@@ -6400,14 +6069,17 @@ void init_Tao_routines_t(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "tao_too_many_particles_lost",
-      &python_tao_too_many_particles_lost,
-      py::arg("beam"),
-      py::arg("no_beam"),
+      "tao_to_real",
+      &Tao::tao_to_real,
+      py::arg("expression"),
       R"""(Parameters
   ----------
-  beam : 
-  no_beam : 
+  expression : unknown
+      arithmetic expression
+  value : float
+      Value of arithmetic expression.
+  err_flag : bool
+      TRUE on error.
   )""");
   py::class_<
       PyTaoTooManyParticlesLost,
@@ -6426,6 +6098,16 @@ void init_Tao_routines_t(py::module& m) {
               return py::cast(s.no_beam);
             throw py::index_error();
           });
+  m.def(
+      "tao_too_many_particles_lost",
+      &python_tao_too_many_particles_lost,
+      py::arg("beam"),
+      py::arg("no_beam"),
+      R"""(Parameters
+  ----------
+  beam : 
+  no_beam : 
+  )""");
   m.def(
       "tao_top10_derivative_print",
       &Tao::tao_top10_derivative_print,
@@ -6460,6 +6142,26 @@ void init_Tao_routines_t(py::module& m) {
   errcode : int
       Return error code: 0 => OK, Not 0 => Err.
   )""");
+  py::class_<
+      Tao::TaoTrackingEleIndex,
+      std::unique_ptr<Tao::TaoTrackingEleIndex>>(
+      m,
+      "TaoTrackingEleIndex",
+      "Fortran routine tao_tracking_ele_index return value")
+      .def_readonly("ix_branch", &Tao::TaoTrackingEleIndex::ix_branch)
+      .def_readonly("ix_ele", &Tao::TaoTrackingEleIndex::ix_ele)
+      .def("__len__", [](const Tao::TaoTrackingEleIndex&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Tao::TaoTrackingEleIndex& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.ix_branch);
+            if (i == 1)
+              return py::cast(s.ix_ele);
+            throw py::index_error();
+          });
   m.def(
       "tao_tracking_ele_index",
       &Tao::tao_tracking_ele_index,
@@ -6483,26 +6185,6 @@ void init_Tao_routines_t(py::module& m) {
   ix_ele : int
       Element index associated with ele.
   )""");
-  py::class_<
-      Tao::TaoTrackingEleIndex,
-      std::unique_ptr<Tao::TaoTrackingEleIndex>>(
-      m,
-      "TaoTrackingEleIndex",
-      "Fortran routine tao_tracking_ele_index return value")
-      .def_readonly("ix_branch", &Tao::TaoTrackingEleIndex::ix_branch)
-      .def_readonly("ix_ele", &Tao::TaoTrackingEleIndex::ix_ele)
-      .def("__len__", [](const Tao::TaoTrackingEleIndex&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Tao::TaoTrackingEleIndex& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.ix_branch);
-            if (i == 1)
-              return py::cast(s.ix_ele);
-            throw py::index_error();
-          });
   m.def(
       "tao_turn_on_special_calcs_if_needed_for_plotting",
       &Tao::tao_turn_on_special_calcs_if_needed_for_plotting,
@@ -6530,6 +6212,17 @@ void init_Tao_routines_t(py::module& m) {
   ix_amp : int
       Index of universe "@". Set to zero if no universe "@" found.
   )""");
+  py::class_<PyTaoUniverseIndex, std::unique_ptr<PyTaoUniverseIndex>>(
+      m, "TaoUniverseIndex", "Fortran routine tao_universe_index return value")
+      .def_readonly("i_this_uni", &PyTaoUniverseIndex::i_this_uni)
+      .def("__len__", [](const PyTaoUniverseIndex&) { return 1; })
+      .def("__getitem__", [](const PyTaoUniverseIndex& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.i_this_uni);
+        throw py::index_error();
+      });
   m.def(
       "tao_universe_index",
       &python_tao_universe_index,
@@ -6544,17 +6237,6 @@ void init_Tao_routines_t(py::module& m) {
       i_uni = -2 (all universes) maps to the default uni? Default if False.
   i_this_uni : 
   )""");
-  py::class_<PyTaoUniverseIndex, std::unique_ptr<PyTaoUniverseIndex>>(
-      m, "TaoUniverseIndex", "Fortran routine tao_universe_index return value")
-      .def_readonly("i_this_uni", &PyTaoUniverseIndex::i_this_uni)
-      .def("__len__", [](const PyTaoUniverseIndex&) { return 1; })
-      .def("__getitem__", [](const PyTaoUniverseIndex& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.i_this_uni);
-        throw py::index_error();
-      });
   m.def(
       "tao_use_data",
       &Tao::tao_use_data,
@@ -6586,6 +6268,17 @@ void init_Tao_routines_t(py::module& m) {
   ----------
   is_terminating : 
   )""");
+  py::class_<PyTaoVar1Name, std::unique_ptr<PyTaoVar1Name>>(
+      m, "TaoVar1Name", "Fortran routine tao_var1_name return value")
+      .def_readonly("var1_name", &PyTaoVar1Name::var1_name)
+      .def("__len__", [](const PyTaoVar1Name&) { return 1; })
+      .def("__getitem__", [](const PyTaoVar1Name& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.var1_name);
+        throw py::index_error();
+      });
   m.def(
       "tao_var1_name",
       &python_tao_var1_name,
@@ -6597,15 +6290,15 @@ void init_Tao_routines_t(py::module& m) {
       Variable
   var1_name : 
   )""");
-  py::class_<PyTaoVar1Name, std::unique_ptr<PyTaoVar1Name>>(
-      m, "TaoVar1Name", "Fortran routine tao_var1_name return value")
-      .def_readonly("var1_name", &PyTaoVar1Name::var1_name)
-      .def("__len__", [](const PyTaoVar1Name&) { return 1; })
-      .def("__getitem__", [](const PyTaoVar1Name& s, int i) -> py::object {
+  py::class_<PyTaoVarAttribName, std::unique_ptr<PyTaoVarAttribName>>(
+      m, "TaoVarAttribName", "Fortran routine tao_var_attrib_name return value")
+      .def_readonly("var_attrib_name", &PyTaoVarAttribName::var_attrib_name)
+      .def("__len__", [](const PyTaoVarAttribName&) { return 1; })
+      .def("__getitem__", [](const PyTaoVarAttribName& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
-          return py::cast(s.var1_name);
+          return py::cast(s.var_attrib_name);
         throw py::index_error();
       });
   m.def(
@@ -6619,17 +6312,6 @@ void init_Tao_routines_t(py::module& m) {
       Variable
   var_attrib_name : 
   )""");
-  py::class_<PyTaoVarAttribName, std::unique_ptr<PyTaoVarAttribName>>(
-      m, "TaoVarAttribName", "Fortran routine tao_var_attrib_name return value")
-      .def_readonly("var_attrib_name", &PyTaoVarAttribName::var_attrib_name)
-      .def("__len__", [](const PyTaoVarAttribName&) { return 1; })
-      .def("__getitem__", [](const PyTaoVarAttribName& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.var_attrib_name);
-        throw py::index_error();
-      });
   m.def(
       "tao_var_check",
       &Tao::tao_var_check,
@@ -6708,6 +6390,17 @@ void init_Tao_routines_t(py::module& m) {
       Plot region setup by tao_wave_cmd.
       This parameter is an input/output and is modified in-place. As an output: Plot with wave analysis curves.
   )""");
+  py::class_<PyTaoWaveCmd, std::unique_ptr<PyTaoWaveCmd>>(
+      m, "TaoWaveCmd", "Fortran routine tao_wave_cmd return value")
+      .def_readonly("err_flag", &PyTaoWaveCmd::err_flag)
+      .def("__len__", [](const PyTaoWaveCmd&) { return 1; })
+      .def("__getitem__", [](const PyTaoWaveCmd& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "tao_wave_cmd",
       &python_tao_wave_cmd,
@@ -6726,15 +6419,18 @@ void init_Tao_routines_t(py::module& m) {
   plot_place : 
       Character(*) place on plot page to put the wave plot.
   )""");
-  py::class_<PyTaoWaveCmd, std::unique_ptr<PyTaoWaveCmd>>(
-      m, "TaoWaveCmd", "Fortran routine tao_wave_cmd return value")
-      .def_readonly("err_flag", &PyTaoWaveCmd::err_flag)
-      .def("__len__", [](const PyTaoWaveCmd&) { return 1; })
-      .def("__getitem__", [](const PyTaoWaveCmd& s, int i) -> py::object {
+  py::class_<Tao::TaoWaveFit, std::unique_ptr<Tao::TaoWaveFit>>(
+      m, "TaoWaveFit", "Fortran routine tao_wave_fit return value")
+      .def_readonly("coef", &Tao::TaoWaveFit::coef)
+      .def_readonly("rms", &Tao::TaoWaveFit::rms)
+      .def("__len__", [](const Tao::TaoWaveFit&) { return 2; })
+      .def("__getitem__", [](const Tao::TaoWaveFit& s, int i) -> py::object {
         if (i < 0)
-          i += 1;
+          i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return py::cast(s.coef);
+        if (i == 1)
+          return py::cast(s.rms);
         throw py::index_error();
       });
   m.def(
@@ -6776,20 +6472,6 @@ void init_Tao_routines_t(py::module& m) {
   rms : float
       Variances with rms(n_func+1) = sqrt(chi^2/n_dat).
   )""");
-  py::class_<Tao::TaoWaveFit, std::unique_ptr<Tao::TaoWaveFit>>(
-      m, "TaoWaveFit", "Fortran routine tao_wave_fit return value")
-      .def_readonly("coef", &Tao::TaoWaveFit::coef)
-      .def_readonly("rms", &Tao::TaoWaveFit::rms)
-      .def("__len__", [](const Tao::TaoWaveFit&) { return 2; })
-      .def("__getitem__", [](const Tao::TaoWaveFit& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.coef);
-        if (i == 1)
-          return py::cast(s.rms);
-        throw py::index_error();
-      });
   m.def(
       "tao_write_cmd",
       &Tao::tao_write_cmd,
@@ -6850,22 +6532,6 @@ void init_Tao_routines_t(py::module& m) {
   err : bool
       Set to True if the plot cannot be found. False otherwise.
   )""");
-  m.def(
-      "tao_x_scale_graph",
-      &python_tao_x_scale_graph,
-      py::arg("graph"),
-      py::arg("x_min"),
-      py::arg("x_max"),
-      py::arg("include_wall") = py::none(),
-      py::arg("have_scaled") = py::none(),
-      R"""(Parameters
-  ----------
-  graph : 
-  x_min : 
-  x_max : 
-  include_wall : 
-  have_scaled : 
-  )""");
   py::class_<PyTaoXScaleGraph, std::unique_ptr<PyTaoXScaleGraph>>(
       m, "TaoXScaleGraph", "Fortran routine tao_x_scale_graph return value")
       .def_readonly("x_min", &PyTaoXScaleGraph::x_min)
@@ -6886,6 +6552,22 @@ void init_Tao_routines_t(py::module& m) {
           return py::cast(s.have_scaled);
         throw py::index_error();
       });
+  m.def(
+      "tao_x_scale_graph",
+      &python_tao_x_scale_graph,
+      py::arg("graph"),
+      py::arg("x_min"),
+      py::arg("x_max"),
+      py::arg("include_wall") = py::none(),
+      py::arg("have_scaled") = py::none(),
+      R"""(Parameters
+  ----------
+  graph : 
+  x_min : 
+  x_max : 
+  include_wall : 
+  have_scaled : 
+  )""");
   m.def(
       "tao_x_scale_plot",
       &Tao::tao_x_scale_plot,

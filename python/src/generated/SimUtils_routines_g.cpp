@@ -1,23 +1,9 @@
 #include "pybmad/generated/SimUtils_routines_g.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyGenCompleteElliptic {
-  double kc;
-  double p;
-  double c;
-  double s;
-  std::optional<double> err_tol;
-  double value;
-};
 PyGenCompleteElliptic python_gen_complete_elliptic(
     double kc,
     double p,
@@ -29,12 +15,6 @@ PyGenCompleteElliptic python_gen_complete_elliptic(
   auto py_result{PyGenCompleteElliptic{kc, p, c, s, err_tol, value}};
   return py_result;
 }
-struct PyGetFileNumber {
-  std::string file_name;
-  std::string cnum_in;
-  int num_out;
-  bool err_flag;
-};
 PyGetFileNumber python_get_file_number(
     std::string file_name,
     std::string cnum_in,
@@ -44,10 +24,6 @@ PyGetFileNumber python_get_file_number(
   auto py_result{PyGetFileNumber{file_name, cnum_in, num_out, err_flag}};
   return py_result;
 }
-struct PyGetFileTimeStamp {
-  std::string file;
-  std::string time_stamp;
-};
 PyGetFileTimeStamp python_get_file_time_stamp(
     std::string file,
     std::string time_stamp) {
@@ -57,24 +33,6 @@ PyGetFileTimeStamp python_get_file_time_stamp(
 }
 
 void init_SimUtils_routines_g(py::module& m) {
-  m.def(
-      "gen_complete_elliptic",
-      &python_gen_complete_elliptic,
-      py::arg("kc"),
-      py::arg("p"),
-      py::arg("c"),
-      py::arg("s"),
-      py::arg("err_tol") = py::none(),
-      py::arg("value"),
-      R"""(Parameters
-  ----------
-  kc : 
-  p : 
-  c : 
-  s : 
-  err_tol : 
-  value : 
-  )""");
   py::class_<PyGenCompleteElliptic, std::unique_ptr<PyGenCompleteElliptic>>(
       m,
       "GenCompleteElliptic",
@@ -106,18 +64,22 @@ void init_SimUtils_routines_g(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "get_file_number",
-      &python_get_file_number,
-      py::arg("file_name"),
-      py::arg("cnum_in"),
-      py::arg("num_out"),
-      py::arg("err_flag"),
+      "gen_complete_elliptic",
+      &python_gen_complete_elliptic,
+      py::arg("kc"),
+      py::arg("p"),
+      py::arg("c"),
+      py::arg("s"),
+      py::arg("err_tol") = py::none(),
+      py::arg("value"),
       R"""(Parameters
   ----------
-  file_name : 
-  cnum_in : 
-  num_out : 
-  err_flag : 
+  kc : 
+  p : 
+  c : 
+  s : 
+  err_tol : 
+  value : 
   )""");
   py::class_<PyGetFileNumber, std::unique_ptr<PyGetFileNumber>>(
       m, "GetFileNumber", "Fortran routine get_file_number return value")
@@ -140,18 +102,18 @@ void init_SimUtils_routines_g(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "get_file_time_stamp",
-      &python_get_file_time_stamp,
-      py::arg("file"),
-      py::arg("time_stamp"),
-      R"""(no longer exists
-  subroutine get_next_number (filein, cnum, digits)
-    implicit none
-    character(*) filein
-    character(*) cnum
-    integer digits
-  end subroutine
-
+      "get_file_number",
+      &python_get_file_number,
+      py::arg("file_name"),
+      py::arg("cnum_in"),
+      py::arg("num_out"),
+      py::arg("err_flag"),
+      R"""(Parameters
+  ----------
+  file_name : 
+  cnum_in : 
+  num_out : 
+  err_flag : 
   )""");
   py::class_<PyGetFileTimeStamp, std::unique_ptr<PyGetFileTimeStamp>>(
       m, "GetFileTimeStamp", "Fortran routine get_file_time_stamp return value")
@@ -167,4 +129,18 @@ void init_SimUtils_routines_g(py::module& m) {
           return py::cast(s.time_stamp);
         throw py::index_error();
       });
+  m.def(
+      "get_file_time_stamp",
+      &python_get_file_time_stamp,
+      py::arg("file"),
+      py::arg("time_stamp"),
+      R"""(no longer exists
+  subroutine get_next_number (filein, cnum, digits)
+    implicit none
+    character(*) filein
+    character(*) cnum
+    integer digits
+  end subroutine
+
+  )""");
 }

@@ -1,19 +1,9 @@
 #include "pybmad/generated/bsim_routines_l.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyLogicalToPython {
-  bool logic;
-  std::string string;
-};
 PyLogicalToPython python_logical_to_python(bool logic, std::string string) {
   bsim::logical_to_python(logic, string);
   auto py_result{PyLogicalToPython{logic, string}};
@@ -21,16 +11,6 @@ PyLogicalToPython python_logical_to_python(bool logic, std::string string) {
 }
 
 void init_bsim_routines_l(py::module& m) {
-  m.def(
-      "logical_to_python",
-      &python_logical_to_python,
-      py::arg("logic"),
-      py::arg("string"),
-      R"""(Parameters
-  ----------
-  logic : 
-  string : 
-  )""");
   py::class_<PyLogicalToPython, std::unique_ptr<PyLogicalToPython>>(
       m, "LogicalToPython", "Fortran routine logical_to_python return value")
       .def_readonly("logic", &PyLogicalToPython::logic)
@@ -45,4 +25,14 @@ void init_bsim_routines_l(py::module& m) {
           return py::cast(s.string);
         throw py::index_error();
       });
+  m.def(
+      "logical_to_python",
+      &python_logical_to_python,
+      py::arg("logic"),
+      py::arg("string"),
+      R"""(Parameters
+  ----------
+  logic : 
+  string : 
+  )""");
 }

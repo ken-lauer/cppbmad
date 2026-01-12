@@ -1,34 +1,14 @@
 #include "pybmad/generated/SimUtils_routines_w.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyWordLen {
-  std::string wording;
-  int wlen;
-};
 PyWordLen python_word_len(std::string wording, int wlen) {
   SimUtils::word_len(wording, wlen);
   auto py_result{PyWordLen{wording, wlen}};
   return py_result;
 }
-struct PyWordRead {
-  std::string in_str;
-  std::string delim_list;
-  std::string word;
-  int ix_word;
-  std::string delim;
-  bool delim_found;
-  std::string out_str;
-  std::optional<bool> ignore_interior;
-};
 PyWordRead python_word_read(
     std::string in_str,
     std::string delim_list,
@@ -60,6 +40,24 @@ PyWordRead python_word_read(
 }
 
 void init_SimUtils_routines_w(py::module& m) {
+  py::class_<
+      SimUtils::WMatToAxisAngle,
+      std::unique_ptr<SimUtils::WMatToAxisAngle>>(
+      m, "WMatToAxisAngle", "Fortran routine w_mat_to_axis_angle return value")
+      .def_readonly("axis", &SimUtils::WMatToAxisAngle::axis)
+      .def_readonly("angle", &SimUtils::WMatToAxisAngle::angle)
+      .def("__len__", [](const SimUtils::WMatToAxisAngle&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const SimUtils::WMatToAxisAngle& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.axis);
+            if (i == 1)
+              return py::cast(s.angle);
+            throw py::index_error();
+          });
   m.def(
       "w_mat_to_axis_angle",
       &SimUtils::w_mat_to_axis_angle,
@@ -83,24 +81,6 @@ void init_SimUtils_routines_w(py::module& m) {
   angle : float
       Rotation angle in the range [0, pi].
   )""");
-  py::class_<
-      SimUtils::WMatToAxisAngle,
-      std::unique_ptr<SimUtils::WMatToAxisAngle>>(
-      m, "WMatToAxisAngle", "Fortran routine w_mat_to_axis_angle return value")
-      .def_readonly("axis", &SimUtils::WMatToAxisAngle::axis)
-      .def_readonly("angle", &SimUtils::WMatToAxisAngle::angle)
-      .def("__len__", [](const SimUtils::WMatToAxisAngle&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::WMatToAxisAngle& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.axis);
-            if (i == 1)
-              return py::cast(s.angle);
-            throw py::index_error();
-          });
   m.def(
       "w_mat_to_quat",
       &SimUtils::w_mat_to_quat,
@@ -119,16 +99,6 @@ void init_SimUtils_routines_w(py::module& m) {
   quat : float
       Quaternion.
   )""");
-  m.def(
-      "word_len",
-      &python_word_len,
-      py::arg("wording"),
-      py::arg("wlen"),
-      R"""(Parameters
-  ----------
-  wording : 
-  wlen : 
-  )""");
   py::class_<PyWordLen, std::unique_ptr<PyWordLen>>(
       m, "WordLen", "Fortran routine word_len return value")
       .def_readonly("wording", &PyWordLen::wording)
@@ -144,26 +114,14 @@ void init_SimUtils_routines_w(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "word_read",
-      &python_word_read,
-      py::arg("in_str"),
-      py::arg("delim_list"),
-      py::arg("word"),
-      py::arg("ix_word"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::arg("out_str"),
-      py::arg("ignore_interior") = py::none(),
+      "word_len",
+      &python_word_len,
+      py::arg("wording"),
+      py::arg("wlen"),
       R"""(Parameters
   ----------
-  in_str : 
-  delim_list : 
-  word : 
-  ix_word : 
-  delim : 
-  delim_found : 
-  out_str : 
-  ignore_interior : 
+  wording : 
+  wlen : 
   )""");
   py::class_<PyWordRead, std::unique_ptr<PyWordRead>>(
       m, "WordRead", "Fortran routine word_read return value")
@@ -197,4 +155,26 @@ void init_SimUtils_routines_w(py::module& m) {
           return py::cast(s.ignore_interior);
         throw py::index_error();
       });
+  m.def(
+      "word_read",
+      &python_word_read,
+      py::arg("in_str"),
+      py::arg("delim_list"),
+      py::arg("word"),
+      py::arg("ix_word"),
+      py::arg("delim"),
+      py::arg("delim_found"),
+      py::arg("out_str"),
+      py::arg("ignore_interior") = py::none(),
+      R"""(Parameters
+  ----------
+  in_str : 
+  delim_list : 
+  word : 
+  ix_word : 
+  delim : 
+  delim_found : 
+  out_str : 
+  ignore_interior : 
+  )""");
 }

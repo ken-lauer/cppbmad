@@ -1,21 +1,9 @@
 #include "pybmad/generated/Bmad_routines_y.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyYlafun {
-  double x;
-  double y;
-  double z;
-  double res;
-};
 PyYlafun python_ylafun(double x, double y, double z, double res) {
   Bmad::ylafun(x, y, z, res);
   auto py_result{PyYlafun{x, y, z, res}};
@@ -23,20 +11,6 @@ PyYlafun python_ylafun(double x, double y, double z, double res) {
 }
 
 void init_Bmad_routines_y(py::module& m) {
-  m.def(
-      "ylafun",
-      &python_ylafun,
-      py::arg("x"),
-      py::arg("y"),
-      py::arg("z"),
-      py::arg("res"),
-      R"""(Parameters
-  ----------
-  x : 
-  y : 
-  z : 
-  res : 
-  )""");
   py::class_<PyYlafun, std::unique_ptr<PyYlafun>>(
       m, "Ylafun", "Fortran routine ylafun return value")
       .def_readonly("x", &PyYlafun::x)
@@ -57,4 +31,18 @@ void init_Bmad_routines_y(py::module& m) {
           return py::cast(s.res);
         throw py::index_error();
       });
+  m.def(
+      "ylafun",
+      &python_ylafun,
+      py::arg("x"),
+      py::arg("y"),
+      py::arg("z"),
+      py::arg("res"),
+      R"""(Parameters
+  ----------
+  x : 
+  y : 
+  z : 
+  res : 
+  )""");
 }

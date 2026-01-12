@@ -1,21 +1,9 @@
 #include "pybmad/generated/SimUtils_routines_c.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyCalcFileNumber {
-  std::string file_name;
-  int num_in;
-  int num_out;
-  bool err_flag;
-};
 PyCalcFileNumber python_calc_file_number(
     std::string file_name,
     int num_in,
@@ -25,10 +13,6 @@ PyCalcFileNumber python_calc_file_number(
   auto py_result{PyCalcFileNumber{file_name, num_in, num_out, err_flag}};
   return py_result;
 }
-struct PyChangeFileNumber {
-  std::string file_name;
-  int change;
-};
 PyChangeFileNumber python_change_file_number(
     std::string file_name,
     int change) {
@@ -36,11 +20,6 @@ PyChangeFileNumber python_change_file_number(
   auto py_result{PyChangeFileNumber{file_name, change}};
   return py_result;
 }
-
-struct PyCoarseFrequencyEstimate {
-  double frequency;
-  std::optional<bool> error;
-};
 PyCoarseFrequencyEstimate python_coarse_frequency_estimate(
     RealAlloc1D& data,
     std::optional<bool> error = std::nullopt) {
@@ -48,12 +27,6 @@ PyCoarseFrequencyEstimate python_coarse_frequency_estimate(
   auto py_result{PyCoarseFrequencyEstimate{_result, error}};
   return py_result;
 }
-struct PyComplexErrorFunction {
-  double wr;
-  double wi;
-  double zr;
-  double zi;
-};
 PyComplexErrorFunction python_complex_error_function(
     double wr,
     double wi,
@@ -63,17 +36,11 @@ PyComplexErrorFunction python_complex_error_function(
   auto py_result{PyComplexErrorFunction{wr, wi, zr, zi}};
   return py_result;
 }
-struct PyCosOne {
-  double cos1;
-};
 PyCosOne python_cos_one(double angle, double cos1) {
   SimUtils::cos_one(angle, cos1);
   auto py_result{PyCosOne{cos1}};
   return py_result;
 }
-struct PyCosc {
-  double y;
-};
 PyCosc python_cosc(double x, std::optional<int> nd, double y) {
   SimUtils::cosc(x, nd, y);
   auto py_result{PyCosc{y}};
@@ -81,20 +48,6 @@ PyCosc python_cosc(double x, std::optional<int> nd, double y) {
 }
 
 void init_SimUtils_routines_c(py::module& m) {
-  m.def(
-      "calc_file_number",
-      &python_calc_file_number,
-      py::arg("file_name"),
-      py::arg("num_in"),
-      py::arg("num_out"),
-      py::arg("err_flag"),
-      R"""(Parameters
-  ----------
-  file_name : 
-  num_in : 
-  num_out : 
-  err_flag : 
-  )""");
   py::class_<PyCalcFileNumber, std::unique_ptr<PyCalcFileNumber>>(
       m, "CalcFileNumber", "Fortran routine calc_file_number return value")
       .def_readonly("file_name", &PyCalcFileNumber::file_name)
@@ -116,14 +69,18 @@ void init_SimUtils_routines_c(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "change_file_number",
-      &python_change_file_number,
+      "calc_file_number",
+      &python_calc_file_number,
       py::arg("file_name"),
-      py::arg("change"),
+      py::arg("num_in"),
+      py::arg("num_out"),
+      py::arg("err_flag"),
       R"""(Parameters
   ----------
   file_name : 
-  change : 
+  num_in : 
+  num_out : 
+  err_flag : 
   )""");
   py::class_<PyChangeFileNumber, std::unique_ptr<PyChangeFileNumber>>(
       m, "ChangeFileNumber", "Fortran routine change_file_number return value")
@@ -139,6 +96,16 @@ void init_SimUtils_routines_c(py::module& m) {
           return py::cast(s.change);
         throw py::index_error();
       });
+  m.def(
+      "change_file_number",
+      &python_change_file_number,
+      py::arg("file_name"),
+      py::arg("change"),
+      R"""(Parameters
+  ----------
+  file_name : 
+  change : 
+  )""");
   m.def(
       "charge_of",
       &SimUtils::charge_of,
@@ -178,28 +145,6 @@ void init_SimUtils_routines_c(py::module& m) {
   charge_mass_ratio : float
       particle charge to mass ratio. (1/eV)
   )""");
-  m.def(
-      "coarse_frequency_estimate",
-      &python_coarse_frequency_estimate,
-      py::arg("data"),
-      py::arg("error") = py::none(),
-      R"""(Function coarse_frequency_estimate(data, error) result(frequency)
-
-  Simple function to take periodic data and estimate
-  the most dominant frequency by FFT.
-
-  Parameters
-  ----------
-  data : float
-      data to analyze. Preferably size(data) is a power of 2 Otherwise the data is padded with zeros.
-
-  Returns
-  -------
-  frequency : float
-      Frequency corresponding to the largest FFT amplitude
-  err : bool
-      Error: not enough data. Frequency is near 0 or 0.5
-  )""");
   py::class_<
       PyCoarseFrequencyEstimate,
       std::unique_ptr<PyCoarseFrequencyEstimate>>(
@@ -221,18 +166,26 @@ void init_SimUtils_routines_c(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "complex_error_function",
-      &python_complex_error_function,
-      py::arg("wr"),
-      py::arg("wi"),
-      py::arg("zr"),
-      py::arg("zi"),
-      R"""(Parameters
+      "coarse_frequency_estimate",
+      &python_coarse_frequency_estimate,
+      py::arg("data"),
+      py::arg("error") = py::none(),
+      R"""(Function coarse_frequency_estimate(data, error) result(frequency)
+
+  Simple function to take periodic data and estimate
+  the most dominant frequency by FFT.
+
+  Parameters
   ----------
-  wr : 
-  wi : 
-  zr : 
-  zi : 
+  data : float
+      data to analyze. Preferably size(data) is a power of 2 Otherwise the data is padded with zeros.
+
+  Returns
+  -------
+  frequency : float
+      Frequency corresponding to the largest FFT amplitude
+  err : bool
+      Error: not enough data. Frequency is near 0 or 0.5
   )""");
   py::class_<PyComplexErrorFunction, std::unique_ptr<PyComplexErrorFunction>>(
       m,
@@ -259,14 +212,18 @@ void init_SimUtils_routines_c(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "cos_one",
-      &python_cos_one,
-      py::arg("angle"),
-      py::arg("cos1"),
+      "complex_error_function",
+      &python_complex_error_function,
+      py::arg("wr"),
+      py::arg("wi"),
+      py::arg("zr"),
+      py::arg("zi"),
       R"""(Parameters
   ----------
-  angle : 
-  cos1 : 
+  wr : 
+  wi : 
+  zr : 
+  zi : 
   )""");
   py::class_<PyCosOne, std::unique_ptr<PyCosOne>>(
       m, "CosOne", "Fortran routine cos_one return value")
@@ -277,6 +234,27 @@ void init_SimUtils_routines_c(py::module& m) {
           i += 1;
         if (i == 0)
           return py::cast(s.cos1);
+        throw py::index_error();
+      });
+  m.def(
+      "cos_one",
+      &python_cos_one,
+      py::arg("angle"),
+      py::arg("cos1"),
+      R"""(Parameters
+  ----------
+  angle : 
+  cos1 : 
+  )""");
+  py::class_<PyCosc, std::unique_ptr<PyCosc>>(
+      m, "Cosc", "Fortran routine cosc return value")
+      .def_readonly("y", &PyCosc::y)
+      .def("__len__", [](const PyCosc&) { return 1; })
+      .def("__getitem__", [](const PyCosc& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.y);
         throw py::index_error();
       });
   m.def(
@@ -291,17 +269,6 @@ void init_SimUtils_routines_c(py::module& m) {
   nd : 
   y : 
   )""");
-  py::class_<PyCosc, std::unique_ptr<PyCosc>>(
-      m, "Cosc", "Fortran routine cosc return value")
-      .def_readonly("y", &PyCosc::y)
-      .def("__len__", [](const PyCosc&) { return 1; })
-      .def("__getitem__", [](const PyCosc& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.y);
-        throw py::index_error();
-      });
   m.def(
       "create_a_spline",
       &SimUtils::create_a_spline,

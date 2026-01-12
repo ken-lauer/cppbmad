@@ -1,21 +1,9 @@
 #include "pybmad/generated/Tao_routines_i.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyIntegrateMax {
-  int ix_start;
-  int ix_ele;
-  double datum_value;
-  int ix_m;
-};
 PyIntegrateMax python_integrate_max(
     int ix_start,
     int ix_ele,
@@ -28,12 +16,6 @@ PyIntegrateMax python_integrate_max(
   auto py_result{PyIntegrateMax{ix_start, ix_ele, datum_value, ix_m}};
   return py_result;
 }
-struct PyIntegrateMin {
-  int ix_start;
-  int ix_ele;
-  double datum_value;
-  int ix_m;
-};
 PyIntegrateMin python_integrate_min(
     int ix_start,
     int ix_ele,
@@ -48,26 +30,6 @@ PyIntegrateMin python_integrate_min(
 }
 
 void init_Tao_routines_i(py::module& m) {
-  m.def(
-      "integrate_max",
-      &python_integrate_max,
-      py::arg("ix_start"),
-      py::arg("ix_ele"),
-      py::arg("datum_value"),
-      py::arg("ix_m"),
-      py::arg("branch"),
-      py::arg("vec"),
-      py::arg("datum"),
-      R"""(Parameters
-  ----------
-  ix_start : 
-  ix_ele : 
-  datum_value : 
-  ix_m : 
-  branch : 
-  vec : 
-  datum : 
-  )""");
   py::class_<PyIntegrateMax, std::unique_ptr<PyIntegrateMax>>(
       m, "IntegrateMax", "Fortran routine integrate_max return value")
       .def_readonly("ix_start", &PyIntegrateMax::ix_start)
@@ -89,8 +51,8 @@ void init_Tao_routines_i(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "integrate_min",
-      &python_integrate_min,
+      "integrate_max",
+      &python_integrate_max,
       py::arg("ix_start"),
       py::arg("ix_ele"),
       py::arg("datum_value"),
@@ -128,4 +90,24 @@ void init_Tao_routines_i(py::module& m) {
           return py::cast(s.ix_m);
         throw py::index_error();
       });
+  m.def(
+      "integrate_min",
+      &python_integrate_min,
+      py::arg("ix_start"),
+      py::arg("ix_ele"),
+      py::arg("datum_value"),
+      py::arg("ix_m"),
+      py::arg("branch"),
+      py::arg("vec"),
+      py::arg("datum"),
+      R"""(Parameters
+  ----------
+  ix_start : 
+  ix_ele : 
+  datum_value : 
+  ix_m : 
+  branch : 
+  vec : 
+  datum : 
+  )""");
 }

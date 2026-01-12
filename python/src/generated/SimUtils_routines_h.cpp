@@ -1,18 +1,9 @@
 #include "pybmad/generated/SimUtils_routines_h.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyHanhan {
-  int N;
-};
 PyHanhan python_hanhan(int N, RealAlloc1D& hh) {
   SimUtils::hanhan(N, hh);
   auto py_result{PyHanhan{N}};
@@ -20,16 +11,6 @@ PyHanhan python_hanhan(int N, RealAlloc1D& hh) {
 }
 
 void init_SimUtils_routines_h(py::module& m) {
-  m.def(
-      "hanhan",
-      &python_hanhan,
-      py::arg("N"),
-      py::arg("hh"),
-      R"""(Parameters
-  ----------
-  N : 
-  hh : 
-  )""");
   py::class_<PyHanhan, std::unique_ptr<PyHanhan>>(
       m, "Hanhan", "Fortran routine hanhan return value")
       .def_readonly("N", &PyHanhan::N)
@@ -41,4 +22,14 @@ void init_SimUtils_routines_h(py::module& m) {
           return py::cast(s.N);
         throw py::index_error();
       });
+  m.def(
+      "hanhan",
+      &python_hanhan,
+      py::arg("N"),
+      py::arg("hh"),
+      R"""(Parameters
+  ----------
+  N : 
+  hh : 
+  )""");
 }

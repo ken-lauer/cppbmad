@@ -1,19 +1,9 @@
 #include "pybmad/generated/SimUtils_routines_m.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyMakeLegalComment {
-  std::string comment_in;
-  std::string comment_out;
-};
 PyMakeLegalComment python_make_legal_comment(
     std::string comment_in,
     std::string comment_out) {
@@ -21,21 +11,11 @@ PyMakeLegalComment python_make_legal_comment(
   auto py_result{PyMakeLegalComment{comment_in, comment_out}};
   return py_result;
 }
-struct PyMatchReg {
-  std::string str;
-  std::string pat;
-  bool is_match;
-};
 PyMatchReg python_match_reg(std::string str, std::string pat, bool is_match) {
   SimUtils::match_reg(str, pat, is_match);
   auto py_result{PyMatchReg{str, pat, is_match}};
   return py_result;
 }
-struct PyMatchWild {
-  std::string string;
-  std::string template_;
-  bool is_match;
-};
 PyMatchWild python_match_wild(
     std::string string,
     std::string template_,
@@ -44,10 +24,6 @@ PyMatchWild python_match_wild(
   auto py_result{PyMatchWild{string, template_, is_match}};
   return py_result;
 }
-struct PyMaximizeProjection {
-  double seed;
-  double func_retval__;
-};
 PyMaximizeProjection python_maximize_projection(
     double seed,
     ComplexAlloc1D& cdata,
@@ -56,9 +32,6 @@ PyMaximizeProjection python_maximize_projection(
   auto py_result{PyMaximizeProjection{seed, func_retval__}};
   return py_result;
 }
-struct PyMilliSleep {
-  int milli_sec;
-};
 PyMilliSleep python_milli_sleep(int milli_sec) {
   SimUtils::milli_sleep(milli_sec);
   auto py_result{PyMilliSleep{milli_sec}};
@@ -66,16 +39,6 @@ PyMilliSleep python_milli_sleep(int milli_sec) {
 }
 
 void init_SimUtils_routines_m(py::module& m) {
-  m.def(
-      "make_legal_comment",
-      &python_make_legal_comment,
-      py::arg("comment_in"),
-      py::arg("comment_out"),
-      R"""(Parameters
-  ----------
-  comment_in : 
-  comment_out : 
-  )""");
   py::class_<PyMakeLegalComment, std::unique_ptr<PyMakeLegalComment>>(
       m, "MakeLegalComment", "Fortran routine make_legal_comment return value")
       .def_readonly("comment_in", &PyMakeLegalComment::comment_in)
@@ -90,6 +53,16 @@ void init_SimUtils_routines_m(py::module& m) {
           return py::cast(s.comment_out);
         throw py::index_error();
       });
+  m.def(
+      "make_legal_comment",
+      &python_make_legal_comment,
+      py::arg("comment_in"),
+      py::arg("comment_out"),
+      R"""(Parameters
+  ----------
+  comment_in : 
+  comment_out : 
+  )""");
   m.def(
       "mass_of",
       &SimUtils::mass_of,
@@ -113,18 +86,6 @@ void init_SimUtils_routines_m(py::module& m) {
   mass : float
       particle mass. Set to real_garbage$ if species value is invalid.
   )""");
-  m.def(
-      "match_reg",
-      &python_match_reg,
-      py::arg("str"),
-      py::arg("pat"),
-      py::arg("is_match"),
-      R"""(Parameters
-  ----------
-  str : 
-  pat : 
-  is_match : 
-  )""");
   py::class_<PyMatchReg, std::unique_ptr<PyMatchReg>>(
       m, "MatchReg", "Fortran routine match_reg return value")
       .def_readonly("str", &PyMatchReg::str)
@@ -143,15 +104,15 @@ void init_SimUtils_routines_m(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "match_wild",
-      &python_match_wild,
-      py::arg("string"),
-      py::arg("template_"),
+      "match_reg",
+      &python_match_reg,
+      py::arg("str"),
+      py::arg("pat"),
       py::arg("is_match"),
       R"""(Parameters
   ----------
-  string : 
-  template : 
+  str : 
+  pat : 
   is_match : 
   )""");
   py::class_<PyMatchWild, std::unique_ptr<PyMatchWild>>(
@@ -172,17 +133,16 @@ void init_SimUtils_routines_m(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "maximize_projection",
-      &python_maximize_projection,
-      py::arg("seed"),
-      py::arg("cdata"),
-      py::arg("func_retval__"),
-      R"""(function maximize_projection
-
-  Optimizer that uses Numerical Recipes brent to find a local maximum,
-  which is the frequency that maximizes the projection.
-
-
+      "match_wild",
+      &python_match_wild,
+      py::arg("string"),
+      py::arg("template_"),
+      py::arg("is_match"),
+      R"""(Parameters
+  ----------
+  string : 
+  template : 
+  is_match : 
   )""");
   py::class_<PyMaximizeProjection, std::unique_ptr<PyMaximizeProjection>>(
       m,
@@ -203,12 +163,17 @@ void init_SimUtils_routines_m(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "milli_sleep",
-      &python_milli_sleep,
-      py::arg("milli_sec"),
-      R"""(Parameters
-  ----------
-  milli_sec : 
+      "maximize_projection",
+      &python_maximize_projection,
+      py::arg("seed"),
+      py::arg("cdata"),
+      py::arg("func_retval__"),
+      R"""(function maximize_projection
+
+  Optimizer that uses Numerical Recipes brent to find a local maximum,
+  which is the frequency that maximizes the projection.
+
+
   )""");
   py::class_<PyMilliSleep, std::unique_ptr<PyMilliSleep>>(
       m, "MilliSleep", "Fortran routine milli_sleep return value")
@@ -221,4 +186,12 @@ void init_SimUtils_routines_m(py::module& m) {
           return py::cast(s.milli_sec);
         throw py::index_error();
       });
+  m.def(
+      "milli_sleep",
+      &python_milli_sleep,
+      py::arg("milli_sec"),
+      R"""(Parameters
+  ----------
+  milli_sec : 
+  )""");
 }

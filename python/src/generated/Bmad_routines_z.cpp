@@ -1,21 +1,9 @@
 #include "pybmad/generated/Bmad_routines_z.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyZAtSurface : public Bmad::ZAtSurface {
-  double x;
-  double y;
-  PyZAtSurface(Bmad::ZAtSurface _base, double x, double y)
-      : Bmad::ZAtSurface(std::move(_base)), x(x), y(y) {}
-};
 PyZAtSurface python_z_at_surface(
     EleProxy& ele,
     double x,
@@ -25,12 +13,6 @@ PyZAtSurface python_z_at_surface(
   auto py_result{PyZAtSurface{_result, x, y}};
   return py_result;
 }
-struct PyZlafun {
-  double x;
-  double y;
-  double z;
-  double res;
-};
 PyZlafun python_zlafun(double x, double y, double z, double res) {
   Bmad::zlafun(x, y, z, res);
   auto py_result{PyZlafun{x, y, z, res}};
@@ -38,6 +20,29 @@ PyZlafun python_zlafun(double x, double y, double z, double res) {
 }
 
 void init_Bmad_routines_z(py::module& m) {
+  py::class_<PyZAtSurface, std::unique_ptr<PyZAtSurface>>(
+      m, "ZAtSurface", "Fortran routine z_at_surface return value")
+      .def_readonly("err_flag", &PyZAtSurface::err_flag)
+      .def_readonly("dz_dxy", &PyZAtSurface::dz_dxy)
+      .def_readonly("z", &PyZAtSurface::z)
+      .def_readonly("x", &PyZAtSurface::x)
+      .def_readonly("y", &PyZAtSurface::y)
+      .def("__len__", [](const PyZAtSurface&) { return 5; })
+      .def("__getitem__", [](const PyZAtSurface& s, int i) -> py::object {
+        if (i < 0)
+          i += 5;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.dz_dxy);
+        if (i == 2)
+          return py::cast(s.z);
+        if (i == 3)
+          return py::cast(s.x);
+        if (i == 4)
+          return py::cast(s.y);
+        throw py::index_error();
+      });
   m.def(
       "z_at_surface",
       &python_z_at_surface,
@@ -71,29 +76,6 @@ void init_Bmad_routines_z(py::module& m) {
   -----
   Remember: +z points into the element.
   )""");
-  py::class_<PyZAtSurface, std::unique_ptr<PyZAtSurface>>(
-      m, "ZAtSurface", "Fortran routine z_at_surface return value")
-      .def_readonly("err_flag", &PyZAtSurface::err_flag)
-      .def_readonly("dz_dxy", &PyZAtSurface::dz_dxy)
-      .def_readonly("z", &PyZAtSurface::z)
-      .def_readonly("x", &PyZAtSurface::x)
-      .def_readonly("y", &PyZAtSurface::y)
-      .def("__len__", [](const PyZAtSurface&) { return 5; })
-      .def("__getitem__", [](const PyZAtSurface& s, int i) -> py::object {
-        if (i < 0)
-          i += 5;
-        if (i == 0)
-          return py::cast(s.err_flag);
-        if (i == 1)
-          return py::cast(s.dz_dxy);
-        if (i == 2)
-          return py::cast(s.z);
-        if (i == 3)
-          return py::cast(s.x);
-        if (i == 4)
-          return py::cast(s.y);
-        throw py::index_error();
-      });
   m.def(
       "zero_ele_kicks",
       &Bmad::zero_ele_kicks,
@@ -124,20 +106,6 @@ void init_Bmad_routines_z(py::module& m) {
   lat : LatStruct
       Lattice
   )""");
-  m.def(
-      "zlafun",
-      &python_zlafun,
-      py::arg("x"),
-      py::arg("y"),
-      py::arg("z"),
-      py::arg("res"),
-      R"""(Parameters
-  ----------
-  x : 
-  y : 
-  z : 
-  res : 
-  )""");
   py::class_<PyZlafun, std::unique_ptr<PyZlafun>>(
       m, "Zlafun", "Fortran routine zlafun return value")
       .def_readonly("x", &PyZlafun::x)
@@ -158,4 +126,18 @@ void init_Bmad_routines_z(py::module& m) {
           return py::cast(s.res);
         throw py::index_error();
       });
+  m.def(
+      "zlafun",
+      &python_zlafun,
+      py::arg("x"),
+      py::arg("y"),
+      py::arg("z"),
+      py::arg("res"),
+      R"""(Parameters
+  ----------
+  x : 
+  y : 
+  z : 
+  res : 
+  )""");
 }

@@ -1,18 +1,9 @@
 #include "pybmad/generated/Bmad_routines_a.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyAbsoluteTimeTracking {
-  bool is_abs_time;
-};
 PyAbsoluteTimeTracking python_absolute_time_tracking(
     EleProxy& ele,
     bool is_abs_time) {
@@ -20,9 +11,6 @@ PyAbsoluteTimeTracking python_absolute_time_tracking(
   auto py_result{PyAbsoluteTimeTracking{is_abs_time}};
   return py_result;
 }
-struct PyAcKickerAmp {
-  double ac_amp;
-};
 PyAcKickerAmp python_ac_kicker_amp(
     EleProxy& ele,
     CoordProxy& orbit,
@@ -32,10 +20,6 @@ PyAcKickerAmp python_ac_kicker_amp(
   auto py_result{PyAcKickerAmp{ac_amp}};
   return py_result;
 }
-struct PyAddThisTaylorTerm {
-  int i_out;
-  double coef;
-};
 PyAddThisTaylorTerm python_add_this_taylor_term(
     EleProxy& ele,
     int i_out,
@@ -45,11 +29,6 @@ PyAddThisTaylorTerm python_add_this_taylor_term(
   auto py_result{PyAddThisTaylorTerm{i_out, coef}};
   return py_result;
 }
-struct PyAdjustSuperSlaveNames {
-  int ix1_lord;
-  int ix2_lord;
-  std::optional<bool> first_time;
-};
 PyAdjustSuperSlaveNames python_adjust_super_slave_names(
     LatProxy& lat,
     int ix1_lord,
@@ -60,9 +39,6 @@ PyAdjustSuperSlaveNames python_adjust_super_slave_names(
   auto py_result{PyAdjustSuperSlaveNames{ix1_lord, ix2_lord, first_time}};
   return py_result;
 }
-struct PyAngleBetweenPolars {
-  double angle;
-};
 PyAngleBetweenPolars python_angle_between_polars(
     SpinPolarProxy& polar1,
     SpinPolarProxy& polar2,
@@ -71,10 +47,6 @@ PyAngleBetweenPolars python_angle_between_polars(
   auto py_result{PyAngleBetweenPolars{angle}};
   return py_result;
 }
-struct PyArrayReStr {
-  std::optional<std::string> parens_in;
-  std::string str_out;
-};
 PyArrayReStr python_array_re_str(
     RealAlloc1D& arr,
     std::optional<std::string> parens_in,
@@ -83,9 +55,6 @@ PyArrayReStr python_array_re_str(
   auto py_result{PyArrayReStr{parens_in, str_out}};
   return py_result;
 }
-struct PyAstraMaxFieldReference {
-  double field_value;
-};
 PyAstraMaxFieldReference python_astra_max_field_reference(
     GridFieldPt1Proxy& pt0,
     EleProxy& ele,
@@ -94,9 +63,6 @@ PyAstraMaxFieldReference python_astra_max_field_reference(
   auto py_result{PyAstraMaxFieldReference{field_value}};
   return py_result;
 }
-struct PyAtThisEleEnd {
-  bool is_at_this_end;
-};
 PyAtThisEleEnd python_at_this_ele_end(
     int now_at,
     int where_at,
@@ -107,6 +73,25 @@ PyAtThisEleEnd python_at_this_ele_end(
 }
 
 void init_Bmad_routines_a(py::module& m) {
+  py::class_<Bmad::AbMultipoleKick, std::unique_ptr<Bmad::AbMultipoleKick>>(
+      m, "AbMultipoleKick", "Fortran routine ab_multipole_kick return value")
+      .def_readonly("kx", &Bmad::AbMultipoleKick::kx)
+      .def_readonly("ky", &Bmad::AbMultipoleKick::ky)
+      .def_readonly("dk", &Bmad::AbMultipoleKick::dk)
+      .def("__len__", [](const Bmad::AbMultipoleKick&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const Bmad::AbMultipoleKick& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.kx);
+            if (i == 1)
+              return py::cast(s.ky);
+            if (i == 2)
+              return py::cast(s.dk);
+            throw py::index_error();
+          });
   m.def(
       "ab_multipole_kick",
       &Bmad::ab_multipole_kick,
@@ -152,25 +137,6 @@ void init_Bmad_routines_a(py::module& m) {
   dk : float
       Kick derivative: dkick(x,y)/d(x,y).
   )""");
-  py::class_<Bmad::AbMultipoleKick, std::unique_ptr<Bmad::AbMultipoleKick>>(
-      m, "AbMultipoleKick", "Fortran routine ab_multipole_kick return value")
-      .def_readonly("kx", &Bmad::AbMultipoleKick::kx)
-      .def_readonly("ky", &Bmad::AbMultipoleKick::ky)
-      .def_readonly("dk", &Bmad::AbMultipoleKick::dk)
-      .def("__len__", [](const Bmad::AbMultipoleKick&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::AbMultipoleKick& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.kx);
-            if (i == 1)
-              return py::cast(s.ky);
-            if (i == 2)
-              return py::cast(s.dk);
-            throw py::index_error();
-          });
   m.def(
       "ab_multipole_kicks",
       &Bmad::ab_multipole_kicks,
@@ -237,17 +203,6 @@ void init_Bmad_routines_a(py::module& m) {
       Photon position relative to e_orb.
       This parameter is an input/output and is modified in-place. As an output: Absolute photon position.
   )""");
-  m.def(
-      "absolute_time_tracking",
-      &python_absolute_time_tracking,
-      py::arg("ele"),
-      py::arg("is_abs_time"),
-      R"""(Parameters
-  ----------
-  ele : EleStruct
-      Element being tracked through.
-  is_abs_time : 
-  )""");
   py::class_<PyAbsoluteTimeTracking, std::unique_ptr<PyAbsoluteTimeTracking>>(
       m,
       "AbsoluteTimeTracking",
@@ -263,6 +218,28 @@ void init_Bmad_routines_a(py::module& m) {
               return py::cast(s.is_abs_time);
             throw py::index_error();
           });
+  m.def(
+      "absolute_time_tracking",
+      &python_absolute_time_tracking,
+      py::arg("ele"),
+      py::arg("is_abs_time"),
+      R"""(Parameters
+  ----------
+  ele : EleStruct
+      Element being tracked through.
+  is_abs_time : 
+  )""");
+  py::class_<PyAcKickerAmp, std::unique_ptr<PyAcKickerAmp>>(
+      m, "AcKickerAmp", "Fortran routine ac_kicker_amp return value")
+      .def_readonly("ac_amp", &PyAcKickerAmp::ac_amp)
+      .def("__len__", [](const PyAcKickerAmp&) { return 1; })
+      .def("__getitem__", [](const PyAcKickerAmp& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.ac_amp);
+        throw py::index_error();
+      });
   m.def(
       "ac_kicker_amp",
       &python_ac_kicker_amp,
@@ -281,15 +258,18 @@ void init_Bmad_routines_a(py::module& m) {
       convenient to be able to override this. For example, time_runge_kutta uses this.
   ac_amp : 
   )""");
-  py::class_<PyAcKickerAmp, std::unique_ptr<PyAcKickerAmp>>(
-      m, "AcKickerAmp", "Fortran routine ac_kicker_amp return value")
-      .def_readonly("ac_amp", &PyAcKickerAmp::ac_amp)
-      .def("__len__", [](const PyAcKickerAmp&) { return 1; })
-      .def("__getitem__", [](const PyAcKickerAmp& s, int i) -> py::object {
+  py::class_<Bmad::ActionToXyz, std::unique_ptr<Bmad::ActionToXyz>>(
+      m, "ActionToXyz", "Fortran routine action_to_xyz return value")
+      .def_readonly("X", &Bmad::ActionToXyz::X)
+      .def_readonly("err_flag", &Bmad::ActionToXyz::err_flag)
+      .def("__len__", [](const Bmad::ActionToXyz&) { return 2; })
+      .def("__getitem__", [](const Bmad::ActionToXyz& s, int i) -> py::object {
         if (i < 0)
-          i += 1;
+          i += 2;
         if (i == 0)
-          return py::cast(s.ac_amp);
+          return py::cast(s.X);
+        if (i == 1)
+          return py::cast(s.err_flag);
         throw py::index_error();
       });
   m.def(
@@ -326,20 +306,6 @@ void init_Bmad_routines_a(py::module& m) {
   err_flag : bool
       Set to true on error.  Often means Eigen decomposition failed.
   )""");
-  py::class_<Bmad::ActionToXyz, std::unique_ptr<Bmad::ActionToXyz>>(
-      m, "ActionToXyz", "Fortran routine action_to_xyz return value")
-      .def_readonly("X", &Bmad::ActionToXyz::X)
-      .def_readonly("err_flag", &Bmad::ActionToXyz::err_flag)
-      .def("__len__", [](const Bmad::ActionToXyz&) { return 2; })
-      .def("__getitem__", [](const Bmad::ActionToXyz& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.X);
-        if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
-      });
   m.def(
       "add_lattice_control_structs",
       &Bmad::add_lattice_control_structs,
@@ -365,6 +331,22 @@ void init_Bmad_routines_a(py::module& m) {
       Used when n_add_slave or n_add_slave_field is non-zero. If True then new space is added at the end of the
       array. If False then new space is added at the front of the array. Default is True.
   )""");
+  py::class_<Bmad::AddSuperimpose, std::unique_ptr<Bmad::AddSuperimpose>>(
+      m, "AddSuperimpose", "Fortran routine add_superimpose return value")
+      .def_readonly("err_flag", &Bmad::AddSuperimpose::err_flag)
+      .def_readonly("super_ele_out", &Bmad::AddSuperimpose::super_ele_out)
+      .def("__len__", [](const Bmad::AddSuperimpose&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::AddSuperimpose& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.err_flag);
+            if (i == 1)
+              return py::cast(s.super_ele_out);
+            throw py::index_error();
+          });
   m.def(
       "add_superimpose",
       &Bmad::add_superimpose,
@@ -429,22 +411,6 @@ void init_Bmad_routines_a(py::module& m) {
   super_ele_out : EleStruct
       Pointer to the super element in the lattice.
   )""");
-  py::class_<Bmad::AddSuperimpose, std::unique_ptr<Bmad::AddSuperimpose>>(
-      m, "AddSuperimpose", "Fortran routine add_superimpose return value")
-      .def_readonly("err_flag", &Bmad::AddSuperimpose::err_flag)
-      .def_readonly("super_ele_out", &Bmad::AddSuperimpose::super_ele_out)
-      .def("__len__", [](const Bmad::AddSuperimpose&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::AddSuperimpose& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.super_ele_out);
-            throw py::index_error();
-          });
   m.def(
       "add_this_multipass",
       &Bmad::add_this_multipass,
@@ -456,19 +422,6 @@ void init_Bmad_routines_a(py::module& m) {
   lat : 
   m_slaves : 
   lord_in : 
-  )""");
-  m.def(
-      "add_this_taylor_term",
-      &python_add_this_taylor_term,
-      py::arg("ele"),
-      py::arg("i_out"),
-      py::arg("coef"),
-      py::arg("expn"),
-      R"""(Subroutine add_this_taylor_term (ele, i_out, coef, expn)
-
-  Subroutine used by bmad_parser and bmad_parser2 to parse the input file.
-  This subroutine is not intended for general use.
-
   )""");
   py::class_<PyAddThisTaylorTerm, std::unique_ptr<PyAddThisTaylorTerm>>(
       m,
@@ -488,16 +441,16 @@ void init_Bmad_routines_a(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "adjust_super_slave_names",
-      &python_adjust_super_slave_names,
-      py::arg("lat"),
-      py::arg("ix1_lord"),
-      py::arg("ix2_lord"),
-      py::arg("first_time") = py::none(),
-      R"""(Subroutine adjust_super_slave_names (lat, ix1_lord, ix2_lord, first_time)
+      "add_this_taylor_term",
+      &python_add_this_taylor_term,
+      py::arg("ele"),
+      py::arg("i_out"),
+      py::arg("coef"),
+      py::arg("expn"),
+      R"""(Subroutine add_this_taylor_term (ele, i_out, coef, expn)
 
-  Routine to adjust the names of the slaves.
-  This routine is used by add_superimpose and is not meant for general use.
+  Subroutine used by bmad_parser and bmad_parser2 to parse the input file.
+  This subroutine is not intended for general use.
 
   )""");
   py::class_<PyAdjustSuperSlaveNames, std::unique_ptr<PyAdjustSuperSlaveNames>>(
@@ -521,6 +474,19 @@ void init_Bmad_routines_a(py::module& m) {
               return py::cast(s.first_time);
             throw py::index_error();
           });
+  m.def(
+      "adjust_super_slave_names",
+      &python_adjust_super_slave_names,
+      py::arg("lat"),
+      py::arg("ix1_lord"),
+      py::arg("ix2_lord"),
+      py::arg("first_time") = py::none(),
+      R"""(Subroutine adjust_super_slave_names (lat, ix1_lord, ix2_lord, first_time)
+
+  Routine to adjust the names of the slaves.
+  This routine is used by add_superimpose and is not meant for general use.
+
+  )""");
   m.def(
       "allocate_branch_array",
       &Bmad::allocate_branch_array,
@@ -552,20 +518,6 @@ void init_Bmad_routines_a(py::module& m) {
       Default False. If true, setup ramper slaves. Generally this needs to be done if reallocating with a fully
       formed lattice.
   )""");
-  m.def(
-      "angle_between_polars",
-      &python_angle_between_polars,
-      py::arg("polar1"),
-      py::arg("polar2"),
-      py::arg("angle"),
-      R"""(Parameters
-  ----------
-  polar1 : 
-      (spin_polar_struct)
-  polar2 : 
-      (spin_polar_struct)
-  angle : 
-  )""");
   py::class_<PyAngleBetweenPolars, std::unique_ptr<PyAngleBetweenPolars>>(
       m,
       "AngleBetweenPolars",
@@ -581,6 +533,20 @@ void init_Bmad_routines_a(py::module& m) {
               return py::cast(s.angle);
             throw py::index_error();
           });
+  m.def(
+      "angle_between_polars",
+      &python_angle_between_polars,
+      py::arg("polar1"),
+      py::arg("polar2"),
+      py::arg("angle"),
+      R"""(Parameters
+  ----------
+  polar1 : 
+      (spin_polar_struct)
+  polar2 : 
+      (spin_polar_struct)
+  angle : 
+  )""");
   m.def(
       "angle_to_canonical_coords",
       &Bmad::angle_to_canonical_coords,
@@ -671,18 +637,6 @@ void init_Bmad_routines_a(py::module& m) {
   err_flag : bool
       Set true if there is an error. False otherwise.
   )""");
-  m.def(
-      "array_re_str",
-      &python_array_re_str,
-      py::arg("arr"),
-      py::arg("parens_in") = py::none(),
-      py::arg("str_out"),
-      R"""(Parameters
-  ----------
-  arr : 
-  parens_in : 
-  str_out : 
-  )""");
   py::class_<PyArrayReStr, std::unique_ptr<PyArrayReStr>>(
       m, "ArrayReStr", "Fortran routine array_re_str return value")
       .def_readonly("parens_in", &PyArrayReStr::parens_in)
@@ -698,16 +652,16 @@ void init_Bmad_routines_a(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "astra_max_field_reference",
-      &python_astra_max_field_reference,
-      py::arg("pt0"),
-      py::arg("ele"),
-      py::arg("field_value"),
+      "array_re_str",
+      &python_array_re_str,
+      py::arg("arr"),
+      py::arg("parens_in") = py::none(),
+      py::arg("str_out"),
       R"""(Parameters
   ----------
-  pt0 : 
-  ele : 
-  field_value : 
+  arr : 
+  parens_in : 
+  str_out : 
   )""");
   py::class_<
       PyAstraMaxFieldReference,
@@ -727,6 +681,29 @@ void init_Bmad_routines_a(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "astra_max_field_reference",
+      &python_astra_max_field_reference,
+      py::arg("pt0"),
+      py::arg("ele"),
+      py::arg("field_value"),
+      R"""(Parameters
+  ----------
+  pt0 : 
+  ele : 
+  field_value : 
+  )""");
+  py::class_<PyAtThisEleEnd, std::unique_ptr<PyAtThisEleEnd>>(
+      m, "AtThisEleEnd", "Fortran routine at_this_ele_end return value")
+      .def_readonly("is_at_this_end", &PyAtThisEleEnd::is_at_this_end)
+      .def("__len__", [](const PyAtThisEleEnd&) { return 1; })
+      .def("__getitem__", [](const PyAtThisEleEnd& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_at_this_end);
+        throw py::index_error();
+      });
+  m.def(
       "at_this_ele_end",
       &python_at_this_ele_end,
       py::arg("now_at"),
@@ -741,17 +718,6 @@ void init_Bmad_routines_a(py::module& m) {
       no_aperture$, surface$, wall_transition$.
   is_at_this_end : 
   )""");
-  py::class_<PyAtThisEleEnd, std::unique_ptr<PyAtThisEleEnd>>(
-      m, "AtThisEleEnd", "Fortran routine at_this_ele_end return value")
-      .def_readonly("is_at_this_end", &PyAtThisEleEnd::is_at_this_end)
-      .def("__len__", [](const PyAtThisEleEnd&) { return 1; })
-      .def("__getitem__", [](const PyAtThisEleEnd& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.is_at_this_end);
-        throw py::index_error();
-      });
   m.def(
       "attribute_bookkeeper",
       &Bmad::attribute_bookkeeper,
@@ -768,6 +734,22 @@ void init_Bmad_routines_a(py::module& m) {
       to be done independent of the state of ele.bookkeeping_stat.attributes. This will also cause
       attribute_bookkeeper to assume intelligent bookkeeping.
   )""");
+  py::class_<Bmad::AttributeFree1, std::unique_ptr<Bmad::AttributeFree1>>(
+      m, "AttributeFree1", "Fortran routine attribute_free1 return value")
+      .def_readonly("why_not_free", &Bmad::AttributeFree1::why_not_free)
+      .def_readonly("free", &Bmad::AttributeFree1::free)
+      .def("__len__", [](const Bmad::AttributeFree1&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::AttributeFree1& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.why_not_free);
+            if (i == 1)
+              return py::cast(s.free);
+            throw py::index_error();
+          });
   m.def(
       "attribute_free",
       py::overload_cast<
@@ -834,14 +816,14 @@ void init_Bmad_routines_a(py::module& m) {
       Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
       element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
   )""");
-  py::class_<Bmad::AttributeFree1, std::unique_ptr<Bmad::AttributeFree1>>(
-      m, "AttributeFree1", "Fortran routine attribute_free1 return value")
-      .def_readonly("why_not_free", &Bmad::AttributeFree1::why_not_free)
-      .def_readonly("free", &Bmad::AttributeFree1::free)
-      .def("__len__", [](const Bmad::AttributeFree1&) { return 2; })
+  py::class_<Bmad::AttributeFree2, std::unique_ptr<Bmad::AttributeFree2>>(
+      m, "AttributeFree2", "Fortran routine attribute_free2 return value")
+      .def_readonly("why_not_free", &Bmad::AttributeFree2::why_not_free)
+      .def_readonly("free", &Bmad::AttributeFree2::free)
+      .def("__len__", [](const Bmad::AttributeFree2&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::AttributeFree1& s, int i) -> py::object {
+          [](const Bmad::AttributeFree2& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -914,14 +896,14 @@ void init_Bmad_routines_a(py::module& m) {
       Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
       element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
   )""");
-  py::class_<Bmad::AttributeFree2, std::unique_ptr<Bmad::AttributeFree2>>(
-      m, "AttributeFree2", "Fortran routine attribute_free2 return value")
-      .def_readonly("why_not_free", &Bmad::AttributeFree2::why_not_free)
-      .def_readonly("free", &Bmad::AttributeFree2::free)
-      .def("__len__", [](const Bmad::AttributeFree2&) { return 2; })
+  py::class_<Bmad::AttributeFree3, std::unique_ptr<Bmad::AttributeFree3>>(
+      m, "AttributeFree3", "Fortran routine attribute_free3 return value")
+      .def_readonly("why_not_free", &Bmad::AttributeFree3::why_not_free)
+      .def_readonly("free", &Bmad::AttributeFree3::free)
+      .def("__len__", [](const Bmad::AttributeFree3&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::AttributeFree2& s, int i) -> py::object {
+          [](const Bmad::AttributeFree3& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -998,77 +980,6 @@ void init_Bmad_routines_a(py::module& m) {
       Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
       element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
   )""");
-  py::class_<Bmad::AttributeFree3, std::unique_ptr<Bmad::AttributeFree3>>(
-      m, "AttributeFree3", "Fortran routine attribute_free3 return value")
-      .def_readonly("why_not_free", &Bmad::AttributeFree3::why_not_free)
-      .def_readonly("free", &Bmad::AttributeFree3::free)
-      .def("__len__", [](const Bmad::AttributeFree3&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::AttributeFree3& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.why_not_free);
-            if (i == 1)
-              return py::cast(s.free);
-            throw py::index_error();
-          });
-  m.def(
-      "attribute_index",
-      py::overload_cast<
-          EleProxy&,
-          std::string,
-          std::optional<bool>,
-          std::optional<bool>>(&Bmad::attribute_index),
-      py::arg("ele"),
-      py::arg("name"),
-      py::arg("can_abbreviate") = py::none(),
-      py::arg("print_error") = py::none(),
-      R"""(Function attribute_index (...) result (attrib_index)
-
-  Function to return the index of a attribute for a given BMAD element type
-  and the name of the attribute. Abbreviations are by default permitted but must be at
-  least 3 characters. Exception: overlay and group varialbe names may not
-  be abbreviated.
-
-  This routine is an overloaded name for:
-    attribute_index1 (ele, name, full_name, can_abbreviate, print_error) result (attrib_index)
-    attribute_index2 (key, name, full_name, can_abbreviate, print_error) result (attrib_index)
-
-  Note:
-    If ele%key or key = 0 -> Entire name table will be searched.
-
-  See also:
-    has_attribute
-    attribute_info
-    attribute_name
-
-  Parameters
-  ----------
-  ele : EleStruct
-      attribute_index will restrict the name search to valid attributes of the given element.
-  key : int
-      Equivalent to ele.key.
-  name : unknown
-      Attribute name. Must be uppercase.
-  can_abbreviate : bool, optional
-      Can abbreviate names? Default is True.
-  print_error : bool, optional
-      Default True. If false, do not print error message.
-
-  Returns
-  -------
-  full_name : unknown
-      Non-abbreviated name.
-  attrib_index : int
-      Index of the attribute. If the attribute name is not appropriate then 0 will be returned. Example: ele.key
-      = sbend$ ix = attribute_index (ele, 'K1') Result: ix -> k1$
-
-  Notes
-  -----
-  Overloaded versions:
-  )""");
   py::class_<Bmad::AttributeIndex1, std::unique_ptr<Bmad::AttributeIndex1>>(
       m, "AttributeIndex1", "Fortran routine attribute_index1 return value")
       .def_readonly("full_name", &Bmad::AttributeIndex1::full_name)
@@ -1088,11 +999,11 @@ void init_Bmad_routines_a(py::module& m) {
   m.def(
       "attribute_index",
       py::overload_cast<
-          int,
+          EleProxy&,
           std::string,
           std::optional<bool>,
           std::optional<bool>>(&Bmad::attribute_index),
-      py::arg("key"),
+      py::arg("ele"),
       py::arg("name"),
       py::arg("can_abbreviate") = py::none(),
       py::arg("print_error") = py::none(),
@@ -1156,6 +1067,61 @@ void init_Bmad_routines_a(py::module& m) {
               return py::cast(s.attrib_index);
             throw py::index_error();
           });
+  m.def(
+      "attribute_index",
+      py::overload_cast<
+          int,
+          std::string,
+          std::optional<bool>,
+          std::optional<bool>>(&Bmad::attribute_index),
+      py::arg("key"),
+      py::arg("name"),
+      py::arg("can_abbreviate") = py::none(),
+      py::arg("print_error") = py::none(),
+      R"""(Function attribute_index (...) result (attrib_index)
+
+  Function to return the index of a attribute for a given BMAD element type
+  and the name of the attribute. Abbreviations are by default permitted but must be at
+  least 3 characters. Exception: overlay and group varialbe names may not
+  be abbreviated.
+
+  This routine is an overloaded name for:
+    attribute_index1 (ele, name, full_name, can_abbreviate, print_error) result (attrib_index)
+    attribute_index2 (key, name, full_name, can_abbreviate, print_error) result (attrib_index)
+
+  Note:
+    If ele%key or key = 0 -> Entire name table will be searched.
+
+  See also:
+    has_attribute
+    attribute_info
+    attribute_name
+
+  Parameters
+  ----------
+  ele : EleStruct
+      attribute_index will restrict the name search to valid attributes of the given element.
+  key : int
+      Equivalent to ele.key.
+  name : unknown
+      Attribute name. Must be uppercase.
+  can_abbreviate : bool, optional
+      Can abbreviate names? Default is True.
+  print_error : bool, optional
+      Default True. If false, do not print error message.
+
+  Returns
+  -------
+  full_name : unknown
+      Non-abbreviated name.
+  attrib_index : int
+      Index of the attribute. If the attribute name is not appropriate then 0 will be returned. Example: ele.key
+      = sbend$ ix = attribute_index (ele, 'K1') Result: ix -> k1$
+
+  Notes
+  -----
+  Overloaded versions:
+  )""");
   m.def(
       "attribute_name",
       py::overload_cast<int, int, std::optional<bool>>(&Bmad::attribute_name),

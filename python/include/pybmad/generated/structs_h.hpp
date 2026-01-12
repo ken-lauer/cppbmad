@@ -2,8 +2,6 @@
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
 
-void init_structs_h(py::module& m);
-
 // Per-struct init functions
 void init_high_energy_space_charge_struct(
     py::module& m,

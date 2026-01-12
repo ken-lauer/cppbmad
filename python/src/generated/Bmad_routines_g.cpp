@@ -1,27 +1,14 @@
 #include "pybmad/generated/Bmad_routines_g.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyGammaRef {
-  double gamma;
-};
 PyGammaRef python_gamma_ref(EleProxy& ele, double gamma) {
   Bmad::gamma_ref(ele, gamma);
   auto py_result{PyGammaRef{gamma}};
   return py_result;
 }
-struct PyGenGradField {
-  double rho;
-  double theta;
-};
 PyGenGradField python_gen_grad_field(
     RealAlloc1D& deriv,
     GenGrad1Proxy& gg,
@@ -32,11 +19,6 @@ PyGenGradField python_gen_grad_field(
   auto py_result{PyGenGradField{rho, theta}};
   return py_result;
 }
-struct PyGetCalledFile {
-  std::string delim;
-  std::string call_file;
-  bool err;
-};
 PyGetCalledFile python_get_called_file(
     std::string delim,
     std::string call_file,
@@ -45,11 +27,6 @@ PyGetCalledFile python_get_called_file(
   auto py_result{PyGetCalledFile{delim, call_file, err}};
   return py_result;
 }
-struct PyGptFieldGridScaling {
-  int dimensions;
-  double field_scale;
-  double ref_time;
-};
 PyGptFieldGridScaling python_gpt_field_grid_scaling(
     EleProxy& ele,
     int dimensions,
@@ -59,9 +36,6 @@ PyGptFieldGridScaling python_gpt_field_grid_scaling(
   auto py_result{PyGptFieldGridScaling{dimensions, field_scale, ref_time}};
   return py_result;
 }
-struct PyGptMaxFieldReference {
-  double field_value;
-};
 PyGptMaxFieldReference python_gpt_max_field_reference(
     GridFieldPt1Proxy& pt0,
     EleProxy& ele,
@@ -70,9 +44,6 @@ PyGptMaxFieldReference python_gpt_max_field_reference(
   auto py_result{PyGptMaxFieldReference{field_value}};
   return py_result;
 }
-struct PyGradientShiftSrWake {
-  double grad_shift;
-};
 PyGradientShiftSrWake python_gradient_shift_sr_wake(
     EleProxy& ele,
     LatParamProxy& param,
@@ -108,6 +79,27 @@ void init_Bmad_routines_g(py::module& m) {
   g_bend : float
       bending strength vector.
   )""");
+  py::class_<
+      Bmad::GBendingStrengthFromEmField,
+      std::unique_ptr<Bmad::GBendingStrengthFromEmField>>(
+      m,
+      "GBendingStrengthFromEmField",
+      "Fortran routine g_bending_strength_from_em_field return value")
+      .def_readonly("g", &Bmad::GBendingStrengthFromEmField::g)
+      .def_readonly("dg", &Bmad::GBendingStrengthFromEmField::dg)
+      .def(
+          "__len__", [](const Bmad::GBendingStrengthFromEmField&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::GBendingStrengthFromEmField& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.g);
+            if (i == 1)
+              return py::cast(s.dg);
+            throw py::index_error();
+          });
   m.def(
       "g_bending_strength_from_em_field",
       &Bmad::g_bending_strength_from_em_field,
@@ -134,27 +126,6 @@ void init_Bmad_routines_g(py::module& m) {
   dg : float
       dg(:)/dr gradient. Takes into account dg_x/dx in a bend due to curvilinear coords.
   )""");
-  py::class_<
-      Bmad::GBendingStrengthFromEmField,
-      std::unique_ptr<Bmad::GBendingStrengthFromEmField>>(
-      m,
-      "GBendingStrengthFromEmField",
-      "Fortran routine g_bending_strength_from_em_field return value")
-      .def_readonly("g", &Bmad::GBendingStrengthFromEmField::g)
-      .def_readonly("dg", &Bmad::GBendingStrengthFromEmField::dg)
-      .def(
-          "__len__", [](const Bmad::GBendingStrengthFromEmField&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::GBendingStrengthFromEmField& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.g);
-            if (i == 1)
-              return py::cast(s.dg);
-            throw py::index_error();
-          });
   m.def(
       "g_integrals_calc",
       &Bmad::g_integrals_calc,
@@ -163,17 +134,6 @@ void init_Bmad_routines_g(py::module& m) {
   ----------
   lat : LatStruct
       Lattice to integrate through.
-  )""");
-  m.def(
-      "gamma_ref",
-      &python_gamma_ref,
-      py::arg("ele"),
-      py::arg("gamma"),
-      R"""(Parameters
-  ----------
-  ele : EleStruct
-      Element to evaluate at.
-  gamma : 
   )""");
   py::class_<PyGammaRef, std::unique_ptr<PyGammaRef>>(
       m, "GammaRef", "Fortran routine gamma_ref return value")
@@ -186,6 +146,17 @@ void init_Bmad_routines_g(py::module& m) {
           return py::cast(s.gamma);
         throw py::index_error();
       });
+  m.def(
+      "gamma_ref",
+      &python_gamma_ref,
+      py::arg("ele"),
+      py::arg("gamma"),
+      R"""(Parameters
+  ----------
+  ele : EleStruct
+      Element to evaluate at.
+  gamma : 
+  )""");
   m.def(
       "gen_grad1_to_em_taylor",
       &Bmad::gen_grad1_to_em_taylor,
@@ -220,6 +191,20 @@ void init_Bmad_routines_g(py::module& m) {
   em_taylor : EmTaylorStruct
       Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
   )""");
+  py::class_<PyGenGradField, std::unique_ptr<PyGenGradField>>(
+      m, "GenGradField", "Fortran routine gen_grad_field return value")
+      .def_readonly("rho", &PyGenGradField::rho)
+      .def_readonly("theta", &PyGenGradField::theta)
+      .def("__len__", [](const PyGenGradField&) { return 2; })
+      .def("__getitem__", [](const PyGenGradField& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.rho);
+        if (i == 1)
+          return py::cast(s.theta);
+        throw py::index_error();
+      });
   m.def(
       "gen_grad_field",
       &python_gen_grad_field,
@@ -236,20 +221,6 @@ void init_Bmad_routines_g(py::module& m) {
   theta : 
   field : 
   )""");
-  py::class_<PyGenGradField, std::unique_ptr<PyGenGradField>>(
-      m, "GenGradField", "Fortran routine gen_grad_field return value")
-      .def_readonly("rho", &PyGenGradField::rho)
-      .def_readonly("theta", &PyGenGradField::theta)
-      .def("__len__", [](const PyGenGradField&) { return 2; })
-      .def("__getitem__", [](const PyGenGradField& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.rho);
-        if (i == 1)
-          return py::cast(s.theta);
-        throw py::index_error();
-      });
   m.def(
       "get_bl_from_fwhm",
       &Bmad::get_bl_from_fwhm,
@@ -272,18 +243,6 @@ void init_Bmad_routines_g(py::module& m) {
   sigma : float
       Bunch length
   )""");
-  m.def(
-      "get_called_file",
-      &python_get_called_file,
-      py::arg("delim"),
-      py::arg("call_file"),
-      py::arg("err"),
-      R"""(Parameters
-  ----------
-  delim : 
-  call_file : 
-  err : 
-  )""");
   py::class_<PyGetCalledFile, std::unique_ptr<PyGetCalledFile>>(
       m, "GetCalledFile", "Fortran routine get_called_file return value")
       .def_readonly("delim", &PyGetCalledFile::delim)
@@ -301,6 +260,38 @@ void init_Bmad_routines_g(py::module& m) {
           return py::cast(s.err);
         throw py::index_error();
       });
+  m.def(
+      "get_called_file",
+      &python_get_called_file,
+      py::arg("delim"),
+      py::arg("call_file"),
+      py::arg("err"),
+      R"""(Parameters
+  ----------
+  delim : 
+  call_file : 
+  err : 
+  )""");
+  py::class_<
+      Bmad::GetEmitFromSigmaMat,
+      std::unique_ptr<Bmad::GetEmitFromSigmaMat>>(
+      m,
+      "GetEmitFromSigmaMat",
+      "Fortran routine get_emit_from_sigma_mat return value")
+      .def_readonly("normal", &Bmad::GetEmitFromSigmaMat::normal)
+      .def_readonly("err_flag", &Bmad::GetEmitFromSigmaMat::err_flag)
+      .def("__len__", [](const Bmad::GetEmitFromSigmaMat&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::GetEmitFromSigmaMat& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.normal);
+            if (i == 1)
+              return py::cast(s.err_flag);
+            throw py::index_error();
+          });
   m.def(
       "get_emit_from_sigma_mat",
       &Bmad::get_emit_from_sigma_mat,
@@ -339,26 +330,6 @@ void init_Bmad_routines_g(py::module& m) {
   err_flag : bool
       Set to true if something went wrong.  Otherwise set to false.
   )""");
-  py::class_<
-      Bmad::GetEmitFromSigmaMat,
-      std::unique_ptr<Bmad::GetEmitFromSigmaMat>>(
-      m,
-      "GetEmitFromSigmaMat",
-      "Fortran routine get_emit_from_sigma_mat return value")
-      .def_readonly("normal", &Bmad::GetEmitFromSigmaMat::normal)
-      .def_readonly("err_flag", &Bmad::GetEmitFromSigmaMat::err_flag)
-      .def("__len__", [](const Bmad::GetEmitFromSigmaMat&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::GetEmitFromSigmaMat& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.normal);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
   m.def(
       "get_next_word",
       &Bmad::get_next_word,
@@ -395,19 +366,6 @@ void init_Bmad_routines_g(py::module& m) {
   err_flag : bool, optional
       Set True if there is an error. False otherwise.
   )""");
-  m.def(
-      "get_slave_list",
-      &Bmad::get_slave_list,
-      py::arg("lord"),
-      R"""(Parameters
-  ----------
-  lord : EleStruct
-      The lord element.
-  slaves : ElePointerStruct
-      : Array of slaves.
-  n_slave : int
-      Number of slaves.
-  )""");
   py::class_<Bmad::GetSlaveList, std::unique_ptr<Bmad::GetSlaveList>>(
       m, "GetSlaveList", "Fortran routine get_slave_list return value")
       .def_readonly("slaves", &Bmad::GetSlaveList::slaves)
@@ -423,18 +381,17 @@ void init_Bmad_routines_g(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "gpt_field_grid_scaling",
-      &python_gpt_field_grid_scaling,
-      py::arg("ele"),
-      py::arg("dimensions"),
-      py::arg("field_scale"),
-      py::arg("ref_time"),
+      "get_slave_list",
+      &Bmad::get_slave_list,
+      py::arg("lord"),
       R"""(Parameters
   ----------
-  ele : 
-  dimensions : 
-  field_scale : 
-  ref_time : 
+  lord : EleStruct
+      The lord element.
+  slaves : ElePointerStruct
+      : Array of slaves.
+  n_slave : int
+      Number of slaves.
   )""");
   py::class_<PyGptFieldGridScaling, std::unique_ptr<PyGptFieldGridScaling>>(
       m,
@@ -458,16 +415,18 @@ void init_Bmad_routines_g(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "gpt_max_field_reference",
-      &python_gpt_max_field_reference,
-      py::arg("pt0"),
+      "gpt_field_grid_scaling",
+      &python_gpt_field_grid_scaling,
       py::arg("ele"),
-      py::arg("field_value"),
+      py::arg("dimensions"),
+      py::arg("field_scale"),
+      py::arg("ref_time"),
       R"""(Parameters
   ----------
-  pt0 : 
   ele : 
-  field_value : 
+  dimensions : 
+  field_scale : 
+  ref_time : 
   )""");
   py::class_<PyGptMaxFieldReference, std::unique_ptr<PyGptMaxFieldReference>>(
       m,
@@ -482,6 +441,38 @@ void init_Bmad_routines_g(py::module& m) {
               i += 1;
             if (i == 0)
               return py::cast(s.field_value);
+            throw py::index_error();
+          });
+  m.def(
+      "gpt_max_field_reference",
+      &python_gpt_max_field_reference,
+      py::arg("pt0"),
+      py::arg("ele"),
+      py::arg("field_value"),
+      R"""(Parameters
+  ----------
+  pt0 : 
+  ele : 
+  field_value : 
+  )""");
+  py::class_<
+      Bmad::GptToParticleBunch,
+      std::unique_ptr<Bmad::GptToParticleBunch>>(
+      m,
+      "GptToParticleBunch",
+      "Fortran routine gpt_to_particle_bunch return value")
+      .def_readonly("bunch", &Bmad::GptToParticleBunch::bunch)
+      .def_readonly("err_flag", &Bmad::GptToParticleBunch::err_flag)
+      .def("__len__", [](const Bmad::GptToParticleBunch&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::GptToParticleBunch& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.bunch);
+            if (i == 1)
+              return py::cast(s.err_flag);
             throw py::index_error();
           });
   m.def(
@@ -508,24 +499,19 @@ void init_Bmad_routines_g(py::module& m) {
   err_flag : bool
       Set True if there is an error. False otherwise.
   )""");
-  py::class_<
-      Bmad::GptToParticleBunch,
-      std::unique_ptr<Bmad::GptToParticleBunch>>(
+  py::class_<PyGradientShiftSrWake, std::unique_ptr<PyGradientShiftSrWake>>(
       m,
-      "GptToParticleBunch",
-      "Fortran routine gpt_to_particle_bunch return value")
-      .def_readonly("bunch", &Bmad::GptToParticleBunch::bunch)
-      .def_readonly("err_flag", &Bmad::GptToParticleBunch::err_flag)
-      .def("__len__", [](const Bmad::GptToParticleBunch&) { return 2; })
+      "GradientShiftSrWake",
+      "Fortran routine gradient_shift_sr_wake return value")
+      .def_readonly("grad_shift", &PyGradientShiftSrWake::grad_shift)
+      .def("__len__", [](const PyGradientShiftSrWake&) { return 1; })
       .def(
           "__getitem__",
-          [](const Bmad::GptToParticleBunch& s, int i) -> py::object {
+          [](const PyGradientShiftSrWake& s, int i) -> py::object {
             if (i < 0)
-              i += 2;
+              i += 1;
             if (i == 0)
-              return py::cast(s.bunch);
-            if (i == 1)
-              return py::cast(s.err_flag);
+              return py::cast(s.grad_shift);
             throw py::index_error();
           });
   m.def(
@@ -542,21 +528,6 @@ void init_Bmad_routines_g(py::module& m) {
       Lattice parameters .n_part        -- Number of particles in a bunch .particle      -- Type of particle
   grad_shift : 
   )""");
-  py::class_<PyGradientShiftSrWake, std::unique_ptr<PyGradientShiftSrWake>>(
-      m,
-      "GradientShiftSrWake",
-      "Fortran routine gradient_shift_sr_wake return value")
-      .def_readonly("grad_shift", &PyGradientShiftSrWake::grad_shift)
-      .def("__len__", [](const PyGradientShiftSrWake&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyGradientShiftSrWake& s, int i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.grad_shift);
-            throw py::index_error();
-          });
   m.def(
       "grid_field_interpolate",
       &Bmad::grid_field_interpolate,

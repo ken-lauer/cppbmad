@@ -1,18 +1,9 @@
 #include "pybmad/generated/Tao_routines_r.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyReAllocateCDouble {
-  std::optional<double> init_val;
-};
 PyReAllocateCDouble python_re_allocate_c_double(
     RealAlloc1D& re,
     int n,
@@ -24,6 +15,20 @@ PyReAllocateCDouble python_re_allocate_c_double(
 }
 
 void init_Tao_routines_r(py::module& m) {
+  py::class_<PyReAllocateCDouble, std::unique_ptr<PyReAllocateCDouble>>(
+      m,
+      "ReAllocateCDouble",
+      "Fortran routine re_allocate_c_double return value")
+      .def_readonly("init_val", &PyReAllocateCDouble::init_val)
+      .def("__len__", [](const PyReAllocateCDouble&) { return 1; })
+      .def(
+          "__getitem__", [](const PyReAllocateCDouble& s, int i) -> py::object {
+            if (i < 0)
+              i += 1;
+            if (i == 0)
+              return py::cast(s.init_val);
+            throw py::index_error();
+          });
   m.def(
       "re_allocate_c_double",
       &python_re_allocate_c_double,
@@ -49,18 +54,4 @@ void init_Tao_routines_r(py::module& m) {
   exact : bool, optional
       If present and False then the size of the output array is permitted to be larger than n. Default is True.
   )""");
-  py::class_<PyReAllocateCDouble, std::unique_ptr<PyReAllocateCDouble>>(
-      m,
-      "ReAllocateCDouble",
-      "Fortran routine re_allocate_c_double return value")
-      .def_readonly("init_val", &PyReAllocateCDouble::init_val)
-      .def("__len__", [](const PyReAllocateCDouble&) { return 1; })
-      .def(
-          "__getitem__", [](const PyReAllocateCDouble& s, int i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.init_val);
-            throw py::index_error();
-          });
 }

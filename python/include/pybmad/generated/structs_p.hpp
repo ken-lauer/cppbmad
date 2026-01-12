@@ -2,8 +2,6 @@
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
 
-void init_structs_p(py::module& m);
-
 // Per-struct init functions
 void init_photon_element_struct(
     py::module& m,

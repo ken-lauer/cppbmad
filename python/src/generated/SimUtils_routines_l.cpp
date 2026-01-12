@@ -1,22 +1,9 @@
 #include "pybmad/generated/SimUtils_routines_l.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyLinearFit {
-  int n_data;
-  double a;
-  double b;
-  double sig_a;
-  double sig_b;
-};
 PyLinearFit python_linear_fit(
     RealAlloc1D& x,
     RealAlloc1D& y,
@@ -29,10 +16,6 @@ PyLinearFit python_linear_fit(
   auto py_result{PyLinearFit{n_data, a, b, sig_a, sig_b}};
   return py_result;
 }
-struct PyLogicStr {
-  bool logic;
-  std::string str;
-};
 PyLogicStr python_logic_str(bool logic, std::string str) {
   SimUtils::logic_str(logic, str);
   auto py_result{PyLogicStr{logic, str}};
@@ -40,26 +23,6 @@ PyLogicStr python_logic_str(bool logic, std::string str) {
 }
 
 void init_SimUtils_routines_l(py::module& m) {
-  m.def(
-      "linear_fit",
-      &python_linear_fit,
-      py::arg("x"),
-      py::arg("y"),
-      py::arg("n_data"),
-      py::arg("a"),
-      py::arg("b"),
-      py::arg("sig_a"),
-      py::arg("sig_b"),
-      R"""(Parameters
-  ----------
-  x : 
-  y : 
-  n_data : 
-  a : 
-  b : 
-  sig_a : 
-  sig_b : 
-  )""");
   py::class_<PyLinearFit, std::unique_ptr<PyLinearFit>>(
       m, "LinearFit", "Fortran routine linear_fit return value")
       .def_readonly("n_data", &PyLinearFit::n_data)
@@ -84,6 +47,26 @@ void init_SimUtils_routines_l(py::module& m) {
         throw py::index_error();
       });
   m.def(
+      "linear_fit",
+      &python_linear_fit,
+      py::arg("x"),
+      py::arg("y"),
+      py::arg("n_data"),
+      py::arg("a"),
+      py::arg("b"),
+      py::arg("sig_a"),
+      py::arg("sig_b"),
+      R"""(Parameters
+  ----------
+  x : 
+  y : 
+  n_data : 
+  a : 
+  b : 
+  sig_a : 
+  sig_b : 
+  )""");
+  m.def(
       "linear_fit_2d",
       &SimUtils::linear_fit_2d,
       py::arg("x"),
@@ -100,16 +83,6 @@ void init_SimUtils_routines_l(py::module& m) {
   coef : float
       Coefficients of the linear fit
   )""");
-  m.def(
-      "logic_str",
-      &python_logic_str,
-      py::arg("logic"),
-      py::arg("str"),
-      R"""(Parameters
-  ----------
-  logic : 
-  str : 
-  )""");
   py::class_<PyLogicStr, std::unique_ptr<PyLogicStr>>(
       m, "LogicStr", "Fortran routine logic_str return value")
       .def_readonly("logic", &PyLogicStr::logic)
@@ -124,6 +97,16 @@ void init_SimUtils_routines_l(py::module& m) {
           return py::cast(s.str);
         throw py::index_error();
       });
+  m.def(
+      "logic_str",
+      &python_logic_str,
+      py::arg("logic"),
+      py::arg("str"),
+      R"""(Parameters
+  ----------
+  logic : 
+  str : 
+  )""");
   m.def(
       "lunget",
       &SimUtils::lunget,

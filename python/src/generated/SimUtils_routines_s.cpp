@@ -1,20 +1,9 @@
 #include "pybmad/generated/SimUtils_routines_s.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PySetParameterInt {
-  int param_val;
-  int set_val;
-  int save_val;
-};
 PySetParameterInt python_set_parameter_int(
     int param_val,
     int set_val,
@@ -23,11 +12,6 @@ PySetParameterInt python_set_parameter_int(
   auto py_result{PySetParameterInt{param_val, set_val, save_val}};
   return py_result;
 }
-struct PySetParameterLogic {
-  bool param_val;
-  bool set_val;
-  bool save_val;
-};
 PySetParameterLogic python_set_parameter_logic(
     bool param_val,
     bool set_val,
@@ -36,11 +20,6 @@ PySetParameterLogic python_set_parameter_logic(
   auto py_result{PySetParameterLogic{param_val, set_val, save_val}};
   return py_result;
 }
-struct PySetParameterReal {
-  double param_val;
-  double set_val;
-  double save_val;
-};
 PySetParameterReal python_set_parameter_real(
     double param_val,
     double set_val,
@@ -49,71 +28,41 @@ PySetParameterReal python_set_parameter_real(
   auto py_result{PySetParameterReal{param_val, set_val, save_val}};
   return py_result;
 }
-struct PySinc {
-  double y;
-};
 PySinc python_sinc(double x, std::optional<int> nd, double y) {
   SimUtils::sinc(x, nd, y);
   auto py_result{PySinc{y}};
   return py_result;
 }
-struct PySincc {
-  double y;
-};
 PySincc python_sincc(double x, std::optional<int> nd, double y) {
   SimUtils::sincc(x, nd, y);
   auto py_result{PySincc{y}};
   return py_result;
 }
-struct PySinhxX {
-  double y;
-};
 PySinhxX python_sinhx_x(double x, std::optional<int> nd, double y) {
   SimUtils::sinhx_x(x, nd, y);
   auto py_result{PySinhxX{y}};
   return py_result;
 }
-struct PySkipHeader {
-  int ix_unit;
-  bool error_flag;
-};
 PySkipHeader python_skip_header(int ix_unit, bool error_flag) {
   SimUtils::skip_header(ix_unit, error_flag);
   auto py_result{PySkipHeader{ix_unit, error_flag}};
   return py_result;
 }
-struct PySqrtAlpha {
-  double y;
-};
 PySqrtAlpha python_sqrt_alpha(double alpha, double x, double y) {
   SimUtils::sqrt_alpha(alpha, x, y);
   auto py_result{PySqrtAlpha{y}};
   return py_result;
 }
-struct PySqrtOne {
-  double ds1;
-};
 PySqrtOne python_sqrt_one(double x, std::optional<int> nd, double ds1) {
   SimUtils::sqrt_one(x, nd, ds1);
   auto py_result{PySqrtOne{ds1}};
   return py_result;
 }
-struct PyStrCount {
-  std::string str;
-  std::string match;
-  int num;
-};
 PyStrCount python_str_count(std::string str, std::string match, int num) {
   SimUtils::str_count(str, match, num);
   auto py_result{PyStrCount{str, match, num}};
   return py_result;
 }
-struct PyStrFirstInSet {
-  std::string line;
-  std::string set;
-  std::optional<bool> ignore_clauses;
-  int ix_match;
-};
 PyStrFirstInSet python_str_first_in_set(
     std::string line,
     std::string set,
@@ -123,11 +72,6 @@ PyStrFirstInSet python_str_first_in_set(
   auto py_result{PyStrFirstInSet{line, set, ignore_clauses, ix_match}};
   return py_result;
 }
-struct PyStrFirstNotInSet {
-  std::string line;
-  std::string set;
-  int ix_match;
-};
 PyStrFirstNotInSet python_str_first_not_in_set(
     std::string line,
     std::string set,
@@ -136,11 +80,6 @@ PyStrFirstNotInSet python_str_first_not_in_set(
   auto py_result{PyStrFirstNotInSet{line, set, ix_match}};
   return py_result;
 }
-struct PyStrLastInSet {
-  std::string line;
-  std::string set;
-  int ix_match;
-};
 PyStrLastInSet python_str_last_in_set(
     std::string line,
     std::string set,
@@ -149,11 +88,6 @@ PyStrLastInSet python_str_last_in_set(
   auto py_result{PyStrLastInSet{line, set, ix_match}};
   return py_result;
 }
-struct PyStrLastNotInSet {
-  std::string line;
-  std::string set;
-  int ix_match;
-};
 PyStrLastNotInSet python_str_last_not_in_set(
     std::string line,
     std::string set,
@@ -162,11 +96,6 @@ PyStrLastNotInSet python_str_last_not_in_set(
   auto py_result{PyStrLastNotInSet{line, set, ix_match}};
   return py_result;
 }
-struct PyStrMatchWild {
-  std::string str;
-  std::string pat;
-  bool a_match;
-};
 PyStrMatchWild python_str_match_wild(
     std::string str,
     std::string pat,
@@ -175,13 +104,6 @@ PyStrMatchWild python_str_match_wild(
   auto py_result{PyStrMatchWild{str, pat, a_match}};
   return py_result;
 }
-struct PyStrSubstitute {
-  std::string string;
-  std::optional<std::string> str_match;
-  std::optional<std::string> str_replace;
-  std::optional<bool> do_trim;
-  std::optional<bool> ignore_escaped;
-};
 PyStrSubstitute python_str_substitute(
     std::string string,
     std::optional<std::string> str_match = std::nullopt,
@@ -198,13 +120,6 @@ PyStrSubstitute python_str_substitute(
       PyStrSubstitute{string, str_match, str_replace, do_trim, ignore_escaped}};
   return py_result;
 }
-struct PyStringToInt {
-  std::string line;
-  int default_;
-  bool err_flag;
-  std::optional<bool> err_print_flag;
-  int value;
-};
 PyStringToInt python_string_to_int(
     std::string line,
     int default_,
@@ -217,13 +132,6 @@ PyStringToInt python_string_to_int(
       PyStringToInt{line, default_, err_flag, err_print_flag, value}};
   return py_result;
 }
-struct PyStringToReal {
-  std::string line;
-  double default_;
-  bool err_flag;
-  std::optional<bool> err_print_flag;
-  double value;
-};
 PyStringToReal python_string_to_real(
     std::string line,
     double default_,
@@ -236,11 +144,6 @@ PyStringToReal python_string_to_real(
       PyStringToReal{line, default_, err_flag, err_print_flag, value}};
   return py_result;
 }
-struct PyStringTrim {
-  std::string in_string;
-  std::string out_string;
-  int word_len;
-};
 PyStringTrim python_string_trim(
     std::string in_string,
     std::string out_string,
@@ -249,14 +152,6 @@ PyStringTrim python_string_trim(
   auto py_result{PyStringTrim{in_string, out_string, word_len}};
   return py_result;
 }
-struct PyStringTrim2 {
-  std::string in_str;
-  std::string delimitors;
-  std::string out_str;
-  int ix_word;
-  std::string delim;
-  int ix_next;
-};
 PyStringTrim2 python_string_trim2(
     std::string in_str,
     std::string delimitors,
@@ -269,10 +164,6 @@ PyStringTrim2 python_string_trim2(
       PyStringTrim2{in_str, delimitors, out_str, ix_word, delim, ix_next}};
   return py_result;
 }
-struct PySystemCommand {
-  std::string line;
-  std::optional<bool> err_flag;
-};
 PySystemCommand python_system_command(
     std::string line,
     std::optional<bool> err_flag = std::nullopt) {
@@ -282,18 +173,6 @@ PySystemCommand python_system_command(
 }
 
 void init_SimUtils_routines_s(py::module& m) {
-  m.def(
-      "set_parameter",
-      py::overload_cast<int, int, int>(&python_set_parameter_int),
-      py::arg("param_val"),
-      py::arg("set_val"),
-      py::arg("save_val"),
-      R"""(Parameters
-  ----------
-  param_val : 
-  set_val : 
-  save_val : 
-  )""");
   py::class_<PySetParameterInt, std::unique_ptr<PySetParameterInt>>(
       m, "SetParameterInt", "Fortran routine set_parameter_int return value")
       .def_readonly("param_val", &PySetParameterInt::param_val)
@@ -313,7 +192,7 @@ void init_SimUtils_routines_s(py::module& m) {
       });
   m.def(
       "set_parameter",
-      py::overload_cast<bool, bool, bool>(&python_set_parameter_logic),
+      py::overload_cast<int, int, int>(&python_set_parameter_int),
       py::arg("param_val"),
       py::arg("set_val"),
       py::arg("save_val"),
@@ -345,7 +224,7 @@ void init_SimUtils_routines_s(py::module& m) {
           });
   m.def(
       "set_parameter",
-      py::overload_cast<double, double, double>(&python_set_parameter_real),
+      py::overload_cast<bool, bool, bool>(&python_set_parameter_logic),
       py::arg("param_val"),
       py::arg("set_val"),
       py::arg("save_val"),
@@ -373,6 +252,18 @@ void init_SimUtils_routines_s(py::module& m) {
         throw py::index_error();
       });
   m.def(
+      "set_parameter",
+      py::overload_cast<double, double, double>(&python_set_parameter_real),
+      py::arg("param_val"),
+      py::arg("set_val"),
+      py::arg("save_val"),
+      R"""(Parameters
+  ----------
+  param_val : 
+  set_val : 
+  save_val : 
+  )""");
+  m.def(
       "set_species_charge",
       &SimUtils::set_species_charge,
       py::arg("species_in"),
@@ -395,18 +286,6 @@ void init_SimUtils_routines_s(py::module& m) {
   species_charged : int
       Species of the same type as species_in but with different charge.
   )""");
-  m.def(
-      "sinc",
-      &python_sinc,
-      py::arg("x"),
-      py::arg("nd") = py::none(),
-      py::arg("y"),
-      R"""(Parameters
-  ----------
-  x : 
-  nd : 
-  y : 
-  )""");
   py::class_<PySinc, std::unique_ptr<PySinc>>(
       m, "Sinc", "Fortran routine sinc return value")
       .def_readonly("y", &PySinc::y)
@@ -419,8 +298,8 @@ void init_SimUtils_routines_s(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "sincc",
-      &python_sincc,
+      "sinc",
+      &python_sinc,
       py::arg("x"),
       py::arg("nd") = py::none(),
       py::arg("y"),
@@ -442,8 +321,8 @@ void init_SimUtils_routines_s(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "sinhx_x",
-      &python_sinhx_x,
+      "sincc",
+      &python_sincc,
       py::arg("x"),
       py::arg("nd") = py::none(),
       py::arg("y"),
@@ -465,14 +344,16 @@ void init_SimUtils_routines_s(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "skip_header",
-      &python_skip_header,
-      py::arg("ix_unit"),
-      py::arg("error_flag"),
+      "sinhx_x",
+      &python_sinhx_x,
+      py::arg("x"),
+      py::arg("nd") = py::none(),
+      py::arg("y"),
       R"""(Parameters
   ----------
-  ix_unit : 
-  error_flag : 
+  x : 
+  nd : 
+  y : 
   )""");
   py::class_<PySkipHeader, std::unique_ptr<PySkipHeader>>(
       m, "SkipHeader", "Fortran routine skip_header return value")
@@ -488,6 +369,16 @@ void init_SimUtils_routines_s(py::module& m) {
           return py::cast(s.error_flag);
         throw py::index_error();
       });
+  m.def(
+      "skip_header",
+      &python_skip_header,
+      py::arg("ix_unit"),
+      py::arg("error_flag"),
+      R"""(Parameters
+  ----------
+  ix_unit : 
+  error_flag : 
+  )""");
   m.def(
       "species_id",
       &SimUtils::species_id,
@@ -660,6 +551,29 @@ void init_SimUtils_routines_s(py::module& m) {
   ok : bool
       Set .false. if something is wrong (like less than 2 points used).
   )""");
+  py::class_<
+      SimUtils::SplineAkimaInterpolate,
+      std::unique_ptr<SimUtils::SplineAkimaInterpolate>>(
+      m,
+      "SplineAkimaInterpolate",
+      "Fortran routine spline_akima_interpolate return value")
+      .def_readonly("ok", &SimUtils::SplineAkimaInterpolate::ok)
+      .def_readonly("y", &SimUtils::SplineAkimaInterpolate::y)
+      .def_readonly("dy", &SimUtils::SplineAkimaInterpolate::dy)
+      .def("__len__", [](const SimUtils::SplineAkimaInterpolate&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const SimUtils::SplineAkimaInterpolate& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.ok);
+            if (i == 1)
+              return py::cast(s.y);
+            if (i == 2)
+              return py::cast(s.dy);
+            throw py::index_error();
+          });
   m.def(
       "spline_akima_interpolate",
       &SimUtils::spline_akima_interpolate,
@@ -698,18 +612,16 @@ void init_SimUtils_routines_s(py::module& m) {
       Spline derivative interpolation.
   )""");
   py::class_<
-      SimUtils::SplineAkimaInterpolate,
-      std::unique_ptr<SimUtils::SplineAkimaInterpolate>>(
-      m,
-      "SplineAkimaInterpolate",
-      "Fortran routine spline_akima_interpolate return value")
-      .def_readonly("ok", &SimUtils::SplineAkimaInterpolate::ok)
-      .def_readonly("y", &SimUtils::SplineAkimaInterpolate::y)
-      .def_readonly("dy", &SimUtils::SplineAkimaInterpolate::dy)
-      .def("__len__", [](const SimUtils::SplineAkimaInterpolate&) { return 3; })
+      SimUtils::SplineEvaluate,
+      std::unique_ptr<SimUtils::SplineEvaluate>>(
+      m, "SplineEvaluate", "Fortran routine spline_evaluate return value")
+      .def_readonly("ok", &SimUtils::SplineEvaluate::ok)
+      .def_readonly("y", &SimUtils::SplineEvaluate::y)
+      .def_readonly("dy", &SimUtils::SplineEvaluate::dy)
+      .def("__len__", [](const SimUtils::SplineEvaluate&) { return 3; })
       .def(
           "__getitem__",
-          [](const SimUtils::SplineAkimaInterpolate& s, int i) -> py::object {
+          [](const SimUtils::SplineEvaluate& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -753,39 +665,6 @@ void init_SimUtils_routines_s(py::module& m) {
   spline1 spline_akima_interpolate A spline may be generated using for example the spline_akima routine. use
   spline_mod
   )""");
-  py::class_<
-      SimUtils::SplineEvaluate,
-      std::unique_ptr<SimUtils::SplineEvaluate>>(
-      m, "SplineEvaluate", "Fortran routine spline_evaluate return value")
-      .def_readonly("ok", &SimUtils::SplineEvaluate::ok)
-      .def_readonly("y", &SimUtils::SplineEvaluate::y)
-      .def_readonly("dy", &SimUtils::SplineEvaluate::dy)
-      .def("__len__", [](const SimUtils::SplineEvaluate&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::SplineEvaluate& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.ok);
-            if (i == 1)
-              return py::cast(s.y);
-            if (i == 2)
-              return py::cast(s.dy);
-            throw py::index_error();
-          });
-  m.def(
-      "sqrt_alpha",
-      &python_sqrt_alpha,
-      py::arg("alpha"),
-      py::arg("x"),
-      py::arg("y"),
-      R"""(Parameters
-  ----------
-  alpha : 
-  x : 
-  y : 
-  )""");
   py::class_<PySqrtAlpha, std::unique_ptr<PySqrtAlpha>>(
       m, "SqrtAlpha", "Fortran routine sqrt_alpha return value")
       .def_readonly("y", &PySqrtAlpha::y)
@@ -798,16 +677,16 @@ void init_SimUtils_routines_s(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "sqrt_one",
-      &python_sqrt_one,
+      "sqrt_alpha",
+      &python_sqrt_alpha,
+      py::arg("alpha"),
       py::arg("x"),
-      py::arg("nd") = py::none(),
-      py::arg("ds1"),
+      py::arg("y"),
       R"""(Parameters
   ----------
+  alpha : 
   x : 
-  nd : 
-  ds1 : 
+  y : 
   )""");
   py::class_<PySqrtOne, std::unique_ptr<PySqrtOne>>(
       m, "SqrtOne", "Fortran routine sqrt_one return value")
@@ -821,16 +700,16 @@ void init_SimUtils_routines_s(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "str_count",
-      &python_str_count,
-      py::arg("str"),
-      py::arg("match"),
-      py::arg("num"),
+      "sqrt_one",
+      &python_sqrt_one,
+      py::arg("x"),
+      py::arg("nd") = py::none(),
+      py::arg("ds1"),
       R"""(Parameters
   ----------
-  str : 
-  match : 
-  num : 
+  x : 
+  nd : 
+  ds1 : 
   )""");
   py::class_<PyStrCount, std::unique_ptr<PyStrCount>>(
       m, "StrCount", "Fortran routine str_count return value")
@@ -850,6 +729,18 @@ void init_SimUtils_routines_s(py::module& m) {
         throw py::index_error();
       });
   m.def(
+      "str_count",
+      &python_str_count,
+      py::arg("str"),
+      py::arg("match"),
+      py::arg("num"),
+      R"""(Parameters
+  ----------
+  str : 
+  match : 
+  num : 
+  )""");
+  m.def(
       "str_downcase",
       &SimUtils::str_downcase,
       py::arg("src"),
@@ -857,20 +748,6 @@ void init_SimUtils_routines_s(py::module& m) {
   ----------
   dst : 
   src : 
-  )""");
-  m.def(
-      "str_first_in_set",
-      &python_str_first_in_set,
-      py::arg("line"),
-      py::arg("set"),
-      py::arg("ignore_clauses") = py::none(),
-      py::arg("ix_match"),
-      R"""(Parameters
-  ----------
-  line : 
-  set : 
-  ignore_clauses : 
-  ix_match : 
   )""");
   py::class_<PyStrFirstInSet, std::unique_ptr<PyStrFirstInSet>>(
       m, "StrFirstInSet", "Fortran routine str_first_in_set return value")
@@ -893,15 +770,17 @@ void init_SimUtils_routines_s(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "str_first_not_in_set",
-      &python_str_first_not_in_set,
+      "str_first_in_set",
+      &python_str_first_in_set,
       py::arg("line"),
       py::arg("set"),
+      py::arg("ignore_clauses") = py::none(),
       py::arg("ix_match"),
       R"""(Parameters
   ----------
   line : 
   set : 
+  ignore_clauses : 
   ix_match : 
   )""");
   py::class_<PyStrFirstNotInSet, std::unique_ptr<PyStrFirstNotInSet>>(
@@ -924,8 +803,8 @@ void init_SimUtils_routines_s(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "str_last_in_set",
-      &python_str_last_in_set,
+      "str_first_not_in_set",
+      &python_str_first_not_in_set,
       py::arg("line"),
       py::arg("set"),
       py::arg("ix_match"),
@@ -953,8 +832,8 @@ void init_SimUtils_routines_s(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "str_last_not_in_set",
-      &python_str_last_not_in_set,
+      "str_last_in_set",
+      &python_str_last_in_set,
       py::arg("line"),
       py::arg("set"),
       py::arg("ix_match"),
@@ -982,16 +861,16 @@ void init_SimUtils_routines_s(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "str_match_wild",
-      &python_str_match_wild,
-      py::arg("str"),
-      py::arg("pat"),
-      py::arg("a_match"),
+      "str_last_not_in_set",
+      &python_str_last_not_in_set,
+      py::arg("line"),
+      py::arg("set"),
+      py::arg("ix_match"),
       R"""(Parameters
   ----------
-  str : 
-  pat : 
-  a_match : 
+  line : 
+  set : 
+  ix_match : 
   )""");
   py::class_<PyStrMatchWild, std::unique_ptr<PyStrMatchWild>>(
       m, "StrMatchWild", "Fortran routine str_match_wild return value")
@@ -1011,20 +890,16 @@ void init_SimUtils_routines_s(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "str_substitute",
-      &python_str_substitute,
-      py::arg("string"),
-      py::arg("str_match") = py::none(),
-      py::arg("str_replace") = py::none(),
-      py::arg("do_trim") = py::none(),
-      py::arg("ignore_escaped") = py::none(),
+      "str_match_wild",
+      &python_str_match_wild,
+      py::arg("str"),
+      py::arg("pat"),
+      py::arg("a_match"),
       R"""(Parameters
   ----------
-  string : 
-  str_match : 
-  str_replace : 
-  do_trim : 
-  ignore_escaped : 
+  str : 
+  pat : 
+  a_match : 
   )""");
   py::class_<PyStrSubstitute, std::unique_ptr<PyStrSubstitute>>(
       m, "StrSubstitute", "Fortran routine str_substitute return value")
@@ -1050,6 +925,22 @@ void init_SimUtils_routines_s(py::module& m) {
         throw py::index_error();
       });
   m.def(
+      "str_substitute",
+      &python_str_substitute,
+      py::arg("string"),
+      py::arg("str_match") = py::none(),
+      py::arg("str_replace") = py::none(),
+      py::arg("do_trim") = py::none(),
+      py::arg("ignore_escaped") = py::none(),
+      R"""(Parameters
+  ----------
+  string : 
+  str_match : 
+  str_replace : 
+  do_trim : 
+  ignore_escaped : 
+  )""");
+  m.def(
       "str_upcase",
       &SimUtils::str_upcase,
       py::arg("src"),
@@ -1057,22 +948,6 @@ void init_SimUtils_routines_s(py::module& m) {
   ----------
   dst : 
   src : 
-  )""");
-  m.def(
-      "string_to_int",
-      &python_string_to_int,
-      py::arg("line"),
-      py::arg("default_"),
-      py::arg("err_flag"),
-      py::arg("err_print_flag") = py::none(),
-      py::arg("value"),
-      R"""(Parameters
-  ----------
-  line : 
-  default : 
-  err_flag : 
-  err_print_flag : 
-  value : 
   )""");
   py::class_<PyStringToInt, std::unique_ptr<PyStringToInt>>(
       m, "StringToInt", "Fortran routine string_to_int return value")
@@ -1098,8 +973,8 @@ void init_SimUtils_routines_s(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "string_to_real",
-      &python_string_to_real,
+      "string_to_int",
+      &python_string_to_int,
       py::arg("line"),
       py::arg("default_"),
       py::arg("err_flag"),
@@ -1137,16 +1012,20 @@ void init_SimUtils_routines_s(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "string_trim",
-      &python_string_trim,
-      py::arg("in_string"),
-      py::arg("out_string"),
-      py::arg("word_len"),
+      "string_to_real",
+      &python_string_to_real,
+      py::arg("line"),
+      py::arg("default_"),
+      py::arg("err_flag"),
+      py::arg("err_print_flag") = py::none(),
+      py::arg("value"),
       R"""(Parameters
   ----------
-  in_string : 
-  out_string : 
-  word_len : 
+  line : 
+  default : 
+  err_flag : 
+  err_print_flag : 
+  value : 
   )""");
   py::class_<PyStringTrim, std::unique_ptr<PyStringTrim>>(
       m, "StringTrim", "Fortran routine string_trim return value")
@@ -1166,22 +1045,16 @@ void init_SimUtils_routines_s(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "string_trim2",
-      &python_string_trim2,
-      py::arg("in_str"),
-      py::arg("delimitors"),
-      py::arg("out_str"),
-      py::arg("ix_word"),
-      py::arg("delim"),
-      py::arg("ix_next"),
+      "string_trim",
+      &python_string_trim,
+      py::arg("in_string"),
+      py::arg("out_string"),
+      py::arg("word_len"),
       R"""(Parameters
   ----------
-  in_str : 
-  delimitors : 
-  out_str : 
-  ix_word : 
-  delim : 
-  ix_next : 
+  in_string : 
+  out_string : 
+  word_len : 
   )""");
   py::class_<PyStringTrim2, std::unique_ptr<PyStringTrim2>>(
       m, "StringTrim2", "Fortran routine string_trim2 return value")
@@ -1209,6 +1082,24 @@ void init_SimUtils_routines_s(py::module& m) {
           return py::cast(s.ix_next);
         throw py::index_error();
       });
+  m.def(
+      "string_trim2",
+      &python_string_trim2,
+      py::arg("in_str"),
+      py::arg("delimitors"),
+      py::arg("out_str"),
+      py::arg("ix_word"),
+      py::arg("delim"),
+      py::arg("ix_next"),
+      R"""(Parameters
+  ----------
+  in_str : 
+  delimitors : 
+  out_str : 
+  ix_word : 
+  delim : 
+  ix_next : 
+  )""");
   m.def(
       "super_bicubic_coef",
       &SimUtils::super_bicubic_coef,
@@ -1243,6 +1134,32 @@ void init_SimUtils_routines_s(py::module& m) {
   c : float
       Coefficients.
   )""");
+  py::class_<
+      SimUtils::SuperBicubicInterpolation,
+      std::unique_ptr<SimUtils::SuperBicubicInterpolation>>(
+      m,
+      "SuperBicubicInterpolation",
+      "Fortran routine super_bicubic_interpolation return value")
+      .def_readonly("ansy", &SimUtils::SuperBicubicInterpolation::ansy)
+      .def_readonly("ansy1", &SimUtils::SuperBicubicInterpolation::ansy1)
+      .def_readonly("ansy2", &SimUtils::SuperBicubicInterpolation::ansy2)
+      .def(
+          "__len__",
+          [](const SimUtils::SuperBicubicInterpolation&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const SimUtils::SuperBicubicInterpolation& s,
+             int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.ansy);
+            if (i == 1)
+              return py::cast(s.ansy1);
+            if (i == 2)
+              return py::cast(s.ansy2);
+            throw py::index_error();
+          });
   m.def(
       "super_bicubic_interpolation",
       &SimUtils::super_bicubic_interpolation,
@@ -1296,30 +1213,20 @@ void init_SimUtils_routines_s(py::module& m) {
   ansy2 : float
       2-direction derivative at interpolation point.
   )""");
-  py::class_<
-      SimUtils::SuperBicubicInterpolation,
-      std::unique_ptr<SimUtils::SuperBicubicInterpolation>>(
-      m,
-      "SuperBicubicInterpolation",
-      "Fortran routine super_bicubic_interpolation return value")
-      .def_readonly("ansy", &SimUtils::SuperBicubicInterpolation::ansy)
-      .def_readonly("ansy1", &SimUtils::SuperBicubicInterpolation::ansy1)
-      .def_readonly("ansy2", &SimUtils::SuperBicubicInterpolation::ansy2)
-      .def(
-          "__len__",
-          [](const SimUtils::SuperBicubicInterpolation&) { return 3; })
+  py::class_<SimUtils::SuperPolint, std::unique_ptr<SimUtils::SuperPolint>>(
+      m, "SuperPolint", "Fortran routine super_polint return value")
+      .def_readonly("y", &SimUtils::SuperPolint::y)
+      .def_readonly("dy", &SimUtils::SuperPolint::dy)
+      .def("__len__", [](const SimUtils::SuperPolint&) { return 2; })
       .def(
           "__getitem__",
-          [](const SimUtils::SuperBicubicInterpolation& s,
-             int i) -> py::object {
+          [](const SimUtils::SuperPolint& s, int i) -> py::object {
             if (i < 0)
-              i += 3;
+              i += 2;
             if (i == 0)
-              return py::cast(s.ansy);
+              return py::cast(s.y);
             if (i == 1)
-              return py::cast(s.ansy1);
-            if (i == 2)
-              return py::cast(s.ansy2);
+              return py::cast(s.dy);
             throw py::index_error();
           });
   m.def(
@@ -1342,22 +1249,6 @@ void init_SimUtils_routines_s(py::module& m) {
   y : float
   dy : float
   )""");
-  py::class_<SimUtils::SuperPolint, std::unique_ptr<SimUtils::SuperPolint>>(
-      m, "SuperPolint", "Fortran routine super_polint return value")
-      .def_readonly("y", &SimUtils::SuperPolint::y)
-      .def_readonly("dy", &SimUtils::SuperPolint::dy)
-      .def("__len__", [](const SimUtils::SuperPolint&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::SuperPolint& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.y);
-            if (i == 1)
-              return py::cast(s.dy);
-            throw py::index_error();
-          });
   m.def(
       "super_poly",
       &SimUtils::super_poly,
@@ -1413,16 +1304,6 @@ void init_SimUtils_routines_s(py::module& m) {
       Array of integers.
       This parameter is an input/output and is modified in-place. As an output: Sorted array.
   )""");
-  m.def(
-      "system_command",
-      &python_system_command,
-      py::arg("line"),
-      py::arg("err_flag") = py::none(),
-      R"""(Parameters
-  ----------
-  line : 
-  err_flag : 
-  )""");
   py::class_<PySystemCommand, std::unique_ptr<PySystemCommand>>(
       m, "SystemCommand", "Fortran routine system_command return value")
       .def_readonly("line", &PySystemCommand::line)
@@ -1437,4 +1318,14 @@ void init_SimUtils_routines_s(py::module& m) {
           return py::cast(s.err_flag);
         throw py::index_error();
       });
+  m.def(
+      "system_command",
+      &python_system_command,
+      py::arg("line"),
+      py::arg("err_flag") = py::none(),
+      R"""(Parameters
+  ----------
+  line : 
+  err_flag : 
+  )""");
 }

@@ -1,18 +1,9 @@
 #include "pybmad/generated/Bmad_routines_b.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyBendLengthHasBeenSet {
-  bool is_set;
-};
 PyBendLengthHasBeenSet python_bend_length_has_been_set(
     EleProxy& ele,
     bool is_set) {
@@ -20,9 +11,6 @@ PyBendLengthHasBeenSet python_bend_length_has_been_set(
   auto py_result{PyBendLengthHasBeenSet{is_set}};
   return py_result;
 }
-struct PyBmadParser2 {
-  std::optional<bool> err_flag;
-};
 PyBmadParser2 python_bmad_parser2(
     std::string lat_file,
     LatProxy& lat,
@@ -35,9 +23,6 @@ PyBmadParser2 python_bmad_parser2(
   auto py_result{PyBmadParser2{err_flag}};
   return py_result;
 }
-struct PyBranchName {
-  std::string name;
-};
 PyBranchName python_branch_name(BranchProxy& branch, std::string name) {
   Bmad::branch_name(branch, name);
   auto py_result{PyBranchName{name}};
@@ -45,6 +30,20 @@ PyBranchName python_branch_name(BranchProxy& branch, std::string name) {
 }
 
 void init_Bmad_routines_b(py::module& m) {
+  py::class_<Bmad::BbiKick, std::unique_ptr<Bmad::BbiKick>>(
+      m, "BbiKick", "Fortran routine bbi_kick return value")
+      .def_readonly("nk", &Bmad::BbiKick::nk)
+      .def_readonly("dnk", &Bmad::BbiKick::dnk)
+      .def("__len__", [](const Bmad::BbiKick&) { return 2; })
+      .def("__getitem__", [](const Bmad::BbiKick& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.nk);
+        if (i == 1)
+          return py::cast(s.dnk);
+        throw py::index_error();
+      });
   m.def(
       "bbi_kick",
       &Bmad::bbi_kick,
@@ -81,20 +80,6 @@ void init_Bmad_routines_b(py::module& m) {
       [far from beam] ion_const = N_particles_bunch * r_p * c_light / (2 * pi * (sig_x + sig_y) * A) A = Mass of
       ion in AMU.
   )""");
-  py::class_<Bmad::BbiKick, std::unique_ptr<Bmad::BbiKick>>(
-      m, "BbiKick", "Fortran routine bbi_kick return value")
-      .def_readonly("nk", &Bmad::BbiKick::nk)
-      .def_readonly("dnk", &Bmad::BbiKick::dnk)
-      .def("__len__", [](const Bmad::BbiKick&) { return 2; })
-      .def("__getitem__", [](const Bmad::BbiKick& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.nk);
-        if (i == 1)
-          return py::cast(s.dnk);
-        throw py::index_error();
-      });
   m.def(
       "bbi_slice_calc",
       &Bmad::bbi_slice_calc,
@@ -180,6 +165,29 @@ void init_Bmad_routines_b(py::module& m) {
       Set true if there is an error. False otherwise.
   beam_init_set : 
   )""");
+  py::class_<Bmad::BeamTilts, std::unique_ptr<Bmad::BeamTilts>>(
+      m, "BeamTilts", "Fortran routine beam_tilts return value")
+      .def_readonly("angle_xy", &Bmad::BeamTilts::angle_xy)
+      .def_readonly("angle_xz", &Bmad::BeamTilts::angle_xz)
+      .def_readonly("angle_yz", &Bmad::BeamTilts::angle_yz)
+      .def_readonly("angle_xpz", &Bmad::BeamTilts::angle_xpz)
+      .def_readonly("angle_ypz", &Bmad::BeamTilts::angle_ypz)
+      .def("__len__", [](const Bmad::BeamTilts&) { return 5; })
+      .def("__getitem__", [](const Bmad::BeamTilts& s, int i) -> py::object {
+        if (i < 0)
+          i += 5;
+        if (i == 0)
+          return py::cast(s.angle_xy);
+        if (i == 1)
+          return py::cast(s.angle_xz);
+        if (i == 2)
+          return py::cast(s.angle_yz);
+        if (i == 3)
+          return py::cast(s.angle_xpz);
+        if (i == 4)
+          return py::cast(s.angle_ypz);
+        throw py::index_error();
+      });
   m.def(
       "beam_tilts",
       &Bmad::beam_tilts,
@@ -220,29 +228,6 @@ void init_Bmad_routines_b(py::module& m) {
   angle_ypz : float
       y-pz coupling
   )""");
-  py::class_<Bmad::BeamTilts, std::unique_ptr<Bmad::BeamTilts>>(
-      m, "BeamTilts", "Fortran routine beam_tilts return value")
-      .def_readonly("angle_xy", &Bmad::BeamTilts::angle_xy)
-      .def_readonly("angle_xz", &Bmad::BeamTilts::angle_xz)
-      .def_readonly("angle_yz", &Bmad::BeamTilts::angle_yz)
-      .def_readonly("angle_xpz", &Bmad::BeamTilts::angle_xpz)
-      .def_readonly("angle_ypz", &Bmad::BeamTilts::angle_ypz)
-      .def("__len__", [](const Bmad::BeamTilts&) { return 5; })
-      .def("__getitem__", [](const Bmad::BeamTilts& s, int i) -> py::object {
-        if (i < 0)
-          i += 5;
-        if (i == 0)
-          return py::cast(s.angle_xy);
-        if (i == 1)
-          return py::cast(s.angle_xz);
-        if (i == 2)
-          return py::cast(s.angle_yz);
-        if (i == 3)
-          return py::cast(s.angle_xpz);
-        if (i == 4)
-          return py::cast(s.angle_ypz);
-        throw py::index_error();
-      });
   m.def(
       "bend_edge_kick",
       &Bmad::bend_edge_kick,
@@ -304,17 +289,6 @@ void init_Bmad_routines_b(py::module& m) {
   calc_potential : bool, optional
       Calc electric and magnetic potentials? Default is false.
   )""");
-  m.def(
-      "bend_length_has_been_set",
-      &python_bend_length_has_been_set,
-      py::arg("ele"),
-      py::arg("is_set"),
-      R"""(Parameters
-  ----------
-  ele : EleStruct
-      Element to be checked. Ouput:
-  is_set : 
-  )""");
   py::class_<PyBendLengthHasBeenSet, std::unique_ptr<PyBendLengthHasBeenSet>>(
       m,
       "BendLengthHasBeenSet",
@@ -330,6 +304,17 @@ void init_Bmad_routines_b(py::module& m) {
               return py::cast(s.is_set);
             throw py::index_error();
           });
+  m.def(
+      "bend_length_has_been_set",
+      &python_bend_length_has_been_set,
+      py::arg("ele"),
+      py::arg("is_set"),
+      R"""(Parameters
+  ----------
+  ele : EleStruct
+      Element to be checked. Ouput:
+  is_set : 
+  )""");
   m.def(
       "bend_photon_e_rel_init",
       &Bmad::bend_photon_e_rel_init,
@@ -639,6 +624,26 @@ void init_Bmad_routines_b(py::module& m) {
   sigma_z : float
       Bunch length. FWHM/TwoRootTwoLogTwo from bunch profile
   )""");
+  py::class_<Bmad::BmadParser, std::unique_ptr<Bmad::BmadParser>>(
+      m, "BmadParser", "Fortran routine bmad_parser return value")
+      .def_readonly("lat", &Bmad::BmadParser::lat)
+      .def_readonly("digested_read_ok", &Bmad::BmadParser::digested_read_ok)
+      .def_readonly("err_flag", &Bmad::BmadParser::err_flag)
+      .def_readonly("parse_lat", &Bmad::BmadParser::parse_lat)
+      .def("__len__", [](const Bmad::BmadParser&) { return 4; })
+      .def("__getitem__", [](const Bmad::BmadParser& s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.lat);
+        if (i == 1)
+          return py::cast(s.digested_read_ok);
+        if (i == 2)
+          return py::cast(s.err_flag);
+        if (i == 3)
+          return py::cast(s.parse_lat);
+        throw py::index_error();
+      });
   m.def(
       "bmad_parser",
       &Bmad::bmad_parser,
@@ -667,24 +672,15 @@ void init_Bmad_routines_b(py::module& m) {
       List of elements used to construct the lattice. Useful if bmad_parser2 will be called. See bmad_parser2
       documentation.
   )""");
-  py::class_<Bmad::BmadParser, std::unique_ptr<Bmad::BmadParser>>(
-      m, "BmadParser", "Fortran routine bmad_parser return value")
-      .def_readonly("lat", &Bmad::BmadParser::lat)
-      .def_readonly("digested_read_ok", &Bmad::BmadParser::digested_read_ok)
-      .def_readonly("err_flag", &Bmad::BmadParser::err_flag)
-      .def_readonly("parse_lat", &Bmad::BmadParser::parse_lat)
-      .def("__len__", [](const Bmad::BmadParser&) { return 4; })
-      .def("__getitem__", [](const Bmad::BmadParser& s, int i) -> py::object {
+  py::class_<PyBmadParser2, std::unique_ptr<PyBmadParser2>>(
+      m, "BmadParser2", "Fortran routine bmad_parser2 return value")
+      .def_readonly("err_flag", &PyBmadParser2::err_flag)
+      .def("__len__", [](const PyBmadParser2&) { return 1; })
+      .def("__getitem__", [](const PyBmadParser2& s, int i) -> py::object {
         if (i < 0)
-          i += 4;
+          i += 1;
         if (i == 0)
-          return py::cast(s.lat);
-        if (i == 1)
-          return py::cast(s.digested_read_ok);
-        if (i == 2)
           return py::cast(s.err_flag);
-        if (i == 3)
-          return py::cast(s.parse_lat);
         throw py::index_error();
       });
   m.def(
@@ -713,17 +709,6 @@ void init_Bmad_routines_b(py::module& m) {
       not used. This is useful in preventing errors being generated if group/overlay elements definded by
       lat_file refer to unused slaves in parse_lat.
   )""");
-  py::class_<PyBmadParser2, std::unique_ptr<PyBmadParser2>>(
-      m, "BmadParser2", "Fortran routine bmad_parser2 return value")
-      .def_readonly("err_flag", &PyBmadParser2::err_flag)
-      .def("__len__", [](const PyBmadParser2&) { return 1; })
-      .def("__getitem__", [](const PyBmadParser2& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.err_flag);
-        throw py::index_error();
-      });
   m.def(
       "bmad_patch_parameters_to_ptc",
       &Bmad::bmad_patch_parameters_to_ptc,
@@ -745,17 +730,6 @@ void init_Bmad_routines_b(py::module& m) {
   branch1 : 
   branch2 : 
   )""");
-  m.def(
-      "branch_name",
-      &python_branch_name,
-      py::arg("branch"),
-      py::arg("name"),
-      R"""(Parameters
-  ----------
-  branch : BranchStruct
-      Lattice branch
-  name : 
-  )""");
   py::class_<PyBranchName, std::unique_ptr<PyBranchName>>(
       m, "BranchName", "Fortran routine branch_name return value")
       .def_readonly("name", &PyBranchName::name)
@@ -767,6 +741,17 @@ void init_Bmad_routines_b(py::module& m) {
           return py::cast(s.name);
         throw py::index_error();
       });
+  m.def(
+      "branch_name",
+      &python_branch_name,
+      py::arg("branch"),
+      py::arg("name"),
+      R"""(Parameters
+  ----------
+  branch : BranchStruct
+      Lattice branch
+  name : 
+  )""");
   m.def(
       "branch_to_ptc_m_u",
       &Bmad::branch_to_ptc_m_u,

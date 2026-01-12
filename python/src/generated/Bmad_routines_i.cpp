@@ -1,22 +1,9 @@
 #include "pybmad/generated/Bmad_routines_i.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyIbsMatrixC {
-  bool tail_cut;
-  double tau;
-  double energy;
-  double n_part;
-  int species;
-};
 PyIbsMatrixC python_ibs_matrix_c(
     FixedArray2D<Real, 6, 6> sigma_mat,
     bool tail_cut,
@@ -30,16 +17,6 @@ PyIbsMatrixC python_ibs_matrix_c(
   auto py_result{PyIbsMatrixC{tail_cut, tau, energy, n_part, species}};
   return py_result;
 }
-struct PyIgfcoulombfun {
-  double u;
-  double v;
-  double w;
-  double gam;
-  double dx;
-  double dy;
-  double dz;
-  double res;
-};
 PyIgfcoulombfun python_igfcoulombfun(
     double u,
     double v,
@@ -53,16 +30,6 @@ PyIgfcoulombfun python_igfcoulombfun(
   auto py_result{PyIgfcoulombfun{u, v, w, gam, dx, dy, dz, res}};
   return py_result;
 }
-struct PyIgfexfun {
-  double u;
-  double v;
-  double w;
-  double gam;
-  double dx;
-  double dy;
-  double dz;
-  double res;
-};
 PyIgfexfun python_igfexfun(
     double u,
     double v,
@@ -76,16 +43,6 @@ PyIgfexfun python_igfexfun(
   auto py_result{PyIgfexfun{u, v, w, gam, dx, dy, dz, res}};
   return py_result;
 }
-struct PyIgfeyfun {
-  double u;
-  double v;
-  double w;
-  double gam;
-  double dx;
-  double dy;
-  double dz;
-  double res;
-};
 PyIgfeyfun python_igfeyfun(
     double u,
     double v,
@@ -99,16 +56,6 @@ PyIgfeyfun python_igfeyfun(
   auto py_result{PyIgfeyfun{u, v, w, gam, dx, dy, dz, res}};
   return py_result;
 }
-struct PyIgfezfun {
-  double u;
-  double v;
-  double w;
-  double gam;
-  double dx;
-  double dy;
-  double dz;
-  double res;
-};
 PyIgfezfun python_igfezfun(
     double u,
     double v,
@@ -122,9 +69,6 @@ PyIgfezfun python_igfezfun(
   auto py_result{PyIgfezfun{u, v, w, gam, dx, dy, dz, res}};
   return py_result;
 }
-struct PyInitAttributeName1 {
-  bool is_ok;
-};
 PyInitAttributeName1 python_init_attribute_name1(
     bool is_ok,
     int ix_key,
@@ -137,14 +81,6 @@ PyInitAttributeName1 python_init_attribute_name1(
   auto py_result{PyInitAttributeName1{is_ok}};
   return py_result;
 }
-struct PyInitBeamDistribution : public Bmad::InitBeamDistribution {
-  std::optional<bool> conserve_momentum;
-  PyInitBeamDistribution(
-      Bmad::InitBeamDistribution _base,
-      std::optional<bool> conserve_momentum)
-      : Bmad::InitBeamDistribution(std::move(_base)),
-        conserve_momentum(conserve_momentum) {}
-};
 PyInitBeamDistribution python_init_beam_distribution(
     EleProxy& ele,
     LatParamProxy& param,
@@ -162,14 +98,6 @@ PyInitBeamDistribution python_init_beam_distribution(
   auto py_result{PyInitBeamDistribution{_result, conserve_momentum}};
   return py_result;
 }
-struct PyInitBunchDistribution : public Bmad::InitBunchDistribution {
-  std::optional<bool> conserve_momentum;
-  PyInitBunchDistribution(
-      Bmad::InitBunchDistribution _base,
-      std::optional<bool> conserve_momentum)
-      : Bmad::InitBunchDistribution(std::move(_base)),
-        conserve_momentum(conserve_momentum) {}
-};
 PyInitBunchDistribution python_init_bunch_distribution(
     EleProxy& ele,
     LatParamProxy& param,
@@ -189,10 +117,6 @@ PyInitBunchDistribution python_init_bunch_distribution(
   auto py_result{PyInitBunchDistribution{_result, conserve_momentum}};
   return py_result;
 }
-struct PyInitSurfaceSegment {
-  int ix;
-  int iy;
-};
 PyInitSurfaceSegment python_init_surface_segment(
     PhotonElementProxy& phot,
     int ix,
@@ -201,9 +125,6 @@ PyInitSurfaceSegment python_init_surface_segment(
   auto py_result{PyInitSurfaceSegment{ix, iy}};
   return py_result;
 }
-struct PyIntegrandBase {
-  double func_retval__;
-};
 PyIntegrandBase python_integrand_base(
     double t,
     RealAlloc1D& args,
@@ -212,9 +133,6 @@ PyIntegrandBase python_integrand_base(
   auto py_result{PyIntegrandBase{func_retval__}};
   return py_result;
 }
-struct PyIntegrationTimerEle {
-  double tol;
-};
 PyIntegrationTimerEle python_integration_timer_ele(
     EleProxy& ele,
     LatParamProxy& param,
@@ -227,26 +145,6 @@ PyIntegrationTimerEle python_integration_timer_ele(
 }
 
 void init_Bmad_routines_i(py::module& m) {
-  m.def(
-      "ibs_matrix_c",
-      &python_ibs_matrix_c,
-      py::arg("sigma_mat"),
-      py::arg("tail_cut"),
-      py::arg("tau"),
-      py::arg("energy"),
-      py::arg("n_part"),
-      py::arg("species"),
-      py::arg("ibs_mat"),
-      R"""(Parameters
-  ----------
-  sigma_mat : 
-  tail_cut : 
-  tau : 
-  energy : 
-  n_part : 
-  species : 
-  ibs_mat : 
-  )""");
   py::class_<PyIbsMatrixC, std::unique_ptr<PyIbsMatrixC>>(
       m, "IbsMatrixC", "Fortran routine ibs_matrix_c return value")
       .def_readonly("tail_cut", &PyIbsMatrixC::tail_cut)
@@ -271,26 +169,24 @@ void init_Bmad_routines_i(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "igfcoulombfun",
-      &python_igfcoulombfun,
-      py::arg("u"),
-      py::arg("v"),
-      py::arg("w"),
-      py::arg("gam"),
-      py::arg("dx"),
-      py::arg("dy"),
-      py::arg("dz"),
-      py::arg("res"),
+      "ibs_matrix_c",
+      &python_ibs_matrix_c,
+      py::arg("sigma_mat"),
+      py::arg("tail_cut"),
+      py::arg("tau"),
+      py::arg("energy"),
+      py::arg("n_part"),
+      py::arg("species"),
+      py::arg("ibs_mat"),
       R"""(Parameters
   ----------
-  u : 
-  v : 
-  w : 
-  gam : 
-  dx : 
-  dy : 
-  dz : 
-  res : 
+  sigma_mat : 
+  tail_cut : 
+  tau : 
+  energy : 
+  n_part : 
+  species : 
+  ibs_mat : 
   )""");
   py::class_<PyIgfcoulombfun, std::unique_ptr<PyIgfcoulombfun>>(
       m, "Igfcoulombfun", "Fortran routine igfcoulombfun return value")
@@ -325,8 +221,8 @@ void init_Bmad_routines_i(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "igfexfun",
-      &python_igfexfun,
+      "igfcoulombfun",
+      &python_igfcoulombfun,
       py::arg("u"),
       py::arg("v"),
       py::arg("w"),
@@ -379,8 +275,8 @@ void init_Bmad_routines_i(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "igfeyfun",
-      &python_igfeyfun,
+      "igfexfun",
+      &python_igfexfun,
       py::arg("u"),
       py::arg("v"),
       py::arg("w"),
@@ -433,8 +329,8 @@ void init_Bmad_routines_i(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "igfezfun",
-      &python_igfezfun,
+      "igfeyfun",
+      &python_igfeyfun,
       py::arg("u"),
       py::arg("v"),
       py::arg("w"),
@@ -487,6 +383,43 @@ void init_Bmad_routines_i(py::module& m) {
         throw py::index_error();
       });
   m.def(
+      "igfezfun",
+      &python_igfezfun,
+      py::arg("u"),
+      py::arg("v"),
+      py::arg("w"),
+      py::arg("gam"),
+      py::arg("dx"),
+      py::arg("dy"),
+      py::arg("dz"),
+      py::arg("res"),
+      R"""(Parameters
+  ----------
+  u : 
+  v : 
+  w : 
+  gam : 
+  dx : 
+  dy : 
+  dz : 
+  res : 
+  )""");
+  py::class_<PyInitAttributeName1, std::unique_ptr<PyInitAttributeName1>>(
+      m,
+      "InitAttributeName1",
+      "Fortran routine init_attribute_name1 return value")
+      .def_readonly("is_ok", &PyInitAttributeName1::is_ok)
+      .def("__len__", [](const PyInitAttributeName1&) { return 1; })
+      .def(
+          "__getitem__",
+          [](const PyInitAttributeName1& s, int i) -> py::object {
+            if (i < 0)
+              i += 1;
+            if (i == 0)
+              return py::cast(s.is_ok);
+            throw py::index_error();
+          });
+  m.def(
       "init_attribute_name1",
       &python_init_attribute_name1,
       py::arg("is_ok"),
@@ -518,21 +451,6 @@ void init_Bmad_routines_i(py::module& m) {
       Normally this routine throws an error if the [ix_key, ix_attrib] has been set previously. If override =
       True then the set is done and no error is generated.
   )""");
-  py::class_<PyInitAttributeName1, std::unique_ptr<PyInitAttributeName1>>(
-      m,
-      "InitAttributeName1",
-      "Fortran routine init_attribute_name1 return value")
-      .def_readonly("is_ok", &PyInitAttributeName1::is_ok)
-      .def("__len__", [](const PyInitAttributeName1&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyInitAttributeName1& s, int i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.is_ok);
-            throw py::index_error();
-          });
   m.def(
       "init_attribute_name_array",
       &Bmad::init_attribute_name_array,
@@ -542,6 +460,31 @@ void init_Bmad_routines_i(py::module& m) {
   in attribute_mod. Not meant for general use.
 
   )""");
+  py::class_<PyInitBeamDistribution, std::unique_ptr<PyInitBeamDistribution>>(
+      m,
+      "InitBeamDistribution",
+      "Fortran routine init_beam_distribution return value")
+      .def_readonly("beam", &PyInitBeamDistribution::beam)
+      .def_readonly("err_flag", &PyInitBeamDistribution::err_flag)
+      .def_readonly("beam_init_set", &PyInitBeamDistribution::beam_init_set)
+      .def_readonly(
+          "conserve_momentum", &PyInitBeamDistribution::conserve_momentum)
+      .def("__len__", [](const PyInitBeamDistribution&) { return 4; })
+      .def(
+          "__getitem__",
+          [](const PyInitBeamDistribution& s, int i) -> py::object {
+            if (i < 0)
+              i += 4;
+            if (i == 0)
+              return py::cast(s.beam);
+            if (i == 1)
+              return py::cast(s.err_flag);
+            if (i == 2)
+              return py::cast(s.beam_init_set);
+            if (i == 3)
+              return py::cast(s.conserve_momentum);
+            throw py::index_error();
+          });
   m.def(
       "init_beam_distribution",
       &python_init_beam_distribution,
@@ -594,31 +537,6 @@ void init_Bmad_routines_i(py::module& m) {
       Set to input beam_init with components like .a_emit set what is used in constructing the beam (which is
       different from beam_init.a_emit if this is set negative).
   )""");
-  py::class_<PyInitBeamDistribution, std::unique_ptr<PyInitBeamDistribution>>(
-      m,
-      "InitBeamDistribution",
-      "Fortran routine init_beam_distribution return value")
-      .def_readonly("beam", &PyInitBeamDistribution::beam)
-      .def_readonly("err_flag", &PyInitBeamDistribution::err_flag)
-      .def_readonly("beam_init_set", &PyInitBeamDistribution::beam_init_set)
-      .def_readonly(
-          "conserve_momentum", &PyInitBeamDistribution::conserve_momentum)
-      .def("__len__", [](const PyInitBeamDistribution&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const PyInitBeamDistribution& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.beam);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            if (i == 2)
-              return py::cast(s.beam_init_set);
-            if (i == 3)
-              return py::cast(s.conserve_momentum);
-            throw py::index_error();
-          });
   m.def("init_bmad", &Bmad::init_bmad, R"""()""");
   m.def(
       "init_bmad_parser_common",
@@ -628,6 +546,31 @@ void init_Bmad_routines_i(py::module& m) {
   ----------
   lat : 
   )""");
+  py::class_<PyInitBunchDistribution, std::unique_ptr<PyInitBunchDistribution>>(
+      m,
+      "InitBunchDistribution",
+      "Fortran routine init_bunch_distribution return value")
+      .def_readonly("bunch", &PyInitBunchDistribution::bunch)
+      .def_readonly("err_flag", &PyInitBunchDistribution::err_flag)
+      .def_readonly("beam_init_used", &PyInitBunchDistribution::beam_init_used)
+      .def_readonly(
+          "conserve_momentum", &PyInitBunchDistribution::conserve_momentum)
+      .def("__len__", [](const PyInitBunchDistribution&) { return 4; })
+      .def(
+          "__getitem__",
+          [](const PyInitBunchDistribution& s, int i) -> py::object {
+            if (i < 0)
+              i += 4;
+            if (i == 0)
+              return py::cast(s.bunch);
+            if (i == 1)
+              return py::cast(s.err_flag);
+            if (i == 2)
+              return py::cast(s.beam_init_used);
+            if (i == 3)
+              return py::cast(s.conserve_momentum);
+            throw py::index_error();
+          });
   m.def(
       "init_bunch_distribution",
       &python_init_bunch_distribution,
@@ -698,31 +641,6 @@ void init_Bmad_routines_i(py::module& m) {
       be different from beam_init.a_emit if this is set negative). If reading from a file, beam_init_used will
       equal beam_init.
   )""");
-  py::class_<PyInitBunchDistribution, std::unique_ptr<PyInitBunchDistribution>>(
-      m,
-      "InitBunchDistribution",
-      "Fortran routine init_bunch_distribution return value")
-      .def_readonly("bunch", &PyInitBunchDistribution::bunch)
-      .def_readonly("err_flag", &PyInitBunchDistribution::err_flag)
-      .def_readonly("beam_init_used", &PyInitBunchDistribution::beam_init_used)
-      .def_readonly(
-          "conserve_momentum", &PyInitBunchDistribution::conserve_momentum)
-      .def("__len__", [](const PyInitBunchDistribution&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const PyInitBunchDistribution& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.bunch);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            if (i == 2)
-              return py::cast(s.beam_init_used);
-            if (i == 3)
-              return py::cast(s.conserve_momentum);
-            throw py::index_error();
-          });
   m.def(
       "init_complex_taylor_series",
       &Bmad::init_complex_taylor_series,
@@ -1104,6 +1022,26 @@ void init_Bmad_routines_i(py::module& m) {
   random_on : bool, optional
       : Default is True. If False then use zero for all random numbers needed in the calc.
   )""");
+  py::class_<
+      Bmad::InitPhotonIntegProb,
+      std::unique_ptr<Bmad::InitPhotonIntegProb>>(
+      m,
+      "InitPhotonIntegProb",
+      "Fortran routine init_photon_integ_prob return value")
+      .def_readonly("E_photon", &Bmad::InitPhotonIntegProb::E_photon)
+      .def_readonly("integ_prob", &Bmad::InitPhotonIntegProb::integ_prob)
+      .def("__len__", [](const Bmad::InitPhotonIntegProb&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::InitPhotonIntegProb& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.E_photon);
+            if (i == 1)
+              return py::cast(s.integ_prob);
+            throw py::index_error();
+          });
   m.def(
       "init_photon_integ_prob",
       &Bmad::init_photon_integ_prob,
@@ -1150,26 +1088,6 @@ void init_Bmad_routines_i(py::module& m) {
   integ_prob : float
       Integrated probablility of emitting a photon in given angle and energy range.
   )""");
-  py::class_<
-      Bmad::InitPhotonIntegProb,
-      std::unique_ptr<Bmad::InitPhotonIntegProb>>(
-      m,
-      "InitPhotonIntegProb",
-      "Fortran routine init_photon_integ_prob return value")
-      .def_readonly("E_photon", &Bmad::InitPhotonIntegProb::E_photon)
-      .def_readonly("integ_prob", &Bmad::InitPhotonIntegProb::integ_prob)
-      .def("__len__", [](const Bmad::InitPhotonIntegProb&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::InitPhotonIntegProb& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.E_photon);
-            if (i == 1)
-              return py::cast(s.integ_prob);
-            throw py::index_error();
-          });
   m.def(
       "init_spin_distribution",
       &Bmad::init_spin_distribution,
@@ -1189,21 +1107,6 @@ void init_Bmad_routines_i(py::module& m) {
   bunch : BunchStruct
       Bunch of particles. .particle(:).spin
   )""");
-  m.def(
-      "init_surface_segment",
-      &python_init_surface_segment,
-      py::arg("phot"),
-      py::arg("ix"),
-      py::arg("iy"),
-      R"""(Subroutine init_surface_segment (phot, ix, iy)
-
-  Routine to init the componentes in ele%photon%segmented%pt(ix,iy) for use with segmented surface calculations.
-
-  Parameters
-  ----------
-  phot : unknown
-      index of grid point to init.
-  )""");
   py::class_<PyInitSurfaceSegment, std::unique_ptr<PyInitSurfaceSegment>>(
       m,
       "InitSurfaceSegment",
@@ -1222,6 +1125,21 @@ void init_Bmad_routines_i(py::module& m) {
               return py::cast(s.iy);
             throw py::index_error();
           });
+  m.def(
+      "init_surface_segment",
+      &python_init_surface_segment,
+      py::arg("phot"),
+      py::arg("ix"),
+      py::arg("iy"),
+      R"""(Subroutine init_surface_segment (phot, ix, iy)
+
+  Routine to init the componentes in ele%photon%segmented%pt(ix,iy) for use with segmented surface calculations.
+
+  Parameters
+  ----------
+  phot : unknown
+      index of grid point to init.
+  )""");
   m.def(
       "init_taylor_series",
       &Bmad::init_taylor_series,
@@ -1286,6 +1204,17 @@ void init_Bmad_routines_i(py::module& m) {
       orbit array to enlarge.
       This parameter is an input/output and is modified in-place. As an output: Enlarged orbit array.
   )""");
+  py::class_<PyIntegrandBase, std::unique_ptr<PyIntegrandBase>>(
+      m, "IntegrandBase", "Fortran routine integrand_base return value")
+      .def_readonly("func_retval__", &PyIntegrandBase::func_retval__)
+      .def("__len__", [](const PyIntegrandBase&) { return 1; })
+      .def("__getitem__", [](const PyIntegrandBase& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.func_retval__);
+        throw py::index_error();
+      });
   m.def(
       "integrand_base",
       &python_integrand_base,
@@ -1309,17 +1238,6 @@ void init_Bmad_routines_i(py::module& m) {
       Array of reals over which to evaluate the integrand. <return value> -- REAL(rp): Array of reals containing
       values of integrand at t(:).
   )""");
-  py::class_<PyIntegrandBase, std::unique_ptr<PyIntegrandBase>>(
-      m, "IntegrandBase", "Fortran routine integrand_base return value")
-      .def_readonly("func_retval__", &PyIntegrandBase::func_retval__)
-      .def("__len__", [](const PyIntegrandBase&) { return 1; })
-      .def("__getitem__", [](const PyIntegrandBase& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.func_retval__);
-        throw py::index_error();
-      });
   m.def(
       "integrate_psi",
       &Bmad::integrate_psi,
@@ -1357,6 +1275,21 @@ void init_Bmad_routines_i(py::module& m) {
       R"""(subroutine integrated_mats(eles,coos,Lambda,Theta,Iota,mode)
 
   )""");
+  py::class_<PyIntegrationTimerEle, std::unique_ptr<PyIntegrationTimerEle>>(
+      m,
+      "IntegrationTimerEle",
+      "Fortran routine integration_timer_ele return value")
+      .def_readonly("tol", &PyIntegrationTimerEle::tol)
+      .def("__len__", [](const PyIntegrationTimerEle&) { return 1; })
+      .def(
+          "__getitem__",
+          [](const PyIntegrationTimerEle& s, int i) -> py::object {
+            if (i < 0)
+              i += 1;
+            if (i == 0)
+              return py::cast(s.tol);
+            throw py::index_error();
+          });
   m.def(
       "integration_timer",
       &python_integration_timer_ele,
@@ -1373,21 +1306,6 @@ void init_Bmad_routines_i(py::module& m) {
   orb_max : 
   tol : 
   )""");
-  py::class_<PyIntegrationTimerEle, std::unique_ptr<PyIntegrationTimerEle>>(
-      m,
-      "IntegrationTimerEle",
-      "Fortran routine integration_timer_ele return value")
-      .def_readonly("tol", &PyIntegrationTimerEle::tol)
-      .def("__len__", [](const PyIntegrationTimerEle&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyIntegrationTimerEle& s, int i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.tol);
-            throw py::index_error();
-          });
   m.def(
       "ion_kick",
       &Bmad::ion_kick,

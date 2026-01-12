@@ -1,18 +1,9 @@
 #include "pybmad/generated/Bmad_routines_f.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyFringeHere {
-  bool is_here;
-};
 PyFringeHere python_fringe_here(
     EleProxy& ele,
     CoordProxy& orbit,
@@ -82,6 +73,22 @@ void init_Bmad_routines_f(py::module& m) {
   in_degrees : bool
       Table angles in degrees?
   )""");
+  py::class_<Bmad::FindElementEnds, std::unique_ptr<Bmad::FindElementEnds>>(
+      m, "FindElementEnds", "Fortran routine find_element_ends return value")
+      .def_readonly("ele1", &Bmad::FindElementEnds::ele1)
+      .def_readonly("ele2", &Bmad::FindElementEnds::ele2)
+      .def("__len__", [](const Bmad::FindElementEnds&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::FindElementEnds& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.ele1);
+            if (i == 1)
+              return py::cast(s.ele2);
+            throw py::index_error();
+          });
   m.def(
       "find_element_ends",
       &Bmad::find_element_ends,
@@ -101,22 +108,6 @@ void init_Bmad_routines_f(py::module& m) {
   ix_multipass : int, optional
       Which multipass pass to follow. Default is 1. This is ignored if there is no multipass elements.
   )""");
-  py::class_<Bmad::FindElementEnds, std::unique_ptr<Bmad::FindElementEnds>>(
-      m, "FindElementEnds", "Fortran routine find_element_ends return value")
-      .def_readonly("ele1", &Bmad::FindElementEnds::ele1)
-      .def_readonly("ele2", &Bmad::FindElementEnds::ele2)
-      .def("__len__", [](const Bmad::FindElementEnds&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::FindElementEnds& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.ele1);
-            if (i == 1)
-              return py::cast(s.ele2);
-            throw py::index_error();
-          });
   m.def(
       "find_fwhm",
       &Bmad::find_fwhm,
@@ -145,6 +136,26 @@ void init_Bmad_routines_f(py::module& m) {
   fwhm : float
       Full width at half max of psi(t)
   )""");
+  py::class_<
+      Bmad::FindMatchingFieldmap,
+      std::unique_ptr<Bmad::FindMatchingFieldmap>>(
+      m,
+      "FindMatchingFieldmap",
+      "Fortran routine find_matching_fieldmap return value")
+      .def_readonly("match_ele", &Bmad::FindMatchingFieldmap::match_ele)
+      .def_readonly("ix_field", &Bmad::FindMatchingFieldmap::ix_field)
+      .def("__len__", [](const Bmad::FindMatchingFieldmap&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::FindMatchingFieldmap& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.match_ele);
+            if (i == 1)
+              return py::cast(s.ix_field);
+            throw py::index_error();
+          });
   m.def(
       "find_matching_fieldmap",
       &Bmad::find_matching_fieldmap,
@@ -168,26 +179,6 @@ void init_Bmad_routines_f(py::module& m) {
   ignore_slaves : bool, optional
       If True, ignore any multipass slaves. Default is False.
   )""");
-  py::class_<
-      Bmad::FindMatchingFieldmap,
-      std::unique_ptr<Bmad::FindMatchingFieldmap>>(
-      m,
-      "FindMatchingFieldmap",
-      "Fortran routine find_matching_fieldmap return value")
-      .def_readonly("match_ele", &Bmad::FindMatchingFieldmap::match_ele)
-      .def_readonly("ix_field", &Bmad::FindMatchingFieldmap::ix_field)
-      .def("__len__", [](const Bmad::FindMatchingFieldmap&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::FindMatchingFieldmap& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.match_ele);
-            if (i == 1)
-              return py::cast(s.ix_field);
-            throw py::index_error();
-          });
   m.def(
       "find_normalization",
       &Bmad::find_normalization,
@@ -214,25 +205,6 @@ void init_Bmad_routines_f(py::module& m) {
   pnrml : float
       Value for psi(0) that results in integral of psi(t) from -bound to +bound being equal to 1.0
   )""");
-  m.def(
-      "floor_angles_to_w_mat",
-      &Bmad::floor_angles_to_w_mat,
-      py::arg("theta"),
-      py::arg("phi"),
-      py::arg("psi"),
-      R"""(Parameters
-  ----------
-  theta : float
-      Azimuth angle.
-  phi : float
-      Pitch angle.
-  psi : float
-      Roll angle.
-  w_mat : float
-      Orientation matrix.
-  w_mat_inv : float
-      Inverse Orientation matrix.
-  )""");
   py::class_<Bmad::FloorAnglesToWMat, std::unique_ptr<Bmad::FloorAnglesToWMat>>(
       m,
       "FloorAnglesToWMat",
@@ -252,23 +224,23 @@ void init_Bmad_routines_f(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "floor_w_mat_to_angles",
-      &Bmad::floor_w_mat_to_angles,
-      py::arg("w_mat"),
-      py::arg("floor0") = py::none(),
+      "floor_angles_to_w_mat",
+      &Bmad::floor_angles_to_w_mat,
+      py::arg("theta"),
+      py::arg("phi"),
+      py::arg("psi"),
       R"""(Parameters
   ----------
-  w_mat : float
-      Orientation matrix.
   theta : float
       Azimuth angle.
   phi : float
       Pitch angle.
   psi : float
       Roll angle.
-  floor0 : FloorPositionStruct, optional
-      There are two solutions related by: [theta, phi, psi] & [pi+theta, pi-phi, pi+psi] If floor0 is present,
-      choose the solution "nearest" the angles in floor0.
+  w_mat : float
+      Orientation matrix.
+  w_mat_inv : float
+      Inverse Orientation matrix.
   )""");
   py::class_<Bmad::FloorWMatToAngles, std::unique_ptr<Bmad::FloorWMatToAngles>>(
       m,
@@ -292,6 +264,25 @@ void init_Bmad_routines_f(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "floor_w_mat_to_angles",
+      &Bmad::floor_w_mat_to_angles,
+      py::arg("w_mat"),
+      py::arg("floor0") = py::none(),
+      R"""(Parameters
+  ----------
+  w_mat : float
+      Orientation matrix.
+  theta : float
+      Azimuth angle.
+  phi : float
+      Pitch angle.
+  psi : float
+      Roll angle.
+  floor0 : FloorPositionStruct, optional
+      There are two solutions related by: [theta, phi, psi] & [pi+theta, pi-phi, pi+psi] If floor0 is present,
+      choose the solution "nearest" the angles in floor0.
+  )""");
+  m.def(
       "form_complex_taylor",
       &Bmad::form_complex_taylor,
       py::arg("re_taylor"),
@@ -313,6 +304,28 @@ void init_Bmad_routines_f(py::module& m) {
   complex_taylor : ComplexTaylorStruct
       combined complex taylor
   )""");
+  py::class_<
+      Bmad::FormDigestedBmadFileName,
+      std::unique_ptr<Bmad::FormDigestedBmadFileName>>(
+      m,
+      "FormDigestedBmadFileName",
+      "Fortran routine form_digested_bmad_file_name return value")
+      .def_readonly(
+          "digested_file", &Bmad::FormDigestedBmadFileName::digested_file)
+      .def_readonly(
+          "full_lat_file", &Bmad::FormDigestedBmadFileName::full_lat_file)
+      .def("__len__", [](const Bmad::FormDigestedBmadFileName&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::FormDigestedBmadFileName& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.digested_file);
+            if (i == 1)
+              return py::cast(s.full_lat_file);
+            throw py::index_error();
+          });
   m.def(
       "form_digested_bmad_file_name",
       &Bmad::form_digested_bmad_file_name,
@@ -342,28 +355,17 @@ void init_Bmad_routines_f(py::module& m) {
   full_lat_file : unknown
       Input lattice file name with full directory. Can be used for error messages.
   )""");
-  py::class_<
-      Bmad::FormDigestedBmadFileName,
-      std::unique_ptr<Bmad::FormDigestedBmadFileName>>(
-      m,
-      "FormDigestedBmadFileName",
-      "Fortran routine form_digested_bmad_file_name return value")
-      .def_readonly(
-          "digested_file", &Bmad::FormDigestedBmadFileName::digested_file)
-      .def_readonly(
-          "full_lat_file", &Bmad::FormDigestedBmadFileName::full_lat_file)
-      .def("__len__", [](const Bmad::FormDigestedBmadFileName&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::FormDigestedBmadFileName& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.digested_file);
-            if (i == 1)
-              return py::cast(s.full_lat_file);
-            throw py::index_error();
-          });
+  py::class_<PyFringeHere, std::unique_ptr<PyFringeHere>>(
+      m, "FringeHere", "Fortran routine fringe_here return value")
+      .def_readonly("is_here", &PyFringeHere::is_here)
+      .def("__len__", [](const PyFringeHere&) { return 1; })
+      .def("__getitem__", [](const PyFringeHere& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_here);
+        throw py::index_error();
+      });
   m.def(
       "fringe_here",
       &python_fringe_here,
@@ -381,15 +383,4 @@ void init_Bmad_routines_f(py::module& m) {
       Either first_track_edge$ or second_track_edge$.
   is_here : 
   )""");
-  py::class_<PyFringeHere, std::unique_ptr<PyFringeHere>>(
-      m, "FringeHere", "Fortran routine fringe_here return value")
-      .def_readonly("is_here", &PyFringeHere::is_here)
-      .def("__len__", [](const PyFringeHere&) { return 1; })
-      .def("__getitem__", [](const PyFringeHere& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.is_here);
-        throw py::index_error();
-      });
 }

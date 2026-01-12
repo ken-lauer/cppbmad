@@ -2,8 +2,6 @@
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
 
-void init_structs_a(py::module& m);
-
 // Per-struct init functions
 void init_ac_kicker_freq_struct(
     py::module& m,

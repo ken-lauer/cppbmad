@@ -1,31 +1,14 @@
 #include "pybmad/generated/Bmad_routines_l.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyLafun {
-  double x;
-  double y;
-  double z;
-  double res;
-};
 PyLafun python_lafun(double x, double y, double z, double res) {
   Bmad::lafun(x, y, z, res);
   auto py_result{PyLafun{x, y, z, res}};
   return py_result;
 }
-
-struct PyLatEleLocator {
-  bool err;
-  int n_loc;
-};
 PyLatEleLocator python_lat_ele_locator(
     std::string loc_str,
     LatProxy& lat,
@@ -47,9 +30,6 @@ PyLatEleLocator python_lat_ele_locator(
   auto py_result{PyLatEleLocator{_result, n_loc}};
   return py_result;
 }
-struct PyLordEdgeAligned {
-  bool is_aligned;
-};
 PyLordEdgeAligned python_lord_edge_aligned(
     EleProxy& slave,
     int slave_edge,
@@ -59,9 +39,6 @@ PyLordEdgeAligned python_lord_edge_aligned(
   auto py_result{PyLordEdgeAligned{is_aligned}};
   return py_result;
 }
-struct PyLowEnergyZCorrection {
-  double dz;
-};
 PyLowEnergyZCorrection python_low_energy_z_correction(
     CoordProxy& orbit,
     EleProxy& ele,
@@ -75,20 +52,6 @@ PyLowEnergyZCorrection python_low_energy_z_correction(
 }
 
 void init_Bmad_routines_l(py::module& m) {
-  m.def(
-      "lafun",
-      &python_lafun,
-      py::arg("x"),
-      py::arg("y"),
-      py::arg("z"),
-      py::arg("res"),
-      R"""(Parameters
-  ----------
-  x : 
-  y : 
-  z : 
-  res : 
-  )""");
   py::class_<PyLafun, std::unique_ptr<PyLafun>>(
       m, "Lafun", "Fortran routine lafun return value")
       .def_readonly("x", &PyLafun::x)
@@ -110,6 +73,20 @@ void init_Bmad_routines_l(py::module& m) {
         throw py::index_error();
       });
   m.def(
+      "lafun",
+      &python_lafun,
+      py::arg("x"),
+      py::arg("y"),
+      py::arg("z"),
+      py::arg("res"),
+      R"""(Parameters
+  ----------
+  x : 
+  y : 
+  z : 
+  res : 
+  )""");
+  m.def(
       "lat_compute_ref_energy_and_time",
       &Bmad::lat_compute_ref_energy_and_time,
       py::arg("lat"),
@@ -120,6 +97,20 @@ void init_Bmad_routines_l(py::module& m) {
   err_flag : bool
       Set true if there is an error. False otherwise.
   )""");
+  py::class_<PyLatEleLocator, std::unique_ptr<PyLatEleLocator>>(
+      m, "LatEleLocator", "Fortran routine lat_ele_locator return value")
+      .def_readonly("err", &PyLatEleLocator::err)
+      .def_readonly("n_loc", &PyLatEleLocator::n_loc)
+      .def("__len__", [](const PyLatEleLocator&) { return 2; })
+      .def("__getitem__", [](const PyLatEleLocator& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err);
+        if (i == 1)
+          return py::cast(s.n_loc);
+        throw py::index_error();
+      });
   m.def(
       "lat_ele_locator",
       &python_lat_ele_locator,
@@ -160,20 +151,6 @@ void init_Bmad_routines_l(py::module& m) {
   append_eles : bool, optional
       Default is False. If True, found elements are appended to eles(:) array.
   )""");
-  py::class_<PyLatEleLocator, std::unique_ptr<PyLatEleLocator>>(
-      m, "LatEleLocator", "Fortran routine lat_ele_locator return value")
-      .def_readonly("err", &PyLatEleLocator::err)
-      .def_readonly("n_loc", &PyLatEleLocator::n_loc)
-      .def("__len__", [](const PyLatEleLocator&) { return 2; })
-      .def("__getitem__", [](const PyLatEleLocator& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.err);
-        if (i == 1)
-          return py::cast(s.n_loc);
-        throw py::index_error();
-      });
   m.def(
       "lat_equal_lat",
       &Bmad::lat_equal_lat,
@@ -301,6 +278,20 @@ void init_Bmad_routines_l(py::module& m) {
   make_matrix : float, optional
       Propagate the transfer matrix? Default is False.
   )""");
+  py::class_<Bmad::LinearCoef, std::unique_ptr<Bmad::LinearCoef>>(
+      m, "LinearCoef", "Fortran routine linear_coef return value")
+      .def_readonly("err_flag", &Bmad::LinearCoef::err_flag)
+      .def_readonly("coef", &Bmad::LinearCoef::coef)
+      .def("__len__", [](const Bmad::LinearCoef&) { return 2; })
+      .def("__getitem__", [](const Bmad::LinearCoef& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.coef);
+        throw py::index_error();
+      });
   m.def(
       "linear_coef",
       &Bmad::linear_coef,
@@ -321,20 +312,6 @@ void init_Bmad_routines_l(py::module& m) {
   coef : float
       Linear coefficient.
   )""");
-  py::class_<Bmad::LinearCoef, std::unique_ptr<Bmad::LinearCoef>>(
-      m, "LinearCoef", "Fortran routine linear_coef return value")
-      .def_readonly("err_flag", &Bmad::LinearCoef::err_flag)
-      .def_readonly("coef", &Bmad::LinearCoef::coef)
-      .def("__len__", [](const Bmad::LinearCoef&) { return 2; })
-      .def("__getitem__", [](const Bmad::LinearCoef& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.err_flag);
-        if (i == 1)
-          return py::cast(s.coef);
-        throw py::index_error();
-      });
   m.def(
       "linear_to_spin_taylor",
       &Bmad::linear_to_spin_taylor,
@@ -346,6 +323,21 @@ void init_Bmad_routines_l(py::module& m) {
   spin_taylor : TaylorStruct
       Taylor map
   )""");
+  py::class_<Bmad::LoadParseLine, std::unique_ptr<Bmad::LoadParseLine>>(
+      m, "LoadParseLine", "Fortran routine load_parse_line return value")
+      .def_readonly("end_of_file", &Bmad::LoadParseLine::end_of_file)
+      .def_readonly("err_flag", &Bmad::LoadParseLine::err_flag)
+      .def("__len__", [](const Bmad::LoadParseLine&) { return 2; })
+      .def(
+          "__getitem__", [](const Bmad::LoadParseLine& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.end_of_file);
+            if (i == 1)
+              return py::cast(s.err_flag);
+            throw py::index_error();
+          });
   m.def(
       "load_parse_line",
       &Bmad::load_parse_line,
@@ -371,21 +363,17 @@ void init_Bmad_routines_l(py::module& m) {
   err_flag : bool
       Set True if there is an error. False otherwise bp_com.parse_line -- string to append to.
   )""");
-  py::class_<Bmad::LoadParseLine, std::unique_ptr<Bmad::LoadParseLine>>(
-      m, "LoadParseLine", "Fortran routine load_parse_line return value")
-      .def_readonly("end_of_file", &Bmad::LoadParseLine::end_of_file)
-      .def_readonly("err_flag", &Bmad::LoadParseLine::err_flag)
-      .def("__len__", [](const Bmad::LoadParseLine&) { return 2; })
-      .def(
-          "__getitem__", [](const Bmad::LoadParseLine& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.end_of_file);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+  py::class_<PyLordEdgeAligned, std::unique_ptr<PyLordEdgeAligned>>(
+      m, "LordEdgeAligned", "Fortran routine lord_edge_aligned return value")
+      .def_readonly("is_aligned", &PyLordEdgeAligned::is_aligned)
+      .def("__len__", [](const PyLordEdgeAligned&) { return 1; })
+      .def("__getitem__", [](const PyLordEdgeAligned& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_aligned);
+        throw py::index_error();
+      });
   m.def(
       "lord_edge_aligned",
       &python_lord_edge_aligned,
@@ -403,17 +391,21 @@ void init_Bmad_routines_l(py::module& m) {
       Lord element.
   is_aligned : 
   )""");
-  py::class_<PyLordEdgeAligned, std::unique_ptr<PyLordEdgeAligned>>(
-      m, "LordEdgeAligned", "Fortran routine lord_edge_aligned return value")
-      .def_readonly("is_aligned", &PyLordEdgeAligned::is_aligned)
-      .def("__len__", [](const PyLordEdgeAligned&) { return 1; })
-      .def("__getitem__", [](const PyLordEdgeAligned& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.is_aligned);
-        throw py::index_error();
-      });
+  py::class_<PyLowEnergyZCorrection, std::unique_ptr<PyLowEnergyZCorrection>>(
+      m,
+      "LowEnergyZCorrection",
+      "Fortran routine low_energy_z_correction return value")
+      .def_readonly("dz", &PyLowEnergyZCorrection::dz)
+      .def("__len__", [](const PyLowEnergyZCorrection&) { return 1; })
+      .def(
+          "__getitem__",
+          [](const PyLowEnergyZCorrection& s, int i) -> py::object {
+            if (i < 0)
+              i += 1;
+            if (i == 0)
+              return py::cast(s.dz);
+            throw py::index_error();
+          });
   m.def(
       "low_energy_z_correction",
       &python_low_energy_z_correction,
@@ -439,19 +431,4 @@ void init_Bmad_routines_l(py::module& m) {
       Propagate the transfer matrix? Default is false.
   dz : 
   )""");
-  py::class_<PyLowEnergyZCorrection, std::unique_ptr<PyLowEnergyZCorrection>>(
-      m,
-      "LowEnergyZCorrection",
-      "Fortran routine low_energy_z_correction return value")
-      .def_readonly("dz", &PyLowEnergyZCorrection::dz)
-      .def("__len__", [](const PyLowEnergyZCorrection&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyLowEnergyZCorrection& s, int i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.dz);
-            throw py::index_error();
-          });
 }

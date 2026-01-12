@@ -1,20 +1,9 @@
 #include "pybmad/generated/SimUtils_routines_a.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyApfft {
-  std::string window;
-  double phase;
-  std::optional<int> diag;
-};
 PyApfft python_apfft(
     RealAlloc1D& rdata_in,
     FixedArray1D<Real, 2> bounds,
@@ -25,13 +14,6 @@ PyApfft python_apfft(
   auto py_result{PyApfft{window, phase, diag}};
   return py_result;
 }
-struct PyApfftExt {
-  std::string window;
-  double phase;
-  double amp;
-  double freq;
-  std::optional<int> diag;
-};
 PyApfftExt python_apfft_ext(
     RealAlloc1D& rdata,
     FixedArray1D<Real, 2> bounds,
@@ -45,18 +27,11 @@ PyApfftExt python_apfft_ext(
   auto py_result{PyApfftExt{window, phase, amp, freq, diag}};
   return py_result;
 }
-struct PyAsinc {
-  double y;
-};
 PyAsinc python_asinc(double x, std::optional<int> nd, double y) {
   SimUtils::asinc(x, nd, y);
   auto py_result{PyAsinc{y}};
   return py_result;
 }
-struct PyAssertEqual {
-  std::string err_str;
-  int ival;
-};
 PyAssertEqual python_assert_equal(
     IntAlloc1D& int_arr,
     std::string err_str,
@@ -112,21 +87,6 @@ void init_SimUtils_routines_a(py::module& m) {
   anti_species : int
       Antiparticle ID.
   )""");
-  m.def(
-      "apfft",
-      &python_apfft,
-      py::arg("rdata_in"),
-      py::arg("bounds"),
-      py::arg("window"),
-      py::arg("phase"),
-      py::arg("diag") = py::none(),
-      R"""(subroutine apfft(rdata_in, bounds, window, phase, diag)
-
-  Implements the All Phase FFT method for obtaining accurate phase from signal data.
-
-  The signal data is truncated to an odd length, and the phase is relative to the central point.
-
-  )""");
   py::class_<PyApfft, std::unique_ptr<PyApfft>>(
       m, "Apfft", "Fortran routine apfft return value")
       .def_readonly("window", &PyApfft::window)
@@ -144,6 +104,39 @@ void init_SimUtils_routines_a(py::module& m) {
           return py::cast(s.diag);
         throw py::index_error();
       });
+  m.def(
+      "apfft",
+      &python_apfft,
+      py::arg("rdata_in"),
+      py::arg("bounds"),
+      py::arg("window"),
+      py::arg("phase"),
+      py::arg("diag") = py::none(),
+      R"""(subroutine apfft(rdata_in, bounds, window, phase, diag)
+
+  Implements the All Phase FFT method for obtaining accurate phase from signal data.
+
+  The signal data is truncated to an odd length, and the phase is relative to the central point.
+
+  )""");
+  py::class_<SimUtils::ApfftCorr, std::unique_ptr<SimUtils::ApfftCorr>>(
+      m, "ApfftCorr", "Fortran routine apfft_corr return value")
+      .def_readonly("phase", &SimUtils::ApfftCorr::phase)
+      .def_readonly("amp", &SimUtils::ApfftCorr::amp)
+      .def_readonly("freq", &SimUtils::ApfftCorr::freq)
+      .def("__len__", [](const SimUtils::ApfftCorr&) { return 3; })
+      .def(
+          "__getitem__", [](const SimUtils::ApfftCorr& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.phase);
+            if (i == 1)
+              return py::cast(s.amp);
+            if (i == 2)
+              return py::cast(s.freq);
+            throw py::index_error();
+          });
   m.def(
       "apfft_corr",
       &SimUtils::apfft_corr,
@@ -179,42 +172,6 @@ void init_SimUtils_routines_a(py::module& m) {
   amp : float
       amplitude of peak
   )""");
-  py::class_<SimUtils::ApfftCorr, std::unique_ptr<SimUtils::ApfftCorr>>(
-      m, "ApfftCorr", "Fortran routine apfft_corr return value")
-      .def_readonly("phase", &SimUtils::ApfftCorr::phase)
-      .def_readonly("amp", &SimUtils::ApfftCorr::amp)
-      .def_readonly("freq", &SimUtils::ApfftCorr::freq)
-      .def("__len__", [](const SimUtils::ApfftCorr&) { return 3; })
-      .def(
-          "__getitem__", [](const SimUtils::ApfftCorr& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.phase);
-            if (i == 1)
-              return py::cast(s.amp);
-            if (i == 2)
-              return py::cast(s.freq);
-            throw py::index_error();
-          });
-  m.def(
-      "apfft_ext",
-      &python_apfft_ext,
-      py::arg("rdata"),
-      py::arg("bounds"),
-      py::arg("window"),
-      py::arg("phase"),
-      py::arg("amp"),
-      py::arg("freq"),
-      py::arg("diag") = py::none(),
-      R"""(subroutine apfft_ext(rdata,bounds, window, phase, amp, freq, diag)
-
-  Implements the All Phase FFT method for obtaining accurate phase from signal data.
-
-  This "extended" apfft subroutine returns the amplitudes and frequency as well, for use
-  by the corrected apfft subroutine in this module.
-
-  )""");
   py::class_<PyApfftExt, std::unique_ptr<PyApfftExt>>(
       m, "ApfftExt", "Fortran routine apfft_ext return value")
       .def_readonly("window", &PyApfftExt::window)
@@ -239,16 +196,22 @@ void init_SimUtils_routines_a(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "asinc",
-      &python_asinc,
-      py::arg("x"),
-      py::arg("nd") = py::none(),
-      py::arg("y"),
-      R"""(Parameters
-  ----------
-  x : 
-  nd : 
-  y : 
+      "apfft_ext",
+      &python_apfft_ext,
+      py::arg("rdata"),
+      py::arg("bounds"),
+      py::arg("window"),
+      py::arg("phase"),
+      py::arg("amp"),
+      py::arg("freq"),
+      py::arg("diag") = py::none(),
+      R"""(subroutine apfft_ext(rdata,bounds, window, phase, amp, freq, diag)
+
+  Implements the All Phase FFT method for obtaining accurate phase from signal data.
+
+  This "extended" apfft subroutine returns the amplitudes and frequency as well, for use
+  by the corrected apfft subroutine in this module.
+
   )""");
   py::class_<PyAsinc, std::unique_ptr<PyAsinc>>(
       m, "Asinc", "Fortran routine asinc return value")
@@ -262,16 +225,16 @@ void init_SimUtils_routines_a(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "assert_equal",
-      &python_assert_equal,
-      py::arg("int_arr"),
-      py::arg("err_str"),
-      py::arg("ival"),
+      "asinc",
+      &python_asinc,
+      py::arg("x"),
+      py::arg("nd") = py::none(),
+      py::arg("y"),
       R"""(Parameters
   ----------
-  int_arr : 
-  err_str : 
-  ival : 
+  x : 
+  nd : 
+  y : 
   )""");
   py::class_<PyAssertEqual, std::unique_ptr<PyAssertEqual>>(
       m, "AssertEqual", "Fortran routine assert_equal return value")
@@ -287,6 +250,18 @@ void init_SimUtils_routines_a(py::module& m) {
           return py::cast(s.ival);
         throw py::index_error();
       });
+  m.def(
+      "assert_equal",
+      &python_assert_equal,
+      py::arg("int_arr"),
+      py::arg("err_str"),
+      py::arg("ival"),
+      R"""(Parameters
+  ----------
+  int_arr : 
+  err_str : 
+  ival : 
+  )""");
   m.def(
       "atomic_number",
       &SimUtils::atomic_number,

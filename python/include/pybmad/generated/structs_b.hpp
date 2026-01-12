@@ -2,8 +2,6 @@
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
 
-void init_structs_b(py::module& m);
-
 // Per-struct init functions
 void init_bbu_beam_struct(py::module& m, py::class_<BbuBeamProxy>& class_);
 void init_bbu_param_struct(py::module& m, py::class_<BbuParamProxy>& class_);

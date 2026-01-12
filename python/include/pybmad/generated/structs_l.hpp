@@ -2,8 +2,6 @@
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
 
-void init_structs_l(py::module& m);
-
 // Per-struct init functions
 void init_lat_ele_loc_struct(py::module& m, py::class_<LatEleLocProxy>& class_);
 void init_lat_ele_order1_struct(

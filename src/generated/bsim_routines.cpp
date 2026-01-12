@@ -8,7 +8,7 @@
 #include "bmad/generated/bsim_routines.hpp"
 #include "bmad/generated/proxy.hpp"
 #include "bmad/json.hpp"
-#include "bmad/types.h"
+#include "bmad/types.hpp"
 
 using namespace Bmad;
 

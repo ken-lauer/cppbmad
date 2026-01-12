@@ -2,8 +2,6 @@
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
 
-void init_structs_r(py::module& m);
-
 // Per-struct init functions
 void init_rad_int1_struct(py::module& m, py::class_<RadInt1Proxy>& class_);
 void init_rad_int_all_ele_struct(

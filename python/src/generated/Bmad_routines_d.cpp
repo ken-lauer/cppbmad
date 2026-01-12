@@ -1,23 +1,9 @@
 #include "pybmad/generated/Bmad_routines_d.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyDampingMatrixD {
-  double gamma;
-  double g_tot;
-  double B0;
-  double B1;
-  double delta;
-  int species;
-};
 PyDampingMatrixD python_damping_matrix_d(
     double gamma,
     double g_tot,
@@ -30,9 +16,6 @@ PyDampingMatrixD python_damping_matrix_d(
   auto py_result{PyDampingMatrixD{gamma, g_tot, B0, B1, delta, species}};
   return py_result;
 }
-struct PyDefaultTrackingSpecies {
-  int species;
-};
 PyDefaultTrackingSpecies python_default_tracking_species(
     LatParamProxy& param,
     int species) {
@@ -40,9 +23,6 @@ PyDefaultTrackingSpecies python_default_tracking_species(
   auto py_result{PyDefaultTrackingSpecies{species}};
   return py_result;
 }
-struct PyDiffractionPlateOrMaskHitSpot {
-  int ix_section;
-};
 PyDiffractionPlateOrMaskHitSpot python_diffraction_plate_or_mask_hit_spot(
     EleProxy& ele,
     CoordProxy& orbit,
@@ -51,11 +31,6 @@ PyDiffractionPlateOrMaskHitSpot python_diffraction_plate_or_mask_hit_spot(
   auto py_result{PyDiffractionPlateOrMaskHitSpot{ix_section}};
   return py_result;
 }
-struct PyDiffusionMatrixB {
-  double gamma;
-  double g_tot;
-  int species;
-};
 PyDiffusionMatrixB python_diffusion_matrix_b(
     double gamma,
     double g_tot,
@@ -65,11 +40,6 @@ PyDiffusionMatrixB python_diffusion_matrix_b(
   auto py_result{PyDiffusionMatrixB{gamma, g_tot, species}};
   return py_result;
 }
-
-struct PyDistanceToAperture {
-  bool no_aperture_here;
-  double dist;
-};
 PyDistanceToAperture python_distance_to_aperture(
     CoordProxy& orbit,
     int particle_at,
@@ -79,12 +49,6 @@ PyDistanceToAperture python_distance_to_aperture(
   auto py_result{PyDistanceToAperture{_result, dist}};
   return py_result;
 }
-struct PyDpcGivenDe {
-  double pc_old;
-  double mass;
-  double dE;
-  double dpc;
-};
 PyDpcGivenDe python_dpc_given_de(
     double pc_old,
     double mass,
@@ -96,26 +60,6 @@ PyDpcGivenDe python_dpc_given_de(
 }
 
 void init_Bmad_routines_d(py::module& m) {
-  m.def(
-      "damping_matrix_d",
-      &python_damping_matrix_d,
-      py::arg("gamma"),
-      py::arg("g_tot"),
-      py::arg("B0"),
-      py::arg("B1"),
-      py::arg("delta"),
-      py::arg("species"),
-      py::arg("mat"),
-      R"""(Parameters
-  ----------
-  gamma : 
-  g_tot : 
-  B0 : 
-  B1 : 
-  delta : 
-  species : 
-  mat : 
-  )""");
   py::class_<PyDampingMatrixD, std::unique_ptr<PyDampingMatrixD>>(
       m, "DampingMatrixD", "Fortran routine damping_matrix_d return value")
       .def_readonly("gamma", &PyDampingMatrixD::gamma)
@@ -142,6 +86,26 @@ void init_Bmad_routines_d(py::module& m) {
           return py::cast(s.species);
         throw py::index_error();
       });
+  m.def(
+      "damping_matrix_d",
+      &python_damping_matrix_d,
+      py::arg("gamma"),
+      py::arg("g_tot"),
+      py::arg("B0"),
+      py::arg("B1"),
+      py::arg("delta"),
+      py::arg("species"),
+      py::arg("mat"),
+      R"""(Parameters
+  ----------
+  gamma : 
+  g_tot : 
+  B0 : 
+  B1 : 
+  delta : 
+  species : 
+  mat : 
+  )""");
   m.def(
       "deallocate_ele_pointers",
       &Bmad::deallocate_ele_pointers,
@@ -186,17 +150,6 @@ void init_Bmad_routines_d(py::module& m) {
       Lat with pointers.
       This parameter is an input/output and is modified in-place. As an output: Lat with deallocated pointers.
   )""");
-  m.def(
-      "default_tracking_species",
-      &python_default_tracking_species,
-      py::arg("param"),
-      py::arg("species"),
-      R"""(Parameters
-  ----------
-  param : LatParamStruct
-      Parameters for a lattice branch.
-  species : 
-  )""");
   py::class_<
       PyDefaultTrackingSpecies,
       std::unique_ptr<PyDefaultTrackingSpecies>>(
@@ -214,6 +167,17 @@ void init_Bmad_routines_d(py::module& m) {
               return py::cast(s.species);
             throw py::index_error();
           });
+  m.def(
+      "default_tracking_species",
+      &python_default_tracking_species,
+      py::arg("param"),
+      py::arg("species"),
+      R"""(Parameters
+  ----------
+  param : LatParamStruct
+      Parameters for a lattice branch.
+  species : 
+  )""");
   m.def(
       "detector_pixel_pt",
       &Bmad::detector_pixel_pt,
@@ -235,20 +199,6 @@ void init_Bmad_routines_d(py::module& m) {
   ix_pix : int
       index of ele.photon.pixel.pt(:,:) the particle is in.
   )""");
-  m.def(
-      "diffraction_plate_or_mask_hit_spot",
-      &python_diffraction_plate_or_mask_hit_spot,
-      py::arg("ele"),
-      py::arg("orbit"),
-      py::arg("ix_section"),
-      R"""(Parameters
-  ----------
-  ele : EleStruct
-      diffraction_plate or mask element.
-  orbit : CoordStruct
-      particle position.
-  ix_section : 
-  )""");
   py::class_<
       PyDiffractionPlateOrMaskHitSpot,
       std::unique_ptr<PyDiffractionPlateOrMaskHitSpot>>(
@@ -267,18 +217,18 @@ void init_Bmad_routines_d(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "diffusion_matrix_b",
-      &python_diffusion_matrix_b,
-      py::arg("gamma"),
-      py::arg("g_tot"),
-      py::arg("species"),
-      py::arg("mat"),
+      "diffraction_plate_or_mask_hit_spot",
+      &python_diffraction_plate_or_mask_hit_spot,
+      py::arg("ele"),
+      py::arg("orbit"),
+      py::arg("ix_section"),
       R"""(Parameters
   ----------
-  gamma : 
-  g_tot : 
-  species : 
-  mat : 
+  ele : EleStruct
+      diffraction_plate or mask element.
+  orbit : CoordStruct
+      particle position.
+  ix_section : 
   )""");
   py::class_<PyDiffusionMatrixB, std::unique_ptr<PyDiffusionMatrixB>>(
       m, "DiffusionMatrixB", "Fortran routine diffusion_matrix_b return value")
@@ -298,23 +248,18 @@ void init_Bmad_routines_d(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "distance_to_aperture",
-      &python_distance_to_aperture,
-      py::arg("orbit"),
-      py::arg("particle_at"),
-      py::arg("ele"),
-      py::arg("dist"),
+      "diffusion_matrix_b",
+      &python_diffusion_matrix_b,
+      py::arg("gamma"),
+      py::arg("g_tot"),
+      py::arg("species"),
+      py::arg("mat"),
       R"""(Parameters
   ----------
-  orbit : CoordStruct
-      Particle position.
-  particle_at : int
-      first_track_edge$, second_track_edge$, or in_between$
-  ele : EleStruct
-      Element containing aperture.
-  no_aperture_here : bool
-      True if aperture does not exist at the longitudinal location of the particle.
-  dist : 
+  gamma : 
+  g_tot : 
+  species : 
+  mat : 
   )""");
   py::class_<PyDistanceToAperture, std::unique_ptr<PyDistanceToAperture>>(
       m,
@@ -335,6 +280,25 @@ void init_Bmad_routines_d(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "distance_to_aperture",
+      &python_distance_to_aperture,
+      py::arg("orbit"),
+      py::arg("particle_at"),
+      py::arg("ele"),
+      py::arg("dist"),
+      R"""(Parameters
+  ----------
+  orbit : CoordStruct
+      Particle position.
+  particle_at : int
+      first_track_edge$, second_track_edge$, or in_between$
+  ele : EleStruct
+      Element containing aperture.
+  no_aperture_here : bool
+      True if aperture does not exist at the longitudinal location of the particle.
+  dist : 
+  )""");
+  m.def(
       "do_mode_flip",
       &Bmad::do_mode_flip,
       py::arg("ele"),
@@ -345,20 +309,6 @@ void init_Bmad_routines_d(py::module& m) {
       This parameter is an input/output and is modified in-place. As an output: Flipped element
   err_flag : bool
       Set True if there is an error. False otherwise.
-  )""");
-  m.def(
-      "dpc_given_de",
-      &python_dpc_given_de,
-      py::arg("pc_old"),
-      py::arg("mass"),
-      py::arg("dE"),
-      py::arg("dpc"),
-      R"""(Parameters
-  ----------
-  pc_old : 
-  mass : 
-  dE : 
-  dpc : 
   )""");
   py::class_<PyDpcGivenDe, std::unique_ptr<PyDpcGivenDe>>(
       m, "DpcGivenDe", "Fortran routine dpc_given_de return value")
@@ -380,6 +330,20 @@ void init_Bmad_routines_d(py::module& m) {
           return py::cast(s.dpc);
         throw py::index_error();
       });
+  m.def(
+      "dpc_given_de",
+      &python_dpc_given_de,
+      py::arg("pc_old"),
+      py::arg("mass"),
+      py::arg("dE"),
+      py::arg("dpc"),
+      R"""(Parameters
+  ----------
+  pc_old : 
+  mass : 
+  dE : 
+  dpc : 
+  )""");
   m.def(
       "drift_and_pipe_track_methods_adjustment",
       &Bmad::drift_and_pipe_track_methods_adjustment,

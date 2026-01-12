@@ -1,20 +1,9 @@
 #include "pybmad/generated/Bmad_routines_o.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyOdeintBmadTime : public Bmad::OdeintBmadTime {
-  double rf_time;
-  PyOdeintBmadTime(Bmad::OdeintBmadTime _base, double rf_time)
-      : Bmad::OdeintBmadTime(std::move(_base)), rf_time(rf_time) {}
-};
 PyOdeintBmadTime python_odeint_bmad_time(
     CoordProxy& orb,
     EleProxy& ele,
@@ -29,11 +18,6 @@ PyOdeintBmadTime python_odeint_bmad_time(
   auto py_result{PyOdeintBmadTime{_result, rf_time}};
   return py_result;
 }
-struct PyOffsetParticle : public Bmad::OffsetParticle {
-  std::optional<double> time;
-  PyOffsetParticle(Bmad::OffsetParticle _base, std::optional<double> time)
-      : Bmad::OffsetParticle(std::move(_base)), time(time) {}
-};
 PyOffsetParticle python_offset_particle(
     EleProxy& ele,
     bool set,
@@ -61,11 +45,6 @@ PyOffsetParticle python_offset_particle(
   auto py_result{PyOffsetParticle{_result, time}};
   return py_result;
 }
-
-struct PyOrbitTooLarge {
-  LatParamProxy param;
-  bool is_too_large;
-};
 PyOrbitTooLarge python_orbit_too_large(
     CoordProxy& orbit,
     std::optional<bool> check_momentum,
@@ -74,11 +53,6 @@ PyOrbitTooLarge python_orbit_too_large(
   auto py_result{PyOrbitTooLarge{_result, is_too_large}};
   return py_result;
 }
-struct PyOscGetgrnpipe {
-  double gam;
-  double a;
-  double b;
-};
 PyOscGetgrnpipe python_osc_getgrnpipe(
     double gam,
     double a,
@@ -90,11 +64,6 @@ PyOscGetgrnpipe python_osc_getgrnpipe(
   auto py_result{PyOscGetgrnpipe{gam, a, b}};
   return py_result;
 }
-struct PyOscWriteRectpipeGrn {
-  double apipe;
-  double bpipe;
-  double gamma;
-};
 PyOscWriteRectpipeGrn python_osc_write_rectpipe_grn(
     double apipe,
     double bpipe,
@@ -111,6 +80,20 @@ PyOscWriteRectpipeGrn python_osc_write_rectpipe_grn(
 }
 
 void init_Bmad_routines_o(py::module& m) {
+  py::class_<Bmad::OdeintBmad, std::unique_ptr<Bmad::OdeintBmad>>(
+      m, "OdeintBmad", "Fortran routine odeint_bmad return value")
+      .def_readonly("err_flag", &Bmad::OdeintBmad::err_flag)
+      .def_readonly("track", &Bmad::OdeintBmad::track)
+      .def("__len__", [](const Bmad::OdeintBmad&) { return 2; })
+      .def("__getitem__", [](const Bmad::OdeintBmad& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.track);
+        throw py::index_error();
+      });
   m.def(
       "odeint_bmad",
       &Bmad::odeint_bmad,
@@ -162,18 +145,21 @@ void init_Bmad_routines_o(py::module& m) {
   track : TrackStruct
       Structure holding the track information.
   )""");
-  py::class_<Bmad::OdeintBmad, std::unique_ptr<Bmad::OdeintBmad>>(
-      m, "OdeintBmad", "Fortran routine odeint_bmad return value")
-      .def_readonly("err_flag", &Bmad::OdeintBmad::err_flag)
-      .def_readonly("track", &Bmad::OdeintBmad::track)
-      .def("__len__", [](const Bmad::OdeintBmad&) { return 2; })
-      .def("__getitem__", [](const Bmad::OdeintBmad& s, int i) -> py::object {
+  py::class_<PyOdeintBmadTime, std::unique_ptr<PyOdeintBmadTime>>(
+      m, "OdeintBmadTime", "Fortran routine odeint_bmad_time return value")
+      .def_readonly("err_flag", &PyOdeintBmadTime::err_flag)
+      .def_readonly("dt_step", &PyOdeintBmadTime::dt_step)
+      .def_readonly("rf_time", &PyOdeintBmadTime::rf_time)
+      .def("__len__", [](const PyOdeintBmadTime&) { return 3; })
+      .def("__getitem__", [](const PyOdeintBmadTime& s, int i) -> py::object {
         if (i < 0)
-          i += 2;
+          i += 3;
         if (i == 0)
           return py::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.track);
+          return py::cast(s.dt_step);
+        if (i == 2)
+          return py::cast(s.rf_time);
         throw py::index_error();
       });
   m.def(
@@ -226,21 +212,21 @@ void init_Bmad_routines_o(py::module& m) {
   dt_step : float
       Next RK time step that this tracker would take based on the error tolerance. Used by track_bunch_time.
   )""");
-  py::class_<PyOdeintBmadTime, std::unique_ptr<PyOdeintBmadTime>>(
-      m, "OdeintBmadTime", "Fortran routine odeint_bmad_time return value")
-      .def_readonly("err_flag", &PyOdeintBmadTime::err_flag)
-      .def_readonly("dt_step", &PyOdeintBmadTime::dt_step)
-      .def_readonly("rf_time", &PyOdeintBmadTime::rf_time)
-      .def("__len__", [](const PyOdeintBmadTime&) { return 3; })
-      .def("__getitem__", [](const PyOdeintBmadTime& s, int i) -> py::object {
+  py::class_<PyOffsetParticle, std::unique_ptr<PyOffsetParticle>>(
+      m, "OffsetParticle", "Fortran routine offset_particle return value")
+      .def_readonly("s_out", &PyOffsetParticle::s_out)
+      .def_readonly("spin_qrot", &PyOffsetParticle::spin_qrot)
+      .def_readonly("time", &PyOffsetParticle::time)
+      .def("__len__", [](const PyOffsetParticle&) { return 3; })
+      .def("__getitem__", [](const PyOffsetParticle& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return py::cast(s.s_out);
         if (i == 1)
-          return py::cast(s.dt_step);
+          return py::cast(s.spin_qrot);
         if (i == 2)
-          return py::cast(s.rf_time);
+          return py::cast(s.time);
         throw py::index_error();
       });
   m.def(
@@ -296,23 +282,6 @@ void init_Bmad_routines_o(py::module& m) {
       Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
       This parameter is an input/output and is modified in-place. As an output: Updated time.
   )""");
-  py::class_<PyOffsetParticle, std::unique_ptr<PyOffsetParticle>>(
-      m, "OffsetParticle", "Fortran routine offset_particle return value")
-      .def_readonly("s_out", &PyOffsetParticle::s_out)
-      .def_readonly("spin_qrot", &PyOffsetParticle::spin_qrot)
-      .def_readonly("time", &PyOffsetParticle::time)
-      .def("__len__", [](const PyOffsetParticle&) { return 3; })
-      .def("__getitem__", [](const PyOffsetParticle& s, int i) -> py::object {
-        if (i < 0)
-          i += 3;
-        if (i == 0)
-          return py::cast(s.s_out);
-        if (i == 1)
-          return py::cast(s.spin_qrot);
-        if (i == 2)
-          return py::cast(s.time);
-        throw py::index_error();
-      });
   m.def(
       "offset_photon",
       &Bmad::offset_photon,
@@ -355,6 +324,25 @@ void init_Bmad_routines_o(py::module& m) {
   mat4 : float
       1-Turn coupled matrix.
   )""");
+  py::class_<Bmad::OpenBinaryFile, std::unique_ptr<Bmad::OpenBinaryFile>>(
+      m, "OpenBinaryFile", "Fortran routine open_binary_file return value")
+      .def_readonly("iu", &Bmad::OpenBinaryFile::iu)
+      .def_readonly("iver", &Bmad::OpenBinaryFile::iver)
+      .def_readonly("is_ok", &Bmad::OpenBinaryFile::is_ok)
+      .def("__len__", [](const Bmad::OpenBinaryFile&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const Bmad::OpenBinaryFile& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.iu);
+            if (i == 1)
+              return py::cast(s.iver);
+            if (i == 2)
+              return py::cast(s.is_ok);
+            throw py::index_error();
+          });
   m.def(
       "open_binary_file",
       &Bmad::open_binary_file,
@@ -383,45 +371,6 @@ void init_Bmad_routines_o(py::module& m) {
   is_ok : bool
       Open OK?
   )""");
-  py::class_<Bmad::OpenBinaryFile, std::unique_ptr<Bmad::OpenBinaryFile>>(
-      m, "OpenBinaryFile", "Fortran routine open_binary_file return value")
-      .def_readonly("iu", &Bmad::OpenBinaryFile::iu)
-      .def_readonly("iver", &Bmad::OpenBinaryFile::iver)
-      .def_readonly("is_ok", &Bmad::OpenBinaryFile::is_ok)
-      .def("__len__", [](const Bmad::OpenBinaryFile&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::OpenBinaryFile& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.iu);
-            if (i == 1)
-              return py::cast(s.iver);
-            if (i == 2)
-              return py::cast(s.is_ok);
-            throw py::index_error();
-          });
-  m.def(
-      "orbit_amplitude_calc",
-      &Bmad::orbit_amplitude_calc,
-      py::arg("ele"),
-      py::arg("orb"),
-      R"""(Parameters
-  ----------
-  ele : EleStruct
-      Element holding the Twiss parameters, dispersion and coupling info.
-  orb : CoordStruct
-      Orbit coordinates at the exit end of ele.
-  amp_a : float
-      a-mode amplitude
-  amp_b : float
-      b-mode amplitude
-  amp_na : float
-      a-mode, energy normalized, amplitude.
-  amp_nb : float
-      b-mode, energy normalized, amplitude.
-  )""");
   py::class_<
       Bmad::OrbitAmplitudeCalc,
       std::unique_ptr<Bmad::OrbitAmplitudeCalc>>(
@@ -448,6 +397,26 @@ void init_Bmad_routines_o(py::module& m) {
               return py::cast(s.amp_nb);
             throw py::index_error();
           });
+  m.def(
+      "orbit_amplitude_calc",
+      &Bmad::orbit_amplitude_calc,
+      py::arg("ele"),
+      py::arg("orb"),
+      R"""(Parameters
+  ----------
+  ele : EleStruct
+      Element holding the Twiss parameters, dispersion and coupling info.
+  orb : CoordStruct
+      Orbit coordinates at the exit end of ele.
+  amp_a : float
+      a-mode amplitude
+  amp_b : float
+      b-mode amplitude
+  amp_na : float
+      a-mode, energy normalized, amplitude.
+  amp_nb : float
+      b-mode, energy normalized, amplitude.
+  )""");
   m.def(
       "orbit_reference_energy_correction",
       &Bmad::orbit_reference_energy_correction,
@@ -503,6 +472,20 @@ void init_Bmad_routines_o(py::module& m) {
       not_set$ (default), upstream_end$, downstream_end$. If not_set$ then origin is at the entrance end.
   local_position : 
   )""");
+  py::class_<PyOrbitTooLarge, std::unique_ptr<PyOrbitTooLarge>>(
+      m, "OrbitTooLarge", "Fortran routine orbit_too_large return value")
+      .def_readonly("param", &PyOrbitTooLarge::param)
+      .def_readonly("is_too_large", &PyOrbitTooLarge::is_too_large)
+      .def("__len__", [](const PyOrbitTooLarge&) { return 2; })
+      .def("__getitem__", [](const PyOrbitTooLarge& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.param);
+        if (i == 1)
+          return py::cast(s.is_too_large);
+        throw py::index_error();
+      });
   m.def(
       "orbit_too_large",
       &python_orbit_too_large,
@@ -519,20 +502,26 @@ void init_Bmad_routines_o(py::module& m) {
       If True (default) check the momentum.
   is_too_large : 
   )""");
-  py::class_<PyOrbitTooLarge, std::unique_ptr<PyOrbitTooLarge>>(
-      m, "OrbitTooLarge", "Fortran routine orbit_too_large return value")
-      .def_readonly("param", &PyOrbitTooLarge::param)
-      .def_readonly("is_too_large", &PyOrbitTooLarge::is_too_large)
-      .def("__len__", [](const PyOrbitTooLarge&) { return 2; })
-      .def("__getitem__", [](const PyOrbitTooLarge& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.param);
-        if (i == 1)
-          return py::cast(s.is_too_large);
-        throw py::index_error();
-      });
+  py::class_<
+      Bmad::OrderEvecsByNSimilarity,
+      std::unique_ptr<Bmad::OrderEvecsByNSimilarity>>(
+      m,
+      "OrderEvecsByNSimilarity",
+      "Fortran routine order_evecs_by_n_similarity return value")
+      .def_readonly("evec", &Bmad::OrderEvecsByNSimilarity::evec)
+      .def_readonly("err_flag", &Bmad::OrderEvecsByNSimilarity::err_flag)
+      .def("__len__", [](const Bmad::OrderEvecsByNSimilarity&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::OrderEvecsByNSimilarity& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.evec);
+            if (i == 1)
+              return py::cast(s.err_flag);
+            throw py::index_error();
+          });
   m.def(
       "order_evecs_by_n_similarity",
       &Bmad::order_evecs_by_n_similarity,
@@ -564,26 +553,6 @@ void init_Bmad_routines_o(py::module& m) {
   err_flag : bool
       Set True if there is an error. False otherwise
   )""");
-  py::class_<
-      Bmad::OrderEvecsByNSimilarity,
-      std::unique_ptr<Bmad::OrderEvecsByNSimilarity>>(
-      m,
-      "OrderEvecsByNSimilarity",
-      "Fortran routine order_evecs_by_n_similarity return value")
-      .def_readonly("evec", &Bmad::OrderEvecsByNSimilarity::evec)
-      .def_readonly("err_flag", &Bmad::OrderEvecsByNSimilarity::err_flag)
-      .def("__len__", [](const Bmad::OrderEvecsByNSimilarity&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::OrderEvecsByNSimilarity& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.evec);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
   m.def(
       "order_evecs_by_plane_dominance",
       &Bmad::order_evecs_by_plane_dominance,
@@ -703,6 +672,23 @@ void init_Bmad_routines_o(py::module& m) {
   nhi : 
   npad : 
   )""");
+  py::class_<PyOscGetgrnpipe, std::unique_ptr<PyOscGetgrnpipe>>(
+      m, "OscGetgrnpipe", "Fortran routine osc_getgrnpipe return value")
+      .def_readonly("gam", &PyOscGetgrnpipe::gam)
+      .def_readonly("a", &PyOscGetgrnpipe::a)
+      .def_readonly("b", &PyOscGetgrnpipe::b)
+      .def("__len__", [](const PyOscGetgrnpipe&) { return 3; })
+      .def("__getitem__", [](const PyOscGetgrnpipe& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.gam);
+        if (i == 1)
+          return py::cast(s.a);
+        if (i == 2)
+          return py::cast(s.b);
+        throw py::index_error();
+      });
   m.def(
       "osc_getgrnpipe",
       &python_osc_getgrnpipe,
@@ -721,24 +707,28 @@ void init_Bmad_routines_o(py::module& m) {
   umin : 
   npad : 
   )""");
-  py::class_<PyOscGetgrnpipe, std::unique_ptr<PyOscGetgrnpipe>>(
-      m, "OscGetgrnpipe", "Fortran routine osc_getgrnpipe return value")
-      .def_readonly("gam", &PyOscGetgrnpipe::gam)
-      .def_readonly("a", &PyOscGetgrnpipe::a)
-      .def_readonly("b", &PyOscGetgrnpipe::b)
-      .def("__len__", [](const PyOscGetgrnpipe&) { return 3; })
-      .def("__getitem__", [](const PyOscGetgrnpipe& s, int i) -> py::object {
-        if (i < 0)
-          i += 3;
-        if (i == 0)
-          return py::cast(s.gam);
-        if (i == 1)
-          return py::cast(s.a);
-        if (i == 2)
-          return py::cast(s.b);
-        throw py::index_error();
-      });
   m.def("osc_read_rectpipe_grn", &Bmad::osc_read_rectpipe_grn, R"""()""");
+  py::class_<PyOscWriteRectpipeGrn, std::unique_ptr<PyOscWriteRectpipeGrn>>(
+      m,
+      "OscWriteRectpipeGrn",
+      "Fortran routine osc_write_rectpipe_grn return value")
+      .def_readonly("apipe", &PyOscWriteRectpipeGrn::apipe)
+      .def_readonly("bpipe", &PyOscWriteRectpipeGrn::bpipe)
+      .def_readonly("gamma", &PyOscWriteRectpipeGrn::gamma)
+      .def("__len__", [](const PyOscWriteRectpipeGrn&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const PyOscWriteRectpipeGrn& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.apipe);
+            if (i == 1)
+              return py::cast(s.bpipe);
+            if (i == 2)
+              return py::cast(s.gamma);
+            throw py::index_error();
+          });
   m.def(
       "osc_write_rectpipe_grn",
       &python_osc_write_rectpipe_grn,
@@ -761,25 +751,4 @@ void init_Bmad_routines_o(py::module& m) {
   nhi : 
   gamma : 
   )""");
-  py::class_<PyOscWriteRectpipeGrn, std::unique_ptr<PyOscWriteRectpipeGrn>>(
-      m,
-      "OscWriteRectpipeGrn",
-      "Fortran routine osc_write_rectpipe_grn return value")
-      .def_readonly("apipe", &PyOscWriteRectpipeGrn::apipe)
-      .def_readonly("bpipe", &PyOscWriteRectpipeGrn::bpipe)
-      .def_readonly("gamma", &PyOscWriteRectpipeGrn::gamma)
-      .def("__len__", [](const PyOscWriteRectpipeGrn&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PyOscWriteRectpipeGrn& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.apipe);
-            if (i == 1)
-              return py::cast(s.bpipe);
-            if (i == 2)
-              return py::cast(s.gamma);
-            throw py::index_error();
-          });
 }

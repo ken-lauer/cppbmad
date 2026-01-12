@@ -1,18 +1,9 @@
 #include "pybmad/generated/SimUtils_routines_e.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyErrExit {
-  std::optional<std::string> err_str;
-};
 PyErrExit python_err_exit(std::optional<std::string> err_str = std::nullopt) {
   SimUtils::err_exit(make_opt_ref(err_str));
   auto py_result{PyErrExit{err_str}};
@@ -38,14 +29,6 @@ void init_SimUtils_routines_e(py::module& m) {
   which_end : int
       0 => calculate slopes for the start end of the array. 1 => calculate slopes for the end end of the array.
   )""");
-  m.def(
-      "err_exit",
-      &python_err_exit,
-      py::arg("err_str") = py::none(),
-      R"""(Parameters
-  ----------
-  err_str : 
-  )""");
   py::class_<PyErrExit, std::unique_ptr<PyErrExit>>(
       m, "ErrExit", "Fortran routine err_exit return value")
       .def_readonly("err_str", &PyErrExit::err_str)
@@ -57,4 +40,12 @@ void init_SimUtils_routines_e(py::module& m) {
           return py::cast(s.err_str);
         throw py::index_error();
       });
+  m.def(
+      "err_exit",
+      &python_err_exit,
+      py::arg("err_str") = py::none(),
+      R"""(Parameters
+  ----------
+  err_str : 
+  )""");
 }

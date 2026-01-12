@@ -1,18 +1,9 @@
 #include "pybmad/generated/Bmad_routines_k.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyKeyNameToKeyIndex {
-  int key_index;
-};
 PyKeyNameToKeyIndex python_key_name_to_key_index(
     std::string key_str,
     std::optional<bool> abbrev_allowed,
@@ -21,11 +12,6 @@ PyKeyNameToKeyIndex python_key_name_to_key_index(
   auto py_result{PyKeyNameToKeyIndex{key_index}};
   return py_result;
 }
-struct PyKickVectorCalc : public Bmad::KickVectorCalc {
-  std::optional<bool> print_err;
-  PyKickVectorCalc(Bmad::KickVectorCalc _base, std::optional<bool> print_err)
-      : Bmad::KickVectorCalc(std::move(_base)), print_err(print_err) {}
-};
 PyKickVectorCalc python_kick_vector_calc(
     EleProxy& ele,
     LatParamProxy& param,
@@ -37,11 +23,6 @@ PyKickVectorCalc python_kick_vector_calc(
   auto py_result{PyKickVectorCalc{_result, print_err}};
   return py_result;
 }
-
-struct PyKnotInterpolate {
-  bool err_flag;
-  double y_pt;
-};
 PyKnotInterpolate python_knot_interpolate(
     RealAlloc1D& x_knot,
     RealAlloc1D& y_knot,
@@ -53,9 +34,6 @@ PyKnotInterpolate python_knot_interpolate(
   auto py_result{PyKnotInterpolate{_result, y_pt}};
   return py_result;
 }
-struct PyKnotsToString {
-  std::string str;
-};
 PyKnotsToString python_knots_to_string(
     RealAlloc1D& x_knot,
     RealAlloc1D& y_knot,
@@ -66,6 +44,20 @@ PyKnotsToString python_knots_to_string(
 }
 
 void init_Bmad_routines_k(py::module& m) {
+  py::class_<PyKeyNameToKeyIndex, std::unique_ptr<PyKeyNameToKeyIndex>>(
+      m,
+      "KeyNameToKeyIndex",
+      "Fortran routine key_name_to_key_index return value")
+      .def_readonly("key_index", &PyKeyNameToKeyIndex::key_index)
+      .def("__len__", [](const PyKeyNameToKeyIndex&) { return 1; })
+      .def(
+          "__getitem__", [](const PyKeyNameToKeyIndex& s, int i) -> py::object {
+            if (i < 0)
+              i += 1;
+            if (i == 0)
+              return py::cast(s.key_index);
+            throw py::index_error();
+          });
   m.def(
       "key_name_to_key_index",
       &python_key_name_to_key_index,
@@ -81,20 +73,23 @@ void init_Bmad_routines_k(py::module& m) {
       rfcavity elements) if True.
   key_index : 
   )""");
-  py::class_<PyKeyNameToKeyIndex, std::unique_ptr<PyKeyNameToKeyIndex>>(
-      m,
-      "KeyNameToKeyIndex",
-      "Fortran routine key_name_to_key_index return value")
-      .def_readonly("key_index", &PyKeyNameToKeyIndex::key_index)
-      .def("__len__", [](const PyKeyNameToKeyIndex&) { return 1; })
-      .def(
-          "__getitem__", [](const PyKeyNameToKeyIndex& s, int i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.key_index);
-            throw py::index_error();
-          });
+  py::class_<PyKickVectorCalc, std::unique_ptr<PyKickVectorCalc>>(
+      m, "KickVectorCalc", "Fortran routine kick_vector_calc return value")
+      .def_readonly("dr_ds", &PyKickVectorCalc::dr_ds)
+      .def_readonly("err", &PyKickVectorCalc::err)
+      .def_readonly("print_err", &PyKickVectorCalc::print_err)
+      .def("__len__", [](const PyKickVectorCalc&) { return 3; })
+      .def("__getitem__", [](const PyKickVectorCalc& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.dr_ds);
+        if (i == 1)
+          return py::cast(s.err);
+        if (i == 2)
+          return py::cast(s.print_err);
+        throw py::index_error();
+      });
   m.def(
       "kick_vector_calc",
       &python_kick_vector_calc,
@@ -174,23 +169,6 @@ void init_Bmad_routines_k(py::module& m) {
   -----
   Remember: In order to simplify the calculation, in the body of any element, P0 is taken to be
   )""");
-  py::class_<PyKickVectorCalc, std::unique_ptr<PyKickVectorCalc>>(
-      m, "KickVectorCalc", "Fortran routine kick_vector_calc return value")
-      .def_readonly("dr_ds", &PyKickVectorCalc::dr_ds)
-      .def_readonly("err", &PyKickVectorCalc::err)
-      .def_readonly("print_err", &PyKickVectorCalc::print_err)
-      .def("__len__", [](const PyKickVectorCalc&) { return 3; })
-      .def("__getitem__", [](const PyKickVectorCalc& s, int i) -> py::object {
-        if (i < 0)
-          i += 3;
-        if (i == 0)
-          return py::cast(s.dr_ds);
-        if (i == 1)
-          return py::cast(s.err);
-        if (i == 2)
-          return py::cast(s.print_err);
-        throw py::index_error();
-      });
   m.def(
       "kill_complex_taylor",
       &Bmad::kill_complex_taylor,
@@ -243,6 +221,20 @@ void init_Bmad_routines_k(py::module& m) {
   kind_str : unknown
       String representation
   )""");
+  py::class_<PyKnotInterpolate, std::unique_ptr<PyKnotInterpolate>>(
+      m, "KnotInterpolate", "Fortran routine knot_interpolate return value")
+      .def_readonly("err_flag", &PyKnotInterpolate::err_flag)
+      .def_readonly("y_pt", &PyKnotInterpolate::y_pt)
+      .def("__len__", [](const PyKnotInterpolate&) { return 2; })
+      .def("__getitem__", [](const PyKnotInterpolate& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.y_pt);
+        throw py::index_error();
+      });
   m.def(
       "knot_interpolate",
       &python_knot_interpolate,
@@ -265,18 +257,15 @@ void init_Bmad_routines_k(py::module& m) {
       Set True if there is an error. False otherwise.
   y_pt : 
   )""");
-  py::class_<PyKnotInterpolate, std::unique_ptr<PyKnotInterpolate>>(
-      m, "KnotInterpolate", "Fortran routine knot_interpolate return value")
-      .def_readonly("err_flag", &PyKnotInterpolate::err_flag)
-      .def_readonly("y_pt", &PyKnotInterpolate::y_pt)
-      .def("__len__", [](const PyKnotInterpolate&) { return 2; })
-      .def("__getitem__", [](const PyKnotInterpolate& s, int i) -> py::object {
+  py::class_<PyKnotsToString, std::unique_ptr<PyKnotsToString>>(
+      m, "KnotsToString", "Fortran routine knots_to_string return value")
+      .def_readonly("str", &PyKnotsToString::str)
+      .def("__len__", [](const PyKnotsToString&) { return 1; })
+      .def("__getitem__", [](const PyKnotsToString& s, int i) -> py::object {
         if (i < 0)
-          i += 2;
+          i += 1;
         if (i == 0)
-          return py::cast(s.err_flag);
-        if (i == 1)
-          return py::cast(s.y_pt);
+          return py::cast(s.str);
         throw py::index_error();
       });
   m.def(
@@ -291,15 +280,4 @@ void init_Bmad_routines_k(py::module& m) {
   y_knot : 
   str : 
   )""");
-  py::class_<PyKnotsToString, std::unique_ptr<PyKnotsToString>>(
-      m, "KnotsToString", "Fortran routine knots_to_string return value")
-      .def_readonly("str", &PyKnotsToString::str)
-      .def("__len__", [](const PyKnotsToString&) { return 1; })
-      .def("__getitem__", [](const PyKnotsToString& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.str);
-        throw py::index_error();
-      });
 }

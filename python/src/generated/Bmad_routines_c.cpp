@@ -1,20 +1,9 @@
 #include "pybmad/generated/Bmad_routines_c.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-
-struct PyCalcBunchSigmaMatrixEtc {
-  BunchParamsProxy bunch_params;
-  std::optional<bool> is_time_coords;
-};
 PyCalcBunchSigmaMatrixEtc python_calc_bunch_sigma_matrix_etc(
     CoordProxyAlloc1D& particle,
     RealAlloc1D& charge,
@@ -25,10 +14,6 @@ PyCalcBunchSigmaMatrixEtc python_calc_bunch_sigma_matrix_etc(
   auto py_result{PyCalcBunchSigmaMatrixEtc{_result, is_time_coords}};
   return py_result;
 }
-struct PyCheckForSuperimposeProblem {
-  bool err_flag;
-  bool wrap;
-};
 PyCheckForSuperimposeProblem python_check_for_superimpose_problem(
     BranchProxy& branch,
     EleProxy& super_ele,
@@ -40,11 +25,6 @@ PyCheckForSuperimposeProblem python_check_for_superimpose_problem(
   auto py_result{PyCheckForSuperimposeProblem{err_flag, wrap}};
   return py_result;
 }
-struct PyChromCalc : public Bmad::ChromCalc {
-  double delta_e;
-  PyChromCalc(Bmad::ChromCalc _base, double delta_e)
-      : Bmad::ChromCalc(std::move(_base)), delta_e(delta_e) {}
-};
 PyChromCalc python_chrom_calc(
     LatProxy& lat,
     double delta_e,
@@ -55,11 +35,6 @@ PyChromCalc python_chrom_calc(
   auto py_result{PyChromCalc{_result, delta_e}};
   return py_result;
 }
-
-struct PyChromTune {
-  bool err_flag;
-  double delta_e;
-};
 PyChromTune python_chrom_tune(
     LatProxy& lat,
     double delta_e,
@@ -70,18 +45,11 @@ PyChromTune python_chrom_tune(
   auto py_result{PyChromTune{_result, delta_e}};
   return py_result;
 }
-struct PyClassicalRadius {
-  double radius;
-};
 PyClassicalRadius python_classical_radius(int species, double radius) {
   Bmad::classical_radius(species, radius);
   auto py_result{PyClassicalRadius{radius}};
   return py_result;
 }
-struct PyCmplxReStr {
-  std::complex<double> cmp;
-  std::string str_out;
-};
 PyCmplxReStr python_cmplx_re_str(
     std::complex<double> cmp,
     std::string str_out) {
@@ -89,9 +57,6 @@ PyCmplxReStr python_cmplx_re_str(
   auto py_result{PyCmplxReStr{cmp, str_out}};
   return py_result;
 }
-struct PyComplexTaylorCoef1 {
-  std::complex<double> coef;
-};
 PyComplexTaylorCoef1 python_complex_taylor_coef1(
     ComplexTaylorProxy& complex_taylor,
     IntAlloc1D& exp,
@@ -100,9 +65,6 @@ PyComplexTaylorCoef1 python_complex_taylor_coef1(
   auto py_result{PyComplexTaylorCoef1{coef}};
   return py_result;
 }
-struct PyComplexTaylorCoef2 {
-  std::complex<double> coef;
-};
 PyComplexTaylorCoef2 python_complex_taylor_coef2(
     ComplexTaylorProxy& complex_taylor,
     std::optional<int> i1,
@@ -120,13 +82,6 @@ PyComplexTaylorCoef2 python_complex_taylor_coef2(
   auto py_result{PyComplexTaylorCoef2{coef}};
   return py_result;
 }
-struct PyConvertLocalCartesianToLocalCurvilinear {
-  double x;
-  double z;
-  double g;
-  double xout;
-  double sout;
-};
 PyConvertLocalCartesianToLocalCurvilinear
 python_convert_local_cartesian_to_local_curvilinear(
     double x,
@@ -139,13 +94,6 @@ python_convert_local_cartesian_to_local_curvilinear(
       PyConvertLocalCartesianToLocalCurvilinear{x, z, g, xout, sout}};
   return py_result;
 }
-struct PyConvertLocalCurvilinearToLocalCartesian {
-  double x;
-  double s;
-  double g;
-  double xout;
-  double zout;
-};
 PyConvertLocalCurvilinearToLocalCartesian
 python_convert_local_curvilinear_to_local_cartesian(
     double x,
@@ -158,11 +106,6 @@ python_convert_local_curvilinear_to_local_cartesian(
       PyConvertLocalCurvilinearToLocalCartesian{x, s, g, xout, zout}};
   return py_result;
 }
-
-struct PyCoordStateName {
-  std::string state_str;
-  std::optional<bool> one_word;
-};
 PyCoordStateName python_coord_state_name(
     int coord_state,
     std::optional<bool> one_word = std::nullopt) {
@@ -170,11 +113,6 @@ PyCoordStateName python_coord_state_name(
   auto py_result{PyCoordStateName{_result, one_word}};
   return py_result;
 }
-struct PyCoordsRelativeToFloor {
-  std::optional<double> theta;
-  std::optional<double> phi;
-  std::optional<double> psi;
-};
 PyCoordsRelativeToFloor python_coords_relative_to_floor(
     FloorPositionProxy& floor0,
     FixedArray1D<Real, 3> dr,
@@ -192,13 +130,6 @@ PyCoordsRelativeToFloor python_coords_relative_to_floor(
   auto py_result{PyCoordsRelativeToFloor{theta, phi, psi}};
   return py_result;
 }
-struct PyCoulombfun {
-  double u;
-  double v;
-  double w;
-  double gam;
-  double res;
-};
 PyCoulombfun python_coulombfun(
     double u,
     double v,
@@ -209,9 +140,6 @@ PyCoulombfun python_coulombfun(
   auto py_result{PyCoulombfun{u, v, w, gam, res}};
   return py_result;
 }
-struct PyCreateConcatenatedWall3d {
-  bool err;
-};
 PyCreateConcatenatedWall3d python_create_concatenated_wall3d(
     LatProxy& lat,
     bool err) {
@@ -219,9 +147,6 @@ PyCreateConcatenatedWall3d python_create_concatenated_wall3d(
   auto py_result{PyCreateConcatenatedWall3d{err}};
   return py_result;
 }
-struct PyCreateGirder {
-  bool err_flag;
-};
 PyCreateGirder python_create_girder(
     LatProxy& lat,
     int ix_girder,
@@ -357,29 +282,6 @@ void init_Bmad_routines_c(py::module& m) {
   err : bool
       Set True if there is an error.
   )""");
-  m.def(
-      "calc_bunch_sigma_matrix_etc",
-      &python_calc_bunch_sigma_matrix_etc,
-      py::arg("particle"),
-      py::arg("charge"),
-      py::arg("is_time_coords") = py::none(),
-      py::arg("ele") = py::none(),
-      R"""(Subroutine calc_bunch_sigma_matrix_etc (particle, charge, bunch_params, is_time_coords, ele)
-
-  Routine to find the sigma matrix elements of a particle distribution.
-
-  Parameters
-  ----------
-  particle : CoordStruct
-      Array of particles.
-  charge : float
-      Particle charge or photon intensity.
-
-  Returns
-  -------
-  bunch_params : BunchParamsStruct
-      Bunch parameters. .sigma(6,6) .centroid.vec(6) .centroid.p0c .rel_max(6) .rel_min(6)
-  )""");
   py::class_<
       PyCalcBunchSigmaMatrixEtc,
       std::unique_ptr<PyCalcBunchSigmaMatrixEtc>>(
@@ -402,31 +304,27 @@ void init_Bmad_routines_c(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "calc_emittances_and_twiss_from_sigma_matrix",
-      &Bmad::calc_emittances_and_twiss_from_sigma_matrix,
-      py::arg("sigma_mat"),
-      py::arg("print_err") = py::none(),
-      R"""(Subroutine calc_emittances_and_twiss_from_sigma_matrix(sigma_mat, bunch_params, error, print_err, n_mat)
+      "calc_bunch_sigma_matrix_etc",
+      &python_calc_bunch_sigma_matrix_etc,
+      py::arg("particle"),
+      py::arg("charge"),
+      py::arg("is_time_coords") = py::none(),
+      py::arg("ele") = py::none(),
+      R"""(Subroutine calc_bunch_sigma_matrix_etc (particle, charge, bunch_params, is_time_coords, ele)
 
-  Routine to calc emittances and Twiss function from a beam sigma matrix.
-  See: Andy Wolski "Alternative approach to general coupled linear optics".
+  Routine to find the sigma matrix elements of a particle distribution.
 
   Parameters
   ----------
-  sigma_mat : float
-      Sigma matrix.
-  print_err : bool, optional
-      If present and False then suppress "no eigen-system found" messages.
+  particle : CoordStruct
+      Array of particles.
+  charge : float
+      Particle charge or photon intensity.
 
   Returns
   -------
   bunch_params : BunchParamsStruct
-      Holds Twiss and emittance info.
-  error : bool
-      Set True if there is an error. Can happen if the emittance of a mode is zero.
-  n_mat : float
-      N matrix defined in Wolski Eq 44 and used to convert from action-angle coords to lab coords (Wolski Eq
-      51.).
+      Bunch parameters. .sigma(6,6) .centroid.vec(6) .centroid.p0c .rel_max(6) .rel_min(6)
   )""");
   py::class_<
       Bmad::CalcEmittancesAndTwissFromSigmaMatrix,
@@ -458,6 +356,33 @@ void init_Bmad_routines_c(py::module& m) {
               return py::cast(s.n_mat);
             throw py::index_error();
           });
+  m.def(
+      "calc_emittances_and_twiss_from_sigma_matrix",
+      &Bmad::calc_emittances_and_twiss_from_sigma_matrix,
+      py::arg("sigma_mat"),
+      py::arg("print_err") = py::none(),
+      R"""(Subroutine calc_emittances_and_twiss_from_sigma_matrix(sigma_mat, bunch_params, error, print_err, n_mat)
+
+  Routine to calc emittances and Twiss function from a beam sigma matrix.
+  See: Andy Wolski "Alternative approach to general coupled linear optics".
+
+  Parameters
+  ----------
+  sigma_mat : float
+      Sigma matrix.
+  print_err : bool, optional
+      If present and False then suppress "no eigen-system found" messages.
+
+  Returns
+  -------
+  bunch_params : BunchParamsStruct
+      Holds Twiss and emittance info.
+  error : bool
+      Set True if there is an error. Can happen if the emittance of a mode is zero.
+  n_mat : float
+      N matrix defined in Wolski Eq 44 and used to convert from action-angle coords to lab coords (Wolski Eq
+      51.).
+  )""");
   m.def(
       "calc_spin_params",
       &Bmad::calc_spin_params,
@@ -494,6 +419,25 @@ void init_Bmad_routines_c(py::module& m) {
       If True then slave.key will be set to em_field. -- Logical, optional: If True then slave.key will be set
       to em_field. Default is False.
   )""");
+  py::class_<Bmad::CalcWallRadius, std::unique_ptr<Bmad::CalcWallRadius>>(
+      m, "CalcWallRadius", "Fortran routine calc_wall_radius return value")
+      .def_readonly("r_wall", &Bmad::CalcWallRadius::r_wall)
+      .def_readonly("dr_dtheta", &Bmad::CalcWallRadius::dr_dtheta)
+      .def_readonly("ix_vertex", &Bmad::CalcWallRadius::ix_vertex)
+      .def("__len__", [](const Bmad::CalcWallRadius&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const Bmad::CalcWallRadius& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.r_wall);
+            if (i == 1)
+              return py::cast(s.dr_dtheta);
+            if (i == 2)
+              return py::cast(s.ix_vertex);
+            throw py::index_error();
+          });
   m.def(
       "calc_wall_radius",
       &Bmad::calc_wall_radius,
@@ -527,25 +471,6 @@ void init_Bmad_routines_c(py::module& m) {
       Wall at given angle is between v(ix_vertex-1) and v(ix_vertex). If ix_vertex = 1 then Wall at given angle
       is between v(N) and v(1) where N = size(v).
   )""");
-  py::class_<Bmad::CalcWallRadius, std::unique_ptr<Bmad::CalcWallRadius>>(
-      m, "CalcWallRadius", "Fortran routine calc_wall_radius return value")
-      .def_readonly("r_wall", &Bmad::CalcWallRadius::r_wall)
-      .def_readonly("dr_dtheta", &Bmad::CalcWallRadius::dr_dtheta)
-      .def_readonly("ix_vertex", &Bmad::CalcWallRadius::ix_vertex)
-      .def("__len__", [](const Bmad::CalcWallRadius&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::CalcWallRadius& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.r_wall);
-            if (i == 1)
-              return py::cast(s.dr_dtheta);
-            if (i == 2)
-              return py::cast(s.ix_vertex);
-            throw py::index_error();
-          });
   m.def(
       "calc_z_tune",
       &Bmad::calc_z_tune,
@@ -628,6 +553,26 @@ void init_Bmad_routines_c(py::module& m) {
   err : bool
       Set true if there is a problem. False otherwise.
   )""");
+  py::class_<
+      PyCheckForSuperimposeProblem,
+      std::unique_ptr<PyCheckForSuperimposeProblem>>(
+      m,
+      "CheckForSuperimposeProblem",
+      "Fortran routine check_for_superimpose_problem return value")
+      .def_readonly("err_flag", &PyCheckForSuperimposeProblem::err_flag)
+      .def_readonly("wrap", &PyCheckForSuperimposeProblem::wrap)
+      .def("__len__", [](const PyCheckForSuperimposeProblem&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const PyCheckForSuperimposeProblem& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.err_flag);
+            if (i == 1)
+              return py::cast(s.wrap);
+            throw py::index_error();
+          });
   m.def(
       "check_for_superimpose_problem",
       &python_check_for_superimpose_problem,
@@ -650,24 +595,22 @@ void init_Bmad_routines_c(py::module& m) {
   This subroutine is not intended for general use.
 
   )""");
-  py::class_<
-      PyCheckForSuperimposeProblem,
-      std::unique_ptr<PyCheckForSuperimposeProblem>>(
+  py::class_<Bmad::CheckIfSInBounds, std::unique_ptr<Bmad::CheckIfSInBounds>>(
       m,
-      "CheckForSuperimposeProblem",
-      "Fortran routine check_for_superimpose_problem return value")
-      .def_readonly("err_flag", &PyCheckForSuperimposeProblem::err_flag)
-      .def_readonly("wrap", &PyCheckForSuperimposeProblem::wrap)
-      .def("__len__", [](const PyCheckForSuperimposeProblem&) { return 2; })
+      "CheckIfSInBounds",
+      "Fortran routine check_if_s_in_bounds return value")
+      .def_readonly("err_flag", &Bmad::CheckIfSInBounds::err_flag)
+      .def_readonly("translated_s", &Bmad::CheckIfSInBounds::translated_s)
+      .def("__len__", [](const Bmad::CheckIfSInBounds&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyCheckForSuperimposeProblem& s, int i) -> py::object {
+          [](const Bmad::CheckIfSInBounds& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
               return py::cast(s.err_flag);
             if (i == 1)
-              return py::cast(s.wrap);
+              return py::cast(s.translated_s);
             throw py::index_error();
           });
   m.def(
@@ -688,43 +631,6 @@ void init_Bmad_routines_c(py::module& m) {
       position translated to the range [0, branch_length]
   print_err : bool, optional
       Print error message if there is an error? Default is True.
-  )""");
-  py::class_<Bmad::CheckIfSInBounds, std::unique_ptr<Bmad::CheckIfSInBounds>>(
-      m,
-      "CheckIfSInBounds",
-      "Fortran routine check_if_s_in_bounds return value")
-      .def_readonly("err_flag", &Bmad::CheckIfSInBounds::err_flag)
-      .def_readonly("translated_s", &Bmad::CheckIfSInBounds::translated_s)
-      .def("__len__", [](const Bmad::CheckIfSInBounds&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::CheckIfSInBounds& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.translated_s);
-            throw py::index_error();
-          });
-  m.def(
-      "choose_quads_for_set_tune",
-      &Bmad::choose_quads_for_set_tune,
-      py::arg("branch"),
-      py::arg("mask") = py::none(),
-      R"""(Parameters
-  ----------
-  branch : BranchStruct
-      Lattice branch.
-  dk1 : float
-      Weights for the quadrupoles. All values will be +1 or -1.
-  eles : ElePointerStruct
-      eles(i).ele points to element with dk1(i) weight.
-  mask : unknown, optional
-      If present, assign weight of zero for all quads that do not match. That is, no variation for matching
-      quads.
-  err_flag : bool
-      Set True if there is not one quad with positive dk1 and one quad with negative dk1.
   )""");
   py::class_<
       Bmad::ChooseQuadsForSetTune,
@@ -749,6 +655,57 @@ void init_Bmad_routines_c(py::module& m) {
               return py::cast(s.err_flag);
             throw py::index_error();
           });
+  m.def(
+      "choose_quads_for_set_tune",
+      &Bmad::choose_quads_for_set_tune,
+      py::arg("branch"),
+      py::arg("mask") = py::none(),
+      R"""(Parameters
+  ----------
+  branch : BranchStruct
+      Lattice branch.
+  dk1 : float
+      Weights for the quadrupoles. All values will be +1 or -1.
+  eles : ElePointerStruct
+      eles(i).ele points to element with dk1(i) weight.
+  mask : unknown, optional
+      If present, assign weight of zero for all quads that do not match. That is, no variation for matching
+      quads.
+  err_flag : bool
+      Set True if there is not one quad with positive dk1 and one quad with negative dk1.
+  )""");
+  py::class_<PyChromCalc, std::unique_ptr<PyChromCalc>>(
+      m, "ChromCalc", "Fortran routine chrom_calc return value")
+      .def_readonly("chrom_a", &PyChromCalc::chrom_a)
+      .def_readonly("chrom_b", &PyChromCalc::chrom_b)
+      .def_readonly("err_flag", &PyChromCalc::err_flag)
+      .def_readonly("low_E_lat", &PyChromCalc::low_E_lat)
+      .def_readonly("high_E_lat", &PyChromCalc::high_E_lat)
+      .def_readonly("low_E_orb", &PyChromCalc::low_E_orb)
+      .def_readonly("high_E_orb", &PyChromCalc::high_E_orb)
+      .def_readonly("delta_e", &PyChromCalc::delta_e)
+      .def("__len__", [](const PyChromCalc&) { return 8; })
+      .def("__getitem__", [](const PyChromCalc& s, int i) -> py::object {
+        if (i < 0)
+          i += 8;
+        if (i == 0)
+          return py::cast(s.chrom_a);
+        if (i == 1)
+          return py::cast(s.chrom_b);
+        if (i == 2)
+          return py::cast(s.err_flag);
+        if (i == 3)
+          return py::cast(s.low_E_lat);
+        if (i == 4)
+          return py::cast(s.high_E_lat);
+        if (i == 5)
+          return py::cast(s.low_E_orb);
+        if (i == 6)
+          return py::cast(s.high_E_orb);
+        if (i == 7)
+          return py::cast(s.delta_e);
+        throw py::index_error();
+      });
   m.def(
       "chrom_calc",
       &python_chrom_calc,
@@ -788,35 +745,17 @@ void init_Bmad_routines_c(py::module& m) {
       On-energy orbit at start (fixer point). Default is the branch.particle_start. Only needed if lattice
       branch has an open geometry.
   )""");
-  py::class_<PyChromCalc, std::unique_ptr<PyChromCalc>>(
-      m, "ChromCalc", "Fortran routine chrom_calc return value")
-      .def_readonly("chrom_a", &PyChromCalc::chrom_a)
-      .def_readonly("chrom_b", &PyChromCalc::chrom_b)
-      .def_readonly("err_flag", &PyChromCalc::err_flag)
-      .def_readonly("low_E_lat", &PyChromCalc::low_E_lat)
-      .def_readonly("high_E_lat", &PyChromCalc::high_E_lat)
-      .def_readonly("low_E_orb", &PyChromCalc::low_E_orb)
-      .def_readonly("high_E_orb", &PyChromCalc::high_E_orb)
-      .def_readonly("delta_e", &PyChromCalc::delta_e)
-      .def("__len__", [](const PyChromCalc&) { return 8; })
-      .def("__getitem__", [](const PyChromCalc& s, int i) -> py::object {
+  py::class_<PyChromTune, std::unique_ptr<PyChromTune>>(
+      m, "ChromTune", "Fortran routine chrom_tune return value")
+      .def_readonly("err_flag", &PyChromTune::err_flag)
+      .def_readonly("delta_e", &PyChromTune::delta_e)
+      .def("__len__", [](const PyChromTune&) { return 2; })
+      .def("__getitem__", [](const PyChromTune& s, int i) -> py::object {
         if (i < 0)
-          i += 8;
+          i += 2;
         if (i == 0)
-          return py::cast(s.chrom_a);
-        if (i == 1)
-          return py::cast(s.chrom_b);
-        if (i == 2)
           return py::cast(s.err_flag);
-        if (i == 3)
-          return py::cast(s.low_E_lat);
-        if (i == 4)
-          return py::cast(s.high_E_lat);
-        if (i == 5)
-          return py::cast(s.low_E_orb);
-        if (i == 6)
-          return py::cast(s.high_E_orb);
-        if (i == 7)
+        if (i == 1)
           return py::cast(s.delta_e);
         throw py::index_error();
       });
@@ -849,18 +788,15 @@ void init_Bmad_routines_c(py::module& m) {
       sextupoles are set to the last value calculated. Note: This subroutine assumes the Twiss parameters have
       been computed.
   )""");
-  py::class_<PyChromTune, std::unique_ptr<PyChromTune>>(
-      m, "ChromTune", "Fortran routine chrom_tune return value")
-      .def_readonly("err_flag", &PyChromTune::err_flag)
-      .def_readonly("delta_e", &PyChromTune::delta_e)
-      .def("__len__", [](const PyChromTune&) { return 2; })
-      .def("__getitem__", [](const PyChromTune& s, int i) -> py::object {
+  py::class_<PyClassicalRadius, std::unique_ptr<PyClassicalRadius>>(
+      m, "ClassicalRadius", "Fortran routine classical_radius return value")
+      .def_readonly("radius", &PyClassicalRadius::radius)
+      .def("__len__", [](const PyClassicalRadius&) { return 1; })
+      .def("__getitem__", [](const PyClassicalRadius& s, int i) -> py::object {
         if (i < 0)
-          i += 2;
+          i += 1;
         if (i == 0)
-          return py::cast(s.err_flag);
-        if (i == 1)
-          return py::cast(s.delta_e);
+          return py::cast(s.radius);
         throw py::index_error();
       });
   m.def(
@@ -874,17 +810,6 @@ void init_Bmad_routines_c(py::module& m) {
       Species of particle.
   radius : 
   )""");
-  py::class_<PyClassicalRadius, std::unique_ptr<PyClassicalRadius>>(
-      m, "ClassicalRadius", "Fortran routine classical_radius return value")
-      .def_readonly("radius", &PyClassicalRadius::radius)
-      .def("__len__", [](const PyClassicalRadius&) { return 1; })
-      .def("__getitem__", [](const PyClassicalRadius& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.radius);
-        throw py::index_error();
-      });
   m.def(
       "clear_lat_1turn_mats",
       &Bmad::clear_lat_1turn_mats,
@@ -937,6 +862,26 @@ void init_Bmad_routines_c(py::module& m) {
       Print error message if calc does not converge? Default is True. Note: Condition messages like no RF
       voltage with i_dim = 6 will always be printed.
   )""");
+  py::class_<
+      Bmad::ClosedOrbitFromTracking,
+      std::unique_ptr<Bmad::ClosedOrbitFromTracking>>(
+      m,
+      "ClosedOrbitFromTracking",
+      "Fortran routine closed_orbit_from_tracking return value")
+      .def_readonly("closed_orb", &Bmad::ClosedOrbitFromTracking::closed_orb)
+      .def_readonly("err_flag", &Bmad::ClosedOrbitFromTracking::err_flag)
+      .def("__len__", [](const Bmad::ClosedOrbitFromTracking&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::ClosedOrbitFromTracking& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.closed_orb);
+            if (i == 1)
+              return py::cast(s.err_flag);
+            throw py::index_error();
+          });
   m.def(
       "closed_orbit_from_tracking",
       &Bmad::closed_orbit_from_tracking,
@@ -964,36 +909,6 @@ void init_Bmad_routines_c(py::module& m) {
   err_flag : bool
       Set True if there is an error. False otherwise.
   )""");
-  py::class_<
-      Bmad::ClosedOrbitFromTracking,
-      std::unique_ptr<Bmad::ClosedOrbitFromTracking>>(
-      m,
-      "ClosedOrbitFromTracking",
-      "Fortran routine closed_orbit_from_tracking return value")
-      .def_readonly("closed_orb", &Bmad::ClosedOrbitFromTracking::closed_orb)
-      .def_readonly("err_flag", &Bmad::ClosedOrbitFromTracking::err_flag)
-      .def("__len__", [](const Bmad::ClosedOrbitFromTracking&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ClosedOrbitFromTracking& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.closed_orb);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
-  m.def(
-      "cmplx_re_str",
-      &python_cmplx_re_str,
-      py::arg("cmp"),
-      py::arg("str_out"),
-      R"""(Parameters
-  ----------
-  cmp : 
-  str_out : 
-  )""");
   py::class_<PyCmplxReStr, std::unique_ptr<PyCmplxReStr>>(
       m, "CmplxReStr", "Fortran routine cmplx_re_str return value")
       .def_readonly("cmp", &PyCmplxReStr::cmp)
@@ -1008,6 +923,16 @@ void init_Bmad_routines_c(py::module& m) {
           return py::cast(s.str_out);
         throw py::index_error();
       });
+  m.def(
+      "cmplx_re_str",
+      &python_cmplx_re_str,
+      py::arg("cmp"),
+      py::arg("str_out"),
+      R"""(Parameters
+  ----------
+  cmp : 
+  str_out : 
+  )""");
   m.def(
       "combine_consecutive_elements",
       &Bmad::combine_consecutive_elements,
@@ -1028,6 +953,21 @@ void init_Bmad_routines_c(py::module& m) {
   ----------
   complex_taylor : 
   )""");
+  py::class_<PyComplexTaylorCoef1, std::unique_ptr<PyComplexTaylorCoef1>>(
+      m,
+      "ComplexTaylorCoef1",
+      "Fortran routine complex_taylor_coef1 return value")
+      .def_readonly("coef", &PyComplexTaylorCoef1::coef)
+      .def("__len__", [](const PyComplexTaylorCoef1&) { return 1; })
+      .def(
+          "__getitem__",
+          [](const PyComplexTaylorCoef1& s, int i) -> py::object {
+            if (i < 0)
+              i += 1;
+            if (i == 0)
+              return py::cast(s.coef);
+            throw py::index_error();
+          });
   m.def(
       "complex_taylor_coef",
       py::overload_cast<ComplexTaylorProxy&, IntAlloc1D&, std::complex<double>>(
@@ -1071,15 +1011,15 @@ void init_Bmad_routines_c(py::module& m) {
   complex_taylor_coef : complex
       Coefficient.
   )""");
-  py::class_<PyComplexTaylorCoef1, std::unique_ptr<PyComplexTaylorCoef1>>(
+  py::class_<PyComplexTaylorCoef2, std::unique_ptr<PyComplexTaylorCoef2>>(
       m,
-      "ComplexTaylorCoef1",
-      "Fortran routine complex_taylor_coef1 return value")
-      .def_readonly("coef", &PyComplexTaylorCoef1::coef)
-      .def("__len__", [](const PyComplexTaylorCoef1&) { return 1; })
+      "ComplexTaylorCoef2",
+      "Fortran routine complex_taylor_coef2 return value")
+      .def_readonly("coef", &PyComplexTaylorCoef2::coef)
+      .def("__len__", [](const PyComplexTaylorCoef2&) { return 1; })
       .def(
           "__getitem__",
-          [](const PyComplexTaylorCoef1& s, int i) -> py::object {
+          [](const PyComplexTaylorCoef2& s, int i) -> py::object {
             if (i < 0)
               i += 1;
             if (i == 0)
@@ -1147,21 +1087,6 @@ void init_Bmad_routines_c(py::module& m) {
   complex_taylor_coef : complex
       Coefficient.
   )""");
-  py::class_<PyComplexTaylorCoef2, std::unique_ptr<PyComplexTaylorCoef2>>(
-      m,
-      "ComplexTaylorCoef2",
-      "Fortran routine complex_taylor_coef2 return value")
-      .def_readonly("coef", &PyComplexTaylorCoef2::coef)
-      .def("__len__", [](const PyComplexTaylorCoef2&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyComplexTaylorCoef2& s, int i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.coef);
-            throw py::index_error();
-          });
   m.def(
       "complex_taylor_equal_complex_taylor",
       &Bmad::complex_taylor_equal_complex_taylor,
@@ -1208,6 +1133,29 @@ void init_Bmad_routines_c(py::module& m) {
   complex_taylor : ComplexTaylorStruct
       Unit complex_taylor map .
   )""");
+  py::class_<
+      Bmad::ComplexTaylorToMat6,
+      std::unique_ptr<Bmad::ComplexTaylorToMat6>>(
+      m,
+      "ComplexTaylorToMat6",
+      "Fortran routine complex_taylor_to_mat6 return value")
+      .def_readonly("vec0", &Bmad::ComplexTaylorToMat6::vec0)
+      .def_readonly("mat6", &Bmad::ComplexTaylorToMat6::mat6)
+      .def_readonly("r_out", &Bmad::ComplexTaylorToMat6::r_out)
+      .def("__len__", [](const Bmad::ComplexTaylorToMat6&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const Bmad::ComplexTaylorToMat6& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.vec0);
+            if (i == 1)
+              return py::cast(s.mat6);
+            if (i == 2)
+              return py::cast(s.r_out);
+            throw py::index_error();
+          });
   m.def(
       "complex_taylor_to_mat6",
       &Bmad::complex_taylor_to_mat6,
@@ -1234,29 +1182,6 @@ void init_Bmad_routines_c(py::module& m) {
   r_out : complex
       Coordinates at output.
   )""");
-  py::class_<
-      Bmad::ComplexTaylorToMat6,
-      std::unique_ptr<Bmad::ComplexTaylorToMat6>>(
-      m,
-      "ComplexTaylorToMat6",
-      "Fortran routine complex_taylor_to_mat6 return value")
-      .def_readonly("vec0", &Bmad::ComplexTaylorToMat6::vec0)
-      .def_readonly("mat6", &Bmad::ComplexTaylorToMat6::mat6)
-      .def_readonly("r_out", &Bmad::ComplexTaylorToMat6::r_out)
-      .def("__len__", [](const Bmad::ComplexTaylorToMat6&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ComplexTaylorToMat6& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.vec0);
-            if (i == 1)
-              return py::cast(s.mat6);
-            if (i == 2)
-              return py::cast(s.r_out);
-            throw py::index_error();
-          });
   m.def(
       "complex_taylors_equal_complex_taylors",
       &Bmad::complex_taylors_equal_complex_taylors,
@@ -1400,6 +1325,24 @@ void init_Bmad_routines_c(py::module& m) {
       Non-skew multipoles.
       This parameter is an input/output and is modified in-place. As an output: Converted Non-skew multipoles.
   )""");
+  py::class_<Bmad::ConvertCoords, std::unique_ptr<Bmad::ConvertCoords>>(
+      m, "ConvertCoords", "Fortran routine convert_coords return value")
+      .def_readonly("out_type_str", &Bmad::ConvertCoords::out_type_str)
+      .def_readonly("coord_out", &Bmad::ConvertCoords::coord_out)
+      .def_readonly("err_flag", &Bmad::ConvertCoords::err_flag)
+      .def("__len__", [](const Bmad::ConvertCoords&) { return 3; })
+      .def(
+          "__getitem__", [](const Bmad::ConvertCoords& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.out_type_str);
+            if (i == 1)
+              return py::cast(s.coord_out);
+            if (i == 2)
+              return py::cast(s.err_flag);
+            throw py::index_error();
+          });
   m.def(
       "convert_coords",
       &Bmad::convert_coords,
@@ -1425,24 +1368,6 @@ void init_Bmad_routines_c(py::module& m) {
       (a_vec + eta_vec * z') a_bar  =  sqrt(2*j_a) * cos(phi_a) a'_bar = -sqrt(2*j_a) * sin(phi_a) Note: 1) If
       ELE.Z.BETA = 0 then ELE.Z.BETA is set to 1. 2) phases are in radians
   )""");
-  py::class_<Bmad::ConvertCoords, std::unique_ptr<Bmad::ConvertCoords>>(
-      m, "ConvertCoords", "Fortran routine convert_coords return value")
-      .def_readonly("out_type_str", &Bmad::ConvertCoords::out_type_str)
-      .def_readonly("coord_out", &Bmad::ConvertCoords::coord_out)
-      .def_readonly("err_flag", &Bmad::ConvertCoords::err_flag)
-      .def("__len__", [](const Bmad::ConvertCoords&) { return 3; })
-      .def(
-          "__getitem__", [](const Bmad::ConvertCoords& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.out_type_str);
-            if (i == 1)
-              return py::cast(s.coord_out);
-            if (i == 2)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
   m.def(
       "convert_field_ele_to_lab",
       &Bmad::convert_field_ele_to_lab,
@@ -1473,22 +1398,6 @@ void init_Bmad_routines_c(py::module& m) {
   -------
   field : EmFieldStruct
       EM field.
-  )""");
-  m.def(
-      "convert_local_cartesian_to_local_curvilinear",
-      &python_convert_local_cartesian_to_local_curvilinear,
-      py::arg("x"),
-      py::arg("z"),
-      py::arg("g"),
-      py::arg("xout"),
-      py::arg("sout"),
-      R"""(Parameters
-  ----------
-  x : 
-  z : 
-  g : 
-  xout : 
-  sout : 
   )""");
   py::class_<
       PyConvertLocalCartesianToLocalCurvilinear,
@@ -1523,20 +1432,20 @@ void init_Bmad_routines_c(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "convert_local_curvilinear_to_local_cartesian",
-      &python_convert_local_curvilinear_to_local_cartesian,
+      "convert_local_cartesian_to_local_curvilinear",
+      &python_convert_local_cartesian_to_local_curvilinear,
       py::arg("x"),
-      py::arg("s"),
+      py::arg("z"),
       py::arg("g"),
       py::arg("xout"),
-      py::arg("zout"),
+      py::arg("sout"),
       R"""(Parameters
   ----------
   x : 
-  s : 
+  z : 
   g : 
   xout : 
-  zout : 
+  sout : 
   )""");
   py::class_<
       PyConvertLocalCurvilinearToLocalCartesian,
@@ -1571,6 +1480,22 @@ void init_Bmad_routines_c(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "convert_local_curvilinear_to_local_cartesian",
+      &python_convert_local_curvilinear_to_local_cartesian,
+      py::arg("x"),
+      py::arg("s"),
+      py::arg("g"),
+      py::arg("xout"),
+      py::arg("zout"),
+      R"""(Parameters
+  ----------
+  x : 
+  s : 
+  g : 
+  xout : 
+  zout : 
+  )""");
+  m.def(
       "convert_particle_coordinates_s_to_t",
       &Bmad::convert_particle_coordinates_s_to_t,
       py::arg("particle"),
@@ -1603,32 +1528,6 @@ void init_Bmad_routines_c(py::module& m) {
       If True (the default), use ele.value(p0c$) as the reference momentum. If False, use ele.value(p0c_start$)
       as the reference.
   )""");
-  m.def(
-      "convert_pc_to",
-      &Bmad::convert_pc_to,
-      py::arg("pc"),
-      py::arg("particle"),
-      R"""(Parameters
-  ----------
-  pc : float
-      Particle momentum
-  particle : int
-      Type of particle. positron$, etc.
-  E_tot : float
-      Total energy of the particle.
-  gamma : float
-      Gamma factor.
-  kinetic : float
-      Kinetic energy
-  beta : float
-      velocity / c_light
-  brho : float
-      Nominal B_field*rho_bend
-  beta1 : float
-      1 - beta. Equal to 1/(2*gamma^2) in ultra-rel limit.
-  err_flag : bool
-      Set true if there is an error. False otherwise.
-  )""");
   py::class_<Bmad::ConvertPcTo, std::unique_ptr<Bmad::ConvertPcTo>>(
       m, "ConvertPcTo", "Fortran routine convert_pc_to return value")
       .def_readonly("E_tot", &Bmad::ConvertPcTo::E_tot)
@@ -1659,33 +1558,30 @@ void init_Bmad_routines_c(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "convert_total_energy_to",
-      &Bmad::convert_total_energy_to,
-      py::arg("E_tot"),
+      "convert_pc_to",
+      &Bmad::convert_pc_to,
+      py::arg("pc"),
       py::arg("particle"),
-      py::arg("print_err") = py::none(),
       R"""(Parameters
   ----------
-  E_tot : float
-      Total energy of the particle.
+  pc : float
+      Particle momentum
   particle : int
       Type of particle. positron$, etc.
+  E_tot : float
+      Total energy of the particle.
   gamma : float
-      Gamma factor. Set to -1 for photons.
+      Gamma factor.
   kinetic : float
       Kinetic energy
   beta : float
       velocity / c_light
-  pc : float
-      Particle momentum
   brho : float
       Nominal B_field*rho_bend
   beta1 : float
       1 - beta. Equal to 1/(2*gamma^2) in ultra-rel limit.
   err_flag : bool
       Set true if there is an error. False otherwise.
-  print_err : bool, optional
-      Print error message if E_tot < particle mass? Default is True.
   )""");
   py::class_<
       Bmad::ConvertTotalEnergyTo,
@@ -1723,21 +1619,33 @@ void init_Bmad_routines_c(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "converter_distribution_parser",
-      &Bmad::converter_distribution_parser,
-      py::arg("ele"),
+      "convert_total_energy_to",
+      &Bmad::convert_total_energy_to,
+      py::arg("E_tot"),
+      py::arg("particle"),
+      py::arg("print_err") = py::none(),
       R"""(Parameters
   ----------
-  ele : EleStruct
-      Converter element.
-      This parameter is an input/output and is modified in-place. As an output: Converter element with
-      .converter field set.
-  delim : unknown
-      Ending delimitor.
-  delim_found : bool
-      Has a delimitor been found?
+  E_tot : float
+      Total energy of the particle.
+  particle : int
+      Type of particle. positron$, etc.
+  gamma : float
+      Gamma factor. Set to -1 for photons.
+  kinetic : float
+      Kinetic energy
+  beta : float
+      velocity / c_light
+  pc : float
+      Particle momentum
+  brho : float
+      Nominal B_field*rho_bend
+  beta1 : float
+      1 - beta. Equal to 1/(2*gamma^2) in ultra-rel limit.
   err_flag : bool
-      Set True if there is an error. False otherwise.
+      Set true if there is an error. False otherwise.
+  print_err : bool, optional
+      Print error message if E_tot < particle mass? Default is True.
   )""");
   py::class_<
       Bmad::ConverterDistributionParser,
@@ -1765,6 +1673,23 @@ void init_Bmad_routines_c(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "converter_distribution_parser",
+      &Bmad::converter_distribution_parser,
+      py::arg("ele"),
+      R"""(Parameters
+  ----------
+  ele : EleStruct
+      Converter element.
+      This parameter is an input/output and is modified in-place. As an output: Converter element with
+      .converter field set.
+  delim : unknown
+      Ending delimitor.
+  delim_found : bool
+      Has a delimitor been found?
+  err_flag : bool
+      Set True if there is an error. False otherwise.
+  )""");
+  m.def(
       "coord_equal_coord",
       &Bmad::coord_equal_coord,
       py::arg("coord2"),
@@ -1785,6 +1710,20 @@ void init_Bmad_routines_c(py::module& m) {
   coord1 : CoordStruct
       Output coord.
   )""");
+  py::class_<PyCoordStateName, std::unique_ptr<PyCoordStateName>>(
+      m, "CoordStateName", "Fortran routine coord_state_name return value")
+      .def_readonly("state_str", &PyCoordStateName::state_str)
+      .def_readonly("one_word", &PyCoordStateName::one_word)
+      .def("__len__", [](const PyCoordStateName&) { return 2; })
+      .def("__getitem__", [](const PyCoordStateName& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.state_str);
+        if (i == 1)
+          return py::cast(s.one_word);
+        throw py::index_error();
+      });
   m.def(
       "coord_state_name",
       &python_coord_state_name,
@@ -1804,20 +1743,6 @@ void init_Bmad_routines_c(py::module& m) {
   state_str : unknown
       String representation.
   )""");
-  py::class_<PyCoordStateName, std::unique_ptr<PyCoordStateName>>(
-      m, "CoordStateName", "Fortran routine coord_state_name return value")
-      .def_readonly("state_str", &PyCoordStateName::state_str)
-      .def_readonly("one_word", &PyCoordStateName::one_word)
-      .def("__len__", [](const PyCoordStateName&) { return 2; })
-      .def("__getitem__", [](const PyCoordStateName& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.state_str);
-        if (i == 1)
-          return py::cast(s.one_word);
-        throw py::index_error();
-      });
   m.def(
       "coords_body_to_local",
       &Bmad::coords_body_to_local,
@@ -1878,6 +1803,29 @@ void init_Bmad_routines_c(py::module& m) {
       Set True if global floor position cannot be computed.
   global : 
   )""");
+  py::class_<
+      Bmad::CoordsFloorToCurvilinear,
+      std::unique_ptr<Bmad::CoordsFloorToCurvilinear>>(
+      m,
+      "CoordsFloorToCurvilinear",
+      "Fortran routine coords_floor_to_curvilinear return value")
+      .def_readonly("ele1", &Bmad::CoordsFloorToCurvilinear::ele1)
+      .def_readonly("status", &Bmad::CoordsFloorToCurvilinear::status)
+      .def_readonly("w_mat", &Bmad::CoordsFloorToCurvilinear::w_mat)
+      .def("__len__", [](const Bmad::CoordsFloorToCurvilinear&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const Bmad::CoordsFloorToCurvilinear& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.ele1);
+            if (i == 1)
+              return py::cast(s.status);
+            if (i == 2)
+              return py::cast(s.w_mat);
+            throw py::index_error();
+          });
   m.def(
       "coords_floor_to_curvilinear",
       &Bmad::coords_floor_to_curvilinear,
@@ -1900,25 +1848,25 @@ void init_Bmad_routines_c(py::module& m) {
   local_coords : 
   )""");
   py::class_<
-      Bmad::CoordsFloorToCurvilinear,
-      std::unique_ptr<Bmad::CoordsFloorToCurvilinear>>(
+      Bmad::CoordsFloorToLocalCurvilinear,
+      std::unique_ptr<Bmad::CoordsFloorToLocalCurvilinear>>(
       m,
-      "CoordsFloorToCurvilinear",
-      "Fortran routine coords_floor_to_curvilinear return value")
-      .def_readonly("ele1", &Bmad::CoordsFloorToCurvilinear::ele1)
-      .def_readonly("status", &Bmad::CoordsFloorToCurvilinear::status)
-      .def_readonly("w_mat", &Bmad::CoordsFloorToCurvilinear::w_mat)
-      .def("__len__", [](const Bmad::CoordsFloorToCurvilinear&) { return 3; })
+      "CoordsFloorToLocalCurvilinear",
+      "Fortran routine coords_floor_to_local_curvilinear return value")
+      .def_readonly("status", &Bmad::CoordsFloorToLocalCurvilinear::status)
+      .def_readonly("w_mat", &Bmad::CoordsFloorToLocalCurvilinear::w_mat)
+      .def(
+          "__len__",
+          [](const Bmad::CoordsFloorToLocalCurvilinear&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::CoordsFloorToCurvilinear& s, int i) -> py::object {
+          [](const Bmad::CoordsFloorToLocalCurvilinear& s,
+             int i) -> py::object {
             if (i < 0)
-              i += 3;
+              i += 2;
             if (i == 0)
-              return py::cast(s.ele1);
-            if (i == 1)
               return py::cast(s.status);
-            if (i == 2)
+            if (i == 1)
               return py::cast(s.w_mat);
             throw py::index_error();
           });
@@ -1946,29 +1894,6 @@ void init_Bmad_routines_c(py::module& m) {
       ele.orientation = -1.
   local_position : 
   )""");
-  py::class_<
-      Bmad::CoordsFloorToLocalCurvilinear,
-      std::unique_ptr<Bmad::CoordsFloorToLocalCurvilinear>>(
-      m,
-      "CoordsFloorToLocalCurvilinear",
-      "Fortran routine coords_floor_to_local_curvilinear return value")
-      .def_readonly("status", &Bmad::CoordsFloorToLocalCurvilinear::status)
-      .def_readonly("w_mat", &Bmad::CoordsFloorToLocalCurvilinear::w_mat)
-      .def(
-          "__len__",
-          [](const Bmad::CoordsFloorToLocalCurvilinear&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::CoordsFloorToLocalCurvilinear& s,
-             int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.status);
-            if (i == 1)
-              return py::cast(s.w_mat);
-            throw py::index_error();
-          });
   m.def(
       "coords_floor_to_relative",
       &Bmad::coords_floor_to_relative,
@@ -2044,28 +1969,6 @@ void init_Bmad_routines_c(py::module& m) {
       ele.orientation = -1.
   global_position : 
   )""");
-  m.def(
-      "coords_relative_to_floor",
-      &python_coords_relative_to_floor,
-      py::arg("floor0"),
-      py::arg("dr"),
-      py::arg("theta") = py::none(),
-      py::arg("phi") = py::none(),
-      py::arg("psi") = py::none(),
-      py::arg("floor1"),
-      R"""(Parameters
-  ----------
-  floor0 : FloorPositionStruct
-      Initial reference frame.
-  dr : float
-      (x, y, z) positional shift of the reference frame. theta, phi, psi -- real(rp), optional: Angular shift of
-      the reference frame. See the Bmad manual on the Global Coordinate system for more details. All angles must
-      either be absent or present.
-  theta : 
-  phi : 
-  psi : 
-  floor1 : 
-  )""");
   py::class_<PyCoordsRelativeToFloor, std::unique_ptr<PyCoordsRelativeToFloor>>(
       m,
       "CoordsRelativeToFloor",
@@ -2088,20 +1991,26 @@ void init_Bmad_routines_c(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "coulombfun",
-      &python_coulombfun,
-      py::arg("u"),
-      py::arg("v"),
-      py::arg("w"),
-      py::arg("gam"),
-      py::arg("res"),
+      "coords_relative_to_floor",
+      &python_coords_relative_to_floor,
+      py::arg("floor0"),
+      py::arg("dr"),
+      py::arg("theta") = py::none(),
+      py::arg("phi") = py::none(),
+      py::arg("psi") = py::none(),
+      py::arg("floor1"),
       R"""(Parameters
   ----------
-  u : 
-  v : 
-  w : 
-  gam : 
-  res : 
+  floor0 : FloorPositionStruct
+      Initial reference frame.
+  dr : float
+      (x, y, z) positional shift of the reference frame. theta, phi, psi -- real(rp), optional: Angular shift of
+      the reference frame. See the Bmad manual on the Global Coordinate system for more details. All angles must
+      either be absent or present.
+  theta : 
+  phi : 
+  psi : 
+  floor1 : 
   )""");
   py::class_<PyCoulombfun, std::unique_ptr<PyCoulombfun>>(
       m, "Coulombfun", "Fortran routine coulombfun return value")
@@ -2126,6 +2035,39 @@ void init_Bmad_routines_c(py::module& m) {
           return py::cast(s.res);
         throw py::index_error();
       });
+  m.def(
+      "coulombfun",
+      &python_coulombfun,
+      py::arg("u"),
+      py::arg("v"),
+      py::arg("w"),
+      py::arg("gam"),
+      py::arg("res"),
+      R"""(Parameters
+  ----------
+  u : 
+  v : 
+  w : 
+  gam : 
+  res : 
+  )""");
+  py::class_<
+      PyCreateConcatenatedWall3d,
+      std::unique_ptr<PyCreateConcatenatedWall3d>>(
+      m,
+      "CreateConcatenatedWall3d",
+      "Fortran routine create_concatenated_wall3d return value")
+      .def_readonly("err", &PyCreateConcatenatedWall3d::err)
+      .def("__len__", [](const PyCreateConcatenatedWall3d&) { return 1; })
+      .def(
+          "__getitem__",
+          [](const PyCreateConcatenatedWall3d& s, int i) -> py::object {
+            if (i < 0)
+              i += 1;
+            if (i == 0)
+              return py::cast(s.err);
+            throw py::index_error();
+          });
   m.def(
       "create_concatenated_wall3d",
       &python_create_concatenated_wall3d,
@@ -2153,20 +2095,23 @@ void init_Bmad_routines_c(py::module& m) {
       Set True if there is an error, false otherwise.
   )""");
   py::class_<
-      PyCreateConcatenatedWall3d,
-      std::unique_ptr<PyCreateConcatenatedWall3d>>(
+      Bmad::CreateElementSlice,
+      std::unique_ptr<Bmad::CreateElementSlice>>(
       m,
-      "CreateConcatenatedWall3d",
-      "Fortran routine create_concatenated_wall3d return value")
-      .def_readonly("err", &PyCreateConcatenatedWall3d::err)
-      .def("__len__", [](const PyCreateConcatenatedWall3d&) { return 1; })
+      "CreateElementSlice",
+      "Fortran routine create_element_slice return value")
+      .def_readonly("sliced_ele", &Bmad::CreateElementSlice::sliced_ele)
+      .def_readonly("err_flag", &Bmad::CreateElementSlice::err_flag)
+      .def("__len__", [](const Bmad::CreateElementSlice&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyCreateConcatenatedWall3d& s, int i) -> py::object {
+          [](const Bmad::CreateElementSlice& s, int i) -> py::object {
             if (i < 0)
-              i += 1;
+              i += 2;
             if (i == 0)
-              return py::cast(s.err);
+              return py::cast(s.sliced_ele);
+            if (i == 1)
+              return py::cast(s.err_flag);
             throw py::index_error();
           });
   m.def(
@@ -2207,26 +2152,6 @@ void init_Bmad_routines_c(py::module& m) {
       present and there may be an adjustment needed to the orbit ref energy (EG space charge tracking does not
       keep track of ref energy through an lcavity).
   )""");
-  py::class_<
-      Bmad::CreateElementSlice,
-      std::unique_ptr<Bmad::CreateElementSlice>>(
-      m,
-      "CreateElementSlice",
-      "Fortran routine create_element_slice return value")
-      .def_readonly("sliced_ele", &Bmad::CreateElementSlice::sliced_ele)
-      .def_readonly("err_flag", &Bmad::CreateElementSlice::err_flag)
-      .def("__len__", [](const Bmad::CreateElementSlice&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::CreateElementSlice& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.sliced_ele);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
   m.def(
       "create_field_overlap",
       &Bmad::create_field_overlap,
@@ -2244,6 +2169,17 @@ void init_Bmad_routines_c(py::module& m) {
   err_flag : bool
       Set true if there is a problem (like no elements found).
   )""");
+  py::class_<PyCreateGirder, std::unique_ptr<PyCreateGirder>>(
+      m, "CreateGirder", "Fortran routine create_girder return value")
+      .def_readonly("err_flag", &PyCreateGirder::err_flag)
+      .def("__len__", [](const PyCreateGirder&) { return 1; })
+      .def("__getitem__", [](const PyCreateGirder& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "create_girder",
       &python_create_girder,
@@ -2267,17 +2203,6 @@ void init_Bmad_routines_c(py::module& m) {
       girder_info.descrip girder_info.value(:)
   err_flag : 
   )""");
-  py::class_<PyCreateGirder, std::unique_ptr<PyCreateGirder>>(
-      m, "CreateGirder", "Fortran routine create_girder return value")
-      .def_readonly("err_flag", &PyCreateGirder::err_flag)
-      .def("__len__", [](const PyCreateGirder&) { return 1; })
-      .def("__getitem__", [](const PyCreateGirder& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.err_flag);
-        throw py::index_error();
-      });
   m.def(
       "create_group",
       &Bmad::create_group,
@@ -2328,6 +2253,26 @@ void init_Bmad_routines_c(py::module& m) {
   err : bool
       Set True if an attribute is not free to be controlled.
   )""");
+  py::class_<
+      Bmad::CreatePlanarWigglerModel,
+      std::unique_ptr<Bmad::CreatePlanarWigglerModel>>(
+      m,
+      "CreatePlanarWigglerModel",
+      "Fortran routine create_planar_wiggler_model return value")
+      .def_readonly("lat", &Bmad::CreatePlanarWigglerModel::lat)
+      .def_readonly("err_flag", &Bmad::CreatePlanarWigglerModel::err_flag)
+      .def("__len__", [](const Bmad::CreatePlanarWigglerModel&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::CreatePlanarWigglerModel& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.lat);
+            if (i == 1)
+              return py::cast(s.err_flag);
+            throw py::index_error();
+          });
   m.def(
       "create_planar_wiggler_model",
       &Bmad::create_planar_wiggler_model,
@@ -2369,26 +2314,6 @@ void init_Bmad_routines_c(py::module& m) {
   err_flag : bool
       Set True if there is an error.
   )""");
-  py::class_<
-      Bmad::CreatePlanarWigglerModel,
-      std::unique_ptr<Bmad::CreatePlanarWigglerModel>>(
-      m,
-      "CreatePlanarWigglerModel",
-      "Fortran routine create_planar_wiggler_model return value")
-      .def_readonly("lat", &Bmad::CreatePlanarWigglerModel::lat)
-      .def_readonly("err_flag", &Bmad::CreatePlanarWigglerModel::err_flag)
-      .def("__len__", [](const Bmad::CreatePlanarWigglerModel&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::CreatePlanarWigglerModel& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.lat);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
   m.def(
       "create_ramper",
       &Bmad::create_ramper,

@@ -1,20 +1,9 @@
 #include "pybmad/generated/Bmad_routines_w.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyWordToValue {
-  std::string word;
-  double value;
-  bool err_flag;
-};
 PyWordToValue python_word_to_value(
     std::string word,
     LatProxy& lat,
@@ -25,11 +14,6 @@ PyWordToValue python_word_to_value(
   auto py_result{PyWordToValue{word, value, err_flag}};
   return py_result;
 }
-struct PyWriteAstraBend {
-  int iu;
-  double strength;
-  int id;
-};
 PyWriteAstraBend python_write_astra_bend(
     int iu,
     double strength,
@@ -42,10 +26,6 @@ PyWriteAstraBend python_write_astra_bend(
   auto py_result{PyWriteAstraBend{iu, strength, id}};
   return py_result;
 }
-struct PyWriteBlenderEle {
-  int iu;
-  std::optional<bool> old_format;
-};
 PyWriteBlenderEle python_write_blender_ele(
     int iu,
     EleProxy& ele,
@@ -54,9 +34,6 @@ PyWriteBlenderEle python_write_blender_ele(
   auto py_result{PyWriteBlenderEle{iu, old_format}};
   return py_result;
 }
-struct PyWriteBlenderLatLayout {
-  std::string file_name;
-};
 PyWriteBlenderLatLayout python_write_blender_lat_layout(
     std::string file_name,
     LatProxy& lat) {
@@ -64,9 +41,6 @@ PyWriteBlenderLatLayout python_write_blender_lat_layout(
   auto py_result{PyWriteBlenderLatLayout{file_name}};
   return py_result;
 }
-struct PyWriteLatLine {
-  std::string line;
-};
 PyWriteLatLine python_write_lat_line(
     std::string line,
     int iu,
@@ -77,12 +51,6 @@ PyWriteLatLine python_write_lat_line(
   auto py_result{PyWriteLatLine{line}};
   return py_result;
 }
-struct PyWriteLatticeInSadFormat {
-  std::string out_file_name;
-  std::optional<bool> include_apertures;
-  std::optional<int> ix_branch;
-  std::optional<bool> err;
-};
 PyWriteLatticeInSadFormat python_write_lattice_in_sad_format(
     std::string out_file_name,
     LatProxy& lat,
@@ -99,10 +67,6 @@ PyWriteLatticeInSadFormat python_write_lattice_in_sad_format(
       out_file_name, include_apertures, ix_branch, err}};
   return py_result;
 }
-struct PyWriteLineElement {
-  std::string line;
-  int iu;
-};
 PyWriteLineElement python_write_line_element(
     std::string line,
     int iu,
@@ -175,6 +139,36 @@ void init_Bmad_routines_w(py::module& m) {
       If True, return the inverse matrix. Default is False.
   w_mat : 
   )""");
+  py::class_<Bmad::Wall3dDRadius, std::unique_ptr<Bmad::Wall3dDRadius>>(
+      m, "Wall3dDRadius", "Fortran routine wall3d_d_radius return value")
+      .def_readonly("perp", &Bmad::Wall3dDRadius::perp)
+      .def_readonly("ix_section", &Bmad::Wall3dDRadius::ix_section)
+      .def_readonly("no_wall_here", &Bmad::Wall3dDRadius::no_wall_here)
+      .def_readonly("origin", &Bmad::Wall3dDRadius::origin)
+      .def_readonly("radius_wall", &Bmad::Wall3dDRadius::radius_wall)
+      .def_readonly("err_flag", &Bmad::Wall3dDRadius::err_flag)
+      .def_readonly("d_radius", &Bmad::Wall3dDRadius::d_radius)
+      .def("__len__", [](const Bmad::Wall3dDRadius&) { return 7; })
+      .def(
+          "__getitem__", [](const Bmad::Wall3dDRadius& s, int i) -> py::object {
+            if (i < 0)
+              i += 7;
+            if (i == 0)
+              return py::cast(s.perp);
+            if (i == 1)
+              return py::cast(s.ix_section);
+            if (i == 2)
+              return py::cast(s.no_wall_here);
+            if (i == 3)
+              return py::cast(s.origin);
+            if (i == 4)
+              return py::cast(s.radius_wall);
+            if (i == 5)
+              return py::cast(s.err_flag);
+            if (i == 6)
+              return py::cast(s.d_radius);
+            throw py::index_error();
+          });
   m.def(
       "wall3d_d_radius",
       &Bmad::wall3d_d_radius,
@@ -220,36 +214,6 @@ void init_Bmad_routines_w(py::module& m) {
   err_flag : bool
       Set True if error. (EG noassociated .wall3d), false otherwise.
   )""");
-  py::class_<Bmad::Wall3dDRadius, std::unique_ptr<Bmad::Wall3dDRadius>>(
-      m, "Wall3dDRadius", "Fortran routine wall3d_d_radius return value")
-      .def_readonly("perp", &Bmad::Wall3dDRadius::perp)
-      .def_readonly("ix_section", &Bmad::Wall3dDRadius::ix_section)
-      .def_readonly("no_wall_here", &Bmad::Wall3dDRadius::no_wall_here)
-      .def_readonly("origin", &Bmad::Wall3dDRadius::origin)
-      .def_readonly("radius_wall", &Bmad::Wall3dDRadius::radius_wall)
-      .def_readonly("err_flag", &Bmad::Wall3dDRadius::err_flag)
-      .def_readonly("d_radius", &Bmad::Wall3dDRadius::d_radius)
-      .def("__len__", [](const Bmad::Wall3dDRadius&) { return 7; })
-      .def(
-          "__getitem__", [](const Bmad::Wall3dDRadius& s, int i) -> py::object {
-            if (i < 0)
-              i += 7;
-            if (i == 0)
-              return py::cast(s.perp);
-            if (i == 1)
-              return py::cast(s.ix_section);
-            if (i == 2)
-              return py::cast(s.no_wall_here);
-            if (i == 3)
-              return py::cast(s.origin);
-            if (i == 4)
-              return py::cast(s.radius_wall);
-            if (i == 5)
-              return py::cast(s.err_flag);
-            if (i == 6)
-              return py::cast(s.d_radius);
-            throw py::index_error();
-          });
   m.def(
       "wall3d_initializer",
       &Bmad::wall3d_initializer,
@@ -317,22 +281,6 @@ void init_Bmad_routines_w(py::module& m) {
   position : float
       Position used in wall3d_d_radius call.
   )""");
-  m.def(
-      "word_to_value",
-      &python_word_to_value,
-      py::arg("word"),
-      py::arg("lat"),
-      py::arg("value"),
-      py::arg("err_flag"),
-      py::arg("ele") = py::none(),
-      R"""(Parameters
-  ----------
-  word : 
-  lat : 
-  value : 
-  err_flag : 
-  ele : 
-  )""");
   py::class_<PyWordToValue, std::unique_ptr<PyWordToValue>>(
       m, "WordToValue", "Fortran routine word_to_value return value")
       .def_readonly("word", &PyWordToValue::word)
@@ -350,6 +298,22 @@ void init_Bmad_routines_w(py::module& m) {
           return py::cast(s.err_flag);
         throw py::index_error();
       });
+  m.def(
+      "word_to_value",
+      &python_word_to_value,
+      py::arg("word"),
+      py::arg("lat"),
+      py::arg("value"),
+      py::arg("err_flag"),
+      py::arg("ele") = py::none(),
+      R"""(Parameters
+  ----------
+  word : 
+  lat : 
+  value : 
+  err_flag : 
+  ele : 
+  )""");
   m.def(
       "write_ascii_beam_file",
       &Bmad::write_ascii_beam_file,
@@ -372,6 +336,23 @@ void init_Bmad_routines_w(py::module& m) {
   alive_only : bool, optional
       Only write live (includes pre_born) particles to the file? Default is False.
   )""");
+  py::class_<PyWriteAstraBend, std::unique_ptr<PyWriteAstraBend>>(
+      m, "WriteAstraBend", "Fortran routine write_astra_bend return value")
+      .def_readonly("iu", &PyWriteAstraBend::iu)
+      .def_readonly("strength", &PyWriteAstraBend::strength)
+      .def_readonly("id", &PyWriteAstraBend::id)
+      .def("__len__", [](const PyWriteAstraBend&) { return 3; })
+      .def("__getitem__", [](const PyWriteAstraBend& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.iu);
+        if (i == 1)
+          return py::cast(s.strength);
+        if (i == 2)
+          return py::cast(s.id);
+        throw py::index_error();
+      });
   m.def(
       "write_astra_bend",
       &python_write_astra_bend,
@@ -392,23 +373,26 @@ void init_Bmad_routines_w(py::module& m) {
   d3 : 
   d4 : 
   )""");
-  py::class_<PyWriteAstraBend, std::unique_ptr<PyWriteAstraBend>>(
-      m, "WriteAstraBend", "Fortran routine write_astra_bend return value")
-      .def_readonly("iu", &PyWriteAstraBend::iu)
-      .def_readonly("strength", &PyWriteAstraBend::strength)
-      .def_readonly("id", &PyWriteAstraBend::id)
-      .def("__len__", [](const PyWriteAstraBend&) { return 3; })
-      .def("__getitem__", [](const PyWriteAstraBend& s, int i) -> py::object {
-        if (i < 0)
-          i += 3;
-        if (i == 0)
-          return py::cast(s.iu);
-        if (i == 1)
-          return py::cast(s.strength);
-        if (i == 2)
-          return py::cast(s.id);
-        throw py::index_error();
-      });
+  py::class_<
+      Bmad::WriteAstraFieldGridFile,
+      std::unique_ptr<Bmad::WriteAstraFieldGridFile>>(
+      m,
+      "WriteAstraFieldGridFile",
+      "Fortran routine write_astra_field_grid_file return value")
+      .def_readonly("maxfield", &Bmad::WriteAstraFieldGridFile::maxfield)
+      .def_readonly("err", &Bmad::WriteAstraFieldGridFile::err)
+      .def("__len__", [](const Bmad::WriteAstraFieldGridFile&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::WriteAstraFieldGridFile& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.maxfield);
+            if (i == 1)
+              return py::cast(s.err);
+            throw py::index_error();
+          });
   m.def(
       "write_astra_field_grid_file",
       &Bmad::write_astra_field_grid_file,
@@ -440,17 +424,17 @@ void init_Bmad_routines_w(py::module& m) {
       Set True if, say a file could not be opened.
   )""");
   py::class_<
-      Bmad::WriteAstraFieldGridFile,
-      std::unique_ptr<Bmad::WriteAstraFieldGridFile>>(
+      Bmad::WriteAstraFieldGridFile3d,
+      std::unique_ptr<Bmad::WriteAstraFieldGridFile3d>>(
       m,
-      "WriteAstraFieldGridFile",
-      "Fortran routine write_astra_field_grid_file return value")
-      .def_readonly("maxfield", &Bmad::WriteAstraFieldGridFile::maxfield)
-      .def_readonly("err", &Bmad::WriteAstraFieldGridFile::err)
-      .def("__len__", [](const Bmad::WriteAstraFieldGridFile&) { return 2; })
+      "WriteAstraFieldGridFile3d",
+      "Fortran routine write_astra_field_grid_file_3d return value")
+      .def_readonly("maxfield", &Bmad::WriteAstraFieldGridFile3d::maxfield)
+      .def_readonly("err", &Bmad::WriteAstraFieldGridFile3d::err)
+      .def("__len__", [](const Bmad::WriteAstraFieldGridFile3d&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::WriteAstraFieldGridFile& s, int i) -> py::object {
+          [](const Bmad::WriteAstraFieldGridFile3d& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
@@ -497,26 +481,6 @@ void init_Bmad_routines_w(py::module& m) {
   err : bool
       Set True if, say a file could not be opened.
   )""");
-  py::class_<
-      Bmad::WriteAstraFieldGridFile3d,
-      std::unique_ptr<Bmad::WriteAstraFieldGridFile3d>>(
-      m,
-      "WriteAstraFieldGridFile3d",
-      "Fortran routine write_astra_field_grid_file_3d return value")
-      .def_readonly("maxfield", &Bmad::WriteAstraFieldGridFile3d::maxfield)
-      .def_readonly("err", &Bmad::WriteAstraFieldGridFile3d::err)
-      .def("__len__", [](const Bmad::WriteAstraFieldGridFile3d&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::WriteAstraFieldGridFile3d& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.maxfield);
-            if (i == 1)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
   m.def(
       "write_beam_file",
       &Bmad::write_beam_file,
@@ -635,18 +599,6 @@ void init_Bmad_routines_w(py::module& m) {
   err_flag : bool
       Set True if there is an error. False otherwise.
   )""");
-  m.def(
-      "write_blender_ele",
-      &python_write_blender_ele,
-      py::arg("iu"),
-      py::arg("ele"),
-      py::arg("old_format") = py::none(),
-      R"""(Parameters
-  ----------
-  iu : 
-  ele : 
-  old_format : 
-  )""");
   py::class_<PyWriteBlenderEle, std::unique_ptr<PyWriteBlenderEle>>(
       m, "WriteBlenderEle", "Fortran routine write_blender_ele return value")
       .def_readonly("iu", &PyWriteBlenderEle::iu)
@@ -662,14 +614,16 @@ void init_Bmad_routines_w(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "write_blender_lat_layout",
-      &python_write_blender_lat_layout,
-      py::arg("file_name"),
-      py::arg("lat"),
+      "write_blender_ele",
+      &python_write_blender_ele,
+      py::arg("iu"),
+      py::arg("ele"),
+      py::arg("old_format") = py::none(),
       R"""(Parameters
   ----------
-  file_name : 
-  lat : 
+  iu : 
+  ele : 
+  old_format : 
   )""");
   py::class_<PyWriteBlenderLatLayout, std::unique_ptr<PyWriteBlenderLatLayout>>(
       m,
@@ -686,6 +640,16 @@ void init_Bmad_routines_w(py::module& m) {
               return py::cast(s.file_name);
             throw py::index_error();
           });
+  m.def(
+      "write_blender_lat_layout",
+      &python_write_blender_lat_layout,
+      py::arg("file_name"),
+      py::arg("lat"),
+      R"""(Parameters
+  ----------
+  file_name : 
+  lat : 
+  )""");
   m.def(
       "write_bmad_lattice_file",
       &Bmad::write_bmad_lattice_file,
@@ -708,6 +672,29 @@ void init_Bmad_routines_w(py::module& m) {
   orbit0 : CoordStruct, optional
       Initial orbit. Used to write the inital orbit if the lattice geometry is closed.
   )""");
+  py::class_<
+      Bmad::WriteGptFieldGridFile1d,
+      std::unique_ptr<Bmad::WriteGptFieldGridFile1d>>(
+      m,
+      "WriteGptFieldGridFile1d",
+      "Fortran routine write_gpt_field_grid_file_1d return value")
+      .def_readonly("maxfield", &Bmad::WriteGptFieldGridFile1d::maxfield)
+      .def_readonly("ref_time", &Bmad::WriteGptFieldGridFile1d::ref_time)
+      .def_readonly("err", &Bmad::WriteGptFieldGridFile1d::err)
+      .def("__len__", [](const Bmad::WriteGptFieldGridFile1d&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const Bmad::WriteGptFieldGridFile1d& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.maxfield);
+            if (i == 1)
+              return py::cast(s.ref_time);
+            if (i == 2)
+              return py::cast(s.err);
+            throw py::index_error();
+          });
   m.def(
       "write_gpt_field_grid_file_1d",
       &Bmad::write_gpt_field_grid_file_1d,
@@ -741,18 +728,18 @@ void init_Bmad_routines_w(py::module& m) {
       Set True if, say a file could not be opened.
   )""");
   py::class_<
-      Bmad::WriteGptFieldGridFile1d,
-      std::unique_ptr<Bmad::WriteGptFieldGridFile1d>>(
+      Bmad::WriteGptFieldGridFile2d,
+      std::unique_ptr<Bmad::WriteGptFieldGridFile2d>>(
       m,
-      "WriteGptFieldGridFile1d",
-      "Fortran routine write_gpt_field_grid_file_1d return value")
-      .def_readonly("maxfield", &Bmad::WriteGptFieldGridFile1d::maxfield)
-      .def_readonly("ref_time", &Bmad::WriteGptFieldGridFile1d::ref_time)
-      .def_readonly("err", &Bmad::WriteGptFieldGridFile1d::err)
-      .def("__len__", [](const Bmad::WriteGptFieldGridFile1d&) { return 3; })
+      "WriteGptFieldGridFile2d",
+      "Fortran routine write_gpt_field_grid_file_2d return value")
+      .def_readonly("maxfield", &Bmad::WriteGptFieldGridFile2d::maxfield)
+      .def_readonly("ref_time", &Bmad::WriteGptFieldGridFile2d::ref_time)
+      .def_readonly("err", &Bmad::WriteGptFieldGridFile2d::err)
+      .def("__len__", [](const Bmad::WriteGptFieldGridFile2d&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::WriteGptFieldGridFile1d& s, int i) -> py::object {
+          [](const Bmad::WriteGptFieldGridFile2d& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -800,18 +787,18 @@ void init_Bmad_routines_w(py::module& m) {
       Set True if, say a file could not be opened.
   )""");
   py::class_<
-      Bmad::WriteGptFieldGridFile2d,
-      std::unique_ptr<Bmad::WriteGptFieldGridFile2d>>(
+      Bmad::WriteGptFieldGridFile3d,
+      std::unique_ptr<Bmad::WriteGptFieldGridFile3d>>(
       m,
-      "WriteGptFieldGridFile2d",
-      "Fortran routine write_gpt_field_grid_file_2d return value")
-      .def_readonly("maxfield", &Bmad::WriteGptFieldGridFile2d::maxfield)
-      .def_readonly("ref_time", &Bmad::WriteGptFieldGridFile2d::ref_time)
-      .def_readonly("err", &Bmad::WriteGptFieldGridFile2d::err)
-      .def("__len__", [](const Bmad::WriteGptFieldGridFile2d&) { return 3; })
+      "WriteGptFieldGridFile3d",
+      "Fortran routine write_gpt_field_grid_file_3d return value")
+      .def_readonly("maxfield", &Bmad::WriteGptFieldGridFile3d::maxfield)
+      .def_readonly("ref_time", &Bmad::WriteGptFieldGridFile3d::ref_time)
+      .def_readonly("err", &Bmad::WriteGptFieldGridFile3d::err)
+      .def("__len__", [](const Bmad::WriteGptFieldGridFile3d&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::WriteGptFieldGridFile2d& s, int i) -> py::object {
+          [](const Bmad::WriteGptFieldGridFile3d& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -860,29 +847,17 @@ void init_Bmad_routines_w(py::module& m) {
   err : bool
       Set True if, say a file could not be opened.
   )""");
-  py::class_<
-      Bmad::WriteGptFieldGridFile3d,
-      std::unique_ptr<Bmad::WriteGptFieldGridFile3d>>(
-      m,
-      "WriteGptFieldGridFile3d",
-      "Fortran routine write_gpt_field_grid_file_3d return value")
-      .def_readonly("maxfield", &Bmad::WriteGptFieldGridFile3d::maxfield)
-      .def_readonly("ref_time", &Bmad::WriteGptFieldGridFile3d::ref_time)
-      .def_readonly("err", &Bmad::WriteGptFieldGridFile3d::err)
-      .def("__len__", [](const Bmad::WriteGptFieldGridFile3d&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::WriteGptFieldGridFile3d& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.maxfield);
-            if (i == 1)
-              return py::cast(s.ref_time);
-            if (i == 2)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+  py::class_<PyWriteLatLine, std::unique_ptr<PyWriteLatLine>>(
+      m, "WriteLatLine", "Fortran routine write_lat_line return value")
+      .def_readonly("line", &PyWriteLatLine::line)
+      .def("__len__", [](const PyWriteLatLine&) { return 1; })
+      .def("__getitem__", [](const PyWriteLatLine& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.line);
+        throw py::index_error();
+      });
   m.def(
       "write_lat_line",
       &python_write_lat_line,
@@ -915,17 +890,6 @@ void init_Bmad_routines_w(py::module& m) {
   scibmad : bool, optional
       Default False. If True then do not include "&" line continuation
   )""");
-  py::class_<PyWriteLatLine, std::unique_ptr<PyWriteLatLine>>(
-      m, "WriteLatLine", "Fortran routine write_lat_line return value")
-      .def_readonly("line", &PyWriteLatLine::line)
-      .def("__len__", [](const PyWriteLatLine&) { return 1; })
-      .def("__getitem__", [](const PyWriteLatLine& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.line);
-        throw py::index_error();
-      });
   m.def(
       "write_lattice_in_elegant_format",
       &Bmad::write_lattice_in_elegant_format,
@@ -1037,22 +1001,6 @@ void init_Bmad_routines_w(py::module& m) {
   err : bool
       Set True if, say a file could not be opened.
   )""");
-  m.def(
-      "write_lattice_in_sad_format",
-      &python_write_lattice_in_sad_format,
-      py::arg("out_file_name"),
-      py::arg("lat"),
-      py::arg("include_apertures") = py::none(),
-      py::arg("ix_branch") = py::none(),
-      py::arg("err") = py::none(),
-      R"""(Parameters
-  ----------
-  out_file_name : 
-  lat : 
-  include_apertures : 
-  ix_branch : 
-  err : 
-  )""");
   py::class_<
       PyWriteLatticeInSadFormat,
       std::unique_ptr<PyWriteLatticeInSadFormat>>(
@@ -1081,17 +1029,20 @@ void init_Bmad_routines_w(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "write_lattice_in_scibmad",
-      &Bmad::write_lattice_in_scibmad,
+      "write_lattice_in_sad_format",
+      &python_write_lattice_in_sad_format,
+      py::arg("out_file_name"),
       py::arg("lat"),
+      py::arg("include_apertures") = py::none(),
+      py::arg("ix_branch") = py::none(),
+      py::arg("err") = py::none(),
       R"""(Parameters
   ----------
-  scibmad_file : unknown
-      SciBmad lattice file name.
-  lat : LatStruct
-      Lattice
-  err_flag : bool
-      Error flag
+  out_file_name : 
+  lat : 
+  include_apertures : 
+  ix_branch : 
+  err : 
   )""");
   py::class_<
       Bmad::WriteLatticeInScibmad,
@@ -1114,18 +1065,17 @@ void init_Bmad_routines_w(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "write_line_element",
-      &python_write_line_element,
-      py::arg("line"),
-      py::arg("iu"),
-      py::arg("ele"),
+      "write_lattice_in_scibmad",
+      &Bmad::write_lattice_in_scibmad,
       py::arg("lat"),
       R"""(Parameters
   ----------
-  line : 
-  iu : 
-  ele : 
-  lat : 
+  scibmad_file : unknown
+      SciBmad lattice file name.
+  lat : LatStruct
+      Lattice
+  err_flag : bool
+      Error flag
   )""");
   py::class_<PyWriteLineElement, std::unique_ptr<PyWriteLineElement>>(
       m, "WriteLineElement", "Fortran routine write_line_element return value")
@@ -1141,6 +1091,40 @@ void init_Bmad_routines_w(py::module& m) {
           return py::cast(s.iu);
         throw py::index_error();
       });
+  m.def(
+      "write_line_element",
+      &python_write_line_element,
+      py::arg("line"),
+      py::arg("iu"),
+      py::arg("ele"),
+      py::arg("lat"),
+      R"""(Parameters
+  ----------
+  line : 
+  iu : 
+  ele : 
+  lat : 
+  )""");
+  py::class_<
+      Bmad::WriteOpalFieldGridFile,
+      std::unique_ptr<Bmad::WriteOpalFieldGridFile>>(
+      m,
+      "WriteOpalFieldGridFile",
+      "Fortran routine write_opal_field_grid_file return value")
+      .def_readonly("maxfield", &Bmad::WriteOpalFieldGridFile::maxfield)
+      .def_readonly("err", &Bmad::WriteOpalFieldGridFile::err)
+      .def("__len__", [](const Bmad::WriteOpalFieldGridFile&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::WriteOpalFieldGridFile& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.maxfield);
+            if (i == 1)
+              return py::cast(s.err);
+            throw py::index_error();
+          });
   m.def(
       "write_opal_field_grid_file",
       &Bmad::write_opal_field_grid_file,
@@ -1169,26 +1153,6 @@ void init_Bmad_routines_w(py::module& m) {
   err : bool
       Set True if, say a file could not be opened.
   )""");
-  py::class_<
-      Bmad::WriteOpalFieldGridFile,
-      std::unique_ptr<Bmad::WriteOpalFieldGridFile>>(
-      m,
-      "WriteOpalFieldGridFile",
-      "Fortran routine write_opal_field_grid_file return value")
-      .def_readonly("maxfield", &Bmad::WriteOpalFieldGridFile::maxfield)
-      .def_readonly("err", &Bmad::WriteOpalFieldGridFile::err)
-      .def("__len__", [](const Bmad::WriteOpalFieldGridFile&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::WriteOpalFieldGridFile& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.maxfield);
-            if (i == 1)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
   m.def(
       "write_opal_lattice_file",
       &Bmad::write_opal_lattice_file,

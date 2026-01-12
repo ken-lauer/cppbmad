@@ -1,22 +1,9 @@
 #include "pybmad/generated/SimUtils_routines_q.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyQueryString {
-  std::string query_str;
-  bool upcase;
-  std::string return_str;
-  int ix;
-  int ios;
-};
 PyQueryString python_query_string(
     std::string query_str,
     bool upcase,
@@ -27,10 +14,6 @@ PyQueryString python_query_string(
   auto py_result{PyQueryString{query_str, upcase, return_str, ix, ios}};
   return py_result;
 }
-struct PyQuote {
-  std::string str;
-  std::string q_str;
-};
 PyQuote python_quote(std::string str, std::string q_str) {
   SimUtils::quote(str, q_str);
   auto py_result{PyQuote{str, q_str}};
@@ -241,6 +224,24 @@ void init_SimUtils_routines_q(py::module& m) {
   vec_out : float
       Final vector.
   )""");
+  py::class_<
+      SimUtils::QuatToAxisAngle,
+      std::unique_ptr<SimUtils::QuatToAxisAngle>>(
+      m, "QuatToAxisAngle", "Fortran routine quat_to_axis_angle return value")
+      .def_readonly("axis", &SimUtils::QuatToAxisAngle::axis)
+      .def_readonly("angle", &SimUtils::QuatToAxisAngle::angle)
+      .def("__len__", [](const SimUtils::QuatToAxisAngle&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const SimUtils::QuatToAxisAngle& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.axis);
+            if (i == 1)
+              return py::cast(s.angle);
+            throw py::index_error();
+          });
   m.def(
       "quat_to_axis_angle",
       &SimUtils::quat_to_axis_angle,
@@ -262,24 +263,6 @@ void init_SimUtils_routines_q(py::module& m) {
   angle : float
       angle of rotation in range [0, pi].
   )""");
-  py::class_<
-      SimUtils::QuatToAxisAngle,
-      std::unique_ptr<SimUtils::QuatToAxisAngle>>(
-      m, "QuatToAxisAngle", "Fortran routine quat_to_axis_angle return value")
-      .def_readonly("axis", &SimUtils::QuatToAxisAngle::axis)
-      .def_readonly("angle", &SimUtils::QuatToAxisAngle::angle)
-      .def("__len__", [](const SimUtils::QuatToAxisAngle&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::QuatToAxisAngle& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.axis);
-            if (i == 1)
-              return py::cast(s.angle);
-            throw py::index_error();
-          });
   m.def(
       "quat_to_omega",
       &SimUtils::quat_to_omega,
@@ -316,22 +299,6 @@ void init_SimUtils_routines_q(py::module& m) {
   w_mat : float
       Rotation matrix
   )""");
-  m.def(
-      "query_string",
-      &python_query_string,
-      py::arg("query_str"),
-      py::arg("upcase"),
-      py::arg("return_str"),
-      py::arg("ix"),
-      py::arg("ios"),
-      R"""(Parameters
-  ----------
-  query_str : 
-  upcase : 
-  return_str : 
-  ix : 
-  ios : 
-  )""");
   py::class_<PyQueryString, std::unique_ptr<PyQueryString>>(
       m, "QueryString", "Fortran routine query_string return value")
       .def_readonly("query_str", &PyQueryString::query_str)
@@ -356,14 +323,20 @@ void init_SimUtils_routines_q(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "quote",
-      &python_quote,
-      py::arg("str"),
-      py::arg("q_str"),
+      "query_string",
+      &python_query_string,
+      py::arg("query_str"),
+      py::arg("upcase"),
+      py::arg("return_str"),
+      py::arg("ix"),
+      py::arg("ios"),
       R"""(Parameters
   ----------
-  str : 
-  q_str : 
+  query_str : 
+  upcase : 
+  return_str : 
+  ix : 
+  ios : 
   )""");
   py::class_<PyQuote, std::unique_ptr<PyQuote>>(
       m, "Quote", "Fortran routine quote return value")
@@ -379,4 +352,14 @@ void init_SimUtils_routines_q(py::module& m) {
           return py::cast(s.q_str);
         throw py::index_error();
       });
+  m.def(
+      "quote",
+      &python_quote,
+      py::arg("str"),
+      py::arg("q_str"),
+      R"""(Parameters
+  ----------
+  str : 
+  q_str : 
+  )""");
 }

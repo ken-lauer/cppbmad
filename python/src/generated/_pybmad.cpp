@@ -24,6 +24,10 @@ PYBIND11_MODULE(_pybmad, m) {
   // Generated definitions:
   m.doc() = "pybmad";
 
+  // Hand-written bindings
+  bind_standard_arrays(m);
+  init_common_structs(m);
+
   auto py_SplineStruct = py::class_<SplineProxy>(
       m, "SplineStruct", "Fortran struct: spline_struct");
   auto py_SpinPolarStruct = py::class_<SpinPolarProxy>(
@@ -597,9 +601,73 @@ PYBIND11_MODULE(_pybmad, m) {
   init_test_sub_struct(m, py_TestSubStruct);
   init_test_sub_sub_struct(m, py_TestSubSubStruct);
 
-  // Hand-written bindings
-  bind_standard_arrays(m);
-  init_common_structs(m);
+  // Routine initializers
+  init_Bmad_routines_a(m);
+  init_Bmad_routines_b(m);
+  init_Bmad_routines_c(m);
+  init_Bmad_routines_d(m);
+  init_Bmad_routines_e(m);
+  init_Bmad_routines_f(m);
+  init_Bmad_routines_g(m);
+  init_Bmad_routines_h(m);
+  init_Bmad_routines_i(m);
+  init_Bmad_routines_j(m);
+  init_Bmad_routines_k(m);
+  init_Bmad_routines_l(m);
+  init_Bmad_routines_m(m);
+  init_Bmad_routines_n(m);
+  init_Bmad_routines_o(m);
+  init_Bmad_routines_p(m);
+  init_Bmad_routines_q(m);
+  init_Bmad_routines_r(m);
+  init_Bmad_routines_s(m);
+  init_Bmad_routines_t(m);
+  init_Bmad_routines_u(m);
+  init_Bmad_routines_v(m);
+  init_Bmad_routines_w(m);
+  init_Bmad_routines_x(m);
+  init_Bmad_routines_y(m);
+  init_Bmad_routines_z(m);
+  init_CppBmadTest_routines_t(m);
+  init_SimUtils_routines_a(m);
+  init_SimUtils_routines_b(m);
+  init_SimUtils_routines_c(m);
+  init_SimUtils_routines_d(m);
+  init_SimUtils_routines_e(m);
+  init_SimUtils_routines_f(m);
+  init_SimUtils_routines_g(m);
+  init_SimUtils_routines_h(m);
+  init_SimUtils_routines_i(m);
+  init_SimUtils_routines_j(m);
+  init_SimUtils_routines_l(m);
+  init_SimUtils_routines_m(m);
+  init_SimUtils_routines_n(m);
+  init_SimUtils_routines_o(m);
+  init_SimUtils_routines_p(m);
+  init_SimUtils_routines_q(m);
+  init_SimUtils_routines_r(m);
+  init_SimUtils_routines_s(m);
+  init_SimUtils_routines_t(m);
+  init_SimUtils_routines_u(m);
+  init_SimUtils_routines_v(m);
+  init_SimUtils_routines_w(m);
+  init_SimUtils_routines_x(m);
+  init_Tao_routines_a(m);
+  init_Tao_routines_c(m);
+  init_Tao_routines_i(m);
+  init_Tao_routines_j(m);
+  init_Tao_routines_r(m);
+  init_Tao_routines_t(m);
+  init_Tao_routines_u(m);
+  init_bsim_routines_b(m);
+  init_bsim_routines_c(m);
+  init_bsim_routines_h(m);
+  init_bsim_routines_i(m);
+  init_bsim_routines_l(m);
+  init_bsim_routines_r(m);
+  init_bsim_routines_s(m);
+  init_bsim_routines_t(m);
+  init_bsim_routines_w(m);
 
   // Enums
   py::native_enum<EleAttribute>(m, "EleAttribute", "enum.IntEnum")
@@ -2185,72 +2253,4 @@ PYBIND11_MODULE(_pybmad, m) {
   m.attr("PRINT_PAGE_SHORT_LEN") = py::float_(Bmad::PRINT_PAGE_SHORT_LEN);
   m.attr("FILLED_ARROW_HEAD") = py::int_(Bmad::FILLED_ARROW_HEAD);
   m.attr("OUTLINE_ARROW_HEAD") = py::int_(Bmad::OUTLINE_ARROW_HEAD);
-
-  // Routine Group Initializers
-  init_Bmad_routines_a(m);
-  init_Bmad_routines_b(m);
-  init_Bmad_routines_c(m);
-  init_Bmad_routines_d(m);
-  init_Bmad_routines_e(m);
-  init_Bmad_routines_f(m);
-  init_Bmad_routines_g(m);
-  init_Bmad_routines_h(m);
-  init_Bmad_routines_i(m);
-  init_Bmad_routines_j(m);
-  init_Bmad_routines_k(m);
-  init_Bmad_routines_l(m);
-  init_Bmad_routines_m(m);
-  init_Bmad_routines_n(m);
-  init_Bmad_routines_o(m);
-  init_Bmad_routines_p(m);
-  init_Bmad_routines_q(m);
-  init_Bmad_routines_r(m);
-  init_Bmad_routines_s(m);
-  init_Bmad_routines_t(m);
-  init_Bmad_routines_u(m);
-  init_Bmad_routines_v(m);
-  init_Bmad_routines_w(m);
-  init_Bmad_routines_x(m);
-  init_Bmad_routines_y(m);
-  init_Bmad_routines_z(m);
-  init_CppBmadTest_routines_t(m);
-  init_SimUtils_routines_a(m);
-  init_SimUtils_routines_b(m);
-  init_SimUtils_routines_c(m);
-  init_SimUtils_routines_d(m);
-  init_SimUtils_routines_e(m);
-  init_SimUtils_routines_f(m);
-  init_SimUtils_routines_g(m);
-  init_SimUtils_routines_h(m);
-  init_SimUtils_routines_i(m);
-  init_SimUtils_routines_j(m);
-  init_SimUtils_routines_l(m);
-  init_SimUtils_routines_m(m);
-  init_SimUtils_routines_n(m);
-  init_SimUtils_routines_o(m);
-  init_SimUtils_routines_p(m);
-  init_SimUtils_routines_q(m);
-  init_SimUtils_routines_r(m);
-  init_SimUtils_routines_s(m);
-  init_SimUtils_routines_t(m);
-  init_SimUtils_routines_u(m);
-  init_SimUtils_routines_v(m);
-  init_SimUtils_routines_w(m);
-  init_SimUtils_routines_x(m);
-  init_Tao_routines_a(m);
-  init_Tao_routines_c(m);
-  init_Tao_routines_i(m);
-  init_Tao_routines_j(m);
-  init_Tao_routines_r(m);
-  init_Tao_routines_t(m);
-  init_Tao_routines_u(m);
-  init_bsim_routines_b(m);
-  init_bsim_routines_c(m);
-  init_bsim_routines_h(m);
-  init_bsim_routines_i(m);
-  init_bsim_routines_l(m);
-  init_bsim_routines_r(m);
-  init_bsim_routines_s(m);
-  init_bsim_routines_t(m);
-  init_bsim_routines_w(m);
 }

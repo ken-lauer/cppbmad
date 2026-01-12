@@ -1,20 +1,9 @@
 #include "pybmad/generated/SimUtils_routines_d.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyDateAndTimeStamp {
-  std::string string;
-  std::optional<bool> numeric_month;
-  std::optional<bool> include_zone;
-};
 PyDateAndTimeStamp python_date_and_time_stamp(
     std::string string,
     std::optional<bool> numeric_month = std::nullopt,
@@ -24,21 +13,11 @@ PyDateAndTimeStamp python_date_and_time_stamp(
   auto py_result{PyDateAndTimeStamp{string, numeric_month, include_zone}};
   return py_result;
 }
-struct PyDetab {
-  std::string str;
-};
 PyDetab python_detab(std::string str) {
   SimUtils::detab(str);
   auto py_result{PyDetab{str}};
   return py_result;
 }
-struct PyDisplaySizeAndResolution {
-  int ix_screen;
-  double x_size;
-  double y_size;
-  double x_res;
-  double y_res;
-};
 PyDisplaySizeAndResolution python_display_size_and_resolution(
     int ix_screen,
     double x_size,
@@ -51,21 +30,11 @@ PyDisplaySizeAndResolution python_display_size_and_resolution(
       PyDisplaySizeAndResolution{ix_screen, x_size, y_size, x_res, y_res}};
   return py_result;
 }
-struct PyDjBessel {
-  int m;
-  double arg;
-  double dj_bes;
-};
 PyDjBessel python_dj_bessel(int m, double arg, double dj_bes) {
   SimUtils::dj_bessel(m, arg, dj_bes);
   auto py_result{PyDjBessel{m, arg, dj_bes}};
   return py_result;
 }
-struct PyDjbHash {
-  std::string str;
-  std::optional<int> old_hash;
-  int hash;
-};
 PyDjbHash python_djb_hash(
     std::string str,
     std::optional<int> old_hash,
@@ -74,18 +43,11 @@ PyDjbHash python_djb_hash(
   auto py_result{PyDjbHash{str, old_hash, hash}};
   return py_result;
 }
-struct PyDjbStrHash {
-  std::string in_str;
-  std::string hash_str;
-};
 PyDjbStrHash python_djb_str_hash(std::string in_str, std::string hash_str) {
   SimUtils::djb_str_hash(in_str, hash_str);
   auto py_result{PyDjbStrHash{in_str, hash_str}};
   return py_result;
 }
-struct PyDowncaseString {
-  std::string string;
-};
 PyDowncaseString python_downcase_string(std::string string) {
   SimUtils::downcase_string(string);
   auto py_result{PyDowncaseString{string}};
@@ -93,18 +55,6 @@ PyDowncaseString python_downcase_string(std::string string) {
 }
 
 void init_SimUtils_routines_d(py::module& m) {
-  m.def(
-      "date_and_time_stamp",
-      &python_date_and_time_stamp,
-      py::arg("string"),
-      py::arg("numeric_month") = py::none(),
-      py::arg("include_zone") = py::none(),
-      R"""(Parameters
-  ----------
-  string : 
-  numeric_month : 
-  include_zone : 
-  )""");
   py::class_<PyDateAndTimeStamp, std::unique_ptr<PyDateAndTimeStamp>>(
       m, "DateAndTimeStamp", "Fortran routine date_and_time_stamp return value")
       .def_readonly("string", &PyDateAndTimeStamp::string)
@@ -123,20 +73,24 @@ void init_SimUtils_routines_d(py::module& m) {
         throw py::index_error();
       });
   m.def(
+      "date_and_time_stamp",
+      &python_date_and_time_stamp,
+      py::arg("string"),
+      py::arg("numeric_month") = py::none(),
+      py::arg("include_zone") = py::none(),
+      R"""(Parameters
+  ----------
+  string : 
+  numeric_month : 
+  include_zone : 
+  )""");
+  m.def(
       "destfixedwindowls",
       &SimUtils::destfixedwindowls,
       py::arg("id"),
       R"""(Parameters
   ----------
   id : 
-  )""");
-  m.def(
-      "detab",
-      &python_detab,
-      py::arg("str"),
-      R"""(Parameters
-  ----------
-  str : 
   )""");
   py::class_<PyDetab, std::unique_ptr<PyDetab>>(
       m, "Detab", "Fortran routine detab return value")
@@ -150,20 +104,12 @@ void init_SimUtils_routines_d(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "display_size_and_resolution",
-      &python_display_size_and_resolution,
-      py::arg("ix_screen"),
-      py::arg("x_size"),
-      py::arg("y_size"),
-      py::arg("x_res"),
-      py::arg("y_res"),
+      "detab",
+      &python_detab,
+      py::arg("str"),
       R"""(Parameters
   ----------
-  ix_screen : 
-  x_size : 
-  y_size : 
-  x_res : 
-  y_res : 
+  str : 
   )""");
   py::class_<
       PyDisplaySizeAndResolution,
@@ -195,16 +141,20 @@ void init_SimUtils_routines_d(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "dj_bessel",
-      &python_dj_bessel,
-      py::arg("m"),
-      py::arg("arg"),
-      py::arg("dj_bes"),
+      "display_size_and_resolution",
+      &python_display_size_and_resolution,
+      py::arg("ix_screen"),
+      py::arg("x_size"),
+      py::arg("y_size"),
+      py::arg("x_res"),
+      py::arg("y_res"),
       R"""(Parameters
   ----------
-  m : 
-  arg : 
-  dj_bes : 
+  ix_screen : 
+  x_size : 
+  y_size : 
+  x_res : 
+  y_res : 
   )""");
   py::class_<PyDjBessel, std::unique_ptr<PyDjBessel>>(
       m, "DjBessel", "Fortran routine dj_bessel return value")
@@ -224,16 +174,16 @@ void init_SimUtils_routines_d(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "djb_hash",
-      &python_djb_hash,
-      py::arg("str"),
-      py::arg("old_hash") = py::none(),
-      py::arg("hash"),
+      "dj_bessel",
+      &python_dj_bessel,
+      py::arg("m"),
+      py::arg("arg"),
+      py::arg("dj_bes"),
       R"""(Parameters
   ----------
-  str : 
-  old_hash : 
-  hash : 
+  m : 
+  arg : 
+  dj_bes : 
   )""");
   py::class_<PyDjbHash, std::unique_ptr<PyDjbHash>>(
       m, "DjbHash", "Fortran routine djb_hash return value")
@@ -253,14 +203,16 @@ void init_SimUtils_routines_d(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "djb_str_hash",
-      &python_djb_str_hash,
-      py::arg("in_str"),
-      py::arg("hash_str"),
+      "djb_hash",
+      &python_djb_hash,
+      py::arg("str"),
+      py::arg("old_hash") = py::none(),
+      py::arg("hash"),
       R"""(Parameters
   ----------
-  in_str : 
-  hash_str : 
+  str : 
+  old_hash : 
+  hash : 
   )""");
   py::class_<PyDjbStrHash, std::unique_ptr<PyDjbStrHash>>(
       m, "DjbStrHash", "Fortran routine djb_str_hash return value")
@@ -277,12 +229,14 @@ void init_SimUtils_routines_d(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "downcase_string",
-      &python_downcase_string,
-      py::arg("string"),
+      "djb_str_hash",
+      &python_djb_str_hash,
+      py::arg("in_str"),
+      py::arg("hash_str"),
       R"""(Parameters
   ----------
-  string : 
+  in_str : 
+  hash_str : 
   )""");
   py::class_<PyDowncaseString, std::unique_ptr<PyDowncaseString>>(
       m, "DowncaseString", "Fortran routine downcase_string return value")
@@ -295,4 +249,12 @@ void init_SimUtils_routines_d(py::module& m) {
           return py::cast(s.string);
         throw py::index_error();
       });
+  m.def(
+      "downcase_string",
+      &python_downcase_string,
+      py::arg("string"),
+      R"""(Parameters
+  ----------
+  string : 
+  )""");
 }

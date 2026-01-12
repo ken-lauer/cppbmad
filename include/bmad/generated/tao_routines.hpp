@@ -5,7 +5,7 @@
 #include "bmad/convert.h"
 #include "bmad/generated/enums.hpp"
 #include "bmad/generated/proxy.hpp"
-#include "bmad/types.h"
+#include "bmad/types.hpp"
 
 using namespace Bmad;
 

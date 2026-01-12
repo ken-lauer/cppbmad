@@ -1,19 +1,9 @@
 #include "pybmad/generated/SimUtils_routines_o.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyOrdinalStr {
-  int n;
-  std::string str;
-};
 PyOrdinalStr python_ordinal_str(int n, std::string str) {
   SimUtils::ordinal_str(n, str);
   auto py_result{PyOrdinalStr{n, str}};
@@ -59,16 +49,6 @@ void init_SimUtils_routines_o(py::module& m) {
   pmd_name : unknown
       Name of the species. Will return 'INVALID!' (= invalid_name) if index is not valid.
   )""");
-  m.def(
-      "ordinal_str",
-      &python_ordinal_str,
-      py::arg("n"),
-      py::arg("str"),
-      R"""(Parameters
-  ----------
-  n : 
-  str : 
-  )""");
   py::class_<PyOrdinalStr, std::unique_ptr<PyOrdinalStr>>(
       m, "OrdinalStr", "Fortran routine ordinal_str return value")
       .def_readonly("n", &PyOrdinalStr::n)
@@ -83,4 +63,14 @@ void init_SimUtils_routines_o(py::module& m) {
           return py::cast(s.str);
         throw py::index_error();
       });
+  m.def(
+      "ordinal_str",
+      &python_ordinal_str,
+      py::arg("n"),
+      py::arg("str"),
+      R"""(Parameters
+  ----------
+  n : 
+  str : 
+  )""");
 }

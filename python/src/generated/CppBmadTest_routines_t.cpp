@@ -1,26 +1,9 @@
 #include "pybmad/generated/CppBmadTest_routines_t.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyTestCharacterScalar : public CppBmadTest::TestCharacterScalar {
-  std::string val_inout;
-  std::optional<std::string> val_inout_opt;
-  PyTestCharacterScalar(
-      CppBmadTest::TestCharacterScalar _base,
-      std::string val_inout,
-      std::optional<std::string> val_inout_opt)
-      : CppBmadTest::TestCharacterScalar(std::move(_base)),
-        val_inout(val_inout),
-        val_inout_opt(val_inout_opt) {}
-};
 PyTestCharacterScalar python_test_character_scalar(
     std::string val_in,
     std::string val_inout,
@@ -31,17 +14,6 @@ PyTestCharacterScalar python_test_character_scalar(
   auto py_result{PyTestCharacterScalar{_result, val_inout, val_inout_opt}};
   return py_result;
 }
-struct PyTestComplexScalar : public CppBmadTest::TestComplexScalar {
-  std::complex<double> val_inout;
-  std::optional<std::complex<double>> val_inout_opt;
-  PyTestComplexScalar(
-      CppBmadTest::TestComplexScalar _base,
-      std::complex<double> val_inout,
-      std::optional<std::complex<double>> val_inout_opt)
-      : CppBmadTest::TestComplexScalar(std::move(_base)),
-        val_inout(val_inout),
-        val_inout_opt(val_inout_opt) {}
-};
 PyTestComplexScalar python_test_complex_scalar(
     std::complex<double> val_in,
     std::complex<double> val_inout,
@@ -52,17 +24,6 @@ PyTestComplexScalar python_test_complex_scalar(
   auto py_result{PyTestComplexScalar{_result, val_inout, val_inout_opt}};
   return py_result;
 }
-struct PyTestInteger8Scalar : public CppBmadTest::TestInteger8Scalar {
-  int64_t val_inout;
-  std::optional<int64_t> val_inout_opt;
-  PyTestInteger8Scalar(
-      CppBmadTest::TestInteger8Scalar _base,
-      int64_t val_inout,
-      std::optional<int64_t> val_inout_opt)
-      : CppBmadTest::TestInteger8Scalar(std::move(_base)),
-        val_inout(val_inout),
-        val_inout_opt(val_inout_opt) {}
-};
 PyTestInteger8Scalar python_test_integer8_scalar(
     int64_t val_in,
     int64_t val_inout,
@@ -73,17 +34,6 @@ PyTestInteger8Scalar python_test_integer8_scalar(
   auto py_result{PyTestInteger8Scalar{_result, val_inout, val_inout_opt}};
   return py_result;
 }
-struct PyTestIntegerScalar : public CppBmadTest::TestIntegerScalar {
-  int val_inout;
-  std::optional<int> val_inout_opt;
-  PyTestIntegerScalar(
-      CppBmadTest::TestIntegerScalar _base,
-      int val_inout,
-      std::optional<int> val_inout_opt)
-      : CppBmadTest::TestIntegerScalar(std::move(_base)),
-        val_inout(val_inout),
-        val_inout_opt(val_inout_opt) {}
-};
 PyTestIntegerScalar python_test_integer_scalar(
     int val_in,
     int val_inout,
@@ -94,17 +44,6 @@ PyTestIntegerScalar python_test_integer_scalar(
   auto py_result{PyTestIntegerScalar{_result, val_inout, val_inout_opt}};
   return py_result;
 }
-struct PyTestLogicalScalar : public CppBmadTest::TestLogicalScalar {
-  bool val_inout;
-  std::optional<bool> val_inout_opt;
-  PyTestLogicalScalar(
-      CppBmadTest::TestLogicalScalar _base,
-      bool val_inout,
-      std::optional<bool> val_inout_opt)
-      : CppBmadTest::TestLogicalScalar(std::move(_base)),
-        val_inout(val_inout),
-        val_inout_opt(val_inout_opt) {}
-};
 PyTestLogicalScalar python_test_logical_scalar(
     bool val_in,
     bool val_inout,
@@ -115,17 +54,6 @@ PyTestLogicalScalar python_test_logical_scalar(
   auto py_result{PyTestLogicalScalar{_result, val_inout, val_inout_opt}};
   return py_result;
 }
-struct PyTestReal16Scalar : public CppBmadTest::TestReal16Scalar {
-  long double val_inout;
-  std::optional<long double> val_inout_opt;
-  PyTestReal16Scalar(
-      CppBmadTest::TestReal16Scalar _base,
-      long double val_inout,
-      std::optional<long double> val_inout_opt)
-      : CppBmadTest::TestReal16Scalar(std::move(_base)),
-        val_inout(val_inout),
-        val_inout_opt(val_inout_opt) {}
-};
 PyTestReal16Scalar python_test_real16_scalar(
     long double val_in,
     long double val_inout,
@@ -136,17 +64,6 @@ PyTestReal16Scalar python_test_real16_scalar(
   auto py_result{PyTestReal16Scalar{_result, val_inout, val_inout_opt}};
   return py_result;
 }
-struct PyTestRealScalar : public CppBmadTest::TestRealScalar {
-  double val_inout;
-  std::optional<double> val_inout_opt;
-  PyTestRealScalar(
-      CppBmadTest::TestRealScalar _base,
-      double val_inout,
-      std::optional<double> val_inout_opt)
-      : CppBmadTest::TestRealScalar(std::move(_base)),
-        val_inout(val_inout),
-        val_inout_opt(val_inout_opt) {}
-};
 PyTestRealScalar python_test_real_scalar(
     double val_in,
     double val_inout,
@@ -159,22 +76,6 @@ PyTestRealScalar python_test_real_scalar(
 }
 
 void init_CppBmadTest_routines_t(py::module& m) {
-  m.def(
-      "test_bunch_struct_array",
-      &CppBmadTest::test_bunch_struct_array,
-      py::arg("arr_in"),
-      py::arg("arr_inout"),
-      py::arg("arr_in_opt") = py::none(),
-      py::arg("arr_inout_opt") = py::none(),
-      R"""(Parameters
-  ----------
-  arr_in : 
-  arr_inout : 
-  arr_out : 
-  opt_status : 
-  arr_in_opt : 
-  arr_inout_opt : 
-  )""");
   py::class_<
       CppBmadTest::TestBunchStructArray,
       std::unique_ptr<CppBmadTest::TestBunchStructArray>>(
@@ -198,20 +99,20 @@ void init_CppBmadTest_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "test_bunch_struct_scalar",
-      &CppBmadTest::test_bunch_struct_scalar,
-      py::arg("val_in"),
-      py::arg("val_inout"),
-      py::arg("val_in_opt") = py::none(),
-      py::arg("val_inout_opt") = py::none(),
+      "test_bunch_struct_array",
+      &CppBmadTest::test_bunch_struct_array,
+      py::arg("arr_in"),
+      py::arg("arr_inout"),
+      py::arg("arr_in_opt") = py::none(),
+      py::arg("arr_inout_opt") = py::none(),
       R"""(Parameters
   ----------
-  val_in : 
-  val_inout : 
-  val_out : 
+  arr_in : 
+  arr_inout : 
+  arr_out : 
   opt_status : 
-  val_in_opt : 
-  val_inout_opt : 
+  arr_in_opt : 
+  arr_inout_opt : 
   )""");
   py::class_<
       CppBmadTest::TestBunchStructScalar,
@@ -237,8 +138,8 @@ void init_CppBmadTest_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "test_character_scalar",
-      &python_test_character_scalar,
+      "test_bunch_struct_scalar",
+      &CppBmadTest::test_bunch_struct_scalar,
       py::arg("val_in"),
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
@@ -277,20 +178,20 @@ void init_CppBmadTest_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "test_complex_array",
-      &CppBmadTest::test_complex_array,
-      py::arg("arr_in"),
-      py::arg("arr_inout"),
-      py::arg("arr_in_opt") = py::none(),
-      py::arg("arr_inout_opt") = py::none(),
+      "test_character_scalar",
+      &python_test_character_scalar,
+      py::arg("val_in"),
+      py::arg("val_inout"),
+      py::arg("val_in_opt") = py::none(),
+      py::arg("val_inout_opt") = py::none(),
       R"""(Parameters
   ----------
-  arr_in : 
-  arr_inout : 
-  arr_out : 
+  val_in : 
+  val_inout : 
+  val_out : 
   opt_status : 
-  arr_in_opt : 
-  arr_inout_opt : 
+  val_in_opt : 
+  val_inout_opt : 
   )""");
   py::class_<
       CppBmadTest::TestComplexArray,
@@ -311,20 +212,20 @@ void init_CppBmadTest_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "test_complex_scalar",
-      &python_test_complex_scalar,
-      py::arg("val_in"),
-      py::arg("val_inout"),
-      py::arg("val_in_opt") = py::none(),
-      py::arg("val_inout_opt") = py::none(),
+      "test_complex_array",
+      &CppBmadTest::test_complex_array,
+      py::arg("arr_in"),
+      py::arg("arr_inout"),
+      py::arg("arr_in_opt") = py::none(),
+      py::arg("arr_inout_opt") = py::none(),
       R"""(Parameters
   ----------
-  val_in : 
-  val_inout : 
-  val_out : 
+  arr_in : 
+  arr_inout : 
+  arr_out : 
   opt_status : 
-  val_in_opt : 
-  val_inout_opt : 
+  arr_in_opt : 
+  arr_inout_opt : 
   )""");
   py::class_<PyTestComplexScalar, std::unique_ptr<PyTestComplexScalar>>(
       m,
@@ -350,20 +251,20 @@ void init_CppBmadTest_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "test_integer8_array",
-      &CppBmadTest::test_integer8_array,
-      py::arg("arr_in"),
-      py::arg("arr_inout"),
-      py::arg("arr_in_opt") = py::none(),
-      py::arg("arr_inout_opt") = py::none(),
+      "test_complex_scalar",
+      &python_test_complex_scalar,
+      py::arg("val_in"),
+      py::arg("val_inout"),
+      py::arg("val_in_opt") = py::none(),
+      py::arg("val_inout_opt") = py::none(),
       R"""(Parameters
   ----------
-  arr_in : 
-  arr_inout : 
-  arr_out : 
+  val_in : 
+  val_inout : 
+  val_out : 
   opt_status : 
-  arr_in_opt : 
-  arr_inout_opt : 
+  val_in_opt : 
+  val_inout_opt : 
   )""");
   py::class_<
       CppBmadTest::TestInteger8Array,
@@ -386,20 +287,20 @@ void init_CppBmadTest_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "test_integer8_scalar",
-      &python_test_integer8_scalar,
-      py::arg("val_in"),
-      py::arg("val_inout"),
-      py::arg("val_in_opt") = py::none(),
-      py::arg("val_inout_opt") = py::none(),
+      "test_integer8_array",
+      &CppBmadTest::test_integer8_array,
+      py::arg("arr_in"),
+      py::arg("arr_inout"),
+      py::arg("arr_in_opt") = py::none(),
+      py::arg("arr_inout_opt") = py::none(),
       R"""(Parameters
   ----------
-  val_in : 
-  val_inout : 
-  val_out : 
+  arr_in : 
+  arr_inout : 
+  arr_out : 
   opt_status : 
-  val_in_opt : 
-  val_inout_opt : 
+  arr_in_opt : 
+  arr_inout_opt : 
   )""");
   py::class_<PyTestInteger8Scalar, std::unique_ptr<PyTestInteger8Scalar>>(
       m,
@@ -426,20 +327,20 @@ void init_CppBmadTest_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "test_integer_array",
-      &CppBmadTest::test_integer_array,
-      py::arg("arr_in"),
-      py::arg("arr_inout"),
-      py::arg("arr_in_opt") = py::none(),
-      py::arg("arr_inout_opt") = py::none(),
+      "test_integer8_scalar",
+      &python_test_integer8_scalar,
+      py::arg("val_in"),
+      py::arg("val_inout"),
+      py::arg("val_in_opt") = py::none(),
+      py::arg("val_inout_opt") = py::none(),
       R"""(Parameters
   ----------
-  arr_in : 
-  arr_inout : 
-  arr_out : 
+  val_in : 
+  val_inout : 
+  val_out : 
   opt_status : 
-  arr_in_opt : 
-  arr_inout_opt : 
+  val_in_opt : 
+  val_inout_opt : 
   )""");
   py::class_<
       CppBmadTest::TestIntegerArray,
@@ -460,20 +361,20 @@ void init_CppBmadTest_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "test_integer_scalar",
-      &python_test_integer_scalar,
-      py::arg("val_in"),
-      py::arg("val_inout"),
-      py::arg("val_in_opt") = py::none(),
-      py::arg("val_inout_opt") = py::none(),
+      "test_integer_array",
+      &CppBmadTest::test_integer_array,
+      py::arg("arr_in"),
+      py::arg("arr_inout"),
+      py::arg("arr_in_opt") = py::none(),
+      py::arg("arr_inout_opt") = py::none(),
       R"""(Parameters
   ----------
-  val_in : 
-  val_inout : 
-  val_out : 
+  arr_in : 
+  arr_inout : 
+  arr_out : 
   opt_status : 
-  val_in_opt : 
-  val_inout_opt : 
+  arr_in_opt : 
+  arr_inout_opt : 
   )""");
   py::class_<PyTestIntegerScalar, std::unique_ptr<PyTestIntegerScalar>>(
       m,
@@ -499,20 +400,20 @@ void init_CppBmadTest_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "test_logical_array",
-      &CppBmadTest::test_logical_array,
-      py::arg("arr_in"),
-      py::arg("arr_inout"),
-      py::arg("arr_in_opt") = py::none(),
-      py::arg("arr_inout_opt") = py::none(),
+      "test_integer_scalar",
+      &python_test_integer_scalar,
+      py::arg("val_in"),
+      py::arg("val_inout"),
+      py::arg("val_in_opt") = py::none(),
+      py::arg("val_inout_opt") = py::none(),
       R"""(Parameters
   ----------
-  arr_in : 
-  arr_inout : 
-  arr_out : 
+  val_in : 
+  val_inout : 
+  val_out : 
   opt_status : 
-  arr_in_opt : 
-  arr_inout_opt : 
+  val_in_opt : 
+  val_inout_opt : 
   )""");
   py::class_<
       CppBmadTest::TestLogicalArray,
@@ -533,20 +434,20 @@ void init_CppBmadTest_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "test_logical_scalar",
-      &python_test_logical_scalar,
-      py::arg("val_in"),
-      py::arg("val_inout"),
-      py::arg("val_in_opt") = py::none(),
-      py::arg("val_inout_opt") = py::none(),
+      "test_logical_array",
+      &CppBmadTest::test_logical_array,
+      py::arg("arr_in"),
+      py::arg("arr_inout"),
+      py::arg("arr_in_opt") = py::none(),
+      py::arg("arr_inout_opt") = py::none(),
       R"""(Parameters
   ----------
-  val_in : 
-  val_inout : 
-  val_out : 
+  arr_in : 
+  arr_inout : 
+  arr_out : 
   opt_status : 
-  val_in_opt : 
-  val_inout_opt : 
+  arr_in_opt : 
+  arr_inout_opt : 
   )""");
   py::class_<PyTestLogicalScalar, std::unique_ptr<PyTestLogicalScalar>>(
       m,
@@ -572,20 +473,20 @@ void init_CppBmadTest_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "test_real16_array",
-      &CppBmadTest::test_real16_array,
-      py::arg("arr_in"),
-      py::arg("arr_inout"),
-      py::arg("arr_in_opt") = py::none(),
-      py::arg("arr_inout_opt") = py::none(),
+      "test_logical_scalar",
+      &python_test_logical_scalar,
+      py::arg("val_in"),
+      py::arg("val_inout"),
+      py::arg("val_in_opt") = py::none(),
+      py::arg("val_inout_opt") = py::none(),
       R"""(Parameters
   ----------
-  arr_in : 
-  arr_inout : 
-  arr_out : 
+  val_in : 
+  val_inout : 
+  val_out : 
   opt_status : 
-  arr_in_opt : 
-  arr_inout_opt : 
+  val_in_opt : 
+  val_inout_opt : 
   )""");
   py::class_<
       CppBmadTest::TestReal16Array,
@@ -606,20 +507,20 @@ void init_CppBmadTest_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "test_real16_scalar",
-      &python_test_real16_scalar,
-      py::arg("val_in"),
-      py::arg("val_inout"),
-      py::arg("val_in_opt") = py::none(),
-      py::arg("val_inout_opt") = py::none(),
+      "test_real16_array",
+      &CppBmadTest::test_real16_array,
+      py::arg("arr_in"),
+      py::arg("arr_inout"),
+      py::arg("arr_in_opt") = py::none(),
+      py::arg("arr_inout_opt") = py::none(),
       R"""(Parameters
   ----------
-  val_in : 
-  val_inout : 
-  val_out : 
+  arr_in : 
+  arr_inout : 
+  arr_out : 
   opt_status : 
-  val_in_opt : 
-  val_inout_opt : 
+  arr_in_opt : 
+  arr_inout_opt : 
   )""");
   py::class_<PyTestReal16Scalar, std::unique_ptr<PyTestReal16Scalar>>(
       m, "TestReal16Scalar", "Fortran routine test_real16_scalar return value")
@@ -642,20 +543,20 @@ void init_CppBmadTest_routines_t(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "test_real_array",
-      &CppBmadTest::test_real_array,
-      py::arg("arr_in"),
-      py::arg("arr_inout"),
-      py::arg("arr_in_opt") = py::none(),
-      py::arg("arr_inout_opt") = py::none(),
+      "test_real16_scalar",
+      &python_test_real16_scalar,
+      py::arg("val_in"),
+      py::arg("val_inout"),
+      py::arg("val_in_opt") = py::none(),
+      py::arg("val_inout_opt") = py::none(),
       R"""(Parameters
   ----------
-  arr_in : 
-  arr_inout : 
-  arr_out : 
+  val_in : 
+  val_inout : 
+  val_out : 
   opt_status : 
-  arr_in_opt : 
-  arr_inout_opt : 
+  val_in_opt : 
+  val_inout_opt : 
   )""");
   py::class_<
       CppBmadTest::TestRealArray,
@@ -676,20 +577,20 @@ void init_CppBmadTest_routines_t(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "test_real_scalar",
-      &python_test_real_scalar,
-      py::arg("val_in"),
-      py::arg("val_inout"),
-      py::arg("val_in_opt") = py::none(),
-      py::arg("val_inout_opt") = py::none(),
+      "test_real_array",
+      &CppBmadTest::test_real_array,
+      py::arg("arr_in"),
+      py::arg("arr_inout"),
+      py::arg("arr_in_opt") = py::none(),
+      py::arg("arr_inout_opt") = py::none(),
       R"""(Parameters
   ----------
-  val_in : 
-  val_inout : 
-  val_out : 
+  arr_in : 
+  arr_inout : 
+  arr_out : 
   opt_status : 
-  val_in_opt : 
-  val_inout_opt : 
+  arr_in_opt : 
+  arr_inout_opt : 
   )""");
   py::class_<PyTestRealScalar, std::unique_ptr<PyTestRealScalar>>(
       m, "TestRealScalar", "Fortran routine test_real_scalar return value")
@@ -711,4 +612,20 @@ void init_CppBmadTest_routines_t(py::module& m) {
           return py::cast(s.val_inout_opt);
         throw py::index_error();
       });
+  m.def(
+      "test_real_scalar",
+      &python_test_real_scalar,
+      py::arg("val_in"),
+      py::arg("val_inout"),
+      py::arg("val_in_opt") = py::none(),
+      py::arg("val_inout_opt") = py::none(),
+      R"""(Parameters
+  ----------
+  val_in : 
+  val_inout : 
+  val_out : 
+  opt_status : 
+  val_in_opt : 
+  val_inout_opt : 
+  )""");
 }

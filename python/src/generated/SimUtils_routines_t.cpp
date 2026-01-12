@@ -1,20 +1,9 @@
 #include "pybmad/generated/SimUtils_routines_t.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyToStr {
-  double num;
-  std::optional<int> max_signif;
-  std::string string;
-};
 PyToStr python_to_str(
     double num,
     std::optional<int> max_signif,
@@ -23,9 +12,6 @@ PyToStr python_to_str(
   auto py_result{PyToStr{num, max_signif, string}};
   return py_result;
 }
-struct PyTypeThisFile {
-  std::string filename;
-};
 PyTypeThisFile python_type_this_file(std::string filename) {
   SimUtils::type_this_file(filename);
   auto py_result{PyTypeThisFile{filename}};
@@ -33,19 +19,6 @@ PyTypeThisFile python_type_this_file(std::string filename) {
 }
 
 void init_SimUtils_routines_t(py::module& m) {
-  m.def(
-      "to_str",
-      &python_to_str,
-      py::arg("num"),
-      py::arg("max_signif") = py::none(),
-      py::arg("string"),
-      R"""(no longer exists
-  subroutine test_tune_tracker_lock (tracker_locked)
-    implicit none
-    logical tracker_locked(2)
-  end subroutine
-
-  )""");
   py::class_<PyToStr, std::unique_ptr<PyToStr>>(
       m, "ToStr", "Fortran routine to_str return value")
       .def_readonly("num", &PyToStr::num)
@@ -63,6 +36,45 @@ void init_SimUtils_routines_t(py::module& m) {
           return py::cast(s.string);
         throw py::index_error();
       });
+  m.def(
+      "to_str",
+      &python_to_str,
+      py::arg("num"),
+      py::arg("max_signif") = py::none(),
+      py::arg("string"),
+      R"""(no longer exists
+  subroutine test_tune_tracker_lock (tracker_locked)
+    implicit none
+    logical tracker_locked(2)
+  end subroutine
+
+  )""");
+  py::class_<
+      SimUtils::TricubicCmplxEval,
+      std::unique_ptr<SimUtils::TricubicCmplxEval>>(
+      m,
+      "TricubicCmplxEval",
+      "Fortran routine tricubic_cmplx_eval return value")
+      .def_readonly("df_dx", &SimUtils::TricubicCmplxEval::df_dx)
+      .def_readonly("df_dy", &SimUtils::TricubicCmplxEval::df_dy)
+      .def_readonly("df_dz", &SimUtils::TricubicCmplxEval::df_dz)
+      .def_readonly("f_val", &SimUtils::TricubicCmplxEval::f_val)
+      .def("__len__", [](const SimUtils::TricubicCmplxEval&) { return 4; })
+      .def(
+          "__getitem__",
+          [](const SimUtils::TricubicCmplxEval& s, int i) -> py::object {
+            if (i < 0)
+              i += 4;
+            if (i == 0)
+              return py::cast(s.df_dx);
+            if (i == 1)
+              return py::cast(s.df_dy);
+            if (i == 2)
+              return py::cast(s.df_dz);
+            if (i == 3)
+              return py::cast(s.f_val);
+            throw py::index_error();
+          });
   m.def(
       "tricubic_cmplx_eval",
       &SimUtils::tricubic_cmplx_eval,
@@ -101,40 +113,6 @@ void init_SimUtils_routines_t(py::module& m) {
   df_dz : complex
       Normalized first derivative: True df/dz = df_dz * dz
   )""");
-  py::class_<
-      SimUtils::TricubicCmplxEval,
-      std::unique_ptr<SimUtils::TricubicCmplxEval>>(
-      m,
-      "TricubicCmplxEval",
-      "Fortran routine tricubic_cmplx_eval return value")
-      .def_readonly("df_dx", &SimUtils::TricubicCmplxEval::df_dx)
-      .def_readonly("df_dy", &SimUtils::TricubicCmplxEval::df_dy)
-      .def_readonly("df_dz", &SimUtils::TricubicCmplxEval::df_dz)
-      .def_readonly("f_val", &SimUtils::TricubicCmplxEval::f_val)
-      .def("__len__", [](const SimUtils::TricubicCmplxEval&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::TricubicCmplxEval& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.df_dx);
-            if (i == 1)
-              return py::cast(s.df_dy);
-            if (i == 2)
-              return py::cast(s.df_dz);
-            if (i == 3)
-              return py::cast(s.f_val);
-            throw py::index_error();
-          });
-  m.def(
-      "type_this_file",
-      &python_type_this_file,
-      py::arg("filename"),
-      R"""(Parameters
-  ----------
-  filename : 
-  )""");
   py::class_<PyTypeThisFile, std::unique_ptr<PyTypeThisFile>>(
       m, "TypeThisFile", "Fortran routine type_this_file return value")
       .def_readonly("filename", &PyTypeThisFile::filename)
@@ -146,4 +124,12 @@ void init_SimUtils_routines_t(py::module& m) {
           return py::cast(s.filename);
         throw py::index_error();
       });
+  m.def(
+      "type_this_file",
+      &python_type_this_file,
+      py::arg("filename"),
+      R"""(Parameters
+  ----------
+  filename : 
+  )""");
 }

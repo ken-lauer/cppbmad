@@ -1,19 +1,9 @@
 #include "pybmad/generated/bsim_routines_s.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PySetTune3d {
-  std::optional<std::string> mask;
-  bool everything_ok;
-};
 PySetTune3d python_set_tune_3d(
     BranchProxy& branch,
     FixedArray1D<Real, 3> target_tunes,
@@ -37,6 +27,20 @@ PySetTune3d python_set_tune_3d(
 }
 
 void init_bsim_routines_s(py::module& m) {
+  py::class_<PySetTune3d, std::unique_ptr<PySetTune3d>>(
+      m, "SetTune3d", "Fortran routine set_tune_3d return value")
+      .def_readonly("mask", &PySetTune3d::mask)
+      .def_readonly("everything_ok", &PySetTune3d::everything_ok)
+      .def("__len__", [](const PySetTune3d&) { return 2; })
+      .def("__getitem__", [](const PySetTune3d& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.mask);
+        if (i == 1)
+          return py::cast(s.everything_ok);
+        throw py::index_error();
+      });
   m.def(
       "set_tune_3d",
       &python_set_tune_3d,
@@ -67,18 +71,4 @@ void init_bsim_routines_s(py::module& m) {
       Print error message if there is a problem? Default is True.
   everything_ok : 
   )""");
-  py::class_<PySetTune3d, std::unique_ptr<PySetTune3d>>(
-      m, "SetTune3d", "Fortran routine set_tune_3d return value")
-      .def_readonly("mask", &PySetTune3d::mask)
-      .def_readonly("everything_ok", &PySetTune3d::everything_ok)
-      .def("__len__", [](const PySetTune3d&) { return 2; })
-      .def("__getitem__", [](const PySetTune3d& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.mask);
-        if (i == 1)
-          return py::cast(s.everything_ok);
-        throw py::index_error();
-      });
 }

@@ -1,20 +1,9 @@
 #include "pybmad/generated/Bmad_routines_p.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyParseCartesianMap {
-  std::string delim;
-  bool delim_found;
-  bool err_flag;
-};
 PyParseCartesianMap python_parse_cartesian_map(
     CartesianMapProxy& ct_map,
     EleProxy& ele,
@@ -26,11 +15,6 @@ PyParseCartesianMap python_parse_cartesian_map(
   auto py_result{PyParseCartesianMap{delim, delim_found, err_flag}};
   return py_result;
 }
-struct PyParseCylindricalMap {
-  std::string delim;
-  bool delim_found;
-  bool err_flag;
-};
 PyParseCylindricalMap python_parse_cylindrical_map(
     CylindricalMapProxy& cl_map,
     EleProxy& ele,
@@ -42,11 +26,6 @@ PyParseCylindricalMap python_parse_cylindrical_map(
   auto py_result{PyParseCylindricalMap{delim, delim_found, err_flag}};
   return py_result;
 }
-struct PyParseGenGradMap {
-  std::string delim;
-  bool delim_found;
-  bool err_flag;
-};
 PyParseGenGradMap python_parse_gen_grad_map(
     GenGradMapProxy& gg_map,
     EleProxy& ele,
@@ -58,11 +37,6 @@ PyParseGenGradMap python_parse_gen_grad_map(
   auto py_result{PyParseGenGradMap{delim, delim_found, err_flag}};
   return py_result;
 }
-struct PyParseGridField {
-  std::string delim;
-  bool delim_found;
-  bool err_flag;
-};
 PyParseGridField python_parse_grid_field(
     GridFieldProxy& g_field,
     EleProxy& ele,
@@ -74,17 +48,6 @@ PyParseGridField python_parse_grid_field(
   auto py_result{PyParseGridField{delim, delim_found, err_flag}};
   return py_result;
 }
-struct PyParseIntegerList {
-  std::string err_str;
-  bool exact_size;
-  std::string delim;
-  bool delim_found;
-  std::optional<std::string> open_delim;
-  std::optional<std::string> separator;
-  std::optional<std::string> close_delim;
-  std::optional<int> default_value;
-  bool is_ok;
-};
 PyParseIntegerList python_parse_integer_list(
     std::string err_str,
     LatProxy& lat,
@@ -121,26 +84,6 @@ PyParseIntegerList python_parse_integer_list(
       is_ok}};
   return py_result;
 }
-struct PyParseIntegerList2 : public Bmad::ParseIntegerList2 {
-  std::optional<int> num_expected;
-  std::optional<std::string> open_delim;
-  std::optional<std::string> separator;
-  std::optional<std::string> close_delim;
-  std::optional<int> default_value;
-  PyParseIntegerList2(
-      Bmad::ParseIntegerList2 _base,
-      std::optional<int> num_expected,
-      std::optional<std::string> open_delim,
-      std::optional<std::string> separator,
-      std::optional<std::string> close_delim,
-      std::optional<int> default_value)
-      : Bmad::ParseIntegerList2(std::move(_base)),
-        num_expected(num_expected),
-        open_delim(open_delim),
-        separator(separator),
-        close_delim(close_delim),
-        default_value(default_value) {}
-};
 PyParseIntegerList2 python_parse_integer_list2(
     std::string err_str,
     LatProxy& lat,
@@ -168,29 +111,6 @@ PyParseIntegerList2 python_parse_integer_list2(
       default_value}};
   return py_result;
 }
-struct PyParseRealList2 : public Bmad::ParseRealList2 {
-  std::optional<int> num_expected;
-  std::optional<std::string> open_brace;
-  std::optional<std::string> separator;
-  std::optional<std::string> close_brace;
-  std::optional<double> default_value;
-  std::optional<bool> single_value;
-  PyParseRealList2(
-      Bmad::ParseRealList2 _base,
-      std::optional<int> num_expected,
-      std::optional<std::string> open_brace,
-      std::optional<std::string> separator,
-      std::optional<std::string> close_brace,
-      std::optional<double> default_value,
-      std::optional<bool> single_value)
-      : Bmad::ParseRealList2(std::move(_base)),
-        num_expected(num_expected),
-        open_brace(open_brace),
-        separator(separator),
-        close_brace(close_brace),
-        default_value(default_value),
-        single_value(single_value) {}
-};
 PyParseRealList2 python_parse_real_list2(
     LatProxy& lat,
     std::string err_str,
@@ -221,10 +141,6 @@ PyParseRealList2 python_parse_real_list2(
       single_value}};
   return py_result;
 }
-struct PyParserAddConstant {
-  std::string word;
-  bool redef_is_error;
-};
 PyParserAddConstant python_parser_add_constant(
     std::string word,
     LatProxy& lat,
@@ -233,14 +149,6 @@ PyParserAddConstant python_parser_add_constant(
   auto py_result{PyParserAddConstant{word, redef_is_error}};
   return py_result;
 }
-struct PyParserCallCheck {
-  std::string word;
-  int ix_word;
-  std::string delim;
-  bool delim_found;
-  bool call_found;
-  std::optional<bool> err_flag;
-};
 PyParserCallCheck python_parser_call_check(
     std::string word,
     int ix_word,
@@ -254,11 +162,6 @@ PyParserCallCheck python_parser_call_check(
       word, ix_word, delim, delim_found, call_found, err_flag}};
   return py_result;
 }
-struct PyParserFastIntegerRead {
-  std::string delim_wanted;
-  std::string err_str;
-  bool is_ok;
-};
 PyParserFastIntegerRead python_parser_fast_integer_read(
     IntAlloc1D& int_vec,
     EleProxy& ele,
@@ -269,14 +172,6 @@ PyParserFastIntegerRead python_parser_fast_integer_read(
   auto py_result{PyParserFastIntegerRead{delim_wanted, err_str, is_ok}};
   return py_result;
 }
-struct PyParserFileStack {
-  std::string how;
-  std::optional<std::string> file_name_in;
-  std::optional<bool> finished;
-  std::optional<bool> err;
-  std::optional<bool> open_file;
-  std::optional<bool> abort_on_open_error;
-};
 PyParserFileStack python_parser_file_stack(
     std::string how,
     std::optional<std::string> file_name_in = std::nullopt,
@@ -295,16 +190,6 @@ PyParserFileStack python_parser_file_stack(
       how, file_name_in, finished, err, open_file, abort_on_open_error}};
   return py_result;
 }
-struct PyParserGetInteger {
-  int int_val;
-  std::string word;
-  int ix_word;
-  std::string delim;
-  bool delim_found;
-  bool err;
-  std::optional<std::string> str1;
-  std::optional<std::string> str2;
-};
 PyParserGetInteger python_parser_get_integer(
     int int_val,
     std::string word,
@@ -327,14 +212,6 @@ PyParserGetInteger python_parser_get_integer(
       int_val, word, ix_word, delim, delim_found, err, str1, str2}};
   return py_result;
 }
-struct PyParserGetLogical {
-  std::string attrib_name;
-  bool this_logic;
-  std::string ele_name;
-  std::string delim;
-  bool delim_found;
-  bool err;
-};
 PyParserGetLogical python_parser_get_logical(
     std::string attrib_name,
     bool this_logic,
@@ -348,19 +225,11 @@ PyParserGetLogical python_parser_get_logical(
       attrib_name, this_logic, ele_name, delim, delim_found, err}};
   return py_result;
 }
-struct PyParserPrintLine {
-  bool end_of_file;
-};
 PyParserPrintLine python_parser_print_line(LatProxy& lat, bool end_of_file) {
   Bmad::parser_print_line(lat, end_of_file);
   auto py_result{PyParserPrintLine{end_of_file}};
   return py_result;
 }
-struct PyParserReadLrWake {
-  std::string delim;
-  bool delim_found;
-  bool err_flag;
-};
 PyParserReadLrWake python_parser_read_lr_wake(
     EleProxy& ele,
     std::string delim,
@@ -370,11 +239,6 @@ PyParserReadLrWake python_parser_read_lr_wake(
   auto py_result{PyParserReadLrWake{delim, delim_found, err_flag}};
   return py_result;
 }
-struct PyParserReadSrWake {
-  std::string delim;
-  bool delim_found;
-  bool err_flag;
-};
 PyParserReadSrWake python_parser_read_sr_wake(
     EleProxy& ele,
     std::string delim,
@@ -384,9 +248,6 @@ PyParserReadSrWake python_parser_read_sr_wake(
   auto py_result{PyParserReadSrWake{delim, delim_found, err_flag}};
   return py_result;
 }
-struct PyParticleIsMovingBackwards {
-  bool is_moving_backwards;
-};
 PyParticleIsMovingBackwards python_particle_is_moving_backwards(
     CoordProxy& orbit,
     bool is_moving_backwards) {
@@ -394,9 +255,6 @@ PyParticleIsMovingBackwards python_particle_is_moving_backwards(
   auto py_result{PyParticleIsMovingBackwards{is_moving_backwards}};
   return py_result;
 }
-struct PyParticleIsMovingForward {
-  bool is_moving_forward;
-};
 PyParticleIsMovingForward python_particle_is_moving_forward(
     CoordProxy& orbit,
     std::optional<int> dir,
@@ -405,9 +263,6 @@ PyParticleIsMovingForward python_particle_is_moving_forward(
   auto py_result{PyParticleIsMovingForward{is_moving_forward}};
   return py_result;
 }
-struct PyParticleRfTime {
-  long double time;
-};
 PyParticleRfTime python_particle_rf_time(
     CoordProxy& orbit,
     EleProxy& ele,
@@ -429,9 +284,6 @@ PyParticleRfTime python_particle_rf_time(
   auto py_result{PyParticleRfTime{time}};
   return py_result;
 }
-struct PyPatchFlipsPropagationDirection {
-  bool is_flip;
-};
 PyPatchFlipsPropagationDirection python_patch_flips_propagation_direction(
     double x_pitch,
     double y_pitch,
@@ -440,9 +292,6 @@ PyPatchFlipsPropagationDirection python_patch_flips_propagation_direction(
   auto py_result{PyPatchFlipsPropagationDirection{is_flip}};
   return py_result;
 }
-struct PyPatchLength {
-  double length;
-};
 PyPatchLength python_patch_length(
     EleProxy& patch,
     std::optional<int> ref_coords,
@@ -451,10 +300,6 @@ PyPatchLength python_patch_length(
   auto py_result{PyPatchLength{length}};
   return py_result;
 }
-struct PyPhotonAddToDetectorStatistics {
-  std::optional<int> ix_pt;
-  std::optional<int> iy_pt;
-};
 PyPhotonAddToDetectorStatistics python_photon_add_to_detector_statistics(
     CoordProxy& orbit0,
     CoordProxy& orbit,
@@ -467,13 +312,6 @@ PyPhotonAddToDetectorStatistics python_photon_add_to_detector_statistics(
   auto py_result{PyPhotonAddToDetectorStatistics{ix_pt, iy_pt}};
   return py_result;
 }
-
-struct PyPhotonTargetCornerCalc {
-  TargetPointProxy corner;
-  double x_lim;
-  double y_lim;
-  double z_lim;
-};
 PyPhotonTargetCornerCalc python_photon_target_corner_calc(
     EleProxy& aperture_ele,
     double x_lim,
@@ -485,9 +323,6 @@ PyPhotonTargetCornerCalc python_photon_target_corner_calc(
   auto py_result{PyPhotonTargetCornerCalc{_result, x_lim, y_lim, z_lim}};
   return py_result;
 }
-struct PyPhysicalEleEnd {
-  int physical_end;
-};
 PyPhysicalEleEnd python_physical_ele_end(
     int track_end,
     CoordProxy& orbit,
@@ -499,16 +334,6 @@ PyPhysicalEleEnd python_physical_ele_end(
   auto py_result{PyPhysicalEleEnd{physical_end}};
   return py_result;
 }
-
-struct PyPointerToSurfaceDisplacementPt {
-  SurfaceDisplacementPtProxy pt;
-  double x;
-  double y;
-  std::optional<int> ix;
-  std::optional<int> iy;
-  std::optional<double> xx;
-  std::optional<double> yy;
-};
 PyPointerToSurfaceDisplacementPt python_pointer_to_surface_displacement_pt(
     EleProxy& ele,
     bool nearest,
@@ -533,16 +358,6 @@ PyPointerToSurfaceDisplacementPt python_pointer_to_surface_displacement_pt(
       PyPointerToSurfaceDisplacementPt{_result, x, y, ix, iy, xx, yy}};
   return py_result;
 }
-
-struct PyPointerToSurfaceSegmentedPt {
-  SurfaceSegmentedPtProxy pt;
-  double x;
-  double y;
-  std::optional<int> ix;
-  std::optional<int> iy;
-  std::optional<double> xx;
-  std::optional<double> yy;
-};
 PyPointerToSurfaceSegmentedPt python_pointer_to_surface_segmented_pt(
     EleProxy& ele,
     bool nearest,
@@ -568,6 +383,26 @@ PyPointerToSurfaceSegmentedPt python_pointer_to_surface_segmented_pt(
 }
 
 void init_Bmad_routines_p(py::module& m) {
+  py::class_<PyParseCartesianMap, std::unique_ptr<PyParseCartesianMap>>(
+      m,
+      "ParseCartesianMap",
+      "Fortran routine parse_cartesian_map return value")
+      .def_readonly("delim", &PyParseCartesianMap::delim)
+      .def_readonly("delim_found", &PyParseCartesianMap::delim_found)
+      .def_readonly("err_flag", &PyParseCartesianMap::err_flag)
+      .def("__len__", [](const PyParseCartesianMap&) { return 3; })
+      .def(
+          "__getitem__", [](const PyParseCartesianMap& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.delim);
+            if (i == 1)
+              return py::cast(s.delim_found);
+            if (i == 2)
+              return py::cast(s.err_flag);
+            throw py::index_error();
+          });
   m.def(
       "parse_cartesian_map",
       &python_parse_cartesian_map,
@@ -593,16 +428,17 @@ void init_Bmad_routines_p(py::module& m) {
      . ) },
 
   )""");
-  py::class_<PyParseCartesianMap, std::unique_ptr<PyParseCartesianMap>>(
+  py::class_<PyParseCylindricalMap, std::unique_ptr<PyParseCylindricalMap>>(
       m,
-      "ParseCartesianMap",
-      "Fortran routine parse_cartesian_map return value")
-      .def_readonly("delim", &PyParseCartesianMap::delim)
-      .def_readonly("delim_found", &PyParseCartesianMap::delim_found)
-      .def_readonly("err_flag", &PyParseCartesianMap::err_flag)
-      .def("__len__", [](const PyParseCartesianMap&) { return 3; })
+      "ParseCylindricalMap",
+      "Fortran routine parse_cylindrical_map return value")
+      .def_readonly("delim", &PyParseCylindricalMap::delim)
+      .def_readonly("delim_found", &PyParseCylindricalMap::delim_found)
+      .def_readonly("err_flag", &PyParseCylindricalMap::err_flag)
+      .def("__len__", [](const PyParseCylindricalMap&) { return 3; })
       .def(
-          "__getitem__", [](const PyParseCartesianMap& s, int i) -> py::object {
+          "__getitem__",
+          [](const PyParseCylindricalMap& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -631,27 +467,23 @@ void init_Bmad_routines_p(py::module& m) {
   delim_found : 
   err_flag : 
   )""");
-  py::class_<PyParseCylindricalMap, std::unique_ptr<PyParseCylindricalMap>>(
-      m,
-      "ParseCylindricalMap",
-      "Fortran routine parse_cylindrical_map return value")
-      .def_readonly("delim", &PyParseCylindricalMap::delim)
-      .def_readonly("delim_found", &PyParseCylindricalMap::delim_found)
-      .def_readonly("err_flag", &PyParseCylindricalMap::err_flag)
-      .def("__len__", [](const PyParseCylindricalMap&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PyParseCylindricalMap& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.delim);
-            if (i == 1)
-              return py::cast(s.delim_found);
-            if (i == 2)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+  py::class_<PyParseGenGradMap, std::unique_ptr<PyParseGenGradMap>>(
+      m, "ParseGenGradMap", "Fortran routine parse_gen_grad_map return value")
+      .def_readonly("delim", &PyParseGenGradMap::delim)
+      .def_readonly("delim_found", &PyParseGenGradMap::delim_found)
+      .def_readonly("err_flag", &PyParseGenGradMap::err_flag)
+      .def("__len__", [](const PyParseGenGradMap&) { return 3; })
+      .def("__getitem__", [](const PyParseGenGradMap& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.delim);
+        if (i == 1)
+          return py::cast(s.delim_found);
+        if (i == 2)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "parse_gen_grad_map",
       &python_parse_gen_grad_map,
@@ -666,13 +498,13 @@ void init_Bmad_routines_p(py::module& m) {
   Subroutine to parse a "gen_grad_map = {}" construct
 
   )""");
-  py::class_<PyParseGenGradMap, std::unique_ptr<PyParseGenGradMap>>(
-      m, "ParseGenGradMap", "Fortran routine parse_gen_grad_map return value")
-      .def_readonly("delim", &PyParseGenGradMap::delim)
-      .def_readonly("delim_found", &PyParseGenGradMap::delim_found)
-      .def_readonly("err_flag", &PyParseGenGradMap::err_flag)
-      .def("__len__", [](const PyParseGenGradMap&) { return 3; })
-      .def("__getitem__", [](const PyParseGenGradMap& s, int i) -> py::object {
+  py::class_<PyParseGridField, std::unique_ptr<PyParseGridField>>(
+      m, "ParseGridField", "Fortran routine parse_grid_field return value")
+      .def_readonly("delim", &PyParseGridField::delim)
+      .def_readonly("delim_found", &PyParseGridField::delim_found)
+      .def_readonly("err_flag", &PyParseGridField::err_flag)
+      .def("__len__", [](const PyParseGridField&) { return 3; })
+      .def("__getitem__", [](const PyParseGridField& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -700,48 +532,6 @@ void init_Bmad_routines_p(py::module& m) {
   delim : 
   delim_found : 
   err_flag : 
-  )""");
-  py::class_<PyParseGridField, std::unique_ptr<PyParseGridField>>(
-      m, "ParseGridField", "Fortran routine parse_grid_field return value")
-      .def_readonly("delim", &PyParseGridField::delim)
-      .def_readonly("delim_found", &PyParseGridField::delim_found)
-      .def_readonly("err_flag", &PyParseGridField::err_flag)
-      .def("__len__", [](const PyParseGridField&) { return 3; })
-      .def("__getitem__", [](const PyParseGridField& s, int i) -> py::object {
-        if (i < 0)
-          i += 3;
-        if (i == 0)
-          return py::cast(s.delim);
-        if (i == 1)
-          return py::cast(s.delim_found);
-        if (i == 2)
-          return py::cast(s.err_flag);
-        throw py::index_error();
-      });
-  m.def(
-      "parse_integer_list",
-      &python_parse_integer_list,
-      py::arg("err_str"),
-      py::arg("lat"),
-      py::arg("int_array"),
-      py::arg("exact_size"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::arg("open_delim") = py::none(),
-      py::arg("separator") = py::none(),
-      py::arg("close_delim") = py::none(),
-      py::arg("default_value") = py::none(),
-      py::arg("is_ok"),
-      R"""(Function parse_integer_list (err_str, lat, int_array, exact_size, delim, delim_found, open_delim,
-                                        separator, close_delim, default_value) result (is_ok)
-
-  Routine to parse a list of integers of the form:
-     open_delim integer_1 separator integer_2 . . . close_delim
-  Example:   "(1.2, 2.3, 4.4, 8.5)"
-
-  Similar to parse_integer_list2 except does not use allocatable array.
-  See parse_integer_list2 for more details
-
   )""");
   py::class_<PyParseIntegerList, std::unique_ptr<PyParseIntegerList>>(
       m, "ParseIntegerList", "Fortran routine parse_integer_list return value")
@@ -778,6 +568,69 @@ void init_Bmad_routines_p(py::module& m) {
           return py::cast(s.is_ok);
         throw py::index_error();
       });
+  m.def(
+      "parse_integer_list",
+      &python_parse_integer_list,
+      py::arg("err_str"),
+      py::arg("lat"),
+      py::arg("int_array"),
+      py::arg("exact_size"),
+      py::arg("delim"),
+      py::arg("delim_found"),
+      py::arg("open_delim") = py::none(),
+      py::arg("separator") = py::none(),
+      py::arg("close_delim") = py::none(),
+      py::arg("default_value") = py::none(),
+      py::arg("is_ok"),
+      R"""(Function parse_integer_list (err_str, lat, int_array, exact_size, delim, delim_found, open_delim,
+                                        separator, close_delim, default_value) result (is_ok)
+
+  Routine to parse a list of integers of the form:
+     open_delim integer_1 separator integer_2 . . . close_delim
+  Example:   "(1.2, 2.3, 4.4, 8.5)"
+
+  Similar to parse_integer_list2 except does not use allocatable array.
+  See parse_integer_list2 for more details
+
+  )""");
+  py::class_<PyParseIntegerList2, std::unique_ptr<PyParseIntegerList2>>(
+      m,
+      "ParseIntegerList2",
+      "Fortran routine parse_integer_list2 return value")
+      .def_readonly("num_found", &PyParseIntegerList2::num_found)
+      .def_readonly("delim", &PyParseIntegerList2::delim)
+      .def_readonly("delim_found", &PyParseIntegerList2::delim_found)
+      .def_readonly("is_ok", &PyParseIntegerList2::is_ok)
+      .def_readonly("num_expected", &PyParseIntegerList2::num_expected)
+      .def_readonly("open_delim", &PyParseIntegerList2::open_delim)
+      .def_readonly("separator", &PyParseIntegerList2::separator)
+      .def_readonly("close_delim", &PyParseIntegerList2::close_delim)
+      .def_readonly("default_value", &PyParseIntegerList2::default_value)
+      .def("__len__", [](const PyParseIntegerList2&) { return 9; })
+      .def(
+          "__getitem__", [](const PyParseIntegerList2& s, int i) -> py::object {
+            if (i < 0)
+              i += 9;
+            if (i == 0)
+              return py::cast(s.num_found);
+            if (i == 1)
+              return py::cast(s.delim);
+            if (i == 2)
+              return py::cast(s.delim_found);
+            if (i == 3)
+              return py::cast(s.is_ok);
+            if (i == 4)
+              return py::cast(s.num_expected);
+            if (i == 5)
+              return py::cast(s.open_delim);
+            if (i == 6)
+              return py::cast(s.separator);
+            if (i == 7)
+              return py::cast(s.close_delim);
+            if (i == 8)
+              return py::cast(s.default_value);
+            throw py::index_error();
+          });
   m.def(
       "parse_integer_list2",
       &python_parse_integer_list2,
@@ -820,42 +673,28 @@ void init_Bmad_routines_p(py::module& m) {
   delim_found : bool
       Delimiter found? False if end of input command.
   )""");
-  py::class_<PyParseIntegerList2, std::unique_ptr<PyParseIntegerList2>>(
-      m,
-      "ParseIntegerList2",
-      "Fortran routine parse_integer_list2 return value")
-      .def_readonly("num_found", &PyParseIntegerList2::num_found)
-      .def_readonly("delim", &PyParseIntegerList2::delim)
-      .def_readonly("delim_found", &PyParseIntegerList2::delim_found)
-      .def_readonly("is_ok", &PyParseIntegerList2::is_ok)
-      .def_readonly("num_expected", &PyParseIntegerList2::num_expected)
-      .def_readonly("open_delim", &PyParseIntegerList2::open_delim)
-      .def_readonly("separator", &PyParseIntegerList2::separator)
-      .def_readonly("close_delim", &PyParseIntegerList2::close_delim)
-      .def_readonly("default_value", &PyParseIntegerList2::default_value)
-      .def("__len__", [](const PyParseIntegerList2&) { return 9; })
+  py::class_<Bmad::ParseRealList, std::unique_ptr<Bmad::ParseRealList>>(
+      m, "ParseRealList", "Fortran routine parse_real_list return value")
+      .def_readonly("real_array", &Bmad::ParseRealList::real_array)
+      .def_readonly("delim", &Bmad::ParseRealList::delim)
+      .def_readonly("delim_found", &Bmad::ParseRealList::delim_found)
+      .def_readonly("num_found", &Bmad::ParseRealList::num_found)
+      .def_readonly("is_ok", &Bmad::ParseRealList::is_ok)
+      .def("__len__", [](const Bmad::ParseRealList&) { return 5; })
       .def(
-          "__getitem__", [](const PyParseIntegerList2& s, int i) -> py::object {
+          "__getitem__", [](const Bmad::ParseRealList& s, int i) -> py::object {
             if (i < 0)
-              i += 9;
+              i += 5;
             if (i == 0)
-              return py::cast(s.num_found);
+              return py::cast(s.real_array);
             if (i == 1)
               return py::cast(s.delim);
             if (i == 2)
               return py::cast(s.delim_found);
             if (i == 3)
-              return py::cast(s.is_ok);
+              return py::cast(s.num_found);
             if (i == 4)
-              return py::cast(s.num_expected);
-            if (i == 5)
-              return py::cast(s.open_delim);
-            if (i == 6)
-              return py::cast(s.separator);
-            if (i == 7)
-              return py::cast(s.close_delim);
-            if (i == 8)
-              return py::cast(s.default_value);
+              return py::cast(s.is_ok);
             throw py::index_error();
           });
   m.def(
@@ -902,30 +741,44 @@ void init_Bmad_routines_p(py::module& m) {
   Related routines:
   parse_real_matrix.
   )""");
-  py::class_<Bmad::ParseRealList, std::unique_ptr<Bmad::ParseRealList>>(
-      m, "ParseRealList", "Fortran routine parse_real_list return value")
-      .def_readonly("real_array", &Bmad::ParseRealList::real_array)
-      .def_readonly("delim", &Bmad::ParseRealList::delim)
-      .def_readonly("delim_found", &Bmad::ParseRealList::delim_found)
-      .def_readonly("num_found", &Bmad::ParseRealList::num_found)
-      .def_readonly("is_ok", &Bmad::ParseRealList::is_ok)
-      .def("__len__", [](const Bmad::ParseRealList&) { return 5; })
-      .def(
-          "__getitem__", [](const Bmad::ParseRealList& s, int i) -> py::object {
-            if (i < 0)
-              i += 5;
-            if (i == 0)
-              return py::cast(s.real_array);
-            if (i == 1)
-              return py::cast(s.delim);
-            if (i == 2)
-              return py::cast(s.delim_found);
-            if (i == 3)
-              return py::cast(s.num_found);
-            if (i == 4)
-              return py::cast(s.is_ok);
-            throw py::index_error();
-          });
+  py::class_<PyParseRealList2, std::unique_ptr<PyParseRealList2>>(
+      m, "ParseRealList2", "Fortran routine parse_real_list2 return value")
+      .def_readonly("num_found", &PyParseRealList2::num_found)
+      .def_readonly("delim", &PyParseRealList2::delim)
+      .def_readonly("delim_found", &PyParseRealList2::delim_found)
+      .def_readonly("is_ok", &PyParseRealList2::is_ok)
+      .def_readonly("num_expected", &PyParseRealList2::num_expected)
+      .def_readonly("open_brace", &PyParseRealList2::open_brace)
+      .def_readonly("separator", &PyParseRealList2::separator)
+      .def_readonly("close_brace", &PyParseRealList2::close_brace)
+      .def_readonly("default_value", &PyParseRealList2::default_value)
+      .def_readonly("single_value", &PyParseRealList2::single_value)
+      .def("__len__", [](const PyParseRealList2&) { return 10; })
+      .def("__getitem__", [](const PyParseRealList2& s, int i) -> py::object {
+        if (i < 0)
+          i += 10;
+        if (i == 0)
+          return py::cast(s.num_found);
+        if (i == 1)
+          return py::cast(s.delim);
+        if (i == 2)
+          return py::cast(s.delim_found);
+        if (i == 3)
+          return py::cast(s.is_ok);
+        if (i == 4)
+          return py::cast(s.num_expected);
+        if (i == 5)
+          return py::cast(s.open_brace);
+        if (i == 6)
+          return py::cast(s.separator);
+        if (i == 7)
+          return py::cast(s.close_brace);
+        if (i == 8)
+          return py::cast(s.default_value);
+        if (i == 9)
+          return py::cast(s.single_value);
+        throw py::index_error();
+      });
   m.def(
       "parse_real_list2",
       &python_parse_real_list2,
@@ -976,56 +829,6 @@ void init_Bmad_routines_p(py::module& m) {
   Related routines:
   pase_real_list parse_real_matrix.
   )""");
-  py::class_<PyParseRealList2, std::unique_ptr<PyParseRealList2>>(
-      m, "ParseRealList2", "Fortran routine parse_real_list2 return value")
-      .def_readonly("num_found", &PyParseRealList2::num_found)
-      .def_readonly("delim", &PyParseRealList2::delim)
-      .def_readonly("delim_found", &PyParseRealList2::delim_found)
-      .def_readonly("is_ok", &PyParseRealList2::is_ok)
-      .def_readonly("num_expected", &PyParseRealList2::num_expected)
-      .def_readonly("open_brace", &PyParseRealList2::open_brace)
-      .def_readonly("separator", &PyParseRealList2::separator)
-      .def_readonly("close_brace", &PyParseRealList2::close_brace)
-      .def_readonly("default_value", &PyParseRealList2::default_value)
-      .def_readonly("single_value", &PyParseRealList2::single_value)
-      .def("__len__", [](const PyParseRealList2&) { return 10; })
-      .def("__getitem__", [](const PyParseRealList2& s, int i) -> py::object {
-        if (i < 0)
-          i += 10;
-        if (i == 0)
-          return py::cast(s.num_found);
-        if (i == 1)
-          return py::cast(s.delim);
-        if (i == 2)
-          return py::cast(s.delim_found);
-        if (i == 3)
-          return py::cast(s.is_ok);
-        if (i == 4)
-          return py::cast(s.num_expected);
-        if (i == 5)
-          return py::cast(s.open_brace);
-        if (i == 6)
-          return py::cast(s.separator);
-        if (i == 7)
-          return py::cast(s.close_brace);
-        if (i == 8)
-          return py::cast(s.default_value);
-        if (i == 9)
-          return py::cast(s.single_value);
-        throw py::index_error();
-      });
-  m.def(
-      "parser_add_constant",
-      &python_parser_add_constant,
-      py::arg("word"),
-      py::arg("lat"),
-      py::arg("redef_is_error"),
-      R"""(Parameters
-  ----------
-  word : 
-  lat : 
-  redef_is_error : 
-  )""");
   py::class_<PyParserAddConstant, std::unique_ptr<PyParserAddConstant>>(
       m,
       "ParserAddConstant",
@@ -1044,18 +847,16 @@ void init_Bmad_routines_p(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "parser_call_check",
-      &python_parser_call_check,
+      "parser_add_constant",
+      &python_parser_add_constant,
       py::arg("word"),
-      py::arg("ix_word"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::arg("call_found"),
-      py::arg("err_flag") = py::none(),
-      R"""(Subroutine parser_call_check(word, ix_word, delim, delim_found, call_found, err_flag))
-
-  Routine to check if there is a "call::XXX" construct in the input stream.
-
+      py::arg("lat"),
+      py::arg("redef_is_error"),
+      R"""(Parameters
+  ----------
+  word : 
+  lat : 
+  redef_is_error : 
   )""");
   py::class_<PyParserCallCheck, std::unique_ptr<PyParserCallCheck>>(
       m, "ParserCallCheck", "Fortran routine parser_call_check return value")
@@ -1083,6 +884,43 @@ void init_Bmad_routines_p(py::module& m) {
           return py::cast(s.err_flag);
         throw py::index_error();
       });
+  m.def(
+      "parser_call_check",
+      &python_parser_call_check,
+      py::arg("word"),
+      py::arg("ix_word"),
+      py::arg("delim"),
+      py::arg("delim_found"),
+      py::arg("call_found"),
+      py::arg("err_flag") = py::none(),
+      R"""(Subroutine parser_call_check(word, ix_word, delim, delim_found, call_found, err_flag))
+
+  Routine to check if there is a "call::XXX" construct in the input stream.
+
+  )""");
+  py::class_<
+      Bmad::ParserFastComplexRead,
+      std::unique_ptr<Bmad::ParserFastComplexRead>>(
+      m,
+      "ParserFastComplexRead",
+      "Fortran routine parser_fast_complex_read return value")
+      .def_readonly("cmplx_vec", &Bmad::ParserFastComplexRead::cmplx_vec)
+      .def_readonly("delim", &Bmad::ParserFastComplexRead::delim)
+      .def_readonly("is_ok", &Bmad::ParserFastComplexRead::is_ok)
+      .def("__len__", [](const Bmad::ParserFastComplexRead&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const Bmad::ParserFastComplexRead& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.cmplx_vec);
+            if (i == 1)
+              return py::cast(s.delim);
+            if (i == 2)
+              return py::cast(s.is_ok);
+            throw py::index_error();
+          });
   m.def(
       "parser_fast_complex_read",
       &Bmad::parser_fast_complex_read,
@@ -1112,25 +950,23 @@ void init_Bmad_routines_p(py::module& m) {
   is_ok : bool
       True if everything OK. False otherwise.
   )""");
-  py::class_<
-      Bmad::ParserFastComplexRead,
-      std::unique_ptr<Bmad::ParserFastComplexRead>>(
+  py::class_<PyParserFastIntegerRead, std::unique_ptr<PyParserFastIntegerRead>>(
       m,
-      "ParserFastComplexRead",
-      "Fortran routine parser_fast_complex_read return value")
-      .def_readonly("cmplx_vec", &Bmad::ParserFastComplexRead::cmplx_vec)
-      .def_readonly("delim", &Bmad::ParserFastComplexRead::delim)
-      .def_readonly("is_ok", &Bmad::ParserFastComplexRead::is_ok)
-      .def("__len__", [](const Bmad::ParserFastComplexRead&) { return 3; })
+      "ParserFastIntegerRead",
+      "Fortran routine parser_fast_integer_read return value")
+      .def_readonly("delim_wanted", &PyParserFastIntegerRead::delim_wanted)
+      .def_readonly("err_str", &PyParserFastIntegerRead::err_str)
+      .def_readonly("is_ok", &PyParserFastIntegerRead::is_ok)
+      .def("__len__", [](const PyParserFastIntegerRead&) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::ParserFastComplexRead& s, int i) -> py::object {
+          [](const PyParserFastIntegerRead& s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
-              return py::cast(s.cmplx_vec);
+              return py::cast(s.delim_wanted);
             if (i == 1)
-              return py::cast(s.delim);
+              return py::cast(s.err_str);
             if (i == 2)
               return py::cast(s.is_ok);
             throw py::index_error();
@@ -1150,24 +986,29 @@ void init_Bmad_routines_p(py::module& m) {
   -------
   is_ok
   )""");
-  py::class_<PyParserFastIntegerRead, std::unique_ptr<PyParserFastIntegerRead>>(
+  py::class_<
+      Bmad::ParserFastRealRead,
+      std::unique_ptr<Bmad::ParserFastRealRead>>(
       m,
-      "ParserFastIntegerRead",
-      "Fortran routine parser_fast_integer_read return value")
-      .def_readonly("delim_wanted", &PyParserFastIntegerRead::delim_wanted)
-      .def_readonly("err_str", &PyParserFastIntegerRead::err_str)
-      .def_readonly("is_ok", &PyParserFastIntegerRead::is_ok)
-      .def("__len__", [](const PyParserFastIntegerRead&) { return 3; })
+      "ParserFastRealRead",
+      "Fortran routine parser_fast_real_read return value")
+      .def_readonly("real_vec", &Bmad::ParserFastRealRead::real_vec)
+      .def_readonly("delim", &Bmad::ParserFastRealRead::delim)
+      .def_readonly("n_real", &Bmad::ParserFastRealRead::n_real)
+      .def_readonly("is_ok", &Bmad::ParserFastRealRead::is_ok)
+      .def("__len__", [](const Bmad::ParserFastRealRead&) { return 4; })
       .def(
           "__getitem__",
-          [](const PyParserFastIntegerRead& s, int i) -> py::object {
+          [](const Bmad::ParserFastRealRead& s, int i) -> py::object {
             if (i < 0)
-              i += 3;
+              i += 4;
             if (i == 0)
-              return py::cast(s.delim_wanted);
+              return py::cast(s.real_vec);
             if (i == 1)
-              return py::cast(s.err_str);
+              return py::cast(s.delim);
             if (i == 2)
+              return py::cast(s.n_real);
+            if (i == 3)
               return py::cast(s.is_ok);
             throw py::index_error();
           });
@@ -1210,48 +1051,6 @@ void init_Bmad_routines_p(py::module& m) {
   n_real : int
       Number of elements found.
   )""");
-  py::class_<
-      Bmad::ParserFastRealRead,
-      std::unique_ptr<Bmad::ParserFastRealRead>>(
-      m,
-      "ParserFastRealRead",
-      "Fortran routine parser_fast_real_read return value")
-      .def_readonly("real_vec", &Bmad::ParserFastRealRead::real_vec)
-      .def_readonly("delim", &Bmad::ParserFastRealRead::delim)
-      .def_readonly("n_real", &Bmad::ParserFastRealRead::n_real)
-      .def_readonly("is_ok", &Bmad::ParserFastRealRead::is_ok)
-      .def("__len__", [](const Bmad::ParserFastRealRead&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ParserFastRealRead& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.real_vec);
-            if (i == 1)
-              return py::cast(s.delim);
-            if (i == 2)
-              return py::cast(s.n_real);
-            if (i == 3)
-              return py::cast(s.is_ok);
-            throw py::index_error();
-          });
-  m.def(
-      "parser_file_stack",
-      &python_parser_file_stack,
-      py::arg("how"),
-      py::arg("file_name_in") = py::none(),
-      py::arg("finished") = py::none(),
-      py::arg("err") = py::none(),
-      py::arg("open_file") = py::none(),
-      py::arg("abort_on_open_error") = py::none(),
-      R"""(Subroutine parser_file_stack (how, file_name_in, finished, err, open_file, abort_on_open_error)
-
-  Subroutine to keep track of the files that are opened for reading.
-  This subroutine is used by bmad_parser and bmad_parser2.
-  This subroutine is not intended for general use.
-
-  )""");
   py::class_<PyParserFileStack, std::unique_ptr<PyParserFileStack>>(
       m, "ParserFileStack", "Fortran routine parser_file_stack return value")
       .def_readonly("how", &PyParserFileStack::how)
@@ -1280,26 +1079,20 @@ void init_Bmad_routines_p(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "parser_get_integer",
-      &python_parser_get_integer,
-      py::arg("int_val"),
-      py::arg("word"),
-      py::arg("ix_word"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::arg("err"),
-      py::arg("str1") = py::none(),
-      py::arg("str2") = py::none(),
-      R"""(Parameters
-  ----------
-  int_val : 
-  word : 
-  ix_word : 
-  delim : 
-  delim_found : 
-  err : 
-  str1 : 
-  str2 : 
+      "parser_file_stack",
+      &python_parser_file_stack,
+      py::arg("how"),
+      py::arg("file_name_in") = py::none(),
+      py::arg("finished") = py::none(),
+      py::arg("err") = py::none(),
+      py::arg("open_file") = py::none(),
+      py::arg("abort_on_open_error") = py::none(),
+      R"""(Subroutine parser_file_stack (how, file_name_in, finished, err, open_file, abort_on_open_error)
+
+  Subroutine to keep track of the files that are opened for reading.
+  This subroutine is used by bmad_parser and bmad_parser2.
+  This subroutine is not intended for general use.
+
   )""");
   py::class_<PyParserGetInteger, std::unique_ptr<PyParserGetInteger>>(
       m, "ParserGetInteger", "Fortran routine parser_get_integer return value")
@@ -1334,22 +1127,26 @@ void init_Bmad_routines_p(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "parser_get_logical",
-      &python_parser_get_logical,
-      py::arg("attrib_name"),
-      py::arg("this_logic"),
-      py::arg("ele_name"),
+      "parser_get_integer",
+      &python_parser_get_integer,
+      py::arg("int_val"),
+      py::arg("word"),
+      py::arg("ix_word"),
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err"),
+      py::arg("str1") = py::none(),
+      py::arg("str2") = py::none(),
       R"""(Parameters
   ----------
-  attrib_name : 
-  this_logic : 
-  ele_name : 
+  int_val : 
+  word : 
+  ix_word : 
   delim : 
   delim_found : 
   err : 
+  str1 : 
+  str2 : 
   )""");
   py::class_<PyParserGetLogical, std::unique_ptr<PyParserGetLogical>>(
       m, "ParserGetLogical", "Fortran routine parser_get_logical return value")
@@ -1378,6 +1175,24 @@ void init_Bmad_routines_p(py::module& m) {
         throw py::index_error();
       });
   m.def(
+      "parser_get_logical",
+      &python_parser_get_logical,
+      py::arg("attrib_name"),
+      py::arg("this_logic"),
+      py::arg("ele_name"),
+      py::arg("delim"),
+      py::arg("delim_found"),
+      py::arg("err"),
+      R"""(Parameters
+  ----------
+  attrib_name : 
+  this_logic : 
+  ele_name : 
+  delim : 
+  delim_found : 
+  err : 
+  )""");
+  m.def(
       "parser_identify_fork_to_element",
       &Bmad::parser_identify_fork_to_element,
       py::arg("lat"),
@@ -1396,6 +1211,17 @@ void init_Bmad_routines_p(py::module& m) {
       R"""(Subroutine parser_init_custom_elements (lat)
 
   )""");
+  py::class_<PyParserPrintLine, std::unique_ptr<PyParserPrintLine>>(
+      m, "ParserPrintLine", "Fortran routine parser_print_line return value")
+      .def_readonly("end_of_file", &PyParserPrintLine::end_of_file)
+      .def("__len__", [](const PyParserPrintLine&) { return 1; })
+      .def("__getitem__", [](const PyParserPrintLine& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.end_of_file);
+        throw py::index_error();
+      });
   m.def(
       "parser_print_line",
       &python_parser_print_line,
@@ -1406,15 +1232,21 @@ void init_Bmad_routines_p(py::module& m) {
   This routine is called when a print statement is found in the lattice file.
 
   )""");
-  py::class_<PyParserPrintLine, std::unique_ptr<PyParserPrintLine>>(
-      m, "ParserPrintLine", "Fortran routine parser_print_line return value")
-      .def_readonly("end_of_file", &PyParserPrintLine::end_of_file)
-      .def("__len__", [](const PyParserPrintLine&) { return 1; })
-      .def("__getitem__", [](const PyParserPrintLine& s, int i) -> py::object {
+  py::class_<PyParserReadLrWake, std::unique_ptr<PyParserReadLrWake>>(
+      m, "ParserReadLrWake", "Fortran routine parser_read_lr_wake return value")
+      .def_readonly("delim", &PyParserReadLrWake::delim)
+      .def_readonly("delim_found", &PyParserReadLrWake::delim_found)
+      .def_readonly("err_flag", &PyParserReadLrWake::err_flag)
+      .def("__len__", [](const PyParserReadLrWake&) { return 3; })
+      .def("__getitem__", [](const PyParserReadLrWake& s, int i) -> py::object {
         if (i < 0)
-          i += 1;
+          i += 3;
         if (i == 0)
-          return py::cast(s.end_of_file);
+          return py::cast(s.delim);
+        if (i == 1)
+          return py::cast(s.delim_found);
+        if (i == 2)
+          return py::cast(s.err_flag);
         throw py::index_error();
       });
   m.def(
@@ -1435,23 +1267,6 @@ void init_Bmad_routines_p(py::module& m) {
       Element containing wake structure.
       This parameter is an input/output and is modified in-place. As an output: Element with wake information.
   )""");
-  py::class_<PyParserReadLrWake, std::unique_ptr<PyParserReadLrWake>>(
-      m, "ParserReadLrWake", "Fortran routine parser_read_lr_wake return value")
-      .def_readonly("delim", &PyParserReadLrWake::delim)
-      .def_readonly("delim_found", &PyParserReadLrWake::delim_found)
-      .def_readonly("err_flag", &PyParserReadLrWake::err_flag)
-      .def("__len__", [](const PyParserReadLrWake&) { return 3; })
-      .def("__getitem__", [](const PyParserReadLrWake& s, int i) -> py::object {
-        if (i < 0)
-          i += 3;
-        if (i == 0)
-          return py::cast(s.delim);
-        if (i == 1)
-          return py::cast(s.delim_found);
-        if (i == 2)
-          return py::cast(s.err_flag);
-        throw py::index_error();
-      });
   m.def(
       "parser_read_old_format_lr_wake",
       &Bmad::parser_read_old_format_lr_wake,
@@ -1488,6 +1303,23 @@ void init_Bmad_routines_p(py::module& m) {
   sr_file_name : unknown
       Name of short-range wake field file.
   )""");
+  py::class_<PyParserReadSrWake, std::unique_ptr<PyParserReadSrWake>>(
+      m, "ParserReadSrWake", "Fortran routine parser_read_sr_wake return value")
+      .def_readonly("delim", &PyParserReadSrWake::delim)
+      .def_readonly("delim_found", &PyParserReadSrWake::delim_found)
+      .def_readonly("err_flag", &PyParserReadSrWake::err_flag)
+      .def("__len__", [](const PyParserReadSrWake&) { return 3; })
+      .def("__getitem__", [](const PyParserReadSrWake& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.delim);
+        if (i == 1)
+          return py::cast(s.delim_found);
+        if (i == 2)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "parser_read_sr_wake",
       &python_parser_read_sr_wake,
@@ -1506,23 +1338,6 @@ void init_Bmad_routines_p(py::module& m) {
       Element containing wake structure.
       This parameter is an input/output and is modified in-place. As an output: Element with wake information.
   )""");
-  py::class_<PyParserReadSrWake, std::unique_ptr<PyParserReadSrWake>>(
-      m, "ParserReadSrWake", "Fortran routine parser_read_sr_wake return value")
-      .def_readonly("delim", &PyParserReadSrWake::delim)
-      .def_readonly("delim_found", &PyParserReadSrWake::delim_found)
-      .def_readonly("err_flag", &PyParserReadSrWake::err_flag)
-      .def("__len__", [](const PyParserReadSrWake&) { return 3; })
-      .def("__getitem__", [](const PyParserReadSrWake& s, int i) -> py::object {
-        if (i < 0)
-          i += 3;
-        if (i == 0)
-          return py::cast(s.delim);
-        if (i == 1)
-          return py::cast(s.delim_found);
-        if (i == 2)
-          return py::cast(s.err_flag);
-        throw py::index_error();
-      });
   m.def(
       "parser_transfer_control_struct",
       &Bmad::parser_transfer_control_struct,
@@ -1580,17 +1395,6 @@ void init_Bmad_routines_p(py::module& m) {
   -------
   particle
   )""");
-  m.def(
-      "particle_is_moving_backwards",
-      &python_particle_is_moving_backwards,
-      py::arg("orbit"),
-      py::arg("is_moving_backwards"),
-      R"""(Parameters
-  ----------
-  orbit : CoordStruct
-      Particle coordinates
-  is_moving_backwards : 
-  )""");
   py::class_<
       PyParticleIsMovingBackwards,
       std::unique_ptr<PyParticleIsMovingBackwards>>(
@@ -1611,18 +1415,15 @@ void init_Bmad_routines_p(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "particle_is_moving_forward",
-      &python_particle_is_moving_forward,
+      "particle_is_moving_backwards",
+      &python_particle_is_moving_backwards,
       py::arg("orbit"),
-      py::arg("dir") = py::none(),
-      py::arg("is_moving_forward"),
+      py::arg("is_moving_backwards"),
       R"""(Parameters
   ----------
   orbit : CoordStruct
       Particle coordinates
-  dir : int, optional
-      +1 if tracking forward(default) or -1 to return True if tracking backwards.
-  is_moving_forward : 
+  is_moving_backwards : 
   )""");
   py::class_<
       PyParticleIsMovingForward,
@@ -1642,6 +1443,31 @@ void init_Bmad_routines_p(py::module& m) {
               return py::cast(s.is_moving_forward);
             throw py::index_error();
           });
+  m.def(
+      "particle_is_moving_forward",
+      &python_particle_is_moving_forward,
+      py::arg("orbit"),
+      py::arg("dir") = py::none(),
+      py::arg("is_moving_forward"),
+      R"""(Parameters
+  ----------
+  orbit : CoordStruct
+      Particle coordinates
+  dir : int, optional
+      +1 if tracking forward(default) or -1 to return True if tracking backwards.
+  is_moving_forward : 
+  )""");
+  py::class_<PyParticleRfTime, std::unique_ptr<PyParticleRfTime>>(
+      m, "ParticleRfTime", "Fortran routine particle_rf_time return value")
+      .def_readonly("time", &PyParticleRfTime::time)
+      .def("__len__", [](const PyParticleRfTime&) { return 1; })
+      .def("__getitem__", [](const PyParticleRfTime& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.time);
+        throw py::index_error();
+      });
   m.def(
       "particle_rf_time",
       &python_particle_rf_time,
@@ -1676,31 +1502,6 @@ void init_Bmad_routines_p(py::module& m) {
       relative time. Ouput:
   time : 
   )""");
-  py::class_<PyParticleRfTime, std::unique_ptr<PyParticleRfTime>>(
-      m, "ParticleRfTime", "Fortran routine particle_rf_time return value")
-      .def_readonly("time", &PyParticleRfTime::time)
-      .def("__len__", [](const PyParticleRfTime&) { return 1; })
-      .def("__getitem__", [](const PyParticleRfTime& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.time);
-        throw py::index_error();
-      });
-  m.def(
-      "patch_flips_propagation_direction",
-      &python_patch_flips_propagation_direction,
-      py::arg("x_pitch"),
-      py::arg("y_pitch"),
-      py::arg("is_flip"),
-      R"""(Parameters
-  ----------
-  x_pitch : float
-      Rotaion around y-axis
-  y_pitch : float
-      Rotation around x-axis.
-  is_flip : 
-  )""");
   py::class_<
       PyPatchFlipsPropagationDirection,
       std::unique_ptr<PyPatchFlipsPropagationDirection>>(
@@ -1719,18 +1520,18 @@ void init_Bmad_routines_p(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "patch_length",
-      &python_patch_length,
-      py::arg("patch"),
-      py::arg("ref_coords") = py::none(),
-      py::arg("length"),
+      "patch_flips_propagation_direction",
+      &python_patch_flips_propagation_direction,
+      py::arg("x_pitch"),
+      py::arg("y_pitch"),
+      py::arg("is_flip"),
       R"""(Parameters
   ----------
-  patch : EleStruct
-      Patch element.
-  ref_coords : int, optional
-      Reference coords to use. entrance_end$, exit_end$ Default is nint(patch.value(ref_coords$)).
-  length : 
+  x_pitch : float
+      Rotaion around y-axis
+  y_pitch : float
+      Rotation around x-axis.
+  is_flip : 
   )""");
   py::class_<PyPatchLength, std::unique_ptr<PyPatchLength>>(
       m, "PatchLength", "Fortran routine patch_length return value")
@@ -1744,30 +1545,18 @@ void init_Bmad_routines_p(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "photon_absorption_and_phase_shift",
-      &Bmad::photon_absorption_and_phase_shift,
-      py::arg("material"),
-      py::arg("Energy"),
-      R"""(Subroutine photon_absorption_and_phase_shift (material, Energy, absorption, phase_shift, err_flag)
-
-  Routine to calcualte the absorption and phase shift values for a photon with a given
-  energy going through a particular material.
-
-  Parameters
+      "patch_length",
+      &python_patch_length,
+      py::arg("patch"),
+      py::arg("ref_coords") = py::none(),
+      py::arg("length"),
+      R"""(Parameters
   ----------
-  material : unknown
-      Material name.
-  Energy : float
-      Photon energy (eV).
-
-  Returns
-  -------
-  absorption : float
-      E_field ~ Exp(-absorption * length)
-  phase_shift : float
-      E_field Phase shift (radians) per unit length relative to vacuum.
-  err_flag : bool
-      Set true if material not recognized.
+  patch : EleStruct
+      Patch element.
+  ref_coords : int, optional
+      Reference coords to use. entrance_end$, exit_end$ Default is nint(patch.value(ref_coords$)).
+  length : 
   )""");
   py::class_<
       Bmad::PhotonAbsorptionAndPhaseShift,
@@ -1795,6 +1584,52 @@ void init_Bmad_routines_p(py::module& m) {
               return py::cast(s.phase_shift);
             if (i == 2)
               return py::cast(s.err_flag);
+            throw py::index_error();
+          });
+  m.def(
+      "photon_absorption_and_phase_shift",
+      &Bmad::photon_absorption_and_phase_shift,
+      py::arg("material"),
+      py::arg("Energy"),
+      R"""(Subroutine photon_absorption_and_phase_shift (material, Energy, absorption, phase_shift, err_flag)
+
+  Routine to calcualte the absorption and phase shift values for a photon with a given
+  energy going through a particular material.
+
+  Parameters
+  ----------
+  material : unknown
+      Material name.
+  Energy : float
+      Photon energy (eV).
+
+  Returns
+  -------
+  absorption : float
+      E_field ~ Exp(-absorption * length)
+  phase_shift : float
+      E_field Phase shift (radians) per unit length relative to vacuum.
+  err_flag : bool
+      Set true if material not recognized.
+  )""");
+  py::class_<
+      PyPhotonAddToDetectorStatistics,
+      std::unique_ptr<PyPhotonAddToDetectorStatistics>>(
+      m,
+      "PhotonAddToDetectorStatistics",
+      "Fortran routine photon_add_to_detector_statistics return value")
+      .def_readonly("ix_pt", &PyPhotonAddToDetectorStatistics::ix_pt)
+      .def_readonly("iy_pt", &PyPhotonAddToDetectorStatistics::iy_pt)
+      .def("__len__", [](const PyPhotonAddToDetectorStatistics&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const PyPhotonAddToDetectorStatistics& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.ix_pt);
+            if (i == 1)
+              return py::cast(s.iy_pt);
             throw py::index_error();
           });
   m.def(
@@ -1826,24 +1661,20 @@ void init_Bmad_routines_p(py::module& m) {
       If present then use this grid point instead of the grid point determined by the (x, y) coords of the
       photon
   )""");
-  py::class_<
-      PyPhotonAddToDetectorStatistics,
-      std::unique_ptr<PyPhotonAddToDetectorStatistics>>(
-      m,
-      "PhotonAddToDetectorStatistics",
-      "Fortran routine photon_add_to_detector_statistics return value")
-      .def_readonly("ix_pt", &PyPhotonAddToDetectorStatistics::ix_pt)
-      .def_readonly("iy_pt", &PyPhotonAddToDetectorStatistics::iy_pt)
-      .def("__len__", [](const PyPhotonAddToDetectorStatistics&) { return 2; })
+  py::class_<Bmad::PhotonReflection, std::unique_ptr<Bmad::PhotonReflection>>(
+      m, "PhotonReflection", "Fortran routine photon_reflection return value")
+      .def_readonly("graze_angle_out", &Bmad::PhotonReflection::graze_angle_out)
+      .def_readonly("phi_out", &Bmad::PhotonReflection::phi_out)
+      .def("__len__", [](const Bmad::PhotonReflection&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyPhotonAddToDetectorStatistics& s, int i) -> py::object {
+          [](const Bmad::PhotonReflection& s, int i) -> py::object {
             if (i < 0)
               i += 2;
             if (i == 0)
-              return py::cast(s.ix_pt);
+              return py::cast(s.graze_angle_out);
             if (i == 1)
-              return py::cast(s.iy_pt);
+              return py::cast(s.phi_out);
             throw py::index_error();
           });
   m.def(
@@ -1872,22 +1703,6 @@ void init_Bmad_routines_p(py::module& m) {
   phi_out : float
       Azimuthal angle in radians.
   )""");
-  py::class_<Bmad::PhotonReflection, std::unique_ptr<Bmad::PhotonReflection>>(
-      m, "PhotonReflection", "Fortran routine photon_reflection return value")
-      .def_readonly("graze_angle_out", &Bmad::PhotonReflection::graze_angle_out)
-      .def_readonly("phi_out", &Bmad::PhotonReflection::phi_out)
-      .def("__len__", [](const Bmad::PhotonReflection&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::PhotonReflection& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.graze_angle_out);
-            if (i == 1)
-              return py::cast(s.phi_out);
-            throw py::index_error();
-          });
   m.def(
       "photon_reflection_std_surface_init",
       &Bmad::photon_reflection_std_surface_init,
@@ -1904,6 +1719,26 @@ void init_Bmad_routines_p(py::module& m) {
   surface : 
       photon_reflect_surface_struct
   )""");
+  py::class_<
+      Bmad::PhotonReflectivity,
+      std::unique_ptr<Bmad::PhotonReflectivity>>(
+      m,
+      "PhotonReflectivity",
+      "Fortran routine photon_reflectivity return value")
+      .def_readonly("p_reflect", &Bmad::PhotonReflectivity::p_reflect)
+      .def_readonly("rel_p_specular", &Bmad::PhotonReflectivity::rel_p_specular)
+      .def("__len__", [](const Bmad::PhotonReflectivity&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::PhotonReflectivity& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.p_reflect);
+            if (i == 1)
+              return py::cast(s.rel_p_specular);
+            throw py::index_error();
+          });
   m.def(
       "photon_reflectivity",
       &Bmad::photon_reflectivity,
@@ -1937,23 +1772,29 @@ void init_Bmad_routines_p(py::module& m) {
       Relative specular reflection probability.
   )""");
   py::class_<
-      Bmad::PhotonReflectivity,
-      std::unique_ptr<Bmad::PhotonReflectivity>>(
+      PyPhotonTargetCornerCalc,
+      std::unique_ptr<PyPhotonTargetCornerCalc>>(
       m,
-      "PhotonReflectivity",
-      "Fortran routine photon_reflectivity return value")
-      .def_readonly("p_reflect", &Bmad::PhotonReflectivity::p_reflect)
-      .def_readonly("rel_p_specular", &Bmad::PhotonReflectivity::rel_p_specular)
-      .def("__len__", [](const Bmad::PhotonReflectivity&) { return 2; })
+      "PhotonTargetCornerCalc",
+      "Fortran routine photon_target_corner_calc return value")
+      .def_readonly("corner", &PyPhotonTargetCornerCalc::corner)
+      .def_readonly("x_lim", &PyPhotonTargetCornerCalc::x_lim)
+      .def_readonly("y_lim", &PyPhotonTargetCornerCalc::y_lim)
+      .def_readonly("z_lim", &PyPhotonTargetCornerCalc::z_lim)
+      .def("__len__", [](const PyPhotonTargetCornerCalc&) { return 4; })
       .def(
           "__getitem__",
-          [](const Bmad::PhotonReflectivity& s, int i) -> py::object {
+          [](const PyPhotonTargetCornerCalc& s, int i) -> py::object {
             if (i < 0)
-              i += 2;
+              i += 4;
             if (i == 0)
-              return py::cast(s.p_reflect);
+              return py::cast(s.corner);
             if (i == 1)
-              return py::cast(s.rel_p_specular);
+              return py::cast(s.x_lim);
+            if (i == 2)
+              return py::cast(s.y_lim);
+            if (i == 3)
+              return py::cast(s.z_lim);
             throw py::index_error();
           });
   m.def(
@@ -1981,32 +1822,6 @@ void init_Bmad_routines_p(py::module& m) {
   corner : TargetPointStruct
       Corner coords in source_ele ref frame.
   )""");
-  py::class_<
-      PyPhotonTargetCornerCalc,
-      std::unique_ptr<PyPhotonTargetCornerCalc>>(
-      m,
-      "PhotonTargetCornerCalc",
-      "Fortran routine photon_target_corner_calc return value")
-      .def_readonly("corner", &PyPhotonTargetCornerCalc::corner)
-      .def_readonly("x_lim", &PyPhotonTargetCornerCalc::x_lim)
-      .def_readonly("y_lim", &PyPhotonTargetCornerCalc::y_lim)
-      .def_readonly("z_lim", &PyPhotonTargetCornerCalc::z_lim)
-      .def("__len__", [](const PyPhotonTargetCornerCalc&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const PyPhotonTargetCornerCalc& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.corner);
-            if (i == 1)
-              return py::cast(s.x_lim);
-            if (i == 2)
-              return py::cast(s.y_lim);
-            if (i == 3)
-              return py::cast(s.z_lim);
-            throw py::index_error();
-          });
   m.def(
       "photon_target_setup",
       &Bmad::photon_target_setup,
@@ -2044,6 +1859,17 @@ void init_Bmad_routines_p(py::module& m) {
   e_type : int
       coherent$ or incoherent$
   )""");
+  py::class_<PyPhysicalEleEnd, std::unique_ptr<PyPhysicalEleEnd>>(
+      m, "PhysicalEleEnd", "Fortran routine physical_ele_end return value")
+      .def_readonly("physical_end", &PyPhysicalEleEnd::physical_end)
+      .def("__len__", [](const PyPhysicalEleEnd&) { return 1; })
+      .def("__getitem__", [](const PyPhysicalEleEnd& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.physical_end);
+        throw py::index_error();
+      });
   m.def(
       "physical_ele_end",
       &python_physical_ele_end,
@@ -2064,17 +1890,6 @@ void init_Bmad_routines_p(py::module& m) {
       If True return the stream end instead of the physical end. Default is False.
   physical_end : 
   )""");
-  py::class_<PyPhysicalEleEnd, std::unique_ptr<PyPhysicalEleEnd>>(
-      m, "PhysicalEleEnd", "Fortran routine physical_ele_end return value")
-      .def_readonly("physical_end", &PyPhysicalEleEnd::physical_end)
-      .def("__len__", [](const PyPhysicalEleEnd&) { return 1; })
-      .def("__getitem__", [](const PyPhysicalEleEnd& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.physical_end);
-        throw py::index_error();
-      });
   m.def(
       "point_photon_emission",
       &Bmad::point_photon_emission,
@@ -2411,6 +2226,32 @@ void init_Bmad_routines_p(py::module& m) {
   pointer_to_ele2 (lat, ele_loc) result (ele_ptr), Function pointer_to_ele3 (lat, ele_name) result (ele_ptr),
   Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
   )""");
+  py::class_<
+      Bmad::PointerToElementAtS,
+      std::unique_ptr<Bmad::PointerToElementAtS>>(
+      m,
+      "PointerToElementAtS",
+      "Fortran routine pointer_to_element_at_s return value")
+      .def_readonly("err_flag", &Bmad::PointerToElementAtS::err_flag)
+      .def_readonly("s_eff", &Bmad::PointerToElementAtS::s_eff)
+      .def_readonly("position", &Bmad::PointerToElementAtS::position)
+      .def_readonly("ele", &Bmad::PointerToElementAtS::ele)
+      .def("__len__", [](const Bmad::PointerToElementAtS&) { return 4; })
+      .def(
+          "__getitem__",
+          [](const Bmad::PointerToElementAtS& s, int i) -> py::object {
+            if (i < 0)
+              i += 4;
+            if (i == 0)
+              return py::cast(s.err_flag);
+            if (i == 1)
+              return py::cast(s.s_eff);
+            if (i == 2)
+              return py::cast(s.position);
+            if (i == 3)
+              return py::cast(s.ele);
+            throw py::index_error();
+          });
   m.def(
       "pointer_to_element_at_s",
       &Bmad::pointer_to_element_at_s,
@@ -2474,32 +2315,6 @@ void init_Bmad_routines_p(py::module& m) {
   If there are multiple elements that are at the given s position due to the presence of an element with a
   negative length which of the possible elements is actually chosen is ill-defined.
   )""");
-  py::class_<
-      Bmad::PointerToElementAtS,
-      std::unique_ptr<Bmad::PointerToElementAtS>>(
-      m,
-      "PointerToElementAtS",
-      "Fortran routine pointer_to_element_at_s return value")
-      .def_readonly("err_flag", &Bmad::PointerToElementAtS::err_flag)
-      .def_readonly("s_eff", &Bmad::PointerToElementAtS::s_eff)
-      .def_readonly("position", &Bmad::PointerToElementAtS::position)
-      .def_readonly("ele", &Bmad::PointerToElementAtS::ele)
-      .def("__len__", [](const Bmad::PointerToElementAtS&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const Bmad::PointerToElementAtS& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.s_eff);
-            if (i == 2)
-              return py::cast(s.position);
-            if (i == 3)
-              return py::cast(s.ele);
-            throw py::index_error();
-          });
   m.def(
       "pointer_to_field_ele",
       &Bmad::pointer_to_field_ele,
@@ -2530,6 +2345,27 @@ void init_Bmad_routines_p(py::module& m) {
       no girder present
   girder : 
   )""");
+  py::class_<Bmad::PointerToLord, std::unique_ptr<Bmad::PointerToLord>>(
+      m, "PointerToLord", "Fortran routine pointer_to_lord return value")
+      .def_readonly("control", &Bmad::PointerToLord::control)
+      .def_readonly("ix_slave_back", &Bmad::PointerToLord::ix_slave_back)
+      .def_readonly("ix_control", &Bmad::PointerToLord::ix_control)
+      .def_readonly("ix_ic", &Bmad::PointerToLord::ix_ic)
+      .def("__len__", [](const Bmad::PointerToLord&) { return 4; })
+      .def(
+          "__getitem__", [](const Bmad::PointerToLord& s, int i) -> py::object {
+            if (i < 0)
+              i += 4;
+            if (i == 0)
+              return py::cast(s.control);
+            if (i == 1)
+              return py::cast(s.ix_slave_back);
+            if (i == 2)
+              return py::cast(s.ix_control);
+            if (i == 3)
+              return py::cast(s.ix_ic);
+            throw py::index_error();
+          });
   m.def(
       "pointer_to_lord",
       &Bmad::pointer_to_lord,
@@ -2557,44 +2393,6 @@ void init_Bmad_routines_p(py::module& m) {
       Index of the lat.ic(:) element associated with the control argument.
   lord_ptr : 
   )""");
-  py::class_<Bmad::PointerToLord, std::unique_ptr<Bmad::PointerToLord>>(
-      m, "PointerToLord", "Fortran routine pointer_to_lord return value")
-      .def_readonly("control", &Bmad::PointerToLord::control)
-      .def_readonly("ix_slave_back", &Bmad::PointerToLord::ix_slave_back)
-      .def_readonly("ix_control", &Bmad::PointerToLord::ix_control)
-      .def_readonly("ix_ic", &Bmad::PointerToLord::ix_ic)
-      .def("__len__", [](const Bmad::PointerToLord&) { return 4; })
-      .def(
-          "__getitem__", [](const Bmad::PointerToLord& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.control);
-            if (i == 1)
-              return py::cast(s.ix_slave_back);
-            if (i == 2)
-              return py::cast(s.ix_control);
-            if (i == 3)
-              return py::cast(s.ix_ic);
-            throw py::index_error();
-          });
-  m.def(
-      "pointer_to_multipass_lord",
-      &Bmad::pointer_to_multipass_lord,
-      py::arg("ele"),
-      py::arg("multi_lord"),
-      R"""(Parameters
-  ----------
-  ele : EleStruct
-      Lattice element.
-  ix_pass : int
-      Multipass turn number. Set to 0 if element is a multipass_lord. Set to -1 if element is not a
-      multipass_slave.
-  super_lord : EleStruct
-      super_lord of the element. Set to NULL if ele is not a super_slave or super_lord. Note: if ele is a
-      multipass_lord there are multiple possible super_lord slaves.
-  multi_lord : 
-  )""");
   py::class_<
       Bmad::PointerToMultipassLord,
       std::unique_ptr<Bmad::PointerToMultipassLord>>(
@@ -2616,6 +2414,23 @@ void init_Bmad_routines_p(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "pointer_to_multipass_lord",
+      &Bmad::pointer_to_multipass_lord,
+      py::arg("ele"),
+      py::arg("multi_lord"),
+      R"""(Parameters
+  ----------
+  ele : EleStruct
+      Lattice element.
+  ix_pass : int
+      Multipass turn number. Set to 0 if element is a multipass_lord. Set to -1 if element is not a
+      multipass_slave.
+  super_lord : EleStruct
+      super_lord of the element. Set to NULL if ele is not a super_slave or super_lord. Note: if ele is a
+      multipass_lord there are multiple possible super_lord slaves.
+  multi_lord : 
+  )""");
+  m.def(
       "pointer_to_next_ele",
       &Bmad::pointer_to_next_ele,
       py::arg("this_ele"),
@@ -2635,6 +2450,31 @@ void init_Bmad_routines_p(py::module& m) {
       If True then fork at any fork element. Default is False.
   next_ele : 
   )""");
+  py::class_<Bmad::PointerToSlave, std::unique_ptr<Bmad::PointerToSlave>>(
+      m, "PointerToSlave", "Fortran routine pointer_to_slave return value")
+      .def_readonly("control", &Bmad::PointerToSlave::control)
+      .def_readonly("ix_lord_back", &Bmad::PointerToSlave::ix_lord_back)
+      .def_readonly("ix_control", &Bmad::PointerToSlave::ix_control)
+      .def_readonly("ix_ic", &Bmad::PointerToSlave::ix_ic)
+      .def_readonly("slave_ptr", &Bmad::PointerToSlave::slave_ptr)
+      .def("__len__", [](const Bmad::PointerToSlave&) { return 5; })
+      .def(
+          "__getitem__",
+          [](const Bmad::PointerToSlave& s, int i) -> py::object {
+            if (i < 0)
+              i += 5;
+            if (i == 0)
+              return py::cast(s.control);
+            if (i == 1)
+              return py::cast(s.ix_lord_back);
+            if (i == 2)
+              return py::cast(s.ix_control);
+            if (i == 3)
+              return py::cast(s.ix_ic);
+            if (i == 4)
+              return py::cast(s.slave_ptr);
+            throw py::index_error();
+          });
   m.def(
       "pointer_to_slave",
       &Bmad::pointer_to_slave,
@@ -2681,55 +2521,6 @@ void init_Bmad_routines_p(py::module& m) {
   Related routines:
   pointer_to_lord pointer_to_super_lord pointer_to_ele num_lords
   )""");
-  py::class_<Bmad::PointerToSlave, std::unique_ptr<Bmad::PointerToSlave>>(
-      m, "PointerToSlave", "Fortran routine pointer_to_slave return value")
-      .def_readonly("control", &Bmad::PointerToSlave::control)
-      .def_readonly("ix_lord_back", &Bmad::PointerToSlave::ix_lord_back)
-      .def_readonly("ix_control", &Bmad::PointerToSlave::ix_control)
-      .def_readonly("ix_ic", &Bmad::PointerToSlave::ix_ic)
-      .def_readonly("slave_ptr", &Bmad::PointerToSlave::slave_ptr)
-      .def("__len__", [](const Bmad::PointerToSlave&) { return 5; })
-      .def(
-          "__getitem__",
-          [](const Bmad::PointerToSlave& s, int i) -> py::object {
-            if (i < 0)
-              i += 5;
-            if (i == 0)
-              return py::cast(s.control);
-            if (i == 1)
-              return py::cast(s.ix_lord_back);
-            if (i == 2)
-              return py::cast(s.ix_control);
-            if (i == 3)
-              return py::cast(s.ix_ic);
-            if (i == 4)
-              return py::cast(s.slave_ptr);
-            throw py::index_error();
-          });
-  m.def(
-      "pointer_to_super_lord",
-      &Bmad::pointer_to_super_lord,
-      py::arg("slave"),
-      py::arg("lord_type") = py::none(),
-      py::arg("lord_ptr"),
-      R"""(Parameters
-  ----------
-  slave : EleStruct
-      Slave element.
-  control : ControlStruct
-      Pointer to control info for this lord/slave relationship. Nullified if there is an error.
-  ix_slave_back : int
-      Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back) will point back to slave. Set
-      to -1 if there is an error or the slave is a slice_slave.
-  ix_control : int
-      Index in lat.control(:) array the control argument is at. For ramper lord elements, ix_control is index
-      for the lord.control.ramper(:) array.
-  ix_ic : int
-      Index of the lat.ic(:) element associated with the control argument.
-  lord_type : int, optional
-      If present, only return a super_lord of this type.
-  lord_ptr : 
-  )""");
   py::class_<
       Bmad::PointerToSuperLord,
       std::unique_ptr<Bmad::PointerToSuperLord>>(
@@ -2757,40 +2548,28 @@ void init_Bmad_routines_p(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "pointer_to_surface_displacement_pt",
-      &python_pointer_to_surface_displacement_pt,
-      py::arg("ele"),
-      py::arg("nearest"),
-      py::arg("x"),
-      py::arg("y"),
-      py::arg("ix") = py::none(),
-      py::arg("iy") = py::none(),
-      py::arg("extend_grid") = py::none(),
-      py::arg("xx") = py::none(),
-      py::arg("yy") = py::none(),
-      R"""(Function pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
-
-  Routine to point to the grid point struct associated with point (x,y).
-
-  Note: If nearest = True, the grid boundary is a length dr/2 from the boundary grid points.
-
-  Parameters
+      "pointer_to_super_lord",
+      &Bmad::pointer_to_super_lord,
+      py::arg("slave"),
+      py::arg("lord_type") = py::none(),
+      py::arg("lord_ptr"),
+      R"""(Parameters
   ----------
-  ele : EleStruct
-      Element containing the grid
-  nearest : bool
-      If True, return pointer to nearest grid point. If False, return pointer to the grid point lower and left
-      of (x,y). x, y        -- real(rp): Photon position.
-  extend_grid : bool, optional
-      If (x,y) past grid pretend (x,y) is at grid boundary. Default is False. ix, iy      -- integer, optional:
-      Grid point index.
-
-  Returns
-  -------
-  pt : GridPointStruct
-      Pointer to grid point. Will not be associated if (x,y) outside the grid. xx, yy      -- real(rp),
-      optional: Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set
-      to be on the nearest grid boundary point.
+  slave : EleStruct
+      Slave element.
+  control : ControlStruct
+      Pointer to control info for this lord/slave relationship. Nullified if there is an error.
+  ix_slave_back : int
+      Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back) will point back to slave. Set
+      to -1 if there is an error or the slave is a slice_slave.
+  ix_control : int
+      Index in lat.control(:) array the control argument is at. For ramper lord elements, ix_control is index
+      for the lord.control.ramper(:) array.
+  ix_ic : int
+      Index of the lat.ic(:) element associated with the control argument.
+  lord_type : int, optional
+      If present, only return a super_lord of this type.
+  lord_ptr : 
   )""");
   py::class_<
       PyPointerToSurfaceDisplacementPt,
@@ -2828,8 +2607,8 @@ void init_Bmad_routines_p(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "pointer_to_surface_segmented_pt",
-      &python_pointer_to_surface_segmented_pt,
+      "pointer_to_surface_displacement_pt",
+      &python_pointer_to_surface_displacement_pt,
       py::arg("ele"),
       py::arg("nearest"),
       py::arg("x"),
@@ -2839,7 +2618,7 @@ void init_Bmad_routines_p(py::module& m) {
       py::arg("extend_grid") = py::none(),
       py::arg("xx") = py::none(),
       py::arg("yy") = py::none(),
-      R"""(Function pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
+      R"""(Function pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
 
   Routine to point to the grid point struct associated with point (x,y).
 
@@ -2899,6 +2678,42 @@ void init_Bmad_routines_p(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "pointer_to_surface_segmented_pt",
+      &python_pointer_to_surface_segmented_pt,
+      py::arg("ele"),
+      py::arg("nearest"),
+      py::arg("x"),
+      py::arg("y"),
+      py::arg("ix") = py::none(),
+      py::arg("iy") = py::none(),
+      py::arg("extend_grid") = py::none(),
+      py::arg("xx") = py::none(),
+      py::arg("yy") = py::none(),
+      R"""(Function pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
+
+  Routine to point to the grid point struct associated with point (x,y).
+
+  Note: If nearest = True, the grid boundary is a length dr/2 from the boundary grid points.
+
+  Parameters
+  ----------
+  ele : EleStruct
+      Element containing the grid
+  nearest : bool
+      If True, return pointer to nearest grid point. If False, return pointer to the grid point lower and left
+      of (x,y). x, y        -- real(rp): Photon position.
+  extend_grid : bool, optional
+      If (x,y) past grid pretend (x,y) is at grid boundary. Default is False. ix, iy      -- integer, optional:
+      Grid point index.
+
+  Returns
+  -------
+  pt : GridPointStruct
+      Pointer to grid point. Will not be associated if (x,y) outside the grid. xx, yy      -- real(rp),
+      optional: Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set
+      to be on the nearest grid boundary point.
+  )""");
+  m.def(
       "pointer_to_wake_ele",
       &Bmad::pointer_to_wake_ele,
       py::arg("ele"),
@@ -2911,6 +2726,25 @@ void init_Bmad_routines_p(py::module& m) {
       distance of wake locaiton from beginning of ele.
   wake_ele : 
   )""");
+  py::class_<Bmad::PointerToWall3d, std::unique_ptr<Bmad::PointerToWall3d>>(
+      m, "PointerToWall3d", "Fortran routine pointer_to_wall3d return value")
+      .def_readonly("ds_offset", &Bmad::PointerToWall3d::ds_offset)
+      .def_readonly("is_branch_wall", &Bmad::PointerToWall3d::is_branch_wall)
+      .def_readonly("wall3d", &Bmad::PointerToWall3d::wall3d)
+      .def("__len__", [](const Bmad::PointerToWall3d&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const Bmad::PointerToWall3d& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.ds_offset);
+            if (i == 1)
+              return py::cast(s.is_branch_wall);
+            if (i == 2)
+              return py::cast(s.wall3d);
+            throw py::index_error();
+          });
   m.def(
       "pointer_to_wall3d",
       &Bmad::pointer_to_wall3d,
@@ -2939,25 +2773,6 @@ void init_Bmad_routines_p(py::module& m) {
   is_branch_wall : bool
       Set True if wall3d points to branch.wall3d.
   )""");
-  py::class_<Bmad::PointerToWall3d, std::unique_ptr<Bmad::PointerToWall3d>>(
-      m, "PointerToWall3d", "Fortran routine pointer_to_wall3d return value")
-      .def_readonly("ds_offset", &Bmad::PointerToWall3d::ds_offset)
-      .def_readonly("is_branch_wall", &Bmad::PointerToWall3d::is_branch_wall)
-      .def_readonly("wall3d", &Bmad::PointerToWall3d::wall3d)
-      .def("__len__", [](const Bmad::PointerToWall3d&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::PointerToWall3d& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.ds_offset);
-            if (i == 1)
-              return py::cast(s.is_branch_wall);
-            if (i == 2)
-              return py::cast(s.wall3d);
-            throw py::index_error();
-          });
   m.def(
       "polar_to_spinor",
       &Bmad::polar_to_spinor,
@@ -2980,6 +2795,25 @@ void init_Bmad_routines_p(py::module& m) {
       Spin_polar_struct
   vec : 
   )""");
+  py::class_<Bmad::ProjectEmitToXyz, std::unique_ptr<Bmad::ProjectEmitToXyz>>(
+      m, "ProjectEmitToXyz", "Fortran routine project_emit_to_xyz return value")
+      .def_readonly("sigma_x", &Bmad::ProjectEmitToXyz::sigma_x)
+      .def_readonly("sigma_y", &Bmad::ProjectEmitToXyz::sigma_y)
+      .def_readonly("sigma_z", &Bmad::ProjectEmitToXyz::sigma_z)
+      .def("__len__", [](const Bmad::ProjectEmitToXyz&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const Bmad::ProjectEmitToXyz& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.sigma_x);
+            if (i == 1)
+              return py::cast(s.sigma_y);
+            if (i == 2)
+              return py::cast(s.sigma_z);
+            throw py::index_error();
+          });
   m.def(
       "project_emit_to_xyz",
       &Bmad::project_emit_to_xyz,
@@ -3022,25 +2856,6 @@ void init_Bmad_routines_p(py::module& m) {
   sigma_z : float
       projected longitudinal beamsize
   )""");
-  py::class_<Bmad::ProjectEmitToXyz, std::unique_ptr<Bmad::ProjectEmitToXyz>>(
-      m, "ProjectEmitToXyz", "Fortran routine project_emit_to_xyz return value")
-      .def_readonly("sigma_x", &Bmad::ProjectEmitToXyz::sigma_x)
-      .def_readonly("sigma_y", &Bmad::ProjectEmitToXyz::sigma_y)
-      .def_readonly("sigma_z", &Bmad::ProjectEmitToXyz::sigma_z)
-      .def("__len__", [](const Bmad::ProjectEmitToXyz&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ProjectEmitToXyz& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.sigma_x);
-            if (i == 1)
-              return py::cast(s.sigma_y);
-            if (i == 2)
-              return py::cast(s.sigma_z);
-            throw py::index_error();
-          });
   m.def(
       "psi_prime_sca",
       &Bmad::psi_prime_sca,
@@ -3100,6 +2915,20 @@ void init_Bmad_routines_p(py::module& m) {
   closed_orbit : CoordStruct
       closed_orbit
   )""");
+  py::class_<Bmad::PtcEmitCalc, std::unique_ptr<Bmad::PtcEmitCalc>>(
+      m, "PtcEmitCalc", "Fortran routine ptc_emit_calc return value")
+      .def_readonly("norm_mode", &Bmad::PtcEmitCalc::norm_mode)
+      .def_readonly("closed_orb", &Bmad::PtcEmitCalc::closed_orb)
+      .def("__len__", [](const Bmad::PtcEmitCalc&) { return 2; })
+      .def("__getitem__", [](const Bmad::PtcEmitCalc& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.norm_mode);
+        if (i == 1)
+          return py::cast(s.closed_orb);
+        throw py::index_error();
+      });
   m.def(
       "ptc_emit_calc",
       &Bmad::ptc_emit_calc,
@@ -3125,20 +2954,6 @@ void init_Bmad_routines_p(py::module& m) {
   closed_orb : CoordStruct
       Closed orbit at ele (Bmad coordinates). Notice: This closed orbit is the closed orbit with radiation on.
   )""");
-  py::class_<Bmad::PtcEmitCalc, std::unique_ptr<Bmad::PtcEmitCalc>>(
-      m, "PtcEmitCalc", "Fortran routine ptc_emit_calc return value")
-      .def_readonly("norm_mode", &Bmad::PtcEmitCalc::norm_mode)
-      .def_readonly("closed_orb", &Bmad::PtcEmitCalc::closed_orb)
-      .def("__len__", [](const Bmad::PtcEmitCalc&) { return 2; })
-      .def("__getitem__", [](const Bmad::PtcEmitCalc& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.norm_mode);
-        if (i == 1)
-          return py::cast(s.closed_orb);
-        throw py::index_error();
-      });
   m.def(
       "ptc_layouts_resplit",
       &Bmad::ptc_layouts_resplit,
@@ -3236,6 +3051,20 @@ void init_Bmad_routines_p(py::module& m) {
   For example, for a change in bmad_com%taylor_order.
 
   )""");
+  py::class_<Bmad::PtcSpinCalc, std::unique_ptr<Bmad::PtcSpinCalc>>(
+      m, "PtcSpinCalc", "Fortran routine ptc_spin_calc return value")
+      .def_readonly("norm_mode", &Bmad::PtcSpinCalc::norm_mode)
+      .def_readonly("closed_orb", &Bmad::PtcSpinCalc::closed_orb)
+      .def("__len__", [](const Bmad::PtcSpinCalc&) { return 2; })
+      .def("__getitem__", [](const Bmad::PtcSpinCalc& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.norm_mode);
+        if (i == 1)
+          return py::cast(s.closed_orb);
+        throw py::index_error();
+      });
   m.def(
       "ptc_spin_calc",
       &Bmad::ptc_spin_calc,
@@ -3259,18 +3088,18 @@ void init_Bmad_routines_p(py::module& m) {
   closed_orb : CoordStruct
       Closed orbit at ele (Bmad coordinates). Notice: This closed orbit is the closed orbit with radiation on.
   )""");
-  py::class_<Bmad::PtcSpinCalc, std::unique_ptr<Bmad::PtcSpinCalc>>(
-      m, "PtcSpinCalc", "Fortran routine ptc_spin_calc return value")
-      .def_readonly("norm_mode", &Bmad::PtcSpinCalc::norm_mode)
-      .def_readonly("closed_orb", &Bmad::PtcSpinCalc::closed_orb)
-      .def("__len__", [](const Bmad::PtcSpinCalc&) { return 2; })
-      .def("__getitem__", [](const Bmad::PtcSpinCalc& s, int i) -> py::object {
+  py::class_<Bmad::PtcTrackAll, std::unique_ptr<Bmad::PtcTrackAll>>(
+      m, "PtcTrackAll", "Fortran routine ptc_track_all return value")
+      .def_readonly("track_state", &Bmad::PtcTrackAll::track_state)
+      .def_readonly("err_flag", &Bmad::PtcTrackAll::err_flag)
+      .def("__len__", [](const Bmad::PtcTrackAll&) { return 2; })
+      .def("__getitem__", [](const Bmad::PtcTrackAll& s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.norm_mode);
+          return py::cast(s.track_state);
         if (i == 1)
-          return py::cast(s.closed_orb);
+          return py::cast(s.err_flag);
         throw py::index_error();
       });
   m.def(
@@ -3297,20 +3126,6 @@ void init_Bmad_routines_p(py::module& m) {
   err_flag : bool
       Set true if particle lost or error. False otherwise
   )""");
-  py::class_<Bmad::PtcTrackAll, std::unique_ptr<Bmad::PtcTrackAll>>(
-      m, "PtcTrackAll", "Fortran routine ptc_track_all return value")
-      .def_readonly("track_state", &Bmad::PtcTrackAll::track_state)
-      .def_readonly("err_flag", &Bmad::PtcTrackAll::err_flag)
-      .def("__len__", [](const Bmad::PtcTrackAll&) { return 2; })
-      .def("__getitem__", [](const Bmad::PtcTrackAll& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.track_state);
-        if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
-      });
   m.def(
       "ptc_transfer_map_with_spin",
       &Bmad::ptc_transfer_map_with_spin,

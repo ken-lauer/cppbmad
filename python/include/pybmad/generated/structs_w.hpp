@@ -2,8 +2,6 @@
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
 
-void init_structs_w(py::module& m);
-
 // Per-struct init functions
 void init_wake_lr_mode_struct(
     py::module& m,

@@ -1,20 +1,9 @@
 #include "pybmad/generated/SimUtils_routines_r.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-
-struct PyRanGaussScalar {
-  double harvest;
-  std::optional<int> index_quasi;
-};
 PyRanGaussScalar python_ran_gauss_scalar(
     optional_ref<RandomStateProxy> ran_state = std::nullopt,
     std::optional<double> sigma_cut = std::nullopt,
@@ -24,11 +13,6 @@ PyRanGaussScalar python_ran_gauss_scalar(
   auto py_result{PyRanGaussScalar{_result, index_quasi}};
   return py_result;
 }
-
-struct PyRanUniformScalar {
-  double harvest;
-  std::optional<int> index_quasi;
-};
 PyRanUniformScalar python_ran_uniform_scalar(
     optional_ref<RandomStateProxy> ran_state = std::nullopt,
     std::optional<int> index_quasi = std::nullopt) {
@@ -36,12 +20,6 @@ PyRanUniformScalar python_ran_uniform_scalar(
   auto py_result{PyRanUniformScalar{_result, index_quasi}};
   return py_result;
 }
-struct PyRealNumFortranFormat {
-  double number;
-  int width;
-  std::optional<int> n_blanks;
-  std::string fmt_str;
-};
 PyRealNumFortranFormat python_real_num_fortran_format(
     double number,
     int width,
@@ -52,11 +30,6 @@ PyRealNumFortranFormat python_real_num_fortran_format(
   auto py_result{PyRealNumFortranFormat{number, width, n_blanks, fmt_str}};
   return py_result;
 }
-struct PyRealPath {
-  std::string path_in;
-  std::string path_out;
-  bool is_ok;
-};
 PyRealPath python_real_path(
     std::string path_in,
     std::string path_out,
@@ -65,12 +38,6 @@ PyRealPath python_real_path(
   auto py_result{PyRealPath{path_in, path_out, is_ok}};
   return py_result;
 }
-struct PyRealStr {
-  double r_num;
-  std::optional<int> n_signif;
-  std::optional<int> n_decimal;
-  std::string str;
-};
 PyRealStr python_real_str(
     double r_num,
     std::optional<int> n_signif,
@@ -81,13 +48,6 @@ PyRealStr python_real_str(
   auto py_result{PyRealStr{r_num, n_signif, n_decimal, str}};
   return py_result;
 }
-struct PyRealToString {
-  double real_num;
-  int width;
-  std::optional<int> n_signif;
-  std::optional<int> n_decimal;
-  std::string str;
-};
 PyRealToString python_real_to_string(
     double real_num,
     int width,
@@ -99,11 +59,6 @@ PyRealToString python_real_to_string(
   auto py_result{PyRealToString{real_num, width, n_signif, n_decimal, str}};
   return py_result;
 }
-
-struct PyRmsValue {
-  double ave_val;
-  double rms_val;
-};
 PyRmsValue python_rms_value(
     RealAlloc1D& val_arr,
     optional_ref<BoolAlloc1D> good_val,
@@ -112,11 +67,6 @@ PyRmsValue python_rms_value(
   auto py_result{PyRmsValue{_result, rms_val}};
   return py_result;
 }
-struct PyRunTimer {
-  std::string command;
-  std::optional<double> time;
-  std::optional<double> time0;
-};
 PyRunTimer python_run_timer(
     std::string command,
     std::optional<double> time = std::nullopt,
@@ -168,6 +118,27 @@ void init_SimUtils_routines_r(py::module& m) {
   ran_state : RandomStateStruct, optional
       Internal state. See the ran_seed_put documentation for more details.
   )""");
+  py::class_<
+      SimUtils::RanGaussConverter,
+      std::unique_ptr<SimUtils::RanGaussConverter>>(
+      m,
+      "RanGaussConverter",
+      "Fortran routine ran_gauss_converter return value")
+      .def_readonly("get", &SimUtils::RanGaussConverter::get)
+      .def_readonly(
+          "get_sigma_cut", &SimUtils::RanGaussConverter::get_sigma_cut)
+      .def("__len__", [](const SimUtils::RanGaussConverter&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const SimUtils::RanGaussConverter& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.get);
+            if (i == 1)
+              return py::cast(s.get_sigma_cut);
+            throw py::index_error();
+          });
   m.def(
       "ran_gauss_converter",
       &SimUtils::ran_gauss_converter,
@@ -210,27 +181,20 @@ void init_SimUtils_routines_r(py::module& m) {
   get_sigma_cut : float
       Get the current (before any set) sigma cutoff.
   )""");
-  py::class_<
-      SimUtils::RanGaussConverter,
-      std::unique_ptr<SimUtils::RanGaussConverter>>(
-      m,
-      "RanGaussConverter",
-      "Fortran routine ran_gauss_converter return value")
-      .def_readonly("get", &SimUtils::RanGaussConverter::get)
-      .def_readonly(
-          "get_sigma_cut", &SimUtils::RanGaussConverter::get_sigma_cut)
-      .def("__len__", [](const SimUtils::RanGaussConverter&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::RanGaussConverter& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.get);
-            if (i == 1)
-              return py::cast(s.get_sigma_cut);
-            throw py::index_error();
-          });
+  py::class_<PyRanGaussScalar, std::unique_ptr<PyRanGaussScalar>>(
+      m, "RanGaussScalar", "Fortran routine ran_gauss_scalar return value")
+      .def_readonly("harvest", &PyRanGaussScalar::harvest)
+      .def_readonly("index_quasi", &PyRanGaussScalar::index_quasi)
+      .def("__len__", [](const PyRanGaussScalar&) { return 2; })
+      .def("__getitem__", [](const PyRanGaussScalar& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.harvest);
+        if (i == 1)
+          return py::cast(s.index_quasi);
+        throw py::index_error();
+      });
   m.def(
       "ran_gauss_scalar",
       &python_ran_gauss_scalar,
@@ -267,20 +231,6 @@ void init_SimUtils_routines_r(py::module& m) {
   -----
   Overloaded versions:
   )""");
-  py::class_<PyRanGaussScalar, std::unique_ptr<PyRanGaussScalar>>(
-      m, "RanGaussScalar", "Fortran routine ran_gauss_scalar return value")
-      .def_readonly("harvest", &PyRanGaussScalar::harvest)
-      .def_readonly("index_quasi", &PyRanGaussScalar::index_quasi)
-      .def("__len__", [](const PyRanGaussScalar&) { return 2; })
-      .def("__getitem__", [](const PyRanGaussScalar& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.harvest);
-        if (i == 1)
-          return py::cast(s.index_quasi);
-        throw py::index_error();
-      });
   m.def(
       "ran_gauss_vector",
       &SimUtils::ran_gauss_vector,
@@ -357,6 +307,20 @@ void init_SimUtils_routines_r(py::module& m) {
       Offset added to seed. Default is zero. Used with MPI processes ensure different threads use different
       random numbers.
   )""");
+  py::class_<PyRanUniformScalar, std::unique_ptr<PyRanUniformScalar>>(
+      m, "RanUniformScalar", "Fortran routine ran_uniform_scalar return value")
+      .def_readonly("harvest", &PyRanUniformScalar::harvest)
+      .def_readonly("index_quasi", &PyRanUniformScalar::index_quasi)
+      .def("__len__", [](const PyRanUniformScalar&) { return 2; })
+      .def("__getitem__", [](const PyRanUniformScalar& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.harvest);
+        if (i == 1)
+          return py::cast(s.index_quasi);
+        throw py::index_error();
+      });
   m.def(
       "ran_uniform",
       py::overload_cast<optional_ref<RandomStateProxy>, std::optional<int>>(
@@ -392,20 +356,6 @@ void init_SimUtils_routines_r(py::module& m) {
   -----
   Overloaded versions:
   )""");
-  py::class_<PyRanUniformScalar, std::unique_ptr<PyRanUniformScalar>>(
-      m, "RanUniformScalar", "Fortran routine ran_uniform_scalar return value")
-      .def_readonly("harvest", &PyRanUniformScalar::harvest)
-      .def_readonly("index_quasi", &PyRanUniformScalar::index_quasi)
-      .def("__len__", [](const PyRanUniformScalar&) { return 2; })
-      .def("__getitem__", [](const PyRanUniformScalar& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.harvest);
-        if (i == 1)
-          return py::cast(s.index_quasi);
-        throw py::index_error();
-      });
   m.def(
       "ran_uniform",
       py::overload_cast<optional_ref<RandomStateProxy>>(&SimUtils::ran_uniform),
@@ -439,20 +389,6 @@ void init_SimUtils_routines_r(py::module& m) {
   -----
   Overloaded versions:
   )""");
-  m.def(
-      "real_num_fortran_format",
-      &python_real_num_fortran_format,
-      py::arg("number"),
-      py::arg("width"),
-      py::arg("n_blanks") = py::none(),
-      py::arg("fmt_str"),
-      R"""(Parameters
-  ----------
-  number : 
-  width : 
-  n_blanks : 
-  fmt_str : 
-  )""");
   py::class_<PyRealNumFortranFormat, std::unique_ptr<PyRealNumFortranFormat>>(
       m,
       "RealNumFortranFormat",
@@ -478,16 +414,18 @@ void init_SimUtils_routines_r(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "real_path",
-      &python_real_path,
-      py::arg("path_in"),
-      py::arg("path_out"),
-      py::arg("is_ok"),
+      "real_num_fortran_format",
+      &python_real_num_fortran_format,
+      py::arg("number"),
+      py::arg("width"),
+      py::arg("n_blanks") = py::none(),
+      py::arg("fmt_str"),
       R"""(Parameters
   ----------
-  path_in : 
-  path_out : 
-  is_ok : 
+  number : 
+  width : 
+  n_blanks : 
+  fmt_str : 
   )""");
   py::class_<PyRealPath, std::unique_ptr<PyRealPath>>(
       m, "RealPath", "Fortran routine real_path return value")
@@ -507,18 +445,16 @@ void init_SimUtils_routines_r(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "real_str",
-      &python_real_str,
-      py::arg("r_num"),
-      py::arg("n_signif") = py::none(),
-      py::arg("n_decimal") = py::none(),
-      py::arg("str"),
+      "real_path",
+      &python_real_path,
+      py::arg("path_in"),
+      py::arg("path_out"),
+      py::arg("is_ok"),
       R"""(Parameters
   ----------
-  r_num : 
-  n_signif : 
-  n_decimal : 
-  str : 
+  path_in : 
+  path_out : 
+  is_ok : 
   )""");
   py::class_<PyRealStr, std::unique_ptr<PyRealStr>>(
       m, "RealStr", "Fortran routine real_str return value")
@@ -541,17 +477,15 @@ void init_SimUtils_routines_r(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "real_to_string",
-      &python_real_to_string,
-      py::arg("real_num"),
-      py::arg("width"),
+      "real_str",
+      &python_real_str,
+      py::arg("r_num"),
       py::arg("n_signif") = py::none(),
       py::arg("n_decimal") = py::none(),
       py::arg("str"),
       R"""(Parameters
   ----------
-  real_num : 
-  width : 
+  r_num : 
   n_signif : 
   n_decimal : 
   str : 
@@ -580,6 +514,22 @@ void init_SimUtils_routines_r(py::module& m) {
         throw py::index_error();
       });
   m.def(
+      "real_to_string",
+      &python_real_to_string,
+      py::arg("real_num"),
+      py::arg("width"),
+      py::arg("n_signif") = py::none(),
+      py::arg("n_decimal") = py::none(),
+      py::arg("str"),
+      R"""(Parameters
+  ----------
+  real_num : 
+  width : 
+  n_signif : 
+  n_decimal : 
+  str : 
+  )""");
+  m.def(
       "reallocate_spline",
       &SimUtils::reallocate_spline,
       py::arg("spline"),
@@ -605,6 +555,20 @@ void init_SimUtils_routines_r(py::module& m) {
   exact : bool, optional
       If present and False then the size of the output array is permitted to be larger than n. Default is True.
   )""");
+  py::class_<PyRmsValue, std::unique_ptr<PyRmsValue>>(
+      m, "RmsValue", "Fortran routine rms_value return value")
+      .def_readonly("ave_val", &PyRmsValue::ave_val)
+      .def_readonly("rms_val", &PyRmsValue::rms_val)
+      .def("__len__", [](const PyRmsValue&) { return 2; })
+      .def("__getitem__", [](const PyRmsValue& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.ave_val);
+        if (i == 1)
+          return py::cast(s.rms_val);
+        throw py::index_error();
+      });
   m.def(
       "rms_value",
       &python_rms_value,
@@ -621,20 +585,6 @@ void init_SimUtils_routines_r(py::module& m) {
       average value.
   rms_val : 
   )""");
-  py::class_<PyRmsValue, std::unique_ptr<PyRmsValue>>(
-      m, "RmsValue", "Fortran routine rms_value return value")
-      .def_readonly("ave_val", &PyRmsValue::ave_val)
-      .def_readonly("rms_val", &PyRmsValue::rms_val)
-      .def("__len__", [](const PyRmsValue&) { return 2; })
-      .def("__getitem__", [](const PyRmsValue& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.ave_val);
-        if (i == 1)
-          return py::cast(s.rms_val);
-        throw py::index_error();
-      });
   m.def(
       "rot_2d",
       &SimUtils::rot_2d,
@@ -713,18 +663,6 @@ void init_SimUtils_routines_r(py::module& m) {
   re_out : float
       Equiv real.
   )""");
-  m.def(
-      "run_timer",
-      &python_run_timer,
-      py::arg("command"),
-      py::arg("time") = py::none(),
-      py::arg("time0") = py::none(),
-      R"""(Parameters
-  ----------
-  command : 
-  time : 
-  time0 : 
-  )""");
   py::class_<PyRunTimer, std::unique_ptr<PyRunTimer>>(
       m, "RunTimer", "Fortran routine run_timer return value")
       .def_readonly("command", &PyRunTimer::command)
@@ -742,4 +680,16 @@ void init_SimUtils_routines_r(py::module& m) {
           return py::cast(s.time0);
         throw py::index_error();
       });
+  m.def(
+      "run_timer",
+      &python_run_timer,
+      py::arg("command"),
+      py::arg("time") = py::none(),
+      py::arg("time0") = py::none(),
+      R"""(Parameters
+  ----------
+  command : 
+  time : 
+  time0 : 
+  )""");
 }

@@ -2,8 +2,6 @@
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
 
-void init_structs_c(py::module& m);
-
 // Per-struct init functions
 void init_cartesian_map_struct(
     py::module& m,

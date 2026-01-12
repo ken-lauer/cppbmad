@@ -2,8 +2,6 @@
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
 
-void init_structs_q(py::module& m);
-
 // Per-struct init functions
 void init_qp_axis_struct(py::module& m, py::class_<QpAxisProxy>& class_);
 void init_qp_legend_struct(py::module& m, py::class_<QpLegendProxy>& class_);

@@ -1,18 +1,9 @@
 #include "pybmad/generated/Bmad_routines_e.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyEAccelField {
-  double field;
-};
 PyEAccelField python_e_accel_field(
     EleProxy& ele,
     int voltage_or_gradient,
@@ -22,9 +13,6 @@ PyEAccelField python_e_accel_field(
   auto py_result{PyEAccelField{field}};
   return py_result;
 }
-struct PyEleFullName {
-  std::string str;
-};
 PyEleFullName python_ele_full_name(
     EleProxy& ele,
     std::optional<std::string> template_,
@@ -33,9 +21,6 @@ PyEleFullName python_ele_full_name(
   auto py_result{PyEleFullName{str}};
   return py_result;
 }
-struct PyEleHasConstantDsDtRef {
-  bool is_const;
-};
 PyEleHasConstantDsDtRef python_ele_has_constant_ds_dt_ref(
     EleProxy& ele,
     bool is_const) {
@@ -43,19 +28,11 @@ PyEleHasConstantDsDtRef python_ele_has_constant_ds_dt_ref(
   auto py_result{PyEleHasConstantDsDtRef{is_const}};
   return py_result;
 }
-
-struct PyEleHasNonzeroKick {
-  EleProxy ele;
-  bool has_kick;
-};
 PyEleHasNonzeroKick python_ele_has_nonzero_kick(bool has_kick) {
   auto _result = Bmad::ele_has_nonzero_kick(has_kick);
   auto py_result{PyEleHasNonzeroKick{_result, has_kick}};
   return py_result;
 }
-struct PyEleHasNonzeroOffset {
-  bool has_offset;
-};
 PyEleHasNonzeroOffset python_ele_has_nonzero_offset(
     EleProxy& ele,
     bool has_offset) {
@@ -63,9 +40,6 @@ PyEleHasNonzeroOffset python_ele_has_nonzero_offset(
   auto py_result{PyEleHasNonzeroOffset{has_offset}};
   return py_result;
 }
-struct PyEleLocName {
-  std::string str;
-};
 PyEleLocName python_ele_loc_name(
     EleProxy& ele,
     std::optional<bool> show_branch0,
@@ -75,17 +49,11 @@ PyEleLocName python_ele_loc_name(
   auto py_result{PyEleLocName{str}};
   return py_result;
 }
-struct PyEleNametableIndex {
-  int ix_nt;
-};
 PyEleNametableIndex python_ele_nametable_index(EleProxy& ele, int ix_nt) {
   Bmad::ele_nametable_index(ele, ix_nt);
   auto py_result{PyEleNametableIndex{ix_nt}};
   return py_result;
 }
-struct PyEleRfStepIndex {
-  int ix_step;
-};
 PyEleRfStepIndex python_ele_rf_step_index(
     double E_ref,
     double s_rel,
@@ -95,9 +63,6 @@ PyEleRfStepIndex python_ele_rf_step_index(
   auto py_result{PyEleRfStepIndex{ix_step}};
   return py_result;
 }
-struct PyEleUniqueName {
-  std::string unique_name;
-};
 PyEleUniqueName python_ele_unique_name(
     EleProxy& ele,
     LatEleOrderProxy& order,
@@ -106,9 +71,6 @@ PyEleUniqueName python_ele_unique_name(
   auto py_result{PyEleUniqueName{unique_name}};
   return py_result;
 }
-struct PyEleValueHasChanged {
-  bool has_changed;
-};
 PyEleValueHasChanged python_ele_value_has_changed(
     EleProxy& ele,
     IntAlloc1D& list,
@@ -119,14 +81,6 @@ PyEleValueHasChanged python_ele_value_has_changed(
   auto py_result{PyEleValueHasChanged{has_changed}};
   return py_result;
 }
-
-struct PyEmFieldDerivatives {
-  EmFieldProxy dfield;
-  double s_pos;
-  bool local_ref_frame;
-  std::optional<bool> grid_allow_s_out_of_bounds;
-  std::optional<double> rf_time;
-};
 PyEmFieldDerivatives python_em_field_derivatives(
     EleProxy& ele,
     LatParamProxy& param,
@@ -147,9 +101,6 @@ PyEmFieldDerivatives python_em_field_derivatives(
       _result, s_pos, local_ref_frame, grid_allow_s_out_of_bounds, rf_time}};
   return py_result;
 }
-struct PyEnteringElement {
-  bool is_entering;
-};
 PyEnteringElement python_entering_element(
     CoordProxy& orbit,
     int particle_at,
@@ -158,9 +109,6 @@ PyEnteringElement python_entering_element(
   auto py_result{PyEnteringElement{is_entering}};
   return py_result;
 }
-struct PyEqAcKicker {
-  bool is_eq;
-};
 PyEqAcKicker python_eq_ac_kicker(
     AcKickerProxy& f1,
     AcKickerProxy& f2,
@@ -169,9 +117,6 @@ PyEqAcKicker python_eq_ac_kicker(
   auto py_result{PyEqAcKicker{is_eq}};
   return py_result;
 }
-struct PyEqAcKickerFreq {
-  bool is_eq;
-};
 PyEqAcKickerFreq python_eq_ac_kicker_freq(
     AcKickerFreqProxy& f1,
     AcKickerFreqProxy& f2,
@@ -180,9 +125,6 @@ PyEqAcKickerFreq python_eq_ac_kicker_freq(
   auto py_result{PyEqAcKickerFreq{is_eq}};
   return py_result;
 }
-struct PyEqAcKickerTime {
-  bool is_eq;
-};
 PyEqAcKickerTime python_eq_ac_kicker_time(
     AcKickerTimeProxy& f1,
     AcKickerTimeProxy& f2,
@@ -191,9 +133,6 @@ PyEqAcKickerTime python_eq_ac_kicker_time(
   auto py_result{PyEqAcKickerTime{is_eq}};
   return py_result;
 }
-struct PyEqAnormalMode {
-  bool is_eq;
-};
 PyEqAnormalMode python_eq_anormal_mode(
     AnormalModeProxy& f1,
     AnormalModeProxy& f2,
@@ -202,9 +141,6 @@ PyEqAnormalMode python_eq_anormal_mode(
   auto py_result{PyEqAnormalMode{is_eq}};
   return py_result;
 }
-struct PyEqApertureParam {
-  bool is_eq;
-};
 PyEqApertureParam python_eq_aperture_param(
     ApertureParamProxy& f1,
     ApertureParamProxy& f2,
@@ -213,9 +149,6 @@ PyEqApertureParam python_eq_aperture_param(
   auto py_result{PyEqApertureParam{is_eq}};
   return py_result;
 }
-struct PyEqAperturePoint {
-  bool is_eq;
-};
 PyEqAperturePoint python_eq_aperture_point(
     AperturePointProxy& f1,
     AperturePointProxy& f2,
@@ -224,9 +157,6 @@ PyEqAperturePoint python_eq_aperture_point(
   auto py_result{PyEqAperturePoint{is_eq}};
   return py_result;
 }
-struct PyEqApertureScan {
-  bool is_eq;
-};
 PyEqApertureScan python_eq_aperture_scan(
     ApertureScanProxy& f1,
     ApertureScanProxy& f2,
@@ -235,17 +165,11 @@ PyEqApertureScan python_eq_aperture_scan(
   auto py_result{PyEqApertureScan{is_eq}};
   return py_result;
 }
-struct PyEqBeam {
-  bool is_eq;
-};
 PyEqBeam python_eq_beam(BeamProxy& f1, BeamProxy& f2, bool is_eq) {
   Bmad::eq_beam(f1, f2, is_eq);
   auto py_result{PyEqBeam{is_eq}};
   return py_result;
 }
-struct PyEqBeamInit {
-  bool is_eq;
-};
 PyEqBeamInit python_eq_beam_init(
     BeamInitProxy& f1,
     BeamInitProxy& f2,
@@ -254,9 +178,6 @@ PyEqBeamInit python_eq_beam_init(
   auto py_result{PyEqBeamInit{is_eq}};
   return py_result;
 }
-struct PyEqBmadCommon {
-  bool is_eq;
-};
 PyEqBmadCommon python_eq_bmad_common(
     BmadCommonProxy& f1,
     BmadCommonProxy& f2,
@@ -265,9 +186,6 @@ PyEqBmadCommon python_eq_bmad_common(
   auto py_result{PyEqBmadCommon{is_eq}};
   return py_result;
 }
-struct PyEqBookkeepingState {
-  bool is_eq;
-};
 PyEqBookkeepingState python_eq_bookkeeping_state(
     BookkeepingStateProxy& f1,
     BookkeepingStateProxy& f2,
@@ -276,9 +194,6 @@ PyEqBookkeepingState python_eq_bookkeeping_state(
   auto py_result{PyEqBookkeepingState{is_eq}};
   return py_result;
 }
-struct PyEqBpmPhaseCoupling {
-  bool is_eq;
-};
 PyEqBpmPhaseCoupling python_eq_bpm_phase_coupling(
     BpmPhaseCouplingProxy& f1,
     BpmPhaseCouplingProxy& f2,
@@ -287,25 +202,16 @@ PyEqBpmPhaseCoupling python_eq_bpm_phase_coupling(
   auto py_result{PyEqBpmPhaseCoupling{is_eq}};
   return py_result;
 }
-struct PyEqBranch {
-  bool is_eq;
-};
 PyEqBranch python_eq_branch(BranchProxy& f1, BranchProxy& f2, bool is_eq) {
   Bmad::eq_branch(f1, f2, is_eq);
   auto py_result{PyEqBranch{is_eq}};
   return py_result;
 }
-struct PyEqBunch {
-  bool is_eq;
-};
 PyEqBunch python_eq_bunch(BunchProxy& f1, BunchProxy& f2, bool is_eq) {
   Bmad::eq_bunch(f1, f2, is_eq);
   auto py_result{PyEqBunch{is_eq}};
   return py_result;
 }
-struct PyEqBunchParams {
-  bool is_eq;
-};
 PyEqBunchParams python_eq_bunch_params(
     BunchParamsProxy& f1,
     BunchParamsProxy& f2,
@@ -314,9 +220,6 @@ PyEqBunchParams python_eq_bunch_params(
   auto py_result{PyEqBunchParams{is_eq}};
   return py_result;
 }
-struct PyEqCartesianMap {
-  bool is_eq;
-};
 PyEqCartesianMap python_eq_cartesian_map(
     CartesianMapProxy& f1,
     CartesianMapProxy& f2,
@@ -325,9 +228,6 @@ PyEqCartesianMap python_eq_cartesian_map(
   auto py_result{PyEqCartesianMap{is_eq}};
   return py_result;
 }
-struct PyEqCartesianMapTerm {
-  bool is_eq;
-};
 PyEqCartesianMapTerm python_eq_cartesian_map_term(
     CartesianMapTermProxy& f1,
     CartesianMapTermProxy& f2,
@@ -336,9 +236,6 @@ PyEqCartesianMapTerm python_eq_cartesian_map_term(
   auto py_result{PyEqCartesianMapTerm{is_eq}};
   return py_result;
 }
-struct PyEqCartesianMapTerm1 {
-  bool is_eq;
-};
 PyEqCartesianMapTerm1 python_eq_cartesian_map_term1(
     CartesianMapTerm1Proxy& f1,
     CartesianMapTerm1Proxy& f2,
@@ -347,9 +244,6 @@ PyEqCartesianMapTerm1 python_eq_cartesian_map_term1(
   auto py_result{PyEqCartesianMapTerm1{is_eq}};
   return py_result;
 }
-struct PyEqComplexTaylor {
-  bool is_eq;
-};
 PyEqComplexTaylor python_eq_complex_taylor(
     ComplexTaylorProxy& f1,
     ComplexTaylorProxy& f2,
@@ -358,9 +252,6 @@ PyEqComplexTaylor python_eq_complex_taylor(
   auto py_result{PyEqComplexTaylor{is_eq}};
   return py_result;
 }
-struct PyEqComplexTaylorTerm {
-  bool is_eq;
-};
 PyEqComplexTaylorTerm python_eq_complex_taylor_term(
     ComplexTaylorTermProxy& f1,
     ComplexTaylorTermProxy& f2,
@@ -369,17 +260,11 @@ PyEqComplexTaylorTerm python_eq_complex_taylor_term(
   auto py_result{PyEqComplexTaylorTerm{is_eq}};
   return py_result;
 }
-struct PyEqControl {
-  bool is_eq;
-};
 PyEqControl python_eq_control(ControlProxy& f1, ControlProxy& f2, bool is_eq) {
   Bmad::eq_control(f1, f2, is_eq);
   auto py_result{PyEqControl{is_eq}};
   return py_result;
 }
-struct PyEqControlRamp1 {
-  bool is_eq;
-};
 PyEqControlRamp1 python_eq_control_ramp1(
     ControlRamp1Proxy& f1,
     ControlRamp1Proxy& f2,
@@ -388,9 +273,6 @@ PyEqControlRamp1 python_eq_control_ramp1(
   auto py_result{PyEqControlRamp1{is_eq}};
   return py_result;
 }
-struct PyEqControlVar1 {
-  bool is_eq;
-};
 PyEqControlVar1 python_eq_control_var1(
     ControlVar1Proxy& f1,
     ControlVar1Proxy& f2,
@@ -399,9 +281,6 @@ PyEqControlVar1 python_eq_control_var1(
   auto py_result{PyEqControlVar1{is_eq}};
   return py_result;
 }
-struct PyEqController {
-  bool is_eq;
-};
 PyEqController python_eq_controller(
     ControllerProxy& f1,
     ControllerProxy& f2,
@@ -410,17 +289,11 @@ PyEqController python_eq_controller(
   auto py_result{PyEqController{is_eq}};
   return py_result;
 }
-struct PyEqCoord {
-  bool is_eq;
-};
 PyEqCoord python_eq_coord(CoordProxy& f1, CoordProxy& f2, bool is_eq) {
   Bmad::eq_coord(f1, f2, is_eq);
   auto py_result{PyEqCoord{is_eq}};
   return py_result;
 }
-struct PyEqCoordArray {
-  bool is_eq;
-};
 PyEqCoordArray python_eq_coord_array(
     CoordArrayProxy& f1,
     CoordArrayProxy& f2,
@@ -429,9 +302,6 @@ PyEqCoordArray python_eq_coord_array(
   auto py_result{PyEqCoordArray{is_eq}};
   return py_result;
 }
-struct PyEqCylindricalMap {
-  bool is_eq;
-};
 PyEqCylindricalMap python_eq_cylindrical_map(
     CylindricalMapProxy& f1,
     CylindricalMapProxy& f2,
@@ -440,9 +310,6 @@ PyEqCylindricalMap python_eq_cylindrical_map(
   auto py_result{PyEqCylindricalMap{is_eq}};
   return py_result;
 }
-struct PyEqCylindricalMapTerm {
-  bool is_eq;
-};
 PyEqCylindricalMapTerm python_eq_cylindrical_map_term(
     CylindricalMapTermProxy& f1,
     CylindricalMapTermProxy& f2,
@@ -451,9 +318,6 @@ PyEqCylindricalMapTerm python_eq_cylindrical_map_term(
   auto py_result{PyEqCylindricalMapTerm{is_eq}};
   return py_result;
 }
-struct PyEqCylindricalMapTerm1 {
-  bool is_eq;
-};
 PyEqCylindricalMapTerm1 python_eq_cylindrical_map_term1(
     CylindricalMapTerm1Proxy& f1,
     CylindricalMapTerm1Proxy& f2,
@@ -462,17 +326,11 @@ PyEqCylindricalMapTerm1 python_eq_cylindrical_map_term1(
   auto py_result{PyEqCylindricalMapTerm1{is_eq}};
   return py_result;
 }
-struct PyEqEle {
-  bool is_eq;
-};
 PyEqEle python_eq_ele(EleProxy& f1, EleProxy& f2, bool is_eq) {
   Bmad::eq_ele(f1, f2, is_eq);
   auto py_result{PyEqEle{is_eq}};
   return py_result;
 }
-struct PyEqEllipseBeamInit {
-  bool is_eq;
-};
 PyEqEllipseBeamInit python_eq_ellipse_beam_init(
     EllipseBeamInitProxy& f1,
     EllipseBeamInitProxy& f2,
@@ -481,17 +339,11 @@ PyEqEllipseBeamInit python_eq_ellipse_beam_init(
   auto py_result{PyEqEllipseBeamInit{is_eq}};
   return py_result;
 }
-struct PyEqEmField {
-  bool is_eq;
-};
 PyEqEmField python_eq_em_field(EmFieldProxy& f1, EmFieldProxy& f2, bool is_eq) {
   Bmad::eq_em_field(f1, f2, is_eq);
   auto py_result{PyEqEmField{is_eq}};
   return py_result;
 }
-struct PyEqEmTaylor {
-  bool is_eq;
-};
 PyEqEmTaylor python_eq_em_taylor(
     EmTaylorProxy& f1,
     EmTaylorProxy& f2,
@@ -500,9 +352,6 @@ PyEqEmTaylor python_eq_em_taylor(
   auto py_result{PyEqEmTaylor{is_eq}};
   return py_result;
 }
-struct PyEqEmTaylorTerm {
-  bool is_eq;
-};
 PyEqEmTaylorTerm python_eq_em_taylor_term(
     EmTaylorTermProxy& f1,
     EmTaylorTermProxy& f2,
@@ -511,9 +360,6 @@ PyEqEmTaylorTerm python_eq_em_taylor_term(
   auto py_result{PyEqEmTaylorTerm{is_eq}};
   return py_result;
 }
-struct PyEqExpressionAtom {
-  bool is_eq;
-};
 PyEqExpressionAtom python_eq_expression_atom(
     ExpressionAtomProxy& f1,
     ExpressionAtomProxy& f2,
@@ -522,9 +368,6 @@ PyEqExpressionAtom python_eq_expression_atom(
   auto py_result{PyEqExpressionAtom{is_eq}};
   return py_result;
 }
-struct PyEqFloorPosition {
-  bool is_eq;
-};
 PyEqFloorPosition python_eq_floor_position(
     FloorPositionProxy& f1,
     FloorPositionProxy& f2,
@@ -533,9 +376,6 @@ PyEqFloorPosition python_eq_floor_position(
   auto py_result{PyEqFloorPosition{is_eq}};
   return py_result;
 }
-struct PyEqGenGrad1 {
-  bool is_eq;
-};
 PyEqGenGrad1 python_eq_gen_grad1(
     GenGrad1Proxy& f1,
     GenGrad1Proxy& f2,
@@ -544,9 +384,6 @@ PyEqGenGrad1 python_eq_gen_grad1(
   auto py_result{PyEqGenGrad1{is_eq}};
   return py_result;
 }
-struct PyEqGenGradMap {
-  bool is_eq;
-};
 PyEqGenGradMap python_eq_gen_grad_map(
     GenGradMapProxy& f1,
     GenGradMapProxy& f2,
@@ -555,9 +392,6 @@ PyEqGenGradMap python_eq_gen_grad_map(
   auto py_result{PyEqGenGradMap{is_eq}};
   return py_result;
 }
-struct PyEqGridBeamInit {
-  bool is_eq;
-};
 PyEqGridBeamInit python_eq_grid_beam_init(
     GridBeamInitProxy& f1,
     GridBeamInitProxy& f2,
@@ -566,9 +400,6 @@ PyEqGridBeamInit python_eq_grid_beam_init(
   auto py_result{PyEqGridBeamInit{is_eq}};
   return py_result;
 }
-struct PyEqGridField {
-  bool is_eq;
-};
 PyEqGridField python_eq_grid_field(
     GridFieldProxy& f1,
     GridFieldProxy& f2,
@@ -577,9 +408,6 @@ PyEqGridField python_eq_grid_field(
   auto py_result{PyEqGridField{is_eq}};
   return py_result;
 }
-struct PyEqGridFieldPt {
-  bool is_eq;
-};
 PyEqGridFieldPt python_eq_grid_field_pt(
     GridFieldPtProxy& f1,
     GridFieldPtProxy& f2,
@@ -588,9 +416,6 @@ PyEqGridFieldPt python_eq_grid_field_pt(
   auto py_result{PyEqGridFieldPt{is_eq}};
   return py_result;
 }
-struct PyEqGridFieldPt1 {
-  bool is_eq;
-};
 PyEqGridFieldPt1 python_eq_grid_field_pt1(
     GridFieldPt1Proxy& f1,
     GridFieldPt1Proxy& f2,
@@ -599,9 +424,6 @@ PyEqGridFieldPt1 python_eq_grid_field_pt1(
   auto py_result{PyEqGridFieldPt1{is_eq}};
   return py_result;
 }
-struct PyEqHighEnergySpaceCharge {
-  bool is_eq;
-};
 PyEqHighEnergySpaceCharge python_eq_high_energy_space_charge(
     HighEnergySpaceChargeProxy& f1,
     HighEnergySpaceChargeProxy& f2,
@@ -610,9 +432,6 @@ PyEqHighEnergySpaceCharge python_eq_high_energy_space_charge(
   auto py_result{PyEqHighEnergySpaceCharge{is_eq}};
   return py_result;
 }
-struct PyEqInterval1Coef {
-  bool is_eq;
-};
 PyEqInterval1Coef python_eq_interval1_coef(
     Interval1CoefProxy& f1,
     Interval1CoefProxy& f2,
@@ -621,9 +440,6 @@ PyEqInterval1Coef python_eq_interval1_coef(
   auto py_result{PyEqInterval1Coef{is_eq}};
   return py_result;
 }
-struct PyEqKvBeamInit {
-  bool is_eq;
-};
 PyEqKvBeamInit python_eq_kv_beam_init(
     KvBeamInitProxy& f1,
     KvBeamInitProxy& f2,
@@ -632,17 +448,11 @@ PyEqKvBeamInit python_eq_kv_beam_init(
   auto py_result{PyEqKvBeamInit{is_eq}};
   return py_result;
 }
-struct PyEqLat {
-  bool is_eq;
-};
 PyEqLat python_eq_lat(LatProxy& f1, LatProxy& f2, bool is_eq) {
   Bmad::eq_lat(f1, f2, is_eq);
   auto py_result{PyEqLat{is_eq}};
   return py_result;
 }
-struct PyEqLatEleLoc {
-  bool is_eq;
-};
 PyEqLatEleLoc python_eq_lat_ele_loc(
     LatEleLocProxy& f1,
     LatEleLocProxy& f2,
@@ -651,9 +461,6 @@ PyEqLatEleLoc python_eq_lat_ele_loc(
   auto py_result{PyEqLatEleLoc{is_eq}};
   return py_result;
 }
-struct PyEqLatParam {
-  bool is_eq;
-};
 PyEqLatParam python_eq_lat_param(
     LatParamProxy& f1,
     LatParamProxy& f2,
@@ -662,9 +469,6 @@ PyEqLatParam python_eq_lat_param(
   auto py_result{PyEqLatParam{is_eq}};
   return py_result;
 }
-struct PyEqLinacNormalMode {
-  bool is_eq;
-};
 PyEqLinacNormalMode python_eq_linac_normal_mode(
     LinacNormalModeProxy& f1,
     LinacNormalModeProxy& f2,
@@ -673,17 +477,11 @@ PyEqLinacNormalMode python_eq_linac_normal_mode(
   auto py_result{PyEqLinacNormalMode{is_eq}};
   return py_result;
 }
-struct PyEqMode3 {
-  bool is_eq;
-};
 PyEqMode3 python_eq_mode3(Mode3Proxy& f1, Mode3Proxy& f2, bool is_eq) {
   Bmad::eq_mode3(f1, f2, is_eq);
   auto py_result{PyEqMode3{is_eq}};
   return py_result;
 }
-struct PyEqModeInfo {
-  bool is_eq;
-};
 PyEqModeInfo python_eq_mode_info(
     ModeInfoProxy& f1,
     ModeInfoProxy& f2,
@@ -692,9 +490,6 @@ PyEqModeInfo python_eq_mode_info(
   auto py_result{PyEqModeInfo{is_eq}};
   return py_result;
 }
-struct PyEqNormalModes {
-  bool is_eq;
-};
 PyEqNormalModes python_eq_normal_modes(
     NormalModesProxy& f1,
     NormalModesProxy& f2,
@@ -703,9 +498,6 @@ PyEqNormalModes python_eq_normal_modes(
   auto py_result{PyEqNormalModes{is_eq}};
   return py_result;
 }
-struct PyEqPhotonElement {
-  bool is_eq;
-};
 PyEqPhotonElement python_eq_photon_element(
     PhotonElementProxy& f1,
     PhotonElementProxy& f2,
@@ -714,9 +506,6 @@ PyEqPhotonElement python_eq_photon_element(
   auto py_result{PyEqPhotonElement{is_eq}};
   return py_result;
 }
-struct PyEqPhotonMaterial {
-  bool is_eq;
-};
 PyEqPhotonMaterial python_eq_photon_material(
     PhotonMaterialProxy& f1,
     PhotonMaterialProxy& f2,
@@ -725,9 +514,6 @@ PyEqPhotonMaterial python_eq_photon_material(
   auto py_result{PyEqPhotonMaterial{is_eq}};
   return py_result;
 }
-struct PyEqPhotonReflectSurface {
-  bool is_eq;
-};
 PyEqPhotonReflectSurface python_eq_photon_reflect_surface(
     PhotonReflectSurfaceProxy& f1,
     PhotonReflectSurfaceProxy& f2,
@@ -736,9 +522,6 @@ PyEqPhotonReflectSurface python_eq_photon_reflect_surface(
   auto py_result{PyEqPhotonReflectSurface{is_eq}};
   return py_result;
 }
-struct PyEqPhotonReflectTable {
-  bool is_eq;
-};
 PyEqPhotonReflectTable python_eq_photon_reflect_table(
     PhotonReflectTableProxy& f1,
     PhotonReflectTableProxy& f2,
@@ -747,9 +530,6 @@ PyEqPhotonReflectTable python_eq_photon_reflect_table(
   auto py_result{PyEqPhotonReflectTable{is_eq}};
   return py_result;
 }
-struct PyEqPhotonTarget {
-  bool is_eq;
-};
 PyEqPhotonTarget python_eq_photon_target(
     PhotonTargetProxy& f1,
     PhotonTargetProxy& f2,
@@ -758,9 +538,6 @@ PyEqPhotonTarget python_eq_photon_target(
   auto py_result{PyEqPhotonTarget{is_eq}};
   return py_result;
 }
-struct PyEqPixelDetec {
-  bool is_eq;
-};
 PyEqPixelDetec python_eq_pixel_detec(
     PixelDetecProxy& f1,
     PixelDetecProxy& f2,
@@ -769,17 +546,11 @@ PyEqPixelDetec python_eq_pixel_detec(
   auto py_result{PyEqPixelDetec{is_eq}};
   return py_result;
 }
-struct PyEqPixelPt {
-  bool is_eq;
-};
 PyEqPixelPt python_eq_pixel_pt(PixelPtProxy& f1, PixelPtProxy& f2, bool is_eq) {
   Bmad::eq_pixel_pt(f1, f2, is_eq);
   auto py_result{PyEqPixelPt{is_eq}};
   return py_result;
 }
-struct PyEqPreTracker {
-  bool is_eq;
-};
 PyEqPreTracker python_eq_pre_tracker(
     PreTrackerProxy& f1,
     PreTrackerProxy& f2,
@@ -788,17 +559,11 @@ PyEqPreTracker python_eq_pre_tracker(
   auto py_result{PyEqPreTracker{is_eq}};
   return py_result;
 }
-struct PyEqRadInt1 {
-  bool is_eq;
-};
 PyEqRadInt1 python_eq_rad_int1(RadInt1Proxy& f1, RadInt1Proxy& f2, bool is_eq) {
   Bmad::eq_rad_int1(f1, f2, is_eq);
   auto py_result{PyEqRadInt1{is_eq}};
   return py_result;
 }
-struct PyEqRadIntAllEle {
-  bool is_eq;
-};
 PyEqRadIntAllEle python_eq_rad_int_all_ele(
     RadIntAllEleProxy& f1,
     RadIntAllEleProxy& f2,
@@ -807,9 +572,6 @@ PyEqRadIntAllEle python_eq_rad_int_all_ele(
   auto py_result{PyEqRadIntAllEle{is_eq}};
   return py_result;
 }
-struct PyEqRadIntBranch {
-  bool is_eq;
-};
 PyEqRadIntBranch python_eq_rad_int_branch(
     RadIntBranchProxy& f1,
     RadIntBranchProxy& f2,
@@ -818,17 +580,11 @@ PyEqRadIntBranch python_eq_rad_int_branch(
   auto py_result{PyEqRadIntBranch{is_eq}};
   return py_result;
 }
-struct PyEqRadMap {
-  bool is_eq;
-};
 PyEqRadMap python_eq_rad_map(RadMapProxy& f1, RadMapProxy& f2, bool is_eq) {
   Bmad::eq_rad_map(f1, f2, is_eq);
   auto py_result{PyEqRadMap{is_eq}};
   return py_result;
 }
-struct PyEqRadMapEle {
-  bool is_eq;
-};
 PyEqRadMapEle python_eq_rad_map_ele(
     RadMapEleProxy& f1,
     RadMapEleProxy& f2,
@@ -837,9 +593,6 @@ PyEqRadMapEle python_eq_rad_map_ele(
   auto py_result{PyEqRadMapEle{is_eq}};
   return py_result;
 }
-struct PyEqRamperLord {
-  bool is_eq;
-};
 PyEqRamperLord python_eq_ramper_lord(
     RamperLordProxy& f1,
     RamperLordProxy& f2,
@@ -848,9 +601,6 @@ PyEqRamperLord python_eq_ramper_lord(
   auto py_result{PyEqRamperLord{is_eq}};
   return py_result;
 }
-struct PyEqSpaceChargeCommon {
-  bool is_eq;
-};
 PyEqSpaceChargeCommon python_eq_space_charge_common(
     SpaceChargeCommonProxy& f1,
     SpaceChargeCommonProxy& f2,
@@ -859,9 +609,6 @@ PyEqSpaceChargeCommon python_eq_space_charge_common(
   auto py_result{PyEqSpaceChargeCommon{is_eq}};
   return py_result;
 }
-struct PyEqSpinPolar {
-  bool is_eq;
-};
 PyEqSpinPolar python_eq_spin_polar(
     SpinPolarProxy& f1,
     SpinPolarProxy& f2,
@@ -870,17 +617,11 @@ PyEqSpinPolar python_eq_spin_polar(
   auto py_result{PyEqSpinPolar{is_eq}};
   return py_result;
 }
-struct PyEqSpline {
-  bool is_eq;
-};
 PyEqSpline python_eq_spline(SplineProxy& f1, SplineProxy& f2, bool is_eq) {
   Bmad::eq_spline(f1, f2, is_eq);
   auto py_result{PyEqSpline{is_eq}};
   return py_result;
 }
-struct PyEqStrongBeam {
-  bool is_eq;
-};
 PyEqStrongBeam python_eq_strong_beam(
     StrongBeamProxy& f1,
     StrongBeamProxy& f2,
@@ -889,9 +630,6 @@ PyEqStrongBeam python_eq_strong_beam(
   auto py_result{PyEqStrongBeam{is_eq}};
   return py_result;
 }
-struct PyEqSurfaceCurvature {
-  bool is_eq;
-};
 PyEqSurfaceCurvature python_eq_surface_curvature(
     SurfaceCurvatureProxy& f1,
     SurfaceCurvatureProxy& f2,
@@ -900,9 +638,6 @@ PyEqSurfaceCurvature python_eq_surface_curvature(
   auto py_result{PyEqSurfaceCurvature{is_eq}};
   return py_result;
 }
-struct PyEqSurfaceDisplacement {
-  bool is_eq;
-};
 PyEqSurfaceDisplacement python_eq_surface_displacement(
     SurfaceDisplacementProxy& f1,
     SurfaceDisplacementProxy& f2,
@@ -911,9 +646,6 @@ PyEqSurfaceDisplacement python_eq_surface_displacement(
   auto py_result{PyEqSurfaceDisplacement{is_eq}};
   return py_result;
 }
-struct PyEqSurfaceDisplacementPt {
-  bool is_eq;
-};
 PyEqSurfaceDisplacementPt python_eq_surface_displacement_pt(
     SurfaceDisplacementPtProxy& f1,
     SurfaceDisplacementPtProxy& f2,
@@ -922,9 +654,6 @@ PyEqSurfaceDisplacementPt python_eq_surface_displacement_pt(
   auto py_result{PyEqSurfaceDisplacementPt{is_eq}};
   return py_result;
 }
-struct PyEqSurfaceHMisalign {
-  bool is_eq;
-};
 PyEqSurfaceHMisalign python_eq_surface_h_misalign(
     SurfaceHMisalignProxy& f1,
     SurfaceHMisalignProxy& f2,
@@ -933,9 +662,6 @@ PyEqSurfaceHMisalign python_eq_surface_h_misalign(
   auto py_result{PyEqSurfaceHMisalign{is_eq}};
   return py_result;
 }
-struct PyEqSurfaceHMisalignPt {
-  bool is_eq;
-};
 PyEqSurfaceHMisalignPt python_eq_surface_h_misalign_pt(
     SurfaceHMisalignPtProxy& f1,
     SurfaceHMisalignPtProxy& f2,
@@ -944,9 +670,6 @@ PyEqSurfaceHMisalignPt python_eq_surface_h_misalign_pt(
   auto py_result{PyEqSurfaceHMisalignPt{is_eq}};
   return py_result;
 }
-struct PyEqSurfaceSegmented {
-  bool is_eq;
-};
 PyEqSurfaceSegmented python_eq_surface_segmented(
     SurfaceSegmentedProxy& f1,
     SurfaceSegmentedProxy& f2,
@@ -955,9 +678,6 @@ PyEqSurfaceSegmented python_eq_surface_segmented(
   auto py_result{PyEqSurfaceSegmented{is_eq}};
   return py_result;
 }
-struct PyEqSurfaceSegmentedPt {
-  bool is_eq;
-};
 PyEqSurfaceSegmentedPt python_eq_surface_segmented_pt(
     SurfaceSegmentedPtProxy& f1,
     SurfaceSegmentedPtProxy& f2,
@@ -966,9 +686,6 @@ PyEqSurfaceSegmentedPt python_eq_surface_segmented_pt(
   auto py_result{PyEqSurfaceSegmentedPt{is_eq}};
   return py_result;
 }
-struct PyEqTargetPoint {
-  bool is_eq;
-};
 PyEqTargetPoint python_eq_target_point(
     TargetPointProxy& f1,
     TargetPointProxy& f2,
@@ -977,17 +694,11 @@ PyEqTargetPoint python_eq_target_point(
   auto py_result{PyEqTargetPoint{is_eq}};
   return py_result;
 }
-struct PyEqTaylor {
-  bool is_eq;
-};
 PyEqTaylor python_eq_taylor(TaylorProxy& f1, TaylorProxy& f2, bool is_eq) {
   Bmad::eq_taylor(f1, f2, is_eq);
   auto py_result{PyEqTaylor{is_eq}};
   return py_result;
 }
-struct PyEqTaylorTerm {
-  bool is_eq;
-};
 PyEqTaylorTerm python_eq_taylor_term(
     TaylorTermProxy& f1,
     TaylorTermProxy& f2,
@@ -996,17 +707,11 @@ PyEqTaylorTerm python_eq_taylor_term(
   auto py_result{PyEqTaylorTerm{is_eq}};
   return py_result;
 }
-struct PyEqTrack {
-  bool is_eq;
-};
 PyEqTrack python_eq_track(TrackProxy& f1, TrackProxy& f2, bool is_eq) {
   Bmad::eq_track(f1, f2, is_eq);
   auto py_result{PyEqTrack{is_eq}};
   return py_result;
 }
-struct PyEqTrackPoint {
-  bool is_eq;
-};
 PyEqTrackPoint python_eq_track_point(
     TrackPointProxy& f1,
     TrackPointProxy& f2,
@@ -1015,33 +720,21 @@ PyEqTrackPoint python_eq_track_point(
   auto py_result{PyEqTrackPoint{is_eq}};
   return py_result;
 }
-struct PyEqTwiss {
-  bool is_eq;
-};
 PyEqTwiss python_eq_twiss(TwissProxy& f1, TwissProxy& f2, bool is_eq) {
   Bmad::eq_twiss(f1, f2, is_eq);
   auto py_result{PyEqTwiss{is_eq}};
   return py_result;
 }
-struct PyEqWake {
-  bool is_eq;
-};
 PyEqWake python_eq_wake(WakeProxy& f1, WakeProxy& f2, bool is_eq) {
   Bmad::eq_wake(f1, f2, is_eq);
   auto py_result{PyEqWake{is_eq}};
   return py_result;
 }
-struct PyEqWakeLr {
-  bool is_eq;
-};
 PyEqWakeLr python_eq_wake_lr(WakeLrProxy& f1, WakeLrProxy& f2, bool is_eq) {
   Bmad::eq_wake_lr(f1, f2, is_eq);
   auto py_result{PyEqWakeLr{is_eq}};
   return py_result;
 }
-struct PyEqWakeLrMode {
-  bool is_eq;
-};
 PyEqWakeLrMode python_eq_wake_lr_mode(
     WakeLrModeProxy& f1,
     WakeLrModeProxy& f2,
@@ -1050,17 +743,11 @@ PyEqWakeLrMode python_eq_wake_lr_mode(
   auto py_result{PyEqWakeLrMode{is_eq}};
   return py_result;
 }
-struct PyEqWakeSr {
-  bool is_eq;
-};
 PyEqWakeSr python_eq_wake_sr(WakeSrProxy& f1, WakeSrProxy& f2, bool is_eq) {
   Bmad::eq_wake_sr(f1, f2, is_eq);
   auto py_result{PyEqWakeSr{is_eq}};
   return py_result;
 }
-struct PyEqWakeSrMode {
-  bool is_eq;
-};
 PyEqWakeSrMode python_eq_wake_sr_mode(
     WakeSrModeProxy& f1,
     WakeSrModeProxy& f2,
@@ -1069,9 +756,6 @@ PyEqWakeSrMode python_eq_wake_sr_mode(
   auto py_result{PyEqWakeSrMode{is_eq}};
   return py_result;
 }
-struct PyEqWakeSrZLong {
-  bool is_eq;
-};
 PyEqWakeSrZLong python_eq_wake_sr_z_long(
     WakeSrZLongProxy& f1,
     WakeSrZLongProxy& f2,
@@ -1080,17 +764,11 @@ PyEqWakeSrZLong python_eq_wake_sr_z_long(
   auto py_result{PyEqWakeSrZLong{is_eq}};
   return py_result;
 }
-struct PyEqWall3d {
-  bool is_eq;
-};
 PyEqWall3d python_eq_wall3d(Wall3dProxy& f1, Wall3dProxy& f2, bool is_eq) {
   Bmad::eq_wall3d(f1, f2, is_eq);
   auto py_result{PyEqWall3d{is_eq}};
   return py_result;
 }
-struct PyEqWall3dSection {
-  bool is_eq;
-};
 PyEqWall3dSection python_eq_wall3d_section(
     Wall3dSectionProxy& f1,
     Wall3dSectionProxy& f2,
@@ -1099,9 +777,6 @@ PyEqWall3dSection python_eq_wall3d_section(
   auto py_result{PyEqWall3dSection{is_eq}};
   return py_result;
 }
-struct PyEqWall3dVertex {
-  bool is_eq;
-};
 PyEqWall3dVertex python_eq_wall3d_vertex(
     Wall3dVertexProxy& f1,
     Wall3dVertexProxy& f2,
@@ -1110,18 +785,11 @@ PyEqWall3dVertex python_eq_wall3d_vertex(
   auto py_result{PyEqWall3dVertex{is_eq}};
   return py_result;
 }
-struct PyEqXyDisp {
-  bool is_eq;
-};
 PyEqXyDisp python_eq_xy_disp(XyDispProxy& f1, XyDispProxy& f2, bool is_eq) {
   Bmad::eq_xy_disp(f1, f2, is_eq);
   auto py_result{PyEqXyDisp{is_eq}};
   return py_result;
 }
-struct PyEqualSignHere {
-  std::string delim;
-  bool is_here;
-};
 PyEqualSignHere python_equal_sign_here(
     EleProxy& ele,
     std::string delim,
@@ -1130,9 +798,6 @@ PyEqualSignHere python_equal_sign_here(
   auto py_result{PyEqualSignHere{delim, is_here}};
   return py_result;
 }
-struct PyEquivalentTaylorAttributes {
-  bool equiv;
-};
 PyEquivalentTaylorAttributes python_equivalent_taylor_attributes(
     EleProxy& ele_taylor,
     EleProxy& ele2,
@@ -1141,14 +806,6 @@ PyEquivalentTaylorAttributes python_equivalent_taylor_attributes(
   auto py_result{PyEquivalentTaylorAttributes{equiv}};
   return py_result;
 }
-struct PyEtdiv {
-  double A;
-  double B;
-  double C;
-  double D;
-  double E;
-  double F;
-};
 PyEtdiv python_etdiv(
     double A,
     double B,
@@ -1160,11 +817,6 @@ PyEtdiv python_etdiv(
   auto py_result{PyEtdiv{A, B, C, D, E, F}};
   return py_result;
 }
-struct PyExpectOneOf {
-  std::string delim;
-  bool delim_found;
-  bool is_ok;
-};
 PyExpectOneOf python_expect_one_of(
     std::string delim_list,
     bool check_input_delim,
@@ -1179,6 +831,17 @@ PyExpectOneOf python_expect_one_of(
 }
 
 void init_Bmad_routines_e(py::module& m) {
+  py::class_<PyEAccelField, std::unique_ptr<PyEAccelField>>(
+      m, "EAccelField", "Fortran routine e_accel_field return value")
+      .def_readonly("field", &PyEAccelField::field)
+      .def("__len__", [](const PyEAccelField&) { return 1; })
+      .def("__getitem__", [](const PyEAccelField& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.field);
+        throw py::index_error();
+      });
   m.def(
       "e_accel_field",
       &python_e_accel_field,
@@ -1196,17 +859,6 @@ void init_Bmad_routines_e(py::module& m) {
       Using bmad_standard tracking? Default is False.
   field : 
   )""");
-  py::class_<PyEAccelField, std::unique_ptr<PyEAccelField>>(
-      m, "EAccelField", "Fortran routine e_accel_field return value")
-      .def_readonly("field", &PyEAccelField::field)
-      .def("__len__", [](const PyEAccelField&) { return 1; })
-      .def("__getitem__", [](const PyEAccelField& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.field);
-        throw py::index_error();
-      });
   m.def(
       "e_crit_photon",
       &Bmad::e_crit_photon,
@@ -1228,6 +880,28 @@ void init_Bmad_routines_e(py::module& m) {
   E_crit : float
       Critical photon energy.
   )""");
+  py::class_<Bmad::EigenDecomp6mat, std::unique_ptr<Bmad::EigenDecomp6mat>>(
+      m, "EigenDecomp6mat", "Fortran routine eigen_decomp_6mat return value")
+      .def_readonly("eval", &Bmad::EigenDecomp6mat::eval)
+      .def_readonly("evec", &Bmad::EigenDecomp6mat::evec)
+      .def_readonly("err_flag", &Bmad::EigenDecomp6mat::err_flag)
+      .def_readonly("tunes", &Bmad::EigenDecomp6mat::tunes)
+      .def("__len__", [](const Bmad::EigenDecomp6mat&) { return 4; })
+      .def(
+          "__getitem__",
+          [](const Bmad::EigenDecomp6mat& s, int i) -> py::object {
+            if (i < 0)
+              i += 4;
+            if (i == 0)
+              return py::cast(s.eval);
+            if (i == 1)
+              return py::cast(s.evec);
+            if (i == 2)
+              return py::cast(s.err_flag);
+            if (i == 3)
+              return py::cast(s.tunes);
+            throw py::index_error();
+          });
   m.def(
       "eigen_decomp_6mat",
       &Bmad::eigen_decomp_6mat,
@@ -1253,28 +927,6 @@ void init_Bmad_routines_e(py::module& m) {
   tunes : float
       Mode tunes, in radians.
   )""");
-  py::class_<Bmad::EigenDecomp6mat, std::unique_ptr<Bmad::EigenDecomp6mat>>(
-      m, "EigenDecomp6mat", "Fortran routine eigen_decomp_6mat return value")
-      .def_readonly("eval", &Bmad::EigenDecomp6mat::eval)
-      .def_readonly("evec", &Bmad::EigenDecomp6mat::evec)
-      .def_readonly("err_flag", &Bmad::EigenDecomp6mat::err_flag)
-      .def_readonly("tunes", &Bmad::EigenDecomp6mat::tunes)
-      .def("__len__", [](const Bmad::EigenDecomp6mat&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const Bmad::EigenDecomp6mat& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.eval);
-            if (i == 1)
-              return py::cast(s.evec);
-            if (i == 2)
-              return py::cast(s.err_flag);
-            if (i == 3)
-              return py::cast(s.tunes);
-            throw py::index_error();
-          });
   m.def(
       "ele_compute_ref_energy_and_time",
       &Bmad::ele_compute_ref_energy_and_time,
@@ -1345,6 +997,17 @@ void init_Bmad_routines_e(py::module& m) {
       This parameter is an input/output and is modified in-place. As an output: Element with pointers
       deallocated as needed.
   )""");
+  py::class_<PyEleFullName, std::unique_ptr<PyEleFullName>>(
+      m, "EleFullName", "Fortran routine ele_full_name return value")
+      .def_readonly("str", &PyEleFullName::str)
+      .def("__len__", [](const PyEleFullName&) { return 1; })
+      .def("__getitem__", [](const PyEleFullName& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.str);
+        throw py::index_error();
+      });
   m.def(
       "ele_full_name",
       &python_ele_full_name,
@@ -1359,17 +1022,6 @@ void init_Bmad_routines_e(py::module& m) {
       Encoding template. Default is "@N (&#)".
   str : 
   )""");
-  py::class_<PyEleFullName, std::unique_ptr<PyEleFullName>>(
-      m, "EleFullName", "Fortran routine ele_full_name return value")
-      .def_readonly("str", &PyEleFullName::str)
-      .def("__len__", [](const PyEleFullName&) { return 1; })
-      .def("__getitem__", [](const PyEleFullName& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.str);
-        throw py::index_error();
-      });
   m.def(
       "ele_geometry",
       &Bmad::ele_geometry,
@@ -1409,17 +1061,6 @@ void init_Bmad_routines_e(py::module& m) {
       0.5_rp => Output is geometry at center of element. -1.0_rp => Used to propagate geometry in reverse.
   floor : 
   )""");
-  m.def(
-      "ele_has_constant_ds_dt_ref",
-      &python_ele_has_constant_ds_dt_ref,
-      py::arg("ele"),
-      py::arg("is_const"),
-      R"""(Parameters
-  ----------
-  ele : EleStruct
-      Element.
-  is_const : 
-  )""");
   py::class_<PyEleHasConstantDsDtRef, std::unique_ptr<PyEleHasConstantDsDtRef>>(
       m,
       "EleHasConstantDsDtRef",
@@ -1436,14 +1077,15 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "ele_has_nonzero_kick",
-      &python_ele_has_nonzero_kick,
-      py::arg("has_kick"),
+      "ele_has_constant_ds_dt_ref",
+      &python_ele_has_constant_ds_dt_ref,
+      py::arg("ele"),
+      py::arg("is_const"),
       R"""(Parameters
   ----------
   ele : EleStruct
-      Element with no kicks.
-  has_kick : 
+      Element.
+  is_const : 
   )""");
   py::class_<PyEleHasNonzeroKick, std::unique_ptr<PyEleHasNonzeroKick>>(
       m,
@@ -1463,14 +1105,14 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "ele_has_nonzero_offset",
-      &python_ele_has_nonzero_offset,
-      py::arg("ele"),
-      py::arg("has_offset"),
+      "ele_has_nonzero_kick",
+      &python_ele_has_nonzero_kick,
+      py::arg("has_kick"),
       R"""(Parameters
   ----------
-  ele : 
-  has_offset : 
+  ele : EleStruct
+      Element with no kicks.
+  has_kick : 
   )""");
   py::class_<PyEleHasNonzeroOffset, std::unique_ptr<PyEleHasNonzeroOffset>>(
       m,
@@ -1487,6 +1129,16 @@ void init_Bmad_routines_e(py::module& m) {
               return py::cast(s.has_offset);
             throw py::index_error();
           });
+  m.def(
+      "ele_has_nonzero_offset",
+      &python_ele_has_nonzero_offset,
+      py::arg("ele"),
+      py::arg("has_offset"),
+      R"""(Parameters
+  ----------
+  ele : 
+  has_offset : 
+  )""");
   m.def(
       "ele_is_monitor",
       &Bmad::ele_is_monitor,
@@ -1520,6 +1172,17 @@ void init_Bmad_routines_e(py::module& m) {
       Element to be identified
   loc : 
   )""");
+  py::class_<PyEleLocName, std::unique_ptr<PyEleLocName>>(
+      m, "EleLocName", "Fortran routine ele_loc_name return value")
+      .def_readonly("str", &PyEleLocName::str)
+      .def("__len__", [](const PyEleLocName&) { return 1; })
+      .def("__getitem__", [](const PyEleLocName& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.str);
+        throw py::index_error();
+      });
   m.def(
       "ele_loc_name",
       &python_ele_loc_name,
@@ -1537,30 +1200,6 @@ void init_Bmad_routines_e(py::module& m) {
       If present, enclose location string using the two characters supplied. Typically parens will be set to
       "()" or "[]".
   str : 
-  )""");
-  py::class_<PyEleLocName, std::unique_ptr<PyEleLocName>>(
-      m, "EleLocName", "Fortran routine ele_loc_name return value")
-      .def_readonly("str", &PyEleLocName::str)
-      .def("__len__", [](const PyEleLocName&) { return 1; })
-      .def("__getitem__", [](const PyEleLocName& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.str);
-        throw py::index_error();
-      });
-  m.def(
-      "ele_misalignment_l_s_calc",
-      &Bmad::ele_misalignment_l_s_calc,
-      py::arg("ele"),
-      R"""(Parameters
-  ----------
-  ele : float
-      Element
-  L_mis : float
-      Misalignment vector relative to center of element
-  S_mis : float
-      Misalignment matrix relative to center of element
   )""");
   py::class_<
       Bmad::EleMisalignmentLSCalc,
@@ -1583,15 +1222,17 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "ele_nametable_index",
-      &python_ele_nametable_index,
+      "ele_misalignment_l_s_calc",
+      &Bmad::ele_misalignment_l_s_calc,
       py::arg("ele"),
-      py::arg("ix_nt"),
       R"""(Parameters
   ----------
-  ele : EleStruct
-      Element in a lattice.
-  ix_nt : 
+  ele : float
+      Element
+  L_mis : float
+      Misalignment vector relative to center of element
+  S_mis : float
+      Misalignment matrix relative to center of element
   )""");
   py::class_<PyEleNametableIndex, std::unique_ptr<PyEleNametableIndex>>(
       m,
@@ -1607,6 +1248,17 @@ void init_Bmad_routines_e(py::module& m) {
               return py::cast(s.ix_nt);
             throw py::index_error();
           });
+  m.def(
+      "ele_nametable_index",
+      &python_ele_nametable_index,
+      py::arg("ele"),
+      py::arg("ix_nt"),
+      R"""(Parameters
+  ----------
+  ele : EleStruct
+      Element in a lattice.
+  ix_nt : 
+  )""");
   m.def(
       "ele_order_calc",
       &Bmad::ele_order_calc,
@@ -1643,6 +1295,17 @@ void init_Bmad_routines_e(py::module& m) {
   make_matrix : bool, optional
       Propagate the transfer matrix? Default is false.
   )""");
+  py::class_<PyEleRfStepIndex, std::unique_ptr<PyEleRfStepIndex>>(
+      m, "EleRfStepIndex", "Fortran routine ele_rf_step_index return value")
+      .def_readonly("ix_step", &PyEleRfStepIndex::ix_step)
+      .def("__len__", [](const PyEleRfStepIndex&) { return 1; })
+      .def("__getitem__", [](const PyEleRfStepIndex& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.ix_step);
+        throw py::index_error();
+      });
   m.def(
       "ele_rf_step_index",
       &python_ele_rf_step_index,
@@ -1660,17 +1323,29 @@ void init_Bmad_routines_e(py::module& m) {
       RF cavity.
   ix_step : 
   )""");
-  py::class_<PyEleRfStepIndex, std::unique_ptr<PyEleRfStepIndex>>(
-      m, "EleRfStepIndex", "Fortran routine ele_rf_step_index return value")
-      .def_readonly("ix_step", &PyEleRfStepIndex::ix_step)
-      .def("__len__", [](const PyEleRfStepIndex&) { return 1; })
-      .def("__getitem__", [](const PyEleRfStepIndex& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.ix_step);
-        throw py::index_error();
-      });
+  py::class_<
+      Bmad::EleToPtcMagneticBnAn,
+      std::unique_ptr<Bmad::EleToPtcMagneticBnAn>>(
+      m,
+      "EleToPtcMagneticBnAn",
+      "Fortran routine ele_to_ptc_magnetic_bn_an return value")
+      .def_readonly("bn", &Bmad::EleToPtcMagneticBnAn::bn)
+      .def_readonly("an", &Bmad::EleToPtcMagneticBnAn::an)
+      .def_readonly("n_max", &Bmad::EleToPtcMagneticBnAn::n_max)
+      .def("__len__", [](const Bmad::EleToPtcMagneticBnAn&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const Bmad::EleToPtcMagneticBnAn& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.bn);
+            if (i == 1)
+              return py::cast(s.an);
+            if (i == 2)
+              return py::cast(s.n_max);
+            throw py::index_error();
+          });
   m.def(
       "ele_to_ptc_magnetic_bn_an",
       &Bmad::ele_to_ptc_magnetic_bn_an,
@@ -1699,29 +1374,6 @@ void init_Bmad_routines_e(py::module& m) {
   n_max : int
       Maximum non-zero multipole component. Set to zero if there are no multipoles.
   )""");
-  py::class_<
-      Bmad::EleToPtcMagneticBnAn,
-      std::unique_ptr<Bmad::EleToPtcMagneticBnAn>>(
-      m,
-      "EleToPtcMagneticBnAn",
-      "Fortran routine ele_to_ptc_magnetic_bn_an return value")
-      .def_readonly("bn", &Bmad::EleToPtcMagneticBnAn::bn)
-      .def_readonly("an", &Bmad::EleToPtcMagneticBnAn::an)
-      .def_readonly("n_max", &Bmad::EleToPtcMagneticBnAn::n_max)
-      .def("__len__", [](const Bmad::EleToPtcMagneticBnAn&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::EleToPtcMagneticBnAn& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.bn);
-            if (i == 1)
-              return py::cast(s.an);
-            if (i == 2)
-              return py::cast(s.n_max);
-            throw py::index_error();
-          });
   m.def(
       "ele_to_spin_taylor",
       &Bmad::ele_to_spin_taylor,
@@ -1738,6 +1390,20 @@ void init_Bmad_routines_e(py::module& m) {
   orb0 : CoordStruct
       Starting ref coords.
   )""");
+  py::class_<Bmad::EleToTaylor, std::unique_ptr<Bmad::EleToTaylor>>(
+      m, "EleToTaylor", "Fortran routine ele_to_taylor return value")
+      .def_readonly("orbital_taylor", &Bmad::EleToTaylor::orbital_taylor)
+      .def_readonly("spin_taylor", &Bmad::EleToTaylor::spin_taylor)
+      .def("__len__", [](const Bmad::EleToTaylor&) { return 2; })
+      .def("__getitem__", [](const Bmad::EleToTaylor& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.orbital_taylor);
+        if (i == 1)
+          return py::cast(s.spin_taylor);
+        throw py::index_error();
+      });
   m.def(
       "ele_to_taylor",
       &Bmad::ele_to_taylor,
@@ -1761,18 +1427,15 @@ void init_Bmad_routines_e(py::module& m) {
   spin_taylor : TaylorStruct
       Spin taylor map. If not present then the map is put in ele.spin_taylor.
   )""");
-  py::class_<Bmad::EleToTaylor, std::unique_ptr<Bmad::EleToTaylor>>(
-      m, "EleToTaylor", "Fortran routine ele_to_taylor return value")
-      .def_readonly("orbital_taylor", &Bmad::EleToTaylor::orbital_taylor)
-      .def_readonly("spin_taylor", &Bmad::EleToTaylor::spin_taylor)
-      .def("__len__", [](const Bmad::EleToTaylor&) { return 2; })
-      .def("__getitem__", [](const Bmad::EleToTaylor& s, int i) -> py::object {
+  py::class_<PyEleUniqueName, std::unique_ptr<PyEleUniqueName>>(
+      m, "EleUniqueName", "Fortran routine ele_unique_name return value")
+      .def_readonly("unique_name", &PyEleUniqueName::unique_name)
+      .def("__len__", [](const PyEleUniqueName&) { return 1; })
+      .def("__getitem__", [](const PyEleUniqueName& s, int i) -> py::object {
         if (i < 0)
-          i += 2;
+          i += 1;
         if (i == 0)
-          return py::cast(s.orbital_taylor);
-        if (i == 1)
-          return py::cast(s.spin_taylor);
+          return py::cast(s.unique_name);
         throw py::index_error();
       });
   m.def(
@@ -1790,17 +1453,21 @@ void init_Bmad_routines_e(py::module& m) {
       this argument.
   unique_name : 
   )""");
-  py::class_<PyEleUniqueName, std::unique_ptr<PyEleUniqueName>>(
-      m, "EleUniqueName", "Fortran routine ele_unique_name return value")
-      .def_readonly("unique_name", &PyEleUniqueName::unique_name)
-      .def("__len__", [](const PyEleUniqueName&) { return 1; })
-      .def("__getitem__", [](const PyEleUniqueName& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.unique_name);
-        throw py::index_error();
-      });
+  py::class_<PyEleValueHasChanged, std::unique_ptr<PyEleValueHasChanged>>(
+      m,
+      "EleValueHasChanged",
+      "Fortran routine ele_value_has_changed return value")
+      .def_readonly("has_changed", &PyEleValueHasChanged::has_changed)
+      .def("__len__", [](const PyEleValueHasChanged&) { return 1; })
+      .def(
+          "__getitem__",
+          [](const PyEleValueHasChanged& s, int i) -> py::object {
+            if (i < 0)
+              i += 1;
+            if (i == 0)
+              return py::cast(s.has_changed);
+            throw py::index_error();
+          });
   m.def(
       "ele_value_has_changed",
       &python_ele_value_has_changed,
@@ -1824,21 +1491,6 @@ void init_Bmad_routines_e(py::module& m) {
       If True then set ele.old_value(j) = ele.value(j) for j in list
   has_changed : 
   )""");
-  py::class_<PyEleValueHasChanged, std::unique_ptr<PyEleValueHasChanged>>(
-      m,
-      "EleValueHasChanged",
-      "Fortran routine ele_value_has_changed return value")
-      .def_readonly("has_changed", &PyEleValueHasChanged::has_changed)
-      .def("__len__", [](const PyEleValueHasChanged&) { return 1; })
-      .def(
-          "__getitem__",
-          [](const PyEleValueHasChanged& s, int i) -> py::object {
-            if (i < 0)
-              i += 1;
-            if (i == 0)
-              return py::cast(s.has_changed);
-            throw py::index_error();
-          });
   m.def(
       "ele_vec_equal_ele_vec",
       &Bmad::ele_vec_equal_ele_vec,
@@ -1848,31 +1500,6 @@ void init_Bmad_routines_e(py::module& m) {
   ----------
   ele1 : 
   ele2 : 
-  )""");
-  m.def(
-      "elec_multipole_field",
-      &Bmad::elec_multipole_field,
-      py::arg("a"),
-      py::arg("b"),
-      py::arg("n"),
-      py::arg("coord"),
-      R"""(Parameters
-  ----------
-  a : float
-      Multipole skew component.
-  b : float
-      Multipole normal component.
-  n : float
-      Multipole order.
-  coord : CoordStruct
-  Ex : float
-      X field component
-  Ey : float
-      Y field component.
-  dE : float
-      Field derivatives: dfield(x,y)/d(x,y).
-  compute_dE : bool
-      If False, do not compute the field derivatives even if dE is present. Default is True.
   )""");
   py::class_<
       Bmad::ElecMultipoleField,
@@ -1898,6 +1525,53 @@ void init_Bmad_routines_e(py::module& m) {
               return py::cast(s.dE);
             if (i == 3)
               return py::cast(s.compute_dE);
+            throw py::index_error();
+          });
+  m.def(
+      "elec_multipole_field",
+      &Bmad::elec_multipole_field,
+      py::arg("a"),
+      py::arg("b"),
+      py::arg("n"),
+      py::arg("coord"),
+      R"""(Parameters
+  ----------
+  a : float
+      Multipole skew component.
+  b : float
+      Multipole normal component.
+  n : float
+      Multipole order.
+  coord : CoordStruct
+  Ex : float
+      X field component
+  Ey : float
+      Y field component.
+  dE : float
+      Field derivatives: dfield(x,y)/d(x,y).
+  compute_dE : bool
+      If False, do not compute the field derivatives even if dE is present. Default is True.
+  )""");
+  py::class_<Bmad::ElementAtSBranch, std::unique_ptr<Bmad::ElementAtSBranch>>(
+      m, "ElementAtSBranch", "Fortran routine element_at_s_branch return value")
+      .def_readonly("err_flag", &Bmad::ElementAtSBranch::err_flag)
+      .def_readonly("s_eff", &Bmad::ElementAtSBranch::s_eff)
+      .def_readonly("position", &Bmad::ElementAtSBranch::position)
+      .def_readonly("ix_ele", &Bmad::ElementAtSBranch::ix_ele)
+      .def("__len__", [](const Bmad::ElementAtSBranch&) { return 4; })
+      .def(
+          "__getitem__",
+          [](const Bmad::ElementAtSBranch& s, int i) -> py::object {
+            if (i < 0)
+              i += 4;
+            if (i == 0)
+              return py::cast(s.err_flag);
+            if (i == 1)
+              return py::cast(s.s_eff);
+            if (i == 2)
+              return py::cast(s.position);
+            if (i == 3)
+              return py::cast(s.ix_ele);
             throw py::index_error();
           });
   m.def(
@@ -1979,16 +1653,15 @@ void init_Bmad_routines_e(py::module& m) {
   an element with a negative length which of the possible elements is actually chosen is ill-defined.
   Overloaded versions:
   )""");
-  py::class_<Bmad::ElementAtSBranch, std::unique_ptr<Bmad::ElementAtSBranch>>(
-      m, "ElementAtSBranch", "Fortran routine element_at_s_branch return value")
-      .def_readonly("err_flag", &Bmad::ElementAtSBranch::err_flag)
-      .def_readonly("s_eff", &Bmad::ElementAtSBranch::s_eff)
-      .def_readonly("position", &Bmad::ElementAtSBranch::position)
-      .def_readonly("ix_ele", &Bmad::ElementAtSBranch::ix_ele)
-      .def("__len__", [](const Bmad::ElementAtSBranch&) { return 4; })
+  py::class_<Bmad::ElementAtSLat, std::unique_ptr<Bmad::ElementAtSLat>>(
+      m, "ElementAtSLat", "Fortran routine element_at_s_lat return value")
+      .def_readonly("err_flag", &Bmad::ElementAtSLat::err_flag)
+      .def_readonly("s_eff", &Bmad::ElementAtSLat::s_eff)
+      .def_readonly("position", &Bmad::ElementAtSLat::position)
+      .def_readonly("ix_ele", &Bmad::ElementAtSLat::ix_ele)
+      .def("__len__", [](const Bmad::ElementAtSLat&) { return 4; })
       .def(
-          "__getitem__",
-          [](const Bmad::ElementAtSBranch& s, int i) -> py::object {
+          "__getitem__", [](const Bmad::ElementAtSLat& s, int i) -> py::object {
             if (i < 0)
               i += 4;
             if (i == 0)
@@ -2085,27 +1758,6 @@ void init_Bmad_routines_e(py::module& m) {
   an element with a negative length which of the possible elements is actually chosen is ill-defined.
   Overloaded versions:
   )""");
-  py::class_<Bmad::ElementAtSLat, std::unique_ptr<Bmad::ElementAtSLat>>(
-      m, "ElementAtSLat", "Fortran routine element_at_s_lat return value")
-      .def_readonly("err_flag", &Bmad::ElementAtSLat::err_flag)
-      .def_readonly("s_eff", &Bmad::ElementAtSLat::s_eff)
-      .def_readonly("position", &Bmad::ElementAtSLat::position)
-      .def_readonly("ix_ele", &Bmad::ElementAtSLat::ix_ele)
-      .def("__len__", [](const Bmad::ElementAtSLat&) { return 4; })
-      .def(
-          "__getitem__", [](const Bmad::ElementAtSLat& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.s_eff);
-            if (i == 2)
-              return py::cast(s.position);
-            if (i == 3)
-              return py::cast(s.ix_ele);
-            throw py::index_error();
-          });
   m.def(
       "element_slice_iterator",
       &Bmad::element_slice_iterator,
@@ -2133,6 +1785,20 @@ void init_Bmad_routines_e(py::module& m) {
       Ending edge of slice relative to beginning of element.
   )""");
   m.def("ellipinc_test", &Bmad::ellipinc_test, R"""()""");
+  py::class_<Bmad::EmFieldCalc, std::unique_ptr<Bmad::EmFieldCalc>>(
+      m, "EmFieldCalc", "Fortran routine em_field_calc return value")
+      .def_readonly("field", &Bmad::EmFieldCalc::field)
+      .def_readonly("err_flag", &Bmad::EmFieldCalc::err_flag)
+      .def("__len__", [](const Bmad::EmFieldCalc&) { return 2; })
+      .def("__getitem__", [](const Bmad::EmFieldCalc& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.field);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "em_field_calc",
       &Bmad::em_field_calc,
@@ -2193,20 +1859,35 @@ void init_Bmad_routines_e(py::module& m) {
       Used with recursive calls that pass the lord as the ele argument. In this case original_ele is the
       original ele argument.
   )""");
-  py::class_<Bmad::EmFieldCalc, std::unique_ptr<Bmad::EmFieldCalc>>(
-      m, "EmFieldCalc", "Fortran routine em_field_calc return value")
-      .def_readonly("field", &Bmad::EmFieldCalc::field)
-      .def_readonly("err_flag", &Bmad::EmFieldCalc::err_flag)
-      .def("__len__", [](const Bmad::EmFieldCalc&) { return 2; })
-      .def("__getitem__", [](const Bmad::EmFieldCalc& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.field);
-        if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
-      });
+  py::class_<PyEmFieldDerivatives, std::unique_ptr<PyEmFieldDerivatives>>(
+      m,
+      "EmFieldDerivatives",
+      "Fortran routine em_field_derivatives return value")
+      .def_readonly("dfield", &PyEmFieldDerivatives::dfield)
+      .def_readonly("s_pos", &PyEmFieldDerivatives::s_pos)
+      .def_readonly("local_ref_frame", &PyEmFieldDerivatives::local_ref_frame)
+      .def_readonly(
+          "grid_allow_s_out_of_bounds",
+          &PyEmFieldDerivatives::grid_allow_s_out_of_bounds)
+      .def_readonly("rf_time", &PyEmFieldDerivatives::rf_time)
+      .def("__len__", [](const PyEmFieldDerivatives&) { return 5; })
+      .def(
+          "__getitem__",
+          [](const PyEmFieldDerivatives& s, int i) -> py::object {
+            if (i < 0)
+              i += 5;
+            if (i == 0)
+              return py::cast(s.dfield);
+            if (i == 1)
+              return py::cast(s.s_pos);
+            if (i == 2)
+              return py::cast(s.local_ref_frame);
+            if (i == 3)
+              return py::cast(s.grid_allow_s_out_of_bounds);
+            if (i == 4)
+              return py::cast(s.rf_time);
+            throw py::index_error();
+          });
   m.def(
       "em_field_derivatives",
       &python_em_field_derivatives,
@@ -2244,35 +1925,6 @@ void init_Bmad_routines_e(py::module& m) {
   dfield : EmFieldStruct
       E and B field derivatives. dfield.E and dfield.B are not touched.
   )""");
-  py::class_<PyEmFieldDerivatives, std::unique_ptr<PyEmFieldDerivatives>>(
-      m,
-      "EmFieldDerivatives",
-      "Fortran routine em_field_derivatives return value")
-      .def_readonly("dfield", &PyEmFieldDerivatives::dfield)
-      .def_readonly("s_pos", &PyEmFieldDerivatives::s_pos)
-      .def_readonly("local_ref_frame", &PyEmFieldDerivatives::local_ref_frame)
-      .def_readonly(
-          "grid_allow_s_out_of_bounds",
-          &PyEmFieldDerivatives::grid_allow_s_out_of_bounds)
-      .def_readonly("rf_time", &PyEmFieldDerivatives::rf_time)
-      .def("__len__", [](const PyEmFieldDerivatives&) { return 5; })
-      .def(
-          "__getitem__",
-          [](const PyEmFieldDerivatives& s, int i) -> py::object {
-            if (i < 0)
-              i += 5;
-            if (i == 0)
-              return py::cast(s.dfield);
-            if (i == 1)
-              return py::cast(s.s_pos);
-            if (i == 2)
-              return py::cast(s.local_ref_frame);
-            if (i == 3)
-              return py::cast(s.grid_allow_s_out_of_bounds);
-            if (i == 4)
-              return py::cast(s.rf_time);
-            throw py::index_error();
-          });
   m.def(
       "em_field_kick_vector_time",
       &Bmad::em_field_kick_vector_time,
@@ -2341,6 +1993,23 @@ void init_Bmad_routines_e(py::module& m) {
   em_taylor1 : 
   em_taylor2 : 
   )""");
+  py::class_<Bmad::Emit6d, std::unique_ptr<Bmad::Emit6d>>(
+      m, "Emit6d", "Fortran routine emit_6d return value")
+      .def_readonly("mode", &Bmad::Emit6d::mode)
+      .def_readonly("sigma_mat", &Bmad::Emit6d::sigma_mat)
+      .def_readonly("rad_int_by_ele", &Bmad::Emit6d::rad_int_by_ele)
+      .def("__len__", [](const Bmad::Emit6d&) { return 3; })
+      .def("__getitem__", [](const Bmad::Emit6d& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.mode);
+        if (i == 1)
+          return py::cast(s.sigma_mat);
+        if (i == 2)
+          return py::cast(s.rad_int_by_ele);
+        throw py::index_error();
+      });
   m.def(
       "emit_6d",
       &Bmad::emit_6d,
@@ -2374,21 +2043,15 @@ void init_Bmad_routines_e(py::module& m) {
   rad_int_by_ele : RadIntAllEleStruct
       Radiation integrals element-by-element.
   )""");
-  py::class_<Bmad::Emit6d, std::unique_ptr<Bmad::Emit6d>>(
-      m, "Emit6d", "Fortran routine emit_6d return value")
-      .def_readonly("mode", &Bmad::Emit6d::mode)
-      .def_readonly("sigma_mat", &Bmad::Emit6d::sigma_mat)
-      .def_readonly("rad_int_by_ele", &Bmad::Emit6d::rad_int_by_ele)
-      .def("__len__", [](const Bmad::Emit6d&) { return 3; })
-      .def("__getitem__", [](const Bmad::Emit6d& s, int i) -> py::object {
+  py::class_<PyEnteringElement, std::unique_ptr<PyEnteringElement>>(
+      m, "EnteringElement", "Fortran routine entering_element return value")
+      .def_readonly("is_entering", &PyEnteringElement::is_entering)
+      .def("__len__", [](const PyEnteringElement&) { return 1; })
+      .def("__getitem__", [](const PyEnteringElement& s, int i) -> py::object {
         if (i < 0)
-          i += 3;
+          i += 1;
         if (i == 0)
-          return py::cast(s.mode);
-        if (i == 1)
-          return py::cast(s.sigma_mat);
-        if (i == 2)
-          return py::cast(s.rad_int_by_ele);
+          return py::cast(s.is_entering);
         throw py::index_error();
       });
   m.def(
@@ -2405,17 +2068,6 @@ void init_Bmad_routines_e(py::module& m) {
       First_track_edge$ or second_track_edge$
   is_entering : 
   )""");
-  py::class_<PyEnteringElement, std::unique_ptr<PyEnteringElement>>(
-      m, "EnteringElement", "Fortran routine entering_element return value")
-      .def_readonly("is_entering", &PyEnteringElement::is_entering)
-      .def("__len__", [](const PyEnteringElement&) { return 1; })
-      .def("__getitem__", [](const PyEnteringElement& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.is_entering);
-        throw py::index_error();
-      });
   m.def(
       "envelope_radints",
       &Bmad::envelope_radints,
@@ -2435,6 +2087,26 @@ void init_Bmad_routines_e(py::module& m) {
      tau = lattice_length/c_light/alpha
 
   )""");
+  py::class_<
+      Bmad::EnvelopeRadintsIbs,
+      std::unique_ptr<Bmad::EnvelopeRadintsIbs>>(
+      m,
+      "EnvelopeRadintsIbs",
+      "Fortran routine envelope_radints_ibs return value")
+      .def_readonly("alpha", &Bmad::EnvelopeRadintsIbs::alpha)
+      .def_readonly("emit", &Bmad::EnvelopeRadintsIbs::emit)
+      .def("__len__", [](const Bmad::EnvelopeRadintsIbs&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::EnvelopeRadintsIbs& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.alpha);
+            if (i == 1)
+              return py::cast(s.emit);
+            throw py::index_error();
+          });
   m.def(
       "envelope_radints_ibs",
       &Bmad::envelope_radints_ibs,
@@ -2493,38 +2165,6 @@ void init_Bmad_routines_e(py::module& m) {
   emit : float
       Normal mode emittances.
   )""");
-  py::class_<
-      Bmad::EnvelopeRadintsIbs,
-      std::unique_ptr<Bmad::EnvelopeRadintsIbs>>(
-      m,
-      "EnvelopeRadintsIbs",
-      "Fortran routine envelope_radints_ibs return value")
-      .def_readonly("alpha", &Bmad::EnvelopeRadintsIbs::alpha)
-      .def_readonly("emit", &Bmad::EnvelopeRadintsIbs::emit)
-      .def("__len__", [](const Bmad::EnvelopeRadintsIbs&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::EnvelopeRadintsIbs& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.alpha);
-            if (i == 1)
-              return py::cast(s.emit);
-            throw py::index_error();
-          });
-  m.def(
-      "eq_ac_kicker",
-      &python_eq_ac_kicker,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::arg("is_eq"),
-      R"""(Parameters
-  ----------
-  f1 : 
-  f2 : 
-  is_eq : 
-  )""");
   py::class_<PyEqAcKicker, std::unique_ptr<PyEqAcKicker>>(
       m, "EqAcKicker", "Fortran routine eq_ac_kicker return value")
       .def_readonly("is_eq", &PyEqAcKicker::is_eq)
@@ -2537,8 +2177,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_ac_kicker_freq",
-      &python_eq_ac_kicker_freq,
+      "eq_ac_kicker",
+      &python_eq_ac_kicker,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2560,8 +2200,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_ac_kicker_time",
-      &python_eq_ac_kicker_time,
+      "eq_ac_kicker_freq",
+      &python_eq_ac_kicker_freq,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2583,8 +2223,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_anormal_mode",
-      &python_eq_anormal_mode,
+      "eq_ac_kicker_time",
+      &python_eq_ac_kicker_time,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2606,8 +2246,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_aperture_param",
-      &python_eq_aperture_param,
+      "eq_anormal_mode",
+      &python_eq_anormal_mode,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2629,8 +2269,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_aperture_point",
-      &python_eq_aperture_point,
+      "eq_aperture_param",
+      &python_eq_aperture_param,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2652,8 +2292,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_aperture_scan",
-      &python_eq_aperture_scan,
+      "eq_aperture_point",
+      &python_eq_aperture_point,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2675,8 +2315,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_beam",
-      &python_eq_beam,
+      "eq_aperture_scan",
+      &python_eq_aperture_scan,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2698,8 +2338,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_beam_init",
-      &python_eq_beam_init,
+      "eq_beam",
+      &python_eq_beam,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2721,8 +2361,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_bmad_common",
-      &python_eq_bmad_common,
+      "eq_beam_init",
+      &python_eq_beam_init,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2744,8 +2384,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_bookkeeping_state",
-      &python_eq_bookkeeping_state,
+      "eq_bmad_common",
+      &python_eq_bmad_common,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2771,8 +2411,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_bpm_phase_coupling",
-      &python_eq_bpm_phase_coupling,
+      "eq_bookkeeping_state",
+      &python_eq_bookkeeping_state,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2798,8 +2438,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_branch",
-      &python_eq_branch,
+      "eq_bpm_phase_coupling",
+      &python_eq_bpm_phase_coupling,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2821,8 +2461,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_bunch",
-      &python_eq_bunch,
+      "eq_branch",
+      &python_eq_branch,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2844,8 +2484,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_bunch_params",
-      &python_eq_bunch_params,
+      "eq_bunch",
+      &python_eq_bunch,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2867,8 +2507,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_cartesian_map",
-      &python_eq_cartesian_map,
+      "eq_bunch_params",
+      &python_eq_bunch_params,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2890,8 +2530,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_cartesian_map_term",
-      &python_eq_cartesian_map_term,
+      "eq_cartesian_map",
+      &python_eq_cartesian_map,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2917,8 +2557,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_cartesian_map_term1",
-      &python_eq_cartesian_map_term1,
+      "eq_cartesian_map_term",
+      &python_eq_cartesian_map_term,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2944,8 +2584,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_complex_taylor",
-      &python_eq_complex_taylor,
+      "eq_cartesian_map_term1",
+      &python_eq_cartesian_map_term1,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2967,8 +2607,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_complex_taylor_term",
-      &python_eq_complex_taylor_term,
+      "eq_complex_taylor",
+      &python_eq_complex_taylor,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -2994,8 +2634,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_control",
-      &python_eq_control,
+      "eq_complex_taylor_term",
+      &python_eq_complex_taylor_term,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3017,8 +2657,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_control_ramp1",
-      &python_eq_control_ramp1,
+      "eq_control",
+      &python_eq_control,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3040,8 +2680,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_control_var1",
-      &python_eq_control_var1,
+      "eq_control_ramp1",
+      &python_eq_control_ramp1,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3063,8 +2703,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_controller",
-      &python_eq_controller,
+      "eq_control_var1",
+      &python_eq_control_var1,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3086,8 +2726,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_coord",
-      &python_eq_coord,
+      "eq_controller",
+      &python_eq_controller,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3109,8 +2749,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_coord_array",
-      &python_eq_coord_array,
+      "eq_coord",
+      &python_eq_coord,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3132,8 +2772,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_cylindrical_map",
-      &python_eq_cylindrical_map,
+      "eq_coord_array",
+      &python_eq_coord_array,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3155,8 +2795,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_cylindrical_map_term",
-      &python_eq_cylindrical_map_term,
+      "eq_cylindrical_map",
+      &python_eq_cylindrical_map,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3182,8 +2822,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_cylindrical_map_term1",
-      &python_eq_cylindrical_map_term1,
+      "eq_cylindrical_map_term",
+      &python_eq_cylindrical_map_term,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3209,8 +2849,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_ele",
-      &python_eq_ele,
+      "eq_cylindrical_map_term1",
+      &python_eq_cylindrical_map_term1,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3232,8 +2872,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_ellipse_beam_init",
-      &python_eq_ellipse_beam_init,
+      "eq_ele",
+      &python_eq_ele,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3258,8 +2898,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_em_field",
-      &python_eq_em_field,
+      "eq_ellipse_beam_init",
+      &python_eq_ellipse_beam_init,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3281,8 +2921,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_em_taylor",
-      &python_eq_em_taylor,
+      "eq_em_field",
+      &python_eq_em_field,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3304,8 +2944,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_em_taylor_term",
-      &python_eq_em_taylor_term,
+      "eq_em_taylor",
+      &python_eq_em_taylor,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3327,8 +2967,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_expression_atom",
-      &python_eq_expression_atom,
+      "eq_em_taylor_term",
+      &python_eq_em_taylor_term,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3350,8 +2990,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_floor_position",
-      &python_eq_floor_position,
+      "eq_expression_atom",
+      &python_eq_expression_atom,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3373,8 +3013,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_gen_grad1",
-      &python_eq_gen_grad1,
+      "eq_floor_position",
+      &python_eq_floor_position,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3396,8 +3036,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_gen_grad_map",
-      &python_eq_gen_grad_map,
+      "eq_gen_grad1",
+      &python_eq_gen_grad1,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3419,8 +3059,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_grid_beam_init",
-      &python_eq_grid_beam_init,
+      "eq_gen_grad_map",
+      &python_eq_gen_grad_map,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3442,8 +3082,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_grid_field",
-      &python_eq_grid_field,
+      "eq_grid_beam_init",
+      &python_eq_grid_beam_init,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3465,8 +3105,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_grid_field_pt",
-      &python_eq_grid_field_pt,
+      "eq_grid_field",
+      &python_eq_grid_field,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3488,8 +3128,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_grid_field_pt1",
-      &python_eq_grid_field_pt1,
+      "eq_grid_field_pt",
+      &python_eq_grid_field_pt,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3511,8 +3151,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_high_energy_space_charge",
-      &python_eq_high_energy_space_charge,
+      "eq_grid_field_pt1",
+      &python_eq_grid_field_pt1,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3540,8 +3180,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_interval1_coef",
-      &python_eq_interval1_coef,
+      "eq_high_energy_space_charge",
+      &python_eq_high_energy_space_charge,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3563,8 +3203,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_kv_beam_init",
-      &python_eq_kv_beam_init,
+      "eq_interval1_coef",
+      &python_eq_interval1_coef,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3586,8 +3226,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_lat",
-      &python_eq_lat,
+      "eq_kv_beam_init",
+      &python_eq_kv_beam_init,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3609,8 +3249,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_lat_ele_loc",
-      &python_eq_lat_ele_loc,
+      "eq_lat",
+      &python_eq_lat,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3632,8 +3272,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_lat_param",
-      &python_eq_lat_param,
+      "eq_lat_ele_loc",
+      &python_eq_lat_ele_loc,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3655,8 +3295,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_linac_normal_mode",
-      &python_eq_linac_normal_mode,
+      "eq_lat_param",
+      &python_eq_lat_param,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3681,8 +3321,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_mode3",
-      &python_eq_mode3,
+      "eq_linac_normal_mode",
+      &python_eq_linac_normal_mode,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3704,8 +3344,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_mode_info",
-      &python_eq_mode_info,
+      "eq_mode3",
+      &python_eq_mode3,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3727,8 +3367,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_normal_modes",
-      &python_eq_normal_modes,
+      "eq_mode_info",
+      &python_eq_mode_info,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3750,8 +3390,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_photon_element",
-      &python_eq_photon_element,
+      "eq_normal_modes",
+      &python_eq_normal_modes,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3773,8 +3413,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_photon_material",
-      &python_eq_photon_material,
+      "eq_photon_element",
+      &python_eq_photon_element,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3796,8 +3436,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_photon_reflect_surface",
-      &python_eq_photon_reflect_surface,
+      "eq_photon_material",
+      &python_eq_photon_material,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3825,8 +3465,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_photon_reflect_table",
-      &python_eq_photon_reflect_table,
+      "eq_photon_reflect_surface",
+      &python_eq_photon_reflect_surface,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3852,8 +3492,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_photon_target",
-      &python_eq_photon_target,
+      "eq_photon_reflect_table",
+      &python_eq_photon_reflect_table,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3875,8 +3515,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_pixel_detec",
-      &python_eq_pixel_detec,
+      "eq_photon_target",
+      &python_eq_photon_target,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3898,8 +3538,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_pixel_pt",
-      &python_eq_pixel_pt,
+      "eq_pixel_detec",
+      &python_eq_pixel_detec,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3921,8 +3561,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_pre_tracker",
-      &python_eq_pre_tracker,
+      "eq_pixel_pt",
+      &python_eq_pixel_pt,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3944,8 +3584,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_rad_int1",
-      &python_eq_rad_int1,
+      "eq_pre_tracker",
+      &python_eq_pre_tracker,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3967,8 +3607,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_rad_int_all_ele",
-      &python_eq_rad_int_all_ele,
+      "eq_rad_int1",
+      &python_eq_rad_int1,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -3990,8 +3630,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_rad_int_branch",
-      &python_eq_rad_int_branch,
+      "eq_rad_int_all_ele",
+      &python_eq_rad_int_all_ele,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4013,8 +3653,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_rad_map",
-      &python_eq_rad_map,
+      "eq_rad_int_branch",
+      &python_eq_rad_int_branch,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4036,8 +3676,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_rad_map_ele",
-      &python_eq_rad_map_ele,
+      "eq_rad_map",
+      &python_eq_rad_map,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4059,8 +3699,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_ramper_lord",
-      &python_eq_ramper_lord,
+      "eq_rad_map_ele",
+      &python_eq_rad_map_ele,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4082,8 +3722,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_space_charge_common",
-      &python_eq_space_charge_common,
+      "eq_ramper_lord",
+      &python_eq_ramper_lord,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4109,8 +3749,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_spin_polar",
-      &python_eq_spin_polar,
+      "eq_space_charge_common",
+      &python_eq_space_charge_common,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4132,8 +3772,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_spline",
-      &python_eq_spline,
+      "eq_spin_polar",
+      &python_eq_spin_polar,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4155,8 +3795,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_strong_beam",
-      &python_eq_strong_beam,
+      "eq_spline",
+      &python_eq_spline,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4178,8 +3818,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_surface_curvature",
-      &python_eq_surface_curvature,
+      "eq_strong_beam",
+      &python_eq_strong_beam,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4205,8 +3845,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_surface_displacement",
-      &python_eq_surface_displacement,
+      "eq_surface_curvature",
+      &python_eq_surface_curvature,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4232,8 +3872,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_surface_displacement_pt",
-      &python_eq_surface_displacement_pt,
+      "eq_surface_displacement",
+      &python_eq_surface_displacement,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4261,8 +3901,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_surface_h_misalign",
-      &python_eq_surface_h_misalign,
+      "eq_surface_displacement_pt",
+      &python_eq_surface_displacement_pt,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4288,8 +3928,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_surface_h_misalign_pt",
-      &python_eq_surface_h_misalign_pt,
+      "eq_surface_h_misalign",
+      &python_eq_surface_h_misalign,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4315,8 +3955,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_surface_segmented",
-      &python_eq_surface_segmented,
+      "eq_surface_h_misalign_pt",
+      &python_eq_surface_h_misalign_pt,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4342,8 +3982,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_surface_segmented_pt",
-      &python_eq_surface_segmented_pt,
+      "eq_surface_segmented",
+      &python_eq_surface_segmented,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4369,8 +4009,8 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "eq_target_point",
-      &python_eq_target_point,
+      "eq_surface_segmented_pt",
+      &python_eq_surface_segmented_pt,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4392,8 +4032,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_taylor",
-      &python_eq_taylor,
+      "eq_target_point",
+      &python_eq_target_point,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4415,8 +4055,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_taylor_term",
-      &python_eq_taylor_term,
+      "eq_taylor",
+      &python_eq_taylor,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4438,8 +4078,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_track",
-      &python_eq_track,
+      "eq_taylor_term",
+      &python_eq_taylor_term,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4461,8 +4101,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_track_point",
-      &python_eq_track_point,
+      "eq_track",
+      &python_eq_track,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4484,8 +4124,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_twiss",
-      &python_eq_twiss,
+      "eq_track_point",
+      &python_eq_track_point,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4507,8 +4147,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_wake",
-      &python_eq_wake,
+      "eq_twiss",
+      &python_eq_twiss,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4530,8 +4170,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_wake_lr",
-      &python_eq_wake_lr,
+      "eq_wake",
+      &python_eq_wake,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4553,8 +4193,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_wake_lr_mode",
-      &python_eq_wake_lr_mode,
+      "eq_wake_lr",
+      &python_eq_wake_lr,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4576,8 +4216,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_wake_sr",
-      &python_eq_wake_sr,
+      "eq_wake_lr_mode",
+      &python_eq_wake_lr_mode,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4599,8 +4239,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_wake_sr_mode",
-      &python_eq_wake_sr_mode,
+      "eq_wake_sr",
+      &python_eq_wake_sr,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4622,8 +4262,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_wake_sr_z_long",
-      &python_eq_wake_sr_z_long,
+      "eq_wake_sr_mode",
+      &python_eq_wake_sr_mode,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4645,8 +4285,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_wall3d",
-      &python_eq_wall3d,
+      "eq_wake_sr_z_long",
+      &python_eq_wake_sr_z_long,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4668,8 +4308,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_wall3d_section",
-      &python_eq_wall3d_section,
+      "eq_wall3d",
+      &python_eq_wall3d,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4691,8 +4331,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_wall3d_vertex",
-      &python_eq_wall3d_vertex,
+      "eq_wall3d_section",
+      &python_eq_wall3d_section,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4714,8 +4354,8 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "eq_xy_disp",
-      &python_eq_xy_disp,
+      "eq_wall3d_vertex",
+      &python_eq_wall3d_vertex,
       py::arg("f1"),
       py::arg("f2"),
       py::arg("is_eq"),
@@ -4737,16 +4377,16 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "equal_sign_here",
-      &python_equal_sign_here,
-      py::arg("ele"),
-      py::arg("delim"),
-      py::arg("is_here"),
+      "eq_xy_disp",
+      &python_eq_xy_disp,
+      py::arg("f1"),
+      py::arg("f2"),
+      py::arg("is_eq"),
       R"""(Parameters
   ----------
-  ele : 
-  delim : 
-  is_here : 
+  f1 : 
+  f2 : 
+  is_eq : 
   )""");
   py::class_<PyEqualSignHere, std::unique_ptr<PyEqualSignHere>>(
       m, "EqualSignHere", "Fortran routine equal_sign_here return value")
@@ -4763,18 +4403,16 @@ void init_Bmad_routines_e(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "equivalent_taylor_attributes",
-      &python_equivalent_taylor_attributes,
-      py::arg("ele_taylor"),
-      py::arg("ele2"),
-      py::arg("equiv"),
+      "equal_sign_here",
+      &python_equal_sign_here,
+      py::arg("ele"),
+      py::arg("delim"),
+      py::arg("is_here"),
       R"""(Parameters
   ----------
-  ele_taylor : EleStruct
-      Element with a Taylor map
-  ele2 : EleStruct
-      Element that might receive the Taylor map from ele_taylor.
-  equiv : 
+  ele : 
+  delim : 
+  is_here : 
   )""");
   py::class_<
       PyEquivalentTaylorAttributes,
@@ -4794,22 +4432,18 @@ void init_Bmad_routines_e(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "etdiv",
-      &python_etdiv,
-      py::arg("A"),
-      py::arg("B"),
-      py::arg("C"),
-      py::arg("D"),
-      py::arg("E"),
-      py::arg("F"),
+      "equivalent_taylor_attributes",
+      &python_equivalent_taylor_attributes,
+      py::arg("ele_taylor"),
+      py::arg("ele2"),
+      py::arg("equiv"),
       R"""(Parameters
   ----------
-  A : 
-  B : 
-  C : 
-  D : 
-  E : 
-  F : 
+  ele_taylor : EleStruct
+      Element with a Taylor map
+  ele2 : EleStruct
+      Element that might receive the Taylor map from ele_taylor.
+  equiv : 
   )""");
   py::class_<PyEtdiv, std::unique_ptr<PyEtdiv>>(
       m, "Etdiv", "Fortran routine etdiv return value")
@@ -4837,6 +4471,50 @@ void init_Bmad_routines_e(py::module& m) {
           return py::cast(s.F);
         throw py::index_error();
       });
+  m.def(
+      "etdiv",
+      &python_etdiv,
+      py::arg("A"),
+      py::arg("B"),
+      py::arg("C"),
+      py::arg("D"),
+      py::arg("E"),
+      py::arg("F"),
+      R"""(Parameters
+  ----------
+  A : 
+  B : 
+  C : 
+  D : 
+  E : 
+  F : 
+  )""");
+  py::class_<
+      Bmad::EvaluateArrayIndex,
+      std::unique_ptr<Bmad::EvaluateArrayIndex>>(
+      m,
+      "EvaluateArrayIndex",
+      "Fortran routine evaluate_array_index return value")
+      .def_readonly("err_flag", &Bmad::EvaluateArrayIndex::err_flag)
+      .def_readonly("word2", &Bmad::EvaluateArrayIndex::word2)
+      .def_readonly("delim2", &Bmad::EvaluateArrayIndex::delim2)
+      .def_readonly("this_index", &Bmad::EvaluateArrayIndex::this_index)
+      .def("__len__", [](const Bmad::EvaluateArrayIndex&) { return 4; })
+      .def(
+          "__getitem__",
+          [](const Bmad::EvaluateArrayIndex& s, int i) -> py::object {
+            if (i < 0)
+              i += 4;
+            if (i == 0)
+              return py::cast(s.err_flag);
+            if (i == 1)
+              return py::cast(s.word2);
+            if (i == 2)
+              return py::cast(s.delim2);
+            if (i == 3)
+              return py::cast(s.this_index);
+            throw py::index_error();
+          });
   m.def(
       "evaluate_array_index",
       &Bmad::evaluate_array_index,
@@ -4866,30 +4544,20 @@ void init_Bmad_routines_e(py::module& m) {
   this_index : int
       Integer value
   )""");
-  py::class_<
-      Bmad::EvaluateArrayIndex,
-      std::unique_ptr<Bmad::EvaluateArrayIndex>>(
-      m,
-      "EvaluateArrayIndex",
-      "Fortran routine evaluate_array_index return value")
-      .def_readonly("err_flag", &Bmad::EvaluateArrayIndex::err_flag)
-      .def_readonly("word2", &Bmad::EvaluateArrayIndex::word2)
-      .def_readonly("delim2", &Bmad::EvaluateArrayIndex::delim2)
-      .def_readonly("this_index", &Bmad::EvaluateArrayIndex::this_index)
-      .def("__len__", [](const Bmad::EvaluateArrayIndex&) { return 4; })
+  py::class_<Bmad::EvaluateLogical, std::unique_ptr<Bmad::EvaluateLogical>>(
+      m, "EvaluateLogical", "Fortran routine evaluate_logical return value")
+      .def_readonly("iostat", &Bmad::EvaluateLogical::iostat)
+      .def_readonly("this_logic", &Bmad::EvaluateLogical::this_logic)
+      .def("__len__", [](const Bmad::EvaluateLogical&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::EvaluateArrayIndex& s, int i) -> py::object {
+          [](const Bmad::EvaluateLogical& s, int i) -> py::object {
             if (i < 0)
-              i += 4;
+              i += 2;
             if (i == 0)
-              return py::cast(s.err_flag);
+              return py::cast(s.iostat);
             if (i == 1)
-              return py::cast(s.word2);
-            if (i == 2)
-              return py::cast(s.delim2);
-            if (i == 3)
-              return py::cast(s.this_index);
+              return py::cast(s.this_logic);
             throw py::index_error();
           });
   m.def(
@@ -4916,22 +4584,6 @@ void init_Bmad_routines_e(py::module& m) {
   iostat : int
       Status: Returns 0 if conversion successful.
   )""");
-  py::class_<Bmad::EvaluateLogical, std::unique_ptr<Bmad::EvaluateLogical>>(
-      m, "EvaluateLogical", "Fortran routine evaluate_logical return value")
-      .def_readonly("iostat", &Bmad::EvaluateLogical::iostat)
-      .def_readonly("this_logic", &Bmad::EvaluateLogical::this_logic)
-      .def("__len__", [](const Bmad::EvaluateLogical&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::EvaluateLogical& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.iostat);
-            if (i == 1)
-              return py::cast(s.this_logic);
-            throw py::index_error();
-          });
   m.def(
       "exact_bend_edge_kick",
       &Bmad::exact_bend_edge_kick,
@@ -4985,6 +4637,23 @@ void init_Bmad_routines_e(py::module& m) {
   B2 : float
       Scalar value.  Eq. 34 from Piwinski's paper. <return value> -- Real(rp): Scalar return value.
   )""");
+  py::class_<PyExpectOneOf, std::unique_ptr<PyExpectOneOf>>(
+      m, "ExpectOneOf", "Fortran routine expect_one_of return value")
+      .def_readonly("delim", &PyExpectOneOf::delim)
+      .def_readonly("delim_found", &PyExpectOneOf::delim_found)
+      .def_readonly("is_ok", &PyExpectOneOf::is_ok)
+      .def("__len__", [](const PyExpectOneOf&) { return 3; })
+      .def("__getitem__", [](const PyExpectOneOf& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.delim);
+        if (i == 1)
+          return py::cast(s.delim_found);
+        if (i == 2)
+          return py::cast(s.is_ok);
+        throw py::index_error();
+      });
   m.def(
       "expect_one_of",
       &python_expect_one_of,
@@ -5027,13 +4696,13 @@ void init_Bmad_routines_e(py::module& m) {
   Related routines:
   expect_this
   )""");
-  py::class_<PyExpectOneOf, std::unique_ptr<PyExpectOneOf>>(
-      m, "ExpectOneOf", "Fortran routine expect_one_of return value")
-      .def_readonly("delim", &PyExpectOneOf::delim)
-      .def_readonly("delim_found", &PyExpectOneOf::delim_found)
-      .def_readonly("is_ok", &PyExpectOneOf::is_ok)
-      .def("__len__", [](const PyExpectOneOf&) { return 3; })
-      .def("__getitem__", [](const PyExpectOneOf& s, int i) -> py::object {
+  py::class_<Bmad::ExpectThis, std::unique_ptr<Bmad::ExpectThis>>(
+      m, "ExpectThis", "Fortran routine expect_this return value")
+      .def_readonly("delim", &Bmad::ExpectThis::delim)
+      .def_readonly("delim_found", &Bmad::ExpectThis::delim_found)
+      .def_readonly("is_ok", &Bmad::ExpectThis::is_ok)
+      .def("__len__", [](const Bmad::ExpectThis&) { return 3; })
+      .def("__getitem__", [](const Bmad::ExpectThis& s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -5086,23 +4755,6 @@ void init_Bmad_routines_e(py::module& m) {
   Related routines:
   expect_one_of
   )""");
-  py::class_<Bmad::ExpectThis, std::unique_ptr<Bmad::ExpectThis>>(
-      m, "ExpectThis", "Fortran routine expect_this return value")
-      .def_readonly("delim", &Bmad::ExpectThis::delim)
-      .def_readonly("delim_found", &Bmad::ExpectThis::delim_found)
-      .def_readonly("is_ok", &Bmad::ExpectThis::is_ok)
-      .def("__len__", [](const Bmad::ExpectThis&) { return 3; })
-      .def("__getitem__", [](const Bmad::ExpectThis& s, int i) -> py::object {
-        if (i < 0)
-          i += 3;
-        if (i == 0)
-          return py::cast(s.delim);
-        if (i == 1)
-          return py::cast(s.delim_found);
-        if (i == 2)
-          return py::cast(s.is_ok);
-        throw py::index_error();
-      });
   m.def(
       "expression_stack_to_string",
       &Bmad::expression_stack_to_string,
@@ -5124,6 +4776,29 @@ void init_Bmad_routines_e(py::module& m) {
   str : unknown
       : Expression in string form.
   )""");
+  py::class_<
+      Bmad::ExpressionStackValue,
+      std::unique_ptr<Bmad::ExpressionStackValue>>(
+      m,
+      "ExpressionStackValue",
+      "Fortran routine expression_stack_value return value")
+      .def_readonly("err_flag", &Bmad::ExpressionStackValue::err_flag)
+      .def_readonly("err_str", &Bmad::ExpressionStackValue::err_str)
+      .def_readonly("value", &Bmad::ExpressionStackValue::value)
+      .def("__len__", [](const Bmad::ExpressionStackValue&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const Bmad::ExpressionStackValue& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.err_flag);
+            if (i == 1)
+              return py::cast(s.err_str);
+            if (i == 2)
+              return py::cast(s.value);
+            throw py::index_error();
+          });
   m.def(
       "expression_stack_value",
       &Bmad::expression_stack_value,
@@ -5162,26 +4837,29 @@ void init_Bmad_routines_e(py::module& m) {
   expression_value expression_string_to_stack
   )""");
   py::class_<
-      Bmad::ExpressionStackValue,
-      std::unique_ptr<Bmad::ExpressionStackValue>>(
+      Bmad::ExpressionStringToStack,
+      std::unique_ptr<Bmad::ExpressionStringToStack>>(
       m,
-      "ExpressionStackValue",
-      "Fortran routine expression_stack_value return value")
-      .def_readonly("err_flag", &Bmad::ExpressionStackValue::err_flag)
-      .def_readonly("err_str", &Bmad::ExpressionStackValue::err_str)
-      .def_readonly("value", &Bmad::ExpressionStackValue::value)
-      .def("__len__", [](const Bmad::ExpressionStackValue&) { return 3; })
+      "ExpressionStringToStack",
+      "Fortran routine expression_string_to_stack return value")
+      .def_readonly("stack", &Bmad::ExpressionStringToStack::stack)
+      .def_readonly("n_stack", &Bmad::ExpressionStringToStack::n_stack)
+      .def_readonly("err_flag", &Bmad::ExpressionStringToStack::err_flag)
+      .def_readonly("err_str", &Bmad::ExpressionStringToStack::err_str)
+      .def("__len__", [](const Bmad::ExpressionStringToStack&) { return 4; })
       .def(
           "__getitem__",
-          [](const Bmad::ExpressionStackValue& s, int i) -> py::object {
+          [](const Bmad::ExpressionStringToStack& s, int i) -> py::object {
             if (i < 0)
-              i += 3;
+              i += 4;
             if (i == 0)
-              return py::cast(s.err_flag);
+              return py::cast(s.stack);
             if (i == 1)
-              return py::cast(s.err_str);
+              return py::cast(s.n_stack);
             if (i == 2)
-              return py::cast(s.value);
+              return py::cast(s.err_flag);
+            if (i == 3)
+              return py::cast(s.err_str);
             throw py::index_error();
           });
   m.def(
@@ -5220,28 +4898,22 @@ void init_Bmad_routines_e(py::module& m) {
   expression_value expression_stack_value
   )""");
   py::class_<
-      Bmad::ExpressionStringToStack,
-      std::unique_ptr<Bmad::ExpressionStringToStack>>(
+      Bmad::ExpressionStringToTree,
+      std::unique_ptr<Bmad::ExpressionStringToTree>>(
       m,
-      "ExpressionStringToStack",
-      "Fortran routine expression_string_to_stack return value")
-      .def_readonly("stack", &Bmad::ExpressionStringToStack::stack)
-      .def_readonly("n_stack", &Bmad::ExpressionStringToStack::n_stack)
-      .def_readonly("err_flag", &Bmad::ExpressionStringToStack::err_flag)
-      .def_readonly("err_str", &Bmad::ExpressionStringToStack::err_str)
-      .def("__len__", [](const Bmad::ExpressionStringToStack&) { return 4; })
+      "ExpressionStringToTree",
+      "Fortran routine expression_string_to_tree return value")
+      .def_readonly("err_flag", &Bmad::ExpressionStringToTree::err_flag)
+      .def_readonly("err_str", &Bmad::ExpressionStringToTree::err_str)
+      .def("__len__", [](const Bmad::ExpressionStringToTree&) { return 2; })
       .def(
           "__getitem__",
-          [](const Bmad::ExpressionStringToStack& s, int i) -> py::object {
+          [](const Bmad::ExpressionStringToTree& s, int i) -> py::object {
             if (i < 0)
-              i += 4;
+              i += 2;
             if (i == 0)
-              return py::cast(s.stack);
-            if (i == 1)
-              return py::cast(s.n_stack);
-            if (i == 2)
               return py::cast(s.err_flag);
-            if (i == 3)
+            if (i == 1)
               return py::cast(s.err_str);
             throw py::index_error();
           });
@@ -5291,26 +4963,6 @@ void init_Bmad_routines_e(py::module& m) {
   compound vars with children "atan" "()" The funciton argument of a species related function like "He++" in the
   construct "mass_of(He++)" will not get split will get marked as a species_const$.
   )""");
-  py::class_<
-      Bmad::ExpressionStringToTree,
-      std::unique_ptr<Bmad::ExpressionStringToTree>>(
-      m,
-      "ExpressionStringToTree",
-      "Fortran routine expression_string_to_tree return value")
-      .def_readonly("err_flag", &Bmad::ExpressionStringToTree::err_flag)
-      .def_readonly("err_str", &Bmad::ExpressionStringToTree::err_str)
-      .def("__len__", [](const Bmad::ExpressionStringToTree&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ExpressionStringToTree& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.err_str);
-            throw py::index_error();
-          });
   m.def(
       "expression_tree_to_string",
       &Bmad::expression_tree_to_string,
@@ -5339,6 +4991,25 @@ void init_Bmad_routines_e(py::module& m) {
   str_out : unknown
       Expression string.
   )""");
+  py::class_<Bmad::ExpressionValue, std::unique_ptr<Bmad::ExpressionValue>>(
+      m, "ExpressionValue", "Fortran routine expression_value return value")
+      .def_readonly("err_flag", &Bmad::ExpressionValue::err_flag)
+      .def_readonly("err_str", &Bmad::ExpressionValue::err_str)
+      .def_readonly("value", &Bmad::ExpressionValue::value)
+      .def("__len__", [](const Bmad::ExpressionValue&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const Bmad::ExpressionValue& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.err_flag);
+            if (i == 1)
+              return py::cast(s.err_str);
+            if (i == 2)
+              return py::cast(s.value);
+            throw py::index_error();
+          });
   m.def(
       "expression_value",
       &Bmad::expression_value,
@@ -5372,23 +5043,4 @@ void init_Bmad_routines_e(py::module& m) {
   Related routines:
   expression_string_to_stack expression_stack_value
   )""");
-  py::class_<Bmad::ExpressionValue, std::unique_ptr<Bmad::ExpressionValue>>(
-      m, "ExpressionValue", "Fortran routine expression_value return value")
-      .def_readonly("err_flag", &Bmad::ExpressionValue::err_flag)
-      .def_readonly("err_str", &Bmad::ExpressionValue::err_str)
-      .def_readonly("value", &Bmad::ExpressionValue::value)
-      .def("__len__", [](const Bmad::ExpressionValue&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ExpressionValue& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.err_str);
-            if (i == 2)
-              return py::cast(s.value);
-            throw py::index_error();
-          });
 }

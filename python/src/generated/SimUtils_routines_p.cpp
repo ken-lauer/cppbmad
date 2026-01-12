@@ -1,23 +1,9 @@
 #include "pybmad/generated/SimUtils_routines_p.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyParseFortranFormat {
-  std::string format_str;
-  int n_repeat;
-  int power;
-  std::string descrip;
-  int width;
-  int digits;
-};
 PyParseFortranFormat python_parse_fortran_format(
     std::string format_str,
     int n_repeat,
@@ -31,9 +17,6 @@ PyParseFortranFormat python_parse_fortran_format(
       format_str, n_repeat, power, descrip, width, digits}};
   return py_result;
 }
-struct PyPolyEval {
-  double y;
-};
 PyPolyEval python_poly_eval(
     RealAlloc1D& poly,
     double x,
@@ -43,17 +26,11 @@ PyPolyEval python_poly_eval(
   auto py_result{PyPolyEval{y}};
   return py_result;
 }
-struct PyProbabilityFunct {
-  double prob;
-};
 PyProbabilityFunct python_probability_funct(double x, double prob) {
   SimUtils::probability_funct(x, prob);
   auto py_result{PyProbabilityFunct{prob}};
   return py_result;
 }
-struct PyProjdd {
-  std::complex<double> func_retval__;
-};
 PyProjdd python_projdd(
     ComplexAlloc1D& a,
     ComplexAlloc1D& b,
@@ -64,24 +41,6 @@ PyProjdd python_projdd(
 }
 
 void init_SimUtils_routines_p(py::module& m) {
-  m.def(
-      "parse_fortran_format",
-      &python_parse_fortran_format,
-      py::arg("format_str"),
-      py::arg("n_repeat"),
-      py::arg("power"),
-      py::arg("descrip"),
-      py::arg("width"),
-      py::arg("digits"),
-      R"""(Parameters
-  ----------
-  format_str : 
-  n_repeat : 
-  power : 
-  descrip : 
-  width : 
-  digits : 
-  )""");
   py::class_<PyParseFortranFormat, std::unique_ptr<PyParseFortranFormat>>(
       m,
       "ParseFortranFormat",
@@ -113,6 +72,24 @@ void init_SimUtils_routines_p(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "parse_fortran_format",
+      &python_parse_fortran_format,
+      py::arg("format_str"),
+      py::arg("n_repeat"),
+      py::arg("power"),
+      py::arg("descrip"),
+      py::arg("width"),
+      py::arg("digits"),
+      R"""(Parameters
+  ----------
+  format_str : 
+  n_repeat : 
+  power : 
+  descrip : 
+  width : 
+  digits : 
+  )""");
+  m.def(
       "pointer_to_ran_state",
       &SimUtils::pointer_to_ran_state,
       py::arg("ran_state") = py::none(),
@@ -133,6 +110,17 @@ void init_SimUtils_routines_p(py::module& m) {
   ran_state_ptr : RandomStateStruct
       Pointer to the appropriate state.
   )""");
+  py::class_<PyPolyEval, std::unique_ptr<PyPolyEval>>(
+      m, "PolyEval", "Fortran routine poly_eval return value")
+      .def_readonly("y", &PyPolyEval::y)
+      .def("__len__", [](const PyPolyEval&) { return 1; })
+      .def("__getitem__", [](const PyPolyEval& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.y);
+        throw py::index_error();
+      });
   m.def(
       "poly_eval",
       &python_poly_eval,
@@ -150,15 +138,15 @@ void init_SimUtils_routines_p(py::module& m) {
       poly(:) array are differentials? Default is False.
   y : 
   )""");
-  py::class_<PyPolyEval, std::unique_ptr<PyPolyEval>>(
-      m, "PolyEval", "Fortran routine poly_eval return value")
-      .def_readonly("y", &PyPolyEval::y)
-      .def("__len__", [](const PyPolyEval&) { return 1; })
-      .def("__getitem__", [](const PyPolyEval& s, int i) -> py::object {
+  py::class_<PyProbabilityFunct, std::unique_ptr<PyProbabilityFunct>>(
+      m, "ProbabilityFunct", "Fortran routine probability_funct return value")
+      .def_readonly("prob", &PyProbabilityFunct::prob)
+      .def("__len__", [](const PyProbabilityFunct&) { return 1; })
+      .def("__getitem__", [](const PyProbabilityFunct& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
-          return py::cast(s.y);
+          return py::cast(s.prob);
         throw py::index_error();
       });
   m.def(
@@ -172,15 +160,15 @@ void init_SimUtils_routines_p(py::module& m) {
       Function argument.
   prob : 
   )""");
-  py::class_<PyProbabilityFunct, std::unique_ptr<PyProbabilityFunct>>(
-      m, "ProbabilityFunct", "Fortran routine probability_funct return value")
-      .def_readonly("prob", &PyProbabilityFunct::prob)
-      .def("__len__", [](const PyProbabilityFunct&) { return 1; })
-      .def("__getitem__", [](const PyProbabilityFunct& s, int i) -> py::object {
+  py::class_<PyProjdd, std::unique_ptr<PyProjdd>>(
+      m, "Projdd", "Fortran routine projdd return value")
+      .def_readonly("func_retval__", &PyProjdd::func_retval__)
+      .def("__len__", [](const PyProjdd&) { return 1; })
+      .def("__getitem__", [](const PyProjdd& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
-          return py::cast(s.prob);
+          return py::cast(s.func_retval__);
         throw py::index_error();
       });
   m.def(
@@ -195,15 +183,4 @@ void init_SimUtils_routines_p(py::module& m) {
   b : 
   projdd : 
   )""");
-  py::class_<PyProjdd, std::unique_ptr<PyProjdd>>(
-      m, "Projdd", "Fortran routine projdd return value")
-      .def_readonly("func_retval__", &PyProjdd::func_retval__)
-      .def("__len__", [](const PyProjdd&) { return 1; })
-      .def("__getitem__", [](const PyProjdd& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.func_retval__);
-        throw py::index_error();
-      });
 }

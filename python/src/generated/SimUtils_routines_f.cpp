@@ -1,30 +1,14 @@
 #include "pybmad/generated/SimUtils_routines_f.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyFactorial {
-  int n;
-  double fact;
-};
 PyFactorial python_factorial(int n, double fact) {
   SimUtils::factorial(n, fact);
   auto py_result{PyFactorial{n, fact}};
   return py_result;
 }
-struct PyFileDirectorizer {
-  std::string in_file;
-  std::string out_file;
-  std::string directory;
-  bool add_switch;
-};
 PyFileDirectorizer python_file_directorizer(
     std::string in_file,
     std::string out_file,
@@ -34,11 +18,6 @@ PyFileDirectorizer python_file_directorizer(
   auto py_result{PyFileDirectorizer{in_file, out_file, directory, add_switch}};
   return py_result;
 }
-struct PyFileGet {
-  std::string string;
-  std::string dflt_file_name;
-  std::string file_name;
-};
 PyFileGet python_file_get(
     std::string string,
     std::string dflt_file_name,
@@ -47,13 +26,6 @@ PyFileGet python_file_get(
   auto py_result{PyFileGet{string, dflt_file_name, file_name}};
   return py_result;
 }
-struct PyFileGetOpen {
-  std::string string;
-  std::string dflt_file_name;
-  std::string file_name;
-  int file_unit;
-  bool readonly;
-};
 PyFileGetOpen python_file_get_open(
     std::string string,
     std::string dflt_file_name,
@@ -66,12 +38,6 @@ PyFileGetOpen python_file_get_open(
       PyFileGetOpen{string, dflt_file_name, file_name, file_unit, readonly}};
   return py_result;
 }
-struct PyFileSuffixer {
-  std::string in_file_name;
-  std::string out_file_name;
-  std::string suffix;
-  bool add_switch;
-};
 PyFileSuffixer python_file_suffixer(
     std::string in_file_name,
     std::string out_file_name,
@@ -82,10 +48,6 @@ PyFileSuffixer python_file_suffixer(
       PyFileSuffixer{in_file_name, out_file_name, suffix, add_switch}};
   return py_result;
 }
-struct PyFindLocationInt {
-  int value;
-  int ix_match;
-};
 PyFindLocationInt python_find_location_int(
     IntAlloc1D& arr,
     int value,
@@ -94,10 +56,6 @@ PyFindLocationInt python_find_location_int(
   auto py_result{PyFindLocationInt{value, ix_match}};
   return py_result;
 }
-struct PyFindLocationLogic {
-  bool value;
-  int ix_match;
-};
 PyFindLocationLogic python_find_location_logic(
     BoolAlloc1D& arr,
     bool value,
@@ -106,9 +64,6 @@ PyFindLocationLogic python_find_location_logic(
   auto py_result{PyFindLocationLogic{value, ix_match}};
   return py_result;
 }
-struct PyFindLocationReal {
-  int ix_match;
-};
 PyFindLocationReal python_find_location_real(
     RealAlloc1D& arr,
     double value,
@@ -117,9 +72,6 @@ PyFindLocationReal python_find_location_real(
   auto py_result{PyFindLocationReal{ix_match}};
   return py_result;
 }
-struct PyFixedwindowls {
-  double z;
-};
 PyFixedwindowls python_fixedwindowls(double ynew, int id, double z) {
   SimUtils::fixedwindowls(ynew, id, z);
   auto py_result{PyFixedwindowls{z}};
@@ -127,16 +79,6 @@ PyFixedwindowls python_fixedwindowls(double ynew, int id, double z) {
 }
 
 void init_SimUtils_routines_f(py::module& m) {
-  m.def(
-      "factorial",
-      &python_factorial,
-      py::arg("n"),
-      py::arg("fact"),
-      R"""(Parameters
-  ----------
-  n : 
-  fact : 
-  )""");
   py::class_<PyFactorial, std::unique_ptr<PyFactorial>>(
       m, "Factorial", "Fortran routine factorial return value")
       .def_readonly("n", &PyFactorial::n)
@@ -151,6 +93,16 @@ void init_SimUtils_routines_f(py::module& m) {
           return py::cast(s.fact);
         throw py::index_error();
       });
+  m.def(
+      "factorial",
+      &python_factorial,
+      py::arg("n"),
+      py::arg("fact"),
+      R"""(Parameters
+  ----------
+  n : 
+  fact : 
+  )""");
   m.def(
       "faddeeva_function",
       &SimUtils::faddeeva_function,
@@ -183,20 +135,6 @@ void init_SimUtils_routines_f(py::module& m) {
   isign : int
       -1 => "Forward" transform, +1 => "Backwards" transform.
   )""");
-  m.def(
-      "file_directorizer",
-      &python_file_directorizer,
-      py::arg("in_file"),
-      py::arg("out_file"),
-      py::arg("directory"),
-      py::arg("add_switch"),
-      R"""(Parameters
-  ----------
-  in_file : 
-  out_file : 
-  directory : 
-  add_switch : 
-  )""");
   py::class_<PyFileDirectorizer, std::unique_ptr<PyFileDirectorizer>>(
       m, "FileDirectorizer", "Fortran routine file_directorizer return value")
       .def_readonly("in_file", &PyFileDirectorizer::in_file)
@@ -218,16 +156,18 @@ void init_SimUtils_routines_f(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "file_get",
-      &python_file_get,
-      py::arg("string"),
-      py::arg("dflt_file_name"),
-      py::arg("file_name"),
+      "file_directorizer",
+      &python_file_directorizer,
+      py::arg("in_file"),
+      py::arg("out_file"),
+      py::arg("directory"),
+      py::arg("add_switch"),
       R"""(Parameters
   ----------
-  string : 
-  dflt_file_name : 
-  file_name : 
+  in_file : 
+  out_file : 
+  directory : 
+  add_switch : 
   )""");
   py::class_<PyFileGet, std::unique_ptr<PyFileGet>>(
       m, "FileGet", "Fortran routine file_get return value")
@@ -247,20 +187,16 @@ void init_SimUtils_routines_f(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "file_get_open",
-      &python_file_get_open,
+      "file_get",
+      &python_file_get,
       py::arg("string"),
       py::arg("dflt_file_name"),
       py::arg("file_name"),
-      py::arg("file_unit"),
-      py::arg("readonly"),
       R"""(Parameters
   ----------
   string : 
   dflt_file_name : 
   file_name : 
-  file_unit : 
-  readonly : 
   )""");
   py::class_<PyFileGetOpen, std::unique_ptr<PyFileGetOpen>>(
       m, "FileGetOpen", "Fortran routine file_get_open return value")
@@ -286,18 +222,20 @@ void init_SimUtils_routines_f(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "file_suffixer",
-      &python_file_suffixer,
-      py::arg("in_file_name"),
-      py::arg("out_file_name"),
-      py::arg("suffix"),
-      py::arg("add_switch"),
+      "file_get_open",
+      &python_file_get_open,
+      py::arg("string"),
+      py::arg("dflt_file_name"),
+      py::arg("file_name"),
+      py::arg("file_unit"),
+      py::arg("readonly"),
       R"""(Parameters
   ----------
-  in_file_name : 
-  out_file_name : 
-  suffix : 
-  add_switch : 
+  string : 
+  dflt_file_name : 
+  file_name : 
+  file_unit : 
+  readonly : 
   )""");
   py::class_<PyFileSuffixer, std::unique_ptr<PyFileSuffixer>>(
       m, "FileSuffixer", "Fortran routine file_suffixer return value")
@@ -320,16 +258,18 @@ void init_SimUtils_routines_f(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "find_location",
-      py::overload_cast<IntAlloc1D&, int, int>(&python_find_location_int),
-      py::arg("arr"),
-      py::arg("value"),
-      py::arg("ix_match"),
+      "file_suffixer",
+      &python_file_suffixer,
+      py::arg("in_file_name"),
+      py::arg("out_file_name"),
+      py::arg("suffix"),
+      py::arg("add_switch"),
       R"""(Parameters
   ----------
-  arr : 
-  value : 
-  ix_match : 
+  in_file_name : 
+  out_file_name : 
+  suffix : 
+  add_switch : 
   )""");
   py::class_<PyFindLocationInt, std::unique_ptr<PyFindLocationInt>>(
       m, "FindLocationInt", "Fortran routine find_location_int return value")
@@ -347,7 +287,7 @@ void init_SimUtils_routines_f(py::module& m) {
       });
   m.def(
       "find_location",
-      py::overload_cast<BoolAlloc1D&, bool, int>(&python_find_location_logic),
+      py::overload_cast<IntAlloc1D&, int, int>(&python_find_location_int),
       py::arg("arr"),
       py::arg("value"),
       py::arg("ix_match"),
@@ -376,16 +316,14 @@ void init_SimUtils_routines_f(py::module& m) {
           });
   m.def(
       "find_location",
-      py::overload_cast<RealAlloc1D&, double, int>(&python_find_location_real),
+      py::overload_cast<BoolAlloc1D&, bool, int>(&python_find_location_logic),
       py::arg("arr"),
       py::arg("value"),
       py::arg("ix_match"),
       R"""(Parameters
   ----------
   arr : 
-      real(rp), logical, or integer
-  value : unknown
-      :).
+  value : 
   ix_match : 
   )""");
   py::class_<PyFindLocationReal, std::unique_ptr<PyFindLocationReal>>(
@@ -399,6 +337,20 @@ void init_SimUtils_routines_f(py::module& m) {
           return py::cast(s.ix_match);
         throw py::index_error();
       });
+  m.def(
+      "find_location",
+      py::overload_cast<RealAlloc1D&, double, int>(&python_find_location_real),
+      py::arg("arr"),
+      py::arg("value"),
+      py::arg("ix_match"),
+      R"""(Parameters
+  ----------
+  arr : 
+      real(rp), logical, or integer
+  value : unknown
+      :).
+  ix_match : 
+  )""");
   m.def(
       "fine_frequency_estimate",
       &SimUtils::fine_frequency_estimate,
@@ -418,6 +370,17 @@ void init_SimUtils_routines_f(py::module& m) {
   frequency : float
       Frequency corresponding to the largest FFT amplitude
   )""");
+  py::class_<PyFixedwindowls, std::unique_ptr<PyFixedwindowls>>(
+      m, "Fixedwindowls", "Fortran routine fixedwindowls return value")
+      .def_readonly("z", &PyFixedwindowls::z)
+      .def("__len__", [](const PyFixedwindowls&) { return 1; })
+      .def("__getitem__", [](const PyFixedwindowls& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.z);
+        throw py::index_error();
+      });
   m.def(
       "fixedwindowls",
       &python_fixedwindowls,
@@ -436,17 +399,30 @@ void init_SimUtils_routines_f(py::module& m) {
   called when the instance is no longer needed.
 
   )""");
-  py::class_<PyFixedwindowls, std::unique_ptr<PyFixedwindowls>>(
-      m, "Fixedwindowls", "Fortran routine fixedwindowls return value")
-      .def_readonly("z", &PyFixedwindowls::z)
-      .def("__len__", [](const PyFixedwindowls&) { return 1; })
-      .def("__getitem__", [](const PyFixedwindowls& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.z);
-        throw py::index_error();
-      });
+  py::class_<
+      SimUtils::FourierAmplitude,
+      std::unique_ptr<SimUtils::FourierAmplitude>>(
+      m, "FourierAmplitude", "Fortran routine fourier_amplitude return value")
+      .def_readonly("cos_amp", &SimUtils::FourierAmplitude::cos_amp)
+      .def_readonly("sin_amp", &SimUtils::FourierAmplitude::sin_amp)
+      .def_readonly("dcos_amp", &SimUtils::FourierAmplitude::dcos_amp)
+      .def_readonly("dsin_amp", &SimUtils::FourierAmplitude::dsin_amp)
+      .def("__len__", [](const SimUtils::FourierAmplitude&) { return 4; })
+      .def(
+          "__getitem__",
+          [](const SimUtils::FourierAmplitude& s, int i) -> py::object {
+            if (i < 0)
+              i += 4;
+            if (i == 0)
+              return py::cast(s.cos_amp);
+            if (i == 1)
+              return py::cast(s.sin_amp);
+            if (i == 2)
+              return py::cast(s.dcos_amp);
+            if (i == 3)
+              return py::cast(s.dsin_amp);
+            throw py::index_error();
+          });
   m.def(
       "fourier_amplitude",
       &SimUtils::fourier_amplitude,
@@ -477,28 +453,4 @@ void init_SimUtils_routines_f(py::module& m) {
   dsin_amp : float
       sine amplitude derivative
   )""");
-  py::class_<
-      SimUtils::FourierAmplitude,
-      std::unique_ptr<SimUtils::FourierAmplitude>>(
-      m, "FourierAmplitude", "Fortran routine fourier_amplitude return value")
-      .def_readonly("cos_amp", &SimUtils::FourierAmplitude::cos_amp)
-      .def_readonly("sin_amp", &SimUtils::FourierAmplitude::sin_amp)
-      .def_readonly("dcos_amp", &SimUtils::FourierAmplitude::dcos_amp)
-      .def_readonly("dsin_amp", &SimUtils::FourierAmplitude::dsin_amp)
-      .def("__len__", [](const SimUtils::FourierAmplitude&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::FourierAmplitude& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.cos_amp);
-            if (i == 1)
-              return py::cast(s.sin_amp);
-            if (i == 2)
-              return py::cast(s.dcos_amp);
-            if (i == 3)
-              return py::cast(s.dsin_amp);
-            throw py::index_error();
-          });
 }

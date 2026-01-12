@@ -1,21 +1,9 @@
 #include "pybmad/generated/Bmad_routines_r.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-
-struct PyRadGIntegrals {
-  FixedArray1D<Real, 2> int_g;
-  double int_g2;
-  double int_g3;
-};
 PyRadGIntegrals python_rad_g_integrals(
     EleProxy& ele,
     int where,
@@ -31,13 +19,6 @@ PyRadGIntegrals python_rad_g_integrals(
   auto py_result{PyRadGIntegrals{_result, int_g2, int_g3}};
   return py_result;
 }
-struct PyRadiationIntegrals : public Bmad::RadiationIntegrals {
-  std::optional<int> ix_cache;
-  PyRadiationIntegrals(
-      Bmad::RadiationIntegrals _base,
-      std::optional<int> ix_cache)
-      : Bmad::RadiationIntegrals(std::move(_base)), ix_cache(ix_cache) {}
-};
 PyRadiationIntegrals python_radiation_integrals(
     LatProxy& lat,
     CoordProxyAlloc1D& orbit,
@@ -48,11 +29,6 @@ PyRadiationIntegrals python_radiation_integrals(
   auto py_result{PyRadiationIntegrals{_result, ix_cache}};
   return py_result;
 }
-
-struct PyRamperValue {
-  bool err_flag;
-  double value;
-};
 PyRamperValue python_ramper_value(
     EleProxy& ramper,
     ControlRamp1Proxy& r1,
@@ -61,19 +37,11 @@ PyRamperValue python_ramper_value(
   auto py_result{PyRamperValue{_result, value}};
   return py_result;
 }
-struct PyRchomp {
-  double rel;
-  int plc;
-  std::string out;
-};
 PyRchomp python_rchomp(double rel, int plc, std::string out) {
   Bmad::rchomp(rel, plc, out);
   auto py_result{PyRchomp{rel, plc, out}};
   return py_result;
 }
-struct PyReAllocateWall3dSectionArray {
-  std::optional<bool> exact;
-};
 PyReAllocateWall3dSectionArray python_re_allocate_wall3d_section_array(
     Wall3dSectionProxyAlloc1D& section,
     int n,
@@ -82,9 +50,6 @@ PyReAllocateWall3dSectionArray python_re_allocate_wall3d_section_array(
   auto py_result{PyReAllocateWall3dSectionArray{exact}};
   return py_result;
 }
-struct PyReAllocateWall3dVertexArray {
-  std::optional<bool> exact;
-};
 PyReAllocateWall3dVertexArray python_re_allocate_wall3d_vertex_array(
     Wall3dVertexProxyAlloc1D& v,
     int n,
@@ -93,32 +58,16 @@ PyReAllocateWall3dVertexArray python_re_allocate_wall3d_vertex_array(
   auto py_result{PyReAllocateWall3dVertexArray{exact}};
   return py_result;
 }
-struct PyReStrQp {
-  long double rel;
-  std::string str_out;
-};
 PyReStrQp python_re_str_qp(long double rel, std::string str_out) {
   Bmad::re_str(rel, str_out);
   auto py_result{PyReStrQp{rel, str_out}};
   return py_result;
 }
-struct PyReStrRp {
-  double rel;
-  std::string str_out;
-};
 PyReStrRp python_re_str_rp(double rel, std::string str_out) {
   Bmad::re_str(rel, str_out);
   auto py_result{PyReStrRp{rel, str_out}};
   return py_result;
 }
-struct PyReadBeamFile : public Bmad::ReadBeamFile {
-  std::optional<bool> conserve_momentum;
-  PyReadBeamFile(
-      Bmad::ReadBeamFile _base,
-      std::optional<bool> conserve_momentum)
-      : Bmad::ReadBeamFile(std::move(_base)),
-        conserve_momentum(conserve_momentum) {}
-};
 PyReadBeamFile python_read_beam_file(
     std::string file_name,
     BeamInitProxy& beam_init,
@@ -134,9 +83,6 @@ PyReadBeamFile python_read_beam_file(
   auto py_result{PyReadBeamFile{_result, conserve_momentum}};
   return py_result;
 }
-struct PyReallocateBeam {
-  std::optional<bool> extend;
-};
 PyReallocateBeam python_reallocate_beam(
     BeamProxy& beam,
     int n_bunch,
@@ -146,9 +92,6 @@ PyReallocateBeam python_reallocate_beam(
   auto py_result{PyReallocateBeam{extend}};
   return py_result;
 }
-struct PyRelTrackingChargeToMass {
-  double rel_charge;
-};
 PyRelTrackingChargeToMass python_rel_tracking_charge_to_mass(
     CoordProxy& orbit,
     int ref_species,
@@ -157,9 +100,6 @@ PyRelTrackingChargeToMass python_rel_tracking_charge_to_mass(
   auto py_result{PyRelTrackingChargeToMass{rel_charge}};
   return py_result;
 }
-struct PyRelativeModeFlip {
-  bool func_retval__;
-};
 PyRelativeModeFlip python_relative_mode_flip(
     EleProxy& ele1,
     EleProxy& ele2,
@@ -168,17 +108,11 @@ PyRelativeModeFlip python_relative_mode_flip(
   auto py_result{PyRelativeModeFlip{func_retval__}};
   return py_result;
 }
-struct PyReleaseRadIntCache {
-  int ix_cache;
-};
 PyReleaseRadIntCache python_release_rad_int_cache(int ix_cache) {
   Bmad::release_rad_int_cache(ix_cache);
   auto py_result{PyReleaseRadIntCache{ix_cache}};
   return py_result;
 }
-struct PyRfIsOn {
-  bool is_on;
-};
 PyRfIsOn python_rf_is_on(
     BranchProxy& branch,
     std::optional<int> ix_ele1,
@@ -188,9 +122,6 @@ PyRfIsOn python_rf_is_on(
   auto py_result{PyRfIsOn{is_on}};
   return py_result;
 }
-struct PyRfRefTimeOffset {
-  double time;
-};
 PyRfRefTimeOffset python_rf_ref_time_offset(
     EleProxy& ele,
     std::optional<double> ds,
@@ -199,18 +130,6 @@ PyRfRefTimeOffset python_rf_ref_time_offset(
   auto py_result{PyRfRefTimeOffset{time}};
   return py_result;
 }
-struct PyRfun {
-  double u;
-  double v;
-  double w;
-  double gam;
-  double a;
-  double b;
-  double hz;
-  int i;
-  int j;
-  double res;
-};
 PyRfun python_rfun(
     double u,
     double v,
@@ -226,14 +145,6 @@ PyRfun python_rfun(
   auto py_result{PyRfun{u, v, w, gam, a, b, hz, i, j, res}};
   return py_result;
 }
-struct PyRkAdaptiveTimeStep {
-  int t_dir;
-  double rf_time;
-  double dt_try;
-  double dt_did;
-  double dt_next;
-  bool err_flag;
-};
 PyRkAdaptiveTimeStep python_rk_adaptive_time_step(
     EleProxy& ele,
     LatParamProxy& param,
@@ -260,12 +171,6 @@ PyRkAdaptiveTimeStep python_rk_adaptive_time_step(
       PyRkAdaptiveTimeStep{t_dir, rf_time, dt_try, dt_did, dt_next, err_flag}};
   return py_result;
 }
-
-struct PyRkTimeStep1 {
-  FixedArray1D<Real, 10> r_err;
-  bool err_flag;
-  std::optional<bool> print_err;
-};
 PyRkTimeStep1 python_rk_time_step1(
     EleProxy& ele,
     LatParamProxy& param,
@@ -291,9 +196,6 @@ PyRkTimeStep1 python_rk_time_step1(
   auto py_result{PyRkTimeStep1{_result, err_flag, print_err}};
   return py_result;
 }
-struct PyRotate3 {
-  double angle;
-};
 PyRotate3 python_rotate3(
     FixedArray1D<Real, 3> vec,
     double angle,
@@ -302,9 +204,6 @@ PyRotate3 python_rotate3(
   auto py_result{PyRotate3{angle}};
   return py_result;
 }
-struct PyRotateFieldZx {
-  double theta;
-};
 PyRotateFieldZx python_rotate_field_zx(EmFieldProxy& field, double theta) {
   Bmad::rotate_field_zx(field, theta);
   auto py_result{PyRotateFieldZx{theta}};
@@ -312,6 +211,29 @@ PyRotateFieldZx python_rotate_field_zx(EmFieldProxy& field, double theta) {
 }
 
 void init_Bmad_routines_r(py::module& m) {
+  py::class_<
+      Bmad::Rad1DampAndStocMats,
+      std::unique_ptr<Bmad::Rad1DampAndStocMats>>(
+      m,
+      "Rad1DampAndStocMats",
+      "Fortran routine rad1_damp_and_stoc_mats return value")
+      .def_readonly("rad_map", &Bmad::Rad1DampAndStocMats::rad_map)
+      .def_readonly("err_flag", &Bmad::Rad1DampAndStocMats::err_flag)
+      .def_readonly("rad_int1", &Bmad::Rad1DampAndStocMats::rad_int1)
+      .def("__len__", [](const Bmad::Rad1DampAndStocMats&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const Bmad::Rad1DampAndStocMats& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.rad_map);
+            if (i == 1)
+              return py::cast(s.err_flag);
+            if (i == 2)
+              return py::cast(s.rad_int1);
+            throw py::index_error();
+          });
   m.def(
       "rad1_damp_and_stoc_mats",
       &Bmad::rad1_damp_and_stoc_mats,
@@ -354,26 +276,33 @@ void init_Bmad_routines_r(py::module& m) {
       Radiation integrals
   )""");
   py::class_<
-      Bmad::Rad1DampAndStocMats,
-      std::unique_ptr<Bmad::Rad1DampAndStocMats>>(
+      Bmad::RadDampAndStocMats,
+      std::unique_ptr<Bmad::RadDampAndStocMats>>(
       m,
-      "Rad1DampAndStocMats",
-      "Fortran routine rad1_damp_and_stoc_mats return value")
-      .def_readonly("rad_map", &Bmad::Rad1DampAndStocMats::rad_map)
-      .def_readonly("err_flag", &Bmad::Rad1DampAndStocMats::err_flag)
-      .def_readonly("rad_int1", &Bmad::Rad1DampAndStocMats::rad_int1)
-      .def("__len__", [](const Bmad::Rad1DampAndStocMats&) { return 3; })
+      "RadDampAndStocMats",
+      "Fortran routine rad_damp_and_stoc_mats return value")
+      .def_readonly("rmap", &Bmad::RadDampAndStocMats::rmap)
+      .def_readonly("mode", &Bmad::RadDampAndStocMats::mode)
+      .def_readonly(
+          "xfer_nodamp_mat", &Bmad::RadDampAndStocMats::xfer_nodamp_mat)
+      .def_readonly("err_flag", &Bmad::RadDampAndStocMats::err_flag)
+      .def_readonly("rad_int_branch", &Bmad::RadDampAndStocMats::rad_int_branch)
+      .def("__len__", [](const Bmad::RadDampAndStocMats&) { return 5; })
       .def(
           "__getitem__",
-          [](const Bmad::Rad1DampAndStocMats& s, int i) -> py::object {
+          [](const Bmad::RadDampAndStocMats& s, int i) -> py::object {
             if (i < 0)
-              i += 3;
+              i += 5;
             if (i == 0)
-              return py::cast(s.rad_map);
+              return py::cast(s.rmap);
             if (i == 1)
-              return py::cast(s.err_flag);
+              return py::cast(s.mode);
             if (i == 2)
-              return py::cast(s.rad_int1);
+              return py::cast(s.xfer_nodamp_mat);
+            if (i == 3)
+              return py::cast(s.err_flag);
+            if (i == 4)
+              return py::cast(s.rad_int_branch);
             throw py::index_error();
           });
   m.def(
@@ -420,36 +349,23 @@ void init_Bmad_routines_r(py::module& m) {
   err_flag : bool
       Set true if there is a problem.
   )""");
-  py::class_<
-      Bmad::RadDampAndStocMats,
-      std::unique_ptr<Bmad::RadDampAndStocMats>>(
-      m,
-      "RadDampAndStocMats",
-      "Fortran routine rad_damp_and_stoc_mats return value")
-      .def_readonly("rmap", &Bmad::RadDampAndStocMats::rmap)
-      .def_readonly("mode", &Bmad::RadDampAndStocMats::mode)
-      .def_readonly(
-          "xfer_nodamp_mat", &Bmad::RadDampAndStocMats::xfer_nodamp_mat)
-      .def_readonly("err_flag", &Bmad::RadDampAndStocMats::err_flag)
-      .def_readonly("rad_int_branch", &Bmad::RadDampAndStocMats::rad_int_branch)
-      .def("__len__", [](const Bmad::RadDampAndStocMats&) { return 5; })
-      .def(
-          "__getitem__",
-          [](const Bmad::RadDampAndStocMats& s, int i) -> py::object {
-            if (i < 0)
-              i += 5;
-            if (i == 0)
-              return py::cast(s.rmap);
-            if (i == 1)
-              return py::cast(s.mode);
-            if (i == 2)
-              return py::cast(s.xfer_nodamp_mat);
-            if (i == 3)
-              return py::cast(s.err_flag);
-            if (i == 4)
-              return py::cast(s.rad_int_branch);
-            throw py::index_error();
-          });
+  py::class_<PyRadGIntegrals, std::unique_ptr<PyRadGIntegrals>>(
+      m, "RadGIntegrals", "Fortran routine rad_g_integrals return value")
+      .def_readonly("int_g", &PyRadGIntegrals::int_g)
+      .def_readonly("int_g2", &PyRadGIntegrals::int_g2)
+      .def_readonly("int_g3", &PyRadGIntegrals::int_g3)
+      .def("__len__", [](const PyRadGIntegrals&) { return 3; })
+      .def("__getitem__", [](const PyRadGIntegrals& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.int_g);
+        if (i == 1)
+          return py::cast(s.int_g2);
+        if (i == 2)
+          return py::cast(s.int_g3);
+        throw py::index_error();
+      });
   m.def(
       "rad_g_integrals",
       &python_rad_g_integrals,
@@ -490,23 +406,27 @@ void init_Bmad_routines_r(py::module& m) {
   int_g : float
       Integrals of (gx,gy) vector. gint_g2, int_g3       -- real(rp): integrals of |g|^2 and |g|^3.
   )""");
-  py::class_<PyRadGIntegrals, std::unique_ptr<PyRadGIntegrals>>(
-      m, "RadGIntegrals", "Fortran routine rad_g_integrals return value")
-      .def_readonly("int_g", &PyRadGIntegrals::int_g)
-      .def_readonly("int_g2", &PyRadGIntegrals::int_g2)
-      .def_readonly("int_g3", &PyRadGIntegrals::int_g3)
-      .def("__len__", [](const PyRadGIntegrals&) { return 3; })
-      .def("__getitem__", [](const PyRadGIntegrals& s, int i) -> py::object {
-        if (i < 0)
-          i += 3;
-        if (i == 0)
-          return py::cast(s.int_g);
-        if (i == 1)
-          return py::cast(s.int_g2);
-        if (i == 2)
-          return py::cast(s.int_g3);
-        throw py::index_error();
-      });
+  py::class_<PyRadiationIntegrals, std::unique_ptr<PyRadiationIntegrals>>(
+      m,
+      "RadiationIntegrals",
+      "Fortran routine radiation_integrals return value")
+      .def_readonly("mode", &PyRadiationIntegrals::mode)
+      .def_readonly("rad_int_by_ele", &PyRadiationIntegrals::rad_int_by_ele)
+      .def_readonly("ix_cache", &PyRadiationIntegrals::ix_cache)
+      .def("__len__", [](const PyRadiationIntegrals&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const PyRadiationIntegrals& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.mode);
+            if (i == 1)
+              return py::cast(s.rad_int_by_ele);
+            if (i == 2)
+              return py::cast(s.ix_cache);
+            throw py::index_error();
+          });
   m.def(
       "radiation_integrals",
       &python_radiation_integrals,
@@ -545,27 +465,6 @@ void init_Bmad_routines_r(py::module& m) {
       lin_norm_emit values are running sums from the beginning of the lattice and include the beginning
       emittance stored in lat.a.emit and lat.b.emit.
   )""");
-  py::class_<PyRadiationIntegrals, std::unique_ptr<PyRadiationIntegrals>>(
-      m,
-      "RadiationIntegrals",
-      "Fortran routine radiation_integrals return value")
-      .def_readonly("mode", &PyRadiationIntegrals::mode)
-      .def_readonly("rad_int_by_ele", &PyRadiationIntegrals::rad_int_by_ele)
-      .def_readonly("ix_cache", &PyRadiationIntegrals::ix_cache)
-      .def("__len__", [](const PyRadiationIntegrals&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const PyRadiationIntegrals& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.mode);
-            if (i == 1)
-              return py::cast(s.rad_int_by_ele);
-            if (i == 2)
-              return py::cast(s.ix_cache);
-            throw py::index_error();
-          });
   m.def(
       "radiation_map_setup",
       &Bmad::radiation_map_setup,
@@ -603,6 +502,20 @@ void init_Bmad_routines_r(py::module& m) {
       Default False. If True, do the setup even if lat.ramper_slave_bookkeeping = ok$. But the setup will never
       be done if lat.ramper_slave_bookkeeping = super_ok$.
   )""");
+  py::class_<PyRamperValue, std::unique_ptr<PyRamperValue>>(
+      m, "RamperValue", "Fortran routine ramper_value return value")
+      .def_readonly("err_flag", &PyRamperValue::err_flag)
+      .def_readonly("value", &PyRamperValue::value)
+      .def("__len__", [](const PyRamperValue&) { return 2; })
+      .def("__getitem__", [](const PyRamperValue& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.value);
+        throw py::index_error();
+      });
   m.def(
       "ramper_value",
       &python_ramper_value,
@@ -619,20 +532,6 @@ void init_Bmad_routines_r(py::module& m) {
       Set True if there is an error, False otherwise.
   value : 
   )""");
-  py::class_<PyRamperValue, std::unique_ptr<PyRamperValue>>(
-      m, "RamperValue", "Fortran routine ramper_value return value")
-      .def_readonly("err_flag", &PyRamperValue::err_flag)
-      .def_readonly("value", &PyRamperValue::value)
-      .def("__len__", [](const PyRamperValue&) { return 2; })
-      .def("__getitem__", [](const PyRamperValue& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.err_flag);
-        if (i == 1)
-          return py::cast(s.value);
-        throw py::index_error();
-      });
   m.def(
       "randomize_lr_wake_frequencies",
       &Bmad::randomize_lr_wake_frequencies,
@@ -655,18 +554,6 @@ void init_Bmad_routines_r(py::module& m) {
   set_done : bool
       Set True if there where lr wakes to be set. False otherwise.
   )""");
-  m.def(
-      "rchomp",
-      &python_rchomp,
-      py::arg("rel"),
-      py::arg("plc"),
-      py::arg("out"),
-      R"""(Parameters
-  ----------
-  rel : 
-  plc : 
-  out : 
-  )""");
   py::class_<PyRchomp, std::unique_ptr<PyRchomp>>(
       m, "Rchomp", "Fortran routine rchomp return value")
       .def_readonly("rel", &PyRchomp::rel)
@@ -684,6 +571,18 @@ void init_Bmad_routines_r(py::module& m) {
           return py::cast(s.out);
         throw py::index_error();
       });
+  m.def(
+      "rchomp",
+      &python_rchomp,
+      py::arg("rel"),
+      py::arg("plc"),
+      py::arg("out"),
+      R"""(Parameters
+  ----------
+  rel : 
+  plc : 
+  out : 
+  )""");
   m.def(
       "re_allocate_eles",
       &Bmad::re_allocate_eles,
@@ -704,19 +603,6 @@ void init_Bmad_routines_r(py::module& m) {
       If present and True then eles will have size = n If False (default), reallcation will not be done if eles
       is already large enough
   )""");
-  m.def(
-      "re_allocate",
-      py::overload_cast<Wall3dSectionProxyAlloc1D&, int, std::optional<bool>>(
-          &python_re_allocate_wall3d_section_array),
-      py::arg("section"),
-      py::arg("n"),
-      py::arg("exact") = py::none(),
-      R"""(Parameters
-  ----------
-  section : 
-  n : 
-  exact : 
-  )""");
   py::class_<
       PyReAllocateWall3dSectionArray,
       std::unique_ptr<PyReAllocateWall3dSectionArray>>(
@@ -736,14 +622,14 @@ void init_Bmad_routines_r(py::module& m) {
           });
   m.def(
       "re_allocate",
-      py::overload_cast<Wall3dVertexProxyAlloc1D&, int, std::optional<bool>>(
-          &python_re_allocate_wall3d_vertex_array),
-      py::arg("v"),
+      py::overload_cast<Wall3dSectionProxyAlloc1D&, int, std::optional<bool>>(
+          &python_re_allocate_wall3d_section_array),
+      py::arg("section"),
       py::arg("n"),
       py::arg("exact") = py::none(),
       R"""(Parameters
   ----------
-  v : 
+  section : 
   n : 
   exact : 
   )""");
@@ -765,6 +651,19 @@ void init_Bmad_routines_r(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "re_allocate",
+      py::overload_cast<Wall3dVertexProxyAlloc1D&, int, std::optional<bool>>(
+          &python_re_allocate_wall3d_vertex_array),
+      py::arg("v"),
+      py::arg("n"),
+      py::arg("exact") = py::none(),
+      R"""(Parameters
+  ----------
+  v : 
+  n : 
+  exact : 
+  )""");
+  m.def(
       "re_associate_node_array",
       &Bmad::re_associate_node_array,
       py::arg("tree"),
@@ -785,16 +684,6 @@ void init_Bmad_routines_r(py::module& m) {
   exact : bool, optional
       Default is False. If False, the size of the output array is permitted to be larger than n.
   )""");
-  m.def(
-      "re_str",
-      py::overload_cast<long double, std::string>(&python_re_str_qp),
-      py::arg("rel"),
-      py::arg("str_out"),
-      R"""(Parameters
-  ----------
-  rel : 
-  str_out : 
-  )""");
   py::class_<PyReStrQp, std::unique_ptr<PyReStrQp>>(
       m, "ReStrQp", "Fortran routine re_str_qp return value")
       .def_readonly("rel", &PyReStrQp::rel)
@@ -811,7 +700,7 @@ void init_Bmad_routines_r(py::module& m) {
       });
   m.def(
       "re_str",
-      py::overload_cast<double, std::string>(&python_re_str_rp),
+      py::overload_cast<long double, std::string>(&python_re_str_qp),
       py::arg("rel"),
       py::arg("str_out"),
       R"""(Parameters
@@ -833,6 +722,31 @@ void init_Bmad_routines_r(py::module& m) {
           return py::cast(s.str_out);
         throw py::index_error();
       });
+  m.def(
+      "re_str",
+      py::overload_cast<double, std::string>(&python_re_str_rp),
+      py::arg("rel"),
+      py::arg("str_out"),
+      R"""(Parameters
+  ----------
+  rel : 
+  str_out : 
+  )""");
+  py::class_<Bmad::ReadBeamAscii, std::unique_ptr<Bmad::ReadBeamAscii>>(
+      m, "ReadBeamAscii", "Fortran routine read_beam_ascii return value")
+      .def_readonly("beam", &Bmad::ReadBeamAscii::beam)
+      .def_readonly("err_flag", &Bmad::ReadBeamAscii::err_flag)
+      .def("__len__", [](const Bmad::ReadBeamAscii&) { return 2; })
+      .def(
+          "__getitem__", [](const Bmad::ReadBeamAscii& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.beam);
+            if (i == 1)
+              return py::cast(s.err_flag);
+            throw py::index_error();
+          });
   m.def(
       "read_beam_ascii",
       &Bmad::read_beam_ascii,
@@ -871,21 +785,23 @@ void init_Bmad_routines_r(py::module& m) {
   err_flag : bool
       Set True if there is an error. False otherwise.
   )""");
-  py::class_<Bmad::ReadBeamAscii, std::unique_ptr<Bmad::ReadBeamAscii>>(
-      m, "ReadBeamAscii", "Fortran routine read_beam_ascii return value")
-      .def_readonly("beam", &Bmad::ReadBeamAscii::beam)
-      .def_readonly("err_flag", &Bmad::ReadBeamAscii::err_flag)
-      .def("__len__", [](const Bmad::ReadBeamAscii&) { return 2; })
-      .def(
-          "__getitem__", [](const Bmad::ReadBeamAscii& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.beam);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+  py::class_<PyReadBeamFile, std::unique_ptr<PyReadBeamFile>>(
+      m, "ReadBeamFile", "Fortran routine read_beam_file return value")
+      .def_readonly("beam", &PyReadBeamFile::beam)
+      .def_readonly("err_flag", &PyReadBeamFile::err_flag)
+      .def_readonly("conserve_momentum", &PyReadBeamFile::conserve_momentum)
+      .def("__len__", [](const PyReadBeamFile&) { return 3; })
+      .def("__getitem__", [](const PyReadBeamFile& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.beam);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        if (i == 2)
+          return py::cast(s.conserve_momentum);
+        throw py::index_error();
+      });
   m.def(
       "read_beam_file",
       &python_read_beam_file,
@@ -926,23 +842,6 @@ void init_Bmad_routines_r(py::module& m) {
   err_flag : bool
       Set True if there is an error. False otherwise.
   )""");
-  py::class_<PyReadBeamFile, std::unique_ptr<PyReadBeamFile>>(
-      m, "ReadBeamFile", "Fortran routine read_beam_file return value")
-      .def_readonly("beam", &PyReadBeamFile::beam)
-      .def_readonly("err_flag", &PyReadBeamFile::err_flag)
-      .def_readonly("conserve_momentum", &PyReadBeamFile::conserve_momentum)
-      .def("__len__", [](const PyReadBeamFile&) { return 3; })
-      .def("__getitem__", [](const PyReadBeamFile& s, int i) -> py::object {
-        if (i < 0)
-          i += 3;
-        if (i == 0)
-          return py::cast(s.beam);
-        if (i == 1)
-          return py::cast(s.err_flag);
-        if (i == 2)
-          return py::cast(s.conserve_momentum);
-        throw py::index_error();
-      });
   m.def(
       "read_binary_cartesian_map",
       &Bmad::read_binary_cartesian_map,
@@ -1027,6 +926,17 @@ void init_Bmad_routines_r(py::module& m) {
   surface : PhotonReflectSurfaceStruct
       Surface info.
   )""");
+  py::class_<PyReallocateBeam, std::unique_ptr<PyReallocateBeam>>(
+      m, "ReallocateBeam", "Fortran routine reallocate_beam return value")
+      .def_readonly("extend", &PyReallocateBeam::extend)
+      .def("__len__", [](const PyReallocateBeam&) { return 1; })
+      .def("__getitem__", [](const PyReallocateBeam& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.extend);
+        throw py::index_error();
+      });
   m.def(
       "reallocate_beam",
       &python_reallocate_beam,
@@ -1046,17 +956,6 @@ void init_Bmad_routines_r(py::module& m) {
       will not be touched. If not present, beam.bunch(i).particle(:) will be in an undefined state.
   extend : 
   )""");
-  py::class_<PyReallocateBeam, std::unique_ptr<PyReallocateBeam>>(
-      m, "ReallocateBeam", "Fortran routine reallocate_beam return value")
-      .def_readonly("extend", &PyReallocateBeam::extend)
-      .def("__len__", [](const PyReallocateBeam&) { return 1; })
-      .def("__getitem__", [](const PyReallocateBeam& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.extend);
-        throw py::index_error();
-      });
   m.def("reallocate_bp_com_const", &Bmad::reallocate_bp_com_const, R"""()""");
   m.def(
       "reallocate_bunch",
@@ -1211,20 +1110,6 @@ void init_Bmad_routines_r(py::module& m) {
   exact : bool, optional
       If present and False then the size of the output array is permitted to be larger than n. Default is True.
   )""");
-  m.def(
-      "rel_tracking_charge_to_mass",
-      &python_rel_tracking_charge_to_mass,
-      py::arg("orbit"),
-      py::arg("ref_species"),
-      py::arg("rel_charge"),
-      R"""(Parameters
-  ----------
-  orbit : CoordStruct
-      Particle position structure.
-  ref_species : int
-      Reference species
-  rel_charge : 
-  )""");
   py::class_<
       PyRelTrackingChargeToMass,
       std::unique_ptr<PyRelTrackingChargeToMass>>(
@@ -1243,16 +1128,18 @@ void init_Bmad_routines_r(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "relative_mode_flip",
-      &python_relative_mode_flip,
-      py::arg("ele1"),
-      py::arg("ele2"),
-      py::arg("func_retval__"),
+      "rel_tracking_charge_to_mass",
+      &python_rel_tracking_charge_to_mass,
+      py::arg("orbit"),
+      py::arg("ref_species"),
+      py::arg("rel_charge"),
       R"""(Parameters
   ----------
-  ele1 : 
-  ele2 : 
-  relative_mode_flip : 
+  orbit : CoordStruct
+      Particle position structure.
+  ref_species : int
+      Reference species
+  rel_charge : 
   )""");
   py::class_<PyRelativeModeFlip, std::unique_ptr<PyRelativeModeFlip>>(
       m, "RelativeModeFlip", "Fortran routine relative_mode_flip return value")
@@ -1265,6 +1152,33 @@ void init_Bmad_routines_r(py::module& m) {
           return py::cast(s.func_retval__);
         throw py::index_error();
       });
+  m.def(
+      "relative_mode_flip",
+      &python_relative_mode_flip,
+      py::arg("ele1"),
+      py::arg("ele2"),
+      py::arg("func_retval__"),
+      R"""(Parameters
+  ----------
+  ele1 : 
+  ele2 : 
+  relative_mode_flip : 
+  )""");
+  py::class_<PyReleaseRadIntCache, std::unique_ptr<PyReleaseRadIntCache>>(
+      m,
+      "ReleaseRadIntCache",
+      "Fortran routine release_rad_int_cache return value")
+      .def_readonly("ix_cache", &PyReleaseRadIntCache::ix_cache)
+      .def("__len__", [](const PyReleaseRadIntCache&) { return 1; })
+      .def(
+          "__getitem__",
+          [](const PyReleaseRadIntCache& s, int i) -> py::object {
+            if (i < 0)
+              i += 1;
+            if (i == 0)
+              return py::cast(s.ix_cache);
+            throw py::index_error();
+          });
   m.def(
       "release_rad_int_cache",
       &python_release_rad_int_cache,
@@ -1280,19 +1194,24 @@ void init_Bmad_routines_r(py::module& m) {
       Cache number.
       This parameter is an input/output and is modified in-place. As an output: Cache number set to 0,
   )""");
-  py::class_<PyReleaseRadIntCache, std::unique_ptr<PyReleaseRadIntCache>>(
+  py::class_<
+      Bmad::RemoveConstantTaylor,
+      std::unique_ptr<Bmad::RemoveConstantTaylor>>(
       m,
-      "ReleaseRadIntCache",
-      "Fortran routine release_rad_int_cache return value")
-      .def_readonly("ix_cache", &PyReleaseRadIntCache::ix_cache)
-      .def("__len__", [](const PyReleaseRadIntCache&) { return 1; })
+      "RemoveConstantTaylor",
+      "Fortran routine remove_constant_taylor return value")
+      .def_readonly("taylor_out", &Bmad::RemoveConstantTaylor::taylor_out)
+      .def_readonly("c0", &Bmad::RemoveConstantTaylor::c0)
+      .def("__len__", [](const Bmad::RemoveConstantTaylor&) { return 2; })
       .def(
           "__getitem__",
-          [](const PyReleaseRadIntCache& s, int i) -> py::object {
+          [](const Bmad::RemoveConstantTaylor& s, int i) -> py::object {
             if (i < 0)
-              i += 1;
+              i += 2;
             if (i == 0)
-              return py::cast(s.ix_cache);
+              return py::cast(s.taylor_out);
+            if (i == 1)
+              return py::cast(s.c0);
             throw py::index_error();
           });
   m.def(
@@ -1324,26 +1243,6 @@ void init_Bmad_routines_r(py::module& m) {
   c0 : float
       The constant part of the taylor map
   )""");
-  py::class_<
-      Bmad::RemoveConstantTaylor,
-      std::unique_ptr<Bmad::RemoveConstantTaylor>>(
-      m,
-      "RemoveConstantTaylor",
-      "Fortran routine remove_constant_taylor return value")
-      .def_readonly("taylor_out", &Bmad::RemoveConstantTaylor::taylor_out)
-      .def_readonly("c0", &Bmad::RemoveConstantTaylor::c0)
-      .def("__len__", [](const Bmad::RemoveConstantTaylor&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::RemoveConstantTaylor& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.taylor_out);
-            if (i == 1)
-              return py::cast(s.c0);
-            throw py::index_error();
-          });
   m.def(
       "remove_dead_from_bunch",
       &Bmad::remove_dead_from_bunch,
@@ -1442,6 +1341,17 @@ void init_Bmad_routines_r(py::module& m) {
   -------
   ok
   )""");
+  py::class_<PyRfIsOn, std::unique_ptr<PyRfIsOn>>(
+      m, "RfIsOn", "Fortran routine rf_is_on return value")
+      .def_readonly("is_on", &PyRfIsOn::is_on)
+      .def("__len__", [](const PyRfIsOn&) { return 1; })
+      .def("__getitem__", [](const PyRfIsOn& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.is_on);
+        throw py::index_error();
+      });
   m.def(
       "rf_is_on",
       &python_rf_is_on,
@@ -1459,15 +1369,15 @@ void init_Bmad_routines_r(py::module& m) {
       End of range of elements to check. Default is branch.n_ele_track.
   is_on : 
   )""");
-  py::class_<PyRfIsOn, std::unique_ptr<PyRfIsOn>>(
-      m, "RfIsOn", "Fortran routine rf_is_on return value")
-      .def_readonly("is_on", &PyRfIsOn::is_on)
-      .def("__len__", [](const PyRfIsOn&) { return 1; })
-      .def("__getitem__", [](const PyRfIsOn& s, int i) -> py::object {
+  py::class_<PyRfRefTimeOffset, std::unique_ptr<PyRfRefTimeOffset>>(
+      m, "RfRefTimeOffset", "Fortran routine rf_ref_time_offset return value")
+      .def_readonly("time", &PyRfRefTimeOffset::time)
+      .def("__len__", [](const PyRfRefTimeOffset&) { return 1; })
+      .def("__getitem__", [](const PyRfRefTimeOffset& s, int i) -> py::object {
         if (i < 0)
           i += 1;
         if (i == 0)
-          return py::cast(s.is_on);
+          return py::cast(s.time);
         throw py::index_error();
       });
   m.def(
@@ -1483,43 +1393,6 @@ void init_Bmad_routines_r(py::module& m) {
   ds : float, optional
       Distance of particle from start edge. Default is zero. Ouput:
   time : 
-  )""");
-  py::class_<PyRfRefTimeOffset, std::unique_ptr<PyRfRefTimeOffset>>(
-      m, "RfRefTimeOffset", "Fortran routine rf_ref_time_offset return value")
-      .def_readonly("time", &PyRfRefTimeOffset::time)
-      .def("__len__", [](const PyRfRefTimeOffset&) { return 1; })
-      .def("__getitem__", [](const PyRfRefTimeOffset& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.time);
-        throw py::index_error();
-      });
-  m.def(
-      "rfun",
-      &python_rfun,
-      py::arg("u"),
-      py::arg("v"),
-      py::arg("w"),
-      py::arg("gam"),
-      py::arg("a"),
-      py::arg("b"),
-      py::arg("hz"),
-      py::arg("i"),
-      py::arg("j"),
-      py::arg("res"),
-      R"""(Parameters
-  ----------
-  u : 
-  v : 
-  w : 
-  gam : 
-  a : 
-  b : 
-  hz : 
-  i : 
-  j : 
-  res : 
   )""");
   py::class_<PyRfun, std::unique_ptr<PyRfun>>(
       m, "Rfun", "Fortran routine rfun return value")
@@ -1560,30 +1433,30 @@ void init_Bmad_routines_r(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "rk_adaptive_time_step",
-      &python_rk_adaptive_time_step,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("orb"),
-      py::arg("t_dir"),
-      py::arg("rf_time"),
-      py::arg("dt_try"),
-      py::arg("dt_did"),
-      py::arg("dt_next"),
-      py::arg("err_flag"),
-      py::arg("extra_field") = py::none(),
+      "rfun",
+      &python_rfun,
+      py::arg("u"),
+      py::arg("v"),
+      py::arg("w"),
+      py::arg("gam"),
+      py::arg("a"),
+      py::arg("b"),
+      py::arg("hz"),
+      py::arg("i"),
+      py::arg("j"),
+      py::arg("res"),
       R"""(Parameters
   ----------
-  ele : 
-  param : 
-  orb : 
-  t_dir : 
-  rf_time : 
-  dt_try : 
-  dt_did : 
-  dt_next : 
-  err_flag : 
-  extra_field : 
+  u : 
+  v : 
+  w : 
+  gam : 
+  a : 
+  b : 
+  hz : 
+  i : 
+  j : 
+  res : 
   )""");
   py::class_<PyRkAdaptiveTimeStep, std::unique_ptr<PyRkAdaptiveTimeStep>>(
       m,
@@ -1616,6 +1489,49 @@ void init_Bmad_routines_r(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "rk_adaptive_time_step",
+      &python_rk_adaptive_time_step,
+      py::arg("ele"),
+      py::arg("param"),
+      py::arg("orb"),
+      py::arg("t_dir"),
+      py::arg("rf_time"),
+      py::arg("dt_try"),
+      py::arg("dt_did"),
+      py::arg("dt_next"),
+      py::arg("err_flag"),
+      py::arg("extra_field") = py::none(),
+      R"""(Parameters
+  ----------
+  ele : 
+  param : 
+  orb : 
+  t_dir : 
+  rf_time : 
+  dt_try : 
+  dt_did : 
+  dt_next : 
+  err_flag : 
+  extra_field : 
+  )""");
+  py::class_<PyRkTimeStep1, std::unique_ptr<PyRkTimeStep1>>(
+      m, "RkTimeStep1", "Fortran routine rk_time_step1 return value")
+      .def_readonly("r_err", &PyRkTimeStep1::r_err)
+      .def_readonly("err_flag", &PyRkTimeStep1::err_flag)
+      .def_readonly("print_err", &PyRkTimeStep1::print_err)
+      .def("__len__", [](const PyRkTimeStep1&) { return 3; })
+      .def("__getitem__", [](const PyRkTimeStep1& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.r_err);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        if (i == 2)
+          return py::cast(s.print_err);
+        throw py::index_error();
+      });
+  m.def(
       "rk_time_step1",
       &python_rk_time_step1,
       py::arg("ele"),
@@ -1642,21 +1558,15 @@ void init_Bmad_routines_r(py::module& m) {
   print_err : 
   extra_field : 
   )""");
-  py::class_<PyRkTimeStep1, std::unique_ptr<PyRkTimeStep1>>(
-      m, "RkTimeStep1", "Fortran routine rk_time_step1 return value")
-      .def_readonly("r_err", &PyRkTimeStep1::r_err)
-      .def_readonly("err_flag", &PyRkTimeStep1::err_flag)
-      .def_readonly("print_err", &PyRkTimeStep1::print_err)
-      .def("__len__", [](const PyRkTimeStep1&) { return 3; })
-      .def("__getitem__", [](const PyRkTimeStep1& s, int i) -> py::object {
+  py::class_<PyRotate3, std::unique_ptr<PyRotate3>>(
+      m, "Rotate3", "Fortran routine rotate3 return value")
+      .def_readonly("angle", &PyRotate3::angle)
+      .def("__len__", [](const PyRotate3&) { return 1; })
+      .def("__getitem__", [](const PyRotate3& s, int i) -> py::object {
         if (i < 0)
-          i += 3;
+          i += 1;
         if (i == 0)
-          return py::cast(s.r_err);
-        if (i == 1)
-          return py::cast(s.err_flag);
-        if (i == 2)
-          return py::cast(s.print_err);
+          return py::cast(s.angle);
         throw py::index_error();
       });
   m.def(
@@ -1671,17 +1581,6 @@ void init_Bmad_routines_r(py::module& m) {
   angle : 
   rvec : 
   )""");
-  py::class_<PyRotate3, std::unique_ptr<PyRotate3>>(
-      m, "Rotate3", "Fortran routine rotate3 return value")
-      .def_readonly("angle", &PyRotate3::angle)
-      .def("__len__", [](const PyRotate3&) { return 1; })
-      .def("__getitem__", [](const PyRotate3& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.angle);
-        throw py::index_error();
-      });
   m.def(
       "rotate_em_field",
       &Bmad::rotate_em_field,
@@ -1707,16 +1606,6 @@ void init_Bmad_routines_r(py::module& m) {
   calc_potential : bool, optional
       Rotate the magnetic vector potential? Default is false.
   )""");
-  m.def(
-      "rotate_field_zx",
-      &python_rotate_field_zx,
-      py::arg("field"),
-      py::arg("theta"),
-      R"""(Parameters
-  ----------
-  field : 
-  theta : 
-  )""");
   py::class_<PyRotateFieldZx, std::unique_ptr<PyRotateFieldZx>>(
       m, "RotateFieldZx", "Fortran routine rotate_field_zx return value")
       .def_readonly("theta", &PyRotateFieldZx::theta)
@@ -1728,6 +1617,16 @@ void init_Bmad_routines_r(py::module& m) {
           return py::cast(s.theta);
         throw py::index_error();
       });
+  m.def(
+      "rotate_field_zx",
+      &python_rotate_field_zx,
+      py::arg("field"),
+      py::arg("theta"),
+      R"""(Parameters
+  ----------
+  field : 
+  theta : 
+  )""");
   m.def(
       "rotate_for_curved_surface",
       &Bmad::rotate_for_curved_surface,

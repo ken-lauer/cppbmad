@@ -1,30 +1,14 @@
 #include "pybmad/generated/SimUtils_routines_i.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyIBessel {
-  int m;
-  double arg;
-  double i_bes;
-};
 PyIBessel python_i_bessel(int m, double arg, double i_bes) {
   SimUtils::i_bessel(m, arg, i_bes);
   auto py_result{PyIBessel{m, arg, i_bes}};
   return py_result;
 }
-struct PyIBesselExtended {
-  int m;
-  double arg;
-  std::complex<double> i_bes;
-};
 PyIBesselExtended python_i_bessel_extended(
     int m,
     double arg,
@@ -33,12 +17,6 @@ PyIBesselExtended python_i_bessel_extended(
   auto py_result{PyIBesselExtended{m, arg, i_bes}};
   return py_result;
 }
-struct PyIncrementFileNumber {
-  std::string file_name;
-  int digits;
-  int number;
-  std::string cnumber;
-};
 PyIncrementFileNumber python_increment_file_number(
     std::string file_name,
     int digits,
@@ -48,11 +26,6 @@ PyIncrementFileNumber python_increment_file_number(
   auto py_result{PyIncrementFileNumber{file_name, digits, number, cnumber}};
   return py_result;
 }
-struct PyIndexNocase {
-  std::string string1;
-  std::string string2;
-  int indx;
-};
 PyIndexNocase python_index_nocase(
     std::string string1,
     std::string string2,
@@ -61,22 +34,11 @@ PyIndexNocase python_index_nocase(
   auto py_result{PyIndexNocase{string1, string2, indx}};
   return py_result;
 }
-struct PyIntStr {
-  int int_;
-  std::optional<int> width;
-  std::string str;
-};
 PyIntStr python_int_str(int int_, std::optional<int> width, std::string str) {
   SimUtils::int_str(int_, make_opt_ref(width), str);
   auto py_result{PyIntStr{int_, width, str}};
   return py_result;
 }
-struct PyInterpolatedFft {
-  bool calc_ok;
-  std::optional<int> opt_dump_spectrum;
-  std::optional<int> opt_dump_index;
-  double this_fft;
-};
 PyInterpolatedFft python_interpolated_fft(
     ComplexAlloc1D& cdata,
     bool calc_ok,
@@ -93,12 +55,6 @@ PyInterpolatedFft python_interpolated_fft(
       PyInterpolatedFft{calc_ok, opt_dump_spectrum, opt_dump_index, this_fft}};
   return py_result;
 }
-struct PyInterpolatedFftGsl {
-  bool calc_ok;
-  std::optional<int> opt_dump_spectrum;
-  std::optional<int> opt_dump_index;
-  double this_fft;
-};
 PyInterpolatedFftGsl python_interpolated_fft_gsl(
     ComplexAlloc1D& cdata,
     bool calc_ok,
@@ -115,11 +71,6 @@ PyInterpolatedFftGsl python_interpolated_fft_gsl(
       calc_ok, opt_dump_spectrum, opt_dump_index, this_fft}};
   return py_result;
 }
-struct PyIsAlphabetic {
-  std::string string;
-  std::optional<std::string> valid_chars;
-  bool is_alpha;
-};
 PyIsAlphabetic python_is_alphabetic(
     std::string string,
     std::optional<std::string> valid_chars,
@@ -128,9 +79,6 @@ PyIsAlphabetic python_is_alphabetic(
   auto py_result{PyIsAlphabetic{string, valid_chars, is_alpha}};
   return py_result;
 }
-struct PyIsDecreasingSequence {
-  bool is_decreasing;
-};
 PyIsDecreasingSequence python_is_decreasing_sequence(
     RealAlloc1D& array,
     std::optional<bool> strict,
@@ -139,9 +87,6 @@ PyIsDecreasingSequence python_is_decreasing_sequence(
   auto py_result{PyIsDecreasingSequence{is_decreasing}};
   return py_result;
 }
-struct PyIsIncreasingSequence {
-  bool is_increasing;
-};
 PyIsIncreasingSequence python_is_increasing_sequence(
     RealAlloc1D& array,
     std::optional<bool> strict,
@@ -150,13 +95,6 @@ PyIsIncreasingSequence python_is_increasing_sequence(
   auto py_result{PyIsIncreasingSequence{is_increasing}};
   return py_result;
 }
-struct PyIsInteger {
-  std::string string;
-  std::optional<int> int_;
-  std::optional<std::string> delims;
-  std::optional<int> ix_word;
-  bool valid;
-};
 PyIsInteger python_is_integer(
     std::string string,
     std::optional<int> int_,
@@ -172,11 +110,6 @@ PyIsInteger python_is_integer(
   auto py_result{PyIsInteger{string, int_, delims, ix_word, valid}};
   return py_result;
 }
-struct PyIsLogical {
-  std::string string;
-  std::optional<bool> ignore;
-  bool valid;
-};
 PyIsLogical python_is_logical(
     std::string string,
     std::optional<bool> ignore,
@@ -185,12 +118,6 @@ PyIsLogical python_is_logical(
   auto py_result{PyIsLogical{string, ignore, valid}};
   return py_result;
 }
-struct PyIsReal {
-  std::string string;
-  std::optional<bool> ignore;
-  std::optional<double> real_num;
-  bool valid;
-};
 PyIsReal python_is_real(
     std::string string,
     std::optional<bool> ignore,
@@ -203,18 +130,6 @@ PyIsReal python_is_real(
 }
 
 void init_SimUtils_routines_i(py::module& m) {
-  m.def(
-      "i_bessel",
-      &python_i_bessel,
-      py::arg("m"),
-      py::arg("arg"),
-      py::arg("i_bes"),
-      R"""(Parameters
-  ----------
-  m : 
-  arg : 
-  i_bes : 
-  )""");
   py::class_<PyIBessel, std::unique_ptr<PyIBessel>>(
       m, "IBessel", "Fortran routine i_bessel return value")
       .def_readonly("m", &PyIBessel::m)
@@ -233,8 +148,8 @@ void init_SimUtils_routines_i(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "i_bessel_extended",
-      &python_i_bessel_extended,
+      "i_bessel",
+      &python_i_bessel,
       py::arg("m"),
       py::arg("arg"),
       py::arg("i_bes"),
@@ -262,18 +177,16 @@ void init_SimUtils_routines_i(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "increment_file_number",
-      &python_increment_file_number,
-      py::arg("file_name"),
-      py::arg("digits"),
-      py::arg("number"),
-      py::arg("cnumber"),
+      "i_bessel_extended",
+      &python_i_bessel_extended,
+      py::arg("m"),
+      py::arg("arg"),
+      py::arg("i_bes"),
       R"""(Parameters
   ----------
-  file_name : 
-  digits : 
-  number : 
-  cnumber : 
+  m : 
+  arg : 
+  i_bes : 
   )""");
   py::class_<PyIncrementFileNumber, std::unique_ptr<PyIncrementFileNumber>>(
       m,
@@ -300,16 +213,18 @@ void init_SimUtils_routines_i(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "index_nocase",
-      &python_index_nocase,
-      py::arg("string1"),
-      py::arg("string2"),
-      py::arg("indx"),
+      "increment_file_number",
+      &python_increment_file_number,
+      py::arg("file_name"),
+      py::arg("digits"),
+      py::arg("number"),
+      py::arg("cnumber"),
       R"""(Parameters
   ----------
-  string1 : 
-  string2 : 
-  indx : 
+  file_name : 
+  digits : 
+  number : 
+  cnumber : 
   )""");
   py::class_<PyIndexNocase, std::unique_ptr<PyIndexNocase>>(
       m, "IndexNocase", "Fortran routine index_nocase return value")
@@ -328,6 +243,18 @@ void init_SimUtils_routines_i(py::module& m) {
           return py::cast(s.indx);
         throw py::index_error();
       });
+  m.def(
+      "index_nocase",
+      &python_index_nocase,
+      py::arg("string1"),
+      py::arg("string2"),
+      py::arg("indx"),
+      R"""(Parameters
+  ----------
+  string1 : 
+  string2 : 
+  indx : 
+  )""");
   m.def(
       "initfixedwindowls",
       &SimUtils::initfixedwindowls,
@@ -353,18 +280,6 @@ void init_SimUtils_routines_i(py::module& m) {
       Order of derivative to be returned. Set der=0 to obtain the fit. <return value>  -- INTEGER: id of
       windowLS instance created.
   )""");
-  m.def(
-      "int_str",
-      &python_int_str,
-      py::arg("int_"),
-      py::arg("width") = py::none(),
-      py::arg("str"),
-      R"""(Parameters
-  ----------
-  int : 
-  width : 
-  str : 
-  )""");
   py::class_<PyIntStr, std::unique_ptr<PyIntStr>>(
       m, "IntStr", "Fortran routine int_str return value")
       .def_readonly("int_", &PyIntStr::int_)
@@ -383,23 +298,16 @@ void init_SimUtils_routines_i(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "interpolated_fft",
-      &python_interpolated_fft,
-      py::arg("cdata"),
-      py::arg("calc_ok"),
-      py::arg("opt_dump_spectrum") = py::none(),
-      py::arg("opt_dump_index") = py::none(),
-      py::arg("this_fft"),
-      R"""(Function interpolated_fft (cdata, calc_ok, opt_dump_spectrum, opt_dump_index) result (this_fft)
-
-  Windows the complex data and used Numerical Recipes four1 to find the peak in the spectrum.
-  The result is interpolated to improve the accuracy.  Hanning and Gaussian windowing are
-  available.
-
-
-  Returns
-  -------
-  this_fft
+      "int_str",
+      &python_int_str,
+      py::arg("int_"),
+      py::arg("width") = py::none(),
+      py::arg("str"),
+      R"""(Parameters
+  ----------
+  int : 
+  width : 
+  str : 
   )""");
   py::class_<PyInterpolatedFft, std::unique_ptr<PyInterpolatedFft>>(
       m, "InterpolatedFft", "Fortran routine interpolated_fft return value")
@@ -422,19 +330,23 @@ void init_SimUtils_routines_i(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "interpolated_fft_gsl",
-      &python_interpolated_fft_gsl,
+      "interpolated_fft",
+      &python_interpolated_fft,
       py::arg("cdata"),
       py::arg("calc_ok"),
       py::arg("opt_dump_spectrum") = py::none(),
       py::arg("opt_dump_index") = py::none(),
       py::arg("this_fft"),
-      R"""(function interpolated_fft_gsl
+      R"""(Function interpolated_fft (cdata, calc_ok, opt_dump_spectrum, opt_dump_index) result (this_fft)
 
-  Windows the complex data and uses a mixed-radix GSL routine to find the peak in the spectrum.
+  Windows the complex data and used Numerical Recipes four1 to find the peak in the spectrum.
   The result is interpolated to improve the accuracy.  Hanning and Gaussian windowing are
   available.
 
+
+  Returns
+  -------
+  this_fft
   )""");
   py::class_<PyInterpolatedFftGsl, std::unique_ptr<PyInterpolatedFftGsl>>(
       m,
@@ -462,23 +374,19 @@ void init_SimUtils_routines_i(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "is_alphabetic",
-      &python_is_alphabetic,
-      py::arg("string"),
-      py::arg("valid_chars") = py::none(),
-      py::arg("is_alpha"),
-      R"""(no longer exists
-  function inverse_prob (val) result (prob)
-    import
-    implicit none
-    real(rp) prob
-    real(rp) val
-  end function
+      "interpolated_fft_gsl",
+      &python_interpolated_fft_gsl,
+      py::arg("cdata"),
+      py::arg("calc_ok"),
+      py::arg("opt_dump_spectrum") = py::none(),
+      py::arg("opt_dump_index") = py::none(),
+      py::arg("this_fft"),
+      R"""(function interpolated_fft_gsl
 
+  Windows the complex data and uses a mixed-radix GSL routine to find the peak in the spectrum.
+  The result is interpolated to improve the accuracy.  Hanning and Gaussian windowing are
+  available.
 
-  Returns
-  -------
-  prob
   )""");
   py::class_<PyIsAlphabetic, std::unique_ptr<PyIsAlphabetic>>(
       m, "IsAlphabetic", "Fortran routine is_alphabetic return value")
@@ -498,18 +406,23 @@ void init_SimUtils_routines_i(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "is_decreasing_sequence",
-      &python_is_decreasing_sequence,
-      py::arg("array"),
-      py::arg("strict") = py::none(),
-      py::arg("is_decreasing"),
-      R"""(Parameters
-  ----------
-  array : float
-      Sequence.
-  strict : bool, optional
-      If True (default) sequence must be strictly decreasing.
-  is_decreasing : 
+      "is_alphabetic",
+      &python_is_alphabetic,
+      py::arg("string"),
+      py::arg("valid_chars") = py::none(),
+      py::arg("is_alpha"),
+      R"""(no longer exists
+  function inverse_prob (val) result (prob)
+    import
+    implicit none
+    real(rp) prob
+    real(rp) val
+  end function
+
+
+  Returns
+  -------
+  prob
   )""");
   py::class_<PyIsDecreasingSequence, std::unique_ptr<PyIsDecreasingSequence>>(
       m,
@@ -526,6 +439,20 @@ void init_SimUtils_routines_i(py::module& m) {
               return py::cast(s.is_decreasing);
             throw py::index_error();
           });
+  m.def(
+      "is_decreasing_sequence",
+      &python_is_decreasing_sequence,
+      py::arg("array"),
+      py::arg("strict") = py::none(),
+      py::arg("is_decreasing"),
+      R"""(Parameters
+  ----------
+  array : float
+      Sequence.
+  strict : bool, optional
+      If True (default) sequence must be strictly decreasing.
+  is_decreasing : 
+  )""");
   m.def(
       "is_false",
       &SimUtils::is_false,
@@ -557,20 +484,6 @@ void init_SimUtils_routines_i(py::module& m) {
   is_true int_logic ) which is a real array. Some of the elements in the %value array are used to specify
   boolian attributes. For example quadrupoles use ele%value(scale_multipoles$).
   )""");
-  m.def(
-      "is_increasing_sequence",
-      &python_is_increasing_sequence,
-      py::arg("array"),
-      py::arg("strict") = py::none(),
-      py::arg("is_increasing"),
-      R"""(Parameters
-  ----------
-  array : float
-      Sequence.
-  strict : bool, optional
-      If True (default) sequence must be strictly increasing.
-  is_increasing : 
-  )""");
   py::class_<PyIsIncreasingSequence, std::unique_ptr<PyIsIncreasingSequence>>(
       m,
       "IsIncreasingSequence",
@@ -587,20 +500,18 @@ void init_SimUtils_routines_i(py::module& m) {
             throw py::index_error();
           });
   m.def(
-      "is_integer",
-      &python_is_integer,
-      py::arg("string"),
-      py::arg("int_") = py::none(),
-      py::arg("delims") = py::none(),
-      py::arg("ix_word") = py::none(),
-      py::arg("valid"),
+      "is_increasing_sequence",
+      &python_is_increasing_sequence,
+      py::arg("array"),
+      py::arg("strict") = py::none(),
+      py::arg("is_increasing"),
       R"""(Parameters
   ----------
-  string : 
-  int : 
-  delims : 
-  ix_word : 
-  valid : 
+  array : float
+      Sequence.
+  strict : bool, optional
+      If True (default) sequence must be strictly increasing.
+  is_increasing : 
   )""");
   py::class_<PyIsInteger, std::unique_ptr<PyIsInteger>>(
       m, "IsInteger", "Fortran routine is_integer return value")
@@ -626,15 +537,19 @@ void init_SimUtils_routines_i(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "is_logical",
-      &python_is_logical,
+      "is_integer",
+      &python_is_integer,
       py::arg("string"),
-      py::arg("ignore") = py::none(),
+      py::arg("int_") = py::none(),
+      py::arg("delims") = py::none(),
+      py::arg("ix_word") = py::none(),
       py::arg("valid"),
       R"""(Parameters
   ----------
   string : 
-  ignore : 
+  int : 
+  delims : 
+  ix_word : 
   valid : 
   )""");
   py::class_<PyIsLogical, std::unique_ptr<PyIsLogical>>(
@@ -655,17 +570,15 @@ void init_SimUtils_routines_i(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "is_real",
-      &python_is_real,
+      "is_logical",
+      &python_is_logical,
       py::arg("string"),
       py::arg("ignore") = py::none(),
-      py::arg("real_num") = py::none(),
       py::arg("valid"),
       R"""(Parameters
   ----------
   string : 
   ignore : 
-  real_num : 
   valid : 
   )""");
   py::class_<PyIsReal, std::unique_ptr<PyIsReal>>(
@@ -688,6 +601,20 @@ void init_SimUtils_routines_i(py::module& m) {
           return py::cast(s.valid);
         throw py::index_error();
       });
+  m.def(
+      "is_real",
+      &python_is_real,
+      py::arg("string"),
+      py::arg("ignore") = py::none(),
+      py::arg("real_num") = py::none(),
+      py::arg("valid"),
+      R"""(Parameters
+  ----------
+  string : 
+  ignore : 
+  real_num : 
+  valid : 
+  )""");
   m.def(
       "is_subatomic_species",
       &SimUtils::is_subatomic_species,

@@ -1,20 +1,9 @@
 #include "pybmad/generated/SimUtils_routines_b.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-
-struct PyBinXCenter {
-  double x_center;
-  int ix_bin;
-};
 PyBinXCenter python_bin_x_center(
     int ix_bin,
     double bin1_x_min,
@@ -23,9 +12,6 @@ PyBinXCenter python_bin_x_center(
   auto py_result{PyBinXCenter{_result, ix_bin}};
   return py_result;
 }
-struct PyBitSet {
-  int word;
-};
 PyBitSet python_bit_set(int word, int pos, bool set_to_1) {
   SimUtils::bit_set(word, pos, set_to_1);
   auto py_result{PyBitSet{word}};
@@ -33,6 +19,27 @@ PyBitSet python_bit_set(int word, int pos, bool set_to_1) {
 }
 
 void init_SimUtils_routines_b(py::module& m) {
+  py::class_<
+      SimUtils::BicubicCmplxEval,
+      std::unique_ptr<SimUtils::BicubicCmplxEval>>(
+      m, "BicubicCmplxEval", "Fortran routine bicubic_cmplx_eval return value")
+      .def_readonly("df_dx", &SimUtils::BicubicCmplxEval::df_dx)
+      .def_readonly("df_dy", &SimUtils::BicubicCmplxEval::df_dy)
+      .def_readonly("f_val", &SimUtils::BicubicCmplxEval::f_val)
+      .def("__len__", [](const SimUtils::BicubicCmplxEval&) { return 3; })
+      .def(
+          "__getitem__",
+          [](const SimUtils::BicubicCmplxEval& s, int i) -> py::object {
+            if (i < 0)
+              i += 3;
+            if (i == 0)
+              return py::cast(s.df_dx);
+            if (i == 1)
+              return py::cast(s.df_dy);
+            if (i == 2)
+              return py::cast(s.f_val);
+            throw py::index_error();
+          });
   m.def(
       "bicubic_cmplx_eval",
       &SimUtils::bicubic_cmplx_eval,
@@ -66,27 +73,6 @@ void init_SimUtils_routines_b(py::module& m) {
   df_dy : complex
       Normalized first derivative: True df/dy = df_dy * dy
   )""");
-  py::class_<
-      SimUtils::BicubicCmplxEval,
-      std::unique_ptr<SimUtils::BicubicCmplxEval>>(
-      m, "BicubicCmplxEval", "Fortran routine bicubic_cmplx_eval return value")
-      .def_readonly("df_dx", &SimUtils::BicubicCmplxEval::df_dx)
-      .def_readonly("df_dy", &SimUtils::BicubicCmplxEval::df_dy)
-      .def_readonly("f_val", &SimUtils::BicubicCmplxEval::f_val)
-      .def("__len__", [](const SimUtils::BicubicCmplxEval&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::BicubicCmplxEval& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.df_dx);
-            if (i == 1)
-              return py::cast(s.df_dy);
-            if (i == 2)
-              return py::cast(s.f_val);
-            throw py::index_error();
-          });
   m.def(
       "bin_index",
       &SimUtils::bin_index,
@@ -111,6 +97,20 @@ void init_SimUtils_routines_b(py::module& m) {
   ix_bin : int
       Index of bin x is in.
   )""");
+  py::class_<PyBinXCenter, std::unique_ptr<PyBinXCenter>>(
+      m, "BinXCenter", "Fortran routine bin_x_center return value")
+      .def_readonly("x_center", &PyBinXCenter::x_center)
+      .def_readonly("ix_bin", &PyBinXCenter::ix_bin)
+      .def("__len__", [](const PyBinXCenter&) { return 2; })
+      .def("__getitem__", [](const PyBinXCenter& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.x_center);
+        if (i == 1)
+          return py::cast(s.ix_bin);
+        throw py::index_error();
+      });
   m.def(
       "bin_x_center",
       &python_bin_x_center,
@@ -134,18 +134,15 @@ void init_SimUtils_routines_b(py::module& m) {
   -------
   x_center
   )""");
-  py::class_<PyBinXCenter, std::unique_ptr<PyBinXCenter>>(
-      m, "BinXCenter", "Fortran routine bin_x_center return value")
-      .def_readonly("x_center", &PyBinXCenter::x_center)
-      .def_readonly("ix_bin", &PyBinXCenter::ix_bin)
-      .def("__len__", [](const PyBinXCenter&) { return 2; })
-      .def("__getitem__", [](const PyBinXCenter& s, int i) -> py::object {
+  py::class_<PyBitSet, std::unique_ptr<PyBitSet>>(
+      m, "BitSet", "Fortran routine bit_set return value")
+      .def_readonly("word", &PyBitSet::word)
+      .def("__len__", [](const PyBitSet&) { return 1; })
+      .def("__getitem__", [](const PyBitSet& s, int i) -> py::object {
         if (i < 0)
-          i += 2;
+          i += 1;
         if (i == 0)
-          return py::cast(s.x_center);
-        if (i == 1)
-          return py::cast(s.ix_bin);
+          return py::cast(s.word);
         throw py::index_error();
       });
   m.def(
@@ -168,17 +165,26 @@ void init_SimUtils_routines_b(py::module& m) {
   set_to_1 : bool
       If True then bit is set to 1. If False bit is set to 0.
   )""");
-  py::class_<PyBitSet, std::unique_ptr<PyBitSet>>(
-      m, "BitSet", "Fortran routine bit_set return value")
-      .def_readonly("word", &PyBitSet::word)
-      .def("__len__", [](const PyBitSet&) { return 1; })
-      .def("__getitem__", [](const PyBitSet& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.word);
-        throw py::index_error();
-      });
+  py::class_<
+      SimUtils::BracketIndexForSpline,
+      std::unique_ptr<SimUtils::BracketIndexForSpline>>(
+      m,
+      "BracketIndexForSpline",
+      "Fortran routine bracket_index_for_spline return value")
+      .def_readonly("ix0", &SimUtils::BracketIndexForSpline::ix0)
+      .def_readonly("ok", &SimUtils::BracketIndexForSpline::ok)
+      .def("__len__", [](const SimUtils::BracketIndexForSpline&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const SimUtils::BracketIndexForSpline& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.ix0);
+            if (i == 1)
+              return py::cast(s.ok);
+            throw py::index_error();
+          });
   m.def(
       "bracket_index_for_spline",
       &SimUtils::bracket_index_for_spline,
@@ -213,24 +219,4 @@ void init_SimUtils_routines_b(py::module& m) {
   ok : bool
       True if x is in range. False otherwise.
   )""");
-  py::class_<
-      SimUtils::BracketIndexForSpline,
-      std::unique_ptr<SimUtils::BracketIndexForSpline>>(
-      m,
-      "BracketIndexForSpline",
-      "Fortran routine bracket_index_for_spline return value")
-      .def_readonly("ix0", &SimUtils::BracketIndexForSpline::ix0)
-      .def_readonly("ok", &SimUtils::BracketIndexForSpline::ok)
-      .def("__len__", [](const SimUtils::BracketIndexForSpline&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::BracketIndexForSpline& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.ix0);
-            if (i == 1)
-              return py::cast(s.ok);
-            throw py::index_error();
-          });
 }

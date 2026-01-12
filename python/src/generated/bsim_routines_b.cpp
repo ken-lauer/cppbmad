@@ -1,19 +1,9 @@
 #include "pybmad/generated/bsim_routines_b.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyBbuHomVoltageCalc {
-  int n_period;
-  int ix_stage_last_tracked;
-};
 PyBbuHomVoltageCalc python_bbu_hom_voltage_calc(
     LatProxy& lat,
     BbuBeamProxy& bbu_beam,
@@ -23,9 +13,6 @@ PyBbuHomVoltageCalc python_bbu_hom_voltage_calc(
   auto py_result{PyBbuHomVoltageCalc{n_period, ix_stage_last_tracked}};
   return py_result;
 }
-struct PyBbuSetup {
-  double dt_bunch;
-};
 PyBbuSetup python_bbu_setup(
     LatProxy& lat,
     double dt_bunch,
@@ -35,10 +22,6 @@ PyBbuSetup python_bbu_setup(
   auto py_result{PyBbuSetup{dt_bunch}};
   return py_result;
 }
-struct PyBbuTrackAStage {
-  bool lost;
-  int ix_stage_tracked;
-};
 PyBbuTrackAStage python_bbu_track_a_stage(
     LatProxy& lat,
     BbuBeamProxy& bbu_beam,
@@ -49,12 +32,6 @@ PyBbuTrackAStage python_bbu_track_a_stage(
   auto py_result{PyBbuTrackAStage{lost, ix_stage_tracked}};
   return py_result;
 }
-struct PyBbuTrackAll {
-  double hom_voltage_normalized;
-  double growth_rate;
-  bool lost;
-  int irep;
-};
 PyBbuTrackAll python_bbu_track_all(
     LatProxy& lat,
     BbuBeamProxy& bbu_beam,
@@ -93,20 +70,6 @@ void init_bsim_routines_b(py::module& m) {
   bbu_param : 
   beam_init : 
   )""");
-  m.def(
-      "bbu_hom_voltage_calc",
-      &python_bbu_hom_voltage_calc,
-      py::arg("lat"),
-      py::arg("bbu_beam"),
-      py::arg("n_period"),
-      py::arg("ix_stage_last_tracked"),
-      R"""(Parameters
-  ----------
-  lat : 
-  bbu_beam : 
-  n_period : 
-  ix_stage_last_tracked : 
-  )""");
   py::class_<PyBbuHomVoltageCalc, std::unique_ptr<PyBbuHomVoltageCalc>>(
       m,
       "BbuHomVoltageCalc",
@@ -126,6 +89,20 @@ void init_bsim_routines_b(py::module& m) {
             throw py::index_error();
           });
   m.def(
+      "bbu_hom_voltage_calc",
+      &python_bbu_hom_voltage_calc,
+      py::arg("lat"),
+      py::arg("bbu_beam"),
+      py::arg("n_period"),
+      py::arg("ix_stage_last_tracked"),
+      R"""(Parameters
+  ----------
+  lat : 
+  bbu_beam : 
+  n_period : 
+  ix_stage_last_tracked : 
+  )""");
+  m.def(
       "bbu_remove_head_bunch",
       &bsim::bbu_remove_head_bunch,
       py::arg("bbu_beam"),
@@ -133,6 +110,17 @@ void init_bsim_routines_b(py::module& m) {
   ----------
   bbu_beam : 
   )""");
+  py::class_<PyBbuSetup, std::unique_ptr<PyBbuSetup>>(
+      m, "BbuSetup", "Fortran routine bbu_setup return value")
+      .def_readonly("dt_bunch", &PyBbuSetup::dt_bunch)
+      .def("__len__", [](const PyBbuSetup&) { return 1; })
+      .def("__getitem__", [](const PyBbuSetup& s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.dt_bunch);
+        throw py::index_error();
+      });
   m.def(
       "bbu_setup",
       &python_bbu_setup,
@@ -147,15 +135,18 @@ void init_bsim_routines_b(py::module& m) {
   bbu_param : 
   bbu_beam : 
   )""");
-  py::class_<PyBbuSetup, std::unique_ptr<PyBbuSetup>>(
-      m, "BbuSetup", "Fortran routine bbu_setup return value")
-      .def_readonly("dt_bunch", &PyBbuSetup::dt_bunch)
-      .def("__len__", [](const PyBbuSetup&) { return 1; })
-      .def("__getitem__", [](const PyBbuSetup& s, int i) -> py::object {
+  py::class_<PyBbuTrackAStage, std::unique_ptr<PyBbuTrackAStage>>(
+      m, "BbuTrackAStage", "Fortran routine bbu_track_a_stage return value")
+      .def_readonly("lost", &PyBbuTrackAStage::lost)
+      .def_readonly("ix_stage_tracked", &PyBbuTrackAStage::ix_stage_tracked)
+      .def("__len__", [](const PyBbuTrackAStage&) { return 2; })
+      .def("__getitem__", [](const PyBbuTrackAStage& s, int i) -> py::object {
         if (i < 0)
-          i += 1;
+          i += 2;
         if (i == 0)
-          return py::cast(s.dt_bunch);
+          return py::cast(s.lost);
+        if (i == 1)
+          return py::cast(s.ix_stage_tracked);
         throw py::index_error();
       });
   m.def(
@@ -174,18 +165,25 @@ void init_bsim_routines_b(py::module& m) {
   lost : 
   ix_stage_tracked : 
   )""");
-  py::class_<PyBbuTrackAStage, std::unique_ptr<PyBbuTrackAStage>>(
-      m, "BbuTrackAStage", "Fortran routine bbu_track_a_stage return value")
-      .def_readonly("lost", &PyBbuTrackAStage::lost)
-      .def_readonly("ix_stage_tracked", &PyBbuTrackAStage::ix_stage_tracked)
-      .def("__len__", [](const PyBbuTrackAStage&) { return 2; })
-      .def("__getitem__", [](const PyBbuTrackAStage& s, int i) -> py::object {
+  py::class_<PyBbuTrackAll, std::unique_ptr<PyBbuTrackAll>>(
+      m, "BbuTrackAll", "Fortran routine bbu_track_all return value")
+      .def_readonly(
+          "hom_voltage_normalized", &PyBbuTrackAll::hom_voltage_normalized)
+      .def_readonly("growth_rate", &PyBbuTrackAll::growth_rate)
+      .def_readonly("lost", &PyBbuTrackAll::lost)
+      .def_readonly("irep", &PyBbuTrackAll::irep)
+      .def("__len__", [](const PyBbuTrackAll&) { return 4; })
+      .def("__getitem__", [](const PyBbuTrackAll& s, int i) -> py::object {
         if (i < 0)
-          i += 2;
+          i += 4;
         if (i == 0)
-          return py::cast(s.lost);
+          return py::cast(s.hom_voltage_normalized);
         if (i == 1)
-          return py::cast(s.ix_stage_tracked);
+          return py::cast(s.growth_rate);
+        if (i == 2)
+          return py::cast(s.lost);
+        if (i == 3)
+          return py::cast(s.irep);
         throw py::index_error();
       });
   m.def(
@@ -210,25 +208,4 @@ void init_bsim_routines_b(py::module& m) {
   lost : 
   irep : 
   )""");
-  py::class_<PyBbuTrackAll, std::unique_ptr<PyBbuTrackAll>>(
-      m, "BbuTrackAll", "Fortran routine bbu_track_all return value")
-      .def_readonly(
-          "hom_voltage_normalized", &PyBbuTrackAll::hom_voltage_normalized)
-      .def_readonly("growth_rate", &PyBbuTrackAll::growth_rate)
-      .def_readonly("lost", &PyBbuTrackAll::lost)
-      .def_readonly("irep", &PyBbuTrackAll::irep)
-      .def("__len__", [](const PyBbuTrackAll&) { return 4; })
-      .def("__getitem__", [](const PyBbuTrackAll& s, int i) -> py::object {
-        if (i < 0)
-          i += 4;
-        if (i == 0)
-          return py::cast(s.hom_voltage_normalized);
-        if (i == 1)
-          return py::cast(s.growth_rate);
-        if (i == 2)
-          return py::cast(s.lost);
-        if (i == 3)
-          return py::cast(s.irep);
-        throw py::index_error();
-      });
 }

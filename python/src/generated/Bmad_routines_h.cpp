@@ -1,19 +1,9 @@
 #include "pybmad/generated/Bmad_routines_h.hpp"
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include "pybmad/arrays.hpp"
-#include "pybmad/util.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-// Wrappers
-struct PyHasAttribute {
-  std::string attrib;
-  bool has_it;
-};
 PyHasAttribute python_has_attribute(
     EleProxy& ele,
     std::string attrib,
@@ -22,12 +12,6 @@ PyHasAttribute python_has_attribute(
   auto py_result{PyHasAttribute{attrib, has_it}};
   return py_result;
 }
-struct PyHdf5WriteBeam {
-  std::string file_name;
-  bool append;
-  bool error;
-  std::optional<bool> alive_only;
-};
 PyHdf5WriteBeam python_hdf5_write_beam(
     std::string file_name,
     BunchProxyAlloc1D& bunches,
@@ -40,10 +24,6 @@ PyHdf5WriteBeam python_hdf5_write_beam(
   auto py_result{PyHdf5WriteBeam{file_name, append, error, alive_only}};
   return py_result;
 }
-struct PyHdf5WriteGridField {
-  std::string file_name;
-  bool err_flag;
-};
 PyHdf5WriteGridField python_hdf5_write_grid_field(
     std::string file_name,
     EleProxy& ele,
@@ -94,18 +74,6 @@ void init_Bmad_routines_h(py::module& m) {
   make_matrix : float, optional
       Propagate the transfer matrix? Default is False.
   )""");
-  m.def(
-      "has_attribute",
-      &python_has_attribute,
-      py::arg("ele"),
-      py::arg("attrib"),
-      py::arg("has_it"),
-      R"""(Parameters
-  ----------
-  ele : 
-  attrib : 
-  has_it : 
-  )""");
   py::class_<PyHasAttribute, std::unique_ptr<PyHasAttribute>>(
       m, "HasAttribute", "Fortran routine has_attribute return value")
       .def_readonly("attrib", &PyHasAttribute::attrib)
@@ -120,6 +88,18 @@ void init_Bmad_routines_h(py::module& m) {
           return py::cast(s.has_it);
         throw py::index_error();
       });
+  m.def(
+      "has_attribute",
+      &python_has_attribute,
+      py::arg("ele"),
+      py::arg("attrib"),
+      py::arg("has_it"),
+      R"""(Parameters
+  ----------
+  ele : 
+  attrib : 
+  has_it : 
+  )""");
   m.def(
       "has_curvature",
       &Bmad::has_curvature,
@@ -162,24 +142,6 @@ void init_Bmad_routines_h(py::module& m) {
   Related routines:
   has_attribute function.
   )""");
-  m.def(
-      "hdf5_write_beam",
-      &python_hdf5_write_beam,
-      py::arg("file_name"),
-      py::arg("bunches"),
-      py::arg("append"),
-      py::arg("error"),
-      py::arg("lat") = py::none(),
-      py::arg("alive_only") = py::none(),
-      R"""(Parameters
-  ----------
-  file_name : 
-  bunches : 
-  append : 
-  error : 
-  lat : 
-  alive_only : 
-  )""");
   py::class_<PyHdf5WriteBeam, std::unique_ptr<PyHdf5WriteBeam>>(
       m, "Hdf5WriteBeam", "Fortran routine hdf5_write_beam return value")
       .def_readonly("file_name", &PyHdf5WriteBeam::file_name)
@@ -201,18 +163,22 @@ void init_Bmad_routines_h(py::module& m) {
         throw py::index_error();
       });
   m.def(
-      "hdf5_write_grid_field",
-      &python_hdf5_write_grid_field,
+      "hdf5_write_beam",
+      &python_hdf5_write_beam,
       py::arg("file_name"),
-      py::arg("ele"),
-      py::arg("g_field"),
-      py::arg("err_flag"),
+      py::arg("bunches"),
+      py::arg("append"),
+      py::arg("error"),
+      py::arg("lat") = py::none(),
+      py::arg("alive_only") = py::none(),
       R"""(Parameters
   ----------
   file_name : 
-  ele : 
-  g_field : 
-  err_flag : 
+  bunches : 
+  append : 
+  error : 
+  lat : 
+  alive_only : 
   )""");
   py::class_<PyHdf5WriteGridField, std::unique_ptr<PyHdf5WriteGridField>>(
       m,
@@ -232,6 +198,20 @@ void init_Bmad_routines_h(py::module& m) {
               return py::cast(s.err_flag);
             throw py::index_error();
           });
+  m.def(
+      "hdf5_write_grid_field",
+      &python_hdf5_write_grid_field,
+      py::arg("file_name"),
+      py::arg("ele"),
+      py::arg("g_field"),
+      py::arg("err_flag"),
+      R"""(Parameters
+  ----------
+  file_name : 
+  ele : 
+  g_field : 
+  err_flag : 
+  )""");
   m.def(
       "hwang_bend_edge_kick",
       &Bmad::hwang_bend_edge_kick,
