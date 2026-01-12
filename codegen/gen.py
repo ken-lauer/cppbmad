@@ -25,7 +25,15 @@ from .context import ConfigContext, config_context
 from .coverage import generate_coverage_report
 from .cpp import generate_to_string_code, generate_to_string_header
 from .enums import ENUM_FILENAME, write_enums
-from .paths import CODEGEN_ROOT, CPPBMAD_INCLUDE, CPPBMAD_ROOT, CPPBMAD_SRC, REPO_ROOT
+from .paths import (
+    CODEGEN_ROOT,
+    CPPBMAD_INCLUDE,
+    CPPBMAD_ROOT,
+    CPPBMAD_SRC,
+    PYBMAD_INCLUDE,
+    PYBMAD_SRC,
+    REPO_ROOT,
+)
 from .proxy import create_cpp_proxy_header, create_cpp_proxy_impl, create_fortran_proxy_code
 from .py import generate_pybmad
 from .routines import generate_routines, parse_bmad_routines
@@ -334,11 +342,13 @@ def generate(
 
     if pybmad:
         pybmad_files = generate_pybmad(structs, routines_by_name)
-        # existing_files = set(OUTPUT_PATH.glob("*.cpp")) | set(OUTPUT_PATH.glob("*.hpp"))
-        # for fn in existing_files:
-        #     if fn.name not in module_file_to_source:
-        #         logger.warning(f"Removing stale file from previous generation: {fn}")
-        #         fn.unlink()
+        cpp_gen_src = PYBMAD_SRC / "generated"
+        hpp_gen_src = PYBMAD_INCLUDE / "generated"
+        existing_files = set(cpp_gen_src.glob("*.cpp")) | set(hpp_gen_src.glob("*.hpp"))
+        for fn in existing_files:
+            if fn not in pybmad_files:
+                logger.warning(f"Removing stale file from previous generation: {fn}")
+                fn.unlink()
         for fn, source in pybmad_files.items():
             write_contents_if_differs(target_path=fn, contents=source)
 

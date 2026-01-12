@@ -47,3 +47,11 @@ repos:
       - id: clang-format
         files: ^.*\.(cpp|h|hpp|c|cc|cxx)$
         exclude: "^(codegen/to_string.tpl.cpp|include/bmad/json.hpp)$"
+  # - repo: local
+  #   hooks:
+  #     - id: forbid-untracked-generated-files
+  #       name: Forbid untracked files in generated directories
+  #       entry: bash .check_untracked.sh
+  #       language: system
+  #       pass_filenames: false
+  #       always_run: false

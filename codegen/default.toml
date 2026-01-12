@@ -273,7 +273,7 @@ interface_ignore_list = [
 
 structs_defined_externally = []
 
-include_header_files = ['#include "bmad_enums.hpp"', '#include "bmad/types.h"']
+include_header_files = []
 
 skips = [
   "xraylib",

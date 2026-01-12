@@ -436,105 +436,258 @@ def generate_pybmad_struct_code(
     return code_lines
 
 
+def _group_structures_by_char(
+    structs: list[CodegenStructure],
+) -> dict[str, list[CodegenStructure]]:
+    """Group structures by the first letter of their Fortran name."""
+    structs_by_char = {}
+    for st in structs:
+        ch = st.f_name[0].lower()
+        structs_by_char.setdefault(ch, []).append(st)
+    return structs_by_char
+
+
+def _group_routines_by_source_and_char(
+    routines_by_name: dict[str, FortranRoutine],
+) -> dict[str, dict[str, list[FortranRoutine]]]:
+    """Group routines by source namespace and first letter."""
+    routines_map = {}
+
+    for routine in routines_by_name.values():
+        src = routine.cpp_namespace
+        char = routine.name[0].lower()
+
+        routines_map.setdefault(src, {}).setdefault(char, [])
+        routines_map[src][char].append(routine)
+
+    return routines_map
+
+
+def _generate_structure_files(
+    files: dict[pathlib.Path, str],
+    structs_by_char: dict[str, list[CodegenStructure]],
+    all_structs: list[CodegenStructure],
+    routines_by_name: dict[str, FortranRoutine],
+    array_usage: dict[str, set],
+) -> tuple[list[str], list[str]]:
+    """
+    Generate the split C++ files (structs_{letter}) for structures.
+    Returns the list of generated headers and initialization function calls.
+    """
+    headers: list[str] = ["#pragma once"]
+    init_calls: list[str] = []
+
+    for char, char_structs in sorted(structs_by_char.items()):
+        char_structs.sort(key=lambda st: (st.module, st.f_name))
+
+        header_name = f"structs_{char}.hpp"
+        init_fn_name = f"init_structs_{char}"
+        header_path = PYBMAD_INCLUDE / "pybmad" / "generated" / header_name
+
+        files[header_path] = textwrap.dedent(f"""\
+            #pragma once
+            #include <pybind11/pybind11.h>
+            namespace py = pybind11;
+
+            void {init_fn_name}(py::module &m);
+        """)
+
+        headers.append(f'#include "pybmad/generated/{header_name}"')
+        init_calls.append(f"{init_fn_name}(m);")
+
+        src_lines = [
+            f'#include "pybmad/generated/{header_name}"',
+            '#include "bmad/generated/proxy.hpp"',
+            '#include "bmad/generated/to_string.hpp"',
+            '#include "bmad/to_string.hpp"',
+            '#include "pybmad/arrays.hpp"',
+            "",
+            "using namespace Pybmad;",
+            "namespace py = pybind11;",
+            "",
+        ]
+
+        for st in char_structs:
+            lines = generate_pybmad_struct_code(
+                all_structs, routines_by_name, st, array_usage.get(st.f_name.lower(), set())
+            )
+            src_lines.extend(lines)
+
+        src_lines.append("")
+        src_lines.append(f"void {init_fn_name}(py::module &m) {{")
+        for st in char_structs:
+            src_lines.append(
+                f"    auto py_{st.python_class_name} = py::class_<{st.cpp_class}>(m, "
+                f'"{st.python_class_name}", "Fortran struct: {st.f_name}");'
+            )
+            src_lines.append(f"    init_{st.f_name}(m, py_{st.python_class_name});")
+        src_lines.append("}")
+
+        src_path = PYBMAD_SRC / "generated" / f"structs_{char}.cpp"
+        files[src_path] = "\n".join(src_lines)
+
+    return headers, init_calls
+
+
+def _generate_routine_files(
+    files: dict[pathlib.Path, str],
+    routines_map: dict[str, dict[str, list[FortranRoutine]]],
+) -> tuple[list[str], list[str]]:
+    """
+    Generate the split C++ files ({source}_routines_{letter}) for routines.
+    Returns the list of generated headers and initialization function calls.
+    """
+    headers: list[str] = ["#pragma once"]
+    init_calls: list[str] = []
+
+    for src, chars_dict in sorted(routines_map.items()):
+        for char, routine_list in sorted(chars_dict.items()):
+            # Reconstruct the dictionary using r.name as the key
+            subset_routines = {r.name: r for r in routine_list}
+
+            base_name = f"{src}_routines_{char}"
+            header_name = f"{base_name}.hpp"
+            src_name = f"{base_name}.cpp"
+            init_fn_name = f"init_{src}_routines_{char}"
+
+            header_path = PYBMAD_INCLUDE / "pybmad" / "generated" / header_name
+            files[header_path] = textwrap.dedent(f"""\
+                #pragma once
+                #include <pybind11/pybind11.h>
+                namespace py = pybind11;
+
+                void {init_fn_name}(py::module &m);
+            """)
+
+            headers.append(f'#include "pybmad/generated/{header_name}"')
+            init_calls.append(f"{init_fn_name}(m);")
+
+            wrappers_code = generate_py_routine_wrappers(subset_routines)
+            defs_block = generate_py_routine_defs(subset_routines)
+            defs_block_indented = textwrap.indent(defs_block, "  ")
+
+            cpp_content = textwrap.dedent(f"""\
+                #include "pybmad/generated/{header_name}"
+                #include <pybind11/complex.h>
+                #include <pybind11/numpy.h>
+                #include <pybind11/stl.h>
+                #include "pybmad/arrays.hpp"
+                #include "pybmad/util.hpp"
+
+                namespace py = pybind11;
+                using namespace pybind11::literals;
+                using namespace Pybmad;
+                
+                // Wrappers
+                {wrappers_code}
+                
+                void {init_fn_name}(py::module &m) {{
+                {defs_block_indented}
+                }}
+            """)
+
+            files[PYBMAD_SRC / "generated" / src_name] = cpp_content
+
+    return headers, init_calls
+
+
+def _generate_main_module_file(
+    files: dict[pathlib.Path, str],
+    enums: dict[str, dict[str, EnumValue]],
+    struct_inits: list[str],
+    routine_inits: list[str],
+) -> None:
+    """Generate the main _pybmad.cpp file aggregating all bindings."""
+    template_text = (CODEGEN_ROOT / "pybind_mod.tpl.cpp").read_text()
+    template = string.Template(template_text.replace("// ${", "${"))
+
+    enum_code = generate_enum_wrapper_code(enums)
+    if enum_code:
+        enum_code = enum_code.replace("\n", "\n    ")
+
+    hand_written_bindings = "\n".join(
+        (
+            "    bind_standard_arrays(m);",
+            "    init_common_structs(m);",
+        )
+    )
+
+    newline = "\n"
+    core_body = textwrap.dedent(f"""\
+        m.doc() = "pybmad";
+
+        // Hand-written bindings
+{hand_written_bindings}
+
+        // Enums
+{enum_code or "    // (No enums)"}
+
+        // Init groups of structures
+    {newline.join(f"    {s}" for s in struct_inits)}
+
+        // Routine Group Initializers
+    {newline.join(f"    {s}" for s in routine_inits)}
+        """).strip()
+
+    inclusions = textwrap.dedent("""
+        #include "pybmad/generated/structs.hpp"
+        #include "pybmad/generated/routines.hpp"
+    """)
+
+    substituted = template.substitute(
+        pybind11_routine_wrappers=inclusions,
+        pybind11_definitions=core_body,
+    )
+
+    files[PYBMAD_SRC / "generated" / "_pybmad.cpp"] = substituted
+
+
 def generate_pybmad(
     structs: list[CodegenStructure],
     routines_by_name: dict[str, FortranRoutine],
     enums: dict[str, dict[str, EnumValue]] | None = None,
 ) -> dict[pathlib.Path, str]:
     """
-    Generate a split pybind11 binding:
-      - _core.cpp: defines PYBIND11_MODULE and calls per-structure init functions
-      - One .cpp per structure: defines void init_<struct_name>(py::module &)
-      - A header declaring init functions (included by _core.cpp and each per-struct file)
-    """
+    Generate split pybind11 bindings for Bmad.
 
+    Parameters
+    ----------
+    structs : list[CodegenStructure]
+        List of structure definitions to bind.
+    routines_by_name : dict[str, FortranRoutine]
+        Dictionary mapping routine names to their definitions.
+    enums : dict[str, dict[str, EnumValue]] | None
+        Optional parsed enums. If None, they are parsed.
+
+    Returns
+    -------
+    dict[pathlib.Path, str]
+        A dictionary mapping file output paths to their generated string content.
+    """
     if enums is None:
         enums = parse_all_enums()
+
     files: dict[pathlib.Path, str] = {}
-
-    code_lines = []
-    code_lines.append("#include <pybind11/pybind11.h>")
-    code_lines.append('#include "bmad/generated/proxy.hpp"')
-    code_lines.append('#include "bmad/generated/to_string.hpp"')
-    code_lines.append('#include "bmad/to_string.hpp"')
-    code_lines.append('#include "pybmad/arrays.hpp"')
-    code_lines.append("")
-    code_lines.append("using namespace Pybmad;")
-    code_lines.append("namespace py = pybind11;")
-    code_lines.append("")
-    code_lines.append("namespace Pybmad {")
-
-    def by_module_and_name(struct: CodegenStructure):
-        return (struct.module, struct.f_name)
-
     array_usage = struct_array_usage_dimensions(routines_by_name, structs)
-    for struct in sorted(structs, key=by_module_and_name):
-        code_lines.extend(
-            generate_pybmad_struct_code(
-                structs, routines_by_name, struct, array_usage.get(struct.f_name.lower(), set())
-            )
-        )
 
-    code_lines.append("} // namespace Pybmad")
-    filename = PYBMAD_SRC / "generated" / "structs.cpp"
-    files[filename] = "\n".join(code_lines)
+    structs_by_char = _group_structures_by_char(structs)
+    routines_map = _group_routines_by_source_and_char(routines_by_name)
 
-    enum_code = generate_enum_wrapper_code(enums)
-    hand_written_bindings = "\n".join(
-        (
-            "bind_standard_arrays(m);",
-            "init_common_structs(m);",
-        )
+    struct_headers, struct_inits = _generate_structure_files(
+        files, structs_by_char, structs, routines_by_name, array_usage
     )
 
-    template_text = (CODEGEN_ROOT / "pybind.tpl.cpp").read_text()
-    # Ensure ${ substitution does not break comment placeholders
-    template_text = template_text.replace("// ${", "${")
-    template = string.Template(template_text)
+    routine_headers, routine_inits = _generate_routine_files(files, routines_map)
 
-    struct_init_lines = []
-    for struct in structs:
-        struct_init_lines.append(
-            f'    auto py_{struct.python_class_name} = py::class_<{struct.cpp_class}>(m, "{struct.python_class_name}", "Fortran struct: {struct.f_name}");'
-        )
+    files[PYBMAD_INCLUDE / "pybmad" / "generated" / "structs.hpp"] = "\n".join(struct_headers)
+    files[PYBMAD_INCLUDE / "pybmad" / "generated" / "routines.hpp"] = "\n".join(routine_headers)
 
-    for struct in structs:
-        struct_init_lines.append(f"    init_{struct.f_name}(m, py_{struct.python_class_name});")
+    _generate_main_module_file(files, enums, struct_inits, routine_inits)
 
-    init_calls = "\n".join(struct_init_lines)
-
-    routine_block = generate_py_routine_defs(routines_by_name)
-    routine_wrappers = generate_py_routine_wrappers(routines_by_name)
-    enum_code = enum_code.replace("\\n", "\\n    ")
-    core_body = textwrap.dedent(
-        f"""
-        m.doc() = "pybmad";
-
-        // Per-structure bindings
-{init_calls}
-
-        // Hand-written bindings
-{hand_written_bindings}
-
-        // Enums
-{enum_code or "// (No enums)"}
-
-        // Routines
-{routine_block}
-        """
-    ).rstrip()
-
-    substituted = template.substitute(
-        pybind11_routine_wrappers=routine_wrappers,
-        pybind11_definitions=core_body,
-    )
-
-    files[PYBMAD_SRC / "generated" / "_pybmad.cpp"] = substituted
-
-    pybmad_header = generate_pybmad_header(
+    files[PYBMAD_INCLUDE / "pybmad" / "generated" / "init.hpp"] = generate_pybmad_header(
         template=(CODEGEN_ROOT / "pybind.tpl.hpp").read_text(),
         routines=routines_by_name,
         structs=structs,
     )
-    files[PYBMAD_INCLUDE / "pybmad" / "generated" / "init.hpp"] = pybmad_header
+
     return files
