@@ -16,9 +16,28 @@ set(BUILD_TYPE "${_default_acc_build_type}"
 )
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 
+if(DEFINED $ENV{PKG_VERSION})
+  set(PROJECT_VERSION_STRING "$ENV{PKG_VERSION}")
+else()
+  find_package(Git)
+  if(GIT_FOUND)
+    execute_process(
+      COMMAND ${GIT_EXECUTABLE} describe --tags --abbrev=0
+      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+      OUTPUT_VARIABLE PROJECT_VERSION_STRING
+      OUTPUT_STRIP_TRAILING_WHITESPACE
+      ERROR_QUIET
+    )
+    string(REPLACE "-" "." PROJECT_VERSION_STRING "${PROJECT_VERSION_STRING}")
+  endif()
+endif()
+if(NOT PROJECT_VERSION_STRING)
+  set(PROJECT_VERSION_STRING "0.0.0")
+endif()
+
 project(
   ${LIBNAME}
-  VERSION 0.0.1
+  VERSION ${PROJECT_VERSION_STRING}
   LANGUAGES CXX Fortran
 )
 
