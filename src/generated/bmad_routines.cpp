@@ -5076,6 +5076,7 @@ void Bmad::igfezfun(
       /* double& */ res);
 }
 void Bmad::init_attribute_name1(
+    bool& is_ok,
     int ix_key,
     int ix_attrib,
     std::string name,
@@ -5097,6 +5098,7 @@ void Bmad::init_attribute_name1(
     _override = nullptr;
   }
   fortran_init_attribute_name1(
+      /* bool& */ is_ok,
       /* int& */ ix_key,
       /* int& */ ix_attrib,
       /* const char* */ _name,
@@ -10350,7 +10352,10 @@ void Bmad::setup_high_energy_space_charge_calc(
     BranchProxy& branch,
     double n_part,
     NormalModesProxy& mode,
+    optional_ref<BeamInitProxy> beam_init,
     optional_ref<CoordProxyAlloc1D> closed_orb) {
+  auto* _beam_init = beam_init.has_value() ? beam_init->get().get_fortran_ptr()
+                                           : nullptr; // input, optional
   // intent=in allocatable type array
   auto* _closed_orb = closed_orb.has_value()
       ? closed_orb->get().get_fortran_ptr()
@@ -10360,6 +10365,7 @@ void Bmad::setup_high_energy_space_charge_calc(
       /* void* */ branch.get_fortran_ptr(),
       /* double& */ n_part,
       /* void* */ mode.get_fortran_ptr(),
+      /* void* */ _beam_init,
       /* void* */ _closed_orb);
 }
 FixedArray2D<Real, 6, 6> Bmad::sigma_mat_ptc_to_bmad(

@@ -210,7 +210,7 @@ bool apply_all_rampers(LatProxy& lat);
 // - Untranslated type: fringe_field_info_struct (0D)
 
 // Skipped unusable routine apply_element_edge_kick_hook_def:
-// - Untranslated type: fringe_field_info_struct (0D)
+// - Routine in configuration skip list
 extern "C" void fortran_apply_energy_kick(
     double& dE /* 0D_NOT_real in */,
     void* orbit /* 0D_NOT_type inout */,
@@ -1868,7 +1868,7 @@ void ele_rf_step_index(double E_ref, double s_rel, EleProxy& ele, int& ix_step);
 // - Untranslated type: fibre (0D)
 
 // Skipped unusable routine ele_to_fibre_hook_def:
-// - Untranslated type: fibre (0D)
+// - Routine in configuration skip list
 extern "C" void fortran_ele_to_ptc_magnetic_bn_an(
     void* ele /* 0D_NOT_type in */,
     void* bn /* 1D_ALLOC_real out */,
@@ -3450,12 +3450,14 @@ void igfezfun(
 // Skipped unusable routine imageconvcorr3d:
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_init_attribute_name1(
+    bool& is_ok /* 0D_NOT_logical inout */,
     int& ix_key /* 0D_NOT_integer in */,
     int& ix_attrib /* 0D_NOT_integer in */,
     const char* name /* 0D_NOT_character in */,
     int* attrib_state /* 0D_NOT_integer in */,
     bool* override /* 0D_NOT_logical in */);
 void init_attribute_name1(
+    bool& is_ok,
     int ix_key,
     int ix_attrib,
     std::string name,
@@ -6871,12 +6873,14 @@ extern "C" void fortran_setup_high_energy_space_charge_calc(
     void* branch /* 0D_NOT_type in */,
     double& n_part /* 0D_NOT_real in */,
     void* mode /* 0D_NOT_type in */,
+    void* beam_init /* 0D_NOT_type in */,
     void* closed_orb /* 1D_ALLOC_type in */);
 void setup_high_energy_space_charge_calc(
     bool calc_on,
     BranchProxy& branch,
     double n_part,
     NormalModesProxy& mode,
+    optional_ref<BeamInitProxy> beam_init = std::nullopt,
     optional_ref<CoordProxyAlloc1D> closed_orb = std::nullopt);
 
 // Skipped unusable routine sfft:

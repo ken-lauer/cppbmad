@@ -2409,6 +2409,21 @@ PyIndexNocase python_index_nocase(
   auto py_result{PyIndexNocase{string1, string2, indx}};
   return py_result;
 }
+struct PyInitAttributeName1 {
+  bool is_ok;
+};
+PyInitAttributeName1 python_init_attribute_name1(
+    bool is_ok,
+    int ix_key,
+    int ix_attrib,
+    std::string name,
+    std::optional<int> attrib_state = std::nullopt,
+    std::optional<bool> override = std::nullopt) {
+  Bmad::init_attribute_name1(
+      is_ok, ix_key, ix_attrib, name, attrib_state, override);
+  auto py_result{PyInitAttributeName1{is_ok}};
+  return py_result;
+}
 struct PyInitBeamDistribution : public Bmad::InitBeamDistribution {
   std::optional<bool> conserve_momentum;
   PyInitBeamDistribution(
@@ -8141,10 +8156,11 @@ PYBIND11_MODULE(_pybmad, m) {
   m.attr("Y1_LIMIT") = py::int_(Bmad::Y1_LIMIT);
   m.attr("Y2_LIMIT") = py::int_(Bmad::Y2_LIMIT);
   m.attr("CHECK_SUM") = py::int_(Bmad::CHECK_SUM);
+  m.attr("IS_ON") = py::int_(Bmad::IS_ON);
+  m.attr("ALIAS") = py::int_(Bmad::ALIAS);
   m.attr("DISTRIBUTION") = py::int_(Bmad::DISTRIBUTION);
   m.attr("TT") = py::int_(Bmad::TT);
   m.attr("X_KNOT") = py::int_(Bmad::X_KNOT);
-  m.attr("ALIAS") = py::int_(Bmad::ALIAS);
   m.attr("MAX_FRINGE_ORDER") = py::int_(Bmad::MAX_FRINGE_ORDER);
   m.attr("ETA_X") = py::int_(Bmad::ETA_X);
   m.attr("ELECTRIC_DIPOLE_MOMENT") = py::int_(Bmad::ELECTRIC_DIPOLE_MOMENT);
@@ -8184,24 +8200,23 @@ PYBIND11_MODULE(_pybmad, m) {
   m.attr("Z_REF") = py::int_(Bmad::Z_REF);
   m.attr("P89") = py::int_(Bmad::P89);
   m.attr("RADIATION_LENGTH_USED") = py::int_(Bmad::RADIATION_LENGTH_USED);
-  m.attr("DETA_DPZ_Y") = py::int_(Bmad::DETA_DPZ_Y);
   m.attr("PZ_REF") = py::int_(Bmad::PZ_REF);
   m.attr("SPACE_CHARGE_METHOD") = py::int_(Bmad::SPACE_CHARGE_METHOD);
   m.attr("P90") = py::int_(Bmad::P90);
   m.attr("DETAP_DPZ_X") = py::int_(Bmad::DETAP_DPZ_X);
   m.attr("MAT6_CALC_METHOD") = py::int_(Bmad::MAT6_CALC_METHOD);
-  m.attr("DETAP_DPZ_Y") = py::int_(Bmad::DETAP_DPZ_Y);
   m.attr("TRACKING_METHOD") = py::int_(Bmad::TRACKING_METHOD);
-  m.attr("S_LONG") = py::int_(Bmad::S_LONG);
   m.attr("REF_TIME") = py::int_(Bmad::REF_TIME);
   m.attr("PTC_INTEGRATION_TYPE") = py::int_(Bmad::PTC_INTEGRATION_TYPE);
   m.attr("SPIN_TRACKING_METHOD") = py::int_(Bmad::SPIN_TRACKING_METHOD);
   m.attr("ETA_A") = py::int_(Bmad::ETA_A);
   m.attr("APERTURE") = py::int_(Bmad::APERTURE);
   m.attr("ETAP_A") = py::int_(Bmad::ETAP_A);
+  m.attr("DETA_DPZ_Y") = py::int_(Bmad::DETA_DPZ_Y);
   m.attr("X_LIMIT") = py::int_(Bmad::X_LIMIT);
   m.attr("ABSOLUTE_TIME_TRACKING") = py::int_(Bmad::ABSOLUTE_TIME_TRACKING);
   m.attr("ETA_B") = py::int_(Bmad::ETA_B);
+  m.attr("DETAP_DPZ_Y") = py::int_(Bmad::DETAP_DPZ_Y);
   m.attr("Y_LIMIT") = py::int_(Bmad::Y_LIMIT);
   m.attr("ETAP_B") = py::int_(Bmad::ETAP_B);
   m.attr("OFFSET_MOVES_APERTURE") = py::int_(Bmad::OFFSET_MOVES_APERTURE);
@@ -8216,6 +8231,7 @@ PYBIND11_MODULE(_pybmad, m) {
   m.attr("FREQUENCIES") = py::int_(Bmad::FREQUENCIES);
   m.attr("OLD_INTEGRATOR") = py::int_(Bmad::OLD_INTEGRATOR);
   m.attr("CURVATURE") = py::int_(Bmad::CURVATURE);
+  m.attr("S_LONG") = py::int_(Bmad::S_LONG);
   m.attr("X_POSITION") = py::int_(Bmad::X_POSITION);
   m.attr("EXACT_MODEL") = py::int_(Bmad::EXACT_MODEL);
   m.attr("SYMPLECTIFY") = py::int_(Bmad::SYMPLECTIFY);
@@ -8223,7 +8239,6 @@ PYBIND11_MODULE(_pybmad, m) {
   m.attr("N_SLICE_SPLINE") = py::int_(Bmad::N_SLICE_SPLINE);
   m.attr("Z_POSITION") = py::int_(Bmad::Z_POSITION);
   m.attr("AMP_VS_TIME") = py::int_(Bmad::AMP_VS_TIME);
-  m.attr("IS_ON") = py::int_(Bmad::IS_ON);
   m.attr("THETA_POSITION") = py::int_(Bmad::THETA_POSITION);
   m.attr("VERTICAL_KICK") = py::int_(Bmad::VERTICAL_KICK);
   m.attr("FIELD_CALC") = py::int_(Bmad::FIELD_CALC);
@@ -20738,18 +20753,23 @@ indx :
       });
   m.def(
       "init_attribute_name1",
-      &Bmad::init_attribute_name1,
+      &python_init_attribute_name1,
+      py::arg("is_ok"),
       py::arg("ix_key"),
       py::arg("ix_attrib"),
       py::arg("name"),
       py::arg("attrib_state") = py::none(),
       py::arg("override") = py::none(),
-      R"""(Subroutine init_attribute_name1 (ix_key, ix_attrib, name, attrib_state, override)
+      R"""(subroutine init_attribute_name1 (is_ok, ix_key, ix_attrib, name, attrib_state, override)
 
 Routine to initialize a single name in the element attribute name table.
 
 Parameters
 ----------
+is_ok : bool
+    Initial setting.
+    This parameter is an input/output and is modified in-place. As an output: Set False if there is a problem.
+    Otherwise untouched.
 ix_key : int
     Key index.
 ix_attrib : int
@@ -20763,6 +20783,21 @@ override : bool, optional
     Normally this routine throws an error if the [ix_key, ix_attrib] has been set previously. If override =
     True then the set is done and no error is generated.
 )""");
+  py::class_<PyInitAttributeName1, std::unique_ptr<PyInitAttributeName1>>(
+      m,
+      "InitAttributeName1",
+      "Fortran routine init_attribute_name1 return value")
+      .def_readonly("is_ok", &PyInitAttributeName1::is_ok)
+      .def("__len__", [](const PyInitAttributeName1&) { return 1; })
+      .def(
+          "__getitem__",
+          [](const PyInitAttributeName1& s, int i) -> py::object {
+            if (i < 0)
+              i += 1;
+            if (i == 0)
+              return py::cast(s.is_ok);
+            throw py::index_error();
+          });
   m.def(
       "init_attribute_name_array",
       &Bmad::init_attribute_name_array,
@@ -33048,12 +33083,19 @@ This subroutine is not intended for general use.
       py::arg("branch"),
       py::arg("n_part"),
       py::arg("mode"),
+      py::arg("beam_init") = py::none(),
       py::arg("closed_orb") = py::none(),
-      R"""(Subroutine setup_high_energy_space_charge_calc (calc_on, branch, n_part, mode, closed_orb, beam_init)
+      R"""(Subroutine setup_high_energy_space_charge_calc (calc_on, branch, n_part, mode, beam_init, closed_orb)
 
 Routine to initialize constants needed by the ultra relativistic space charge
 tracking routine track1_high_energy_space_charge. This setup routine must be called if
 the lattice or any of the other input parameters are changed.
+
+Parameters used:
+    a-mode emittance
+    b-mode emittance
+    sig_z bunch length
+    sig_pz relative energy spread
 
 Parameters
 ----------
@@ -33064,9 +33106,9 @@ branch : BranchStruct
 n_part : float
     Number of actual particles in a bunch. Used to compute the bunch charge.
 mode : NormalModesStruct
-    Structure holding the beam info. .a.emittance  -- a-mode unnormalized emittance. .b.emittance  -- b-mode
-    unnormalized emittance. .sig_z        -- Real(rp): Bunch length. .sigE_E       -- Real(rp): Sigma_E/E
-    relative energy spread
+    Structure holding the beam info. Will be combined with info in beam_init.
+beam_init : BeamInitStruct, optional
+    Structure holding beam info. Will be combined with info in mode.
 closed_orb : CoordStruct, optional
     Closed orbit. If not present the closed orbit is taken to be zero.
 )""");

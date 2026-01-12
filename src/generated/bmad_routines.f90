@@ -13435,8 +13435,8 @@ subroutine fortran_igfezfun (u, v, w, gam, dx, dy, dz, res) bind(c)
   call c_f_pointer(res, f_res_ptr)
   f_res_ptr = f_res
 end subroutine
-subroutine fortran_init_attribute_name1 (ix_key, ix_attrib, name, attrib_state, override) &
-    bind(c)
+subroutine fortran_init_attribute_name1 (is_ok, ix_key, ix_attrib, name, attrib_state, &
+    override) bind(c)
 
   implicit none
   ! ** In parameters **
@@ -13455,7 +13455,21 @@ subroutine fortran_init_attribute_name1 (ix_key, ix_attrib, name, attrib_state, 
   logical, target :: f_override_native
   logical, pointer :: f_override_native_ptr
   logical(c_bool), pointer :: f_override_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: is_ok  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_is_ok
+  logical, target :: f_is_ok_native
+  logical, pointer :: f_is_ok_native_ptr
+  logical(c_bool), pointer :: f_is_ok_ptr
   ! ** End of parameters **
+  ! inout: f_is_ok 0D_NOT_logical
+  if (c_associated(is_ok)) then
+    call c_f_pointer(is_ok, f_is_ok_ptr)
+    f_is_ok_native = f_is_ok_ptr
+    f_is_ok_native_ptr => f_is_ok_native
+  else
+    f_is_ok_native_ptr => null()
+  endif
   ! in: f_ix_key 0D_NOT_integer
   f_ix_key = ix_key
   ! in: f_ix_attrib 0D_NOT_integer
@@ -13478,9 +13492,16 @@ subroutine fortran_init_attribute_name1 (ix_key, ix_attrib, name, attrib_state, 
   else
     f_override_native_ptr => null()
   endif
-  call init_attribute_name1(f_ix_key, f_ix_attrib, f_name, f_attrib_state_ptr, &
-      f_override_native_ptr)
+  call init_attribute_name1(f_is_ok_native_ptr, f_ix_key, f_ix_attrib, f_name, &
+      f_attrib_state_ptr, f_override_native_ptr)
 
+  ! inout: f_is_ok 0D_NOT_logical
+  if (c_associated(is_ok)) then
+    call c_f_pointer(is_ok, f_is_ok_ptr)
+    f_is_ok_ptr = f_is_ok_native
+  else
+    ! f_is_ok unset
+  endif
 end subroutine
 subroutine fortran_init_attribute_name_array () bind(c)
 
@@ -26861,9 +26882,9 @@ subroutine fortran_settable_dep_var_bookkeeping (ele) bind(c)
 
 end subroutine
 subroutine fortran_setup_high_energy_space_charge_calc (calc_on, branch, n_part, mode, &
-    closed_orb) bind(c)
+    beam_init, closed_orb) bind(c)
 
-  use bmad_struct, only: branch_struct, coord_struct, normal_modes_struct
+  use bmad_struct, only: beam_init_struct, branch_struct, coord_struct, normal_modes_struct
   implicit none
   ! ** In parameters **
   logical(c_bool) :: calc_on  ! 0D_NOT_logical
@@ -26874,6 +26895,8 @@ subroutine fortran_setup_high_energy_space_charge_calc (calc_on, branch, n_part,
   real(rp) :: f_n_part
   type(c_ptr), value :: mode  ! 0D_NOT_type
   type(normal_modes_struct), pointer :: f_mode
+  type(c_ptr), value :: beam_init  ! 0D_NOT_type
+  type(beam_init_struct), pointer :: f_beam_init
   type(c_ptr), intent(in), value :: closed_orb
   type(coord_struct_container_alloc), pointer :: f_closed_orb
   ! ** End of parameters **
@@ -26887,9 +26910,11 @@ subroutine fortran_setup_high_energy_space_charge_calc (calc_on, branch, n_part,
   ! in: f_mode 0D_NOT_type
   if (.not. c_associated(mode)) return
   call c_f_pointer(mode, f_mode)
+  ! in: f_beam_init 0D_NOT_type
+  if (c_associated(beam_init))   call c_f_pointer(beam_init, f_beam_init)
   !! container type array (1D_ALLOC_type)
   if (c_associated(closed_orb))   call c_f_pointer(closed_orb, f_closed_orb)
-  call setup_high_energy_space_charge_calc(f_calc_on, f_branch, f_n_part, f_mode, &
+  call setup_high_energy_space_charge_calc(f_calc_on, f_branch, f_n_part, f_mode, f_beam_init, &
       f_closed_orb%data)
 
 end subroutine

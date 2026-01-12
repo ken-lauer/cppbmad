@@ -904,6 +904,9 @@ void tao_graph_setup(TaoPlotProxy& plot, TaoGraphProxy& graph);
 
 // Skipped unusable routine tao_hook_show_cmd_def:
 // - Routine in configuration skip list
+
+// Skipped unusable routine tao_hook_universe_calc_post_process_def:
+// - Routine in configuration skip list
 extern "C" void fortran_tao_init(bool& err_flag /* 0D_NOT_logical out */);
 bool tao_init();
 extern "C" void fortran_tao_init_beam_in_universe(
