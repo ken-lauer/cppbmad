@@ -29,8 +29,7 @@ target_include_directories(${PYBIND_LIBNAME} PRIVATE
 target_link_directories(${PYBIND_LIBNAME} PRIVATE "$ENV{ACC_ROOT_DIR}/${BUILD_TYPE}/lib")
 
 # Link libraries
-# Note: "cppbmad" is visible here because it was defined in the parent CMake scope.
-target_link_libraries(${PYBIND_LIBNAME} PUBLIC
+target_link_libraries(${PYBIND_LIBNAME} PRIVATE
     pybind11::headers
     cppbmad
     bmad
