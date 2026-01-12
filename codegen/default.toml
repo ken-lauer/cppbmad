@@ -306,6 +306,8 @@ skips = [
   "track_many_hook_def",
   "wall_hit_handler_custom_def",
   "em_field_custom_def",
+  ".*hook.*def",
+  ".*custom.*def",
 
   # pointer handling
   "deallocate_ele_array_pointers",

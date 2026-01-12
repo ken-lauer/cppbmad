@@ -487,7 +487,7 @@ class FortranRoutine:
             return [f"PYBMAD_TEST_BUILD enabled; {self.name} is skipped"]
         conf = config_context.get()
 
-        if self.name.lower() in conf.params.skips:
+        if conf.params.should_skip_routine(self.name.lower()):
             return ["Routine in configuration skip list"]
         if self.module.lower() in conf.params.skips:
             return [f"Routine module ({self.module}) in configuration skip list"]

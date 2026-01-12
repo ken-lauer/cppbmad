@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pathlib
+import re
 from typing import Annotated
 
 import pydantic
@@ -46,6 +47,13 @@ class CodegenConfig(pydantic.BaseModel):
     def from_file(cls, filename: pathlib.Path) -> CodegenConfig:
         with filename.open("rb") as fp:
             return CodegenConfig.model_validate(tomllib.load(fp))
+
+    def should_skip_routine(self, name: str) -> bool:
+        if name in self.skips:
+            return True
+
+        patterns = [skip for skip in self.skips if "." in skip or "*" in skip]
+        return any(re.match(pat, name) for pat in patterns)
 
 
 SUPPORTED_ARRAY_DIMS = (1, 2, 3)
