@@ -49,7 +49,7 @@ code_dir = "code"
 
 include_header_files = [
   '#include "bmad_enums.hpp"',
-  '#include "bmad/types.h"',
+  '#include "bmad/types.hpp"',
 ]
 
 routine_interface_files = []

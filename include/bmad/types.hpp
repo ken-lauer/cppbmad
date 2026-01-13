@@ -22,20 +22,6 @@ using Int = int;
 using Int8 = int64_t;
 using Char = char*;
 
-using c_Bool = const bool;
-using c_Complex = const Complex;
-using c_Real = const double;
-using c_Int = const int;
-using c_Int8 = const int64_t;
-using c_String = const string;
-using c_Char = const char*;
-
-using c_BoolArr = const bool*;
-using c_ComplexArr = const Complex*;
-using c_RealArr = const double*;
-using c_IntArr = const int*;
-using c_Int8Arr = const long int*;
-
 template <typename T, std::size_t DIM1>
 using FixedArray1D = std::array<T, DIM1>;
 template <typename T, std::size_t DIM1, std::size_t DIM2>

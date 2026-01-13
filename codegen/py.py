@@ -80,16 +80,11 @@ def generate_routine_return_value_wrapper(routine: FortranRoutine) -> list[str]:
     if len(outputs) <= 1 and not immut_args:  # TODO: immut args even for 1 -> struct
         return []
 
-    clsname = snake_to_camel(routine.name)
-    if immut_args:
-        full_clsname = f"Py{clsname}"
-    else:
-        full_clsname = routine.cpp_return_type
-        clsname = full_clsname.split("::")[1]
+    clsname, full_clsname = routine.python_class_return_type
 
     lines = []
     lines.append(
-        f'    py::class_<{full_clsname}, std::unique_ptr<{full_clsname}>>(m, "{clsname}", "Fortran routine {routine.name} return value")'
+        f'    py::class_<{full_clsname}, std::unique_ptr<{full_clsname}>>(m, "{clsname}", "{routine.name} return type")'
     )
     for arg in outputs:
         lines.append(f'        .def_readonly("{arg.python_name}", &{full_clsname}::{arg.c_name})')
@@ -111,8 +106,7 @@ def generate_py_routine_return_value_struct(routine: FortranRoutine) -> list[str
     args = [CppWrapperArgument.from_arg(arg) for arg in routine.args]
     outputs = [arg for arg in args if arg.arg.intent == "out"]
 
-    name = snake_to_camel(routine.name)
-    py_name = f"Py{name}"
+    name, py_name = routine.python_class_return_type
     orig_struct = routine.cpp_return_type
 
     immut_args = [arg for arg in args if is_python_immutable(arg.arg)]
@@ -303,15 +297,15 @@ def generate_routine_pybind_def(routine: FortranRoutine, overloads: list[Fortran
     return lines
 
 
-def generate_py_routine_wrappers(routines: dict[str, FortranRoutine]):
+def generate_py_routine_wrappers(routines: dict[str, FortranRoutine]) -> tuple[str, str]:
+    structures = []
     code = []
-
     to_wrap = [routine for routine in routines.values() if routine.usable and routine.needs_python_wrapper]
     for routine in sorted_routines(to_wrap):
-        code.extend(generate_py_routine_return_value_struct(routine))
+        structures.extend(generate_py_routine_return_value_struct(routine))
         code.extend(generate_py_routine_wrapper(routine))
 
-    return "\n".join(code)
+    return "\n".join(structures), "\n".join(code)
 
 
 def generate_py_routine_defs(routines: dict[str, FortranRoutine]):
@@ -322,8 +316,8 @@ def generate_py_routine_defs(routines: dict[str, FortranRoutine]):
         overloads = [
             rt for rt in to_wrap if rt.overloaded_name == routine.overloaded_name and rt is not routine
         ]
-        code.extend(generate_routine_pybind_def(routine, overloads))
         code.extend(generate_routine_return_value_wrapper(routine))
+        code.extend(generate_routine_pybind_def(routine, overloads))
 
     return "\n".join(code)
 
@@ -547,35 +541,39 @@ def _generate_routine_files(
             src_name = f"{base_name}.cpp"
             init_fn_name = f"init_{src}_routines_{char}"
 
+            wrapper_structs, wrappers_code = generate_py_routine_wrappers(subset_routines)
+
             header_path = PYBMAD_INCLUDE / "pybmad" / "generated" / header_name
             files[header_path] = textwrap.dedent(f"""\
                 #pragma once
+                #include <pybind11/complex.h>
+                #include <pybind11/numpy.h>
                 #include <pybind11/pybind11.h>
+                #include <pybind11/stl.h>
+
+                #include "pybmad/arrays.hpp"
+                #include "pybmad/util.hpp"
+
                 namespace py = pybind11;
 
                 void {init_fn_name}(py::module &m);
+
+                {wrapper_structs}
             """)
 
             headers.append(f'#include "pybmad/generated/{header_name}"')
             init_calls.append(f"{init_fn_name}(m);")
 
-            wrappers_code = generate_py_routine_wrappers(subset_routines)
             defs_block = generate_py_routine_defs(subset_routines)
             defs_block_indented = textwrap.indent(defs_block, "  ")
 
             cpp_content = textwrap.dedent(f"""\
                 #include "pybmad/generated/{header_name}"
-                #include <pybind11/complex.h>
-                #include <pybind11/numpy.h>
-                #include <pybind11/stl.h>
-                #include "pybmad/arrays.hpp"
-                #include "pybmad/util.hpp"
 
                 namespace py = pybind11;
                 using namespace pybind11::literals;
                 using namespace Pybmad;
-                
-                // Wrappers
+
                 {wrappers_code}
                 
                 void {init_fn_name}(py::module &m) {{
@@ -615,23 +613,19 @@ def _generate_main_module_file(
     if enum_code:
         enum_code = enum_code.replace("\n", "\n    ")
 
-    hand_written_bindings = "\n".join(
-        (
-            "    bind_standard_arrays(m);",
-            "    init_common_structs(m);",
-        )
-    )
-
     newline = "\n"
     core_body = textwrap.dedent(f"""\
         m.doc() = "pybmad";
 
-        // Hand-written bindings
-{hand_written_bindings}
+        bind_standard_arrays(m);
 
+        // Structures
         {newline.join(struct_inits)}
 
-        // Routine Group Initializers
+        // Hand-written bindings
+        init_common_structs(m);
+
+        // Routine initializers
     {newline.join(f"    {s}" for s in routine_inits)}
 
         // Enums

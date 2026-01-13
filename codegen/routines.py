@@ -449,6 +449,23 @@ class FortranRoutine:
                 return "::".join((self.cpp_namespace, return_type))
         return return_type
 
+    @property
+    def python_class_return_type(self) -> tuple[str, str]:
+        immut_args = [arg for arg in self.args if is_python_immutable(arg)]
+        outputs = [*self.outputs, *immut_args]
+
+        if len(outputs) <= 1 and not immut_args:
+            # TODO: immut args even for 1 -> struct
+            raise ValueError("Returns native type")
+
+        clsname = snake_to_camel(self.name)
+        if immut_args:
+            full_clsname = f"Py{clsname}"
+        else:
+            full_clsname = self.cpp_return_type
+            clsname = full_clsname.split("::")[1]
+        return clsname, full_clsname
+
     def get_cpp_decl(self, defaults: bool, namespace: bool) -> str:
         decl_args = ", ".join(self._get_cpp_decl_spec(defaults))
 

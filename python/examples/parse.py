@@ -9,6 +9,7 @@ logger = logging.getLogger("pybmad-test")
 logger.setLevel("DEBUG")
 logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s")
 
+
 t0 = time.monotonic()
 res = pybmad.bmad_parser("${ACC_ROOT_DIR}/bmad-doc/tao_examples/fodo/fodo.bmad")
 t1 = time.monotonic()

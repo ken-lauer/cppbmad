@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-#include "bmad/types.h"
+#include "bmad/types.hpp"
 
 //---------------------------------------------------------------------------
 

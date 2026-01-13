@@ -1,14 +1,11 @@
 from __future__ import annotations
 
 import matplotlib.pyplot as plt
-import pybmad
 from pytao import Tao
 
+import pybmad
+
 tao = Tao(init_file="$ACC_ROOT_DIR/bmad-doc/tao_examples/optics_matching/tao.init")
-
-print(tao)
-
-print("\n".join(tao.cmd("show uni")))
 
 s = pybmad.get_super_universe()
 
@@ -18,6 +15,7 @@ plt.ion()
 
 for region in regions:
     for graph in region.plot.graph:
+        print("Region", region)
         curves = [curve for curve in graph.curve if curve.valid]
 
         if not curves:
