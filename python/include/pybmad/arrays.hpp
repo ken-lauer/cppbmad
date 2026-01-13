@@ -6,6 +6,7 @@
 #include <string>
 
 #include "bmad/fortran_arrays.hpp"
+#include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 
 namespace py = pybind11;
@@ -326,9 +327,6 @@ inline void bind_FAlloc1D<BoolAlloc1D>(py::module& m, const std::string& name) {
 // 3. Derived Type (Proxy) Views (FTypeArrayND<ProxyType, N...>)
 // =============================================================================
 
-// Helper for N-Dimensional Proxy Arrays (Works for 1, 2, 3...)
-// We pass the full View template instantiation as ArrayType
-// e.g. ArrayType = SplineProxyArray1D
 template <typename ArrayType>
 void bind_FTypeArrayND(py::module& m, const std::string& name) {
   py::class_<ArrayType>(m, name.c_str())
@@ -336,23 +334,41 @@ void bind_FTypeArrayND(py::module& m, const std::string& name) {
           py::init<>()) // Usually these are created C++ side and returned, but init useful for tests
       .def("__len__", [](const ArrayType& a) { return a.total_size(); })
       .def("is_valid", &ArrayType::is_valid)
-
-      // __getitem__ variadic depending on N is hard in generic lambda.
-      // We will default to flat C-style indexing or 1D indexing for simplicity here,
-      // unless you want to specialize for N=2, N=3 specifically for python syntax arr[x,y].
-      // Pybind generally maps [x,y] to a tuple argument for __getitem__.
-
       .def(
           "__getitem__",
           [](ArrayType& self, int i) {
-            // Accessing the proxy creates a temporary object attached to that memory
-            // which Pybind will cast to Python.
-            // Note: using linear_index_c logic via 'at'
             if (i < 0)
               i += static_cast<int>(self.total_size());
+            if (i < 0 || i >= static_cast<int>(self.total_size()))
+              throw py::index_error();
             return self.at(i);
           })
-      // We don't usually Set the proxy itself, we get the proxy and set its fields
+      .def(
+          "__getitem__",
+          [](ArrayType& self, py::slice slice) {
+            size_t start, stop, step, slice_length;
+            if (!slice.compute(
+                    self.total_size(), &start, &stop, &step, &slice_length))
+              throw py::error_already_set();
+
+            py::list list;
+            for (size_t i = 0; i < slice_length; ++i) {
+              list.append(self.at(start));
+              start += step;
+            }
+            return list;
+          })
+      .def(
+          "__setitem__",
+          [](ArrayType& self, int i, typename ArrayType::value_type& other) {
+            if (i < 0)
+              i += static_cast<int>(self.total_size());
+            if (i < 0 || i >= static_cast<int>(self.total_size()))
+              throw py::index_error();
+
+            FortranTraits<typename ArrayType::value_type>::copy(
+                other.get_fortran_ptr(), self.at(i).get_fortran_ptr());
+          })
 
       .def(
           "__iter__",
@@ -365,13 +381,6 @@ void bind_FTypeArrayND(py::module& m, const std::string& name) {
         return Bmad::to_string(self);
       });
 }
-
-// Special check: FTypeArrayND<..., 1, ...> has "allocate" static method and ownership
-// We can use SFINAE or just overload names if we know specific types.
-// For the 1D proxies with allocators (like SplineProxyArray1D), we might want access to .resize()
-// essentially provided by the FTypeArrayND 1D logic if it was owned,
-// but usually in Bmad, FTypeAlloc1D manages the memory.
-// We stick to the View binding above for pure arrays.
 
 // =============================================================================
 // 4. Derived Type (Proxy) Allocators (FTypeAlloc1D<ViewType...>)
@@ -386,7 +395,6 @@ void bind_FTypeAlloc1D(py::module& m, const std::string& name) {
       .def("clear", &AllocClass::clear)
       .def("__len__", &AllocClass::size)
 
-      // Item access returns the Proxy object
       .def(
           "__getitem__",
           [](AllocClass& self, int i) {
@@ -394,6 +402,34 @@ void bind_FTypeAlloc1D(py::module& m, const std::string& name) {
               i += self.size();
             // .view() refreshes valid pointers, .at() does bounds check
             return self.view().at(i);
+          })
+      .def(
+          "__getitem__",
+          [](AllocClass& self, py::slice slice) {
+            size_t start, stop, step, slice_length;
+            auto& view = self.view();
+            if (!slice.compute(
+                    view.total_size(), &start, &stop, &step, &slice_length))
+              throw py::error_already_set();
+
+            py::list list;
+            for (size_t i = 0; i < slice_length; ++i) {
+              list.append(view.at(start));
+              start += step;
+            }
+            return list;
+          })
+      .def(
+          "__setitem__",
+          [](AllocClass& self,
+             int i,
+             typename AllocClass::view_type::value_type& other) {
+            if (i < 0)
+              i += static_cast<int>(self.size());
+
+            // .view() refreshes valid pointers, .at() does bounds check
+            FortranTraits<typename AllocClass::view_type::value_type>::copy(
+                other.get_fortran_ptr(), self.view().at(i).get_fortran_ptr());
           })
       .def(
           "__iter__",

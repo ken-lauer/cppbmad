@@ -5,7 +5,7 @@ from pytao import Tao
 
 import pybmad
 
-tao = Tao(init_file="$ACC_ROOT_DIR/bmad-doc/tao_examples/optics_matching/tao.init")
+tao = Tao(init_file="$ACC_ROOT_DIR/bmad-doc/tao_examples/optics_matching/tao.init", plot="mpl")
 
 s = pybmad.get_super_universe()
 
@@ -15,7 +15,6 @@ plt.ion()
 
 for region in regions:
     for graph in region.plot.graph:
-        print("Region", region)
         curves = [curve for curve in graph.curve if curve.valid]
 
         if not curves:

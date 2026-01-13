@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import sys
 
-import pybmad
 import pytest
+
+import pybmad
 
 
 def container_create(container_cls, values: list):
@@ -370,3 +371,28 @@ def test_bunch_struct_scalar(use_in_opt: bool, use_inout_opt: bool):
 
     if use_inout_opt:
         assert kw["val_inout_opt"].ix_ele == 101
+
+
+def test_type_array_setitem():
+    # copy under the hood
+    ele_arr = pybmad.EleStruct.new_array1d(3)
+
+    ele = pybmad.EleStruct()
+
+    ele.name = "foo"
+
+    ele_arr[0] = ele
+
+    assert ele_arr[0].name == ele.name
+
+
+def test_type_array_getitem():
+    ele_arr = pybmad.EleStruct.new_array1d(3)
+
+    ele_arr[0].name = "0"
+    ele_arr[1].name = "1"
+    ele_arr[2].name = "2"
+
+    assert len(ele_arr) == 3
+    assert len(ele_arr[:2]) == 2
+    assert [ele.name for ele in ele_arr[-1:]] == ["2"]

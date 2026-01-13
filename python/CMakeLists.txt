@@ -35,7 +35,6 @@ target_link_libraries(${PYBIND_LIBNAME} PRIVATE
     cppbmad
     bmad
     sim_utils
-    cpp_bmad_interface
 )
 
 target_compile_definitions(${PYBIND_LIBNAME} PRIVATE VERSION_INFO=${PROJECT_VERSION})

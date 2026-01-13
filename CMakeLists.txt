@@ -128,7 +128,6 @@ target_link_libraries(${LIBNAME} PUBLIC
   sim_utils
   tao
   bsim
-  # cpp_bmad_interface
 )
 
 if(APPLE)

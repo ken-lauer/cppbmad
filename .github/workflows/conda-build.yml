@@ -1,4 +1,4 @@
-name: Bmad-ecosystem - Conda build & test
+name: Conda build & test
 
 on:
   push:
