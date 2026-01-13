@@ -713,6 +713,9 @@ def find_structs(
             # ENDTYPE
             (struct_name,) = get_names_from_line(line)
 
+            if struct_name.upper() == struct_name:
+                struct_name = struct_name.lower()
+
             struct = Structure(
                 filename=path_with_respect_to_env(file_line.filename, "ACC_ROOT_DIR"),
                 module=module,

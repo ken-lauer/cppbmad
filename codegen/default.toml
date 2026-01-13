@@ -159,6 +159,9 @@ struct_list = [
   "tao_universe_calc_struct",
   "lat_ele_order_struct",
 
+  "tao_expression_info_struct",
+  "tao_eval_node_struct",
+
   # plot page
   "tao_title_struct",
   "qp_rect_struct",
@@ -202,6 +205,10 @@ struct_list = [
   "bbu_beam_struct",
   "bbu_param_struct",
 
+  # ptc
+  "fibre",
+  "layout",
+
   # Testing
   "all_encompassing_struct",
   "test_sub_struct",
@@ -215,8 +222,6 @@ struct_list = [
 
 component_no_translate_list = [
   # NOTE: 'ptc' may be required for taylor map info (polymorphic tracking)
-  "fibre",
-  "layout",
   "ptc_branch1_info_struct",
   "branch_struct%ptc",
   # end PTC

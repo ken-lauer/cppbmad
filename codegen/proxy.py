@@ -884,8 +884,8 @@ contains
     )
 
     for nt in native_type_containers:
-        name = nt.name
-        struct_name = name
+        struct_name = nt.name
+        struct_name = struct_name.lower()
         container_name = nt.fortran_container_struct
         print(
             f"""
@@ -963,16 +963,17 @@ contains
         )
 
     for struct in structs:
-        print(f"  !! {struct.f_name}", file=fout)
+        struct_name = struct.f_name.lower()
+        print(f"  !! {struct_name}", file=fout)
         print(
             f"""
-    function allocate_fortran_{struct.f_name}(n, element_size) result(ptr) bind(c)
+    function allocate_fortran_{struct_name}(n, element_size) result(ptr) bind(c)
       implicit none
       integer(c_int), value :: n
       integer(c_size_t), intent(out) :: element_size
       type(c_ptr) :: ptr
-      type({struct.f_name}), pointer :: fptr
-      type({struct.f_name}), pointer :: fptr_array(:)
+      type({struct_name}), pointer :: fptr
+      type({struct_name}), pointer :: fptr_array(:)
 
       if (n <= 0) then
         allocate(fptr)
@@ -985,12 +986,12 @@ contains
       end if
     end function
 
-    subroutine deallocate_fortran_{struct.f_name}(ptr, n) bind(c)
+    subroutine deallocate_fortran_{struct_name}(ptr, n) bind(c)
       implicit none
       type(c_ptr), value :: ptr
       integer(c_int), value :: n
-      type({struct.f_name}), pointer :: fptr
-      type({struct.f_name}), pointer :: fptr_array(:)
+      type({struct_name}), pointer :: fptr
+      type({struct_name}), pointer :: fptr_array(:)
 
       if (c_associated(ptr)) then
         if (n <= 0) then
@@ -1003,10 +1004,10 @@ contains
       end if
     end subroutine
 
-  subroutine copy_fortran_{struct.f_name}(src_ptr, dst_ptr) bind(c)
+  subroutine copy_fortran_{struct_name}(src_ptr, dst_ptr) bind(c)
     implicit none
     type(c_ptr), value :: src_ptr, dst_ptr
-    type({struct.f_name}), pointer :: src, dst
+    type({struct_name}), pointer :: src, dst
 
     if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
       call c_f_pointer(src_ptr, src)
@@ -1015,7 +1016,7 @@ contains
     end if
   end subroutine
 
-  function allocate_{struct.f_name}_container() result(ptr) bind(c)
+  function allocate_{struct_name}_container() result(ptr) bind(c)
     implicit none
     type(c_ptr) :: ptr
     type({struct.container_alloc_name}), pointer :: ctr
@@ -1023,7 +1024,7 @@ contains
     ptr = c_loc(ctr)
   end function
 
-  subroutine deallocate_{struct.f_name}_container(ptr) bind(c)
+  subroutine deallocate_{struct_name}_container(ptr) bind(c)
     implicit none
     type(c_ptr), value :: ptr
     type({struct.container_alloc_name}), pointer :: ctr
@@ -1033,7 +1034,7 @@ contains
     end if
   end subroutine
 
-  subroutine reallocate_{struct.f_name}_container_data(container_ptr, lbound_, n) bind(c)
+  subroutine reallocate_{struct_name}_container_data(container_ptr, lbound_, n) bind(c)
     implicit none
     type(c_ptr), value :: container_ptr
     integer(c_int), value :: lbound_
@@ -1051,7 +1052,7 @@ contains
     end if
   end subroutine
 
-  subroutine access_{struct.f_name}_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_{struct_name}_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
@@ -1239,6 +1240,7 @@ using {nt.cpp_container_name} = FAlloc1D<
 """)
 
     for struct_name, class_body in classes.items():
+        struct_name = struct_name.lower()
         class_name = struct_to_proxy_class_name(struct_name)
         class_forward_declarations.append(f"class {class_name};")
         class_forward_declarations.append(f"""
