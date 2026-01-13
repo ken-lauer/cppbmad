@@ -527,6 +527,9 @@ void Tao::tao_deallocate_plot_cache(TaoPlotCacheProxyAlloc1D& plot_cache) {
   // intent=inout allocatable type array
   fortran_tao_deallocate_plot_cache(/* void* */ plot_cache.get_fortran_ptr());
 }
+void Tao::tao_deallocate_tree(TaoEvalNodeProxy& tree) {
+  fortran_tao_deallocate_tree(/* void* */ tree.get_fortran_ptr());
+}
 void Tao::tao_destroy_plot_window() {
   fortran_tao_destroy_plot_window();
 }
@@ -727,6 +730,332 @@ Tao::TaoEvaluateDatumAtS Tao::tao_evaluate_datum_at_s(
       /* double& */ _value);
   return TaoEvaluateDatumAtS{_err_str, _bad_datum, _value};
 }
+Tao::TaoEvaluateElementParameters Tao::tao_evaluate_element_parameters(
+    std::string param_name,
+    bool print_err,
+    optional_ref<EleProxy> dflt_ele,
+    std::string dflt_source,
+    std::optional<std::string> dflt_component,
+    std::optional<int> dflt_uni,
+    optional_ref<int> eval_point) {
+  bool _err{};
+  auto _param_name = param_name.c_str();
+  // intent=out allocatable general array
+  auto values{RealAlloc1D()};
+  auto* _dflt_ele = dflt_ele.has_value() ? dflt_ele->get().get_fortran_ptr()
+                                         : nullptr; // input, optional
+  auto _dflt_source = dflt_source.c_str();
+  const char* _dflt_component =
+      dflt_component.has_value() ? dflt_component->c_str() : nullptr;
+  int dflt_uni_lvalue;
+  auto* _dflt_uni{&dflt_uni_lvalue};
+  if (dflt_uni.has_value()) {
+    dflt_uni_lvalue = dflt_uni.value();
+  } else {
+    _dflt_uni = nullptr;
+  }
+  auto* _eval_point =
+      eval_point.has_value() ? &eval_point->get() : nullptr; // inout, optional
+  // intent=out allocatable type array
+  auto info{TaoExpressionInfoProxyAlloc1D()};
+  fortran_tao_evaluate_element_parameters(
+      /* bool& */ _err,
+      /* const char* */ _param_name,
+      /* void* */ values.get_fortran_ptr(),
+      /* bool& */ print_err,
+      /* void* */ _dflt_ele,
+      /* const char* */ _dflt_source,
+      /* const char* */ _dflt_component,
+      /* int* */ _dflt_uni,
+      /* int* */ _eval_point,
+      /* void* */ info.get_fortran_ptr());
+  return TaoEvaluateElementParameters{_err, std::move(values), std::move(info)};
+}
+Tao::TaoEvaluateExpression Tao::tao_evaluate_expression(
+    std::string expression,
+    int n_size,
+    bool use_good_user,
+    std::optional<bool> print_err,
+    std::optional<std::string> dflt_component,
+    std::optional<std::string> dflt_source,
+    optional_ref<EleProxy> dflt_ele_ref,
+    optional_ref<EleProxy> dflt_ele_start,
+    optional_ref<EleProxy> dflt_ele,
+    std::optional<std::string> dflt_dat_or_var_index,
+    std::optional<int> dflt_uni,
+    std::optional<int> dflt_eval_point,
+    std::optional<double> dflt_s_offset,
+    optional_ref<CoordProxy> dflt_orbit,
+    optional_ref<TaoDataProxy> datum) {
+  auto _expression = expression.c_str();
+  // intent=out allocatable general array
+  auto value{RealAlloc1D()};
+  bool _err_flag{};
+  bool print_err_lvalue;
+  auto* _print_err{&print_err_lvalue};
+  if (print_err.has_value()) {
+    print_err_lvalue = print_err.value();
+  } else {
+    _print_err = nullptr;
+  }
+  // intent=out allocatable type array
+  auto info{TaoExpressionInfoProxyAlloc1D()};
+  // intent=out allocatable type array
+  auto stack{TaoEvalNodeProxyAlloc1D()};
+  const char* _dflt_component =
+      dflt_component.has_value() ? dflt_component->c_str() : nullptr;
+  const char* _dflt_source =
+      dflt_source.has_value() ? dflt_source->c_str() : nullptr;
+  auto* _dflt_ele_ref = dflt_ele_ref.has_value()
+      ? dflt_ele_ref->get().get_fortran_ptr()
+      : nullptr; // input, optional
+  auto* _dflt_ele_start = dflt_ele_start.has_value()
+      ? dflt_ele_start->get().get_fortran_ptr()
+      : nullptr; // input, optional
+  auto* _dflt_ele = dflt_ele.has_value() ? dflt_ele->get().get_fortran_ptr()
+                                         : nullptr; // input, optional
+  const char* _dflt_dat_or_var_index = dflt_dat_or_var_index.has_value()
+      ? dflt_dat_or_var_index->c_str()
+      : nullptr;
+  int dflt_uni_lvalue;
+  auto* _dflt_uni{&dflt_uni_lvalue};
+  if (dflt_uni.has_value()) {
+    dflt_uni_lvalue = dflt_uni.value();
+  } else {
+    _dflt_uni = nullptr;
+  }
+  int dflt_eval_point_lvalue;
+  auto* _dflt_eval_point{&dflt_eval_point_lvalue};
+  if (dflt_eval_point.has_value()) {
+    dflt_eval_point_lvalue = dflt_eval_point.value();
+  } else {
+    _dflt_eval_point = nullptr;
+  }
+  double dflt_s_offset_lvalue;
+  auto* _dflt_s_offset{&dflt_s_offset_lvalue};
+  if (dflt_s_offset.has_value()) {
+    dflt_s_offset_lvalue = dflt_s_offset.value();
+  } else {
+    _dflt_s_offset = nullptr;
+  }
+  auto* _dflt_orbit = dflt_orbit.has_value()
+      ? dflt_orbit->get().get_fortran_ptr()
+      : nullptr; // input, optional
+  auto* _datum = datum.has_value() ? datum->get().get_fortran_ptr()
+                                   : nullptr; // input, optional
+  fortran_tao_evaluate_expression(
+      /* const char* */ _expression,
+      /* int& */ n_size,
+      /* bool& */ use_good_user,
+      /* void* */ value.get_fortran_ptr(),
+      /* bool& */ _err_flag,
+      /* bool* */ _print_err,
+      /* void* */ info.get_fortran_ptr(),
+      /* void* */ stack.get_fortran_ptr(),
+      /* const char* */ _dflt_component,
+      /* const char* */ _dflt_source,
+      /* void* */ _dflt_ele_ref,
+      /* void* */ _dflt_ele_start,
+      /* void* */ _dflt_ele,
+      /* const char* */ _dflt_dat_or_var_index,
+      /* int* */ _dflt_uni,
+      /* int* */ _dflt_eval_point,
+      /* double* */ _dflt_s_offset,
+      /* void* */ _dflt_orbit,
+      /* void* */ _datum);
+  return TaoEvaluateExpression{
+      std::move(value), _err_flag, std::move(info), std::move(stack)};
+}
+Tao::TaoEvaluateExpressionNew Tao::tao_evaluate_expression_new(
+    std::string expression,
+    int n_size,
+    bool use_good_user,
+    std::optional<bool> print_err,
+    std::optional<std::string> dflt_component,
+    std::optional<std::string> dflt_source,
+    optional_ref<EleProxy> dflt_ele_ref,
+    optional_ref<EleProxy> dflt_ele_start,
+    optional_ref<EleProxy> dflt_ele,
+    std::optional<std::string> dflt_dat_or_var_index,
+    std::optional<int> dflt_uni,
+    std::optional<int> dflt_eval_point,
+    std::optional<double> dflt_s_offset,
+    optional_ref<CoordProxy> dflt_orbit,
+    optional_ref<TaoDataProxy> datum) {
+  auto _expression = expression.c_str();
+  // intent=out allocatable general array
+  auto value{RealAlloc1D()};
+  bool _err_flag{};
+  bool print_err_lvalue;
+  auto* _print_err{&print_err_lvalue};
+  if (print_err.has_value()) {
+    print_err_lvalue = print_err.value();
+  } else {
+    _print_err = nullptr;
+  }
+  // intent=out allocatable type array
+  auto info{TaoExpressionInfoProxyAlloc1D()};
+  // intent=out allocatable type array
+  auto stack{TaoEvalNodeProxyAlloc1D()};
+  const char* _dflt_component =
+      dflt_component.has_value() ? dflt_component->c_str() : nullptr;
+  const char* _dflt_source =
+      dflt_source.has_value() ? dflt_source->c_str() : nullptr;
+  auto* _dflt_ele_ref = dflt_ele_ref.has_value()
+      ? dflt_ele_ref->get().get_fortran_ptr()
+      : nullptr; // input, optional
+  auto* _dflt_ele_start = dflt_ele_start.has_value()
+      ? dflt_ele_start->get().get_fortran_ptr()
+      : nullptr; // input, optional
+  auto* _dflt_ele = dflt_ele.has_value() ? dflt_ele->get().get_fortran_ptr()
+                                         : nullptr; // input, optional
+  const char* _dflt_dat_or_var_index = dflt_dat_or_var_index.has_value()
+      ? dflt_dat_or_var_index->c_str()
+      : nullptr;
+  int dflt_uni_lvalue;
+  auto* _dflt_uni{&dflt_uni_lvalue};
+  if (dflt_uni.has_value()) {
+    dflt_uni_lvalue = dflt_uni.value();
+  } else {
+    _dflt_uni = nullptr;
+  }
+  int dflt_eval_point_lvalue;
+  auto* _dflt_eval_point{&dflt_eval_point_lvalue};
+  if (dflt_eval_point.has_value()) {
+    dflt_eval_point_lvalue = dflt_eval_point.value();
+  } else {
+    _dflt_eval_point = nullptr;
+  }
+  double dflt_s_offset_lvalue;
+  auto* _dflt_s_offset{&dflt_s_offset_lvalue};
+  if (dflt_s_offset.has_value()) {
+    dflt_s_offset_lvalue = dflt_s_offset.value();
+  } else {
+    _dflt_s_offset = nullptr;
+  }
+  auto* _dflt_orbit = dflt_orbit.has_value()
+      ? dflt_orbit->get().get_fortran_ptr()
+      : nullptr; // input, optional
+  auto* _datum = datum.has_value() ? datum->get().get_fortran_ptr()
+                                   : nullptr; // input, optional
+  fortran_tao_evaluate_expression_new(
+      /* const char* */ _expression,
+      /* int& */ n_size,
+      /* bool& */ use_good_user,
+      /* void* */ value.get_fortran_ptr(),
+      /* bool& */ _err_flag,
+      /* bool* */ _print_err,
+      /* void* */ info.get_fortran_ptr(),
+      /* void* */ stack.get_fortran_ptr(),
+      /* const char* */ _dflt_component,
+      /* const char* */ _dflt_source,
+      /* void* */ _dflt_ele_ref,
+      /* void* */ _dflt_ele_start,
+      /* void* */ _dflt_ele,
+      /* const char* */ _dflt_dat_or_var_index,
+      /* int* */ _dflt_uni,
+      /* int* */ _dflt_eval_point,
+      /* double* */ _dflt_s_offset,
+      /* void* */ _dflt_orbit,
+      /* void* */ _datum);
+  return TaoEvaluateExpressionNew{
+      std::move(value), _err_flag, std::move(info), std::move(stack)};
+}
+Tao::TaoEvaluateExpressionOld Tao::tao_evaluate_expression_old(
+    std::string expression,
+    int n_size,
+    bool use_good_user,
+    std::optional<bool> print_err,
+    std::optional<std::string> dflt_component,
+    std::optional<std::string> dflt_source,
+    optional_ref<EleProxy> dflt_ele_ref,
+    optional_ref<EleProxy> dflt_ele_start,
+    optional_ref<EleProxy> dflt_ele,
+    std::optional<std::string> dflt_dat_or_var_index,
+    std::optional<int> dflt_uni,
+    std::optional<int> dflt_eval_point,
+    std::optional<double> dflt_s_offset,
+    optional_ref<CoordProxy> dflt_orbit,
+    optional_ref<TaoDataProxy> datum) {
+  auto _expression = expression.c_str();
+  // intent=out allocatable general array
+  auto value{RealAlloc1D()};
+  bool _err_flag{};
+  bool print_err_lvalue;
+  auto* _print_err{&print_err_lvalue};
+  if (print_err.has_value()) {
+    print_err_lvalue = print_err.value();
+  } else {
+    _print_err = nullptr;
+  }
+  // intent=out allocatable type array
+  auto info{TaoExpressionInfoProxyAlloc1D()};
+  // intent=out allocatable type array
+  auto stack{TaoEvalNodeProxyAlloc1D()};
+  const char* _dflt_component =
+      dflt_component.has_value() ? dflt_component->c_str() : nullptr;
+  const char* _dflt_source =
+      dflt_source.has_value() ? dflt_source->c_str() : nullptr;
+  auto* _dflt_ele_ref = dflt_ele_ref.has_value()
+      ? dflt_ele_ref->get().get_fortran_ptr()
+      : nullptr; // input, optional
+  auto* _dflt_ele_start = dflt_ele_start.has_value()
+      ? dflt_ele_start->get().get_fortran_ptr()
+      : nullptr; // input, optional
+  auto* _dflt_ele = dflt_ele.has_value() ? dflt_ele->get().get_fortran_ptr()
+                                         : nullptr; // input, optional
+  const char* _dflt_dat_or_var_index = dflt_dat_or_var_index.has_value()
+      ? dflt_dat_or_var_index->c_str()
+      : nullptr;
+  int dflt_uni_lvalue;
+  auto* _dflt_uni{&dflt_uni_lvalue};
+  if (dflt_uni.has_value()) {
+    dflt_uni_lvalue = dflt_uni.value();
+  } else {
+    _dflt_uni = nullptr;
+  }
+  int dflt_eval_point_lvalue;
+  auto* _dflt_eval_point{&dflt_eval_point_lvalue};
+  if (dflt_eval_point.has_value()) {
+    dflt_eval_point_lvalue = dflt_eval_point.value();
+  } else {
+    _dflt_eval_point = nullptr;
+  }
+  double dflt_s_offset_lvalue;
+  auto* _dflt_s_offset{&dflt_s_offset_lvalue};
+  if (dflt_s_offset.has_value()) {
+    dflt_s_offset_lvalue = dflt_s_offset.value();
+  } else {
+    _dflt_s_offset = nullptr;
+  }
+  auto* _dflt_orbit = dflt_orbit.has_value()
+      ? dflt_orbit->get().get_fortran_ptr()
+      : nullptr; // input, optional
+  auto* _datum = datum.has_value() ? datum->get().get_fortran_ptr()
+                                   : nullptr; // input, optional
+  fortran_tao_evaluate_expression_old(
+      /* const char* */ _expression,
+      /* int& */ n_size,
+      /* bool& */ use_good_user,
+      /* void* */ value.get_fortran_ptr(),
+      /* bool& */ _err_flag,
+      /* bool* */ _print_err,
+      /* void* */ info.get_fortran_ptr(),
+      /* void* */ stack.get_fortran_ptr(),
+      /* const char* */ _dflt_component,
+      /* const char* */ _dflt_source,
+      /* void* */ _dflt_ele_ref,
+      /* void* */ _dflt_ele_start,
+      /* void* */ _dflt_ele,
+      /* const char* */ _dflt_dat_or_var_index,
+      /* int* */ _dflt_uni,
+      /* int* */ _dflt_eval_point,
+      /* double* */ _dflt_s_offset,
+      /* void* */ _dflt_orbit,
+      /* void* */ _datum);
+  return TaoEvaluateExpressionOld{
+      std::move(value), _err_flag, std::move(info), std::move(stack)};
+}
 Tao::TaoEvaluateLatOrBeamData Tao::tao_evaluate_lat_or_beam_data(
     std::string data_name,
     bool print_err,
@@ -789,6 +1118,57 @@ Tao::TaoEvaluateLatOrBeamData Tao::tao_evaluate_lat_or_beam_data(
       /* double* */ _dflt_s_offset);
   return TaoEvaluateLatOrBeamData{_err, std::move(values)};
 }
+Tao::TaoEvaluateStackOld Tao::tao_evaluate_stack_old(
+    TaoEvalNodeProxyAlloc1D& stack,
+    int n_size_in,
+    bool use_good_user,
+    bool print_err,
+    std::string expression,
+    optional_ref<TaoExpressionInfoProxyAlloc1D> info_in) {
+  // intent=in allocatable type array
+  // intent=out allocatable general array
+  auto value{RealAlloc1D()};
+  bool _err_flag{};
+  auto _expression = expression.c_str();
+  // intent=inout allocatable type array
+  auto* _info_in = info_in.has_value() ? info_in->get().get_fortran_ptr()
+                                       : nullptr; // input, optional
+  fortran_tao_evaluate_stack_old(
+      /* void* */ stack.get_fortran_ptr(),
+      /* int& */ n_size_in,
+      /* bool& */ use_good_user,
+      /* void* */ value.get_fortran_ptr(),
+      /* bool& */ _err_flag,
+      /* bool& */ print_err,
+      /* const char* */ _expression,
+      /* void* */ _info_in);
+  return TaoEvaluateStackOld{std::move(value), _err_flag};
+}
+Tao::TaoEvaluateTree Tao::tao_evaluate_tree(
+    TaoEvalNodeProxy& tao_tree,
+    int& n_size,
+    bool use_good_user,
+    bool print_err,
+    std::string expression,
+    optional_ref<TaoExpressionInfoProxyAlloc1D> info_in) {
+  // intent=out allocatable general array
+  auto value{RealAlloc1D()};
+  bool _err_flag{};
+  auto _expression = expression.c_str();
+  // intent=inout allocatable type array
+  auto* _info_in = info_in.has_value() ? info_in->get().get_fortran_ptr()
+                                       : nullptr; // input, optional
+  fortran_tao_evaluate_tree(
+      /* void* */ tao_tree.get_fortran_ptr(),
+      /* int& */ n_size,
+      /* bool& */ use_good_user,
+      /* void* */ value.get_fortran_ptr(),
+      /* bool& */ _err_flag,
+      /* bool& */ print_err,
+      /* const char* */ _expression,
+      /* void* */ _info_in);
+  return TaoEvaluateTree{std::move(value), _err_flag};
+}
 void Tao::tao_evaluate_tune(
     std::string q_str,
     double q0,
@@ -813,6 +1193,36 @@ std::string Tao::tao_expression_hash_substitute(
       /* const char* */ _expression_out,
       /* void* */ _eval_ele);
   return _expression_out;
+}
+std::string Tao::tao_expression_tree_to_string(
+    TaoEvalNodeProxy& tree,
+    std::optional<bool> include_root,
+    std::optional<int> n_node,
+    optional_ref<TaoEvalNodeProxy> parent) {
+  bool include_root_lvalue;
+  auto* _include_root{&include_root_lvalue};
+  if (include_root.has_value()) {
+    include_root_lvalue = include_root.value();
+  } else {
+    _include_root = nullptr;
+  }
+  int n_node_lvalue;
+  auto* _n_node{&n_node_lvalue};
+  if (n_node.has_value()) {
+    n_node_lvalue = n_node.value();
+  } else {
+    _n_node = nullptr;
+  }
+  auto* _parent = parent.has_value() ? parent->get().get_fortran_ptr()
+                                     : nullptr; // input, optional
+  char _str_out[4096];
+  fortran_tao_expression_tree_to_string(
+      /* void* */ tree.get_fortran_ptr(),
+      /* bool* */ _include_root,
+      /* int* */ _n_node,
+      /* void* */ _parent,
+      /* const char* */ _str_out);
+  return _str_out;
 }
 Tao::TaoFindPlotRegion Tao::tao_find_plot_region(
     std::string where,
@@ -1437,6 +1847,72 @@ Tao::TaoParamValueAtS Tao::tao_param_value_at_s(
       /* double& */ value);
   return TaoParamValueAtS{_err_flag, _why_invalid, _print_err, _bad_datum};
 }
+void Tao::tao_param_value_routine(
+    std::string& str,
+    bool& use_good_user,
+    std::string& saved_prefix,
+    TaoEvalNodeProxy& stack,
+    bool& err_flag,
+    bool& print_err,
+    optional_ref<std::string> dflt_component,
+    optional_ref<std::string> dflt_source,
+    optional_ref<EleProxy> dflt_ele_ref,
+    optional_ref<EleProxy> dflt_ele_start,
+    optional_ref<EleProxy> dflt_ele,
+    optional_ref<std::string> dflt_dat_or_var_index,
+    optional_ref<int> dflt_uni,
+    optional_ref<int> dflt_eval_point,
+    optional_ref<double> dflt_s_offset,
+    optional_ref<CoordProxy> dflt_orbit,
+    optional_ref<TaoDataProxy> datum) {
+  auto _str = str.c_str(); // ptr, inout, required
+  auto _saved_prefix = saved_prefix.c_str(); // ptr, inout, required
+  const char* _dflt_component =
+      dflt_component.has_value() ? dflt_component->get().c_str() : nullptr;
+  const char* _dflt_source =
+      dflt_source.has_value() ? dflt_source->get().c_str() : nullptr;
+  auto* _dflt_ele_ref = dflt_ele_ref.has_value()
+      ? dflt_ele_ref->get().get_fortran_ptr()
+      : nullptr; // input, optional
+  auto* _dflt_ele_start = dflt_ele_start.has_value()
+      ? dflt_ele_start->get().get_fortran_ptr()
+      : nullptr; // input, optional
+  auto* _dflt_ele = dflt_ele.has_value() ? dflt_ele->get().get_fortran_ptr()
+                                         : nullptr; // input, optional
+  const char* _dflt_dat_or_var_index = dflt_dat_or_var_index.has_value()
+      ? dflt_dat_or_var_index->get().c_str()
+      : nullptr;
+  auto* _dflt_uni =
+      dflt_uni.has_value() ? &dflt_uni->get() : nullptr; // inout, optional
+  auto* _dflt_eval_point = dflt_eval_point.has_value()
+      ? &dflt_eval_point->get()
+      : nullptr; // inout, optional
+  auto* _dflt_s_offset = dflt_s_offset.has_value() ? &dflt_s_offset->get()
+                                                   : nullptr; // inout, optional
+  auto* _dflt_orbit = dflt_orbit.has_value()
+      ? dflt_orbit->get().get_fortran_ptr()
+      : nullptr; // input, optional
+  auto* _datum = datum.has_value() ? datum->get().get_fortran_ptr()
+                                   : nullptr; // input, optional
+  fortran_tao_param_value_routine(
+      /* const char* */ _str,
+      /* bool& */ use_good_user,
+      /* const char* */ _saved_prefix,
+      /* void* */ stack.get_fortran_ptr(),
+      /* bool& */ err_flag,
+      /* bool& */ print_err,
+      /* const char* */ _dflt_component,
+      /* const char* */ _dflt_source,
+      /* void* */ _dflt_ele_ref,
+      /* void* */ _dflt_ele_start,
+      /* void* */ _dflt_ele,
+      /* const char* */ _dflt_dat_or_var_index,
+      /* int* */ _dflt_uni,
+      /* int* */ _dflt_eval_point,
+      /* double* */ _dflt_s_offset,
+      /* void* */ _dflt_orbit,
+      /* void* */ _datum);
+}
 bool Tao::tao_parse_command_args(optional_ref<std::string> cmd_line) {
   bool _error{};
   const char* _cmd_line =
@@ -1784,6 +2260,35 @@ void Tao::tao_rad_int_calc_needed(
       /* const char* */ _data_type,
       /* const char* */ _data_source,
       /* bool& */ do_rad_int);
+}
+void Tao::tao_re_allocate_expression_info(
+    TaoExpressionInfoProxyAlloc1D& info,
+    int n,
+    std::optional<bool> exact) {
+  // intent=inout allocatable type array
+  bool exact_lvalue;
+  auto* _exact{&exact_lvalue};
+  if (exact.has_value()) {
+    exact_lvalue = exact.value();
+  } else {
+    _exact = nullptr;
+  }
+  fortran_tao_re_allocate_expression_info(
+      /* void* */ info.get_fortran_ptr(), /* int& */ n, /* bool* */ _exact);
+}
+void Tao::tao_re_associate_node_array(
+    TaoEvalNodeProxy& tree,
+    int n,
+    std::optional<bool> exact) {
+  bool exact_lvalue;
+  auto* _exact{&exact_lvalue};
+  if (exact.has_value()) {
+    exact_lvalue = exact.value();
+  } else {
+    _exact = nullptr;
+  }
+  fortran_tao_re_associate_node_array(
+      /* void* */ tree.get_fortran_ptr(), /* int& */ n, /* bool* */ _exact);
 }
 void Tao::tao_re_execute(std::string& string, bool& err) {
   auto _string = string.c_str(); // ptr, inout, required
@@ -2692,6 +3197,19 @@ Tao::TaoTrackingEleIndex Tao::tao_tracking_ele_index(
 }
 void Tao::tao_turn_on_special_calcs_if_needed_for_plotting() {
   fortran_tao_turn_on_special_calcs_if_needed_for_plotting();
+}
+void Tao::tao_type_expression_tree(
+    TaoEvalNodeProxy& tree,
+    std::optional<int> indent) {
+  int indent_lvalue;
+  auto* _indent{&indent_lvalue};
+  if (indent.has_value()) {
+    indent_lvalue = indent.value();
+  } else {
+    _indent = nullptr;
+  }
+  fortran_tao_type_expression_tree(
+      /* void* */ tree.get_fortran_ptr(), /* int* */ _indent);
 }
 int Tao::tao_uni_atsign_index(std::string string) {
   auto _string = string.c_str();

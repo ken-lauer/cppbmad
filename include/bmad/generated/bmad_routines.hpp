@@ -105,7 +105,6 @@ void add_lattice_control_structs(
 
 // Skipped unusable routine add_ptc_layout_to_list:
 // - Untranslated type: ptc_branch1_struct (0D)
-// - Untranslated type: layout (0D)
 extern "C" void fortran_add_superimpose(
     void* lat /* 0D_NOT_type inout */,
     void* super_ele_in /* 0D_NOT_type in */,
@@ -477,9 +476,10 @@ struct BeamTilts {
   double angle_ypz;
 };
 Bmad::BeamTilts beam_tilts(FixedArray2D<Real, 6, 6> S);
-
-// Skipped unusable routine beambeam_fibre_setup:
-// - Untranslated type: fibre (0D)
+extern "C" void fortran_beambeam_fibre_setup(
+    void* ele /* 0D_NOT_type in */,
+    void* ptc_fibre /* 0D_NOT_type out */);
+FibreRawStruct beambeam_fibre_setup(EleProxy& ele);
 extern "C" void fortran_bend_edge_kick(
     void* ele /* 0D_NOT_type in */,
     void* param /* 0D_NOT_type in */,
@@ -1863,9 +1863,26 @@ extern "C" bool fortran_ele_rf_step_index(
     void* ele /* 0D_NOT_type in */,
     int& ix_step /* 0D_NOT_integer inout */);
 void ele_rf_step_index(double E_ref, double s_rel, EleProxy& ele, int& ix_step);
-
-// Skipped unusable routine ele_to_fibre:
-// - Untranslated type: fibre (0D)
+extern "C" void fortran_ele_to_fibre(
+    void* ele /* 0D_NOT_type in */,
+    void* ptc_fibre /* 0D_PTR_type out */,
+    bool& use_offsets /* 0D_NOT_logical in */,
+    bool& err_flag /* 0D_NOT_logical out */,
+    int* integ_order /* 0D_NOT_integer in */,
+    int* steps /* 0D_NOT_integer in */,
+    bool* for_layout /* 0D_NOT_logical in */,
+    void* ref_in /* 0D_NOT_type in */);
+struct EleToFibre {
+  FibreRawStruct ptc_fibre;
+  bool err_flag;
+};
+Bmad::EleToFibre ele_to_fibre(
+    EleProxy& ele,
+    bool use_offsets,
+    std::optional<int> integ_order = std::nullopt,
+    std::optional<int> steps = std::nullopt,
+    std::optional<bool> for_layout = std::nullopt,
+    optional_ref<CoordProxy> ref_in = std::nullopt);
 
 // Skipped unusable routine ele_to_fibre_hook_def:
 // - Routine in configuration skip list
@@ -2938,9 +2955,17 @@ int fft1(RealAlloc1D& a, RealAlloc1D& b, int n, int isn);
 
 // Skipped unusable routine fftconvcorr3d:
 // - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine fibre_to_ele:
-// - Untranslated type: fibre (0D)
+extern "C" void fortran_fibre_to_ele(
+    void* ptc_fibre /* 0D_NOT_type in */,
+    void* branch /* 0D_NOT_type inout */,
+    int& ix_ele /* 0D_NOT_integer inout */,
+    bool& err_flag /* 0D_NOT_logical out */,
+    bool* from_mad /* 0D_NOT_logical in */);
+bool fibre_to_ele(
+    FibreRawStruct& ptc_fibre,
+    BranchProxy& branch,
+    int& ix_ele,
+    std::optional<bool> from_mad = std::nullopt);
 extern "C" bool fortran_field_attribute_free(
     void* ele /* 0D_NOT_type in */,
     const char* attrib_name /* 0D_NOT_character in */,
@@ -3753,9 +3778,16 @@ void integration_timer(
     CoordProxy& start,
     CoordProxy& orb_max,
     double& tol);
-
-// Skipped unusable routine integration_timer_fibre:
-// - Untranslated type: fibre (0D)
+extern "C" void fortran_integration_timer_fibre(
+    void* a_fibre /* 0D_NOT_type inout */,
+    double* orbit /* 1D_NOT_real in */,
+    double* orbit_max /* 1D_NOT_real in */,
+    double& tol_dp /* 0D_NOT_real in */);
+void integration_timer(
+    FibreRawStruct& a_fibre,
+    FixedArray1D<Real, 6> orbit,
+    FixedArray1D<Real, 6> orbit_max,
+    double tol_dp);
 
 // Skipped unusable routine interpolate_field:
 // - Untranslated type: mesh3d_struct (0D)
@@ -4434,9 +4466,15 @@ extern "C" void fortran_mfft1(
     int& isn /* 0D_NOT_integer in */,
     int& ierr /* 0D_NOT_integer out */);
 int mfft1(RealAlloc1D& a, RealAlloc1D& b, IntAlloc1D& n, int ndim, int isn);
-
-// Skipped unusable routine misalign_ptc_fibre:
-// - Untranslated type: fibre (0D)
+extern "C" void fortran_misalign_ptc_fibre(
+    void* ele /* 0D_NOT_type in */,
+    bool& use_offsets /* 0D_NOT_logical in */,
+    void* ptc_fibre /* 0D_PTR_type out */,
+    bool& for_layout /* 0D_NOT_logical in */);
+FibreRawStruct misalign_ptc_fibre(
+    EleProxy& ele,
+    bool use_offsets,
+    bool for_layout);
 extern "C" bool fortran_momentum_compaction(
     void* branch /* 0D_NOT_type in */,
     double& mom_comp /* 0D_NOT_real inout */);
@@ -5640,9 +5678,10 @@ Bmad::PointerToElementAtS pointer_to_element_at_s(
     double s,
     bool choose_max,
     std::optional<bool> print_err = std::nullopt);
-
-// Skipped unusable routine pointer_to_fibre:
-// - Untranslated type: fibre (0D)
+extern "C" bool fortran_pointer_to_fibre(
+    void* ele /* 0D_NOT_type in */,
+    void* assoc_fibre /* 0D_PTR_type inout */);
+void pointer_to_fibre(EleProxy& ele, FibreRawStruct& assoc_fibre);
 extern "C" bool fortran_pointer_to_field_ele(
     void* ele /* 0D_NOT_type in */,
     int& ix_field_ele /* 0D_NOT_integer in */,
@@ -5853,12 +5892,35 @@ extern "C" void fortran_psi_prime_sca(
 double psi_prime_sca(double t, double p, FixedArray1D<Real, 8> args);
 extern "C" void fortran_ptc_bookkeeper(void* lat /* 0D_NOT_type inout */);
 void ptc_bookkeeper(LatProxy& lat);
-
-// Skipped unusable routine ptc_calculate_tracking_step_size:
-// - Untranslated type: layout (0D)
-
-// Skipped unusable routine ptc_check_for_lost_particle:
-// - Untranslated type: fibre (0D)
+extern "C" void fortran_ptc_calculate_tracking_step_size(
+    void* ptc_layout /* 0D_NOT_type inout */,
+    double& kl_max /* 0D_NOT_real in */,
+    double* ds_max /* 0D_NOT_real in */,
+    bool* even_steps /* 1D_NOT_logical in */,
+    double* r_typical /* 0D_NOT_real in */,
+    double* dx_tol_bend /* 0D_NOT_real in */,
+    bool* use_2nd_order /* 0D_NOT_logical in */,
+    int* crossover /* 1D_NOT_integer in */,
+    int* crossover_wiggler /* 1D_NOT_integer inout */);
+void ptc_calculate_tracking_step_size(
+    LayoutRawStruct& ptc_layout,
+    double kl_max,
+    std::optional<double> ds_max = std::nullopt,
+    std::optional<FixedArray1D<Bool, 2>> even_steps = std::nullopt,
+    std::optional<double> r_typical = std::nullopt,
+    std::optional<double> dx_tol_bend = std::nullopt,
+    std::optional<bool> use_2nd_order = std::nullopt,
+    std::optional<FixedArray1D<Int, 2>> crossover = std::nullopt,
+    std::optional<FixedArray1D<Int, 2>> crossover_wiggler = std::nullopt);
+extern "C" void fortran_ptc_check_for_lost_particle(
+    int& state /* 0D_NOT_integer out */,
+    void* ptc_fibre /* 0D_PTR_type out */,
+    bool& do_reset /* 0D_NOT_logical in */);
+struct PtcCheckForLostParticle {
+  int state;
+  FibreRawStruct ptc_fibre;
+};
+Bmad::PtcCheckForLostParticle ptc_check_for_lost_particle(bool do_reset);
 extern "C" void fortran_ptc_closed_orbit_calc(
     void* branch /* 0D_NOT_type in */,
     void* closed_orbit /* 1D_ALLOC_type out */,
@@ -8665,7 +8727,6 @@ void type_expression_tree(
 // - Untranslated type: real_8 (1D)
 
 // Skipped unusable routine type_ptc_fibre:
-// - Untranslated type: fibre (0D)
 // - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
@@ -8673,9 +8734,8 @@ void type_expression_tree(
 // - Untranslated type: internal_state (0D)
 // - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine type_ptc_layout:
-// - Untranslated type: layout (0D)
+extern "C" void fortran_type_ptc_layout(void* lay /* 0D_NOT_type inout */);
+void type_ptc_layout(LayoutRawStruct& lay);
 
 // Skipped unusable routine type_real_8_taylors:
 // - Untranslated type: real_8 (1D)

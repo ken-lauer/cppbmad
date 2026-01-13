@@ -347,6 +347,12 @@ PYBIND11_MODULE(_pybmad, m) {
       m, "TaoUniverseCalcStruct", "Fortran struct: tao_universe_calc_struct");
   auto py_LatEleOrderStruct = py::class_<LatEleOrderProxy>(
       m, "LatEleOrderStruct", "Fortran struct: lat_ele_order_struct");
+  auto py_TaoExpressionInfoStruct = py::class_<TaoExpressionInfoProxy>(
+      m,
+      "TaoExpressionInfoStruct",
+      "Fortran struct: tao_expression_info_struct");
+  auto py_TaoEvalNodeStruct = py::class_<TaoEvalNodeProxy>(
+      m, "TaoEvalNodeStruct", "Fortran struct: tao_eval_node_struct");
   auto py_TaoTitleStruct = py::class_<TaoTitleProxy>(
       m, "TaoTitleStruct", "Fortran struct: tao_title_struct");
   auto py_QpRectStruct = py::class_<QpRectProxy>(
@@ -417,6 +423,10 @@ PYBIND11_MODULE(_pybmad, m) {
       m, "BbuBeamStruct", "Fortran struct: bbu_beam_struct");
   auto py_BbuParamStruct = py::class_<BbuParamProxy>(
       m, "BbuParamStruct", "Fortran struct: bbu_param_struct");
+  auto py_Fibre =
+      py::class_<FibreRawStruct>(m, "Fibre", "Fortran struct: fibre");
+  auto py_Layout =
+      py::class_<LayoutRawStruct>(m, "Layout", "Fortran struct: layout");
   auto py_AllEncompassingStruct = py::class_<AllEncompassingProxy>(
       m, "AllEncompassingStruct", "Fortran struct: all_encompassing_struct");
   auto py_TestSubStruct = py::class_<TestSubProxy>(
@@ -565,6 +575,8 @@ PYBIND11_MODULE(_pybmad, m) {
   init_tao_ping_scale_struct(m, py_TaoPingScaleStruct);
   init_tao_universe_calc_struct(m, py_TaoUniverseCalcStruct);
   init_lat_ele_order_struct(m, py_LatEleOrderStruct);
+  init_tao_expression_info_struct(m, py_TaoExpressionInfoStruct);
+  init_tao_eval_node_struct(m, py_TaoEvalNodeStruct);
   init_tao_title_struct(m, py_TaoTitleStruct);
   init_qp_rect_struct(m, py_QpRectStruct);
   init_tao_drawing_struct(m, py_TaoDrawingStruct);
@@ -596,6 +608,8 @@ PYBIND11_MODULE(_pybmad, m) {
   init_bbu_stage_struct(m, py_BbuStageStruct);
   init_bbu_beam_struct(m, py_BbuBeamStruct);
   init_bbu_param_struct(m, py_BbuParamStruct);
+  init_fibre(m, py_Fibre);
+  init_layout(m, py_Layout);
   init_all_encompassing_struct(m, py_AllEncompassingStruct);
   init_test_sub_struct(m, py_TestSubStruct);
   init_test_sub_sub_struct(m, py_TestSubSubStruct);

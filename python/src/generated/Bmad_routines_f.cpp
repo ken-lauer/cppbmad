@@ -4,6 +4,15 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
+PyFibreToEle python_fibre_to_ele(
+    FibreRawStruct& ptc_fibre,
+    BranchProxy& branch,
+    int ix_ele,
+    std::optional<bool> from_mad = std::nullopt) {
+  auto _result = Bmad::fibre_to_ele(ptc_fibre, branch, ix_ele, from_mad);
+  auto py_result{PyFibreToEle{_result, ix_ele}};
+  return py_result;
+}
 PyFringeHere python_fringe_here(
     EleProxy& ele,
     CoordProxy& orbit,
@@ -29,6 +38,44 @@ void init_Bmad_routines_f(py::module& m) {
   n : 
   isn : 
   ierr : 
+  )""");
+  py::class_<PyFibreToEle, std::unique_ptr<PyFibreToEle>>(
+      m, "FibreToEle", "fibre_to_ele return type")
+      .def_readonly("err_flag", &PyFibreToEle::err_flag)
+      .def_readonly("ix_ele", &PyFibreToEle::ix_ele)
+      .def("__len__", [](const PyFibreToEle&) { return 2; })
+      .def("__getitem__", [](const PyFibreToEle& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.ix_ele);
+        throw py::index_error();
+      });
+  m.def(
+      "fibre_to_ele",
+      &python_fibre_to_ele,
+      py::arg("ptc_fibre"),
+      py::arg("branch"),
+      py::arg("ix_ele"),
+      py::arg("from_mad") = py::none(),
+      R"""(Parameters
+  ----------
+  ptc_fibre : unknown
+      PTC fibre.
+  branch : BranchStruct
+      branch containing elements.
+  ix_ele : int
+      Index in ele(:) array of element last used.
+      This parameter is an input/output and is modified in-place. As an output: Index to element created (upper
+      index if more than one created).
+  err_flag : bool
+      Set true if there is an error. False otherwise. To do: lcavity energy change !? open or closed geometry?
+      Energy patch
+  from_mad : bool, optional
+      If True, ignore PTC specific parameters like integrator_order. Default is False. True is used when the
+      fibre has been created via MAD. In this case, the PTC specific parameters may not have good values.
   )""");
   m.def(
       "field_attribute_free",

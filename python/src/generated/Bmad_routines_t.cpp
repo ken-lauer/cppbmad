@@ -3723,4 +3723,13 @@ void init_Bmad_routines_t(py::module& m) {
   indent : int, optional
       Initial indent. Default is zero.
   )""");
+  m.def(
+      "type_ptc_layout",
+      &Bmad::type_ptc_layout,
+      py::arg("lay"),
+      R"""(Subroutine type_ptc_layout (lay)
+
+  Subroutine to print the global information in a layout
+
+  )""");
 }

@@ -1280,7 +1280,12 @@ void init_Bmad_routines_i(py::module& m) {
           });
   m.def(
       "integration_timer",
-      &python_integration_timer_ele,
+      py::overload_cast<
+          EleProxy&,
+          LatParamProxy&,
+          CoordProxy&,
+          CoordProxy&,
+          double>(&python_integration_timer_ele),
       py::arg("ele"),
       py::arg("param"),
       py::arg("start"),
@@ -1293,6 +1298,24 @@ void init_Bmad_routines_i(py::module& m) {
   start : 
   orb_max : 
   tol : 
+  )""");
+  m.def(
+      "integration_timer",
+      py::overload_cast<
+          FibreRawStruct&,
+          FixedArray1D<Real, 6>,
+          FixedArray1D<Real, 6>,
+          double>(&Bmad::integration_timer),
+      py::arg("a_fibre"),
+      py::arg("orbit"),
+      py::arg("orbit_max"),
+      py::arg("tol_dp"),
+      R"""(Parameters
+  ----------
+  a_fibre : 
+  orbit : 
+  orbit_max : 
+  tol_dp : 
   )""");
   m.def(
       "ion_kick",

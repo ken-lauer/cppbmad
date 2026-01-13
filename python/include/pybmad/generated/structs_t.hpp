@@ -1,6 +1,10 @@
 #pragma once
 #include <pybind11/pybind11.h>
+#include "bmad/generated/proxy.hpp"
+#include "pybmad/generated/structs.hpp"
 namespace py = pybind11;
+
+using namespace Bmad;
 
 // Per-struct init functions
 void init_target_point_struct(
@@ -65,6 +69,12 @@ void init_tao_ele_pointer_struct(
 void init_tao_ele_shape_struct(
     py::module& m,
     py::class_<TaoEleShapeProxy>& class_);
+void init_tao_eval_node_struct(
+    py::module& m,
+    py::class_<TaoEvalNodeProxy>& class_);
+void init_tao_expression_info_struct(
+    py::module& m,
+    py::class_<TaoExpressionInfoProxy>& class_);
 void init_tao_floor_plan_struct(
     py::module& m,
     py::class_<TaoFloorPlanProxy>& class_);

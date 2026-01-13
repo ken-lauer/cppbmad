@@ -1892,6 +1892,25 @@ std::string to_string(const LatEleOrderProxy& self) {
       "LatEleOrderProxy",
       {std::pair{"branch", "[...]"}});
 }
+std::string to_string(const TaoExpressionInfoProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoExpressionInfoProxy",
+      {std::pair{"good", to_string(self.good())},
+       std::pair{"ele", to_string(self.ele())},
+       std::pair{"s", to_string(self.s())}});
+}
+std::string to_string(const TaoEvalNodeProxy& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoEvalNodeProxy",
+      {std::pair{"type", to_string(self.type())},
+       std::pair{"name", self.name()},
+       std::pair{"scale", to_string(self.scale())},
+       std::pair{"value", to_string(self.value())},
+       std::pair{"info", "[...]"},
+       std::pair{"node", "[...]"}});
+}
 std::string to_string(const TaoTitleProxy& self) {
   return repr(
       self.get_fortran_ptr(),
@@ -2528,6 +2547,45 @@ std::string to_string(const BbuParamProxy& self) {
        std::pair{"ramp_n_start", to_string(self.ramp_n_start())},
        std::pair{"n_ramp_pattern", to_string(self.n_ramp_pattern())}});
 }
+std::string to_string(const FibreRawStruct& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "FibreRawStruct",
+      {std::pair{"DIR", to_string(self.DIR())},
+       std::pair{"PREVIOUS", to_string(self.PREVIOUS())},
+       std::pair{"NEXT", "..."},
+       std::pair{"PARENT_LAYOUT", to_string(self.PARENT_LAYOUT())},
+       std::pair{"pos", to_string(self.pos())},
+       std::pair{"BETA0", to_string(self.BETA0())},
+       std::pair{"GAMMA0I", to_string(self.GAMMA0I())},
+       std::pair{"GAMBET", to_string(self.GAMBET())},
+       std::pair{"MASS", to_string(self.MASS())},
+       std::pair{"CHARGE", to_string(self.CHARGE())},
+       std::pair{"AG", to_string(self.AG())},
+       std::pair{"P", to_string(self.P())},
+       std::pair{"N", to_string(self.N())},
+       std::pair{"loc", to_string(self.loc())}});
+}
+std::string to_string(const LayoutRawStruct& self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "LayoutRawStruct",
+      {std::pair{"NAME", self.NAME()},
+       std::pair{"INDEX", to_string(self.INDEX())},
+       std::pair{"HARMONIC_NUMBER", to_string(self.HARMONIC_NUMBER())},
+       std::pair{"CLOSED", to_string(self.CLOSED())},
+       std::pair{"N", to_string(self.N())},
+       std::pair{"NTHIN", to_string(self.NTHIN())},
+       std::pair{"THIN", to_string(self.THIN())},
+       std::pair{"LASTPOS", to_string(self.LASTPOS())},
+       std::pair{"LAST", to_string(self.LAST())},
+       std::pair{"END", to_string(self.END())},
+       std::pair{"START", to_string(self.START())},
+       std::pair{"START_GROUND", to_string(self.START_GROUND())},
+       std::pair{"END_GROUND", to_string(self.END_GROUND())},
+       std::pair{"NEXT", to_string(self.NEXT())},
+       std::pair{"PREVIOUS", to_string(self.PREVIOUS())}});
+}
 std::string to_string(const AllEncompassingProxy& self) {
   return repr(
       self.get_fortran_ptr(),
@@ -2855,6 +2913,13 @@ std::string to_string(const Bmad::EleMisalignmentLSCalc& self) {
       "Bmad::EleMisalignmentLSCalc",
       {std::pair{"L_mis", to_string(self.L_mis)},
        std::pair{"S_mis", to_string(self.S_mis)}});
+}
+std::string to_string(const Bmad::EleToFibre& self) {
+  return repr(
+      &self,
+      "Bmad::EleToFibre",
+      {std::pair{"ptc_fibre", to_string(self.ptc_fibre)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
 }
 std::string to_string(const Bmad::EleToPtcMagneticBnAn& self) {
   return repr(
@@ -3447,6 +3512,13 @@ std::string to_string(const Bmad::ProjectEmitToXyz& self) {
        std::pair{"sigma_y", to_string(self.sigma_y)},
        std::pair{"sigma_z", to_string(self.sigma_z)}});
 }
+std::string to_string(const Bmad::PtcCheckForLostParticle& self) {
+  return repr(
+      &self,
+      "Bmad::PtcCheckForLostParticle",
+      {std::pair{"state", to_string(self.state)},
+       std::pair{"ptc_fibre", to_string(self.ptc_fibre)}});
+}
 std::string to_string(const Bmad::PtcEmitCalc& self) {
   return repr(
       &self,
@@ -3688,12 +3760,61 @@ std::string to_string(const Tao::TaoEvaluateDatumAtS& self) {
        std::pair{"bad_datum", to_string(self.bad_datum)},
        std::pair{"value", to_string(self.value)}});
 }
+std::string to_string(const Tao::TaoEvaluateElementParameters& self) {
+  return repr(
+      &self,
+      "Tao::TaoEvaluateElementParameters",
+      {std::pair{"err", to_string(self.err)},
+       std::pair{"values", to_string(self.values)},
+       std::pair{"info", "[...]"}});
+}
+std::string to_string(const Tao::TaoEvaluateExpression& self) {
+  return repr(
+      &self,
+      "Tao::TaoEvaluateExpression",
+      {std::pair{"value", to_string(self.value)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"info", "[...]"},
+       std::pair{"stack", "[...]"}});
+}
+std::string to_string(const Tao::TaoEvaluateExpressionNew& self) {
+  return repr(
+      &self,
+      "Tao::TaoEvaluateExpressionNew",
+      {std::pair{"value", to_string(self.value)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"info", "[...]"},
+       std::pair{"stack", "[...]"}});
+}
+std::string to_string(const Tao::TaoEvaluateExpressionOld& self) {
+  return repr(
+      &self,
+      "Tao::TaoEvaluateExpressionOld",
+      {std::pair{"value", to_string(self.value)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"info", "[...]"},
+       std::pair{"stack", "[...]"}});
+}
 std::string to_string(const Tao::TaoEvaluateLatOrBeamData& self) {
   return repr(
       &self,
       "Tao::TaoEvaluateLatOrBeamData",
       {std::pair{"err", to_string(self.err)},
        std::pair{"values", to_string(self.values)}});
+}
+std::string to_string(const Tao::TaoEvaluateStackOld& self) {
+  return repr(
+      &self,
+      "Tao::TaoEvaluateStackOld",
+      {std::pair{"value", to_string(self.value)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
+}
+std::string to_string(const Tao::TaoEvaluateTree& self) {
+  return repr(
+      &self,
+      "Tao::TaoEvaluateTree",
+      {std::pair{"value", to_string(self.value)},
+       std::pair{"err_flag", to_string(self.err_flag)}});
 }
 std::string to_string(const Tao::TaoFindPlotRegion& self) {
   return repr(

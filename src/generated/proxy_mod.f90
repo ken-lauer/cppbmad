@@ -8,12 +8,13 @@ module bmad_struct_proxy_mod
   use bmad_struct, only: ac_kicker_freq_struct, ac_kicker_struct, ac_kicker_time_struct, anormal_mode_struct, aperture_param_struct, aperture_point_struct, aperture_scan_struct, beam_init_struct, beam_struct, bmad_common_struct, bmad_normal_form_struct, bookkeeping_state_struct, bpm_phase_coupling_struct, branch_struct, bunch_params_struct, bunch_struct, bunch_track_struct, cartesian_map_struct, cartesian_map_term1_struct, cartesian_map_term_struct, complex_taylor_struct, complex_taylor_term_struct, control_ramp1_struct, control_struct, control_var1_struct, controller_struct, coord_array_struct, coord_struct, cylindrical_map_struct, cylindrical_map_term1_struct, cylindrical_map_term_struct, ele_pointer_struct, ele_struct, ellipse_beam_init_struct, em_field_struct, em_taylor_struct, em_taylor_term_struct, expression_atom_struct, expression_tree_struct, floor_position_struct, gen_grad1_struct, gen_grad_map_struct, grid_beam_init_struct, grid_field_pt1_struct, grid_field_pt_struct, grid_field_struct, high_energy_space_charge_struct, interval1_coef_struct, kv_beam_init_struct, lat_ele_loc_struct, lat_ele_order1_struct, lat_ele_order_array_struct, lat_ele_order_struct, lat_param_struct, lat_struct, linac_normal_mode_struct, mode3_struct, mode_info_struct, normal_modes_struct, photon_element_struct, photon_material_struct, photon_reflect_surface_struct, photon_reflect_table_struct, photon_target_struct, pixel_detec_struct, pixel_pt_struct, pre_tracker_struct, ptc_normal_form_struct, rad_int1_struct, rad_int_all_ele_struct, rad_int_branch_struct, rad_map_ele_struct, rad_map_struct, ramper_lord_struct, resonance_h_struct, rf_ele_struct, rf_stair_step_struct, space_charge_common_struct, spin_axis_struct, spin_orbit_map1_struct, spin_polar_struct, strong_beam_struct, surface_curvature_struct, surface_displacement_pt_struct, surface_displacement_struct, surface_h_misalign_pt_struct, surface_h_misalign_struct, surface_segmented_pt_struct, surface_segmented_struct, target_point_struct, taylor_struct, taylor_term_struct, track_point_struct, track_struct, twiss_struct, wake_lr_mode_struct, wake_lr_struct, wake_sr_mode_struct, wake_sr_struct, wake_sr_z_long_struct, wake_struct, wall3d_section_struct, wall3d_struct, wall3d_vertex_struct, xy_disp_struct
   use cubic_interpolation_mod, only: bicubic_cmplx_coef_struct, tricubic_cmplx_coef_struct
   use sim_utils_struct, only: nametable_struct
-  use tao_struct, only: tao_beam_branch_struct, tao_beam_uni_struct, tao_building_wall_orientation_struct, tao_building_wall_point_struct, tao_building_wall_section_struct, tao_building_wall_struct, tao_cmd_history_struct, tao_common_struct, tao_curve_color_struct, tao_curve_orbit_struct, tao_curve_struct, tao_d1_data_struct, tao_d2_data_struct, tao_data_struct, tao_data_var_component_struct, tao_drawing_struct, tao_dynamic_aperture_struct, tao_ele_pointer_struct, tao_ele_shape_struct, tao_floor_plan_struct, tao_global_struct, tao_graph_struct, tao_histogram_struct, tao_init_struct, tao_lat_sigma_struct, tao_lattice_branch_struct, tao_lattice_struct, tao_model_branch_struct, tao_model_element_struct, tao_ping_scale_struct, tao_plot_cache_struct, tao_plot_page_struct, tao_plot_region_struct, tao_plot_struct, tao_shape_pattern_point_struct, tao_shape_pattern_struct, tao_spin_dn_dpz_struct, tao_spin_ele_struct, tao_spin_map_struct, tao_spin_polarization_struct, tao_super_universe_struct, tao_title_struct, tao_universe_calc_struct, tao_universe_pointer_struct, tao_universe_struct, tao_v1_var_struct, tao_var_slave_struct, tao_var_struct, tao_wave_kick_pt_struct, tao_wave_struct
+  use tao_struct, only: tao_beam_branch_struct, tao_beam_uni_struct, tao_building_wall_orientation_struct, tao_building_wall_point_struct, tao_building_wall_section_struct, tao_building_wall_struct, tao_cmd_history_struct, tao_common_struct, tao_curve_color_struct, tao_curve_orbit_struct, tao_curve_struct, tao_d1_data_struct, tao_d2_data_struct, tao_data_struct, tao_data_var_component_struct, tao_drawing_struct, tao_dynamic_aperture_struct, tao_ele_pointer_struct, tao_ele_shape_struct, tao_eval_node_struct, tao_expression_info_struct, tao_floor_plan_struct, tao_global_struct, tao_graph_struct, tao_histogram_struct, tao_init_struct, tao_lat_sigma_struct, tao_lattice_branch_struct, tao_lattice_struct, tao_model_branch_struct, tao_model_element_struct, tao_ping_scale_struct, tao_plot_cache_struct, tao_plot_page_struct, tao_plot_region_struct, tao_plot_struct, tao_shape_pattern_point_struct, tao_shape_pattern_struct, tao_spin_dn_dpz_struct, tao_spin_ele_struct, tao_spin_map_struct, tao_spin_polarization_struct, tao_super_universe_struct, tao_title_struct, tao_universe_calc_struct, tao_universe_pointer_struct, tao_universe_struct, tao_v1_var_struct, tao_var_slave_struct, tao_var_struct, tao_wave_kick_pt_struct, tao_wave_struct
   use srdt_mod, only: summation_rdt_struct
   use quick_plot_struct, only: qp_axis_struct, qp_legend_struct, qp_line_struct, qp_point_struct, qp_rect_struct, qp_symbol_struct
   use mad_mod, only: mad_energy_struct, mad_map_struct
   use random_mod, only: random_state_struct
   use bbu_track_mod, only: bbu_beam_struct, bbu_param_struct, bbu_stage_struct
+  use definition, only: fibre, layout
   use test_struct_defs, only: all_encompassing_struct, test_sub_struct, test_sub_sub_struct
   
   type :: spline_struct_container_alloc
@@ -584,6 +585,14 @@ module bmad_struct_proxy_mod
     type(lat_ele_order_struct), allocatable :: data(:)
   end type lat_ele_order_struct_container_alloc
 
+  type :: tao_expression_info_struct_container_alloc
+    type(tao_expression_info_struct), allocatable :: data(:)
+  end type tao_expression_info_struct_container_alloc
+
+  type :: tao_eval_node_struct_container_alloc
+    type(tao_eval_node_struct), allocatable :: data(:)
+  end type tao_eval_node_struct_container_alloc
+
   type :: tao_title_struct_container_alloc
     type(tao_title_struct), allocatable :: data(:)
   end type tao_title_struct_container_alloc
@@ -703,6 +712,14 @@ module bmad_struct_proxy_mod
   type :: bbu_param_struct_container_alloc
     type(bbu_param_struct), allocatable :: data(:)
   end type bbu_param_struct_container_alloc
+
+  type :: fibre_container_alloc
+    type(fibre), allocatable :: data(:)
+  end type fibre_container_alloc
+
+  type :: layout_container_alloc
+    type(layout), allocatable :: data(:)
+  end type layout_container_alloc
 
   type :: all_encompassing_struct_container_alloc
     type(all_encompassing_struct), allocatable :: data(:)
@@ -25235,6 +25252,33 @@ contains
     endif
   end subroutine
 
+  ! ele_struct%ptc_fibre: 0D_PTR_type
+
+  subroutine ele_struct_get_ptc_fibre(struct_obj_ptr, ptr_out) bind(c, name='ele_struct_get_ptc_fibre')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(ele_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%ptc_fibre)) then
+      ptr_out = c_loc(struct_obj%ptc_fibre)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine ele_struct_set_ptc_fibre(struct_obj_ptr, src_ptr) bind(c, name='ele_struct_set_ptc_fibre')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(ele_struct), pointer :: struct_obj
+    type(fibre), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%ptc_fibre)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%ptc_fibre = src_obj
+    endif
+  end subroutine
+
   ! ele_struct%floor: 0D_NOT_type
 
   subroutine ele_struct_get_floor(struct_obj_ptr, ptr_out) bind(c, name='ele_struct_get_floor')
@@ -45314,6 +45358,463 @@ contains
     endif
   end subroutine
 
+  !! tao_expression_info_struct
+
+    function allocate_fortran_tao_expression_info_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_expression_info_struct), pointer :: fptr
+      type(tao_expression_info_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_expression_info_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_expression_info_struct), pointer :: fptr
+      type(tao_expression_info_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_expression_info_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_expression_info_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_expression_info_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_expression_info_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_expression_info_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_expression_info_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_expression_info_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_expression_info_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_expression_info_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_expression_info_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_expression_info_struct%good: 0D_NOT_logical
+
+  subroutine tao_expression_info_struct_get_good(struct_obj_ptr, value_out) bind(c, name='tao_expression_info_struct_get_good')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(tao_expression_info_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%good
+  end subroutine
+
+
+  subroutine tao_expression_info_struct_set_good(struct_obj_ptr, value_in) bind(c, name='tao_expression_info_struct_set_good')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(tao_expression_info_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%good = value_in
+  end subroutine
+
+  ! tao_expression_info_struct%ele: 0D_PTR_type
+
+  subroutine tao_expression_info_struct_get_ele(struct_obj_ptr, ptr_out) bind(c, name='tao_expression_info_struct_get_ele')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(tao_expression_info_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%ele)) then
+      ptr_out = c_loc(struct_obj%ele)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine tao_expression_info_struct_set_ele(struct_obj_ptr, src_ptr) bind(c, name='tao_expression_info_struct_set_ele')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(tao_expression_info_struct), pointer :: struct_obj
+    type(ele_struct), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%ele)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%ele = src_obj
+    endif
+  end subroutine
+
+  ! tao_expression_info_struct%s: 0D_NOT_real
+
+  subroutine tao_expression_info_struct_get_s(struct_obj_ptr, value_out) bind(c, name='tao_expression_info_struct_get_s')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_expression_info_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%s
+  end subroutine
+
+
+  subroutine tao_expression_info_struct_set_s(struct_obj_ptr, value_in) bind(c, name='tao_expression_info_struct_set_s')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_expression_info_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%s = value_in
+  end subroutine
+
+  !! tao_eval_node_struct
+
+    function allocate_fortran_tao_eval_node_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(tao_eval_node_struct), pointer :: fptr
+      type(tao_eval_node_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_tao_eval_node_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(tao_eval_node_struct), pointer :: fptr
+      type(tao_eval_node_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_tao_eval_node_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(tao_eval_node_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_tao_eval_node_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(tao_eval_node_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_tao_eval_node_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(tao_eval_node_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_tao_eval_node_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_eval_node_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_tao_eval_node_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(tao_eval_node_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! tao_eval_node_struct%type: 0D_NOT_integer
+
+  subroutine tao_eval_node_struct_get_type(struct_obj_ptr, value_out) bind(c, name='tao_eval_node_struct_get_type')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    type(tao_eval_node_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%type
+  end subroutine
+
+
+  subroutine tao_eval_node_struct_set_type(struct_obj_ptr, value_in) bind(c, name='tao_eval_node_struct_set_type')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(tao_eval_node_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%type = value_in
+  end subroutine
+
+  ! tao_eval_node_struct%name: 0D_NOT_character
+
+  subroutine tao_eval_node_struct_get_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_eval_node_struct_get_name_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_eval_node_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%name)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%name), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_eval_node_struct_set_name(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_eval_node_struct_set_name')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_eval_node_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%name = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_eval_node_struct%scale: 0D_NOT_real
+
+  subroutine tao_eval_node_struct_get_scale(struct_obj_ptr, value_out) bind(c, name='tao_eval_node_struct_get_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(tao_eval_node_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%scale
+  end subroutine
+
+
+  subroutine tao_eval_node_struct_set_scale(struct_obj_ptr, value_in) bind(c, name='tao_eval_node_struct_set_scale')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(tao_eval_node_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%scale = value_in
+  end subroutine
+
+  ! tao_eval_node_struct%value: 1D_ALLOC_real
+
+  subroutine tao_eval_node_struct_get_value_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='tao_eval_node_struct_get_value_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_eval_node_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%value) .and. is_contiguous(struct_obj%value)) then
+      data_ptr = c_loc(struct_obj%value(lbound(struct_obj%value, 1)))
+      bounds(1) = int(lbound(struct_obj%value, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%value, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_eval_node_struct%info: 1D_ALLOC_type
+
+  subroutine tao_eval_node_struct_get_info_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_eval_node_struct_get_info_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_eval_node_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%info) .and. is_contiguous(struct_obj%info)) then
+      data_ptr = c_loc(struct_obj%info(lbound(struct_obj%info, 1)))
+      bounds(1) = int(lbound(struct_obj%info, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%info, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%info(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! tao_eval_node_struct%node: 1D_PTR_type
+
+  subroutine tao_eval_node_struct_get_node_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='tao_eval_node_struct_get_node_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_eval_node_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%node) .and. is_contiguous(struct_obj%node)) then
+      data_ptr = c_loc(struct_obj%node(lbound(struct_obj%node, 1)))
+      bounds(1) = int(lbound(struct_obj%node, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%node, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%node(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
   !! tao_title_struct
 
     function allocate_fortran_tao_title_struct(n, element_size) result(ptr) bind(c)
@@ -57978,6 +58479,1016 @@ contains
     type(bbu_param_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     struct_obj%n_ramp_pattern = value_in
+  end subroutine
+
+  !! fibre
+
+    function allocate_fortran_fibre(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(fibre), pointer :: fptr
+      type(fibre), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_fibre(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(fibre), pointer :: fptr
+      type(fibre), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_fibre(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(fibre), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_fibre_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(fibre_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_fibre_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(fibre_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_fibre_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(fibre_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_fibre_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(fibre_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! fibre%DIR: 0D_PTR_integer
+
+  subroutine fibre_get_DIR(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_DIR')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%DIR)) then
+      ptr_out = c_loc(struct_obj%DIR)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine fibre_set_DIR(struct_obj_ptr, value_in) bind(c, name='fibre_set_DIR')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%DIR)) then
+      struct_obj%DIR = value_in
+    endif
+  end subroutine
+
+  ! fibre%PREVIOUS: 0D_PTR_type
+
+  subroutine fibre_get_PREVIOUS(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_PREVIOUS')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%PREVIOUS)) then
+      ptr_out = c_loc(struct_obj%PREVIOUS)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine fibre_set_PREVIOUS(struct_obj_ptr, src_ptr) bind(c, name='fibre_set_PREVIOUS')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(fibre), pointer :: struct_obj
+    type(FIBRE), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%PREVIOUS)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%PREVIOUS = src_obj
+    endif
+  end subroutine
+
+  ! fibre%NEXT: 0D_PTR_type
+
+  subroutine fibre_get_NEXT(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_NEXT')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%NEXT)) then
+      ptr_out = c_loc(struct_obj%NEXT)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine fibre_set_NEXT(struct_obj_ptr, src_ptr) bind(c, name='fibre_set_NEXT')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(fibre), pointer :: struct_obj
+    type(FIBRE), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%NEXT)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%NEXT = src_obj
+    endif
+  end subroutine
+
+  ! fibre%PARENT_LAYOUT: 0D_PTR_type
+
+  subroutine fibre_get_PARENT_LAYOUT(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_PARENT_LAYOUT')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%PARENT_LAYOUT)) then
+      ptr_out = c_loc(struct_obj%PARENT_LAYOUT)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine fibre_set_PARENT_LAYOUT(struct_obj_ptr, src_ptr) bind(c, name='fibre_set_PARENT_LAYOUT')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(fibre), pointer :: struct_obj
+    type(LAYOUT), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%PARENT_LAYOUT)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%PARENT_LAYOUT = src_obj
+    endif
+  end subroutine
+
+  ! fibre%pos: 0D_PTR_integer
+
+  subroutine fibre_get_pos(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_pos')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%pos)) then
+      ptr_out = c_loc(struct_obj%pos)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine fibre_set_pos(struct_obj_ptr, value_in) bind(c, name='fibre_set_pos')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%pos)) then
+      struct_obj%pos = value_in
+    endif
+  end subroutine
+
+  ! fibre%BETA0: 0D_PTR_real
+
+  subroutine fibre_get_BETA0(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_BETA0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%BETA0)) then
+      ptr_out = c_loc(struct_obj%BETA0)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine fibre_set_BETA0(struct_obj_ptr, value_in) bind(c, name='fibre_set_BETA0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%BETA0)) then
+      struct_obj%BETA0 = value_in
+    endif
+  end subroutine
+
+  ! fibre%GAMMA0I: 0D_PTR_real
+
+  subroutine fibre_get_GAMMA0I(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_GAMMA0I')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%GAMMA0I)) then
+      ptr_out = c_loc(struct_obj%GAMMA0I)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine fibre_set_GAMMA0I(struct_obj_ptr, value_in) bind(c, name='fibre_set_GAMMA0I')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%GAMMA0I)) then
+      struct_obj%GAMMA0I = value_in
+    endif
+  end subroutine
+
+  ! fibre%GAMBET: 0D_PTR_real
+
+  subroutine fibre_get_GAMBET(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_GAMBET')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%GAMBET)) then
+      ptr_out = c_loc(struct_obj%GAMBET)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine fibre_set_GAMBET(struct_obj_ptr, value_in) bind(c, name='fibre_set_GAMBET')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%GAMBET)) then
+      struct_obj%GAMBET = value_in
+    endif
+  end subroutine
+
+  ! fibre%MASS: 0D_PTR_real
+
+  subroutine fibre_get_MASS(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_MASS')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%MASS)) then
+      ptr_out = c_loc(struct_obj%MASS)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine fibre_set_MASS(struct_obj_ptr, value_in) bind(c, name='fibre_set_MASS')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%MASS)) then
+      struct_obj%MASS = value_in
+    endif
+  end subroutine
+
+  ! fibre%CHARGE: 0D_PTR_real
+
+  subroutine fibre_get_CHARGE(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_CHARGE')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%CHARGE)) then
+      ptr_out = c_loc(struct_obj%CHARGE)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine fibre_set_CHARGE(struct_obj_ptr, value_in) bind(c, name='fibre_set_CHARGE')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%CHARGE)) then
+      struct_obj%CHARGE = value_in
+    endif
+  end subroutine
+
+  ! fibre%AG: 0D_PTR_real
+
+  subroutine fibre_get_AG(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_AG')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%AG)) then
+      ptr_out = c_loc(struct_obj%AG)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine fibre_set_AG(struct_obj_ptr, value_in) bind(c, name='fibre_set_AG')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%AG)) then
+      struct_obj%AG = value_in
+    endif
+  end subroutine
+
+  ! fibre%P: 0D_PTR_type
+
+  subroutine fibre_get_P(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_P')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%P)) then
+      ptr_out = c_loc(struct_obj%P)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine fibre_set_P(struct_obj_ptr, src_ptr) bind(c, name='fibre_set_P')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(fibre), pointer :: struct_obj
+    type(FIBRE), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%P)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%P = src_obj
+    endif
+  end subroutine
+
+  ! fibre%N: 0D_PTR_type
+
+  subroutine fibre_get_N(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_N')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%N)) then
+      ptr_out = c_loc(struct_obj%N)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine fibre_set_N(struct_obj_ptr, src_ptr) bind(c, name='fibre_set_N')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(fibre), pointer :: struct_obj
+    type(FIBRE), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%N)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%N = src_obj
+    endif
+  end subroutine
+
+  ! fibre%loc: 0D_PTR_integer
+
+  subroutine fibre_get_loc(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_loc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%loc)) then
+      ptr_out = c_loc(struct_obj%loc)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine fibre_set_loc(struct_obj_ptr, value_in) bind(c, name='fibre_set_loc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(fibre), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%loc)) then
+      struct_obj%loc = value_in
+    endif
+  end subroutine
+
+  !! layout
+
+    function allocate_fortran_layout(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(layout), pointer :: fptr
+      type(layout), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_layout(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(layout), pointer :: fptr
+      type(layout), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_layout(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(layout), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_layout_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(layout_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_layout_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(layout_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_layout_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(layout_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_layout_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
+    integer(c_int), intent(out) :: sz
+    integer(c_size_t), intent(out) :: elem_size
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(layout_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      sz = size(ctr%data)
+      js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(js)) / 8
+      d_ptr = c_loc(ctr%data(js))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      js = 0
+      sz = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! layout%NAME: 0D_PTR_character
+
+  subroutine layout_get_NAME_info(struct_obj_ptr, data_ptr, str_len, is_allocated) &
+    bind(c, name='layout_get_NAME_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), intent(out) :: str_len
+    logical(c_bool), intent(out) :: is_allocated
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%NAME)) then
+      data_ptr = c_loc(struct_obj%NAME)
+      str_len = int(len(struct_obj%NAME), c_int)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      str_len = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine layout_set_NAME(struct_obj_ptr, str_ptr, str_len) bind(c, name='layout_set_NAME')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(layout), pointer :: struct_obj
+    character(len=str_len), pointer :: temp_str
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%NAME)) deallocate(struct_obj%NAME)
+
+    if (str_len > 0) then
+        call c_f_pointer(str_ptr, temp_str)
+        allocate(struct_obj%NAME, source=temp_str)
+    else
+        nullify(struct_obj%NAME)
+    endif
+  end subroutine
+
+  ! layout%INDEX: 0D_PTR_integer
+
+  subroutine layout_get_INDEX(struct_obj_ptr, ptr_out) bind(c, name='layout_get_INDEX')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%INDEX)) then
+      ptr_out = c_loc(struct_obj%INDEX)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine layout_set_INDEX(struct_obj_ptr, value_in) bind(c, name='layout_set_INDEX')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%INDEX)) then
+      struct_obj%INDEX = value_in
+    endif
+  end subroutine
+
+  ! layout%HARMONIC_NUMBER: 0D_PTR_real
+
+  subroutine layout_get_HARMONIC_NUMBER(struct_obj_ptr, ptr_out) bind(c, name='layout_get_HARMONIC_NUMBER')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%HARMONIC_NUMBER)) then
+      ptr_out = c_loc(struct_obj%HARMONIC_NUMBER)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine layout_set_HARMONIC_NUMBER(struct_obj_ptr, value_in) bind(c, name='layout_set_HARMONIC_NUMBER')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%HARMONIC_NUMBER)) then
+      struct_obj%HARMONIC_NUMBER = value_in
+    endif
+  end subroutine
+
+  ! layout%CLOSED: 0D_PTR_logical
+
+  subroutine layout_get_CLOSED(struct_obj_ptr, ptr_out) bind(c, name='layout_get_CLOSED')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%CLOSED)) then
+      ptr_out = c_loc(struct_obj%CLOSED)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine layout_set_CLOSED(struct_obj_ptr, value_in) bind(c, name='layout_set_CLOSED')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%CLOSED)) then
+      struct_obj%CLOSED = value_in
+    endif
+  end subroutine
+
+  ! layout%N: 0D_PTR_integer
+
+  subroutine layout_get_N(struct_obj_ptr, ptr_out) bind(c, name='layout_get_N')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%N)) then
+      ptr_out = c_loc(struct_obj%N)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine layout_set_N(struct_obj_ptr, value_in) bind(c, name='layout_set_N')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%N)) then
+      struct_obj%N = value_in
+    endif
+  end subroutine
+
+  ! layout%NTHIN: 0D_PTR_integer
+
+  subroutine layout_get_NTHIN(struct_obj_ptr, ptr_out) bind(c, name='layout_get_NTHIN')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%NTHIN)) then
+      ptr_out = c_loc(struct_obj%NTHIN)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine layout_set_NTHIN(struct_obj_ptr, value_in) bind(c, name='layout_set_NTHIN')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%NTHIN)) then
+      struct_obj%NTHIN = value_in
+    endif
+  end subroutine
+
+  ! layout%THIN: 0D_PTR_real
+
+  subroutine layout_get_THIN(struct_obj_ptr, ptr_out) bind(c, name='layout_get_THIN')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%THIN)) then
+      ptr_out = c_loc(struct_obj%THIN)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine layout_set_THIN(struct_obj_ptr, value_in) bind(c, name='layout_set_THIN')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%THIN)) then
+      struct_obj%THIN = value_in
+    endif
+  end subroutine
+
+  ! layout%LASTPOS: 0D_PTR_integer
+
+  subroutine layout_get_LASTPOS(struct_obj_ptr, ptr_out) bind(c, name='layout_get_LASTPOS')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%LASTPOS)) then
+      ptr_out = c_loc(struct_obj%LASTPOS)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine layout_set_LASTPOS(struct_obj_ptr, value_in) bind(c, name='layout_set_LASTPOS')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%LASTPOS)) then
+      struct_obj%LASTPOS = value_in
+    endif
+  end subroutine
+
+  ! layout%LAST: 0D_PTR_type
+
+  subroutine layout_get_LAST(struct_obj_ptr, ptr_out) bind(c, name='layout_get_LAST')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%LAST)) then
+      ptr_out = c_loc(struct_obj%LAST)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine layout_set_LAST(struct_obj_ptr, src_ptr) bind(c, name='layout_set_LAST')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(layout), pointer :: struct_obj
+    type(FIBRE), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%LAST)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%LAST = src_obj
+    endif
+  end subroutine
+
+  ! layout%END: 0D_PTR_type
+
+  subroutine layout_get_END(struct_obj_ptr, ptr_out) bind(c, name='layout_get_END')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%END)) then
+      ptr_out = c_loc(struct_obj%END)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine layout_set_END(struct_obj_ptr, src_ptr) bind(c, name='layout_set_END')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(layout), pointer :: struct_obj
+    type(FIBRE), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%END)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%END = src_obj
+    endif
+  end subroutine
+
+  ! layout%START: 0D_PTR_type
+
+  subroutine layout_get_START(struct_obj_ptr, ptr_out) bind(c, name='layout_get_START')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%START)) then
+      ptr_out = c_loc(struct_obj%START)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine layout_set_START(struct_obj_ptr, src_ptr) bind(c, name='layout_set_START')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(layout), pointer :: struct_obj
+    type(FIBRE), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%START)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%START = src_obj
+    endif
+  end subroutine
+
+  ! layout%START_GROUND: 0D_PTR_type
+
+  subroutine layout_get_START_GROUND(struct_obj_ptr, ptr_out) bind(c, name='layout_get_START_GROUND')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%START_GROUND)) then
+      ptr_out = c_loc(struct_obj%START_GROUND)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine layout_set_START_GROUND(struct_obj_ptr, src_ptr) bind(c, name='layout_set_START_GROUND')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(layout), pointer :: struct_obj
+    type(FIBRE), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%START_GROUND)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%START_GROUND = src_obj
+    endif
+  end subroutine
+
+  ! layout%END_GROUND: 0D_PTR_type
+
+  subroutine layout_get_END_GROUND(struct_obj_ptr, ptr_out) bind(c, name='layout_get_END_GROUND')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%END_GROUND)) then
+      ptr_out = c_loc(struct_obj%END_GROUND)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine layout_set_END_GROUND(struct_obj_ptr, src_ptr) bind(c, name='layout_set_END_GROUND')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(layout), pointer :: struct_obj
+    type(FIBRE), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%END_GROUND)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%END_GROUND = src_obj
+    endif
+  end subroutine
+
+  ! layout%NEXT: 0D_PTR_type
+
+  subroutine layout_get_NEXT(struct_obj_ptr, ptr_out) bind(c, name='layout_get_NEXT')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%NEXT)) then
+      ptr_out = c_loc(struct_obj%NEXT)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine layout_set_NEXT(struct_obj_ptr, src_ptr) bind(c, name='layout_set_NEXT')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(layout), pointer :: struct_obj
+    type(LAYOUT), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%NEXT)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%NEXT = src_obj
+    endif
+  end subroutine
+
+  ! layout%PREVIOUS: 0D_PTR_type
+
+  subroutine layout_get_PREVIOUS(struct_obj_ptr, ptr_out) bind(c, name='layout_get_PREVIOUS')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: ptr_out
+    type(layout), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%PREVIOUS)) then
+      ptr_out = c_loc(struct_obj%PREVIOUS)
+    else
+      ptr_out = c_null_ptr
+    endif
+  end subroutine
+
+
+  subroutine layout_set_PREVIOUS(struct_obj_ptr, src_ptr) bind(c, name='layout_set_PREVIOUS')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: src_ptr
+    type(layout), pointer :: struct_obj
+    type(LAYOUT), pointer :: src_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%PREVIOUS)) then
+      call c_f_pointer(src_ptr, src_obj)
+      struct_obj%PREVIOUS = src_obj
+    endif
   end subroutine
 
   !! all_encompassing_struct

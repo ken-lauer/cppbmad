@@ -10,8 +10,8 @@ use bmad_struct_proxy_mod
 use tao_data_and_eval_mod, only: integrate_max, integrate_min, tao_datum_integrate, &
     tao_datum_s_position, tao_do_wire_scan, tao_ele_geometry_with_misalignments, &
     tao_eval_floor_orbit, tao_evaluate_datum_at_s, tao_evaluate_lat_or_beam_data, &
-    tao_expression_hash_substitute, tao_get_data, tao_load_this_datum, &
-    tao_pointer_to_datum_ele, tao_scratch_values_calc, tao_to_int, &
+    tao_evaluate_stack_old, tao_expression_hash_substitute, tao_get_data, tao_load_this_datum, &
+    tao_param_value_routine, tao_pointer_to_datum_ele, tao_scratch_values_calc, tao_to_int, &
     tao_to_phase_and_coupling_reading, tao_tracking_ele_index
 
 use tao_c_interface_mod, only: re_allocate_c_double, tao_c_out_io_buffer_reset
@@ -22,30 +22,32 @@ use tao_interface, only: tao_abort_command_file, tao_alias_cmd, tao_beam_emit_ca
     tao_control_tree_list, tao_count_strings, tao_curve_ele_ref, tao_curve_ix_uni, &
     tao_curve_name, tao_curve_rms_calc, tao_d2_d1_name, tao_data_check, tao_data_coupling_init, &
     tao_data_sanity_check, tao_datum_has_associated_ele, tao_datum_name, tao_de_optimizer, &
-    tao_ele_shape_info, tao_evaluate_a_datum, tao_evaluate_tune, tao_find_plot_region, &
-    tao_fixer, tao_floor_to_screen, tao_floor_to_screen_coords, tao_get_opt_vars, &
-    tao_graph_name, tao_init, tao_init_find_elements, tao_init_lattice, tao_init_plotting, &
-    tao_is_valid_name, tao_json_cmd, tao_key_info_to_str, tao_lat_bookkeeper, &
-    tao_lat_emit_calc, tao_lat_sigma_calc_needed, tao_lattice_calc, tao_limit_calc, &
-    tao_lmdif_optimizer, tao_locate_all_elements, tao_locate_elements, tao_mark_lattice_ele, &
-    tao_merit, tao_one_turn_map_calc_needed, tao_open_file, tao_open_scratch_file, &
+    tao_ele_shape_info, tao_evaluate_a_datum, tao_evaluate_element_parameters, &
+    tao_evaluate_expression, tao_evaluate_expression_new, tao_evaluate_expression_old, &
+    tao_evaluate_tree, tao_evaluate_tune, tao_find_plot_region, tao_fixer, tao_floor_to_screen, &
+    tao_floor_to_screen_coords, tao_get_opt_vars, tao_graph_name, tao_init, &
+    tao_init_find_elements, tao_init_lattice, tao_init_plotting, tao_is_valid_name, &
+    tao_json_cmd, tao_key_info_to_str, tao_lat_bookkeeper, tao_lat_emit_calc, &
+    tao_lat_sigma_calc_needed, tao_lattice_calc, tao_limit_calc, tao_lmdif_optimizer, &
+    tao_locate_all_elements, tao_locate_elements, tao_mark_lattice_ele, tao_merit, &
+    tao_one_turn_map_calc_needed, tao_open_file, tao_open_scratch_file, &
     tao_optimization_status, tao_oreint_building_wall_pt, tao_param_value_at_s, &
     tao_parse_command_args, tao_parse_element_param_str, tao_pause_cmd, tao_pick_universe, &
     tao_pipe_cmd, tao_place_cmd, tao_plot_cmd, tao_plot_setup, tao_plot_struct_transfer, &
     tao_pointer_to_building_wall_shape, tao_pointer_to_datum, tao_pointer_to_ele_shape, &
     tao_pointer_to_tao_lat, tao_pointer_to_universe, tao_pointer_to_universes, &
     tao_print_command_line_info, tao_ptc_normal_form, tao_python_cmd, tao_quiet_set, &
-    tao_rad_int_calc_needed, tao_read_cmd, tao_read_phase_space_index, tao_regression_test, &
-    tao_remove_blank_characters, tao_run_cmd, tao_scale_ping_data, tao_set_data_useit_opt, &
-    tao_set_invalid, tao_set_opt_vars, tao_set_var_model_value, tao_set_var_useit_opt, &
-    tao_setup_key_table, tao_shape_init, tao_show_cmd, tao_single_mode, &
-    tao_spin_matrices_calc_needed, tao_spin_tracking_turn_on, tao_split_component, &
-    tao_srdt_calc_needed, tao_subin_uni_number, tao_symbol_import_from_lat, tao_taper_cmd, &
-    tao_to_real, tao_top_level, tao_turn_on_special_calcs_if_needed_for_plotting, &
-    tao_uni_atsign_index, tao_universe_index, tao_use_data, tao_use_var, &
-    tao_user_is_terminating_optimization, tao_var1_name, tao_var_attrib_name, tao_var_check, &
-    tao_var_repoint, tao_var_target_calc, tao_var_useit_plot_calc, tao_write_cmd, &
-    tao_x_axis_cmd
+    tao_rad_int_calc_needed, tao_re_allocate_expression_info, tao_read_cmd, &
+    tao_read_phase_space_index, tao_regression_test, tao_remove_blank_characters, tao_run_cmd, &
+    tao_scale_ping_data, tao_set_data_useit_opt, tao_set_invalid, tao_set_opt_vars, &
+    tao_set_var_model_value, tao_set_var_useit_opt, tao_setup_key_table, tao_shape_init, &
+    tao_show_cmd, tao_single_mode, tao_spin_matrices_calc_needed, tao_spin_tracking_turn_on, &
+    tao_split_component, tao_srdt_calc_needed, tao_subin_uni_number, &
+    tao_symbol_import_from_lat, tao_taper_cmd, tao_to_real, tao_top_level, &
+    tao_turn_on_special_calcs_if_needed_for_plotting, tao_uni_atsign_index, tao_universe_index, &
+    tao_use_data, tao_use_var, tao_user_is_terminating_optimization, tao_var1_name, &
+    tao_var_attrib_name, tao_var_check, tao_var_repoint, tao_var_target_calc, &
+    tao_var_useit_plot_calc, tao_write_cmd, tao_x_axis_cmd
 
 use tao_init_data_mod, only: tao_add_to_normal_mode_h_array, tao_allocate_data_array, &
     tao_d2_data_stuffit, tao_init_data, tao_init_data_end_stuff, tao_init_data_in_universe
@@ -75,6 +77,9 @@ use tao_plot_window_mod, only: tao_create_plot_window, tao_destroy_plot_window
 
 use tao_struct, only: tao_deallocate_plot_cache, &
     tao_lattice_branches_equal_tao_lattice_branches, tao_lattice_equal_tao_lattice
+
+use tao_expression_tree_mod, only: tao_deallocate_tree, tao_expression_tree_to_string, &
+    tao_re_associate_node_array, tao_type_expression_tree
 
 use tao_dmerit_mod, only: tao_dmerit_calc, tao_dmodel_dvar_calc, tao_veto_vars_with_zero_dmodel
 
@@ -1735,6 +1740,20 @@ subroutine fortran_tao_deallocate_plot_cache (plot_cache) bind(c)
   call tao_deallocate_plot_cache(f_plot_cache%data)
 
 end subroutine
+subroutine fortran_tao_deallocate_tree (tree) bind(c)
+
+  use tao_struct, only: tao_eval_node_struct
+  implicit none
+  ! ** Inout parameters **
+  type(c_ptr), value :: tree  ! 0D_NOT_type
+  type(tao_eval_node_struct), pointer :: f_tree
+  ! ** End of parameters **
+  ! inout: f_tree 0D_NOT_type
+  if (.not. c_associated(tree)) return
+  call c_f_pointer(tree, f_tree)
+  call tao_deallocate_tree(f_tree)
+
+end subroutine
 subroutine fortran_tao_destroy_plot_window () bind(c)
 
   implicit none
@@ -2352,6 +2371,542 @@ subroutine fortran_tao_evaluate_datum_at_s (datum, tao_lat, ele, ele_ref, valid_
   call c_f_pointer(value, f_value_ptr)
   f_value_ptr = f_value
 end subroutine
+subroutine fortran_tao_evaluate_element_parameters (err, param_name, values, print_err, &
+    dflt_ele, dflt_source, dflt_component, dflt_uni, eval_point, info) bind(c)
+
+  use bmad_struct, only: ele_struct
+  use tao_struct, only: tao_expression_info_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: param_name
+  character(len=4096), target :: f_param_name
+  character(kind=c_char), pointer :: f_param_name_ptr(:)
+  logical(c_bool) :: print_err  ! 0D_NOT_logical
+  logical :: f_print_err
+  type(c_ptr), value :: dflt_ele  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_dflt_ele
+  type(c_ptr), intent(in), value :: dflt_source
+  character(len=4096), target :: f_dflt_source
+  character(kind=c_char), pointer :: f_dflt_source_ptr(:)
+  type(c_ptr), intent(in), value :: dflt_component
+  character(len=4096), target :: f_dflt_component
+  character(kind=c_char), pointer :: f_dflt_component_ptr(:)
+  character(len=4096), pointer :: f_dflt_component_call_ptr
+  type(c_ptr), intent(in), value :: dflt_uni  ! 0D_NOT_integer
+  integer(c_int) :: f_dflt_uni
+  integer(c_int), pointer :: f_dflt_uni_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
+  logical :: f_err
+  logical(c_bool), pointer :: f_err_ptr
+  type(c_ptr), intent(in), value :: values
+  type(real_container_alloc), pointer :: f_values
+  type(c_ptr), intent(in), value :: info
+  type(tao_expression_info_struct_container_alloc), pointer :: f_info
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: eval_point  ! 0D_NOT_integer
+  integer(c_int) :: f_eval_point
+  integer(c_int), pointer :: f_eval_point_ptr
+  ! ** End of parameters **
+  ! in: f_param_name 0D_NOT_character
+  if (.not. c_associated(param_name)) return
+  call c_f_pointer(param_name, f_param_name_ptr, [huge(0)])
+  call to_f_str(f_param_name_ptr, f_param_name)
+  !! container general array (1D_ALLOC_real)
+  if (c_associated(values))   call c_f_pointer(values, f_values)
+  ! in: f_print_err 0D_NOT_logical
+  f_print_err = print_err
+  ! in: f_dflt_ele 0D_PTR_type
+  if (c_associated(dflt_ele))   call c_f_pointer(dflt_ele, f_dflt_ele)
+  ! in: f_dflt_source 0D_NOT_character
+  if (.not. c_associated(dflt_source)) return
+  call c_f_pointer(dflt_source, f_dflt_source_ptr, [huge(0)])
+  call to_f_str(f_dflt_source_ptr, f_dflt_source)
+  ! in: f_dflt_component 0D_NOT_character
+  if (c_associated(dflt_component)) then
+    call c_f_pointer(dflt_component, f_dflt_component_ptr, [huge(0)])
+    call to_f_str(f_dflt_component_ptr, f_dflt_component)
+    f_dflt_component_call_ptr => f_dflt_component
+  else
+    f_dflt_component_call_ptr => null()
+  endif
+  ! in: f_dflt_uni 0D_NOT_integer
+  if (c_associated(dflt_uni)) then
+    call c_f_pointer(dflt_uni, f_dflt_uni_ptr)
+  else
+    f_dflt_uni_ptr => null()
+  endif
+  ! inout: f_eval_point 0D_NOT_integer
+  if (c_associated(eval_point)) then
+    call c_f_pointer(eval_point, f_eval_point_ptr)
+  else
+    f_eval_point_ptr => null()
+  endif
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(info))   call c_f_pointer(info, f_info)
+  call tao_evaluate_element_parameters(f_err, f_param_name, f_values%data, f_print_err, &
+      f_dflt_ele, f_dflt_source, f_dflt_component_call_ptr, f_dflt_uni_ptr, f_eval_point_ptr, &
+      f_info%data)
+
+  ! out: f_err 0D_NOT_logical
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
+  ! inout: f_eval_point 0D_NOT_integer
+  ! no output conversion for f_eval_point
+end subroutine
+subroutine fortran_tao_evaluate_expression (expression, n_size, use_good_user, value, err_flag, &
+    print_err, info, stack, dflt_component, dflt_source, dflt_ele_ref, dflt_ele_start, &
+    dflt_ele, dflt_dat_or_var_index, dflt_uni, dflt_eval_point, dflt_s_offset, dflt_orbit, &
+    datum) bind(c)
+
+  use tao_struct, only: tao_data_struct, tao_eval_node_struct, tao_expression_info_struct
+  use bmad_struct, only: coord_struct, ele_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: expression
+  character(len=4096), target :: f_expression
+  character(kind=c_char), pointer :: f_expression_ptr(:)
+  integer(c_int) :: n_size  ! 0D_NOT_integer
+  integer :: f_n_size
+  logical(c_bool) :: use_good_user  ! 0D_NOT_logical
+  logical :: f_use_good_user
+  type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_err
+  logical, target :: f_print_err_native
+  logical, pointer :: f_print_err_native_ptr
+  logical(c_bool), pointer :: f_print_err_ptr
+  type(c_ptr), intent(in), value :: dflt_component
+  character(len=4096), target :: f_dflt_component
+  character(kind=c_char), pointer :: f_dflt_component_ptr(:)
+  character(len=4096), pointer :: f_dflt_component_call_ptr
+  type(c_ptr), intent(in), value :: dflt_source
+  character(len=4096), target :: f_dflt_source
+  character(kind=c_char), pointer :: f_dflt_source_ptr(:)
+  character(len=4096), pointer :: f_dflt_source_call_ptr
+  type(c_ptr), value :: dflt_ele_ref  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_dflt_ele_ref
+  type(c_ptr), value :: dflt_ele_start  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_dflt_ele_start
+  type(c_ptr), value :: dflt_ele  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_dflt_ele
+  type(c_ptr), intent(in), value :: dflt_dat_or_var_index
+  character(len=4096), target :: f_dflt_dat_or_var_index
+  character(kind=c_char), pointer :: f_dflt_dat_or_var_index_ptr(:)
+  character(len=4096), pointer :: f_dflt_dat_or_var_index_call_ptr
+  type(c_ptr), intent(in), value :: dflt_uni  ! 0D_NOT_integer
+  integer(c_int) :: f_dflt_uni
+  integer(c_int), pointer :: f_dflt_uni_ptr
+  type(c_ptr), intent(in), value :: dflt_eval_point  ! 0D_NOT_integer
+  integer(c_int) :: f_dflt_eval_point
+  integer(c_int), pointer :: f_dflt_eval_point_ptr
+  type(c_ptr), intent(in), value :: dflt_s_offset  ! 0D_NOT_real
+  real(c_double) :: f_dflt_s_offset
+  real(c_double), pointer :: f_dflt_s_offset_ptr
+  type(c_ptr), value :: dflt_orbit  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_dflt_orbit
+  type(c_ptr), value :: datum  ! 0D_NOT_type
+  type(tao_data_struct), pointer :: f_datum
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: value
+  type(real_container_alloc), pointer :: f_value
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  type(c_ptr), intent(in), value :: info
+  type(tao_expression_info_struct_container_alloc), pointer :: f_info
+  type(c_ptr), intent(in), value :: stack
+  type(tao_eval_node_struct_container_alloc), pointer :: f_stack
+  ! ** End of parameters **
+  ! in: f_expression 0D_NOT_character
+  if (.not. c_associated(expression)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(expression, f_expression_ptr, [huge(0)])
+  call to_f_str(f_expression_ptr, f_expression)
+  ! in: f_n_size 0D_NOT_integer
+  f_n_size = n_size
+  ! in: f_use_good_user 0D_NOT_logical
+  f_use_good_user = use_good_user
+  !! container general array (1D_ALLOC_real)
+  if (c_associated(value))   call c_f_pointer(value, f_value)
+  ! in: f_print_err 0D_NOT_logical
+  if (c_associated(print_err)) then
+    call c_f_pointer(print_err, f_print_err_ptr)
+    f_print_err_native = f_print_err_ptr
+    f_print_err_native_ptr => f_print_err_native
+  else
+    f_print_err_native_ptr => null()
+  endif
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(info))   call c_f_pointer(info, f_info)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(stack))   call c_f_pointer(stack, f_stack)
+  ! in: f_dflt_component 0D_NOT_character
+  if (c_associated(dflt_component)) then
+    call c_f_pointer(dflt_component, f_dflt_component_ptr, [huge(0)])
+    call to_f_str(f_dflt_component_ptr, f_dflt_component)
+    f_dflt_component_call_ptr => f_dflt_component
+  else
+    f_dflt_component_call_ptr => null()
+  endif
+  ! in: f_dflt_source 0D_NOT_character
+  if (c_associated(dflt_source)) then
+    call c_f_pointer(dflt_source, f_dflt_source_ptr, [huge(0)])
+    call to_f_str(f_dflt_source_ptr, f_dflt_source)
+    f_dflt_source_call_ptr => f_dflt_source
+  else
+    f_dflt_source_call_ptr => null()
+  endif
+  ! in: f_dflt_ele_ref 0D_PTR_type
+  if (c_associated(dflt_ele_ref))   call c_f_pointer(dflt_ele_ref, f_dflt_ele_ref)
+  ! in: f_dflt_ele_start 0D_PTR_type
+  if (c_associated(dflt_ele_start))   call c_f_pointer(dflt_ele_start, f_dflt_ele_start)
+  ! in: f_dflt_ele 0D_PTR_type
+  if (c_associated(dflt_ele))   call c_f_pointer(dflt_ele, f_dflt_ele)
+  ! in: f_dflt_dat_or_var_index 0D_NOT_character
+  if (c_associated(dflt_dat_or_var_index)) then
+    call c_f_pointer(dflt_dat_or_var_index, f_dflt_dat_or_var_index_ptr, [huge(0)])
+    call to_f_str(f_dflt_dat_or_var_index_ptr, f_dflt_dat_or_var_index)
+    f_dflt_dat_or_var_index_call_ptr => f_dflt_dat_or_var_index
+  else
+    f_dflt_dat_or_var_index_call_ptr => null()
+  endif
+  ! in: f_dflt_uni 0D_NOT_integer
+  if (c_associated(dflt_uni)) then
+    call c_f_pointer(dflt_uni, f_dflt_uni_ptr)
+  else
+    f_dflt_uni_ptr => null()
+  endif
+  ! in: f_dflt_eval_point 0D_NOT_integer
+  if (c_associated(dflt_eval_point)) then
+    call c_f_pointer(dflt_eval_point, f_dflt_eval_point_ptr)
+  else
+    f_dflt_eval_point_ptr => null()
+  endif
+  ! in: f_dflt_s_offset 0D_NOT_real
+  if (c_associated(dflt_s_offset)) then
+    call c_f_pointer(dflt_s_offset, f_dflt_s_offset_ptr)
+  else
+    f_dflt_s_offset_ptr => null()
+  endif
+  ! in: f_dflt_orbit 0D_NOT_type
+  if (c_associated(dflt_orbit))   call c_f_pointer(dflt_orbit, f_dflt_orbit)
+  ! in: f_datum 0D_NOT_type
+  if (c_associated(datum))   call c_f_pointer(datum, f_datum)
+  call tao_evaluate_expression(f_expression, f_n_size, f_use_good_user, f_value%data, &
+      f_err_flag, f_print_err_native_ptr, f_info%data, f_stack%data, f_dflt_component_call_ptr, &
+      f_dflt_source_call_ptr, f_dflt_ele_ref, f_dflt_ele_start, f_dflt_ele, &
+      f_dflt_dat_or_var_index_call_ptr, f_dflt_uni_ptr, f_dflt_eval_point_ptr, &
+      f_dflt_s_offset_ptr, f_dflt_orbit, f_datum)
+
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
+end subroutine
+subroutine fortran_tao_evaluate_expression_new (expression, n_size, use_good_user, value, &
+    err_flag, print_err, info, stack, dflt_component, dflt_source, dflt_ele_ref, &
+    dflt_ele_start, dflt_ele, dflt_dat_or_var_index, dflt_uni, dflt_eval_point, dflt_s_offset, &
+    dflt_orbit, datum) bind(c)
+
+  use tao_struct, only: tao_data_struct, tao_eval_node_struct, tao_expression_info_struct
+  use bmad_struct, only: coord_struct, ele_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: expression
+  character(len=4096), target :: f_expression
+  character(kind=c_char), pointer :: f_expression_ptr(:)
+  integer(c_int) :: n_size  ! 0D_NOT_integer
+  integer :: f_n_size
+  logical(c_bool) :: use_good_user  ! 0D_NOT_logical
+  logical :: f_use_good_user
+  type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_err
+  logical, target :: f_print_err_native
+  logical, pointer :: f_print_err_native_ptr
+  logical(c_bool), pointer :: f_print_err_ptr
+  type(c_ptr), intent(in), value :: dflt_component
+  character(len=4096), target :: f_dflt_component
+  character(kind=c_char), pointer :: f_dflt_component_ptr(:)
+  character(len=4096), pointer :: f_dflt_component_call_ptr
+  type(c_ptr), intent(in), value :: dflt_source
+  character(len=4096), target :: f_dflt_source
+  character(kind=c_char), pointer :: f_dflt_source_ptr(:)
+  character(len=4096), pointer :: f_dflt_source_call_ptr
+  type(c_ptr), value :: dflt_ele_ref  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_dflt_ele_ref
+  type(c_ptr), value :: dflt_ele_start  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_dflt_ele_start
+  type(c_ptr), value :: dflt_ele  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_dflt_ele
+  type(c_ptr), intent(in), value :: dflt_dat_or_var_index
+  character(len=4096), target :: f_dflt_dat_or_var_index
+  character(kind=c_char), pointer :: f_dflt_dat_or_var_index_ptr(:)
+  character(len=4096), pointer :: f_dflt_dat_or_var_index_call_ptr
+  type(c_ptr), intent(in), value :: dflt_uni  ! 0D_NOT_integer
+  integer(c_int) :: f_dflt_uni
+  integer(c_int), pointer :: f_dflt_uni_ptr
+  type(c_ptr), intent(in), value :: dflt_eval_point  ! 0D_NOT_integer
+  integer(c_int) :: f_dflt_eval_point
+  integer(c_int), pointer :: f_dflt_eval_point_ptr
+  type(c_ptr), intent(in), value :: dflt_s_offset  ! 0D_NOT_real
+  real(c_double) :: f_dflt_s_offset
+  real(c_double), pointer :: f_dflt_s_offset_ptr
+  type(c_ptr), value :: dflt_orbit  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_dflt_orbit
+  type(c_ptr), value :: datum  ! 0D_NOT_type
+  type(tao_data_struct), pointer :: f_datum
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: value
+  type(real_container_alloc), pointer :: f_value
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  type(c_ptr), intent(in), value :: info
+  type(tao_expression_info_struct_container_alloc), pointer :: f_info
+  type(c_ptr), intent(in), value :: stack
+  type(tao_eval_node_struct_container_alloc), pointer :: f_stack
+  ! ** End of parameters **
+  ! in: f_expression 0D_NOT_character
+  if (.not. c_associated(expression)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(expression, f_expression_ptr, [huge(0)])
+  call to_f_str(f_expression_ptr, f_expression)
+  ! in: f_n_size 0D_NOT_integer
+  f_n_size = n_size
+  ! in: f_use_good_user 0D_NOT_logical
+  f_use_good_user = use_good_user
+  !! container general array (1D_ALLOC_real)
+  if (c_associated(value))   call c_f_pointer(value, f_value)
+  ! in: f_print_err 0D_NOT_logical
+  if (c_associated(print_err)) then
+    call c_f_pointer(print_err, f_print_err_ptr)
+    f_print_err_native = f_print_err_ptr
+    f_print_err_native_ptr => f_print_err_native
+  else
+    f_print_err_native_ptr => null()
+  endif
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(info))   call c_f_pointer(info, f_info)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(stack))   call c_f_pointer(stack, f_stack)
+  ! in: f_dflt_component 0D_NOT_character
+  if (c_associated(dflt_component)) then
+    call c_f_pointer(dflt_component, f_dflt_component_ptr, [huge(0)])
+    call to_f_str(f_dflt_component_ptr, f_dflt_component)
+    f_dflt_component_call_ptr => f_dflt_component
+  else
+    f_dflt_component_call_ptr => null()
+  endif
+  ! in: f_dflt_source 0D_NOT_character
+  if (c_associated(dflt_source)) then
+    call c_f_pointer(dflt_source, f_dflt_source_ptr, [huge(0)])
+    call to_f_str(f_dflt_source_ptr, f_dflt_source)
+    f_dflt_source_call_ptr => f_dflt_source
+  else
+    f_dflt_source_call_ptr => null()
+  endif
+  ! in: f_dflt_ele_ref 0D_PTR_type
+  if (c_associated(dflt_ele_ref))   call c_f_pointer(dflt_ele_ref, f_dflt_ele_ref)
+  ! in: f_dflt_ele_start 0D_PTR_type
+  if (c_associated(dflt_ele_start))   call c_f_pointer(dflt_ele_start, f_dflt_ele_start)
+  ! in: f_dflt_ele 0D_PTR_type
+  if (c_associated(dflt_ele))   call c_f_pointer(dflt_ele, f_dflt_ele)
+  ! in: f_dflt_dat_or_var_index 0D_NOT_character
+  if (c_associated(dflt_dat_or_var_index)) then
+    call c_f_pointer(dflt_dat_or_var_index, f_dflt_dat_or_var_index_ptr, [huge(0)])
+    call to_f_str(f_dflt_dat_or_var_index_ptr, f_dflt_dat_or_var_index)
+    f_dflt_dat_or_var_index_call_ptr => f_dflt_dat_or_var_index
+  else
+    f_dflt_dat_or_var_index_call_ptr => null()
+  endif
+  ! in: f_dflt_uni 0D_NOT_integer
+  if (c_associated(dflt_uni)) then
+    call c_f_pointer(dflt_uni, f_dflt_uni_ptr)
+  else
+    f_dflt_uni_ptr => null()
+  endif
+  ! in: f_dflt_eval_point 0D_NOT_integer
+  if (c_associated(dflt_eval_point)) then
+    call c_f_pointer(dflt_eval_point, f_dflt_eval_point_ptr)
+  else
+    f_dflt_eval_point_ptr => null()
+  endif
+  ! in: f_dflt_s_offset 0D_NOT_real
+  if (c_associated(dflt_s_offset)) then
+    call c_f_pointer(dflt_s_offset, f_dflt_s_offset_ptr)
+  else
+    f_dflt_s_offset_ptr => null()
+  endif
+  ! in: f_dflt_orbit 0D_NOT_type
+  if (c_associated(dflt_orbit))   call c_f_pointer(dflt_orbit, f_dflt_orbit)
+  ! in: f_datum 0D_NOT_type
+  if (c_associated(datum))   call c_f_pointer(datum, f_datum)
+  call tao_evaluate_expression_new(f_expression, f_n_size, f_use_good_user, f_value%data, &
+      f_err_flag, f_print_err_native_ptr, f_info%data, f_stack%data, f_dflt_component_call_ptr, &
+      f_dflt_source_call_ptr, f_dflt_ele_ref, f_dflt_ele_start, f_dflt_ele, &
+      f_dflt_dat_or_var_index_call_ptr, f_dflt_uni_ptr, f_dflt_eval_point_ptr, &
+      f_dflt_s_offset_ptr, f_dflt_orbit, f_datum)
+
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
+end subroutine
+subroutine fortran_tao_evaluate_expression_old (expression, n_size, use_good_user, value, &
+    err_flag, print_err, info, stack, dflt_component, dflt_source, dflt_ele_ref, &
+    dflt_ele_start, dflt_ele, dflt_dat_or_var_index, dflt_uni, dflt_eval_point, dflt_s_offset, &
+    dflt_orbit, datum) bind(c)
+
+  use tao_struct, only: tao_data_struct, tao_eval_node_struct, tao_expression_info_struct
+  use bmad_struct, only: coord_struct, ele_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: expression
+  character(len=4096), target :: f_expression
+  character(kind=c_char), pointer :: f_expression_ptr(:)
+  integer(c_int) :: n_size  ! 0D_NOT_integer
+  integer :: f_n_size
+  logical(c_bool) :: use_good_user  ! 0D_NOT_logical
+  logical :: f_use_good_user
+  type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_err
+  logical, target :: f_print_err_native
+  logical, pointer :: f_print_err_native_ptr
+  logical(c_bool), pointer :: f_print_err_ptr
+  type(c_ptr), intent(in), value :: dflt_component
+  character(len=4096), target :: f_dflt_component
+  character(kind=c_char), pointer :: f_dflt_component_ptr(:)
+  character(len=4096), pointer :: f_dflt_component_call_ptr
+  type(c_ptr), intent(in), value :: dflt_source
+  character(len=4096), target :: f_dflt_source
+  character(kind=c_char), pointer :: f_dflt_source_ptr(:)
+  character(len=4096), pointer :: f_dflt_source_call_ptr
+  type(c_ptr), value :: dflt_ele_ref  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_dflt_ele_ref
+  type(c_ptr), value :: dflt_ele_start  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_dflt_ele_start
+  type(c_ptr), value :: dflt_ele  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_dflt_ele
+  type(c_ptr), intent(in), value :: dflt_dat_or_var_index
+  character(len=4096), target :: f_dflt_dat_or_var_index
+  character(kind=c_char), pointer :: f_dflt_dat_or_var_index_ptr(:)
+  character(len=4096), pointer :: f_dflt_dat_or_var_index_call_ptr
+  type(c_ptr), intent(in), value :: dflt_uni  ! 0D_NOT_integer
+  integer(c_int) :: f_dflt_uni
+  integer(c_int), pointer :: f_dflt_uni_ptr
+  type(c_ptr), intent(in), value :: dflt_eval_point  ! 0D_NOT_integer
+  integer(c_int) :: f_dflt_eval_point
+  integer(c_int), pointer :: f_dflt_eval_point_ptr
+  type(c_ptr), intent(in), value :: dflt_s_offset  ! 0D_NOT_real
+  real(c_double) :: f_dflt_s_offset
+  real(c_double), pointer :: f_dflt_s_offset_ptr
+  type(c_ptr), value :: dflt_orbit  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_dflt_orbit
+  type(c_ptr), value :: datum  ! 0D_NOT_type
+  type(tao_data_struct), pointer :: f_datum
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: value
+  type(real_container_alloc), pointer :: f_value
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  type(c_ptr), intent(in), value :: info
+  type(tao_expression_info_struct_container_alloc), pointer :: f_info
+  type(c_ptr), intent(in), value :: stack
+  type(tao_eval_node_struct_container_alloc), pointer :: f_stack
+  ! ** End of parameters **
+  ! in: f_expression 0D_NOT_character
+  if (.not. c_associated(expression)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(expression, f_expression_ptr, [huge(0)])
+  call to_f_str(f_expression_ptr, f_expression)
+  ! in: f_n_size 0D_NOT_integer
+  f_n_size = n_size
+  ! in: f_use_good_user 0D_NOT_logical
+  f_use_good_user = use_good_user
+  !! container general array (1D_ALLOC_real)
+  if (c_associated(value))   call c_f_pointer(value, f_value)
+  ! in: f_print_err 0D_NOT_logical
+  if (c_associated(print_err)) then
+    call c_f_pointer(print_err, f_print_err_ptr)
+    f_print_err_native = f_print_err_ptr
+    f_print_err_native_ptr => f_print_err_native
+  else
+    f_print_err_native_ptr => null()
+  endif
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(info))   call c_f_pointer(info, f_info)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(stack))   call c_f_pointer(stack, f_stack)
+  ! in: f_dflt_component 0D_NOT_character
+  if (c_associated(dflt_component)) then
+    call c_f_pointer(dflt_component, f_dflt_component_ptr, [huge(0)])
+    call to_f_str(f_dflt_component_ptr, f_dflt_component)
+    f_dflt_component_call_ptr => f_dflt_component
+  else
+    f_dflt_component_call_ptr => null()
+  endif
+  ! in: f_dflt_source 0D_NOT_character
+  if (c_associated(dflt_source)) then
+    call c_f_pointer(dflt_source, f_dflt_source_ptr, [huge(0)])
+    call to_f_str(f_dflt_source_ptr, f_dflt_source)
+    f_dflt_source_call_ptr => f_dflt_source
+  else
+    f_dflt_source_call_ptr => null()
+  endif
+  ! in: f_dflt_ele_ref 0D_PTR_type
+  if (c_associated(dflt_ele_ref))   call c_f_pointer(dflt_ele_ref, f_dflt_ele_ref)
+  ! in: f_dflt_ele_start 0D_PTR_type
+  if (c_associated(dflt_ele_start))   call c_f_pointer(dflt_ele_start, f_dflt_ele_start)
+  ! in: f_dflt_ele 0D_PTR_type
+  if (c_associated(dflt_ele))   call c_f_pointer(dflt_ele, f_dflt_ele)
+  ! in: f_dflt_dat_or_var_index 0D_NOT_character
+  if (c_associated(dflt_dat_or_var_index)) then
+    call c_f_pointer(dflt_dat_or_var_index, f_dflt_dat_or_var_index_ptr, [huge(0)])
+    call to_f_str(f_dflt_dat_or_var_index_ptr, f_dflt_dat_or_var_index)
+    f_dflt_dat_or_var_index_call_ptr => f_dflt_dat_or_var_index
+  else
+    f_dflt_dat_or_var_index_call_ptr => null()
+  endif
+  ! in: f_dflt_uni 0D_NOT_integer
+  if (c_associated(dflt_uni)) then
+    call c_f_pointer(dflt_uni, f_dflt_uni_ptr)
+  else
+    f_dflt_uni_ptr => null()
+  endif
+  ! in: f_dflt_eval_point 0D_NOT_integer
+  if (c_associated(dflt_eval_point)) then
+    call c_f_pointer(dflt_eval_point, f_dflt_eval_point_ptr)
+  else
+    f_dflt_eval_point_ptr => null()
+  endif
+  ! in: f_dflt_s_offset 0D_NOT_real
+  if (c_associated(dflt_s_offset)) then
+    call c_f_pointer(dflt_s_offset, f_dflt_s_offset_ptr)
+  else
+    f_dflt_s_offset_ptr => null()
+  endif
+  ! in: f_dflt_orbit 0D_NOT_type
+  if (c_associated(dflt_orbit))   call c_f_pointer(dflt_orbit, f_dflt_orbit)
+  ! in: f_datum 0D_NOT_type
+  if (c_associated(datum))   call c_f_pointer(datum, f_datum)
+  call tao_evaluate_expression_old(f_expression, f_n_size, f_use_good_user, f_value%data, &
+      f_err_flag, f_print_err_native_ptr, f_info%data, f_stack%data, f_dflt_component_call_ptr, &
+      f_dflt_source_call_ptr, f_dflt_ele_ref, f_dflt_ele_start, f_dflt_ele, &
+      f_dflt_dat_or_var_index_call_ptr, f_dflt_uni_ptr, f_dflt_eval_point_ptr, &
+      f_dflt_s_offset_ptr, f_dflt_orbit, f_datum)
+
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
+end subroutine
 subroutine fortran_tao_evaluate_lat_or_beam_data (err, data_name, values, print_err, &
     default_source, dflt_ele_ref, dflt_ele_start, dflt_ele, dflt_component, dflt_uni, &
     dflt_eval_point, dflt_s_offset) bind(c)
@@ -2448,6 +3003,126 @@ subroutine fortran_tao_evaluate_lat_or_beam_data (err, data_name, values, print_
   ! inout: f_default_source 0D_NOT_character
   ! TODO i/o string (max length issue; buffer overflow...)
 end subroutine
+subroutine fortran_tao_evaluate_stack_old (stack, n_size_in, use_good_user, value, err_flag, &
+    print_err, expression, info_in) bind(c)
+
+  use tao_struct, only: tao_eval_node_struct, tao_expression_info_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: stack
+  type(tao_eval_node_struct_container_alloc), pointer :: f_stack
+  integer(c_int) :: n_size_in  ! 0D_NOT_integer
+  integer :: f_n_size_in
+  logical(c_bool) :: use_good_user  ! 0D_NOT_logical
+  logical :: f_use_good_user
+  logical(c_bool) :: print_err  ! 0D_NOT_logical
+  logical :: f_print_err
+  type(c_ptr), intent(in), value :: expression
+  character(len=4096), target :: f_expression
+  character(kind=c_char), pointer :: f_expression_ptr(:)
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: value
+  type(real_container_alloc), pointer :: f_value
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: info_in
+  type(tao_expression_info_struct_container_alloc), pointer :: f_info_in
+  ! ** End of parameters **
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(stack))   call c_f_pointer(stack, f_stack)
+  ! in: f_n_size_in 0D_NOT_integer
+  f_n_size_in = n_size_in
+  ! in: f_use_good_user 0D_NOT_logical
+  f_use_good_user = use_good_user
+  !! container general array (1D_ALLOC_real)
+  if (c_associated(value))   call c_f_pointer(value, f_value)
+  ! in: f_print_err 0D_NOT_logical
+  f_print_err = print_err
+  ! in: f_expression 0D_NOT_character
+  if (.not. c_associated(expression)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(expression, f_expression_ptr, [huge(0)])
+  call to_f_str(f_expression_ptr, f_expression)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(info_in))   call c_f_pointer(info_in, f_info_in)
+  call tao_evaluate_stack_old(f_stack%data, f_n_size_in, f_use_good_user, f_value%data, &
+      f_err_flag, f_print_err, f_expression, f_info_in%data)
+
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
+end subroutine
+subroutine fortran_tao_evaluate_tree (tao_tree, n_size, use_good_user, value, err_flag, &
+    print_err, expression, info_in) bind(c)
+
+  use tao_struct, only: tao_eval_node_struct, tao_expression_info_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: tao_tree  ! 0D_NOT_type
+  type(tao_eval_node_struct), pointer :: f_tao_tree
+  logical(c_bool) :: use_good_user  ! 0D_NOT_logical
+  logical :: f_use_good_user
+  logical(c_bool) :: print_err  ! 0D_NOT_logical
+  logical :: f_print_err
+  type(c_ptr), intent(in), value :: expression
+  character(len=4096), target :: f_expression
+  character(kind=c_char), pointer :: f_expression_ptr(:)
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: value
+  type(real_container_alloc), pointer :: f_value
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: n_size  ! 0D_NOT_integer
+  integer(c_int) :: f_n_size
+  integer(c_int), pointer :: f_n_size_ptr
+  type(c_ptr), intent(in), value :: info_in
+  type(tao_expression_info_struct_container_alloc), pointer :: f_info_in
+  ! ** End of parameters **
+  ! in: f_tao_tree 0D_NOT_type
+  if (.not. c_associated(tao_tree)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(tao_tree, f_tao_tree)
+  ! inout: f_n_size 0D_NOT_integer
+  if (c_associated(n_size)) then
+    call c_f_pointer(n_size, f_n_size_ptr)
+  else
+    f_n_size_ptr => null()
+  endif
+  ! in: f_use_good_user 0D_NOT_logical
+  f_use_good_user = use_good_user
+  !! container general array (1D_ALLOC_real)
+  if (c_associated(value))   call c_f_pointer(value, f_value)
+  ! in: f_print_err 0D_NOT_logical
+  f_print_err = print_err
+  ! in: f_expression 0D_NOT_character
+  if (.not. c_associated(expression)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(expression, f_expression_ptr, [huge(0)])
+  call to_f_str(f_expression_ptr, f_expression)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(info_in))   call c_f_pointer(info_in, f_info_in)
+  call tao_evaluate_tree(f_tao_tree, f_n_size_ptr, f_use_good_user, f_value%data, f_err_flag, &
+      f_print_err, f_expression, f_info_in%data)
+
+  ! inout: f_n_size 0D_NOT_integer
+  ! no output conversion for f_n_size
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
+end subroutine
 subroutine fortran_tao_evaluate_tune (q_str, q0, delta_input, q_val) bind(c)
 
   implicit none
@@ -2505,6 +3180,55 @@ subroutine fortran_tao_expression_hash_substitute (expression_in, expression_out
   ! out: f_expression_out 0D_NOT_character
   call c_f_pointer(expression_out, f_expression_out_ptr, [len_trim(f_expression_out) + 1]) ! output-only string
   call to_c_str(f_expression_out, f_expression_out_ptr)
+end subroutine
+subroutine fortran_tao_expression_tree_to_string (tree, include_root, n_node, parent, str_out) &
+    bind(c)
+
+  use tao_struct, only: tao_eval_node_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: tree  ! 0D_NOT_type
+  type(tao_eval_node_struct), pointer :: f_tree
+  type(c_ptr), intent(in), value :: include_root  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_include_root
+  logical, target :: f_include_root_native
+  logical, pointer :: f_include_root_native_ptr
+  logical(c_bool), pointer :: f_include_root_ptr
+  type(c_ptr), intent(in), value :: n_node  ! 0D_NOT_integer
+  integer(c_int) :: f_n_node
+  integer(c_int), pointer :: f_n_node_ptr
+  type(c_ptr), value :: parent  ! 0D_NOT_type
+  type(tao_eval_node_struct), pointer :: f_parent
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: str_out
+  character(len=4096), target :: f_str_out
+  character(kind=c_char), pointer :: f_str_out_ptr(:)
+  ! ** End of parameters **
+  ! in: f_tree 0D_NOT_type
+  if (.not. c_associated(tree)) return
+  call c_f_pointer(tree, f_tree)
+  ! in: f_include_root 0D_NOT_logical
+  if (c_associated(include_root)) then
+    call c_f_pointer(include_root, f_include_root_ptr)
+    f_include_root_native = f_include_root_ptr
+    f_include_root_native_ptr => f_include_root_native
+  else
+    f_include_root_native_ptr => null()
+  endif
+  ! in: f_n_node 0D_NOT_integer
+  if (c_associated(n_node)) then
+    call c_f_pointer(n_node, f_n_node_ptr)
+  else
+    f_n_node_ptr => null()
+  endif
+  ! in: f_parent 0D_NOT_type
+  if (c_associated(parent))   call c_f_pointer(parent, f_parent)
+  f_str_out = tao_expression_tree_to_string(f_tree, f_include_root_native_ptr, f_n_node_ptr, &
+      f_parent)
+
+  ! out: f_str_out 0D_ALLOC_character
+  call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1]) ! output-only string
+  call to_c_str(f_str_out, f_str_out_ptr)
 end subroutine
 subroutine fortran_tao_find_plot_region (err, where, region, print_flag) bind(c)
 
@@ -4273,6 +4997,200 @@ subroutine fortran_tao_param_value_at_s (dat_name, ele_to_s, ele_here, orbit, er
   call c_f_pointer(value, f_value_ptr)
   f_value_ptr = f_value
 end subroutine
+subroutine fortran_tao_param_value_routine (str, use_good_user, saved_prefix, stack, err_flag, &
+    print_err, dflt_component, dflt_source, dflt_ele_ref, dflt_ele_start, dflt_ele, &
+    dflt_dat_or_var_index, dflt_uni, dflt_eval_point, dflt_s_offset, dflt_orbit, datum) bind(c)
+
+  use tao_struct, only: tao_data_struct, tao_eval_node_struct
+  use bmad_struct, only: coord_struct, ele_struct
+  implicit none
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: str
+  character(len=4096), target :: f_str
+  character(kind=c_char), pointer :: f_str_ptr(:)
+  type(c_ptr), intent(in), value :: use_good_user  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_use_good_user
+  logical, target :: f_use_good_user_native
+  logical, pointer :: f_use_good_user_native_ptr
+  logical(c_bool), pointer :: f_use_good_user_ptr
+  type(c_ptr), intent(in), value :: saved_prefix
+  character(len=4096), target :: f_saved_prefix
+  character(kind=c_char), pointer :: f_saved_prefix_ptr(:)
+  type(c_ptr), value :: stack  ! 0D_NOT_type
+  type(tao_eval_node_struct), pointer :: f_stack
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_err_flag
+  logical, target :: f_err_flag_native
+  logical, pointer :: f_err_flag_native_ptr
+  logical(c_bool), pointer :: f_err_flag_ptr
+  type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_err
+  logical, target :: f_print_err_native
+  logical, pointer :: f_print_err_native_ptr
+  logical(c_bool), pointer :: f_print_err_ptr
+  type(c_ptr), intent(in), value :: dflt_component
+  character(len=4096), target :: f_dflt_component
+  character(kind=c_char), pointer :: f_dflt_component_ptr(:)
+  character(len=4096), pointer :: f_dflt_component_call_ptr
+  type(c_ptr), intent(in), value :: dflt_source
+  character(len=4096), target :: f_dflt_source
+  character(kind=c_char), pointer :: f_dflt_source_ptr(:)
+  character(len=4096), pointer :: f_dflt_source_call_ptr
+  type(c_ptr), value :: dflt_ele_ref  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_dflt_ele_ref
+  type(c_ptr), value :: dflt_ele_start  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_dflt_ele_start
+  type(c_ptr), value :: dflt_ele  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_dflt_ele
+  type(c_ptr), intent(in), value :: dflt_dat_or_var_index
+  character(len=4096), target :: f_dflt_dat_or_var_index
+  character(kind=c_char), pointer :: f_dflt_dat_or_var_index_ptr(:)
+  character(len=4096), pointer :: f_dflt_dat_or_var_index_call_ptr
+  type(c_ptr), intent(in), value :: dflt_uni  ! 0D_NOT_integer
+  integer(c_int) :: f_dflt_uni
+  integer(c_int), pointer :: f_dflt_uni_ptr
+  type(c_ptr), intent(in), value :: dflt_eval_point  ! 0D_NOT_integer
+  integer(c_int) :: f_dflt_eval_point
+  integer(c_int), pointer :: f_dflt_eval_point_ptr
+  type(c_ptr), intent(in), value :: dflt_s_offset  ! 0D_NOT_real
+  real(c_double) :: f_dflt_s_offset
+  real(c_double), pointer :: f_dflt_s_offset_ptr
+  type(c_ptr), value :: dflt_orbit  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_dflt_orbit
+  type(c_ptr), value :: datum  ! 0D_NOT_type
+  type(tao_data_struct), pointer :: f_datum
+  ! ** End of parameters **
+  ! inout: f_str 0D_NOT_character
+  if (.not. c_associated(str)) return
+  call c_f_pointer(str, f_str_ptr, [huge(0)])
+  call to_f_str(f_str_ptr, f_str)
+  ! inout: f_use_good_user 0D_NOT_logical
+  if (c_associated(use_good_user)) then
+    call c_f_pointer(use_good_user, f_use_good_user_ptr)
+    f_use_good_user_native = f_use_good_user_ptr
+    f_use_good_user_native_ptr => f_use_good_user_native
+  else
+    f_use_good_user_native_ptr => null()
+  endif
+  ! inout: f_saved_prefix 0D_NOT_character
+  if (.not. c_associated(saved_prefix)) return
+  call c_f_pointer(saved_prefix, f_saved_prefix_ptr, [huge(0)])
+  call to_f_str(f_saved_prefix_ptr, f_saved_prefix)
+  ! inout: f_stack 0D_NOT_type
+  if (.not. c_associated(stack)) return
+  call c_f_pointer(stack, f_stack)
+  ! inout: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_native = f_err_flag_ptr
+    f_err_flag_native_ptr => f_err_flag_native
+  else
+    f_err_flag_native_ptr => null()
+  endif
+  ! inout: f_print_err 0D_NOT_logical
+  if (c_associated(print_err)) then
+    call c_f_pointer(print_err, f_print_err_ptr)
+    f_print_err_native = f_print_err_ptr
+    f_print_err_native_ptr => f_print_err_native
+  else
+    f_print_err_native_ptr => null()
+  endif
+  ! inout: f_dflt_component 0D_NOT_character
+  if (c_associated(dflt_component)) then
+    call c_f_pointer(dflt_component, f_dflt_component_ptr, [huge(0)])
+    call to_f_str(f_dflt_component_ptr, f_dflt_component)
+    f_dflt_component_call_ptr => f_dflt_component
+  else
+    f_dflt_component_call_ptr => null()
+  endif
+  ! inout: f_dflt_source 0D_NOT_character
+  if (c_associated(dflt_source)) then
+    call c_f_pointer(dflt_source, f_dflt_source_ptr, [huge(0)])
+    call to_f_str(f_dflt_source_ptr, f_dflt_source)
+    f_dflt_source_call_ptr => f_dflt_source
+  else
+    f_dflt_source_call_ptr => null()
+  endif
+  ! inout: f_dflt_ele_ref 0D_PTR_type
+  if (c_associated(dflt_ele_ref))   call c_f_pointer(dflt_ele_ref, f_dflt_ele_ref)
+  ! inout: f_dflt_ele_start 0D_PTR_type
+  if (c_associated(dflt_ele_start))   call c_f_pointer(dflt_ele_start, f_dflt_ele_start)
+  ! inout: f_dflt_ele 0D_PTR_type
+  if (c_associated(dflt_ele))   call c_f_pointer(dflt_ele, f_dflt_ele)
+  ! inout: f_dflt_dat_or_var_index 0D_NOT_character
+  if (c_associated(dflt_dat_or_var_index)) then
+    call c_f_pointer(dflt_dat_or_var_index, f_dflt_dat_or_var_index_ptr, [huge(0)])
+    call to_f_str(f_dflt_dat_or_var_index_ptr, f_dflt_dat_or_var_index)
+    f_dflt_dat_or_var_index_call_ptr => f_dflt_dat_or_var_index
+  else
+    f_dflt_dat_or_var_index_call_ptr => null()
+  endif
+  ! inout: f_dflt_uni 0D_NOT_integer
+  if (c_associated(dflt_uni)) then
+    call c_f_pointer(dflt_uni, f_dflt_uni_ptr)
+  else
+    f_dflt_uni_ptr => null()
+  endif
+  ! inout: f_dflt_eval_point 0D_NOT_integer
+  if (c_associated(dflt_eval_point)) then
+    call c_f_pointer(dflt_eval_point, f_dflt_eval_point_ptr)
+  else
+    f_dflt_eval_point_ptr => null()
+  endif
+  ! inout: f_dflt_s_offset 0D_NOT_real
+  if (c_associated(dflt_s_offset)) then
+    call c_f_pointer(dflt_s_offset, f_dflt_s_offset_ptr)
+  else
+    f_dflt_s_offset_ptr => null()
+  endif
+  ! inout: f_dflt_orbit 0D_NOT_type
+  if (c_associated(dflt_orbit))   call c_f_pointer(dflt_orbit, f_dflt_orbit)
+  ! inout: f_datum 0D_NOT_type
+  if (c_associated(datum))   call c_f_pointer(datum, f_datum)
+  call tao_param_value_routine(f_str, f_use_good_user_native_ptr, f_saved_prefix, f_stack, &
+      f_err_flag_native_ptr, f_print_err_native_ptr, f_dflt_component_call_ptr, &
+      f_dflt_source_call_ptr, f_dflt_ele_ref, f_dflt_ele_start, f_dflt_ele, &
+      f_dflt_dat_or_var_index_call_ptr, f_dflt_uni_ptr, f_dflt_eval_point_ptr, &
+      f_dflt_s_offset_ptr, f_dflt_orbit, f_datum)
+
+  ! inout: f_str 0D_NOT_character
+  ! TODO i/o string (max length issue; buffer overflow...)
+  ! inout: f_use_good_user 0D_NOT_logical
+  if (c_associated(use_good_user)) then
+    call c_f_pointer(use_good_user, f_use_good_user_ptr)
+    f_use_good_user_ptr = f_use_good_user_native
+  else
+    ! f_use_good_user unset
+  endif
+  ! inout: f_saved_prefix 0D_NOT_character
+  ! TODO i/o string (max length issue; buffer overflow...)
+  ! inout: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = f_err_flag_native
+  else
+    ! f_err_flag unset
+  endif
+  ! inout: f_print_err 0D_NOT_logical
+  if (c_associated(print_err)) then
+    call c_f_pointer(print_err, f_print_err_ptr)
+    f_print_err_ptr = f_print_err_native
+  else
+    ! f_print_err unset
+  endif
+  ! inout: f_dflt_component 0D_NOT_character
+  ! TODO i/o string (max length issue; buffer overflow...)
+  ! inout: f_dflt_source 0D_NOT_character
+  ! TODO i/o string (max length issue; buffer overflow...)
+  ! inout: f_dflt_dat_or_var_index 0D_NOT_character
+  ! TODO i/o string (max length issue; buffer overflow...)
+  ! inout: f_dflt_uni 0D_NOT_integer
+  ! no output conversion for f_dflt_uni
+  ! inout: f_dflt_eval_point 0D_NOT_integer
+  ! no output conversion for f_dflt_eval_point
+  ! inout: f_dflt_s_offset 0D_NOT_real
+  ! no output conversion for f_dflt_s_offset
+end subroutine
 subroutine fortran_tao_parse_command_args (error, cmd_line) bind(c)
 
   implicit none
@@ -5210,6 +6128,69 @@ subroutine fortran_tao_rad_int_calc_needed (data_type, data_source, do_rad_int) 
   ! out: f_do_rad_int 0D_NOT_logical
   call c_f_pointer(do_rad_int, f_do_rad_int_ptr)
   f_do_rad_int_ptr = f_do_rad_int
+end subroutine
+subroutine fortran_tao_re_allocate_expression_info (info, n, exact) bind(c)
+
+  use tao_struct, only: tao_expression_info_struct
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: n  ! 0D_NOT_integer
+  integer :: f_n
+  type(c_ptr), intent(in), value :: exact  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_exact
+  logical, target :: f_exact_native
+  logical, pointer :: f_exact_native_ptr
+  logical(c_bool), pointer :: f_exact_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: info
+  type(tao_expression_info_struct_container_alloc), pointer :: f_info
+  ! ** End of parameters **
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(info))   call c_f_pointer(info, f_info)
+  ! in: f_n 0D_NOT_integer
+  f_n = n
+  ! in: f_exact 0D_NOT_logical
+  if (c_associated(exact)) then
+    call c_f_pointer(exact, f_exact_ptr)
+    f_exact_native = f_exact_ptr
+    f_exact_native_ptr => f_exact_native
+  else
+    f_exact_native_ptr => null()
+  endif
+  call tao_re_allocate_expression_info(f_info%data, f_n, f_exact_native_ptr)
+
+end subroutine
+subroutine fortran_tao_re_associate_node_array (tree, n, exact) bind(c)
+
+  use tao_struct, only: tao_eval_node_struct
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: n  ! 0D_NOT_integer
+  integer :: f_n
+  type(c_ptr), intent(in), value :: exact  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_exact
+  logical, target :: f_exact_native
+  logical, pointer :: f_exact_native_ptr
+  logical(c_bool), pointer :: f_exact_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: tree  ! 0D_NOT_type
+  type(tao_eval_node_struct), pointer :: f_tree
+  ! ** End of parameters **
+  ! inout: f_tree 0D_NOT_type
+  if (.not. c_associated(tree)) return
+  call c_f_pointer(tree, f_tree)
+  ! in: f_n 0D_NOT_integer
+  f_n = n
+  ! in: f_exact 0D_NOT_logical
+  if (c_associated(exact)) then
+    call c_f_pointer(exact, f_exact_ptr)
+    f_exact_native = f_exact_ptr
+    f_exact_native_ptr => f_exact_native
+  else
+    f_exact_native_ptr => null()
+  endif
+  call tao_re_associate_node_array(f_tree, f_n, f_exact_native_ptr)
+
 end subroutine
 subroutine fortran_tao_re_execute (string, err) bind(c)
 
@@ -7662,6 +8643,29 @@ subroutine fortran_tao_turn_on_special_calcs_if_needed_for_plotting () bind(c)
   implicit none
   ! ** End of parameters **
   call tao_turn_on_special_calcs_if_needed_for_plotting()
+
+end subroutine
+subroutine fortran_tao_type_expression_tree (tree, indent) bind(c)
+
+  use tao_struct, only: tao_eval_node_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: tree  ! 0D_NOT_type
+  type(tao_eval_node_struct), pointer :: f_tree
+  type(c_ptr), intent(in), value :: indent  ! 0D_NOT_integer
+  integer(c_int) :: f_indent
+  integer(c_int), pointer :: f_indent_ptr
+  ! ** End of parameters **
+  ! in: f_tree 0D_NOT_type
+  if (.not. c_associated(tree)) return
+  call c_f_pointer(tree, f_tree)
+  ! in: f_indent 0D_NOT_integer
+  if (c_associated(indent)) then
+    call c_f_pointer(indent, f_indent_ptr)
+  else
+    f_indent_ptr => null()
+  endif
+  call tao_type_expression_tree(f_tree, f_indent_ptr)
 
 end subroutine
 subroutine fortran_tao_uni_atsign_index (string, ix_amp) bind(c)

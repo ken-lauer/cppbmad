@@ -2294,6 +2294,17 @@ void init_Bmad_routines_p(py::module& m) {
   negative length which of the possible elements is actually chosen is ill-defined.
   )""");
   m.def(
+      "pointer_to_fibre",
+      &Bmad::pointer_to_fibre,
+      py::arg("ele"),
+      py::arg("assoc_fibre"),
+      R"""(Parameters
+  ----------
+  ele : EleStruct
+      Bmad element
+  assoc_fibre : 
+  )""");
+  m.def(
       "pointer_to_field_ele",
       &Bmad::pointer_to_field_ele,
       py::arg("ele"),
@@ -2864,6 +2875,87 @@ void init_Bmad_routines_p(py::module& m) {
   ----------
   lat : LatStruct
       Bmad lattice.
+  )""");
+  m.def(
+      "ptc_calculate_tracking_step_size",
+      &Bmad::ptc_calculate_tracking_step_size,
+      py::arg("ptc_layout"),
+      py::arg("kl_max"),
+      py::arg("ds_max") = py::none(),
+      py::arg("even_steps") = py::none(),
+      py::arg("r_typical") = py::none(),
+      py::arg("dx_tol_bend") = py::none(),
+      py::arg("use_2nd_order") = py::none(),
+      py::arg("crossover") = py::none(),
+      py::arg("crossover_wiggler") = py::none(),
+      R"""(Subroutine ptc_calculate_tracking_step_size (ptc_layout, kl_max, ds_max,
+                                  even_steps, r_typical, dx_tol_bend, use_2nd_order)
+
+  Routine to calculate the optimum number of tracking steps and order
+  of the integrator (2, 4, or 6) for each fibre in a layout.
+
+  See the Bmad manual chapter on PTC for more details.
+
+  Parameters
+  ----------
+  ptc_layout : unknown
+      This parameter is an input/output and is modified in-place. As an output: Lattice with the optimum number
+      of tracking steps and integrator order.
+  kl_max : float
+      Maximum K1*L per tracking step.
+  ds_max : float
+      Maximum ds for any step. Useful when including other physicas like space charge.
+  even_steps : bool, optional
+      Always use an even number of steps for a fibre? Useful if need to evaluate at the center of fibres.
+  r_typical : float, optional
+      Typical transverse offset. Used for computing the effective contribution of K1*L due to sextupoles.
+  dx_tol_bend : float
+      Tolerable residual orbit in a bend.
+  use_2nd_order : bool, optional
+      If present and True then force the use of 2nd order integrator.
+  crossover : int, optional
+      crossover points between orders for all elements except wigglers. Default is [4, 18].
+  crossover_wiggler(2) : int, optional
+      crossover points for wigglers. Default is [30, 60]. -- integer, optional: crossover points for wigglers.
+      Default is [30, 60].
+  )""");
+  py::class_<
+      Bmad::PtcCheckForLostParticle,
+      std::unique_ptr<Bmad::PtcCheckForLostParticle>>(
+      m, "PtcCheckForLostParticle", "ptc_check_for_lost_particle return type")
+      .def_readonly("state", &Bmad::PtcCheckForLostParticle::state)
+      .def_readonly("ptc_fibre", &Bmad::PtcCheckForLostParticle::ptc_fibre)
+      .def("__len__", [](const Bmad::PtcCheckForLostParticle&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Bmad::PtcCheckForLostParticle& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.state);
+            if (i == 1)
+              return py::cast(s.ptc_fibre);
+            throw py::index_error();
+          });
+  m.def(
+      "ptc_check_for_lost_particle",
+      &Bmad::ptc_check_for_lost_particle,
+      py::arg("do_reset"),
+      R"""(Subroutine ptc_check_for_lost_particle (state, ptc_fibre, do_reset)
+
+  Routine to check if a particle has been lost when tracking with PTC.
+
+  Parameters
+  ----------
+  do_reset : bool
+      If True then reset ptc flags.
+
+  Returns
+  -------
+  state : int
+      Same as coord_struct.state. alive$, lost$, lost_neg_x$, etc.
+  ptc_fibre : unknown
+      Pointer to fibre where particle lost. Nullified if particle alive.
   )""");
   m.def(
       "ptc_closed_orbit_calc",

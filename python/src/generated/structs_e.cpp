@@ -88,6 +88,8 @@ void init_ele_struct(py::module& m, py::class_<EleProxy>& cls) {
       .def_property("rf", &EleProxy::rf, &EleProxy::set_rf)
       // EleProxy.lord (0D_PTR_type - Pointer to a slice lord.
       .def_property("lord", &EleProxy::lord, &EleProxy::set_lord)
+      // EleProxy.ptc_fibre (0D_PTR_type - PTC track corresponding to this ele.
+      .def_property("ptc_fibre", &EleProxy::ptc_fibre, &EleProxy::set_ptc_fibre)
       // EleProxy.floor (0D_NOT_type -
       .def_property("floor", &EleProxy::floor, &EleProxy::set_floor)
       // EleProxy.high_energy_space_charge (0D_PTR_type -

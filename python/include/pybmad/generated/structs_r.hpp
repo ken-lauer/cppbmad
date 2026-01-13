@@ -1,6 +1,10 @@
 #pragma once
 #include <pybind11/pybind11.h>
+#include "bmad/generated/proxy.hpp"
+#include "pybmad/generated/structs.hpp"
 namespace py = pybind11;
+
+using namespace Bmad;
 
 // Per-struct init functions
 void init_rad_int1_struct(py::module& m, py::class_<RadInt1Proxy>& class_);

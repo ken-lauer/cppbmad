@@ -822,6 +822,13 @@ Bmad::BeamTilts Bmad::beam_tilts(FixedArray2D<Real, 6, 6> S) {
       /* double& */ _angle_ypz);
   return BeamTilts{_angle_xy, _angle_xz, _angle_yz, _angle_xpz, _angle_ypz};
 }
+FibreRawStruct Bmad::beambeam_fibre_setup(EleProxy& ele) {
+  FibreRawStruct _ptc_fibre;
+  fortran_beambeam_fibre_setup(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ _ptc_fibre.get_fortran_ptr());
+  return std::move(_ptc_fibre);
+}
 void Bmad::bend_edge_kick(
     EleProxy& ele,
     LatParamProxy& param,
@@ -2966,6 +2973,49 @@ void Bmad::ele_rf_step_index(
       /* void* */ ele.get_fortran_ptr(),
       /* int& */ ix_step);
 }
+Bmad::EleToFibre Bmad::ele_to_fibre(
+    EleProxy& ele,
+    bool use_offsets,
+    std::optional<int> integ_order,
+    std::optional<int> steps,
+    std::optional<bool> for_layout,
+    optional_ref<CoordProxy> ref_in) {
+  void* _ptc_fibre;
+  bool _err_flag{};
+  int integ_order_lvalue;
+  auto* _integ_order{&integ_order_lvalue};
+  if (integ_order.has_value()) {
+    integ_order_lvalue = integ_order.value();
+  } else {
+    _integ_order = nullptr;
+  }
+  int steps_lvalue;
+  auto* _steps{&steps_lvalue};
+  if (steps.has_value()) {
+    steps_lvalue = steps.value();
+  } else {
+    _steps = nullptr;
+  }
+  bool for_layout_lvalue;
+  auto* _for_layout{&for_layout_lvalue};
+  if (for_layout.has_value()) {
+    for_layout_lvalue = for_layout.value();
+  } else {
+    _for_layout = nullptr;
+  }
+  auto* _ref_in = ref_in.has_value() ? ref_in->get().get_fortran_ptr()
+                                     : nullptr; // input, optional
+  fortran_ele_to_fibre(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ &_ptc_fibre,
+      /* bool& */ use_offsets,
+      /* bool& */ _err_flag,
+      /* int* */ _integ_order,
+      /* int* */ _steps,
+      /* bool* */ _for_layout,
+      /* void* */ _ref_in);
+  return EleToFibre{std::move(FibreRawStruct(_ptc_fibre)), _err_flag};
+}
 Bmad::EleToPtcMagneticBnAn Bmad::ele_to_ptc_magnetic_bn_an(EleProxy& ele) {
   // intent=out allocatable general array
   auto bn{RealAlloc1D()};
@@ -4447,6 +4497,27 @@ int Bmad::fft1(RealAlloc1D& a, RealAlloc1D& b, int n, int isn) {
       /* int& */ _ierr);
   return _ierr;
 }
+bool Bmad::fibre_to_ele(
+    FibreRawStruct& ptc_fibre,
+    BranchProxy& branch,
+    int& ix_ele,
+    std::optional<bool> from_mad) {
+  bool _err_flag{};
+  bool from_mad_lvalue;
+  auto* _from_mad{&from_mad_lvalue};
+  if (from_mad.has_value()) {
+    from_mad_lvalue = from_mad.value();
+  } else {
+    _from_mad = nullptr;
+  }
+  fortran_fibre_to_ele(
+      /* void* */ ptc_fibre.get_fortran_ptr(),
+      /* void* */ branch.get_fortran_ptr(),
+      /* int& */ ix_ele,
+      /* bool& */ _err_flag,
+      /* bool* */ _from_mad);
+  return _err_flag;
+}
 bool Bmad::field_attribute_free(EleProxy& ele, std::string attrib_name) {
   auto _attrib_name = attrib_name.c_str();
   bool _free{};
@@ -5733,6 +5804,19 @@ void Bmad::integration_timer(
       /* void* */ orb_max.get_fortran_ptr(),
       /* double& */ tol);
 }
+void Bmad::integration_timer(
+    FibreRawStruct& a_fibre,
+    FixedArray1D<Real, 6> orbit,
+    FixedArray1D<Real, 6> orbit_max,
+    double tol_dp) {
+  auto* _orbit = orbit.data(); // CppWrapperGeneralArgument
+  auto* _orbit_max = orbit_max.data(); // CppWrapperGeneralArgument
+  fortran_integration_timer_fibre(
+      /* void* */ a_fibre.get_fortran_ptr(),
+      /* double* */ _orbit,
+      /* double* */ _orbit_max,
+      /* double& */ tol_dp);
+}
 FixedArray1D<Real, 3> Bmad::ion_kick(
     CoordProxy& orbit,
     FixedArray1D<Real, 2> r_beam,
@@ -6734,6 +6818,18 @@ int Bmad::mfft1(
       /* int& */ isn,
       /* int& */ _ierr);
   return _ierr;
+}
+FibreRawStruct Bmad::misalign_ptc_fibre(
+    EleProxy& ele,
+    bool use_offsets,
+    bool for_layout) {
+  void* _ptc_fibre;
+  fortran_misalign_ptc_fibre(
+      /* void* */ ele.get_fortran_ptr(),
+      /* bool& */ use_offsets,
+      /* void* */ &_ptc_fibre,
+      /* bool& */ for_layout);
+  return std::move(FibreRawStruct(_ptc_fibre));
 }
 void Bmad::momentum_compaction(BranchProxy& branch, double& mom_comp) {
   fortran_momentum_compaction(
@@ -8446,6 +8542,11 @@ Bmad::PointerToElementAtS Bmad::pointer_to_element_at_s(
   return PointerToElementAtS{
       _err_flag, _s_eff, std::move(_position), std::move(EleProxy(_ele))};
 }
+void Bmad::pointer_to_fibre(EleProxy& ele, FibreRawStruct& assoc_fibre) {
+  auto _assoc_fibre = &assoc_fibre; // input, required, pointer
+  fortran_pointer_to_fibre(
+      /* void* */ ele.get_fortran_ptr(), /* void* */ &assoc_fibre);
+}
 double Bmad::pointer_to_field_ele(
     EleProxy& ele,
     int ix_field_ele,
@@ -8744,6 +8845,68 @@ double Bmad::psi_prime_sca(double t, double p, FixedArray1D<Real, 8> args) {
 }
 void Bmad::ptc_bookkeeper(LatProxy& lat) {
   fortran_ptc_bookkeeper(/* void* */ lat.get_fortran_ptr());
+}
+void Bmad::ptc_calculate_tracking_step_size(
+    LayoutRawStruct& ptc_layout,
+    double kl_max,
+    std::optional<double> ds_max,
+    std::optional<FixedArray1D<Bool, 2>> even_steps,
+    std::optional<double> r_typical,
+    std::optional<double> dx_tol_bend,
+    std::optional<bool> use_2nd_order,
+    std::optional<FixedArray1D<Int, 2>> crossover,
+    std::optional<FixedArray1D<Int, 2>> crossover_wiggler) {
+  double ds_max_lvalue;
+  auto* _ds_max{&ds_max_lvalue};
+  if (ds_max.has_value()) {
+    ds_max_lvalue = ds_max.value();
+  } else {
+    _ds_max = nullptr;
+  }
+  bool* _even_steps =
+      even_steps.has_value() ? even_steps.value().data() : nullptr;
+  double r_typical_lvalue;
+  auto* _r_typical{&r_typical_lvalue};
+  if (r_typical.has_value()) {
+    r_typical_lvalue = r_typical.value();
+  } else {
+    _r_typical = nullptr;
+  }
+  double dx_tol_bend_lvalue;
+  auto* _dx_tol_bend{&dx_tol_bend_lvalue};
+  if (dx_tol_bend.has_value()) {
+    dx_tol_bend_lvalue = dx_tol_bend.value();
+  } else {
+    _dx_tol_bend = nullptr;
+  }
+  bool use_2nd_order_lvalue;
+  auto* _use_2nd_order{&use_2nd_order_lvalue};
+  if (use_2nd_order.has_value()) {
+    use_2nd_order_lvalue = use_2nd_order.value();
+  } else {
+    _use_2nd_order = nullptr;
+  }
+  int* _crossover = crossover.has_value() ? crossover.value().data() : nullptr;
+  int* _crossover_wiggler = crossover_wiggler.has_value()
+      ? crossover_wiggler.value().data()
+      : nullptr;
+  fortran_ptc_calculate_tracking_step_size(
+      /* void* */ ptc_layout.get_fortran_ptr(),
+      /* double& */ kl_max,
+      /* double* */ _ds_max,
+      /* bool* */ _even_steps,
+      /* double* */ _r_typical,
+      /* double* */ _dx_tol_bend,
+      /* bool* */ _use_2nd_order,
+      /* int* */ _crossover,
+      /* int* */ _crossover_wiggler);
+}
+Bmad::PtcCheckForLostParticle Bmad::ptc_check_for_lost_particle(bool do_reset) {
+  int _state{};
+  void* _ptc_fibre;
+  fortran_ptc_check_for_lost_particle(
+      /* int& */ _state, /* void* */ &_ptc_fibre, /* bool& */ do_reset);
+  return PtcCheckForLostParticle{_state, std::move(FibreRawStruct(_ptc_fibre))};
 }
 CoordProxyAlloc1D Bmad::ptc_closed_orbit_calc(
     BranchProxy& branch,
@@ -13474,6 +13637,9 @@ void Bmad::type_expression_tree(
   }
   fortran_type_expression_tree(
       /* void* */ tree.get_fortran_ptr(), /* int* */ _indent);
+}
+void Bmad::type_ptc_layout(LayoutRawStruct& lay) {
+  fortran_type_ptc_layout(/* void* */ lay.get_fortran_ptr());
 }
 void Bmad::update_ele_from_fibre(EleProxy& ele) {
   fortran_update_ele_from_fibre(/* void* */ ele.get_fortran_ptr());

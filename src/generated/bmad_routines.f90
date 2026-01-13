@@ -41,22 +41,23 @@ use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
     ele_full_name, ele_geometry, ele_geometry_with_misalignments, ele_has_constant_ds_dt_ref, &
     ele_has_nonzero_kick, ele_has_nonzero_offset, ele_loc, ele_loc_name, &
     ele_misalignment_l_s_calc, ele_nametable_index, ele_order_calc, &
-    ele_reference_energy_correction, ele_rf_step_index, ele_to_spin_taylor, ele_to_taylor, &
-    ele_unique_name, ele_value_has_changed, ele_vec_equal_ele_vec, elec_multipole_field, &
-    element_slice_iterator, em_field_calc, em_field_plus_em_field, em_taylor_equal_em_taylor, &
-    em_taylors_equal_em_taylors, entering_element, equivalent_taylor_attributes, &
-    find_element_ends, find_matching_fieldmap, floor_angles_to_w_mat, floor_w_mat_to_angles, &
-    fringe_here, g_bending_strength_from_em_field, g_integrals_calc, gamma_ref, &
-    gen_grad1_to_em_taylor, gen_grad_at_s_to_em_taylor, get_slave_list, gradient_shift_sr_wake, &
-    hdf5_write_beam, hdf5_write_grid_field, init_bmad, init_bmad_parser_common, &
-    init_complex_taylor_series, init_coord, init_custom, init_ele, init_em_taylor_series, &
-    init_lat, init_multipole_cache, init_photon_from_a_photon_init_ele, init_taylor_series, &
-    init_wake, insert_element, ion_kick, key_name_to_key_index, kill_ptc_layouts, kill_taylor, &
-    knot_interpolate, knots_to_string, lat_compute_ref_energy_and_time, lat_ele_locator, &
-    lat_equal_lat, lat_geometry, lat_make_mat6, lat_sanity_check, lat_to_ptc_layout, &
-    lat_vec_equal_lat_vec, lattice_bookkeeper, lcavity_rf_step_setup, linear_to_spin_taylor, &
-    lord_edge_aligned, low_energy_z_correction, make_g2_mats, make_g_mats, make_hybrid_lat, &
-    make_mat6, make_mat6_bmad, make_mat6_bmad_photon, make_mat6_symp_lie_ptc, make_mat6_taylor, &
+    ele_reference_energy_correction, ele_rf_step_index, ele_to_fibre, ele_to_spin_taylor, &
+    ele_to_taylor, ele_unique_name, ele_value_has_changed, ele_vec_equal_ele_vec, &
+    elec_multipole_field, element_slice_iterator, em_field_calc, em_field_plus_em_field, &
+    em_taylor_equal_em_taylor, em_taylors_equal_em_taylors, entering_element, &
+    equivalent_taylor_attributes, fibre_to_ele, find_element_ends, find_matching_fieldmap, &
+    floor_angles_to_w_mat, floor_w_mat_to_angles, fringe_here, &
+    g_bending_strength_from_em_field, g_integrals_calc, gamma_ref, gen_grad1_to_em_taylor, &
+    gen_grad_at_s_to_em_taylor, get_slave_list, gradient_shift_sr_wake, hdf5_write_beam, &
+    hdf5_write_grid_field, init_bmad, init_bmad_parser_common, init_complex_taylor_series, &
+    init_coord, init_custom, init_ele, init_em_taylor_series, init_lat, init_multipole_cache, &
+    init_photon_from_a_photon_init_ele, init_taylor_series, init_wake, insert_element, &
+    ion_kick, key_name_to_key_index, kill_ptc_layouts, kill_taylor, knot_interpolate, &
+    knots_to_string, lat_compute_ref_energy_and_time, lat_ele_locator, lat_equal_lat, &
+    lat_geometry, lat_make_mat6, lat_sanity_check, lat_to_ptc_layout, lat_vec_equal_lat_vec, &
+    lattice_bookkeeper, lcavity_rf_step_setup, linear_to_spin_taylor, lord_edge_aligned, &
+    low_energy_z_correction, make_g2_mats, make_g_mats, make_hybrid_lat, make_mat6, &
+    make_mat6_bmad, make_mat6_bmad_photon, make_mat6_symp_lie_ptc, make_mat6_taylor, &
     make_mat6_tracking, make_v_mats, map1_inverse, map1_make_unit, map1_times_map1, &
     map_to_angle_coords, master_parameter_value, mat4_multipole, mat6_add_offsets, &
     mat6_add_pitch, mat_symp_decouple, match_ele_to_mat6, mexp, momentum_compaction, &
@@ -68,12 +69,12 @@ use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
     orbit_to_floor_phase_space, orbit_to_local_curvilinear, orbit_too_large, &
     order_super_lord_slaves, particle_is_moving_backwards, particle_is_moving_forward, &
     particle_rf_time, patch_flips_propagation_direction, patch_length, physical_ele_end, &
-    pointer_to_branch, pointer_to_ele, pointer_to_field_ele, pointer_to_girder, &
-    pointer_to_lord, pointer_to_multipass_lord, pointer_to_next_ele, pointer_to_super_lord, &
-    pointer_to_wake_ele, polar_to_spinor, polar_to_vec, ptc_bookkeeper, ptc_ran_seed_put, &
-    ptc_set_rf_state_for_c_normal, ptc_transfer_map_with_spin, radiation_integrals, &
-    ramper_slave_setup, ramper_value, re_allocate_eles, reallocate_beam, reallocate_bunch, &
-    reallocate_control, reallocate_coord, reallocate_expression_stack, &
+    pointer_to_branch, pointer_to_ele, pointer_to_fibre, pointer_to_field_ele, &
+    pointer_to_girder, pointer_to_lord, pointer_to_multipass_lord, pointer_to_next_ele, &
+    pointer_to_super_lord, pointer_to_wake_ele, polar_to_spinor, polar_to_vec, ptc_bookkeeper, &
+    ptc_ran_seed_put, ptc_set_rf_state_for_c_normal, ptc_transfer_map_with_spin, &
+    radiation_integrals, ramper_slave_setup, ramper_value, re_allocate_eles, reallocate_beam, &
+    reallocate_bunch, reallocate_control, reallocate_coord, reallocate_expression_stack, &
     rel_tracking_charge_to_mass, relative_mode_flip, remove_dead_from_bunch, &
     remove_eles_from_lat, remove_lord_slave_link, reverse_lat, rf_coupler_kick, rf_is_on, &
     rf_ref_time_offset, rotate_for_curved_surface, rotate_spin, rotate_spin_a_step, &
@@ -136,10 +137,11 @@ use bmad_parser_mod, only: add_this_multipass, add_this_taylor_term, bp_set_ran_
 use bookkeeper_mod, only: aperture_bookkeeper, compute_slave_coupler, makeup_control_slave, &
     makeup_group_lord, makeup_multipass_slave, makeup_super_slave, makeup_super_slave1
 
-use ptc_interface_mod, only: apply_patch_to_ptc_fibre, bmad_patch_parameters_to_ptc, &
-    concat_ele_taylor, concat_taylor, ele_to_ptc_magnetic_bn_an, form_complex_taylor, &
-    kind_name, ptc_set_taylor_order_if_needed, remove_constant_taylor, set_ptc_com_pointers, &
-    set_ptc_quiet, sigma_mat_ptc_to_bmad, taylor_inverse, taylor_propagate1
+use ptc_interface_mod, only: apply_patch_to_ptc_fibre, beambeam_fibre_setup, &
+    bmad_patch_parameters_to_ptc, concat_ele_taylor, concat_taylor, ele_to_ptc_magnetic_bn_an, &
+    form_complex_taylor, kind_name, misalign_ptc_fibre, ptc_set_taylor_order_if_needed, &
+    remove_constant_taylor, set_ptc_com_pointers, set_ptc_quiet, sigma_mat_ptc_to_bmad, &
+    taylor_inverse, taylor_propagate1
 
 use write_lattice_file_mod, only: array_re_str, cmplx_re_str, rchomp, re_str, value_to_line, &
     write_lat_line, write_line_element
@@ -163,9 +165,9 @@ use fringe_mod, only: bend_edge_kick, exact_bend_edge_kick, hard_multipole_edge_
 use ibs_mod, only: bl_via_vlassov
 
 use ptc_layout_mod, only: branch_to_ptc_m_u, normal_form_complex_taylors, normal_form_taylors, &
-    ptc_closed_orbit_calc, ptc_emit_calc, ptc_layouts_resplit, &
-    ptc_one_turn_mat_and_closed_orbit_calc, ptc_spin_calc, ptc_track_all, set_ptc_verbose, &
-    update_ele_from_fibre
+    ptc_calculate_tracking_step_size, ptc_check_for_lost_particle, ptc_closed_orbit_calc, &
+    ptc_emit_calc, ptc_layouts_resplit, ptc_one_turn_mat_and_closed_orbit_calc, ptc_spin_calc, &
+    ptc_track_all, set_ptc_verbose, type_ptc_layout, update_ele_from_fibre
 
 use beam_utils, only: calc_bunch_params, calc_bunch_params_slice, calc_bunch_params_z_slice, &
     calc_bunch_sigma_matrix_etc, calc_emittances_and_twiss_from_sigma_matrix, calc_spin_params, &
@@ -2108,6 +2110,29 @@ subroutine fortran_beam_tilts (S, angle_xy, angle_xz, angle_yz, angle_xpz, angle
   ! out: f_angle_ypz 0D_NOT_real
   call c_f_pointer(angle_ypz, f_angle_ypz_ptr)
   f_angle_ypz_ptr = f_angle_ypz
+end subroutine
+subroutine fortran_beambeam_fibre_setup (ele, ptc_fibre) bind(c)
+
+  use bmad_struct, only: ele_struct
+  use definition, only: fibre
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  ! ** Out parameters **
+  type(c_ptr), value :: ptc_fibre  ! 0D_NOT_type
+  type(fibre), pointer :: f_ptc_fibre
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! out: f_ptc_fibre 0D_NOT_type
+  if (.not. c_associated(ptc_fibre)) return
+  call c_f_pointer(ptc_fibre, f_ptc_fibre)
+  call beambeam_fibre_setup(f_ele, f_ptc_fibre)
+
+  ! out: f_ptc_fibre 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix, track_spin) &
     bind(c)
@@ -7390,6 +7415,84 @@ subroutine fortran_ele_rf_step_index (E_ref, s_rel, ele, ix_step) bind(c)
   call c_f_pointer(ix_step, f_ix_step_ptr)
   f_ix_step_ptr = f_ix_step
 end subroutine
+subroutine fortran_ele_to_fibre (ele, ptc_fibre, use_offsets, err_flag, integ_order, steps, &
+    for_layout, ref_in) bind(c)
+
+  use bmad_struct, only: coord_struct, ele_struct
+  use definition, only: fibre
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  logical(c_bool) :: use_offsets  ! 0D_NOT_logical
+  logical :: f_use_offsets
+  type(c_ptr), intent(in), value :: integ_order  ! 0D_NOT_integer
+  integer(c_int) :: f_integ_order
+  integer(c_int), pointer :: f_integ_order_ptr
+  type(c_ptr), intent(in), value :: steps  ! 0D_NOT_integer
+  integer(c_int) :: f_steps
+  integer(c_int), pointer :: f_steps_ptr
+  type(c_ptr), intent(in), value :: for_layout  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_for_layout
+  logical, target :: f_for_layout_native
+  logical, pointer :: f_for_layout_native_ptr
+  logical(c_bool), pointer :: f_for_layout_ptr
+  type(c_ptr), value :: ref_in  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_ref_in
+  ! ** Out parameters **
+  type(c_ptr) :: ptc_fibre  ! 0D_PTR_type
+  type(fibre), pointer :: f_ptc_fibre
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(ele, f_ele)
+  ! out: f_ptc_fibre 0D_PTR_type
+  if (.not. c_associated(ptc_fibre)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(ptc_fibre, f_ptc_fibre)
+  ! in: f_use_offsets 0D_NOT_logical
+  f_use_offsets = use_offsets
+  ! in: f_integ_order 0D_NOT_integer
+  if (c_associated(integ_order)) then
+    call c_f_pointer(integ_order, f_integ_order_ptr)
+  else
+    f_integ_order_ptr => null()
+  endif
+  ! in: f_steps 0D_NOT_integer
+  if (c_associated(steps)) then
+    call c_f_pointer(steps, f_steps_ptr)
+  else
+    f_steps_ptr => null()
+  endif
+  ! in: f_for_layout 0D_NOT_logical
+  if (c_associated(for_layout)) then
+    call c_f_pointer(for_layout, f_for_layout_ptr)
+    f_for_layout_native = f_for_layout_ptr
+    f_for_layout_native_ptr => f_for_layout_native
+  else
+    f_for_layout_native_ptr => null()
+  endif
+  ! in: f_ref_in 0D_NOT_type
+  if (c_associated(ref_in))   call c_f_pointer(ref_in, f_ref_in)
+  call ele_to_fibre(f_ele, f_ptc_fibre, f_use_offsets, f_err_flag, f_integ_order_ptr, &
+      f_steps_ptr, f_for_layout_native_ptr, f_ref_in)
+
+  ! out: f_ptc_fibre 0D_PTR_type
+  ptc_fibre = c_loc(f_ptc_fibre)
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
+end subroutine
 subroutine fortran_ele_to_ptc_magnetic_bn_an (ele, bn, an, n_max) bind(c)
 
   use bmad_struct, only: ele_struct
@@ -11593,6 +11696,66 @@ subroutine fortran_fft1 (a, b, n, isn, ierr) bind(c)
   call c_f_pointer(ierr, f_ierr_ptr)
   f_ierr_ptr = f_ierr
 end subroutine
+subroutine fortran_fibre_to_ele (ptc_fibre, branch, ix_ele, err_flag, from_mad) bind(c)
+
+  use definition, only: fibre
+  use bmad_struct, only: branch_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ptc_fibre  ! 0D_NOT_type
+  type(fibre), pointer :: f_ptc_fibre
+  type(c_ptr), intent(in), value :: from_mad  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_from_mad
+  logical, target :: f_from_mad_native
+  logical, pointer :: f_from_mad_native_ptr
+  logical(c_bool), pointer :: f_from_mad_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: branch  ! 0D_NOT_type
+  type(branch_struct), pointer :: f_branch
+  type(c_ptr), intent(in), value :: ix_ele  ! 0D_NOT_integer
+  integer(c_int) :: f_ix_ele
+  integer(c_int), pointer :: f_ix_ele_ptr
+  ! ** End of parameters **
+  ! in: f_ptc_fibre 0D_NOT_type
+  if (.not. c_associated(ptc_fibre)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(ptc_fibre, f_ptc_fibre)
+  ! inout: f_branch 0D_NOT_type
+  if (.not. c_associated(branch)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(branch, f_branch)
+  ! inout: f_ix_ele 0D_NOT_integer
+  if (c_associated(ix_ele)) then
+    call c_f_pointer(ix_ele, f_ix_ele_ptr)
+  else
+    f_ix_ele_ptr => null()
+  endif
+  ! in: f_from_mad 0D_NOT_logical
+  if (c_associated(from_mad)) then
+    call c_f_pointer(from_mad, f_from_mad_ptr)
+    f_from_mad_native = f_from_mad_ptr
+    f_from_mad_native_ptr => f_from_mad_native
+  else
+    f_from_mad_native_ptr => null()
+  endif
+  call fibre_to_ele(f_ptc_fibre, f_branch, f_ix_ele_ptr, f_err_flag, f_from_mad_native_ptr)
+
+  ! inout: f_ix_ele 0D_NOT_integer
+  ! no output conversion for f_ix_ele
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
+end subroutine
 subroutine fortran_field_attribute_free (ele, attrib_name, free) bind(c)
 
   use bmad_struct, only: ele_struct
@@ -14712,6 +14875,45 @@ subroutine fortran_integration_timer_ele (ele, param, start, orb_max, tol) bind(
   ! inout: f_tol 0D_NOT_real
   ! no output conversion for f_tol
 end subroutine
+subroutine fortran_integration_timer_fibre (a_fibre, orbit, orbit_max, tol_dp) bind(c)
+
+  use definition, only: fibre
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: orbit
+  real(dp) :: f_orbit(6)
+  real(c_double), pointer :: f_orbit_ptr(:)
+  type(c_ptr), intent(in), value :: orbit_max
+  real(dp) :: f_orbit_max(6)
+  real(c_double), pointer :: f_orbit_max_ptr(:)
+  real(c_double) :: tol_dp  ! 0D_NOT_real
+  real(dp) :: f_tol_dp
+  ! ** Inout parameters **
+  type(c_ptr), value :: a_fibre  ! 0D_NOT_type
+  type(fibre), pointer :: f_a_fibre
+  ! ** End of parameters **
+  ! inout: f_a_fibre 0D_NOT_type
+  if (.not. c_associated(a_fibre)) return
+  call c_f_pointer(a_fibre, f_a_fibre)
+  !! general array (1D_NOT_real)
+  if (c_associated(orbit)) then
+    call c_f_pointer(orbit, f_orbit_ptr, [6])
+    f_orbit = f_orbit_ptr(:)
+  else
+    f_orbit_ptr => null()
+  endif
+  !! general array (1D_NOT_real)
+  if (c_associated(orbit_max)) then
+    call c_f_pointer(orbit_max, f_orbit_max_ptr, [6])
+    f_orbit_max = f_orbit_max_ptr(:)
+  else
+    f_orbit_max_ptr => null()
+  endif
+  ! in: f_tol_dp 0D_NOT_real
+  f_tol_dp = tol_dp
+  call integration_timer(f_a_fibre, f_orbit, f_orbit_max, f_tol_dp)
+
+end subroutine
 subroutine fortran_ion_kick (orbit, r_beam, n_beam_part, a_twiss, b_twiss, sig_ee, kick) &
     bind(c)
 
@@ -17473,6 +17675,37 @@ subroutine fortran_mfft1 (a, b, n, ndim, isn, ierr) bind(c)
   ! out: f_ierr 0D_NOT_integer
   call c_f_pointer(ierr, f_ierr_ptr)
   f_ierr_ptr = f_ierr
+end subroutine
+subroutine fortran_misalign_ptc_fibre (ele, use_offsets, ptc_fibre, for_layout) bind(c)
+
+  use bmad_struct, only: ele_struct
+  use definition, only: fibre
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  logical(c_bool) :: use_offsets  ! 0D_NOT_logical
+  logical :: f_use_offsets
+  logical(c_bool) :: for_layout  ! 0D_NOT_logical
+  logical :: f_for_layout
+  ! ** Out parameters **
+  type(c_ptr) :: ptc_fibre  ! 0D_PTR_type
+  type(fibre), pointer :: f_ptc_fibre
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_use_offsets 0D_NOT_logical
+  f_use_offsets = use_offsets
+  ! out: f_ptc_fibre 0D_PTR_type
+  if (.not. c_associated(ptc_fibre)) return
+  call c_f_pointer(ptc_fibre, f_ptc_fibre)
+  ! in: f_for_layout 0D_NOT_logical
+  f_for_layout = for_layout
+  call misalign_ptc_fibre(f_ele, f_use_offsets, f_ptc_fibre, f_for_layout)
+
+  ! out: f_ptc_fibre 0D_PTR_type
+  ptc_fibre = c_loc(f_ptc_fibre)
 end subroutine
 subroutine fortran_momentum_compaction (branch, mom_comp) bind(c)
 
@@ -22132,6 +22365,26 @@ subroutine fortran_pointer_to_element_at_s (branch, s, choose_max, err_flag, s_e
   ! out: f_ele 0D_PTR_type
   ele = c_loc(f_ele)
 end subroutine
+subroutine fortran_pointer_to_fibre (ele, assoc_fibre) bind(c)
+
+  use bmad_struct, only: ele_struct
+  use definition, only: fibre
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  ! ** Out parameters **
+  type(c_ptr), value :: assoc_fibre  ! 0D_PTR_type
+  type(fibre), pointer :: f_assoc_fibre
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  f_assoc_fibre => pointer_to_fibre(f_ele)
+
+  ! out: f_assoc_fibre 0D_PTR_type
+  assoc_fibre = c_loc(f_assoc_fibre)
+end subroutine
 subroutine fortran_pointer_to_field_ele (ele, ix_field_ele, dz_offset, field_ele) bind(c)
 
   use bmad_struct, only: ele_struct
@@ -22927,6 +23180,125 @@ subroutine fortran_ptc_bookkeeper (lat) bind(c)
   call c_f_pointer(lat, f_lat)
   call ptc_bookkeeper(f_lat)
 
+end subroutine
+subroutine fortran_ptc_calculate_tracking_step_size (ptc_layout, kl_max, ds_max, even_steps, &
+    r_typical, dx_tol_bend, use_2nd_order, crossover, crossover_wiggler) bind(c)
+
+  use definition, only: layout
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: kl_max  ! 0D_NOT_real
+  real(rp) :: f_kl_max
+  type(c_ptr), intent(in), value :: ds_max  ! 0D_NOT_real
+  real(c_double) :: f_ds_max
+  real(c_double), pointer :: f_ds_max_ptr
+  type(c_ptr), intent(in), value :: even_steps
+  logical :: f_even_steps(2)
+  logical(c_bool), pointer :: f_even_steps_ptr(:)
+  type(c_ptr), intent(in), value :: r_typical  ! 0D_NOT_real
+  real(c_double) :: f_r_typical
+  real(c_double), pointer :: f_r_typical_ptr
+  type(c_ptr), intent(in), value :: dx_tol_bend  ! 0D_NOT_real
+  real(c_double) :: f_dx_tol_bend
+  real(c_double), pointer :: f_dx_tol_bend_ptr
+  type(c_ptr), intent(in), value :: use_2nd_order  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_use_2nd_order
+  logical, target :: f_use_2nd_order_native
+  logical, pointer :: f_use_2nd_order_native_ptr
+  logical(c_bool), pointer :: f_use_2nd_order_ptr
+  type(c_ptr), intent(in), value :: crossover
+  integer :: f_crossover(2)
+  integer(c_int), pointer :: f_crossover_ptr(:)
+  ! ** Inout parameters **
+  type(c_ptr), value :: ptc_layout  ! 0D_NOT_type
+  type(layout), pointer :: f_ptc_layout
+  type(c_ptr), intent(in), value :: crossover_wiggler
+  integer :: f_crossover_wiggler(2)
+  integer(c_int), pointer :: f_crossover_wiggler_ptr(:)
+  ! ** End of parameters **
+  ! inout: f_ptc_layout 0D_NOT_type
+  if (.not. c_associated(ptc_layout)) return
+  call c_f_pointer(ptc_layout, f_ptc_layout)
+  ! in: f_kl_max 0D_NOT_real
+  f_kl_max = kl_max
+  ! in: f_ds_max 0D_NOT_real
+  if (c_associated(ds_max)) then
+    call c_f_pointer(ds_max, f_ds_max_ptr)
+  else
+    f_ds_max_ptr => null()
+  endif
+  !! general array (1D_NOT_logical)
+  if (c_associated(even_steps)) then
+    call c_f_pointer(even_steps, f_even_steps_ptr, [2])
+    f_even_steps = f_even_steps_ptr(:)
+  else
+    f_even_steps_ptr => null()
+  endif
+  ! in: f_r_typical 0D_NOT_real
+  if (c_associated(r_typical)) then
+    call c_f_pointer(r_typical, f_r_typical_ptr)
+  else
+    f_r_typical_ptr => null()
+  endif
+  ! in: f_dx_tol_bend 0D_NOT_real
+  if (c_associated(dx_tol_bend)) then
+    call c_f_pointer(dx_tol_bend, f_dx_tol_bend_ptr)
+  else
+    f_dx_tol_bend_ptr => null()
+  endif
+  ! in: f_use_2nd_order 0D_NOT_logical
+  if (c_associated(use_2nd_order)) then
+    call c_f_pointer(use_2nd_order, f_use_2nd_order_ptr)
+    f_use_2nd_order_native = f_use_2nd_order_ptr
+    f_use_2nd_order_native_ptr => f_use_2nd_order_native
+  else
+    f_use_2nd_order_native_ptr => null()
+  endif
+  !! general array (1D_NOT_integer)
+  if (c_associated(crossover)) then
+    call c_f_pointer(crossover, f_crossover_ptr, [2])
+    f_crossover = f_crossover_ptr(:)
+  else
+    f_crossover_ptr => null()
+  endif
+  !! general array (1D_NOT_integer)
+  if (c_associated(crossover_wiggler)) then
+    call c_f_pointer(crossover_wiggler, f_crossover_wiggler_ptr, [2])
+    f_crossover_wiggler = f_crossover_wiggler_ptr(:)
+  else
+    f_crossover_wiggler_ptr => null()
+  endif
+  call ptc_calculate_tracking_step_size(f_ptc_layout, f_kl_max, f_ds_max_ptr, f_even_steps, &
+      f_r_typical_ptr, f_dx_tol_bend_ptr, f_use_2nd_order_native_ptr, f_crossover, &
+      f_crossover_wiggler)
+
+end subroutine
+subroutine fortran_ptc_check_for_lost_particle (state, ptc_fibre, do_reset) bind(c)
+
+  use definition, only: fibre
+  implicit none
+  ! ** In parameters **
+  logical(c_bool) :: do_reset  ! 0D_NOT_logical
+  logical :: f_do_reset
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: state  ! 0D_NOT_integer
+  integer :: f_state
+  integer(c_int), pointer :: f_state_ptr
+  type(c_ptr) :: ptc_fibre  ! 0D_PTR_type
+  type(fibre), pointer :: f_ptc_fibre
+  ! ** End of parameters **
+  ! out: f_ptc_fibre 0D_PTR_type
+  if (.not. c_associated(ptc_fibre)) return
+  call c_f_pointer(ptc_fibre, f_ptc_fibre)
+  ! in: f_do_reset 0D_NOT_logical
+  f_do_reset = do_reset
+  call ptc_check_for_lost_particle(f_state, f_ptc_fibre, f_do_reset)
+
+  ! out: f_state 0D_NOT_integer
+  call c_f_pointer(state, f_state_ptr)
+  f_state_ptr = f_state
+  ! out: f_ptc_fibre 0D_PTR_type
+  ptc_fibre = c_loc(f_ptc_fibre)
 end subroutine
 subroutine fortran_ptc_closed_orbit_calc (branch, closed_orbit, radiation_damping_on) bind(c)
 
@@ -33681,6 +34053,20 @@ subroutine fortran_type_expression_tree (tree, indent) bind(c)
     f_indent_ptr => null()
   endif
   call type_expression_tree(f_tree, f_indent_ptr)
+
+end subroutine
+subroutine fortran_type_ptc_layout (lay) bind(c)
+
+  use definition, only: layout
+  implicit none
+  ! ** Inout parameters **
+  type(c_ptr), value :: lay  ! 0D_NOT_type
+  type(layout), pointer :: f_lay
+  ! ** End of parameters **
+  ! inout: f_lay 0D_NOT_type
+  if (.not. c_associated(lay)) return
+  call c_f_pointer(lay, f_lay)
+  call type_ptc_layout(f_lay)
 
 end subroutine
 subroutine fortran_update_ele_from_fibre (ele) bind(c)

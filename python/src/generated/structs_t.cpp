@@ -1691,6 +1691,108 @@ void init_tao_ele_shape_struct(
 }
 
 // =============================================================================
+// tao_eval_node_struct
+void init_tao_eval_node_struct(
+    py::module& m,
+    py::class_<TaoEvalNodeProxy>& cls) {
+  cls.def(py::init<>())
+      // TaoEvalNodeProxy.type (0D_NOT_integer -
+      .def_property(
+          "type", &TaoEvalNodeProxy::type, &TaoEvalNodeProxy::set_type)
+      // TaoEvalNodeProxy.name (0D_NOT_character -
+      .def_property(
+          "name", &TaoEvalNodeProxy::name, &TaoEvalNodeProxy::set_name)
+      // TaoEvalNodeProxy.scale (0D_NOT_real - Scale factor for ping data
+      .def_property(
+          "scale", &TaoEvalNodeProxy::scale, &TaoEvalNodeProxy::set_scale)
+      // TaoEvalNodeProxy.value (1D_ALLOC_real -
+      .def_property_readonly("value", &TaoEvalNodeProxy::value)
+      // TaoEvalNodeProxy.info (1D_ALLOC_type -
+      .def_property_readonly("info", &TaoEvalNodeProxy::info)
+      // TaoEvalNodeProxy.node (1D_PTR_type - Child nodes for tree construction.
+      .def_property_readonly("node", &TaoEvalNodeProxy::node)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoEvalNodeProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
+
+      .def(
+          "__repr__",
+          [](const TaoEvalNodeProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoEvalNodeProxy& self) {
+            return TaoEvalNodeProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoEvalNodeProxy& self, py::dict& memo) {
+            return TaoEvalNodeProxy(self);
+          })
+
+      ;
+
+  bind_FTypeArrayND<TaoEvalNodeProxyArray1D>(m, "TaoEvalNodeStructArray1D");
+  bind_FTypeAlloc1D<TaoEvalNodeProxyAlloc1D>(m, "TaoEvalNodeStructAlloc1D");
+  // 2D TaoEvalNodeProxy arrays are not used in structs/routines
+  // 3D TaoEvalNodeProxy arrays are not used in structs/routines
+}
+
+// =============================================================================
+// tao_expression_info_struct
+void init_tao_expression_info_struct(
+    py::module& m,
+    py::class_<TaoExpressionInfoProxy>& cls) {
+  cls.def(py::init<>())
+      // TaoExpressionInfoProxy.good (0D_NOT_logical - Expression is valid.
+      .def_property(
+          "good",
+          &TaoExpressionInfoProxy::good,
+          &TaoExpressionInfoProxy::set_good)
+      // TaoExpressionInfoProxy.ele (0D_PTR_type - Associated ele if it exists
+      .def_property(
+          "ele", &TaoExpressionInfoProxy::ele, &TaoExpressionInfoProxy::set_ele)
+      // TaoExpressionInfoProxy.s (0D_NOT_real - Longitudinal position of expression.
+      .def_property(
+          "s", &TaoExpressionInfoProxy::s, &TaoExpressionInfoProxy::set_s)
+      .def_static(
+          "new_array1d",
+          [](int sz, int lbound) {
+            return TaoExpressionInfoProxyAlloc1D(lbound, sz);
+          },
+          py::arg("sz"),
+          py::arg("lbound") = 1)
+
+      .def(
+          "__repr__",
+          [](const TaoExpressionInfoProxy& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoExpressionInfoProxy& self) {
+            return TaoExpressionInfoProxy(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const TaoExpressionInfoProxy& self, py::dict& memo) {
+            return TaoExpressionInfoProxy(self);
+          })
+
+      ;
+
+  bind_FTypeArrayND<TaoExpressionInfoProxyArray1D>(
+      m, "TaoExpressionInfoStructArray1D");
+  bind_FTypeAlloc1D<TaoExpressionInfoProxyAlloc1D>(
+      m, "TaoExpressionInfoStructAlloc1D");
+  // 2D TaoExpressionInfoProxy arrays are not used in structs/routines
+  // 3D TaoExpressionInfoProxy arrays are not used in structs/routines
+}
+
+// =============================================================================
 // tao_floor_plan_struct
 void init_tao_floor_plan_struct(
     py::module& m,

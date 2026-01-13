@@ -431,3 +431,77 @@ void init_linac_normal_mode_struct(
   // 2D LinacNormalModeProxy arrays are not used in structs/routines
   // 3D LinacNormalModeProxy arrays are not used in structs/routines
 }
+
+// =============================================================================
+// layout
+void init_layout(py::module& m, py::class_<LayoutRawStruct>& cls) {
+  cls.def(py::init<>())
+      // LayoutRawStruct.NAME (0D_PTR_character - IDENTIFICATION
+      .def_property("NAME", &LayoutRawStruct::NAME, &LayoutRawStruct::set_NAME)
+      // LayoutRawStruct.INDEX (0D_PTR_integer - IDENTIFICATION, CHARGE SIGN
+      .def_property(
+          "INDEX", &LayoutRawStruct::INDEX, &LayoutRawStruct::set_INDEX)
+      // LayoutRawStruct.HARMONIC_NUMBER (0D_PTR_real -
+      .def_property(
+          "HARMONIC_NUMBER",
+          &LayoutRawStruct::HARMONIC_NUMBER,
+          &LayoutRawStruct::set_HARMONIC_NUMBER)
+      // LayoutRawStruct.CLOSED (0D_PTR_logical -
+      .def_property(
+          "CLOSED", &LayoutRawStruct::CLOSED, &LayoutRawStruct::set_CLOSED)
+      // LayoutRawStruct.N (0D_PTR_integer - TOTAL ELEMENT IN THE CHAIN
+      .def_property("N", &LayoutRawStruct::N, &LayoutRawStruct::set_N)
+      // LayoutRawStruct.NTHIN (0D_PTR_integer - NUMBER IF THIN LENSES IN COLLECTION  (FOR SPEED ESTIMATES)
+      .def_property(
+          "NTHIN", &LayoutRawStruct::NTHIN, &LayoutRawStruct::set_NTHIN)
+      // LayoutRawStruct.THIN (0D_PTR_real - PARAMETER USED FOR AUTOMATIC CUTTING INTO THIN LENS POINTERS OF LINK LAYOUT
+      .def_property("THIN", &LayoutRawStruct::THIN, &LayoutRawStruct::set_THIN)
+      // LayoutRawStruct.LASTPOS (0D_PTR_integer - POSITION OF LAST VISITED
+      .def_property(
+          "LASTPOS", &LayoutRawStruct::LASTPOS, &LayoutRawStruct::set_LASTPOS)
+      // LayoutRawStruct.LAST (0D_PTR_type - LAST VISITED
+      .def_property("LAST", &LayoutRawStruct::LAST, &LayoutRawStruct::set_LAST)
+      // LayoutRawStruct.END (0D_PTR_type -
+      .def_property("END", &LayoutRawStruct::END, &LayoutRawStruct::set_END)
+      // LayoutRawStruct.START (0D_PTR_type -
+      .def_property(
+          "START", &LayoutRawStruct::START, &LayoutRawStruct::set_START)
+      // LayoutRawStruct.START_GROUND (0D_PTR_type - STORE THE GROUNDED VALUE OF START DURING CIRCULAR SCANNING
+      .def_property(
+          "START_GROUND",
+          &LayoutRawStruct::START_GROUND,
+          &LayoutRawStruct::set_START_GROUND)
+      // LayoutRawStruct.END_GROUND (0D_PTR_type - STORE THE GROUNDED VALUE OF END DURING CIRCULAR SCANNING
+      .def_property(
+          "END_GROUND",
+          &LayoutRawStruct::END_GROUND,
+          &LayoutRawStruct::set_END_GROUND)
+      // LayoutRawStruct.NEXT (0D_PTR_type -
+      .def_property("NEXT", &LayoutRawStruct::NEXT, &LayoutRawStruct::set_NEXT)
+      // LayoutRawStruct.PREVIOUS (0D_PTR_type -
+      .def_property(
+          "PREVIOUS",
+          &LayoutRawStruct::PREVIOUS,
+          &LayoutRawStruct::set_PREVIOUS)
+
+      .def(
+          "__repr__",
+          [](const LayoutRawStruct& self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const LayoutRawStruct& self) {
+            return LayoutRawStruct(self); // under-the-hood fortran copy
+          })
+      .def(
+          "__deepcopy__",
+          [](const LayoutRawStruct& self, py::dict& memo) {
+            return LayoutRawStruct(self);
+          })
+
+      ;
+
+  // 1D LayoutRawStruct arrays are not used in structs/routines
+  // 2D LayoutRawStruct arrays are not used in structs/routines
+  // 3D LayoutRawStruct arrays are not used in structs/routines
+}

@@ -1518,6 +1518,31 @@ void init_Bmad_routines_m(py::module& m) {
   isn : 
   ierr : 
   )""");
+  m.def(
+      "misalign_ptc_fibre",
+      &Bmad::misalign_ptc_fibre,
+      py::arg("ele"),
+      py::arg("use_offsets"),
+      py::arg("for_layout"),
+      R"""(Subroutine misalign_ptc_fibre (ele, use_offsets, ptc_fibre, for_layout)
+
+  Routine to misalign a fibre associated with a Bmad element.
+
+  Parameters
+  ----------
+  ele : EleStruct
+      Bmad element with misalignments.
+  use_offsets : bool
+      Does ptc_fibre include element offsets, pitches and tilt? This argument is ignored if the element is a
+      patch.
+  for_layout : bool
+      If True then fibre is being created as part of a layout as opposed to a stand-alone fibre
+
+  Returns
+  -------
+  ptc_fibre : unknown
+      PTC fibre element with misalignments.
+  )""");
   py::class_<PyMomentumCompaction, std::unique_ptr<PyMomentumCompaction>>(
       m, "MomentumCompaction", "momentum_compaction return type")
       .def_readonly("mom_comp", &PyMomentumCompaction::mom_comp)

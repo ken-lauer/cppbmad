@@ -430,9 +430,8 @@ bool tao_de_optimizer();
 extern "C" void fortran_tao_deallocate_plot_cache(
     void* plot_cache /* 1D_ALLOC_type inout */);
 void tao_deallocate_plot_cache(TaoPlotCacheProxyAlloc1D& plot_cache);
-
-// Skipped unusable routine tao_deallocate_tree:
-// - Untranslated type: tao_eval_node_struct (0D)
+extern "C" void fortran_tao_deallocate_tree(void* tree /* 0D_NOT_type inout */);
+void tao_deallocate_tree(TaoEvalNodeProxy& tree);
 extern "C" void fortran_tao_destroy_plot_window();
 void tao_destroy_plot_window();
 extern "C" void fortran_tao_dmerit_calc();
@@ -601,21 +600,156 @@ Tao::TaoEvaluateDatumAtS tao_evaluate_datum_at_s(
     EleProxy& ele,
     EleProxy& ele_ref,
     bool valid_value);
-
-// Skipped unusable routine tao_evaluate_element_parameters:
-// - Untranslated type: tao_expression_info_struct (1D)
-
-// Skipped unusable routine tao_evaluate_expression:
-// - Untranslated type: tao_expression_info_struct (1D)
-// - Untranslated type: tao_eval_node_struct (1D)
-
-// Skipped unusable routine tao_evaluate_expression_new:
-// - Untranslated type: tao_expression_info_struct (1D)
-// - Untranslated type: tao_eval_node_struct (1D)
-
-// Skipped unusable routine tao_evaluate_expression_old:
-// - Untranslated type: tao_expression_info_struct (1D)
-// - Untranslated type: tao_eval_node_struct (1D)
+extern "C" void fortran_tao_evaluate_element_parameters(
+    bool& err /* 0D_NOT_logical out */,
+    const char* param_name /* 0D_NOT_character in */,
+    void* values /* 1D_ALLOC_real out */,
+    bool& print_err /* 0D_NOT_logical in */,
+    void* dflt_ele /* 0D_PTR_type in */,
+    const char* dflt_source /* 0D_NOT_character in */,
+    const char* dflt_component /* 0D_NOT_character in */,
+    int* dflt_uni /* 0D_NOT_integer in */,
+    int* eval_point /* 0D_NOT_integer inout */,
+    void* info /* 1D_ALLOC_type out */);
+struct TaoEvaluateElementParameters {
+  bool err;
+  RealAlloc1D values;
+  TaoExpressionInfoProxyAlloc1D info;
+};
+Tao::TaoEvaluateElementParameters tao_evaluate_element_parameters(
+    std::string param_name,
+    bool print_err,
+    optional_ref<EleProxy> dflt_ele,
+    std::string dflt_source,
+    std::optional<std::string> dflt_component = std::nullopt,
+    std::optional<int> dflt_uni = std::nullopt,
+    optional_ref<int> eval_point = std::nullopt);
+extern "C" void fortran_tao_evaluate_expression(
+    const char* expression /* 0D_NOT_character in */,
+    int& n_size /* 0D_NOT_integer in */,
+    bool& use_good_user /* 0D_NOT_logical in */,
+    void* value /* 1D_ALLOC_real out */,
+    bool& err_flag /* 0D_NOT_logical out */,
+    bool* print_err /* 0D_NOT_logical in */,
+    void* info /* 1D_ALLOC_type out */,
+    void* stack /* 1D_ALLOC_type out */,
+    const char* dflt_component /* 0D_NOT_character in */,
+    const char* dflt_source /* 0D_NOT_character in */,
+    void* dflt_ele_ref /* 0D_PTR_type in */,
+    void* dflt_ele_start /* 0D_PTR_type in */,
+    void* dflt_ele /* 0D_PTR_type in */,
+    const char* dflt_dat_or_var_index /* 0D_NOT_character in */,
+    int* dflt_uni /* 0D_NOT_integer in */,
+    int* dflt_eval_point /* 0D_NOT_integer in */,
+    double* dflt_s_offset /* 0D_NOT_real in */,
+    void* dflt_orbit /* 0D_NOT_type in */,
+    void* datum /* 0D_NOT_type in */);
+struct TaoEvaluateExpression {
+  RealAlloc1D value;
+  bool err_flag;
+  TaoExpressionInfoProxyAlloc1D info;
+  TaoEvalNodeProxyAlloc1D stack;
+};
+Tao::TaoEvaluateExpression tao_evaluate_expression(
+    std::string expression,
+    int n_size,
+    bool use_good_user,
+    std::optional<bool> print_err = std::nullopt,
+    std::optional<std::string> dflt_component = std::nullopt,
+    std::optional<std::string> dflt_source = std::nullopt,
+    optional_ref<EleProxy> dflt_ele_ref = std::nullopt,
+    optional_ref<EleProxy> dflt_ele_start = std::nullopt,
+    optional_ref<EleProxy> dflt_ele = std::nullopt,
+    std::optional<std::string> dflt_dat_or_var_index = std::nullopt,
+    std::optional<int> dflt_uni = std::nullopt,
+    std::optional<int> dflt_eval_point = std::nullopt,
+    std::optional<double> dflt_s_offset = std::nullopt,
+    optional_ref<CoordProxy> dflt_orbit = std::nullopt,
+    optional_ref<TaoDataProxy> datum = std::nullopt);
+extern "C" void fortran_tao_evaluate_expression_new(
+    const char* expression /* 0D_NOT_character in */,
+    int& n_size /* 0D_NOT_integer in */,
+    bool& use_good_user /* 0D_NOT_logical in */,
+    void* value /* 1D_ALLOC_real out */,
+    bool& err_flag /* 0D_NOT_logical out */,
+    bool* print_err /* 0D_NOT_logical in */,
+    void* info /* 1D_ALLOC_type out */,
+    void* stack /* 1D_ALLOC_type out */,
+    const char* dflt_component /* 0D_NOT_character in */,
+    const char* dflt_source /* 0D_NOT_character in */,
+    void* dflt_ele_ref /* 0D_PTR_type in */,
+    void* dflt_ele_start /* 0D_PTR_type in */,
+    void* dflt_ele /* 0D_PTR_type in */,
+    const char* dflt_dat_or_var_index /* 0D_NOT_character in */,
+    int* dflt_uni /* 0D_NOT_integer in */,
+    int* dflt_eval_point /* 0D_NOT_integer in */,
+    double* dflt_s_offset /* 0D_NOT_real in */,
+    void* dflt_orbit /* 0D_NOT_type in */,
+    void* datum /* 0D_NOT_type in */);
+struct TaoEvaluateExpressionNew {
+  RealAlloc1D value;
+  bool err_flag;
+  TaoExpressionInfoProxyAlloc1D info;
+  TaoEvalNodeProxyAlloc1D stack;
+};
+Tao::TaoEvaluateExpressionNew tao_evaluate_expression_new(
+    std::string expression,
+    int n_size,
+    bool use_good_user,
+    std::optional<bool> print_err = std::nullopt,
+    std::optional<std::string> dflt_component = std::nullopt,
+    std::optional<std::string> dflt_source = std::nullopt,
+    optional_ref<EleProxy> dflt_ele_ref = std::nullopt,
+    optional_ref<EleProxy> dflt_ele_start = std::nullopt,
+    optional_ref<EleProxy> dflt_ele = std::nullopt,
+    std::optional<std::string> dflt_dat_or_var_index = std::nullopt,
+    std::optional<int> dflt_uni = std::nullopt,
+    std::optional<int> dflt_eval_point = std::nullopt,
+    std::optional<double> dflt_s_offset = std::nullopt,
+    optional_ref<CoordProxy> dflt_orbit = std::nullopt,
+    optional_ref<TaoDataProxy> datum = std::nullopt);
+extern "C" void fortran_tao_evaluate_expression_old(
+    const char* expression /* 0D_NOT_character in */,
+    int& n_size /* 0D_NOT_integer in */,
+    bool& use_good_user /* 0D_NOT_logical in */,
+    void* value /* 1D_ALLOC_real out */,
+    bool& err_flag /* 0D_NOT_logical out */,
+    bool* print_err /* 0D_NOT_logical in */,
+    void* info /* 1D_ALLOC_type out */,
+    void* stack /* 1D_ALLOC_type out */,
+    const char* dflt_component /* 0D_NOT_character in */,
+    const char* dflt_source /* 0D_NOT_character in */,
+    void* dflt_ele_ref /* 0D_PTR_type in */,
+    void* dflt_ele_start /* 0D_PTR_type in */,
+    void* dflt_ele /* 0D_PTR_type in */,
+    const char* dflt_dat_or_var_index /* 0D_NOT_character in */,
+    int* dflt_uni /* 0D_NOT_integer in */,
+    int* dflt_eval_point /* 0D_NOT_integer in */,
+    double* dflt_s_offset /* 0D_NOT_real in */,
+    void* dflt_orbit /* 0D_NOT_type in */,
+    void* datum /* 0D_NOT_type in */);
+struct TaoEvaluateExpressionOld {
+  RealAlloc1D value;
+  bool err_flag;
+  TaoExpressionInfoProxyAlloc1D info;
+  TaoEvalNodeProxyAlloc1D stack;
+};
+Tao::TaoEvaluateExpressionOld tao_evaluate_expression_old(
+    std::string expression,
+    int n_size,
+    bool use_good_user,
+    std::optional<bool> print_err = std::nullopt,
+    std::optional<std::string> dflt_component = std::nullopt,
+    std::optional<std::string> dflt_source = std::nullopt,
+    optional_ref<EleProxy> dflt_ele_ref = std::nullopt,
+    optional_ref<EleProxy> dflt_ele_start = std::nullopt,
+    optional_ref<EleProxy> dflt_ele = std::nullopt,
+    std::optional<std::string> dflt_dat_or_var_index = std::nullopt,
+    std::optional<int> dflt_uni = std::nullopt,
+    std::optional<int> dflt_eval_point = std::nullopt,
+    std::optional<double> dflt_s_offset = std::nullopt,
+    optional_ref<CoordProxy> dflt_orbit = std::nullopt,
+    optional_ref<TaoDataProxy> datum = std::nullopt);
 extern "C" void fortran_tao_evaluate_lat_or_beam_data(
     bool& err /* 0D_NOT_logical out */,
     const char* data_name /* 0D_NOT_character in */,
@@ -644,14 +778,46 @@ Tao::TaoEvaluateLatOrBeamData tao_evaluate_lat_or_beam_data(
     std::optional<int> dflt_uni = std::nullopt,
     std::optional<int> dflt_eval_point = std::nullopt,
     std::optional<double> dflt_s_offset = std::nullopt);
-
-// Skipped unusable routine tao_evaluate_stack_old:
-// - Untranslated type: tao_eval_node_struct (1D)
-// - Untranslated type: tao_expression_info_struct (1D)
-
-// Skipped unusable routine tao_evaluate_tree:
-// - Untranslated type: tao_eval_node_struct (0D)
-// - Untranslated type: tao_expression_info_struct (1D)
+extern "C" void fortran_tao_evaluate_stack_old(
+    void* stack /* 1D_ALLOC_type in */,
+    int& n_size_in /* 0D_NOT_integer in */,
+    bool& use_good_user /* 0D_NOT_logical in */,
+    void* value /* 1D_ALLOC_real out */,
+    bool& err_flag /* 0D_NOT_logical out */,
+    bool& print_err /* 0D_NOT_logical in */,
+    const char* expression /* 0D_NOT_character in */,
+    void* info_in /* 1D_ALLOC_type inout */);
+struct TaoEvaluateStackOld {
+  RealAlloc1D value;
+  bool err_flag;
+};
+Tao::TaoEvaluateStackOld tao_evaluate_stack_old(
+    TaoEvalNodeProxyAlloc1D& stack,
+    int n_size_in,
+    bool use_good_user,
+    bool print_err,
+    std::string expression,
+    optional_ref<TaoExpressionInfoProxyAlloc1D> info_in = std::nullopt);
+extern "C" void fortran_tao_evaluate_tree(
+    void* tao_tree /* 0D_NOT_type in */,
+    int& n_size /* 0D_NOT_integer inout */,
+    bool& use_good_user /* 0D_NOT_logical in */,
+    void* value /* 1D_ALLOC_real out */,
+    bool& err_flag /* 0D_NOT_logical out */,
+    bool& print_err /* 0D_NOT_logical in */,
+    const char* expression /* 0D_NOT_character in */,
+    void* info_in /* 1D_ALLOC_type inout */);
+struct TaoEvaluateTree {
+  RealAlloc1D value;
+  bool err_flag;
+};
+Tao::TaoEvaluateTree tao_evaluate_tree(
+    TaoEvalNodeProxy& tao_tree,
+    int& n_size,
+    bool use_good_user,
+    bool print_err,
+    std::string expression,
+    optional_ref<TaoExpressionInfoProxyAlloc1D> info_in = std::nullopt);
 extern "C" bool fortran_tao_evaluate_tune(
     const char* q_str /* 0D_NOT_character in */,
     double& q0 /* 0D_NOT_real in */,
@@ -669,10 +835,17 @@ extern "C" void fortran_tao_expression_hash_substitute(
 std::string tao_expression_hash_substitute(
     std::string expression_in,
     optional_ref<EleProxy> eval_ele = std::nullopt);
-
-// Skipped unusable routine tao_expression_tree_to_string:
-// - Untranslated type: tao_eval_node_struct (0D)
-// - Untranslated type: tao_eval_node_struct (0D)
+extern "C" bool fortran_tao_expression_tree_to_string(
+    void* tree /* 0D_NOT_type in */,
+    bool* include_root /* 0D_NOT_logical in */,
+    int* n_node /* 0D_NOT_integer in */,
+    void* parent /* 0D_NOT_type in */,
+    const char* str_out /* 0D_ALLOC_character out */);
+std::string tao_expression_tree_to_string(
+    TaoEvalNodeProxy& tree,
+    std::optional<bool> include_root = std::nullopt,
+    std::optional<int> n_node = std::nullopt,
+    optional_ref<TaoEvalNodeProxy> parent = std::nullopt);
 
 // Skipped unusable routine tao_find_data:
 // - Untranslated type: tao_d2_data_array_struct (1D)
@@ -1208,9 +1381,42 @@ Tao::TaoParamValueAtS tao_param_value_at_s(
     EleProxy& ele_here,
     CoordProxy& orbit,
     double& value);
-
-// Skipped unusable routine tao_param_value_routine:
-// - Untranslated type: tao_eval_node_struct (0D)
+extern "C" void fortran_tao_param_value_routine(
+    const char* str /* 0D_NOT_character inout */,
+    bool& use_good_user /* 0D_NOT_logical inout */,
+    const char* saved_prefix /* 0D_NOT_character inout */,
+    void* stack /* 0D_NOT_type inout */,
+    bool& err_flag /* 0D_NOT_logical inout */,
+    bool& print_err /* 0D_NOT_logical inout */,
+    const char* dflt_component /* 0D_NOT_character inout */,
+    const char* dflt_source /* 0D_NOT_character inout */,
+    void* dflt_ele_ref /* 0D_PTR_type inout */,
+    void* dflt_ele_start /* 0D_PTR_type inout */,
+    void* dflt_ele /* 0D_PTR_type inout */,
+    const char* dflt_dat_or_var_index /* 0D_NOT_character inout */,
+    int* dflt_uni /* 0D_NOT_integer inout */,
+    int* dflt_eval_point /* 0D_NOT_integer inout */,
+    double* dflt_s_offset /* 0D_NOT_real inout */,
+    void* dflt_orbit /* 0D_NOT_type inout */,
+    void* datum /* 0D_NOT_type inout */);
+void tao_param_value_routine(
+    std::string& str,
+    bool& use_good_user,
+    std::string& saved_prefix,
+    TaoEvalNodeProxy& stack,
+    bool& err_flag,
+    bool& print_err,
+    optional_ref<std::string> dflt_component = std::nullopt,
+    optional_ref<std::string> dflt_source = std::nullopt,
+    optional_ref<EleProxy> dflt_ele_ref = std::nullopt,
+    optional_ref<EleProxy> dflt_ele_start = std::nullopt,
+    optional_ref<EleProxy> dflt_ele = std::nullopt,
+    optional_ref<std::string> dflt_dat_or_var_index = std::nullopt,
+    optional_ref<int> dflt_uni = std::nullopt,
+    optional_ref<int> dflt_eval_point = std::nullopt,
+    optional_ref<double> dflt_s_offset = std::nullopt,
+    optional_ref<CoordProxy> dflt_orbit = std::nullopt,
+    optional_ref<TaoDataProxy> datum = std::nullopt);
 extern "C" void fortran_tao_parse_command_args(
     bool& error /* 0D_NOT_logical out */,
     const char* cmd_line /* 0D_NOT_character inout */);
@@ -1456,12 +1662,22 @@ void tao_rad_int_calc_needed(
     std::string& data_type,
     std::string& data_source,
     bool& do_rad_int);
-
-// Skipped unusable routine tao_re_allocate_expression_info:
-// - Untranslated type: tao_expression_info_struct (1D)
-
-// Skipped unusable routine tao_re_associate_node_array:
-// - Untranslated type: tao_eval_node_struct (0D)
+extern "C" void fortran_tao_re_allocate_expression_info(
+    void* info /* 1D_ALLOC_type inout */,
+    int& n /* 0D_NOT_integer in */,
+    bool* exact /* 0D_NOT_logical in */);
+void tao_re_allocate_expression_info(
+    TaoExpressionInfoProxyAlloc1D& info,
+    int n,
+    std::optional<bool> exact = std::nullopt);
+extern "C" void fortran_tao_re_associate_node_array(
+    void* tree /* 0D_NOT_type inout */,
+    int& n /* 0D_NOT_integer in */,
+    bool* exact /* 0D_NOT_logical in */);
+void tao_re_associate_node_array(
+    TaoEvalNodeProxy& tree,
+    int n,
+    std::optional<bool> exact = std::nullopt);
 extern "C" void fortran_tao_re_execute(
     const char* string /* 0D_NOT_character inout */,
     bool& err /* 0D_NOT_logical inout */);
@@ -2065,9 +2281,12 @@ Tao::TaoTrackingEleIndex tao_tracking_ele_index(
     TaoDataProxy& datum);
 extern "C" void fortran_tao_turn_on_special_calcs_if_needed_for_plotting();
 void tao_turn_on_special_calcs_if_needed_for_plotting();
-
-// Skipped unusable routine tao_type_expression_tree:
-// - Untranslated type: tao_eval_node_struct (0D)
+extern "C" void fortran_tao_type_expression_tree(
+    void* tree /* 0D_NOT_type in */,
+    int* indent /* 0D_NOT_integer in */);
+void tao_type_expression_tree(
+    TaoEvalNodeProxy& tree,
+    std::optional<int> indent = std::nullopt);
 extern "C" bool fortran_tao_uni_atsign_index(
     const char* string /* 0D_NOT_character in */,
     int& ix_amp /* 0D_NOT_integer out */);

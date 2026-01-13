@@ -2533,6 +2533,8 @@ void ele_struct_get_rf(const void* struct_obj, void** ptr_out);
 void ele_struct_set_rf(void* struct_obj, const void* src_ptr);
 void ele_struct_get_lord(const void* struct_obj, void** ptr_out);
 void ele_struct_set_lord(void* struct_obj, const void* src_ptr);
+void ele_struct_get_ptc_fibre(const void* struct_obj, void** ptr_out);
+void ele_struct_set_ptc_fibre(void* struct_obj, const void* src_ptr);
 void ele_struct_get_floor(const void* struct_obj, void** ptr_out);
 void ele_struct_set_floor(void* struct_obj, const void* src_ptr);
 void ele_struct_get_high_energy_space_charge(
@@ -5107,6 +5109,49 @@ void lat_ele_order_struct_get_branch_info(
     bool* is_alloc,
     size_t* el_size);
 
+void tao_expression_info_struct_get_good(
+    const void* struct_obj,
+    bool* value_out);
+void tao_expression_info_struct_set_good(void* struct_obj, bool value_in);
+void tao_expression_info_struct_get_ele(const void* struct_obj, void** ptr_out);
+void tao_expression_info_struct_set_ele(void* struct_obj, const void* src_ptr);
+void tao_expression_info_struct_get_s(
+    const void* struct_obj,
+    double* value_out);
+void tao_expression_info_struct_set_s(void* struct_obj, double value_in);
+void tao_eval_node_struct_get_type(const void* struct_obj, int* value_out);
+void tao_eval_node_struct_set_type(void* struct_obj, int value_in);
+void tao_eval_node_struct_get_name_info(
+    const void* s,
+    char** d,
+    int* bounds,
+    bool* a);
+void tao_eval_node_struct_set_name(
+    void* struct_obj,
+    const char* str_ptr,
+    int str_len);
+void tao_eval_node_struct_get_scale(const void* struct_obj, double* value_out);
+void tao_eval_node_struct_set_scale(void* struct_obj, double value_in);
+void tao_eval_node_struct_get_value_info(
+    const void* s,
+    double** d,
+    int* bounds,
+    bool* is_alloc);
+
+void tao_eval_node_struct_get_info_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
+void tao_eval_node_struct_get_node_info(
+    const void* s,
+    void** d,
+    int* bounds,
+    bool* is_alloc,
+    size_t* el_size);
+
 void tao_title_struct_get_string_info(
     const void* s,
     char** d,
@@ -7100,6 +7145,66 @@ void bbu_param_struct_get_n_ramp_pattern(
     const void* struct_obj,
     int* value_out);
 void bbu_param_struct_set_n_ramp_pattern(void* struct_obj, int value_in);
+void fibre_get_DIR(const void* struct_obj, int** ptr_out);
+void fibre_set_DIR(void* struct_obj, int value_in);
+void fibre_get_PREVIOUS(const void* struct_obj, void** ptr_out);
+void fibre_set_PREVIOUS(void* struct_obj, const void* src_ptr);
+void fibre_get_NEXT(const void* struct_obj, void** ptr_out);
+void fibre_set_NEXT(void* struct_obj, const void* src_ptr);
+void fibre_get_PARENT_LAYOUT(const void* struct_obj, void** ptr_out);
+void fibre_set_PARENT_LAYOUT(void* struct_obj, const void* src_ptr);
+void fibre_get_pos(const void* struct_obj, int** ptr_out);
+void fibre_set_pos(void* struct_obj, int value_in);
+void fibre_get_BETA0(const void* struct_obj, double** ptr_out);
+void fibre_set_BETA0(void* struct_obj, double value_in);
+void fibre_get_GAMMA0I(const void* struct_obj, double** ptr_out);
+void fibre_set_GAMMA0I(void* struct_obj, double value_in);
+void fibre_get_GAMBET(const void* struct_obj, double** ptr_out);
+void fibre_set_GAMBET(void* struct_obj, double value_in);
+void fibre_get_MASS(const void* struct_obj, double** ptr_out);
+void fibre_set_MASS(void* struct_obj, double value_in);
+void fibre_get_CHARGE(const void* struct_obj, double** ptr_out);
+void fibre_set_CHARGE(void* struct_obj, double value_in);
+void fibre_get_AG(const void* struct_obj, double** ptr_out);
+void fibre_set_AG(void* struct_obj, double value_in);
+void fibre_get_P(const void* struct_obj, void** ptr_out);
+void fibre_set_P(void* struct_obj, const void* src_ptr);
+void fibre_get_N(const void* struct_obj, void** ptr_out);
+void fibre_set_N(void* struct_obj, const void* src_ptr);
+void fibre_get_loc(const void* struct_obj, int** ptr_out);
+void fibre_set_loc(void* struct_obj, int value_in);
+
+void layout_get_NAME_info(const void* s, char** d, int* len, bool* is_alloc);
+
+void layout_set_NAME(void* struct_obj, const char* str_ptr, int str_len);
+void layout_get_INDEX(const void* struct_obj, int** ptr_out);
+void layout_set_INDEX(void* struct_obj, int value_in);
+void layout_get_HARMONIC_NUMBER(const void* struct_obj, double** ptr_out);
+void layout_set_HARMONIC_NUMBER(void* struct_obj, double value_in);
+void layout_get_CLOSED(const void* struct_obj, bool** ptr_out);
+void layout_set_CLOSED(void* struct_obj, bool value_in);
+void layout_get_N(const void* struct_obj, int** ptr_out);
+void layout_set_N(void* struct_obj, int value_in);
+void layout_get_NTHIN(const void* struct_obj, int** ptr_out);
+void layout_set_NTHIN(void* struct_obj, int value_in);
+void layout_get_THIN(const void* struct_obj, double** ptr_out);
+void layout_set_THIN(void* struct_obj, double value_in);
+void layout_get_LASTPOS(const void* struct_obj, int** ptr_out);
+void layout_set_LASTPOS(void* struct_obj, int value_in);
+void layout_get_LAST(const void* struct_obj, void** ptr_out);
+void layout_set_LAST(void* struct_obj, const void* src_ptr);
+void layout_get_END(const void* struct_obj, void** ptr_out);
+void layout_set_END(void* struct_obj, const void* src_ptr);
+void layout_get_START(const void* struct_obj, void** ptr_out);
+void layout_set_START(void* struct_obj, const void* src_ptr);
+void layout_get_START_GROUND(const void* struct_obj, void** ptr_out);
+void layout_set_START_GROUND(void* struct_obj, const void* src_ptr);
+void layout_get_END_GROUND(const void* struct_obj, void** ptr_out);
+void layout_set_END_GROUND(void* struct_obj, const void* src_ptr);
+void layout_get_NEXT(const void* struct_obj, void** ptr_out);
+void layout_set_NEXT(void* struct_obj, const void* src_ptr);
+void layout_get_PREVIOUS(const void* struct_obj, void** ptr_out);
+void layout_set_PREVIOUS(void* struct_obj, const void* src_ptr);
 void all_encompassing_struct_get_real_rp_0d(
     const void* struct_obj,
     double* value_out);
@@ -9910,6 +10015,42 @@ void access_lat_ele_order_struct_container(
     size_t* elem_size,
     bool* alloc);
 
+void* allocate_fortran_tao_expression_info_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_expression_info_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_expression_info_struct(const void* src, void* dst);
+
+void* allocate_tao_expression_info_struct_container();
+void reallocate_tao_expression_info_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_expression_info_struct_container(void*) noexcept;
+void access_tao_expression_info_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_tao_eval_node_struct(int n, size_t* element_size);
+void deallocate_fortran_tao_eval_node_struct(void* ptr, int n) noexcept;
+void copy_fortran_tao_eval_node_struct(const void* src, void* dst);
+
+void* allocate_tao_eval_node_struct_container();
+void reallocate_tao_eval_node_struct_container_data(
+    void*,
+    int,
+    size_t) noexcept;
+void deallocate_tao_eval_node_struct_container(void*) noexcept;
+void access_tao_eval_node_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
 void* allocate_fortran_tao_title_struct(int n, size_t* element_size);
 void deallocate_fortran_tao_title_struct(void* ptr, int n) noexcept;
 void copy_fortran_tao_title_struct(const void* src, void* dst);
@@ -10401,6 +10542,36 @@ void* allocate_bbu_param_struct_container();
 void reallocate_bbu_param_struct_container_data(void*, int, size_t) noexcept;
 void deallocate_bbu_param_struct_container(void*) noexcept;
 void access_bbu_param_struct_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_fibre(int n, size_t* element_size);
+void deallocate_fortran_fibre(void* ptr, int n) noexcept;
+void copy_fortran_fibre(const void* src, void* dst);
+
+void* allocate_fibre_container();
+void reallocate_fibre_container_data(void*, int, size_t) noexcept;
+void deallocate_fibre_container(void*) noexcept;
+void access_fibre_container(
+    void* handle,
+    void** data,
+    int* lbound,
+    int* size,
+    size_t* elem_size,
+    bool* alloc);
+
+void* allocate_fortran_layout(int n, size_t* element_size);
+void deallocate_fortran_layout(void* ptr, int n) noexcept;
+void copy_fortran_layout(const void* src, void* dst);
+
+void* allocate_layout_container();
+void reallocate_layout_container_data(void*, int, size_t) noexcept;
+void deallocate_layout_container(void*) noexcept;
+void access_layout_container(
     void* handle,
     void** data,
     int* lbound,
@@ -12777,6 +12948,38 @@ using LatEleOrderProxyAlloc1D = FTypeAlloc1D<
     reallocate_lat_ele_order_struct_container_data,
     access_lat_ele_order_struct_container>;
 
+class TaoExpressionInfoProxy;
+
+using TaoExpressionInfoProxyArray1D = FTypeArray1D<
+    TaoExpressionInfoProxy,
+    allocate_fortran_tao_expression_info_struct,
+    deallocate_fortran_tao_expression_info_struct>;
+using TaoExpressionInfoProxyArray2D = FTypeArray2D<TaoExpressionInfoProxy>;
+using TaoExpressionInfoProxyArray3D = FTypeArray3D<TaoExpressionInfoProxy>;
+
+using TaoExpressionInfoProxyAlloc1D = FTypeAlloc1D<
+    TaoExpressionInfoProxyArray1D,
+    allocate_tao_expression_info_struct_container,
+    deallocate_tao_expression_info_struct_container,
+    reallocate_tao_expression_info_struct_container_data,
+    access_tao_expression_info_struct_container>;
+
+class TaoEvalNodeProxy;
+
+using TaoEvalNodeProxyArray1D = FTypeArray1D<
+    TaoEvalNodeProxy,
+    allocate_fortran_tao_eval_node_struct,
+    deallocate_fortran_tao_eval_node_struct>;
+using TaoEvalNodeProxyArray2D = FTypeArray2D<TaoEvalNodeProxy>;
+using TaoEvalNodeProxyArray3D = FTypeArray3D<TaoEvalNodeProxy>;
+
+using TaoEvalNodeProxyAlloc1D = FTypeAlloc1D<
+    TaoEvalNodeProxyArray1D,
+    allocate_tao_eval_node_struct_container,
+    deallocate_tao_eval_node_struct_container,
+    reallocate_tao_eval_node_struct_container_data,
+    access_tao_eval_node_struct_container>;
+
 class TaoTitleProxy;
 
 using TaoTitleProxyArray1D = FTypeArray1D<
@@ -13264,6 +13467,38 @@ using BbuParamProxyAlloc1D = FTypeAlloc1D<
     deallocate_bbu_param_struct_container,
     reallocate_bbu_param_struct_container_data,
     access_bbu_param_struct_container>;
+
+class FibreRawStruct;
+
+using FibreRawStructArray1D = FTypeArray1D<
+    FibreRawStruct,
+    allocate_fortran_fibre,
+    deallocate_fortran_fibre>;
+using FibreRawStructArray2D = FTypeArray2D<FibreRawStruct>;
+using FibreRawStructArray3D = FTypeArray3D<FibreRawStruct>;
+
+using FibreRawStructAlloc1D = FTypeAlloc1D<
+    FibreRawStructArray1D,
+    allocate_fibre_container,
+    deallocate_fibre_container,
+    reallocate_fibre_container_data,
+    access_fibre_container>;
+
+class LayoutRawStruct;
+
+using LayoutRawStructArray1D = FTypeArray1D<
+    LayoutRawStruct,
+    allocate_fortran_layout,
+    deallocate_fortran_layout>;
+using LayoutRawStructArray2D = FTypeArray2D<LayoutRawStruct>;
+using LayoutRawStructArray3D = FTypeArray3D<LayoutRawStruct>;
+
+using LayoutRawStructAlloc1D = FTypeAlloc1D<
+    LayoutRawStructArray1D,
+    allocate_layout_container,
+    deallocate_layout_container,
+    reallocate_layout_container_data,
+    access_layout_container>;
 
 class AllEncompassingProxy;
 
@@ -16541,6 +16776,8 @@ class EleProxy : public FortranProxy<EleProxy> {
   void set_rf(const RfEleProxy& src);
   std::optional<EleProxy> lord() const; // 0D_PTR_type
   void set_lord(const EleProxy& src);
+  std::optional<FibreRawStruct> ptc_fibre() const; // 0D_PTR_type
+  void set_ptc_fibre(const FibreRawStruct& src);
   FloorPositionProxy floor() const; // 0D_NOT_type
   void set_floor(const FloorPositionProxy& src);
   std::optional<HighEnergySpaceChargeProxy> high_energy_space_charge()
@@ -18959,6 +19196,69 @@ class LatEleOrderProxy : public FortranProxy<LatEleOrderProxy> {
 };
 
 template <>
+struct FortranTraits<TaoExpressionInfoProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_expression_info_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_expression_info_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_expression_info_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_expression_info_struct";
+  }
+};
+
+class TaoExpressionInfoProxy : public FortranProxy<TaoExpressionInfoProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  bool good() const; // 0D_NOT_logical
+  void set_good(bool value);
+  std::optional<EleProxy> ele() const; // 0D_PTR_type
+  void set_ele(const EleProxy& src);
+  double s() const; // 0D_NOT_real
+  void set_s(double value);
+};
+
+template <>
+struct FortranTraits<TaoEvalNodeProxy> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_tao_eval_node_struct(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_tao_eval_node_struct(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_tao_eval_node_struct(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "tao_eval_node_struct";
+  }
+};
+
+class TaoEvalNodeProxy : public FortranProxy<TaoEvalNodeProxy> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  int type() const; // 0D_NOT_integer
+  void set_type(int value);
+  std::string name() const; // 0D_NOT_character
+  void set_name(const std::string& value);
+  double scale() const; // 0D_NOT_real
+  void set_scale(double value);
+  FArray1D<double> value() const; // 1D_ALLOC_real
+  TaoExpressionInfoProxyArray1D info() const; // 1D_ALLOC_type
+  TaoEvalNodeProxyArray1D node() const; // 1D_PTR_type
+};
+
+template <>
 struct FortranTraits<TaoTitleProxy> {
   static void* allocate() {
     size_t sz;
@@ -20469,6 +20769,112 @@ class BbuParamProxy : public FortranProxy<BbuParamProxy> {
   void set_ramp_n_start(int value);
   int n_ramp_pattern() const; // 0D_NOT_integer
   void set_n_ramp_pattern(int value);
+};
+
+template <>
+struct FortranTraits<FibreRawStruct> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_fibre(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_fibre(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_fibre(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "fibre";
+  }
+};
+
+class FibreRawStruct : public FortranProxy<FibreRawStruct> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  int* DIR() const; // 0D_PTR_integer
+  void set_DIR(int value);
+  std::optional<FibreRawStruct> PREVIOUS() const; // 0D_PTR_type
+  void set_PREVIOUS(const FibreRawStruct& src);
+  std::optional<FibreRawStruct> NEXT() const; // 0D_PTR_type
+  void set_NEXT(const FibreRawStruct& src);
+  std::optional<LayoutRawStruct> PARENT_LAYOUT() const; // 0D_PTR_type
+  void set_PARENT_LAYOUT(const LayoutRawStruct& src);
+  int* pos() const; // 0D_PTR_integer
+  void set_pos(int value);
+  double* BETA0() const; // 0D_PTR_real
+  void set_BETA0(double value);
+  double* GAMMA0I() const; // 0D_PTR_real
+  void set_GAMMA0I(double value);
+  double* GAMBET() const; // 0D_PTR_real
+  void set_GAMBET(double value);
+  double* MASS() const; // 0D_PTR_real
+  void set_MASS(double value);
+  double* CHARGE() const; // 0D_PTR_real
+  void set_CHARGE(double value);
+  double* AG() const; // 0D_PTR_real
+  void set_AG(double value);
+  std::optional<FibreRawStruct> P() const; // 0D_PTR_type
+  void set_P(const FibreRawStruct& src);
+  std::optional<FibreRawStruct> N() const; // 0D_PTR_type
+  void set_N(const FibreRawStruct& src);
+  int* loc() const; // 0D_PTR_integer
+  void set_loc(int value);
+};
+
+template <>
+struct FortranTraits<LayoutRawStruct> {
+  static void* allocate() {
+    size_t sz;
+    return allocate_fortran_layout(0, &sz);
+  }
+  static void deallocate(void* ptr) noexcept {
+    deallocate_fortran_layout(ptr, 0);
+  }
+  static void copy(const void* src, void* dst) {
+    copy_fortran_layout(src, dst);
+  }
+  static constexpr std::string_view type_name() {
+    return "layout";
+  }
+};
+
+class LayoutRawStruct : public FortranProxy<LayoutRawStruct> {
+ public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  std::string NAME() const; // 0D_PTR_character
+  void set_NAME(const std::string& value);
+  int* INDEX() const; // 0D_PTR_integer
+  void set_INDEX(int value);
+  double* HARMONIC_NUMBER() const; // 0D_PTR_real
+  void set_HARMONIC_NUMBER(double value);
+  bool* CLOSED() const; // 0D_PTR_logical
+  void set_CLOSED(bool value);
+  int* N() const; // 0D_PTR_integer
+  void set_N(int value);
+  int* NTHIN() const; // 0D_PTR_integer
+  void set_NTHIN(int value);
+  double* THIN() const; // 0D_PTR_real
+  void set_THIN(double value);
+  int* LASTPOS() const; // 0D_PTR_integer
+  void set_LASTPOS(int value);
+  std::optional<FibreRawStruct> LAST() const; // 0D_PTR_type
+  void set_LAST(const FibreRawStruct& src);
+  std::optional<FibreRawStruct> END() const; // 0D_PTR_type
+  void set_END(const FibreRawStruct& src);
+  std::optional<FibreRawStruct> START() const; // 0D_PTR_type
+  void set_START(const FibreRawStruct& src);
+  std::optional<FibreRawStruct> START_GROUND() const; // 0D_PTR_type
+  void set_START_GROUND(const FibreRawStruct& src);
+  std::optional<FibreRawStruct> END_GROUND() const; // 0D_PTR_type
+  void set_END_GROUND(const FibreRawStruct& src);
+  std::optional<LayoutRawStruct> NEXT() const; // 0D_PTR_type
+  void set_NEXT(const LayoutRawStruct& src);
+  std::optional<LayoutRawStruct> PREVIOUS() const; // 0D_PTR_type
+  void set_PREVIOUS(const LayoutRawStruct& src);
 };
 
 template <>

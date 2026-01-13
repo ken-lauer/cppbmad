@@ -1313,6 +1313,50 @@ void init_Bmad_routines_e(py::module& m) {
       RF cavity.
   ix_step : 
   )""");
+  py::class_<Bmad::EleToFibre, std::unique_ptr<Bmad::EleToFibre>>(
+      m, "EleToFibre", "ele_to_fibre return type")
+      .def_readonly("ptc_fibre", &Bmad::EleToFibre::ptc_fibre)
+      .def_readonly("err_flag", &Bmad::EleToFibre::err_flag)
+      .def("__len__", [](const Bmad::EleToFibre&) { return 2; })
+      .def("__getitem__", [](const Bmad::EleToFibre& s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.ptc_fibre);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
+  m.def(
+      "ele_to_fibre",
+      &Bmad::ele_to_fibre,
+      py::arg("ele"),
+      py::arg("use_offsets"),
+      py::arg("integ_order") = py::none(),
+      py::arg("steps") = py::none(),
+      py::arg("for_layout") = py::none(),
+      py::arg("ref_in") = py::none(),
+      R"""(Parameters
+  ----------
+  ele : EleStruct
+      Bmad element.
+  ptc_fibre : unknown
+      PTC fibre element.
+  use_offsets : bool
+      Does ptc_fibre include element offsets, pitches and tilt?
+  err_flag : bool
+      Set True if setup OK. False otherwise.
+  integ_order : int, optional
+      Order for the sympletic integrator. Possibilities are: 2, 4, or 6 Overrides ele.value(integrator_order$).
+      default = 2 (if not set with set_ptc).
+  steps : int, optional
+      Number of integration steps. Overrides ele.value(ds_step$).
+  for_layout : bool, optional
+      If True then fibre will be put in the PTC layout. Default is False.
+  ref_in : CoordStruct, optional
+      Particle to be tracked. ref_particle$, electron$, etc. This argument should only be present when the fibre
+      is not to be put in a layout.
+  )""");
   py::class_<
       Bmad::EleToPtcMagneticBnAn,
       std::unique_ptr<Bmad::EleToPtcMagneticBnAn>>(

@@ -108,6 +108,15 @@ struct PyTaoEleShapeInfo : public Tao::TaoEleShapeInfo {
         y2(y2),
         ix_shape_min(ix_shape_min) {}
 };
+struct PyTaoEvaluateElementParameters
+    : public Tao::TaoEvaluateElementParameters {
+  std::optional<int> eval_point;
+  PyTaoEvaluateElementParameters(
+      Tao::TaoEvaluateElementParameters _base,
+      std::optional<int> eval_point)
+      : Tao::TaoEvaluateElementParameters(std::move(_base)),
+        eval_point(eval_point) {}
+};
 struct PyTaoEvaluateLatOrBeamData : public Tao::TaoEvaluateLatOrBeamData {
   std::string default_source;
   PyTaoEvaluateLatOrBeamData(
@@ -115,6 +124,11 @@ struct PyTaoEvaluateLatOrBeamData : public Tao::TaoEvaluateLatOrBeamData {
       std::string default_source)
       : Tao::TaoEvaluateLatOrBeamData(std::move(_base)),
         default_source(default_source) {}
+};
+struct PyTaoEvaluateTree : public Tao::TaoEvaluateTree {
+  int n_size;
+  PyTaoEvaluateTree(Tao::TaoEvaluateTree _base, int n_size)
+      : Tao::TaoEvaluateTree(std::move(_base)), n_size(n_size) {}
 };
 struct PyTaoEvaluateTune {
   double q_val;
@@ -212,6 +226,19 @@ struct PyTaoParamValueAtS : public Tao::TaoParamValueAtS {
       : Tao::TaoParamValueAtS(std::move(_base)),
         dat_name(dat_name),
         value(value) {}
+};
+struct PyTaoParamValueRoutine {
+  std::string str;
+  bool use_good_user;
+  std::string saved_prefix;
+  bool err_flag;
+  bool print_err;
+  std::optional<std::string> dflt_component;
+  std::optional<std::string> dflt_source;
+  std::optional<std::string> dflt_dat_or_var_index;
+  std::optional<int> dflt_uni;
+  std::optional<int> dflt_eval_point;
+  std::optional<double> dflt_s_offset;
 };
 
 struct PyTaoParseCommandArgs {

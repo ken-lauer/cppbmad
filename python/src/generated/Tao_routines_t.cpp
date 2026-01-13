@@ -205,6 +205,25 @@ PyTaoEleShapeInfo python_tao_ele_shape_info(
   auto py_result{PyTaoEleShapeInfo{_result, y1, y2, ix_shape_min}};
   return py_result;
 }
+PyTaoEvaluateElementParameters python_tao_evaluate_element_parameters(
+    std::string param_name,
+    bool print_err,
+    optional_ref<EleProxy> dflt_ele,
+    std::string dflt_source,
+    std::optional<std::string> dflt_component = std::nullopt,
+    std::optional<int> dflt_uni = std::nullopt,
+    std::optional<int> eval_point = std::nullopt) {
+  auto _result = Tao::tao_evaluate_element_parameters(
+      param_name,
+      print_err,
+      dflt_ele,
+      dflt_source,
+      dflt_component,
+      dflt_uni,
+      make_opt_ref(eval_point));
+  auto py_result{PyTaoEvaluateElementParameters{_result, eval_point}};
+  return py_result;
+}
 PyTaoEvaluateLatOrBeamData python_tao_evaluate_lat_or_beam_data(
     std::string data_name,
     bool print_err,
@@ -228,6 +247,18 @@ PyTaoEvaluateLatOrBeamData python_tao_evaluate_lat_or_beam_data(
       dflt_eval_point,
       dflt_s_offset);
   auto py_result{PyTaoEvaluateLatOrBeamData{_result, default_source}};
+  return py_result;
+}
+PyTaoEvaluateTree python_tao_evaluate_tree(
+    TaoEvalNodeProxy& tao_tree,
+    int n_size,
+    bool use_good_user,
+    bool print_err,
+    std::string expression,
+    optional_ref<TaoExpressionInfoProxyAlloc1D> info_in = std::nullopt) {
+  auto _result = Tao::tao_evaluate_tree(
+      tao_tree, n_size, use_good_user, print_err, expression, info_in);
+  auto py_result{PyTaoEvaluateTree{_result, n_size}};
   return py_result;
 }
 PyTaoEvaluateTune python_tao_evaluate_tune(
@@ -413,6 +444,56 @@ PyTaoParamValueAtS python_tao_param_value_at_s(
   auto _result =
       Tao::tao_param_value_at_s(dat_name, ele_to_s, ele_here, orbit, value);
   auto py_result{PyTaoParamValueAtS{_result, dat_name, value}};
+  return py_result;
+}
+PyTaoParamValueRoutine python_tao_param_value_routine(
+    std::string str,
+    bool use_good_user,
+    std::string saved_prefix,
+    TaoEvalNodeProxy& stack,
+    bool err_flag,
+    bool print_err,
+    std::optional<std::string> dflt_component = std::nullopt,
+    std::optional<std::string> dflt_source = std::nullopt,
+    optional_ref<EleProxy> dflt_ele_ref = std::nullopt,
+    optional_ref<EleProxy> dflt_ele_start = std::nullopt,
+    optional_ref<EleProxy> dflt_ele = std::nullopt,
+    std::optional<std::string> dflt_dat_or_var_index = std::nullopt,
+    std::optional<int> dflt_uni = std::nullopt,
+    std::optional<int> dflt_eval_point = std::nullopt,
+    std::optional<double> dflt_s_offset = std::nullopt,
+    optional_ref<CoordProxy> dflt_orbit = std::nullopt,
+    optional_ref<TaoDataProxy> datum = std::nullopt) {
+  Tao::tao_param_value_routine(
+      str,
+      use_good_user,
+      saved_prefix,
+      stack,
+      err_flag,
+      print_err,
+      make_opt_ref(dflt_component),
+      make_opt_ref(dflt_source),
+      dflt_ele_ref,
+      dflt_ele_start,
+      dflt_ele,
+      make_opt_ref(dflt_dat_or_var_index),
+      make_opt_ref(dflt_uni),
+      make_opt_ref(dflt_eval_point),
+      make_opt_ref(dflt_s_offset),
+      dflt_orbit,
+      datum);
+  auto py_result{PyTaoParamValueRoutine{
+      str,
+      use_good_user,
+      saved_prefix,
+      err_flag,
+      print_err,
+      dflt_component,
+      dflt_source,
+      dflt_dat_or_var_index,
+      dflt_uni,
+      dflt_eval_point,
+      dflt_s_offset}};
   return py_result;
 }
 PyTaoParseCommandArgs python_tao_parse_command_args(
@@ -1672,6 +1753,20 @@ void init_Tao_routines_t(py::module& m) {
   ----------
   plot_cache : 
   )""");
+  m.def(
+      "tao_deallocate_tree",
+      &Tao::tao_deallocate_tree,
+      py::arg("tree"),
+      R"""(Subroutine tao_deallocate_tree (tree)
+
+  Routine to deallocate tree%node(:) and everything below it
+
+  Parameters
+  ----------
+  tree : TaoEvalNodeStruct
+      Root of tree to deallocate.
+      This parameter is an input/output and is modified in-place. As an output: Deallocated tree.
+  )""");
   m.def("tao_destroy_plot_window", &Tao::tao_destroy_plot_window, R"""()""");
   m.def(
       "tao_dmerit_calc",
@@ -2192,6 +2287,330 @@ void init_Tao_routines_t(py::module& m) {
       Datum value.
   )""");
   py::class_<
+      PyTaoEvaluateElementParameters,
+      std::unique_ptr<PyTaoEvaluateElementParameters>>(
+      m,
+      "TaoEvaluateElementParameters",
+      "tao_evaluate_element_parameters return type")
+      .def_readonly("err", &PyTaoEvaluateElementParameters::err)
+      .def_readonly("values", &PyTaoEvaluateElementParameters::values)
+      .def_readonly("info", &PyTaoEvaluateElementParameters::info)
+      .def_readonly("eval_point", &PyTaoEvaluateElementParameters::eval_point)
+      .def("__len__", [](const PyTaoEvaluateElementParameters&) { return 4; })
+      .def(
+          "__getitem__",
+          [](const PyTaoEvaluateElementParameters& s, int i) -> py::object {
+            if (i < 0)
+              i += 4;
+            if (i == 0)
+              return py::cast(s.err);
+            if (i == 1)
+              return py::cast(s.values);
+            if (i == 2)
+              return py::cast(s.info);
+            if (i == 3)
+              return py::cast(s.eval_point);
+            throw py::index_error();
+          });
+  m.def(
+      "tao_evaluate_element_parameters",
+      &python_tao_evaluate_element_parameters,
+      py::arg("param_name"),
+      py::arg("print_err"),
+      py::arg("dflt_ele") = py::none(),
+      py::arg("dflt_source"),
+      py::arg("dflt_component") = py::none(),
+      py::arg("dflt_uni") = py::none(),
+      py::arg("eval_point") = py::none(),
+      R"""(Parameters
+  ----------
+  err : bool
+      True if there is an error in syntax. False otherwise
+  param_name : unknown
+      parameter name.
+  values : float
+      Array of datum values.
+  print_err : bool
+      Print error message?
+  dflt_ele : EleStruct, optional
+      Default element if not specified by param_name.
+  dflt_source : unknown
+      Default source
+  dflt_component : unknown, optional
+      Default component
+  dflt_uni : int, optional
+      Default universe to use.
+  eval_point : 
+  info : unknown
+  )""");
+  py::class_<
+      Tao::TaoEvaluateExpression,
+      std::unique_ptr<Tao::TaoEvaluateExpression>>(
+      m, "TaoEvaluateExpression", "tao_evaluate_expression return type")
+      .def_readonly("value", &Tao::TaoEvaluateExpression::value)
+      .def_readonly("err_flag", &Tao::TaoEvaluateExpression::err_flag)
+      .def_readonly("info", &Tao::TaoEvaluateExpression::info)
+      .def_readonly("stack", &Tao::TaoEvaluateExpression::stack)
+      .def("__len__", [](const Tao::TaoEvaluateExpression&) { return 4; })
+      .def(
+          "__getitem__",
+          [](const Tao::TaoEvaluateExpression& s, int i) -> py::object {
+            if (i < 0)
+              i += 4;
+            if (i == 0)
+              return py::cast(s.value);
+            if (i == 1)
+              return py::cast(s.err_flag);
+            if (i == 2)
+              return py::cast(s.info);
+            if (i == 3)
+              return py::cast(s.stack);
+            throw py::index_error();
+          });
+  m.def(
+      "tao_evaluate_expression",
+      &Tao::tao_evaluate_expression,
+      py::arg("expression"),
+      py::arg("n_size"),
+      py::arg("use_good_user"),
+      py::arg("print_err") = py::none(),
+      py::arg("dflt_component") = py::none(),
+      py::arg("dflt_source") = py::none(),
+      py::arg("dflt_ele_ref") = py::none(),
+      py::arg("dflt_ele_start") = py::none(),
+      py::arg("dflt_ele") = py::none(),
+      py::arg("dflt_dat_or_var_index") = py::none(),
+      py::arg("dflt_uni") = py::none(),
+      py::arg("dflt_eval_point") = py::none(),
+      py::arg("dflt_s_offset") = py::none(),
+      py::arg("dflt_orbit") = py::none(),
+      py::arg("datum") = py::none(),
+      R"""(Parameters
+  ----------
+  expression : unknown
+      Arithmetic expression.
+  n_size : int
+      Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
+      this value. If n_size = 0, the natural size is determined by the expression itself.
+  use_good_user : bool
+      Use the good_user logical in evaluating good(:)
+  value : float
+      Value of arithmetic expression.
+  err_flag : bool
+      True on an error. EG: Invalid expression. A divide by zero is not an error but good(:) will be set to
+      False.
+  print_err : bool, optional
+      If False then supress evaluation error messages. This does not affect syntax error messages. Default is
+      True.
+  info : TaoExpressionInfoStruct
+      Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
+      orbit.x[23]|good_user is False.
+  stack : TaoEvalNodeStruct
+      Array of nodes of variable names. This is useful to check what datums or variables are used in the
+      expression.
+  dflt_component : unknown, optional
+      Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
+  dflt_source : unknown, optional
+      Default source ('lat', 'data', etc.). Default is ''.
+  dflt_ele_ref : EleStruct, optional
+      Default reference element.
+  dflt_ele_start : EleStruct, optional
+      Default start element for ranges.
+  dflt_ele : EleStruct, optional
+      Default element to evaluate at.
+  dflt_dat_or_var_index : unknown, optional
+      Default datum or variable index to use.
+  dflt_uni : int, optional
+      Default universe to use. If 0 or not present, use viewed universe.
+  dflt_eval_point : int, optional
+      Default eval_point. anchor_end$ (default), anchor_center$, or anchor_beginning$.
+  dflt_s_offset : float, optional
+      Default offset of eval_point. Default = 0.
+  dflt_orbit : CoordStruct, optional
+      Default orbit to evaluate at.
+  datum : TaoDataStruct, optional
+      If present, check to see that the expression does not depend upon a datum that will be evaluated after
+      this datum. If so, this is an error.
+  )""");
+  py::class_<
+      Tao::TaoEvaluateExpressionNew,
+      std::unique_ptr<Tao::TaoEvaluateExpressionNew>>(
+      m, "TaoEvaluateExpressionNew", "tao_evaluate_expression_new return type")
+      .def_readonly("value", &Tao::TaoEvaluateExpressionNew::value)
+      .def_readonly("err_flag", &Tao::TaoEvaluateExpressionNew::err_flag)
+      .def_readonly("info", &Tao::TaoEvaluateExpressionNew::info)
+      .def_readonly("stack", &Tao::TaoEvaluateExpressionNew::stack)
+      .def("__len__", [](const Tao::TaoEvaluateExpressionNew&) { return 4; })
+      .def(
+          "__getitem__",
+          [](const Tao::TaoEvaluateExpressionNew& s, int i) -> py::object {
+            if (i < 0)
+              i += 4;
+            if (i == 0)
+              return py::cast(s.value);
+            if (i == 1)
+              return py::cast(s.err_flag);
+            if (i == 2)
+              return py::cast(s.info);
+            if (i == 3)
+              return py::cast(s.stack);
+            throw py::index_error();
+          });
+  m.def(
+      "tao_evaluate_expression_new",
+      &Tao::tao_evaluate_expression_new,
+      py::arg("expression"),
+      py::arg("n_size"),
+      py::arg("use_good_user"),
+      py::arg("print_err") = py::none(),
+      py::arg("dflt_component") = py::none(),
+      py::arg("dflt_source") = py::none(),
+      py::arg("dflt_ele_ref") = py::none(),
+      py::arg("dflt_ele_start") = py::none(),
+      py::arg("dflt_ele") = py::none(),
+      py::arg("dflt_dat_or_var_index") = py::none(),
+      py::arg("dflt_uni") = py::none(),
+      py::arg("dflt_eval_point") = py::none(),
+      py::arg("dflt_s_offset") = py::none(),
+      py::arg("dflt_orbit") = py::none(),
+      py::arg("datum") = py::none(),
+      R"""(Parameters
+  ----------
+  expression : unknown
+      Arithmetic expression.
+  n_size : int
+      Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
+      this value. If n_size = 0, the natural size is determined by the expression itself.
+  use_good_user : bool
+      Use the good_user logical in evaluating good(:)
+  value : float
+      Value of arithmetic expression.
+  err_flag : bool
+      True on an error. EG: Invalid expression. A divide by zero is not an error but good(:) will be set to
+      False.
+  print_err : bool, optional
+      If False then supress evaluation error messages. This does not affect syntax error messages. Default is
+      True.
+  info : TaoExpressionInfoStruct
+      Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
+      orbit.x[23]|good_user is False.
+  stack : TaoEvalNodeStruct
+      Array of nodes of variable names. This is useful to check what datums or variables are used in the
+      expression.
+  dflt_component : unknown, optional
+      Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
+  dflt_source : unknown, optional
+      Default source ('lat', 'data', etc.). Default is ''.
+  dflt_ele_ref : EleStruct, optional
+      Default reference element.
+  dflt_ele_start : EleStruct, optional
+      Default start element for ranges.
+  dflt_ele : EleStruct, optional
+      Default element to evaluate at.
+  dflt_dat_or_var_index : unknown, optional
+      Default datum or variable index to use.
+  dflt_uni : int, optional
+      Default universe to use. If 0 or not present, use viewed universe.
+  dflt_eval_point : int, optional
+      Default eval_point. anchor_end$ (default), anchor_center$, or anchor_beginning$.
+  dflt_s_offset : float, optional
+      Default offset of eval_point. Default = 0.
+  dflt_orbit : CoordStruct, optional
+      Default orbit to evaluate at.
+  datum : TaoDataStruct, optional
+      If present, check to see that the expression does not depend upon a datum that will be evaluated after
+      this datum. If so, this is an error.
+  )""");
+  py::class_<
+      Tao::TaoEvaluateExpressionOld,
+      std::unique_ptr<Tao::TaoEvaluateExpressionOld>>(
+      m, "TaoEvaluateExpressionOld", "tao_evaluate_expression_old return type")
+      .def_readonly("value", &Tao::TaoEvaluateExpressionOld::value)
+      .def_readonly("err_flag", &Tao::TaoEvaluateExpressionOld::err_flag)
+      .def_readonly("info", &Tao::TaoEvaluateExpressionOld::info)
+      .def_readonly("stack", &Tao::TaoEvaluateExpressionOld::stack)
+      .def("__len__", [](const Tao::TaoEvaluateExpressionOld&) { return 4; })
+      .def(
+          "__getitem__",
+          [](const Tao::TaoEvaluateExpressionOld& s, int i) -> py::object {
+            if (i < 0)
+              i += 4;
+            if (i == 0)
+              return py::cast(s.value);
+            if (i == 1)
+              return py::cast(s.err_flag);
+            if (i == 2)
+              return py::cast(s.info);
+            if (i == 3)
+              return py::cast(s.stack);
+            throw py::index_error();
+          });
+  m.def(
+      "tao_evaluate_expression_old",
+      &Tao::tao_evaluate_expression_old,
+      py::arg("expression"),
+      py::arg("n_size"),
+      py::arg("use_good_user"),
+      py::arg("print_err") = py::none(),
+      py::arg("dflt_component") = py::none(),
+      py::arg("dflt_source") = py::none(),
+      py::arg("dflt_ele_ref") = py::none(),
+      py::arg("dflt_ele_start") = py::none(),
+      py::arg("dflt_ele") = py::none(),
+      py::arg("dflt_dat_or_var_index") = py::none(),
+      py::arg("dflt_uni") = py::none(),
+      py::arg("dflt_eval_point") = py::none(),
+      py::arg("dflt_s_offset") = py::none(),
+      py::arg("dflt_orbit") = py::none(),
+      py::arg("datum") = py::none(),
+      R"""(Parameters
+  ----------
+  expression : unknown
+      Arithmetic expression.
+  n_size : int
+      Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
+      this value. If n_size = 0, the natural size is determined by the expression itself.
+  use_good_user : bool
+      Use the good_user logical in evaluating good(:)
+  value : float
+      Value of arithmetic expression.
+  err_flag : bool
+      True on an error. EG: Invalid expression. A divide by zero is not an error but good(:) will be set to
+      False.
+  print_err : bool, optional
+      If False then supress evaluation error messages. This does not affect syntax error messages. Default is
+      True.
+  info : TaoExpressionInfoStruct
+      Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
+      orbit.x[23]|good_user is False.
+  stack : TaoEvalNodeStruct
+      Array of nodes of variable names. This is useful to check what datums or variables are used in the
+      expression.
+  dflt_component : unknown, optional
+      Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
+  dflt_source : unknown, optional
+      Default source ('lat', 'data', etc.). Default is ''.
+  dflt_ele_ref : EleStruct, optional
+      Default reference element.
+  dflt_ele_start : EleStruct, optional
+      Default start element for ranges.
+  dflt_ele : EleStruct, optional
+      Default element to evaluate at.
+  dflt_dat_or_var_index : unknown, optional
+      Default datum or variable index to use.
+  dflt_uni : int, optional
+      Default universe to use. If 0 or not present, use viewed universe.
+  dflt_eval_point : int, optional
+      Default eval_point. anchor_end$ (default), anchor_center$, or anchor_beginning$.
+  dflt_s_offset : float, optional
+      Default offset of eval_point. Default = 0.
+  dflt_orbit : CoordStruct, optional
+      Default orbit to evaluate at.
+  datum : TaoDataStruct, optional
+      If present, check to see that the expression does not depend upon a datum that will be evaluated after
+      this datum. If so, this is an error.
+  )""");
+  py::class_<
       PyTaoEvaluateLatOrBeamData,
       std::unique_ptr<PyTaoEvaluateLatOrBeamData>>(
       m,
@@ -2270,6 +2689,106 @@ void init_Tao_routines_t(py::module& m) {
   values : float
       Array of datum valuse.
   )""");
+  py::class_<
+      Tao::TaoEvaluateStackOld,
+      std::unique_ptr<Tao::TaoEvaluateStackOld>>(
+      m, "TaoEvaluateStackOld", "tao_evaluate_stack_old return type")
+      .def_readonly("value", &Tao::TaoEvaluateStackOld::value)
+      .def_readonly("err_flag", &Tao::TaoEvaluateStackOld::err_flag)
+      .def("__len__", [](const Tao::TaoEvaluateStackOld&) { return 2; })
+      .def(
+          "__getitem__",
+          [](const Tao::TaoEvaluateStackOld& s, int i) -> py::object {
+            if (i < 0)
+              i += 2;
+            if (i == 0)
+              return py::cast(s.value);
+            if (i == 1)
+              return py::cast(s.err_flag);
+            throw py::index_error();
+          });
+  m.def(
+      "tao_evaluate_stack_old",
+      &Tao::tao_evaluate_stack_old,
+      py::arg("stack"),
+      py::arg("n_size_in"),
+      py::arg("use_good_user"),
+      py::arg("print_err"),
+      py::arg("expression"),
+      py::arg("info_in") = py::none(),
+      R"""(Subroutine tao_evaluate_stack_old (stack, n_size_in, use_good_user, value, info, err_flag, print_err, expression)
+
+  Routine to evaluate an expression stack.
+
+  Parameters
+  ----------
+  stack : TaoEvalNodeStruct
+      Expression stack
+  n_size_in : int
+      Desired array size. If the expression evaluates to a a scalar, each value in the value array will get this
+      value. If n_size = 0, the natural size is determined by the expression itself.
+  use_good_user : bool
+      Use the good_user logical in evaluating good(:)
+  print_err : bool
+      If False then supress evaluation error messages. This does not affect syntax error messages. Default is
+      True.
+  expression : unknown
+      Original expression. Used for error messages.
+
+  Returns
+  -------
+  value : float
+      Value of arithmetic expression.
+  info : TaoExpressionInfoStruct
+      Is the value valid? Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
+      orbit.x[23]|good_user is False.
+  err_flag : bool
+      True on error. False otherwise
+  )""");
+  py::class_<PyTaoEvaluateTree, std::unique_ptr<PyTaoEvaluateTree>>(
+      m, "TaoEvaluateTree", "tao_evaluate_tree return type")
+      .def_readonly("value", &PyTaoEvaluateTree::value)
+      .def_readonly("err_flag", &PyTaoEvaluateTree::err_flag)
+      .def_readonly("n_size", &PyTaoEvaluateTree::n_size)
+      .def("__len__", [](const PyTaoEvaluateTree&) { return 3; })
+      .def("__getitem__", [](const PyTaoEvaluateTree& s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.value);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        if (i == 2)
+          return py::cast(s.n_size);
+        throw py::index_error();
+      });
+  m.def(
+      "tao_evaluate_tree",
+      &python_tao_evaluate_tree,
+      py::arg("tao_tree"),
+      py::arg("n_size"),
+      py::arg("use_good_user"),
+      py::arg("print_err"),
+      py::arg("expression"),
+      py::arg("info_in") = py::none(),
+      R"""(Parameters
+  ----------
+  tao_tree : TaoEvalNodeStruct
+      Expression tree
+  n_size : 
+  use_good_user : bool
+      Use the good_user logical in evaluating good(:)
+  value : float
+      Value(s) of the arithmetic expression.
+  err_flag : bool
+      True on error. False otherwise
+  print_err : bool
+      If False then supress evaluation error messages. This does not affect syntax error messages. Default is
+      True.
+  expression : unknown
+      Original expression. Used for error messages.
+  info_in : 
+  )""");
   py::class_<PyTaoEvaluateTune, std::unique_ptr<PyTaoEvaluateTune>>(
       m, "TaoEvaluateTune", "tao_evaluate_tune return type")
       .def_readonly("q_val", &PyTaoEvaluateTune::q_val)
@@ -2324,6 +2843,34 @@ void init_Tao_routines_t(py::module& m) {
   -------
   expression_out : unknown
       Expression with substitutions made.
+  )""");
+  m.def(
+      "tao_expression_tree_to_string",
+      &Tao::tao_expression_tree_to_string,
+      py::arg("tree"),
+      py::arg("include_root") = py::none(),
+      py::arg("n_node") = py::none(),
+      py::arg("parent") = py::none(),
+      R"""(Function tao_expression_tree_to_string (tree, include_root, n_node, parent) result(str_out)
+
+  Routine to convert an expression tree to a expression string.
+
+  Parameters
+  ----------
+  tree : TaoEvalNodeStruct
+      Tree to print.
+  include_root : bool, optional
+      Default is True. If True, do not inculde in the output string the root node. Note: If the root node is of
+      type root$, this node is always ignored.
+  n_node : int, optional
+      Internal use only. Used with recursive calls.
+  parent : TaoEvalNodeStruct, optional
+      Internal use only. Used with recusive calls.
+
+  Returns
+  -------
+  str_out : unknown
+      Expression string.
   )""");
   py::class_<Tao::TaoFindPlotRegion, std::unique_ptr<Tao::TaoFindPlotRegion>>(
       m, "TaoFindPlotRegion", "tao_find_plot_region return type")
@@ -3634,6 +4181,91 @@ void init_Tao_routines_t(py::module& m) {
       Data_type is malformed.
   value : 
   )""");
+  py::class_<PyTaoParamValueRoutine, std::unique_ptr<PyTaoParamValueRoutine>>(
+      m, "TaoParamValueRoutine", "tao_param_value_routine return type")
+      .def_readonly("str", &PyTaoParamValueRoutine::str)
+      .def_readonly("use_good_user", &PyTaoParamValueRoutine::use_good_user)
+      .def_readonly("saved_prefix", &PyTaoParamValueRoutine::saved_prefix)
+      .def_readonly("err_flag", &PyTaoParamValueRoutine::err_flag)
+      .def_readonly("print_err", &PyTaoParamValueRoutine::print_err)
+      .def_readonly("dflt_component", &PyTaoParamValueRoutine::dflt_component)
+      .def_readonly("dflt_source", &PyTaoParamValueRoutine::dflt_source)
+      .def_readonly(
+          "dflt_dat_or_var_index",
+          &PyTaoParamValueRoutine::dflt_dat_or_var_index)
+      .def_readonly("dflt_uni", &PyTaoParamValueRoutine::dflt_uni)
+      .def_readonly("dflt_eval_point", &PyTaoParamValueRoutine::dflt_eval_point)
+      .def_readonly("dflt_s_offset", &PyTaoParamValueRoutine::dflt_s_offset)
+      .def("__len__", [](const PyTaoParamValueRoutine&) { return 11; })
+      .def(
+          "__getitem__",
+          [](const PyTaoParamValueRoutine& s, int i) -> py::object {
+            if (i < 0)
+              i += 11;
+            if (i == 0)
+              return py::cast(s.str);
+            if (i == 1)
+              return py::cast(s.use_good_user);
+            if (i == 2)
+              return py::cast(s.saved_prefix);
+            if (i == 3)
+              return py::cast(s.err_flag);
+            if (i == 4)
+              return py::cast(s.print_err);
+            if (i == 5)
+              return py::cast(s.dflt_component);
+            if (i == 6)
+              return py::cast(s.dflt_source);
+            if (i == 7)
+              return py::cast(s.dflt_dat_or_var_index);
+            if (i == 8)
+              return py::cast(s.dflt_uni);
+            if (i == 9)
+              return py::cast(s.dflt_eval_point);
+            if (i == 10)
+              return py::cast(s.dflt_s_offset);
+            throw py::index_error();
+          });
+  m.def(
+      "tao_param_value_routine",
+      &python_tao_param_value_routine,
+      py::arg("str"),
+      py::arg("use_good_user"),
+      py::arg("saved_prefix"),
+      py::arg("stack"),
+      py::arg("err_flag"),
+      py::arg("print_err"),
+      py::arg("dflt_component") = py::none(),
+      py::arg("dflt_source") = py::none(),
+      py::arg("dflt_ele_ref") = py::none(),
+      py::arg("dflt_ele_start") = py::none(),
+      py::arg("dflt_ele") = py::none(),
+      py::arg("dflt_dat_or_var_index") = py::none(),
+      py::arg("dflt_uni") = py::none(),
+      py::arg("dflt_eval_point") = py::none(),
+      py::arg("dflt_s_offset") = py::none(),
+      py::arg("dflt_orbit") = py::none(),
+      py::arg("datum") = py::none(),
+      R"""(Parameters
+  ----------
+  str : 
+  use_good_user : 
+  saved_prefix : 
+  stack : 
+  err_flag : 
+  print_err : 
+  dflt_component : 
+  dflt_source : 
+  dflt_ele_ref : 
+  dflt_ele_start : 
+  dflt_ele : 
+  dflt_dat_or_var_index : 
+  dflt_uni : 
+  dflt_eval_point : 
+  dflt_s_offset : 
+  dflt_orbit : 
+  datum : 
+  )""");
   py::class_<PyTaoParseCommandArgs, std::unique_ptr<PyTaoParseCommandArgs>>(
       m, "TaoParseCommandArgs", "tao_parse_command_args return type")
       .def_readonly("error", &PyTaoParseCommandArgs::error)
@@ -4351,6 +4983,43 @@ void init_Tao_routines_t(py::module& m) {
   data_type : 
   data_source : 
   do_rad_int : 
+  )""");
+  m.def(
+      "tao_re_allocate_expression_info",
+      &Tao::tao_re_allocate_expression_info,
+      py::arg("info"),
+      py::arg("n"),
+      py::arg("exact") = py::none(),
+      R"""(Parameters
+  ----------
+  info : TaoExpressionInfoStruct
+      This parameter is an input/output and is modified in-place. As an output: Allocated array with size(re) >=
+      n.
+  n : int
+      Size wanted.
+  exact : bool, optional
+      If present and False then the size of the output array is permitted to be larger than n. Default is True.
+  )""");
+  m.def(
+      "tao_re_associate_node_array",
+      &Tao::tao_re_associate_node_array,
+      py::arg("tree"),
+      py::arg("n"),
+      py::arg("exact") = py::none(),
+      R"""(Subroutine tao_re_associate_node_array(tree, n, exact)
+
+  Routine to resize the tree%node(:) array.
+
+  Note: The data of the array is preserved but data at the end of the
+  array will be lost if n is less than the original size of the array
+
+  Parameters
+  ----------
+  tree : TaoEvalNodeStruct
+  n : int
+      Size wanted.
+  exact : bool, optional
+      Default is False. If False, the size of the output array is permitted to be larger than n.
   )""");
   py::class_<PyTaoReExecute, std::unique_ptr<PyTaoReExecute>>(
       m, "TaoReExecute", "tao_re_execute return type")
@@ -6087,6 +6756,23 @@ void init_Tao_routines_t(py::module& m) {
       "tao_turn_on_special_calcs_if_needed_for_plotting",
       &Tao::tao_turn_on_special_calcs_if_needed_for_plotting,
       R"""()""");
+  m.def(
+      "tao_type_expression_tree",
+      &Tao::tao_type_expression_tree,
+      py::arg("tree"),
+      py::arg("indent") = py::none(),
+      R"""(Subroutine tao_type_expression_tree (tree, indent)
+
+  Routine to print an expression tree in tree form.
+  Good for debugging.
+
+  Parameters
+  ----------
+  tree : TaoEvalNodeStruct
+      Tree to print.
+  indent : int, optional
+      Initial indent. Default is zero.
+  )""");
   m.def(
       "tao_uni_atsign_index",
       &Tao::tao_uni_atsign_index,

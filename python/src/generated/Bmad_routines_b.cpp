@@ -229,6 +229,24 @@ void init_Bmad_routines_b(py::module& m) {
       y-pz coupling
   )""");
   m.def(
+      "beambeam_fibre_setup",
+      &Bmad::beambeam_fibre_setup,
+      py::arg("ele"),
+      R"""(Subroutine beambeam_fibre_setup(ele, ptc_fibre)
+
+  Routine to setup a fibre to handle the beambeam interaction.
+
+  Parameters
+  ----------
+  ele : EleStruct
+      Bmad beambeam element.
+
+  Returns
+  -------
+  ptc_fibre : 
+      Corresponding PTC fibre.
+  )""");
+  m.def(
       "bend_edge_kick",
       &Bmad::bend_edge_kick,
       py::arg("ele"),

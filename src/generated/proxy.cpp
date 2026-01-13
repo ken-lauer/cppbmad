@@ -4616,6 +4616,16 @@ std::optional<EleProxy> EleProxy::lord() const {
 void EleProxy::set_lord(const EleProxy& src) {
   ele_struct_set_lord(fortran_ptr_, src.get_fortran_ptr());
 }
+std::optional<FibreRawStruct> EleProxy::ptc_fibre() const {
+  void* ptr;
+  ele_struct_get_ptc_fibre(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return FibreRawStruct(ptr);
+}
+void EleProxy::set_ptc_fibre(const FibreRawStruct& src) {
+  ele_struct_set_ptc_fibre(fortran_ptr_, src.get_fortran_ptr());
+}
 FloorPositionProxy EleProxy::floor() const {
   void* ptr;
   ele_struct_get_floor(fortran_ptr_, &ptr);
@@ -9101,6 +9111,69 @@ LatEleOrderArrayProxyArray1D LatEleOrderProxy::branch() const {
   return ProxyHelpers::get_type_array_1d<LatEleOrderArrayProxyArray1D>(
       fortran_ptr_, lat_ele_order_struct_get_branch_info);
 }
+bool TaoExpressionInfoProxy::good() const {
+  bool value;
+  tao_expression_info_struct_get_good(fortran_ptr_, &value);
+  return value;
+}
+void TaoExpressionInfoProxy::set_good(bool value) {
+  tao_expression_info_struct_set_good(fortran_ptr_, value);
+}
+std::optional<EleProxy> TaoExpressionInfoProxy::ele() const {
+  void* ptr;
+  tao_expression_info_struct_get_ele(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return EleProxy(ptr);
+}
+void TaoExpressionInfoProxy::set_ele(const EleProxy& src) {
+  tao_expression_info_struct_set_ele(fortran_ptr_, src.get_fortran_ptr());
+}
+double TaoExpressionInfoProxy::s() const {
+  double value;
+  tao_expression_info_struct_get_s(fortran_ptr_, &value);
+  return value;
+}
+void TaoExpressionInfoProxy::set_s(double value) {
+  tao_expression_info_struct_set_s(fortran_ptr_, value);
+}
+int TaoEvalNodeProxy::type() const {
+  int value;
+  tao_eval_node_struct_get_type(fortran_ptr_, &value);
+  return value;
+}
+void TaoEvalNodeProxy::set_type(int value) {
+  tao_eval_node_struct_set_type(fortran_ptr_, value);
+}
+std::string TaoEvalNodeProxy::name() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_, tao_eval_node_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoEvalNodeProxy::set_name(const std::string& value) {
+  tao_eval_node_struct_set_name(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double TaoEvalNodeProxy::scale() const {
+  double value;
+  tao_eval_node_struct_get_scale(fortran_ptr_, &value);
+  return value;
+}
+void TaoEvalNodeProxy::set_scale(double value) {
+  tao_eval_node_struct_set_scale(fortran_ptr_, value);
+}
+FArray1D<double> TaoEvalNodeProxy::value() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_, tao_eval_node_struct_get_value_info);
+}
+TaoExpressionInfoProxyArray1D TaoEvalNodeProxy::info() const {
+  return ProxyHelpers::get_type_array_1d<TaoExpressionInfoProxyArray1D>(
+      fortran_ptr_, tao_eval_node_struct_get_info_info);
+}
+TaoEvalNodeProxyArray1D TaoEvalNodeProxy::node() const {
+  return ProxyHelpers::get_type_array_1d<TaoEvalNodeProxyArray1D>(
+      fortran_ptr_, tao_eval_node_struct_get_node_info);
+}
 std::string TaoTitleProxy::string() const {
   FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
       fortran_ptr_, tao_title_struct_get_string_info);
@@ -12354,6 +12427,261 @@ int BbuParamProxy::n_ramp_pattern() const {
 }
 void BbuParamProxy::set_n_ramp_pattern(int value) {
   bbu_param_struct_set_n_ramp_pattern(fortran_ptr_, value);
+}
+int* FibreRawStruct::DIR() const {
+  int* ptr;
+  fibre_get_DIR(fortran_ptr_, &ptr);
+  return ptr;
+}
+void FibreRawStruct::set_DIR(int value) {
+  fibre_set_DIR(fortran_ptr_, value);
+}
+std::optional<FibreRawStruct> FibreRawStruct::PREVIOUS() const {
+  void* ptr;
+  fibre_get_PREVIOUS(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return FibreRawStruct(ptr);
+}
+void FibreRawStruct::set_PREVIOUS(const FibreRawStruct& src) {
+  fibre_set_PREVIOUS(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<FibreRawStruct> FibreRawStruct::NEXT() const {
+  void* ptr;
+  fibre_get_NEXT(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return FibreRawStruct(ptr);
+}
+void FibreRawStruct::set_NEXT(const FibreRawStruct& src) {
+  fibre_set_NEXT(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<LayoutRawStruct> FibreRawStruct::PARENT_LAYOUT() const {
+  void* ptr;
+  fibre_get_PARENT_LAYOUT(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return LayoutRawStruct(ptr);
+}
+void FibreRawStruct::set_PARENT_LAYOUT(const LayoutRawStruct& src) {
+  fibre_set_PARENT_LAYOUT(fortran_ptr_, src.get_fortran_ptr());
+}
+int* FibreRawStruct::pos() const {
+  int* ptr;
+  fibre_get_pos(fortran_ptr_, &ptr);
+  return ptr;
+}
+void FibreRawStruct::set_pos(int value) {
+  fibre_set_pos(fortran_ptr_, value);
+}
+double* FibreRawStruct::BETA0() const {
+  double* ptr;
+  fibre_get_BETA0(fortran_ptr_, &ptr);
+  return ptr;
+}
+void FibreRawStruct::set_BETA0(double value) {
+  fibre_set_BETA0(fortran_ptr_, value);
+}
+double* FibreRawStruct::GAMMA0I() const {
+  double* ptr;
+  fibre_get_GAMMA0I(fortran_ptr_, &ptr);
+  return ptr;
+}
+void FibreRawStruct::set_GAMMA0I(double value) {
+  fibre_set_GAMMA0I(fortran_ptr_, value);
+}
+double* FibreRawStruct::GAMBET() const {
+  double* ptr;
+  fibre_get_GAMBET(fortran_ptr_, &ptr);
+  return ptr;
+}
+void FibreRawStruct::set_GAMBET(double value) {
+  fibre_set_GAMBET(fortran_ptr_, value);
+}
+double* FibreRawStruct::MASS() const {
+  double* ptr;
+  fibre_get_MASS(fortran_ptr_, &ptr);
+  return ptr;
+}
+void FibreRawStruct::set_MASS(double value) {
+  fibre_set_MASS(fortran_ptr_, value);
+}
+double* FibreRawStruct::CHARGE() const {
+  double* ptr;
+  fibre_get_CHARGE(fortran_ptr_, &ptr);
+  return ptr;
+}
+void FibreRawStruct::set_CHARGE(double value) {
+  fibre_set_CHARGE(fortran_ptr_, value);
+}
+double* FibreRawStruct::AG() const {
+  double* ptr;
+  fibre_get_AG(fortran_ptr_, &ptr);
+  return ptr;
+}
+void FibreRawStruct::set_AG(double value) {
+  fibre_set_AG(fortran_ptr_, value);
+}
+std::optional<FibreRawStruct> FibreRawStruct::P() const {
+  void* ptr;
+  fibre_get_P(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return FibreRawStruct(ptr);
+}
+void FibreRawStruct::set_P(const FibreRawStruct& src) {
+  fibre_set_P(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<FibreRawStruct> FibreRawStruct::N() const {
+  void* ptr;
+  fibre_get_N(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return FibreRawStruct(ptr);
+}
+void FibreRawStruct::set_N(const FibreRawStruct& src) {
+  fibre_set_N(fortran_ptr_, src.get_fortran_ptr());
+}
+int* FibreRawStruct::loc() const {
+  int* ptr;
+  fibre_get_loc(fortran_ptr_, &ptr);
+  return ptr;
+}
+void FibreRawStruct::set_loc(int value) {
+  fibre_set_loc(fortran_ptr_, value);
+}
+std::string LayoutRawStruct::NAME() const {
+  return ProxyHelpers::get_string(fortran_ptr_, layout_get_NAME_info);
+}
+void LayoutRawStruct::set_NAME(const std::string& value) {
+  layout_set_NAME(
+      fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int* LayoutRawStruct::INDEX() const {
+  int* ptr;
+  layout_get_INDEX(fortran_ptr_, &ptr);
+  return ptr;
+}
+void LayoutRawStruct::set_INDEX(int value) {
+  layout_set_INDEX(fortran_ptr_, value);
+}
+double* LayoutRawStruct::HARMONIC_NUMBER() const {
+  double* ptr;
+  layout_get_HARMONIC_NUMBER(fortran_ptr_, &ptr);
+  return ptr;
+}
+void LayoutRawStruct::set_HARMONIC_NUMBER(double value) {
+  layout_set_HARMONIC_NUMBER(fortran_ptr_, value);
+}
+bool* LayoutRawStruct::CLOSED() const {
+  bool* ptr;
+  layout_get_CLOSED(fortran_ptr_, &ptr);
+  return ptr;
+}
+void LayoutRawStruct::set_CLOSED(bool value) {
+  layout_set_CLOSED(fortran_ptr_, value);
+}
+int* LayoutRawStruct::N() const {
+  int* ptr;
+  layout_get_N(fortran_ptr_, &ptr);
+  return ptr;
+}
+void LayoutRawStruct::set_N(int value) {
+  layout_set_N(fortran_ptr_, value);
+}
+int* LayoutRawStruct::NTHIN() const {
+  int* ptr;
+  layout_get_NTHIN(fortran_ptr_, &ptr);
+  return ptr;
+}
+void LayoutRawStruct::set_NTHIN(int value) {
+  layout_set_NTHIN(fortran_ptr_, value);
+}
+double* LayoutRawStruct::THIN() const {
+  double* ptr;
+  layout_get_THIN(fortran_ptr_, &ptr);
+  return ptr;
+}
+void LayoutRawStruct::set_THIN(double value) {
+  layout_set_THIN(fortran_ptr_, value);
+}
+int* LayoutRawStruct::LASTPOS() const {
+  int* ptr;
+  layout_get_LASTPOS(fortran_ptr_, &ptr);
+  return ptr;
+}
+void LayoutRawStruct::set_LASTPOS(int value) {
+  layout_set_LASTPOS(fortran_ptr_, value);
+}
+std::optional<FibreRawStruct> LayoutRawStruct::LAST() const {
+  void* ptr;
+  layout_get_LAST(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return FibreRawStruct(ptr);
+}
+void LayoutRawStruct::set_LAST(const FibreRawStruct& src) {
+  layout_set_LAST(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<FibreRawStruct> LayoutRawStruct::END() const {
+  void* ptr;
+  layout_get_END(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return FibreRawStruct(ptr);
+}
+void LayoutRawStruct::set_END(const FibreRawStruct& src) {
+  layout_set_END(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<FibreRawStruct> LayoutRawStruct::START() const {
+  void* ptr;
+  layout_get_START(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return FibreRawStruct(ptr);
+}
+void LayoutRawStruct::set_START(const FibreRawStruct& src) {
+  layout_set_START(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<FibreRawStruct> LayoutRawStruct::START_GROUND() const {
+  void* ptr;
+  layout_get_START_GROUND(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return FibreRawStruct(ptr);
+}
+void LayoutRawStruct::set_START_GROUND(const FibreRawStruct& src) {
+  layout_set_START_GROUND(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<FibreRawStruct> LayoutRawStruct::END_GROUND() const {
+  void* ptr;
+  layout_get_END_GROUND(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return FibreRawStruct(ptr);
+}
+void LayoutRawStruct::set_END_GROUND(const FibreRawStruct& src) {
+  layout_set_END_GROUND(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<LayoutRawStruct> LayoutRawStruct::NEXT() const {
+  void* ptr;
+  layout_get_NEXT(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return LayoutRawStruct(ptr);
+}
+void LayoutRawStruct::set_NEXT(const LayoutRawStruct& src) {
+  layout_set_NEXT(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<LayoutRawStruct> LayoutRawStruct::PREVIOUS() const {
+  void* ptr;
+  layout_get_PREVIOUS(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return LayoutRawStruct(ptr);
+}
+void LayoutRawStruct::set_PREVIOUS(const LayoutRawStruct& src) {
+  layout_set_PREVIOUS(fortran_ptr_, src.get_fortran_ptr());
 }
 double AllEncompassingProxy::real_rp_0d() const {
   double value;
