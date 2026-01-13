@@ -832,7 +832,7 @@ PyExpectOneOf python_expect_one_of(
 
 void init_Bmad_routines_e(py::module& m) {
   py::class_<PyEAccelField, std::unique_ptr<PyEAccelField>>(
-      m, "EAccelField", "Fortran routine e_accel_field return value")
+      m, "EAccelField", "e_accel_field return type")
       .def_readonly("field", &PyEAccelField::field)
       .def("__len__", [](const PyEAccelField&) { return 1; })
       .def("__getitem__", [](const PyEAccelField& s, int i) -> py::object {
@@ -881,7 +881,7 @@ void init_Bmad_routines_e(py::module& m) {
       Critical photon energy.
   )""");
   py::class_<Bmad::EigenDecomp6mat, std::unique_ptr<Bmad::EigenDecomp6mat>>(
-      m, "EigenDecomp6mat", "Fortran routine eigen_decomp_6mat return value")
+      m, "EigenDecomp6mat", "eigen_decomp_6mat return type")
       .def_readonly("eval", &Bmad::EigenDecomp6mat::eval)
       .def_readonly("evec", &Bmad::EigenDecomp6mat::evec)
       .def_readonly("err_flag", &Bmad::EigenDecomp6mat::err_flag)
@@ -998,7 +998,7 @@ void init_Bmad_routines_e(py::module& m) {
       deallocated as needed.
   )""");
   py::class_<PyEleFullName, std::unique_ptr<PyEleFullName>>(
-      m, "EleFullName", "Fortran routine ele_full_name return value")
+      m, "EleFullName", "ele_full_name return type")
       .def_readonly("str", &PyEleFullName::str)
       .def("__len__", [](const PyEleFullName&) { return 1; })
       .def("__getitem__", [](const PyEleFullName& s, int i) -> py::object {
@@ -1062,9 +1062,7 @@ void init_Bmad_routines_e(py::module& m) {
   floor : 
   )""");
   py::class_<PyEleHasConstantDsDtRef, std::unique_ptr<PyEleHasConstantDsDtRef>>(
-      m,
-      "EleHasConstantDsDtRef",
-      "Fortran routine ele_has_constant_ds_dt_ref return value")
+      m, "EleHasConstantDsDtRef", "ele_has_constant_ds_dt_ref return type")
       .def_readonly("is_const", &PyEleHasConstantDsDtRef::is_const)
       .def("__len__", [](const PyEleHasConstantDsDtRef&) { return 1; })
       .def(
@@ -1088,9 +1086,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_const : 
   )""");
   py::class_<PyEleHasNonzeroKick, std::unique_ptr<PyEleHasNonzeroKick>>(
-      m,
-      "EleHasNonzeroKick",
-      "Fortran routine ele_has_nonzero_kick return value")
+      m, "EleHasNonzeroKick", "ele_has_nonzero_kick return type")
       .def_readonly("ele", &PyEleHasNonzeroKick::ele)
       .def_readonly("has_kick", &PyEleHasNonzeroKick::has_kick)
       .def("__len__", [](const PyEleHasNonzeroKick&) { return 2; })
@@ -1115,9 +1111,7 @@ void init_Bmad_routines_e(py::module& m) {
   has_kick : 
   )""");
   py::class_<PyEleHasNonzeroOffset, std::unique_ptr<PyEleHasNonzeroOffset>>(
-      m,
-      "EleHasNonzeroOffset",
-      "Fortran routine ele_has_nonzero_offset return value")
+      m, "EleHasNonzeroOffset", "ele_has_nonzero_offset return type")
       .def_readonly("has_offset", &PyEleHasNonzeroOffset::has_offset)
       .def("__len__", [](const PyEleHasNonzeroOffset&) { return 1; })
       .def(
@@ -1173,7 +1167,7 @@ void init_Bmad_routines_e(py::module& m) {
   loc : 
   )""");
   py::class_<PyEleLocName, std::unique_ptr<PyEleLocName>>(
-      m, "EleLocName", "Fortran routine ele_loc_name return value")
+      m, "EleLocName", "ele_loc_name return type")
       .def_readonly("str", &PyEleLocName::str)
       .def("__len__", [](const PyEleLocName&) { return 1; })
       .def("__getitem__", [](const PyEleLocName& s, int i) -> py::object {
@@ -1204,9 +1198,7 @@ void init_Bmad_routines_e(py::module& m) {
   py::class_<
       Bmad::EleMisalignmentLSCalc,
       std::unique_ptr<Bmad::EleMisalignmentLSCalc>>(
-      m,
-      "EleMisalignmentLSCalc",
-      "Fortran routine ele_misalignment_l_s_calc return value")
+      m, "EleMisalignmentLSCalc", "ele_misalignment_l_s_calc return type")
       .def_readonly("L_mis", &Bmad::EleMisalignmentLSCalc::L_mis)
       .def_readonly("S_mis", &Bmad::EleMisalignmentLSCalc::S_mis)
       .def("__len__", [](const Bmad::EleMisalignmentLSCalc&) { return 2; })
@@ -1235,9 +1227,7 @@ void init_Bmad_routines_e(py::module& m) {
       Misalignment matrix relative to center of element
   )""");
   py::class_<PyEleNametableIndex, std::unique_ptr<PyEleNametableIndex>>(
-      m,
-      "EleNametableIndex",
-      "Fortran routine ele_nametable_index return value")
+      m, "EleNametableIndex", "ele_nametable_index return type")
       .def_readonly("ix_nt", &PyEleNametableIndex::ix_nt)
       .def("__len__", [](const PyEleNametableIndex&) { return 1; })
       .def(
@@ -1296,7 +1286,7 @@ void init_Bmad_routines_e(py::module& m) {
       Propagate the transfer matrix? Default is false.
   )""");
   py::class_<PyEleRfStepIndex, std::unique_ptr<PyEleRfStepIndex>>(
-      m, "EleRfStepIndex", "Fortran routine ele_rf_step_index return value")
+      m, "EleRfStepIndex", "ele_rf_step_index return type")
       .def_readonly("ix_step", &PyEleRfStepIndex::ix_step)
       .def("__len__", [](const PyEleRfStepIndex&) { return 1; })
       .def("__getitem__", [](const PyEleRfStepIndex& s, int i) -> py::object {
@@ -1326,9 +1316,7 @@ void init_Bmad_routines_e(py::module& m) {
   py::class_<
       Bmad::EleToPtcMagneticBnAn,
       std::unique_ptr<Bmad::EleToPtcMagneticBnAn>>(
-      m,
-      "EleToPtcMagneticBnAn",
-      "Fortran routine ele_to_ptc_magnetic_bn_an return value")
+      m, "EleToPtcMagneticBnAn", "ele_to_ptc_magnetic_bn_an return type")
       .def_readonly("bn", &Bmad::EleToPtcMagneticBnAn::bn)
       .def_readonly("an", &Bmad::EleToPtcMagneticBnAn::an)
       .def_readonly("n_max", &Bmad::EleToPtcMagneticBnAn::n_max)
@@ -1391,7 +1379,7 @@ void init_Bmad_routines_e(py::module& m) {
       Starting ref coords.
   )""");
   py::class_<Bmad::EleToTaylor, std::unique_ptr<Bmad::EleToTaylor>>(
-      m, "EleToTaylor", "Fortran routine ele_to_taylor return value")
+      m, "EleToTaylor", "ele_to_taylor return type")
       .def_readonly("orbital_taylor", &Bmad::EleToTaylor::orbital_taylor)
       .def_readonly("spin_taylor", &Bmad::EleToTaylor::spin_taylor)
       .def("__len__", [](const Bmad::EleToTaylor&) { return 2; })
@@ -1428,7 +1416,7 @@ void init_Bmad_routines_e(py::module& m) {
       Spin taylor map. If not present then the map is put in ele.spin_taylor.
   )""");
   py::class_<PyEleUniqueName, std::unique_ptr<PyEleUniqueName>>(
-      m, "EleUniqueName", "Fortran routine ele_unique_name return value")
+      m, "EleUniqueName", "ele_unique_name return type")
       .def_readonly("unique_name", &PyEleUniqueName::unique_name)
       .def("__len__", [](const PyEleUniqueName&) { return 1; })
       .def("__getitem__", [](const PyEleUniqueName& s, int i) -> py::object {
@@ -1454,9 +1442,7 @@ void init_Bmad_routines_e(py::module& m) {
   unique_name : 
   )""");
   py::class_<PyEleValueHasChanged, std::unique_ptr<PyEleValueHasChanged>>(
-      m,
-      "EleValueHasChanged",
-      "Fortran routine ele_value_has_changed return value")
+      m, "EleValueHasChanged", "ele_value_has_changed return type")
       .def_readonly("has_changed", &PyEleValueHasChanged::has_changed)
       .def("__len__", [](const PyEleValueHasChanged&) { return 1; })
       .def(
@@ -1504,9 +1490,7 @@ void init_Bmad_routines_e(py::module& m) {
   py::class_<
       Bmad::ElecMultipoleField,
       std::unique_ptr<Bmad::ElecMultipoleField>>(
-      m,
-      "ElecMultipoleField",
-      "Fortran routine elec_multipole_field return value")
+      m, "ElecMultipoleField", "elec_multipole_field return type")
       .def_readonly("Ex", &Bmad::ElecMultipoleField::Ex)
       .def_readonly("Ey", &Bmad::ElecMultipoleField::Ey)
       .def_readonly("dE", &Bmad::ElecMultipoleField::dE)
@@ -1553,7 +1537,7 @@ void init_Bmad_routines_e(py::module& m) {
       If False, do not compute the field derivatives even if dE is present. Default is True.
   )""");
   py::class_<Bmad::ElementAtSBranch, std::unique_ptr<Bmad::ElementAtSBranch>>(
-      m, "ElementAtSBranch", "Fortran routine element_at_s_branch return value")
+      m, "ElementAtSBranch", "element_at_s_branch return type")
       .def_readonly("err_flag", &Bmad::ElementAtSBranch::err_flag)
       .def_readonly("s_eff", &Bmad::ElementAtSBranch::s_eff)
       .def_readonly("position", &Bmad::ElementAtSBranch::position)
@@ -1654,7 +1638,7 @@ void init_Bmad_routines_e(py::module& m) {
   Overloaded versions:
   )""");
   py::class_<Bmad::ElementAtSLat, std::unique_ptr<Bmad::ElementAtSLat>>(
-      m, "ElementAtSLat", "Fortran routine element_at_s_lat return value")
+      m, "ElementAtSLat", "element_at_s_lat return type")
       .def_readonly("err_flag", &Bmad::ElementAtSLat::err_flag)
       .def_readonly("s_eff", &Bmad::ElementAtSLat::s_eff)
       .def_readonly("position", &Bmad::ElementAtSLat::position)
@@ -1786,7 +1770,7 @@ void init_Bmad_routines_e(py::module& m) {
   )""");
   m.def("ellipinc_test", &Bmad::ellipinc_test, R"""()""");
   py::class_<Bmad::EmFieldCalc, std::unique_ptr<Bmad::EmFieldCalc>>(
-      m, "EmFieldCalc", "Fortran routine em_field_calc return value")
+      m, "EmFieldCalc", "em_field_calc return type")
       .def_readonly("field", &Bmad::EmFieldCalc::field)
       .def_readonly("err_flag", &Bmad::EmFieldCalc::err_flag)
       .def("__len__", [](const Bmad::EmFieldCalc&) { return 2; })
@@ -1860,9 +1844,7 @@ void init_Bmad_routines_e(py::module& m) {
       original ele argument.
   )""");
   py::class_<PyEmFieldDerivatives, std::unique_ptr<PyEmFieldDerivatives>>(
-      m,
-      "EmFieldDerivatives",
-      "Fortran routine em_field_derivatives return value")
+      m, "EmFieldDerivatives", "em_field_derivatives return type")
       .def_readonly("dfield", &PyEmFieldDerivatives::dfield)
       .def_readonly("s_pos", &PyEmFieldDerivatives::s_pos)
       .def_readonly("local_ref_frame", &PyEmFieldDerivatives::local_ref_frame)
@@ -1994,7 +1976,7 @@ void init_Bmad_routines_e(py::module& m) {
   em_taylor2 : 
   )""");
   py::class_<Bmad::Emit6d, std::unique_ptr<Bmad::Emit6d>>(
-      m, "Emit6d", "Fortran routine emit_6d return value")
+      m, "Emit6d", "emit_6d return type")
       .def_readonly("mode", &Bmad::Emit6d::mode)
       .def_readonly("sigma_mat", &Bmad::Emit6d::sigma_mat)
       .def_readonly("rad_int_by_ele", &Bmad::Emit6d::rad_int_by_ele)
@@ -2044,7 +2026,7 @@ void init_Bmad_routines_e(py::module& m) {
       Radiation integrals element-by-element.
   )""");
   py::class_<PyEnteringElement, std::unique_ptr<PyEnteringElement>>(
-      m, "EnteringElement", "Fortran routine entering_element return value")
+      m, "EnteringElement", "entering_element return type")
       .def_readonly("is_entering", &PyEnteringElement::is_entering)
       .def("__len__", [](const PyEnteringElement&) { return 1; })
       .def("__getitem__", [](const PyEnteringElement& s, int i) -> py::object {
@@ -2090,9 +2072,7 @@ void init_Bmad_routines_e(py::module& m) {
   py::class_<
       Bmad::EnvelopeRadintsIbs,
       std::unique_ptr<Bmad::EnvelopeRadintsIbs>>(
-      m,
-      "EnvelopeRadintsIbs",
-      "Fortran routine envelope_radints_ibs return value")
+      m, "EnvelopeRadintsIbs", "envelope_radints_ibs return type")
       .def_readonly("alpha", &Bmad::EnvelopeRadintsIbs::alpha)
       .def_readonly("emit", &Bmad::EnvelopeRadintsIbs::emit)
       .def("__len__", [](const Bmad::EnvelopeRadintsIbs&) { return 2; })
@@ -2166,7 +2146,7 @@ void init_Bmad_routines_e(py::module& m) {
       Normal mode emittances.
   )""");
   py::class_<PyEqAcKicker, std::unique_ptr<PyEqAcKicker>>(
-      m, "EqAcKicker", "Fortran routine eq_ac_kicker return value")
+      m, "EqAcKicker", "eq_ac_kicker return type")
       .def_readonly("is_eq", &PyEqAcKicker::is_eq)
       .def("__len__", [](const PyEqAcKicker&) { return 1; })
       .def("__getitem__", [](const PyEqAcKicker& s, int i) -> py::object {
@@ -2189,7 +2169,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqAcKickerFreq, std::unique_ptr<PyEqAcKickerFreq>>(
-      m, "EqAcKickerFreq", "Fortran routine eq_ac_kicker_freq return value")
+      m, "EqAcKickerFreq", "eq_ac_kicker_freq return type")
       .def_readonly("is_eq", &PyEqAcKickerFreq::is_eq)
       .def("__len__", [](const PyEqAcKickerFreq&) { return 1; })
       .def("__getitem__", [](const PyEqAcKickerFreq& s, int i) -> py::object {
@@ -2212,7 +2192,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqAcKickerTime, std::unique_ptr<PyEqAcKickerTime>>(
-      m, "EqAcKickerTime", "Fortran routine eq_ac_kicker_time return value")
+      m, "EqAcKickerTime", "eq_ac_kicker_time return type")
       .def_readonly("is_eq", &PyEqAcKickerTime::is_eq)
       .def("__len__", [](const PyEqAcKickerTime&) { return 1; })
       .def("__getitem__", [](const PyEqAcKickerTime& s, int i) -> py::object {
@@ -2235,7 +2215,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqAnormalMode, std::unique_ptr<PyEqAnormalMode>>(
-      m, "EqAnormalMode", "Fortran routine eq_anormal_mode return value")
+      m, "EqAnormalMode", "eq_anormal_mode return type")
       .def_readonly("is_eq", &PyEqAnormalMode::is_eq)
       .def("__len__", [](const PyEqAnormalMode&) { return 1; })
       .def("__getitem__", [](const PyEqAnormalMode& s, int i) -> py::object {
@@ -2258,7 +2238,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqApertureParam, std::unique_ptr<PyEqApertureParam>>(
-      m, "EqApertureParam", "Fortran routine eq_aperture_param return value")
+      m, "EqApertureParam", "eq_aperture_param return type")
       .def_readonly("is_eq", &PyEqApertureParam::is_eq)
       .def("__len__", [](const PyEqApertureParam&) { return 1; })
       .def("__getitem__", [](const PyEqApertureParam& s, int i) -> py::object {
@@ -2281,7 +2261,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqAperturePoint, std::unique_ptr<PyEqAperturePoint>>(
-      m, "EqAperturePoint", "Fortran routine eq_aperture_point return value")
+      m, "EqAperturePoint", "eq_aperture_point return type")
       .def_readonly("is_eq", &PyEqAperturePoint::is_eq)
       .def("__len__", [](const PyEqAperturePoint&) { return 1; })
       .def("__getitem__", [](const PyEqAperturePoint& s, int i) -> py::object {
@@ -2304,7 +2284,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqApertureScan, std::unique_ptr<PyEqApertureScan>>(
-      m, "EqApertureScan", "Fortran routine eq_aperture_scan return value")
+      m, "EqApertureScan", "eq_aperture_scan return type")
       .def_readonly("is_eq", &PyEqApertureScan::is_eq)
       .def("__len__", [](const PyEqApertureScan&) { return 1; })
       .def("__getitem__", [](const PyEqApertureScan& s, int i) -> py::object {
@@ -2327,7 +2307,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqBeam, std::unique_ptr<PyEqBeam>>(
-      m, "EqBeam", "Fortran routine eq_beam return value")
+      m, "EqBeam", "eq_beam return type")
       .def_readonly("is_eq", &PyEqBeam::is_eq)
       .def("__len__", [](const PyEqBeam&) { return 1; })
       .def("__getitem__", [](const PyEqBeam& s, int i) -> py::object {
@@ -2350,7 +2330,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqBeamInit, std::unique_ptr<PyEqBeamInit>>(
-      m, "EqBeamInit", "Fortran routine eq_beam_init return value")
+      m, "EqBeamInit", "eq_beam_init return type")
       .def_readonly("is_eq", &PyEqBeamInit::is_eq)
       .def("__len__", [](const PyEqBeamInit&) { return 1; })
       .def("__getitem__", [](const PyEqBeamInit& s, int i) -> py::object {
@@ -2373,7 +2353,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqBmadCommon, std::unique_ptr<PyEqBmadCommon>>(
-      m, "EqBmadCommon", "Fortran routine eq_bmad_common return value")
+      m, "EqBmadCommon", "eq_bmad_common return type")
       .def_readonly("is_eq", &PyEqBmadCommon::is_eq)
       .def("__len__", [](const PyEqBmadCommon&) { return 1; })
       .def("__getitem__", [](const PyEqBmadCommon& s, int i) -> py::object {
@@ -2396,9 +2376,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqBookkeepingState, std::unique_ptr<PyEqBookkeepingState>>(
-      m,
-      "EqBookkeepingState",
-      "Fortran routine eq_bookkeeping_state return value")
+      m, "EqBookkeepingState", "eq_bookkeeping_state return type")
       .def_readonly("is_eq", &PyEqBookkeepingState::is_eq)
       .def("__len__", [](const PyEqBookkeepingState&) { return 1; })
       .def(
@@ -2423,9 +2401,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqBpmPhaseCoupling, std::unique_ptr<PyEqBpmPhaseCoupling>>(
-      m,
-      "EqBpmPhaseCoupling",
-      "Fortran routine eq_bpm_phase_coupling return value")
+      m, "EqBpmPhaseCoupling", "eq_bpm_phase_coupling return type")
       .def_readonly("is_eq", &PyEqBpmPhaseCoupling::is_eq)
       .def("__len__", [](const PyEqBpmPhaseCoupling&) { return 1; })
       .def(
@@ -2450,7 +2426,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqBranch, std::unique_ptr<PyEqBranch>>(
-      m, "EqBranch", "Fortran routine eq_branch return value")
+      m, "EqBranch", "eq_branch return type")
       .def_readonly("is_eq", &PyEqBranch::is_eq)
       .def("__len__", [](const PyEqBranch&) { return 1; })
       .def("__getitem__", [](const PyEqBranch& s, int i) -> py::object {
@@ -2473,7 +2449,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqBunch, std::unique_ptr<PyEqBunch>>(
-      m, "EqBunch", "Fortran routine eq_bunch return value")
+      m, "EqBunch", "eq_bunch return type")
       .def_readonly("is_eq", &PyEqBunch::is_eq)
       .def("__len__", [](const PyEqBunch&) { return 1; })
       .def("__getitem__", [](const PyEqBunch& s, int i) -> py::object {
@@ -2496,7 +2472,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqBunchParams, std::unique_ptr<PyEqBunchParams>>(
-      m, "EqBunchParams", "Fortran routine eq_bunch_params return value")
+      m, "EqBunchParams", "eq_bunch_params return type")
       .def_readonly("is_eq", &PyEqBunchParams::is_eq)
       .def("__len__", [](const PyEqBunchParams&) { return 1; })
       .def("__getitem__", [](const PyEqBunchParams& s, int i) -> py::object {
@@ -2519,7 +2495,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqCartesianMap, std::unique_ptr<PyEqCartesianMap>>(
-      m, "EqCartesianMap", "Fortran routine eq_cartesian_map return value")
+      m, "EqCartesianMap", "eq_cartesian_map return type")
       .def_readonly("is_eq", &PyEqCartesianMap::is_eq)
       .def("__len__", [](const PyEqCartesianMap&) { return 1; })
       .def("__getitem__", [](const PyEqCartesianMap& s, int i) -> py::object {
@@ -2542,9 +2518,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqCartesianMapTerm, std::unique_ptr<PyEqCartesianMapTerm>>(
-      m,
-      "EqCartesianMapTerm",
-      "Fortran routine eq_cartesian_map_term return value")
+      m, "EqCartesianMapTerm", "eq_cartesian_map_term return type")
       .def_readonly("is_eq", &PyEqCartesianMapTerm::is_eq)
       .def("__len__", [](const PyEqCartesianMapTerm&) { return 1; })
       .def(
@@ -2569,9 +2543,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqCartesianMapTerm1, std::unique_ptr<PyEqCartesianMapTerm1>>(
-      m,
-      "EqCartesianMapTerm1",
-      "Fortran routine eq_cartesian_map_term1 return value")
+      m, "EqCartesianMapTerm1", "eq_cartesian_map_term1 return type")
       .def_readonly("is_eq", &PyEqCartesianMapTerm1::is_eq)
       .def("__len__", [](const PyEqCartesianMapTerm1&) { return 1; })
       .def(
@@ -2596,7 +2568,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqComplexTaylor, std::unique_ptr<PyEqComplexTaylor>>(
-      m, "EqComplexTaylor", "Fortran routine eq_complex_taylor return value")
+      m, "EqComplexTaylor", "eq_complex_taylor return type")
       .def_readonly("is_eq", &PyEqComplexTaylor::is_eq)
       .def("__len__", [](const PyEqComplexTaylor&) { return 1; })
       .def("__getitem__", [](const PyEqComplexTaylor& s, int i) -> py::object {
@@ -2619,9 +2591,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqComplexTaylorTerm, std::unique_ptr<PyEqComplexTaylorTerm>>(
-      m,
-      "EqComplexTaylorTerm",
-      "Fortran routine eq_complex_taylor_term return value")
+      m, "EqComplexTaylorTerm", "eq_complex_taylor_term return type")
       .def_readonly("is_eq", &PyEqComplexTaylorTerm::is_eq)
       .def("__len__", [](const PyEqComplexTaylorTerm&) { return 1; })
       .def(
@@ -2646,7 +2616,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqControl, std::unique_ptr<PyEqControl>>(
-      m, "EqControl", "Fortran routine eq_control return value")
+      m, "EqControl", "eq_control return type")
       .def_readonly("is_eq", &PyEqControl::is_eq)
       .def("__len__", [](const PyEqControl&) { return 1; })
       .def("__getitem__", [](const PyEqControl& s, int i) -> py::object {
@@ -2669,7 +2639,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqControlRamp1, std::unique_ptr<PyEqControlRamp1>>(
-      m, "EqControlRamp1", "Fortran routine eq_control_ramp1 return value")
+      m, "EqControlRamp1", "eq_control_ramp1 return type")
       .def_readonly("is_eq", &PyEqControlRamp1::is_eq)
       .def("__len__", [](const PyEqControlRamp1&) { return 1; })
       .def("__getitem__", [](const PyEqControlRamp1& s, int i) -> py::object {
@@ -2692,7 +2662,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqControlVar1, std::unique_ptr<PyEqControlVar1>>(
-      m, "EqControlVar1", "Fortran routine eq_control_var1 return value")
+      m, "EqControlVar1", "eq_control_var1 return type")
       .def_readonly("is_eq", &PyEqControlVar1::is_eq)
       .def("__len__", [](const PyEqControlVar1&) { return 1; })
       .def("__getitem__", [](const PyEqControlVar1& s, int i) -> py::object {
@@ -2715,7 +2685,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqController, std::unique_ptr<PyEqController>>(
-      m, "EqController", "Fortran routine eq_controller return value")
+      m, "EqController", "eq_controller return type")
       .def_readonly("is_eq", &PyEqController::is_eq)
       .def("__len__", [](const PyEqController&) { return 1; })
       .def("__getitem__", [](const PyEqController& s, int i) -> py::object {
@@ -2738,7 +2708,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqCoord, std::unique_ptr<PyEqCoord>>(
-      m, "EqCoord", "Fortran routine eq_coord return value")
+      m, "EqCoord", "eq_coord return type")
       .def_readonly("is_eq", &PyEqCoord::is_eq)
       .def("__len__", [](const PyEqCoord&) { return 1; })
       .def("__getitem__", [](const PyEqCoord& s, int i) -> py::object {
@@ -2761,7 +2731,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqCoordArray, std::unique_ptr<PyEqCoordArray>>(
-      m, "EqCoordArray", "Fortran routine eq_coord_array return value")
+      m, "EqCoordArray", "eq_coord_array return type")
       .def_readonly("is_eq", &PyEqCoordArray::is_eq)
       .def("__len__", [](const PyEqCoordArray&) { return 1; })
       .def("__getitem__", [](const PyEqCoordArray& s, int i) -> py::object {
@@ -2784,7 +2754,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqCylindricalMap, std::unique_ptr<PyEqCylindricalMap>>(
-      m, "EqCylindricalMap", "Fortran routine eq_cylindrical_map return value")
+      m, "EqCylindricalMap", "eq_cylindrical_map return type")
       .def_readonly("is_eq", &PyEqCylindricalMap::is_eq)
       .def("__len__", [](const PyEqCylindricalMap&) { return 1; })
       .def("__getitem__", [](const PyEqCylindricalMap& s, int i) -> py::object {
@@ -2807,9 +2777,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqCylindricalMapTerm, std::unique_ptr<PyEqCylindricalMapTerm>>(
-      m,
-      "EqCylindricalMapTerm",
-      "Fortran routine eq_cylindrical_map_term return value")
+      m, "EqCylindricalMapTerm", "eq_cylindrical_map_term return type")
       .def_readonly("is_eq", &PyEqCylindricalMapTerm::is_eq)
       .def("__len__", [](const PyEqCylindricalMapTerm&) { return 1; })
       .def(
@@ -2834,9 +2802,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqCylindricalMapTerm1, std::unique_ptr<PyEqCylindricalMapTerm1>>(
-      m,
-      "EqCylindricalMapTerm1",
-      "Fortran routine eq_cylindrical_map_term1 return value")
+      m, "EqCylindricalMapTerm1", "eq_cylindrical_map_term1 return type")
       .def_readonly("is_eq", &PyEqCylindricalMapTerm1::is_eq)
       .def("__len__", [](const PyEqCylindricalMapTerm1&) { return 1; })
       .def(
@@ -2861,7 +2827,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqEle, std::unique_ptr<PyEqEle>>(
-      m, "EqEle", "Fortran routine eq_ele return value")
+      m, "EqEle", "eq_ele return type")
       .def_readonly("is_eq", &PyEqEle::is_eq)
       .def("__len__", [](const PyEqEle&) { return 1; })
       .def("__getitem__", [](const PyEqEle& s, int i) -> py::object {
@@ -2884,9 +2850,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqEllipseBeamInit, std::unique_ptr<PyEqEllipseBeamInit>>(
-      m,
-      "EqEllipseBeamInit",
-      "Fortran routine eq_ellipse_beam_init return value")
+      m, "EqEllipseBeamInit", "eq_ellipse_beam_init return type")
       .def_readonly("is_eq", &PyEqEllipseBeamInit::is_eq)
       .def("__len__", [](const PyEqEllipseBeamInit&) { return 1; })
       .def(
@@ -2910,7 +2874,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqEmField, std::unique_ptr<PyEqEmField>>(
-      m, "EqEmField", "Fortran routine eq_em_field return value")
+      m, "EqEmField", "eq_em_field return type")
       .def_readonly("is_eq", &PyEqEmField::is_eq)
       .def("__len__", [](const PyEqEmField&) { return 1; })
       .def("__getitem__", [](const PyEqEmField& s, int i) -> py::object {
@@ -2933,7 +2897,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqEmTaylor, std::unique_ptr<PyEqEmTaylor>>(
-      m, "EqEmTaylor", "Fortran routine eq_em_taylor return value")
+      m, "EqEmTaylor", "eq_em_taylor return type")
       .def_readonly("is_eq", &PyEqEmTaylor::is_eq)
       .def("__len__", [](const PyEqEmTaylor&) { return 1; })
       .def("__getitem__", [](const PyEqEmTaylor& s, int i) -> py::object {
@@ -2956,7 +2920,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqEmTaylorTerm, std::unique_ptr<PyEqEmTaylorTerm>>(
-      m, "EqEmTaylorTerm", "Fortran routine eq_em_taylor_term return value")
+      m, "EqEmTaylorTerm", "eq_em_taylor_term return type")
       .def_readonly("is_eq", &PyEqEmTaylorTerm::is_eq)
       .def("__len__", [](const PyEqEmTaylorTerm&) { return 1; })
       .def("__getitem__", [](const PyEqEmTaylorTerm& s, int i) -> py::object {
@@ -2979,7 +2943,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqExpressionAtom, std::unique_ptr<PyEqExpressionAtom>>(
-      m, "EqExpressionAtom", "Fortran routine eq_expression_atom return value")
+      m, "EqExpressionAtom", "eq_expression_atom return type")
       .def_readonly("is_eq", &PyEqExpressionAtom::is_eq)
       .def("__len__", [](const PyEqExpressionAtom&) { return 1; })
       .def("__getitem__", [](const PyEqExpressionAtom& s, int i) -> py::object {
@@ -3002,7 +2966,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqFloorPosition, std::unique_ptr<PyEqFloorPosition>>(
-      m, "EqFloorPosition", "Fortran routine eq_floor_position return value")
+      m, "EqFloorPosition", "eq_floor_position return type")
       .def_readonly("is_eq", &PyEqFloorPosition::is_eq)
       .def("__len__", [](const PyEqFloorPosition&) { return 1; })
       .def("__getitem__", [](const PyEqFloorPosition& s, int i) -> py::object {
@@ -3025,7 +2989,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqGenGrad1, std::unique_ptr<PyEqGenGrad1>>(
-      m, "EqGenGrad1", "Fortran routine eq_gen_grad1 return value")
+      m, "EqGenGrad1", "eq_gen_grad1 return type")
       .def_readonly("is_eq", &PyEqGenGrad1::is_eq)
       .def("__len__", [](const PyEqGenGrad1&) { return 1; })
       .def("__getitem__", [](const PyEqGenGrad1& s, int i) -> py::object {
@@ -3048,7 +3012,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqGenGradMap, std::unique_ptr<PyEqGenGradMap>>(
-      m, "EqGenGradMap", "Fortran routine eq_gen_grad_map return value")
+      m, "EqGenGradMap", "eq_gen_grad_map return type")
       .def_readonly("is_eq", &PyEqGenGradMap::is_eq)
       .def("__len__", [](const PyEqGenGradMap&) { return 1; })
       .def("__getitem__", [](const PyEqGenGradMap& s, int i) -> py::object {
@@ -3071,7 +3035,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqGridBeamInit, std::unique_ptr<PyEqGridBeamInit>>(
-      m, "EqGridBeamInit", "Fortran routine eq_grid_beam_init return value")
+      m, "EqGridBeamInit", "eq_grid_beam_init return type")
       .def_readonly("is_eq", &PyEqGridBeamInit::is_eq)
       .def("__len__", [](const PyEqGridBeamInit&) { return 1; })
       .def("__getitem__", [](const PyEqGridBeamInit& s, int i) -> py::object {
@@ -3094,7 +3058,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqGridField, std::unique_ptr<PyEqGridField>>(
-      m, "EqGridField", "Fortran routine eq_grid_field return value")
+      m, "EqGridField", "eq_grid_field return type")
       .def_readonly("is_eq", &PyEqGridField::is_eq)
       .def("__len__", [](const PyEqGridField&) { return 1; })
       .def("__getitem__", [](const PyEqGridField& s, int i) -> py::object {
@@ -3117,7 +3081,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqGridFieldPt, std::unique_ptr<PyEqGridFieldPt>>(
-      m, "EqGridFieldPt", "Fortran routine eq_grid_field_pt return value")
+      m, "EqGridFieldPt", "eq_grid_field_pt return type")
       .def_readonly("is_eq", &PyEqGridFieldPt::is_eq)
       .def("__len__", [](const PyEqGridFieldPt&) { return 1; })
       .def("__getitem__", [](const PyEqGridFieldPt& s, int i) -> py::object {
@@ -3140,7 +3104,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqGridFieldPt1, std::unique_ptr<PyEqGridFieldPt1>>(
-      m, "EqGridFieldPt1", "Fortran routine eq_grid_field_pt1 return value")
+      m, "EqGridFieldPt1", "eq_grid_field_pt1 return type")
       .def_readonly("is_eq", &PyEqGridFieldPt1::is_eq)
       .def("__len__", [](const PyEqGridFieldPt1&) { return 1; })
       .def("__getitem__", [](const PyEqGridFieldPt1& s, int i) -> py::object {
@@ -3165,9 +3129,7 @@ void init_Bmad_routines_e(py::module& m) {
   py::class_<
       PyEqHighEnergySpaceCharge,
       std::unique_ptr<PyEqHighEnergySpaceCharge>>(
-      m,
-      "EqHighEnergySpaceCharge",
-      "Fortran routine eq_high_energy_space_charge return value")
+      m, "EqHighEnergySpaceCharge", "eq_high_energy_space_charge return type")
       .def_readonly("is_eq", &PyEqHighEnergySpaceCharge::is_eq)
       .def("__len__", [](const PyEqHighEnergySpaceCharge&) { return 1; })
       .def(
@@ -3192,7 +3154,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqInterval1Coef, std::unique_ptr<PyEqInterval1Coef>>(
-      m, "EqInterval1Coef", "Fortran routine eq_interval1_coef return value")
+      m, "EqInterval1Coef", "eq_interval1_coef return type")
       .def_readonly("is_eq", &PyEqInterval1Coef::is_eq)
       .def("__len__", [](const PyEqInterval1Coef&) { return 1; })
       .def("__getitem__", [](const PyEqInterval1Coef& s, int i) -> py::object {
@@ -3215,7 +3177,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqKvBeamInit, std::unique_ptr<PyEqKvBeamInit>>(
-      m, "EqKvBeamInit", "Fortran routine eq_kv_beam_init return value")
+      m, "EqKvBeamInit", "eq_kv_beam_init return type")
       .def_readonly("is_eq", &PyEqKvBeamInit::is_eq)
       .def("__len__", [](const PyEqKvBeamInit&) { return 1; })
       .def("__getitem__", [](const PyEqKvBeamInit& s, int i) -> py::object {
@@ -3238,7 +3200,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqLat, std::unique_ptr<PyEqLat>>(
-      m, "EqLat", "Fortran routine eq_lat return value")
+      m, "EqLat", "eq_lat return type")
       .def_readonly("is_eq", &PyEqLat::is_eq)
       .def("__len__", [](const PyEqLat&) { return 1; })
       .def("__getitem__", [](const PyEqLat& s, int i) -> py::object {
@@ -3261,7 +3223,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqLatEleLoc, std::unique_ptr<PyEqLatEleLoc>>(
-      m, "EqLatEleLoc", "Fortran routine eq_lat_ele_loc return value")
+      m, "EqLatEleLoc", "eq_lat_ele_loc return type")
       .def_readonly("is_eq", &PyEqLatEleLoc::is_eq)
       .def("__len__", [](const PyEqLatEleLoc&) { return 1; })
       .def("__getitem__", [](const PyEqLatEleLoc& s, int i) -> py::object {
@@ -3284,7 +3246,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqLatParam, std::unique_ptr<PyEqLatParam>>(
-      m, "EqLatParam", "Fortran routine eq_lat_param return value")
+      m, "EqLatParam", "eq_lat_param return type")
       .def_readonly("is_eq", &PyEqLatParam::is_eq)
       .def("__len__", [](const PyEqLatParam&) { return 1; })
       .def("__getitem__", [](const PyEqLatParam& s, int i) -> py::object {
@@ -3307,9 +3269,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqLinacNormalMode, std::unique_ptr<PyEqLinacNormalMode>>(
-      m,
-      "EqLinacNormalMode",
-      "Fortran routine eq_linac_normal_mode return value")
+      m, "EqLinacNormalMode", "eq_linac_normal_mode return type")
       .def_readonly("is_eq", &PyEqLinacNormalMode::is_eq)
       .def("__len__", [](const PyEqLinacNormalMode&) { return 1; })
       .def(
@@ -3333,7 +3293,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqMode3, std::unique_ptr<PyEqMode3>>(
-      m, "EqMode3", "Fortran routine eq_mode3 return value")
+      m, "EqMode3", "eq_mode3 return type")
       .def_readonly("is_eq", &PyEqMode3::is_eq)
       .def("__len__", [](const PyEqMode3&) { return 1; })
       .def("__getitem__", [](const PyEqMode3& s, int i) -> py::object {
@@ -3356,7 +3316,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqModeInfo, std::unique_ptr<PyEqModeInfo>>(
-      m, "EqModeInfo", "Fortran routine eq_mode_info return value")
+      m, "EqModeInfo", "eq_mode_info return type")
       .def_readonly("is_eq", &PyEqModeInfo::is_eq)
       .def("__len__", [](const PyEqModeInfo&) { return 1; })
       .def("__getitem__", [](const PyEqModeInfo& s, int i) -> py::object {
@@ -3379,7 +3339,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqNormalModes, std::unique_ptr<PyEqNormalModes>>(
-      m, "EqNormalModes", "Fortran routine eq_normal_modes return value")
+      m, "EqNormalModes", "eq_normal_modes return type")
       .def_readonly("is_eq", &PyEqNormalModes::is_eq)
       .def("__len__", [](const PyEqNormalModes&) { return 1; })
       .def("__getitem__", [](const PyEqNormalModes& s, int i) -> py::object {
@@ -3402,7 +3362,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqPhotonElement, std::unique_ptr<PyEqPhotonElement>>(
-      m, "EqPhotonElement", "Fortran routine eq_photon_element return value")
+      m, "EqPhotonElement", "eq_photon_element return type")
       .def_readonly("is_eq", &PyEqPhotonElement::is_eq)
       .def("__len__", [](const PyEqPhotonElement&) { return 1; })
       .def("__getitem__", [](const PyEqPhotonElement& s, int i) -> py::object {
@@ -3425,7 +3385,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqPhotonMaterial, std::unique_ptr<PyEqPhotonMaterial>>(
-      m, "EqPhotonMaterial", "Fortran routine eq_photon_material return value")
+      m, "EqPhotonMaterial", "eq_photon_material return type")
       .def_readonly("is_eq", &PyEqPhotonMaterial::is_eq)
       .def("__len__", [](const PyEqPhotonMaterial&) { return 1; })
       .def("__getitem__", [](const PyEqPhotonMaterial& s, int i) -> py::object {
@@ -3450,9 +3410,7 @@ void init_Bmad_routines_e(py::module& m) {
   py::class_<
       PyEqPhotonReflectSurface,
       std::unique_ptr<PyEqPhotonReflectSurface>>(
-      m,
-      "EqPhotonReflectSurface",
-      "Fortran routine eq_photon_reflect_surface return value")
+      m, "EqPhotonReflectSurface", "eq_photon_reflect_surface return type")
       .def_readonly("is_eq", &PyEqPhotonReflectSurface::is_eq)
       .def("__len__", [](const PyEqPhotonReflectSurface&) { return 1; })
       .def(
@@ -3477,9 +3435,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqPhotonReflectTable, std::unique_ptr<PyEqPhotonReflectTable>>(
-      m,
-      "EqPhotonReflectTable",
-      "Fortran routine eq_photon_reflect_table return value")
+      m, "EqPhotonReflectTable", "eq_photon_reflect_table return type")
       .def_readonly("is_eq", &PyEqPhotonReflectTable::is_eq)
       .def("__len__", [](const PyEqPhotonReflectTable&) { return 1; })
       .def(
@@ -3504,7 +3460,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqPhotonTarget, std::unique_ptr<PyEqPhotonTarget>>(
-      m, "EqPhotonTarget", "Fortran routine eq_photon_target return value")
+      m, "EqPhotonTarget", "eq_photon_target return type")
       .def_readonly("is_eq", &PyEqPhotonTarget::is_eq)
       .def("__len__", [](const PyEqPhotonTarget&) { return 1; })
       .def("__getitem__", [](const PyEqPhotonTarget& s, int i) -> py::object {
@@ -3527,7 +3483,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqPixelDetec, std::unique_ptr<PyEqPixelDetec>>(
-      m, "EqPixelDetec", "Fortran routine eq_pixel_detec return value")
+      m, "EqPixelDetec", "eq_pixel_detec return type")
       .def_readonly("is_eq", &PyEqPixelDetec::is_eq)
       .def("__len__", [](const PyEqPixelDetec&) { return 1; })
       .def("__getitem__", [](const PyEqPixelDetec& s, int i) -> py::object {
@@ -3550,7 +3506,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqPixelPt, std::unique_ptr<PyEqPixelPt>>(
-      m, "EqPixelPt", "Fortran routine eq_pixel_pt return value")
+      m, "EqPixelPt", "eq_pixel_pt return type")
       .def_readonly("is_eq", &PyEqPixelPt::is_eq)
       .def("__len__", [](const PyEqPixelPt&) { return 1; })
       .def("__getitem__", [](const PyEqPixelPt& s, int i) -> py::object {
@@ -3573,7 +3529,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqPreTracker, std::unique_ptr<PyEqPreTracker>>(
-      m, "EqPreTracker", "Fortran routine eq_pre_tracker return value")
+      m, "EqPreTracker", "eq_pre_tracker return type")
       .def_readonly("is_eq", &PyEqPreTracker::is_eq)
       .def("__len__", [](const PyEqPreTracker&) { return 1; })
       .def("__getitem__", [](const PyEqPreTracker& s, int i) -> py::object {
@@ -3596,7 +3552,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqRadInt1, std::unique_ptr<PyEqRadInt1>>(
-      m, "EqRadInt1", "Fortran routine eq_rad_int1 return value")
+      m, "EqRadInt1", "eq_rad_int1 return type")
       .def_readonly("is_eq", &PyEqRadInt1::is_eq)
       .def("__len__", [](const PyEqRadInt1&) { return 1; })
       .def("__getitem__", [](const PyEqRadInt1& s, int i) -> py::object {
@@ -3619,7 +3575,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqRadIntAllEle, std::unique_ptr<PyEqRadIntAllEle>>(
-      m, "EqRadIntAllEle", "Fortran routine eq_rad_int_all_ele return value")
+      m, "EqRadIntAllEle", "eq_rad_int_all_ele return type")
       .def_readonly("is_eq", &PyEqRadIntAllEle::is_eq)
       .def("__len__", [](const PyEqRadIntAllEle&) { return 1; })
       .def("__getitem__", [](const PyEqRadIntAllEle& s, int i) -> py::object {
@@ -3642,7 +3598,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqRadIntBranch, std::unique_ptr<PyEqRadIntBranch>>(
-      m, "EqRadIntBranch", "Fortran routine eq_rad_int_branch return value")
+      m, "EqRadIntBranch", "eq_rad_int_branch return type")
       .def_readonly("is_eq", &PyEqRadIntBranch::is_eq)
       .def("__len__", [](const PyEqRadIntBranch&) { return 1; })
       .def("__getitem__", [](const PyEqRadIntBranch& s, int i) -> py::object {
@@ -3665,7 +3621,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqRadMap, std::unique_ptr<PyEqRadMap>>(
-      m, "EqRadMap", "Fortran routine eq_rad_map return value")
+      m, "EqRadMap", "eq_rad_map return type")
       .def_readonly("is_eq", &PyEqRadMap::is_eq)
       .def("__len__", [](const PyEqRadMap&) { return 1; })
       .def("__getitem__", [](const PyEqRadMap& s, int i) -> py::object {
@@ -3688,7 +3644,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqRadMapEle, std::unique_ptr<PyEqRadMapEle>>(
-      m, "EqRadMapEle", "Fortran routine eq_rad_map_ele return value")
+      m, "EqRadMapEle", "eq_rad_map_ele return type")
       .def_readonly("is_eq", &PyEqRadMapEle::is_eq)
       .def("__len__", [](const PyEqRadMapEle&) { return 1; })
       .def("__getitem__", [](const PyEqRadMapEle& s, int i) -> py::object {
@@ -3711,7 +3667,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqRamperLord, std::unique_ptr<PyEqRamperLord>>(
-      m, "EqRamperLord", "Fortran routine eq_ramper_lord return value")
+      m, "EqRamperLord", "eq_ramper_lord return type")
       .def_readonly("is_eq", &PyEqRamperLord::is_eq)
       .def("__len__", [](const PyEqRamperLord&) { return 1; })
       .def("__getitem__", [](const PyEqRamperLord& s, int i) -> py::object {
@@ -3734,9 +3690,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqSpaceChargeCommon, std::unique_ptr<PyEqSpaceChargeCommon>>(
-      m,
-      "EqSpaceChargeCommon",
-      "Fortran routine eq_space_charge_common return value")
+      m, "EqSpaceChargeCommon", "eq_space_charge_common return type")
       .def_readonly("is_eq", &PyEqSpaceChargeCommon::is_eq)
       .def("__len__", [](const PyEqSpaceChargeCommon&) { return 1; })
       .def(
@@ -3761,7 +3715,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqSpinPolar, std::unique_ptr<PyEqSpinPolar>>(
-      m, "EqSpinPolar", "Fortran routine eq_spin_polar return value")
+      m, "EqSpinPolar", "eq_spin_polar return type")
       .def_readonly("is_eq", &PyEqSpinPolar::is_eq)
       .def("__len__", [](const PyEqSpinPolar&) { return 1; })
       .def("__getitem__", [](const PyEqSpinPolar& s, int i) -> py::object {
@@ -3784,7 +3738,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqSpline, std::unique_ptr<PyEqSpline>>(
-      m, "EqSpline", "Fortran routine eq_spline return value")
+      m, "EqSpline", "eq_spline return type")
       .def_readonly("is_eq", &PyEqSpline::is_eq)
       .def("__len__", [](const PyEqSpline&) { return 1; })
       .def("__getitem__", [](const PyEqSpline& s, int i) -> py::object {
@@ -3807,7 +3761,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqStrongBeam, std::unique_ptr<PyEqStrongBeam>>(
-      m, "EqStrongBeam", "Fortran routine eq_strong_beam return value")
+      m, "EqStrongBeam", "eq_strong_beam return type")
       .def_readonly("is_eq", &PyEqStrongBeam::is_eq)
       .def("__len__", [](const PyEqStrongBeam&) { return 1; })
       .def("__getitem__", [](const PyEqStrongBeam& s, int i) -> py::object {
@@ -3830,9 +3784,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqSurfaceCurvature, std::unique_ptr<PyEqSurfaceCurvature>>(
-      m,
-      "EqSurfaceCurvature",
-      "Fortran routine eq_surface_curvature return value")
+      m, "EqSurfaceCurvature", "eq_surface_curvature return type")
       .def_readonly("is_eq", &PyEqSurfaceCurvature::is_eq)
       .def("__len__", [](const PyEqSurfaceCurvature&) { return 1; })
       .def(
@@ -3857,9 +3809,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqSurfaceDisplacement, std::unique_ptr<PyEqSurfaceDisplacement>>(
-      m,
-      "EqSurfaceDisplacement",
-      "Fortran routine eq_surface_displacement return value")
+      m, "EqSurfaceDisplacement", "eq_surface_displacement return type")
       .def_readonly("is_eq", &PyEqSurfaceDisplacement::is_eq)
       .def("__len__", [](const PyEqSurfaceDisplacement&) { return 1; })
       .def(
@@ -3886,9 +3836,7 @@ void init_Bmad_routines_e(py::module& m) {
   py::class_<
       PyEqSurfaceDisplacementPt,
       std::unique_ptr<PyEqSurfaceDisplacementPt>>(
-      m,
-      "EqSurfaceDisplacementPt",
-      "Fortran routine eq_surface_displacement_pt return value")
+      m, "EqSurfaceDisplacementPt", "eq_surface_displacement_pt return type")
       .def_readonly("is_eq", &PyEqSurfaceDisplacementPt::is_eq)
       .def("__len__", [](const PyEqSurfaceDisplacementPt&) { return 1; })
       .def(
@@ -3913,9 +3861,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqSurfaceHMisalign, std::unique_ptr<PyEqSurfaceHMisalign>>(
-      m,
-      "EqSurfaceHMisalign",
-      "Fortran routine eq_surface_h_misalign return value")
+      m, "EqSurfaceHMisalign", "eq_surface_h_misalign return type")
       .def_readonly("is_eq", &PyEqSurfaceHMisalign::is_eq)
       .def("__len__", [](const PyEqSurfaceHMisalign&) { return 1; })
       .def(
@@ -3940,9 +3886,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqSurfaceHMisalignPt, std::unique_ptr<PyEqSurfaceHMisalignPt>>(
-      m,
-      "EqSurfaceHMisalignPt",
-      "Fortran routine eq_surface_h_misalign_pt return value")
+      m, "EqSurfaceHMisalignPt", "eq_surface_h_misalign_pt return type")
       .def_readonly("is_eq", &PyEqSurfaceHMisalignPt::is_eq)
       .def("__len__", [](const PyEqSurfaceHMisalignPt&) { return 1; })
       .def(
@@ -3967,9 +3911,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqSurfaceSegmented, std::unique_ptr<PyEqSurfaceSegmented>>(
-      m,
-      "EqSurfaceSegmented",
-      "Fortran routine eq_surface_segmented return value")
+      m, "EqSurfaceSegmented", "eq_surface_segmented return type")
       .def_readonly("is_eq", &PyEqSurfaceSegmented::is_eq)
       .def("__len__", [](const PyEqSurfaceSegmented&) { return 1; })
       .def(
@@ -3994,9 +3936,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqSurfaceSegmentedPt, std::unique_ptr<PyEqSurfaceSegmentedPt>>(
-      m,
-      "EqSurfaceSegmentedPt",
-      "Fortran routine eq_surface_segmented_pt return value")
+      m, "EqSurfaceSegmentedPt", "eq_surface_segmented_pt return type")
       .def_readonly("is_eq", &PyEqSurfaceSegmentedPt::is_eq)
       .def("__len__", [](const PyEqSurfaceSegmentedPt&) { return 1; })
       .def(
@@ -4021,7 +3961,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqTargetPoint, std::unique_ptr<PyEqTargetPoint>>(
-      m, "EqTargetPoint", "Fortran routine eq_target_point return value")
+      m, "EqTargetPoint", "eq_target_point return type")
       .def_readonly("is_eq", &PyEqTargetPoint::is_eq)
       .def("__len__", [](const PyEqTargetPoint&) { return 1; })
       .def("__getitem__", [](const PyEqTargetPoint& s, int i) -> py::object {
@@ -4044,7 +3984,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqTaylor, std::unique_ptr<PyEqTaylor>>(
-      m, "EqTaylor", "Fortran routine eq_taylor return value")
+      m, "EqTaylor", "eq_taylor return type")
       .def_readonly("is_eq", &PyEqTaylor::is_eq)
       .def("__len__", [](const PyEqTaylor&) { return 1; })
       .def("__getitem__", [](const PyEqTaylor& s, int i) -> py::object {
@@ -4067,7 +4007,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqTaylorTerm, std::unique_ptr<PyEqTaylorTerm>>(
-      m, "EqTaylorTerm", "Fortran routine eq_taylor_term return value")
+      m, "EqTaylorTerm", "eq_taylor_term return type")
       .def_readonly("is_eq", &PyEqTaylorTerm::is_eq)
       .def("__len__", [](const PyEqTaylorTerm&) { return 1; })
       .def("__getitem__", [](const PyEqTaylorTerm& s, int i) -> py::object {
@@ -4090,7 +4030,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqTrack, std::unique_ptr<PyEqTrack>>(
-      m, "EqTrack", "Fortran routine eq_track return value")
+      m, "EqTrack", "eq_track return type")
       .def_readonly("is_eq", &PyEqTrack::is_eq)
       .def("__len__", [](const PyEqTrack&) { return 1; })
       .def("__getitem__", [](const PyEqTrack& s, int i) -> py::object {
@@ -4113,7 +4053,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqTrackPoint, std::unique_ptr<PyEqTrackPoint>>(
-      m, "EqTrackPoint", "Fortran routine eq_track_point return value")
+      m, "EqTrackPoint", "eq_track_point return type")
       .def_readonly("is_eq", &PyEqTrackPoint::is_eq)
       .def("__len__", [](const PyEqTrackPoint&) { return 1; })
       .def("__getitem__", [](const PyEqTrackPoint& s, int i) -> py::object {
@@ -4136,7 +4076,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqTwiss, std::unique_ptr<PyEqTwiss>>(
-      m, "EqTwiss", "Fortran routine eq_twiss return value")
+      m, "EqTwiss", "eq_twiss return type")
       .def_readonly("is_eq", &PyEqTwiss::is_eq)
       .def("__len__", [](const PyEqTwiss&) { return 1; })
       .def("__getitem__", [](const PyEqTwiss& s, int i) -> py::object {
@@ -4159,7 +4099,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqWake, std::unique_ptr<PyEqWake>>(
-      m, "EqWake", "Fortran routine eq_wake return value")
+      m, "EqWake", "eq_wake return type")
       .def_readonly("is_eq", &PyEqWake::is_eq)
       .def("__len__", [](const PyEqWake&) { return 1; })
       .def("__getitem__", [](const PyEqWake& s, int i) -> py::object {
@@ -4182,7 +4122,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqWakeLr, std::unique_ptr<PyEqWakeLr>>(
-      m, "EqWakeLr", "Fortran routine eq_wake_lr return value")
+      m, "EqWakeLr", "eq_wake_lr return type")
       .def_readonly("is_eq", &PyEqWakeLr::is_eq)
       .def("__len__", [](const PyEqWakeLr&) { return 1; })
       .def("__getitem__", [](const PyEqWakeLr& s, int i) -> py::object {
@@ -4205,7 +4145,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqWakeLrMode, std::unique_ptr<PyEqWakeLrMode>>(
-      m, "EqWakeLrMode", "Fortran routine eq_wake_lr_mode return value")
+      m, "EqWakeLrMode", "eq_wake_lr_mode return type")
       .def_readonly("is_eq", &PyEqWakeLrMode::is_eq)
       .def("__len__", [](const PyEqWakeLrMode&) { return 1; })
       .def("__getitem__", [](const PyEqWakeLrMode& s, int i) -> py::object {
@@ -4228,7 +4168,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqWakeSr, std::unique_ptr<PyEqWakeSr>>(
-      m, "EqWakeSr", "Fortran routine eq_wake_sr return value")
+      m, "EqWakeSr", "eq_wake_sr return type")
       .def_readonly("is_eq", &PyEqWakeSr::is_eq)
       .def("__len__", [](const PyEqWakeSr&) { return 1; })
       .def("__getitem__", [](const PyEqWakeSr& s, int i) -> py::object {
@@ -4251,7 +4191,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqWakeSrMode, std::unique_ptr<PyEqWakeSrMode>>(
-      m, "EqWakeSrMode", "Fortran routine eq_wake_sr_mode return value")
+      m, "EqWakeSrMode", "eq_wake_sr_mode return type")
       .def_readonly("is_eq", &PyEqWakeSrMode::is_eq)
       .def("__len__", [](const PyEqWakeSrMode&) { return 1; })
       .def("__getitem__", [](const PyEqWakeSrMode& s, int i) -> py::object {
@@ -4274,7 +4214,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqWakeSrZLong, std::unique_ptr<PyEqWakeSrZLong>>(
-      m, "EqWakeSrZLong", "Fortran routine eq_wake_sr_z_long return value")
+      m, "EqWakeSrZLong", "eq_wake_sr_z_long return type")
       .def_readonly("is_eq", &PyEqWakeSrZLong::is_eq)
       .def("__len__", [](const PyEqWakeSrZLong&) { return 1; })
       .def("__getitem__", [](const PyEqWakeSrZLong& s, int i) -> py::object {
@@ -4297,7 +4237,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqWall3d, std::unique_ptr<PyEqWall3d>>(
-      m, "EqWall3d", "Fortran routine eq_wall3d return value")
+      m, "EqWall3d", "eq_wall3d return type")
       .def_readonly("is_eq", &PyEqWall3d::is_eq)
       .def("__len__", [](const PyEqWall3d&) { return 1; })
       .def("__getitem__", [](const PyEqWall3d& s, int i) -> py::object {
@@ -4320,7 +4260,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqWall3dSection, std::unique_ptr<PyEqWall3dSection>>(
-      m, "EqWall3dSection", "Fortran routine eq_wall3d_section return value")
+      m, "EqWall3dSection", "eq_wall3d_section return type")
       .def_readonly("is_eq", &PyEqWall3dSection::is_eq)
       .def("__len__", [](const PyEqWall3dSection&) { return 1; })
       .def("__getitem__", [](const PyEqWall3dSection& s, int i) -> py::object {
@@ -4343,7 +4283,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqWall3dVertex, std::unique_ptr<PyEqWall3dVertex>>(
-      m, "EqWall3dVertex", "Fortran routine eq_wall3d_vertex return value")
+      m, "EqWall3dVertex", "eq_wall3d_vertex return type")
       .def_readonly("is_eq", &PyEqWall3dVertex::is_eq)
       .def("__len__", [](const PyEqWall3dVertex&) { return 1; })
       .def("__getitem__", [](const PyEqWall3dVertex& s, int i) -> py::object {
@@ -4366,7 +4306,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqXyDisp, std::unique_ptr<PyEqXyDisp>>(
-      m, "EqXyDisp", "Fortran routine eq_xy_disp return value")
+      m, "EqXyDisp", "eq_xy_disp return type")
       .def_readonly("is_eq", &PyEqXyDisp::is_eq)
       .def("__len__", [](const PyEqXyDisp&) { return 1; })
       .def("__getitem__", [](const PyEqXyDisp& s, int i) -> py::object {
@@ -4389,7 +4329,7 @@ void init_Bmad_routines_e(py::module& m) {
   is_eq : 
   )""");
   py::class_<PyEqualSignHere, std::unique_ptr<PyEqualSignHere>>(
-      m, "EqualSignHere", "Fortran routine equal_sign_here return value")
+      m, "EqualSignHere", "equal_sign_here return type")
       .def_readonly("delim", &PyEqualSignHere::delim)
       .def_readonly("is_here", &PyEqualSignHere::is_here)
       .def("__len__", [](const PyEqualSignHere&) { return 2; })
@@ -4419,7 +4359,7 @@ void init_Bmad_routines_e(py::module& m) {
       std::unique_ptr<PyEquivalentTaylorAttributes>>(
       m,
       "EquivalentTaylorAttributes",
-      "Fortran routine equivalent_taylor_attributes return value")
+      "equivalent_taylor_attributes return type")
       .def_readonly("equiv", &PyEquivalentTaylorAttributes::equiv)
       .def("__len__", [](const PyEquivalentTaylorAttributes&) { return 1; })
       .def(
@@ -4445,8 +4385,7 @@ void init_Bmad_routines_e(py::module& m) {
       Element that might receive the Taylor map from ele_taylor.
   equiv : 
   )""");
-  py::class_<PyEtdiv, std::unique_ptr<PyEtdiv>>(
-      m, "Etdiv", "Fortran routine etdiv return value")
+  py::class_<PyEtdiv, std::unique_ptr<PyEtdiv>>(m, "Etdiv", "etdiv return type")
       .def_readonly("A", &PyEtdiv::A)
       .def_readonly("B", &PyEtdiv::B)
       .def_readonly("C", &PyEtdiv::C)
@@ -4492,9 +4431,7 @@ void init_Bmad_routines_e(py::module& m) {
   py::class_<
       Bmad::EvaluateArrayIndex,
       std::unique_ptr<Bmad::EvaluateArrayIndex>>(
-      m,
-      "EvaluateArrayIndex",
-      "Fortran routine evaluate_array_index return value")
+      m, "EvaluateArrayIndex", "evaluate_array_index return type")
       .def_readonly("err_flag", &Bmad::EvaluateArrayIndex::err_flag)
       .def_readonly("word2", &Bmad::EvaluateArrayIndex::word2)
       .def_readonly("delim2", &Bmad::EvaluateArrayIndex::delim2)
@@ -4545,7 +4482,7 @@ void init_Bmad_routines_e(py::module& m) {
       Integer value
   )""");
   py::class_<Bmad::EvaluateLogical, std::unique_ptr<Bmad::EvaluateLogical>>(
-      m, "EvaluateLogical", "Fortran routine evaluate_logical return value")
+      m, "EvaluateLogical", "evaluate_logical return type")
       .def_readonly("iostat", &Bmad::EvaluateLogical::iostat)
       .def_readonly("this_logic", &Bmad::EvaluateLogical::this_logic)
       .def("__len__", [](const Bmad::EvaluateLogical&) { return 2; })
@@ -4638,7 +4575,7 @@ void init_Bmad_routines_e(py::module& m) {
       Scalar value.  Eq. 34 from Piwinski's paper. <return value> -- Real(rp): Scalar return value.
   )""");
   py::class_<PyExpectOneOf, std::unique_ptr<PyExpectOneOf>>(
-      m, "ExpectOneOf", "Fortran routine expect_one_of return value")
+      m, "ExpectOneOf", "expect_one_of return type")
       .def_readonly("delim", &PyExpectOneOf::delim)
       .def_readonly("delim_found", &PyExpectOneOf::delim_found)
       .def_readonly("is_ok", &PyExpectOneOf::is_ok)
@@ -4697,7 +4634,7 @@ void init_Bmad_routines_e(py::module& m) {
   expect_this
   )""");
   py::class_<Bmad::ExpectThis, std::unique_ptr<Bmad::ExpectThis>>(
-      m, "ExpectThis", "Fortran routine expect_this return value")
+      m, "ExpectThis", "expect_this return type")
       .def_readonly("delim", &Bmad::ExpectThis::delim)
       .def_readonly("delim_found", &Bmad::ExpectThis::delim_found)
       .def_readonly("is_ok", &Bmad::ExpectThis::is_ok)
@@ -4779,9 +4716,7 @@ void init_Bmad_routines_e(py::module& m) {
   py::class_<
       Bmad::ExpressionStackValue,
       std::unique_ptr<Bmad::ExpressionStackValue>>(
-      m,
-      "ExpressionStackValue",
-      "Fortran routine expression_stack_value return value")
+      m, "ExpressionStackValue", "expression_stack_value return type")
       .def_readonly("err_flag", &Bmad::ExpressionStackValue::err_flag)
       .def_readonly("err_str", &Bmad::ExpressionStackValue::err_str)
       .def_readonly("value", &Bmad::ExpressionStackValue::value)
@@ -4839,9 +4774,7 @@ void init_Bmad_routines_e(py::module& m) {
   py::class_<
       Bmad::ExpressionStringToStack,
       std::unique_ptr<Bmad::ExpressionStringToStack>>(
-      m,
-      "ExpressionStringToStack",
-      "Fortran routine expression_string_to_stack return value")
+      m, "ExpressionStringToStack", "expression_string_to_stack return type")
       .def_readonly("stack", &Bmad::ExpressionStringToStack::stack)
       .def_readonly("n_stack", &Bmad::ExpressionStringToStack::n_stack)
       .def_readonly("err_flag", &Bmad::ExpressionStringToStack::err_flag)
@@ -4900,9 +4833,7 @@ void init_Bmad_routines_e(py::module& m) {
   py::class_<
       Bmad::ExpressionStringToTree,
       std::unique_ptr<Bmad::ExpressionStringToTree>>(
-      m,
-      "ExpressionStringToTree",
-      "Fortran routine expression_string_to_tree return value")
+      m, "ExpressionStringToTree", "expression_string_to_tree return type")
       .def_readonly("err_flag", &Bmad::ExpressionStringToTree::err_flag)
       .def_readonly("err_str", &Bmad::ExpressionStringToTree::err_str)
       .def("__len__", [](const Bmad::ExpressionStringToTree&) { return 2; })
@@ -4992,7 +4923,7 @@ void init_Bmad_routines_e(py::module& m) {
       Expression string.
   )""");
   py::class_<Bmad::ExpressionValue, std::unique_ptr<Bmad::ExpressionValue>>(
-      m, "ExpressionValue", "Fortran routine expression_value return value")
+      m, "ExpressionValue", "expression_value return type")
       .def_readonly("err_flag", &Bmad::ExpressionValue::err_flag)
       .def_readonly("err_str", &Bmad::ExpressionValue::err_str)
       .def_readonly("value", &Bmad::ExpressionValue::value)

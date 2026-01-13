@@ -350,7 +350,7 @@ void init_Bmad_routines_m(py::module& m) {
       Structure holding the transfer map.
   )""");
   py::class_<Bmad::MadTmfoc, std::unique_ptr<Bmad::MadTmfoc>>(
-      m, "MadTmfoc", "Fortran routine mad_tmfoc return value")
+      m, "MadTmfoc", "mad_tmfoc return type")
       .def_readonly("c", &Bmad::MadTmfoc::c)
       .def_readonly("s", &Bmad::MadTmfoc::s)
       .def_readonly("d", &Bmad::MadTmfoc::d)
@@ -467,7 +467,7 @@ void init_Bmad_routines_m(py::module& m) {
   g2_inv_mat : 
   )""");
   py::class_<Bmad::MakeGMats, std::unique_ptr<Bmad::MakeGMats>>(
-      m, "MakeGMats", "Fortran routine make_g_mats return value")
+      m, "MakeGMats", "make_g_mats return type")
       .def_readonly("g_mat", &Bmad::MakeGMats::g_mat)
       .def_readonly("g_inv_mat", &Bmad::MakeGMats::g_inv_mat)
       .def("__len__", [](const Bmad::MakeGMats&) { return 2; })
@@ -494,7 +494,7 @@ void init_Bmad_routines_m(py::module& m) {
       The inverse of G_MAT
   )""");
   py::class_<Bmad::MakeHvbp, std::unique_ptr<Bmad::MakeHvbp>>(
-      m, "MakeHvbp", "Fortran routine make_hvbp return value")
+      m, "MakeHvbp", "make_hvbp return type")
       .def_readonly("B", &Bmad::MakeHvbp::B)
       .def_readonly("V", &Bmad::MakeHvbp::V)
       .def_readonly("H", &Bmad::MakeHvbp::H)
@@ -578,7 +578,7 @@ void init_Bmad_routines_m(py::module& m) {
       Central orbit for taylor stuff. Each orb0_arr(i).orbit(:) holds the orbit for the i^th lattice branch
   )""");
   py::class_<Bmad::MakeMadMap, std::unique_ptr<Bmad::MakeMadMap>>(
-      m, "MakeMadMap", "Fortran routine make_mad_map return value")
+      m, "MakeMadMap", "make_mad_map return type")
       .def_readonly("energy", &Bmad::MakeMadMap::energy)
       .def_readonly("map", &Bmad::MakeMadMap::map)
       .def("__len__", [](const Bmad::MakeMadMap&) { return 2; })
@@ -615,7 +615,7 @@ void init_Bmad_routines_m(py::module& m) {
       Structure holding the transfer map.
   )""");
   py::class_<Bmad::MakeMat6, std::unique_ptr<Bmad::MakeMat6>>(
-      m, "MakeMat6", "Fortran routine make_mat6 return value")
+      m, "MakeMat6", "make_mat6 return type")
       .def_readonly("end_orb", &Bmad::MakeMat6::end_orb)
       .def_readonly("err_flag", &Bmad::MakeMat6::err_flag)
       .def("__len__", [](const Bmad::MakeMat6&) { return 2; })
@@ -648,7 +648,7 @@ void init_Bmad_routines_m(py::module& m) {
       Set True if there is an error. False otherwise.
   )""");
   py::class_<Bmad::MakeMat6Bmad, std::unique_ptr<Bmad::MakeMat6Bmad>>(
-      m, "MakeMat6Bmad", "Fortran routine make_mat6_bmad return value")
+      m, "MakeMat6Bmad", "make_mat6_bmad return type")
       .def_readonly("end_orb", &Bmad::MakeMat6Bmad::end_orb)
       .def_readonly("err", &Bmad::MakeMat6Bmad::err)
       .def("__len__", [](const Bmad::MakeMat6Bmad&) { return 2; })
@@ -684,9 +684,7 @@ void init_Bmad_routines_m(py::module& m) {
   py::class_<
       Bmad::MakeMat6BmadPhoton,
       std::unique_ptr<Bmad::MakeMat6BmadPhoton>>(
-      m,
-      "MakeMat6BmadPhoton",
-      "Fortran routine make_mat6_bmad_photon return value")
+      m, "MakeMat6BmadPhoton", "make_mat6_bmad_photon return type")
       .def_readonly("end_orb", &Bmad::MakeMat6BmadPhoton::end_orb)
       .def_readonly("err", &Bmad::MakeMat6BmadPhoton::err)
       .def("__len__", [](const Bmad::MakeMat6BmadPhoton&) { return 2; })
@@ -790,7 +788,7 @@ void init_Bmad_routines_m(py::module& m) {
       Coordinates at end of element.
   )""");
   py::class_<PyMakeMat6Taylor, std::unique_ptr<PyMakeMat6Taylor>>(
-      m, "MakeMat6Taylor", "Fortran routine make_mat6_taylor return value")
+      m, "MakeMat6Taylor", "make_mat6_taylor return type")
       .def_readonly("end_orb", &PyMakeMat6Taylor::end_orb)
       .def_readonly("err_flag", &PyMakeMat6Taylor::err_flag)
       .def("__len__", [](const PyMakeMat6Taylor&) { return 2; })
@@ -821,7 +819,7 @@ void init_Bmad_routines_m(py::module& m) {
   err_flag : 
   )""");
   py::class_<Bmad::MakeMat6Tracking, std::unique_ptr<Bmad::MakeMat6Tracking>>(
-      m, "MakeMat6Tracking", "Fortran routine make_mat6_tracking return value")
+      m, "MakeMat6Tracking", "make_mat6_tracking return type")
       .def_readonly("end_orb", &Bmad::MakeMat6Tracking::end_orb)
       .def_readonly("err_flag", &Bmad::MakeMat6Tracking::err_flag)
       .def("__len__", [](const Bmad::MakeMat6Tracking&) { return 2; })
@@ -860,7 +858,7 @@ void init_Bmad_routines_m(py::module& m) {
       Default False. If True, only calculate ele.spin_taylor.
   )""");
   py::class_<Bmad::MakeN, std::unique_ptr<Bmad::MakeN>>(
-      m, "MakeN", "Fortran routine make_n return value")
+      m, "MakeN", "make_n return type")
       .def_readonly("N", &Bmad::MakeN::N)
       .def_readonly("err_flag", &Bmad::MakeN::err_flag)
       .def_readonly("tunes_out", &Bmad::MakeN::tunes_out)
@@ -918,7 +916,7 @@ void init_Bmad_routines_m(py::module& m) {
       U = Inverse(N).t6.N.  Block diagonal matrix of 2x2 rotation matrices.
   )""");
   py::class_<Bmad::MakePbrh, std::unique_ptr<Bmad::MakePbrh>>(
-      m, "MakePbrh", "Fortran routine make_pbrh return value")
+      m, "MakePbrh", "make_pbrh return type")
       .def_readonly("P", &Bmad::MakePbrh::P)
       .def_readonly("Bp", &Bmad::MakePbrh::Bp)
       .def_readonly("R", &Bmad::MakePbrh::R)
@@ -969,7 +967,7 @@ void init_Bmad_routines_m(py::module& m) {
       Eqn. 100.  Longitudinal coupling.
   )""");
   py::class_<Bmad::MakeSmatFromAbc, std::unique_ptr<Bmad::MakeSmatFromAbc>>(
-      m, "MakeSmatFromAbc", "Fortran routine make_smat_from_abc return value")
+      m, "MakeSmatFromAbc", "make_smat_from_abc return type")
       .def_readonly("sigma_mat", &Bmad::MakeSmatFromAbc::sigma_mat)
       .def_readonly("err_flag", &Bmad::MakeSmatFromAbc::err_flag)
       .def_readonly("Nout", &Bmad::MakeSmatFromAbc::Nout)
@@ -1052,7 +1050,7 @@ void init_Bmad_routines_m(py::module& m) {
 
   )""");
   py::class_<Bmad::MakeVMats, std::unique_ptr<Bmad::MakeVMats>>(
-      m, "MakeVMats", "Fortran routine make_v_mats return value")
+      m, "MakeVMats", "make_v_mats return type")
       .def_readonly("v_mat", &Bmad::MakeVMats::v_mat)
       .def_readonly("v_inv_mat", &Bmad::MakeVMats::v_inv_mat)
       .def("__len__", [](const Bmad::MakeVMats&) { return 2; })
@@ -1079,9 +1077,7 @@ void init_Bmad_routines_m(py::module& m) {
       X-Y coords to Normal mode transformation
   )""");
   py::class_<PyMakeupControlSlave, std::unique_ptr<PyMakeupControlSlave>>(
-      m,
-      "MakeupControlSlave",
-      "Fortran routine makeup_control_slave return value")
+      m, "MakeupControlSlave", "makeup_control_slave return type")
       .def_readonly("err_flag", &PyMakeupControlSlave::err_flag)
       .def("__len__", [](const PyMakeupControlSlave&) { return 1; })
       .def(
@@ -1105,7 +1101,7 @@ void init_Bmad_routines_m(py::module& m) {
 
   )""");
   py::class_<PyMakeupGroupLord, std::unique_ptr<PyMakeupGroupLord>>(
-      m, "MakeupGroupLord", "Fortran routine makeup_group_lord return value")
+      m, "MakeupGroupLord", "makeup_group_lord return type")
       .def_readonly("err_flag", &PyMakeupGroupLord::err_flag)
       .def("__len__", [](const PyMakeupGroupLord&) { return 1; })
       .def("__getitem__", [](const PyMakeupGroupLord& s, int i) -> py::object {
@@ -1128,9 +1124,7 @@ void init_Bmad_routines_m(py::module& m) {
 
   )""");
   py::class_<PyMakeupMultipassSlave, std::unique_ptr<PyMakeupMultipassSlave>>(
-      m,
-      "MakeupMultipassSlave",
-      "Fortran routine makeup_multipass_slave return value")
+      m, "MakeupMultipassSlave", "makeup_multipass_slave return type")
       .def_readonly("err_flag", &PyMakeupMultipassSlave::err_flag)
       .def("__len__", [](const PyMakeupMultipassSlave&) { return 1; })
       .def(
@@ -1155,7 +1149,7 @@ void init_Bmad_routines_m(py::module& m) {
 
   )""");
   py::class_<PyMakeupSuperSlave, std::unique_ptr<PyMakeupSuperSlave>>(
-      m, "MakeupSuperSlave", "Fortran routine makeup_super_slave return value")
+      m, "MakeupSuperSlave", "makeup_super_slave return type")
       .def_readonly("err_flag", &PyMakeupSuperSlave::err_flag)
       .def("__len__", [](const PyMakeupSuperSlave&) { return 1; })
       .def("__getitem__", [](const PyMakeupSuperSlave& s, int i) -> py::object {
@@ -1272,9 +1266,7 @@ void init_Bmad_routines_m(py::module& m) {
       .wall3d.section(i).patch_in_region marked.
   )""");
   py::class_<PyMasterParameterValue, std::unique_ptr<PyMasterParameterValue>>(
-      m,
-      "MasterParameterValue",
-      "Fortran routine master_parameter_value return value")
+      m, "MasterParameterValue", "master_parameter_value return type")
       .def_readonly("value", &PyMasterParameterValue::value)
       .def("__len__", [](const PyMasterParameterValue&) { return 1; })
       .def(
@@ -1301,7 +1293,7 @@ void init_Bmad_routines_m(py::module& m) {
   value : 
   )""");
   py::class_<PyMat4Multipole, std::unique_ptr<PyMat4Multipole>>(
-      m, "Mat4Multipole", "Fortran routine mat4_multipole return value")
+      m, "Mat4Multipole", "mat4_multipole return type")
       .def_readonly("kick_mat", &PyMat4Multipole::kick_mat)
       .def_readonly("n", &PyMat4Multipole::n)
       .def("__len__", [](const PyMat4Multipole&) { return 2; })
@@ -1389,7 +1381,7 @@ void init_Bmad_routines_m(py::module& m) {
       first order complex_taylor map.
   )""");
   py::class_<Bmad::MatSympDecouple, std::unique_ptr<Bmad::MatSympDecouple>>(
-      m, "MatSympDecouple", "Fortran routine mat_symp_decouple return value")
+      m, "MatSympDecouple", "mat_symp_decouple return type")
       .def_readonly("stat", &Bmad::MatSympDecouple::stat)
       .def_readonly("twiss1", &Bmad::MatSympDecouple::twiss1)
       .def_readonly("twiss2", &Bmad::MatSympDecouple::twiss2)
@@ -1442,7 +1434,7 @@ void init_Bmad_routines_m(py::module& m) {
       If .true. then an error message is typed out for a non ok$ STAT
   )""");
   py::class_<Bmad::MatchEleToMat6, std::unique_ptr<Bmad::MatchEleToMat6>>(
-      m, "MatchEleToMat6", "Fortran routine match_ele_to_mat6 return value")
+      m, "MatchEleToMat6", "match_ele_to_mat6 return type")
       .def_readonly("mat6", &Bmad::MatchEleToMat6::mat6)
       .def_readonly("vec0", &Bmad::MatchEleToMat6::vec0)
       .def_readonly("err_flag", &Bmad::MatchEleToMat6::err_flag)
@@ -1485,8 +1477,7 @@ void init_Bmad_routines_m(py::module& m) {
       Default is False. If True, set the beginning and ending Twiss values in the element to create a phase
       trombone.
   )""");
-  py::class_<PyMexp, std::unique_ptr<PyMexp>>(
-      m, "Mexp", "Fortran routine mexp return value")
+  py::class_<PyMexp, std::unique_ptr<PyMexp>>(m, "Mexp", "mexp return type")
       .def_readonly("this_exp", &PyMexp::this_exp)
       .def("__len__", [](const PyMexp&) { return 1; })
       .def("__getitem__", [](const PyMexp& s, int i) -> py::object {
@@ -1528,9 +1519,7 @@ void init_Bmad_routines_m(py::module& m) {
   ierr : 
   )""");
   py::class_<PyMomentumCompaction, std::unique_ptr<PyMomentumCompaction>>(
-      m,
-      "MomentumCompaction",
-      "Fortran routine momentum_compaction return value")
+      m, "MomentumCompaction", "momentum_compaction return type")
       .def_readonly("mom_comp", &PyMomentumCompaction::mom_comp)
       .def("__len__", [](const PyMomentumCompaction&) { return 1; })
       .def(
@@ -1558,7 +1547,7 @@ void init_Bmad_routines_m(py::module& m) {
       std::unique_ptr<Bmad::MultiTurnTrackingAnalysis>>(
       m,
       "MultiTurnTrackingAnalysis",
-      "Fortran routine multi_turn_tracking_analysis return value")
+      "multi_turn_tracking_analysis return type")
       .def_readonly("track0", &Bmad::MultiTurnTrackingAnalysis::track0)
       .def_readonly("ele", &Bmad::MultiTurnTrackingAnalysis::ele)
       .def_readonly("stable", &Bmad::MultiTurnTrackingAnalysis::stable)
@@ -1660,7 +1649,7 @@ void init_Bmad_routines_m(py::module& m) {
       super_lords. Output
   )""");
   py::class_<Bmad::Multipole1AbToKt, std::unique_ptr<Bmad::Multipole1AbToKt>>(
-      m, "Multipole1AbToKt", "Fortran routine multipole1_ab_to_kt return value")
+      m, "Multipole1AbToKt", "multipole1_ab_to_kt return type")
       .def_readonly("knl", &Bmad::Multipole1AbToKt::knl)
       .def_readonly("tn", &Bmad::Multipole1AbToKt::tn)
       .def("__len__", [](const Bmad::Multipole1AbToKt&) { return 2; })
@@ -1695,7 +1684,7 @@ void init_Bmad_routines_m(py::module& m) {
       Multipole angle.
   )""");
   py::class_<Bmad::Multipole1KtToAb, std::unique_ptr<Bmad::Multipole1KtToAb>>(
-      m, "Multipole1KtToAb", "Fortran routine multipole1_kt_to_ab return value")
+      m, "Multipole1KtToAb", "multipole1_kt_to_ab return type")
       .def_readonly("an", &Bmad::Multipole1KtToAb::an)
       .def_readonly("bn", &Bmad::Multipole1KtToAb::bn)
       .def("__len__", [](const Bmad::Multipole1KtToAb&) { return 2; })
@@ -1733,7 +1722,7 @@ void init_Bmad_routines_m(py::module& m) {
       Normal multipole component.
   )""");
   py::class_<Bmad::MultipoleAbToKt, std::unique_ptr<Bmad::MultipoleAbToKt>>(
-      m, "MultipoleAbToKt", "Fortran routine multipole_ab_to_kt return value")
+      m, "MultipoleAbToKt", "multipole_ab_to_kt return type")
       .def_readonly("knl", &Bmad::MultipoleAbToKt::knl)
       .def_readonly("tn", &Bmad::MultipoleAbToKt::tn)
       .def("__len__", [](const Bmad::MultipoleAbToKt&) { return 2; })
@@ -1765,7 +1754,7 @@ void init_Bmad_routines_m(py::module& m) {
       Multipole angle.
   )""");
   py::class_<Bmad::MultipoleEleToAb, std::unique_ptr<Bmad::MultipoleEleToAb>>(
-      m, "MultipoleEleToAb", "Fortran routine multipole_ele_to_ab return value")
+      m, "MultipoleEleToAb", "multipole_ele_to_ab return type")
       .def_readonly("ix_pole_max", &Bmad::MultipoleEleToAb::ix_pole_max)
       .def_readonly("a", &Bmad::MultipoleEleToAb::a)
       .def_readonly("b", &Bmad::MultipoleEleToAb::b)
@@ -1823,7 +1812,7 @@ void init_Bmad_routines_m(py::module& m) {
       Default is false. If True, no scaling is applied.
   )""");
   py::class_<Bmad::MultipoleEleToKt, std::unique_ptr<Bmad::MultipoleEleToKt>>(
-      m, "MultipoleEleToKt", "Fortran routine multipole_ele_to_kt return value")
+      m, "MultipoleEleToKt", "multipole_ele_to_kt return type")
       .def_readonly("ix_pole_max", &Bmad::MultipoleEleToKt::ix_pole_max)
       .def_readonly("knl", &Bmad::MultipoleEleToKt::knl)
       .def_readonly("tilt", &Bmad::MultipoleEleToKt::tilt)
@@ -1977,7 +1966,7 @@ void init_Bmad_routines_m(py::module& m) {
       If present and n = 0 then the multipole simulates a zero length bend with bending angle knl.
   )""");
   py::class_<Bmad::MultipoleKtToAb, std::unique_ptr<Bmad::MultipoleKtToAb>>(
-      m, "MultipoleKtToAb", "Fortran routine multipole_kt_to_ab return value")
+      m, "MultipoleKtToAb", "multipole_kt_to_ab return type")
       .def_readonly("an", &Bmad::MultipoleKtToAb::an)
       .def_readonly("bn", &Bmad::MultipoleKtToAb::bn)
       .def("__len__", [](const Bmad::MultipoleKtToAb&) { return 2; })
@@ -2026,8 +2015,7 @@ void init_Bmad_routines_m(py::module& m) {
   orbit : CoordStruct
       Particle coordinates.
   )""");
-  py::class_<PyMytan, std::unique_ptr<PyMytan>>(
-      m, "Mytan", "Fortran routine mytan return value")
+  py::class_<PyMytan, std::unique_ptr<PyMytan>>(m, "Mytan", "mytan return type")
       .def_readonly("y", &PyMytan::y)
       .def_readonly("x", &PyMytan::x)
       .def_readonly("arg", &PyMytan::arg)

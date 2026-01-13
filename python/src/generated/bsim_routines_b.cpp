@@ -71,9 +71,7 @@ void init_bsim_routines_b(py::module& m) {
   beam_init : 
   )""");
   py::class_<PyBbuHomVoltageCalc, std::unique_ptr<PyBbuHomVoltageCalc>>(
-      m,
-      "BbuHomVoltageCalc",
-      "Fortran routine bbu_hom_voltage_calc return value")
+      m, "BbuHomVoltageCalc", "bbu_hom_voltage_calc return type")
       .def_readonly("n_period", &PyBbuHomVoltageCalc::n_period)
       .def_readonly(
           "ix_stage_last_tracked", &PyBbuHomVoltageCalc::ix_stage_last_tracked)
@@ -111,7 +109,7 @@ void init_bsim_routines_b(py::module& m) {
   bbu_beam : 
   )""");
   py::class_<PyBbuSetup, std::unique_ptr<PyBbuSetup>>(
-      m, "BbuSetup", "Fortran routine bbu_setup return value")
+      m, "BbuSetup", "bbu_setup return type")
       .def_readonly("dt_bunch", &PyBbuSetup::dt_bunch)
       .def("__len__", [](const PyBbuSetup&) { return 1; })
       .def("__getitem__", [](const PyBbuSetup& s, int i) -> py::object {
@@ -136,7 +134,7 @@ void init_bsim_routines_b(py::module& m) {
   bbu_beam : 
   )""");
   py::class_<PyBbuTrackAStage, std::unique_ptr<PyBbuTrackAStage>>(
-      m, "BbuTrackAStage", "Fortran routine bbu_track_a_stage return value")
+      m, "BbuTrackAStage", "bbu_track_a_stage return type")
       .def_readonly("lost", &PyBbuTrackAStage::lost)
       .def_readonly("ix_stage_tracked", &PyBbuTrackAStage::ix_stage_tracked)
       .def("__len__", [](const PyBbuTrackAStage&) { return 2; })
@@ -166,7 +164,7 @@ void init_bsim_routines_b(py::module& m) {
   ix_stage_tracked : 
   )""");
   py::class_<PyBbuTrackAll, std::unique_ptr<PyBbuTrackAll>>(
-      m, "BbuTrackAll", "Fortran routine bbu_track_all return value")
+      m, "BbuTrackAll", "bbu_track_all return type")
       .def_readonly(
           "hom_voltage_normalized", &PyBbuTrackAll::hom_voltage_normalized)
       .def_readonly("growth_rate", &PyBbuTrackAll::growth_rate)

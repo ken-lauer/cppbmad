@@ -145,7 +145,7 @@ PyTwiss3Propagate1 python_twiss3_propagate1(
 
 void init_Bmad_routines_t(py::module& m) {
   py::class_<Bmad::T6ToB123, std::unique_ptr<Bmad::T6ToB123>>(
-      m, "T6ToB123", "Fortran routine t6_to_b123 return value")
+      m, "T6ToB123", "t6_to_b123 return type")
       .def_readonly("B1", &Bmad::T6ToB123::B1)
       .def_readonly("B2", &Bmad::T6ToB123::B2)
       .def_readonly("B3", &Bmad::T6ToB123::B3)
@@ -195,9 +195,7 @@ void init_Bmad_routines_t(py::module& m) {
       Set True if there is an error. False otherwise
   )""");
   py::class_<PyTaperMagStrengths, std::unique_ptr<PyTaperMagStrengths>>(
-      m,
-      "TaperMagStrengths",
-      "Fortran routine taper_mag_strengths return value")
+      m, "TaperMagStrengths", "taper_mag_strengths return type")
       .def_readonly("err_flag", &PyTaperMagStrengths::err_flag)
       .def("__len__", [](const PyTaperMagStrengths&) { return 1; })
       .def(
@@ -228,7 +226,7 @@ void init_Bmad_routines_t(py::module& m) {
   err_flag : 
   )""");
   py::class_<PyTargetMinMaxCalc, std::unique_ptr<PyTargetMinMaxCalc>>(
-      m, "TargetMinMaxCalc", "Fortran routine target_min_max_calc return value")
+      m, "TargetMinMaxCalc", "target_min_max_calc return type")
       .def_readonly("y_min", &PyTargetMinMaxCalc::y_min)
       .def_readonly("y_max", &PyTargetMinMaxCalc::y_max)
       .def_readonly("phi_min", &PyTargetMinMaxCalc::phi_min)
@@ -275,7 +273,7 @@ void init_Bmad_routines_t(py::module& m) {
       values. phi_min, phi_max -- real(rp): min/max values.
   )""");
   py::class_<Bmad::TargetRotMats, std::unique_ptr<Bmad::TargetRotMats>>(
-      m, "TargetRotMats", "Fortran routine target_rot_mats return value")
+      m, "TargetRotMats", "target_rot_mats return type")
       .def_readonly("w_to_target", &Bmad::TargetRotMats::w_to_target)
       .def_readonly("w_to_ele", &Bmad::TargetRotMats::w_to_ele)
       .def("__len__", [](const Bmad::TargetRotMats&) { return 2; })
@@ -321,7 +319,7 @@ void init_Bmad_routines_t(py::module& m) {
   taylor2 : 
   )""");
   py::class_<Bmad::TaylorInverse, std::unique_ptr<Bmad::TaylorInverse>>(
-      m, "TaylorInverse", "Fortran routine taylor_inverse return value")
+      m, "TaylorInverse", "taylor_inverse return type")
       .def_readonly("taylor_inv", &Bmad::TaylorInverse::taylor_inv)
       .def_readonly("err", &Bmad::TaylorInverse::err)
       .def("__len__", [](const Bmad::TaylorInverse&) { return 2; })
@@ -478,7 +476,7 @@ void init_Bmad_routines_t(py::module& m) {
       Tilt angle.
   )""");
   py::class_<Bmad::ToEtaReading, std::unique_ptr<Bmad::ToEtaReading>>(
-      m, "ToEtaReading", "Fortran routine to_eta_reading return value")
+      m, "ToEtaReading", "to_eta_reading return type")
       .def_readonly("reading", &Bmad::ToEtaReading::reading)
       .def_readonly("err", &Bmad::ToEtaReading::err)
       .def("__len__", [](const Bmad::ToEtaReading&) { return 2; })
@@ -528,7 +526,7 @@ void init_Bmad_routines_t(py::module& m) {
       Set True if there is an error. False otherwise.
   )""");
   py::class_<PyToFieldmapCoords, std::unique_ptr<PyToFieldmapCoords>>(
-      m, "ToFieldmapCoords", "Fortran routine to_fieldmap_coords return value")
+      m, "ToFieldmapCoords", "to_fieldmap_coords return type")
       .def_readonly("x", &PyToFieldmapCoords::x)
       .def_readonly("y", &PyToFieldmapCoords::y)
       .def_readonly("z", &PyToFieldmapCoords::z)
@@ -590,7 +588,7 @@ void init_Bmad_routines_t(py::module& m) {
       Set True if there is an error. False otherwise.
   )""");
   py::class_<Bmad::ToOrbitReading, std::unique_ptr<Bmad::ToOrbitReading>>(
-      m, "ToOrbitReading", "Fortran routine to_orbit_reading return value")
+      m, "ToOrbitReading", "to_orbit_reading return type")
       .def_readonly("reading", &Bmad::ToOrbitReading::reading)
       .def_readonly("err", &Bmad::ToOrbitReading::err)
       .def("__len__", [](const Bmad::ToOrbitReading&) { return 2; })
@@ -645,7 +643,7 @@ void init_Bmad_routines_t(py::module& m) {
       std::unique_ptr<Bmad::ToPhaseAndCouplingReading>>(
       m,
       "ToPhaseAndCouplingReading",
-      "Fortran routine to_phase_and_coupling_reading return value")
+      "to_phase_and_coupling_reading return type")
       .def_readonly("reading", &Bmad::ToPhaseAndCouplingReading::reading)
       .def_readonly("err", &Bmad::ToPhaseAndCouplingReading::err)
       .def("__len__", [](const Bmad::ToPhaseAndCouplingReading&) { return 2; })
@@ -826,7 +824,7 @@ void init_Bmad_routines_t(py::module& m) {
       Touschek rate, in units particle per second, assuming two particles per event.
   )""");
   py::class_<PyTouschekRate1Zap, std::unique_ptr<PyTouschekRate1Zap>>(
-      m, "TouschekRate1Zap", "Fortran routine touschek_rate1_zap return value")
+      m, "TouschekRate1Zap", "touschek_rate1_zap return type")
       .def_readonly("rate", &PyTouschekRate1Zap::rate)
       .def_readonly("ix", &PyTouschekRate1Zap::ix)
       .def_readonly("s", &PyTouschekRate1Zap::s)
@@ -859,7 +857,7 @@ void init_Bmad_routines_t(py::module& m) {
   s : 
   )""");
   py::class_<Bmad::Track1, std::unique_ptr<Bmad::Track1>>(
-      m, "Track1", "Fortran routine track1 return value")
+      m, "Track1", "track1 return type")
       .def_readonly("end_orb", &Bmad::Track1::end_orb)
       .def_readonly("err_flag", &Bmad::Track1::err_flag)
       .def("__len__", [](const Bmad::Track1&) { return 2; })
@@ -939,7 +937,7 @@ void init_Bmad_routines_t(py::module& m) {
       Set true if there is an error. EG: Too many particles lost for a CSR calc.
   )""");
   py::class_<Bmad::Track1Bmad, std::unique_ptr<Bmad::Track1Bmad>>(
-      m, "Track1Bmad", "Fortran routine track1_bmad return value")
+      m, "Track1Bmad", "track1_bmad return type")
       .def_readonly("err_flag", &Bmad::Track1Bmad::err_flag)
       .def_readonly("track", &Bmad::Track1Bmad::track)
       .def("__len__", [](const Bmad::Track1Bmad&) { return 2; })
@@ -1420,7 +1418,7 @@ void init_Bmad_routines_t(py::module& m) {
   track1_radiation.
   )""");
   py::class_<Bmad::Track1RungeKutta, std::unique_ptr<Bmad::Track1RungeKutta>>(
-      m, "Track1RungeKutta", "Fortran routine track1_runge_kutta return value")
+      m, "Track1RungeKutta", "track1_runge_kutta return type")
       .def_readonly("err_flag", &Bmad::Track1RungeKutta::err_flag)
       .def_readonly("track", &Bmad::Track1RungeKutta::track)
       .def("__len__", [](const Bmad::Track1RungeKutta&) { return 2; })
@@ -1484,7 +1482,7 @@ void init_Bmad_routines_t(py::module& m) {
       This parameter is an input/output and is modified in-place. As an output: final phase-space coords
   )""");
   py::class_<PyTrack1Spin, std::unique_ptr<PyTrack1Spin>>(
-      m, "Track1Spin", "Fortran routine track1_spin return value")
+      m, "Track1Spin", "track1_spin return type")
       .def_readonly("ele", &PyTrack1Spin::ele)
       .def_readonly("end_orb", &PyTrack1Spin::end_orb)
       .def_readonly("make_quaternion", &PyTrack1Spin::make_quaternion)
@@ -1601,9 +1599,7 @@ void init_Bmad_routines_t(py::module& m) {
       Propagate the transfer matrix? Default is false.
   )""");
   py::class_<PyTrack1TimeRungeKutta, std::unique_ptr<PyTrack1TimeRungeKutta>>(
-      m,
-      "Track1TimeRungeKutta",
-      "Fortran routine track1_time_runge_kutta return value")
+      m, "Track1TimeRungeKutta", "track1_time_runge_kutta return type")
       .def_readonly("err_flag", &PyTrack1TimeRungeKutta::err_flag)
       .def_readonly("track", &PyTrack1TimeRungeKutta::track)
       .def_readonly("dt_step", &PyTrack1TimeRungeKutta::dt_step)
@@ -1655,7 +1651,7 @@ void init_Bmad_routines_t(py::module& m) {
       tracker would take based on the error tolerance.
   )""");
   py::class_<Bmad::TrackABeambeam, std::unique_ptr<Bmad::TrackABeambeam>>(
-      m, "TrackABeambeam", "Fortran routine track_a_beambeam return value")
+      m, "TrackABeambeam", "track_a_beambeam return type")
       .def_readonly("track", &Bmad::TrackABeambeam::track)
       .def_readonly("mat6", &Bmad::TrackABeambeam::mat6)
       .def("__len__", [](const Bmad::TrackABeambeam&) { return 2; })
@@ -1800,7 +1796,7 @@ void init_Bmad_routines_t(py::module& m) {
       Propagate the transfer matrix? Default is false.
   )""");
   py::class_<PyTrackADrift, std::unique_ptr<PyTrackADrift>>(
-      m, "TrackADrift", "Fortran routine track_a_drift return value")
+      m, "TrackADrift", "track_a_drift return type")
       .def_readonly("time", &PyTrackADrift::time)
       .def("__len__", [](const PyTrackADrift&) { return 1; })
       .def("__getitem__", [](const PyTrackADrift& s, int i) -> py::object {
@@ -1975,7 +1971,7 @@ void init_Bmad_routines_t(py::module& m) {
       Propagate the transfer matrix? Default is false.
   )""");
   py::class_<PyTrackAMatch, std::unique_ptr<PyTrackAMatch>>(
-      m, "TrackAMatch", "Fortran routine track_a_match return value")
+      m, "TrackAMatch", "track_a_match return type")
       .def_readonly("mat6", &PyTrackAMatch::mat6)
       .def_readonly("err_flag", &PyTrackAMatch::err_flag)
       .def("__len__", [](const PyTrackAMatch&) { return 2; })
@@ -2012,7 +2008,7 @@ void init_Bmad_routines_t(py::module& m) {
       Propagate the transfer matrix? Default is false.
   )""");
   py::class_<Bmad::TrackAPatch, std::unique_ptr<Bmad::TrackAPatch>>(
-      m, "TrackAPatch", "Fortran routine track_a_patch return value")
+      m, "TrackAPatch", "track_a_patch return type")
       .def_readonly("s_ent", &Bmad::TrackAPatch::s_ent)
       .def_readonly("ds_ref", &Bmad::TrackAPatch::ds_ref)
       .def_readonly("mat6", &Bmad::TrackAPatch::mat6)
@@ -2089,7 +2085,7 @@ void init_Bmad_routines_t(py::module& m) {
       of assuming that the particle is at the patch edge.
   )""");
   py::class_<PyTrackAPickup, std::unique_ptr<PyTrackAPickup>>(
-      m, "TrackAPickup", "Fortran routine track_a_pickup return value")
+      m, "TrackAPickup", "track_a_pickup return type")
       .def_readonly("mat6", &PyTrackAPickup::mat6)
       .def_readonly("err_flag", &PyTrackAPickup::err_flag)
       .def("__len__", [](const PyTrackAPickup&) { return 2; })
@@ -2259,9 +2255,7 @@ void init_Bmad_routines_t(py::module& m) {
   py::class_<
       Bmad::TrackAZeroLengthElement,
       std::unique_ptr<Bmad::TrackAZeroLengthElement>>(
-      m,
-      "TrackAZeroLengthElement",
-      "Fortran routine track_a_zero_length_element return value")
+      m, "TrackAZeroLengthElement", "track_a_zero_length_element return type")
       .def_readonly("err_flag", &Bmad::TrackAZeroLengthElement::err_flag)
       .def_readonly("track", &Bmad::TrackAZeroLengthElement::track)
       .def("__len__", [](const Bmad::TrackAZeroLengthElement&) { return 2; })
@@ -2297,7 +2291,7 @@ void init_Bmad_routines_t(py::module& m) {
       Structure holding the track information.
   )""");
   py::class_<Bmad::TrackAll, std::unique_ptr<Bmad::TrackAll>>(
-      m, "TrackAll", "Fortran routine track_all return value")
+      m, "TrackAll", "track_all return type")
       .def_readonly("track_state", &Bmad::TrackAll::track_state)
       .def_readonly("err_flag", &Bmad::TrackAll::err_flag)
       .def_readonly("orbit0", &Bmad::TrackAll::orbit0)
@@ -2519,7 +2513,7 @@ void init_Bmad_routines_t(py::module& m) {
       Ending coords.
   )""");
   py::class_<Bmad::TrackFromSToS, std::unique_ptr<Bmad::TrackFromSToS>>(
-      m, "TrackFromSToS", "Fortran routine track_from_s_to_s return value")
+      m, "TrackFromSToS", "track_from_s_to_s return type")
       .def_readonly("orbit_end", &Bmad::TrackFromSToS::orbit_end)
       .def_readonly("all_orb", &Bmad::TrackFromSToS::all_orb)
       .def_readonly("track_state", &Bmad::TrackFromSToS::track_state)
@@ -2614,7 +2608,7 @@ void init_Bmad_routines_t(py::module& m) {
       real(rp), rotation matrix to transform to surface coords.
   )""");
   py::class_<Bmad::TrackUntilDead, std::unique_ptr<Bmad::TrackUntilDead>>(
-      m, "TrackUntilDead", "Fortran routine track_until_dead return value")
+      m, "TrackUntilDead", "track_until_dead return type")
       .def_readonly("end_orb", &Bmad::TrackUntilDead::end_orb)
       .def_readonly("track", &Bmad::TrackUntilDead::track)
       .def("__len__", [](const Bmad::TrackUntilDead&) { return 2; })
@@ -2658,9 +2652,7 @@ void init_Bmad_routines_t(py::module& m) {
   py::class_<
       Bmad::TrackingRadMapSetup,
       std::unique_ptr<Bmad::TrackingRadMapSetup>>(
-      m,
-      "TrackingRadMapSetup",
-      "Fortran routine tracking_rad_map_setup return value")
+      m, "TrackingRadMapSetup", "tracking_rad_map_setup return type")
       .def_readonly("rad_map", &Bmad::TrackingRadMapSetup::rad_map)
       .def_readonly("err_flag", &Bmad::TrackingRadMapSetup::err_flag)
       .def("__len__", [](const Bmad::TrackingRadMapSetup&) { return 2; })
@@ -2882,9 +2874,7 @@ void init_Bmad_routines_t(py::module& m) {
   py::class_<
       Bmad::TransferMapFromSToS,
       std::unique_ptr<Bmad::TransferMapFromSToS>>(
-      m,
-      "TransferMapFromSToS",
-      "Fortran routine transfer_map_from_s_to_s return value")
+      m, "TransferMapFromSToS", "transfer_map_from_s_to_s return type")
       .def_readonly("ref_orb_out", &Bmad::TransferMapFromSToS::ref_orb_out)
       .def_readonly("err_flag", &Bmad::TransferMapFromSToS::err_flag)
       .def("__len__", [](const Bmad::TransferMapFromSToS&) { return 2; })
@@ -3076,7 +3066,7 @@ void init_Bmad_routines_t(py::module& m) {
       Truncated complex_taylor map.
   )""");
   py::class_<Bmad::Twiss1Propagate, std::unique_ptr<Bmad::Twiss1Propagate>>(
-      m, "Twiss1Propagate", "Fortran routine twiss1_propagate return value")
+      m, "Twiss1Propagate", "twiss1_propagate return type")
       .def_readonly("twiss2", &Bmad::Twiss1Propagate::twiss2)
       .def_readonly("err", &Bmad::Twiss1Propagate::err)
       .def("__len__", [](const Bmad::Twiss1Propagate&) { return 2; })
@@ -3114,7 +3104,7 @@ void init_Bmad_routines_t(py::module& m) {
       Set True if there is an error, false otherwise.
   )""");
   py::class_<PyTwiss3AtStart, std::unique_ptr<PyTwiss3AtStart>>(
-      m, "Twiss3AtStart", "Fortran routine twiss3_at_start return value")
+      m, "Twiss3AtStart", "twiss3_at_start return type")
       .def_readonly("tune3", &PyTwiss3AtStart::tune3)
       .def_readonly("err_flag", &PyTwiss3AtStart::err_flag)
       .def("__len__", [](const PyTwiss3AtStart&) { return 2; })
@@ -3176,7 +3166,7 @@ void init_Bmad_routines_t(py::module& m) {
   twiss3_at_start
   )""");
   py::class_<PyTwiss3Propagate1, std::unique_ptr<PyTwiss3Propagate1>>(
-      m, "Twiss3Propagate1", "Fortran routine twiss3_propagate1 return value")
+      m, "Twiss3Propagate1", "twiss3_propagate1 return type")
       .def_readonly("err_flag", &PyTwiss3Propagate1::err_flag)
       .def("__len__", [](const PyTwiss3Propagate1&) { return 1; })
       .def("__getitem__", [](const PyTwiss3Propagate1& s, int i) -> py::object {
@@ -3434,9 +3424,7 @@ void init_Bmad_routines_t(py::module& m) {
   py::class_<
       Bmad::TwissAndTrackFromSToS,
       std::unique_ptr<Bmad::TwissAndTrackFromSToS>>(
-      m,
-      "TwissAndTrackFromSToS",
-      "Fortran routine twiss_and_track_from_s_to_s return value")
+      m, "TwissAndTrackFromSToS", "twiss_and_track_from_s_to_s return type")
       .def_readonly("orbit_end", &Bmad::TwissAndTrackFromSToS::orbit_end)
       .def_readonly("ele_end", &Bmad::TwissAndTrackFromSToS::ele_end)
       .def_readonly("err", &Bmad::TwissAndTrackFromSToS::err)
@@ -3489,9 +3477,7 @@ void init_Bmad_routines_t(py::module& m) {
   py::class_<
       Bmad::TwissAndTrackIntraEle,
       std::unique_ptr<Bmad::TwissAndTrackIntraEle>>(
-      m,
-      "TwissAndTrackIntraEle",
-      "Fortran routine twiss_and_track_intra_ele return value")
+      m, "TwissAndTrackIntraEle", "twiss_and_track_intra_ele return type")
       .def_readonly("orbit_end", &Bmad::TwissAndTrackIntraEle::orbit_end)
       .def_readonly("err", &Bmad::TwissAndTrackIntraEle::err)
       .def("__len__", [](const Bmad::TwissAndTrackIntraEle&) { return 2; })
@@ -3560,7 +3546,7 @@ void init_Bmad_routines_t(py::module& m) {
       trancking instead of recomputing ele_end from scratch. This can save time.
   )""");
   py::class_<Bmad::TwissAtElement, std::unique_ptr<Bmad::TwissAtElement>>(
-      m, "TwissAtElement", "Fortran routine twiss_at_element return value")
+      m, "TwissAtElement", "twiss_at_element return type")
       .def_readonly("start", &Bmad::TwissAtElement::start)
       .def_readonly("end", &Bmad::TwissAtElement::end)
       .def_readonly("average", &Bmad::TwissAtElement::average)
@@ -3614,9 +3600,7 @@ void init_Bmad_routines_t(py::module& m) {
       If True (the default), print an error message If the 1-turn matrix is unstable.
   )""");
   py::class_<Bmad::TwissFromTracking, std::unique_ptr<Bmad::TwissFromTracking>>(
-      m,
-      "TwissFromTracking",
-      "Fortran routine twiss_from_tracking return value")
+      m, "TwissFromTracking", "twiss_from_tracking return type")
       .def_readonly("symp_err", &Bmad::TwissFromTracking::symp_err)
       .def_readonly("err_flag", &Bmad::TwissFromTracking::err_flag)
       .def("__len__", [](const Bmad::TwissFromTracking&) { return 2; })

@@ -61,7 +61,7 @@ PyDpcGivenDe python_dpc_given_de(
 
 void init_Bmad_routines_d(py::module& m) {
   py::class_<PyDampingMatrixD, std::unique_ptr<PyDampingMatrixD>>(
-      m, "DampingMatrixD", "Fortran routine damping_matrix_d return value")
+      m, "DampingMatrixD", "damping_matrix_d return type")
       .def_readonly("gamma", &PyDampingMatrixD::gamma)
       .def_readonly("g_tot", &PyDampingMatrixD::g_tot)
       .def_readonly("B0", &PyDampingMatrixD::B0)
@@ -153,9 +153,7 @@ void init_Bmad_routines_d(py::module& m) {
   py::class_<
       PyDefaultTrackingSpecies,
       std::unique_ptr<PyDefaultTrackingSpecies>>(
-      m,
-      "DefaultTrackingSpecies",
-      "Fortran routine default_tracking_species return value")
+      m, "DefaultTrackingSpecies", "default_tracking_species return type")
       .def_readonly("species", &PyDefaultTrackingSpecies::species)
       .def("__len__", [](const PyDefaultTrackingSpecies&) { return 1; })
       .def(
@@ -204,7 +202,7 @@ void init_Bmad_routines_d(py::module& m) {
       std::unique_ptr<PyDiffractionPlateOrMaskHitSpot>>(
       m,
       "DiffractionPlateOrMaskHitSpot",
-      "Fortran routine diffraction_plate_or_mask_hit_spot return value")
+      "diffraction_plate_or_mask_hit_spot return type")
       .def_readonly("ix_section", &PyDiffractionPlateOrMaskHitSpot::ix_section)
       .def("__len__", [](const PyDiffractionPlateOrMaskHitSpot&) { return 1; })
       .def(
@@ -231,7 +229,7 @@ void init_Bmad_routines_d(py::module& m) {
   ix_section : 
   )""");
   py::class_<PyDiffusionMatrixB, std::unique_ptr<PyDiffusionMatrixB>>(
-      m, "DiffusionMatrixB", "Fortran routine diffusion_matrix_b return value")
+      m, "DiffusionMatrixB", "diffusion_matrix_b return type")
       .def_readonly("gamma", &PyDiffusionMatrixB::gamma)
       .def_readonly("g_tot", &PyDiffusionMatrixB::g_tot)
       .def_readonly("species", &PyDiffusionMatrixB::species)
@@ -262,9 +260,7 @@ void init_Bmad_routines_d(py::module& m) {
   mat : 
   )""");
   py::class_<PyDistanceToAperture, std::unique_ptr<PyDistanceToAperture>>(
-      m,
-      "DistanceToAperture",
-      "Fortran routine distance_to_aperture return value")
+      m, "DistanceToAperture", "distance_to_aperture return type")
       .def_readonly("no_aperture_here", &PyDistanceToAperture::no_aperture_here)
       .def_readonly("dist", &PyDistanceToAperture::dist)
       .def("__len__", [](const PyDistanceToAperture&) { return 2; })
@@ -311,7 +307,7 @@ void init_Bmad_routines_d(py::module& m) {
       Set True if there is an error. False otherwise.
   )""");
   py::class_<PyDpcGivenDe, std::unique_ptr<PyDpcGivenDe>>(
-      m, "DpcGivenDe", "Fortran routine dpc_given_de return value")
+      m, "DpcGivenDe", "dpc_given_de return type")
       .def_readonly("pc_old", &PyDpcGivenDe::pc_old)
       .def_readonly("mass", &PyDpcGivenDe::mass)
       .def_readonly("dE", &PyDpcGivenDe::dE)

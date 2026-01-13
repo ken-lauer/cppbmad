@@ -84,7 +84,7 @@ void init_Bmad_routines_g(py::module& m) {
       std::unique_ptr<Bmad::GBendingStrengthFromEmField>>(
       m,
       "GBendingStrengthFromEmField",
-      "Fortran routine g_bending_strength_from_em_field return value")
+      "g_bending_strength_from_em_field return type")
       .def_readonly("g", &Bmad::GBendingStrengthFromEmField::g)
       .def_readonly("dg", &Bmad::GBendingStrengthFromEmField::dg)
       .def(
@@ -136,7 +136,7 @@ void init_Bmad_routines_g(py::module& m) {
       Lattice to integrate through.
   )""");
   py::class_<PyGammaRef, std::unique_ptr<PyGammaRef>>(
-      m, "GammaRef", "Fortran routine gamma_ref return value")
+      m, "GammaRef", "gamma_ref return type")
       .def_readonly("gamma", &PyGammaRef::gamma)
       .def("__len__", [](const PyGammaRef&) { return 1; })
       .def("__getitem__", [](const PyGammaRef& s, int i) -> py::object {
@@ -192,7 +192,7 @@ void init_Bmad_routines_g(py::module& m) {
       Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
   )""");
   py::class_<PyGenGradField, std::unique_ptr<PyGenGradField>>(
-      m, "GenGradField", "Fortran routine gen_grad_field return value")
+      m, "GenGradField", "gen_grad_field return type")
       .def_readonly("rho", &PyGenGradField::rho)
       .def_readonly("theta", &PyGenGradField::theta)
       .def("__len__", [](const PyGenGradField&) { return 2; })
@@ -244,7 +244,7 @@ void init_Bmad_routines_g(py::module& m) {
       Bunch length
   )""");
   py::class_<PyGetCalledFile, std::unique_ptr<PyGetCalledFile>>(
-      m, "GetCalledFile", "Fortran routine get_called_file return value")
+      m, "GetCalledFile", "get_called_file return type")
       .def_readonly("delim", &PyGetCalledFile::delim)
       .def_readonly("call_file", &PyGetCalledFile::call_file)
       .def_readonly("err", &PyGetCalledFile::err)
@@ -275,9 +275,7 @@ void init_Bmad_routines_g(py::module& m) {
   py::class_<
       Bmad::GetEmitFromSigmaMat,
       std::unique_ptr<Bmad::GetEmitFromSigmaMat>>(
-      m,
-      "GetEmitFromSigmaMat",
-      "Fortran routine get_emit_from_sigma_mat return value")
+      m, "GetEmitFromSigmaMat", "get_emit_from_sigma_mat return type")
       .def_readonly("normal", &Bmad::GetEmitFromSigmaMat::normal)
       .def_readonly("err_flag", &Bmad::GetEmitFromSigmaMat::err_flag)
       .def("__len__", [](const Bmad::GetEmitFromSigmaMat&) { return 2; })
@@ -367,7 +365,7 @@ void init_Bmad_routines_g(py::module& m) {
       Set True if there is an error. False otherwise.
   )""");
   py::class_<Bmad::GetSlaveList, std::unique_ptr<Bmad::GetSlaveList>>(
-      m, "GetSlaveList", "Fortran routine get_slave_list return value")
+      m, "GetSlaveList", "get_slave_list return type")
       .def_readonly("slaves", &Bmad::GetSlaveList::slaves)
       .def_readonly("n_slave", &Bmad::GetSlaveList::n_slave)
       .def("__len__", [](const Bmad::GetSlaveList&) { return 2; })
@@ -394,9 +392,7 @@ void init_Bmad_routines_g(py::module& m) {
       Number of slaves.
   )""");
   py::class_<PyGptFieldGridScaling, std::unique_ptr<PyGptFieldGridScaling>>(
-      m,
-      "GptFieldGridScaling",
-      "Fortran routine gpt_field_grid_scaling return value")
+      m, "GptFieldGridScaling", "gpt_field_grid_scaling return type")
       .def_readonly("dimensions", &PyGptFieldGridScaling::dimensions)
       .def_readonly("field_scale", &PyGptFieldGridScaling::field_scale)
       .def_readonly("ref_time", &PyGptFieldGridScaling::ref_time)
@@ -429,9 +425,7 @@ void init_Bmad_routines_g(py::module& m) {
   ref_time : 
   )""");
   py::class_<PyGptMaxFieldReference, std::unique_ptr<PyGptMaxFieldReference>>(
-      m,
-      "GptMaxFieldReference",
-      "Fortran routine gpt_max_field_reference return value")
+      m, "GptMaxFieldReference", "gpt_max_field_reference return type")
       .def_readonly("field_value", &PyGptMaxFieldReference::field_value)
       .def("__len__", [](const PyGptMaxFieldReference&) { return 1; })
       .def(
@@ -458,9 +452,7 @@ void init_Bmad_routines_g(py::module& m) {
   py::class_<
       Bmad::GptToParticleBunch,
       std::unique_ptr<Bmad::GptToParticleBunch>>(
-      m,
-      "GptToParticleBunch",
-      "Fortran routine gpt_to_particle_bunch return value")
+      m, "GptToParticleBunch", "gpt_to_particle_bunch return type")
       .def_readonly("bunch", &Bmad::GptToParticleBunch::bunch)
       .def_readonly("err_flag", &Bmad::GptToParticleBunch::err_flag)
       .def("__len__", [](const Bmad::GptToParticleBunch&) { return 2; })
@@ -500,9 +492,7 @@ void init_Bmad_routines_g(py::module& m) {
       Set True if there is an error. False otherwise.
   )""");
   py::class_<PyGradientShiftSrWake, std::unique_ptr<PyGradientShiftSrWake>>(
-      m,
-      "GradientShiftSrWake",
-      "Fortran routine gradient_shift_sr_wake return value")
+      m, "GradientShiftSrWake", "gradient_shift_sr_wake return type")
       .def_readonly("grad_shift", &PyGradientShiftSrWake::grad_shift)
       .def("__len__", [](const PyGradientShiftSrWake&) { return 1; })
       .def(

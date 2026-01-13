@@ -22,7 +22,7 @@ void init_SimUtils_routines_b(py::module& m) {
   py::class_<
       SimUtils::BicubicCmplxEval,
       std::unique_ptr<SimUtils::BicubicCmplxEval>>(
-      m, "BicubicCmplxEval", "Fortran routine bicubic_cmplx_eval return value")
+      m, "BicubicCmplxEval", "bicubic_cmplx_eval return type")
       .def_readonly("df_dx", &SimUtils::BicubicCmplxEval::df_dx)
       .def_readonly("df_dy", &SimUtils::BicubicCmplxEval::df_dy)
       .def_readonly("f_val", &SimUtils::BicubicCmplxEval::f_val)
@@ -98,7 +98,7 @@ void init_SimUtils_routines_b(py::module& m) {
       Index of bin x is in.
   )""");
   py::class_<PyBinXCenter, std::unique_ptr<PyBinXCenter>>(
-      m, "BinXCenter", "Fortran routine bin_x_center return value")
+      m, "BinXCenter", "bin_x_center return type")
       .def_readonly("x_center", &PyBinXCenter::x_center)
       .def_readonly("ix_bin", &PyBinXCenter::ix_bin)
       .def("__len__", [](const PyBinXCenter&) { return 2; })
@@ -135,7 +135,7 @@ void init_SimUtils_routines_b(py::module& m) {
   x_center
   )""");
   py::class_<PyBitSet, std::unique_ptr<PyBitSet>>(
-      m, "BitSet", "Fortran routine bit_set return value")
+      m, "BitSet", "bit_set return type")
       .def_readonly("word", &PyBitSet::word)
       .def("__len__", [](const PyBitSet&) { return 1; })
       .def("__getitem__", [](const PyBitSet& s, int i) -> py::object {
@@ -168,9 +168,7 @@ void init_SimUtils_routines_b(py::module& m) {
   py::class_<
       SimUtils::BracketIndexForSpline,
       std::unique_ptr<SimUtils::BracketIndexForSpline>>(
-      m,
-      "BracketIndexForSpline",
-      "Fortran routine bracket_index_for_spline return value")
+      m, "BracketIndexForSpline", "bracket_index_for_spline return type")
       .def_readonly("ix0", &SimUtils::BracketIndexForSpline::ix0)
       .def_readonly("ok", &SimUtils::BracketIndexForSpline::ok)
       .def("__len__", [](const SimUtils::BracketIndexForSpline&) { return 2; })

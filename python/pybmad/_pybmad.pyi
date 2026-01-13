@@ -8,7 +8,7 @@ import typing
 __all__: list[str] = ['A0', 'A0_ELEC', 'A21', 'A21_ELEC', 'ABS', 'ABSOLUTE', 'ABSOLUTE_TIME_TRACKING', 'AB_MULTIPOLE', 'ACCORDION_EDGE', 'ACOS', 'ACOSH', 'ACOTH', 'AC_KICKER', 'ALIAS', 'ALIVE', 'ALL', 'ALL_CONTROL_VAR', 'ALL_GROUPS', 'ALPHA_A', 'ALPHA_A0', 'ALPHA_A1', 'ALPHA_ANGLE', 'ALPHA_A_OUT', 'ALPHA_A_STORED', 'ALPHA_A_STRONG', 'ALPHA_B', 'ALPHA_B0', 'ALPHA_B1', 'ALPHA_B_OUT', 'ALPHA_B_STORED', 'ALPHA_B_STRONG', 'AMPERSAND', 'AMP_VS_TIME', 'ANCHOR_BEGINNING', 'ANCHOR_CENTER', 'ANCHOR_END', 'ANGLE', 'ANGLE_OUT_MAX', 'ANOMALOUS_MAG_MOMENT_DEUTERON', 'ANOMALOUS_MAG_MOMENT_ELECTRON', 'ANOMALOUS_MAG_MOMENT_HE3', 'ANOMALOUS_MAG_MOMENT_MUON', 'ANOMALOUS_MAG_MOMENT_NEUTRON', 'ANOMALOUS_MAG_MOMENT_PROTON', 'ANOMALOUS_MOMENT_OF', 'ANTIMUON', 'ANTIPARTICLE', 'ANTIPROTON', 'ANTI_ATOM', 'ANTI_DEUTERON', 'ANTI_HELION', 'ANTI_NEUTRON', 'ANTI_REF_PARTICLE', 'APERTURE', 'APERTURE_AT', 'APERTURE_TYPE', 'AREA_DENSITY', 'AREA_DENSITY_USED', 'ARG_COUNT', 'ARROW', 'ASCII', 'ASIN', 'ASINH', 'ATAN', 'ATAN2', 'ATANH', 'ATOMIC_MASS_UNIT', 'ATTRIBUTE_GROUP', 'AUTO', 'AUTOSCALE_AMPLITUDE', 'AUTOSCALE_PHASE', 'AUTO_APERTURE', 'AVERAGE', 'AbMultipoleKick', 'AbsoluteTimeTracking', 'AcKickerAmp', 'AcKickerFreqStruct', 'AcKickerFreqStructAlloc1D', 'AcKickerFreqStructArray1D', 'AcKickerStruct', 'AcKickerTimeStruct', 'AcKickerTimeStructAlloc1D', 'AcKickerTimeStructArray1D', 'ActionToXyz', 'AddSuperimpose', 'AddThisTaylorTerm', 'AdjustSuperSlaveNames', 'AllEncompassingStruct', 'AngleBetweenPolars', 'AnormalModeStruct', 'ApertureParamStruct', 'AperturePointStruct', 'AperturePointStructAlloc1D', 'AperturePointStructArray1D', 'ApertureScanStruct', 'ApertureScanStructAlloc1D', 'ApertureScanStructArray1D', 'Apfft', 'ApfftCorr', 'ApfftExt', 'ArrayReStr', 'Asinc', 'AssertEqual', 'AstraMaxFieldReference', 'AtThisEleEnd', 'AttributeFree1', 'AttributeFree2', 'AttributeFree3', 'AttributeIndex1', 'AttributeIndex2', 'B0', 'B0_ELEC', 'B1_GRADIENT', 'B21', 'B21_ELEC', 'B2_GRADIENT', 'B3_GRADIENT', 'BASIC_BEND', 'BBI_CONST', 'BEAMBEAM', 'BEGINNING_ELE', 'BENDS', 'BEND_TILT', 'BETA_A', 'BETA_A0', 'BETA_A1', 'BETA_A_OUT', 'BETA_A_STORED', 'BETA_A_STRONG', 'BETA_B', 'BETA_B0', 'BETA_B1', 'BETA_B_OUT', 'BETA_B_STORED', 'BETA_B_STRONG', 'BINARY', 'BLACK', 'BLANK', 'BLUE', 'BL_HKICK', 'BL_KICK', 'BL_VKICK', 'BMAD_INC_VERSION', 'BMAD_STANDARD', 'BOTH_ENDS', 'BRAGG_ANGLE', 'BRAGG_ANGLE_IN', 'BRAGG_ANGLE_OUT', 'BRAGG_DIFFRACTED', 'BS_FIELD', 'B_FIELD', 'B_FIELD_ERR', 'B_FIELD_TOT', 'B_MAX', 'B_PARAM', 'BbiKick', 'BbuBeamStruct', 'BbuHomVoltageCalc', 'BbuParamStruct', 'BbuSetup', 'BbuStageStruct', 'BbuStageStructAlloc1D', 'BbuStageStructArray1D', 'BbuTrackAStage', 'BbuTrackAll', 'BeamInitStruct', 'BeamStruct', 'BeamTilts', 'BendLengthHasBeenSet', 'BicubicCmplxCoefStruct', 'BicubicCmplxCoefStructArray3D', 'BicubicCmplxEval', 'BinXCenter', 'BitSet', 'BmadCommonStruct', 'BmadNormalFormStruct', 'BmadParser', 'BmadParser2', 'BookkeepingStateStruct', 'BoolAlloc1D', 'BoolArray1D', 'BoolArray2D', 'BoolArray3D', 'BpmPhaseCouplingStruct', 'BracketIndexForSpline', 'BranchName', 'BranchStruct', 'BranchStructAlloc1D', 'BranchStructArray1D', 'BunchParamsStruct', 'BunchParamsStructAlloc1D', 'BunchParamsStructArray1D', 'BunchStruct', 'BunchStructAlloc1D', 'BunchStructArray1D', 'BunchTrackStruct', 'BunchTrackStructAlloc1D', 'BunchTrackStructArray1D', 'C11_MAT0', 'C11_MAT1', 'C12_MAT0', 'C12_MAT1', 'C21_MAT0', 'C21_MAT1', 'C22_MAT0', 'C22_MAT1', 'CANNOT_FIND', 'CAPILLARY', 'CARTESIAN_MAP', 'CATHODE_FFT_3D', 'CAVITY_TYPE', 'CEILING', 'CENTER_PT', 'CHAMBER_WALL', 'CHARGE', 'CHARGE_OF', 'CHECK_SUM', 'CIRCLE_DOT_SYM', 'CIRCLE_FILLED_SYM', 'CIRCLE_PLUS_SYM', 'CIRCLE_SYM', 'CLASSICAL_RADIUS_FACTOR', 'CLEAR', 'CLOSED', 'CMAT_11', 'CMAT_11_STORED', 'CMAT_12', 'CMAT_12_STORED', 'CMAT_21', 'CMAT_21_STORED', 'CMAT_22', 'CMAT_22_STORED', 'COHERENT', 'COLON', 'COMMA', 'COMPOUND', 'CONSTANT', 'CONSTANT_REF_ENERGY', 'CONTINUOUS', 'CONTROL_GROUP', 'CONTROL_LORD', 'CONTROL_VAR', 'CONVERTER', 'COS', 'COSH', 'COT', 'COTH', 'COUPLER_ANGLE', 'COUPLER_AT', 'COUPLER_PHASE', 'COUPLER_STRENGTH', 'CRAB_CAVITY', 'CRAB_TILT', 'CRAB_X1', 'CRAB_X2', 'CRAB_X3', 'CRAB_X4', 'CRAB_X5', 'CREATE_JUMBO_SLAVE', 'CRITICAL_ANGLE', 'CRITICAL_ANGLE_FACTOR', 'CROSSING_TIME', 'CROSS_HATCHED', 'CRUNCH', 'CRUNCH_CALIB', 'CRYSTAL', 'CRYSTAL_TYPE', 'CSC', 'CSR_DS_STEP', 'CSR_METHOD', 'CUBIC', 'CURLY_BRACKETS', 'CURRENT', 'CURVATURE', 'CURVE', 'CUSTOM', 'CUSTOM_APERTURE', 'CUSTOM_ATTRIBUTE0', 'CUSTOM_ATTRIBUTE_NUM', 'CYAN', 'CYCLES', 'CYLINDRICAL_MAP', 'C_LIGHT', 'CalcBunchSigmaMatrixEtc', 'CalcEmittancesAndTwissFromSigmaMatrix', 'CalcFileNumber', 'CalcWallRadius', 'CartesianMapStruct', 'CartesianMapStructAlloc1D', 'CartesianMapStructArray1D', 'CartesianMapTerm1Struct', 'CartesianMapTerm1StructAlloc1D', 'CartesianMapTerm1StructArray1D', 'CartesianMapTermStruct', 'ChangeFileNumber', 'CheckForSuperimposeProblem', 'CheckIfSInBounds', 'CheckRfFreq', 'ChooseQuadsForSetTune', 'ChromCalc', 'ChromTune', 'ClassicalRadius', 'ClosedOrbitFromTracking', 'CmplxReStr', 'CoarseFrequencyEstimate', 'ComplexAlloc1D', 'ComplexArray1D', 'ComplexArray2D', 'ComplexArray3D', 'ComplexErrorFunction', 'ComplexTaylorCoef1', 'ComplexTaylorCoef2', 'ComplexTaylorStruct', 'ComplexTaylorStructAlloc1D', 'ComplexTaylorStructArray1D', 'ComplexTaylorTermStruct', 'ComplexTaylorTermStructAlloc1D', 'ComplexTaylorTermStructArray1D', 'ComplexTaylorToMat6', 'ControlRamp1Struct', 'ControlRamp1StructAlloc1D', 'ControlRamp1StructArray1D', 'ControlStruct', 'ControlStructAlloc1D', 'ControlStructArray1D', 'ControlVar1Struct', 'ControlVar1StructAlloc1D', 'ControlVar1StructArray1D', 'ControllerStruct', 'ConvertCoords', 'ConvertLocalCartesianToLocalCurvilinear', 'ConvertLocalCurvilinearToLocalCartesian', 'ConvertPcTo', 'ConvertTotalEnergyTo', 'ConverterDistributionParser', 'CoordArrayStruct', 'CoordArrayStructAlloc1D', 'CoordArrayStructArray1D', 'CoordStateName', 'CoordStruct', 'CoordStructAlloc1D', 'CoordStructArray1D', 'CoordsFloorToCurvilinear', 'CoordsFloorToLocalCurvilinear', 'CoordsRelativeToFloor', 'CosOne', 'Cosc', 'Coulombfun', 'CreateConcatenatedWall3d', 'CreateElementSlice', 'CreateGirder', 'CreatePlanarWigglerModel', 'CylindricalMapStruct', 'CylindricalMapStructAlloc1D', 'CylindricalMapStructArray1D', 'CylindricalMapTerm1Struct', 'CylindricalMapTerm1StructAlloc1D', 'CylindricalMapTerm1StructArray1D', 'CylindricalMapTermStruct', 'D1_THICKNESS', 'D2_THICKNESS', 'DALPHA_DPZ_A', 'DALPHA_DPZ_A_STORED', 'DALPHA_DPZ_B', 'DALPHA_DPZ_B_STORED', 'DARK_GREY', 'DARWIN_WIDTH_PI', 'DARWIN_WIDTH_SIGMA', 'DASHED', 'DASH_DOT', 'DASH_DOT3', 'DBETA_DPZ_A', 'DBETA_DPZ_A_STORED', 'DBETA_DPZ_B', 'DBETA_DPZ_B_STORED', 'DBRAGG_ANGLE_DE', 'DB_FIELD', 'DCMAT_DPZ_11_STORED', 'DCMAT_DPZ_12_STORED', 'DCMAT_DPZ_21_STORED', 'DCMAT_DPZ_22_STORED', 'DEFAULT_TRACKING_SPECIES', 'DEF_BMAD_COM', 'DEF_LINE', 'DEF_MAD_BEAM', 'DEF_PARAMETER', 'DEF_PARTICLE_START', 'DEF_PTC_COM', 'DEF_SPACE_CHARGE_COM', 'DEGREES', 'DELTA_E_REF', 'DELTA_REF_TIME', 'DELTA_REF_TIME_USER_SET', 'DELTA_TIME', 'DENSITY', 'DENSITY_USED', 'DESCRIP', 'DETAP_DPZ_X', 'DETAP_DPZ_X_STORED', 'DETAP_DPZ_Y', 'DETAP_DPZ_Y_STORED', 'DETA_DPZ_X', 'DETA_DPZ_X_STORED', 'DETA_DPZ_Y', 'DETA_DPZ_Y_STORED', 'DETA_DS_MASTER', 'DETECTOR', 'DEUTERON', 'DE_ETA_MEAS', 'DFLT_DRAW', 'DFLT_SET', 'DG', 'DIAMOND_SYM', 'DIFFRACTION_PLATE', 'DIRECTION', 'DISPATCH', 'DISTRIBUTION', 'DIVIDE', 'DOTTED', 'DOT_SYM', 'DOUBLE_COLON', 'DOWNSTREAM', 'DOWNSTREAM_COORD_DIR', 'DOWNSTREAM_END', 'DPHI_A', 'DPHI_B', 'DPHI_ORIGIN', 'DPSI_ORIGIN', 'DRIFT', 'DRIFT_KICK', 'DS_PHOTON_SLICE', 'DS_SLICE', 'DS_STEP', 'DTHETA_ORIGIN', 'DTHICKNESS_DX', 'DT_MAX', 'DX_ORIGIN', 'DY_ORIGIN', 'DZ_ORIGIN', 'D_SPACING', 'DampingMatrixD', 'DateAndTimeStamp', 'DefaultTrackingSpecies', 'Detab', 'DiffractionPlateOrMaskHitSpot', 'DiffusionMatrixB', 'DisplaySizeAndResolution', 'DistanceToAperture', 'DjBessel', 'DjbHash', 'DjbStrHash', 'DowncaseString', 'DpcGivenDe', 'E1', 'E1_GRADIENT', 'E2', 'E2_CENTER', 'E2_GRADIENT', 'E2_PROBABILITY', 'E3_GRADIENT', 'EAccelField', 'ECOLLIMATOR', 'ELECTRIC', 'ELECTRIC_DIPOLE_MOMENT', 'ELECTRON', 'ELEC_MULTIPOLE', 'ELE_ORIGIN', 'ELLIPTICAL', 'ELSEPARATOR', 'EMITTANCE_A', 'EMITTANCE_B', 'EMITTANCE_Z', 'EMIT_FRACTION', 'EM_FIELD', 'END_EDGE', 'END_STACK', 'ENERGY_DISTRIBUTION', 'ENERGY_PROBABILITY_CURVE', 'ENTRANCE_END', 'EPS_STEP_SCALE', 'EQUAL', 'ETAP_A', 'ETAP_B', 'ETAP_X', 'ETAP_X0', 'ETAP_X1', 'ETAP_X_OUT', 'ETAP_X_STORED', 'ETAP_Y', 'ETAP_Y0', 'ETAP_Y1', 'ETAP_Y_OUT', 'ETAP_Y_STORED', 'ETA_A', 'ETA_B', 'ETA_X', 'ETA_X0', 'ETA_X1', 'ETA_X_OUT', 'ETA_X_STORED', 'ETA_Y', 'ETA_Y0', 'ETA_Y1', 'ETA_Y_OUT', 'ETA_Y_STORED', 'ETA_Z', 'EXACT_MISALIGN', 'EXACT_MODEL', 'EXACT_MULTIPOLES', 'EXIT_END', 'EXP', 'E_CENTER', 'E_CENTER_RELATIVE_TO_REF', 'E_CHARGE', 'E_FIELD', 'E_FIELD_X', 'E_FIELD_Y', 'E_GUN', 'E_LOSS', 'E_MASS', 'E_PHOTON', 'E_TOT', 'E_TOT_OFFSET', 'E_TOT_REF_INIT', 'E_TOT_SET', 'E_TOT_START', 'E_TOT_STRONG', 'EigenDecomp6mat', 'EleAttribute', 'EleFullName', 'EleHasConstantDsDtRef', 'EleHasNonzeroKick', 'EleHasNonzeroOffset', 'EleKey', 'EleLocName', 'EleMisalignmentLSCalc', 'EleNametableIndex', 'ElePointerStruct', 'ElePointerStructAlloc1D', 'ElePointerStructArray1D', 'EleRfStepIndex', 'EleStruct', 'EleStructAlloc1D', 'EleStructArray1D', 'EleToPtcMagneticBnAn', 'EleToTaylor', 'EleUniqueName', 'EleValueHasChanged', 'ElecMultipoleField', 'ElementAtSBranch', 'ElementAtSLat', 'EllipseBeamInitStruct', 'EllipseBeamInitStructAlloc1D', 'EllipseBeamInitStructArray1D', 'EmFieldCalc', 'EmFieldDerivatives', 'EmFieldStruct', 'EmFieldStructAlloc1D', 'EmFieldStructArray1D', 'EmTaylorStruct', 'EmTaylorStructAlloc1D', 'EmTaylorStructArray1D', 'EmTaylorTermStruct', 'EmTaylorTermStructAlloc1D', 'EmTaylorTermStructArray1D', 'Emit6d', 'EnteringElement', 'EnvelopeRadintsIbs', 'EqAcKicker', 'EqAcKickerFreq', 'EqAcKickerTime', 'EqAnormalMode', 'EqApertureParam', 'EqAperturePoint', 'EqApertureScan', 'EqBeam', 'EqBeamInit', 'EqBmadCommon', 'EqBookkeepingState', 'EqBpmPhaseCoupling', 'EqBranch', 'EqBunch', 'EqBunchParams', 'EqCartesianMap', 'EqCartesianMapTerm', 'EqCartesianMapTerm1', 'EqComplexTaylor', 'EqComplexTaylorTerm', 'EqControl', 'EqControlRamp1', 'EqControlVar1', 'EqController', 'EqCoord', 'EqCoordArray', 'EqCylindricalMap', 'EqCylindricalMapTerm', 'EqCylindricalMapTerm1', 'EqEle', 'EqEllipseBeamInit', 'EqEmField', 'EqEmTaylor', 'EqEmTaylorTerm', 'EqExpressionAtom', 'EqFloorPosition', 'EqGenGrad1', 'EqGenGradMap', 'EqGridBeamInit', 'EqGridField', 'EqGridFieldPt', 'EqGridFieldPt1', 'EqHighEnergySpaceCharge', 'EqInterval1Coef', 'EqKvBeamInit', 'EqLat', 'EqLatEleLoc', 'EqLatParam', 'EqLinacNormalMode', 'EqMode3', 'EqModeInfo', 'EqNormalModes', 'EqPhotonElement', 'EqPhotonMaterial', 'EqPhotonReflectSurface', 'EqPhotonReflectTable', 'EqPhotonTarget', 'EqPixelDetec', 'EqPixelPt', 'EqPreTracker', 'EqRadInt1', 'EqRadIntAllEle', 'EqRadIntBranch', 'EqRadMap', 'EqRadMapEle', 'EqRamperLord', 'EqSpaceChargeCommon', 'EqSpinPolar', 'EqSpline', 'EqStrongBeam', 'EqSurfaceCurvature', 'EqSurfaceDisplacement', 'EqSurfaceDisplacementPt', 'EqSurfaceHMisalign', 'EqSurfaceHMisalignPt', 'EqSurfaceSegmented', 'EqSurfaceSegmentedPt', 'EqTargetPoint', 'EqTaylor', 'EqTaylorTerm', 'EqTrack', 'EqTrackPoint', 'EqTwiss', 'EqWake', 'EqWakeLr', 'EqWakeLrMode', 'EqWakeSr', 'EqWakeSrMode', 'EqWakeSrZLong', 'EqWall3d', 'EqWall3dSection', 'EqWall3dVertex', 'EqXyDisp', 'EqualSignHere', 'EquivalentTaylorAttributes', 'ErrExit', 'Etdiv', 'EvaluateArrayIndex', 'EvaluateLogical', 'ExpectOneOf', 'ExpectThis', 'ExpressionAtomStruct', 'ExpressionAtomStructAlloc1D', 'ExpressionAtomStructArray1D', 'ExpressionStackValue', 'ExpressionStringToStack', 'ExpressionStringToTree', 'ExpressionTreeStruct', 'ExpressionTreeStructAlloc1D', 'ExpressionTreeStructArray1D', 'ExpressionValue', 'FACTORIAL', 'FALSE_', 'FALSE_INT', 'FAMILY_QU', 'FAMILY_SQ', 'FAMILY_X', 'FAMILY_Y', 'FB1', 'FB2', 'FCharArray1D', 'FEEDBACK', 'FFT_3D', 'FIDUCIAL', 'FIDUCIAL_PT', 'FIELDMAP', 'FIELD_AUTOSCALE', 'FIELD_CALC', 'FIELD_LORD', 'FIELD_MASTER', 'FIELD_OVERLAPS', 'FIELD_SCALE_FACTOR', 'FIELD_X', 'FIELD_Y', 'FILLED_ARROW_HEAD', 'FINAL_CHARGE', 'FINE_STRUCTURE_CONSTANT', 'FINT', 'FINTX', 'FIRST_PASS', 'FIRST_TRACK_EDGE', 'FIXED_STEP_RUNGE_KUTTA', 'FIXED_STEP_TIME_RUNGE_KUTTA', 'FIXER', 'FLEXIBLE', 'FLOOR', 'FLOOR_POSITION_GROUP', 'FLOOR_SHIFT', 'FOCAL_STRENGTH', 'FOIL', 'FORK', 'FORWARD_DIFFRACTED', 'FOURPI', 'FQ1', 'FQ2', 'FREE', 'FREQUENCIES', 'FRINGE_AT', 'FRINGE_TYPE', 'FULL', 'FUNCTION', 'FUNC_PARENS', 'F_FACTOR', 'Factorial', 'FileDirectorizer', 'FileGet', 'FileGetOpen', 'FileSuffixer', 'FindElementEnds', 'FindLocationInt', 'FindLocationLogic', 'FindLocationReal', 'FindMatchingFieldmap', 'Fixedwindowls', 'FloorAnglesToWMat', 'FloorPositionStruct', 'FloorWMatToAngles', 'FormDigestedBmadFileName', 'FourierAmplitude', 'FringeHere', 'G', 'GANG', 'GAP', 'GAUSSIAN', 'GBendingStrengthFromEmField', 'GEN_GRAD_MAP', 'GEOMETRY', 'GIRDER', 'GIRDER_LORD', 'GKICKER', 'GOVERNOR', 'GRADIENT', 'GRADIENT_ERR', 'GRADIENT_TOT', 'GRAZE_ANGLE', 'GRAZE_ANGLE_IN', 'GRAZE_ANGLE_OUT', 'GREEN', 'GRID_FIELD', 'GROUP', 'GROUP_LORD', 'G_ERR', 'G_MAX', 'G_TOT', 'GammaRef', 'GenCompleteElliptic', 'GenGrad1Struct', 'GenGrad1StructAlloc1D', 'GenGrad1StructArray1D', 'GenGradField', 'GenGradMapStruct', 'GenGradMapStructAlloc1D', 'GenGradMapStructArray1D', 'GetCalledFile', 'GetEmitFromSigmaMat', 'GetFileNumber', 'GetFileTimeStamp', 'GetSlaveList', 'GptFieldGridScaling', 'GptMaxFieldReference', 'GptToParticleBunch', 'GradientShiftSrWake', 'GridBeamInitStruct', 'GridBeamInitStructAlloc1D', 'GridBeamInitStructArray1D', 'GridFieldPt1Struct', 'GridFieldPt1StructArray3D', 'GridFieldPtStruct', 'GridFieldStruct', 'GridFieldStructAlloc1D', 'GridFieldStructArray1D', 'H1', 'H2', 'HARD_EDGE_ONLY', 'HARMON', 'HARMON_MASTER', 'HATCHED', 'HDF5', 'HELICAL_MODEL', 'HELION', 'HGAP', 'HGAPX', 'HIGHLAND', 'HIGH_ENERGY_SPACE_CHARGE_ON', 'HKICK', 'HKICKER', 'HORIZONTALLY_PURE', 'HYBRID', 'HYPER_X', 'HYPER_XY', 'HYPER_Y', 'H_BAR_PLANCK', 'H_DISPLACE', 'H_PLANCK', 'Hanhan', 'HasAttribute', 'Hdf5WriteBeam', 'Hdf5WriteGridField', 'HighEnergySpaceChargeStruct', 'HomVoltage', 'IBessel', 'IBesselExtended', 'IDENTITY', 'IMPACTT', 'INCLUDE_KICKS', 'INCOHERENT', 'INHERIT_FROM_FORK', 'INIT_NEEDED', 'INPUT_ELE', 'INSIDE', 'INSTRUMENT', 'INT', 'INTEGRATOR_ORDER', 'INTERPOLATION', 'INT_GARBAGE', 'INVALID', 'INVALID_NAME', 'IN_BETWEEN', 'IN_STOP_BAND', 'IS_INTEGER', 'IS_LOGICAL', 'IS_MOSAIC', 'IS_ON', 'IS_REAL', 'IS_STRING', 'IS_STRUCT', 'IS_SWITCH', 'IX_BRANCH', 'IX_FIXER', 'IX_SLICE_SLAVE', 'IX_TO_BRANCH', 'IX_TO_ELEMENT', 'IbsMatrixC', 'Igfcoulombfun', 'Igfexfun', 'Igfeyfun', 'Igfezfun', 'IncrementFileNumber', 'IndexNocase', 'InitAttributeName1', 'InitBeamDistribution', 'InitBunchDistribution', 'InitPhotonIntegProb', 'InitSurfaceSegment', 'Int8Alloc1D', 'Int8Array1D', 'IntAlloc1D', 'IntArray1D', 'IntArray2D', 'IntArray3D', 'IntStr', 'IntegrandBase', 'IntegrateMax', 'IntegrateMin', 'IntegrationTimerEle', 'InterpolatedFft', 'InterpolatedFftGsl', 'Interval1CoefStruct', 'Interval1CoefStructAlloc1D', 'Interval1CoefStructArray1D', 'IsAlphabetic', 'IsDecreasingSequence', 'IsIncreasingSequence', 'IsInteger', 'IsLogical', 'IsReal', 'JBessel', 'K0L', 'K0SL', 'K1', 'K1X', 'K1Y', 'K2', 'K21L', 'K21SL', 'K3', 'KICK', 'KICK0', 'KICKER', 'KS', 'KX', 'KeyNameToKeyIndex', 'KickVectorCalc', 'KnotInterpolate', 'KnotsToString', 'KvBeamInitStruct', 'L', 'LATTICE', 'LATTICE_TYPE', 'LB_SUBATOMIC', 'LCAVITY', 'LEADING', 'LENS', 'LIGHT_GREEN', 'LIGHT_GREY', 'LINEAR', 'LINEAR_EDGE', 'LIVE_BRANCH', 'LOG', 'LONGITUDINAL_MODE', 'LORD_DEFINED', 'LORD_PAD1', 'LORD_PAD2', 'LOST', 'LOST_NEG_X', 'LOST_NEG_X_APERTURE', 'LOST_NEG_Y', 'LOST_NEG_Y_APERTURE', 'LOST_POS_X', 'LOST_POS_X_APERTURE', 'LOST_POS_Y', 'LOST_POS_Y_APERTURE', 'LOST_PZ', 'LOST_PZ_APERTURE', 'LOST_Z', 'LOST_Z_APERTURE', 'LR_FREQ_SPREAD', 'LR_SELF_WAKE_ON', 'LR_WAKE', 'LR_WAKE_FILE', 'LYNCH_DAHL', 'L_ACTIVE', 'L_CHORD', 'L_FUNC_PARENS', 'L_PARENS', 'L_PERIOD', 'L_RECTANGLE', 'L_SAGITTA', 'L_SOFT_EDGE', 'Lafun', 'LatEleLocStruct', 'LatEleLocStructAlloc1D', 'LatEleLocStructArray1D', 'LatEleLocator', 'LatEleOrder1Struct', 'LatEleOrder1StructAlloc1D', 'LatEleOrder1StructArray1D', 'LatEleOrderArrayStruct', 'LatEleOrderArrayStructAlloc1D', 'LatEleOrderArrayStructArray1D', 'LatEleOrderStruct', 'LatParamStruct', 'LatStruct', 'LatStructAlloc1D', 'LatStructArray1D', 'LinacNormalModeStruct', 'LinearCoef', 'LinearFit', 'LoadParseLine', 'LogicStr', 'LogicalToPython', 'LordEdgeAligned', 'LowEnergyZCorrection', 'MACHINE', 'MAD', 'MAGENTA', 'MAGNETIC', 'MAGNUS', 'MARKER', 'MASK', 'MASK_PLATE', 'MASS_OF', 'MAT6_CALC_METHOD', 'MAT6_GROUP', 'MATCH', 'MATCH_ORBIT', 'MATCH_TWISS', 'MATERIAL_TYPE', 'MATRIX', 'MATRIX_KICK', 'MAX', 'MAX_FRINGE_ORDER', 'MAYBE', 'MEAN_EXCITATION_ENERGY', 'MIN', 'MINOR_SLAVE', 'MINUS', 'MIRROR', 'MIXED', 'MODE', 'MODE_FLIP', 'MODE_FLIP0', 'MODE_FLIP1', 'MODE_FLIP_STORED', 'MODULO', 'MONITOR', 'MOSAIC_ANGLE_RMS_IN_PLANE', 'MOSAIC_ANGLE_RMS_OUT_PLANE', 'MOSAIC_DIFFRACTION_NUM', 'MOSAIC_THICKNESS', 'MOVING_FORWARD', 'MULTILAYER_MIRROR', 'MULTIPASS_LORD', 'MULTIPASS_REF_ENERGY', 'MULTIPASS_SLAVE', 'MULTIPOLE', 'MULTIPOLES_ON', 'MULTIPOLE_SOURCE', 'MULTIPOLE_SYMMETRY', 'MUON', 'MU_0_VAC', 'M_DEUTERON', 'M_ELECTRON', 'M_HELION', 'M_MUON', 'M_NEUTRON', 'M_PION_0', 'M_PION_CHARGED', 'M_PROTON', 'MadEnergyStruct', 'MadMapStruct', 'MadTmfoc', 'MakeGMats', 'MakeHvbp', 'MakeLegalComment', 'MakeMadMap', 'MakeMat6', 'MakeMat6Bmad', 'MakeMat6BmadPhoton', 'MakeMat6Taylor', 'MakeMat6Tracking', 'MakeN', 'MakePbrh', 'MakeSmatFromAbc', 'MakeVMats', 'MakeupControlSlave', 'MakeupGroupLord', 'MakeupMultipassSlave', 'MakeupSuperSlave', 'MasterParameterValue', 'Mat4Multipole', 'MatSympDecouple', 'MatchEleToMat6', 'MatchReg', 'MatchWild', 'MaximizeProjection', 'Mexp', 'MilliSleep', 'Mode3Struct', 'ModeInfoStruct', 'MomentumCompaction', 'MultiTurnTrackingAnalysis', 'Multipole1AbToKt', 'Multipole1KtToAb', 'MultipoleAbToKt', 'MultipoleEleToAb', 'MultipoleEleToKt', 'MultipoleKtToAb', 'Mytan', 'NAVY_BLUE', 'NBinsAutomatic', 'NChooseK', 'NEUTRON', 'NEW_BRANCH', 'NINT', 'NO', 'NOISE', 'NONE', 'NONE_PT', 'NON_SYMPLECTIC', 'NORMAL', 'NOT_A_LORD', 'NOT_SET', 'NOWHERE', 'NO_APERTURE', 'NO_CLOSED_ORBIT', 'NO_COMPLETE_ORBIT', 'NO_DELIM', 'NO_END', 'NO_END_MARKER', 'NO_FIELD', 'NO_FILL', 'NO_MISALIGNMENT', 'NULL_ELE', 'NUMERIC', 'NUM_ELE_ATTRIB', 'NUM_ELE_ATTRIB_EXTENDED', 'NUM_STEPS', 'N_AVOGADRO', 'N_CELL', 'N_KEY', 'N_PART', 'N_PARTICLE', 'N_PERIOD', 'N_PLANE', 'N_POLE_MAXX', 'N_RF_STEPS', 'N_SAMPLE', 'N_SLICE', 'N_SLICE_SPLINE', 'N_VAR_MAX', 'Naff', 'NametableAdd', 'NametableBracketIndexx', 'NametableChange1', 'NametableInit', 'NametableRemove', 'NametableStruct', 'NormalFormComplexTaylors', 'NormalFormTaylors', 'NormalMode3Calc', 'NormalModesStruct', 'NumFieldEles', 'NumLords', 'OCTUPOLE', 'OFF', 'OFFSET_MOVES_APERTURE', 'OFF_AND_SAVE', 'OK', 'OLD_ASCII', 'OLD_CONTROL_VAR', 'OLD_CONTROL_VAR_OFFSET', 'OLD_INTEGRATOR', 'ON', 'ONE_DIM', 'ONE_FILE', 'OPAL', 'OPAQUE', 'OPEN', 'ORANGE', 'ORIGIN_ELE', 'ORIGIN_ELE_REF_PT', 'OSC_AMPLITUDE', 'OUTLINE_ARROW_HEAD', 'OUTPUT_ELE', 'OUTSIDE', 'OVERLAY', 'OVERLAY_LORD', 'OdeintBmad', 'OdeintBmadTime', 'OffsetParticle', 'OpenBinaryFile', 'OrbitAmplitudeCalc', 'OrbitTooLarge', 'OrderEvecsByNSimilarity', 'OrdinalStr', 'OscGetgrnpipe', 'OscWriteRectpipeGrn', 'P0C', 'P0C_REF_INIT', 'P0C_SET', 'P0C_START', 'P88', 'P89', 'P90', 'PARENS', 'PARTICLE', 'PATCH', 'PATCH_PROBLEM', 'PC_OUT_MAX', 'PC_OUT_MIN', 'PC_STRONG', 'PENDELLOSUNG_PERIOD_PI', 'PENDELLOSUNG_PERIOD_SIGMA', 'PHASE_TROMBONE', 'PHASE_X', 'PHASE_Y', 'PHI0', 'PHI0_AUTOSCALE', 'PHI0_ERR', 'PHI0_MAX', 'PHI0_MULTIPASS', 'PHI_A', 'PHI_A_STORED', 'PHI_B', 'PHI_B_STORED', 'PHI_POSITION', 'PHOTON', 'PHOTON_FORK', 'PHOTON_INIT', 'PHOTON_TYPE', 'PHYSICAL_SOURCE', 'PI', 'PICKUP', 'PION_0', 'PION_MINUS', 'PION_PLUS', 'PIPE', 'PIXEL', 'PLANAR_MODEL', 'PLUS', 'PLUS_SYM', 'POLARITY', 'POLARIZED', 'POSITRON', 'POWER', 'PRE_BORN', 'PRINT_PAGE_LONG_LEN', 'PRINT_PAGE_SHORT_LEN', 'PROTON', 'PROVISIONAL', 'PSI_ANGLE', 'PSI_POSITION', 'PTC_CANONICAL_COORDS', 'PTC_FIELD_GEOMETRY', 'PTC_FRINGE_GEOMETRY', 'PTC_INTEGRATION_TYPE', 'PTC_STANDARD', 'PURPLE', 'PX', 'PX0', 'PX1', 'PX_APERTURE_CENTER', 'PX_APERTURE_WIDTH2', 'PX_KICK', 'PX_REF', 'PX_STORED', 'PY', 'PY0', 'PY1', 'PY_APERTURE_CENTER', 'PY_APERTURE_WIDTH2', 'PY_KICK', 'PY_REF', 'PY_STORED', 'PZ', 'PZ0', 'PZ1', 'PZ_APERTURE_CENTER', 'PZ_APERTURE_WIDTH2', 'PZ_KICK', 'PZ_REF', 'PZ_STORED', 'P_MASS', 'ParseCartesianMap', 'ParseCylindricalMap', 'ParseFortranFormat', 'ParseGenGradMap', 'ParseGridField', 'ParseIntegerList', 'ParseIntegerList2', 'ParseRealList', 'ParseRealList2', 'ParserAddConstant', 'ParserCallCheck', 'ParserFastComplexRead', 'ParserFastIntegerRead', 'ParserFastRealRead', 'ParserFileStack', 'ParserGetInteger', 'ParserGetLogical', 'ParserPrintLine', 'ParserReadLrWake', 'ParserReadSrWake', 'ParticleIsMovingBackwards', 'ParticleIsMovingForward', 'ParticleRfTime', 'PatchFlipsPropagationDirection', 'PatchLength', 'PhotonAbsorptionAndPhaseShift', 'PhotonAddToDetectorStatistics', 'PhotonElementStruct', 'PhotonMaterialStruct', 'PhotonReflectSurfaceStruct', 'PhotonReflectTableStruct', 'PhotonReflectTableStructAlloc1D', 'PhotonReflectTableStructArray1D', 'PhotonReflection', 'PhotonReflectivity', 'PhotonTargetCornerCalc', 'PhotonTargetStruct', 'PhysicalEleEnd', 'PixelDetecStruct', 'PixelPtStruct', 'PixelPtStructArray2D', 'PointerToElementAtS', 'PointerToLord', 'PointerToMultipassLord', 'PointerToSlave', 'PointerToSuperLord', 'PointerToSurfaceDisplacementPt', 'PointerToSurfaceSegmentedPt', 'PointerToWall3d', 'PolyEval', 'PreTrackerStruct', 'ProbabilityFunct', 'Projdd', 'ProjectEmitToXyz', 'PtcEmitCalc', 'PtcNormalFormStruct', 'PtcSpinCalc', 'PtcTrackAll', 'QUADRUPOLE', 'QUAD_TILT', 'QpAxisStruct', 'QpLegendStruct', 'QpLineStruct', 'QpPointStruct', 'QpRectStruct', 'QpSymbolStruct', 'QuatToAxisAngle', 'QueryString', 'Quote', 'R0_ELEC', 'R0_MAG', 'RADIANS', 'RADIANS_OVER_2PI', 'RADIATION_LENGTH', 'RADIATION_LENGTH_USED', 'RADIUS', 'RAD_INT_GROUP', 'RAMPER', 'RAMPER_LORD', 'RAN', 'RAN_GAUSS', 'RAN_SEED', 'RBEND', 'RCOLLIMATOR', 'REAL_GARBAGE', 'RECALC', 'RECTANGULAR', 'RED', 'REDDISH_PURPLE', 'RED_CROSS_SYM', 'REFERENCE', 'REFER_TO_LORDS', 'REFLECTION', 'REFLECTIVITY_TABLE', 'REF_CAP_GAMMA', 'REF_COORDS', 'REF_ENERGY_GROUP', 'REF_ORBIT', 'REF_ORBIT_FOLLOWS', 'REF_ORIGIN', 'REF_PARTICLE', 'REF_SPECIES', 'REF_TILT', 'REF_TILT_TOT', 'REF_TIME', 'REF_TIME_START', 'REF_WAVELENGTH', 'RELATIVE', 'REPETITION_FREQUENCY', 'RESTORE_STATE', 'RFCAVITY', 'RF_BEND', 'RF_FREQUENCY', 'RF_WAVELENGTH', 'RHO', 'RIPKEN_KICK', 'RMS', 'ROLL', 'ROLL_TOT', 'ROOT', 'ROTATIONALLY_SYMMETRIC_RZ', 'RUNGE_KUTTA', 'R_E', 'R_P', 'R_PARENS', 'R_SOLENOID', 'Rad1DampAndStocMats', 'RadDampAndStocMats', 'RadGIntegrals', 'RadInt1Struct', 'RadInt1StructAlloc1D', 'RadInt1StructArray1D', 'RadIntAllEleStruct', 'RadIntBranchStruct', 'RadIntBranchStructAlloc1D', 'RadIntBranchStructArray1D', 'RadMapEleStruct', 'RadMapStruct', 'RadiationIntegrals', 'RamperLordStruct', 'RamperLordStructAlloc1D', 'RamperLordStructArray1D', 'RamperValue', 'RanGaussConverter', 'RanGaussScalar', 'RanUniformScalar', 'RandomStateStruct', 'Rchomp', 'ReAllocateCDouble', 'ReAllocateWall3dSectionArray', 'ReAllocateWall3dVertexArray', 'ReStrQp', 'ReStrRp', 'ReadBeamAscii', 'ReadBeamFile', 'Real16Alloc1D', 'Real16Array1D', 'RealAlloc1D', 'RealArray1D', 'RealArray2D', 'RealArray3D', 'RealNumFortranFormat', 'RealPath', 'RealStr', 'RealToString', 'ReallocateBeam', 'RelTrackingChargeToMass', 'RelativeModeFlip', 'ReleaseRadIntCache', 'RemoveConstantTaylor', 'ResonanceHStruct', 'ResonanceHStructAlloc1D', 'ResonanceHStructArray1D', 'RfEleStruct', 'RfIsOn', 'RfRefTimeOffset', 'RfStairStepStruct', 'RfStairStepStructAlloc1D', 'RfStairStepStructArray1D', 'Rfun', 'RkAdaptiveTimeStep', 'RkTimeStep1', 'RmsValue', 'Rotate3', 'RotateFieldZx', 'RunTimer', 'SAD_FULL', 'SAD_MULT', 'SAMPLE', 'SAVE_STATE', 'SBEND', 'SBodyCalc', 'SCALE_FIELD_TO_ONE', 'SCALE_MULTIPOLES', 'SCATTER_METHOD', 'SCATTER_TEST', 'SEC', 'SECOND_TRACK_EDGE', 'SECTOR', 'SEXTUPOLE', 'SHIFTED_TO_RELATIVE', 'SHORT', 'SIGN', 'SIG_E', 'SIG_E2', 'SIG_PZ', 'SIG_VX', 'SIG_VY', 'SIG_X', 'SIG_Y', 'SIG_Z', 'SIN', 'SINC', 'SINH', 'SLAVE', 'SLICE', 'SLICE_SLAVE', 'SMALL_REL_CHANGE', 'SOFT_EDGE', 'SOFT_EDGE_ONLY', 'SOLENOID', 'SOLID', 'SOLID_FILL', 'SOL_QUAD', 'SPACE_CHARGE_METHOD', 'SPATIAL_DISTRIBUTION', 'SPECIES', 'SPECIES_CONST', 'SPECIES_OUT', 'SPECIES_STRONG', 'SPHERICAL', 'SPIN_DN_DPZ_X', 'SPIN_DN_DPZ_Y', 'SPIN_DN_DPZ_Z', 'SPIN_FRINGE_ON', 'SPIN_INTEGRATION', 'SPIN_TRACKING_METHOD', 'SPIN_X', 'SPIN_X_STORED', 'SPIN_Y', 'SPIN_Y_STORED', 'SPIN_Z', 'SPIN_Z_STORED', 'SPLIT_ID', 'SPRINT', 'SQRT', 'SQRT_2', 'SQRT_3', 'SQUARE_BRACKETS', 'SQUARE_CONCAVE_SYM', 'SQUARE_FILLED_SYM', 'SQUARE_SYM', 'SR_WAKE', 'SR_WAKE_FILE', 'STALE', 'STANDARD', 'STANDING_WAVE', 'STAR5_FILLED_SYM', 'STAR5_SYM', 'START_EDGE', 'START_END', 'STAR_OF_DAVID_SYM', 'STEADY_STATE_3D', 'STRAIGHT', 'SUM', 'SUPERIMPOSE', 'SUPER_LORD', 'SUPER_OFFSET', 'SUPER_OK', 'SUPER_SLAVE', 'SURFACE', 'SYMMETRY', 'SYMPLECTIFY', 'SYMP_LIE_BMAD', 'SYMP_LIE_PTC', 'S_ABORT', 'S_AND_FLOOR_POSITION_GROUP', 'S_BLANK', 'S_DINFO', 'S_DWARN', 'S_ERROR', 'S_FATAL', 'S_IMPORTANT', 'S_INFO', 'S_LONG', 'S_NOOUTPUT', 'S_PLANE', 'S_POSITION', 'S_POSITION_GROUP', 'S_SUCCESS', 'S_TWISS_REF', 'S_WARN', 'ScAdaptiveStep', 'ScStep', 'SetEleAttribute', 'SetEleStatusStale', 'SetFlagsForChangedIntegerAttribute', 'SetFlagsForChangedLogicalAttribute', 'SetFlagsForChangedRealAttribute', 'SetFringeOnOff', 'SetParameterInt', 'SetParameterLogic', 'SetParameterReal', 'SetPtcQuiet', 'SetPtcVerbose', 'SetTune', 'SetTune3d', 'SignificantDifference', 'Sinc', 'Sincc', 'SinhxX', 'SkipEleBlender', 'SkipHeader', 'SolQuadMat6Calc', 'SolvePsiFixedSteps', 'SpaceChargeCommonStruct', 'SpinAxisStruct', 'SpinMat8ResonanceStrengths', 'SpinMatToEigen', 'SpinOmega', 'SpinOrbitMap1Struct', 'SpinOrbitMap1StructAlloc1D', 'SpinOrbitMap1StructArray1D', 'SpinPolarStruct', 'SpinQuatResonanceStrengths', 'SplineAkimaInterpolate', 'SplineEvaluate', 'SplineStruct', 'SplineStructAlloc1D', 'SplineStructArray1D', 'SplitLat', 'SqrtAlpha', 'SqrtOne', 'StrCount', 'StrFirstInSet', 'StrFirstNotInSet', 'StrLastInSet', 'StrLastNotInSet', 'StrMatchWild', 'StrSubstitute', 'StreamEleEnd', 'StringToInt', 'StringToReal', 'StringTrim', 'StringTrim2', 'StrongBeamSigmaCalc', 'StrongBeamStrength', 'StrongBeamStruct', 'SummationRdtStruct', 'SummationRdtStructAlloc1D', 'SummationRdtStructArray1D', 'SuperBicubicInterpolation', 'SuperPolint', 'SurfaceCurvatureStruct', 'SurfaceDisplacementPtStruct', 'SurfaceDisplacementPtStructArray2D', 'SurfaceDisplacementStruct', 'SurfaceGridDisplacement', 'SurfaceHMisalignPtStruct', 'SurfaceHMisalignPtStructArray2D', 'SurfaceHMisalignStruct', 'SurfaceSegmentedPtStruct', 'SurfaceSegmentedPtStructArray2D', 'SurfaceSegmentedStruct', 'SystemCommand', 'T', 'T0', 'T21', 'T6ToB123', 'TAN', 'TANH', 'TAYLOR', 'TAYLOR_MAP_INCLUDES_OFFSETS', 'TAYLOR_OFFSET', 'TAYLOR_ORDER', 'TERM', 'THETA_POSITION', 'THICKNESS', 'THICK_MULTIPOLE', 'TILT', 'TILT_CALIB', 'TILT_CORR', 'TILT_TOT', 'TIMES', 'TIMES_SYM', 'TIME_RUNGE_KUTTA', 'TO_ELEMENT', 'TO_LINE', 'TRACKING', 'TRACKING_METHOD', 'TRAILING', 'TRANSMISSION', 'TRANSPARENT', 'TRANSVERSE_KICK', 'TRANSVERSE_SIGMA_CUT', 'TRAVELING_WAVE', 'TRIANGLE_FILLED_SYM', 'TRIANGLE_SYM', 'TRUE_', 'TRUE_INT', 'TT', 'TWISS_PROPAGATE_FAILURE', 'TWOPI', 'TYPE', 'T_OFFSET', 'TaoAllocateDataArray', 'TaoAllocateV1Var', 'TaoAllocateVarArray', 'TaoBeamBranchStruct', 'TaoBeamEmitCalc', 'TaoBeamUniStruct', 'TaoBranchIndex', 'TaoBuildingWallOrientationStruct', 'TaoBuildingWallPointStruct', 'TaoBuildingWallPointStructAlloc1D', 'TaoBuildingWallPointStructArray1D', 'TaoBuildingWallSectionStruct', 'TaoBuildingWallSectionStructAlloc1D', 'TaoBuildingWallSectionStructArray1D', 'TaoBuildingWallStruct', 'TaoCalcDataAtSPts', 'TaoChangeEle', 'TaoChromCalcNeeded', 'TaoClipCmd', 'TaoCmdHistoryRecord', 'TaoCmdHistoryStruct', 'TaoCmdHistoryStructAlloc1D', 'TaoCmdHistoryStructArray1D', 'TaoCommand', 'TaoCommonStruct', 'TaoConstraintTypeName', 'TaoCurveColorStruct', 'TaoCurveEleRef', 'TaoCurveIxUni', 'TaoCurveName', 'TaoCurveOrbitStruct', 'TaoCurveRmsCalc', 'TaoCurveStruct', 'TaoCurveStructAlloc1D', 'TaoCurveStructArray1D', 'TaoD1DataStruct', 'TaoD1DataStructAlloc1D', 'TaoD1DataStructArray1D', 'TaoD2D1Name', 'TaoD2DataStruct', 'TaoD2DataStructAlloc1D', 'TaoD2DataStructArray1D', 'TaoD2DataStuffit', 'TaoDataCheck', 'TaoDataSanityCheck', 'TaoDataStruct', 'TaoDataStructAlloc1D', 'TaoDataStructArray1D', 'TaoDataUseitPlotCalc', 'TaoDataVarComponentStruct', 'TaoDataVarComponentStructAlloc1D', 'TaoDataVarComponentStructArray1D', 'TaoDatumHasAssociatedEle', 'TaoDatumIntegrate', 'TaoDatumName', 'TaoDrawCurveData', 'TaoDrawEleForFloorPlan', 'TaoDrawHistogramData', 'TaoDrawingStruct', 'TaoDynamicApertureStruct', 'TaoEleGeometryWithMisalignments', 'TaoElePointerStruct', 'TaoElePointerStructAlloc1D', 'TaoElePointerStructArray1D', 'TaoEleShapeInfo', 'TaoEleShapeStruct', 'TaoEleShapeStructAlloc1D', 'TaoEleShapeStructArray1D', 'TaoEvalFloorOrbit', 'TaoEvaluateADatum', 'TaoEvaluateDatumAtS', 'TaoEvaluateLatOrBeamData', 'TaoEvaluateTune', 'TaoFindPlotRegion', 'TaoFloorPlanStruct', 'TaoFloorToScreen', 'TaoGetData', 'TaoGetOptVars', 'TaoGlobalStruct', 'TaoGraphName', 'TaoGraphSMinMaxCalc', 'TaoGraphStruct', 'TaoGraphStructAlloc1D', 'TaoGraphStructArray1D', 'TaoHistogramStruct', 'TaoInitBeamInUniverse', 'TaoInitDataInUniverse', 'TaoInitFindElements', 'TaoInitLattice', 'TaoInitPlotting', 'TaoInitStruct', 'TaoInjectBeam', 'TaoInjectParticle', 'TaoIsValidName', 'TaoKeyInfoToStr', 'TaoLatEmitCalc', 'TaoLatSigmaCalcNeeded', 'TaoLatSigmaStruct', 'TaoLatSigmaStructAlloc1D', 'TaoLatSigmaStructArray1D', 'TaoLatticeBranchStruct', 'TaoLatticeBranchStructAlloc1D', 'TaoLatticeBranchStructArray1D', 'TaoLatticeCalc', 'TaoLatticeStruct', 'TaoLoadThisDatum', 'TaoLocateAllElements', 'TaoLocateElements', 'TaoMerit', 'TaoModelBranchStruct', 'TaoModelBranchStructAlloc1D', 'TaoModelBranchStructArray1D', 'TaoModelElementStruct', 'TaoModelElementStructAlloc1D', 'TaoModelElementStructArray1D', 'TaoNextWord', 'TaoOneTurnMapCalcNeeded', 'TaoOpenFile', 'TaoOpenScratchFile', 'TaoOptimizationStatus', 'TaoParamValueAtS', 'TaoParseCommandArgs', 'TaoParseElementParamStr', 'TaoParticleDataValue', 'TaoPickUniverse', 'TaoPingScaleStruct', 'TaoPlotCacheStruct', 'TaoPlotCacheStructAlloc1D', 'TaoPlotCacheStructArray1D', 'TaoPlotPageStruct', 'TaoPlotRegionStruct', 'TaoPlotRegionStructAlloc1D', 'TaoPlotRegionStructArray1D', 'TaoPlotStruct', 'TaoPlotStructAlloc1D', 'TaoPlotStructArray1D', 'TaoPointerToDatumEle', 'TaoPointerToEleShape', 'TaoPointerToUniverseStr', 'TaoPointerToUniverses', 'TaoRadIntCalcNeeded', 'TaoReExecute', 'TaoReadCmd', 'TaoReadPhaseSpaceIndex', 'TaoRemoveBlankCharacters', 'TaoScaleGraph', 'TaoSetCalculateCmd', 'TaoSetDataCmd', 'TaoSetElementsCmd', 'TaoSetFloorPlanAxisLabel', 'TaoSetIntegerValue', 'TaoSetLogicalValue', 'TaoSetQpAxisStruct', 'TaoSetQpPointStruct', 'TaoSetQpRectStruct', 'TaoSetRealValue', 'TaoShapePatternPointStruct', 'TaoShapePatternPointStructAlloc1D', 'TaoShapePatternPointStructArray1D', 'TaoShapePatternStruct', 'TaoShapePatternStructAlloc1D', 'TaoShapePatternStructArray1D', 'TaoSpinDnDpzStruct', 'TaoSpinEleStruct', 'TaoSpinEleStructAlloc1D', 'TaoSpinEleStructArray1D', 'TaoSpinMapStruct', 'TaoSpinMatricesCalcNeeded', 'TaoSpinPolarizationStruct', 'TaoSplitComponent', 'TaoSrdtCalcNeeded', 'TaoSubinUniNumber', 'TaoSuperUniverseStruct', 'TaoTitleStruct', 'TaoToChangeNumber', 'TaoToInt', 'TaoToPhaseAndCouplingReading', 'TaoToReal', 'TaoTooManyParticlesLost', 'TaoTrackingEleIndex', 'TaoUniverseCalcStruct', 'TaoUniverseIndex', 'TaoUniversePointerStruct', 'TaoUniversePointerStructAlloc1D', 'TaoUniversePointerStructArray1D', 'TaoUniverseStruct', 'TaoUniverseStructAlloc1D', 'TaoUniverseStructArray1D', 'TaoV1VarStruct', 'TaoV1VarStructAlloc1D', 'TaoV1VarStructArray1D', 'TaoVar1Name', 'TaoVarAttribName', 'TaoVarSlaveStruct', 'TaoVarSlaveStructAlloc1D', 'TaoVarSlaveStructArray1D', 'TaoVarStruct', 'TaoVarStructAlloc1D', 'TaoVarStructArray1D', 'TaoWaveCmd', 'TaoWaveFit', 'TaoWaveKickPtStruct', 'TaoWaveKickPtStructAlloc1D', 'TaoWaveKickPtStructArray1D', 'TaoWaveStruct', 'TaoXScaleGraph', 'TaperMagStrengths', 'TargetMinMaxCalc', 'TargetPointStruct', 'TargetPointStructAlloc1D', 'TargetPointStructArray1D', 'TargetRotMats', 'TaylorInverse', 'TaylorStruct', 'TaylorStructAlloc1D', 'TaylorStructArray1D', 'TaylorTermStruct', 'TaylorTermStructAlloc1D', 'TaylorTermStructArray1D', 'TestBunchStructArray', 'TestBunchStructScalar', 'TestCharacterScalar', 'TestComplexArray', 'TestComplexScalar', 'TestInteger8Array', 'TestInteger8Scalar', 'TestIntegerArray', 'TestIntegerScalar', 'TestLogicalArray', 'TestLogicalScalar', 'TestReal16Array', 'TestReal16Scalar', 'TestRealArray', 'TestRealScalar', 'TestSubStruct', 'TestSubStructAlloc1D', 'TestSubStructArray1D', 'TestSubStructArray2D', 'TestSubStructArray3D', 'TestSubSubStruct', 'ToEtaReading', 'ToFieldmapCoords', 'ToOrbitReading', 'ToPhaseAndCouplingReading', 'ToStr', 'TouschekRate1Zap', 'Track1', 'Track1Bmad', 'Track1RungeKutta', 'Track1Spin', 'Track1TimeRungeKutta', 'TrackABeambeam', 'TrackADrift', 'TrackAMatch', 'TrackAPatch', 'TrackAPickup', 'TrackAZeroLengthElement', 'TrackAll', 'TrackFromSToS', 'TrackPointStruct', 'TrackPointStructAlloc1D', 'TrackPointStructArray1D', 'TrackStruct', 'TrackUntilDead', 'TrackingRadMapSetup', 'TransferMapFromSToS', 'TricubicCmplxCoefStruct', 'TricubicCmplxCoefStructArray3D', 'TricubicCmplxEval', 'Twiss1Propagate', 'Twiss3AtStart', 'Twiss3Propagate1', 'TwissAndTrackFromSToS', 'TwissAndTrackIntraEle', 'TwissAtElement', 'TwissFromTracking', 'TwissStruct', 'TypeThisFile', 'UB_SUBATOMIC', 'UNARY_MINUS', 'UNARY_PLUS', 'UNDIFFRACTED', 'UNDULATOR', 'UNIFORM', 'UNKNOWN', 'UNPOLARIZED', 'UNSTABLE', 'UNSTABLE_A', 'UNSTABLE_B', 'UPSTREAM', 'UPSTREAM_COORD_DIR', 'UPSTREAM_END', 'USER_SET', 'USER_SETS_LENGTH', 'USE_REFLECTIVITY_TABLE', 'UpcaseString', 'V1_UNITCELL', 'V2_UNITCELL', 'VAL1', 'VAL10', 'VAL11', 'VAL12', 'VAL2', 'VAL3', 'VAL4', 'VAL5', 'VAL6', 'VAL7', 'VAL8', 'VAL9', 'VAR', 'VARIABLE', 'VAR_OFFSET', 'VELOCITY_DISTRIBUTION', 'VERTICALLY_PURE', 'VERTICAL_BAR', 'VERTICAL_KICK', 'VKICK', 'VKICKER', 'VOLTAGE', 'VOLTAGE_ERR', 'VOLTAGE_TOT', 'V_DISPLACE', 'V_UNITCELL', 'ValidFieldCalc', 'ValidFringeType', 'ValidMat6CalcMethod', 'ValidSpinTrackingMethod', 'ValidTrackingMethod', 'ValueOfAttribute', 'ValueToLine', 'WALL', 'WALL3D', 'WALL_END', 'WALL_START', 'WALL_TRANSITION', 'WHITE', 'WIGGLER', 'WIGGLERS', 'WMatToAxisAngle', 'WRAP_SUPERIMPOSE', 'WakeLrModeStruct', 'WakeLrModeStructAlloc1D', 'WakeLrModeStructArray1D', 'WakeLrStruct', 'WakeSrModeStruct', 'WakeSrModeStructAlloc1D', 'WakeSrModeStructArray1D', 'WakeSrStruct', 'WakeSrZLongStruct', 'WakeStruct', 'Wall3DSectionStruct', 'Wall3DSectionStructAlloc1D', 'Wall3DSectionStructArray1D', 'Wall3DStruct', 'Wall3DStructAlloc1D', 'Wall3DStructArray1D', 'Wall3DVertexStruct', 'Wall3DVertexStructAlloc1D', 'Wall3DVertexStructArray1D', 'Wall3dDRadius', 'WordLen', 'WordRead', 'WordToValue', 'WriteAstraBend', 'WriteAstraFieldGridFile', 'WriteAstraFieldGridFile3d', 'WriteBlenderEle', 'WriteBlenderLatLayout', 'WriteGptFieldGridFile1d', 'WriteGptFieldGridFile2d', 'WriteGptFieldGridFile3d', 'WriteLatLine', 'WriteLatticeInSadFormat', 'WriteLatticeInScibmad', 'WriteLineElement', 'WriteOpalFieldGridFile', 'X', 'X0', 'X1', 'X1_EDGE', 'X1_LIMIT', 'X2_EDGE', 'X2_LIMIT', 'XFER_MAT_CALC_FAILURE', 'XY', 'XYZ', 'XY_AXIS', 'X_AXIS', 'X_DISPERSION_CALIB', 'X_DISPERSION_ERR', 'X_GAIN_CALIB', 'X_GAIN_ERR', 'X_INVARIANT', 'X_KICK', 'X_KNOT', 'X_LEADING', 'X_LIMIT', 'X_OFFSET', 'X_OFFSET_CALIB', 'X_OFFSET_MULT', 'X_OFFSET_TOT', 'X_PITCH', 'X_PITCH_TOT', 'X_PLANE', 'X_POLARIZATION', 'X_POSITION', 'X_QUAD', 'X_REF', 'X_STORED', 'X_SYMBOL_SYM', 'X_TRAILING', 'Xlafun', 'XyDispStruct', 'Y', 'Y0', 'Y1', 'Y1_EDGE', 'Y1_LIMIT', 'Y2_EDGE', 'Y2_LIMIT', 'YELLOW', 'YELLOW_GREEN', 'YES', 'Y_AXIS', 'Y_DISPERSION_CALIB', 'Y_DISPERSION_ERR', 'Y_GAIN_CALIB', 'Y_GAIN_ERR', 'Y_KICK', 'Y_KNOT', 'Y_LEADING', 'Y_LIMIT', 'Y_OFFSET', 'Y_OFFSET_CALIB', 'Y_OFFSET_MULT', 'Y_OFFSET_TOT', 'Y_PITCH', 'Y_PITCH_TOT', 'Y_PLANE', 'Y_POLARIZATION', 'Y_POSITION', 'Y_QUAD', 'Y_REF', 'Y_STORED', 'Y_TRAILING', 'Ylafun', 'Z', 'Z0', 'Z1', 'ZAtSurface', 'ZERO', 'Z_APERTURE_CENTER', 'Z_APERTURE_WIDTH2', 'Z_AXIS', 'Z_KICK', 'Z_OFFSET', 'Z_OFFSET_TOT', 'Z_PLANE', 'Z_POSITION', 'Z_REF', 'Z_STORED', 'Zlafun', 'ab_multipole_kick', 'ab_multipole_kicks', 'absolute_photon_position', 'absolute_time_tracking', 'ac_kicker_amp', 'action_to_xyz', 'add_lattice_control_structs', 'add_superimpose', 'add_this_multipass', 'add_this_taylor_term', 'adjust_super_slave_names', 'allocate_branch_array', 'allocate_lat_ele_array', 'allocate_thread_states', 'angle_between_polars', 'angle_to_canonical_coords', 'anomalous_moment_of', 'antiparticle', 'aperture_bookkeeper', 'apfft', 'apfft_corr', 'apfft_ext', 'apply_all_rampers', 'apply_energy_kick', 'apply_patch_to_ptc_fibre', 'apply_rampers_to_slave', 'array_re_str', 'asinc', 'assert_equal', 'astra_max_field_reference', 'at_this_ele_end', 'atomic_number', 'atomic_species_id', 'attribute_bookkeeper', 'attribute_free', 'attribute_index', 'attribute_name', 'attribute_type', 'attribute_units', 'autoscale_phase_and_amp', 'average_twiss', 'axis_angle_to_quat', 'axis_angle_to_w_mat', 'bbi_kick', 'bbi_slice_calc', 'bbu_add_a_bunch', 'bbu_hom_voltage_calc', 'bbu_remove_head_bunch', 'bbu_setup', 'bbu_track_a_stage', 'bbu_track_all', 'beam_envelope_ibs', 'beam_equal_beam', 'beam_init_setup', 'beam_tilts', 'bend_edge_kick', 'bend_exact_multipole_field', 'bend_length_has_been_set', 'bend_photon_e_rel_init', 'bend_photon_energy_integ_prob', 'bend_photon_energy_normalized_probability', 'bend_photon_init', 'bend_photon_polarization_init', 'bend_photon_vert_angle_init', 'bend_shift', 'bend_vert_angle_integ_prob', 'bicubic_cmplx_eval', 'bin_index', 'bin_x_center', 'bit_set', 'bl_via_vlassov', 'bmad_parser', 'bmad_parser2', 'bmad_patch_parameters_to_ptc', 'bp_set_ran_status', 'bracket_index_for_spline', 'branch_equal_branch', 'branch_name', 'branch_to_ptc_m_u', 'bunch_equal_bunch', 'c_to_cbar', 'calc_bunch_params', 'calc_bunch_params_slice', 'calc_bunch_params_z_slice', 'calc_bunch_sigma_matrix_etc', 'calc_emittances_and_twiss_from_sigma_matrix', 'calc_file_number', 'calc_spin_params', 'calc_super_slave_key', 'calc_wall_radius', 'calc_z_tune', 'canonical_to_angle_coords', 'cbar_to_c', 'change_file_number', 'charge_of', 'charge_to_mass_of', 'check_aperture_limit', 'check_controller_controls', 'check_for_superimpose_problem', 'check_if_s_in_bounds', 'check_rf_freq', 'choose_quads_for_set_tune', 'chrom_calc', 'chrom_tune', 'classical_radius', 'clear_lat_1turn_mats', 'clear_taylor_maps_from_elements', 'closed_orbit_calc', 'closed_orbit_from_tracking', 'cmplx_re_str', 'coarse_frequency_estimate', 'combine_consecutive_elements', 'complex_error_function', 'complex_taylor_clean', 'complex_taylor_coef', 'complex_taylor_equal_complex_taylor', 'complex_taylor_exponent_index', 'complex_taylor_make_unit', 'complex_taylor_to_mat6', 'complex_taylors_equal_complex_taylors', 'compute_slave_coupler', 'concat_ele_taylor', 'concat_taylor', 'concat_transfer_mat', 'control_bookkeeper', 'convert_bend_exact_multipole', 'convert_coords', 'convert_field_ele_to_lab', 'convert_local_cartesian_to_local_curvilinear', 'convert_local_curvilinear_to_local_cartesian', 'convert_particle_coordinates_s_to_t', 'convert_particle_coordinates_t_to_s', 'convert_pc_to', 'convert_total_energy_to', 'converter_distribution_parser', 'coord_equal_coord', 'coord_state_name', 'coords_body_to_local', 'coords_body_to_rel_exit', 'coords_curvilinear_to_floor', 'coords_floor_to_curvilinear', 'coords_floor_to_local_curvilinear', 'coords_floor_to_relative', 'coords_local_curvilinear_to_body', 'coords_local_curvilinear_to_floor', 'coords_relative_to_floor', 'cos_one', 'cosc', 'coulombfun', 'count_lines_in_file', 'create_a_spline', 'create_concatenated_wall3d', 'create_element_slice', 'create_field_overlap', 'create_girder', 'create_group', 'create_lat_ele_nametable', 'create_overlay', 'create_planar_wiggler_model', 'create_ramper', 'create_sol_quad_model', 'create_unique_ele_names', 'create_wiggler_cartesian_map', 'cross_product', 'crystal_attribute_bookkeeper', 'crystal_h_misalign', 'crystal_type_to_crystal_params', 'custom_attribute_ubound_index', 'damping_matrix_d', 'date_and_time_stamp', 'deallocate_ele_pointers', 'deallocate_expression_tree', 'deallocate_lat_pointers', 'default_tracking_species', 'destfixedwindowls', 'detab', 'detector_pixel_pt', 'diffraction_plate_or_mask_hit_spot', 'diffusion_matrix_b', 'display_size_and_resolution', 'distance_to_aperture', 'dj_bessel', 'djb_hash', 'djb_str_hash', 'do_mode_flip', 'downcase_string', 'dpc_given_de', 'drift_and_pipe_track_methods_adjustment', 'drift_multipass_name_correction', 'drift_orbit_time', 'drift_particle_to_s', 'drift_particle_to_t', 'dspline_len', 'dynamic_aperture_point', 'dynamic_aperture_scan', 'e_accel_field', 'e_crit_photon', 'eigen_decomp_6mat', 'ele_compute_ref_energy_and_time', 'ele_equal_ele', 'ele_equals_ele', 'ele_finalizer', 'ele_full_name', 'ele_geometry', 'ele_geometry_with_misalignments', 'ele_has_constant_ds_dt_ref', 'ele_has_nonzero_kick', 'ele_has_nonzero_offset', 'ele_is_monitor', 'ele_loc', 'ele_loc_name', 'ele_misalignment_l_s_calc', 'ele_nametable_index', 'ele_order_calc', 'ele_reference_energy_correction', 'ele_rf_step_index', 'ele_to_ptc_magnetic_bn_an', 'ele_to_spin_taylor', 'ele_to_taylor', 'ele_unique_name', 'ele_value_has_changed', 'ele_vec_equal_ele_vec', 'elec_multipole_field', 'element_at_s', 'element_slice_iterator', 'ellipinc_test', 'em_field_calc', 'em_field_derivatives', 'em_field_kick_vector_time', 'em_field_plus_em_field', 'em_taylor_equal_em_taylor', 'em_taylors_equal_em_taylors', 'emit_6d', 'end_akima_spline_calc', 'entering_element', 'envelope_radints', 'envelope_radints_ibs', 'eq_ac_kicker', 'eq_ac_kicker_freq', 'eq_ac_kicker_time', 'eq_anormal_mode', 'eq_aperture_param', 'eq_aperture_point', 'eq_aperture_scan', 'eq_beam', 'eq_beam_init', 'eq_bmad_common', 'eq_bookkeeping_state', 'eq_bpm_phase_coupling', 'eq_branch', 'eq_bunch', 'eq_bunch_params', 'eq_cartesian_map', 'eq_cartesian_map_term', 'eq_cartesian_map_term1', 'eq_complex_taylor', 'eq_complex_taylor_term', 'eq_control', 'eq_control_ramp1', 'eq_control_var1', 'eq_controller', 'eq_coord', 'eq_coord_array', 'eq_cylindrical_map', 'eq_cylindrical_map_term', 'eq_cylindrical_map_term1', 'eq_ele', 'eq_ellipse_beam_init', 'eq_em_field', 'eq_em_taylor', 'eq_em_taylor_term', 'eq_expression_atom', 'eq_floor_position', 'eq_gen_grad1', 'eq_gen_grad_map', 'eq_grid_beam_init', 'eq_grid_field', 'eq_grid_field_pt', 'eq_grid_field_pt1', 'eq_high_energy_space_charge', 'eq_interval1_coef', 'eq_kv_beam_init', 'eq_lat', 'eq_lat_ele_loc', 'eq_lat_param', 'eq_linac_normal_mode', 'eq_mode3', 'eq_mode_info', 'eq_normal_modes', 'eq_photon_element', 'eq_photon_material', 'eq_photon_reflect_surface', 'eq_photon_reflect_table', 'eq_photon_target', 'eq_pixel_detec', 'eq_pixel_pt', 'eq_pre_tracker', 'eq_rad_int1', 'eq_rad_int_all_ele', 'eq_rad_int_branch', 'eq_rad_map', 'eq_rad_map_ele', 'eq_ramper_lord', 'eq_space_charge_common', 'eq_spin_polar', 'eq_spline', 'eq_strong_beam', 'eq_surface_curvature', 'eq_surface_displacement', 'eq_surface_displacement_pt', 'eq_surface_h_misalign', 'eq_surface_h_misalign_pt', 'eq_surface_segmented', 'eq_surface_segmented_pt', 'eq_target_point', 'eq_taylor', 'eq_taylor_term', 'eq_track', 'eq_track_point', 'eq_twiss', 'eq_wake', 'eq_wake_lr', 'eq_wake_lr_mode', 'eq_wake_sr', 'eq_wake_sr_mode', 'eq_wake_sr_z_long', 'eq_wall3d', 'eq_wall3d_section', 'eq_wall3d_vertex', 'eq_xy_disp', 'equal_sign_here', 'equivalent_taylor_attributes', 'err_exit', 'etdiv', 'evaluate_array_index', 'evaluate_logical', 'exact_bend_edge_kick', 'exp_bessi0', 'expect_one_of', 'expect_this', 'expression_stack_to_string', 'expression_stack_value', 'expression_string_to_stack', 'expression_string_to_tree', 'expression_tree_to_string', 'expression_value', 'factorial', 'faddeeva_function', 'fft1', 'fft_1d', 'field_attribute_free', 'file_directorizer', 'file_get', 'file_get_open', 'file_suffixer', 'finalize_reflectivity_table', 'find_element_ends', 'find_fwhm', 'find_location', 'find_matching_fieldmap', 'find_normalization', 'fine_frequency_estimate', 'fixedwindowls', 'floor_angles_to_w_mat', 'floor_w_mat_to_angles', 'form_complex_taylor', 'form_digested_bmad_file_name', 'fourier_amplitude', 'fringe_here', 'g_bend_from_em_field', 'g_bending_strength_from_em_field', 'g_integrals_calc', 'gamma_ref', 'gen_complete_elliptic', 'gen_grad1_to_em_taylor', 'gen_grad_at_s_to_em_taylor', 'gen_grad_field', 'get_bl_from_fwhm', 'get_bmad_com', 'get_called_file', 'get_emit_from_sigma_mat', 'get_file_number', 'get_file_time_stamp', 'get_next_word', 'get_slave_list', 'get_space_charge_com', 'get_super_universe', 'gpt_field_grid_scaling', 'gpt_max_field_reference', 'gpt_to_particle_bunch', 'gradient_shift_sr_wake', 'grid_field_interpolate', 'hanhan', 'hard_multipole_edge_kick', 'has_attribute', 'has_curvature', 'has_orientation_attributes', 'hdf5_write_beam', 'hdf5_write_grid_field', 'hom_voltage', 'hwang_bend_edge_kick', 'i_bessel', 'i_bessel_extended', 'ibs_matrix_c', 'igfcoulombfun', 'igfexfun', 'igfeyfun', 'igfezfun', 'increment_file_number', 'index_nocase', 'init_attribute_name1', 'init_attribute_name_array', 'init_beam_distribution', 'init_bmad', 'init_bmad_parser_common', 'init_bunch_distribution', 'init_complex_taylor_series', 'init_coord', 'init_custom', 'init_ele', 'init_em_taylor_series', 'init_lat', 'init_multipole_cache', 'init_photon_from_a_photon_init_ele', 'init_photon_integ_prob', 'init_spin_distribution', 'init_surface_segment', 'init_taylor_series', 'init_wake', 'initfixedwindowls', 'insert_element', 'insert_phase_trombone', 'int_str', 'integrand_base', 'integrate_max', 'integrate_min', 'integrate_psi', 'integrated_mats', 'integration_timer', 'interpolated_fft', 'interpolated_fft_gsl', 'ion_kick', 'is_alphabetic', 'is_attribute', 'is_decreasing_sequence', 'is_false', 'is_increasing_sequence', 'is_integer', 'is_logical', 'is_real', 'is_subatomic_species', 'is_true', 'j_bessel', 'key_name_to_key_index', 'kick_vector_calc', 'kill_complex_taylor', 'kill_ptc_layouts', 'kill_taylor', 'kind_name', 'knot_interpolate', 'knots_to_string', 'lafun', 'lat_compute_ref_energy_and_time', 'lat_ele_locator', 'lat_equal_lat', 'lat_geometry', 'lat_make_mat6', 'lat_sanity_check', 'lat_to_ptc_layout', 'lat_vec_equal_lat_vec', 'lattice_bookkeeper', 'lcavity_rf_step_setup', 'linear_bend_edge_kick', 'linear_coef', 'linear_fit', 'linear_fit_2d', 'linear_to_spin_taylor', 'load_parse_line', 'logic_str', 'logical_to_python', 'lord_edge_aligned', 'low_energy_z_correction', 'lunget', 'mad_add_offsets_and_multipoles', 'mad_concat_map2', 'mad_drift', 'mad_elsep', 'mad_map_to_taylor', 'mad_quadrupole', 'mad_rfcavity', 'mad_sbend', 'mad_sbend_body', 'mad_sbend_fringe', 'mad_sextupole', 'mad_solenoid', 'mad_tmfoc', 'mad_tmsymm', 'mad_tmtilt', 'mad_track1', 'make_g2_mats', 'make_g_mats', 'make_hvbp', 'make_hybrid_lat', 'make_legal_comment', 'make_mad_map', 'make_mat6', 'make_mat6_bmad', 'make_mat6_bmad_photon', 'make_mat6_high_energy_space_charge', 'make_mat6_mad', 'make_mat6_symp_lie_ptc', 'make_mat6_taylor', 'make_mat6_tracking', 'make_n', 'make_pbrh', 'make_smat_from_abc', 'make_unit_mad_map', 'make_v', 'make_v_mats', 'makeup_control_slave', 'makeup_group_lord', 'makeup_multipass_slave', 'makeup_super_slave', 'makeup_super_slave1', 'map1_inverse', 'map1_make_unit', 'map1_times_map1', 'map_to_angle_coords', 'mark_patch_regions', 'mass_of', 'master_parameter_value', 'mat4_multipole', 'mat6_add_offsets', 'mat6_add_pitch', 'mat6_to_complex_taylor', 'mat_symp_decouple', 'match_ele_to_mat6', 'match_reg', 'match_wild', 'maximize_projection', 'mexp', 'mfft1', 'milli_sleep', 'momentum_compaction', 'multi_turn_tracking_analysis', 'multilayer_type_to_multilayer_params', 'multipass_chain', 'multipole1_ab_to_kt', 'multipole1_kt_to_ab', 'multipole_ab_to_kt', 'multipole_ele_to_ab', 'multipole_ele_to_kt', 'multipole_init', 'multipole_kick', 'multipole_kick_mat', 'multipole_kicks', 'multipole_kt_to_ab', 'multipole_spin_tracking', 'mytan', 'n_attrib_string_max_len', 'n_bins_automatic', 'n_choose_k', 'n_spline_create', 'naff', 'nametable_add', 'nametable_bracket_indexx', 'nametable_change1', 'nametable_init', 'nametable_remove', 'new_control', 'nint_chk', 'normal_form_complex_taylors', 'normal_form_taylors', 'normal_mode3_calc', 'normal_mode_dispersion', 'normalize_evecs', 'num_field_eles', 'num_lords', 'odeint_bmad', 'odeint_bmad_time', 'offset_particle', 'offset_photon', 'omega_to_quat', 'one_turn_mat_at_ele', 'open_binary_file', 'openpmd_species_name', 'orbit_amplitude_calc', 'orbit_reference_energy_correction', 'orbit_to_floor_phase_space', 'orbit_to_local_curvilinear', 'orbit_too_large', 'order_evecs_by_n_similarity', 'order_evecs_by_plane_dominance', 'order_evecs_by_tune', 'order_particles_in_z', 'order_super_lord_slaves', 'ordinal_str', 'osc_alloc_freespace_array', 'osc_alloc_image_array', 'osc_alloc_rectpipe_arrays', 'osc_getgrnpipe', 'osc_read_rectpipe_grn', 'osc_write_rectpipe_grn', 'parse_cartesian_map', 'parse_cylindrical_map', 'parse_fortran_format', 'parse_gen_grad_map', 'parse_grid_field', 'parse_integer_list', 'parse_integer_list2', 'parse_real_list', 'parse_real_list2', 'parser_add_constant', 'parser_call_check', 'parser_fast_complex_read', 'parser_fast_integer_read', 'parser_fast_real_read', 'parser_file_stack', 'parser_get_integer', 'parser_get_logical', 'parser_identify_fork_to_element', 'parser_init_custom_elements', 'parser_print_line', 'parser_read_lr_wake', 'parser_read_old_format_lr_wake', 'parser_read_old_format_sr_wake', 'parser_read_sr_wake', 'parser_transfer_control_struct', 'particle_in_global_frame', 'particle_is_moving_backwards', 'particle_is_moving_forward', 'particle_rf_time', 'patch_flips_propagation_direction', 'patch_length', 'photon_absorption_and_phase_shift', 'photon_add_to_detector_statistics', 'photon_reflection', 'photon_reflection_std_surface_init', 'photon_reflectivity', 'photon_target_corner_calc', 'photon_target_setup', 'photon_type', 'physical_ele_end', 'point_photon_emission', 'pointer_to_branch', 'pointer_to_ele', 'pointer_to_element_at_s', 'pointer_to_field_ele', 'pointer_to_girder', 'pointer_to_lord', 'pointer_to_multipass_lord', 'pointer_to_next_ele', 'pointer_to_ran_state', 'pointer_to_slave', 'pointer_to_super_lord', 'pointer_to_surface_displacement_pt', 'pointer_to_surface_segmented_pt', 'pointer_to_wake_ele', 'pointer_to_wall3d', 'polar_to_spinor', 'polar_to_vec', 'poly_eval', 'probability_funct', 'projdd', 'project_emit_to_xyz', 'psi_prime_sca', 'ptc_bookkeeper', 'ptc_closed_orbit_calc', 'ptc_emit_calc', 'ptc_layouts_resplit', 'ptc_one_turn_mat_and_closed_orbit_calc', 'ptc_ran_seed_put', 'ptc_set_rf_state_for_c_normal', 'ptc_set_taylor_order_if_needed', 'ptc_spin_calc', 'ptc_track_all', 'ptc_transfer_map_with_spin', 'pwd_mat', 'quadratic_roots', 'quat_conj', 'quat_inverse', 'quat_mul', 'quat_rotate', 'quat_to_axis_angle', 'quat_to_omega', 'quat_to_w_mat', 'query_string', 'quote', 'rad1_damp_and_stoc_mats', 'rad_damp_and_stoc_mats', 'rad_g_integrals', 'radiation_integrals', 'radiation_map_setup', 'ramper_slave_setup', 'ramper_value', 'ran_default_state', 'ran_engine', 'ran_gauss_converter', 'ran_gauss_scalar', 'ran_gauss_vector', 'ran_seed_get', 'ran_seed_put', 'ran_uniform', 'randomize_lr_wake_frequencies', 'rchomp', 're_allocate', 're_allocate_c_double', 're_allocate_eles', 're_associate_node_array', 're_str', 'read_beam_ascii', 'read_beam_file', 'read_binary_cartesian_map', 'read_binary_cylindrical_map', 'read_binary_grid_field', 'read_surface_reflection_file', 'real_num_fortran_format', 'real_path', 'real_str', 'real_to_string', 'reallocate_beam', 'reallocate_bp_com_const', 'reallocate_bunch', 'reallocate_control', 'reallocate_coord', 'reallocate_expression_stack', 'reallocate_spline', 'rel_tracking_charge_to_mass', 'relative_mode_flip', 'release_rad_int_cache', 'remove_constant_taylor', 'remove_dead_from_bunch', 'remove_eles_from_lat', 'remove_lord_slave_link', 'reverse_lat', 'rf_cav_names', 'rf_coupler_kick', 'rf_is_on', 'rf_ref_time_offset', 'rfun', 'rk_adaptive_time_step', 'rk_time_step1', 'rms_value', 'rot_2d', 'rotate3', 'rotate_em_field', 'rotate_field_zx', 'rotate_for_curved_surface', 'rotate_spin', 'rotate_spin_a_step', 'rotate_spin_given_field', 'rotate_vec', 'rotate_vec_given_axis_angle', 'rp8', 'run_timer', 's_body_calc', 's_calc', 'sad_mult_hard_bend_edge_kick', 'sad_soft_bend_edge_kick', 'save_a_beam_step', 'save_a_bunch_step', 'save_a_step', 'sbend_body_with_k1_map', 'sc_adaptive_step', 'sc_step', 'set_active_fixer', 'set_custom_attribute_name', 'set_ele_attribute', 'set_ele_defaults', 'set_ele_name', 'set_ele_real_attribute', 'set_ele_status_stale', 'set_flags_for_changed_attribute', 'set_fringe_on_off', 'set_lords_status_stale', 'set_on_off', 'set_orbit_to_zero', 'set_parameter', 'set_ptc', 'set_ptc_base_state', 'set_ptc_com_pointers', 'set_ptc_quiet', 'set_ptc_verbose', 'set_pwd_ele', 'set_species_charge', 'set_status_flags', 'set_tune', 'set_tune_3d', 'set_twiss', 'set_z_tune', 'settable_dep_var_bookkeeping', 'setup_high_energy_space_charge_calc', 'sigma_mat_ptc_to_bmad', 'significant_difference', 'sinc', 'sincc', 'sinhx_x', 'skip_ele_blender', 'skip_header', 'slice_lattice', 'soft_quadrupole_edge_kick', 'sol_quad_mat6_calc', 'solve_psi_adaptive', 'solve_psi_fixed_steps', 'sort_complex_taylor_terms', 'species_id', 'species_id_from_openpmd', 'species_name', 'species_of', 'spin_dn_dpz_from_mat8', 'spin_dn_dpz_from_qmap', 'spin_map1_normalize', 'spin_mat8_resonance_strengths', 'spin_mat_to_eigen', 'spin_of', 'spin_omega', 'spin_quat_resonance_strengths', 'spin_taylor_to_linear', 'spinor_to_polar', 'spinor_to_vec', 'spline1', 'spline_akima', 'spline_akima_interpolate', 'spline_evaluate', 'spline_fit_orbit', 'split_lat', 'sprint_spin_taylor_map', 'sqrt_alpha', 'sqrt_one', 'sr_longitudinal_wake_particle', 'sr_transverse_wake_particle', 'sr_z_long_wake', 'srdt_calc', 'srdt_lsq_solution', 'start_branch_at', 'str_count', 'str_downcase', 'str_first_in_set', 'str_first_not_in_set', 'str_last_in_set', 'str_last_not_in_set', 'str_match_wild', 'str_substitute', 'str_upcase', 'stream_ele_end', 'string_attrib', 'string_to_int', 'string_to_real', 'string_trim', 'string_trim2', 'strong_beam_sigma_calc', 'strong_beam_strength', 'super_bicubic_coef', 'super_bicubic_interpolation', 'super_polint', 'super_poly', 'super_sobseq', 'super_sort', 'surface_grid_displacement', 'symp_lie_bmad', 'system_command', 't6_to_b123', 'tao_abort_command_file', 'tao_add_to_normal_mode_h_array', 'tao_alias_cmd', 'tao_allocate_data_array', 'tao_allocate_v1_var', 'tao_allocate_var_array', 'tao_beam_emit_calc', 'tao_beam_track', 'tao_beam_track_endpoint', 'tao_branch_index', 'tao_c_out_io_buffer_reset', 'tao_calc_data_at_s_pts', 'tao_cbar_wave_anal', 'tao_change_ele', 'tao_change_tune', 'tao_change_var', 'tao_change_z_tune', 'tao_chrom_calc_needed', 'tao_clear_cmd', 'tao_clip_cmd', 'tao_close_command_file', 'tao_cmd_history_record', 'tao_command', 'tao_constraint_type_name', 'tao_control_tree_list', 'tao_count_strings', 'tao_create_plot_window', 'tao_curve_beam_ellipse_setup', 'tao_curve_check_universe', 'tao_curve_data_setup', 'tao_curve_datum_calc', 'tao_curve_ele_ref', 'tao_curve_ix_uni', 'tao_curve_name', 'tao_curve_rms_calc', 'tao_d2_d1_name', 'tao_d2_data_stuffit', 'tao_data_check', 'tao_data_coupling_init', 'tao_data_sanity_check', 'tao_data_type_substitute', 'tao_data_useit_plot_calc', 'tao_datum_has_associated_ele', 'tao_datum_integrate', 'tao_datum_name', 'tao_datum_s_position', 'tao_de_optimizer', 'tao_deallocate_plot_cache', 'tao_destroy_plot_window', 'tao_dmerit_calc', 'tao_dmodel_dvar_calc', 'tao_do_wire_scan', 'tao_draw_beam_chamber_wall', 'tao_draw_curve_data', 'tao_draw_ele_for_floor_plan', 'tao_draw_floor_plan', 'tao_draw_graph_axes', 'tao_draw_histogram_data', 'tao_draw_lat_layout', 'tao_draw_plots', 'tao_ele_geometry_with_misalignments', 'tao_ele_shape_info', 'tao_eval_floor_orbit', 'tao_evaluate_a_datum', 'tao_evaluate_datum_at_s', 'tao_evaluate_lat_or_beam_data', 'tao_evaluate_tune', 'tao_expression_hash_substitute', 'tao_find_plot_region', 'tao_fixer', 'tao_floor_to_screen', 'tao_floor_to_screen_coords', 'tao_geodesic_lm_optimizer', 'tao_get_data', 'tao_get_opt_vars', 'tao_get_user_input', 'tao_graph_controller_setup', 'tao_graph_data_setup', 'tao_graph_data_slice_setup', 'tao_graph_dynamic_aperture_setup', 'tao_graph_histogram_setup', 'tao_graph_name', 'tao_graph_phase_space_setup', 'tao_graph_s_min_max_calc', 'tao_graph_setup', 'tao_init', 'tao_init_beam_in_universe', 'tao_init_beams', 'tao_init_data', 'tao_init_data_end_stuff', 'tao_init_data_in_universe', 'tao_init_dynamic_aperture', 'tao_init_find_elements', 'tao_init_global', 'tao_init_lattice', 'tao_init_plotting', 'tao_init_variables', 'tao_inject_beam', 'tao_inject_particle', 'tao_is_valid_name', 'tao_json_cmd', 'tao_key_info_to_str', 'tao_lat_bookkeeper', 'tao_lat_emit_calc', 'tao_lat_sigma_calc_needed', 'tao_lat_sigma_track', 'tao_lattice_branches_equal_tao_lattice_branches', 'tao_lattice_calc', 'tao_lattice_equal_tao_lattice', 'tao_limit_calc', 'tao_lm_optimizer', 'tao_lmdif_optimizer', 'tao_load_this_datum', 'tao_locate_all_elements', 'tao_locate_elements', 'tao_mark_lattice_ele', 'tao_merit', 'tao_next_word', 'tao_one_turn_map_calc_needed', 'tao_open_file', 'tao_open_scratch_file', 'tao_optimization_status', 'tao_orbit_beta_wave_anal', 'tao_oreint_building_wall_pt', 'tao_param_value_at_s', 'tao_parse_command_args', 'tao_parse_element_param_str', 'tao_particle_data_value', 'tao_pause_cmd', 'tao_phase_space_axis_index', 'tao_phase_wave_anal', 'tao_pick_universe', 'tao_pipe_cmd', 'tao_place_cmd', 'tao_plot_cmd', 'tao_plot_data', 'tao_plot_histogram', 'tao_plot_key_table', 'tao_plot_setup', 'tao_plot_struct_transfer', 'tao_plot_wave', 'tao_pointer_to_building_wall_shape', 'tao_pointer_to_datum', 'tao_pointer_to_datum_ele', 'tao_pointer_to_ele_shape', 'tao_pointer_to_tao_lat', 'tao_pointer_to_universe', 'tao_pointer_to_universes', 'tao_pointer_to_var_in_lattice', 'tao_pointer_to_var_in_lattice2', 'tao_print_command_line_info', 'tao_ptc_normal_form', 'tao_python_cmd', 'tao_quiet_set', 'tao_rad_int_calc_needed', 'tao_re_execute', 'tao_read_cmd', 'tao_read_phase_space_index', 'tao_regression_test', 'tao_remove_blank_characters', 'tao_run_cmd', 'tao_scale_cmd', 'tao_scale_graph', 'tao_scale_ping_data', 'tao_scale_plot', 'tao_scratch_values_calc', 'tao_set_beam_cmd', 'tao_set_beam_init_cmd', 'tao_set_bmad_com_cmd', 'tao_set_branch_cmd', 'tao_set_calculate_cmd', 'tao_set_curve_cmd', 'tao_set_curve_invalid', 'tao_set_data_cmd', 'tao_set_data_useit_opt', 'tao_set_default_cmd', 'tao_set_drawing_cmd', 'tao_set_dynamic_aperture_cmd', 'tao_set_elements_cmd', 'tao_set_floor_plan_axis_label', 'tao_set_geodesic_lm_cmd', 'tao_set_global_cmd', 'tao_set_graph_cmd', 'tao_set_integer_value', 'tao_set_invalid', 'tao_set_key_cmd', 'tao_set_lattice_cmd', 'tao_set_logical_value', 'tao_set_openmp_n_threads', 'tao_set_opt_vars', 'tao_set_opti_de_param_cmd', 'tao_set_particle_start_cmd', 'tao_set_plot_cmd', 'tao_set_plot_page_cmd', 'tao_set_ptc_com_cmd', 'tao_set_qp_axis_struct', 'tao_set_qp_point_struct', 'tao_set_qp_rect_struct', 'tao_set_ran_state_cmd', 'tao_set_real_value', 'tao_set_region_cmd', 'tao_set_space_charge_com_cmd', 'tao_set_symbolic_number_cmd', 'tao_set_tune_cmd', 'tao_set_universe_cmd', 'tao_set_var_cmd', 'tao_set_var_model_value', 'tao_set_var_useit_opt', 'tao_set_wave_cmd', 'tao_set_z_tune_cmd', 'tao_setup_key_table', 'tao_shape_init', 'tao_show_cmd', 'tao_show_constraints', 'tao_single_mode', 'tao_single_track', 'tao_spin_matrices_calc_needed', 'tao_spin_tracking_turn_on', 'tao_split_component', 'tao_srdt_calc_needed', 'tao_subin_uni_number', 'tao_svd_optimizer', 'tao_symbol_import_from_lat', 'tao_taper_cmd', 'tao_to_change_number', 'tao_to_int', 'tao_to_phase_and_coupling_reading', 'tao_to_real', 'tao_too_many_particles_lost', 'tao_top10_derivative_print', 'tao_top10_merit_categories_print', 'tao_top_level', 'tao_tracking_ele_index', 'tao_turn_on_special_calcs_if_needed_for_plotting', 'tao_uni_atsign_index', 'tao_universe_index', 'tao_use_data', 'tao_use_var', 'tao_user_is_terminating_optimization', 'tao_var1_name', 'tao_var_attrib_name', 'tao_var_check', 'tao_var_repoint', 'tao_var_target_calc', 'tao_var_useit_plot_calc', 'tao_var_write', 'tao_veto_vars_with_zero_dmodel', 'tao_wave_analysis', 'tao_wave_cmd', 'tao_wave_fit', 'tao_write_cmd', 'tao_x_axis_cmd', 'tao_x_scale_cmd', 'tao_x_scale_graph', 'tao_x_scale_plot', 'taper_mag_strengths', 'target_min_max_calc', 'target_rot_mats', 'taylor_equal_taylor', 'taylor_inverse', 'taylor_propagate1', 'taylor_to_mad_map', 'taylors_equal_taylors', 'test_bunch_struct_array', 'test_bunch_struct_scalar', 'test_character_scalar', 'test_complex_array', 'test_complex_scalar', 'test_integer8_array', 'test_integer8_scalar', 'test_integer_array', 'test_integer_scalar', 'test_logical_array', 'test_logical_scalar', 'test_real16_array', 'test_real16_scalar', 'test_real_array', 'test_real_scalar', 'tilt_coords', 'tilt_coords_photon', 'tilt_mat6', 'to_eta_reading', 'to_fieldmap_coords', 'to_orbit_reading', 'to_phase_and_coupling_reading', 'to_photon_angle_coords', 'to_str', 'to_surface_coords', 'touschek_lifetime', 'touschek_rate1', 'touschek_rate1_zap', 'track1', 'track1_beam', 'track1_bmad', 'track1_bmad_photon', 'track1_bunch', 'track1_bunch_csr', 'track1_bunch_csr3d', 'track1_bunch_hom', 'track1_bunch_space_charge', 'track1_crystal', 'track1_diffraction_plate_or_mask', 'track1_high_energy_space_charge', 'track1_lens', 'track1_linear', 'track1_lr_wake', 'track1_mad', 'track1_mirror', 'track1_mosaic_crystal', 'track1_multilayer_mirror', 'track1_radiation', 'track1_radiation_center', 'track1_runge_kutta', 'track1_sample', 'track1_spin', 'track1_spin_integration', 'track1_spin_taylor', 'track1_sr_wake', 'track1_symp_lie_ptc', 'track1_taylor', 'track1_time_runge_kutta', 'track_a_beambeam', 'track_a_bend', 'track_a_bend_photon', 'track_a_capillary', 'track_a_converter', 'track_a_crab_cavity', 'track_a_drift', 'track_a_drift_photon', 'track_a_foil', 'track_a_gkicker', 'track_a_lcavity', 'track_a_lcavity_old', 'track_a_mask', 'track_a_match', 'track_a_patch', 'track_a_patch_photon', 'track_a_pickup', 'track_a_quadrupole', 'track_a_rfcavity', 'track_a_sad_mult', 'track_a_sol_quad', 'track_a_thick_multipole', 'track_a_wiggler', 'track_a_zero_length_element', 'track_all', 'track_beam', 'track_bunch', 'track_bunch_time', 'track_bunch_to_s', 'track_bunch_to_t', 'track_complex_taylor', 'track_from_s_to_s', 'track_many', 'track_to_surface', 'track_until_dead', 'tracking_rad_map_setup', 'transfer_ac_kick', 'transfer_branch', 'transfer_branch_parameters', 'transfer_branches', 'transfer_ele', 'transfer_ele_taylor', 'transfer_eles', 'transfer_fieldmap', 'transfer_fixer_params', 'transfer_lat', 'transfer_lat_parameters', 'transfer_map_calc', 'transfer_map_from_s_to_s', 'transfer_mat2_from_twiss', 'transfer_mat_from_twiss', 'transfer_matrix_calc', 'transfer_twiss', 'transfer_wake', 'tricubic_cmplx_eval', 'truncate_complex_taylor_to_order', 'twiss1_propagate', 'twiss3_at_start', 'twiss3_from_twiss2', 'twiss3_propagate1', 'twiss3_propagate_all', 'twiss_and_track', 'twiss_and_track_at_s', 'twiss_and_track_from_s_to_s', 'twiss_and_track_intra_ele', 'twiss_at_element', 'twiss_at_start', 'twiss_from_tracking', 'twiss_propagate1', 'twiss_propagate_all', 'twiss_to_1_turn_mat', 'type_coord', 'type_expression_tree', 'type_this_file', 'upcase_string', 'update_ele_from_fibre', 'update_fibre_from_ele', 'update_floor_angles', 'valid_field_calc', 'valid_fringe_type', 'valid_mat6_calc_method', 'valid_spin_tracking_method', 'valid_tracking_method', 'value_of_attribute', 'value_to_line', 'vec_to_polar', 'vec_to_spinor', 'verify_valid_name', 'virtual_memory_usage', 'w_mat_for_bend_angle', 'w_mat_for_tilt', 'w_mat_for_x_pitch', 'w_mat_for_y_pitch', 'w_mat_to_axis_angle', 'w_mat_to_quat', 'wall3d_d_radius', 'wall3d_initializer', 'wall3d_section_initializer', 'wall3d_to_position', 'word_len', 'word_read', 'word_to_value', 'write_ascii_beam_file', 'write_astra_bend', 'write_astra_field_grid_file', 'write_astra_field_grid_file_3d', 'write_beam_file', 'write_beam_floor_positions', 'write_binary_cartesian_map', 'write_binary_cylindrical_map', 'write_binary_grid_field', 'write_blender_ele', 'write_blender_lat_layout', 'write_bmad_lattice_file', 'write_bunch_by_bunch_info', 'write_gpt_field_grid_file_1d', 'write_gpt_field_grid_file_2d', 'write_gpt_field_grid_file_3d', 'write_lat_line', 'write_lattice_in_elegant_format', 'write_lattice_in_foreign_format', 'write_lattice_in_mad_format', 'write_lattice_in_sad_format', 'write_lattice_in_scibmad', 'write_line_element', 'write_opal_field_grid_file', 'write_opal_lattice_file', 'write_time_particle_distribution', 'x0_radiation_length', 'xlafun', 'xraylib_nist_compound', 'ylafun', 'z_at_surface', 'zero_ele_kicks', 'zero_ele_offsets', 'zero_lr_wakes_in_lat', 'zlafun']
 class AbMultipoleKick:
     """
-    Fortran routine ab_multipole_kick return value
+    ab_multipole_kick return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -25,7 +25,7 @@ class AbMultipoleKick:
         ...
 class AbsoluteTimeTracking:
     """
-    Fortran routine absolute_time_tracking return value
+    absolute_time_tracking return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -36,7 +36,7 @@ class AbsoluteTimeTracking:
         ...
 class AcKickerAmp:
     """
-    Fortran routine ac_kicker_amp return value
+    ac_kicker_amp return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -190,7 +190,7 @@ class AcKickerTimeStructArray1D:
         ...
 class ActionToXyz:
     """
-    Fortran routine action_to_xyz return value
+    action_to_xyz return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -204,7 +204,7 @@ class ActionToXyz:
         ...
 class AddSuperimpose:
     """
-    Fortran routine add_superimpose return value
+    add_superimpose return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -218,7 +218,7 @@ class AddSuperimpose:
         ...
 class AddThisTaylorTerm:
     """
-    Fortran routine add_this_taylor_term return value
+    add_this_taylor_term return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -232,7 +232,7 @@ class AddThisTaylorTerm:
         ...
 class AdjustSuperSlaveNames:
     """
-    Fortran routine adjust_super_slave_names return value
+    adjust_super_slave_names return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -454,7 +454,7 @@ class AllEncompassingStruct:
         ...
 class AngleBetweenPolars:
     """
-    Fortran routine angle_between_polars return value
+    angle_between_polars return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -711,7 +711,7 @@ class ApertureScanStructArray1D:
         ...
 class Apfft:
     """
-    Fortran routine apfft return value
+    apfft return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -728,7 +728,7 @@ class Apfft:
         ...
 class ApfftCorr:
     """
-    Fortran routine apfft_corr return value
+    apfft_corr return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -745,7 +745,7 @@ class ApfftCorr:
         ...
 class ApfftExt:
     """
-    Fortran routine apfft_ext return value
+    apfft_ext return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -768,7 +768,7 @@ class ApfftExt:
         ...
 class ArrayReStr:
     """
-    Fortran routine array_re_str return value
+    array_re_str return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -782,7 +782,7 @@ class ArrayReStr:
         ...
 class Asinc:
     """
-    Fortran routine asinc return value
+    asinc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -793,7 +793,7 @@ class Asinc:
         ...
 class AssertEqual:
     """
-    Fortran routine assert_equal return value
+    assert_equal return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -807,7 +807,7 @@ class AssertEqual:
         ...
 class AstraMaxFieldReference:
     """
-    Fortran routine astra_max_field_reference return value
+    astra_max_field_reference return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -818,7 +818,7 @@ class AstraMaxFieldReference:
         ...
 class AtThisEleEnd:
     """
-    Fortran routine at_this_ele_end return value
+    at_this_ele_end return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -829,7 +829,7 @@ class AtThisEleEnd:
         ...
 class AttributeFree1:
     """
-    Fortran routine attribute_free1 return value
+    attribute_free1 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -843,7 +843,7 @@ class AttributeFree1:
         ...
 class AttributeFree2:
     """
-    Fortran routine attribute_free2 return value
+    attribute_free2 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -857,7 +857,7 @@ class AttributeFree2:
         ...
 class AttributeFree3:
     """
-    Fortran routine attribute_free3 return value
+    attribute_free3 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -871,7 +871,7 @@ class AttributeFree3:
         ...
 class AttributeIndex1:
     """
-    Fortran routine attribute_index1 return value
+    attribute_index1 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -885,7 +885,7 @@ class AttributeIndex1:
         ...
 class AttributeIndex2:
     """
-    Fortran routine attribute_index2 return value
+    attribute_index2 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -899,7 +899,7 @@ class AttributeIndex2:
         ...
 class BbiKick:
     """
-    Fortran routine bbi_kick return value
+    bbi_kick return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -982,7 +982,7 @@ class BbuBeamStruct:
         ...
 class BbuHomVoltageCalc:
     """
-    Fortran routine bbu_hom_voltage_calc return value
+    bbu_hom_voltage_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -1131,7 +1131,7 @@ class BbuParamStruct:
         ...
 class BbuSetup:
     """
-    Fortran routine bbu_setup return value
+    bbu_setup return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -1255,7 +1255,7 @@ class BbuStageStructArray1D:
         ...
 class BbuTrackAStage:
     """
-    Fortran routine bbu_track_a_stage return value
+    bbu_track_a_stage return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -1269,7 +1269,7 @@ class BbuTrackAStage:
         ...
 class BbuTrackAll:
     """
-    Fortran routine bbu_track_all return value
+    bbu_track_all return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -1445,7 +1445,7 @@ class BeamStruct:
         ...
 class BeamTilts:
     """
-    Fortran routine beam_tilts return value
+    beam_tilts return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -1468,7 +1468,7 @@ class BeamTilts:
         ...
 class BendLengthHasBeenSet:
     """
-    Fortran routine bend_length_has_been_set return value
+    bend_length_has_been_set return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -1510,7 +1510,7 @@ class BicubicCmplxCoefStructArray3D:
         ...
 class BicubicCmplxEval:
     """
-    Fortran routine bicubic_cmplx_eval return value
+    bicubic_cmplx_eval return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -1527,7 +1527,7 @@ class BicubicCmplxEval:
         ...
 class BinXCenter:
     """
-    Fortran routine bin_x_center return value
+    bin_x_center return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -1541,7 +1541,7 @@ class BinXCenter:
         ...
 class BitSet:
     """
-    Fortran routine bit_set return value
+    bit_set return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -1757,7 +1757,7 @@ class BmadNormalFormStruct:
         ...
 class BmadParser:
     """
-    Fortran routine bmad_parser return value
+    bmad_parser return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -1777,7 +1777,7 @@ class BmadParser:
         ...
 class BmadParser2:
     """
-    Fortran routine bmad_parser2 return value
+    bmad_parser2 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2021,7 +2021,7 @@ class BpmPhaseCouplingStruct:
         ...
 class BracketIndexForSpline:
     """
-    Fortran routine bracket_index_for_spline return value
+    bracket_index_for_spline return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2035,7 +2035,7 @@ class BracketIndexForSpline:
         ...
 class BranchName:
     """
-    Fortran routine branch_name return value
+    branch_name return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2471,7 +2471,7 @@ class BunchTrackStructArray1D:
         ...
 class CalcBunchSigmaMatrixEtc:
     """
-    Fortran routine calc_bunch_sigma_matrix_etc return value
+    calc_bunch_sigma_matrix_etc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2485,7 +2485,7 @@ class CalcBunchSigmaMatrixEtc:
         ...
 class CalcEmittancesAndTwissFromSigmaMatrix:
     """
-    Fortran routine calc_emittances_and_twiss_from_sigma_matrix return value
+    calc_emittances_and_twiss_from_sigma_matrix return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2502,7 +2502,7 @@ class CalcEmittancesAndTwissFromSigmaMatrix:
         ...
 class CalcFileNumber:
     """
-    Fortran routine calc_file_number return value
+    calc_file_number return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2522,7 +2522,7 @@ class CalcFileNumber:
         ...
 class CalcWallRadius:
     """
-    Fortran routine calc_wall_radius return value
+    calc_wall_radius return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2742,7 +2742,7 @@ class CartesianMapTermStruct:
         ...
 class ChangeFileNumber:
     """
-    Fortran routine change_file_number return value
+    change_file_number return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2756,7 +2756,7 @@ class ChangeFileNumber:
         ...
 class CheckForSuperimposeProblem:
     """
-    Fortran routine check_for_superimpose_problem return value
+    check_for_superimpose_problem return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2770,7 +2770,7 @@ class CheckForSuperimposeProblem:
         ...
 class CheckIfSInBounds:
     """
-    Fortran routine check_if_s_in_bounds return value
+    check_if_s_in_bounds return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2784,7 +2784,7 @@ class CheckIfSInBounds:
         ...
 class CheckRfFreq:
     """
-    Fortran routine check_rf_freq return value
+    check_rf_freq return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2795,7 +2795,7 @@ class CheckRfFreq:
         ...
 class ChooseQuadsForSetTune:
     """
-    Fortran routine choose_quads_for_set_tune return value
+    choose_quads_for_set_tune return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2812,7 +2812,7 @@ class ChooseQuadsForSetTune:
         ...
 class ChromCalc:
     """
-    Fortran routine chrom_calc return value
+    chrom_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2844,7 +2844,7 @@ class ChromCalc:
         ...
 class ChromTune:
     """
-    Fortran routine chrom_tune return value
+    chrom_tune return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2858,7 +2858,7 @@ class ChromTune:
         ...
 class ClassicalRadius:
     """
-    Fortran routine classical_radius return value
+    classical_radius return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2869,7 +2869,7 @@ class ClassicalRadius:
         ...
 class ClosedOrbitFromTracking:
     """
-    Fortran routine closed_orbit_from_tracking return value
+    closed_orbit_from_tracking return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2883,7 +2883,7 @@ class ClosedOrbitFromTracking:
         ...
 class CmplxReStr:
     """
-    Fortran routine cmplx_re_str return value
+    cmplx_re_str return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -2897,7 +2897,7 @@ class CmplxReStr:
         ...
 class CoarseFrequencyEstimate:
     """
-    Fortran routine coarse_frequency_estimate return value
+    coarse_frequency_estimate return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3019,7 +3019,7 @@ class ComplexArray3D:
         ...
 class ComplexErrorFunction:
     """
-    Fortran routine complex_error_function return value
+    complex_error_function return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3039,7 +3039,7 @@ class ComplexErrorFunction:
         ...
 class ComplexTaylorCoef1:
     """
-    Fortran routine complex_taylor_coef1 return value
+    complex_taylor_coef1 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3050,7 +3050,7 @@ class ComplexTaylorCoef1:
         ...
 class ComplexTaylorCoef2:
     """
-    Fortran routine complex_taylor_coef2 return value
+    complex_taylor_coef2 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3163,7 +3163,7 @@ class ComplexTaylorTermStructArray1D:
         ...
 class ComplexTaylorToMat6:
     """
-    Fortran routine complex_taylor_to_mat6 return value
+    complex_taylor_to_mat6 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3389,7 +3389,7 @@ class ControllerStruct:
         ...
 class ConvertCoords:
     """
-    Fortran routine convert_coords return value
+    convert_coords return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3406,7 +3406,7 @@ class ConvertCoords:
         ...
 class ConvertLocalCartesianToLocalCurvilinear:
     """
-    Fortran routine convert_local_cartesian_to_local_curvilinear return value
+    convert_local_cartesian_to_local_curvilinear return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3429,7 +3429,7 @@ class ConvertLocalCartesianToLocalCurvilinear:
         ...
 class ConvertLocalCurvilinearToLocalCartesian:
     """
-    Fortran routine convert_local_curvilinear_to_local_cartesian return value
+    convert_local_curvilinear_to_local_cartesian return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3452,7 +3452,7 @@ class ConvertLocalCurvilinearToLocalCartesian:
         ...
 class ConvertPcTo:
     """
-    Fortran routine convert_pc_to return value
+    convert_pc_to return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3481,7 +3481,7 @@ class ConvertPcTo:
         ...
 class ConvertTotalEnergyTo:
     """
-    Fortran routine convert_total_energy_to return value
+    convert_total_energy_to return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3510,7 +3510,7 @@ class ConvertTotalEnergyTo:
         ...
 class ConverterDistributionParser:
     """
-    Fortran routine converter_distribution_parser return value
+    converter_distribution_parser return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3577,7 +3577,7 @@ class CoordArrayStructArray1D:
         ...
 class CoordStateName:
     """
-    Fortran routine coord_state_name return value
+    coord_state_name return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3752,7 +3752,7 @@ class CoordStructArray1D:
         ...
 class CoordsFloorToCurvilinear:
     """
-    Fortran routine coords_floor_to_curvilinear return value
+    coords_floor_to_curvilinear return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3769,7 +3769,7 @@ class CoordsFloorToCurvilinear:
         ...
 class CoordsFloorToLocalCurvilinear:
     """
-    Fortran routine coords_floor_to_local_curvilinear return value
+    coords_floor_to_local_curvilinear return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3783,7 +3783,7 @@ class CoordsFloorToLocalCurvilinear:
         ...
 class CoordsRelativeToFloor:
     """
-    Fortran routine coords_relative_to_floor return value
+    coords_relative_to_floor return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3800,7 +3800,7 @@ class CoordsRelativeToFloor:
         ...
 class CosOne:
     """
-    Fortran routine cos_one return value
+    cos_one return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3811,7 +3811,7 @@ class CosOne:
         ...
 class Cosc:
     """
-    Fortran routine cosc return value
+    cosc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3822,7 +3822,7 @@ class Cosc:
         ...
 class Coulombfun:
     """
-    Fortran routine coulombfun return value
+    coulombfun return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3845,7 +3845,7 @@ class Coulombfun:
         ...
 class CreateConcatenatedWall3d:
     """
-    Fortran routine create_concatenated_wall3d return value
+    create_concatenated_wall3d return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3856,7 +3856,7 @@ class CreateConcatenatedWall3d:
         ...
 class CreateElementSlice:
     """
-    Fortran routine create_element_slice return value
+    create_element_slice return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3870,7 +3870,7 @@ class CreateElementSlice:
         ...
 class CreateGirder:
     """
-    Fortran routine create_girder return value
+    create_girder return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -3881,7 +3881,7 @@ class CreateGirder:
         ...
 class CreatePlanarWigglerModel:
     """
-    Fortran routine create_planar_wiggler_model return value
+    create_planar_wiggler_model return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4070,7 +4070,7 @@ class CylindricalMapTermStruct:
         ...
 class DampingMatrixD:
     """
-    Fortran routine damping_matrix_d return value
+    damping_matrix_d return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4096,7 +4096,7 @@ class DampingMatrixD:
         ...
 class DateAndTimeStamp:
     """
-    Fortran routine date_and_time_stamp return value
+    date_and_time_stamp return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4113,7 +4113,7 @@ class DateAndTimeStamp:
         ...
 class DefaultTrackingSpecies:
     """
-    Fortran routine default_tracking_species return value
+    default_tracking_species return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4124,7 +4124,7 @@ class DefaultTrackingSpecies:
         ...
 class Detab:
     """
-    Fortran routine detab return value
+    detab return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4135,7 +4135,7 @@ class Detab:
         ...
 class DiffractionPlateOrMaskHitSpot:
     """
-    Fortran routine diffraction_plate_or_mask_hit_spot return value
+    diffraction_plate_or_mask_hit_spot return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4146,7 +4146,7 @@ class DiffractionPlateOrMaskHitSpot:
         ...
 class DiffusionMatrixB:
     """
-    Fortran routine diffusion_matrix_b return value
+    diffusion_matrix_b return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4163,7 +4163,7 @@ class DiffusionMatrixB:
         ...
 class DisplaySizeAndResolution:
     """
-    Fortran routine display_size_and_resolution return value
+    display_size_and_resolution return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4186,7 +4186,7 @@ class DisplaySizeAndResolution:
         ...
 class DistanceToAperture:
     """
-    Fortran routine distance_to_aperture return value
+    distance_to_aperture return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4200,7 +4200,7 @@ class DistanceToAperture:
         ...
 class DjBessel:
     """
-    Fortran routine dj_bessel return value
+    dj_bessel return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4217,7 +4217,7 @@ class DjBessel:
         ...
 class DjbHash:
     """
-    Fortran routine djb_hash return value
+    djb_hash return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4234,7 +4234,7 @@ class DjbHash:
         ...
 class DjbStrHash:
     """
-    Fortran routine djb_str_hash return value
+    djb_str_hash return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4248,7 +4248,7 @@ class DjbStrHash:
         ...
 class DowncaseString:
     """
-    Fortran routine downcase_string return value
+    downcase_string return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4259,7 +4259,7 @@ class DowncaseString:
         ...
 class DpcGivenDe:
     """
-    Fortran routine dpc_given_de return value
+    dpc_given_de return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4279,7 +4279,7 @@ class DpcGivenDe:
         ...
 class EAccelField:
     """
-    Fortran routine e_accel_field return value
+    e_accel_field return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4290,7 +4290,7 @@ class EAccelField:
         ...
 class EigenDecomp6mat:
     """
-    Fortran routine eigen_decomp_6mat return value
+    eigen_decomp_6mat return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4393,7 +4393,7 @@ class EleAttribute(enum.IntEnum):
         """
 class EleFullName:
     """
-    Fortran routine ele_full_name return value
+    ele_full_name return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4404,7 +4404,7 @@ class EleFullName:
         ...
 class EleHasConstantDsDtRef:
     """
-    Fortran routine ele_has_constant_ds_dt_ref return value
+    ele_has_constant_ds_dt_ref return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4415,7 +4415,7 @@ class EleHasConstantDsDtRef:
         ...
 class EleHasNonzeroKick:
     """
-    Fortran routine ele_has_nonzero_kick return value
+    ele_has_nonzero_kick return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4429,7 +4429,7 @@ class EleHasNonzeroKick:
         ...
 class EleHasNonzeroOffset:
     """
-    Fortran routine ele_has_nonzero_offset return value
+    ele_has_nonzero_offset return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4518,7 +4518,7 @@ class EleKey(enum.IntEnum):
         """
 class EleLocName:
     """
-    Fortran routine ele_loc_name return value
+    ele_loc_name return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4529,7 +4529,7 @@ class EleLocName:
         ...
 class EleMisalignmentLSCalc:
     """
-    Fortran routine ele_misalignment_l_s_calc return value
+    ele_misalignment_l_s_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4543,7 +4543,7 @@ class EleMisalignmentLSCalc:
         ...
 class EleNametableIndex:
     """
-    Fortran routine ele_nametable_index return value
+    ele_nametable_index return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -4614,7 +4614,7 @@ class ElePointerStructArray1D:
         ...
 class EleRfStepIndex:
     """
-    Fortran routine ele_rf_step_index return value
+    ele_rf_step_index return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5014,7 +5014,7 @@ class EleStructArray1D:
         ...
 class EleToPtcMagneticBnAn:
     """
-    Fortran routine ele_to_ptc_magnetic_bn_an return value
+    ele_to_ptc_magnetic_bn_an return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5031,7 +5031,7 @@ class EleToPtcMagneticBnAn:
         ...
 class EleToTaylor:
     """
-    Fortran routine ele_to_taylor return value
+    ele_to_taylor return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5045,7 +5045,7 @@ class EleToTaylor:
         ...
 class EleUniqueName:
     """
-    Fortran routine ele_unique_name return value
+    ele_unique_name return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5056,7 +5056,7 @@ class EleUniqueName:
         ...
 class EleValueHasChanged:
     """
-    Fortran routine ele_value_has_changed return value
+    ele_value_has_changed return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5067,7 +5067,7 @@ class EleValueHasChanged:
         ...
 class ElecMultipoleField:
     """
-    Fortran routine elec_multipole_field return value
+    elec_multipole_field return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5087,7 +5087,7 @@ class ElecMultipoleField:
         ...
 class ElementAtSBranch:
     """
-    Fortran routine element_at_s_branch return value
+    element_at_s_branch return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5107,7 +5107,7 @@ class ElementAtSBranch:
         ...
 class ElementAtSLat:
     """
-    Fortran routine element_at_s_lat return value
+    element_at_s_lat return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5192,7 +5192,7 @@ class EllipseBeamInitStructArray1D:
         ...
 class EmFieldCalc:
     """
-    Fortran routine em_field_calc return value
+    em_field_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5206,7 +5206,7 @@ class EmFieldCalc:
         ...
 class EmFieldDerivatives:
     """
-    Fortran routine em_field_derivatives return value
+    em_field_derivatives return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5415,7 +5415,7 @@ class EmTaylorTermStructArray1D:
         ...
 class Emit6d:
     """
-    Fortran routine emit_6d return value
+    emit_6d return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5432,7 +5432,7 @@ class Emit6d:
         ...
 class EnteringElement:
     """
-    Fortran routine entering_element return value
+    entering_element return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5443,7 +5443,7 @@ class EnteringElement:
         ...
 class EnvelopeRadintsIbs:
     """
-    Fortran routine envelope_radints_ibs return value
+    envelope_radints_ibs return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5457,7 +5457,7 @@ class EnvelopeRadintsIbs:
         ...
 class EqAcKicker:
     """
-    Fortran routine eq_ac_kicker return value
+    eq_ac_kicker return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5468,7 +5468,7 @@ class EqAcKicker:
         ...
 class EqAcKickerFreq:
     """
-    Fortran routine eq_ac_kicker_freq return value
+    eq_ac_kicker_freq return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5479,7 +5479,7 @@ class EqAcKickerFreq:
         ...
 class EqAcKickerTime:
     """
-    Fortran routine eq_ac_kicker_time return value
+    eq_ac_kicker_time return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5490,7 +5490,7 @@ class EqAcKickerTime:
         ...
 class EqAnormalMode:
     """
-    Fortran routine eq_anormal_mode return value
+    eq_anormal_mode return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5501,7 +5501,7 @@ class EqAnormalMode:
         ...
 class EqApertureParam:
     """
-    Fortran routine eq_aperture_param return value
+    eq_aperture_param return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5512,7 +5512,7 @@ class EqApertureParam:
         ...
 class EqAperturePoint:
     """
-    Fortran routine eq_aperture_point return value
+    eq_aperture_point return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5523,7 +5523,7 @@ class EqAperturePoint:
         ...
 class EqApertureScan:
     """
-    Fortran routine eq_aperture_scan return value
+    eq_aperture_scan return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5534,7 +5534,7 @@ class EqApertureScan:
         ...
 class EqBeam:
     """
-    Fortran routine eq_beam return value
+    eq_beam return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5545,7 +5545,7 @@ class EqBeam:
         ...
 class EqBeamInit:
     """
-    Fortran routine eq_beam_init return value
+    eq_beam_init return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5556,7 +5556,7 @@ class EqBeamInit:
         ...
 class EqBmadCommon:
     """
-    Fortran routine eq_bmad_common return value
+    eq_bmad_common return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5567,7 +5567,7 @@ class EqBmadCommon:
         ...
 class EqBookkeepingState:
     """
-    Fortran routine eq_bookkeeping_state return value
+    eq_bookkeeping_state return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5578,7 +5578,7 @@ class EqBookkeepingState:
         ...
 class EqBpmPhaseCoupling:
     """
-    Fortran routine eq_bpm_phase_coupling return value
+    eq_bpm_phase_coupling return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5589,7 +5589,7 @@ class EqBpmPhaseCoupling:
         ...
 class EqBranch:
     """
-    Fortran routine eq_branch return value
+    eq_branch return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5600,7 +5600,7 @@ class EqBranch:
         ...
 class EqBunch:
     """
-    Fortran routine eq_bunch return value
+    eq_bunch return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5611,7 +5611,7 @@ class EqBunch:
         ...
 class EqBunchParams:
     """
-    Fortran routine eq_bunch_params return value
+    eq_bunch_params return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5622,7 +5622,7 @@ class EqBunchParams:
         ...
 class EqCartesianMap:
     """
-    Fortran routine eq_cartesian_map return value
+    eq_cartesian_map return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5633,7 +5633,7 @@ class EqCartesianMap:
         ...
 class EqCartesianMapTerm:
     """
-    Fortran routine eq_cartesian_map_term return value
+    eq_cartesian_map_term return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5644,7 +5644,7 @@ class EqCartesianMapTerm:
         ...
 class EqCartesianMapTerm1:
     """
-    Fortran routine eq_cartesian_map_term1 return value
+    eq_cartesian_map_term1 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5655,7 +5655,7 @@ class EqCartesianMapTerm1:
         ...
 class EqComplexTaylor:
     """
-    Fortran routine eq_complex_taylor return value
+    eq_complex_taylor return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5666,7 +5666,7 @@ class EqComplexTaylor:
         ...
 class EqComplexTaylorTerm:
     """
-    Fortran routine eq_complex_taylor_term return value
+    eq_complex_taylor_term return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5677,7 +5677,7 @@ class EqComplexTaylorTerm:
         ...
 class EqControl:
     """
-    Fortran routine eq_control return value
+    eq_control return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5688,7 +5688,7 @@ class EqControl:
         ...
 class EqControlRamp1:
     """
-    Fortran routine eq_control_ramp1 return value
+    eq_control_ramp1 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5699,7 +5699,7 @@ class EqControlRamp1:
         ...
 class EqControlVar1:
     """
-    Fortran routine eq_control_var1 return value
+    eq_control_var1 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5710,7 +5710,7 @@ class EqControlVar1:
         ...
 class EqController:
     """
-    Fortran routine eq_controller return value
+    eq_controller return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5721,7 +5721,7 @@ class EqController:
         ...
 class EqCoord:
     """
-    Fortran routine eq_coord return value
+    eq_coord return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5732,7 +5732,7 @@ class EqCoord:
         ...
 class EqCoordArray:
     """
-    Fortran routine eq_coord_array return value
+    eq_coord_array return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5743,7 +5743,7 @@ class EqCoordArray:
         ...
 class EqCylindricalMap:
     """
-    Fortran routine eq_cylindrical_map return value
+    eq_cylindrical_map return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5754,7 +5754,7 @@ class EqCylindricalMap:
         ...
 class EqCylindricalMapTerm:
     """
-    Fortran routine eq_cylindrical_map_term return value
+    eq_cylindrical_map_term return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5765,7 +5765,7 @@ class EqCylindricalMapTerm:
         ...
 class EqCylindricalMapTerm1:
     """
-    Fortran routine eq_cylindrical_map_term1 return value
+    eq_cylindrical_map_term1 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5776,7 +5776,7 @@ class EqCylindricalMapTerm1:
         ...
 class EqEle:
     """
-    Fortran routine eq_ele return value
+    eq_ele return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5787,7 +5787,7 @@ class EqEle:
         ...
 class EqEllipseBeamInit:
     """
-    Fortran routine eq_ellipse_beam_init return value
+    eq_ellipse_beam_init return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5798,7 +5798,7 @@ class EqEllipseBeamInit:
         ...
 class EqEmField:
     """
-    Fortran routine eq_em_field return value
+    eq_em_field return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5809,7 +5809,7 @@ class EqEmField:
         ...
 class EqEmTaylor:
     """
-    Fortran routine eq_em_taylor return value
+    eq_em_taylor return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5820,7 +5820,7 @@ class EqEmTaylor:
         ...
 class EqEmTaylorTerm:
     """
-    Fortran routine eq_em_taylor_term return value
+    eq_em_taylor_term return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5831,7 +5831,7 @@ class EqEmTaylorTerm:
         ...
 class EqExpressionAtom:
     """
-    Fortran routine eq_expression_atom return value
+    eq_expression_atom return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5842,7 +5842,7 @@ class EqExpressionAtom:
         ...
 class EqFloorPosition:
     """
-    Fortran routine eq_floor_position return value
+    eq_floor_position return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5853,7 +5853,7 @@ class EqFloorPosition:
         ...
 class EqGenGrad1:
     """
-    Fortran routine eq_gen_grad1 return value
+    eq_gen_grad1 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5864,7 +5864,7 @@ class EqGenGrad1:
         ...
 class EqGenGradMap:
     """
-    Fortran routine eq_gen_grad_map return value
+    eq_gen_grad_map return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5875,7 +5875,7 @@ class EqGenGradMap:
         ...
 class EqGridBeamInit:
     """
-    Fortran routine eq_grid_beam_init return value
+    eq_grid_beam_init return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5886,7 +5886,7 @@ class EqGridBeamInit:
         ...
 class EqGridField:
     """
-    Fortran routine eq_grid_field return value
+    eq_grid_field return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5897,7 +5897,7 @@ class EqGridField:
         ...
 class EqGridFieldPt:
     """
-    Fortran routine eq_grid_field_pt return value
+    eq_grid_field_pt return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5908,7 +5908,7 @@ class EqGridFieldPt:
         ...
 class EqGridFieldPt1:
     """
-    Fortran routine eq_grid_field_pt1 return value
+    eq_grid_field_pt1 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5919,7 +5919,7 @@ class EqGridFieldPt1:
         ...
 class EqHighEnergySpaceCharge:
     """
-    Fortran routine eq_high_energy_space_charge return value
+    eq_high_energy_space_charge return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5930,7 +5930,7 @@ class EqHighEnergySpaceCharge:
         ...
 class EqInterval1Coef:
     """
-    Fortran routine eq_interval1_coef return value
+    eq_interval1_coef return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5941,7 +5941,7 @@ class EqInterval1Coef:
         ...
 class EqKvBeamInit:
     """
-    Fortran routine eq_kv_beam_init return value
+    eq_kv_beam_init return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5952,7 +5952,7 @@ class EqKvBeamInit:
         ...
 class EqLat:
     """
-    Fortran routine eq_lat return value
+    eq_lat return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5963,7 +5963,7 @@ class EqLat:
         ...
 class EqLatEleLoc:
     """
-    Fortran routine eq_lat_ele_loc return value
+    eq_lat_ele_loc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5974,7 +5974,7 @@ class EqLatEleLoc:
         ...
 class EqLatParam:
     """
-    Fortran routine eq_lat_param return value
+    eq_lat_param return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5985,7 +5985,7 @@ class EqLatParam:
         ...
 class EqLinacNormalMode:
     """
-    Fortran routine eq_linac_normal_mode return value
+    eq_linac_normal_mode return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -5996,7 +5996,7 @@ class EqLinacNormalMode:
         ...
 class EqMode3:
     """
-    Fortran routine eq_mode3 return value
+    eq_mode3 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6007,7 +6007,7 @@ class EqMode3:
         ...
 class EqModeInfo:
     """
-    Fortran routine eq_mode_info return value
+    eq_mode_info return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6018,7 +6018,7 @@ class EqModeInfo:
         ...
 class EqNormalModes:
     """
-    Fortran routine eq_normal_modes return value
+    eq_normal_modes return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6029,7 +6029,7 @@ class EqNormalModes:
         ...
 class EqPhotonElement:
     """
-    Fortran routine eq_photon_element return value
+    eq_photon_element return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6040,7 +6040,7 @@ class EqPhotonElement:
         ...
 class EqPhotonMaterial:
     """
-    Fortran routine eq_photon_material return value
+    eq_photon_material return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6051,7 +6051,7 @@ class EqPhotonMaterial:
         ...
 class EqPhotonReflectSurface:
     """
-    Fortran routine eq_photon_reflect_surface return value
+    eq_photon_reflect_surface return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6062,7 +6062,7 @@ class EqPhotonReflectSurface:
         ...
 class EqPhotonReflectTable:
     """
-    Fortran routine eq_photon_reflect_table return value
+    eq_photon_reflect_table return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6073,7 +6073,7 @@ class EqPhotonReflectTable:
         ...
 class EqPhotonTarget:
     """
-    Fortran routine eq_photon_target return value
+    eq_photon_target return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6084,7 +6084,7 @@ class EqPhotonTarget:
         ...
 class EqPixelDetec:
     """
-    Fortran routine eq_pixel_detec return value
+    eq_pixel_detec return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6095,7 +6095,7 @@ class EqPixelDetec:
         ...
 class EqPixelPt:
     """
-    Fortran routine eq_pixel_pt return value
+    eq_pixel_pt return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6106,7 +6106,7 @@ class EqPixelPt:
         ...
 class EqPreTracker:
     """
-    Fortran routine eq_pre_tracker return value
+    eq_pre_tracker return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6117,7 +6117,7 @@ class EqPreTracker:
         ...
 class EqRadInt1:
     """
-    Fortran routine eq_rad_int1 return value
+    eq_rad_int1 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6128,7 +6128,7 @@ class EqRadInt1:
         ...
 class EqRadIntAllEle:
     """
-    Fortran routine eq_rad_int_all_ele return value
+    eq_rad_int_all_ele return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6139,7 +6139,7 @@ class EqRadIntAllEle:
         ...
 class EqRadIntBranch:
     """
-    Fortran routine eq_rad_int_branch return value
+    eq_rad_int_branch return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6150,7 +6150,7 @@ class EqRadIntBranch:
         ...
 class EqRadMap:
     """
-    Fortran routine eq_rad_map return value
+    eq_rad_map return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6161,7 +6161,7 @@ class EqRadMap:
         ...
 class EqRadMapEle:
     """
-    Fortran routine eq_rad_map_ele return value
+    eq_rad_map_ele return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6172,7 +6172,7 @@ class EqRadMapEle:
         ...
 class EqRamperLord:
     """
-    Fortran routine eq_ramper_lord return value
+    eq_ramper_lord return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6183,7 +6183,7 @@ class EqRamperLord:
         ...
 class EqSpaceChargeCommon:
     """
-    Fortran routine eq_space_charge_common return value
+    eq_space_charge_common return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6194,7 +6194,7 @@ class EqSpaceChargeCommon:
         ...
 class EqSpinPolar:
     """
-    Fortran routine eq_spin_polar return value
+    eq_spin_polar return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6205,7 +6205,7 @@ class EqSpinPolar:
         ...
 class EqSpline:
     """
-    Fortran routine eq_spline return value
+    eq_spline return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6216,7 +6216,7 @@ class EqSpline:
         ...
 class EqStrongBeam:
     """
-    Fortran routine eq_strong_beam return value
+    eq_strong_beam return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6227,7 +6227,7 @@ class EqStrongBeam:
         ...
 class EqSurfaceCurvature:
     """
-    Fortran routine eq_surface_curvature return value
+    eq_surface_curvature return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6238,7 +6238,7 @@ class EqSurfaceCurvature:
         ...
 class EqSurfaceDisplacement:
     """
-    Fortran routine eq_surface_displacement return value
+    eq_surface_displacement return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6249,7 +6249,7 @@ class EqSurfaceDisplacement:
         ...
 class EqSurfaceDisplacementPt:
     """
-    Fortran routine eq_surface_displacement_pt return value
+    eq_surface_displacement_pt return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6260,7 +6260,7 @@ class EqSurfaceDisplacementPt:
         ...
 class EqSurfaceHMisalign:
     """
-    Fortran routine eq_surface_h_misalign return value
+    eq_surface_h_misalign return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6271,7 +6271,7 @@ class EqSurfaceHMisalign:
         ...
 class EqSurfaceHMisalignPt:
     """
-    Fortran routine eq_surface_h_misalign_pt return value
+    eq_surface_h_misalign_pt return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6282,7 +6282,7 @@ class EqSurfaceHMisalignPt:
         ...
 class EqSurfaceSegmented:
     """
-    Fortran routine eq_surface_segmented return value
+    eq_surface_segmented return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6293,7 +6293,7 @@ class EqSurfaceSegmented:
         ...
 class EqSurfaceSegmentedPt:
     """
-    Fortran routine eq_surface_segmented_pt return value
+    eq_surface_segmented_pt return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6304,7 +6304,7 @@ class EqSurfaceSegmentedPt:
         ...
 class EqTargetPoint:
     """
-    Fortran routine eq_target_point return value
+    eq_target_point return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6315,7 +6315,7 @@ class EqTargetPoint:
         ...
 class EqTaylor:
     """
-    Fortran routine eq_taylor return value
+    eq_taylor return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6326,7 +6326,7 @@ class EqTaylor:
         ...
 class EqTaylorTerm:
     """
-    Fortran routine eq_taylor_term return value
+    eq_taylor_term return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6337,7 +6337,7 @@ class EqTaylorTerm:
         ...
 class EqTrack:
     """
-    Fortran routine eq_track return value
+    eq_track return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6348,7 +6348,7 @@ class EqTrack:
         ...
 class EqTrackPoint:
     """
-    Fortran routine eq_track_point return value
+    eq_track_point return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6359,7 +6359,7 @@ class EqTrackPoint:
         ...
 class EqTwiss:
     """
-    Fortran routine eq_twiss return value
+    eq_twiss return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6370,7 +6370,7 @@ class EqTwiss:
         ...
 class EqWake:
     """
-    Fortran routine eq_wake return value
+    eq_wake return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6381,7 +6381,7 @@ class EqWake:
         ...
 class EqWakeLr:
     """
-    Fortran routine eq_wake_lr return value
+    eq_wake_lr return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6392,7 +6392,7 @@ class EqWakeLr:
         ...
 class EqWakeLrMode:
     """
-    Fortran routine eq_wake_lr_mode return value
+    eq_wake_lr_mode return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6403,7 +6403,7 @@ class EqWakeLrMode:
         ...
 class EqWakeSr:
     """
-    Fortran routine eq_wake_sr return value
+    eq_wake_sr return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6414,7 +6414,7 @@ class EqWakeSr:
         ...
 class EqWakeSrMode:
     """
-    Fortran routine eq_wake_sr_mode return value
+    eq_wake_sr_mode return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6425,7 +6425,7 @@ class EqWakeSrMode:
         ...
 class EqWakeSrZLong:
     """
-    Fortran routine eq_wake_sr_z_long return value
+    eq_wake_sr_z_long return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6436,7 +6436,7 @@ class EqWakeSrZLong:
         ...
 class EqWall3d:
     """
-    Fortran routine eq_wall3d return value
+    eq_wall3d return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6447,7 +6447,7 @@ class EqWall3d:
         ...
 class EqWall3dSection:
     """
-    Fortran routine eq_wall3d_section return value
+    eq_wall3d_section return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6458,7 +6458,7 @@ class EqWall3dSection:
         ...
 class EqWall3dVertex:
     """
-    Fortran routine eq_wall3d_vertex return value
+    eq_wall3d_vertex return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6469,7 +6469,7 @@ class EqWall3dVertex:
         ...
 class EqXyDisp:
     """
-    Fortran routine eq_xy_disp return value
+    eq_xy_disp return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6480,7 +6480,7 @@ class EqXyDisp:
         ...
 class EqualSignHere:
     """
-    Fortran routine equal_sign_here return value
+    equal_sign_here return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6494,7 +6494,7 @@ class EqualSignHere:
         ...
 class EquivalentTaylorAttributes:
     """
-    Fortran routine equivalent_taylor_attributes return value
+    equivalent_taylor_attributes return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6505,7 +6505,7 @@ class EquivalentTaylorAttributes:
         ...
 class ErrExit:
     """
-    Fortran routine err_exit return value
+    err_exit return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6516,7 +6516,7 @@ class ErrExit:
         ...
 class Etdiv:
     """
-    Fortran routine etdiv return value
+    etdiv return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6542,7 +6542,7 @@ class Etdiv:
         ...
 class EvaluateArrayIndex:
     """
-    Fortran routine evaluate_array_index return value
+    evaluate_array_index return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6562,7 +6562,7 @@ class EvaluateArrayIndex:
         ...
 class EvaluateLogical:
     """
-    Fortran routine evaluate_logical return value
+    evaluate_logical return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6576,7 +6576,7 @@ class EvaluateLogical:
         ...
 class ExpectOneOf:
     """
-    Fortran routine expect_one_of return value
+    expect_one_of return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6593,7 +6593,7 @@ class ExpectOneOf:
         ...
 class ExpectThis:
     """
-    Fortran routine expect_this return value
+    expect_this return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6670,7 +6670,7 @@ class ExpressionAtomStructArray1D:
         ...
 class ExpressionStackValue:
     """
-    Fortran routine expression_stack_value return value
+    expression_stack_value return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6687,7 +6687,7 @@ class ExpressionStackValue:
         ...
 class ExpressionStringToStack:
     """
-    Fortran routine expression_string_to_stack return value
+    expression_string_to_stack return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6707,7 +6707,7 @@ class ExpressionStringToStack:
         ...
 class ExpressionStringToTree:
     """
-    Fortran routine expression_string_to_tree return value
+    expression_string_to_tree return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6784,7 +6784,7 @@ class ExpressionTreeStructArray1D:
         ...
 class ExpressionValue:
     """
-    Fortran routine expression_value return value
+    expression_value return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6818,7 +6818,7 @@ class FCharArray1D:
         ...
 class Factorial:
     """
-    Fortran routine factorial return value
+    factorial return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6832,7 +6832,7 @@ class Factorial:
         ...
 class FileDirectorizer:
     """
-    Fortran routine file_directorizer return value
+    file_directorizer return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6852,7 +6852,7 @@ class FileDirectorizer:
         ...
 class FileGet:
     """
-    Fortran routine file_get return value
+    file_get return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6869,7 +6869,7 @@ class FileGet:
         ...
 class FileGetOpen:
     """
-    Fortran routine file_get_open return value
+    file_get_open return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6892,7 +6892,7 @@ class FileGetOpen:
         ...
 class FileSuffixer:
     """
-    Fortran routine file_suffixer return value
+    file_suffixer return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6912,7 +6912,7 @@ class FileSuffixer:
         ...
 class FindElementEnds:
     """
-    Fortran routine find_element_ends return value
+    find_element_ends return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6926,7 +6926,7 @@ class FindElementEnds:
         ...
 class FindLocationInt:
     """
-    Fortran routine find_location_int return value
+    find_location_int return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6940,7 +6940,7 @@ class FindLocationInt:
         ...
 class FindLocationLogic:
     """
-    Fortran routine find_location_logic return value
+    find_location_logic return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6954,7 +6954,7 @@ class FindLocationLogic:
         ...
 class FindLocationReal:
     """
-    Fortran routine find_location_real return value
+    find_location_real return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6965,7 +6965,7 @@ class FindLocationReal:
         ...
 class FindMatchingFieldmap:
     """
-    Fortran routine find_matching_fieldmap return value
+    find_matching_fieldmap return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6979,7 +6979,7 @@ class FindMatchingFieldmap:
         ...
 class Fixedwindowls:
     """
-    Fortran routine fixedwindowls return value
+    fixedwindowls return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -6990,7 +6990,7 @@ class Fixedwindowls:
         ...
 class FloorAnglesToWMat:
     """
-    Fortran routine floor_angles_to_w_mat return value
+    floor_angles_to_w_mat return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7040,7 +7040,7 @@ class FloorPositionStruct:
         ...
 class FloorWMatToAngles:
     """
-    Fortran routine floor_w_mat_to_angles return value
+    floor_w_mat_to_angles return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7057,7 +7057,7 @@ class FloorWMatToAngles:
         ...
 class FormDigestedBmadFileName:
     """
-    Fortran routine form_digested_bmad_file_name return value
+    form_digested_bmad_file_name return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7071,7 +7071,7 @@ class FormDigestedBmadFileName:
         ...
 class FourierAmplitude:
     """
-    Fortran routine fourier_amplitude return value
+    fourier_amplitude return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7091,7 +7091,7 @@ class FourierAmplitude:
         ...
 class FringeHere:
     """
-    Fortran routine fringe_here return value
+    fringe_here return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7102,7 +7102,7 @@ class FringeHere:
         ...
 class GBendingStrengthFromEmField:
     """
-    Fortran routine g_bending_strength_from_em_field return value
+    g_bending_strength_from_em_field return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7116,7 +7116,7 @@ class GBendingStrengthFromEmField:
         ...
 class GammaRef:
     """
-    Fortran routine gamma_ref return value
+    gamma_ref return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7127,7 +7127,7 @@ class GammaRef:
         ...
 class GenCompleteElliptic:
     """
-    Fortran routine gen_complete_elliptic return value
+    gen_complete_elliptic return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7221,7 +7221,7 @@ class GenGrad1StructArray1D:
         ...
 class GenGradField:
     """
-    Fortran routine gen_grad_field return value
+    gen_grad_field return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7332,7 +7332,7 @@ class GenGradMapStructArray1D:
         ...
 class GetCalledFile:
     """
-    Fortran routine get_called_file return value
+    get_called_file return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7349,7 +7349,7 @@ class GetCalledFile:
         ...
 class GetEmitFromSigmaMat:
     """
-    Fortran routine get_emit_from_sigma_mat return value
+    get_emit_from_sigma_mat return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7363,7 +7363,7 @@ class GetEmitFromSigmaMat:
         ...
 class GetFileNumber:
     """
-    Fortran routine get_file_number return value
+    get_file_number return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7383,7 +7383,7 @@ class GetFileNumber:
         ...
 class GetFileTimeStamp:
     """
-    Fortran routine get_file_time_stamp return value
+    get_file_time_stamp return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7397,7 +7397,7 @@ class GetFileTimeStamp:
         ...
 class GetSlaveList:
     """
-    Fortran routine get_slave_list return value
+    get_slave_list return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7411,7 +7411,7 @@ class GetSlaveList:
         ...
 class GptFieldGridScaling:
     """
-    Fortran routine gpt_field_grid_scaling return value
+    gpt_field_grid_scaling return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7428,7 +7428,7 @@ class GptFieldGridScaling:
         ...
 class GptMaxFieldReference:
     """
-    Fortran routine gpt_max_field_reference return value
+    gpt_max_field_reference return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7439,7 +7439,7 @@ class GptMaxFieldReference:
         ...
 class GptToParticleBunch:
     """
-    Fortran routine gpt_to_particle_bunch return value
+    gpt_to_particle_bunch return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7453,7 +7453,7 @@ class GptToParticleBunch:
         ...
 class GradientShiftSrWake:
     """
-    Fortran routine gradient_shift_sr_wake return value
+    gradient_shift_sr_wake return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7714,7 +7714,7 @@ class GridFieldStructArray1D:
         ...
 class Hanhan:
     """
-    Fortran routine hanhan return value
+    hanhan return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7725,7 +7725,7 @@ class Hanhan:
         ...
 class HasAttribute:
     """
-    Fortran routine has_attribute return value
+    has_attribute return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7739,7 +7739,7 @@ class HasAttribute:
         ...
 class Hdf5WriteBeam:
     """
-    Fortran routine hdf5_write_beam return value
+    hdf5_write_beam return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7759,7 +7759,7 @@ class Hdf5WriteBeam:
         ...
 class Hdf5WriteGridField:
     """
-    Fortran routine hdf5_write_grid_field return value
+    hdf5_write_grid_field return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7828,7 +7828,7 @@ class HighEnergySpaceChargeStruct:
         ...
 class HomVoltage:
     """
-    Fortran routine hom_voltage return value
+    hom_voltage return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7839,7 +7839,7 @@ class HomVoltage:
         ...
 class IBessel:
     """
-    Fortran routine i_bessel return value
+    i_bessel return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7856,7 +7856,7 @@ class IBessel:
         ...
 class IBesselExtended:
     """
-    Fortran routine i_bessel_extended return value
+    i_bessel_extended return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7873,7 +7873,7 @@ class IBesselExtended:
         ...
 class IbsMatrixC:
     """
-    Fortran routine ibs_matrix_c return value
+    ibs_matrix_c return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7896,7 +7896,7 @@ class IbsMatrixC:
         ...
 class Igfcoulombfun:
     """
-    Fortran routine igfcoulombfun return value
+    igfcoulombfun return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7928,7 +7928,7 @@ class Igfcoulombfun:
         ...
 class Igfexfun:
     """
-    Fortran routine igfexfun return value
+    igfexfun return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7960,7 +7960,7 @@ class Igfexfun:
         ...
 class Igfeyfun:
     """
-    Fortran routine igfeyfun return value
+    igfeyfun return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -7992,7 +7992,7 @@ class Igfeyfun:
         ...
 class Igfezfun:
     """
-    Fortran routine igfezfun return value
+    igfezfun return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8024,7 +8024,7 @@ class Igfezfun:
         ...
 class IncrementFileNumber:
     """
-    Fortran routine increment_file_number return value
+    increment_file_number return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8044,7 +8044,7 @@ class IncrementFileNumber:
         ...
 class IndexNocase:
     """
-    Fortran routine index_nocase return value
+    index_nocase return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8061,7 +8061,7 @@ class IndexNocase:
         ...
 class InitAttributeName1:
     """
-    Fortran routine init_attribute_name1 return value
+    init_attribute_name1 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8072,7 +8072,7 @@ class InitAttributeName1:
         ...
 class InitBeamDistribution:
     """
-    Fortran routine init_beam_distribution return value
+    init_beam_distribution return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8092,7 +8092,7 @@ class InitBeamDistribution:
         ...
 class InitBunchDistribution:
     """
-    Fortran routine init_bunch_distribution return value
+    init_bunch_distribution return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8112,7 +8112,7 @@ class InitBunchDistribution:
         ...
 class InitPhotonIntegProb:
     """
-    Fortran routine init_photon_integ_prob return value
+    init_photon_integ_prob return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8126,7 +8126,7 @@ class InitPhotonIntegProb:
         ...
 class InitSurfaceSegment:
     """
-    Fortran routine init_surface_segment return value
+    init_surface_segment return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8300,7 +8300,7 @@ class IntArray3D:
         ...
 class IntStr:
     """
-    Fortran routine int_str return value
+    int_str return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8317,7 +8317,7 @@ class IntStr:
         ...
 class IntegrandBase:
     """
-    Fortran routine integrand_base return value
+    integrand_base return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8328,7 +8328,7 @@ class IntegrandBase:
         ...
 class IntegrateMax:
     """
-    Fortran routine integrate_max return value
+    integrate_max return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8348,7 +8348,7 @@ class IntegrateMax:
         ...
 class IntegrateMin:
     """
-    Fortran routine integrate_min return value
+    integrate_min return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8368,7 +8368,7 @@ class IntegrateMin:
         ...
 class IntegrationTimerEle:
     """
-    Fortran routine integration_timer_ele return value
+    integration_timer_ele return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8379,7 +8379,7 @@ class IntegrationTimerEle:
         ...
 class InterpolatedFft:
     """
-    Fortran routine interpolated_fft return value
+    interpolated_fft return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8399,7 +8399,7 @@ class InterpolatedFft:
         ...
 class InterpolatedFftGsl:
     """
-    Fortran routine interpolated_fft_gsl return value
+    interpolated_fft_gsl return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8484,7 +8484,7 @@ class Interval1CoefStructArray1D:
         ...
 class IsAlphabetic:
     """
-    Fortran routine is_alphabetic return value
+    is_alphabetic return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8501,7 +8501,7 @@ class IsAlphabetic:
         ...
 class IsDecreasingSequence:
     """
-    Fortran routine is_decreasing_sequence return value
+    is_decreasing_sequence return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8512,7 +8512,7 @@ class IsDecreasingSequence:
         ...
 class IsIncreasingSequence:
     """
-    Fortran routine is_increasing_sequence return value
+    is_increasing_sequence return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8523,7 +8523,7 @@ class IsIncreasingSequence:
         ...
 class IsInteger:
     """
-    Fortran routine is_integer return value
+    is_integer return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8546,7 +8546,7 @@ class IsInteger:
         ...
 class IsLogical:
     """
-    Fortran routine is_logical return value
+    is_logical return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8563,7 +8563,7 @@ class IsLogical:
         ...
 class IsReal:
     """
-    Fortran routine is_real return value
+    is_real return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8583,7 +8583,7 @@ class IsReal:
         ...
 class JBessel:
     """
-    Fortran routine j_bessel return value
+    j_bessel return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8600,7 +8600,7 @@ class JBessel:
         ...
 class KeyNameToKeyIndex:
     """
-    Fortran routine key_name_to_key_index return value
+    key_name_to_key_index return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8611,7 +8611,7 @@ class KeyNameToKeyIndex:
         ...
 class KickVectorCalc:
     """
-    Fortran routine kick_vector_calc return value
+    kick_vector_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8628,7 +8628,7 @@ class KickVectorCalc:
         ...
 class KnotInterpolate:
     """
-    Fortran routine knot_interpolate return value
+    knot_interpolate return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8642,7 +8642,7 @@ class KnotInterpolate:
         ...
 class KnotsToString:
     """
-    Fortran routine knots_to_string return value
+    knots_to_string return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8680,7 +8680,7 @@ class KvBeamInitStruct:
         ...
 class Lafun:
     """
-    Fortran routine lafun return value
+    lafun return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -8759,7 +8759,7 @@ class LatEleLocStructArray1D:
         ...
 class LatEleLocator:
     """
-    Fortran routine lat_ele_locator return value
+    lat_ele_locator return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9200,7 +9200,7 @@ class LinacNormalModeStruct:
         ...
 class LinearCoef:
     """
-    Fortran routine linear_coef return value
+    linear_coef return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9214,7 +9214,7 @@ class LinearCoef:
         ...
 class LinearFit:
     """
-    Fortran routine linear_fit return value
+    linear_fit return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9237,7 +9237,7 @@ class LinearFit:
         ...
 class LoadParseLine:
     """
-    Fortran routine load_parse_line return value
+    load_parse_line return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9251,7 +9251,7 @@ class LoadParseLine:
         ...
 class LogicStr:
     """
-    Fortran routine logic_str return value
+    logic_str return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9265,7 +9265,7 @@ class LogicStr:
         ...
 class LogicalToPython:
     """
-    Fortran routine logical_to_python return value
+    logical_to_python return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9279,7 +9279,7 @@ class LogicalToPython:
         ...
 class LordEdgeAligned:
     """
-    Fortran routine lord_edge_aligned return value
+    lord_edge_aligned return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9290,7 +9290,7 @@ class LordEdgeAligned:
         ...
 class LowEnergyZCorrection:
     """
-    Fortran routine low_energy_z_correction return value
+    low_energy_z_correction return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9370,7 +9370,7 @@ class MadMapStruct:
         ...
 class MadTmfoc:
     """
-    Fortran routine mad_tmfoc return value
+    mad_tmfoc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9390,7 +9390,7 @@ class MadTmfoc:
         ...
 class MakeGMats:
     """
-    Fortran routine make_g_mats return value
+    make_g_mats return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9404,7 +9404,7 @@ class MakeGMats:
         ...
 class MakeHvbp:
     """
-    Fortran routine make_hvbp return value
+    make_hvbp return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9427,7 +9427,7 @@ class MakeHvbp:
         ...
 class MakeLegalComment:
     """
-    Fortran routine make_legal_comment return value
+    make_legal_comment return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9441,7 +9441,7 @@ class MakeLegalComment:
         ...
 class MakeMadMap:
     """
-    Fortran routine make_mad_map return value
+    make_mad_map return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9455,7 +9455,7 @@ class MakeMadMap:
         ...
 class MakeMat6:
     """
-    Fortran routine make_mat6 return value
+    make_mat6 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9469,7 +9469,7 @@ class MakeMat6:
         ...
 class MakeMat6Bmad:
     """
-    Fortran routine make_mat6_bmad return value
+    make_mat6_bmad return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9483,7 +9483,7 @@ class MakeMat6Bmad:
         ...
 class MakeMat6BmadPhoton:
     """
-    Fortran routine make_mat6_bmad_photon return value
+    make_mat6_bmad_photon return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9497,7 +9497,7 @@ class MakeMat6BmadPhoton:
         ...
 class MakeMat6Taylor:
     """
-    Fortran routine make_mat6_taylor return value
+    make_mat6_taylor return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9511,7 +9511,7 @@ class MakeMat6Taylor:
         ...
 class MakeMat6Tracking:
     """
-    Fortran routine make_mat6_tracking return value
+    make_mat6_tracking return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9525,7 +9525,7 @@ class MakeMat6Tracking:
         ...
 class MakeN:
     """
-    Fortran routine make_n return value
+    make_n return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9545,7 +9545,7 @@ class MakeN:
         ...
 class MakePbrh:
     """
-    Fortran routine make_pbrh return value
+    make_pbrh return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9565,7 +9565,7 @@ class MakePbrh:
         ...
 class MakeSmatFromAbc:
     """
-    Fortran routine make_smat_from_abc return value
+    make_smat_from_abc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9582,7 +9582,7 @@ class MakeSmatFromAbc:
         ...
 class MakeVMats:
     """
-    Fortran routine make_v_mats return value
+    make_v_mats return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9596,7 +9596,7 @@ class MakeVMats:
         ...
 class MakeupControlSlave:
     """
-    Fortran routine makeup_control_slave return value
+    makeup_control_slave return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9607,7 +9607,7 @@ class MakeupControlSlave:
         ...
 class MakeupGroupLord:
     """
-    Fortran routine makeup_group_lord return value
+    makeup_group_lord return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9618,7 +9618,7 @@ class MakeupGroupLord:
         ...
 class MakeupMultipassSlave:
     """
-    Fortran routine makeup_multipass_slave return value
+    makeup_multipass_slave return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9629,7 +9629,7 @@ class MakeupMultipassSlave:
         ...
 class MakeupSuperSlave:
     """
-    Fortran routine makeup_super_slave return value
+    makeup_super_slave return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9640,7 +9640,7 @@ class MakeupSuperSlave:
         ...
 class MasterParameterValue:
     """
-    Fortran routine master_parameter_value return value
+    master_parameter_value return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9651,7 +9651,7 @@ class MasterParameterValue:
         ...
 class Mat4Multipole:
     """
-    Fortran routine mat4_multipole return value
+    mat4_multipole return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9665,7 +9665,7 @@ class Mat4Multipole:
         ...
 class MatSympDecouple:
     """
-    Fortran routine mat_symp_decouple return value
+    mat_symp_decouple return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9685,7 +9685,7 @@ class MatSympDecouple:
         ...
 class MatchEleToMat6:
     """
-    Fortran routine match_ele_to_mat6 return value
+    match_ele_to_mat6 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9702,7 +9702,7 @@ class MatchEleToMat6:
         ...
 class MatchReg:
     """
-    Fortran routine match_reg return value
+    match_reg return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9719,7 +9719,7 @@ class MatchReg:
         ...
 class MatchWild:
     """
-    Fortran routine match_wild return value
+    match_wild return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9736,7 +9736,7 @@ class MatchWild:
         ...
 class MaximizeProjection:
     """
-    Fortran routine maximize_projection return value
+    maximize_projection return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9750,7 +9750,7 @@ class MaximizeProjection:
         ...
 class Mexp:
     """
-    Fortran routine mexp return value
+    mexp return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9761,7 +9761,7 @@ class Mexp:
         ...
 class MilliSleep:
     """
-    Fortran routine milli_sleep return value
+    milli_sleep return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9835,7 +9835,7 @@ class ModeInfoStruct:
         ...
 class MomentumCompaction:
     """
-    Fortran routine momentum_compaction return value
+    momentum_compaction return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9846,7 +9846,7 @@ class MomentumCompaction:
         ...
 class MultiTurnTrackingAnalysis:
     """
-    Fortran routine multi_turn_tracking_analysis return value
+    multi_turn_tracking_analysis return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9872,7 +9872,7 @@ class MultiTurnTrackingAnalysis:
         ...
 class Multipole1AbToKt:
     """
-    Fortran routine multipole1_ab_to_kt return value
+    multipole1_ab_to_kt return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9886,7 +9886,7 @@ class Multipole1AbToKt:
         ...
 class Multipole1KtToAb:
     """
-    Fortran routine multipole1_kt_to_ab return value
+    multipole1_kt_to_ab return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9900,7 +9900,7 @@ class Multipole1KtToAb:
         ...
 class MultipoleAbToKt:
     """
-    Fortran routine multipole_ab_to_kt return value
+    multipole_ab_to_kt return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9914,7 +9914,7 @@ class MultipoleAbToKt:
         ...
 class MultipoleEleToAb:
     """
-    Fortran routine multipole_ele_to_ab return value
+    multipole_ele_to_ab return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9934,7 +9934,7 @@ class MultipoleEleToAb:
         ...
 class MultipoleEleToKt:
     """
-    Fortran routine multipole_ele_to_kt return value
+    multipole_ele_to_kt return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9951,7 +9951,7 @@ class MultipoleEleToKt:
         ...
 class MultipoleKtToAb:
     """
-    Fortran routine multipole_kt_to_ab return value
+    multipole_kt_to_ab return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9965,7 +9965,7 @@ class MultipoleKtToAb:
         ...
 class Mytan:
     """
-    Fortran routine mytan return value
+    mytan return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9982,7 +9982,7 @@ class Mytan:
         ...
 class NBinsAutomatic:
     """
-    Fortran routine n_bins_automatic return value
+    n_bins_automatic return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -9996,7 +9996,7 @@ class NBinsAutomatic:
         ...
 class NChooseK:
     """
-    Fortran routine n_choose_k return value
+    n_choose_k return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10013,7 +10013,7 @@ class NChooseK:
         ...
 class Naff:
     """
-    Fortran routine naff return value
+    naff return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10027,7 +10027,7 @@ class Naff:
         ...
 class NametableAdd:
     """
-    Fortran routine nametable_add return value
+    nametable_add return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10041,7 +10041,7 @@ class NametableAdd:
         ...
 class NametableBracketIndexx:
     """
-    Fortran routine nametable_bracket_indexx return value
+    nametable_bracket_indexx return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10058,7 +10058,7 @@ class NametableBracketIndexx:
         ...
 class NametableChange1:
     """
-    Fortran routine nametable_change1 return value
+    nametable_change1 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10072,7 +10072,7 @@ class NametableChange1:
         ...
 class NametableInit:
     """
-    Fortran routine nametable_init return value
+    nametable_init return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10086,7 +10086,7 @@ class NametableInit:
         ...
 class NametableRemove:
     """
-    Fortran routine nametable_remove return value
+    nametable_remove return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10127,7 +10127,7 @@ class NametableStruct:
         ...
 class NormalFormComplexTaylors:
     """
-    Fortran routine normal_form_complex_taylors return value
+    normal_form_complex_taylors return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10141,7 +10141,7 @@ class NormalFormComplexTaylors:
         ...
 class NormalFormTaylors:
     """
-    Fortran routine normal_form_taylors return value
+    normal_form_taylors return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10158,7 +10158,7 @@ class NormalFormTaylors:
         ...
 class NormalMode3Calc:
     """
-    Fortran routine normal_mode3_calc return value
+    normal_mode3_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10242,7 +10242,7 @@ class NormalModesStruct:
         ...
 class NumFieldEles:
     """
-    Fortran routine num_field_eles return value
+    num_field_eles return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10253,7 +10253,7 @@ class NumFieldEles:
         ...
 class NumLords:
     """
-    Fortran routine num_lords return value
+    num_lords return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10264,7 +10264,7 @@ class NumLords:
         ...
 class OdeintBmad:
     """
-    Fortran routine odeint_bmad return value
+    odeint_bmad return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10278,7 +10278,7 @@ class OdeintBmad:
         ...
 class OdeintBmadTime:
     """
-    Fortran routine odeint_bmad_time return value
+    odeint_bmad_time return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10295,7 +10295,7 @@ class OdeintBmadTime:
         ...
 class OffsetParticle:
     """
-    Fortran routine offset_particle return value
+    offset_particle return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10312,7 +10312,7 @@ class OffsetParticle:
         ...
 class OpenBinaryFile:
     """
-    Fortran routine open_binary_file return value
+    open_binary_file return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10329,7 +10329,7 @@ class OpenBinaryFile:
         ...
 class OrbitAmplitudeCalc:
     """
-    Fortran routine orbit_amplitude_calc return value
+    orbit_amplitude_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10349,7 +10349,7 @@ class OrbitAmplitudeCalc:
         ...
 class OrbitTooLarge:
     """
-    Fortran routine orbit_too_large return value
+    orbit_too_large return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10363,7 +10363,7 @@ class OrbitTooLarge:
         ...
 class OrderEvecsByNSimilarity:
     """
-    Fortran routine order_evecs_by_n_similarity return value
+    order_evecs_by_n_similarity return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10377,7 +10377,7 @@ class OrderEvecsByNSimilarity:
         ...
 class OrdinalStr:
     """
-    Fortran routine ordinal_str return value
+    ordinal_str return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10391,7 +10391,7 @@ class OrdinalStr:
         ...
 class OscGetgrnpipe:
     """
-    Fortran routine osc_getgrnpipe return value
+    osc_getgrnpipe return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10408,7 +10408,7 @@ class OscGetgrnpipe:
         ...
 class OscWriteRectpipeGrn:
     """
-    Fortran routine osc_write_rectpipe_grn return value
+    osc_write_rectpipe_grn return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10425,7 +10425,7 @@ class OscWriteRectpipeGrn:
         ...
 class ParseCartesianMap:
     """
-    Fortran routine parse_cartesian_map return value
+    parse_cartesian_map return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10442,7 +10442,7 @@ class ParseCartesianMap:
         ...
 class ParseCylindricalMap:
     """
-    Fortran routine parse_cylindrical_map return value
+    parse_cylindrical_map return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10459,7 +10459,7 @@ class ParseCylindricalMap:
         ...
 class ParseFortranFormat:
     """
-    Fortran routine parse_fortran_format return value
+    parse_fortran_format return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10485,7 +10485,7 @@ class ParseFortranFormat:
         ...
 class ParseGenGradMap:
     """
-    Fortran routine parse_gen_grad_map return value
+    parse_gen_grad_map return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10502,7 +10502,7 @@ class ParseGenGradMap:
         ...
 class ParseGridField:
     """
-    Fortran routine parse_grid_field return value
+    parse_grid_field return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10519,7 +10519,7 @@ class ParseGridField:
         ...
 class ParseIntegerList:
     """
-    Fortran routine parse_integer_list return value
+    parse_integer_list return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10554,7 +10554,7 @@ class ParseIntegerList:
         ...
 class ParseIntegerList2:
     """
-    Fortran routine parse_integer_list2 return value
+    parse_integer_list2 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10589,7 +10589,7 @@ class ParseIntegerList2:
         ...
 class ParseRealList:
     """
-    Fortran routine parse_real_list return value
+    parse_real_list return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10612,7 +10612,7 @@ class ParseRealList:
         ...
 class ParseRealList2:
     """
-    Fortran routine parse_real_list2 return value
+    parse_real_list2 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10650,7 +10650,7 @@ class ParseRealList2:
         ...
 class ParserAddConstant:
     """
-    Fortran routine parser_add_constant return value
+    parser_add_constant return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10664,7 +10664,7 @@ class ParserAddConstant:
         ...
 class ParserCallCheck:
     """
-    Fortran routine parser_call_check return value
+    parser_call_check return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10690,7 +10690,7 @@ class ParserCallCheck:
         ...
 class ParserFastComplexRead:
     """
-    Fortran routine parser_fast_complex_read return value
+    parser_fast_complex_read return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10707,7 +10707,7 @@ class ParserFastComplexRead:
         ...
 class ParserFastIntegerRead:
     """
-    Fortran routine parser_fast_integer_read return value
+    parser_fast_integer_read return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10724,7 +10724,7 @@ class ParserFastIntegerRead:
         ...
 class ParserFastRealRead:
     """
-    Fortran routine parser_fast_real_read return value
+    parser_fast_real_read return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10744,7 +10744,7 @@ class ParserFastRealRead:
         ...
 class ParserFileStack:
     """
-    Fortran routine parser_file_stack return value
+    parser_file_stack return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10770,7 +10770,7 @@ class ParserFileStack:
         ...
 class ParserGetInteger:
     """
-    Fortran routine parser_get_integer return value
+    parser_get_integer return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10802,7 +10802,7 @@ class ParserGetInteger:
         ...
 class ParserGetLogical:
     """
-    Fortran routine parser_get_logical return value
+    parser_get_logical return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10828,7 +10828,7 @@ class ParserGetLogical:
         ...
 class ParserPrintLine:
     """
-    Fortran routine parser_print_line return value
+    parser_print_line return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10839,7 +10839,7 @@ class ParserPrintLine:
         ...
 class ParserReadLrWake:
     """
-    Fortran routine parser_read_lr_wake return value
+    parser_read_lr_wake return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10856,7 +10856,7 @@ class ParserReadLrWake:
         ...
 class ParserReadSrWake:
     """
-    Fortran routine parser_read_sr_wake return value
+    parser_read_sr_wake return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10873,7 +10873,7 @@ class ParserReadSrWake:
         ...
 class ParticleIsMovingBackwards:
     """
-    Fortran routine particle_is_moving_backwards return value
+    particle_is_moving_backwards return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10884,7 +10884,7 @@ class ParticleIsMovingBackwards:
         ...
 class ParticleIsMovingForward:
     """
-    Fortran routine particle_is_moving_forward return value
+    particle_is_moving_forward return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10895,7 +10895,7 @@ class ParticleIsMovingForward:
         ...
 class ParticleRfTime:
     """
-    Fortran routine particle_rf_time return value
+    particle_rf_time return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10906,7 +10906,7 @@ class ParticleRfTime:
         ...
 class PatchFlipsPropagationDirection:
     """
-    Fortran routine patch_flips_propagation_direction return value
+    patch_flips_propagation_direction return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10917,7 +10917,7 @@ class PatchFlipsPropagationDirection:
         ...
 class PatchLength:
     """
-    Fortran routine patch_length return value
+    patch_length return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10928,7 +10928,7 @@ class PatchLength:
         ...
 class PhotonAbsorptionAndPhaseShift:
     """
-    Fortran routine photon_absorption_and_phase_shift return value
+    photon_absorption_and_phase_shift return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -10945,7 +10945,7 @@ class PhotonAbsorptionAndPhaseShift:
         ...
 class PhotonAddToDetectorStatistics:
     """
-    Fortran routine photon_add_to_detector_statistics return value
+    photon_add_to_detector_statistics return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11123,7 +11123,7 @@ class PhotonReflectTableStructArray1D:
         ...
 class PhotonReflection:
     """
-    Fortran routine photon_reflection return value
+    photon_reflection return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11137,7 +11137,7 @@ class PhotonReflection:
         ...
 class PhotonReflectivity:
     """
-    Fortran routine photon_reflectivity return value
+    photon_reflectivity return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11151,7 +11151,7 @@ class PhotonReflectivity:
         ...
 class PhotonTargetCornerCalc:
     """
-    Fortran routine photon_target_corner_calc return value
+    photon_target_corner_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11200,7 +11200,7 @@ class PhotonTargetStruct:
         ...
 class PhysicalEleEnd:
     """
-    Fortran routine physical_ele_end return value
+    physical_ele_end return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11313,7 +11313,7 @@ class PixelPtStructArray2D:
         ...
 class PointerToElementAtS:
     """
-    Fortran routine pointer_to_element_at_s return value
+    pointer_to_element_at_s return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11333,7 +11333,7 @@ class PointerToElementAtS:
         ...
 class PointerToLord:
     """
-    Fortran routine pointer_to_lord return value
+    pointer_to_lord return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11353,7 +11353,7 @@ class PointerToLord:
         ...
 class PointerToMultipassLord:
     """
-    Fortran routine pointer_to_multipass_lord return value
+    pointer_to_multipass_lord return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11367,7 +11367,7 @@ class PointerToMultipassLord:
         ...
 class PointerToSlave:
     """
-    Fortran routine pointer_to_slave return value
+    pointer_to_slave return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11390,7 +11390,7 @@ class PointerToSlave:
         ...
 class PointerToSuperLord:
     """
-    Fortran routine pointer_to_super_lord return value
+    pointer_to_super_lord return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11410,7 +11410,7 @@ class PointerToSuperLord:
         ...
 class PointerToSurfaceDisplacementPt:
     """
-    Fortran routine pointer_to_surface_displacement_pt return value
+    pointer_to_surface_displacement_pt return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11439,7 +11439,7 @@ class PointerToSurfaceDisplacementPt:
         ...
 class PointerToSurfaceSegmentedPt:
     """
-    Fortran routine pointer_to_surface_segmented_pt return value
+    pointer_to_surface_segmented_pt return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11468,7 +11468,7 @@ class PointerToSurfaceSegmentedPt:
         ...
 class PointerToWall3d:
     """
-    Fortran routine pointer_to_wall3d return value
+    pointer_to_wall3d return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11485,7 +11485,7 @@ class PointerToWall3d:
         ...
 class PolyEval:
     """
-    Fortran routine poly_eval return value
+    poly_eval return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11527,7 +11527,7 @@ class PreTrackerStruct:
         ...
 class ProbabilityFunct:
     """
-    Fortran routine probability_funct return value
+    probability_funct return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11538,7 +11538,7 @@ class ProbabilityFunct:
         ...
 class Projdd:
     """
-    Fortran routine projdd return value
+    projdd return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11549,7 +11549,7 @@ class Projdd:
         ...
 class ProjectEmitToXyz:
     """
-    Fortran routine project_emit_to_xyz return value
+    project_emit_to_xyz return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11566,7 +11566,7 @@ class ProjectEmitToXyz:
         ...
 class PtcEmitCalc:
     """
-    Fortran routine ptc_emit_calc return value
+    ptc_emit_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11602,7 +11602,7 @@ class PtcNormalFormStruct:
         ...
 class PtcSpinCalc:
     """
-    Fortran routine ptc_spin_calc return value
+    ptc_spin_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11616,7 +11616,7 @@ class PtcSpinCalc:
         ...
 class PtcTrackAll:
     """
-    Fortran routine ptc_track_all return value
+    ptc_track_all return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11898,7 +11898,7 @@ class QpSymbolStruct:
         ...
 class QuatToAxisAngle:
     """
-    Fortran routine quat_to_axis_angle return value
+    quat_to_axis_angle return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11912,7 +11912,7 @@ class QuatToAxisAngle:
         ...
 class QueryString:
     """
-    Fortran routine query_string return value
+    query_string return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11935,7 +11935,7 @@ class QueryString:
         ...
 class Quote:
     """
-    Fortran routine quote return value
+    quote return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11949,7 +11949,7 @@ class Quote:
         ...
 class Rad1DampAndStocMats:
     """
-    Fortran routine rad1_damp_and_stoc_mats return value
+    rad1_damp_and_stoc_mats return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11966,7 +11966,7 @@ class Rad1DampAndStocMats:
         ...
 class RadDampAndStocMats:
     """
-    Fortran routine rad_damp_and_stoc_mats return value
+    rad_damp_and_stoc_mats return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -11989,7 +11989,7 @@ class RadDampAndStocMats:
         ...
 class RadGIntegrals:
     """
-    Fortran routine rad_g_integrals return value
+    rad_g_integrals return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12268,7 +12268,7 @@ class RadMapStruct:
         ...
 class RadiationIntegrals:
     """
-    Fortran routine radiation_integrals return value
+    radiation_integrals return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12350,7 +12350,7 @@ class RamperLordStructArray1D:
         ...
 class RamperValue:
     """
-    Fortran routine ramper_value return value
+    ramper_value return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12364,7 +12364,7 @@ class RamperValue:
         ...
 class RanGaussConverter:
     """
-    Fortran routine ran_gauss_converter return value
+    ran_gauss_converter return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12378,7 +12378,7 @@ class RanGaussConverter:
         ...
 class RanGaussScalar:
     """
-    Fortran routine ran_gauss_scalar return value
+    ran_gauss_scalar return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12392,7 +12392,7 @@ class RanGaussScalar:
         ...
 class RanUniformScalar:
     """
-    Fortran routine ran_uniform_scalar return value
+    ran_uniform_scalar return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12476,7 +12476,7 @@ class RandomStateStruct:
         ...
 class Rchomp:
     """
-    Fortran routine rchomp return value
+    rchomp return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12493,7 +12493,7 @@ class Rchomp:
         ...
 class ReAllocateCDouble:
     """
-    Fortran routine re_allocate_c_double return value
+    re_allocate_c_double return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12504,7 +12504,7 @@ class ReAllocateCDouble:
         ...
 class ReAllocateWall3dSectionArray:
     """
-    Fortran routine re_allocate_wall3d_section_array return value
+    re_allocate_wall3d_section_array return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12515,7 +12515,7 @@ class ReAllocateWall3dSectionArray:
         ...
 class ReAllocateWall3dVertexArray:
     """
-    Fortran routine re_allocate_wall3d_vertex_array return value
+    re_allocate_wall3d_vertex_array return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12526,7 +12526,7 @@ class ReAllocateWall3dVertexArray:
         ...
 class ReStrQp:
     """
-    Fortran routine re_str_qp return value
+    re_str_qp return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12540,7 +12540,7 @@ class ReStrQp:
         ...
 class ReStrRp:
     """
-    Fortran routine re_str_rp return value
+    re_str_rp return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12554,7 +12554,7 @@ class ReStrRp:
         ...
 class ReadBeamAscii:
     """
-    Fortran routine read_beam_ascii return value
+    read_beam_ascii return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12568,7 +12568,7 @@ class ReadBeamAscii:
         ...
 class ReadBeamFile:
     """
-    Fortran routine read_beam_file return value
+    read_beam_file return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12745,7 +12745,7 @@ class RealArray3D:
         ...
 class RealNumFortranFormat:
     """
-    Fortran routine real_num_fortran_format return value
+    real_num_fortran_format return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12765,7 +12765,7 @@ class RealNumFortranFormat:
         ...
 class RealPath:
     """
-    Fortran routine real_path return value
+    real_path return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12782,7 +12782,7 @@ class RealPath:
         ...
 class RealStr:
     """
-    Fortran routine real_str return value
+    real_str return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12802,7 +12802,7 @@ class RealStr:
         ...
 class RealToString:
     """
-    Fortran routine real_to_string return value
+    real_to_string return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12825,7 +12825,7 @@ class RealToString:
         ...
 class ReallocateBeam:
     """
-    Fortran routine reallocate_beam return value
+    reallocate_beam return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12836,7 +12836,7 @@ class ReallocateBeam:
         ...
 class RelTrackingChargeToMass:
     """
-    Fortran routine rel_tracking_charge_to_mass return value
+    rel_tracking_charge_to_mass return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12847,7 +12847,7 @@ class RelTrackingChargeToMass:
         ...
 class RelativeModeFlip:
     """
-    Fortran routine relative_mode_flip return value
+    relative_mode_flip return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12858,7 +12858,7 @@ class RelativeModeFlip:
         ...
 class ReleaseRadIntCache:
     """
-    Fortran routine release_rad_int_cache return value
+    release_rad_int_cache return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12869,7 +12869,7 @@ class ReleaseRadIntCache:
         ...
 class RemoveConstantTaylor:
     """
-    Fortran routine remove_constant_taylor return value
+    remove_constant_taylor return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12953,7 +12953,7 @@ class RfEleStruct:
         ...
 class RfIsOn:
     """
-    Fortran routine rf_is_on return value
+    rf_is_on return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -12964,7 +12964,7 @@ class RfIsOn:
         ...
 class RfRefTimeOffset:
     """
-    Fortran routine rf_ref_time_offset return value
+    rf_ref_time_offset return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13076,7 +13076,7 @@ class RfStairStepStructArray1D:
         ...
 class Rfun:
     """
-    Fortran routine rfun return value
+    rfun return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13114,7 +13114,7 @@ class Rfun:
         ...
 class RkAdaptiveTimeStep:
     """
-    Fortran routine rk_adaptive_time_step return value
+    rk_adaptive_time_step return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13140,7 +13140,7 @@ class RkAdaptiveTimeStep:
         ...
 class RkTimeStep1:
     """
-    Fortran routine rk_time_step1 return value
+    rk_time_step1 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13157,7 +13157,7 @@ class RkTimeStep1:
         ...
 class RmsValue:
     """
-    Fortran routine rms_value return value
+    rms_value return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13171,7 +13171,7 @@ class RmsValue:
         ...
 class Rotate3:
     """
-    Fortran routine rotate3 return value
+    rotate3 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13182,7 +13182,7 @@ class Rotate3:
         ...
 class RotateFieldZx:
     """
-    Fortran routine rotate_field_zx return value
+    rotate_field_zx return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13193,7 +13193,7 @@ class RotateFieldZx:
         ...
 class RunTimer:
     """
-    Fortran routine run_timer return value
+    run_timer return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13210,7 +13210,7 @@ class RunTimer:
         ...
 class SBodyCalc:
     """
-    Fortran routine s_body_calc return value
+    s_body_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13221,7 +13221,7 @@ class SBodyCalc:
         ...
 class ScAdaptiveStep:
     """
-    Fortran routine sc_adaptive_step return value
+    sc_adaptive_step return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13238,7 +13238,7 @@ class ScAdaptiveStep:
         ...
 class ScStep:
     """
-    Fortran routine sc_step return value
+    sc_step return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13252,7 +13252,7 @@ class ScStep:
         ...
 class SetEleAttribute:
     """
-    Fortran routine set_ele_attribute return value
+    set_ele_attribute return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13266,7 +13266,7 @@ class SetEleAttribute:
         ...
 class SetEleStatusStale:
     """
-    Fortran routine set_ele_status_stale return value
+    set_ele_status_stale return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13283,7 +13283,7 @@ class SetEleStatusStale:
         ...
 class SetFlagsForChangedIntegerAttribute:
     """
-    Fortran routine set_flags_for_changed_integer_attribute return value
+    set_flags_for_changed_integer_attribute return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13294,7 +13294,7 @@ class SetFlagsForChangedIntegerAttribute:
         ...
 class SetFlagsForChangedLogicalAttribute:
     """
-    Fortran routine set_flags_for_changed_logical_attribute return value
+    set_flags_for_changed_logical_attribute return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13305,7 +13305,7 @@ class SetFlagsForChangedLogicalAttribute:
         ...
 class SetFlagsForChangedRealAttribute:
     """
-    Fortran routine set_flags_for_changed_real_attribute return value
+    set_flags_for_changed_real_attribute return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13316,7 +13316,7 @@ class SetFlagsForChangedRealAttribute:
         ...
 class SetFringeOnOff:
     """
-    Fortran routine set_fringe_on_off return value
+    set_fringe_on_off return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13327,7 +13327,7 @@ class SetFringeOnOff:
         ...
 class SetParameterInt:
     """
-    Fortran routine set_parameter_int return value
+    set_parameter_int return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13344,7 +13344,7 @@ class SetParameterInt:
         ...
 class SetParameterLogic:
     """
-    Fortran routine set_parameter_logic return value
+    set_parameter_logic return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13361,7 +13361,7 @@ class SetParameterLogic:
         ...
 class SetParameterReal:
     """
-    Fortran routine set_parameter_real return value
+    set_parameter_real return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13378,7 +13378,7 @@ class SetParameterReal:
         ...
 class SetPtcQuiet:
     """
-    Fortran routine set_ptc_quiet return value
+    set_ptc_quiet return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13389,7 +13389,7 @@ class SetPtcQuiet:
         ...
 class SetPtcVerbose:
     """
-    Fortran routine set_ptc_verbose return value
+    set_ptc_verbose return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13400,7 +13400,7 @@ class SetPtcVerbose:
         ...
 class SetTune:
     """
-    Fortran routine set_tune return value
+    set_tune return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13411,7 +13411,7 @@ class SetTune:
         ...
 class SetTune3d:
     """
-    Fortran routine set_tune_3d return value
+    set_tune_3d return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13425,7 +13425,7 @@ class SetTune3d:
         ...
 class SignificantDifference:
     """
-    Fortran routine significant_difference return value
+    significant_difference return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13436,7 +13436,7 @@ class SignificantDifference:
         ...
 class Sinc:
     """
-    Fortran routine sinc return value
+    sinc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13447,7 +13447,7 @@ class Sinc:
         ...
 class Sincc:
     """
-    Fortran routine sincc return value
+    sincc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13458,7 +13458,7 @@ class Sincc:
         ...
 class SinhxX:
     """
-    Fortran routine sinhx_x return value
+    sinhx_x return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13469,7 +13469,7 @@ class SinhxX:
         ...
 class SkipEleBlender:
     """
-    Fortran routine skip_ele_blender return value
+    skip_ele_blender return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13480,7 +13480,7 @@ class SkipEleBlender:
         ...
 class SkipHeader:
     """
-    Fortran routine skip_header return value
+    skip_header return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13494,7 +13494,7 @@ class SkipHeader:
         ...
 class SolQuadMat6Calc:
     """
-    Fortran routine sol_quad_mat6_calc return value
+    sol_quad_mat6_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13508,7 +13508,7 @@ class SolQuadMat6Calc:
         ...
 class SolvePsiFixedSteps:
     """
-    Fortran routine solve_psi_fixed_steps return value
+    solve_psi_fixed_steps return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13636,7 +13636,7 @@ class SpinAxisStruct:
         ...
 class SpinMat8ResonanceStrengths:
     """
-    Fortran routine spin_mat8_resonance_strengths return value
+    spin_mat8_resonance_strengths return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13650,7 +13650,7 @@ class SpinMat8ResonanceStrengths:
         ...
 class SpinMatToEigen:
     """
-    Fortran routine spin_mat_to_eigen return value
+    spin_mat_to_eigen return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13673,7 +13673,7 @@ class SpinMatToEigen:
         ...
 class SpinOmega:
     """
-    Fortran routine spin_omega return value
+    spin_omega return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13779,7 +13779,7 @@ class SpinPolarStruct:
         ...
 class SpinQuatResonanceStrengths:
     """
-    Fortran routine spin_quat_resonance_strengths return value
+    spin_quat_resonance_strengths return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13793,7 +13793,7 @@ class SpinQuatResonanceStrengths:
         ...
 class SplineAkimaInterpolate:
     """
-    Fortran routine spline_akima_interpolate return value
+    spline_akima_interpolate return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13810,7 +13810,7 @@ class SplineAkimaInterpolate:
         ...
 class SplineEvaluate:
     """
-    Fortran routine spline_evaluate return value
+    spline_evaluate return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13895,7 +13895,7 @@ class SplineStructArray1D:
         ...
 class SplitLat:
     """
-    Fortran routine split_lat return value
+    split_lat return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13912,7 +13912,7 @@ class SplitLat:
         ...
 class SqrtAlpha:
     """
-    Fortran routine sqrt_alpha return value
+    sqrt_alpha return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13923,7 +13923,7 @@ class SqrtAlpha:
         ...
 class SqrtOne:
     """
-    Fortran routine sqrt_one return value
+    sqrt_one return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13934,7 +13934,7 @@ class SqrtOne:
         ...
 class StrCount:
     """
-    Fortran routine str_count return value
+    str_count return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13951,7 +13951,7 @@ class StrCount:
         ...
 class StrFirstInSet:
     """
-    Fortran routine str_first_in_set return value
+    str_first_in_set return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13971,7 +13971,7 @@ class StrFirstInSet:
         ...
 class StrFirstNotInSet:
     """
-    Fortran routine str_first_not_in_set return value
+    str_first_not_in_set return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -13988,7 +13988,7 @@ class StrFirstNotInSet:
         ...
 class StrLastInSet:
     """
-    Fortran routine str_last_in_set return value
+    str_last_in_set return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14005,7 +14005,7 @@ class StrLastInSet:
         ...
 class StrLastNotInSet:
     """
-    Fortran routine str_last_not_in_set return value
+    str_last_not_in_set return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14022,7 +14022,7 @@ class StrLastNotInSet:
         ...
 class StrMatchWild:
     """
-    Fortran routine str_match_wild return value
+    str_match_wild return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14039,7 +14039,7 @@ class StrMatchWild:
         ...
 class StrSubstitute:
     """
-    Fortran routine str_substitute return value
+    str_substitute return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14062,7 +14062,7 @@ class StrSubstitute:
         ...
 class StreamEleEnd:
     """
-    Fortran routine stream_ele_end return value
+    stream_ele_end return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14073,7 +14073,7 @@ class StreamEleEnd:
         ...
 class StringToInt:
     """
-    Fortran routine string_to_int return value
+    string_to_int return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14096,7 +14096,7 @@ class StringToInt:
         ...
 class StringToReal:
     """
-    Fortran routine string_to_real return value
+    string_to_real return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14119,7 +14119,7 @@ class StringToReal:
         ...
 class StringTrim:
     """
-    Fortran routine string_trim return value
+    string_trim return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14136,7 +14136,7 @@ class StringTrim:
         ...
 class StringTrim2:
     """
-    Fortran routine string_trim2 return value
+    string_trim2 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14162,7 +14162,7 @@ class StringTrim2:
         ...
 class StrongBeamSigmaCalc:
     """
-    Fortran routine strong_beam_sigma_calc return value
+    strong_beam_sigma_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14179,7 +14179,7 @@ class StrongBeamSigmaCalc:
         ...
 class StrongBeamStrength:
     """
-    Fortran routine strong_beam_strength return value
+    strong_beam_strength return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14312,7 +14312,7 @@ class SummationRdtStructArray1D:
         ...
 class SuperBicubicInterpolation:
     """
-    Fortran routine super_bicubic_interpolation return value
+    super_bicubic_interpolation return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14329,7 +14329,7 @@ class SuperBicubicInterpolation:
         ...
 class SuperPolint:
     """
-    Fortran routine super_polint return value
+    super_polint return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14451,7 +14451,7 @@ class SurfaceDisplacementStruct:
         ...
 class SurfaceGridDisplacement:
     """
-    Fortran routine surface_grid_displacement return value
+    surface_grid_displacement return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14625,7 +14625,7 @@ class SurfaceSegmentedStruct:
         ...
 class SystemCommand:
     """
-    Fortran routine system_command return value
+    system_command return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14639,7 +14639,7 @@ class SystemCommand:
         ...
 class T6ToB123:
     """
-    Fortran routine t6_to_b123 return value
+    t6_to_b123 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14659,7 +14659,7 @@ class T6ToB123:
         ...
 class TaoAllocateDataArray:
     """
-    Fortran routine tao_allocate_data_array return value
+    tao_allocate_data_array return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14673,7 +14673,7 @@ class TaoAllocateDataArray:
         ...
 class TaoAllocateV1Var:
     """
-    Fortran routine tao_allocate_v1_var return value
+    tao_allocate_v1_var return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14687,7 +14687,7 @@ class TaoAllocateV1Var:
         ...
 class TaoAllocateVarArray:
     """
-    Fortran routine tao_allocate_var_array return value
+    tao_allocate_var_array return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14734,7 +14734,7 @@ class TaoBeamBranchStruct:
         ...
 class TaoBeamEmitCalc:
     """
-    Fortran routine tao_beam_emit_calc return value
+    tao_beam_emit_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14762,7 +14762,7 @@ class TaoBeamUniStruct:
         ...
 class TaoBranchIndex:
     """
-    Fortran routine tao_branch_index return value
+    tao_branch_index return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14948,7 +14948,7 @@ class TaoBuildingWallStruct:
         ...
 class TaoCalcDataAtSPts:
     """
-    Fortran routine tao_calc_data_at_s_pts return value
+    tao_calc_data_at_s_pts return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14959,7 +14959,7 @@ class TaoCalcDataAtSPts:
         ...
 class TaoChangeEle:
     """
-    Fortran routine tao_change_ele return value
+    tao_change_ele return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14973,7 +14973,7 @@ class TaoChangeEle:
         ...
 class TaoChromCalcNeeded:
     """
-    Fortran routine tao_chrom_calc_needed return value
+    tao_chrom_calc_needed return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -14990,7 +14990,7 @@ class TaoChromCalcNeeded:
         ...
 class TaoClipCmd:
     """
-    Fortran routine tao_clip_cmd return value
+    tao_clip_cmd return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15004,7 +15004,7 @@ class TaoClipCmd:
         ...
 class TaoCmdHistoryRecord:
     """
-    Fortran routine tao_cmd_history_record return value
+    tao_cmd_history_record return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15069,7 +15069,7 @@ class TaoCmdHistoryStructArray1D:
         ...
 class TaoCommand:
     """
-    Fortran routine tao_command return value
+    tao_command return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15193,7 +15193,7 @@ class TaoCommonStruct:
         ...
 class TaoConstraintTypeName:
     """
-    Fortran routine tao_constraint_type_name return value
+    tao_constraint_type_name return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15231,7 +15231,7 @@ class TaoCurveColorStruct:
         ...
 class TaoCurveEleRef:
     """
-    Fortran routine tao_curve_ele_ref return value
+    tao_curve_ele_ref return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15242,7 +15242,7 @@ class TaoCurveEleRef:
         ...
 class TaoCurveIxUni:
     """
-    Fortran routine tao_curve_ix_uni return value
+    tao_curve_ix_uni return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15253,7 +15253,7 @@ class TaoCurveIxUni:
         ...
 class TaoCurveName:
     """
-    Fortran routine tao_curve_name return value
+    tao_curve_name return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15294,7 +15294,7 @@ class TaoCurveOrbitStruct:
         ...
 class TaoCurveRmsCalc:
     """
-    Fortran routine tao_curve_rms_calc return value
+    tao_curve_rms_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15506,7 +15506,7 @@ class TaoD1DataStructArray1D:
         ...
 class TaoD2D1Name:
     """
-    Fortran routine tao_d2_d1_name return value
+    tao_d2_d1_name return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15595,7 +15595,7 @@ class TaoD2DataStructArray1D:
         ...
 class TaoD2DataStuffit:
     """
-    Fortran routine tao_d2_data_stuffit return value
+    tao_d2_data_stuffit return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15609,7 +15609,7 @@ class TaoD2DataStuffit:
         ...
 class TaoDataCheck:
     """
-    Fortran routine tao_data_check return value
+    tao_data_check return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15620,7 +15620,7 @@ class TaoDataCheck:
         ...
 class TaoDataSanityCheck:
     """
-    Fortran routine tao_data_sanity_check return value
+    tao_data_sanity_check return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15855,7 +15855,7 @@ class TaoDataStructArray1D:
         ...
 class TaoDataUseitPlotCalc:
     """
-    Fortran routine tao_data_useit_plot_calc return value
+    tao_data_useit_plot_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15923,7 +15923,7 @@ class TaoDataVarComponentStructArray1D:
         ...
 class TaoDatumHasAssociatedEle:
     """
-    Fortran routine tao_datum_has_associated_ele return value
+    tao_datum_has_associated_ele return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15934,7 +15934,7 @@ class TaoDatumHasAssociatedEle:
         ...
 class TaoDatumIntegrate:
     """
-    Fortran routine tao_datum_integrate return value
+    tao_datum_integrate return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15951,7 +15951,7 @@ class TaoDatumIntegrate:
         ...
 class TaoDatumName:
     """
-    Fortran routine tao_datum_name return value
+    tao_datum_name return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15962,7 +15962,7 @@ class TaoDatumName:
         ...
 class TaoDrawCurveData:
     """
-    Fortran routine tao_draw_curve_data return value
+    tao_draw_curve_data return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15973,7 +15973,7 @@ class TaoDrawCurveData:
         ...
 class TaoDrawEleForFloorPlan:
     """
-    Fortran routine tao_draw_ele_for_floor_plan return value
+    tao_draw_ele_for_floor_plan return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -15987,7 +15987,7 @@ class TaoDrawEleForFloorPlan:
         ...
 class TaoDrawHistogramData:
     """
-    Fortran routine tao_draw_histogram_data return value
+    tao_draw_histogram_data return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16050,7 +16050,7 @@ class TaoDynamicApertureStruct:
         ...
 class TaoEleGeometryWithMisalignments:
     """
-    Fortran routine tao_ele_geometry_with_misalignments return value
+    tao_ele_geometry_with_misalignments return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16123,7 +16123,7 @@ class TaoElePointerStructArray1D:
         ...
 class TaoEleShapeInfo:
     """
-    Fortran routine tao_ele_shape_info return value
+    tao_ele_shape_info return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16227,7 +16227,7 @@ class TaoEleShapeStructArray1D:
         ...
 class TaoEvalFloorOrbit:
     """
-    Fortran routine tao_eval_floor_orbit return value
+    tao_eval_floor_orbit return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16244,7 +16244,7 @@ class TaoEvalFloorOrbit:
         ...
 class TaoEvaluateADatum:
     """
-    Fortran routine tao_evaluate_a_datum return value
+    tao_evaluate_a_datum return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16261,7 +16261,7 @@ class TaoEvaluateADatum:
         ...
 class TaoEvaluateDatumAtS:
     """
-    Fortran routine tao_evaluate_datum_at_s return value
+    tao_evaluate_datum_at_s return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16278,7 +16278,7 @@ class TaoEvaluateDatumAtS:
         ...
 class TaoEvaluateLatOrBeamData:
     """
-    Fortran routine tao_evaluate_lat_or_beam_data return value
+    tao_evaluate_lat_or_beam_data return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16295,7 +16295,7 @@ class TaoEvaluateLatOrBeamData:
         ...
 class TaoEvaluateTune:
     """
-    Fortran routine tao_evaluate_tune return value
+    tao_evaluate_tune return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16306,7 +16306,7 @@ class TaoEvaluateTune:
         ...
 class TaoFindPlotRegion:
     """
-    Fortran routine tao_find_plot_region return value
+    tao_find_plot_region return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16359,7 +16359,7 @@ class TaoFloorPlanStruct:
         ...
 class TaoFloorToScreen:
     """
-    Fortran routine tao_floor_to_screen return value
+    tao_floor_to_screen return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16373,7 +16373,7 @@ class TaoFloorToScreen:
         ...
 class TaoGetData:
     """
-    Fortran routine tao_get_data return value
+    tao_get_data return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16393,7 +16393,7 @@ class TaoGetData:
         ...
 class TaoGetOptVars:
     """
-    Fortran routine tao_get_opt_vars return value
+    tao_get_opt_vars return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16628,7 +16628,7 @@ class TaoGlobalStruct:
         ...
 class TaoGraphName:
     """
-    Fortran routine tao_graph_name return value
+    tao_graph_name return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16639,7 +16639,7 @@ class TaoGraphName:
         ...
 class TaoGraphSMinMaxCalc:
     """
-    Fortran routine tao_graph_s_min_max_calc return value
+    tao_graph_s_min_max_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16811,7 +16811,7 @@ class TaoHistogramStruct:
         ...
 class TaoInitBeamInUniverse:
     """
-    Fortran routine tao_init_beam_in_universe return value
+    tao_init_beam_in_universe return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16828,7 +16828,7 @@ class TaoInitBeamInUniverse:
         ...
 class TaoInitDataInUniverse:
     """
-    Fortran routine tao_init_data_in_universe return value
+    tao_init_data_in_universe return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16842,7 +16842,7 @@ class TaoInitDataInUniverse:
         ...
 class TaoInitFindElements:
     """
-    Fortran routine tao_init_find_elements return value
+    tao_init_find_elements return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16856,7 +16856,7 @@ class TaoInitFindElements:
         ...
 class TaoInitLattice:
     """
-    Fortran routine tao_init_lattice return value
+    tao_init_lattice return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16870,7 +16870,7 @@ class TaoInitLattice:
         ...
 class TaoInitPlotting:
     """
-    Fortran routine tao_init_plotting return value
+    tao_init_plotting return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16934,7 +16934,7 @@ class TaoInitStruct:
         ...
 class TaoInjectBeam:
     """
-    Fortran routine tao_inject_beam return value
+    tao_inject_beam return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16948,7 +16948,7 @@ class TaoInjectBeam:
         ...
 class TaoInjectParticle:
     """
-    Fortran routine tao_inject_particle return value
+    tao_inject_particle return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16959,7 +16959,7 @@ class TaoInjectParticle:
         ...
 class TaoIsValidName:
     """
-    Fortran routine tao_is_valid_name return value
+    tao_is_valid_name return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16973,7 +16973,7 @@ class TaoIsValidName:
         ...
 class TaoKeyInfoToStr:
     """
-    Fortran routine tao_key_info_to_str return value
+    tao_key_info_to_str return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -16996,7 +16996,7 @@ class TaoKeyInfoToStr:
         ...
 class TaoLatEmitCalc:
     """
-    Fortran routine tao_lat_emit_calc return value
+    tao_lat_emit_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17007,7 +17007,7 @@ class TaoLatEmitCalc:
         ...
 class TaoLatSigmaCalcNeeded:
     """
-    Fortran routine tao_lat_sigma_calc_needed return value
+    tao_lat_sigma_calc_needed return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17218,7 +17218,7 @@ class TaoLatticeBranchStructArray1D:
         ...
 class TaoLatticeCalc:
     """
-    Fortran routine tao_lattice_calc return value
+    tao_lattice_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17253,7 +17253,7 @@ class TaoLatticeStruct:
         ...
 class TaoLoadThisDatum:
     """
-    Fortran routine tao_load_this_datum return value
+    tao_load_this_datum return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17270,7 +17270,7 @@ class TaoLoadThisDatum:
         ...
 class TaoLocateAllElements:
     """
-    Fortran routine tao_locate_all_elements return value
+    tao_locate_all_elements return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17284,7 +17284,7 @@ class TaoLocateAllElements:
         ...
 class TaoLocateElements:
     """
-    Fortran routine tao_locate_elements return value
+    tao_locate_elements return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17301,7 +17301,7 @@ class TaoLocateElements:
         ...
 class TaoMerit:
     """
-    Fortran routine tao_merit return value
+    tao_merit return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17416,7 +17416,7 @@ class TaoModelElementStructArray1D:
         ...
 class TaoNextWord:
     """
-    Fortran routine tao_next_word return value
+    tao_next_word return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17430,7 +17430,7 @@ class TaoNextWord:
         ...
 class TaoOneTurnMapCalcNeeded:
     """
-    Fortran routine tao_one_turn_map_calc_needed return value
+    tao_one_turn_map_calc_needed return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17447,7 +17447,7 @@ class TaoOneTurnMapCalcNeeded:
         ...
 class TaoOpenFile:
     """
-    Fortran routine tao_open_file return value
+    tao_open_file return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17461,7 +17461,7 @@ class TaoOpenFile:
         ...
 class TaoOpenScratchFile:
     """
-    Fortran routine tao_open_scratch_file return value
+    tao_open_scratch_file return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17475,7 +17475,7 @@ class TaoOpenScratchFile:
         ...
 class TaoOptimizationStatus:
     """
-    Fortran routine tao_optimization_status return value
+    tao_optimization_status return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17486,7 +17486,7 @@ class TaoOptimizationStatus:
         ...
 class TaoParamValueAtS:
     """
-    Fortran routine tao_param_value_at_s return value
+    tao_param_value_at_s return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17512,7 +17512,7 @@ class TaoParamValueAtS:
         ...
 class TaoParseCommandArgs:
     """
-    Fortran routine tao_parse_command_args return value
+    tao_parse_command_args return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17526,7 +17526,7 @@ class TaoParseCommandArgs:
         ...
 class TaoParseElementParamStr:
     """
-    Fortran routine tao_parse_element_param_str return value
+    tao_parse_element_param_str return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17552,7 +17552,7 @@ class TaoParseElementParamStr:
         ...
 class TaoParticleDataValue:
     """
-    Fortran routine tao_particle_data_value return value
+    tao_particle_data_value return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17566,7 +17566,7 @@ class TaoParticleDataValue:
         ...
 class TaoPickUniverse:
     """
-    Fortran routine tao_pick_universe return value
+    tao_pick_universe return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17919,7 +17919,7 @@ class TaoPlotStructArray1D:
         ...
 class TaoPointerToDatumEle:
     """
-    Fortran routine tao_pointer_to_datum_ele return value
+    tao_pointer_to_datum_ele return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17939,7 +17939,7 @@ class TaoPointerToDatumEle:
         ...
 class TaoPointerToEleShape:
     """
-    Fortran routine tao_pointer_to_ele_shape return value
+    tao_pointer_to_ele_shape return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17956,7 +17956,7 @@ class TaoPointerToEleShape:
         ...
 class TaoPointerToUniverseStr:
     """
-    Fortran routine tao_pointer_to_universe_str return value
+    tao_pointer_to_universe_str return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17970,7 +17970,7 @@ class TaoPointerToUniverseStr:
         ...
 class TaoPointerToUniverses:
     """
-    Fortran routine tao_pointer_to_universes return value
+    tao_pointer_to_universes return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -17990,7 +17990,7 @@ class TaoPointerToUniverses:
         ...
 class TaoRadIntCalcNeeded:
     """
-    Fortran routine tao_rad_int_calc_needed return value
+    tao_rad_int_calc_needed return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18007,7 +18007,7 @@ class TaoRadIntCalcNeeded:
         ...
 class TaoReExecute:
     """
-    Fortran routine tao_re_execute return value
+    tao_re_execute return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18021,7 +18021,7 @@ class TaoReExecute:
         ...
 class TaoReadCmd:
     """
-    Fortran routine tao_read_cmd return value
+    tao_read_cmd return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18035,7 +18035,7 @@ class TaoReadCmd:
         ...
 class TaoReadPhaseSpaceIndex:
     """
-    Fortran routine tao_read_phase_space_index return value
+    tao_read_phase_space_index return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18046,7 +18046,7 @@ class TaoReadPhaseSpaceIndex:
         ...
 class TaoRemoveBlankCharacters:
     """
-    Fortran routine tao_remove_blank_characters return value
+    tao_remove_blank_characters return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18057,7 +18057,7 @@ class TaoRemoveBlankCharacters:
         ...
 class TaoScaleGraph:
     """
-    Fortran routine tao_scale_graph return value
+    tao_scale_graph return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18071,7 +18071,7 @@ class TaoScaleGraph:
         ...
 class TaoSetCalculateCmd:
     """
-    Fortran routine tao_set_calculate_cmd return value
+    tao_set_calculate_cmd return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18082,7 +18082,7 @@ class TaoSetCalculateCmd:
         ...
 class TaoSetDataCmd:
     """
-    Fortran routine tao_set_data_cmd return value
+    tao_set_data_cmd return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18093,7 +18093,7 @@ class TaoSetDataCmd:
         ...
 class TaoSetElementsCmd:
     """
-    Fortran routine tao_set_elements_cmd return value
+    tao_set_elements_cmd return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18104,7 +18104,7 @@ class TaoSetElementsCmd:
         ...
 class TaoSetFloorPlanAxisLabel:
     """
-    Fortran routine tao_set_floor_plan_axis_label return value
+    tao_set_floor_plan_axis_label return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18115,7 +18115,7 @@ class TaoSetFloorPlanAxisLabel:
         ...
 class TaoSetIntegerValue:
     """
-    Fortran routine tao_set_integer_value return value
+    tao_set_integer_value return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18129,7 +18129,7 @@ class TaoSetIntegerValue:
         ...
 class TaoSetLogicalValue:
     """
-    Fortran routine tao_set_logical_value return value
+    tao_set_logical_value return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18143,7 +18143,7 @@ class TaoSetLogicalValue:
         ...
 class TaoSetQpAxisStruct:
     """
-    Fortran routine tao_set_qp_axis_struct return value
+    tao_set_qp_axis_struct return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18157,7 +18157,7 @@ class TaoSetQpAxisStruct:
         ...
 class TaoSetQpPointStruct:
     """
-    Fortran routine tao_set_qp_point_struct return value
+    tao_set_qp_point_struct return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18171,7 +18171,7 @@ class TaoSetQpPointStruct:
         ...
 class TaoSetQpRectStruct:
     """
-    Fortran routine tao_set_qp_rect_struct return value
+    tao_set_qp_rect_struct return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18185,7 +18185,7 @@ class TaoSetQpRectStruct:
         ...
 class TaoSetRealValue:
     """
-    Fortran routine tao_set_real_value return value
+    tao_set_real_value return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18439,7 +18439,7 @@ class TaoSpinMapStruct:
         ...
 class TaoSpinMatricesCalcNeeded:
     """
-    Fortran routine tao_spin_matrices_calc_needed return value
+    tao_spin_matrices_calc_needed return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18539,7 +18539,7 @@ class TaoSpinPolarizationStruct:
         ...
 class TaoSplitComponent:
     """
-    Fortran routine tao_split_component return value
+    tao_split_component return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18553,7 +18553,7 @@ class TaoSplitComponent:
         ...
 class TaoSrdtCalcNeeded:
     """
-    Fortran routine tao_srdt_calc_needed return value
+    tao_srdt_calc_needed return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18570,7 +18570,7 @@ class TaoSrdtCalcNeeded:
         ...
 class TaoSubinUniNumber:
     """
-    Fortran routine tao_subin_uni_number return value
+    tao_subin_uni_number return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18658,7 +18658,7 @@ class TaoTitleStruct:
         ...
 class TaoToChangeNumber:
     """
-    Fortran routine tao_to_change_number return value
+    tao_to_change_number return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18678,7 +18678,7 @@ class TaoToChangeNumber:
         ...
 class TaoToInt:
     """
-    Fortran routine tao_to_int return value
+    tao_to_int return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18695,7 +18695,7 @@ class TaoToInt:
         ...
 class TaoToPhaseAndCouplingReading:
     """
-    Fortran routine tao_to_phase_and_coupling_reading return value
+    tao_to_phase_and_coupling_reading return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18712,7 +18712,7 @@ class TaoToPhaseAndCouplingReading:
         ...
 class TaoToReal:
     """
-    Fortran routine tao_to_real return value
+    tao_to_real return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18726,7 +18726,7 @@ class TaoToReal:
         ...
 class TaoTooManyParticlesLost:
     """
-    Fortran routine tao_too_many_particles_lost return value
+    tao_too_many_particles_lost return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18737,7 +18737,7 @@ class TaoTooManyParticlesLost:
         ...
 class TaoTrackingEleIndex:
     """
-    Fortran routine tao_tracking_ele_index return value
+    tao_tracking_ele_index return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -18781,7 +18781,7 @@ class TaoUniverseCalcStruct:
         ...
 class TaoUniverseIndex:
     """
-    Fortran routine tao_universe_index return value
+    tao_universe_index return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -19007,7 +19007,7 @@ class TaoV1VarStructArray1D:
         ...
 class TaoVar1Name:
     """
-    Fortran routine tao_var1_name return value
+    tao_var1_name return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -19018,7 +19018,7 @@ class TaoVar1Name:
         ...
 class TaoVarAttribName:
     """
-    Fortran routine tao_var_attrib_name return value
+    tao_var_attrib_name return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -19318,7 +19318,7 @@ class TaoVarStructArray1D:
         ...
 class TaoWaveCmd:
     """
-    Fortran routine tao_wave_cmd return value
+    tao_wave_cmd return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -19329,7 +19329,7 @@ class TaoWaveCmd:
         ...
 class TaoWaveFit:
     """
-    Fortran routine tao_wave_fit return value
+    tao_wave_fit return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -19662,7 +19662,7 @@ class TaoWaveStruct:
         ...
 class TaoXScaleGraph:
     """
-    Fortran routine tao_x_scale_graph return value
+    tao_x_scale_graph return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -19682,7 +19682,7 @@ class TaoXScaleGraph:
         ...
 class TaperMagStrengths:
     """
-    Fortran routine taper_mag_strengths return value
+    taper_mag_strengths return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -19693,7 +19693,7 @@ class TaperMagStrengths:
         ...
 class TargetMinMaxCalc:
     """
-    Fortran routine target_min_max_calc return value
+    target_min_max_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -19763,7 +19763,7 @@ class TargetPointStructArray1D:
         ...
 class TargetRotMats:
     """
-    Fortran routine target_rot_mats return value
+    target_rot_mats return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -19777,7 +19777,7 @@ class TargetRotMats:
         ...
 class TaylorInverse:
     """
-    Fortran routine taylor_inverse return value
+    taylor_inverse return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -19903,7 +19903,7 @@ class TaylorTermStructArray1D:
         ...
 class TestBunchStructArray:
     """
-    Fortran routine test_bunch_struct_array return value
+    test_bunch_struct_array return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -19917,7 +19917,7 @@ class TestBunchStructArray:
         ...
 class TestBunchStructScalar:
     """
-    Fortran routine test_bunch_struct_scalar return value
+    test_bunch_struct_scalar return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -19931,7 +19931,7 @@ class TestBunchStructScalar:
         ...
 class TestCharacterScalar:
     """
-    Fortran routine test_character_scalar return value
+    test_character_scalar return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -19951,7 +19951,7 @@ class TestCharacterScalar:
         ...
 class TestComplexArray:
     """
-    Fortran routine test_complex_array return value
+    test_complex_array return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -19965,7 +19965,7 @@ class TestComplexArray:
         ...
 class TestComplexScalar:
     """
-    Fortran routine test_complex_scalar return value
+    test_complex_scalar return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -19985,7 +19985,7 @@ class TestComplexScalar:
         ...
 class TestInteger8Array:
     """
-    Fortran routine test_integer8_array return value
+    test_integer8_array return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -19999,7 +19999,7 @@ class TestInteger8Array:
         ...
 class TestInteger8Scalar:
     """
-    Fortran routine test_integer8_scalar return value
+    test_integer8_scalar return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20019,7 +20019,7 @@ class TestInteger8Scalar:
         ...
 class TestIntegerArray:
     """
-    Fortran routine test_integer_array return value
+    test_integer_array return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20033,7 +20033,7 @@ class TestIntegerArray:
         ...
 class TestIntegerScalar:
     """
-    Fortran routine test_integer_scalar return value
+    test_integer_scalar return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20053,7 +20053,7 @@ class TestIntegerScalar:
         ...
 class TestLogicalArray:
     """
-    Fortran routine test_logical_array return value
+    test_logical_array return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20067,7 +20067,7 @@ class TestLogicalArray:
         ...
 class TestLogicalScalar:
     """
-    Fortran routine test_logical_scalar return value
+    test_logical_scalar return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20087,7 +20087,7 @@ class TestLogicalScalar:
         ...
 class TestReal16Array:
     """
-    Fortran routine test_real16_array return value
+    test_real16_array return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20101,7 +20101,7 @@ class TestReal16Array:
         ...
 class TestReal16Scalar:
     """
-    Fortran routine test_real16_scalar return value
+    test_real16_scalar return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20121,7 +20121,7 @@ class TestReal16Scalar:
         ...
 class TestRealArray:
     """
-    Fortran routine test_real_array return value
+    test_real_array return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20135,7 +20135,7 @@ class TestRealArray:
         ...
 class TestRealScalar:
     """
-    Fortran routine test_real_scalar return value
+    test_real_scalar return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20266,7 +20266,7 @@ class TestSubSubStruct:
         ...
 class ToEtaReading:
     """
-    Fortran routine to_eta_reading return value
+    to_eta_reading return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20280,7 +20280,7 @@ class ToEtaReading:
         ...
 class ToFieldmapCoords:
     """
-    Fortran routine to_fieldmap_coords return value
+    to_fieldmap_coords return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20303,7 +20303,7 @@ class ToFieldmapCoords:
         ...
 class ToOrbitReading:
     """
-    Fortran routine to_orbit_reading return value
+    to_orbit_reading return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20317,7 +20317,7 @@ class ToOrbitReading:
         ...
 class ToPhaseAndCouplingReading:
     """
-    Fortran routine to_phase_and_coupling_reading return value
+    to_phase_and_coupling_reading return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20331,7 +20331,7 @@ class ToPhaseAndCouplingReading:
         ...
 class ToStr:
     """
-    Fortran routine to_str return value
+    to_str return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20348,7 +20348,7 @@ class ToStr:
         ...
 class TouschekRate1Zap:
     """
-    Fortran routine touschek_rate1_zap return value
+    touschek_rate1_zap return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20365,7 +20365,7 @@ class TouschekRate1Zap:
         ...
 class Track1:
     """
-    Fortran routine track1 return value
+    track1 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20379,7 +20379,7 @@ class Track1:
         ...
 class Track1Bmad:
     """
-    Fortran routine track1_bmad return value
+    track1_bmad return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20393,7 +20393,7 @@ class Track1Bmad:
         ...
 class Track1RungeKutta:
     """
-    Fortran routine track1_runge_kutta return value
+    track1_runge_kutta return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20407,7 +20407,7 @@ class Track1RungeKutta:
         ...
 class Track1Spin:
     """
-    Fortran routine track1_spin return value
+    track1_spin return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20424,7 +20424,7 @@ class Track1Spin:
         ...
 class Track1TimeRungeKutta:
     """
-    Fortran routine track1_time_runge_kutta return value
+    track1_time_runge_kutta return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20441,7 +20441,7 @@ class Track1TimeRungeKutta:
         ...
 class TrackABeambeam:
     """
-    Fortran routine track_a_beambeam return value
+    track_a_beambeam return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20455,7 +20455,7 @@ class TrackABeambeam:
         ...
 class TrackADrift:
     """
-    Fortran routine track_a_drift return value
+    track_a_drift return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20466,7 +20466,7 @@ class TrackADrift:
         ...
 class TrackAMatch:
     """
-    Fortran routine track_a_match return value
+    track_a_match return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20480,7 +20480,7 @@ class TrackAMatch:
         ...
 class TrackAPatch:
     """
-    Fortran routine track_a_patch return value
+    track_a_patch return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20497,7 +20497,7 @@ class TrackAPatch:
         ...
 class TrackAPickup:
     """
-    Fortran routine track_a_pickup return value
+    track_a_pickup return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20511,7 +20511,7 @@ class TrackAPickup:
         ...
 class TrackAZeroLengthElement:
     """
-    Fortran routine track_a_zero_length_element return value
+    track_a_zero_length_element return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20525,7 +20525,7 @@ class TrackAZeroLengthElement:
         ...
 class TrackAll:
     """
-    Fortran routine track_all return value
+    track_all return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20542,7 +20542,7 @@ class TrackAll:
         ...
 class TrackFromSToS:
     """
-    Fortran routine track_from_s_to_s return value
+    track_from_s_to_s return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20666,7 +20666,7 @@ class TrackStruct:
         ...
 class TrackUntilDead:
     """
-    Fortran routine track_until_dead return value
+    track_until_dead return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20680,7 +20680,7 @@ class TrackUntilDead:
         ...
 class TrackingRadMapSetup:
     """
-    Fortran routine tracking_rad_map_setup return value
+    tracking_rad_map_setup return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20694,7 +20694,7 @@ class TrackingRadMapSetup:
         ...
 class TransferMapFromSToS:
     """
-    Fortran routine transfer_map_from_s_to_s return value
+    transfer_map_from_s_to_s return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20739,7 +20739,7 @@ class TricubicCmplxCoefStructArray3D:
         ...
 class TricubicCmplxEval:
     """
-    Fortran routine tricubic_cmplx_eval return value
+    tricubic_cmplx_eval return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20759,7 +20759,7 @@ class TricubicCmplxEval:
         ...
 class Twiss1Propagate:
     """
-    Fortran routine twiss1_propagate return value
+    twiss1_propagate return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20773,7 +20773,7 @@ class Twiss1Propagate:
         ...
 class Twiss3AtStart:
     """
-    Fortran routine twiss3_at_start return value
+    twiss3_at_start return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20787,7 +20787,7 @@ class Twiss3AtStart:
         ...
 class Twiss3Propagate1:
     """
-    Fortran routine twiss3_propagate1 return value
+    twiss3_propagate1 return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20798,7 +20798,7 @@ class Twiss3Propagate1:
         ...
 class TwissAndTrackFromSToS:
     """
-    Fortran routine twiss_and_track_from_s_to_s return value
+    twiss_and_track_from_s_to_s return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20815,7 +20815,7 @@ class TwissAndTrackFromSToS:
         ...
 class TwissAndTrackIntraEle:
     """
-    Fortran routine twiss_and_track_intra_ele return value
+    twiss_and_track_intra_ele return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20829,7 +20829,7 @@ class TwissAndTrackIntraEle:
         ...
 class TwissAtElement:
     """
-    Fortran routine twiss_at_element return value
+    twiss_at_element return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20846,7 +20846,7 @@ class TwissAtElement:
         ...
 class TwissFromTracking:
     """
-    Fortran routine twiss_from_tracking return value
+    twiss_from_tracking return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20968,7 +20968,7 @@ class TwissStruct:
         ...
 class TypeThisFile:
     """
-    Fortran routine type_this_file return value
+    type_this_file return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20979,7 +20979,7 @@ class TypeThisFile:
         ...
 class UpcaseString:
     """
-    Fortran routine upcase_string return value
+    upcase_string return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -20990,7 +20990,7 @@ class UpcaseString:
         ...
 class ValidFieldCalc:
     """
-    Fortran routine valid_field_calc return value
+    valid_field_calc return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21001,7 +21001,7 @@ class ValidFieldCalc:
         ...
 class ValidFringeType:
     """
-    Fortran routine valid_fringe_type return value
+    valid_fringe_type return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21012,7 +21012,7 @@ class ValidFringeType:
         ...
 class ValidMat6CalcMethod:
     """
-    Fortran routine valid_mat6_calc_method return value
+    valid_mat6_calc_method return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21023,7 +21023,7 @@ class ValidMat6CalcMethod:
         ...
 class ValidSpinTrackingMethod:
     """
-    Fortran routine valid_spin_tracking_method return value
+    valid_spin_tracking_method return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21034,7 +21034,7 @@ class ValidSpinTrackingMethod:
         ...
 class ValidTrackingMethod:
     """
-    Fortran routine valid_tracking_method return value
+    valid_tracking_method return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21045,7 +21045,7 @@ class ValidTrackingMethod:
         ...
 class ValueOfAttribute:
     """
-    Fortran routine value_of_attribute return value
+    value_of_attribute return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21059,7 +21059,7 @@ class ValueOfAttribute:
         ...
 class ValueToLine:
     """
-    Fortran routine value_to_line return value
+    value_to_line return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21085,7 +21085,7 @@ class ValueToLine:
         ...
 class WMatToAxisAngle:
     """
-    Fortran routine w_mat_to_axis_angle return value
+    w_mat_to_axis_angle return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21800,7 +21800,7 @@ class Wall3DVertexStructArray1D:
         ...
 class Wall3dDRadius:
     """
-    Fortran routine wall3d_d_radius return value
+    wall3d_d_radius return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21829,7 +21829,7 @@ class Wall3dDRadius:
         ...
 class WordLen:
     """
-    Fortran routine word_len return value
+    word_len return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21843,7 +21843,7 @@ class WordLen:
         ...
 class WordRead:
     """
-    Fortran routine word_read return value
+    word_read return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21875,7 +21875,7 @@ class WordRead:
         ...
 class WordToValue:
     """
-    Fortran routine word_to_value return value
+    word_to_value return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21892,7 +21892,7 @@ class WordToValue:
         ...
 class WriteAstraBend:
     """
-    Fortran routine write_astra_bend return value
+    write_astra_bend return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21909,7 +21909,7 @@ class WriteAstraBend:
         ...
 class WriteAstraFieldGridFile:
     """
-    Fortran routine write_astra_field_grid_file return value
+    write_astra_field_grid_file return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21923,7 +21923,7 @@ class WriteAstraFieldGridFile:
         ...
 class WriteAstraFieldGridFile3d:
     """
-    Fortran routine write_astra_field_grid_file_3d return value
+    write_astra_field_grid_file_3d return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21937,7 +21937,7 @@ class WriteAstraFieldGridFile3d:
         ...
 class WriteBlenderEle:
     """
-    Fortran routine write_blender_ele return value
+    write_blender_ele return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21951,7 +21951,7 @@ class WriteBlenderEle:
         ...
 class WriteBlenderLatLayout:
     """
-    Fortran routine write_blender_lat_layout return value
+    write_blender_lat_layout return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21962,7 +21962,7 @@ class WriteBlenderLatLayout:
         ...
 class WriteGptFieldGridFile1d:
     """
-    Fortran routine write_gpt_field_grid_file_1d return value
+    write_gpt_field_grid_file_1d return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21979,7 +21979,7 @@ class WriteGptFieldGridFile1d:
         ...
 class WriteGptFieldGridFile2d:
     """
-    Fortran routine write_gpt_field_grid_file_2d return value
+    write_gpt_field_grid_file_2d return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -21996,7 +21996,7 @@ class WriteGptFieldGridFile2d:
         ...
 class WriteGptFieldGridFile3d:
     """
-    Fortran routine write_gpt_field_grid_file_3d return value
+    write_gpt_field_grid_file_3d return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -22013,7 +22013,7 @@ class WriteGptFieldGridFile3d:
         ...
 class WriteLatLine:
     """
-    Fortran routine write_lat_line return value
+    write_lat_line return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -22024,7 +22024,7 @@ class WriteLatLine:
         ...
 class WriteLatticeInSadFormat:
     """
-    Fortran routine write_lattice_in_sad_format return value
+    write_lattice_in_sad_format return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -22044,7 +22044,7 @@ class WriteLatticeInSadFormat:
         ...
 class WriteLatticeInScibmad:
     """
-    Fortran routine write_lattice_in_scibmad return value
+    write_lattice_in_scibmad return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -22058,7 +22058,7 @@ class WriteLatticeInScibmad:
         ...
 class WriteLineElement:
     """
-    Fortran routine write_line_element return value
+    write_line_element return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -22072,7 +22072,7 @@ class WriteLineElement:
         ...
 class WriteOpalFieldGridFile:
     """
-    Fortran routine write_opal_field_grid_file return value
+    write_opal_field_grid_file return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -22086,7 +22086,7 @@ class WriteOpalFieldGridFile:
         ...
 class Xlafun:
     """
-    Fortran routine xlafun return value
+    xlafun return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -22154,7 +22154,7 @@ class XyDispStruct:
         ...
 class Ylafun:
     """
-    Fortran routine ylafun return value
+    ylafun return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -22174,7 +22174,7 @@ class Ylafun:
         ...
 class ZAtSurface:
     """
-    Fortran routine z_at_surface return value
+    z_at_surface return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -22197,7 +22197,7 @@ class ZAtSurface:
         ...
 class Zlafun:
     """
-    Fortran routine zlafun return value
+    zlafun return type
     """
     def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
         ...
@@ -28112,7 +28112,7 @@ def get_bl_from_fwhm(bound: typing.SupportsFloat, args: typing.Annotated[collect
       sigma : float
           Bunch length
     """
-def get_bmad_com() -> ...:
+def get_bmad_com() -> BmadCommonStruct:
     """
     Get the shared BmadCommon structure
     """
@@ -28216,11 +28216,11 @@ def get_slave_list(lord: EleStruct) -> GetSlaveList:
       n_slave : int
           Number of slaves.
     """
-def get_space_charge_com() -> ...:
+def get_space_charge_com() -> SpaceChargeCommonStruct:
     """
     Get the shared SpaceChargeCommon structure
     """
-def get_super_universe() -> ...:
+def get_super_universe() -> TaoSuperUniverseStruct:
     """
     Get the shared TaoSuperUniverse structure
     """

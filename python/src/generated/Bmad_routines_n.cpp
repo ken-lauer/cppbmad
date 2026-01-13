@@ -81,9 +81,7 @@ void init_Bmad_routines_n(py::module& m) {
   py::class_<
       PyNormalFormComplexTaylors,
       std::unique_ptr<PyNormalFormComplexTaylors>>(
-      m,
-      "NormalFormComplexTaylors",
-      "Fortran routine normal_form_complex_taylors return value")
+      m, "NormalFormComplexTaylors", "normal_form_complex_taylors return type")
       .def_readonly("rf_on", &PyNormalFormComplexTaylors::rf_on)
       .def_readonly("order", &PyNormalFormComplexTaylors::order)
       .def("__len__", [](const PyNormalFormComplexTaylors&) { return 2; })
@@ -119,9 +117,7 @@ void init_Bmad_routines_n(py::module& m) {
   order : 
   )""");
   py::class_<Bmad::NormalFormTaylors, std::unique_ptr<Bmad::NormalFormTaylors>>(
-      m,
-      "NormalFormTaylors",
-      "Fortran routine normal_form_taylors return value")
+      m, "NormalFormTaylors", "normal_form_taylors return type")
       .def_readonly("dhdj", &Bmad::NormalFormTaylors::dhdj)
       .def_readonly("A", &Bmad::NormalFormTaylors::A)
       .def_readonly("A_inverse", &Bmad::NormalFormTaylors::A_inverse)
@@ -178,7 +174,7 @@ void init_Bmad_routines_n(py::module& m) {
       Map from Floquet coordinates to phase advances
   )""");
   py::class_<Bmad::NormalMode3Calc, std::unique_ptr<Bmad::NormalMode3Calc>>(
-      m, "NormalMode3Calc", "Fortran routine normal_mode3_calc return value")
+      m, "NormalMode3Calc", "normal_mode3_calc return type")
       .def_readonly("tune", &Bmad::NormalMode3Calc::tune)
       .def_readonly("B", &Bmad::NormalMode3Calc::B)
       .def_readonly("HV", &Bmad::NormalMode3Calc::HV)
@@ -264,7 +260,7 @@ void init_Bmad_routines_n(py::module& m) {
       Set true of normalization is not possible due to amplitude is zero.
   )""");
   py::class_<PyNumFieldEles, std::unique_ptr<PyNumFieldEles>>(
-      m, "NumFieldEles", "Fortran routine num_field_eles return value")
+      m, "NumFieldEles", "num_field_eles return type")
       .def_readonly("n_field_ele", &PyNumFieldEles::n_field_ele)
       .def("__len__", [](const PyNumFieldEles&) { return 1; })
       .def("__getitem__", [](const PyNumFieldEles& s, int i) -> py::object {
@@ -286,7 +282,7 @@ void init_Bmad_routines_n(py::module& m) {
   n_field_ele : 
   )""");
   py::class_<PyNumLords, std::unique_ptr<PyNumLords>>(
-      m, "NumLords", "Fortran routine num_lords return value")
+      m, "NumLords", "num_lords return type")
       .def_readonly("num", &PyNumLords::num)
       .def("__len__", [](const PyNumLords&) { return 1; })
       .def("__getitem__", [](const PyNumLords& s, int i) -> py::object {

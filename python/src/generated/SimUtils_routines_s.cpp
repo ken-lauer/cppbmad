@@ -174,7 +174,7 @@ PySystemCommand python_system_command(
 
 void init_SimUtils_routines_s(py::module& m) {
   py::class_<PySetParameterInt, std::unique_ptr<PySetParameterInt>>(
-      m, "SetParameterInt", "Fortran routine set_parameter_int return value")
+      m, "SetParameterInt", "set_parameter_int return type")
       .def_readonly("param_val", &PySetParameterInt::param_val)
       .def_readonly("set_val", &PySetParameterInt::set_val)
       .def_readonly("save_val", &PySetParameterInt::save_val)
@@ -203,9 +203,7 @@ void init_SimUtils_routines_s(py::module& m) {
   save_val : 
   )""");
   py::class_<PySetParameterLogic, std::unique_ptr<PySetParameterLogic>>(
-      m,
-      "SetParameterLogic",
-      "Fortran routine set_parameter_logic return value")
+      m, "SetParameterLogic", "set_parameter_logic return type")
       .def_readonly("param_val", &PySetParameterLogic::param_val)
       .def_readonly("set_val", &PySetParameterLogic::set_val)
       .def_readonly("save_val", &PySetParameterLogic::save_val)
@@ -235,7 +233,7 @@ void init_SimUtils_routines_s(py::module& m) {
   save_val : 
   )""");
   py::class_<PySetParameterReal, std::unique_ptr<PySetParameterReal>>(
-      m, "SetParameterReal", "Fortran routine set_parameter_real return value")
+      m, "SetParameterReal", "set_parameter_real return type")
       .def_readonly("param_val", &PySetParameterReal::param_val)
       .def_readonly("set_val", &PySetParameterReal::set_val)
       .def_readonly("save_val", &PySetParameterReal::save_val)
@@ -286,8 +284,7 @@ void init_SimUtils_routines_s(py::module& m) {
   species_charged : int
       Species of the same type as species_in but with different charge.
   )""");
-  py::class_<PySinc, std::unique_ptr<PySinc>>(
-      m, "Sinc", "Fortran routine sinc return value")
+  py::class_<PySinc, std::unique_ptr<PySinc>>(m, "Sinc", "sinc return type")
       .def_readonly("y", &PySinc::y)
       .def("__len__", [](const PySinc&) { return 1; })
       .def("__getitem__", [](const PySinc& s, int i) -> py::object {
@@ -309,8 +306,7 @@ void init_SimUtils_routines_s(py::module& m) {
   nd : 
   y : 
   )""");
-  py::class_<PySincc, std::unique_ptr<PySincc>>(
-      m, "Sincc", "Fortran routine sincc return value")
+  py::class_<PySincc, std::unique_ptr<PySincc>>(m, "Sincc", "sincc return type")
       .def_readonly("y", &PySincc::y)
       .def("__len__", [](const PySincc&) { return 1; })
       .def("__getitem__", [](const PySincc& s, int i) -> py::object {
@@ -333,7 +329,7 @@ void init_SimUtils_routines_s(py::module& m) {
   y : 
   )""");
   py::class_<PySinhxX, std::unique_ptr<PySinhxX>>(
-      m, "SinhxX", "Fortran routine sinhx_x return value")
+      m, "SinhxX", "sinhx_x return type")
       .def_readonly("y", &PySinhxX::y)
       .def("__len__", [](const PySinhxX&) { return 1; })
       .def("__getitem__", [](const PySinhxX& s, int i) -> py::object {
@@ -356,7 +352,7 @@ void init_SimUtils_routines_s(py::module& m) {
   y : 
   )""");
   py::class_<PySkipHeader, std::unique_ptr<PySkipHeader>>(
-      m, "SkipHeader", "Fortran routine skip_header return value")
+      m, "SkipHeader", "skip_header return type")
       .def_readonly("ix_unit", &PySkipHeader::ix_unit)
       .def_readonly("error_flag", &PySkipHeader::error_flag)
       .def("__len__", [](const PySkipHeader&) { return 2; })
@@ -554,9 +550,7 @@ void init_SimUtils_routines_s(py::module& m) {
   py::class_<
       SimUtils::SplineAkimaInterpolate,
       std::unique_ptr<SimUtils::SplineAkimaInterpolate>>(
-      m,
-      "SplineAkimaInterpolate",
-      "Fortran routine spline_akima_interpolate return value")
+      m, "SplineAkimaInterpolate", "spline_akima_interpolate return type")
       .def_readonly("ok", &SimUtils::SplineAkimaInterpolate::ok)
       .def_readonly("y", &SimUtils::SplineAkimaInterpolate::y)
       .def_readonly("dy", &SimUtils::SplineAkimaInterpolate::dy)
@@ -614,7 +608,7 @@ void init_SimUtils_routines_s(py::module& m) {
   py::class_<
       SimUtils::SplineEvaluate,
       std::unique_ptr<SimUtils::SplineEvaluate>>(
-      m, "SplineEvaluate", "Fortran routine spline_evaluate return value")
+      m, "SplineEvaluate", "spline_evaluate return type")
       .def_readonly("ok", &SimUtils::SplineEvaluate::ok)
       .def_readonly("y", &SimUtils::SplineEvaluate::y)
       .def_readonly("dy", &SimUtils::SplineEvaluate::dy)
@@ -666,7 +660,7 @@ void init_SimUtils_routines_s(py::module& m) {
   spline_mod
   )""");
   py::class_<PySqrtAlpha, std::unique_ptr<PySqrtAlpha>>(
-      m, "SqrtAlpha", "Fortran routine sqrt_alpha return value")
+      m, "SqrtAlpha", "sqrt_alpha return type")
       .def_readonly("y", &PySqrtAlpha::y)
       .def("__len__", [](const PySqrtAlpha&) { return 1; })
       .def("__getitem__", [](const PySqrtAlpha& s, int i) -> py::object {
@@ -689,7 +683,7 @@ void init_SimUtils_routines_s(py::module& m) {
   y : 
   )""");
   py::class_<PySqrtOne, std::unique_ptr<PySqrtOne>>(
-      m, "SqrtOne", "Fortran routine sqrt_one return value")
+      m, "SqrtOne", "sqrt_one return type")
       .def_readonly("ds1", &PySqrtOne::ds1)
       .def("__len__", [](const PySqrtOne&) { return 1; })
       .def("__getitem__", [](const PySqrtOne& s, int i) -> py::object {
@@ -712,7 +706,7 @@ void init_SimUtils_routines_s(py::module& m) {
   ds1 : 
   )""");
   py::class_<PyStrCount, std::unique_ptr<PyStrCount>>(
-      m, "StrCount", "Fortran routine str_count return value")
+      m, "StrCount", "str_count return type")
       .def_readonly("str", &PyStrCount::str)
       .def_readonly("match", &PyStrCount::match)
       .def_readonly("num", &PyStrCount::num)
@@ -750,7 +744,7 @@ void init_SimUtils_routines_s(py::module& m) {
   src : 
   )""");
   py::class_<PyStrFirstInSet, std::unique_ptr<PyStrFirstInSet>>(
-      m, "StrFirstInSet", "Fortran routine str_first_in_set return value")
+      m, "StrFirstInSet", "str_first_in_set return type")
       .def_readonly("line", &PyStrFirstInSet::line)
       .def_readonly("set", &PyStrFirstInSet::set)
       .def_readonly("ignore_clauses", &PyStrFirstInSet::ignore_clauses)
@@ -784,9 +778,7 @@ void init_SimUtils_routines_s(py::module& m) {
   ix_match : 
   )""");
   py::class_<PyStrFirstNotInSet, std::unique_ptr<PyStrFirstNotInSet>>(
-      m,
-      "StrFirstNotInSet",
-      "Fortran routine str_first_not_in_set return value")
+      m, "StrFirstNotInSet", "str_first_not_in_set return type")
       .def_readonly("line", &PyStrFirstNotInSet::line)
       .def_readonly("set", &PyStrFirstNotInSet::set)
       .def_readonly("ix_match", &PyStrFirstNotInSet::ix_match)
@@ -815,7 +807,7 @@ void init_SimUtils_routines_s(py::module& m) {
   ix_match : 
   )""");
   py::class_<PyStrLastInSet, std::unique_ptr<PyStrLastInSet>>(
-      m, "StrLastInSet", "Fortran routine str_last_in_set return value")
+      m, "StrLastInSet", "str_last_in_set return type")
       .def_readonly("line", &PyStrLastInSet::line)
       .def_readonly("set", &PyStrLastInSet::set)
       .def_readonly("ix_match", &PyStrLastInSet::ix_match)
@@ -844,7 +836,7 @@ void init_SimUtils_routines_s(py::module& m) {
   ix_match : 
   )""");
   py::class_<PyStrLastNotInSet, std::unique_ptr<PyStrLastNotInSet>>(
-      m, "StrLastNotInSet", "Fortran routine str_last_not_in_set return value")
+      m, "StrLastNotInSet", "str_last_not_in_set return type")
       .def_readonly("line", &PyStrLastNotInSet::line)
       .def_readonly("set", &PyStrLastNotInSet::set)
       .def_readonly("ix_match", &PyStrLastNotInSet::ix_match)
@@ -873,7 +865,7 @@ void init_SimUtils_routines_s(py::module& m) {
   ix_match : 
   )""");
   py::class_<PyStrMatchWild, std::unique_ptr<PyStrMatchWild>>(
-      m, "StrMatchWild", "Fortran routine str_match_wild return value")
+      m, "StrMatchWild", "str_match_wild return type")
       .def_readonly("str", &PyStrMatchWild::str)
       .def_readonly("pat", &PyStrMatchWild::pat)
       .def_readonly("a_match", &PyStrMatchWild::a_match)
@@ -902,7 +894,7 @@ void init_SimUtils_routines_s(py::module& m) {
   a_match : 
   )""");
   py::class_<PyStrSubstitute, std::unique_ptr<PyStrSubstitute>>(
-      m, "StrSubstitute", "Fortran routine str_substitute return value")
+      m, "StrSubstitute", "str_substitute return type")
       .def_readonly("string", &PyStrSubstitute::string)
       .def_readonly("str_match", &PyStrSubstitute::str_match)
       .def_readonly("str_replace", &PyStrSubstitute::str_replace)
@@ -950,7 +942,7 @@ void init_SimUtils_routines_s(py::module& m) {
   src : 
   )""");
   py::class_<PyStringToInt, std::unique_ptr<PyStringToInt>>(
-      m, "StringToInt", "Fortran routine string_to_int return value")
+      m, "StringToInt", "string_to_int return type")
       .def_readonly("line", &PyStringToInt::line)
       .def_readonly("default_", &PyStringToInt::default_)
       .def_readonly("err_flag", &PyStringToInt::err_flag)
@@ -989,7 +981,7 @@ void init_SimUtils_routines_s(py::module& m) {
   value : 
   )""");
   py::class_<PyStringToReal, std::unique_ptr<PyStringToReal>>(
-      m, "StringToReal", "Fortran routine string_to_real return value")
+      m, "StringToReal", "string_to_real return type")
       .def_readonly("line", &PyStringToReal::line)
       .def_readonly("default_", &PyStringToReal::default_)
       .def_readonly("err_flag", &PyStringToReal::err_flag)
@@ -1028,7 +1020,7 @@ void init_SimUtils_routines_s(py::module& m) {
   value : 
   )""");
   py::class_<PyStringTrim, std::unique_ptr<PyStringTrim>>(
-      m, "StringTrim", "Fortran routine string_trim return value")
+      m, "StringTrim", "string_trim return type")
       .def_readonly("in_string", &PyStringTrim::in_string)
       .def_readonly("out_string", &PyStringTrim::out_string)
       .def_readonly("word_len", &PyStringTrim::word_len)
@@ -1057,7 +1049,7 @@ void init_SimUtils_routines_s(py::module& m) {
   word_len : 
   )""");
   py::class_<PyStringTrim2, std::unique_ptr<PyStringTrim2>>(
-      m, "StringTrim2", "Fortran routine string_trim2 return value")
+      m, "StringTrim2", "string_trim2 return type")
       .def_readonly("in_str", &PyStringTrim2::in_str)
       .def_readonly("delimitors", &PyStringTrim2::delimitors)
       .def_readonly("out_str", &PyStringTrim2::out_str)
@@ -1137,9 +1129,7 @@ void init_SimUtils_routines_s(py::module& m) {
   py::class_<
       SimUtils::SuperBicubicInterpolation,
       std::unique_ptr<SimUtils::SuperBicubicInterpolation>>(
-      m,
-      "SuperBicubicInterpolation",
-      "Fortran routine super_bicubic_interpolation return value")
+      m, "SuperBicubicInterpolation", "super_bicubic_interpolation return type")
       .def_readonly("ansy", &SimUtils::SuperBicubicInterpolation::ansy)
       .def_readonly("ansy1", &SimUtils::SuperBicubicInterpolation::ansy1)
       .def_readonly("ansy2", &SimUtils::SuperBicubicInterpolation::ansy2)
@@ -1214,7 +1204,7 @@ void init_SimUtils_routines_s(py::module& m) {
       2-direction derivative at interpolation point.
   )""");
   py::class_<SimUtils::SuperPolint, std::unique_ptr<SimUtils::SuperPolint>>(
-      m, "SuperPolint", "Fortran routine super_polint return value")
+      m, "SuperPolint", "super_polint return type")
       .def_readonly("y", &SimUtils::SuperPolint::y)
       .def_readonly("dy", &SimUtils::SuperPolint::dy)
       .def("__len__", [](const SimUtils::SuperPolint&) { return 2; })
@@ -1305,7 +1295,7 @@ void init_SimUtils_routines_s(py::module& m) {
       This parameter is an input/output and is modified in-place. As an output: Sorted array.
   )""");
   py::class_<PySystemCommand, std::unique_ptr<PySystemCommand>>(
-      m, "SystemCommand", "Fortran routine system_command return value")
+      m, "SystemCommand", "system_command return type")
       .def_readonly("line", &PySystemCommand::line)
       .def_readonly("err_flag", &PySystemCommand::err_flag)
       .def("__len__", [](const PySystemCommand&) { return 2; })

@@ -56,7 +56,7 @@ PyDowncaseString python_downcase_string(std::string string) {
 
 void init_SimUtils_routines_d(py::module& m) {
   py::class_<PyDateAndTimeStamp, std::unique_ptr<PyDateAndTimeStamp>>(
-      m, "DateAndTimeStamp", "Fortran routine date_and_time_stamp return value")
+      m, "DateAndTimeStamp", "date_and_time_stamp return type")
       .def_readonly("string", &PyDateAndTimeStamp::string)
       .def_readonly("numeric_month", &PyDateAndTimeStamp::numeric_month)
       .def_readonly("include_zone", &PyDateAndTimeStamp::include_zone)
@@ -92,8 +92,7 @@ void init_SimUtils_routines_d(py::module& m) {
   ----------
   id : 
   )""");
-  py::class_<PyDetab, std::unique_ptr<PyDetab>>(
-      m, "Detab", "Fortran routine detab return value")
+  py::class_<PyDetab, std::unique_ptr<PyDetab>>(m, "Detab", "detab return type")
       .def_readonly("str", &PyDetab::str)
       .def("__len__", [](const PyDetab&) { return 1; })
       .def("__getitem__", [](const PyDetab& s, int i) -> py::object {
@@ -114,9 +113,7 @@ void init_SimUtils_routines_d(py::module& m) {
   py::class_<
       PyDisplaySizeAndResolution,
       std::unique_ptr<PyDisplaySizeAndResolution>>(
-      m,
-      "DisplaySizeAndResolution",
-      "Fortran routine display_size_and_resolution return value")
+      m, "DisplaySizeAndResolution", "display_size_and_resolution return type")
       .def_readonly("ix_screen", &PyDisplaySizeAndResolution::ix_screen)
       .def_readonly("x_size", &PyDisplaySizeAndResolution::x_size)
       .def_readonly("y_size", &PyDisplaySizeAndResolution::y_size)
@@ -157,7 +154,7 @@ void init_SimUtils_routines_d(py::module& m) {
   y_res : 
   )""");
   py::class_<PyDjBessel, std::unique_ptr<PyDjBessel>>(
-      m, "DjBessel", "Fortran routine dj_bessel return value")
+      m, "DjBessel", "dj_bessel return type")
       .def_readonly("m", &PyDjBessel::m)
       .def_readonly("arg", &PyDjBessel::arg)
       .def_readonly("dj_bes", &PyDjBessel::dj_bes)
@@ -186,7 +183,7 @@ void init_SimUtils_routines_d(py::module& m) {
   dj_bes : 
   )""");
   py::class_<PyDjbHash, std::unique_ptr<PyDjbHash>>(
-      m, "DjbHash", "Fortran routine djb_hash return value")
+      m, "DjbHash", "djb_hash return type")
       .def_readonly("str", &PyDjbHash::str)
       .def_readonly("old_hash", &PyDjbHash::old_hash)
       .def_readonly("hash", &PyDjbHash::hash)
@@ -215,7 +212,7 @@ void init_SimUtils_routines_d(py::module& m) {
   hash : 
   )""");
   py::class_<PyDjbStrHash, std::unique_ptr<PyDjbStrHash>>(
-      m, "DjbStrHash", "Fortran routine djb_str_hash return value")
+      m, "DjbStrHash", "djb_str_hash return type")
       .def_readonly("in_str", &PyDjbStrHash::in_str)
       .def_readonly("hash_str", &PyDjbStrHash::hash_str)
       .def("__len__", [](const PyDjbStrHash&) { return 2; })
@@ -239,7 +236,7 @@ void init_SimUtils_routines_d(py::module& m) {
   hash_str : 
   )""");
   py::class_<PyDowncaseString, std::unique_ptr<PyDowncaseString>>(
-      m, "DowncaseString", "Fortran routine downcase_string return value")
+      m, "DowncaseString", "downcase_string return type")
       .def_readonly("string", &PyDowncaseString::string)
       .def("__len__", [](const PyDowncaseString&) { return 1; })
       .def("__getitem__", [](const PyDowncaseString& s, int i) -> py::object {

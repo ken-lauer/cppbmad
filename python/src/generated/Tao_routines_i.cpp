@@ -31,7 +31,7 @@ PyIntegrateMin python_integrate_min(
 
 void init_Tao_routines_i(py::module& m) {
   py::class_<PyIntegrateMax, std::unique_ptr<PyIntegrateMax>>(
-      m, "IntegrateMax", "Fortran routine integrate_max return value")
+      m, "IntegrateMax", "integrate_max return type")
       .def_readonly("ix_start", &PyIntegrateMax::ix_start)
       .def_readonly("ix_ele", &PyIntegrateMax::ix_ele)
       .def_readonly("datum_value", &PyIntegrateMax::datum_value)
@@ -71,7 +71,7 @@ void init_Tao_routines_i(py::module& m) {
   datum : 
   )""");
   py::class_<PyIntegrateMin, std::unique_ptr<PyIntegrateMin>>(
-      m, "IntegrateMin", "Fortran routine integrate_min return value")
+      m, "IntegrateMin", "integrate_min return type")
       .def_readonly("ix_start", &PyIntegrateMin::ix_start)
       .def_readonly("ix_ele", &PyIntegrateMin::ix_ele)
       .def_readonly("datum_value", &PyIntegrateMin::datum_value)

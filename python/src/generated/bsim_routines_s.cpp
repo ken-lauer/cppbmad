@@ -28,7 +28,7 @@ PySetTune3d python_set_tune_3d(
 
 void init_bsim_routines_s(py::module& m) {
   py::class_<PySetTune3d, std::unique_ptr<PySetTune3d>>(
-      m, "SetTune3d", "Fortran routine set_tune_3d return value")
+      m, "SetTune3d", "set_tune_3d return type")
       .def_readonly("mask", &PySetTune3d::mask)
       .def_readonly("everything_ok", &PySetTune3d::everything_ok)
       .def("__len__", [](const PySetTune3d&) { return 2; })

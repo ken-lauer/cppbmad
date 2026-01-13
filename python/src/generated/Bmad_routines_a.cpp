@@ -74,7 +74,7 @@ PyAtThisEleEnd python_at_this_ele_end(
 
 void init_Bmad_routines_a(py::module& m) {
   py::class_<Bmad::AbMultipoleKick, std::unique_ptr<Bmad::AbMultipoleKick>>(
-      m, "AbMultipoleKick", "Fortran routine ab_multipole_kick return value")
+      m, "AbMultipoleKick", "ab_multipole_kick return type")
       .def_readonly("kx", &Bmad::AbMultipoleKick::kx)
       .def_readonly("ky", &Bmad::AbMultipoleKick::ky)
       .def_readonly("dk", &Bmad::AbMultipoleKick::dk)
@@ -204,9 +204,7 @@ void init_Bmad_routines_a(py::module& m) {
       This parameter is an input/output and is modified in-place. As an output: Absolute photon position.
   )""");
   py::class_<PyAbsoluteTimeTracking, std::unique_ptr<PyAbsoluteTimeTracking>>(
-      m,
-      "AbsoluteTimeTracking",
-      "Fortran routine absolute_time_tracking return value")
+      m, "AbsoluteTimeTracking", "absolute_time_tracking return type")
       .def_readonly("is_abs_time", &PyAbsoluteTimeTracking::is_abs_time)
       .def("__len__", [](const PyAbsoluteTimeTracking&) { return 1; })
       .def(
@@ -230,7 +228,7 @@ void init_Bmad_routines_a(py::module& m) {
   is_abs_time : 
   )""");
   py::class_<PyAcKickerAmp, std::unique_ptr<PyAcKickerAmp>>(
-      m, "AcKickerAmp", "Fortran routine ac_kicker_amp return value")
+      m, "AcKickerAmp", "ac_kicker_amp return type")
       .def_readonly("ac_amp", &PyAcKickerAmp::ac_amp)
       .def("__len__", [](const PyAcKickerAmp&) { return 1; })
       .def("__getitem__", [](const PyAcKickerAmp& s, int i) -> py::object {
@@ -259,7 +257,7 @@ void init_Bmad_routines_a(py::module& m) {
   ac_amp : 
   )""");
   py::class_<Bmad::ActionToXyz, std::unique_ptr<Bmad::ActionToXyz>>(
-      m, "ActionToXyz", "Fortran routine action_to_xyz return value")
+      m, "ActionToXyz", "action_to_xyz return type")
       .def_readonly("X", &Bmad::ActionToXyz::X)
       .def_readonly("err_flag", &Bmad::ActionToXyz::err_flag)
       .def("__len__", [](const Bmad::ActionToXyz&) { return 2; })
@@ -332,7 +330,7 @@ void init_Bmad_routines_a(py::module& m) {
       array. If False then new space is added at the front of the array. Default is True.
   )""");
   py::class_<Bmad::AddSuperimpose, std::unique_ptr<Bmad::AddSuperimpose>>(
-      m, "AddSuperimpose", "Fortran routine add_superimpose return value")
+      m, "AddSuperimpose", "add_superimpose return type")
       .def_readonly("err_flag", &Bmad::AddSuperimpose::err_flag)
       .def_readonly("super_ele_out", &Bmad::AddSuperimpose::super_ele_out)
       .def("__len__", [](const Bmad::AddSuperimpose&) { return 2; })
@@ -424,9 +422,7 @@ void init_Bmad_routines_a(py::module& m) {
   lord_in : 
   )""");
   py::class_<PyAddThisTaylorTerm, std::unique_ptr<PyAddThisTaylorTerm>>(
-      m,
-      "AddThisTaylorTerm",
-      "Fortran routine add_this_taylor_term return value")
+      m, "AddThisTaylorTerm", "add_this_taylor_term return type")
       .def_readonly("i_out", &PyAddThisTaylorTerm::i_out)
       .def_readonly("coef", &PyAddThisTaylorTerm::coef)
       .def("__len__", [](const PyAddThisTaylorTerm&) { return 2; })
@@ -454,9 +450,7 @@ void init_Bmad_routines_a(py::module& m) {
 
   )""");
   py::class_<PyAdjustSuperSlaveNames, std::unique_ptr<PyAdjustSuperSlaveNames>>(
-      m,
-      "AdjustSuperSlaveNames",
-      "Fortran routine adjust_super_slave_names return value")
+      m, "AdjustSuperSlaveNames", "adjust_super_slave_names return type")
       .def_readonly("ix1_lord", &PyAdjustSuperSlaveNames::ix1_lord)
       .def_readonly("ix2_lord", &PyAdjustSuperSlaveNames::ix2_lord)
       .def_readonly("first_time", &PyAdjustSuperSlaveNames::first_time)
@@ -519,9 +513,7 @@ void init_Bmad_routines_a(py::module& m) {
       formed lattice.
   )""");
   py::class_<PyAngleBetweenPolars, std::unique_ptr<PyAngleBetweenPolars>>(
-      m,
-      "AngleBetweenPolars",
-      "Fortran routine angle_between_polars return value")
+      m, "AngleBetweenPolars", "angle_between_polars return type")
       .def_readonly("angle", &PyAngleBetweenPolars::angle)
       .def("__len__", [](const PyAngleBetweenPolars&) { return 1; })
       .def(
@@ -638,7 +630,7 @@ void init_Bmad_routines_a(py::module& m) {
       Set true if there is an error. False otherwise.
   )""");
   py::class_<PyArrayReStr, std::unique_ptr<PyArrayReStr>>(
-      m, "ArrayReStr", "Fortran routine array_re_str return value")
+      m, "ArrayReStr", "array_re_str return type")
       .def_readonly("parens_in", &PyArrayReStr::parens_in)
       .def_readonly("str_out", &PyArrayReStr::str_out)
       .def("__len__", [](const PyArrayReStr&) { return 2; })
@@ -666,9 +658,7 @@ void init_Bmad_routines_a(py::module& m) {
   py::class_<
       PyAstraMaxFieldReference,
       std::unique_ptr<PyAstraMaxFieldReference>>(
-      m,
-      "AstraMaxFieldReference",
-      "Fortran routine astra_max_field_reference return value")
+      m, "AstraMaxFieldReference", "astra_max_field_reference return type")
       .def_readonly("field_value", &PyAstraMaxFieldReference::field_value)
       .def("__len__", [](const PyAstraMaxFieldReference&) { return 1; })
       .def(
@@ -693,7 +683,7 @@ void init_Bmad_routines_a(py::module& m) {
   field_value : 
   )""");
   py::class_<PyAtThisEleEnd, std::unique_ptr<PyAtThisEleEnd>>(
-      m, "AtThisEleEnd", "Fortran routine at_this_ele_end return value")
+      m, "AtThisEleEnd", "at_this_ele_end return type")
       .def_readonly("is_at_this_end", &PyAtThisEleEnd::is_at_this_end)
       .def("__len__", [](const PyAtThisEleEnd&) { return 1; })
       .def("__getitem__", [](const PyAtThisEleEnd& s, int i) -> py::object {
@@ -735,7 +725,7 @@ void init_Bmad_routines_a(py::module& m) {
       attribute_bookkeeper to assume intelligent bookkeeping.
   )""");
   py::class_<Bmad::AttributeFree1, std::unique_ptr<Bmad::AttributeFree1>>(
-      m, "AttributeFree1", "Fortran routine attribute_free1 return value")
+      m, "AttributeFree1", "attribute_free1 return type")
       .def_readonly("why_not_free", &Bmad::AttributeFree1::why_not_free)
       .def_readonly("free", &Bmad::AttributeFree1::free)
       .def("__len__", [](const Bmad::AttributeFree1&) { return 2; })
@@ -817,7 +807,7 @@ void init_Bmad_routines_a(py::module& m) {
       element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
   )""");
   py::class_<Bmad::AttributeFree2, std::unique_ptr<Bmad::AttributeFree2>>(
-      m, "AttributeFree2", "Fortran routine attribute_free2 return value")
+      m, "AttributeFree2", "attribute_free2 return type")
       .def_readonly("why_not_free", &Bmad::AttributeFree2::why_not_free)
       .def_readonly("free", &Bmad::AttributeFree2::free)
       .def("__len__", [](const Bmad::AttributeFree2&) { return 2; })
@@ -897,7 +887,7 @@ void init_Bmad_routines_a(py::module& m) {
       element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
   )""");
   py::class_<Bmad::AttributeFree3, std::unique_ptr<Bmad::AttributeFree3>>(
-      m, "AttributeFree3", "Fortran routine attribute_free3 return value")
+      m, "AttributeFree3", "attribute_free3 return type")
       .def_readonly("why_not_free", &Bmad::AttributeFree3::why_not_free)
       .def_readonly("free", &Bmad::AttributeFree3::free)
       .def("__len__", [](const Bmad::AttributeFree3&) { return 2; })
@@ -981,7 +971,7 @@ void init_Bmad_routines_a(py::module& m) {
       element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
   )""");
   py::class_<Bmad::AttributeIndex1, std::unique_ptr<Bmad::AttributeIndex1>>(
-      m, "AttributeIndex1", "Fortran routine attribute_index1 return value")
+      m, "AttributeIndex1", "attribute_index1 return type")
       .def_readonly("full_name", &Bmad::AttributeIndex1::full_name)
       .def_readonly("attrib_index", &Bmad::AttributeIndex1::attrib_index)
       .def("__len__", [](const Bmad::AttributeIndex1&) { return 2; })
@@ -1052,7 +1042,7 @@ void init_Bmad_routines_a(py::module& m) {
   Overloaded versions:
   )""");
   py::class_<Bmad::AttributeIndex2, std::unique_ptr<Bmad::AttributeIndex2>>(
-      m, "AttributeIndex2", "Fortran routine attribute_index2 return value")
+      m, "AttributeIndex2", "attribute_index2 return type")
       .def_readonly("full_name", &Bmad::AttributeIndex2::full_name)
       .def_readonly("attrib_index", &Bmad::AttributeIndex2::attrib_index)
       .def("__len__", [](const Bmad::AttributeIndex2&) { return 2; })

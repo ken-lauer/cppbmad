@@ -75,7 +75,7 @@ void init_Bmad_routines_h(py::module& m) {
       Propagate the transfer matrix? Default is False.
   )""");
   py::class_<PyHasAttribute, std::unique_ptr<PyHasAttribute>>(
-      m, "HasAttribute", "Fortran routine has_attribute return value")
+      m, "HasAttribute", "has_attribute return type")
       .def_readonly("attrib", &PyHasAttribute::attrib)
       .def_readonly("has_it", &PyHasAttribute::has_it)
       .def("__len__", [](const PyHasAttribute&) { return 2; })
@@ -143,7 +143,7 @@ void init_Bmad_routines_h(py::module& m) {
   has_attribute function.
   )""");
   py::class_<PyHdf5WriteBeam, std::unique_ptr<PyHdf5WriteBeam>>(
-      m, "Hdf5WriteBeam", "Fortran routine hdf5_write_beam return value")
+      m, "Hdf5WriteBeam", "hdf5_write_beam return type")
       .def_readonly("file_name", &PyHdf5WriteBeam::file_name)
       .def_readonly("append", &PyHdf5WriteBeam::append)
       .def_readonly("error", &PyHdf5WriteBeam::error)
@@ -181,9 +181,7 @@ void init_Bmad_routines_h(py::module& m) {
   alive_only : 
   )""");
   py::class_<PyHdf5WriteGridField, std::unique_ptr<PyHdf5WriteGridField>>(
-      m,
-      "Hdf5WriteGridField",
-      "Fortran routine hdf5_write_grid_field return value")
+      m, "Hdf5WriteGridField", "hdf5_write_grid_field return type")
       .def_readonly("file_name", &PyHdf5WriteGridField::file_name)
       .def_readonly("err_flag", &PyHdf5WriteGridField::err_flag)
       .def("__len__", [](const PyHdf5WriteGridField&) { return 2; })

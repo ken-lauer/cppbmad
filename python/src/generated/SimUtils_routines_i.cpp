@@ -131,7 +131,7 @@ PyIsReal python_is_real(
 
 void init_SimUtils_routines_i(py::module& m) {
   py::class_<PyIBessel, std::unique_ptr<PyIBessel>>(
-      m, "IBessel", "Fortran routine i_bessel return value")
+      m, "IBessel", "i_bessel return type")
       .def_readonly("m", &PyIBessel::m)
       .def_readonly("arg", &PyIBessel::arg)
       .def_readonly("i_bes", &PyIBessel::i_bes)
@@ -160,7 +160,7 @@ void init_SimUtils_routines_i(py::module& m) {
   i_bes : 
   )""");
   py::class_<PyIBesselExtended, std::unique_ptr<PyIBesselExtended>>(
-      m, "IBesselExtended", "Fortran routine i_bessel_extended return value")
+      m, "IBesselExtended", "i_bessel_extended return type")
       .def_readonly("m", &PyIBesselExtended::m)
       .def_readonly("arg", &PyIBesselExtended::arg)
       .def_readonly("i_bes", &PyIBesselExtended::i_bes)
@@ -189,9 +189,7 @@ void init_SimUtils_routines_i(py::module& m) {
   i_bes : 
   )""");
   py::class_<PyIncrementFileNumber, std::unique_ptr<PyIncrementFileNumber>>(
-      m,
-      "IncrementFileNumber",
-      "Fortran routine increment_file_number return value")
+      m, "IncrementFileNumber", "increment_file_number return type")
       .def_readonly("file_name", &PyIncrementFileNumber::file_name)
       .def_readonly("digits", &PyIncrementFileNumber::digits)
       .def_readonly("number", &PyIncrementFileNumber::number)
@@ -227,7 +225,7 @@ void init_SimUtils_routines_i(py::module& m) {
   cnumber : 
   )""");
   py::class_<PyIndexNocase, std::unique_ptr<PyIndexNocase>>(
-      m, "IndexNocase", "Fortran routine index_nocase return value")
+      m, "IndexNocase", "index_nocase return type")
       .def_readonly("string1", &PyIndexNocase::string1)
       .def_readonly("string2", &PyIndexNocase::string2)
       .def_readonly("indx", &PyIndexNocase::indx)
@@ -281,7 +279,7 @@ void init_SimUtils_routines_i(py::module& m) {
       windowLS instance created.
   )""");
   py::class_<PyIntStr, std::unique_ptr<PyIntStr>>(
-      m, "IntStr", "Fortran routine int_str return value")
+      m, "IntStr", "int_str return type")
       .def_readonly("int_", &PyIntStr::int_)
       .def_readonly("width", &PyIntStr::width)
       .def_readonly("str", &PyIntStr::str)
@@ -310,7 +308,7 @@ void init_SimUtils_routines_i(py::module& m) {
   str : 
   )""");
   py::class_<PyInterpolatedFft, std::unique_ptr<PyInterpolatedFft>>(
-      m, "InterpolatedFft", "Fortran routine interpolated_fft return value")
+      m, "InterpolatedFft", "interpolated_fft return type")
       .def_readonly("calc_ok", &PyInterpolatedFft::calc_ok)
       .def_readonly("opt_dump_spectrum", &PyInterpolatedFft::opt_dump_spectrum)
       .def_readonly("opt_dump_index", &PyInterpolatedFft::opt_dump_index)
@@ -349,9 +347,7 @@ void init_SimUtils_routines_i(py::module& m) {
   this_fft
   )""");
   py::class_<PyInterpolatedFftGsl, std::unique_ptr<PyInterpolatedFftGsl>>(
-      m,
-      "InterpolatedFftGsl",
-      "Fortran routine interpolated_fft_gsl return value")
+      m, "InterpolatedFftGsl", "interpolated_fft_gsl return type")
       .def_readonly("calc_ok", &PyInterpolatedFftGsl::calc_ok)
       .def_readonly(
           "opt_dump_spectrum", &PyInterpolatedFftGsl::opt_dump_spectrum)
@@ -389,7 +385,7 @@ void init_SimUtils_routines_i(py::module& m) {
 
   )""");
   py::class_<PyIsAlphabetic, std::unique_ptr<PyIsAlphabetic>>(
-      m, "IsAlphabetic", "Fortran routine is_alphabetic return value")
+      m, "IsAlphabetic", "is_alphabetic return type")
       .def_readonly("string", &PyIsAlphabetic::string)
       .def_readonly("valid_chars", &PyIsAlphabetic::valid_chars)
       .def_readonly("is_alpha", &PyIsAlphabetic::is_alpha)
@@ -425,9 +421,7 @@ void init_SimUtils_routines_i(py::module& m) {
   prob
   )""");
   py::class_<PyIsDecreasingSequence, std::unique_ptr<PyIsDecreasingSequence>>(
-      m,
-      "IsDecreasingSequence",
-      "Fortran routine is_decreasing_sequence return value")
+      m, "IsDecreasingSequence", "is_decreasing_sequence return type")
       .def_readonly("is_decreasing", &PyIsDecreasingSequence::is_decreasing)
       .def("__len__", [](const PyIsDecreasingSequence&) { return 1; })
       .def(
@@ -485,9 +479,7 @@ void init_SimUtils_routines_i(py::module& m) {
   boolian attributes. For example quadrupoles use ele%value(scale_multipoles$).
   )""");
   py::class_<PyIsIncreasingSequence, std::unique_ptr<PyIsIncreasingSequence>>(
-      m,
-      "IsIncreasingSequence",
-      "Fortran routine is_increasing_sequence return value")
+      m, "IsIncreasingSequence", "is_increasing_sequence return type")
       .def_readonly("is_increasing", &PyIsIncreasingSequence::is_increasing)
       .def("__len__", [](const PyIsIncreasingSequence&) { return 1; })
       .def(
@@ -514,7 +506,7 @@ void init_SimUtils_routines_i(py::module& m) {
   is_increasing : 
   )""");
   py::class_<PyIsInteger, std::unique_ptr<PyIsInteger>>(
-      m, "IsInteger", "Fortran routine is_integer return value")
+      m, "IsInteger", "is_integer return type")
       .def_readonly("string", &PyIsInteger::string)
       .def_readonly("int_", &PyIsInteger::int_)
       .def_readonly("delims", &PyIsInteger::delims)
@@ -553,7 +545,7 @@ void init_SimUtils_routines_i(py::module& m) {
   valid : 
   )""");
   py::class_<PyIsLogical, std::unique_ptr<PyIsLogical>>(
-      m, "IsLogical", "Fortran routine is_logical return value")
+      m, "IsLogical", "is_logical return type")
       .def_readonly("string", &PyIsLogical::string)
       .def_readonly("ignore", &PyIsLogical::ignore)
       .def_readonly("valid", &PyIsLogical::valid)
@@ -582,7 +574,7 @@ void init_SimUtils_routines_i(py::module& m) {
   valid : 
   )""");
   py::class_<PyIsReal, std::unique_ptr<PyIsReal>>(
-      m, "IsReal", "Fortran routine is_real return value")
+      m, "IsReal", "is_real return type")
       .def_readonly("string", &PyIsReal::string)
       .def_readonly("ignore", &PyIsReal::ignore)
       .def_readonly("real_num", &PyIsReal::real_num)

@@ -24,7 +24,7 @@ PyLogicStr python_logic_str(bool logic, std::string str) {
 
 void init_SimUtils_routines_l(py::module& m) {
   py::class_<PyLinearFit, std::unique_ptr<PyLinearFit>>(
-      m, "LinearFit", "Fortran routine linear_fit return value")
+      m, "LinearFit", "linear_fit return type")
       .def_readonly("n_data", &PyLinearFit::n_data)
       .def_readonly("a", &PyLinearFit::a)
       .def_readonly("b", &PyLinearFit::b)
@@ -84,7 +84,7 @@ void init_SimUtils_routines_l(py::module& m) {
       Coefficients of the linear fit
   )""");
   py::class_<PyLogicStr, std::unique_ptr<PyLogicStr>>(
-      m, "LogicStr", "Fortran routine logic_str return value")
+      m, "LogicStr", "logic_str return type")
       .def_readonly("logic", &PyLogicStr::logic)
       .def_readonly("str", &PyLogicStr::str)
       .def("__len__", [](const PyLogicStr&) { return 2; })

@@ -79,9 +79,7 @@ void init_CppBmadTest_routines_t(py::module& m) {
   py::class_<
       CppBmadTest::TestBunchStructArray,
       std::unique_ptr<CppBmadTest::TestBunchStructArray>>(
-      m,
-      "TestBunchStructArray",
-      "Fortran routine test_bunch_struct_array return value")
+      m, "TestBunchStructArray", "test_bunch_struct_array return type")
       .def_readonly("arr_out", &CppBmadTest::TestBunchStructArray::arr_out)
       .def_readonly(
           "opt_status", &CppBmadTest::TestBunchStructArray::opt_status)
@@ -117,9 +115,7 @@ void init_CppBmadTest_routines_t(py::module& m) {
   py::class_<
       CppBmadTest::TestBunchStructScalar,
       std::unique_ptr<CppBmadTest::TestBunchStructScalar>>(
-      m,
-      "TestBunchStructScalar",
-      "Fortran routine test_bunch_struct_scalar return value")
+      m, "TestBunchStructScalar", "test_bunch_struct_scalar return type")
       .def_readonly("val_out", &CppBmadTest::TestBunchStructScalar::val_out)
       .def_readonly(
           "opt_status", &CppBmadTest::TestBunchStructScalar::opt_status)
@@ -154,9 +150,7 @@ void init_CppBmadTest_routines_t(py::module& m) {
   val_inout_opt : 
   )""");
   py::class_<PyTestCharacterScalar, std::unique_ptr<PyTestCharacterScalar>>(
-      m,
-      "TestCharacterScalar",
-      "Fortran routine test_character_scalar return value")
+      m, "TestCharacterScalar", "test_character_scalar return type")
       .def_readonly("val_out", &PyTestCharacterScalar::val_out)
       .def_readonly("opt_status", &PyTestCharacterScalar::opt_status)
       .def_readonly("val_inout", &PyTestCharacterScalar::val_inout)
@@ -196,7 +190,7 @@ void init_CppBmadTest_routines_t(py::module& m) {
   py::class_<
       CppBmadTest::TestComplexArray,
       std::unique_ptr<CppBmadTest::TestComplexArray>>(
-      m, "TestComplexArray", "Fortran routine test_complex_array return value")
+      m, "TestComplexArray", "test_complex_array return type")
       .def_readonly("arr_out", &CppBmadTest::TestComplexArray::arr_out)
       .def_readonly("opt_status", &CppBmadTest::TestComplexArray::opt_status)
       .def("__len__", [](const CppBmadTest::TestComplexArray&) { return 2; })
@@ -228,9 +222,7 @@ void init_CppBmadTest_routines_t(py::module& m) {
   arr_inout_opt : 
   )""");
   py::class_<PyTestComplexScalar, std::unique_ptr<PyTestComplexScalar>>(
-      m,
-      "TestComplexScalar",
-      "Fortran routine test_complex_scalar return value")
+      m, "TestComplexScalar", "test_complex_scalar return type")
       .def_readonly("val_out", &PyTestComplexScalar::val_out)
       .def_readonly("opt_status", &PyTestComplexScalar::opt_status)
       .def_readonly("val_inout", &PyTestComplexScalar::val_inout)
@@ -269,9 +261,7 @@ void init_CppBmadTest_routines_t(py::module& m) {
   py::class_<
       CppBmadTest::TestInteger8Array,
       std::unique_ptr<CppBmadTest::TestInteger8Array>>(
-      m,
-      "TestInteger8Array",
-      "Fortran routine test_integer8_array return value")
+      m, "TestInteger8Array", "test_integer8_array return type")
       .def_readonly("arr_out", &CppBmadTest::TestInteger8Array::arr_out)
       .def_readonly("opt_status", &CppBmadTest::TestInteger8Array::opt_status)
       .def("__len__", [](const CppBmadTest::TestInteger8Array&) { return 2; })
@@ -303,9 +293,7 @@ void init_CppBmadTest_routines_t(py::module& m) {
   arr_inout_opt : 
   )""");
   py::class_<PyTestInteger8Scalar, std::unique_ptr<PyTestInteger8Scalar>>(
-      m,
-      "TestInteger8Scalar",
-      "Fortran routine test_integer8_scalar return value")
+      m, "TestInteger8Scalar", "test_integer8_scalar return type")
       .def_readonly("val_out", &PyTestInteger8Scalar::val_out)
       .def_readonly("opt_status", &PyTestInteger8Scalar::opt_status)
       .def_readonly("val_inout", &PyTestInteger8Scalar::val_inout)
@@ -345,7 +333,7 @@ void init_CppBmadTest_routines_t(py::module& m) {
   py::class_<
       CppBmadTest::TestIntegerArray,
       std::unique_ptr<CppBmadTest::TestIntegerArray>>(
-      m, "TestIntegerArray", "Fortran routine test_integer_array return value")
+      m, "TestIntegerArray", "test_integer_array return type")
       .def_readonly("arr_out", &CppBmadTest::TestIntegerArray::arr_out)
       .def_readonly("opt_status", &CppBmadTest::TestIntegerArray::opt_status)
       .def("__len__", [](const CppBmadTest::TestIntegerArray&) { return 2; })
@@ -377,9 +365,7 @@ void init_CppBmadTest_routines_t(py::module& m) {
   arr_inout_opt : 
   )""");
   py::class_<PyTestIntegerScalar, std::unique_ptr<PyTestIntegerScalar>>(
-      m,
-      "TestIntegerScalar",
-      "Fortran routine test_integer_scalar return value")
+      m, "TestIntegerScalar", "test_integer_scalar return type")
       .def_readonly("val_out", &PyTestIntegerScalar::val_out)
       .def_readonly("opt_status", &PyTestIntegerScalar::opt_status)
       .def_readonly("val_inout", &PyTestIntegerScalar::val_inout)
@@ -418,7 +404,7 @@ void init_CppBmadTest_routines_t(py::module& m) {
   py::class_<
       CppBmadTest::TestLogicalArray,
       std::unique_ptr<CppBmadTest::TestLogicalArray>>(
-      m, "TestLogicalArray", "Fortran routine test_logical_array return value")
+      m, "TestLogicalArray", "test_logical_array return type")
       .def_readonly("arr_out", &CppBmadTest::TestLogicalArray::arr_out)
       .def_readonly("opt_status", &CppBmadTest::TestLogicalArray::opt_status)
       .def("__len__", [](const CppBmadTest::TestLogicalArray&) { return 2; })
@@ -450,9 +436,7 @@ void init_CppBmadTest_routines_t(py::module& m) {
   arr_inout_opt : 
   )""");
   py::class_<PyTestLogicalScalar, std::unique_ptr<PyTestLogicalScalar>>(
-      m,
-      "TestLogicalScalar",
-      "Fortran routine test_logical_scalar return value")
+      m, "TestLogicalScalar", "test_logical_scalar return type")
       .def_readonly("val_out", &PyTestLogicalScalar::val_out)
       .def_readonly("opt_status", &PyTestLogicalScalar::opt_status)
       .def_readonly("val_inout", &PyTestLogicalScalar::val_inout)
@@ -491,7 +475,7 @@ void init_CppBmadTest_routines_t(py::module& m) {
   py::class_<
       CppBmadTest::TestReal16Array,
       std::unique_ptr<CppBmadTest::TestReal16Array>>(
-      m, "TestReal16Array", "Fortran routine test_real16_array return value")
+      m, "TestReal16Array", "test_real16_array return type")
       .def_readonly("arr_out", &CppBmadTest::TestReal16Array::arr_out)
       .def_readonly("opt_status", &CppBmadTest::TestReal16Array::opt_status)
       .def("__len__", [](const CppBmadTest::TestReal16Array&) { return 2; })
@@ -523,7 +507,7 @@ void init_CppBmadTest_routines_t(py::module& m) {
   arr_inout_opt : 
   )""");
   py::class_<PyTestReal16Scalar, std::unique_ptr<PyTestReal16Scalar>>(
-      m, "TestReal16Scalar", "Fortran routine test_real16_scalar return value")
+      m, "TestReal16Scalar", "test_real16_scalar return type")
       .def_readonly("val_out", &PyTestReal16Scalar::val_out)
       .def_readonly("opt_status", &PyTestReal16Scalar::opt_status)
       .def_readonly("val_inout", &PyTestReal16Scalar::val_inout)
@@ -561,7 +545,7 @@ void init_CppBmadTest_routines_t(py::module& m) {
   py::class_<
       CppBmadTest::TestRealArray,
       std::unique_ptr<CppBmadTest::TestRealArray>>(
-      m, "TestRealArray", "Fortran routine test_real_array return value")
+      m, "TestRealArray", "test_real_array return type")
       .def_readonly("arr_out", &CppBmadTest::TestRealArray::arr_out)
       .def_readonly("opt_status", &CppBmadTest::TestRealArray::opt_status)
       .def("__len__", [](const CppBmadTest::TestRealArray&) { return 2; })
@@ -593,7 +577,7 @@ void init_CppBmadTest_routines_t(py::module& m) {
   arr_inout_opt : 
   )""");
   py::class_<PyTestRealScalar, std::unique_ptr<PyTestRealScalar>>(
-      m, "TestRealScalar", "Fortran routine test_real_scalar return value")
+      m, "TestRealScalar", "test_real_scalar return type")
       .def_readonly("val_out", &PyTestRealScalar::val_out)
       .def_readonly("opt_status", &PyTestRealScalar::opt_status)
       .def_readonly("val_inout", &PyTestRealScalar::val_inout)

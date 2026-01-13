@@ -21,7 +21,7 @@ PyZlafun python_zlafun(double x, double y, double z, double res) {
 
 void init_Bmad_routines_z(py::module& m) {
   py::class_<PyZAtSurface, std::unique_ptr<PyZAtSurface>>(
-      m, "ZAtSurface", "Fortran routine z_at_surface return value")
+      m, "ZAtSurface", "z_at_surface return type")
       .def_readonly("err_flag", &PyZAtSurface::err_flag)
       .def_readonly("dz_dxy", &PyZAtSurface::dz_dxy)
       .def_readonly("z", &PyZAtSurface::z)
@@ -107,7 +107,7 @@ void init_Bmad_routines_z(py::module& m) {
       Lattice
   )""");
   py::class_<PyZlafun, std::unique_ptr<PyZlafun>>(
-      m, "Zlafun", "Fortran routine zlafun return value")
+      m, "Zlafun", "zlafun return type")
       .def_readonly("x", &PyZlafun::x)
       .def_readonly("y", &PyZlafun::y)
       .def_readonly("z", &PyZlafun::z)

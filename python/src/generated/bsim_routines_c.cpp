@@ -12,7 +12,7 @@ PyCheckRfFreq python_check_rf_freq(LatProxy& lat, double fb) {
 
 void init_bsim_routines_c(py::module& m) {
   py::class_<PyCheckRfFreq, std::unique_ptr<PyCheckRfFreq>>(
-      m, "CheckRfFreq", "Fortran routine check_rf_freq return value")
+      m, "CheckRfFreq", "check_rf_freq return type")
       .def_readonly("fb", &PyCheckRfFreq::fb)
       .def("__len__", [](const PyCheckRfFreq&) { return 1; })
       .def("__getitem__", [](const PyCheckRfFreq& s, int i) -> py::object {

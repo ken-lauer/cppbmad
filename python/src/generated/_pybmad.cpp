@@ -24,10 +24,9 @@ PYBIND11_MODULE(_pybmad, m) {
   // Generated definitions:
   m.doc() = "pybmad";
 
-  // Hand-written bindings
   bind_standard_arrays(m);
-  init_common_structs(m);
 
+  // Structures
   auto py_SplineStruct = py::class_<SplineProxy>(
       m, "SplineStruct", "Fortran struct: spline_struct");
   auto py_SpinPolarStruct = py::class_<SpinPolarProxy>(
@@ -600,6 +599,9 @@ PYBIND11_MODULE(_pybmad, m) {
   init_all_encompassing_struct(m, py_AllEncompassingStruct);
   init_test_sub_struct(m, py_TestSubStruct);
   init_test_sub_sub_struct(m, py_TestSubSubStruct);
+
+  // Hand-written bindings
+  init_common_structs(m);
 
   // Routine initializers
   init_Bmad_routines_a(m);

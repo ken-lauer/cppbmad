@@ -52,8 +52,7 @@ PyLowEnergyZCorrection python_low_energy_z_correction(
 }
 
 void init_Bmad_routines_l(py::module& m) {
-  py::class_<PyLafun, std::unique_ptr<PyLafun>>(
-      m, "Lafun", "Fortran routine lafun return value")
+  py::class_<PyLafun, std::unique_ptr<PyLafun>>(m, "Lafun", "lafun return type")
       .def_readonly("x", &PyLafun::x)
       .def_readonly("y", &PyLafun::y)
       .def_readonly("z", &PyLafun::z)
@@ -98,7 +97,7 @@ void init_Bmad_routines_l(py::module& m) {
       Set true if there is an error. False otherwise.
   )""");
   py::class_<PyLatEleLocator, std::unique_ptr<PyLatEleLocator>>(
-      m, "LatEleLocator", "Fortran routine lat_ele_locator return value")
+      m, "LatEleLocator", "lat_ele_locator return type")
       .def_readonly("err", &PyLatEleLocator::err)
       .def_readonly("n_loc", &PyLatEleLocator::n_loc)
       .def("__len__", [](const PyLatEleLocator&) { return 2; })
@@ -279,7 +278,7 @@ void init_Bmad_routines_l(py::module& m) {
       Propagate the transfer matrix? Default is False.
   )""");
   py::class_<Bmad::LinearCoef, std::unique_ptr<Bmad::LinearCoef>>(
-      m, "LinearCoef", "Fortran routine linear_coef return value")
+      m, "LinearCoef", "linear_coef return type")
       .def_readonly("err_flag", &Bmad::LinearCoef::err_flag)
       .def_readonly("coef", &Bmad::LinearCoef::coef)
       .def("__len__", [](const Bmad::LinearCoef&) { return 2; })
@@ -324,7 +323,7 @@ void init_Bmad_routines_l(py::module& m) {
       Taylor map
   )""");
   py::class_<Bmad::LoadParseLine, std::unique_ptr<Bmad::LoadParseLine>>(
-      m, "LoadParseLine", "Fortran routine load_parse_line return value")
+      m, "LoadParseLine", "load_parse_line return type")
       .def_readonly("end_of_file", &Bmad::LoadParseLine::end_of_file)
       .def_readonly("err_flag", &Bmad::LoadParseLine::err_flag)
       .def("__len__", [](const Bmad::LoadParseLine&) { return 2; })
@@ -364,7 +363,7 @@ void init_Bmad_routines_l(py::module& m) {
       Set True if there is an error. False otherwise bp_com.parse_line -- string to append to.
   )""");
   py::class_<PyLordEdgeAligned, std::unique_ptr<PyLordEdgeAligned>>(
-      m, "LordEdgeAligned", "Fortran routine lord_edge_aligned return value")
+      m, "LordEdgeAligned", "lord_edge_aligned return type")
       .def_readonly("is_aligned", &PyLordEdgeAligned::is_aligned)
       .def("__len__", [](const PyLordEdgeAligned&) { return 1; })
       .def("__getitem__", [](const PyLordEdgeAligned& s, int i) -> py::object {
@@ -392,9 +391,7 @@ void init_Bmad_routines_l(py::module& m) {
   is_aligned : 
   )""");
   py::class_<PyLowEnergyZCorrection, std::unique_ptr<PyLowEnergyZCorrection>>(
-      m,
-      "LowEnergyZCorrection",
-      "Fortran routine low_energy_z_correction return value")
+      m, "LowEnergyZCorrection", "low_energy_z_correction return type")
       .def_readonly("dz", &PyLowEnergyZCorrection::dz)
       .def("__len__", [](const PyLowEnergyZCorrection&) { return 1; })
       .def(

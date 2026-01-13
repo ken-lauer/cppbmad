@@ -45,9 +45,7 @@ PyKnotsToString python_knots_to_string(
 
 void init_Bmad_routines_k(py::module& m) {
   py::class_<PyKeyNameToKeyIndex, std::unique_ptr<PyKeyNameToKeyIndex>>(
-      m,
-      "KeyNameToKeyIndex",
-      "Fortran routine key_name_to_key_index return value")
+      m, "KeyNameToKeyIndex", "key_name_to_key_index return type")
       .def_readonly("key_index", &PyKeyNameToKeyIndex::key_index)
       .def("__len__", [](const PyKeyNameToKeyIndex&) { return 1; })
       .def(
@@ -74,7 +72,7 @@ void init_Bmad_routines_k(py::module& m) {
   key_index : 
   )""");
   py::class_<PyKickVectorCalc, std::unique_ptr<PyKickVectorCalc>>(
-      m, "KickVectorCalc", "Fortran routine kick_vector_calc return value")
+      m, "KickVectorCalc", "kick_vector_calc return type")
       .def_readonly("dr_ds", &PyKickVectorCalc::dr_ds)
       .def_readonly("err", &PyKickVectorCalc::err)
       .def_readonly("print_err", &PyKickVectorCalc::print_err)
@@ -222,7 +220,7 @@ void init_Bmad_routines_k(py::module& m) {
       String representation
   )""");
   py::class_<PyKnotInterpolate, std::unique_ptr<PyKnotInterpolate>>(
-      m, "KnotInterpolate", "Fortran routine knot_interpolate return value")
+      m, "KnotInterpolate", "knot_interpolate return type")
       .def_readonly("err_flag", &PyKnotInterpolate::err_flag)
       .def_readonly("y_pt", &PyKnotInterpolate::y_pt)
       .def("__len__", [](const PyKnotInterpolate&) { return 2; })
@@ -258,7 +256,7 @@ void init_Bmad_routines_k(py::module& m) {
   y_pt : 
   )""");
   py::class_<PyKnotsToString, std::unique_ptr<PyKnotsToString>>(
-      m, "KnotsToString", "Fortran routine knots_to_string return value")
+      m, "KnotsToString", "knots_to_string return type")
       .def_readonly("str", &PyKnotsToString::str)
       .def("__len__", [](const PyKnotsToString&) { return 1; })
       .def("__getitem__", [](const PyKnotsToString& s, int i) -> py::object {

@@ -162,7 +162,7 @@ PySurfaceGridDisplacement python_surface_grid_displacement(
 
 void init_Bmad_routines_s(py::module& m) {
   py::class_<PySBodyCalc, std::unique_ptr<PySBodyCalc>>(
-      m, "SBodyCalc", "Fortran routine s_body_calc return value")
+      m, "SBodyCalc", "s_body_calc return type")
       .def_readonly("s_body", &PySBodyCalc::s_body)
       .def("__len__", [](const PySBodyCalc&) { return 1; })
       .def("__getitem__", [](const PySBodyCalc& s, int i) -> py::object {
@@ -384,7 +384,7 @@ void init_Bmad_routines_s(py::module& m) {
       Propagate the transfer matrix? Default is false.
   )""");
   py::class_<PyScAdaptiveStep, std::unique_ptr<PyScAdaptiveStep>>(
-      m, "ScAdaptiveStep", "Fortran routine sc_adaptive_step return value")
+      m, "ScAdaptiveStep", "sc_adaptive_step return type")
       .def_readonly("dt_next", &PyScAdaptiveStep::dt_next)
       .def_readonly("include_image", &PyScAdaptiveStep::include_image)
       .def_readonly("dt_step", &PyScAdaptiveStep::dt_step)
@@ -440,7 +440,7 @@ void init_Bmad_routines_s(py::module& m) {
       Next SC time step the tracker would take based on the error tolerance
   )""");
   py::class_<PyScStep, std::unique_ptr<PyScStep>>(
-      m, "ScStep", "Fortran routine sc_step return value")
+      m, "ScStep", "sc_step return type")
       .def_readonly("n_emit", &PyScStep::n_emit)
       .def_readonly("include_image", &PyScStep::include_image)
       .def("__len__", [](const PyScStep&) { return 2; })
@@ -538,7 +538,7 @@ void init_Bmad_routines_s(py::module& m) {
       Set True if an error. False otherwise.
   )""");
   py::class_<Bmad::SetEleAttribute, std::unique_ptr<Bmad::SetEleAttribute>>(
-      m, "SetEleAttribute", "Fortran routine set_ele_attribute return value")
+      m, "SetEleAttribute", "set_ele_attribute return type")
       .def_readonly("err_flag", &Bmad::SetEleAttribute::err_flag)
       .def_readonly("err_id", &Bmad::SetEleAttribute::err_id)
       .def("__len__", [](const Bmad::SetEleAttribute&) { return 2; })
@@ -625,9 +625,7 @@ void init_Bmad_routines_s(py::module& m) {
       If present and False then suppress printing of an error message if attribute is, for example, not free.
   )""");
   py::class_<Bmad::SetEleStatusStale, std::unique_ptr<Bmad::SetEleStatusStale>>(
-      m,
-      "SetEleStatusStale",
-      "Fortran routine set_ele_status_stale return value")
+      m, "SetEleStatusStale", "set_ele_status_stale return type")
       .def_readonly("ele", &Bmad::SetEleStatusStale::ele)
       .def_readonly("status_group", &Bmad::SetEleStatusStale::status_group)
       .def_readonly("set_slaves", &Bmad::SetEleStatusStale::set_slaves)
@@ -663,7 +661,7 @@ void init_Bmad_routines_s(py::module& m) {
       std::unique_ptr<PySetFlagsForChangedIntegerAttribute>>(
       m,
       "SetFlagsForChangedIntegerAttribute",
-      "Fortran routine set_flags_for_changed_integer_attribute return value")
+      "set_flags_for_changed_integer_attribute return type")
       .def_readonly("attrib", &PySetFlagsForChangedIntegerAttribute::attrib)
       .def(
           "__len__",
@@ -796,7 +794,7 @@ void init_Bmad_routines_s(py::module& m) {
       std::unique_ptr<PySetFlagsForChangedLogicalAttribute>>(
       m,
       "SetFlagsForChangedLogicalAttribute",
-      "Fortran routine set_flags_for_changed_logical_attribute return value")
+      "set_flags_for_changed_logical_attribute return type")
       .def_readonly("attrib", &PySetFlagsForChangedLogicalAttribute::attrib)
       .def(
           "__len__",
@@ -873,7 +871,7 @@ void init_Bmad_routines_s(py::module& m) {
       std::unique_ptr<PySetFlagsForChangedRealAttribute>>(
       m,
       "SetFlagsForChangedRealAttribute",
-      "Fortran routine set_flags_for_changed_real_attribute return value")
+      "set_flags_for_changed_real_attribute return type")
       .def_readonly("attrib", &PySetFlagsForChangedRealAttribute::attrib)
       .def(
           "__len__", [](const PySetFlagsForChangedRealAttribute&) { return 1; })
@@ -944,7 +942,7 @@ void init_Bmad_routines_s(py::module& m) {
   Overloaded versions:
   )""");
   py::class_<PySetFringeOnOff, std::unique_ptr<PySetFringeOnOff>>(
-      m, "SetFringeOnOff", "Fortran routine set_fringe_on_off return value")
+      m, "SetFringeOnOff", "set_fringe_on_off return type")
       .def_readonly("fringe_at", &PySetFringeOnOff::fringe_at)
       .def("__len__", [](const PySetFringeOnOff&) { return 1; })
       .def("__getitem__", [](const PySetFringeOnOff& s, int i) -> py::object {
@@ -1100,7 +1098,7 @@ void init_Bmad_routines_s(py::module& m) {
 
   )""");
   py::class_<PySetPtcQuiet, std::unique_ptr<PySetPtcQuiet>>(
-      m, "SetPtcQuiet", "Fortran routine set_ptc_quiet return value")
+      m, "SetPtcQuiet", "set_ptc_quiet return type")
       .def_readonly("old_val", &PySetPtcQuiet::old_val)
       .def("__len__", [](const PySetPtcQuiet&) { return 1; })
       .def("__getitem__", [](const PySetPtcQuiet& s, int i) -> py::object {
@@ -1134,7 +1132,7 @@ void init_Bmad_routines_s(py::module& m) {
       This parameter is an input/output and is modified in-place. As an output: Saved value for set = set$.
   )""");
   py::class_<PySetPtcVerbose, std::unique_ptr<PySetPtcVerbose>>(
-      m, "SetPtcVerbose", "Fortran routine set_ptc_verbose return value")
+      m, "SetPtcVerbose", "set_ptc_verbose return type")
       .def_readonly("on", &PySetPtcVerbose::on)
       .def("__len__", [](const PySetPtcVerbose&) { return 1; })
       .def("__getitem__", [](const PySetPtcVerbose& s, int i) -> py::object {
@@ -1190,7 +1188,7 @@ void init_Bmad_routines_s(py::module& m) {
       bookkeeping status. ok$, stale$, etc.
   )""");
   py::class_<PySetTune, std::unique_ptr<PySetTune>>(
-      m, "SetTune", "Fortran routine set_tune return value")
+      m, "SetTune", "set_tune return type")
       .def_readonly("ok", &PySetTune::ok)
       .def("__len__", [](const PySetTune&) { return 1; })
       .def("__getitem__", [](const PySetTune& s, int i) -> py::object {
@@ -1352,9 +1350,7 @@ void init_Bmad_routines_s(py::module& m) {
       Bmad sigma matrix.
   )""");
   py::class_<PySignificantDifference, std::unique_ptr<PySignificantDifference>>(
-      m,
-      "SignificantDifference",
-      "Fortran routine significant_difference return value")
+      m, "SignificantDifference", "significant_difference return type")
       .def_readonly("is_different", &PySignificantDifference::is_different)
       .def("__len__", [](const PySignificantDifference&) { return 1; })
       .def(
@@ -1387,7 +1383,7 @@ void init_Bmad_routines_s(py::module& m) {
   is_different : 
   )""");
   py::class_<PySkipEleBlender, std::unique_ptr<PySkipEleBlender>>(
-      m, "SkipEleBlender", "Fortran routine skip_ele_blender return value")
+      m, "SkipEleBlender", "skip_ele_blender return type")
       .def_readonly("skip", &PySkipEleBlender::skip)
       .def("__len__", [](const PySkipEleBlender&) { return 1; })
       .def("__getitem__", [](const PySkipEleBlender& s, int i) -> py::object {
@@ -1462,7 +1458,7 @@ void init_Bmad_routines_s(py::module& m) {
       Propagate the transfer matrix? Default is False.
   )""");
   py::class_<PySolQuadMat6Calc, std::unique_ptr<PySolQuadMat6Calc>>(
-      m, "SolQuadMat6Calc", "Fortran routine sol_quad_mat6_calc return value")
+      m, "SolQuadMat6Calc", "sol_quad_mat6_calc return type")
       .def_readonly("ks_in", &PySolQuadMat6Calc::ks_in)
       .def_readonly("k1_in", &PySolQuadMat6Calc::k1_in)
       .def("__len__", [](const PySolQuadMat6Calc&) { return 2; })
@@ -1538,9 +1534,7 @@ void init_Bmad_routines_s(py::module& m) {
   py::class_<
       Bmad::SolvePsiFixedSteps,
       std::unique_ptr<Bmad::SolvePsiFixedSteps>>(
-      m,
-      "SolvePsiFixedSteps",
-      "Fortran routine solve_psi_fixed_steps return value")
+      m, "SolvePsiFixedSteps", "solve_psi_fixed_steps return type")
       .def_readonly("t", &Bmad::SolvePsiFixedSteps::t)
       .def_readonly("p", &Bmad::SolvePsiFixedSteps::p)
       .def("__len__", [](const Bmad::SolvePsiFixedSteps&) { return 2; })
@@ -1674,7 +1668,7 @@ void init_Bmad_routines_s(py::module& m) {
       std::unique_ptr<Bmad::SpinMat8ResonanceStrengths>>(
       m,
       "SpinMat8ResonanceStrengths",
-      "Fortran routine spin_mat8_resonance_strengths return value")
+      "spin_mat8_resonance_strengths return type")
       .def_readonly("xi_sum", &Bmad::SpinMat8ResonanceStrengths::xi_sum)
       .def_readonly("xi_diff", &Bmad::SpinMat8ResonanceStrengths::xi_diff)
       .def("__len__", [](const Bmad::SpinMat8ResonanceStrengths&) { return 2; })
@@ -1706,7 +1700,7 @@ void init_Bmad_routines_s(py::module& m) {
       Difference resonance strength.
   )""");
   py::class_<Bmad::SpinMatToEigen, std::unique_ptr<Bmad::SpinMatToEigen>>(
-      m, "SpinMatToEigen", "Fortran routine spin_mat_to_eigen return value")
+      m, "SpinMatToEigen", "spin_mat_to_eigen return type")
       .def_readonly("orb_eval", &Bmad::SpinMatToEigen::orb_eval)
       .def_readonly("orb_evec", &Bmad::SpinMatToEigen::orb_evec)
       .def_readonly("n0", &Bmad::SpinMatToEigen::n0)
@@ -1753,7 +1747,7 @@ void init_Bmad_routines_s(py::module& m) {
       Set true if there is an error. False otherwise.
   )""");
   py::class_<PySpinOmega, std::unique_ptr<PySpinOmega>>(
-      m, "SpinOmega", "Fortran routine spin_omega return value")
+      m, "SpinOmega", "spin_omega return type")
       .def_readonly("sign_z_vel", &PySpinOmega::sign_z_vel)
       .def_readonly("phase_space_coords", &PySpinOmega::phase_space_coords)
       .def("__len__", [](const PySpinOmega&) { return 2; })
@@ -1787,7 +1781,7 @@ void init_Bmad_routines_s(py::module& m) {
       std::unique_ptr<Bmad::SpinQuatResonanceStrengths>>(
       m,
       "SpinQuatResonanceStrengths",
-      "Fortran routine spin_quat_resonance_strengths return value")
+      "spin_quat_resonance_strengths return type")
       .def_readonly("xi_sum", &Bmad::SpinQuatResonanceStrengths::xi_sum)
       .def_readonly("xi_diff", &Bmad::SpinQuatResonanceStrengths::xi_diff)
       .def("__len__", [](const Bmad::SpinQuatResonanceStrengths&) { return 2; })
@@ -1879,7 +1873,7 @@ void init_Bmad_routines_s(py::module& m) {
       Spline coefs for vertical trajectory.
   )""");
   py::class_<Bmad::SplitLat, std::unique_ptr<Bmad::SplitLat>>(
-      m, "SplitLat", "Fortran routine split_lat return value")
+      m, "SplitLat", "split_lat return type")
       .def_readonly("ix_split", &Bmad::SplitLat::ix_split)
       .def_readonly("split_done", &Bmad::SplitLat::split_done)
       .def_readonly("err_flag", &Bmad::SplitLat::err_flag)
@@ -2116,7 +2110,7 @@ void init_Bmad_routines_s(py::module& m) {
       Set True if there is an error Set False if not.
   )""");
   py::class_<PyStreamEleEnd, std::unique_ptr<PyStreamEleEnd>>(
-      m, "StreamEleEnd", "Fortran routine stream_ele_end return value")
+      m, "StreamEleEnd", "stream_ele_end return type")
       .def_readonly("stream_end", &PyStreamEleEnd::stream_end)
       .def("__len__", [](const PyStreamEleEnd&) { return 1; })
       .def("__getitem__", [](const PyStreamEleEnd& s, int i) -> py::object {
@@ -2168,9 +2162,7 @@ void init_Bmad_routines_s(py::module& m) {
   py::class_<
       Bmad::StrongBeamSigmaCalc,
       std::unique_ptr<Bmad::StrongBeamSigmaCalc>>(
-      m,
-      "StrongBeamSigmaCalc",
-      "Fortran routine strong_beam_sigma_calc return value")
+      m, "StrongBeamSigmaCalc", "strong_beam_sigma_calc return type")
       .def_readonly("sigma", &Bmad::StrongBeamSigmaCalc::sigma)
       .def_readonly("bbi_const", &Bmad::StrongBeamSigmaCalc::bbi_const)
       .def_readonly("dsigma_ds", &Bmad::StrongBeamSigmaCalc::dsigma_ds)
@@ -2207,9 +2199,7 @@ void init_Bmad_routines_s(py::module& m) {
       sig_x and sig_y longitudinal derivatives.
   )""");
   py::class_<PyStrongBeamStrength, std::unique_ptr<PyStrongBeamStrength>>(
-      m,
-      "StrongBeamStrength",
-      "Fortran routine strong_beam_strength return value")
+      m, "StrongBeamStrength", "strong_beam_strength return type")
       .def_readonly("strength", &PyStrongBeamStrength::strength)
       .def("__len__", [](const PyStrongBeamStrength&) { return 1; })
       .def(
@@ -2235,9 +2225,7 @@ void init_Bmad_routines_s(py::module& m) {
   py::class_<
       PySurfaceGridDisplacement,
       std::unique_ptr<PySurfaceGridDisplacement>>(
-      m,
-      "SurfaceGridDisplacement",
-      "Fortran routine surface_grid_displacement return value")
+      m, "SurfaceGridDisplacement", "surface_grid_displacement return type")
       .def_readonly("x", &PySurfaceGridDisplacement::x)
       .def_readonly("y", &PySurfaceGridDisplacement::y)
       .def("__len__", [](const PySurfaceGridDisplacement&) { return 2; })

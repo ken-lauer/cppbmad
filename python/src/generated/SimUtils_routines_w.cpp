@@ -43,7 +43,7 @@ void init_SimUtils_routines_w(py::module& m) {
   py::class_<
       SimUtils::WMatToAxisAngle,
       std::unique_ptr<SimUtils::WMatToAxisAngle>>(
-      m, "WMatToAxisAngle", "Fortran routine w_mat_to_axis_angle return value")
+      m, "WMatToAxisAngle", "w_mat_to_axis_angle return type")
       .def_readonly("axis", &SimUtils::WMatToAxisAngle::axis)
       .def_readonly("angle", &SimUtils::WMatToAxisAngle::angle)
       .def("__len__", [](const SimUtils::WMatToAxisAngle&) { return 2; })
@@ -100,7 +100,7 @@ void init_SimUtils_routines_w(py::module& m) {
       Quaternion.
   )""");
   py::class_<PyWordLen, std::unique_ptr<PyWordLen>>(
-      m, "WordLen", "Fortran routine word_len return value")
+      m, "WordLen", "word_len return type")
       .def_readonly("wording", &PyWordLen::wording)
       .def_readonly("wlen", &PyWordLen::wlen)
       .def("__len__", [](const PyWordLen&) { return 2; })
@@ -124,7 +124,7 @@ void init_SimUtils_routines_w(py::module& m) {
   wlen : 
   )""");
   py::class_<PyWordRead, std::unique_ptr<PyWordRead>>(
-      m, "WordRead", "Fortran routine word_read return value")
+      m, "WordRead", "word_read return type")
       .def_readonly("in_str", &PyWordRead::in_str)
       .def_readonly("delim_list", &PyWordRead::delim_list)
       .def_readonly("word", &PyWordRead::word)

@@ -30,7 +30,7 @@ void init_SimUtils_routines_e(py::module& m) {
       0 => calculate slopes for the start end of the array. 1 => calculate slopes for the end end of the array.
   )""");
   py::class_<PyErrExit, std::unique_ptr<PyErrExit>>(
-      m, "ErrExit", "Fortran routine err_exit return value")
+      m, "ErrExit", "err_exit return type")
       .def_readonly("err_str", &PyErrExit::err_str)
       .def("__len__", [](const PyErrExit&) { return 1; })
       .def("__getitem__", [](const PyErrExit& s, int i) -> py::object {

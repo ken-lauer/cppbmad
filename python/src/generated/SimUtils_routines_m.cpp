@@ -40,7 +40,7 @@ PyMilliSleep python_milli_sleep(int milli_sec) {
 
 void init_SimUtils_routines_m(py::module& m) {
   py::class_<PyMakeLegalComment, std::unique_ptr<PyMakeLegalComment>>(
-      m, "MakeLegalComment", "Fortran routine make_legal_comment return value")
+      m, "MakeLegalComment", "make_legal_comment return type")
       .def_readonly("comment_in", &PyMakeLegalComment::comment_in)
       .def_readonly("comment_out", &PyMakeLegalComment::comment_out)
       .def("__len__", [](const PyMakeLegalComment&) { return 2; })
@@ -87,7 +87,7 @@ void init_SimUtils_routines_m(py::module& m) {
       particle mass. Set to real_garbage$ if species value is invalid.
   )""");
   py::class_<PyMatchReg, std::unique_ptr<PyMatchReg>>(
-      m, "MatchReg", "Fortran routine match_reg return value")
+      m, "MatchReg", "match_reg return type")
       .def_readonly("str", &PyMatchReg::str)
       .def_readonly("pat", &PyMatchReg::pat)
       .def_readonly("is_match", &PyMatchReg::is_match)
@@ -116,7 +116,7 @@ void init_SimUtils_routines_m(py::module& m) {
   is_match : 
   )""");
   py::class_<PyMatchWild, std::unique_ptr<PyMatchWild>>(
-      m, "MatchWild", "Fortran routine match_wild return value")
+      m, "MatchWild", "match_wild return type")
       .def_readonly("string", &PyMatchWild::string)
       .def_readonly("template_", &PyMatchWild::template_)
       .def_readonly("is_match", &PyMatchWild::is_match)
@@ -145,9 +145,7 @@ void init_SimUtils_routines_m(py::module& m) {
   is_match : 
   )""");
   py::class_<PyMaximizeProjection, std::unique_ptr<PyMaximizeProjection>>(
-      m,
-      "MaximizeProjection",
-      "Fortran routine maximize_projection return value")
+      m, "MaximizeProjection", "maximize_projection return type")
       .def_readonly("seed", &PyMaximizeProjection::seed)
       .def_readonly("func_retval__", &PyMaximizeProjection::func_retval__)
       .def("__len__", [](const PyMaximizeProjection&) { return 2; })
@@ -176,7 +174,7 @@ void init_SimUtils_routines_m(py::module& m) {
 
   )""");
   py::class_<PyMilliSleep, std::unique_ptr<PyMilliSleep>>(
-      m, "MilliSleep", "Fortran routine milli_sleep return value")
+      m, "MilliSleep", "milli_sleep return type")
       .def_readonly("milli_sec", &PyMilliSleep::milli_sec)
       .def("__len__", [](const PyMilliSleep&) { return 1; })
       .def("__getitem__", [](const PyMilliSleep& s, int i) -> py::object {

@@ -12,7 +12,7 @@ PyUpcaseString python_upcase_string(std::string string) {
 
 void init_SimUtils_routines_u(py::module& m) {
   py::class_<PyUpcaseString, std::unique_ptr<PyUpcaseString>>(
-      m, "UpcaseString", "Fortran routine upcase_string return value")
+      m, "UpcaseString", "upcase_string return type")
       .def_readonly("string", &PyUpcaseString::string)
       .def("__len__", [](const PyUpcaseString&) { return 1; })
       .def("__getitem__", [](const PyUpcaseString& s, int i) -> py::object {

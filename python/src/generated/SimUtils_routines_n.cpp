@@ -73,7 +73,7 @@ PyNametableRemove python_nametable_remove(
 
 void init_SimUtils_routines_n(py::module& m) {
   py::class_<PyNBinsAutomatic, std::unique_ptr<PyNBinsAutomatic>>(
-      m, "NBinsAutomatic", "Fortran routine n_bins_automatic return value")
+      m, "NBinsAutomatic", "n_bins_automatic return type")
       .def_readonly("n_data", &PyNBinsAutomatic::n_data)
       .def_readonly("n", &PyNBinsAutomatic::n)
       .def("__len__", [](const PyNBinsAutomatic&) { return 2; })
@@ -95,7 +95,7 @@ void init_SimUtils_routines_n(py::module& m) {
 
   )""");
   py::class_<PyNChooseK, std::unique_ptr<PyNChooseK>>(
-      m, "NChooseK", "Fortran routine n_choose_k return value")
+      m, "NChooseK", "n_choose_k return type")
       .def_readonly("n", &PyNChooseK::n)
       .def_readonly("k", &PyNChooseK::k)
       .def_readonly("nck", &PyNChooseK::nck)
@@ -140,8 +140,7 @@ void init_SimUtils_routines_n(py::module& m) {
   n_spline : 
       real(rp), Derivative vector from order 0 to order 2*n+1 of the interpolation spline.
   )""");
-  py::class_<PyNaff, std::unique_ptr<PyNaff>>(
-      m, "Naff", "Fortran routine naff return value")
+  py::class_<PyNaff, std::unique_ptr<PyNaff>>(m, "Naff", "naff return type")
       .def_readonly("opt_dump_spectra", &PyNaff::opt_dump_spectra)
       .def_readonly("opt_zero_first", &PyNaff::opt_zero_first)
       .def("__len__", [](const PyNaff&) { return 2; })
@@ -176,7 +175,7 @@ void init_SimUtils_routines_n(py::module& m) {
 
   )""");
   py::class_<PyNametableAdd, std::unique_ptr<PyNametableAdd>>(
-      m, "NametableAdd", "Fortran routine nametable_add return value")
+      m, "NametableAdd", "nametable_add return type")
       .def_readonly("name", &PyNametableAdd::name)
       .def_readonly("ix_name", &PyNametableAdd::ix_name)
       .def("__len__", [](const PyNametableAdd&) { return 2; })
@@ -204,9 +203,7 @@ void init_SimUtils_routines_n(py::module& m) {
   py::class_<
       PyNametableBracketIndexx,
       std::unique_ptr<PyNametableBracketIndexx>>(
-      m,
-      "NametableBracketIndexx",
-      "Fortran routine nametable_bracket_indexx return value")
+      m, "NametableBracketIndexx", "nametable_bracket_indexx return type")
       .def_readonly("name", &PyNametableBracketIndexx::name)
       .def_readonly("n_match", &PyNametableBracketIndexx::n_match)
       .def_readonly("ix_max", &PyNametableBracketIndexx::ix_max)
@@ -239,7 +236,7 @@ void init_SimUtils_routines_n(py::module& m) {
   ix_max : 
   )""");
   py::class_<PyNametableChange1, std::unique_ptr<PyNametableChange1>>(
-      m, "NametableChange1", "Fortran routine nametable_change1 return value")
+      m, "NametableChange1", "nametable_change1 return type")
       .def_readonly("name", &PyNametableChange1::name)
       .def_readonly("ix_name", &PyNametableChange1::ix_name)
       .def("__len__", [](const PyNametableChange1&) { return 2; })
@@ -265,7 +262,7 @@ void init_SimUtils_routines_n(py::module& m) {
   ix_name : 
   )""");
   py::class_<PyNametableInit, std::unique_ptr<PyNametableInit>>(
-      m, "NametableInit", "Fortran routine nametable_init return value")
+      m, "NametableInit", "nametable_init return type")
       .def_readonly("n_min", &PyNametableInit::n_min)
       .def_readonly("n_max", &PyNametableInit::n_max)
       .def("__len__", [](const PyNametableInit&) { return 2; })
@@ -291,7 +288,7 @@ void init_SimUtils_routines_n(py::module& m) {
   n_max : 
   )""");
   py::class_<PyNametableRemove, std::unique_ptr<PyNametableRemove>>(
-      m, "NametableRemove", "Fortran routine nametable_remove return value")
+      m, "NametableRemove", "nametable_remove return type")
       .def_readonly("ix_name", &PyNametableRemove::ix_name)
       .def("__len__", [](const PyNametableRemove&) { return 1; })
       .def("__getitem__", [](const PyNametableRemove& s, int i) -> py::object {

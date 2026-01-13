@@ -12,7 +12,7 @@ PyHanhan python_hanhan(int N, RealAlloc1D& hh) {
 
 void init_SimUtils_routines_h(py::module& m) {
   py::class_<PyHanhan, std::unique_ptr<PyHanhan>>(
-      m, "Hanhan", "Fortran routine hanhan return value")
+      m, "Hanhan", "hanhan return type")
       .def_readonly("N", &PyHanhan::N)
       .def("__len__", [](const PyHanhan&) { return 1; })
       .def("__getitem__", [](const PyHanhan& s, int i) -> py::object {

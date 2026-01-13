@@ -50,7 +50,7 @@ void init_SimUtils_routines_o(py::module& m) {
       Name of the species. Will return 'INVALID!' (= invalid_name) if index is not valid.
   )""");
   py::class_<PyOrdinalStr, std::unique_ptr<PyOrdinalStr>>(
-      m, "OrdinalStr", "Fortran routine ordinal_str return value")
+      m, "OrdinalStr", "ordinal_str return type")
       .def_readonly("n", &PyOrdinalStr::n)
       .def_readonly("str", &PyOrdinalStr::str)
       .def("__len__", [](const PyOrdinalStr&) { return 2; })

@@ -74,7 +74,7 @@ void init_Bmad_routines_f(py::module& m) {
       Table angles in degrees?
   )""");
   py::class_<Bmad::FindElementEnds, std::unique_ptr<Bmad::FindElementEnds>>(
-      m, "FindElementEnds", "Fortran routine find_element_ends return value")
+      m, "FindElementEnds", "find_element_ends return type")
       .def_readonly("ele1", &Bmad::FindElementEnds::ele1)
       .def_readonly("ele2", &Bmad::FindElementEnds::ele2)
       .def("__len__", [](const Bmad::FindElementEnds&) { return 2; })
@@ -139,9 +139,7 @@ void init_Bmad_routines_f(py::module& m) {
   py::class_<
       Bmad::FindMatchingFieldmap,
       std::unique_ptr<Bmad::FindMatchingFieldmap>>(
-      m,
-      "FindMatchingFieldmap",
-      "Fortran routine find_matching_fieldmap return value")
+      m, "FindMatchingFieldmap", "find_matching_fieldmap return type")
       .def_readonly("match_ele", &Bmad::FindMatchingFieldmap::match_ele)
       .def_readonly("ix_field", &Bmad::FindMatchingFieldmap::ix_field)
       .def("__len__", [](const Bmad::FindMatchingFieldmap&) { return 2; })
@@ -206,9 +204,7 @@ void init_Bmad_routines_f(py::module& m) {
       Value for psi(0) that results in integral of psi(t) from -bound to +bound being equal to 1.0
   )""");
   py::class_<Bmad::FloorAnglesToWMat, std::unique_ptr<Bmad::FloorAnglesToWMat>>(
-      m,
-      "FloorAnglesToWMat",
-      "Fortran routine floor_angles_to_w_mat return value")
+      m, "FloorAnglesToWMat", "floor_angles_to_w_mat return type")
       .def_readonly("w_mat", &Bmad::FloorAnglesToWMat::w_mat)
       .def_readonly("w_mat_inv", &Bmad::FloorAnglesToWMat::w_mat_inv)
       .def("__len__", [](const Bmad::FloorAnglesToWMat&) { return 2; })
@@ -243,9 +239,7 @@ void init_Bmad_routines_f(py::module& m) {
       Inverse Orientation matrix.
   )""");
   py::class_<Bmad::FloorWMatToAngles, std::unique_ptr<Bmad::FloorWMatToAngles>>(
-      m,
-      "FloorWMatToAngles",
-      "Fortran routine floor_w_mat_to_angles return value")
+      m, "FloorWMatToAngles", "floor_w_mat_to_angles return type")
       .def_readonly("theta", &Bmad::FloorWMatToAngles::theta)
       .def_readonly("phi", &Bmad::FloorWMatToAngles::phi)
       .def_readonly("psi", &Bmad::FloorWMatToAngles::psi)
@@ -307,9 +301,7 @@ void init_Bmad_routines_f(py::module& m) {
   py::class_<
       Bmad::FormDigestedBmadFileName,
       std::unique_ptr<Bmad::FormDigestedBmadFileName>>(
-      m,
-      "FormDigestedBmadFileName",
-      "Fortran routine form_digested_bmad_file_name return value")
+      m, "FormDigestedBmadFileName", "form_digested_bmad_file_name return type")
       .def_readonly(
           "digested_file", &Bmad::FormDigestedBmadFileName::digested_file)
       .def_readonly(
@@ -356,7 +348,7 @@ void init_Bmad_routines_f(py::module& m) {
       Input lattice file name with full directory. Can be used for error messages.
   )""");
   py::class_<PyFringeHere, std::unique_ptr<PyFringeHere>>(
-      m, "FringeHere", "Fortran routine fringe_here return value")
+      m, "FringeHere", "fringe_here return type")
       .def_readonly("is_here", &PyFringeHere::is_here)
       .def("__len__", [](const PyFringeHere&) { return 1; })
       .def("__getitem__", [](const PyFringeHere& s, int i) -> py::object {

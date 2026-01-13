@@ -12,7 +12,7 @@ PyYlafun python_ylafun(double x, double y, double z, double res) {
 
 void init_Bmad_routines_y(py::module& m) {
   py::class_<PyYlafun, std::unique_ptr<PyYlafun>>(
-      m, "Ylafun", "Fortran routine ylafun return value")
+      m, "Ylafun", "ylafun return type")
       .def_readonly("x", &PyYlafun::x)
       .def_readonly("y", &PyYlafun::y)
       .def_readonly("z", &PyYlafun::z)

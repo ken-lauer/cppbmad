@@ -12,7 +12,7 @@ PyJBessel python_j_bessel(int m, double arg, double j_bes) {
 
 void init_SimUtils_routines_j(py::module& m) {
   py::class_<PyJBessel, std::unique_ptr<PyJBessel>>(
-      m, "JBessel", "Fortran routine j_bessel return value")
+      m, "JBessel", "j_bessel return type")
       .def_readonly("m", &PyJBessel::m)
       .def_readonly("arg", &PyJBessel::arg)
       .def_readonly("j_bes", &PyJBessel::j_bes)

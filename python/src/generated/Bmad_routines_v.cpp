@@ -78,7 +78,7 @@ PyValueToLine python_value_to_line(
 
 void init_Bmad_routines_v(py::module& m) {
   py::class_<PyValidFieldCalc, std::unique_ptr<PyValidFieldCalc>>(
-      m, "ValidFieldCalc", "Fortran routine valid_field_calc return value")
+      m, "ValidFieldCalc", "valid_field_calc return type")
       .def_readonly("is_valid", &PyValidFieldCalc::is_valid)
       .def("__len__", [](const PyValidFieldCalc&) { return 1; })
       .def("__getitem__", [](const PyValidFieldCalc& s, int i) -> py::object {
@@ -103,7 +103,7 @@ void init_Bmad_routines_v(py::module& m) {
   is_valid : 
   )""");
   py::class_<PyValidFringeType, std::unique_ptr<PyValidFringeType>>(
-      m, "ValidFringeType", "Fortran routine valid_fringe_type return value")
+      m, "ValidFringeType", "valid_fringe_type return type")
       .def_readonly("is_valid", &PyValidFringeType::is_valid)
       .def("__len__", [](const PyValidFringeType&) { return 1; })
       .def("__getitem__", [](const PyValidFringeType& s, int i) -> py::object {
@@ -128,9 +128,7 @@ void init_Bmad_routines_v(py::module& m) {
   is_valid : 
   )""");
   py::class_<PyValidMat6CalcMethod, std::unique_ptr<PyValidMat6CalcMethod>>(
-      m,
-      "ValidMat6CalcMethod",
-      "Fortran routine valid_mat6_calc_method return value")
+      m, "ValidMat6CalcMethod", "valid_mat6_calc_method return type")
       .def_readonly("is_valid", &PyValidMat6CalcMethod::is_valid)
       .def("__len__", [](const PyValidMat6CalcMethod&) { return 1; })
       .def(
@@ -162,9 +160,7 @@ void init_Bmad_routines_v(py::module& m) {
   py::class_<
       PyValidSpinTrackingMethod,
       std::unique_ptr<PyValidSpinTrackingMethod>>(
-      m,
-      "ValidSpinTrackingMethod",
-      "Fortran routine valid_spin_tracking_method return value")
+      m, "ValidSpinTrackingMethod", "valid_spin_tracking_method return type")
       .def_readonly("is_valid", &PyValidSpinTrackingMethod::is_valid)
       .def("__len__", [](const PyValidSpinTrackingMethod&) { return 1; })
       .def(
@@ -191,9 +187,7 @@ void init_Bmad_routines_v(py::module& m) {
   is_valid : 
   )""");
   py::class_<PyValidTrackingMethod, std::unique_ptr<PyValidTrackingMethod>>(
-      m,
-      "ValidTrackingMethod",
-      "Fortran routine valid_tracking_method return value")
+      m, "ValidTrackingMethod", "valid_tracking_method return type")
       .def_readonly("is_valid", &PyValidTrackingMethod::is_valid)
       .def("__len__", [](const PyValidTrackingMethod&) { return 1; })
       .def(
@@ -223,7 +217,7 @@ void init_Bmad_routines_v(py::module& m) {
   is_valid : 
   )""");
   py::class_<PyValueOfAttribute, std::unique_ptr<PyValueOfAttribute>>(
-      m, "ValueOfAttribute", "Fortran routine value_of_attribute return value")
+      m, "ValueOfAttribute", "value_of_attribute return type")
       .def_readonly("err_flag", &PyValueOfAttribute::err_flag)
       .def_readonly("value", &PyValueOfAttribute::value)
       .def("__len__", [](const PyValueOfAttribute&) { return 2; })
@@ -259,7 +253,7 @@ void init_Bmad_routines_v(py::module& m) {
   value : 
   )""");
   py::class_<PyValueToLine, std::unique_ptr<PyValueToLine>>(
-      m, "ValueToLine", "Fortran routine value_to_line return value")
+      m, "ValueToLine", "value_to_line return type")
       .def_readonly("line", &PyValueToLine::line)
       .def_readonly("value", &PyValueToLine::value)
       .def_readonly("str", &PyValueToLine::str)

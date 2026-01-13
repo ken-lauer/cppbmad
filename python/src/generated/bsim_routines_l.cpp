@@ -12,7 +12,7 @@ PyLogicalToPython python_logical_to_python(bool logic, std::string string) {
 
 void init_bsim_routines_l(py::module& m) {
   py::class_<PyLogicalToPython, std::unique_ptr<PyLogicalToPython>>(
-      m, "LogicalToPython", "Fortran routine logical_to_python return value")
+      m, "LogicalToPython", "logical_to_python return type")
       .def_readonly("logic", &PyLogicalToPython::logic)
       .def_readonly("string", &PyLogicalToPython::string)
       .def("__len__", [](const PyLogicalToPython&) { return 2; })

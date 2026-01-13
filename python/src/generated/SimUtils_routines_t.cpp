@@ -20,7 +20,7 @@ PyTypeThisFile python_type_this_file(std::string filename) {
 
 void init_SimUtils_routines_t(py::module& m) {
   py::class_<PyToStr, std::unique_ptr<PyToStr>>(
-      m, "ToStr", "Fortran routine to_str return value")
+      m, "ToStr", "to_str return type")
       .def_readonly("num", &PyToStr::num)
       .def_readonly("max_signif", &PyToStr::max_signif)
       .def_readonly("string", &PyToStr::string)
@@ -52,9 +52,7 @@ void init_SimUtils_routines_t(py::module& m) {
   py::class_<
       SimUtils::TricubicCmplxEval,
       std::unique_ptr<SimUtils::TricubicCmplxEval>>(
-      m,
-      "TricubicCmplxEval",
-      "Fortran routine tricubic_cmplx_eval return value")
+      m, "TricubicCmplxEval", "tricubic_cmplx_eval return type")
       .def_readonly("df_dx", &SimUtils::TricubicCmplxEval::df_dx)
       .def_readonly("df_dy", &SimUtils::TricubicCmplxEval::df_dy)
       .def_readonly("df_dz", &SimUtils::TricubicCmplxEval::df_dz)
@@ -114,7 +112,7 @@ void init_SimUtils_routines_t(py::module& m) {
       Normalized first derivative: True df/dz = df_dz * dz
   )""");
   py::class_<PyTypeThisFile, std::unique_ptr<PyTypeThisFile>>(
-      m, "TypeThisFile", "Fortran routine type_this_file return value")
+      m, "TypeThisFile", "type_this_file return type")
       .def_readonly("filename", &PyTypeThisFile::filename)
       .def("__len__", [](const PyTypeThisFile&) { return 1; })
       .def("__getitem__", [](const PyTypeThisFile& s, int i) -> py::object {

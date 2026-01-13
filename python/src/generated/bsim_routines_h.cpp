@@ -12,7 +12,7 @@ PyHomVoltage python_hom_voltage(WakeLrModeProxy& lr_wake, double voltage) {
 
 void init_bsim_routines_h(py::module& m) {
   py::class_<PyHomVoltage, std::unique_ptr<PyHomVoltage>>(
-      m, "HomVoltage", "Fortran routine hom_voltage return value")
+      m, "HomVoltage", "hom_voltage return type")
       .def_readonly("voltage", &PyHomVoltage::voltage)
       .def("__len__", [](const PyHomVoltage&) { return 1; })
       .def("__getitem__", [](const PyHomVoltage& s, int i) -> py::object {

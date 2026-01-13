@@ -121,9 +121,7 @@ void init_SimUtils_routines_r(py::module& m) {
   py::class_<
       SimUtils::RanGaussConverter,
       std::unique_ptr<SimUtils::RanGaussConverter>>(
-      m,
-      "RanGaussConverter",
-      "Fortran routine ran_gauss_converter return value")
+      m, "RanGaussConverter", "ran_gauss_converter return type")
       .def_readonly("get", &SimUtils::RanGaussConverter::get)
       .def_readonly(
           "get_sigma_cut", &SimUtils::RanGaussConverter::get_sigma_cut)
@@ -182,7 +180,7 @@ void init_SimUtils_routines_r(py::module& m) {
       Get the current (before any set) sigma cutoff.
   )""");
   py::class_<PyRanGaussScalar, std::unique_ptr<PyRanGaussScalar>>(
-      m, "RanGaussScalar", "Fortran routine ran_gauss_scalar return value")
+      m, "RanGaussScalar", "ran_gauss_scalar return type")
       .def_readonly("harvest", &PyRanGaussScalar::harvest)
       .def_readonly("index_quasi", &PyRanGaussScalar::index_quasi)
       .def("__len__", [](const PyRanGaussScalar&) { return 2; })
@@ -308,7 +306,7 @@ void init_SimUtils_routines_r(py::module& m) {
       random numbers.
   )""");
   py::class_<PyRanUniformScalar, std::unique_ptr<PyRanUniformScalar>>(
-      m, "RanUniformScalar", "Fortran routine ran_uniform_scalar return value")
+      m, "RanUniformScalar", "ran_uniform_scalar return type")
       .def_readonly("harvest", &PyRanUniformScalar::harvest)
       .def_readonly("index_quasi", &PyRanUniformScalar::index_quasi)
       .def("__len__", [](const PyRanUniformScalar&) { return 2; })
@@ -390,9 +388,7 @@ void init_SimUtils_routines_r(py::module& m) {
   Overloaded versions:
   )""");
   py::class_<PyRealNumFortranFormat, std::unique_ptr<PyRealNumFortranFormat>>(
-      m,
-      "RealNumFortranFormat",
-      "Fortran routine real_num_fortran_format return value")
+      m, "RealNumFortranFormat", "real_num_fortran_format return type")
       .def_readonly("number", &PyRealNumFortranFormat::number)
       .def_readonly("width", &PyRealNumFortranFormat::width)
       .def_readonly("n_blanks", &PyRealNumFortranFormat::n_blanks)
@@ -428,7 +424,7 @@ void init_SimUtils_routines_r(py::module& m) {
   fmt_str : 
   )""");
   py::class_<PyRealPath, std::unique_ptr<PyRealPath>>(
-      m, "RealPath", "Fortran routine real_path return value")
+      m, "RealPath", "real_path return type")
       .def_readonly("path_in", &PyRealPath::path_in)
       .def_readonly("path_out", &PyRealPath::path_out)
       .def_readonly("is_ok", &PyRealPath::is_ok)
@@ -457,7 +453,7 @@ void init_SimUtils_routines_r(py::module& m) {
   is_ok : 
   )""");
   py::class_<PyRealStr, std::unique_ptr<PyRealStr>>(
-      m, "RealStr", "Fortran routine real_str return value")
+      m, "RealStr", "real_str return type")
       .def_readonly("r_num", &PyRealStr::r_num)
       .def_readonly("n_signif", &PyRealStr::n_signif)
       .def_readonly("n_decimal", &PyRealStr::n_decimal)
@@ -491,7 +487,7 @@ void init_SimUtils_routines_r(py::module& m) {
   str : 
   )""");
   py::class_<PyRealToString, std::unique_ptr<PyRealToString>>(
-      m, "RealToString", "Fortran routine real_to_string return value")
+      m, "RealToString", "real_to_string return type")
       .def_readonly("real_num", &PyRealToString::real_num)
       .def_readonly("width", &PyRealToString::width)
       .def_readonly("n_signif", &PyRealToString::n_signif)
@@ -556,7 +552,7 @@ void init_SimUtils_routines_r(py::module& m) {
       If present and False then the size of the output array is permitted to be larger than n. Default is True.
   )""");
   py::class_<PyRmsValue, std::unique_ptr<PyRmsValue>>(
-      m, "RmsValue", "Fortran routine rms_value return value")
+      m, "RmsValue", "rms_value return type")
       .def_readonly("ave_val", &PyRmsValue::ave_val)
       .def_readonly("rms_val", &PyRmsValue::rms_val)
       .def("__len__", [](const PyRmsValue&) { return 2; })
@@ -664,7 +660,7 @@ void init_SimUtils_routines_r(py::module& m) {
       Equiv real.
   )""");
   py::class_<PyRunTimer, std::unique_ptr<PyRunTimer>>(
-      m, "RunTimer", "Fortran routine run_timer return value")
+      m, "RunTimer", "run_timer return type")
       .def_readonly("command", &PyRunTimer::command)
       .def_readonly("time", &PyRunTimer::time)
       .def_readonly("time0", &PyRunTimer::time0)

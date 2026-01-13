@@ -80,7 +80,7 @@ PyFixedwindowls python_fixedwindowls(double ynew, int id, double z) {
 
 void init_SimUtils_routines_f(py::module& m) {
   py::class_<PyFactorial, std::unique_ptr<PyFactorial>>(
-      m, "Factorial", "Fortran routine factorial return value")
+      m, "Factorial", "factorial return type")
       .def_readonly("n", &PyFactorial::n)
       .def_readonly("fact", &PyFactorial::fact)
       .def("__len__", [](const PyFactorial&) { return 2; })
@@ -136,7 +136,7 @@ void init_SimUtils_routines_f(py::module& m) {
       -1 => "Forward" transform, +1 => "Backwards" transform.
   )""");
   py::class_<PyFileDirectorizer, std::unique_ptr<PyFileDirectorizer>>(
-      m, "FileDirectorizer", "Fortran routine file_directorizer return value")
+      m, "FileDirectorizer", "file_directorizer return type")
       .def_readonly("in_file", &PyFileDirectorizer::in_file)
       .def_readonly("out_file", &PyFileDirectorizer::out_file)
       .def_readonly("directory", &PyFileDirectorizer::directory)
@@ -170,7 +170,7 @@ void init_SimUtils_routines_f(py::module& m) {
   add_switch : 
   )""");
   py::class_<PyFileGet, std::unique_ptr<PyFileGet>>(
-      m, "FileGet", "Fortran routine file_get return value")
+      m, "FileGet", "file_get return type")
       .def_readonly("string", &PyFileGet::string)
       .def_readonly("dflt_file_name", &PyFileGet::dflt_file_name)
       .def_readonly("file_name", &PyFileGet::file_name)
@@ -199,7 +199,7 @@ void init_SimUtils_routines_f(py::module& m) {
   file_name : 
   )""");
   py::class_<PyFileGetOpen, std::unique_ptr<PyFileGetOpen>>(
-      m, "FileGetOpen", "Fortran routine file_get_open return value")
+      m, "FileGetOpen", "file_get_open return type")
       .def_readonly("string", &PyFileGetOpen::string)
       .def_readonly("dflt_file_name", &PyFileGetOpen::dflt_file_name)
       .def_readonly("file_name", &PyFileGetOpen::file_name)
@@ -238,7 +238,7 @@ void init_SimUtils_routines_f(py::module& m) {
   readonly : 
   )""");
   py::class_<PyFileSuffixer, std::unique_ptr<PyFileSuffixer>>(
-      m, "FileSuffixer", "Fortran routine file_suffixer return value")
+      m, "FileSuffixer", "file_suffixer return type")
       .def_readonly("in_file_name", &PyFileSuffixer::in_file_name)
       .def_readonly("out_file_name", &PyFileSuffixer::out_file_name)
       .def_readonly("suffix", &PyFileSuffixer::suffix)
@@ -272,7 +272,7 @@ void init_SimUtils_routines_f(py::module& m) {
   add_switch : 
   )""");
   py::class_<PyFindLocationInt, std::unique_ptr<PyFindLocationInt>>(
-      m, "FindLocationInt", "Fortran routine find_location_int return value")
+      m, "FindLocationInt", "find_location_int return type")
       .def_readonly("value", &PyFindLocationInt::value)
       .def_readonly("ix_match", &PyFindLocationInt::ix_match)
       .def("__len__", [](const PyFindLocationInt&) { return 2; })
@@ -298,9 +298,7 @@ void init_SimUtils_routines_f(py::module& m) {
   ix_match : 
   )""");
   py::class_<PyFindLocationLogic, std::unique_ptr<PyFindLocationLogic>>(
-      m,
-      "FindLocationLogic",
-      "Fortran routine find_location_logic return value")
+      m, "FindLocationLogic", "find_location_logic return type")
       .def_readonly("value", &PyFindLocationLogic::value)
       .def_readonly("ix_match", &PyFindLocationLogic::ix_match)
       .def("__len__", [](const PyFindLocationLogic&) { return 2; })
@@ -327,7 +325,7 @@ void init_SimUtils_routines_f(py::module& m) {
   ix_match : 
   )""");
   py::class_<PyFindLocationReal, std::unique_ptr<PyFindLocationReal>>(
-      m, "FindLocationReal", "Fortran routine find_location_real return value")
+      m, "FindLocationReal", "find_location_real return type")
       .def_readonly("ix_match", &PyFindLocationReal::ix_match)
       .def("__len__", [](const PyFindLocationReal&) { return 1; })
       .def("__getitem__", [](const PyFindLocationReal& s, int i) -> py::object {
@@ -371,7 +369,7 @@ void init_SimUtils_routines_f(py::module& m) {
       Frequency corresponding to the largest FFT amplitude
   )""");
   py::class_<PyFixedwindowls, std::unique_ptr<PyFixedwindowls>>(
-      m, "Fixedwindowls", "Fortran routine fixedwindowls return value")
+      m, "Fixedwindowls", "fixedwindowls return type")
       .def_readonly("z", &PyFixedwindowls::z)
       .def("__len__", [](const PyFixedwindowls&) { return 1; })
       .def("__getitem__", [](const PyFixedwindowls& s, int i) -> py::object {
@@ -402,7 +400,7 @@ void init_SimUtils_routines_f(py::module& m) {
   py::class_<
       SimUtils::FourierAmplitude,
       std::unique_ptr<SimUtils::FourierAmplitude>>(
-      m, "FourierAmplitude", "Fortran routine fourier_amplitude return value")
+      m, "FourierAmplitude", "fourier_amplitude return type")
       .def_readonly("cos_amp", &SimUtils::FourierAmplitude::cos_amp)
       .def_readonly("sin_amp", &SimUtils::FourierAmplitude::sin_amp)
       .def_readonly("dcos_amp", &SimUtils::FourierAmplitude::dcos_amp)

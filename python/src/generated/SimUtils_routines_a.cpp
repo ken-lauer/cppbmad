@@ -87,8 +87,7 @@ void init_SimUtils_routines_a(py::module& m) {
   anti_species : int
       Antiparticle ID.
   )""");
-  py::class_<PyApfft, std::unique_ptr<PyApfft>>(
-      m, "Apfft", "Fortran routine apfft return value")
+  py::class_<PyApfft, std::unique_ptr<PyApfft>>(m, "Apfft", "apfft return type")
       .def_readonly("window", &PyApfft::window)
       .def_readonly("phase", &PyApfft::phase)
       .def_readonly("diag", &PyApfft::diag)
@@ -120,7 +119,7 @@ void init_SimUtils_routines_a(py::module& m) {
 
   )""");
   py::class_<SimUtils::ApfftCorr, std::unique_ptr<SimUtils::ApfftCorr>>(
-      m, "ApfftCorr", "Fortran routine apfft_corr return value")
+      m, "ApfftCorr", "apfft_corr return type")
       .def_readonly("phase", &SimUtils::ApfftCorr::phase)
       .def_readonly("amp", &SimUtils::ApfftCorr::amp)
       .def_readonly("freq", &SimUtils::ApfftCorr::freq)
@@ -173,7 +172,7 @@ void init_SimUtils_routines_a(py::module& m) {
       amplitude of peak
   )""");
   py::class_<PyApfftExt, std::unique_ptr<PyApfftExt>>(
-      m, "ApfftExt", "Fortran routine apfft_ext return value")
+      m, "ApfftExt", "apfft_ext return type")
       .def_readonly("window", &PyApfftExt::window)
       .def_readonly("phase", &PyApfftExt::phase)
       .def_readonly("amp", &PyApfftExt::amp)
@@ -213,8 +212,7 @@ void init_SimUtils_routines_a(py::module& m) {
   by the corrected apfft subroutine in this module.
 
   )""");
-  py::class_<PyAsinc, std::unique_ptr<PyAsinc>>(
-      m, "Asinc", "Fortran routine asinc return value")
+  py::class_<PyAsinc, std::unique_ptr<PyAsinc>>(m, "Asinc", "asinc return type")
       .def_readonly("y", &PyAsinc::y)
       .def("__len__", [](const PyAsinc&) { return 1; })
       .def("__getitem__", [](const PyAsinc& s, int i) -> py::object {
@@ -237,7 +235,7 @@ void init_SimUtils_routines_a(py::module& m) {
   y : 
   )""");
   py::class_<PyAssertEqual, std::unique_ptr<PyAssertEqual>>(
-      m, "AssertEqual", "Fortran routine assert_equal return value")
+      m, "AssertEqual", "assert_equal return type")
       .def_readonly("err_str", &PyAssertEqual::err_str)
       .def_readonly("ival", &PyAssertEqual::ival)
       .def("__len__", [](const PyAssertEqual&) { return 2; })

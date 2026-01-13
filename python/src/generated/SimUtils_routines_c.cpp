@@ -49,7 +49,7 @@ PyCosc python_cosc(double x, std::optional<int> nd, double y) {
 
 void init_SimUtils_routines_c(py::module& m) {
   py::class_<PyCalcFileNumber, std::unique_ptr<PyCalcFileNumber>>(
-      m, "CalcFileNumber", "Fortran routine calc_file_number return value")
+      m, "CalcFileNumber", "calc_file_number return type")
       .def_readonly("file_name", &PyCalcFileNumber::file_name)
       .def_readonly("num_in", &PyCalcFileNumber::num_in)
       .def_readonly("num_out", &PyCalcFileNumber::num_out)
@@ -83,7 +83,7 @@ void init_SimUtils_routines_c(py::module& m) {
   err_flag : 
   )""");
   py::class_<PyChangeFileNumber, std::unique_ptr<PyChangeFileNumber>>(
-      m, "ChangeFileNumber", "Fortran routine change_file_number return value")
+      m, "ChangeFileNumber", "change_file_number return type")
       .def_readonly("file_name", &PyChangeFileNumber::file_name)
       .def_readonly("change", &PyChangeFileNumber::change)
       .def("__len__", [](const PyChangeFileNumber&) { return 2; })
@@ -148,9 +148,7 @@ void init_SimUtils_routines_c(py::module& m) {
   py::class_<
       PyCoarseFrequencyEstimate,
       std::unique_ptr<PyCoarseFrequencyEstimate>>(
-      m,
-      "CoarseFrequencyEstimate",
-      "Fortran routine coarse_frequency_estimate return value")
+      m, "CoarseFrequencyEstimate", "coarse_frequency_estimate return type")
       .def_readonly("frequency", &PyCoarseFrequencyEstimate::frequency)
       .def_readonly("error", &PyCoarseFrequencyEstimate::error)
       .def("__len__", [](const PyCoarseFrequencyEstimate&) { return 2; })
@@ -188,9 +186,7 @@ void init_SimUtils_routines_c(py::module& m) {
       Error: not enough data. Frequency is near 0 or 0.5
   )""");
   py::class_<PyComplexErrorFunction, std::unique_ptr<PyComplexErrorFunction>>(
-      m,
-      "ComplexErrorFunction",
-      "Fortran routine complex_error_function return value")
+      m, "ComplexErrorFunction", "complex_error_function return type")
       .def_readonly("wr", &PyComplexErrorFunction::wr)
       .def_readonly("wi", &PyComplexErrorFunction::wi)
       .def_readonly("zr", &PyComplexErrorFunction::zr)
@@ -226,7 +222,7 @@ void init_SimUtils_routines_c(py::module& m) {
   zi : 
   )""");
   py::class_<PyCosOne, std::unique_ptr<PyCosOne>>(
-      m, "CosOne", "Fortran routine cos_one return value")
+      m, "CosOne", "cos_one return type")
       .def_readonly("cos1", &PyCosOne::cos1)
       .def("__len__", [](const PyCosOne&) { return 1; })
       .def("__getitem__", [](const PyCosOne& s, int i) -> py::object {
@@ -246,8 +242,7 @@ void init_SimUtils_routines_c(py::module& m) {
   angle : 
   cos1 : 
   )""");
-  py::class_<PyCosc, std::unique_ptr<PyCosc>>(
-      m, "Cosc", "Fortran routine cosc return value")
+  py::class_<PyCosc, std::unique_ptr<PyCosc>>(m, "Cosc", "cosc return type")
       .def_readonly("y", &PyCosc::y)
       .def("__len__", [](const PyCosc&) { return 1; })
       .def("__getitem__", [](const PyCosc& s, int i) -> py::object {

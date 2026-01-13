@@ -12,7 +12,7 @@ PyXlafun python_xlafun(double x, double y, double z, double res) {
 
 void init_Bmad_routines_x(py::module& m) {
   py::class_<PyXlafun, std::unique_ptr<PyXlafun>>(
-      m, "Xlafun", "Fortran routine xlafun return value")
+      m, "Xlafun", "xlafun return type")
       .def_readonly("x", &PyXlafun::x)
       .def_readonly("y", &PyXlafun::y)
       .def_readonly("z", &PyXlafun::z)

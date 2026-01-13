@@ -81,7 +81,7 @@ PyOscWriteRectpipeGrn python_osc_write_rectpipe_grn(
 
 void init_Bmad_routines_o(py::module& m) {
   py::class_<Bmad::OdeintBmad, std::unique_ptr<Bmad::OdeintBmad>>(
-      m, "OdeintBmad", "Fortran routine odeint_bmad return value")
+      m, "OdeintBmad", "odeint_bmad return type")
       .def_readonly("err_flag", &Bmad::OdeintBmad::err_flag)
       .def_readonly("track", &Bmad::OdeintBmad::track)
       .def("__len__", [](const Bmad::OdeintBmad&) { return 2; })
@@ -146,7 +146,7 @@ void init_Bmad_routines_o(py::module& m) {
       Structure holding the track information.
   )""");
   py::class_<PyOdeintBmadTime, std::unique_ptr<PyOdeintBmadTime>>(
-      m, "OdeintBmadTime", "Fortran routine odeint_bmad_time return value")
+      m, "OdeintBmadTime", "odeint_bmad_time return type")
       .def_readonly("err_flag", &PyOdeintBmadTime::err_flag)
       .def_readonly("dt_step", &PyOdeintBmadTime::dt_step)
       .def_readonly("rf_time", &PyOdeintBmadTime::rf_time)
@@ -213,7 +213,7 @@ void init_Bmad_routines_o(py::module& m) {
       Next RK time step that this tracker would take based on the error tolerance. Used by track_bunch_time.
   )""");
   py::class_<PyOffsetParticle, std::unique_ptr<PyOffsetParticle>>(
-      m, "OffsetParticle", "Fortran routine offset_particle return value")
+      m, "OffsetParticle", "offset_particle return type")
       .def_readonly("s_out", &PyOffsetParticle::s_out)
       .def_readonly("spin_qrot", &PyOffsetParticle::spin_qrot)
       .def_readonly("time", &PyOffsetParticle::time)
@@ -325,7 +325,7 @@ void init_Bmad_routines_o(py::module& m) {
       1-Turn coupled matrix.
   )""");
   py::class_<Bmad::OpenBinaryFile, std::unique_ptr<Bmad::OpenBinaryFile>>(
-      m, "OpenBinaryFile", "Fortran routine open_binary_file return value")
+      m, "OpenBinaryFile", "open_binary_file return type")
       .def_readonly("iu", &Bmad::OpenBinaryFile::iu)
       .def_readonly("iver", &Bmad::OpenBinaryFile::iver)
       .def_readonly("is_ok", &Bmad::OpenBinaryFile::is_ok)
@@ -374,9 +374,7 @@ void init_Bmad_routines_o(py::module& m) {
   py::class_<
       Bmad::OrbitAmplitudeCalc,
       std::unique_ptr<Bmad::OrbitAmplitudeCalc>>(
-      m,
-      "OrbitAmplitudeCalc",
-      "Fortran routine orbit_amplitude_calc return value")
+      m, "OrbitAmplitudeCalc", "orbit_amplitude_calc return type")
       .def_readonly("amp_a", &Bmad::OrbitAmplitudeCalc::amp_a)
       .def_readonly("amp_b", &Bmad::OrbitAmplitudeCalc::amp_b)
       .def_readonly("amp_na", &Bmad::OrbitAmplitudeCalc::amp_na)
@@ -473,7 +471,7 @@ void init_Bmad_routines_o(py::module& m) {
   local_position : 
   )""");
   py::class_<PyOrbitTooLarge, std::unique_ptr<PyOrbitTooLarge>>(
-      m, "OrbitTooLarge", "Fortran routine orbit_too_large return value")
+      m, "OrbitTooLarge", "orbit_too_large return type")
       .def_readonly("param", &PyOrbitTooLarge::param)
       .def_readonly("is_too_large", &PyOrbitTooLarge::is_too_large)
       .def("__len__", [](const PyOrbitTooLarge&) { return 2; })
@@ -505,9 +503,7 @@ void init_Bmad_routines_o(py::module& m) {
   py::class_<
       Bmad::OrderEvecsByNSimilarity,
       std::unique_ptr<Bmad::OrderEvecsByNSimilarity>>(
-      m,
-      "OrderEvecsByNSimilarity",
-      "Fortran routine order_evecs_by_n_similarity return value")
+      m, "OrderEvecsByNSimilarity", "order_evecs_by_n_similarity return type")
       .def_readonly("evec", &Bmad::OrderEvecsByNSimilarity::evec)
       .def_readonly("err_flag", &Bmad::OrderEvecsByNSimilarity::err_flag)
       .def("__len__", [](const Bmad::OrderEvecsByNSimilarity&) { return 2; })
@@ -673,7 +669,7 @@ void init_Bmad_routines_o(py::module& m) {
   npad : 
   )""");
   py::class_<PyOscGetgrnpipe, std::unique_ptr<PyOscGetgrnpipe>>(
-      m, "OscGetgrnpipe", "Fortran routine osc_getgrnpipe return value")
+      m, "OscGetgrnpipe", "osc_getgrnpipe return type")
       .def_readonly("gam", &PyOscGetgrnpipe::gam)
       .def_readonly("a", &PyOscGetgrnpipe::a)
       .def_readonly("b", &PyOscGetgrnpipe::b)
@@ -709,9 +705,7 @@ void init_Bmad_routines_o(py::module& m) {
   )""");
   m.def("osc_read_rectpipe_grn", &Bmad::osc_read_rectpipe_grn, R"""()""");
   py::class_<PyOscWriteRectpipeGrn, std::unique_ptr<PyOscWriteRectpipeGrn>>(
-      m,
-      "OscWriteRectpipeGrn",
-      "Fortran routine osc_write_rectpipe_grn return value")
+      m, "OscWriteRectpipeGrn", "osc_write_rectpipe_grn return type")
       .def_readonly("apipe", &PyOscWriteRectpipeGrn::apipe)
       .def_readonly("bpipe", &PyOscWriteRectpipeGrn::bpipe)
       .def_readonly("gamma", &PyOscWriteRectpipeGrn::gamma)

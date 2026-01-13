@@ -42,9 +42,7 @@ PyProjdd python_projdd(
 
 void init_SimUtils_routines_p(py::module& m) {
   py::class_<PyParseFortranFormat, std::unique_ptr<PyParseFortranFormat>>(
-      m,
-      "ParseFortranFormat",
-      "Fortran routine parse_fortran_format return value")
+      m, "ParseFortranFormat", "parse_fortran_format return type")
       .def_readonly("format_str", &PyParseFortranFormat::format_str)
       .def_readonly("n_repeat", &PyParseFortranFormat::n_repeat)
       .def_readonly("power", &PyParseFortranFormat::power)
@@ -111,7 +109,7 @@ void init_SimUtils_routines_p(py::module& m) {
       Pointer to the appropriate state.
   )""");
   py::class_<PyPolyEval, std::unique_ptr<PyPolyEval>>(
-      m, "PolyEval", "Fortran routine poly_eval return value")
+      m, "PolyEval", "poly_eval return type")
       .def_readonly("y", &PyPolyEval::y)
       .def("__len__", [](const PyPolyEval&) { return 1; })
       .def("__getitem__", [](const PyPolyEval& s, int i) -> py::object {
@@ -139,7 +137,7 @@ void init_SimUtils_routines_p(py::module& m) {
   y : 
   )""");
   py::class_<PyProbabilityFunct, std::unique_ptr<PyProbabilityFunct>>(
-      m, "ProbabilityFunct", "Fortran routine probability_funct return value")
+      m, "ProbabilityFunct", "probability_funct return type")
       .def_readonly("prob", &PyProbabilityFunct::prob)
       .def("__len__", [](const PyProbabilityFunct&) { return 1; })
       .def("__getitem__", [](const PyProbabilityFunct& s, int i) -> py::object {
@@ -161,7 +159,7 @@ void init_SimUtils_routines_p(py::module& m) {
   prob : 
   )""");
   py::class_<PyProjdd, std::unique_ptr<PyProjdd>>(
-      m, "Projdd", "Fortran routine projdd return value")
+      m, "Projdd", "projdd return type")
       .def_readonly("func_retval__", &PyProjdd::func_retval__)
       .def("__len__", [](const PyProjdd&) { return 1; })
       .def("__getitem__", [](const PyProjdd& s, int i) -> py::object {

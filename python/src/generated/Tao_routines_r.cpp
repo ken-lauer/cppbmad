@@ -16,9 +16,7 @@ PyReAllocateCDouble python_re_allocate_c_double(
 
 void init_Tao_routines_r(py::module& m) {
   py::class_<PyReAllocateCDouble, std::unique_ptr<PyReAllocateCDouble>>(
-      m,
-      "ReAllocateCDouble",
-      "Fortran routine re_allocate_c_double return value")
+      m, "ReAllocateCDouble", "re_allocate_c_double return type")
       .def_readonly("init_val", &PyReAllocateCDouble::init_val)
       .def("__len__", [](const PyReAllocateCDouble&) { return 1; })
       .def(

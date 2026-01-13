@@ -227,7 +227,7 @@ void init_SimUtils_routines_q(py::module& m) {
   py::class_<
       SimUtils::QuatToAxisAngle,
       std::unique_ptr<SimUtils::QuatToAxisAngle>>(
-      m, "QuatToAxisAngle", "Fortran routine quat_to_axis_angle return value")
+      m, "QuatToAxisAngle", "quat_to_axis_angle return type")
       .def_readonly("axis", &SimUtils::QuatToAxisAngle::axis)
       .def_readonly("angle", &SimUtils::QuatToAxisAngle::angle)
       .def("__len__", [](const SimUtils::QuatToAxisAngle&) { return 2; })
@@ -300,7 +300,7 @@ void init_SimUtils_routines_q(py::module& m) {
       Rotation matrix
   )""");
   py::class_<PyQueryString, std::unique_ptr<PyQueryString>>(
-      m, "QueryString", "Fortran routine query_string return value")
+      m, "QueryString", "query_string return type")
       .def_readonly("query_str", &PyQueryString::query_str)
       .def_readonly("upcase", &PyQueryString::upcase)
       .def_readonly("return_str", &PyQueryString::return_str)
@@ -338,8 +338,7 @@ void init_SimUtils_routines_q(py::module& m) {
   ix : 
   ios : 
   )""");
-  py::class_<PyQuote, std::unique_ptr<PyQuote>>(
-      m, "Quote", "Fortran routine quote return value")
+  py::class_<PyQuote, std::unique_ptr<PyQuote>>(m, "Quote", "quote return type")
       .def_readonly("str", &PyQuote::str)
       .def_readonly("q_str", &PyQuote::q_str)
       .def("__len__", [](const PyQuote&) { return 2; })

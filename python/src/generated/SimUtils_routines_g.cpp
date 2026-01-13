@@ -34,9 +34,7 @@ PyGetFileTimeStamp python_get_file_time_stamp(
 
 void init_SimUtils_routines_g(py::module& m) {
   py::class_<PyGenCompleteElliptic, std::unique_ptr<PyGenCompleteElliptic>>(
-      m,
-      "GenCompleteElliptic",
-      "Fortran routine gen_complete_elliptic return value")
+      m, "GenCompleteElliptic", "gen_complete_elliptic return type")
       .def_readonly("kc", &PyGenCompleteElliptic::kc)
       .def_readonly("p", &PyGenCompleteElliptic::p)
       .def_readonly("c", &PyGenCompleteElliptic::c)
@@ -82,7 +80,7 @@ void init_SimUtils_routines_g(py::module& m) {
   value : 
   )""");
   py::class_<PyGetFileNumber, std::unique_ptr<PyGetFileNumber>>(
-      m, "GetFileNumber", "Fortran routine get_file_number return value")
+      m, "GetFileNumber", "get_file_number return type")
       .def_readonly("file_name", &PyGetFileNumber::file_name)
       .def_readonly("cnum_in", &PyGetFileNumber::cnum_in)
       .def_readonly("num_out", &PyGetFileNumber::num_out)
@@ -116,7 +114,7 @@ void init_SimUtils_routines_g(py::module& m) {
   err_flag : 
   )""");
   py::class_<PyGetFileTimeStamp, std::unique_ptr<PyGetFileTimeStamp>>(
-      m, "GetFileTimeStamp", "Fortran routine get_file_time_stamp return value")
+      m, "GetFileTimeStamp", "get_file_time_stamp return type")
       .def_readonly("file", &PyGetFileTimeStamp::file)
       .def_readonly("time_stamp", &PyGetFileTimeStamp::time_stamp)
       .def("__len__", [](const PyGetFileTimeStamp&) { return 2; })

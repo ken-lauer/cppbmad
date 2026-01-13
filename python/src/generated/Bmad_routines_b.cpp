@@ -31,7 +31,7 @@ PyBranchName python_branch_name(BranchProxy& branch, std::string name) {
 
 void init_Bmad_routines_b(py::module& m) {
   py::class_<Bmad::BbiKick, std::unique_ptr<Bmad::BbiKick>>(
-      m, "BbiKick", "Fortran routine bbi_kick return value")
+      m, "BbiKick", "bbi_kick return type")
       .def_readonly("nk", &Bmad::BbiKick::nk)
       .def_readonly("dnk", &Bmad::BbiKick::dnk)
       .def("__len__", [](const Bmad::BbiKick&) { return 2; })
@@ -166,7 +166,7 @@ void init_Bmad_routines_b(py::module& m) {
   beam_init_set : 
   )""");
   py::class_<Bmad::BeamTilts, std::unique_ptr<Bmad::BeamTilts>>(
-      m, "BeamTilts", "Fortran routine beam_tilts return value")
+      m, "BeamTilts", "beam_tilts return type")
       .def_readonly("angle_xy", &Bmad::BeamTilts::angle_xy)
       .def_readonly("angle_xz", &Bmad::BeamTilts::angle_xz)
       .def_readonly("angle_yz", &Bmad::BeamTilts::angle_yz)
@@ -290,9 +290,7 @@ void init_Bmad_routines_b(py::module& m) {
       Calc electric and magnetic potentials? Default is false.
   )""");
   py::class_<PyBendLengthHasBeenSet, std::unique_ptr<PyBendLengthHasBeenSet>>(
-      m,
-      "BendLengthHasBeenSet",
-      "Fortran routine bend_length_has_been_set return value")
+      m, "BendLengthHasBeenSet", "bend_length_has_been_set return type")
       .def_readonly("is_set", &PyBendLengthHasBeenSet::is_set)
       .def("__len__", [](const PyBendLengthHasBeenSet&) { return 1; })
       .def(
@@ -625,7 +623,7 @@ void init_Bmad_routines_b(py::module& m) {
       Bunch length. FWHM/TwoRootTwoLogTwo from bunch profile
   )""");
   py::class_<Bmad::BmadParser, std::unique_ptr<Bmad::BmadParser>>(
-      m, "BmadParser", "Fortran routine bmad_parser return value")
+      m, "BmadParser", "bmad_parser return type")
       .def_readonly("lat", &Bmad::BmadParser::lat)
       .def_readonly("digested_read_ok", &Bmad::BmadParser::digested_read_ok)
       .def_readonly("err_flag", &Bmad::BmadParser::err_flag)
@@ -673,7 +671,7 @@ void init_Bmad_routines_b(py::module& m) {
       documentation.
   )""");
   py::class_<PyBmadParser2, std::unique_ptr<PyBmadParser2>>(
-      m, "BmadParser2", "Fortran routine bmad_parser2 return value")
+      m, "BmadParser2", "bmad_parser2 return type")
       .def_readonly("err_flag", &PyBmadParser2::err_flag)
       .def("__len__", [](const PyBmadParser2&) { return 1; })
       .def("__getitem__", [](const PyBmadParser2& s, int i) -> py::object {
@@ -731,7 +729,7 @@ void init_Bmad_routines_b(py::module& m) {
   branch2 : 
   )""");
   py::class_<PyBranchName, std::unique_ptr<PyBranchName>>(
-      m, "BranchName", "Fortran routine branch_name return value")
+      m, "BranchName", "branch_name return type")
       .def_readonly("name", &PyBranchName::name)
       .def("__len__", [](const PyBranchName&) { return 1; })
       .def("__getitem__", [](const PyBranchName& s, int i) -> py::object {

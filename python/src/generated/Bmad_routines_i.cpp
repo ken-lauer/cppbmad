@@ -146,7 +146,7 @@ PyIntegrationTimerEle python_integration_timer_ele(
 
 void init_Bmad_routines_i(py::module& m) {
   py::class_<PyIbsMatrixC, std::unique_ptr<PyIbsMatrixC>>(
-      m, "IbsMatrixC", "Fortran routine ibs_matrix_c return value")
+      m, "IbsMatrixC", "ibs_matrix_c return type")
       .def_readonly("tail_cut", &PyIbsMatrixC::tail_cut)
       .def_readonly("tau", &PyIbsMatrixC::tau)
       .def_readonly("energy", &PyIbsMatrixC::energy)
@@ -189,7 +189,7 @@ void init_Bmad_routines_i(py::module& m) {
   ibs_mat : 
   )""");
   py::class_<PyIgfcoulombfun, std::unique_ptr<PyIgfcoulombfun>>(
-      m, "Igfcoulombfun", "Fortran routine igfcoulombfun return value")
+      m, "Igfcoulombfun", "igfcoulombfun return type")
       .def_readonly("u", &PyIgfcoulombfun::u)
       .def_readonly("v", &PyIgfcoulombfun::v)
       .def_readonly("w", &PyIgfcoulombfun::w)
@@ -243,7 +243,7 @@ void init_Bmad_routines_i(py::module& m) {
   res : 
   )""");
   py::class_<PyIgfexfun, std::unique_ptr<PyIgfexfun>>(
-      m, "Igfexfun", "Fortran routine igfexfun return value")
+      m, "Igfexfun", "igfexfun return type")
       .def_readonly("u", &PyIgfexfun::u)
       .def_readonly("v", &PyIgfexfun::v)
       .def_readonly("w", &PyIgfexfun::w)
@@ -297,7 +297,7 @@ void init_Bmad_routines_i(py::module& m) {
   res : 
   )""");
   py::class_<PyIgfeyfun, std::unique_ptr<PyIgfeyfun>>(
-      m, "Igfeyfun", "Fortran routine igfeyfun return value")
+      m, "Igfeyfun", "igfeyfun return type")
       .def_readonly("u", &PyIgfeyfun::u)
       .def_readonly("v", &PyIgfeyfun::v)
       .def_readonly("w", &PyIgfeyfun::w)
@@ -351,7 +351,7 @@ void init_Bmad_routines_i(py::module& m) {
   res : 
   )""");
   py::class_<PyIgfezfun, std::unique_ptr<PyIgfezfun>>(
-      m, "Igfezfun", "Fortran routine igfezfun return value")
+      m, "Igfezfun", "igfezfun return type")
       .def_readonly("u", &PyIgfezfun::u)
       .def_readonly("v", &PyIgfezfun::v)
       .def_readonly("w", &PyIgfezfun::w)
@@ -405,9 +405,7 @@ void init_Bmad_routines_i(py::module& m) {
   res : 
   )""");
   py::class_<PyInitAttributeName1, std::unique_ptr<PyInitAttributeName1>>(
-      m,
-      "InitAttributeName1",
-      "Fortran routine init_attribute_name1 return value")
+      m, "InitAttributeName1", "init_attribute_name1 return type")
       .def_readonly("is_ok", &PyInitAttributeName1::is_ok)
       .def("__len__", [](const PyInitAttributeName1&) { return 1; })
       .def(
@@ -461,9 +459,7 @@ void init_Bmad_routines_i(py::module& m) {
 
   )""");
   py::class_<PyInitBeamDistribution, std::unique_ptr<PyInitBeamDistribution>>(
-      m,
-      "InitBeamDistribution",
-      "Fortran routine init_beam_distribution return value")
+      m, "InitBeamDistribution", "init_beam_distribution return type")
       .def_readonly("beam", &PyInitBeamDistribution::beam)
       .def_readonly("err_flag", &PyInitBeamDistribution::err_flag)
       .def_readonly("beam_init_set", &PyInitBeamDistribution::beam_init_set)
@@ -547,9 +543,7 @@ void init_Bmad_routines_i(py::module& m) {
   lat : 
   )""");
   py::class_<PyInitBunchDistribution, std::unique_ptr<PyInitBunchDistribution>>(
-      m,
-      "InitBunchDistribution",
-      "Fortran routine init_bunch_distribution return value")
+      m, "InitBunchDistribution", "init_bunch_distribution return type")
       .def_readonly("bunch", &PyInitBunchDistribution::bunch)
       .def_readonly("err_flag", &PyInitBunchDistribution::err_flag)
       .def_readonly("beam_init_used", &PyInitBunchDistribution::beam_init_used)
@@ -1025,9 +1019,7 @@ void init_Bmad_routines_i(py::module& m) {
   py::class_<
       Bmad::InitPhotonIntegProb,
       std::unique_ptr<Bmad::InitPhotonIntegProb>>(
-      m,
-      "InitPhotonIntegProb",
-      "Fortran routine init_photon_integ_prob return value")
+      m, "InitPhotonIntegProb", "init_photon_integ_prob return type")
       .def_readonly("E_photon", &Bmad::InitPhotonIntegProb::E_photon)
       .def_readonly("integ_prob", &Bmad::InitPhotonIntegProb::integ_prob)
       .def("__len__", [](const Bmad::InitPhotonIntegProb&) { return 2; })
@@ -1108,9 +1100,7 @@ void init_Bmad_routines_i(py::module& m) {
       Bunch of particles. .particle(:).spin
   )""");
   py::class_<PyInitSurfaceSegment, std::unique_ptr<PyInitSurfaceSegment>>(
-      m,
-      "InitSurfaceSegment",
-      "Fortran routine init_surface_segment return value")
+      m, "InitSurfaceSegment", "init_surface_segment return type")
       .def_readonly("ix", &PyInitSurfaceSegment::ix)
       .def_readonly("iy", &PyInitSurfaceSegment::iy)
       .def("__len__", [](const PyInitSurfaceSegment&) { return 2; })
@@ -1205,7 +1195,7 @@ void init_Bmad_routines_i(py::module& m) {
       This parameter is an input/output and is modified in-place. As an output: Enlarged orbit array.
   )""");
   py::class_<PyIntegrandBase, std::unique_ptr<PyIntegrandBase>>(
-      m, "IntegrandBase", "Fortran routine integrand_base return value")
+      m, "IntegrandBase", "integrand_base return type")
       .def_readonly("func_retval__", &PyIntegrandBase::func_retval__)
       .def("__len__", [](const PyIntegrandBase&) { return 1; })
       .def("__getitem__", [](const PyIntegrandBase& s, int i) -> py::object {
@@ -1276,9 +1266,7 @@ void init_Bmad_routines_i(py::module& m) {
 
   )""");
   py::class_<PyIntegrationTimerEle, std::unique_ptr<PyIntegrationTimerEle>>(
-      m,
-      "IntegrationTimerEle",
-      "Fortran routine integration_timer_ele return value")
+      m, "IntegrationTimerEle", "integration_timer_ele return type")
       .def_readonly("tol", &PyIntegrationTimerEle::tol)
       .def("__len__", [](const PyIntegrationTimerEle&) { return 1; })
       .def(
