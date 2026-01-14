@@ -13,6 +13,15 @@
 
 namespace Bmad {
 
+const int MAX_ARRAY_RANK = 3;
+
+struct array_descriptor_t {
+  void* data_ptr;
+  int rank;
+  int dims[MAX_ARRAY_RANK];
+  int strides[MAX_ARRAY_RANK];
+};
+
 // Forward declarations
 template <typename T, std::size_t N>
 class FArrayND;
