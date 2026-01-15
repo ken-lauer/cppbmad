@@ -9,7 +9,7 @@ build_type=${1:-debug}
 
 python -m codegen &&
   cmake -DCMAKE_BUILD_TYPE="${build_type}" -B "${build_type}" . &&
-  make -j8 -C "${build_type}" &&
+  cmake --build "${build_type}" -j8 &&
   ./$build_type/test_all_encompassing &&
   ./$build_type/test_integration &&
   ./$build_type/test_arrays &&
