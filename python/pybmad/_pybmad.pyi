@@ -391,7 +391,7 @@ class AllEncompassingStruct:
     def real_rp_3d_ptr(self) -> RealArray3D:
         ...
     @property
-    def type_0d_ptr(self) -> TestSubStruct | None:
+    def type_0d_ptr(self) -> _pybmad.TestSubStruct | None:
         ...
     @type_0d_ptr.setter
     def type_0d_ptr(self, arg1: TestSubStruct) -> None:
@@ -1553,7 +1553,7 @@ class BmadNormalFormStruct:
     def dhdj(self) -> TaylorStructArray1D:
         ...
     @property
-    def ele_origin(self) -> EleStruct | None:
+    def ele_origin(self) -> _pybmad.EleStruct | None:
         ...
     @ele_origin.setter
     def ele_origin(self, arg1: EleStruct) -> None:
@@ -1883,7 +1883,7 @@ class BranchStruct:
     def ix_to_ele(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def lat(self) -> LatStruct | None:
+    def lat(self) -> _pybmad.LatStruct | None:
         ...
     @lat.setter
     def lat(self, arg1: LatStruct) -> None:
@@ -2375,7 +2375,7 @@ class CartesianMapStruct:
     def master_parameter(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def ptr(self) -> CartesianMapTermStruct | None:
+    def ptr(self) -> _pybmad.CartesianMapTermStruct | None:
         ...
     @ptr.setter
     def ptr(self, arg1: CartesianMapTermStruct) -> None:
@@ -3536,7 +3536,7 @@ class CylindricalMapStruct:
     def phi0_fieldmap(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def ptr(self) -> CylindricalMapTermStruct | None:
+    def ptr(self) -> _pybmad.CylindricalMapTermStruct | None:
         ...
     @ptr.setter
     def ptr(self, arg1: CylindricalMapTermStruct) -> None:
@@ -3889,7 +3889,7 @@ class ElePointerStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def ele(self) -> EleStruct | None:
+    def ele(self) -> _pybmad.EleStruct | None:
         ...
     @ele.setter
     def ele(self, arg1: EleStruct) -> None:
@@ -3993,7 +3993,7 @@ class EleStruct:
     def a_pole_elec(self) -> RealArray1D:
         ...
     @property
-    def ac_kick(self) -> AcKickerStruct | None:
+    def ac_kick(self) -> _pybmad.AcKickerStruct | None:
         ...
     @ac_kick.setter
     def ac_kick(self, arg1: AcKickerStruct) -> None:
@@ -4017,7 +4017,7 @@ class EleStruct:
     def b_pole_elec(self) -> RealArray1D:
         ...
     @property
-    def branch(self) -> BranchStruct | None:
+    def branch(self) -> _pybmad.BranchStruct | None:
         ...
     @branch.setter
     def branch(self, arg1: BranchStruct) -> None:
@@ -4029,7 +4029,7 @@ class EleStruct:
     def cartesian_map(self) -> CartesianMapStructArray1D:
         ...
     @property
-    def control(self) -> ControllerStruct | None:
+    def control(self) -> _pybmad.ControllerStruct | None:
         ...
     @control.setter
     def control(self, arg1: ControllerStruct) -> None:
@@ -4068,7 +4068,7 @@ class EleStruct:
     def grid_field(self) -> GridFieldStructArray1D:
         ...
     @property
-    def high_energy_space_charge(self) -> HighEnergySpaceChargeStruct | None:
+    def high_energy_space_charge(self) -> _pybmad.HighEnergySpaceChargeStruct | None:
         ...
     @high_energy_space_charge.setter
     def high_energy_space_charge(self, arg1: HighEnergySpaceChargeStruct) -> None:
@@ -4128,7 +4128,7 @@ class EleStruct:
     def key(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def lord(self) -> EleStruct | None:
+    def lord(self) -> _pybmad.EleStruct | None:
         ...
     @lord.setter
     def lord(self, arg1: EleStruct) -> None:
@@ -4149,7 +4149,7 @@ class EleStruct:
     def mat6_calc_method(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def mode3(self) -> Mode3Struct | None:
+    def mode3(self) -> _pybmad.Mode3Struct | None:
         ...
     @mode3.setter
     def mode3(self, arg1: Mode3Struct) -> None:
@@ -4194,13 +4194,13 @@ class EleStruct:
     def orientation(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def photon(self) -> PhotonElementStruct | None:
+    def photon(self) -> _pybmad.PhotonElementStruct | None:
         ...
     @photon.setter
     def photon(self, arg1: PhotonElementStruct) -> None:
         ...
     @property
-    def ptc_fibre(self) -> Fibre | None:
+    def ptc_fibre(self) -> _pybmad.Fibre | None:
         ...
     @ptc_fibre.setter
     def ptc_fibre(self, arg1: Fibre) -> None:
@@ -4215,7 +4215,7 @@ class EleStruct:
     def r(self) -> RealArray3D:
         ...
     @property
-    def rad_map(self) -> RadMapEleStruct | None:
+    def rad_map(self) -> _pybmad.RadMapEleStruct | None:
         ...
     @rad_map.setter
     def rad_map(self, arg1: RadMapEleStruct) -> None:
@@ -4233,7 +4233,7 @@ class EleStruct:
     def ref_time(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def rf(self) -> RfEleStruct | None:
+    def rf(self) -> _pybmad.RfEleStruct | None:
         ...
     @rf.setter
     def rf(self, arg1: RfEleStruct) -> None:
@@ -4299,7 +4299,7 @@ class EleStruct:
     def vec0(self) -> RealArray1D:
         ...
     @property
-    def wake(self) -> WakeStruct | None:
+    def wake(self) -> _pybmad.WakeStruct | None:
         ...
     @wake.setter
     def wake(self, arg1: WakeStruct) -> None:
@@ -5118,31 +5118,31 @@ class Fibre:
     def MASS(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def N(self) -> Fibre | None:
+    def N(self) -> _pybmad.Fibre | None:
         ...
     @N.setter
     def N(self, arg1: Fibre) -> None:
         ...
     @property
-    def NEXT(self) -> Fibre | None:
+    def NEXT(self) -> _pybmad.Fibre | None:
         ...
     @NEXT.setter
     def NEXT(self, arg1: Fibre) -> None:
         ...
     @property
-    def P(self) -> Fibre | None:
+    def P(self) -> _pybmad.Fibre | None:
         ...
     @P.setter
     def P(self, arg1: Fibre) -> None:
         ...
     @property
-    def PARENT_LAYOUT(self) -> Layout | None:
+    def PARENT_LAYOUT(self) -> _pybmad.Layout | None:
         ...
     @PARENT_LAYOUT.setter
     def PARENT_LAYOUT(self, arg1: Layout) -> None:
         ...
     @property
-    def PREVIOUS(self) -> Fibre | None:
+    def PREVIOUS(self) -> _pybmad.Fibre | None:
         ...
     @PREVIOUS.setter
     def PREVIOUS(self, arg1: Fibre) -> None:
@@ -5744,7 +5744,7 @@ class GridFieldStruct:
     def phi0_fieldmap(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def ptr(self) -> GridFieldPtStruct | None:
+    def ptr(self) -> _pybmad.GridFieldPtStruct | None:
         ...
     @ptr.setter
     def ptr(self, arg1: GridFieldPtStruct) -> None:
@@ -6512,13 +6512,13 @@ class LatStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def a(self) -> ModeInfoStruct | None:
+    def a(self) -> _pybmad.ModeInfoStruct | None:
         ...
     @a.setter
     def a(self, arg1: ModeInfoStruct) -> None:
         ...
     @property
-    def b(self) -> ModeInfoStruct | None:
+    def b(self) -> _pybmad.ModeInfoStruct | None:
         ...
     @b.setter
     def b(self, arg1: ModeInfoStruct) -> None:
@@ -6578,13 +6578,13 @@ class LatStruct:
     def n_ic_max(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def param(self) -> LatParamStruct | None:
+    def param(self) -> _pybmad.LatParamStruct | None:
         ...
     @param.setter
     def param(self, arg1: LatParamStruct) -> None:
         ...
     @property
-    def particle_start(self) -> CoordStruct | None:
+    def particle_start(self) -> _pybmad.CoordStruct | None:
         ...
     @particle_start.setter
     def particle_start(self, arg1: CoordStruct) -> None:
@@ -6611,7 +6611,7 @@ class LatStruct:
     def version(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def z(self) -> ModeInfoStruct | None:
+    def z(self) -> _pybmad.ModeInfoStruct | None:
         ...
     @z.setter
     def z(self, arg1: ModeInfoStruct) -> None:
@@ -6675,13 +6675,13 @@ class Layout:
     def __repr__(self) -> str:
         ...
     @property
-    def END(self) -> Fibre | None:
+    def END(self) -> _pybmad.Fibre | None:
         ...
     @END.setter
     def END(self, arg1: Fibre) -> None:
         ...
     @property
-    def END_GROUND(self) -> Fibre | None:
+    def END_GROUND(self) -> _pybmad.Fibre | None:
         ...
     @END_GROUND.setter
     def END_GROUND(self, arg1: Fibre) -> None:
@@ -6699,7 +6699,7 @@ class Layout:
     def INDEX(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def LAST(self) -> Fibre | None:
+    def LAST(self) -> _pybmad.Fibre | None:
         ...
     @LAST.setter
     def LAST(self, arg1: Fibre) -> None:
@@ -6717,7 +6717,7 @@ class Layout:
     def N(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def NEXT(self) -> Layout | None:
+    def NEXT(self) -> _pybmad.Layout | None:
         ...
     @NEXT.setter
     def NEXT(self, arg1: Layout) -> None:
@@ -6729,19 +6729,19 @@ class Layout:
     def NTHIN(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def PREVIOUS(self) -> Layout | None:
+    def PREVIOUS(self) -> _pybmad.Layout | None:
         ...
     @PREVIOUS.setter
     def PREVIOUS(self, arg1: Layout) -> None:
         ...
     @property
-    def START(self) -> Fibre | None:
+    def START(self) -> _pybmad.Fibre | None:
         ...
     @START.setter
     def START(self, arg1: Fibre) -> None:
         ...
     @property
-    def START_GROUND(self) -> Fibre | None:
+    def START_GROUND(self) -> _pybmad.Fibre | None:
         ...
     @START_GROUND.setter
     def START_GROUND(self, arg1: Fibre) -> None:
@@ -8152,7 +8152,7 @@ class PtcNormalFormStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def ele_origin(self) -> EleStruct | None:
+    def ele_origin(self) -> _pybmad.EleStruct | None:
         ...
     @ele_origin.setter
     def ele_origin(self, arg1: EleStruct) -> None:
@@ -10813,7 +10813,7 @@ class TaoCurveStruct:
     def err_symb(self) -> RealArray1D:
         ...
     @property
-    def g(self) -> TaoGraphStruct | None:
+    def g(self) -> _pybmad.TaoGraphStruct | None:
         ...
     @g.setter
     def g(self, arg1: TaoGraphStruct) -> None:
@@ -10945,7 +10945,7 @@ class TaoD1DataStruct:
     def d(self) -> ...:
         ...
     @property
-    def d2(self) -> TaoD2DataStruct | None:
+    def d2(self) -> _pybmad.TaoD2DataStruct | None:
         ...
     @d2.setter
     def d2(self, arg1: TaoD2DataStruct) -> None:
@@ -11127,7 +11127,7 @@ class TaoDataStruct:
     def base_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def d1(self) -> TaoD1DataStruct | None:
+    def d1(self) -> _pybmad.TaoD1DataStruct | None:
         ...
     @d1.setter
     def d1(self, arg1: TaoD1DataStruct) -> None:
@@ -11796,7 +11796,7 @@ class TaoExpressionInfoStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def ele(self) -> EleStruct | None:
+    def ele(self) -> _pybmad.EleStruct | None:
         ...
     @ele.setter
     def ele(self, arg1: EleStruct) -> None:
@@ -12211,7 +12211,7 @@ class TaoGraphStruct:
     def ix_universe(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def p(self) -> TaoPlotStruct | None:
+    def p(self) -> _pybmad.TaoPlotStruct | None:
         ...
     @p.setter
     def p(self, arg1: TaoPlotStruct) -> None:
@@ -12549,7 +12549,7 @@ class TaoLatticeBranchStruct:
     def spin_ele(self) -> TaoSpinEleStructArray1D:
         ...
     @property
-    def tao_lat(self) -> TaoLatticeStruct | None:
+    def tao_lat(self) -> _pybmad.TaoLatticeStruct | None:
         ...
     @tao_lat.setter
     def tao_lat(self, arg1: TaoLatticeStruct) -> None:
@@ -13150,7 +13150,7 @@ class TaoPlotStruct:
     def n_curve_pts(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def r(self) -> TaoPlotRegionStruct | None:
+    def r(self) -> _pybmad.TaoPlotRegionStruct | None:
         ...
     @r.setter
     def r(self, arg1: TaoPlotRegionStruct) -> None:
@@ -13866,7 +13866,7 @@ class TaoUniversePointerStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def u(self) -> TaoUniverseStruct | None:
+    def u(self) -> _pybmad.TaoUniverseStruct | None:
         ...
     @u.setter
     def u(self, arg1: TaoUniverseStruct) -> None:
@@ -13941,7 +13941,7 @@ class TaoUniverseStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def base(self) -> TaoLatticeStruct | None:
+    def base(self) -> _pybmad.TaoLatticeStruct | None:
         ...
     @base.setter
     def base(self, arg1: TaoLatticeStruct) -> None:
@@ -13956,7 +13956,7 @@ class TaoUniverseStruct:
     def data(self) -> TaoDataStructArray1D:
         ...
     @property
-    def design(self) -> TaoLatticeStruct | None:
+    def design(self) -> _pybmad.TaoLatticeStruct | None:
         ...
     @design.setter
     def design(self, arg1: TaoLatticeStruct) -> None:
@@ -13968,7 +13968,7 @@ class TaoUniverseStruct:
     def ix_uni(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def model(self) -> TaoLatticeStruct | None:
+    def model(self) -> _pybmad.TaoLatticeStruct | None:
         ...
     @model.setter
     def model(self, arg1: TaoLatticeStruct) -> None:
@@ -14359,7 +14359,7 @@ class TaoVarStruct:
     def step(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def v1(self) -> TaoV1VarStruct | None:
+    def v1(self) -> _pybmad.TaoV1VarStruct | None:
         ...
     @v1.setter
     def v1(self, arg1: TaoV1VarStruct) -> None:
@@ -14436,7 +14436,7 @@ class TaoWaveKickPtStruct:
     def amp(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def ele(self) -> EleStruct | None:
+    def ele(self) -> _pybmad.EleStruct | None:
         ...
     @ele.setter
     def ele(self, arg1: EleStruct) -> None:
@@ -14578,7 +14578,7 @@ class TaoWaveStruct:
     def coef_ba(self) -> RealArray1D:
         ...
     @property
-    def d1_dat(self) -> TaoD1DataStruct | None:
+    def d1_dat(self) -> _pybmad.TaoD1DataStruct | None:
         ...
     @d1_dat.setter
     def d1_dat(self, arg1: TaoD1DataStruct) -> None:
@@ -14668,7 +14668,7 @@ class TaoWaveStruct:
     def n_kick(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def region(self) -> TaoPlotRegionStruct | None:
+    def region(self) -> _pybmad.TaoPlotRegionStruct | None:
         ...
     @region.setter
     def region(self, arg1: TaoPlotRegionStruct) -> None:
@@ -16323,7 +16323,7 @@ class Wall3DSectionStruct:
     def s(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def surface(self) -> PhotonReflectSurfaceStruct | None:
+    def surface(self) -> _pybmad.PhotonReflectSurfaceStruct | None:
         ...
     @surface.setter
     def surface(self, arg1: PhotonReflectSurfaceStruct) -> None:
@@ -17022,7 +17022,7 @@ def add_superimpose(lat: LatStruct, super_ele_in: EleStruct, ix_branch: typing.S
     super_ele_out : EleStruct
         Pointer to the super element in the lattice.
     """
-def add_this_multipass(lat: LatStruct, m_slaves: LatEleLocStructArray1D, lord_in: EleStruct | None = None) -> None:
+def add_this_multipass(lat: LatStruct, m_slaves: LatEleLocStructArray1D, lord_in: _pybmad.EleStruct | None = None) -> None:
     """
     Parameters
     ----------
@@ -17666,7 +17666,7 @@ def attribute_name(ele: EleStruct, ix_att: typing.SupportsInt, show_private: boo
     -----
     Overloaded versions:
     """
-def attribute_type(attrib_name: str, ele: EleStruct | None = None) -> int:
+def attribute_type(attrib_name: str, ele: _pybmad.EleStruct | None = None) -> int:
     """
     Function attribute_type (attrib_name, ele) result (attrib_type)
     
@@ -17924,7 +17924,7 @@ def beam_equal_beam(beam1: BeamStruct, beam2: BeamStruct) -> None:
     beam1 : 
     beam2 : 
     """
-def beam_init_setup(beam_init_in: BeamInitStruct, ele: EleStruct, species: typing.SupportsInt, modes: NormalModesStruct | None = None, err_flag: bool | None = None, beam_init_set: BeamInitStruct) -> None:
+def beam_init_setup(beam_init_in: BeamInitStruct, ele: EleStruct, species: typing.SupportsInt, modes: _pybmad.NormalModesStruct | None = None, err_flag: bool | None = None, beam_init_set: BeamInitStruct) -> None:
     """
     Parameters
     ----------
@@ -18414,7 +18414,7 @@ def bmad_parser(lat_file: str, make_mats6: bool | None = None, use_line: str | N
         List of elements used to construct the lattice. Useful if bmad_parser2 will be called. See bmad_parser2
         documentation.
     """
-def bmad_parser2(lat_file: str, lat: LatStruct, orbit: CoordStructArray1D | None = None, make_mats6: bool | None = None, err_flag: bool | None = None, parse_lat: _pybmad.LatStruct | None = None) -> None:
+def bmad_parser2(lat_file: str, lat: LatStruct, orbit: _pybmad.CoordStructArray1D | None = None, make_mats6: bool | None = None, err_flag: bool | None = None, parse_lat: _pybmad.LatStruct | None = None) -> None:
     """
     Parameters
     ----------
@@ -18527,7 +18527,7 @@ def c_to_cbar(ele: EleStruct) -> typing.Annotated[list[typing.Annotated[list[flo
     cbar_mat : float
         Cbar matrix.
     """
-def calc_bunch_params(bunch: BunchStruct, bunch_params: BunchParamsStruct, error: bool, print_err: bool | None = None, n_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, is_time_coords: bool | None = None, ele: EleStruct | None = None) -> None:
+def calc_bunch_params(bunch: BunchStruct, bunch_params: BunchParamsStruct, error: bool, print_err: bool | None = None, n_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, is_time_coords: bool | None = None, ele: _pybmad.EleStruct | None = None) -> None:
     """
     Subroutine calc_bunch_params (bunch, bunch_params, error, print_err, n_mat, is_time_coords, ele)
     
@@ -18558,7 +18558,7 @@ def calc_bunch_params(bunch: BunchStruct, bunch_params: BunchParamsStruct, error
         N matrix defined in Wolski Eq 44 and used to convert from action-angle coords to lab coords (Wolski Eq
         51.).
     """
-def calc_bunch_params_slice(bunch: BunchStruct, bunch_params: BunchParamsStruct, plane: typing.SupportsInt, slice_center: typing.SupportsFloat, slice_spread: typing.SupportsFloat, err: bool, print_err: bool | None = None, is_time_coords: bool | None = None, ele: EleStruct | None = None) -> None:
+def calc_bunch_params_slice(bunch: BunchStruct, bunch_params: BunchParamsStruct, plane: typing.SupportsInt, slice_center: typing.SupportsFloat, slice_spread: typing.SupportsFloat, err: bool, print_err: bool | None = None, is_time_coords: bool | None = None, ele: _pybmad.EleStruct | None = None) -> None:
     """
     subroutine calc_bunch_params_slice (bunch, bunch_params, plane, slice_center, slice_spread, err, print_err, is_time_coords, ele)
     
@@ -18585,7 +18585,7 @@ def calc_bunch_params_slice(bunch: BunchStruct, bunch_params: BunchParamsStruct,
     err : bool
         Set True if there is an error.
     """
-def calc_bunch_params_z_slice(bunch: BunchStruct, bunch_params: BunchParamsStruct, slice_bounds: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], err: bool, print_err: bool | None = None, is_time_coords: bool | None = None, ele: EleStruct | None = None) -> None:
+def calc_bunch_params_z_slice(bunch: BunchStruct, bunch_params: BunchParamsStruct, slice_bounds: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], err: bool, print_err: bool | None = None, is_time_coords: bool | None = None, ele: _pybmad.EleStruct | None = None) -> None:
     """
     subroutine calc_bunch_params_z_slice (bunch, bunch_params, slice_bounds, err, print_err, is_time_coords, ele)
     
@@ -18612,7 +18612,7 @@ def calc_bunch_params_z_slice(bunch: BunchStruct, bunch_params: BunchParamsStruc
     err : bool
         Set True if there is an error.
     """
-def calc_bunch_sigma_matrix_etc(particle: CoordStructArray1D, charge: RealArray1D, is_time_coords: bool | None = None, ele: EleStruct | None = None) -> BunchParamsStruct:
+def calc_bunch_sigma_matrix_etc(particle: CoordStructArray1D, charge: RealArray1D, is_time_coords: bool | None = None, ele: _pybmad.EleStruct | None = None) -> BunchParamsStruct:
     """
     Subroutine calc_bunch_sigma_matrix_etc (particle, charge, bunch_params, is_time_coords, ele)
     
@@ -18794,7 +18794,7 @@ def charge_to_mass_of(species: typing.SupportsInt) -> float:
     charge_mass_ratio : float
         particle charge to mass ratio. (1/eV)
     """
-def check_aperture_limit(orb: CoordStruct, ele: EleStruct, particle_at: typing.SupportsInt, param: LatParamStruct, old_orb: CoordStruct | None = None, check_momentum: bool | None = None) -> None:
+def check_aperture_limit(orb: CoordStruct, ele: EleStruct, particle_at: typing.SupportsInt, param: LatParamStruct, old_orb: _pybmad.CoordStruct | None = None, check_momentum: bool | None = None) -> None:
     """
     Parameters
     ----------
@@ -18825,7 +18825,7 @@ def check_controller_controls(ele_key: typing.SupportsInt, contrl: ControlStruct
     err : bool
         Set true if there is a problem. False otherwise.
     """
-def check_for_superimpose_problem(branch: BranchStruct, super_ele: EleStruct, err_flag: bool, ref_ele: EleStruct | None = None, wrap: bool) -> None:
+def check_for_superimpose_problem(branch: BranchStruct, super_ele: EleStruct, err_flag: bool, ref_ele: _pybmad.EleStruct | None = None, wrap: bool) -> None:
     """
     Subroutine check_for_superimpose_problem (branch, super_ele, err_flag, ref_ele, wrap)
     
@@ -18878,7 +18878,7 @@ def choose_quads_for_set_tune(branch: BranchStruct, dk1: RealAlloc1D, eles: EleP
     err_flag : bool
         Set True if there is not one quad with positive dk1 and one quad with negative dk1.
     """
-def chrom_calc(lat: LatStruct, delta_e: typing.SupportsFloat, pz: typing.SupportsFloat | None = None, low_E_orb: CoordStructAlloc1D | None = None, high_E_orb: _pybmad.CoordStructAlloc1D | None = None, ix_branch: typing.SupportsInt | None = None, orb0: _pybmad.CoordStruct | None = None) -> ChromCalc:
+def chrom_calc(lat: LatStruct, delta_e: typing.SupportsFloat, pz: typing.SupportsFloat | None = None, low_E_orb: _pybmad.CoordStructAlloc1D | None = None, high_E_orb: _pybmad.CoordStructAlloc1D | None = None, ix_branch: typing.SupportsInt | None = None, orb0: _pybmad.CoordStruct | None = None) -> ChromCalc:
     """
     Parameters
     ----------
@@ -18984,7 +18984,7 @@ def closed_orbit_calc(lat: LatStruct, closed_orb: CoordStructAlloc1D, i_dim: typ
         Print error message if calc does not converge? Default is True. Note: Condition messages like no RF
         voltage with i_dim = 6 will always be printed.
     """
-def closed_orbit_from_tracking(lat: LatStruct, closed_orb: CoordStructAlloc1D, i_dim: typing.SupportsInt, eps_rel: RealArray1D | None = None, eps_abs: _pybmad.RealArray1D | None = None, init_guess: _pybmad.CoordStruct | None = None) -> bool:
+def closed_orbit_from_tracking(lat: LatStruct, closed_orb: CoordStructAlloc1D, i_dim: typing.SupportsInt, eps_rel: _pybmad.RealArray1D | None = None, eps_abs: _pybmad.RealArray1D | None = None, init_guess: _pybmad.CoordStruct | None = None) -> bool:
     """
     Parameters
     ----------
@@ -19174,7 +19174,7 @@ def complex_taylor_make_unit(complex_taylor: ComplexTaylorStructArray1D) -> None
     complex_taylor : ComplexTaylorStruct
         Unit complex_taylor map .
     """
-def complex_taylor_to_mat6(a_complex_taylor: ComplexTaylorStructArray1D, r_in: ComplexArray1D, r_out: ComplexArray1D | None = None) -> ComplexTaylorToMat6:
+def complex_taylor_to_mat6(a_complex_taylor: ComplexTaylorStructArray1D, r_in: ComplexArray1D, r_out: _pybmad.ComplexArray1D | None = None) -> ComplexTaylorToMat6:
     """
     Subroutine complex_taylor_to_mat6 (a_complex_taylor, r_in, vec0, mat6, r_out)
     
@@ -19210,7 +19210,7 @@ def compute_slave_coupler(slave: EleStruct) -> None:
     
     This routine is not meant for general use.
     """
-def concat_ele_taylor(orb_taylor: TaylorStructArray1D, ele: EleStruct, err_flag: bool, spin_taylor: TaylorStructArray1D | None = None) -> None:
+def concat_ele_taylor(orb_taylor: TaylorStructArray1D, ele: EleStruct, err_flag: bool, spin_taylor: _pybmad.TaylorStructArray1D | None = None) -> None:
     """
     Subroutine concat_ele_taylor (orb_taylor, ele, err_flag, spin_taylor)
     
@@ -19283,7 +19283,7 @@ def concat_transfer_mat(mat_1: typing.Annotated[collections.abc.Sequence[typing.
     mat_out : float
         Map from s0 to s2
     """
-def control_bookkeeper(lat: LatStruct, ele: EleStruct | None = None, err_flag: bool | None = None) -> None:
+def control_bookkeeper(lat: LatStruct, ele: _pybmad.EleStruct | None = None, err_flag: bool | None = None) -> None:
     """
     Parameters
     ----------
@@ -19732,7 +19732,7 @@ def create_concatenated_wall3d(lat: LatStruct, err: bool) -> None:
     err_flag : bool
         Set True if there is an error, false otherwise.
     """
-def create_element_slice(ele_in: EleStruct, l_slice: typing.SupportsFloat, offset: typing.SupportsFloat, param: LatParamStruct, include_upstream_end: bool, include_downstream_end: bool, old_slice: EleStruct | None = None, orb_in: _pybmad.CoordStruct | None = None) -> CreateElementSlice:
+def create_element_slice(ele_in: EleStruct, l_slice: typing.SupportsFloat, offset: typing.SupportsFloat, param: LatParamStruct, include_upstream_end: bool, include_downstream_end: bool, old_slice: _pybmad.EleStruct | None = None, orb_in: _pybmad.CoordStruct | None = None) -> CreateElementSlice:
     """
     Parameters
     ----------
@@ -20592,7 +20592,7 @@ def ele_rf_step_index(E_ref: typing.SupportsFloat, s_rel: typing.SupportsFloat, 
         RF cavity.
     ix_step : 
     """
-def ele_to_fibre(ele: EleStruct, use_offsets: bool, integ_order: typing.SupportsInt | None = None, steps: typing.SupportsInt | None = None, for_layout: bool | None = None, ref_in: CoordStruct | None = None) -> EleToFibre:
+def ele_to_fibre(ele: EleStruct, use_offsets: bool, integ_order: typing.SupportsInt | None = None, steps: typing.SupportsInt | None = None, for_layout: bool | None = None, ref_in: _pybmad.CoordStruct | None = None) -> EleToFibre:
     """
     Parameters
     ----------
@@ -20653,7 +20653,7 @@ def ele_to_spin_taylor(ele: EleStruct, param: LatParamStruct, orb0: CoordStruct)
     orb0 : CoordStruct
         Starting ref coords.
     """
-def ele_to_taylor(ele: EleStruct, orb0: CoordStruct | None = None, taylor_map_includes_offsets: bool | None = None, include_damping: bool | None = None) -> EleToTaylor:
+def ele_to_taylor(ele: EleStruct, orb0: _pybmad.CoordStruct | None = None, taylor_map_includes_offsets: bool | None = None, include_damping: bool | None = None) -> EleToTaylor:
     """
     Parameters
     ----------
@@ -20894,7 +20894,7 @@ def element_slice_iterator(ele: EleStruct, param: LatParamStruct, i_slice: typin
     """
 def ellipinc_test() -> None:
     ...
-def em_field_calc(ele: EleStruct, param: LatParamStruct, s_pos: typing.SupportsFloat, orbit: CoordStruct, local_ref_frame: bool, calc_dfield: bool | None = None, calc_potential: bool | None = None, use_overlap: bool | None = None, grid_allow_s_out_of_bounds: bool | None = None, rf_time: typing.SupportsFloat | None = None, used_eles: ElePointerStructAlloc1D | None = None, print_err: bool | None = None, original_ele: _pybmad.EleStruct | None = None) -> EmFieldCalc:
+def em_field_calc(ele: EleStruct, param: LatParamStruct, s_pos: typing.SupportsFloat, orbit: CoordStruct, local_ref_frame: bool, calc_dfield: bool | None = None, calc_potential: bool | None = None, use_overlap: bool | None = None, grid_allow_s_out_of_bounds: bool | None = None, rf_time: typing.SupportsFloat | None = None, used_eles: _pybmad.ElePointerStructAlloc1D | None = None, print_err: bool | None = None, original_ele: _pybmad.EleStruct | None = None) -> EmFieldCalc:
     """
     Parameters
     ----------
@@ -20969,7 +20969,7 @@ def em_field_derivatives(ele: EleStruct, param: LatParamStruct, s_pos: typing.Su
     dfield : EmFieldStruct
         E and B field derivatives. dfield.E and dfield.B are not touched.
     """
-def em_field_kick_vector_time(ele: EleStruct, param: LatParamStruct, rf_time: typing.SupportsFloat, orbit: CoordStruct, err_flag: bool, print_err: bool | None = None, extra_field: EmFieldStruct | None = None) -> typing.Annotated[list[float], "FixedSize(10)"]:
+def em_field_kick_vector_time(ele: EleStruct, param: LatParamStruct, rf_time: typing.SupportsFloat, orbit: CoordStruct, err_flag: bool, print_err: bool | None = None, extra_field: _pybmad.EmFieldStruct | None = None) -> typing.Annotated[list[float], "FixedSize(10)"]:
     """
     Subroutine em_field_kick_vector_time (ele, param, rf_time, orbit, dvec_dt, err_flag, print_err, extra_field))
     
@@ -21019,7 +21019,7 @@ def em_taylors_equal_em_taylors(em_taylor1: EmTaylorStructArray1D, em_taylor2: E
     em_taylor1 : 
     em_taylor2 : 
     """
-def emit_6d(ele_ref: EleStruct, include_opening_angle: bool, closed_orbit: CoordStructArray1D | None = None) -> Emit6d:
+def emit_6d(ele_ref: EleStruct, include_opening_angle: bool, closed_orbit: _pybmad.CoordStructArray1D | None = None) -> Emit6d:
     """
     Subroutine emit_6d (ele_ref, include_opening_angle, mode, sigma_mat, closed_orbit, rad_int_by_ele)
     
@@ -22092,7 +22092,7 @@ def expression_stack_to_string(stack: ExpressionAtomStructArray1D, polish: bool 
     str : unknown
         : Expression in string form.
     """
-def expression_stack_value(stack: ExpressionAtomStructArray1D, var: ControlVar1StructArray1D | None = None, use_old: bool | None = None) -> ExpressionStackValue:
+def expression_stack_value(stack: ExpressionAtomStructArray1D, var: _pybmad.ControlVar1StructArray1D | None = None, use_old: bool | None = None) -> ExpressionStackValue:
     """
     Function expression_stack_value (stack, err_flag, err_str, var, use_old) result (value)
     
@@ -22201,7 +22201,7 @@ def expression_string_to_tree(string: str, root_tree: ExpressionTreeStruct) -> E
     compound vars with children "atan" "()" The funciton argument of a species related function like "He++" in the
     construct "mass_of(He++)" will not get split will get marked as a species_const$.
     """
-def expression_tree_to_string(tree: ExpressionTreeStruct, include_root: bool | None = None, n_node: typing.SupportsInt | None = None, parent: ExpressionTreeStruct | None = None) -> str:
+def expression_tree_to_string(tree: ExpressionTreeStruct, include_root: bool | None = None, n_node: typing.SupportsInt | None = None, parent: _pybmad.ExpressionTreeStruct | None = None) -> str:
     """
     Function expression_tree_to_string (tree, include_root, n_node, parent) result(str_out)
     
@@ -22224,7 +22224,7 @@ def expression_tree_to_string(tree: ExpressionTreeStruct, include_root: bool | N
     str_out : unknown
         Expression string.
     """
-def expression_value(expression: str, var: ControlVar1StructArray1D | None = None, use_old: bool | None = None) -> ExpressionValue:
+def expression_value(expression: str, var: _pybmad.ControlVar1StructArray1D | None = None, use_old: bool | None = None) -> ExpressionValue:
     """
     Function expression_value (expression, err_flag, err_str, var, use_old) result (value)
     
@@ -22542,7 +22542,7 @@ def floor_angles_to_w_mat(theta: typing.SupportsFloat, phi: typing.SupportsFloat
     w_mat_inv : float
         Inverse Orientation matrix.
     """
-def floor_w_mat_to_angles(w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"], floor0: FloorPositionStruct | None = None) -> FloorWMatToAngles:
+def floor_w_mat_to_angles(w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"], floor0: _pybmad.FloorPositionStruct | None = None) -> FloorWMatToAngles:
     """
     Parameters
     ----------
@@ -23043,7 +23043,7 @@ def has_orientation_attributes(ele: EleStruct) -> bool:
     Related routines:
     has_attribute function.
     """
-def hdf5_write_beam(file_name: str, bunches: BunchStructArray1D, append: bool, error: bool, lat: LatStruct | None = None, alive_only: bool | None = None) -> None:
+def hdf5_write_beam(file_name: str, bunches: BunchStructArray1D, append: bool, error: bool, lat: _pybmad.LatStruct | None = None, alive_only: bool | None = None) -> None:
     """
     Parameters
     ----------
@@ -23228,7 +23228,7 @@ def init_attribute_name_array() -> None:
     Private routine to initialize the attribute name array used by routines
     in attribute_mod. Not meant for general use.
     """
-def init_beam_distribution(ele: EleStruct, param: LatParamStruct, beam_init: BeamInitStruct, modes: NormalModesStruct | None = None, print_p0c_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> InitBeamDistribution:
+def init_beam_distribution(ele: EleStruct, param: LatParamStruct, beam_init: BeamInitStruct, modes: _pybmad.NormalModesStruct | None = None, print_p0c_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> InitBeamDistribution:
     """
     Subroutine init_beam_distribution (ele, param, beam_init, beam, err_flag, modes, beam_init_set,
                                                                         print_p0c_shift_warning, conserve_momentum)
@@ -23275,13 +23275,13 @@ def init_beam_distribution(ele: EleStruct, param: LatParamStruct, beam_init: Bea
     """
 def init_bmad() -> None:
     ...
-def init_bmad_parser_common(lat: LatStruct | None = None) -> None:
+def init_bmad_parser_common(lat: _pybmad.LatStruct | None = None) -> None:
     """
     Parameters
     ----------
     lat : 
     """
-def init_bunch_distribution(ele: EleStruct, param: LatParamStruct, beam_init: BeamInitStruct, ix_bunch: typing.SupportsInt, modes: NormalModesStruct | None = None, print_p0c_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> InitBunchDistribution:
+def init_bunch_distribution(ele: EleStruct, param: LatParamStruct, beam_init: BeamInitStruct, ix_bunch: typing.SupportsInt, modes: _pybmad.NormalModesStruct | None = None, print_p0c_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> InitBunchDistribution:
     """
     Subroutine init_bunch_distribution (ele, param, beam_init, ix_bunch, bunch, err_flag, modes, beam_init_used,
                                                                              print_p0c_shift_warning, conserve_momentum)
@@ -23362,7 +23362,7 @@ def init_complex_taylor_series(complex_taylor: ComplexTaylorStruct, n_term: typi
         If True then save any old terms when complex_taylor is resized. Default is False.
     """
 @typing.overload
-def init_coord(orb: CoordStruct, vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], ele: EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, s_pos: typing.SupportsFloat | None = None, random_on: bool | None = None) -> None:
+def init_coord(orb: CoordStruct, vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], ele: _pybmad.EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, s_pos: typing.SupportsFloat | None = None, random_on: bool | None = None) -> None:
     """
     Subroutine init_coord (...)
     
@@ -23429,7 +23429,7 @@ def init_coord(orb: CoordStruct, vec: typing.Annotated[collections.abc.Sequence[
     Overloaded versions:
     """
 @typing.overload
-def init_coord(orb_in: CoordStruct, ele: EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, s_pos: typing.SupportsFloat | None = None, random_on: bool | None = None) -> CoordStruct:
+def init_coord(orb_in: CoordStruct, ele: _pybmad.EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, s_pos: typing.SupportsFloat | None = None, random_on: bool | None = None) -> CoordStruct:
     """
     Subroutine init_coord (...)
     
@@ -23499,7 +23499,7 @@ def init_coord(orb_in: CoordStruct, ele: EleStruct | None = None, element_end: t
     Overloaded versions:
     """
 @typing.overload
-def init_coord(orb: CoordStruct, ele: EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None) -> None:
+def init_coord(orb: CoordStruct, ele: _pybmad.EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None) -> None:
     """
     Subroutine init_coord (...)
     
@@ -23571,7 +23571,7 @@ def init_custom(lat: LatStruct) -> None:
     ----------
     lat : 
     """
-def init_ele(key: typing.SupportsInt | None = None, sub_key: typing.SupportsInt | None = None, ix_ele: typing.SupportsInt | None = None, branch: BranchStruct | None = None) -> EleStruct:
+def init_ele(key: typing.SupportsInt | None = None, sub_key: typing.SupportsInt | None = None, ix_ele: typing.SupportsInt | None = None, branch: _pybmad.BranchStruct | None = None) -> EleStruct:
     """
     Parameters
     ----------
@@ -23750,7 +23750,7 @@ def initfixedwindowls(N: typing.SupportsInt, dt: typing.SupportsFloat, order: ty
         Order of derivative to be returned. Set der=0 to obtain the fit. <return value>  -- INTEGER: id of
         windowLS instance created.
     """
-def insert_element(lat: LatStruct, insert_ele: EleStruct, ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt | None = None, orbit: CoordStructAlloc1D | None = None) -> None:
+def insert_element(lat: LatStruct, insert_ele: EleStruct, ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt | None = None, orbit: _pybmad.CoordStructAlloc1D | None = None) -> None:
     """
     Parameters
     ----------
@@ -24291,7 +24291,7 @@ def lat_geometry(lat: LatStruct) -> None:
     lat : LatStruct
         The lattice. .ele(0).floor  -- Floor_position_struct: The starting point for the calculations.
     """
-def lat_make_mat6(lat: LatStruct, ix_ele: typing.SupportsInt | None = None, ref_orb: CoordStructArray1D | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
+def lat_make_mat6(lat: LatStruct, ix_ele: typing.SupportsInt | None = None, ref_orb: _pybmad.CoordStructArray1D | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
     Parameters
     ----------
@@ -24866,7 +24866,7 @@ def make_hvbp(N: typing.Annotated[collections.abc.Sequence[typing.Annotated[coll
     Hbar : float
         mat_symp_conj(B).H.B
     """
-def make_hybrid_lat(lat_in: LatStruct, use_taylor: bool | None = None, orb0_arr: CoordArrayStructArray1D | None = None) -> LatStruct:
+def make_hybrid_lat(lat_in: LatStruct, use_taylor: bool | None = None, orb0_arr: _pybmad.CoordArrayStructArray1D | None = None) -> LatStruct:
     """
     Parameters
     ----------
@@ -24908,7 +24908,7 @@ def make_mad_map(ele: EleStruct, param: LatParamStruct) -> MakeMadMap:
     map : MadMapStruct
         Structure holding the transfer map.
     """
-def make_mat6(ele: EleStruct, param: LatParamStruct, start_orb: CoordStruct | None = None) -> MakeMat6:
+def make_mat6(ele: EleStruct, param: LatParamStruct, start_orb: _pybmad.CoordStruct | None = None) -> MakeMat6:
     """
     Parameters
     ----------
@@ -25531,7 +25531,7 @@ def multilayer_type_to_multilayer_params(ele: EleStruct) -> bool:
     err_flag : bool
         Set True if multilayer type is unrecognized. False otherwise.
     """
-def multipass_chain(ele: EleStruct, ix_pass: typing.SupportsInt, n_links: typing.SupportsInt, chain_ele: ElePointerStructAlloc1D | None = None, use_super_lord: bool | None = None) -> None:
+def multipass_chain(ele: EleStruct, ix_pass: typing.SupportsInt, n_links: typing.SupportsInt, chain_ele: _pybmad.ElePointerStructAlloc1D | None = None, use_super_lord: bool | None = None) -> None:
     """
     Parameters
     ----------
@@ -25881,7 +25881,7 @@ def nint_chk(re_val: typing.SupportsFloat) -> int:
     int_val : int
         Output nearest integer.
     """
-def normal_form_complex_taylors(one_turn_taylor: TaylorStructArray1D, rf_on: bool, F: ComplexTaylorStructArray1D | None = None, L: _pybmad.ComplexTaylorStructArray1D | None = None, A: _pybmad.TaylorStructArray1D | None = None, A_inverse: _pybmad.TaylorStructArray1D | None = None, order: typing.SupportsInt | None = None) -> None:
+def normal_form_complex_taylors(one_turn_taylor: TaylorStructArray1D, rf_on: bool, F: _pybmad.ComplexTaylorStructArray1D | None = None, L: _pybmad.ComplexTaylorStructArray1D | None = None, A: _pybmad.TaylorStructArray1D | None = None, A_inverse: _pybmad.TaylorStructArray1D | None = None, order: typing.SupportsInt | None = None) -> None:
     """
     Parameters
     ----------
@@ -26048,7 +26048,7 @@ def odeint_bmad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, s1_bo
     track : TrackStruct
         Structure holding the track information.
     """
-def odeint_bmad_time(orb: CoordStruct, ele: EleStruct, param: LatParamStruct, t_dir: typing.SupportsInt, rf_time: typing.SupportsFloat, track: TrackStruct | None = None, t_end: typing.SupportsFloat | None = None, extra_field: _pybmad.EmFieldStruct | None = None) -> OdeintBmadTime:
+def odeint_bmad_time(orb: CoordStruct, ele: EleStruct, param: LatParamStruct, t_dir: typing.SupportsInt, rf_time: typing.SupportsFloat, track: _pybmad.TrackStruct | None = None, t_end: typing.SupportsFloat | None = None, extra_field: _pybmad.EmFieldStruct | None = None) -> OdeintBmadTime:
     """
     Subroutine odeint_bmad_time (orb, ele, param, t_dir, rf_time, err_flag, track, t_end, dt_step, extra_field)
     
@@ -26941,7 +26941,7 @@ def photon_absorption_and_phase_shift(material: str, Energy: typing.SupportsFloa
     err_flag : bool
         Set true if material not recognized.
     """
-def photon_add_to_detector_statistics(orbit0: CoordStruct, orbit: CoordStruct, ele: EleStruct, ix_pt: typing.SupportsInt | None = None, iy_pt: typing.SupportsInt | None = None, pixel_pt: PixelPtStruct | None = None) -> None:
+def photon_add_to_detector_statistics(orbit0: CoordStruct, orbit: CoordStruct, ele: EleStruct, ix_pt: typing.SupportsInt | None = None, iy_pt: typing.SupportsInt | None = None, pixel_pt: _pybmad.PixelPtStruct | None = None) -> None:
     """
     Subroutine photon_add_to_detector_statistics (orbit0, orbit, ele, ix_pt, iy_pt, pixel_pt)
     
@@ -27543,7 +27543,7 @@ def pointer_to_next_ele(this_ele: EleStruct, offset: typing.SupportsInt | None =
         If True then fork at any fork element. Default is False.
     next_ele : 
     """
-def pointer_to_ran_state(ran_state: RandomStateStruct | None = None, ix_thread: typing.SupportsInt | None = None) -> RandomStateStruct:
+def pointer_to_ran_state(ran_state: _pybmad.RandomStateStruct | None = None, ix_thread: typing.SupportsInt | None = None) -> RandomStateStruct:
     """
     Function pointer_to_ran_state(ran_state, ix_thread) result (ran_state_ptr)
     
@@ -27821,7 +27821,7 @@ def ptc_bookkeeper(lat: LatStruct) -> None:
     lat : LatStruct
         Bmad lattice.
     """
-def ptc_calculate_tracking_step_size(ptc_layout: Layout, kl_max: typing.SupportsFloat, ds_max: typing.SupportsFloat | None = None, even_steps: BoolAlloc1D | None = None, r_typical: typing.SupportsFloat | None = None, dx_tol_bend: typing.SupportsFloat | None = None, use_2nd_order: bool | None = None, crossover: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(2)"] | None = None, crossover_wiggler: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(2)"] | None = None) -> None:
+def ptc_calculate_tracking_step_size(ptc_layout: Layout, kl_max: typing.SupportsFloat, ds_max: typing.SupportsFloat | None = None, even_steps: _pybmad.BoolAlloc1D | None = None, r_typical: typing.SupportsFloat | None = None, dx_tol_bend: typing.SupportsFloat | None = None, use_2nd_order: bool | None = None, crossover: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(2)"] | None = None, crossover_wiggler: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(2)"] | None = None) -> None:
     """
     Subroutine ptc_calculate_tracking_step_size (ptc_layout, kl_max, ds_max,
                                     even_steps, r_typical, dx_tol_bend, use_2nd_order)
@@ -28309,7 +28309,7 @@ def quote(str: str, q_str: str) -> None:
     str : 
     q_str : 
     """
-def rad1_damp_and_stoc_mats(ele: EleStruct, include_opening_angle: bool, orb_in: CoordStruct, orb_out: CoordStruct, g2_tol: typing.SupportsFloat, g3_tol: typing.SupportsFloat, ele0: EleStruct | None = None) -> Rad1DampAndStocMats:
+def rad1_damp_and_stoc_mats(ele: EleStruct, include_opening_angle: bool, orb_in: CoordStruct, orb_out: CoordStruct, g2_tol: typing.SupportsFloat, g3_tol: typing.SupportsFloat, ele0: _pybmad.EleStruct | None = None) -> Rad1DampAndStocMats:
     """
     Subroutine rad1_damp_and_stoc_mats (ele, include_opening_angle, orb_in, orb_out, rad_map, g2_tol, g3_tol, err_flag, ele0, rad_int1)
     
@@ -28342,7 +28342,7 @@ def rad1_damp_and_stoc_mats(ele: EleStruct, include_opening_angle: bool, orb_in:
     rad_int1 : RadInt1Struct
         Radiation integrals
     """
-def rad_damp_and_stoc_mats(ele1: EleStruct, ele2: EleStruct, include_opening_angle: bool, closed_orbit: CoordStructArray1D | None = None) -> RadDampAndStocMats:
+def rad_damp_and_stoc_mats(ele1: EleStruct, ele2: EleStruct, include_opening_angle: bool, closed_orbit: _pybmad.CoordStructArray1D | None = None) -> RadDampAndStocMats:
     """
     Subroutine rad_damp_and_stoc_mats (ele1, ele2, include_opening_angle, rmap, mode, xfer_nodamp_mat, err_flag, closed_orbit, rad_int_branch)
     
@@ -28444,7 +28444,7 @@ def radiation_integrals(lat: LatStruct, orbit: CoordStructArray1D, ix_cache: typ
         lin_norm_emit values are running sums from the beginning of the lattice and include the beginning
         emittance stored in lat.a.emit and lat.b.emit.
     """
-def radiation_map_setup(ele: EleStruct, ref_orbit_in: CoordStruct | None = None) -> bool:
+def radiation_map_setup(ele: EleStruct, ref_orbit_in: _pybmad.CoordStruct | None = None) -> bool:
     """
     Subroutine radiation_map_setup (ele, err_flag, ref_orbit_in)
     
@@ -28487,7 +28487,7 @@ def ramper_value(ramper: EleStruct, r1: ControlRamp1Struct, value: typing.Suppor
         Set True if there is an error, False otherwise.
     value : 
     """
-def ran_default_state(set_state: RandomStateStruct | None = None) -> RandomStateStruct:
+def ran_default_state(set_state: _pybmad.RandomStateStruct | None = None) -> RandomStateStruct:
     """
     Subroutine ran_default_state (set_state, get_state)
     
@@ -28504,7 +28504,7 @@ def ran_default_state(set_state: RandomStateStruct | None = None) -> RandomState
     get_state : RandomStateStruct
         Returns the state of the default generator.
     """
-def ran_engine(set: str | None = None, get: str | None = None, ran_state: RandomStateStruct | None = None) -> None:
+def ran_engine(set: str | None = None, get: str | None = None, ran_state: _pybmad.RandomStateStruct | None = None) -> None:
     """
     Subroutine ran_engine (set, get, ran_state)
     
@@ -28522,7 +28522,7 @@ def ran_engine(set: str | None = None, get: str | None = None, ran_state: Random
     ran_state : RandomStateStruct, optional
         Internal state. See the ran_seed_put documentation for more details.
     """
-def ran_gauss_converter(set: str | None = None, set_sigma_cut: typing.SupportsFloat | None = None, ran_state: RandomStateStruct | None = None) -> RanGaussConverter:
+def ran_gauss_converter(set: str | None = None, set_sigma_cut: typing.SupportsFloat | None = None, ran_state: _pybmad.RandomStateStruct | None = None) -> RanGaussConverter:
     """
     Subroutine ran_gauss_converter (set, set_sigma_cut, get, get_sigma_cut, ran_state)
     
@@ -28560,7 +28560,7 @@ def ran_gauss_converter(set: str | None = None, set_sigma_cut: typing.SupportsFl
     get_sigma_cut : float
         Get the current (before any set) sigma cutoff.
     """
-def ran_gauss_scalar(ran_state: RandomStateStruct | None = None, sigma_cut: typing.SupportsFloat | None = None, index_quasi: typing.SupportsInt | None = None) -> float:
+def ran_gauss_scalar(ran_state: _pybmad.RandomStateStruct | None = None, sigma_cut: typing.SupportsFloat | None = None, index_quasi: typing.SupportsInt | None = None) -> float:
     """
     Subroutine ran_gauss (harvest, ran_state, sigma_cut)
     
@@ -28592,7 +28592,7 @@ def ran_gauss_scalar(ran_state: RandomStateStruct | None = None, sigma_cut: typi
     -----
     Overloaded versions:
     """
-def ran_gauss_vector(harvest: RealArray1D, ran_state: RandomStateStruct | None = None, sigma_cut: typing.SupportsFloat | None = None) -> None:
+def ran_gauss_vector(harvest: RealArray1D, ran_state: _pybmad.RandomStateStruct | None = None, sigma_cut: typing.SupportsFloat | None = None) -> None:
     """
     Subroutine ran_gauss (harvest, ran_state, sigma_cut)
     
@@ -28662,7 +28662,7 @@ def ran_seed_put(seed: typing.SupportsInt, mpi_offset: typing.SupportsInt | None
         random numbers.
     """
 @typing.overload
-def ran_uniform(ran_state: RandomStateStruct | None = None, index_quasi: typing.SupportsInt | None = None) -> float:
+def ran_uniform(ran_state: _pybmad.RandomStateStruct | None = None, index_quasi: typing.SupportsInt | None = None) -> float:
     """
     Subroutine ran_uniform (harvest, ran_state)
     
@@ -28694,7 +28694,7 @@ def ran_uniform(ran_state: RandomStateStruct | None = None, index_quasi: typing.
     Overloaded versions:
     """
 @typing.overload
-def ran_uniform(harvest: RealArray1D, ran_state: RandomStateStruct | None = None) -> None:
+def ran_uniform(harvest: RealArray1D, ran_state: _pybmad.RandomStateStruct | None = None) -> None:
     """
     Subroutine ran_uniform (harvest, ran_state)
     
@@ -28874,7 +28874,7 @@ def read_beam_ascii(file_name: str, beam_init: BeamInitStruct) -> ReadBeamAscii:
     err_flag : bool
         Set True if there is an error. False otherwise.
     """
-def read_beam_file(file_name: str, beam_init: BeamInitStruct, ele: EleStruct | None = None, print_mom_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> ReadBeamFile:
+def read_beam_file(file_name: str, beam_init: BeamInitStruct, ele: _pybmad.EleStruct | None = None, print_mom_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> ReadBeamFile:
     """
     Subroutine read_beam_file (file_name, beam, beam_init, err_flag, ele, print_mom_shift_warning, conserve_momentum)
     
@@ -29361,7 +29361,7 @@ def rfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFlo
     j : 
     res : 
     """
-def rk_adaptive_time_step(ele: EleStruct, param: LatParamStruct, orb: CoordStruct, t_dir: typing.SupportsInt, rf_time: typing.SupportsFloat, dt_try: typing.SupportsFloat, dt_did: typing.SupportsFloat, dt_next: typing.SupportsFloat, err_flag: bool, extra_field: EmFieldStruct | None = None) -> None:
+def rk_adaptive_time_step(ele: EleStruct, param: LatParamStruct, orb: CoordStruct, t_dir: typing.SupportsInt, rf_time: typing.SupportsFloat, dt_try: typing.SupportsFloat, dt_did: typing.SupportsFloat, dt_next: typing.SupportsFloat, err_flag: bool, extra_field: _pybmad.EmFieldStruct | None = None) -> None:
     """
     Parameters
     ----------
@@ -29376,7 +29376,7 @@ def rk_adaptive_time_step(ele: EleStruct, param: LatParamStruct, orb: CoordStruc
     err_flag : 
     extra_field : 
     """
-def rk_time_step1(ele: EleStruct, param: LatParamStruct, rf_time: typing.SupportsFloat, orb: CoordStruct, dt: typing.SupportsFloat, new_orb: CoordStruct, dr_dt: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(10)"] | None = None, err_flag: bool, print_err: bool | None = None, extra_field: EmFieldStruct | None = None) -> typing.Annotated[list[float], "FixedSize(10)"]:
+def rk_time_step1(ele: EleStruct, param: LatParamStruct, rf_time: typing.SupportsFloat, orb: CoordStruct, dt: typing.SupportsFloat, new_orb: CoordStruct, dr_dt: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(10)"] | None = None, err_flag: bool, print_err: bool | None = None, extra_field: _pybmad.EmFieldStruct | None = None) -> typing.Annotated[list[float], "FixedSize(10)"]:
     """
     Parameters
     ----------
@@ -29392,7 +29392,7 @@ def rk_time_step1(ele: EleStruct, param: LatParamStruct, rf_time: typing.Support
     print_err : 
     extra_field : 
     """
-def rms_value(val_arr: RealArray1D, good_val: BoolAlloc1D | None = None, rms_val: typing.SupportsFloat) -> float:
+def rms_value(val_arr: RealArray1D, good_val: _pybmad.BoolAlloc1D | None = None, rms_val: typing.SupportsFloat) -> float:
     """
     Parameters
     ----------
@@ -29643,7 +29643,7 @@ def sad_soft_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: 
     t0 : float, optional
         Used with sad_mult. If present, use this instead of ele.a_pole/.b_pole. Must be present if k0l is.
     """
-def save_a_beam_step(ele: EleStruct, beam: BeamStruct, bunch_tracks: BunchTrackStructArray1D | None = None, s_body: typing.SupportsFloat | None = None, is_time_coords: bool | None = None) -> None:
+def save_a_beam_step(ele: EleStruct, beam: BeamStruct, bunch_tracks: _pybmad.BunchTrackStructArray1D | None = None, s_body: typing.SupportsFloat | None = None, is_time_coords: bool | None = None) -> None:
     """
     Parameters
     ----------
@@ -29659,7 +29659,7 @@ def save_a_beam_step(ele: EleStruct, beam: BeamStruct, bunch_tracks: BunchTrackS
         Default is False. If True, input beam is using time coordinates in which case there will be a conversion
         to s-coords before bunch_params are computed. Ouput:
     """
-def save_a_bunch_step(ele: EleStruct, bunch: BunchStruct, bunch_track: BunchTrackStruct | None = None, s_body: typing.SupportsFloat | None = None, is_time_coords: bool | None = None) -> None:
+def save_a_bunch_step(ele: EleStruct, bunch: BunchStruct, bunch_track: _pybmad.BunchTrackStruct | None = None, s_body: typing.SupportsFloat | None = None, is_time_coords: bool | None = None) -> None:
     """
     Parameters
     ----------
@@ -29675,7 +29675,7 @@ def save_a_bunch_step(ele: EleStruct, bunch: BunchStruct, bunch_track: BunchTrac
         Default is False. If True, input bunch is using time coordinates in which case there will be a conversion
         to s-coords before bunch_params are computed. Ouput:
     """
-def save_a_step(track: TrackStruct, ele: EleStruct, param: LatParamStruct, local_ref_frame: bool, orb: CoordStruct, s_rel: typing.SupportsFloat, save_field: bool | None = None, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None, rf_time: typing.SupportsFloat | None = None, strong_beam: StrongBeamStruct | None = None) -> None:
+def save_a_step(track: TrackStruct, ele: EleStruct, param: LatParamStruct, local_ref_frame: bool, orb: CoordStruct, s_rel: typing.SupportsFloat, save_field: bool | None = None, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None, rf_time: typing.SupportsFloat | None = None, strong_beam: _pybmad.StrongBeamStruct | None = None) -> None:
     """
     Parameters
     ----------
@@ -30138,7 +30138,7 @@ def set_lords_status_stale(ele: EleStruct, stat_group: typing.SupportsInt, contr
         Do not use. For coordinating recursion. ele.lat    -- Lat_struct: Lattice with status flags of lords of
         ele set.
     """
-def set_on_off(key: typing.SupportsInt, lat: LatStruct, switch_: typing.SupportsInt, orb: CoordStructArray1D | None = None, use_ref_orb: bool | None = None, ix_branch: typing.SupportsInt | None = None, saved_values: _pybmad.RealAlloc1D | None = None, attribute: str | None = None, set_val: typing.SupportsInt | None = None) -> None:
+def set_on_off(key: typing.SupportsInt, lat: LatStruct, switch_: typing.SupportsInt, orb: _pybmad.CoordStructArray1D | None = None, use_ref_orb: bool | None = None, ix_branch: typing.SupportsInt | None = None, saved_values: _pybmad.RealAlloc1D | None = None, attribute: str | None = None, set_val: typing.SupportsInt | None = None) -> None:
     """
     Parameters
     ----------
@@ -30409,7 +30409,7 @@ def settable_dep_var_bookkeeping(ele: EleStruct) -> None:
     This subroutine is used by bmad_parser and bmad_parser2.
     This subroutine is not intended for general use.
     """
-def setup_high_energy_space_charge_calc(calc_on: bool, branch: BranchStruct, n_part: typing.SupportsFloat, mode: NormalModesStruct, beam_init: BeamInitStruct | None = None, closed_orb: _pybmad.CoordStructArray1D | None = None) -> None:
+def setup_high_energy_space_charge_calc(calc_on: bool, branch: BranchStruct, n_part: typing.SupportsFloat, mode: NormalModesStruct, beam_init: _pybmad.BeamInitStruct | None = None, closed_orb: _pybmad.CoordStructArray1D | None = None) -> None:
     """
     Subroutine setup_high_energy_space_charge_calc (calc_on, branch, n_part, mode, beam_init, closed_orb)
     
@@ -31122,7 +31122,7 @@ def sr_z_long_wake(ele: EleStruct, bunch: BunchStruct, z_ave: typing.SupportsFlo
     orbit : CoordStruct
         Ending particle coords.
     """
-def srdt_calc(lat: LatStruct, order: typing.SupportsInt, n_slices_gen_opt: typing.SupportsInt | None = None, n_slices_sxt_opt: typing.SupportsInt | None = None, per_ele_out: SummationRdtStructAlloc1D | None = None) -> SummationRdtStruct:
+def srdt_calc(lat: LatStruct, order: typing.SupportsInt, n_slices_gen_opt: typing.SupportsInt | None = None, n_slices_sxt_opt: typing.SupportsInt | None = None, per_ele_out: _pybmad.SummationRdtStructAlloc1D | None = None) -> SummationRdtStruct:
     """
     Subroutine srdt_calc(lat, srdt_sums, order, n_slices_gen_opt, n_slices_sxt_opt)
     
@@ -31475,7 +31475,7 @@ def super_poly(x: typing.SupportsFloat, coeffs: RealArray1D) -> float:
     value : float
         Polynomial value.
     """
-def super_sobseq(x: RealArray1D, ran_state: RandomStateStruct | None = None) -> None:
+def super_sobseq(x: RealArray1D, ran_state: _pybmad.RandomStateStruct | None = None) -> None:
     """
     Subroutine super_sobseq (x, ran_state)
     
@@ -32006,7 +32006,7 @@ def tao_data_coupling_init(branch: BranchStruct) -> None:
     branch : BranchStruct
         New lattice branch.
     """
-def tao_data_sanity_check(datum: TaoDataStruct, print_err: bool, default_data_type: str, uni: TaoUniverseStruct | None = None, is_valid: bool) -> None:
+def tao_data_sanity_check(datum: TaoDataStruct, print_err: bool, default_data_type: str, uni: _pybmad.TaoUniverseStruct | None = None, is_valid: bool) -> None:
     """
     Parameters
     ----------
@@ -32455,7 +32455,7 @@ def tao_evaluate_datum_at_s(datum: TaoDataStruct, tao_lat: TaoLatticeStruct, ele
     value : float
         Datum value.
     """
-def tao_evaluate_element_parameters(param_name: str, values: RealAlloc1D, print_err: bool, dflt_ele: EleStruct | None = None, dflt_source: str, dflt_component: str | None = None, dflt_uni: typing.SupportsInt | None = None, eval_point: typing.SupportsInt | None = None, info: _pybmad.TaoExpressionInfoStructAlloc1D | None = None) -> bool:
+def tao_evaluate_element_parameters(param_name: str, values: RealAlloc1D, print_err: bool, dflt_ele: _pybmad.EleStruct | None = None, dflt_source: str, dflt_component: str | None = None, dflt_uni: typing.SupportsInt | None = None, eval_point: typing.SupportsInt | None = None, info: _pybmad.TaoExpressionInfoStructAlloc1D | None = None) -> bool:
     """
     Parameters
     ----------
@@ -32478,7 +32478,7 @@ def tao_evaluate_element_parameters(param_name: str, values: RealAlloc1D, print_
     eval_point : 
     info : unknown
     """
-def tao_evaluate_expression(expression: str, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool | None = None, info: TaoExpressionInfoStructAlloc1D | None = None, stack: _pybmad.TaoEvalNodeStructAlloc1D | None = None, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: _pybmad.EleStruct | None = None, dflt_ele_start: _pybmad.EleStruct | None = None, dflt_ele: _pybmad.EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: _pybmad.CoordStruct | None = None, datum: _pybmad.TaoDataStruct | None = None) -> bool:
+def tao_evaluate_expression(expression: str, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool | None = None, info: _pybmad.TaoExpressionInfoStructAlloc1D | None = None, stack: _pybmad.TaoEvalNodeStructAlloc1D | None = None, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: _pybmad.EleStruct | None = None, dflt_ele_start: _pybmad.EleStruct | None = None, dflt_ele: _pybmad.EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: _pybmad.CoordStruct | None = None, datum: _pybmad.TaoDataStruct | None = None) -> bool:
     """
     Parameters
     ----------
@@ -32527,7 +32527,7 @@ def tao_evaluate_expression(expression: str, n_size: typing.SupportsInt, use_goo
         If present, check to see that the expression does not depend upon a datum that will be evaluated after
         this datum. If so, this is an error.
     """
-def tao_evaluate_expression_new(expression: str, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool | None = None, info: TaoExpressionInfoStructAlloc1D | None = None, stack: _pybmad.TaoEvalNodeStructAlloc1D | None = None, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: _pybmad.EleStruct | None = None, dflt_ele_start: _pybmad.EleStruct | None = None, dflt_ele: _pybmad.EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: _pybmad.CoordStruct | None = None, datum: _pybmad.TaoDataStruct | None = None) -> bool:
+def tao_evaluate_expression_new(expression: str, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool | None = None, info: _pybmad.TaoExpressionInfoStructAlloc1D | None = None, stack: _pybmad.TaoEvalNodeStructAlloc1D | None = None, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: _pybmad.EleStruct | None = None, dflt_ele_start: _pybmad.EleStruct | None = None, dflt_ele: _pybmad.EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: _pybmad.CoordStruct | None = None, datum: _pybmad.TaoDataStruct | None = None) -> bool:
     """
     Parameters
     ----------
@@ -32576,7 +32576,7 @@ def tao_evaluate_expression_new(expression: str, n_size: typing.SupportsInt, use
         If present, check to see that the expression does not depend upon a datum that will be evaluated after
         this datum. If so, this is an error.
     """
-def tao_evaluate_expression_old(expression: str, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool | None = None, info: TaoExpressionInfoStructAlloc1D | None = None, stack: _pybmad.TaoEvalNodeStructAlloc1D | None = None, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: _pybmad.EleStruct | None = None, dflt_ele_start: _pybmad.EleStruct | None = None, dflt_ele: _pybmad.EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: _pybmad.CoordStruct | None = None, datum: _pybmad.TaoDataStruct | None = None) -> bool:
+def tao_evaluate_expression_old(expression: str, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool | None = None, info: _pybmad.TaoExpressionInfoStructAlloc1D | None = None, stack: _pybmad.TaoEvalNodeStructAlloc1D | None = None, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: _pybmad.EleStruct | None = None, dflt_ele_start: _pybmad.EleStruct | None = None, dflt_ele: _pybmad.EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: _pybmad.CoordStruct | None = None, datum: _pybmad.TaoDataStruct | None = None) -> bool:
     """
     Parameters
     ----------
@@ -32625,7 +32625,7 @@ def tao_evaluate_expression_old(expression: str, n_size: typing.SupportsInt, use
         If present, check to see that the expression does not depend upon a datum that will be evaluated after
         this datum. If so, this is an error.
     """
-def tao_evaluate_lat_or_beam_data(data_name: str, values: RealAlloc1D, print_err: bool, default_source: str, dflt_ele_ref: EleStruct | None = None, dflt_ele_start: _pybmad.EleStruct | None = None, dflt_ele: _pybmad.EleStruct | None = None, dflt_component: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None) -> bool:
+def tao_evaluate_lat_or_beam_data(data_name: str, values: RealAlloc1D, print_err: bool, default_source: str, dflt_ele_ref: _pybmad.EleStruct | None = None, dflt_ele_start: _pybmad.EleStruct | None = None, dflt_ele: _pybmad.EleStruct | None = None, dflt_component: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None) -> bool:
     """
     ! private tao_scratch_values_calc, tao_eval_floor_orbit, tao_ele_geometry_with_misalignments
     
@@ -32669,7 +32669,7 @@ def tao_evaluate_lat_or_beam_data(data_name: str, values: RealAlloc1D, print_err
     values : float
         Array of datum valuse.
     """
-def tao_evaluate_stack_old(stack: TaoEvalNodeStructArray1D, n_size_in: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool, expression: str, info_in: TaoExpressionInfoStructAlloc1D | None = None) -> bool:
+def tao_evaluate_stack_old(stack: TaoEvalNodeStructArray1D, n_size_in: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool, expression: str, info_in: _pybmad.TaoExpressionInfoStructAlloc1D | None = None) -> bool:
     """
     Subroutine tao_evaluate_stack_old (stack, n_size_in, use_good_user, value, info, err_flag, print_err, expression)
     
@@ -32700,7 +32700,7 @@ def tao_evaluate_stack_old(stack: TaoEvalNodeStructArray1D, n_size_in: typing.Su
     err_flag : bool
         True on error. False otherwise
     """
-def tao_evaluate_tree(tao_tree: TaoEvalNodeStruct, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool, expression: str, info_in: TaoExpressionInfoStructAlloc1D | None = None) -> bool:
+def tao_evaluate_tree(tao_tree: TaoEvalNodeStruct, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool, expression: str, info_in: _pybmad.TaoExpressionInfoStructAlloc1D | None = None) -> bool:
     """
     Parameters
     ----------
@@ -32732,7 +32732,7 @@ def tao_evaluate_tune(q_str: str, q0: typing.SupportsFloat, delta_input: bool, q
         If true then qa_str and qb_str are deltas from present tune. Outut:
     q_val : 
     """
-def tao_expression_hash_substitute(expression_in: str, eval_ele: EleStruct | None = None) -> str:
+def tao_expression_hash_substitute(expression_in: str, eval_ele: _pybmad.EleStruct | None = None) -> str:
     """
     Subroutine tao_expression_hash_substitute(expression_in, expression_out, eval_ele)
     
@@ -32756,7 +32756,7 @@ def tao_expression_hash_substitute(expression_in: str, eval_ele: EleStruct | Non
     expression_out : unknown
         Expression with substitutions made.
     """
-def tao_expression_tree_to_string(tree: TaoEvalNodeStruct, include_root: bool | None = None, n_node: typing.SupportsInt | None = None, parent: TaoEvalNodeStruct | None = None) -> str:
+def tao_expression_tree_to_string(tree: TaoEvalNodeStruct, include_root: bool | None = None, n_node: typing.SupportsInt | None = None, parent: _pybmad.TaoEvalNodeStruct | None = None) -> str:
     """
     Function tao_expression_tree_to_string (tree, include_root, n_node, parent) result(str_out)
     
@@ -32843,7 +32843,7 @@ def tao_geodesic_lm_optimizer() -> bool:
     abort : bool
         Set True if an user stop signal detected.
     """
-def tao_get_data(data_value: RealAlloc1D | None = None, data_weight: _pybmad.RealAlloc1D | None = None, data_meas_value: _pybmad.RealAlloc1D | None = None, data_ix_dModel: _pybmad.IntAlloc1D | None = None) -> None:
+def tao_get_data(data_value: _pybmad.RealAlloc1D | None = None, data_weight: _pybmad.RealAlloc1D | None = None, data_meas_value: _pybmad.RealAlloc1D | None = None, data_ix_dModel: _pybmad.IntAlloc1D | None = None) -> None:
     """
     Subroutine tao_get_data (data_value, data_weight, data_meas_value, dat_ix_dModel)
     
@@ -32862,7 +32862,7 @@ def tao_get_data(data_value: RealAlloc1D | None = None, data_weight: _pybmad.Rea
     data_ix_dModel : int
         Data ix_dModel indices
     """
-def tao_get_opt_vars(var_value: RealAlloc1D | None = None, var_step: _pybmad.RealAlloc1D | None = None, var_delta: _pybmad.RealAlloc1D | None = None, var_weight: _pybmad.RealAlloc1D | None = None, var_ix: _pybmad.IntAlloc1D | None = None) -> TaoGetOptVars:
+def tao_get_opt_vars(var_value: _pybmad.RealAlloc1D | None = None, var_step: _pybmad.RealAlloc1D | None = None, var_delta: _pybmad.RealAlloc1D | None = None, var_weight: _pybmad.RealAlloc1D | None = None, var_ix: _pybmad.IntAlloc1D | None = None) -> TaoGetOptVars:
     """
     Parameters
     ----------
@@ -33271,7 +33271,7 @@ def tao_lmdif_optimizer() -> bool:
     abort : bool
         Set True if an user stop signal detected or there is a problem with calculating the merit function.
     """
-def tao_load_this_datum(vec: RealArray1D, ele_ref: EleStruct, ele_start: EleStruct, ele: EleStruct, datum_value: typing.SupportsFloat, valid_value: bool, datum: TaoDataStruct, branch: BranchStruct, why_invalid: str | None = None, good: BoolAlloc1D | None = None) -> None:
+def tao_load_this_datum(vec: RealArray1D, ele_ref: EleStruct, ele_start: EleStruct, ele: EleStruct, datum_value: typing.SupportsFloat, valid_value: bool, datum: TaoDataStruct, branch: BranchStruct, why_invalid: str | None = None, good: _pybmad.BoolAlloc1D | None = None) -> None:
     """
     Parameters
     ----------
@@ -33436,7 +33436,7 @@ def tao_param_value_at_s(dat_name: str, ele_to_s: EleStruct, ele_here: EleStruct
         Data_type is malformed.
     value : 
     """
-def tao_param_value_routine(str: str, use_good_user: bool, saved_prefix: str, stack: TaoEvalNodeStruct, err_flag: bool, print_err: bool, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: EleStruct | None = None, dflt_ele_start: _pybmad.EleStruct | None = None, dflt_ele: _pybmad.EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: _pybmad.CoordStruct | None = None, datum: _pybmad.TaoDataStruct | None = None) -> None:
+def tao_param_value_routine(str: str, use_good_user: bool, saved_prefix: str, stack: TaoEvalNodeStruct, err_flag: bool, print_err: bool, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: _pybmad.EleStruct | None = None, dflt_ele_start: _pybmad.EleStruct | None = None, dflt_ele: _pybmad.EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: _pybmad.CoordStruct | None = None, datum: _pybmad.TaoDataStruct | None = None) -> None:
     """
     Parameters
     ----------
@@ -34178,7 +34178,7 @@ def tao_set_data_cmd(who_str: str, value_str: str, silent: bool | None = None) -
     value_str : unknown
         What value to set it to.
     """
-def tao_set_data_useit_opt(data: TaoDataStructArray1D | None = None) -> None:
+def tao_set_data_useit_opt(data: _pybmad.TaoDataStructArray1D | None = None) -> None:
     """
     Parameters
     ----------
@@ -35137,7 +35137,7 @@ def tao_wave_cmd(curve_name: str, plot_place: str, err_flag: bool) -> None:
     plot_place : 
         Character(*) place on plot page to put the wave plot.
     """
-def tao_wave_fit(curve: TaoCurveStruct, ix1: typing.SupportsInt, n_dat: typing.SupportsInt, coef: RealArray1D, rms: RealArray1D, f1: RealArray1D, f2: RealArray1D | None = None, f3: _pybmad.RealArray1D | None = None, f4: _pybmad.RealArray1D | None = None) -> None:
+def tao_wave_fit(curve: TaoCurveStruct, ix1: typing.SupportsInt, n_dat: typing.SupportsInt, coef: RealArray1D, rms: RealArray1D, f1: RealArray1D, f2: _pybmad.RealArray1D | None = None, f3: _pybmad.RealArray1D | None = None, f4: _pybmad.RealArray1D | None = None) -> None:
     """
     Subroutine tao_wave_fit (curve, ix1, n_dat, coef, rms, f1, f2, f3, f4)
     
@@ -35251,7 +35251,7 @@ def tao_x_scale_plot(plot: TaoPlotStruct, x_min_in: typing.SupportsFloat, x_max_
     have_scaled : bool
         Has a graph been scaled?
     """
-def taper_mag_strengths(lat: LatStruct, ref_lat: LatStruct | None = None, except: str | None = None, err_flag: bool | None = None) -> None:
+def taper_mag_strengths(lat: LatStruct, ref_lat: _pybmad.LatStruct | None = None, except: str | None = None, err_flag: bool | None = None) -> None:
     """
     Parameters
     ----------
@@ -35328,7 +35328,7 @@ def taylor_inverse(taylor_in: TaylorStructArray1D, taylor_inv: TaylorStructArray
     err : bool
         Set True if there is no inverse. If not present then print an error message.
     """
-def taylor_propagate1(orb_taylor: TaylorStructArray1D, ele: EleStruct, param: LatParamStruct, ref_in: CoordStruct | None = None, spin_taylor: _pybmad.TaylorStructArray1D | None = None) -> bool:
+def taylor_propagate1(orb_taylor: TaylorStructArray1D, ele: EleStruct, param: LatParamStruct, ref_in: _pybmad.CoordStruct | None = None, spin_taylor: _pybmad.TaylorStructArray1D | None = None) -> bool:
     """
     Subroutine taylor_propagate1 (orb_taylor, ele, param, err_flag, ref_in, spin_taylor)
     
@@ -35385,7 +35385,7 @@ def taylors_equal_taylors(taylor1: TaylorStructArray1D, taylor2: TaylorStructArr
     taylor1 : 
     taylor2 : 
     """
-def test_bunch_struct_array(arr_in: BunchStructArray1D, arr_inout: BunchStructArray1D, arr_out: BunchStructAlloc1D, arr_in_opt: BunchStructArray1D | None = None, arr_inout_opt: _pybmad.BunchStructArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
+def test_bunch_struct_array(arr_in: BunchStructArray1D, arr_inout: BunchStructArray1D, arr_out: BunchStructAlloc1D, arr_in_opt: _pybmad.BunchStructArray1D | None = None, arr_inout_opt: _pybmad.BunchStructArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
     Parameters
       ----------
@@ -35396,7 +35396,7 @@ def test_bunch_struct_array(arr_in: BunchStructArray1D, arr_inout: BunchStructAr
       arr_in_opt : 
       arr_inout_opt : 
     """
-def test_bunch_struct_scalar(val_in: BunchStruct, val_inout: BunchStruct, val_in_opt: BunchStruct | None = None, val_inout_opt: _pybmad.BunchStruct | None = None) -> TestBunchStructScalar:
+def test_bunch_struct_scalar(val_in: BunchStruct, val_inout: BunchStruct, val_in_opt: _pybmad.BunchStruct | None = None, val_inout_opt: _pybmad.BunchStruct | None = None) -> TestBunchStructScalar:
     """
     Parameters
       ----------
@@ -35418,7 +35418,7 @@ def test_character_scalar(val_in: str, val_inout: str, val_in_opt: str | None = 
       val_in_opt : 
       val_inout_opt : 
     """
-def test_complex_array(arr_in: ComplexArray1D, arr_inout: ComplexArray1D, arr_out: ComplexAlloc1D, arr_in_opt: ComplexArray1D | None = None, arr_inout_opt: _pybmad.ComplexArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
+def test_complex_array(arr_in: ComplexArray1D, arr_inout: ComplexArray1D, arr_out: ComplexAlloc1D, arr_in_opt: _pybmad.ComplexArray1D | None = None, arr_inout_opt: _pybmad.ComplexArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
     Parameters
       ----------
@@ -35440,7 +35440,7 @@ def test_complex_scalar(val_in: complex, val_inout: complex, val_in_opt: complex
       val_in_opt : 
       val_inout_opt : 
     """
-def test_integer8_array(arr_in: Int8Array1D, arr_inout: Int8Array1D, arr_out: Int8Alloc1D, arr_in_opt: Int8Array1D | None = None, arr_inout_opt: _pybmad.Int8Array1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
+def test_integer8_array(arr_in: Int8Array1D, arr_inout: Int8Array1D, arr_out: Int8Alloc1D, arr_in_opt: _pybmad.Int8Array1D | None = None, arr_inout_opt: _pybmad.Int8Array1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
     Parameters
       ----------
@@ -35462,7 +35462,7 @@ def test_integer8_scalar(val_in: typing.SupportsInt, val_inout: typing.SupportsI
       val_in_opt : 
       val_inout_opt : 
     """
-def test_integer_array(arr_in: IntArray1D, arr_inout: IntArray1D, arr_out: IntAlloc1D, arr_in_opt: IntArray1D | None = None, arr_inout_opt: _pybmad.IntArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
+def test_integer_array(arr_in: IntArray1D, arr_inout: IntArray1D, arr_out: IntAlloc1D, arr_in_opt: _pybmad.IntArray1D | None = None, arr_inout_opt: _pybmad.IntArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
     Parameters
       ----------
@@ -35484,7 +35484,7 @@ def test_integer_scalar(val_in: typing.SupportsInt, val_inout: typing.SupportsIn
       val_in_opt : 
       val_inout_opt : 
     """
-def test_logical_array(arr_in: BoolAlloc1D, arr_inout: BoolAlloc1D, arr_out: BoolAlloc1D, arr_in_opt: BoolAlloc1D | None = None, arr_inout_opt: _pybmad.BoolAlloc1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
+def test_logical_array(arr_in: BoolAlloc1D, arr_inout: BoolAlloc1D, arr_out: BoolAlloc1D, arr_in_opt: _pybmad.BoolAlloc1D | None = None, arr_inout_opt: _pybmad.BoolAlloc1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
     Parameters
       ----------
@@ -35506,7 +35506,7 @@ def test_logical_scalar(val_in: bool, val_inout: bool, val_in_opt: bool | None =
       val_in_opt : 
       val_inout_opt : 
     """
-def test_real16_array(arr_in: Real16Alloc1D, arr_inout: Real16Alloc1D, arr_out: Real16Alloc1D, arr_in_opt: Real16Alloc1D | None = None, arr_inout_opt: _pybmad.Real16Alloc1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
+def test_real16_array(arr_in: Real16Alloc1D, arr_inout: Real16Alloc1D, arr_out: Real16Alloc1D, arr_in_opt: _pybmad.Real16Alloc1D | None = None, arr_inout_opt: _pybmad.Real16Alloc1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
     Parameters
       ----------
@@ -35528,7 +35528,7 @@ def test_real16_scalar(val_in: typing.SupportsFloat, val_inout: typing.SupportsF
       val_in_opt : 
       val_inout_opt : 
     """
-def test_real_array(arr_in: RealArray1D, arr_inout: RealArray1D, arr_out: RealAlloc1D, arr_in_opt: RealArray1D | None = None, arr_inout_opt: _pybmad.RealArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
+def test_real_array(arr_in: RealArray1D, arr_inout: RealArray1D, arr_out: RealAlloc1D, arr_in_opt: _pybmad.RealArray1D | None = None, arr_inout_opt: _pybmad.RealArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
     Parameters
       ----------
@@ -35844,7 +35844,7 @@ def touschek_rate1_zap(mode: NormalModesStruct, rate: typing.SupportsFloat, lat:
     ix : 
     s : 
     """
-def track1(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct, track: TrackStruct | None = None, ignore_radiation: bool | None = None, make_map1: bool | None = None, init_to_edge: bool | None = None) -> Track1:
+def track1(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct, track: _pybmad.TrackStruct | None = None, ignore_radiation: bool | None = None, make_map1: bool | None = None, init_to_edge: bool | None = None) -> Track1:
     """
     Parameters
     ----------
@@ -35873,7 +35873,7 @@ def track1(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct, track:
         Default is True. If True then force the tracked particle to begin at the element's edge. See above. Do not
         use this argument unless you know what you are doing.
     """
-def track1_beam(beam: BeamStruct, ele: EleStruct, centroid: CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None) -> bool:
+def track1_beam(beam: BeamStruct, ele: EleStruct, centroid: _pybmad.CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None) -> bool:
     """
     Subroutine track1_beam (beam, ele, err, centroid, direction)
     
@@ -35933,7 +35933,7 @@ def track1_bmad_photon(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct
     err_flag : bool
         Set true if there is an error. False otherwise.
     """
-def track1_bunch(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
+def track1_bunch(bunch: BunchStruct, ele: EleStruct, centroid: _pybmad.CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
     """
     Subroutine track1_bunch (bunch, ele, err, centroid, direction, bunch_track)
     
@@ -35961,7 +35961,7 @@ def track1_bunch(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1
     err : bool
         Set true if there is an error. EG: Too many particles lost for a CSR calc.
     """
-def track1_bunch_csr(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1D, s_start: typing.SupportsFloat | None = None, s_end: typing.SupportsFloat | None = None, bunch_track: BunchTrackStruct | None = None) -> bool:
+def track1_bunch_csr(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1D, s_start: typing.SupportsFloat | None = None, s_end: typing.SupportsFloat | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
     """
     Subroutine track1_bunch_csr (bunch, ele, centroid, err, s_start, s_end, bunch_track)
     
@@ -35991,7 +35991,7 @@ def track1_bunch_csr(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructAr
     err : bool
         Set true if there is an error. EG: Too many particles lost.
     """
-def track1_bunch_csr3d(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1D, s_start: typing.SupportsFloat | None = None, s_end: typing.SupportsFloat | None = None, bunch_track: BunchTrackStruct | None = None) -> bool:
+def track1_bunch_csr3d(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1D, s_start: typing.SupportsFloat | None = None, s_end: typing.SupportsFloat | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
     """
     Subroutine track1_bunch_csr3d (bunch, ele, centroid, err, bunch_track)
     
@@ -36025,7 +36025,7 @@ def track1_bunch_csr3d(bunch: BunchStruct, ele: EleStruct, centroid: CoordStruct
     err : bool
         Set true if there is an error. EG: Too many particles lost.
     """
-def track1_bunch_hom(bunch: BunchStruct, ele: EleStruct, direction: typing.SupportsInt | None = None, bunch_track: BunchTrackStruct | None = None) -> None:
+def track1_bunch_hom(bunch: BunchStruct, ele: EleStruct, direction: typing.SupportsInt | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> None:
     """
     Subroutine track1_bunch_hom (bunch, ele, direction, bunch_track)
     
@@ -36045,7 +36045,7 @@ def track1_bunch_hom(bunch: BunchStruct, ele: EleStruct, direction: typing.Suppo
         This parameter is an input/output and is modified in-place. As an output: Track information appended to
         track.
     """
-def track1_bunch_space_charge(bunch: BunchStruct, ele: EleStruct, track_to_same_s: bool | None = None, bunch_track: BunchTrackStruct | None = None) -> bool:
+def track1_bunch_space_charge(bunch: BunchStruct, ele: EleStruct, track_to_same_s: bool | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
     """
     Parameters
     ----------
@@ -36373,7 +36373,7 @@ def track1_symp_lie_ptc(orbit: CoordStruct, ele: EleStruct, param: LatParamStruc
     track : TrackStruct
         Structure holding the track information.
     """
-def track1_taylor(orbit: CoordStruct, ele: EleStruct, taylor: TaylorStructArray1D | None = None, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
+def track1_taylor(orbit: CoordStruct, ele: EleStruct, taylor: _pybmad.TaylorStructArray1D | None = None, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
     Parameters
     ----------
@@ -36839,7 +36839,7 @@ def track_a_zero_length_element(orbit: CoordStruct, ele: EleStruct, param: LatPa
     track : TrackStruct
         Structure holding the track information.
     """
-def track_all(lat: LatStruct, orbit: CoordStructAlloc1D, ix_branch: typing.SupportsInt | None = None, orbit0: CoordStructAlloc1D | None = None, init_lost: bool | None = None) -> TrackAll:
+def track_all(lat: LatStruct, orbit: CoordStructAlloc1D, ix_branch: typing.SupportsInt | None = None, orbit0: _pybmad.CoordStructAlloc1D | None = None, init_lost: bool | None = None) -> TrackAll:
     """
     Parameters
     ----------
@@ -36860,7 +36860,7 @@ def track_all(lat: LatStruct, orbit: CoordStructAlloc1D, ix_branch: typing.Suppo
     init_lost : bool
         Default if False. If True, initialize orbit(N) terms that are not tracked through due to particle loss.
     """
-def track_beam(lat: LatStruct, beam: BeamStruct, ele1: EleStruct | None = None, ele2: _pybmad.EleStruct | None = None, centroid: _pybmad.CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None, bunch_tracks: _pybmad.BunchTrackStructArray1D | None = None) -> bool:
+def track_beam(lat: LatStruct, beam: BeamStruct, ele1: _pybmad.EleStruct | None = None, ele2: _pybmad.EleStruct | None = None, centroid: _pybmad.CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None, bunch_tracks: _pybmad.BunchTrackStructArray1D | None = None) -> bool:
     """
     Subroutine track_beam (lat, beam, ele1, ele2, err, centroid, direction, bunch_tracks)
     
@@ -36895,7 +36895,7 @@ def track_beam(lat: LatStruct, beam: BeamStruct, ele1: EleStruct | None = None, 
     err : bool
         Set true if there is an error. EG: Too many particles lost for a CSR calc.
     """
-def track_bunch(lat: LatStruct, bunch: BunchStruct, ele1: EleStruct | None = None, ele2: _pybmad.EleStruct | None = None, centroid: _pybmad.CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
+def track_bunch(lat: LatStruct, bunch: BunchStruct, ele1: _pybmad.EleStruct | None = None, ele2: _pybmad.EleStruct | None = None, centroid: _pybmad.CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
     """
     Subroutine track_bunch (lat, bunch, ele1, ele2, err, centroid, direction, bunch_track)
     
@@ -36932,7 +36932,7 @@ def track_bunch(lat: LatStruct, bunch: BunchStruct, ele1: EleStruct | None = Non
     err : bool
         Set true if there is an error. EG: Too many particles lost for a CSR calc.
     """
-def track_bunch_time(bunch: BunchStruct, branch: BranchStruct, t_end: typing.SupportsFloat, s_end: typing.SupportsFloat, dt_step: RealArray1D | None = None, extra_field: _pybmad.EmFieldStructArray1D | None = None) -> None:
+def track_bunch_time(bunch: BunchStruct, branch: BranchStruct, t_end: typing.SupportsFloat, s_end: typing.SupportsFloat, dt_step: _pybmad.RealArray1D | None = None, extra_field: _pybmad.EmFieldStructArray1D | None = None) -> None:
     """
     Parameters
     ----------
@@ -37005,7 +37005,7 @@ def track_complex_taylor(start_orb: ComplexArray1D, complex_taylor: ComplexTaylo
     end_orb : complex
         Ending coords.
     """
-def track_from_s_to_s(lat: LatStruct, s_start: typing.SupportsFloat, s_end: typing.SupportsFloat, orbit_start: CoordStruct, all_orb: CoordStructAlloc1D | None = None, ix_branch: typing.SupportsInt | None = None, ix_ele_end: typing.SupportsInt | None = None) -> TrackFromSToS:
+def track_from_s_to_s(lat: LatStruct, s_start: typing.SupportsFloat, s_end: typing.SupportsFloat, orbit_start: CoordStruct, all_orb: _pybmad.CoordStructAlloc1D | None = None, ix_branch: typing.SupportsInt | None = None, ix_ele_end: typing.SupportsInt | None = None) -> TrackFromSToS:
     """
     Parameters
     ----------
@@ -37174,7 +37174,7 @@ def transfer_fieldmap(ele_in: EleStruct, who: typing.SupportsInt) -> EleStruct:
     who : int
         Possibilities are: all$, cartesian_map$, cylindrical_map$, or grid_field$
     """
-def transfer_fixer_params(fixer: EleStruct, to_stored: bool, orbit: CoordStruct | None = None, who: str | None = None) -> bool:
+def transfer_fixer_params(fixer: EleStruct, to_stored: bool, orbit: _pybmad.CoordStruct | None = None, who: str | None = None) -> bool:
     """
     Function transfer_fixer_params(fixer, to_stored, orbit, who) result (is_ok)
     
@@ -37215,7 +37215,7 @@ def transfer_lat_parameters(lat_in: LatStruct) -> LatStruct:
     lat_out : LatStruct
         Output lat with parameters set.
     """
-def transfer_map_calc(lat: LatStruct, orb_map: TaylorStructArray1D, ix1: typing.SupportsInt | None = None, ix2: typing.SupportsInt | None = None, ref_orb: CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, one_turn: bool | None = None, unit_start: bool | None = None, concat_if_possible: bool | None = None, spin_map: _pybmad.TaylorStructArray1D | None = None) -> bool:
+def transfer_map_calc(lat: LatStruct, orb_map: TaylorStructArray1D, ix1: typing.SupportsInt | None = None, ix2: typing.SupportsInt | None = None, ref_orb: _pybmad.CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, one_turn: bool | None = None, unit_start: bool | None = None, concat_if_possible: bool | None = None, spin_map: _pybmad.TaylorStructArray1D | None = None) -> bool:
     """
     Parameters
     ----------
@@ -37248,7 +37248,7 @@ def transfer_map_calc(lat: LatStruct, orb_map: TaylorStructArray1D, ix1: typing.
         Input quaternion spin map. Output only computed if bmad_com.spin_tracking_on = T
         This parameter is an input/output and is modified in-place. As an output: Quaternion spin map.
     """
-def transfer_map_from_s_to_s(lat: LatStruct, t_map: TaylorStructArray1D, s1: typing.SupportsFloat | None = None, s2: typing.SupportsFloat | None = None, ref_orb_in: CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, one_turn: bool | None = None, unit_start: bool | None = None, concat_if_possible: bool | None = None, spin_map: _pybmad.TaylorStructArray1D | None = None) -> TransferMapFromSToS:
+def transfer_map_from_s_to_s(lat: LatStruct, t_map: TaylorStructArray1D, s1: typing.SupportsFloat | None = None, s2: typing.SupportsFloat | None = None, ref_orb_in: _pybmad.CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, one_turn: bool | None = None, unit_start: bool | None = None, concat_if_possible: bool | None = None, spin_map: _pybmad.TaylorStructArray1D | None = None) -> TransferMapFromSToS:
     """
     Subroutine transfer_map_from_s_to_s (lat, t_map, s1, s2, ref_orb_in, ref_orb_out, ix_branch,
                                              one_turn, unit_start, err_flag, concat_if_possible, spin_map)
@@ -37570,7 +37570,7 @@ def twiss_and_track(lat: LatStruct, orb_array: CoordArrayStructAlloc1D, print_er
         Set ok$ if everything is OK and set to something else otherwise. See above for more details.
     """
 @typing.overload
-def twiss_and_track(lat: LatStruct, orb: CoordStructAlloc1D, ix_branch: typing.SupportsInt | None = None, print_err: bool | None = None, calc_chrom: bool | None = None, orb_start: CoordStruct | None = None) -> int:
+def twiss_and_track(lat: LatStruct, orb: CoordStructAlloc1D, ix_branch: typing.SupportsInt | None = None, print_err: bool | None = None, calc_chrom: bool | None = None, orb_start: _pybmad.CoordStruct | None = None) -> int:
     """
     Subroutine twiss_and_track
     
@@ -37636,7 +37636,7 @@ def twiss_and_track(lat: LatStruct, orb: CoordStructAlloc1D, ix_branch: typing.S
     status : int
         Set ok$ if everything is OK and set to something else otherwise. See above for more details.
     """
-def twiss_and_track_at_s(lat: LatStruct, s: typing.SupportsFloat, ele_at_s: EleStruct | None = None, orb: _pybmad.CoordStructArray1D | None = None, orb_at_s: _pybmad.CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, use_last: bool | None = None, compute_floor_coords: bool | None = None) -> bool:
+def twiss_and_track_at_s(lat: LatStruct, s: typing.SupportsFloat, ele_at_s: _pybmad.EleStruct | None = None, orb: _pybmad.CoordStructArray1D | None = None, orb_at_s: _pybmad.CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, use_last: bool | None = None, compute_floor_coords: bool | None = None) -> bool:
     """
     Subroutine twiss_and_track_at_s (lat, s, ele_at_s, orb, orb_at_s, ix_branch, err, use_last, compute_floor_coords)
     
@@ -37689,7 +37689,7 @@ def twiss_and_track_at_s(lat: LatStruct, s: typing.SupportsFloat, ele_at_s: EleS
     err : bool
         Set True if there is a problem in the calculation, False otherwise.
     """
-def twiss_and_track_from_s_to_s(branch: BranchStruct, orbit_start: CoordStruct, s_end: typing.SupportsFloat, ele_start: EleStruct | None = None, compute_floor_coords: bool | None = None, compute_twiss: bool | None = None) -> TwissAndTrackFromSToS:
+def twiss_and_track_from_s_to_s(branch: BranchStruct, orbit_start: CoordStruct, s_end: typing.SupportsFloat, ele_start: _pybmad.EleStruct | None = None, compute_floor_coords: bool | None = None, compute_twiss: bool | None = None) -> TwissAndTrackFromSToS:
     """
     Parameters
     ----------
@@ -37714,7 +37714,7 @@ def twiss_and_track_from_s_to_s(branch: BranchStruct, orbit_start: CoordStruct, 
     compute_twiss : bool, optional
         Default True. If False, to save a little time, do not compute Twiss parameters.
     """
-def twiss_and_track_intra_ele(ele: EleStruct, param: LatParamStruct, l_start: typing.SupportsFloat, l_end: typing.SupportsFloat, track_upstream_end: bool, track_downstream_end: bool, orbit_start: CoordStruct | None = None, ele_start: _pybmad.EleStruct | None = None, ele_end: _pybmad.EleStruct | None = None, compute_floor_coords: bool | None = None, compute_twiss: bool | None = None, reuse_ele_end: bool | None = None) -> TwissAndTrackIntraEle:
+def twiss_and_track_intra_ele(ele: EleStruct, param: LatParamStruct, l_start: typing.SupportsFloat, l_end: typing.SupportsFloat, track_upstream_end: bool, track_downstream_end: bool, orbit_start: _pybmad.CoordStruct | None = None, ele_start: _pybmad.EleStruct | None = None, ele_end: _pybmad.EleStruct | None = None, compute_floor_coords: bool | None = None, compute_twiss: bool | None = None, reuse_ele_end: bool | None = None) -> TwissAndTrackIntraEle:
     """
     Parameters
     ----------
@@ -37783,7 +37783,7 @@ def twiss_at_start(lat: LatStruct, ix_branch: typing.SupportsInt | None = None, 
     type_out : bool, optional
         If True (the default), print an error message If the 1-turn matrix is unstable.
     """
-def twiss_from_tracking(lat: LatStruct, ref_orb0: CoordStruct, d_orb: RealArray1D | None = None) -> TwissFromTracking:
+def twiss_from_tracking(lat: LatStruct, ref_orb0: CoordStruct, d_orb: _pybmad.RealArray1D | None = None) -> TwissFromTracking:
     """
     Parameters
     ----------
@@ -37915,7 +37915,7 @@ def update_fibre_from_ele(ele: EleStruct) -> bool:
         Set True if a call to survey will be needed. Calling survey is avoided in this routine to save time if
         multiple elements are being updated.
     """
-def update_floor_angles(floor: FloorPositionStruct, floor0: FloorPositionStruct | None = None) -> None:
+def update_floor_angles(floor: FloorPositionStruct, floor0: _pybmad.FloorPositionStruct | None = None) -> None:
     """
     Parameters
     ----------
@@ -38266,7 +38266,7 @@ def word_read(in_str: str, delim_list: str, word: str, ix_word: typing.SupportsI
     out_str : 
     ignore_interior : 
     """
-def word_to_value(word: str, lat: LatStruct, value: typing.SupportsFloat, err_flag: bool, ele: EleStruct | None = None) -> None:
+def word_to_value(word: str, lat: LatStruct, value: typing.SupportsFloat, err_flag: bool, ele: _pybmad.EleStruct | None = None) -> None:
     """
     Parameters
     ----------
@@ -38365,7 +38365,7 @@ def write_astra_field_grid_file_3d(base_filename: str, ele: EleStruct, dz: typin
     err : bool
         Set True if, say a file could not be opened.
     """
-def write_beam_file(file_name: str, beam: BeamStruct, new_file: bool | None = None, file_format: typing.SupportsInt | None = None, lat: LatStruct | None = None, alive_only: bool | None = None) -> None:
+def write_beam_file(file_name: str, beam: BeamStruct, new_file: bool | None = None, file_format: typing.SupportsInt | None = None, lat: _pybmad.LatStruct | None = None, alive_only: bool | None = None) -> None:
     """
     Subroutine write_beam_file (file_name, beam, new_file, file_format, lat, alive_only)
     
@@ -38471,7 +38471,7 @@ def write_blender_lat_layout(file_name: str, lat: LatStruct) -> None:
     file_name : 
     lat : 
     """
-def write_bmad_lattice_file(bmad_file: str, lat: LatStruct, output_form: typing.SupportsInt | None = None, orbit0: CoordStruct | None = None) -> bool:
+def write_bmad_lattice_file(bmad_file: str, lat: LatStruct, output_form: typing.SupportsInt | None = None, orbit0: _pybmad.CoordStruct | None = None) -> bool:
     """
     Parameters
     ----------
@@ -38615,7 +38615,7 @@ def write_lat_line(line: str, iu: typing.SupportsInt, end_is_neigh: bool, do_spl
     scibmad : bool, optional
         Default False. If True then do not include "&" line continuation
     """
-def write_lattice_in_elegant_format(out_file_name: str, lat: LatStruct, ref_orbit: CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
+def write_lattice_in_elegant_format(out_file_name: str, lat: LatStruct, ref_orbit: _pybmad.CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
     Parameters
     ----------
@@ -38642,7 +38642,7 @@ def write_lattice_in_elegant_format(out_file_name: str, lat: LatStruct, ref_orbi
     err : bool
         Set True if, say a file could not be opened.
     """
-def write_lattice_in_foreign_format(out_type: str, out_file_name: str, lat: LatStruct, ref_orbit: CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
+def write_lattice_in_foreign_format(out_type: str, out_file_name: str, lat: LatStruct, ref_orbit: _pybmad.CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
     Parameters
     ----------
@@ -38671,7 +38671,7 @@ def write_lattice_in_foreign_format(out_type: str, out_file_name: str, lat: LatS
     err : bool
         Set True if, say a file could not be opened.
     """
-def write_lattice_in_mad_format(out_type: str, out_file_name: str, lat: LatStruct, ref_orbit: CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
+def write_lattice_in_mad_format(out_type: str, out_file_name: str, lat: LatStruct, ref_orbit: _pybmad.CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
     Parameters
     ----------
@@ -38773,7 +38773,7 @@ def write_opal_lattice_file(opal_file_unit: typing.SupportsInt, lat: LatStruct) 
     err : bool
         Set True if, say a file could not be opened.
     """
-def write_time_particle_distribution(time_file_unit: typing.SupportsInt, bunch: BunchStruct, ele: EleStruct, style: str | None = None, branch: BranchStruct | None = None, format: str | None = None) -> bool:
+def write_time_particle_distribution(time_file_unit: typing.SupportsInt, bunch: BunchStruct, ele: EleStruct, style: str | None = None, branch: _pybmad.BranchStruct | None = None, format: str | None = None) -> bool:
     """
     Subroutine write_time_particle_distribution  (time_file_unit, bunch, ele, style, branch, format, err)
     

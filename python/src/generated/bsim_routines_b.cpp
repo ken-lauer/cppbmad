@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_bsim_routines_b(py::module& m) {
+void init_bsim_routines_b(py::module &m) {
   m.def(
       "bbu_add_a_bunch",
       &bsim::bbu_add_a_bunch,
@@ -18,7 +18,8 @@ lat :
 bbu_beam : 
 bbu_param : 
 beam_init : 
-)""");
+)"""
+  );
   m.def(
       "bbu_hom_voltage_calc",
       &bsim::bbu_hom_voltage_calc,
@@ -32,7 +33,8 @@ lat :
 bbu_beam : 
 n_period : 
 ix_stage_last_tracked : 
-)""");
+)"""
+  );
   m.def(
       "bbu_remove_head_bunch",
       &bsim::bbu_remove_head_bunch,
@@ -40,7 +42,8 @@ ix_stage_last_tracked :
       R"""(Parameters
 ----------
 bbu_beam : 
-)""");
+)"""
+  );
   m.def(
       "bbu_setup",
       &bsim::bbu_setup,
@@ -54,7 +57,8 @@ lat :
 dt_bunch : 
 bbu_param : 
 bbu_beam : 
-)""");
+)"""
+  );
   m.def(
       "bbu_track_a_stage",
       &bsim::bbu_track_a_stage,
@@ -70,7 +74,8 @@ bbu_beam :
 bbu_param : 
 lost : 
 ix_stage_tracked : 
-)""");
+)"""
+  );
   m.def(
       "bbu_track_all",
       &bsim::bbu_track_all,
@@ -92,5 +97,6 @@ hom_voltage_normalized :
 growth_rate : 
 lost : 
 irep : 
-)""");
+)"""
+  );
 }

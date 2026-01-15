@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Tao_routines_r(py::module& m) {
+void init_Tao_routines_r(py::module &m) {
   m.def(
       "re_allocate_c_double",
       &Tao::re_allocate_c_double,
@@ -29,5 +29,6 @@ n : int
     Size wanted.
 exact : bool, optional
     If present and False then the size of the output array is permitted to be larger than n. Default is True.
-)""");
+)"""
+  );
 }

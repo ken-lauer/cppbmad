@@ -4,6 +4,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
+
 #include <string>
 
 #include "bmad/json.hpp"
@@ -27,412 +28,595 @@ PYBIND11_MODULE(_pybmad, m) {
   bind_standard_arrays(m);
 
   // Structures
-  auto py_SplineStruct = py::class_<SplineProxy>(
-      m, "SplineStruct", "Fortran struct: spline_struct");
-  auto py_SpinPolarStruct = py::class_<SpinPolarProxy>(
-      m, "SpinPolarStruct", "Fortran struct: spin_polar_struct");
-  auto py_AcKickerTimeStruct = py::class_<AcKickerTimeProxy>(
-      m, "AcKickerTimeStruct", "Fortran struct: ac_kicker_time_struct");
-  auto py_AcKickerFreqStruct = py::class_<AcKickerFreqProxy>(
-      m, "AcKickerFreqStruct", "Fortran struct: ac_kicker_freq_struct");
-  auto py_AcKickerStruct = py::class_<AcKickerProxy>(
-      m, "AcKickerStruct", "Fortran struct: ac_kicker_struct");
-  auto py_Interval1CoefStruct = py::class_<Interval1CoefProxy>(
-      m, "Interval1CoefStruct", "Fortran struct: interval1_coef_struct");
-  auto py_PhotonReflectTableStruct = py::class_<PhotonReflectTableProxy>(
+  auto py_SplineStruct =
+      py::class_<SplineStruct>(m, "SplineStruct", "Fortran struct: spline_struct");
+  auto py_SpinPolarStruct =
+      py::class_<SpinPolarStruct>(m, "SpinPolarStruct", "Fortran struct: spin_polar_struct");
+  auto py_AcKickerTimeStruct = py::class_<AcKickerTimeStruct>(
+      m,
+      "AcKickerTimeStruct",
+      "Fortran struct: ac_kicker_time_struct"
+  );
+  auto py_AcKickerFreqStruct = py::class_<AcKickerFreqStruct>(
+      m,
+      "AcKickerFreqStruct",
+      "Fortran struct: ac_kicker_freq_struct"
+  );
+  auto py_AcKickerStruct =
+      py::class_<AcKickerStruct>(m, "AcKickerStruct", "Fortran struct: ac_kicker_struct");
+  auto py_Interval1CoefStruct = py::class_<Interval1CoefStruct>(
+      m,
+      "Interval1CoefStruct",
+      "Fortran struct: interval1_coef_struct"
+  );
+  auto py_PhotonReflectTableStruct = py::class_<PhotonReflectTableStruct>(
       m,
       "PhotonReflectTableStruct",
-      "Fortran struct: photon_reflect_table_struct");
-  auto py_PhotonReflectSurfaceStruct = py::class_<PhotonReflectSurfaceProxy>(
+      "Fortran struct: photon_reflect_table_struct"
+  );
+  auto py_PhotonReflectSurfaceStruct = py::class_<PhotonReflectSurfaceStruct>(
       m,
       "PhotonReflectSurfaceStruct",
-      "Fortran struct: photon_reflect_surface_struct");
-  auto py_CoordStruct =
-      py::class_<CoordProxy>(m, "CoordStruct", "Fortran struct: coord_struct");
-  auto py_CoordArrayStruct = py::class_<CoordArrayProxy>(
-      m, "CoordArrayStruct", "Fortran struct: coord_array_struct");
-  auto py_BpmPhaseCouplingStruct = py::class_<BpmPhaseCouplingProxy>(
-      m, "BpmPhaseCouplingStruct", "Fortran struct: bpm_phase_coupling_struct");
-  auto py_ExpressionAtomStruct = py::class_<ExpressionAtomProxy>(
-      m, "ExpressionAtomStruct", "Fortran struct: expression_atom_struct");
-  auto py_WakeSrZLongStruct = py::class_<WakeSrZLongProxy>(
-      m, "WakeSrZLongStruct", "Fortran struct: wake_sr_z_long_struct");
-  auto py_WakeSrModeStruct = py::class_<WakeSrModeProxy>(
-      m, "WakeSrModeStruct", "Fortran struct: wake_sr_mode_struct");
-  auto py_WakeSrStruct = py::class_<WakeSrProxy>(
-      m, "WakeSrStruct", "Fortran struct: wake_sr_struct");
-  auto py_WakeLrModeStruct = py::class_<WakeLrModeProxy>(
-      m, "WakeLrModeStruct", "Fortran struct: wake_lr_mode_struct");
-  auto py_WakeLrStruct = py::class_<WakeLrProxy>(
-      m, "WakeLrStruct", "Fortran struct: wake_lr_struct");
-  auto py_LatEleLocStruct = py::class_<LatEleLocProxy>(
-      m, "LatEleLocStruct", "Fortran struct: lat_ele_loc_struct");
-  auto py_WakeStruct =
-      py::class_<WakeProxy>(m, "WakeStruct", "Fortran struct: wake_struct");
-  auto py_TaylorTermStruct = py::class_<TaylorTermProxy>(
-      m, "TaylorTermStruct", "Fortran struct: taylor_term_struct");
-  auto py_TaylorStruct = py::class_<TaylorProxy>(
-      m, "TaylorStruct", "Fortran struct: taylor_struct");
-  auto py_EmTaylorTermStruct = py::class_<EmTaylorTermProxy>(
-      m, "EmTaylorTermStruct", "Fortran struct: em_taylor_term_struct");
-  auto py_EmTaylorStruct = py::class_<EmTaylorProxy>(
-      m, "EmTaylorStruct", "Fortran struct: em_taylor_struct");
-  auto py_CartesianMapTerm1Struct = py::class_<CartesianMapTerm1Proxy>(
+      "Fortran struct: photon_reflect_surface_struct"
+  );
+  auto py_CoordStruct = py::class_<CoordStruct>(m, "CoordStruct", "Fortran struct: coord_struct");
+  auto py_CoordArrayStruct =
+      py::class_<CoordArrayStruct>(m, "CoordArrayStruct", "Fortran struct: coord_array_struct");
+  auto py_BpmPhaseCouplingStruct = py::class_<BpmPhaseCouplingStruct>(
+      m,
+      "BpmPhaseCouplingStruct",
+      "Fortran struct: bpm_phase_coupling_struct"
+  );
+  auto py_ExpressionAtomStruct = py::class_<ExpressionAtomStruct>(
+      m,
+      "ExpressionAtomStruct",
+      "Fortran struct: expression_atom_struct"
+  );
+  auto py_WakeSrZLongStruct = py::class_<WakeSrZLongStruct>(
+      m,
+      "WakeSrZLongStruct",
+      "Fortran struct: wake_sr_z_long_struct"
+  );
+  auto py_WakeSrModeStruct =
+      py::class_<WakeSrModeStruct>(m, "WakeSrModeStruct", "Fortran struct: wake_sr_mode_struct");
+  auto py_WakeSrStruct =
+      py::class_<WakeSrStruct>(m, "WakeSrStruct", "Fortran struct: wake_sr_struct");
+  auto py_WakeLrModeStruct =
+      py::class_<WakeLrModeStruct>(m, "WakeLrModeStruct", "Fortran struct: wake_lr_mode_struct");
+  auto py_WakeLrStruct =
+      py::class_<WakeLrStruct>(m, "WakeLrStruct", "Fortran struct: wake_lr_struct");
+  auto py_LatEleLocStruct =
+      py::class_<LatEleLocStruct>(m, "LatEleLocStruct", "Fortran struct: lat_ele_loc_struct");
+  auto py_WakeStruct = py::class_<WakeStruct>(m, "WakeStruct", "Fortran struct: wake_struct");
+  auto py_TaylorTermStruct =
+      py::class_<TaylorTermStruct>(m, "TaylorTermStruct", "Fortran struct: taylor_term_struct");
+  auto py_TaylorStruct =
+      py::class_<TaylorStruct>(m, "TaylorStruct", "Fortran struct: taylor_struct");
+  auto py_EmTaylorTermStruct = py::class_<EmTaylorTermStruct>(
+      m,
+      "EmTaylorTermStruct",
+      "Fortran struct: em_taylor_term_struct"
+  );
+  auto py_EmTaylorStruct =
+      py::class_<EmTaylorStruct>(m, "EmTaylorStruct", "Fortran struct: em_taylor_struct");
+  auto py_CartesianMapTerm1Struct = py::class_<CartesianMapTerm1Struct>(
       m,
       "CartesianMapTerm1Struct",
-      "Fortran struct: cartesian_map_term1_struct");
-  auto py_CartesianMapTermStruct = py::class_<CartesianMapTermProxy>(
-      m, "CartesianMapTermStruct", "Fortran struct: cartesian_map_term_struct");
-  auto py_CartesianMapStruct = py::class_<CartesianMapProxy>(
-      m, "CartesianMapStruct", "Fortran struct: cartesian_map_struct");
-  auto py_CylindricalMapTerm1Struct = py::class_<CylindricalMapTerm1Proxy>(
+      "Fortran struct: cartesian_map_term1_struct"
+  );
+  auto py_CartesianMapTermStruct = py::class_<CartesianMapTermStruct>(
+      m,
+      "CartesianMapTermStruct",
+      "Fortran struct: cartesian_map_term_struct"
+  );
+  auto py_CartesianMapStruct = py::class_<CartesianMapStruct>(
+      m,
+      "CartesianMapStruct",
+      "Fortran struct: cartesian_map_struct"
+  );
+  auto py_CylindricalMapTerm1Struct = py::class_<CylindricalMapTerm1Struct>(
       m,
       "CylindricalMapTerm1Struct",
-      "Fortran struct: cylindrical_map_term1_struct");
-  auto py_CylindricalMapTermStruct = py::class_<CylindricalMapTermProxy>(
+      "Fortran struct: cylindrical_map_term1_struct"
+  );
+  auto py_CylindricalMapTermStruct = py::class_<CylindricalMapTermStruct>(
       m,
       "CylindricalMapTermStruct",
-      "Fortran struct: cylindrical_map_term_struct");
-  auto py_CylindricalMapStruct = py::class_<CylindricalMapProxy>(
-      m, "CylindricalMapStruct", "Fortran struct: cylindrical_map_struct");
-  auto py_BicubicCmplxCoefStruct = py::class_<BicubicCmplxCoefProxy>(
-      m, "BicubicCmplxCoefStruct", "Fortran struct: bicubic_cmplx_coef_struct");
-  auto py_TricubicCmplxCoefStruct = py::class_<TricubicCmplxCoefProxy>(
+      "Fortran struct: cylindrical_map_term_struct"
+  );
+  auto py_CylindricalMapStruct = py::class_<CylindricalMapStruct>(
+      m,
+      "CylindricalMapStruct",
+      "Fortran struct: cylindrical_map_struct"
+  );
+  auto py_BicubicCmplxCoefStruct = py::class_<BicubicCmplxCoefStruct>(
+      m,
+      "BicubicCmplxCoefStruct",
+      "Fortran struct: bicubic_cmplx_coef_struct"
+  );
+  auto py_TricubicCmplxCoefStruct = py::class_<TricubicCmplxCoefStruct>(
       m,
       "TricubicCmplxCoefStruct",
-      "Fortran struct: tricubic_cmplx_coef_struct");
-  auto py_GridFieldPt1Struct = py::class_<GridFieldPt1Proxy>(
-      m, "GridFieldPt1Struct", "Fortran struct: grid_field_pt1_struct");
-  auto py_GridFieldPtStruct = py::class_<GridFieldPtProxy>(
-      m, "GridFieldPtStruct", "Fortran struct: grid_field_pt_struct");
-  auto py_GridFieldStruct = py::class_<GridFieldProxy>(
-      m, "GridFieldStruct", "Fortran struct: grid_field_struct");
-  auto py_FloorPositionStruct = py::class_<FloorPositionProxy>(
-      m, "FloorPositionStruct", "Fortran struct: floor_position_struct");
-  auto py_HighEnergySpaceChargeStruct = py::class_<HighEnergySpaceChargeProxy>(
+      "Fortran struct: tricubic_cmplx_coef_struct"
+  );
+  auto py_GridFieldPt1Struct = py::class_<GridFieldPt1Struct>(
+      m,
+      "GridFieldPt1Struct",
+      "Fortran struct: grid_field_pt1_struct"
+  );
+  auto py_GridFieldPtStruct =
+      py::class_<GridFieldPtStruct>(m, "GridFieldPtStruct", "Fortran struct: grid_field_pt_struct");
+  auto py_GridFieldStruct =
+      py::class_<GridFieldStruct>(m, "GridFieldStruct", "Fortran struct: grid_field_struct");
+  auto py_FloorPositionStruct = py::class_<FloorPositionStruct>(
+      m,
+      "FloorPositionStruct",
+      "Fortran struct: floor_position_struct"
+  );
+  auto py_HighEnergySpaceChargeStruct = py::class_<HighEnergySpaceChargeStruct>(
       m,
       "HighEnergySpaceChargeStruct",
-      "Fortran struct: high_energy_space_charge_struct");
-  auto py_XyDispStruct = py::class_<XyDispProxy>(
-      m, "XyDispStruct", "Fortran struct: xy_disp_struct");
-  auto py_TwissStruct =
-      py::class_<TwissProxy>(m, "TwissStruct", "Fortran struct: twiss_struct");
-  auto py_Mode3Struct =
-      py::class_<Mode3Proxy>(m, "Mode3Struct", "Fortran struct: mode3_struct");
-  auto py_BookkeepingStateStruct = py::class_<BookkeepingStateProxy>(
-      m, "BookkeepingStateStruct", "Fortran struct: bookkeeping_state_struct");
-  auto py_RadMapStruct = py::class_<RadMapProxy>(
-      m, "RadMapStruct", "Fortran struct: rad_map_struct");
-  auto py_RadMapEleStruct = py::class_<RadMapEleProxy>(
-      m, "RadMapEleStruct", "Fortran struct: rad_map_ele_struct");
-  auto py_GenGrad1Struct = py::class_<GenGrad1Proxy>(
-      m, "GenGrad1Struct", "Fortran struct: gen_grad1_struct");
-  auto py_GenGradMapStruct = py::class_<GenGradMapProxy>(
-      m, "GenGradMapStruct", "Fortran struct: gen_grad_map_struct");
-  auto py_SurfaceSegmentedPtStruct = py::class_<SurfaceSegmentedPtProxy>(
+      "Fortran struct: high_energy_space_charge_struct"
+  );
+  auto py_XyDispStruct =
+      py::class_<XyDispStruct>(m, "XyDispStruct", "Fortran struct: xy_disp_struct");
+  auto py_TwissStruct = py::class_<TwissStruct>(m, "TwissStruct", "Fortran struct: twiss_struct");
+  auto py_Mode3Struct = py::class_<Mode3Struct>(m, "Mode3Struct", "Fortran struct: mode3_struct");
+  auto py_BookkeepingStateStruct = py::class_<BookkeepingStateStruct>(
+      m,
+      "BookkeepingStateStruct",
+      "Fortran struct: bookkeeping_state_struct"
+  );
+  auto py_RadMapStruct =
+      py::class_<RadMapStruct>(m, "RadMapStruct", "Fortran struct: rad_map_struct");
+  auto py_RadMapEleStruct =
+      py::class_<RadMapEleStruct>(m, "RadMapEleStruct", "Fortran struct: rad_map_ele_struct");
+  auto py_GenGrad1Struct =
+      py::class_<GenGrad1Struct>(m, "GenGrad1Struct", "Fortran struct: gen_grad1_struct");
+  auto py_GenGradMapStruct =
+      py::class_<GenGradMapStruct>(m, "GenGradMapStruct", "Fortran struct: gen_grad_map_struct");
+  auto py_SurfaceSegmentedPtStruct = py::class_<SurfaceSegmentedPtStruct>(
       m,
       "SurfaceSegmentedPtStruct",
-      "Fortran struct: surface_segmented_pt_struct");
-  auto py_SurfaceSegmentedStruct = py::class_<SurfaceSegmentedProxy>(
-      m, "SurfaceSegmentedStruct", "Fortran struct: surface_segmented_struct");
-  auto py_SurfaceHMisalignPtStruct = py::class_<SurfaceHMisalignPtProxy>(
+      "Fortran struct: surface_segmented_pt_struct"
+  );
+  auto py_SurfaceSegmentedStruct = py::class_<SurfaceSegmentedStruct>(
+      m,
+      "SurfaceSegmentedStruct",
+      "Fortran struct: surface_segmented_struct"
+  );
+  auto py_SurfaceHMisalignPtStruct = py::class_<SurfaceHMisalignPtStruct>(
       m,
       "SurfaceHMisalignPtStruct",
-      "Fortran struct: surface_h_misalign_pt_struct");
-  auto py_SurfaceHMisalignStruct = py::class_<SurfaceHMisalignProxy>(
-      m, "SurfaceHMisalignStruct", "Fortran struct: surface_h_misalign_struct");
-  auto py_SurfaceDisplacementPtStruct = py::class_<SurfaceDisplacementPtProxy>(
+      "Fortran struct: surface_h_misalign_pt_struct"
+  );
+  auto py_SurfaceHMisalignStruct = py::class_<SurfaceHMisalignStruct>(
+      m,
+      "SurfaceHMisalignStruct",
+      "Fortran struct: surface_h_misalign_struct"
+  );
+  auto py_SurfaceDisplacementPtStruct = py::class_<SurfaceDisplacementPtStruct>(
       m,
       "SurfaceDisplacementPtStruct",
-      "Fortran struct: surface_displacement_pt_struct");
-  auto py_SurfaceDisplacementStruct = py::class_<SurfaceDisplacementProxy>(
+      "Fortran struct: surface_displacement_pt_struct"
+  );
+  auto py_SurfaceDisplacementStruct = py::class_<SurfaceDisplacementStruct>(
       m,
       "SurfaceDisplacementStruct",
-      "Fortran struct: surface_displacement_struct");
-  auto py_TargetPointStruct = py::class_<TargetPointProxy>(
-      m, "TargetPointStruct", "Fortran struct: target_point_struct");
-  auto py_SurfaceCurvatureStruct = py::class_<SurfaceCurvatureProxy>(
-      m, "SurfaceCurvatureStruct", "Fortran struct: surface_curvature_struct");
-  auto py_PhotonTargetStruct = py::class_<PhotonTargetProxy>(
-      m, "PhotonTargetStruct", "Fortran struct: photon_target_struct");
-  auto py_PhotonMaterialStruct = py::class_<PhotonMaterialProxy>(
-      m, "PhotonMaterialStruct", "Fortran struct: photon_material_struct");
-  auto py_PixelPtStruct = py::class_<PixelPtProxy>(
-      m, "PixelPtStruct", "Fortran struct: pixel_pt_struct");
-  auto py_PixelDetecStruct = py::class_<PixelDetecProxy>(
-      m, "PixelDetecStruct", "Fortran struct: pixel_detec_struct");
-  auto py_PhotonElementStruct = py::class_<PhotonElementProxy>(
-      m, "PhotonElementStruct", "Fortran struct: photon_element_struct");
-  auto py_Wall3DVertexStruct = py::class_<Wall3dVertexProxy>(
-      m, "Wall3DVertexStruct", "Fortran struct: wall3d_vertex_struct");
-  auto py_Wall3DSectionStruct = py::class_<Wall3dSectionProxy>(
-      m, "Wall3DSectionStruct", "Fortran struct: wall3d_section_struct");
-  auto py_Wall3DStruct = py::class_<Wall3dProxy>(
-      m, "Wall3DStruct", "Fortran struct: wall3d_struct");
-  auto py_RamperLordStruct = py::class_<RamperLordProxy>(
-      m, "RamperLordStruct", "Fortran struct: ramper_lord_struct");
-  auto py_ControlStruct = py::class_<ControlProxy>(
-      m, "ControlStruct", "Fortran struct: control_struct");
-  auto py_ControlVar1Struct = py::class_<ControlVar1Proxy>(
-      m, "ControlVar1Struct", "Fortran struct: control_var1_struct");
-  auto py_ControlRamp1Struct = py::class_<ControlRamp1Proxy>(
-      m, "ControlRamp1Struct", "Fortran struct: control_ramp1_struct");
-  auto py_ControllerStruct = py::class_<ControllerProxy>(
-      m, "ControllerStruct", "Fortran struct: controller_struct");
-  auto py_EllipseBeamInitStruct = py::class_<EllipseBeamInitProxy>(
-      m, "EllipseBeamInitStruct", "Fortran struct: ellipse_beam_init_struct");
-  auto py_KvBeamInitStruct = py::class_<KvBeamInitProxy>(
-      m, "KvBeamInitStruct", "Fortran struct: kv_beam_init_struct");
-  auto py_GridBeamInitStruct = py::class_<GridBeamInitProxy>(
-      m, "GridBeamInitStruct", "Fortran struct: grid_beam_init_struct");
-  auto py_BeamInitStruct = py::class_<BeamInitProxy>(
-      m, "BeamInitStruct", "Fortran struct: beam_init_struct");
-  auto py_LatParamStruct = py::class_<LatParamProxy>(
-      m, "LatParamStruct", "Fortran struct: lat_param_struct");
-  auto py_ModeInfoStruct = py::class_<ModeInfoProxy>(
-      m, "ModeInfoStruct", "Fortran struct: mode_info_struct");
-  auto py_PreTrackerStruct = py::class_<PreTrackerProxy>(
-      m, "PreTrackerStruct", "Fortran struct: pre_tracker_struct");
-  auto py_AnormalModeStruct = py::class_<AnormalModeProxy>(
-      m, "AnormalModeStruct", "Fortran struct: anormal_mode_struct");
-  auto py_LinacNormalModeStruct = py::class_<LinacNormalModeProxy>(
-      m, "LinacNormalModeStruct", "Fortran struct: linac_normal_mode_struct");
-  auto py_NormalModesStruct = py::class_<NormalModesProxy>(
-      m, "NormalModesStruct", "Fortran struct: normal_modes_struct");
-  auto py_EmFieldStruct = py::class_<EmFieldProxy>(
-      m, "EmFieldStruct", "Fortran struct: em_field_struct");
-  auto py_StrongBeamStruct = py::class_<StrongBeamProxy>(
-      m, "StrongBeamStruct", "Fortran struct: strong_beam_struct");
-  auto py_TrackPointStruct = py::class_<TrackPointProxy>(
-      m, "TrackPointStruct", "Fortran struct: track_point_struct");
-  auto py_TrackStruct =
-      py::class_<TrackProxy>(m, "TrackStruct", "Fortran struct: track_struct");
-  auto py_SpaceChargeCommonStruct = py::class_<SpaceChargeCommonProxy>(
+      "Fortran struct: surface_displacement_struct"
+  );
+  auto py_TargetPointStruct =
+      py::class_<TargetPointStruct>(m, "TargetPointStruct", "Fortran struct: target_point_struct");
+  auto py_SurfaceCurvatureStruct = py::class_<SurfaceCurvatureStruct>(
+      m,
+      "SurfaceCurvatureStruct",
+      "Fortran struct: surface_curvature_struct"
+  );
+  auto py_PhotonTargetStruct = py::class_<PhotonTargetStruct>(
+      m,
+      "PhotonTargetStruct",
+      "Fortran struct: photon_target_struct"
+  );
+  auto py_PhotonMaterialStruct = py::class_<PhotonMaterialStruct>(
+      m,
+      "PhotonMaterialStruct",
+      "Fortran struct: photon_material_struct"
+  );
+  auto py_PixelPtStruct =
+      py::class_<PixelPtStruct>(m, "PixelPtStruct", "Fortran struct: pixel_pt_struct");
+  auto py_PixelDetecStruct =
+      py::class_<PixelDetecStruct>(m, "PixelDetecStruct", "Fortran struct: pixel_detec_struct");
+  auto py_PhotonElementStruct = py::class_<PhotonElementStruct>(
+      m,
+      "PhotonElementStruct",
+      "Fortran struct: photon_element_struct"
+  );
+  auto py_Wall3DVertexStruct = py::class_<Wall3dVertexStruct>(
+      m,
+      "Wall3DVertexStruct",
+      "Fortran struct: wall3d_vertex_struct"
+  );
+  auto py_Wall3DSectionStruct = py::class_<Wall3dSectionStruct>(
+      m,
+      "Wall3DSectionStruct",
+      "Fortran struct: wall3d_section_struct"
+  );
+  auto py_Wall3DStruct =
+      py::class_<Wall3dStruct>(m, "Wall3DStruct", "Fortran struct: wall3d_struct");
+  auto py_RamperLordStruct =
+      py::class_<RamperLordStruct>(m, "RamperLordStruct", "Fortran struct: ramper_lord_struct");
+  auto py_ControlStruct =
+      py::class_<ControlStruct>(m, "ControlStruct", "Fortran struct: control_struct");
+  auto py_ControlVar1Struct =
+      py::class_<ControlVar1Struct>(m, "ControlVar1Struct", "Fortran struct: control_var1_struct");
+  auto py_ControlRamp1Struct = py::class_<ControlRamp1Struct>(
+      m,
+      "ControlRamp1Struct",
+      "Fortran struct: control_ramp1_struct"
+  );
+  auto py_ControllerStruct =
+      py::class_<ControllerStruct>(m, "ControllerStruct", "Fortran struct: controller_struct");
+  auto py_EllipseBeamInitStruct = py::class_<EllipseBeamInitStruct>(
+      m,
+      "EllipseBeamInitStruct",
+      "Fortran struct: ellipse_beam_init_struct"
+  );
+  auto py_KvBeamInitStruct =
+      py::class_<KvBeamInitStruct>(m, "KvBeamInitStruct", "Fortran struct: kv_beam_init_struct");
+  auto py_GridBeamInitStruct = py::class_<GridBeamInitStruct>(
+      m,
+      "GridBeamInitStruct",
+      "Fortran struct: grid_beam_init_struct"
+  );
+  auto py_BeamInitStruct =
+      py::class_<BeamInitStruct>(m, "BeamInitStruct", "Fortran struct: beam_init_struct");
+  auto py_LatParamStruct =
+      py::class_<LatParamStruct>(m, "LatParamStruct", "Fortran struct: lat_param_struct");
+  auto py_ModeInfoStruct =
+      py::class_<ModeInfoStruct>(m, "ModeInfoStruct", "Fortran struct: mode_info_struct");
+  auto py_PreTrackerStruct =
+      py::class_<PreTrackerStruct>(m, "PreTrackerStruct", "Fortran struct: pre_tracker_struct");
+  auto py_AnormalModeStruct =
+      py::class_<AnormalModeStruct>(m, "AnormalModeStruct", "Fortran struct: anormal_mode_struct");
+  auto py_LinacNormalModeStruct = py::class_<LinacNormalModeStruct>(
+      m,
+      "LinacNormalModeStruct",
+      "Fortran struct: linac_normal_mode_struct"
+  );
+  auto py_NormalModesStruct =
+      py::class_<NormalModesStruct>(m, "NormalModesStruct", "Fortran struct: normal_modes_struct");
+  auto py_EmFieldStruct =
+      py::class_<EmFieldStruct>(m, "EmFieldStruct", "Fortran struct: em_field_struct");
+  auto py_StrongBeamStruct =
+      py::class_<StrongBeamStruct>(m, "StrongBeamStruct", "Fortran struct: strong_beam_struct");
+  auto py_TrackPointStruct =
+      py::class_<TrackPointStruct>(m, "TrackPointStruct", "Fortran struct: track_point_struct");
+  auto py_TrackStruct = py::class_<TrackStruct>(m, "TrackStruct", "Fortran struct: track_struct");
+  auto py_SpaceChargeCommonStruct = py::class_<SpaceChargeCommonStruct>(
       m,
       "SpaceChargeCommonStruct",
-      "Fortran struct: space_charge_common_struct");
-  auto py_BmadCommonStruct = py::class_<BmadCommonProxy>(
-      m, "BmadCommonStruct", "Fortran struct: bmad_common_struct");
-  auto py_RadInt1Struct = py::class_<RadInt1Proxy>(
-      m, "RadInt1Struct", "Fortran struct: rad_int1_struct");
-  auto py_RadIntBranchStruct = py::class_<RadIntBranchProxy>(
-      m, "RadIntBranchStruct", "Fortran struct: rad_int_branch_struct");
-  auto py_RadIntAllEleStruct = py::class_<RadIntAllEleProxy>(
-      m, "RadIntAllEleStruct", "Fortran struct: rad_int_all_ele_struct");
-  auto py_RfStairStepStruct = py::class_<RfStairStepProxy>(
-      m, "RfStairStepStruct", "Fortran struct: rf_stair_step_struct");
-  auto py_RfEleStruct =
-      py::class_<RfEleProxy>(m, "RfEleStruct", "Fortran struct: rf_ele_struct");
-  auto py_EleStruct =
-      py::class_<EleProxy>(m, "EleStruct", "Fortran struct: ele_struct");
-  auto py_ComplexTaylorTermStruct = py::class_<ComplexTaylorTermProxy>(
+      "Fortran struct: space_charge_common_struct"
+  );
+  auto py_BmadCommonStruct =
+      py::class_<BmadCommonStruct>(m, "BmadCommonStruct", "Fortran struct: bmad_common_struct");
+  auto py_RadInt1Struct =
+      py::class_<RadInt1Struct>(m, "RadInt1Struct", "Fortran struct: rad_int1_struct");
+  auto py_RadIntBranchStruct = py::class_<RadIntBranchStruct>(
+      m,
+      "RadIntBranchStruct",
+      "Fortran struct: rad_int_branch_struct"
+  );
+  auto py_RadIntAllEleStruct = py::class_<RadIntAllEleStruct>(
+      m,
+      "RadIntAllEleStruct",
+      "Fortran struct: rad_int_all_ele_struct"
+  );
+  auto py_RfStairStepStruct =
+      py::class_<RfStairStepStruct>(m, "RfStairStepStruct", "Fortran struct: rf_stair_step_struct");
+  auto py_RfEleStruct = py::class_<RfEleStruct>(m, "RfEleStruct", "Fortran struct: rf_ele_struct");
+  auto py_EleStruct = py::class_<EleStruct>(m, "EleStruct", "Fortran struct: ele_struct");
+  auto py_ComplexTaylorTermStruct = py::class_<ComplexTaylorTermStruct>(
       m,
       "ComplexTaylorTermStruct",
-      "Fortran struct: complex_taylor_term_struct");
-  auto py_ComplexTaylorStruct = py::class_<ComplexTaylorProxy>(
-      m, "ComplexTaylorStruct", "Fortran struct: complex_taylor_struct");
-  auto py_BranchStruct = py::class_<BranchProxy>(
-      m, "BranchStruct", "Fortran struct: branch_struct");
-  auto py_LatStruct =
-      py::class_<LatProxy>(m, "LatStruct", "Fortran struct: lat_struct");
-  auto py_BunchStruct =
-      py::class_<BunchProxy>(m, "BunchStruct", "Fortran struct: bunch_struct");
-  auto py_BunchParamsStruct = py::class_<BunchParamsProxy>(
-      m, "BunchParamsStruct", "Fortran struct: bunch_params_struct");
-  auto py_BeamStruct =
-      py::class_<BeamProxy>(m, "BeamStruct", "Fortran struct: beam_struct");
-  auto py_AperturePointStruct = py::class_<AperturePointProxy>(
-      m, "AperturePointStruct", "Fortran struct: aperture_point_struct");
-  auto py_ApertureParamStruct = py::class_<ApertureParamProxy>(
-      m, "ApertureParamStruct", "Fortran struct: aperture_param_struct");
-  auto py_ApertureScanStruct = py::class_<ApertureScanProxy>(
-      m, "ApertureScanStruct", "Fortran struct: aperture_scan_struct");
-  auto py_ElePointerStruct = py::class_<ElePointerProxy>(
-      m, "ElePointerStruct", "Fortran struct: ele_pointer_struct");
-  auto py_ExpressionTreeStruct = py::class_<ExpressionTreeProxy>(
-      m, "ExpressionTreeStruct", "Fortran struct: expression_tree_struct");
-  auto py_NametableStruct = py::class_<NametableProxy>(
-      m, "NametableStruct", "Fortran struct: nametable_struct");
-  auto py_TaoSpinDnDpzStruct = py::class_<TaoSpinDnDpzProxy>(
-      m, "TaoSpinDnDpzStruct", "Fortran struct: tao_spin_dn_dpz_struct");
-  auto py_ResonanceHStruct = py::class_<ResonanceHProxy>(
-      m, "ResonanceHStruct", "Fortran struct: resonance_h_struct");
-  auto py_SpinOrbitMap1Struct = py::class_<SpinOrbitMap1Proxy>(
-      m, "SpinOrbitMap1Struct", "Fortran struct: spin_orbit_map1_struct");
-  auto py_SpinAxisStruct = py::class_<SpinAxisProxy>(
-      m, "SpinAxisStruct", "Fortran struct: spin_axis_struct");
-  auto py_PtcNormalFormStruct = py::class_<PtcNormalFormProxy>(
-      m, "PtcNormalFormStruct", "Fortran struct: ptc_normal_form_struct");
-  auto py_BmadNormalFormStruct = py::class_<BmadNormalFormProxy>(
-      m, "BmadNormalFormStruct", "Fortran struct: bmad_normal_form_struct");
-  auto py_BunchTrackStruct = py::class_<BunchTrackProxy>(
-      m, "BunchTrackStruct", "Fortran struct: bunch_track_struct");
-  auto py_SummationRdtStruct = py::class_<SummationRdtProxy>(
-      m, "SummationRdtStruct", "Fortran struct: summation_rdt_struct");
-  auto py_TaoEleShapeStruct = py::class_<TaoEleShapeProxy>(
-      m, "TaoEleShapeStruct", "Fortran struct: tao_ele_shape_struct");
-  auto py_TaoElePointerStruct = py::class_<TaoElePointerProxy>(
-      m, "TaoElePointerStruct", "Fortran struct: tao_ele_pointer_struct");
-  auto py_TaoCurveStruct = py::class_<TaoCurveProxy>(
-      m, "TaoCurveStruct", "Fortran struct: tao_curve_struct");
-  auto py_TaoCurveColorStruct = py::class_<TaoCurveColorProxy>(
-      m, "TaoCurveColorStruct", "Fortran struct: tao_curve_color_struct");
-  auto py_TaoCurveOrbitStruct = py::class_<TaoCurveOrbitProxy>(
-      m, "TaoCurveOrbitStruct", "Fortran struct: tao_curve_orbit_struct");
-  auto py_TaoHistogramStruct = py::class_<TaoHistogramProxy>(
-      m, "TaoHistogramStruct", "Fortran struct: tao_histogram_struct");
-  auto py_LatEleOrder1Struct = py::class_<LatEleOrder1Proxy>(
-      m, "LatEleOrder1Struct", "Fortran struct: lat_ele_order1_struct");
-  auto py_LatEleOrderArrayStruct = py::class_<LatEleOrderArrayProxy>(
+      "Fortran struct: complex_taylor_term_struct"
+  );
+  auto py_ComplexTaylorStruct = py::class_<ComplexTaylorStruct>(
+      m,
+      "ComplexTaylorStruct",
+      "Fortran struct: complex_taylor_struct"
+  );
+  auto py_BranchStruct =
+      py::class_<BranchStruct>(m, "BranchStruct", "Fortran struct: branch_struct");
+  auto py_LatStruct = py::class_<LatStruct>(m, "LatStruct", "Fortran struct: lat_struct");
+  auto py_BunchStruct = py::class_<BunchStruct>(m, "BunchStruct", "Fortran struct: bunch_struct");
+  auto py_BunchParamsStruct =
+      py::class_<BunchParamsStruct>(m, "BunchParamsStruct", "Fortran struct: bunch_params_struct");
+  auto py_BeamStruct = py::class_<BeamStruct>(m, "BeamStruct", "Fortran struct: beam_struct");
+  auto py_AperturePointStruct = py::class_<AperturePointStruct>(
+      m,
+      "AperturePointStruct",
+      "Fortran struct: aperture_point_struct"
+  );
+  auto py_ApertureParamStruct = py::class_<ApertureParamStruct>(
+      m,
+      "ApertureParamStruct",
+      "Fortran struct: aperture_param_struct"
+  );
+  auto py_ApertureScanStruct = py::class_<ApertureScanStruct>(
+      m,
+      "ApertureScanStruct",
+      "Fortran struct: aperture_scan_struct"
+  );
+  auto py_ElePointerStruct =
+      py::class_<ElePointerStruct>(m, "ElePointerStruct", "Fortran struct: ele_pointer_struct");
+  auto py_ExpressionTreeStruct = py::class_<ExpressionTreeStruct>(
+      m,
+      "ExpressionTreeStruct",
+      "Fortran struct: expression_tree_struct"
+  );
+  auto py_NametableStruct =
+      py::class_<NametableStruct>(m, "NametableStruct", "Fortran struct: nametable_struct");
+  auto py_TaoSpinDnDpzStruct = py::class_<TaoSpinDnDpzStruct>(
+      m,
+      "TaoSpinDnDpzStruct",
+      "Fortran struct: tao_spin_dn_dpz_struct"
+  );
+  auto py_ResonanceHStruct =
+      py::class_<ResonanceHStruct>(m, "ResonanceHStruct", "Fortran struct: resonance_h_struct");
+  auto py_SpinOrbitMap1Struct = py::class_<SpinOrbitMap1Struct>(
+      m,
+      "SpinOrbitMap1Struct",
+      "Fortran struct: spin_orbit_map1_struct"
+  );
+  auto py_SpinAxisStruct =
+      py::class_<SpinAxisStruct>(m, "SpinAxisStruct", "Fortran struct: spin_axis_struct");
+  auto py_PtcNormalFormStruct = py::class_<PtcNormalFormStruct>(
+      m,
+      "PtcNormalFormStruct",
+      "Fortran struct: ptc_normal_form_struct"
+  );
+  auto py_BmadNormalFormStruct = py::class_<BmadNormalFormStruct>(
+      m,
+      "BmadNormalFormStruct",
+      "Fortran struct: bmad_normal_form_struct"
+  );
+  auto py_BunchTrackStruct =
+      py::class_<BunchTrackStruct>(m, "BunchTrackStruct", "Fortran struct: bunch_track_struct");
+  auto py_SummationRdtStruct = py::class_<SummationRdtStruct>(
+      m,
+      "SummationRdtStruct",
+      "Fortran struct: summation_rdt_struct"
+  );
+  auto py_TaoEleShapeStruct =
+      py::class_<TaoEleShapeStruct>(m, "TaoEleShapeStruct", "Fortran struct: tao_ele_shape_struct");
+  auto py_TaoElePointerStruct = py::class_<TaoElePointerStruct>(
+      m,
+      "TaoElePointerStruct",
+      "Fortran struct: tao_ele_pointer_struct"
+  );
+  auto py_TaoCurveStruct =
+      py::class_<TaoCurveStruct>(m, "TaoCurveStruct", "Fortran struct: tao_curve_struct");
+  auto py_TaoCurveColorStruct = py::class_<TaoCurveColorStruct>(
+      m,
+      "TaoCurveColorStruct",
+      "Fortran struct: tao_curve_color_struct"
+  );
+  auto py_TaoCurveOrbitStruct = py::class_<TaoCurveOrbitStruct>(
+      m,
+      "TaoCurveOrbitStruct",
+      "Fortran struct: tao_curve_orbit_struct"
+  );
+  auto py_TaoHistogramStruct = py::class_<TaoHistogramStruct>(
+      m,
+      "TaoHistogramStruct",
+      "Fortran struct: tao_histogram_struct"
+  );
+  auto py_LatEleOrder1Struct = py::class_<LatEleOrder1Struct>(
+      m,
+      "LatEleOrder1Struct",
+      "Fortran struct: lat_ele_order1_struct"
+  );
+  auto py_LatEleOrderArrayStruct = py::class_<LatEleOrderArrayStruct>(
       m,
       "LatEleOrderArrayStruct",
-      "Fortran struct: lat_ele_order_array_struct");
-  auto py_TaoLatSigmaStruct = py::class_<TaoLatSigmaProxy>(
-      m, "TaoLatSigmaStruct", "Fortran struct: tao_lat_sigma_struct");
-  auto py_TaoSpinEleStruct = py::class_<TaoSpinEleProxy>(
-      m, "TaoSpinEleStruct", "Fortran struct: tao_spin_ele_struct");
-  auto py_TaoPlotCacheStruct = py::class_<TaoPlotCacheProxy>(
-      m, "TaoPlotCacheStruct", "Fortran struct: tao_plot_cache_struct");
-  auto py_TaoSpinPolarizationStruct = py::class_<TaoSpinPolarizationProxy>(
+      "Fortran struct: lat_ele_order_array_struct"
+  );
+  auto py_TaoLatSigmaStruct =
+      py::class_<TaoLatSigmaStruct>(m, "TaoLatSigmaStruct", "Fortran struct: tao_lat_sigma_struct");
+  auto py_TaoSpinEleStruct =
+      py::class_<TaoSpinEleStruct>(m, "TaoSpinEleStruct", "Fortran struct: tao_spin_ele_struct");
+  auto py_TaoPlotCacheStruct = py::class_<TaoPlotCacheStruct>(
+      m,
+      "TaoPlotCacheStruct",
+      "Fortran struct: tao_plot_cache_struct"
+  );
+  auto py_TaoSpinPolarizationStruct = py::class_<TaoSpinPolarizationStruct>(
       m,
       "TaoSpinPolarizationStruct",
-      "Fortran struct: tao_spin_polarization_struct");
-  auto py_TaoLatticeBranchStruct = py::class_<TaoLatticeBranchProxy>(
-      m, "TaoLatticeBranchStruct", "Fortran struct: tao_lattice_branch_struct");
-  auto py_TaoModelElementStruct = py::class_<TaoModelElementProxy>(
-      m, "TaoModelElementStruct", "Fortran struct: tao_model_element_struct");
-  auto py_TaoBeamBranchStruct = py::class_<TaoBeamBranchProxy>(
-      m, "TaoBeamBranchStruct", "Fortran struct: tao_beam_branch_struct");
-  auto py_TaoD1DataStruct = py::class_<TaoD1DataProxy>(
-      m, "TaoD1DataStruct", "Fortran struct: tao_d1_data_struct");
-  auto py_TaoD2DataStruct = py::class_<TaoD2DataProxy>(
-      m, "TaoD2DataStruct", "Fortran struct: tao_d2_data_struct");
-  auto py_TaoDataVarComponentStruct = py::class_<TaoDataVarComponentProxy>(
+      "Fortran struct: tao_spin_polarization_struct"
+  );
+  auto py_TaoLatticeBranchStruct = py::class_<TaoLatticeBranchStruct>(
+      m,
+      "TaoLatticeBranchStruct",
+      "Fortran struct: tao_lattice_branch_struct"
+  );
+  auto py_TaoModelElementStruct = py::class_<TaoModelElementStruct>(
+      m,
+      "TaoModelElementStruct",
+      "Fortran struct: tao_model_element_struct"
+  );
+  auto py_TaoBeamBranchStruct = py::class_<TaoBeamBranchStruct>(
+      m,
+      "TaoBeamBranchStruct",
+      "Fortran struct: tao_beam_branch_struct"
+  );
+  auto py_TaoD1DataStruct =
+      py::class_<TaoD1DataStruct>(m, "TaoD1DataStruct", "Fortran struct: tao_d1_data_struct");
+  auto py_TaoD2DataStruct =
+      py::class_<TaoD2DataStruct>(m, "TaoD2DataStruct", "Fortran struct: tao_d2_data_struct");
+  auto py_TaoDataVarComponentStruct = py::class_<TaoDataVarComponentStruct>(
       m,
       "TaoDataVarComponentStruct",
-      "Fortran struct: tao_data_var_component_struct");
-  auto py_TaoGraphStruct = py::class_<TaoGraphProxy>(
-      m, "TaoGraphStruct", "Fortran struct: tao_graph_struct");
-  auto py_TaoPlotStruct = py::class_<TaoPlotProxy>(
-      m, "TaoPlotStruct", "Fortran struct: tao_plot_struct");
-  auto py_TaoPlotRegionStruct = py::class_<TaoPlotRegionProxy>(
-      m, "TaoPlotRegionStruct", "Fortran struct: tao_plot_region_struct");
-  auto py_TaoUniversePointerStruct = py::class_<TaoUniversePointerProxy>(
+      "Fortran struct: tao_data_var_component_struct"
+  );
+  auto py_TaoGraphStruct =
+      py::class_<TaoGraphStruct>(m, "TaoGraphStruct", "Fortran struct: tao_graph_struct");
+  auto py_TaoPlotStruct =
+      py::class_<TaoPlotStruct>(m, "TaoPlotStruct", "Fortran struct: tao_plot_struct");
+  auto py_TaoPlotRegionStruct = py::class_<TaoPlotRegionStruct>(
+      m,
+      "TaoPlotRegionStruct",
+      "Fortran struct: tao_plot_region_struct"
+  );
+  auto py_TaoUniversePointerStruct = py::class_<TaoUniversePointerStruct>(
       m,
       "TaoUniversePointerStruct",
-      "Fortran struct: tao_universe_pointer_struct");
-  auto py_TaoSuperUniverseStruct = py::class_<TaoSuperUniverseProxy>(
-      m, "TaoSuperUniverseStruct", "Fortran struct: tao_super_universe_struct");
-  auto py_TaoVarStruct = py::class_<TaoVarProxy>(
-      m, "TaoVarStruct", "Fortran struct: tao_var_struct");
-  auto py_TaoVarSlaveStruct = py::class_<TaoVarSlaveProxy>(
-      m, "TaoVarSlaveStruct", "Fortran struct: tao_var_slave_struct");
-  auto py_TaoLatticeStruct = py::class_<TaoLatticeProxy>(
-      m, "TaoLatticeStruct", "Fortran struct: tao_lattice_struct");
-  auto py_TaoBeamUniStruct = py::class_<TaoBeamUniProxy>(
-      m, "TaoBeamUniStruct", "Fortran struct: tao_beam_uni_struct");
-  auto py_TaoDynamicApertureStruct = py::class_<TaoDynamicApertureProxy>(
+      "Fortran struct: tao_universe_pointer_struct"
+  );
+  auto py_TaoSuperUniverseStruct = py::class_<TaoSuperUniverseStruct>(
+      m,
+      "TaoSuperUniverseStruct",
+      "Fortran struct: tao_super_universe_struct"
+  );
+  auto py_TaoVarStruct =
+      py::class_<TaoVarStruct>(m, "TaoVarStruct", "Fortran struct: tao_var_struct");
+  auto py_TaoVarSlaveStruct =
+      py::class_<TaoVarSlaveStruct>(m, "TaoVarSlaveStruct", "Fortran struct: tao_var_slave_struct");
+  auto py_TaoLatticeStruct =
+      py::class_<TaoLatticeStruct>(m, "TaoLatticeStruct", "Fortran struct: tao_lattice_struct");
+  auto py_TaoBeamUniStruct =
+      py::class_<TaoBeamUniStruct>(m, "TaoBeamUniStruct", "Fortran struct: tao_beam_uni_struct");
+  auto py_TaoDynamicApertureStruct = py::class_<TaoDynamicApertureStruct>(
       m,
       "TaoDynamicApertureStruct",
-      "Fortran struct: tao_dynamic_aperture_struct");
-  auto py_TaoModelBranchStruct = py::class_<TaoModelBranchProxy>(
-      m, "TaoModelBranchStruct", "Fortran struct: tao_model_branch_struct");
-  auto py_TaoSpinMapStruct = py::class_<TaoSpinMapProxy>(
-      m, "TaoSpinMapStruct", "Fortran struct: tao_spin_map_struct");
-  auto py_TaoDataStruct = py::class_<TaoDataProxy>(
-      m, "TaoDataStruct", "Fortran struct: tao_data_struct");
-  auto py_TaoPingScaleStruct = py::class_<TaoPingScaleProxy>(
-      m, "TaoPingScaleStruct", "Fortran struct: tao_ping_scale_struct");
-  auto py_TaoUniverseCalcStruct = py::class_<TaoUniverseCalcProxy>(
-      m, "TaoUniverseCalcStruct", "Fortran struct: tao_universe_calc_struct");
-  auto py_LatEleOrderStruct = py::class_<LatEleOrderProxy>(
-      m, "LatEleOrderStruct", "Fortran struct: lat_ele_order_struct");
-  auto py_TaoExpressionInfoStruct = py::class_<TaoExpressionInfoProxy>(
+      "Fortran struct: tao_dynamic_aperture_struct"
+  );
+  auto py_TaoModelBranchStruct = py::class_<TaoModelBranchStruct>(
+      m,
+      "TaoModelBranchStruct",
+      "Fortran struct: tao_model_branch_struct"
+  );
+  auto py_TaoSpinMapStruct =
+      py::class_<TaoSpinMapStruct>(m, "TaoSpinMapStruct", "Fortran struct: tao_spin_map_struct");
+  auto py_TaoDataStruct =
+      py::class_<TaoDataStruct>(m, "TaoDataStruct", "Fortran struct: tao_data_struct");
+  auto py_TaoPingScaleStruct = py::class_<TaoPingScaleStruct>(
+      m,
+      "TaoPingScaleStruct",
+      "Fortran struct: tao_ping_scale_struct"
+  );
+  auto py_TaoUniverseCalcStruct = py::class_<TaoUniverseCalcStruct>(
+      m,
+      "TaoUniverseCalcStruct",
+      "Fortran struct: tao_universe_calc_struct"
+  );
+  auto py_LatEleOrderStruct =
+      py::class_<LatEleOrderStruct>(m, "LatEleOrderStruct", "Fortran struct: lat_ele_order_struct");
+  auto py_TaoExpressionInfoStruct = py::class_<TaoExpressionInfoStruct>(
       m,
       "TaoExpressionInfoStruct",
-      "Fortran struct: tao_expression_info_struct");
-  auto py_TaoEvalNodeStruct = py::class_<TaoEvalNodeProxy>(
-      m, "TaoEvalNodeStruct", "Fortran struct: tao_eval_node_struct");
-  auto py_TaoTitleStruct = py::class_<TaoTitleProxy>(
-      m, "TaoTitleStruct", "Fortran struct: tao_title_struct");
-  auto py_QpRectStruct = py::class_<QpRectProxy>(
-      m, "QpRectStruct", "Fortran struct: qp_rect_struct");
-  auto py_TaoDrawingStruct = py::class_<TaoDrawingProxy>(
-      m, "TaoDrawingStruct", "Fortran struct: tao_drawing_struct");
-  auto py_TaoShapePatternStruct = py::class_<TaoShapePatternProxy>(
-      m, "TaoShapePatternStruct", "Fortran struct: tao_shape_pattern_struct");
-  auto py_TaoShapePatternPointStruct = py::class_<TaoShapePatternPointProxy>(
+      "Fortran struct: tao_expression_info_struct"
+  );
+  auto py_TaoEvalNodeStruct =
+      py::class_<TaoEvalNodeStruct>(m, "TaoEvalNodeStruct", "Fortran struct: tao_eval_node_struct");
+  auto py_TaoTitleStruct =
+      py::class_<TaoTitleStruct>(m, "TaoTitleStruct", "Fortran struct: tao_title_struct");
+  auto py_QpRectStruct =
+      py::class_<QpRectStruct>(m, "QpRectStruct", "Fortran struct: qp_rect_struct");
+  auto py_TaoDrawingStruct =
+      py::class_<TaoDrawingStruct>(m, "TaoDrawingStruct", "Fortran struct: tao_drawing_struct");
+  auto py_TaoShapePatternStruct = py::class_<TaoShapePatternStruct>(
+      m,
+      "TaoShapePatternStruct",
+      "Fortran struct: tao_shape_pattern_struct"
+  );
+  auto py_TaoShapePatternPointStruct = py::class_<TaoShapePatternPointStruct>(
       m,
       "TaoShapePatternPointStruct",
-      "Fortran struct: tao_shape_pattern_point_struct");
-  auto py_QpAxisStruct = py::class_<QpAxisProxy>(
-      m, "QpAxisStruct", "Fortran struct: qp_axis_struct");
-  auto py_QpLegendStruct = py::class_<QpLegendProxy>(
-      m, "QpLegendStruct", "Fortran struct: qp_legend_struct");
-  auto py_QpPointStruct = py::class_<QpPointProxy>(
-      m, "QpPointStruct", "Fortran struct: qp_point_struct");
-  auto py_QpLineStruct = py::class_<QpLineProxy>(
-      m, "QpLineStruct", "Fortran struct: qp_line_struct");
-  auto py_QpSymbolStruct = py::class_<QpSymbolProxy>(
-      m, "QpSymbolStruct", "Fortran struct: qp_symbol_struct");
-  auto py_TaoFloorPlanStruct = py::class_<TaoFloorPlanProxy>(
-      m, "TaoFloorPlanStruct", "Fortran struct: tao_floor_plan_struct");
-  auto py_TaoV1VarStruct = py::class_<TaoV1VarProxy>(
-      m, "TaoV1VarStruct", "Fortran struct: tao_v1_var_struct");
-  auto py_TaoGlobalStruct = py::class_<TaoGlobalProxy>(
-      m, "TaoGlobalStruct", "Fortran struct: tao_global_struct");
-  auto py_TaoInitStruct = py::class_<TaoInitProxy>(
-      m, "TaoInitStruct", "Fortran struct: tao_init_struct");
-  auto py_TaoCommonStruct = py::class_<TaoCommonProxy>(
-      m, "TaoCommonStruct", "Fortran struct: tao_common_struct");
-  auto py_TaoPlotPageStruct = py::class_<TaoPlotPageProxy>(
-      m, "TaoPlotPageStruct", "Fortran struct: tao_plot_page_struct");
-  auto py_TaoBuildingWallStruct = py::class_<TaoBuildingWallProxy>(
-      m, "TaoBuildingWallStruct", "Fortran struct: tao_building_wall_struct");
-  auto py_TaoBuildingWallOrientationStruct =
-      py::class_<TaoBuildingWallOrientationProxy>(
-          m,
-          "TaoBuildingWallOrientationStruct",
-          "Fortran struct: tao_building_wall_orientation_struct");
-  auto py_TaoBuildingWallSectionStruct =
-      py::class_<TaoBuildingWallSectionProxy>(
-          m,
-          "TaoBuildingWallSectionStruct",
-          "Fortran struct: tao_building_wall_section_struct");
-  auto py_TaoBuildingWallPointStruct = py::class_<TaoBuildingWallPointProxy>(
+      "Fortran struct: tao_shape_pattern_point_struct"
+  );
+  auto py_QpAxisStruct =
+      py::class_<QpAxisStruct>(m, "QpAxisStruct", "Fortran struct: qp_axis_struct");
+  auto py_QpLegendStruct =
+      py::class_<QpLegendStruct>(m, "QpLegendStruct", "Fortran struct: qp_legend_struct");
+  auto py_QpPointStruct =
+      py::class_<QpPointStruct>(m, "QpPointStruct", "Fortran struct: qp_point_struct");
+  auto py_QpLineStruct =
+      py::class_<QpLineStruct>(m, "QpLineStruct", "Fortran struct: qp_line_struct");
+  auto py_QpSymbolStruct =
+      py::class_<QpSymbolStruct>(m, "QpSymbolStruct", "Fortran struct: qp_symbol_struct");
+  auto py_TaoFloorPlanStruct = py::class_<TaoFloorPlanStruct>(
+      m,
+      "TaoFloorPlanStruct",
+      "Fortran struct: tao_floor_plan_struct"
+  );
+  auto py_TaoV1VarStruct =
+      py::class_<TaoV1VarStruct>(m, "TaoV1VarStruct", "Fortran struct: tao_v1_var_struct");
+  auto py_TaoGlobalStruct =
+      py::class_<TaoGlobalStruct>(m, "TaoGlobalStruct", "Fortran struct: tao_global_struct");
+  auto py_TaoInitStruct =
+      py::class_<TaoInitStruct>(m, "TaoInitStruct", "Fortran struct: tao_init_struct");
+  auto py_TaoCommonStruct =
+      py::class_<TaoCommonStruct>(m, "TaoCommonStruct", "Fortran struct: tao_common_struct");
+  auto py_TaoPlotPageStruct =
+      py::class_<TaoPlotPageStruct>(m, "TaoPlotPageStruct", "Fortran struct: tao_plot_page_struct");
+  auto py_TaoBuildingWallStruct = py::class_<TaoBuildingWallStruct>(
+      m,
+      "TaoBuildingWallStruct",
+      "Fortran struct: tao_building_wall_struct"
+  );
+  auto py_TaoBuildingWallOrientationStruct = py::class_<TaoBuildingWallOrientationStruct>(
+      m,
+      "TaoBuildingWallOrientationStruct",
+      "Fortran struct: tao_building_wall_orientation_struct"
+  );
+  auto py_TaoBuildingWallSectionStruct = py::class_<TaoBuildingWallSectionStruct>(
+      m,
+      "TaoBuildingWallSectionStruct",
+      "Fortran struct: tao_building_wall_section_struct"
+  );
+  auto py_TaoBuildingWallPointStruct = py::class_<TaoBuildingWallPointStruct>(
       m,
       "TaoBuildingWallPointStruct",
-      "Fortran struct: tao_building_wall_point_struct");
-  auto py_TaoWaveStruct = py::class_<TaoWaveProxy>(
-      m, "TaoWaveStruct", "Fortran struct: tao_wave_struct");
-  auto py_TaoWaveKickPtStruct = py::class_<TaoWaveKickPtProxy>(
-      m, "TaoWaveKickPtStruct", "Fortran struct: tao_wave_kick_pt_struct");
-  auto py_TaoCmdHistoryStruct = py::class_<TaoCmdHistoryProxy>(
-      m, "TaoCmdHistoryStruct", "Fortran struct: tao_cmd_history_struct");
-  auto py_TaoUniverseStruct = py::class_<TaoUniverseProxy>(
-      m, "TaoUniverseStruct", "Fortran struct: tao_universe_struct");
-  auto py_MadEnergyStruct = py::class_<MadEnergyProxy>(
-      m, "MadEnergyStruct", "Fortran struct: mad_energy_struct");
-  auto py_MadMapStruct = py::class_<MadMapProxy>(
-      m, "MadMapStruct", "Fortran struct: mad_map_struct");
-  auto py_RandomStateStruct = py::class_<RandomStateProxy>(
-      m, "RandomStateStruct", "Fortran struct: random_state_struct");
-  auto py_BbuStageStruct = py::class_<BbuStageProxy>(
-      m, "BbuStageStruct", "Fortran struct: bbu_stage_struct");
-  auto py_BbuBeamStruct = py::class_<BbuBeamProxy>(
-      m, "BbuBeamStruct", "Fortran struct: bbu_beam_struct");
-  auto py_BbuParamStruct = py::class_<BbuParamProxy>(
-      m, "BbuParamStruct", "Fortran struct: bbu_param_struct");
-  auto py_Fibre =
-      py::class_<FibreRawStruct>(m, "Fibre", "Fortran struct: fibre");
-  auto py_Layout =
-      py::class_<LayoutRawStruct>(m, "Layout", "Fortran struct: layout");
-  auto py_AllEncompassingStruct = py::class_<AllEncompassingProxy>(
-      m, "AllEncompassingStruct", "Fortran struct: all_encompassing_struct");
-  auto py_TestSubStruct = py::class_<TestSubProxy>(
-      m, "TestSubStruct", "Fortran struct: test_sub_struct");
-  auto py_TestSubSubStruct = py::class_<TestSubSubProxy>(
-      m, "TestSubSubStruct", "Fortran struct: test_sub_sub_struct");
+      "Fortran struct: tao_building_wall_point_struct"
+  );
+  auto py_TaoWaveStruct =
+      py::class_<TaoWaveStruct>(m, "TaoWaveStruct", "Fortran struct: tao_wave_struct");
+  auto py_TaoWaveKickPtStruct = py::class_<TaoWaveKickPtStruct>(
+      m,
+      "TaoWaveKickPtStruct",
+      "Fortran struct: tao_wave_kick_pt_struct"
+  );
+  auto py_TaoCmdHistoryStruct = py::class_<TaoCmdHistoryStruct>(
+      m,
+      "TaoCmdHistoryStruct",
+      "Fortran struct: tao_cmd_history_struct"
+  );
+  auto py_TaoUniverseStruct =
+      py::class_<TaoUniverseStruct>(m, "TaoUniverseStruct", "Fortran struct: tao_universe_struct");
+  auto py_MadEnergyStruct =
+      py::class_<MadEnergyStruct>(m, "MadEnergyStruct", "Fortran struct: mad_energy_struct");
+  auto py_MadMapStruct =
+      py::class_<MadMapStruct>(m, "MadMapStruct", "Fortran struct: mad_map_struct");
+  auto py_RandomStateStruct =
+      py::class_<RandomStateStruct>(m, "RandomStateStruct", "Fortran struct: random_state_struct");
+  auto py_BbuStageStruct =
+      py::class_<BbuStageStruct>(m, "BbuStageStruct", "Fortran struct: bbu_stage_struct");
+  auto py_BbuBeamStruct =
+      py::class_<BbuBeamStruct>(m, "BbuBeamStruct", "Fortran struct: bbu_beam_struct");
+  auto py_BbuParamStruct =
+      py::class_<BbuParamStruct>(m, "BbuParamStruct", "Fortran struct: bbu_param_struct");
+  auto py_Fibre = py::class_<Fibre>(m, "Fibre", "Fortran struct: fibre");
+  auto py_Layout = py::class_<Layout>(m, "Layout", "Fortran struct: layout");
+  auto py_AllEncompassingStruct = py::class_<AllEncompassingStruct>(
+      m,
+      "AllEncompassingStruct",
+      "Fortran struct: all_encompassing_struct"
+  );
+  auto py_TestSubStruct =
+      py::class_<TestSubStruct>(m, "TestSubStruct", "Fortran struct: test_sub_struct");
+  auto py_TestSubSubStruct =
+      py::class_<TestSubSubStruct>(m, "TestSubSubStruct", "Fortran struct: test_sub_sub_struct");
   init_spline_struct(m, py_SplineStruct);
   init_spin_polar_struct(m, py_SpinPolarStruct);
   init_ac_kicker_time_struct(m, py_AcKickerTimeStruct);
@@ -594,8 +778,7 @@ PYBIND11_MODULE(_pybmad, m) {
   init_tao_common_struct(m, py_TaoCommonStruct);
   init_tao_plot_page_struct(m, py_TaoPlotPageStruct);
   init_tao_building_wall_struct(m, py_TaoBuildingWallStruct);
-  init_tao_building_wall_orientation_struct(
-      m, py_TaoBuildingWallOrientationStruct);
+  init_tao_building_wall_orientation_struct(m, py_TaoBuildingWallOrientationStruct);
   init_tao_building_wall_section_struct(m, py_TaoBuildingWallSectionStruct);
   init_tao_building_wall_point_struct(m, py_TaoBuildingWallPointStruct);
   init_tao_wave_struct(m, py_TaoWaveStruct);
@@ -687,10 +870,7 @@ PYBIND11_MODULE(_pybmad, m) {
 
   // Enums
   py::native_enum<EleAttribute>(m, "EleAttribute", "enum.IntEnum")
-      .value(
-          "L",
-          EleAttribute::L,
-          "Assumed unique. Do not assign 1 to another attribute.")
+      .value("L", EleAttribute::L, "Assumed unique. Do not assign 1 to another attribute.")
       .value("TILT", EleAttribute::TILT, "Important: tilt$ = roll$")
       .value("ROLL", EleAttribute::ROLL)
       .value("N_PART", EleAttribute::N_PART)
@@ -767,8 +947,7 @@ PYBIND11_MODULE(_pybmad, m) {
       .value("DARWIN_WIDTH_SIGMA", EleAttribute::DARWIN_WIDTH_SIGMA)
       .value("DARWIN_WIDTH_PI", EleAttribute::DARWIN_WIDTH_PI)
       .value("SPIN_FRINGE_ON", EleAttribute::SPIN_FRINGE_ON)
-      .value(
-          "PENDELLOSUNG_PERIOD_SIGMA", EleAttribute::PENDELLOSUNG_PERIOD_SIGMA)
+      .value("PENDELLOSUNG_PERIOD_SIGMA", EleAttribute::PENDELLOSUNG_PERIOD_SIGMA)
       .value("SIG_X", EleAttribute::SIG_X)
       .value("EXACT_MULTIPOLES", EleAttribute::EXACT_MULTIPOLES)
       .value("PENDELLOSUNG_PERIOD_PI", EleAttribute::PENDELLOSUNG_PERIOD_PI)
@@ -854,8 +1033,7 @@ PYBIND11_MODULE(_pybmad, m) {
       .value("PHI0_MULTIPASS", EleAttribute::PHI0_MULTIPASS)
       .value("N_SAMPLE", EleAttribute::N_SAMPLE)
       .value("ORIGIN_ELE_REF_PT", EleAttribute::ORIGIN_ELE_REF_PT)
-      .value(
-          "MOSAIC_ANGLE_RMS_IN_PLANE", EleAttribute::MOSAIC_ANGLE_RMS_IN_PLANE)
+      .value("MOSAIC_ANGLE_RMS_IN_PLANE", EleAttribute::MOSAIC_ANGLE_RMS_IN_PLANE)
       .value("EPS_STEP_SCALE", EleAttribute::EPS_STEP_SCALE)
       .value("E_TOT_STRONG", EleAttribute::E_TOT_STRONG)
       .value("DTHICKNESS_DX", EleAttribute::DTHICKNESS_DX)
@@ -866,9 +1044,7 @@ PYBIND11_MODULE(_pybmad, m) {
       .value("ENERGY_DISTRIBUTION", EleAttribute::ENERGY_DISTRIBUTION)
       .value("X_QUAD", EleAttribute::X_QUAD)
       .value("DS_PHOTON_SLICE", EleAttribute::DS_PHOTON_SLICE)
-      .value(
-          "MOSAIC_ANGLE_RMS_OUT_PLANE",
-          EleAttribute::MOSAIC_ANGLE_RMS_OUT_PLANE)
+      .value("MOSAIC_ANGLE_RMS_OUT_PLANE", EleAttribute::MOSAIC_ANGLE_RMS_OUT_PLANE)
       .value("PY_APERTURE_CENTER", EleAttribute::PY_APERTURE_CENTER)
       .value("X_DISPERSION_ERR", EleAttribute::X_DISPERSION_ERR)
       .value("L_RECTANGLE", EleAttribute::L_RECTANGLE)
@@ -926,7 +1102,8 @@ PYBIND11_MODULE(_pybmad, m) {
       .value(
           "X_PITCH",
           EleAttribute::X_PITCH,
-          "Note: [x_kick$, px_kick$, ..., pz_kick$] must be in order.")
+          "Note: [x_kick$, px_kick$, ..., pz_kick$] must be in order."
+      )
       .value("PX_KICK", EleAttribute::PX_KICK)
       .value("Y_PITCH", EleAttribute::Y_PITCH)
       .value("Y_KICK", EleAttribute::Y_KICK)
@@ -955,9 +1132,7 @@ PYBIND11_MODULE(_pybmad, m) {
       .value("BL_KICK", EleAttribute::BL_KICK)
       .value("B_FIELD", EleAttribute::B_FIELD)
       .value("E_FIELD", EleAttribute::E_FIELD)
-      .value(
-          "HIGH_ENERGY_SPACE_CHARGE_ON",
-          EleAttribute::HIGH_ENERGY_SPACE_CHARGE_ON)
+      .value("HIGH_ENERGY_SPACE_CHARGE_ON", EleAttribute::HIGH_ENERGY_SPACE_CHARGE_ON)
       .value("CRAB_X4", EleAttribute::CRAB_X4)
       .value("N_RF_STEPS", EleAttribute::N_RF_STEPS)
       .value("PHOTON_TYPE", EleAttribute::PHOTON_TYPE)
@@ -995,28 +1170,24 @@ PYBIND11_MODULE(_pybmad, m) {
       .value("X_OFFSET_TOT", EleAttribute::X_OFFSET_TOT)
       .value("Y_OFFSET_TOT", EleAttribute::Y_OFFSET_TOT)
       .value("Z_OFFSET_TOT", EleAttribute::Z_OFFSET_TOT)
-      .value(
-          "TILT_TOT",
-          EleAttribute::TILT_TOT,
-          "Important: tilt_tot$ = roll_tot$")
+      .value("TILT_TOT", EleAttribute::TILT_TOT, "Important: tilt_tot$ = roll_tot$")
       .value("ROLL_TOT", EleAttribute::ROLL_TOT)
       .value("REF_TILT_TOT", EleAttribute::REF_TILT_TOT)
       .value("MULTIPASS_REF_ENERGY", EleAttribute::MULTIPASS_REF_ENERGY)
       .value("DISPATCH", EleAttribute::DISPATCH)
       .value("REF_TIME_START", EleAttribute::REF_TIME_START)
-      .value(
-          "THICKNESS",
-          EleAttribute::THICKNESS,
-          "For Etiennes' PTC: 2, 4, 6, or 8.")
+      .value("THICKNESS", EleAttribute::THICKNESS, "For Etiennes' PTC: 2, 4, 6, or 8.")
       .value("INTEGRATOR_ORDER", EleAttribute::INTEGRATOR_ORDER)
       .value(
           "NUM_STEPS",
           EleAttribute::NUM_STEPS,
-          "Assumed unique by set_flags_for_changed_real_attribute")
+          "Assumed unique by set_flags_for_changed_real_attribute"
+      )
       .value(
           "DS_STEP",
           EleAttribute::DS_STEP,
-          "Assumed unique by set_flags_for_changed_real_attribute")
+          "Assumed unique by set_flags_for_changed_real_attribute"
+      )
       .value("CSR_DS_STEP", EleAttribute::CSR_DS_STEP)
       .value("LORD_PAD1", EleAttribute::LORD_PAD1)
       .value("LORD_PAD2", EleAttribute::LORD_PAD2)
@@ -1127,8 +1298,7 @@ PYBIND11_MODULE(_pybmad, m) {
   m.attr("MAGNUS") = py::int_(Bmad::MAGNUS);
   m.attr("AUTO") = py::int_(Bmad::AUTO);
   m.attr("SPRINT") = py::int_(Bmad::SPRINT);
-  m.attr("FIXED_STEP_TIME_RUNGE_KUTTA") =
-      py::int_(Bmad::FIXED_STEP_TIME_RUNGE_KUTTA);
+  m.attr("FIXED_STEP_TIME_RUNGE_KUTTA") = py::int_(Bmad::FIXED_STEP_TIME_RUNGE_KUTTA);
   m.attr("MAD") = py::int_(Bmad::MAD);
   m.attr("TRANSVERSE_KICK") = py::int_(Bmad::TRANSVERSE_KICK);
   m.attr("SPIN_INTEGRATION") = py::int_(Bmad::SPIN_INTEGRATION);
@@ -1318,8 +1488,7 @@ PYBIND11_MODULE(_pybmad, m) {
   m.attr("MAT6_GROUP") = py::int_(Bmad::MAT6_GROUP);
   m.attr("RAD_INT_GROUP") = py::int_(Bmad::RAD_INT_GROUP);
   m.attr("ALL_GROUPS") = py::int_(Bmad::ALL_GROUPS);
-  m.attr("S_AND_FLOOR_POSITION_GROUP") =
-      py::int_(Bmad::S_AND_FLOOR_POSITION_GROUP);
+  m.attr("S_AND_FLOOR_POSITION_GROUP") = py::int_(Bmad::S_AND_FLOOR_POSITION_GROUP);
   m.attr("POLARIZED") = py::int_(Bmad::POLARIZED);
   m.attr("UNPOLARIZED") = py::int_(Bmad::UNPOLARIZED);
   m.attr("CUBIC") = py::int_(Bmad::CUBIC);
@@ -1595,8 +1764,7 @@ PYBIND11_MODULE(_pybmad, m) {
   m.attr("DARWIN_WIDTH_SIGMA") = py::int_(Bmad::DARWIN_WIDTH_SIGMA);
   m.attr("DARWIN_WIDTH_PI") = py::int_(Bmad::DARWIN_WIDTH_PI);
   m.attr("SPIN_FRINGE_ON") = py::int_(Bmad::SPIN_FRINGE_ON);
-  m.attr("PENDELLOSUNG_PERIOD_SIGMA") =
-      py::int_(Bmad::PENDELLOSUNG_PERIOD_SIGMA);
+  m.attr("PENDELLOSUNG_PERIOD_SIGMA") = py::int_(Bmad::PENDELLOSUNG_PERIOD_SIGMA);
   m.attr("SIG_X") = py::int_(Bmad::SIG_X);
   m.attr("EXACT_MULTIPOLES") = py::int_(Bmad::EXACT_MULTIPOLES);
   m.attr("PENDELLOSUNG_PERIOD_PI") = py::int_(Bmad::PENDELLOSUNG_PERIOD_PI);
@@ -1682,8 +1850,7 @@ PYBIND11_MODULE(_pybmad, m) {
   m.attr("PHI0_MULTIPASS") = py::int_(Bmad::PHI0_MULTIPASS);
   m.attr("N_SAMPLE") = py::int_(Bmad::N_SAMPLE);
   m.attr("ORIGIN_ELE_REF_PT") = py::int_(Bmad::ORIGIN_ELE_REF_PT);
-  m.attr("MOSAIC_ANGLE_RMS_IN_PLANE") =
-      py::int_(Bmad::MOSAIC_ANGLE_RMS_IN_PLANE);
+  m.attr("MOSAIC_ANGLE_RMS_IN_PLANE") = py::int_(Bmad::MOSAIC_ANGLE_RMS_IN_PLANE);
   m.attr("EPS_STEP_SCALE") = py::int_(Bmad::EPS_STEP_SCALE);
   m.attr("E_TOT_STRONG") = py::int_(Bmad::E_TOT_STRONG);
   m.attr("DTHICKNESS_DX") = py::int_(Bmad::DTHICKNESS_DX);
@@ -1694,8 +1861,7 @@ PYBIND11_MODULE(_pybmad, m) {
   m.attr("ENERGY_DISTRIBUTION") = py::int_(Bmad::ENERGY_DISTRIBUTION);
   m.attr("X_QUAD") = py::int_(Bmad::X_QUAD);
   m.attr("DS_PHOTON_SLICE") = py::int_(Bmad::DS_PHOTON_SLICE);
-  m.attr("MOSAIC_ANGLE_RMS_OUT_PLANE") =
-      py::int_(Bmad::MOSAIC_ANGLE_RMS_OUT_PLANE);
+  m.attr("MOSAIC_ANGLE_RMS_OUT_PLANE") = py::int_(Bmad::MOSAIC_ANGLE_RMS_OUT_PLANE);
   m.attr("PY_APERTURE_CENTER") = py::int_(Bmad::PY_APERTURE_CENTER);
   m.attr("X_DISPERSION_ERR") = py::int_(Bmad::X_DISPERSION_ERR);
   m.attr("L_RECTANGLE") = py::int_(Bmad::L_RECTANGLE);
@@ -1780,8 +1946,7 @@ PYBIND11_MODULE(_pybmad, m) {
   m.attr("BL_KICK") = py::int_(Bmad::BL_KICK);
   m.attr("B_FIELD") = py::int_(Bmad::B_FIELD);
   m.attr("E_FIELD") = py::int_(Bmad::E_FIELD);
-  m.attr("HIGH_ENERGY_SPACE_CHARGE_ON") =
-      py::int_(Bmad::HIGH_ENERGY_SPACE_CHARGE_ON);
+  m.attr("HIGH_ENERGY_SPACE_CHARGE_ON") = py::int_(Bmad::HIGH_ENERGY_SPACE_CHARGE_ON);
   m.attr("CRAB_X4") = py::int_(Bmad::CRAB_X4);
   m.attr("N_RF_STEPS") = py::int_(Bmad::N_RF_STEPS);
   m.attr("PHOTON_TYPE") = py::int_(Bmad::PHOTON_TYPE);
@@ -1875,8 +2040,7 @@ PYBIND11_MODULE(_pybmad, m) {
   m.attr("APERTURE_TYPE") = py::int_(Bmad::APERTURE_TYPE);
   m.attr("ETA_Z") = py::int_(Bmad::ETA_Z);
   m.attr("MACHINE") = py::int_(Bmad::MACHINE);
-  m.attr("TAYLOR_MAP_INCLUDES_OFFSETS") =
-      py::int_(Bmad::TAYLOR_MAP_INCLUDES_OFFSETS);
+  m.attr("TAYLOR_MAP_INCLUDES_OFFSETS") = py::int_(Bmad::TAYLOR_MAP_INCLUDES_OFFSETS);
   m.attr("PIXEL") = py::int_(Bmad::PIXEL);
   m.attr("P88") = py::int_(Bmad::P88);
   m.attr("RADIATION_LENGTH") = py::int_(Bmad::RADIATION_LENGTH);
@@ -2002,8 +2166,7 @@ PYBIND11_MODULE(_pybmad, m) {
   m.attr("DEGREES") = py::int_(Bmad::DEGREES);
   m.attr("CYCLES") = py::int_(Bmad::CYCLES);
   m.attr("RADIANS_OVER_2PI") = py::int_(Bmad::RADIANS_OVER_2PI);
-  m.attr("ROTATIONALLY_SYMMETRIC_RZ") =
-      py::int_(Bmad::ROTATIONALLY_SYMMETRIC_RZ);
+  m.attr("ROTATIONALLY_SYMMETRIC_RZ") = py::int_(Bmad::ROTATIONALLY_SYMMETRIC_RZ);
   m.attr("XYZ") = py::int_(Bmad::XYZ);
   m.attr("INVALID_NAME") = py::int_(Bmad::INVALID_NAME);
   m.attr("IS_LOGICAL") = py::int_(Bmad::IS_LOGICAL);
@@ -2163,19 +2326,13 @@ PYBIND11_MODULE(_pybmad, m) {
   // Number / mole  (exact)
   m.attr("N_AVOGADRO") = py::float_(Bmad::N_AVOGADRO);
   m.attr("FINE_STRUCTURE_CONSTANT") = py::float_(Bmad::FINE_STRUCTURE_CONSTANT);
-  m.attr("ANOMALOUS_MAG_MOMENT_ELECTRON") =
-      py::float_(Bmad::ANOMALOUS_MAG_MOMENT_ELECTRON);
-  m.attr("ANOMALOUS_MAG_MOMENT_PROTON") =
-      py::float_(Bmad::ANOMALOUS_MAG_MOMENT_PROTON);
+  m.attr("ANOMALOUS_MAG_MOMENT_ELECTRON") = py::float_(Bmad::ANOMALOUS_MAG_MOMENT_ELECTRON);
+  m.attr("ANOMALOUS_MAG_MOMENT_PROTON") = py::float_(Bmad::ANOMALOUS_MAG_MOMENT_PROTON);
   // ~fine_structure_constant / twopi
-  m.attr("ANOMALOUS_MAG_MOMENT_MUON") =
-      py::float_(Bmad::ANOMALOUS_MAG_MOMENT_MUON);
-  m.attr("ANOMALOUS_MAG_MOMENT_DEUTERON") =
-      py::float_(Bmad::ANOMALOUS_MAG_MOMENT_DEUTERON);
-  m.attr("ANOMALOUS_MAG_MOMENT_NEUTRON") =
-      py::float_(Bmad::ANOMALOUS_MAG_MOMENT_NEUTRON);
-  m.attr("ANOMALOUS_MAG_MOMENT_HE3") =
-      py::float_(Bmad::ANOMALOUS_MAG_MOMENT_HE3);
+  m.attr("ANOMALOUS_MAG_MOMENT_MUON") = py::float_(Bmad::ANOMALOUS_MAG_MOMENT_MUON);
+  m.attr("ANOMALOUS_MAG_MOMENT_DEUTERON") = py::float_(Bmad::ANOMALOUS_MAG_MOMENT_DEUTERON);
+  m.attr("ANOMALOUS_MAG_MOMENT_NEUTRON") = py::float_(Bmad::ANOMALOUS_MAG_MOMENT_NEUTRON);
+  m.attr("ANOMALOUS_MAG_MOMENT_HE3") = py::float_(Bmad::ANOMALOUS_MAG_MOMENT_HE3);
 
   // Enums from particle_species_mod.f90
   m.attr("PION_0") = py::int_(Bmad::PION_0);

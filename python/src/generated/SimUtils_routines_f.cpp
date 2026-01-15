@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_f(py::module& m) {
+void init_SimUtils_routines_f(py::module &m) {
   m.def(
       "factorial",
       &SimUtils::factorial,
@@ -14,7 +14,8 @@ void init_SimUtils_routines_f(py::module& m) {
 ----------
 n : 
 fact : 
-)""");
+)"""
+  );
   m.def(
       "faddeeva_function",
       &SimUtils::faddeeva_function,
@@ -26,7 +27,8 @@ fact :
 z : 
 w : 
 dw : 
-)""");
+)"""
+  );
   m.def(
       "fft_1d",
       &SimUtils::fft_1d,
@@ -46,7 +48,8 @@ arr : complex
     This parameter is an input/output and is modified in-place. As an output: FFT of array.
 isign : int
     -1 => "Forward" transform, +1 => "Backwards" transform.
-)""");
+)"""
+  );
   m.def(
       "file_directorizer",
       &SimUtils::file_directorizer,
@@ -60,7 +63,8 @@ in_file :
 out_file : 
 directory : 
 add_switch : 
-)""");
+)"""
+  );
   m.def(
       "file_get",
       &SimUtils::file_get,
@@ -72,7 +76,8 @@ add_switch :
 string : 
 dflt_file_name : 
 file_name : 
-)""");
+)"""
+  );
   m.def(
       "file_get_open",
       &SimUtils::file_get_open,
@@ -88,7 +93,8 @@ dflt_file_name :
 file_name : 
 file_unit : 
 readonly : 
-)""");
+)"""
+  );
   m.def(
       "file_suffixer",
       &SimUtils::file_suffixer,
@@ -102,10 +108,11 @@ in_file_name :
 out_file_name : 
 suffix : 
 add_switch : 
-)""");
+)"""
+  );
   m.def(
       "find_location",
-      py::overload_cast<FArray1D<Int>&, int, int>(&SimUtils::find_location),
+      py::overload_cast<FArray1D<Int> &, int, int>(&SimUtils::find_location),
       py::arg("arr"),
       py::arg("value"),
       py::arg("ix_match"),
@@ -114,10 +121,11 @@ add_switch :
 arr : 
 value : 
 ix_match : 
-)""");
+)"""
+  );
   m.def(
       "find_location",
-      py::overload_cast<BoolAlloc1D&, bool, int>(&SimUtils::find_location),
+      py::overload_cast<BoolAlloc1D &, bool, int>(&SimUtils::find_location),
       py::arg("arr"),
       py::arg("value"),
       py::arg("ix_match"),
@@ -126,10 +134,11 @@ ix_match :
 arr : 
 value : 
 ix_match : 
-)""");
+)"""
+  );
   m.def(
       "find_location",
-      py::overload_cast<FArray1D<Real>&, double, int>(&SimUtils::find_location),
+      py::overload_cast<FArray1D<Real> &, double, int>(&SimUtils::find_location),
       py::arg("arr"),
       py::arg("value"),
       py::arg("ix_match"),
@@ -140,7 +149,8 @@ arr :
 value : unknown
     :).
 ix_match : 
-)""");
+)"""
+  );
   m.def(
       "fine_frequency_estimate",
       &SimUtils::fine_frequency_estimate,
@@ -159,7 +169,8 @@ Returns
 -------
 frequency : float
     Frequency corresponding to the largest FFT amplitude
-)""");
+)"""
+  );
   m.def(
       "fixedwindowls",
       &SimUtils::fixedwindowls,
@@ -177,31 +188,31 @@ a number of data points equal to N has been entered.
 initFixedWindowLS must be called prior to calling this function.  destFixedWindowLS should be
 called when the instance is no longer needed.
 
-)""");
-  py::class_<
-      SimUtils::FourierAmplitude,
-      std::unique_ptr<SimUtils::FourierAmplitude>>(
-      m, "FourierAmplitude", "fourier_amplitude return type")
+)"""
+  );
+  py::class_<SimUtils::FourierAmplitude, std::unique_ptr<SimUtils::FourierAmplitude>>(
+      m,
+      "FourierAmplitude",
+      "fourier_amplitude return type"
+  )
       .def_readonly("cos_amp", &SimUtils::FourierAmplitude::cos_amp)
       .def_readonly("sin_amp", &SimUtils::FourierAmplitude::sin_amp)
       .def_readonly("dcos_amp", &SimUtils::FourierAmplitude::dcos_amp)
       .def_readonly("dsin_amp", &SimUtils::FourierAmplitude::dsin_amp)
-      .def("__len__", [](const SimUtils::FourierAmplitude&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::FourierAmplitude& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.cos_amp);
-            if (i == 1)
-              return py::cast(s.sin_amp);
-            if (i == 2)
-              return py::cast(s.dcos_amp);
-            if (i == 3)
-              return py::cast(s.dsin_amp);
-            throw py::index_error();
-          });
+      .def("__len__", [](const SimUtils::FourierAmplitude &) { return 4; })
+      .def("__getitem__", [](const SimUtils::FourierAmplitude &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.cos_amp);
+        if (i == 1)
+          return py::cast(s.sin_amp);
+        if (i == 2)
+          return py::cast(s.dcos_amp);
+        if (i == 3)
+          return py::cast(s.dsin_amp);
+        throw py::index_error();
+      });
   m.def(
       "fourier_amplitude",
       &SimUtils::fourier_amplitude,
@@ -231,5 +242,6 @@ dcos_amp : float
     cosine amplitude derivative
 dsin_amp : float
     sine amplitude derivative
-)""");
+)"""
+  );
 }

@@ -175,7 +175,7 @@ endif()
 
 foreach(TEST_NAME test_integration test_csr test_arrays)
   add_executable(${TEST_NAME} src/tests/${TEST_NAME}.cpp)
-  target_include_directories(${TEST_NAME} PRIVATE "./include")
+  target_include_directories(${TEST_NAME} PRIVATE "./include" "./src/tests")
   target_link_directories(
     ${TEST_NAME}
     PRIVATE
@@ -194,11 +194,7 @@ target_include_directories(test_all_encompassing PRIVATE
   "./include"
   "./src/tests"  # for doctest.h
 )
-target_link_directories(
-  test_all_encompassing
-  PRIVATE
-  "$ENV{ACC_ROOT_DIR}/${BUILD_TYPE}/lib"
-)
+target_link_directories(test_all_encompassing PRIVATE "$ENV{ACC_ROOT_DIR}/${BUILD_TYPE}/lib")
 target_link_libraries(test_all_encompassing PRIVATE ${LIBNAME})
 set_property(TARGET test_all_encompassing PROPERTY CXX_STANDARD 17)
 

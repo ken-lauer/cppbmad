@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_bsim_routines_s(py::module& m) {
+void init_bsim_routines_s(py::module &m) {
   m.def(
       "set_tune_3d",
       &bsim::set_tune_3d,
@@ -34,5 +34,6 @@ group_knobs : unknown, optional
 print_err : bool, optional
     Print error message if there is a problem? Default is True.
 everything_ok : 
-)""");
+)"""
+  );
 }

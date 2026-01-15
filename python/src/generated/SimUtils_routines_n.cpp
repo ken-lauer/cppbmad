@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_n(py::module& m) {
+void init_SimUtils_routines_n(py::module &m) {
   m.def(
       "n_bins_automatic",
       &SimUtils::n_bins_automatic,
@@ -12,7 +12,8 @@ void init_SimUtils_routines_n(py::module& m) {
       py::arg("n"),
       R"""(Function to automatically select the number of bins
 
-)""");
+)"""
+  );
   m.def(
       "n_choose_k",
       &SimUtils::n_choose_k,
@@ -24,7 +25,8 @@ void init_SimUtils_routines_n(py::module& m) {
 n : 
 k : 
 nck : 
-)""");
+)"""
+  );
   m.def(
       "n_spline_create",
       &SimUtils::n_spline_create,
@@ -42,7 +44,8 @@ x1 : float
     Location where deriv1 derivatives have been evaluated.
 n_spline : 
     real(rp), Derivative vector from order 0 to order 2*n+1 of the interpolation spline.
-)""");
+)"""
+  );
   m.def(
       "naff",
       &SimUtils::naff,
@@ -63,7 +66,8 @@ Frequencies returned are in units of 2pi. That is, freqs ranges from 0 to 1.
 freqs and amps must be allocated before hand.  This subroutine will repeat the
 decomposition loop until all elements of freqs and amps are populated.
 
-)""");
+)"""
+  );
   m.def(
       "nametable_add",
       &SimUtils::nametable_add,
@@ -75,7 +79,8 @@ decomposition loop until all elements of freqs and amps are populated.
 nametable : 
 name : 
 ix_name : 
-)""");
+)"""
+  );
   m.def(
       "nametable_bracket_indexx",
       &SimUtils::nametable_bracket_indexx,
@@ -89,7 +94,8 @@ nametable :
 name : 
 n_match : 
 ix_max : 
-)""");
+)"""
+  );
   m.def(
       "nametable_change1",
       &SimUtils::nametable_change1,
@@ -101,7 +107,8 @@ ix_max :
 nametable : 
 name : 
 ix_name : 
-)""");
+)"""
+  );
   m.def(
       "nametable_init",
       &SimUtils::nametable_init,
@@ -113,7 +120,8 @@ ix_name :
 nametable : 
 n_min : 
 n_max : 
-)""");
+)"""
+  );
   m.def(
       "nametable_remove",
       &SimUtils::nametable_remove,
@@ -123,5 +131,6 @@ n_max :
 ----------
 nametable : 
 ix_name : 
-)""");
+)"""
+  );
 }

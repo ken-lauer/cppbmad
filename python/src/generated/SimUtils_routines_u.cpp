@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_u(py::module& m) {
+void init_SimUtils_routines_u(py::module &m) {
   m.def(
       "upcase_string",
       &SimUtils::upcase_string,
@@ -12,5 +12,6 @@ void init_SimUtils_routines_u(py::module& m) {
       R"""(Parameters
 ----------
 string : 
-)""");
+)"""
+  );
 }

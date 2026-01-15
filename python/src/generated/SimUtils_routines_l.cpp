@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_l(py::module& m) {
+void init_SimUtils_routines_l(py::module &m) {
   m.def(
       "linear_fit",
       &SimUtils::linear_fit,
@@ -24,7 +24,8 @@ a :
 b : 
 sig_a : 
 sig_b : 
-)""");
+)"""
+  );
   m.def(
       "linear_fit_2d",
       &SimUtils::linear_fit_2d,
@@ -41,7 +42,8 @@ z : float
     Array of z-values
 coef : float
     Coefficients of the linear fit
-)""");
+)"""
+  );
   m.def(
       "logic_str",
       &SimUtils::logic_str,
@@ -51,12 +53,14 @@ coef : float
 ----------
 logic : 
 str : 
-)""");
+)"""
+  );
   m.def(
       "lunget",
       &SimUtils::lunget,
       R"""(Parameters
 ----------
 lunget : 
-)""");
+)"""
+  );
 }

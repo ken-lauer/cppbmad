@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_v(py::module& m) {
+void init_Bmad_routines_v(py::module &m) {
   m.def(
       "valid_field_calc",
       &Bmad::valid_field_calc,
@@ -18,7 +18,8 @@ ele : EleStruct
 field_calc : int
     bmad_standard$, etc.
 is_valid : 
-)""");
+)"""
+  );
   m.def(
       "valid_fringe_type",
       &Bmad::valid_fringe_type,
@@ -32,7 +33,8 @@ ele : EleStruct
 fringe_type : int
     bmad_standard$, etc.
 is_valid : 
-)""");
+)"""
+  );
   m.def(
       "valid_mat6_calc_method",
       &Bmad::valid_mat6_calc_method,
@@ -49,7 +51,8 @@ species :
 mat6_calc_method : int
     bmad_standard$, etc.
 is_valid : 
-)""");
+)"""
+  );
   m.def(
       "valid_spin_tracking_method",
       &Bmad::valid_spin_tracking_method,
@@ -63,7 +66,8 @@ ele : EleStruct
 spin_tracking_method : int
     bmad_standard$, etc.
 is_valid : 
-)""");
+)"""
+  );
   m.def(
       "valid_tracking_method",
       &Bmad::valid_tracking_method,
@@ -80,7 +84,8 @@ species :
 tracking_method : int
     bmad_standard$, etc.
 is_valid : 
-)""");
+)"""
+  );
   m.def(
       "value_of_attribute",
       &Bmad::value_of_attribute,
@@ -102,7 +107,8 @@ err_print_flag : bool, optional
 err_value : float, optional
     Value to set value argument if there is an error. Default is 0.
 value : 
-)""");
+)"""
+  );
   m.def(
       "value_to_line",
       &Bmad::value_to_line,
@@ -120,7 +126,8 @@ str :
 typ : 
 ignore_if_zero : 
 use_comma : 
-)""");
+)"""
+  );
   m.def(
       "vec_to_polar",
       &Bmad::vec_to_polar,
@@ -134,7 +141,8 @@ vec : float
 phase : float, optional
     Phase of the spinor, if not given then set to zero
 polar : 
-)""");
+)"""
+  );
   m.def(
       "vec_to_spinor",
       &Bmad::vec_to_spinor,
@@ -148,7 +156,8 @@ vec : float
 phase : float
     Phase of the spinor, if not given then set to zero
 spinor : 
-)""");
+)"""
+  );
   m.def(
       "verify_valid_name",
       &Bmad::verify_valid_name,
@@ -184,5 +193,6 @@ Returns
 -------
 is_valid : bool
     True if name is well formed. False otherwise.
-)""");
+)"""
+  );
 }

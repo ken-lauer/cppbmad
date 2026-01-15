@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_m(py::module& m) {
+void init_SimUtils_routines_m(py::module &m) {
   m.def(
       "make_legal_comment",
       &SimUtils::make_legal_comment,
@@ -14,7 +14,8 @@ void init_SimUtils_routines_m(py::module& m) {
 ----------
 comment_in : 
 comment_out : 
-)""");
+)"""
+  );
   m.def(
       "mass_of",
       &SimUtils::mass_of,
@@ -37,7 +38,8 @@ Returns
 -------
 mass : float
     particle mass. Set to real_garbage$ if species value is invalid.
-)""");
+)"""
+  );
   m.def(
       "match_reg",
       &SimUtils::match_reg,
@@ -49,7 +51,8 @@ mass : float
 str : 
 pat : 
 is_match : 
-)""");
+)"""
+  );
   m.def(
       "match_wild",
       &SimUtils::match_wild,
@@ -61,7 +64,8 @@ is_match :
 string : 
 template : 
 is_match : 
-)""");
+)"""
+  );
   m.def(
       "maximize_projection",
       &SimUtils::maximize_projection,
@@ -74,7 +78,8 @@ Optimizer that uses Numerical Recipes brent to find a local maximum,
 which is the frequency that maximizes the projection.
 
 
-)""");
+)"""
+  );
   m.def(
       "milli_sleep",
       &SimUtils::milli_sleep,
@@ -82,5 +87,6 @@ which is the frequency that maximizes the projection.
       R"""(Parameters
 ----------
 milli_sec : 
-)""");
+)"""
+  );
 }

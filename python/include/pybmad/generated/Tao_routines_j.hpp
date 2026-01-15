@@ -9,4 +9,4 @@
 
 namespace py = pybind11;
 
-void init_Tao_routines_j(py::module& m);
+void init_Tao_routines_j(py::module &m);

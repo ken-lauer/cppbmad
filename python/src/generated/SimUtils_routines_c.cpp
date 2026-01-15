@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_c(py::module& m) {
+void init_SimUtils_routines_c(py::module &m) {
   m.def(
       "calc_file_number",
       &SimUtils::calc_file_number,
@@ -18,7 +18,8 @@ file_name :
 num_in : 
 num_out : 
 err_flag : 
-)""");
+)"""
+  );
   m.def(
       "change_file_number",
       &SimUtils::change_file_number,
@@ -28,7 +29,8 @@ err_flag :
 ----------
 file_name : 
 change : 
-)""");
+)"""
+  );
   m.def(
       "charge_of",
       &SimUtils::charge_of,
@@ -49,7 +51,8 @@ Returns
 -------
 charge : int
     particle charge.
-)""");
+)"""
+  );
   m.def(
       "charge_to_mass_of",
       &SimUtils::charge_to_mass_of,
@@ -67,7 +70,8 @@ Returns
 -------
 charge_mass_ratio : float
     particle charge to mass ratio. (1/eV)
-)""");
+)"""
+  );
   m.def(
       "coarse_frequency_estimate",
       &SimUtils::coarse_frequency_estimate,
@@ -89,7 +93,8 @@ frequency : float
     Frequency corresponding to the largest FFT amplitude
 err : bool
     Error: not enough data. Frequency is near 0 or 0.5
-)""");
+)"""
+  );
   m.def(
       "complex_error_function",
       &SimUtils::complex_error_function,
@@ -103,7 +108,8 @@ wr :
 wi : 
 zr : 
 zi : 
-)""");
+)"""
+  );
   m.def(
       "cos_one",
       &SimUtils::cos_one,
@@ -113,7 +119,8 @@ zi :
 ----------
 angle : 
 cos1 : 
-)""");
+)"""
+  );
   m.def(
       "cosc",
       &SimUtils::cosc,
@@ -125,7 +132,8 @@ cos1 :
 x : 
 nd : 
 y : 
-)""");
+)"""
+  );
   m.def(
       "create_a_spline",
       &SimUtils::create_a_spline,
@@ -157,7 +165,8 @@ Returns
 -------
 spline : SplineStruct
     Spline.
-)""");
+)"""
+  );
   m.def(
       "cross_product",
       &SimUtils::cross_product,
@@ -170,5 +179,6 @@ a : float
     Input vectors.
 b : 
 c : 
-)""");
+)"""
+  );
 }

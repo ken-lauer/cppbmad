@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_e(py::module& m) {
+void init_Bmad_routines_e(py::module &m) {
   m.def(
       "e_accel_field",
       &Bmad::e_accel_field,
@@ -21,7 +21,8 @@ voltage_or_gradient : int
 bmad_standard_tracking : bool, optional
     Using bmad_standard tracking? Default is False.
 field : 
-)""");
+)"""
+  );
   m.def(
       "e_crit_photon",
       &Bmad::e_crit_photon,
@@ -42,29 +43,31 @@ Returns
 -------
 E_crit : float
     Critical photon energy.
-)""");
+)"""
+  );
   py::class_<Bmad::EigenDecomp6mat, std::unique_ptr<Bmad::EigenDecomp6mat>>(
-      m, "EigenDecomp6mat", "eigen_decomp_6mat return type")
+      m,
+      "EigenDecomp6mat",
+      "eigen_decomp_6mat return type"
+  )
       .def_readonly("eval", &Bmad::EigenDecomp6mat::eval)
       .def_readonly("evec", &Bmad::EigenDecomp6mat::evec)
       .def_readonly("err_flag", &Bmad::EigenDecomp6mat::err_flag)
       .def_readonly("tunes", &Bmad::EigenDecomp6mat::tunes)
-      .def("__len__", [](const Bmad::EigenDecomp6mat&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const Bmad::EigenDecomp6mat& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.eval);
-            if (i == 1)
-              return py::cast(s.evec);
-            if (i == 2)
-              return py::cast(s.err_flag);
-            if (i == 3)
-              return py::cast(s.tunes);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::EigenDecomp6mat &) { return 4; })
+      .def("__getitem__", [](const Bmad::EigenDecomp6mat &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.eval);
+        if (i == 1)
+          return py::cast(s.evec);
+        if (i == 2)
+          return py::cast(s.err_flag);
+        if (i == 3)
+          return py::cast(s.tunes);
+        throw py::index_error();
+      });
   m.def(
       "eigen_decomp_6mat",
       &Bmad::eigen_decomp_6mat,
@@ -89,7 +92,8 @@ err_flag : bool
     set to true if an error has occured.
 tunes : float
     Mode tunes, in radians.
-)""");
+)"""
+  );
   m.def(
       "ele_compute_ref_energy_and_time",
       &Bmad::ele_compute_ref_energy_and_time,
@@ -109,7 +113,8 @@ param : LatParamStruct
     Lattice parameters.
 err_flag : bool
     Set true if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "ele_equal_ele",
       &Bmad::ele_equal_ele,
@@ -119,7 +124,8 @@ err_flag : bool
 ----------
 ele_out : 
 ele_in : 
-)""");
+)"""
+  );
   m.def(
       "ele_equals_ele",
       &Bmad::ele_equals_ele,
@@ -143,7 +149,8 @@ Returns
 -------
 ele_out : EleStruct
     Output element.
-)""");
+)"""
+  );
   m.def(
       "ele_finalizer",
       &Bmad::ele_finalizer,
@@ -159,7 +166,8 @@ ele : EleStruct
     Element to cleanup.
     This parameter is an input/output and is modified in-place. As an output: Element with pointers
     deallocated as needed.
-)""");
+)"""
+  );
   m.def(
       "ele_full_name",
       &Bmad::ele_full_name,
@@ -173,7 +181,8 @@ ele : EleStruct
 template : unknown, optional
     Encoding template. Default is "@N (&#)".
 str : 
-)""");
+)"""
+  );
   m.def(
       "ele_geometry",
       &Bmad::ele_geometry,
@@ -197,7 +206,8 @@ len_scale : float, optional
 ignore_patch_err : bool, optional
     If present and True, ignore flexible patch errors. This is used by ele_compute_ref_energy_and_time to
     suppress unnecessary messages.
-)""");
+)"""
+  );
   m.def(
       "ele_geometry_with_misalignments",
       &Bmad::ele_geometry_with_misalignments,
@@ -212,7 +222,8 @@ len_scale : float, optional
     factor to scale the length of the element. 1.0_rp => Output is geometry at end of element (default).
     0.5_rp => Output is geometry at center of element. -1.0_rp => Used to propagate geometry in reverse.
 floor : 
-)""");
+)"""
+  );
   m.def(
       "ele_has_constant_ds_dt_ref",
       &Bmad::ele_has_constant_ds_dt_ref,
@@ -223,7 +234,8 @@ floor :
 ele : EleStruct
     Element.
 is_const : 
-)""");
+)"""
+  );
   m.def(
       "ele_has_nonzero_kick",
       &Bmad::ele_has_nonzero_kick,
@@ -233,7 +245,8 @@ is_const :
 ele : EleStruct
     Element with no kicks.
 has_kick : 
-)""");
+)"""
+  );
   m.def(
       "ele_has_nonzero_offset",
       &Bmad::ele_has_nonzero_offset,
@@ -243,7 +256,8 @@ has_kick :
 ----------
 ele : 
 has_offset : 
-)""");
+)"""
+  );
   m.def(
       "ele_is_monitor",
       &Bmad::ele_is_monitor,
@@ -265,7 +279,8 @@ Returns
 -------
 is_monitor : bool
     Set True if the element is a monitor like element.
-)""");
+)"""
+  );
   m.def(
       "ele_loc",
       &Bmad::ele_loc,
@@ -276,7 +291,8 @@ is_monitor : bool
 ele : EleStruct
     Element to be identified
 loc : 
-)""");
+)"""
+  );
   m.def(
       "ele_loc_name",
       &Bmad::ele_loc_name,
@@ -294,25 +310,25 @@ parens : unknown, optional
     If present, enclose location string using the two characters supplied. Typically parens will be set to
     "()" or "[]".
 str : 
-)""");
-  py::class_<
-      Bmad::EleMisalignmentLSCalc,
-      std::unique_ptr<Bmad::EleMisalignmentLSCalc>>(
-      m, "EleMisalignmentLSCalc", "ele_misalignment_l_s_calc return type")
+)"""
+  );
+  py::class_<Bmad::EleMisalignmentLSCalc, std::unique_ptr<Bmad::EleMisalignmentLSCalc>>(
+      m,
+      "EleMisalignmentLSCalc",
+      "ele_misalignment_l_s_calc return type"
+  )
       .def_readonly("L_mis", &Bmad::EleMisalignmentLSCalc::L_mis)
       .def_readonly("S_mis", &Bmad::EleMisalignmentLSCalc::S_mis)
-      .def("__len__", [](const Bmad::EleMisalignmentLSCalc&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::EleMisalignmentLSCalc& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.L_mis);
-            if (i == 1)
-              return py::cast(s.S_mis);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::EleMisalignmentLSCalc &) { return 2; })
+      .def("__getitem__", [](const Bmad::EleMisalignmentLSCalc &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.L_mis);
+        if (i == 1)
+          return py::cast(s.S_mis);
+        throw py::index_error();
+      });
   m.def(
       "ele_misalignment_l_s_calc",
       &Bmad::ele_misalignment_l_s_calc,
@@ -325,7 +341,8 @@ L_mis : float
     Misalignment vector relative to center of element
 S_mis : float
     Misalignment matrix relative to center of element
-)""");
+)"""
+  );
   m.def(
       "ele_nametable_index",
       &Bmad::ele_nametable_index,
@@ -336,7 +353,8 @@ S_mis : float
 ele : EleStruct
     Element in a lattice.
 ix_nt : 
-)""");
+)"""
+  );
   m.def(
       "ele_order_calc",
       &Bmad::ele_order_calc,
@@ -347,7 +365,8 @@ lat : LatStruct
     Lattice to analyze.
 order : LatEleOrderStruct
     Structure holding the element order information.
-)""");
+)"""
+  );
   m.def(
       "ele_reference_energy_correction",
       &Bmad::ele_reference_energy_correction,
@@ -372,7 +391,8 @@ mat6 : float, optional
     including correction.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "ele_rf_step_index",
       &Bmad::ele_rf_step_index,
@@ -389,13 +409,17 @@ s_rel : float
 ele : float
     RF cavity.
 ix_step : 
-)""");
+)"""
+  );
   py::class_<Bmad::EleToFibre, std::unique_ptr<Bmad::EleToFibre>>(
-      m, "EleToFibre", "ele_to_fibre return type")
+      m,
+      "EleToFibre",
+      "ele_to_fibre return type"
+  )
       .def_readonly("ptc_fibre", &Bmad::EleToFibre::ptc_fibre)
       .def_readonly("err_flag", &Bmad::EleToFibre::err_flag)
-      .def("__len__", [](const Bmad::EleToFibre&) { return 2; })
-      .def("__getitem__", [](const Bmad::EleToFibre& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::EleToFibre &) { return 2; })
+      .def("__getitem__", [](const Bmad::EleToFibre &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -433,7 +457,8 @@ for_layout : bool, optional
 ref_in : CoordStruct, optional
     Particle to be tracked. ref_particle$, electron$, etc. This argument should only be present when the fibre
     is not to be put in a layout.
-)""");
+)"""
+  );
   m.def(
       "ele_to_ptc_magnetic_bn_an",
       &Bmad::ele_to_ptc_magnetic_bn_an,
@@ -463,7 +488,8 @@ an : float
     Skew multipole component.
 n_max : int
     Maximum non-zero multipole component. Set to zero if there are no multipoles.
-)""");
+)"""
+  );
   m.def(
       "ele_to_spin_taylor",
       &Bmad::ele_to_spin_taylor,
@@ -479,13 +505,17 @@ param : unknown
     Branch parameters.
 orb0 : CoordStruct
     Starting ref coords.
-)""");
+)"""
+  );
   py::class_<Bmad::EleToTaylor, std::unique_ptr<Bmad::EleToTaylor>>(
-      m, "EleToTaylor", "ele_to_taylor return type")
+      m,
+      "EleToTaylor",
+      "ele_to_taylor return type"
+  )
       .def_readonly("orbital_taylor", &Bmad::EleToTaylor::orbital_taylor)
       .def_readonly("spin_taylor", &Bmad::EleToTaylor::spin_taylor)
-      .def("__len__", [](const Bmad::EleToTaylor&) { return 2; })
-      .def("__getitem__", [](const Bmad::EleToTaylor& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::EleToTaylor &) { return 2; })
+      .def("__getitem__", [](const Bmad::EleToTaylor &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -516,7 +546,8 @@ orbital_taylor : TaylorStruct
     Orbital taylor map. If not present then the map is put in ele.taylor.
 spin_taylor : TaylorStruct
     Spin taylor map. If not present then the map is put in ele.spin_taylor.
-)""");
+)"""
+  );
   m.def(
       "ele_unique_name",
       &Bmad::ele_unique_name,
@@ -531,7 +562,8 @@ order : LatEleOrderStruct
     Information on element ordering. Before calling this routine, use the routine ele_order_calc to compute
     this argument.
 unique_name : 
-)""");
+)"""
+  );
   m.def(
       "ele_value_has_changed",
       &Bmad::ele_value_has_changed,
@@ -554,7 +586,8 @@ abs_tol : float
 set_old : bool
     If True then set ele.old_value(j) = ele.value(j) for j in list
 has_changed : 
-)""");
+)"""
+  );
   m.def(
       "ele_vec_equal_ele_vec",
       &Bmad::ele_vec_equal_ele_vec,
@@ -564,31 +597,31 @@ has_changed :
 ----------
 ele1 : 
 ele2 : 
-)""");
-  py::class_<
-      Bmad::ElecMultipoleField,
-      std::unique_ptr<Bmad::ElecMultipoleField>>(
-      m, "ElecMultipoleField", "elec_multipole_field return type")
+)"""
+  );
+  py::class_<Bmad::ElecMultipoleField, std::unique_ptr<Bmad::ElecMultipoleField>>(
+      m,
+      "ElecMultipoleField",
+      "elec_multipole_field return type"
+  )
       .def_readonly("Ex", &Bmad::ElecMultipoleField::Ex)
       .def_readonly("Ey", &Bmad::ElecMultipoleField::Ey)
       .def_readonly("dE", &Bmad::ElecMultipoleField::dE)
       .def_readonly("compute_dE", &Bmad::ElecMultipoleField::compute_dE)
-      .def("__len__", [](const Bmad::ElecMultipoleField&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ElecMultipoleField& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.Ex);
-            if (i == 1)
-              return py::cast(s.Ey);
-            if (i == 2)
-              return py::cast(s.dE);
-            if (i == 3)
-              return py::cast(s.compute_dE);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ElecMultipoleField &) { return 4; })
+      .def("__getitem__", [](const Bmad::ElecMultipoleField &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.Ex);
+        if (i == 1)
+          return py::cast(s.Ey);
+        if (i == 2)
+          return py::cast(s.dE);
+        if (i == 3)
+          return py::cast(s.compute_dE);
+        throw py::index_error();
+      });
   m.def(
       "elec_multipole_field",
       &Bmad::elec_multipole_field,
@@ -613,33 +646,34 @@ dE : float
     Field derivatives: dfield(x,y)/d(x,y).
 compute_dE : bool
     If False, do not compute the field derivatives even if dE is present. Default is True.
-)""");
+)"""
+  );
   py::class_<Bmad::ElementAtSBranch, std::unique_ptr<Bmad::ElementAtSBranch>>(
-      m, "ElementAtSBranch", "element_at_s_branch return type")
+      m,
+      "ElementAtSBranch",
+      "element_at_s_branch return type"
+  )
       .def_readonly("err_flag", &Bmad::ElementAtSBranch::err_flag)
       .def_readonly("s_eff", &Bmad::ElementAtSBranch::s_eff)
       .def_readonly("position", &Bmad::ElementAtSBranch::position)
       .def_readonly("ix_ele", &Bmad::ElementAtSBranch::ix_ele)
-      .def("__len__", [](const Bmad::ElementAtSBranch&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ElementAtSBranch& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.s_eff);
-            if (i == 2)
-              return py::cast(s.position);
-            if (i == 3)
-              return py::cast(s.ix_ele);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ElementAtSBranch &) { return 4; })
+      .def("__getitem__", [](const Bmad::ElementAtSBranch &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.s_eff);
+        if (i == 2)
+          return py::cast(s.position);
+        if (i == 3)
+          return py::cast(s.ix_ele);
+        throw py::index_error();
+      });
   m.def(
       "element_at_s",
-      py::overload_cast<BranchProxy&, double, bool, std::optional<bool>>(
-          &Bmad::element_at_s),
+      py::overload_cast<BranchStruct &, double, bool, std::optional<bool>>(&Bmad::element_at_s),
       py::arg("branch"),
       py::arg("s"),
       py::arg("choose_max"),
@@ -714,36 +748,36 @@ boundary. For a circular lattice s is evaluated at the effective s which s_eff =
 floor(s/branch_length) If there are multiple elements that are at the given s position due to the presence of
 an element with a negative length which of the possible elements is actually chosen is ill-defined.
 Overloaded versions:
-)""");
+)"""
+  );
   py::class_<Bmad::ElementAtSLat, std::unique_ptr<Bmad::ElementAtSLat>>(
-      m, "ElementAtSLat", "element_at_s_lat return type")
+      m,
+      "ElementAtSLat",
+      "element_at_s_lat return type"
+  )
       .def_readonly("err_flag", &Bmad::ElementAtSLat::err_flag)
       .def_readonly("s_eff", &Bmad::ElementAtSLat::s_eff)
       .def_readonly("position", &Bmad::ElementAtSLat::position)
       .def_readonly("ix_ele", &Bmad::ElementAtSLat::ix_ele)
-      .def("__len__", [](const Bmad::ElementAtSLat&) { return 4; })
-      .def(
-          "__getitem__", [](const Bmad::ElementAtSLat& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.s_eff);
-            if (i == 2)
-              return py::cast(s.position);
-            if (i == 3)
-              return py::cast(s.ix_ele);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ElementAtSLat &) { return 4; })
+      .def("__getitem__", [](const Bmad::ElementAtSLat &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.s_eff);
+        if (i == 2)
+          return py::cast(s.position);
+        if (i == 3)
+          return py::cast(s.ix_ele);
+        throw py::index_error();
+      });
   m.def(
       "element_at_s",
-      py::overload_cast<
-          LatProxy&,
-          double,
-          bool,
-          std::optional<int>,
-          std::optional<bool>>(&Bmad::element_at_s),
+      py::overload_cast<LatStruct &, double, bool, std::optional<int>, std::optional<bool>>(
+          &Bmad::element_at_s
+      ),
       py::arg("lat"),
       py::arg("s"),
       py::arg("choose_max"),
@@ -819,7 +853,8 @@ boundary. For a circular lattice s is evaluated at the effective s which s_eff =
 floor(s/branch_length) If there are multiple elements that are at the given s position due to the presence of
 an element with a negative length which of the possible elements is actually chosen is ill-defined.
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "element_slice_iterator",
       &Bmad::element_slice_iterator,
@@ -845,14 +880,18 @@ s_start : float, optional
     Starting edge of slice relative to beginning of element.
 s_end : float, optional
     Ending edge of slice relative to beginning of element.
-)""");
+)"""
+  );
   m.def("ellipinc_test", &Bmad::ellipinc_test, R"""()""");
   py::class_<Bmad::EmFieldCalc, std::unique_ptr<Bmad::EmFieldCalc>>(
-      m, "EmFieldCalc", "em_field_calc return type")
+      m,
+      "EmFieldCalc",
+      "em_field_calc return type"
+  )
       .def_readonly("field", &Bmad::EmFieldCalc::field)
       .def_readonly("err_flag", &Bmad::EmFieldCalc::err_flag)
-      .def("__len__", [](const Bmad::EmFieldCalc&) { return 2; })
-      .def("__getitem__", [](const Bmad::EmFieldCalc& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::EmFieldCalc &) { return 2; })
+      .def("__getitem__", [](const Bmad::EmFieldCalc &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -920,7 +959,8 @@ print_err : bool, optional
 original_ele : EleStruct, optional
     Used with recursive calls that pass the lord as the ele argument. In this case original_ele is the
     original ele argument.
-)""");
+)"""
+  );
   m.def(
       "em_field_derivatives",
       &Bmad::em_field_derivatives,
@@ -957,7 +997,8 @@ Returns
 -------
 dfield : EmFieldStruct
     E and B field derivatives. dfield.E and dfield.B are not touched.
-)""");
+)"""
+  );
   m.def(
       "em_field_kick_vector_time",
       &Bmad::em_field_kick_vector_time,
@@ -993,7 +1034,8 @@ Returns
 -------
 dvec_dt : float
     Derivatives.
-)""");
+)"""
+  );
   m.def(
       "em_field_plus_em_field",
       &Bmad::em_field_plus_em_field,
@@ -1005,7 +1047,8 @@ dvec_dt : float
 field1 : 
 field2 : 
 field_tot : 
-)""");
+)"""
+  );
   m.def(
       "em_taylor_equal_em_taylor",
       &Bmad::em_taylor_equal_em_taylor,
@@ -1015,7 +1058,8 @@ field_tot :
 ----------
 em_taylor1 : 
 em_taylor2 : 
-)""");
+)"""
+  );
   m.def(
       "em_taylors_equal_em_taylors",
       &Bmad::em_taylors_equal_em_taylors,
@@ -1025,14 +1069,14 @@ em_taylor2 :
 ----------
 em_taylor1 : 
 em_taylor2 : 
-)""");
-  py::class_<Bmad::Emit6d, std::unique_ptr<Bmad::Emit6d>>(
-      m, "Emit6d", "emit_6d return type")
+)"""
+  );
+  py::class_<Bmad::Emit6d, std::unique_ptr<Bmad::Emit6d>>(m, "Emit6d", "emit_6d return type")
       .def_readonly("mode", &Bmad::Emit6d::mode)
       .def_readonly("sigma_mat", &Bmad::Emit6d::sigma_mat)
       .def_readonly("rad_int_by_ele", &Bmad::Emit6d::rad_int_by_ele)
-      .def("__len__", [](const Bmad::Emit6d&) { return 3; })
-      .def("__getitem__", [](const Bmad::Emit6d& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::Emit6d &) { return 3; })
+      .def("__getitem__", [](const Bmad::Emit6d &s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -1075,7 +1119,8 @@ sigma_mat : float
     Sigma matrix.
 rad_int_by_ele : RadIntAllEleStruct
     Radiation integrals element-by-element.
-)""");
+)"""
+  );
   m.def(
       "entering_element",
       &Bmad::entering_element,
@@ -1089,7 +1134,8 @@ orbit : CoordStruct
 particle_at : int
     First_track_edge$ or second_track_edge$
 is_entering : 
-)""");
+)"""
+  );
   m.def(
       "envelope_radints",
       &Bmad::envelope_radints,
@@ -1108,25 +1154,25 @@ These three matrices are obtained from the subroutine integrated_mats.
 The damping times can obtained from alpha using:
    tau = lattice_length/c_light/alpha
 
-)""");
-  py::class_<
-      Bmad::EnvelopeRadintsIbs,
-      std::unique_ptr<Bmad::EnvelopeRadintsIbs>>(
-      m, "EnvelopeRadintsIbs", "envelope_radints_ibs return type")
+)"""
+  );
+  py::class_<Bmad::EnvelopeRadintsIbs, std::unique_ptr<Bmad::EnvelopeRadintsIbs>>(
+      m,
+      "EnvelopeRadintsIbs",
+      "envelope_radints_ibs return type"
+  )
       .def_readonly("alpha", &Bmad::EnvelopeRadintsIbs::alpha)
       .def_readonly("emit", &Bmad::EnvelopeRadintsIbs::emit)
-      .def("__len__", [](const Bmad::EnvelopeRadintsIbs&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::EnvelopeRadintsIbs& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.alpha);
-            if (i == 1)
-              return py::cast(s.emit);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::EnvelopeRadintsIbs &) { return 2; })
+      .def("__getitem__", [](const Bmad::EnvelopeRadintsIbs &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.alpha);
+        if (i == 1)
+          return py::cast(s.emit);
+        throw py::index_error();
+      });
   m.def(
       "envelope_radints_ibs",
       &Bmad::envelope_radints_ibs,
@@ -1184,7 +1230,8 @@ alpha : float
     Normal mode damping decrements.
 emit : float
     Normal mode emittances.
-)""");
+)"""
+  );
   m.def(
       "eq_ac_kicker",
       &Bmad::eq_ac_kicker,
@@ -1196,7 +1243,8 @@ emit : float
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_ac_kicker_freq",
       &Bmad::eq_ac_kicker_freq,
@@ -1208,7 +1256,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_ac_kicker_time",
       &Bmad::eq_ac_kicker_time,
@@ -1220,7 +1269,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_anormal_mode",
       &Bmad::eq_anormal_mode,
@@ -1232,7 +1282,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_aperture_param",
       &Bmad::eq_aperture_param,
@@ -1244,7 +1295,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_aperture_point",
       &Bmad::eq_aperture_point,
@@ -1256,7 +1308,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_aperture_scan",
       &Bmad::eq_aperture_scan,
@@ -1268,7 +1321,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_beam",
       &Bmad::eq_beam,
@@ -1280,7 +1334,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_beam_init",
       &Bmad::eq_beam_init,
@@ -1292,7 +1347,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_bmad_common",
       &Bmad::eq_bmad_common,
@@ -1304,7 +1360,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_bookkeeping_state",
       &Bmad::eq_bookkeeping_state,
@@ -1316,7 +1373,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_bpm_phase_coupling",
       &Bmad::eq_bpm_phase_coupling,
@@ -1328,7 +1386,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_branch",
       &Bmad::eq_branch,
@@ -1340,7 +1399,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_bunch",
       &Bmad::eq_bunch,
@@ -1352,7 +1412,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_bunch_params",
       &Bmad::eq_bunch_params,
@@ -1364,7 +1425,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_cartesian_map",
       &Bmad::eq_cartesian_map,
@@ -1376,7 +1438,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_cartesian_map_term",
       &Bmad::eq_cartesian_map_term,
@@ -1388,7 +1451,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_cartesian_map_term1",
       &Bmad::eq_cartesian_map_term1,
@@ -1400,7 +1464,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_complex_taylor",
       &Bmad::eq_complex_taylor,
@@ -1412,7 +1477,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_complex_taylor_term",
       &Bmad::eq_complex_taylor_term,
@@ -1424,7 +1490,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_control",
       &Bmad::eq_control,
@@ -1436,7 +1503,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_control_ramp1",
       &Bmad::eq_control_ramp1,
@@ -1448,7 +1516,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_control_var1",
       &Bmad::eq_control_var1,
@@ -1460,7 +1529,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_controller",
       &Bmad::eq_controller,
@@ -1472,7 +1542,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_coord",
       &Bmad::eq_coord,
@@ -1484,7 +1555,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_coord_array",
       &Bmad::eq_coord_array,
@@ -1496,7 +1568,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_cylindrical_map",
       &Bmad::eq_cylindrical_map,
@@ -1508,7 +1581,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_cylindrical_map_term",
       &Bmad::eq_cylindrical_map_term,
@@ -1520,7 +1594,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_cylindrical_map_term1",
       &Bmad::eq_cylindrical_map_term1,
@@ -1532,7 +1607,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_ele",
       &Bmad::eq_ele,
@@ -1544,7 +1620,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_ellipse_beam_init",
       &Bmad::eq_ellipse_beam_init,
@@ -1556,7 +1633,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_em_field",
       &Bmad::eq_em_field,
@@ -1568,7 +1646,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_em_taylor",
       &Bmad::eq_em_taylor,
@@ -1580,7 +1659,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_em_taylor_term",
       &Bmad::eq_em_taylor_term,
@@ -1592,7 +1672,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_expression_atom",
       &Bmad::eq_expression_atom,
@@ -1604,7 +1685,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_floor_position",
       &Bmad::eq_floor_position,
@@ -1616,7 +1698,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_gen_grad1",
       &Bmad::eq_gen_grad1,
@@ -1628,7 +1711,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_gen_grad_map",
       &Bmad::eq_gen_grad_map,
@@ -1640,7 +1724,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_grid_beam_init",
       &Bmad::eq_grid_beam_init,
@@ -1652,7 +1737,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_grid_field",
       &Bmad::eq_grid_field,
@@ -1664,7 +1750,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_grid_field_pt",
       &Bmad::eq_grid_field_pt,
@@ -1676,7 +1763,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_grid_field_pt1",
       &Bmad::eq_grid_field_pt1,
@@ -1688,7 +1776,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_high_energy_space_charge",
       &Bmad::eq_high_energy_space_charge,
@@ -1700,7 +1789,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_interval1_coef",
       &Bmad::eq_interval1_coef,
@@ -1712,7 +1802,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_kv_beam_init",
       &Bmad::eq_kv_beam_init,
@@ -1724,7 +1815,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_lat",
       &Bmad::eq_lat,
@@ -1736,7 +1828,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_lat_ele_loc",
       &Bmad::eq_lat_ele_loc,
@@ -1748,7 +1841,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_lat_param",
       &Bmad::eq_lat_param,
@@ -1760,7 +1854,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_linac_normal_mode",
       &Bmad::eq_linac_normal_mode,
@@ -1772,7 +1867,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_mode3",
       &Bmad::eq_mode3,
@@ -1784,7 +1880,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_mode_info",
       &Bmad::eq_mode_info,
@@ -1796,7 +1893,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_normal_modes",
       &Bmad::eq_normal_modes,
@@ -1808,7 +1906,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_photon_element",
       &Bmad::eq_photon_element,
@@ -1820,7 +1919,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_photon_material",
       &Bmad::eq_photon_material,
@@ -1832,7 +1932,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_photon_reflect_surface",
       &Bmad::eq_photon_reflect_surface,
@@ -1844,7 +1945,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_photon_reflect_table",
       &Bmad::eq_photon_reflect_table,
@@ -1856,7 +1958,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_photon_target",
       &Bmad::eq_photon_target,
@@ -1868,7 +1971,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_pixel_detec",
       &Bmad::eq_pixel_detec,
@@ -1880,7 +1984,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_pixel_pt",
       &Bmad::eq_pixel_pt,
@@ -1892,7 +1997,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_pre_tracker",
       &Bmad::eq_pre_tracker,
@@ -1904,7 +2010,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_rad_int1",
       &Bmad::eq_rad_int1,
@@ -1916,7 +2023,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_rad_int_all_ele",
       &Bmad::eq_rad_int_all_ele,
@@ -1928,7 +2036,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_rad_int_branch",
       &Bmad::eq_rad_int_branch,
@@ -1940,7 +2049,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_rad_map",
       &Bmad::eq_rad_map,
@@ -1952,7 +2062,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_rad_map_ele",
       &Bmad::eq_rad_map_ele,
@@ -1964,7 +2075,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_ramper_lord",
       &Bmad::eq_ramper_lord,
@@ -1976,7 +2088,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_space_charge_common",
       &Bmad::eq_space_charge_common,
@@ -1988,7 +2101,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_spin_polar",
       &Bmad::eq_spin_polar,
@@ -2000,7 +2114,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_spline",
       &Bmad::eq_spline,
@@ -2012,7 +2127,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_strong_beam",
       &Bmad::eq_strong_beam,
@@ -2024,7 +2140,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_surface_curvature",
       &Bmad::eq_surface_curvature,
@@ -2036,7 +2153,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_surface_displacement",
       &Bmad::eq_surface_displacement,
@@ -2048,7 +2166,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_surface_displacement_pt",
       &Bmad::eq_surface_displacement_pt,
@@ -2060,7 +2179,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_surface_h_misalign",
       &Bmad::eq_surface_h_misalign,
@@ -2072,7 +2192,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_surface_h_misalign_pt",
       &Bmad::eq_surface_h_misalign_pt,
@@ -2084,7 +2205,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_surface_segmented",
       &Bmad::eq_surface_segmented,
@@ -2096,7 +2218,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_surface_segmented_pt",
       &Bmad::eq_surface_segmented_pt,
@@ -2108,7 +2231,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_target_point",
       &Bmad::eq_target_point,
@@ -2120,7 +2244,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_taylor",
       &Bmad::eq_taylor,
@@ -2132,7 +2257,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_taylor_term",
       &Bmad::eq_taylor_term,
@@ -2144,7 +2270,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_track",
       &Bmad::eq_track,
@@ -2156,7 +2283,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_track_point",
       &Bmad::eq_track_point,
@@ -2168,7 +2296,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_twiss",
       &Bmad::eq_twiss,
@@ -2180,7 +2309,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_wake",
       &Bmad::eq_wake,
@@ -2192,7 +2322,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_wake_lr",
       &Bmad::eq_wake_lr,
@@ -2204,7 +2335,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_wake_lr_mode",
       &Bmad::eq_wake_lr_mode,
@@ -2216,7 +2348,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_wake_sr",
       &Bmad::eq_wake_sr,
@@ -2228,7 +2361,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_wake_sr_mode",
       &Bmad::eq_wake_sr_mode,
@@ -2240,7 +2374,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_wake_sr_z_long",
       &Bmad::eq_wake_sr_z_long,
@@ -2252,7 +2387,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_wall3d",
       &Bmad::eq_wall3d,
@@ -2264,7 +2400,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_wall3d_section",
       &Bmad::eq_wall3d_section,
@@ -2276,7 +2413,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_wall3d_vertex",
       &Bmad::eq_wall3d_vertex,
@@ -2288,7 +2426,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "eq_xy_disp",
       &Bmad::eq_xy_disp,
@@ -2300,7 +2439,8 @@ is_eq :
 f1 : 
 f2 : 
 is_eq : 
-)""");
+)"""
+  );
   m.def(
       "equal_sign_here",
       &Bmad::equal_sign_here,
@@ -2312,7 +2452,8 @@ is_eq :
 ele : 
 delim : 
 is_here : 
-)""");
+)"""
+  );
   m.def(
       "equivalent_taylor_attributes",
       &Bmad::equivalent_taylor_attributes,
@@ -2326,7 +2467,8 @@ ele_taylor : EleStruct
 ele2 : EleStruct
     Element that might receive the Taylor map from ele_taylor.
 equiv : 
-)""");
+)"""
+  );
   m.def(
       "etdiv",
       &Bmad::etdiv,
@@ -2344,31 +2486,31 @@ C :
 D : 
 E : 
 F : 
-)""");
-  py::class_<
-      Bmad::EvaluateArrayIndex,
-      std::unique_ptr<Bmad::EvaluateArrayIndex>>(
-      m, "EvaluateArrayIndex", "evaluate_array_index return type")
+)"""
+  );
+  py::class_<Bmad::EvaluateArrayIndex, std::unique_ptr<Bmad::EvaluateArrayIndex>>(
+      m,
+      "EvaluateArrayIndex",
+      "evaluate_array_index return type"
+  )
       .def_readonly("err_flag", &Bmad::EvaluateArrayIndex::err_flag)
       .def_readonly("word2", &Bmad::EvaluateArrayIndex::word2)
       .def_readonly("delim2", &Bmad::EvaluateArrayIndex::delim2)
       .def_readonly("this_index", &Bmad::EvaluateArrayIndex::this_index)
-      .def("__len__", [](const Bmad::EvaluateArrayIndex&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const Bmad::EvaluateArrayIndex& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.word2);
-            if (i == 2)
-              return py::cast(s.delim2);
-            if (i == 3)
-              return py::cast(s.this_index);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::EvaluateArrayIndex &) { return 4; })
+      .def("__getitem__", [](const Bmad::EvaluateArrayIndex &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.word2);
+        if (i == 2)
+          return py::cast(s.delim2);
+        if (i == 3)
+          return py::cast(s.this_index);
+        throw py::index_error();
+      });
   m.def(
       "evaluate_array_index",
       &Bmad::evaluate_array_index,
@@ -2397,23 +2539,25 @@ delim2 : unknown
     Actual delimitor found after word2.
 this_index : int
     Integer value
-)""");
+)"""
+  );
   py::class_<Bmad::EvaluateLogical, std::unique_ptr<Bmad::EvaluateLogical>>(
-      m, "EvaluateLogical", "evaluate_logical return type")
+      m,
+      "EvaluateLogical",
+      "evaluate_logical return type"
+  )
       .def_readonly("iostat", &Bmad::EvaluateLogical::iostat)
       .def_readonly("this_logic", &Bmad::EvaluateLogical::this_logic)
-      .def("__len__", [](const Bmad::EvaluateLogical&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::EvaluateLogical& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.iostat);
-            if (i == 1)
-              return py::cast(s.this_logic);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::EvaluateLogical &) { return 2; })
+      .def("__getitem__", [](const Bmad::EvaluateLogical &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.iostat);
+        if (i == 1)
+          return py::cast(s.this_logic);
+        throw py::index_error();
+      });
   m.def(
       "evaluate_logical",
       &Bmad::evaluate_logical,
@@ -2437,7 +2581,8 @@ this_logic : bool
     Result.
 iostat : int
     Status: Returns 0 if conversion successful.
-)""");
+)"""
+  );
   m.def(
       "exact_bend_edge_kick",
       &Bmad::exact_bend_edge_kick,
@@ -2467,7 +2612,8 @@ mat6 : float, optional
     edge.
 make_matrix : float, optional
     Propagate the transfer matrix? Default is False.
-)""");
+)"""
+  );
   m.def(
       "exp_bessi0",
       &Bmad::exp_bessi0,
@@ -2490,7 +2636,8 @@ B1 : float
     Scalar value.  Eq. 33 from Piwinski's paper.
 B2 : float
     Scalar value.  Eq. 34 from Piwinski's paper. <return value> -- Real(rp): Scalar return value.
-)""");
+)"""
+  );
   m.def(
       "expect_one_of",
       &Bmad::expect_one_of,
@@ -2532,14 +2679,18 @@ Notes
 -----
 Related routines:
 expect_this
-)""");
+)"""
+  );
   py::class_<Bmad::ExpectThis, std::unique_ptr<Bmad::ExpectThis>>(
-      m, "ExpectThis", "expect_this return type")
+      m,
+      "ExpectThis",
+      "expect_this return type"
+  )
       .def_readonly("delim", &Bmad::ExpectThis::delim)
       .def_readonly("delim_found", &Bmad::ExpectThis::delim_found)
       .def_readonly("is_ok", &Bmad::ExpectThis::is_ok)
-      .def("__len__", [](const Bmad::ExpectThis&) { return 3; })
-      .def("__getitem__", [](const Bmad::ExpectThis& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::ExpectThis &) { return 3; })
+      .def("__getitem__", [](const Bmad::ExpectThis &s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -2591,7 +2742,8 @@ Notes
 -----
 Related routines:
 expect_one_of
-)""");
+)"""
+  );
   m.def(
       "expression_stack_to_string",
       &Bmad::expression_stack_to_string,
@@ -2612,28 +2764,28 @@ Returns
 -------
 str : unknown
     : Expression in string form.
-)""");
-  py::class_<
-      Bmad::ExpressionStackValue,
-      std::unique_ptr<Bmad::ExpressionStackValue>>(
-      m, "ExpressionStackValue", "expression_stack_value return type")
+)"""
+  );
+  py::class_<Bmad::ExpressionStackValue, std::unique_ptr<Bmad::ExpressionStackValue>>(
+      m,
+      "ExpressionStackValue",
+      "expression_stack_value return type"
+  )
       .def_readonly("err_flag", &Bmad::ExpressionStackValue::err_flag)
       .def_readonly("err_str", &Bmad::ExpressionStackValue::err_str)
       .def_readonly("value", &Bmad::ExpressionStackValue::value)
-      .def("__len__", [](const Bmad::ExpressionStackValue&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ExpressionStackValue& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.err_str);
-            if (i == 2)
-              return py::cast(s.value);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ExpressionStackValue &) { return 3; })
+      .def("__getitem__", [](const Bmad::ExpressionStackValue &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.err_str);
+        if (i == 2)
+          return py::cast(s.value);
+        throw py::index_error();
+      });
   m.def(
       "expression_stack_value",
       &Bmad::expression_stack_value,
@@ -2670,28 +2822,28 @@ Notes
 -----
 Related routines:
 expression_value expression_string_to_stack
-)""");
-  py::class_<
-      Bmad::ExpressionStringToStack,
-      std::unique_ptr<Bmad::ExpressionStringToStack>>(
-      m, "ExpressionStringToStack", "expression_string_to_stack return type")
+)"""
+  );
+  py::class_<Bmad::ExpressionStringToStack, std::unique_ptr<Bmad::ExpressionStringToStack>>(
+      m,
+      "ExpressionStringToStack",
+      "expression_string_to_stack return type"
+  )
       .def_readonly("n_stack", &Bmad::ExpressionStringToStack::n_stack)
       .def_readonly("err_flag", &Bmad::ExpressionStringToStack::err_flag)
       .def_readonly("err_str", &Bmad::ExpressionStringToStack::err_str)
-      .def("__len__", [](const Bmad::ExpressionStringToStack&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ExpressionStringToStack& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.n_stack);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            if (i == 2)
-              return py::cast(s.err_str);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ExpressionStringToStack &) { return 3; })
+      .def("__getitem__", [](const Bmad::ExpressionStringToStack &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.n_stack);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        if (i == 2)
+          return py::cast(s.err_str);
+        throw py::index_error();
+      });
   m.def(
       "expression_string_to_stack",
       &Bmad::expression_string_to_stack,
@@ -2727,25 +2879,25 @@ Notes
 -----
 Related routines:
 expression_value expression_stack_value
-)""");
-  py::class_<
-      Bmad::ExpressionStringToTree,
-      std::unique_ptr<Bmad::ExpressionStringToTree>>(
-      m, "ExpressionStringToTree", "expression_string_to_tree return type")
+)"""
+  );
+  py::class_<Bmad::ExpressionStringToTree, std::unique_ptr<Bmad::ExpressionStringToTree>>(
+      m,
+      "ExpressionStringToTree",
+      "expression_string_to_tree return type"
+  )
       .def_readonly("err_flag", &Bmad::ExpressionStringToTree::err_flag)
       .def_readonly("err_str", &Bmad::ExpressionStringToTree::err_str)
-      .def("__len__", [](const Bmad::ExpressionStringToTree&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ExpressionStringToTree& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.err_str);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ExpressionStringToTree &) { return 2; })
+      .def("__getitem__", [](const Bmad::ExpressionStringToTree &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.err_str);
+        throw py::index_error();
+      });
   m.def(
       "expression_string_to_tree",
       &Bmad::expression_string_to_tree,
@@ -2791,7 +2943,8 @@ of the equation this node will have two comma children. The second equal node ch
 children. :orxit.x" (this is a Tao construct) which get :" "orbit.x" functions line "atan()" are considered
 compound vars with children "atan" "()" The funciton argument of a species related function like "He++" in the
 construct "mass_of(He++)" will not get split will get marked as a species_const$.
-)""");
+)"""
+  );
   m.def(
       "expression_tree_to_string",
       &Bmad::expression_tree_to_string,
@@ -2819,26 +2972,28 @@ Returns
 -------
 str_out : unknown
     Expression string.
-)""");
+)"""
+  );
   py::class_<Bmad::ExpressionValue, std::unique_ptr<Bmad::ExpressionValue>>(
-      m, "ExpressionValue", "expression_value return type")
+      m,
+      "ExpressionValue",
+      "expression_value return type"
+  )
       .def_readonly("err_flag", &Bmad::ExpressionValue::err_flag)
       .def_readonly("err_str", &Bmad::ExpressionValue::err_str)
       .def_readonly("value", &Bmad::ExpressionValue::value)
-      .def("__len__", [](const Bmad::ExpressionValue&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ExpressionValue& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.err_str);
-            if (i == 2)
-              return py::cast(s.value);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ExpressionValue &) { return 3; })
+      .def("__getitem__", [](const Bmad::ExpressionValue &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.err_str);
+        if (i == 2)
+          return py::cast(s.value);
+        throw py::index_error();
+      });
   m.def(
       "expression_value",
       &Bmad::expression_value,
@@ -2871,5 +3026,6 @@ Notes
 -----
 Related routines:
 expression_string_to_stack expression_stack_value
-)""");
+)"""
+  );
 }

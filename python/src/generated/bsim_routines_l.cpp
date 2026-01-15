@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_bsim_routines_l(py::module& m) {
+void init_bsim_routines_l(py::module &m) {
   m.def(
       "logical_to_python",
       &bsim::logical_to_python,
@@ -14,5 +14,6 @@ void init_bsim_routines_l(py::module& m) {
 ----------
 logic : 
 string : 
-)""");
+)"""
+  );
 }

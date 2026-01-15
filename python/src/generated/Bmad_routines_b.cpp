@@ -4,13 +4,12 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_b(py::module& m) {
-  py::class_<Bmad::BbiKick, std::unique_ptr<Bmad::BbiKick>>(
-      m, "BbiKick", "bbi_kick return type")
+void init_Bmad_routines_b(py::module &m) {
+  py::class_<Bmad::BbiKick, std::unique_ptr<Bmad::BbiKick>>(m, "BbiKick", "bbi_kick return type")
       .def_readonly("nk", &Bmad::BbiKick::nk)
       .def_readonly("dnk", &Bmad::BbiKick::dnk)
-      .def("__len__", [](const Bmad::BbiKick&) { return 2; })
-      .def("__getitem__", [](const Bmad::BbiKick& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::BbiKick &) { return 2; })
+      .def("__getitem__", [](const Bmad::BbiKick &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -54,7 +53,8 @@ dnk : float
     (sig_y * (sig_x + sig_y) * A)  [linear region] ~ -2 * N_p * r_p * c_light * y / ((x^2 + y^2) * A)
     [far from beam] ion_const = N_particles_bunch * r_p * c_light / (2 * pi * (sig_x + sig_y) * A) A = Mass of
     ion in AMU.
-)""");
+)"""
+  );
   m.def(
       "bbi_slice_calc",
       &Bmad::bbi_slice_calc,
@@ -69,7 +69,8 @@ n_slice : int
     Number of slices
 z_slice : float
     Array of slice positions 1:n_slice. zero padded for indexes greater than n_slice
-)""");
+)"""
+  );
   m.def(
       "beam_envelope_ibs",
       &Bmad::beam_envelope_ibs,
@@ -108,7 +109,8 @@ Returns
 -------
 ibs_mat : float
     changes in 2nd order moments due to IBS are ibs_mat*element_length
-)""");
+)"""
+  );
   m.def(
       "beam_equal_beam",
       &Bmad::beam_equal_beam,
@@ -118,7 +120,8 @@ ibs_mat : float
 ----------
 beam1 : 
 beam2 : 
-)""");
+)"""
+  );
   m.def(
       "beam_init_setup",
       &Bmad::beam_init_setup,
@@ -140,16 +143,20 @@ modes : NormalModesStruct, optional
 err_flag : bool, optional
     Set true if there is an error. False otherwise.
 beam_init_set : 
-)""");
+)"""
+  );
   py::class_<Bmad::BeamTilts, std::unique_ptr<Bmad::BeamTilts>>(
-      m, "BeamTilts", "beam_tilts return type")
+      m,
+      "BeamTilts",
+      "beam_tilts return type"
+  )
       .def_readonly("angle_xy", &Bmad::BeamTilts::angle_xy)
       .def_readonly("angle_xz", &Bmad::BeamTilts::angle_xz)
       .def_readonly("angle_yz", &Bmad::BeamTilts::angle_yz)
       .def_readonly("angle_xpz", &Bmad::BeamTilts::angle_xpz)
       .def_readonly("angle_ypz", &Bmad::BeamTilts::angle_ypz)
-      .def("__len__", [](const Bmad::BeamTilts&) { return 5; })
-      .def("__getitem__", [](const Bmad::BeamTilts& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::BeamTilts &) { return 5; })
+      .def("__getitem__", [](const Bmad::BeamTilts &s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -203,7 +210,8 @@ angle_xpz : float
     x-pz coupling
 angle_ypz : float
     y-pz coupling
-)""");
+)"""
+  );
   m.def(
       "beambeam_fibre_setup",
       &Bmad::beambeam_fibre_setup,
@@ -221,7 +229,8 @@ Returns
 -------
 ptc_fibre : 
     Corresponding PTC fibre.
-)""");
+)"""
+  );
   m.def(
       "bend_edge_kick",
       &Bmad::bend_edge_kick,
@@ -256,7 +265,8 @@ make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
 track_spin : bool, optional
     If True then track the spin through the edge fields. Default: False.
-)""");
+)"""
+  );
   m.def(
       "bend_exact_multipole_field",
       &Bmad::bend_exact_multipole_field,
@@ -282,7 +292,8 @@ calc_dfield : bool, optional
     If present and True then calculate the field derivatives.
 calc_potential : bool, optional
     Calc electric and magnetic potentials? Default is false.
-)""");
+)"""
+  );
   m.def(
       "bend_length_has_been_set",
       &Bmad::bend_length_has_been_set,
@@ -293,7 +304,8 @@ calc_potential : bool, optional
 ele : EleStruct
     Element to be checked. Ouput:
 is_set : 
-)""");
+)"""
+  );
   m.def(
       "bend_photon_e_rel_init",
       &Bmad::bend_photon_e_rel_init,
@@ -327,7 +339,8 @@ Returns
 -------
 E_rel : float
     Relative photon energy E/E_crit.
-)""");
+)"""
+  );
   m.def(
       "bend_photon_energy_integ_prob",
       &Bmad::bend_photon_energy_integ_prob,
@@ -352,7 +365,8 @@ Returns
 -------
 integ_prob : float
     Integrated probability. Will be in the range [0, 1].
-)""");
+)"""
+  );
   m.def(
       "bend_photon_energy_normalized_probability",
       &Bmad::bend_photon_energy_normalized_probability,
@@ -372,7 +386,8 @@ Returns
 -------
 prob : float
     Normalized probability.
-)""");
+)"""
+  );
   m.def(
       "bend_photon_init",
       &Bmad::bend_photon_init,
@@ -444,7 +459,8 @@ Returns
 -------
 orbit : CoordStruct
     Initialized photon.
-)""");
+)"""
+  );
   m.def(
       "bend_photon_polarization_init",
       &Bmad::bend_photon_polarization_init,
@@ -474,7 +490,8 @@ Returns
 orbit : CoordStruct
     Photon coords .field(2)     -- (x,y) polaraization. Will have unit magnitude .phase(2)     -- (x,y)
     phases. Will be [0, pi/2].
-)""");
+)"""
+  );
   m.def(
       "bend_photon_vert_angle_init",
       &Bmad::bend_photon_vert_angle_init,
@@ -505,7 +522,8 @@ Returns
 -------
 phi : float
     The photon vertical emission angle (in radians). Note: phi is an increasing monotonic function of r_in.
-)""");
+)"""
+  );
   m.def(
       "bend_shift",
       &Bmad::bend_shift,
@@ -527,7 +545,8 @@ w_mat : float
 ref_tilt : float, optional
     ref_tilt. Default: 0
 position2 : 
-)""");
+)"""
+  );
   m.def(
       "bend_vert_angle_integ_prob",
       &Bmad::bend_vert_angle_integ_prob,
@@ -555,7 +574,8 @@ Returns
 -------
 integ_prob : float
     Integrated probability. Will be in the range [0, 1].
-)""");
+)"""
+  );
   m.def(
       "bl_via_vlassov",
       &Bmad::bl_via_vlassov,
@@ -602,15 +622,19 @@ Returns
 -------
 sigma_z : float
     Bunch length. FWHM/TwoRootTwoLogTwo from bunch profile
-)""");
+)"""
+  );
   py::class_<Bmad::BmadParser, std::unique_ptr<Bmad::BmadParser>>(
-      m, "BmadParser", "bmad_parser return type")
+      m,
+      "BmadParser",
+      "bmad_parser return type"
+  )
       .def_readonly("lat", &Bmad::BmadParser::lat)
       .def_readonly("digested_read_ok", &Bmad::BmadParser::digested_read_ok)
       .def_readonly("err_flag", &Bmad::BmadParser::err_flag)
       .def_readonly("parse_lat", &Bmad::BmadParser::parse_lat)
-      .def("__len__", [](const Bmad::BmadParser&) { return 4; })
-      .def("__getitem__", [](const Bmad::BmadParser& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::BmadParser &) { return 4; })
+      .def("__getitem__", [](const Bmad::BmadParser &s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -650,7 +674,8 @@ err_flag : bool
 parse_lat : LatStruct
     List of elements used to construct the lattice. Useful if bmad_parser2 will be called. See bmad_parser2
     documentation.
-)""");
+)"""
+  );
   m.def(
       "bmad_parser2",
       &Bmad::bmad_parser2,
@@ -676,7 +701,8 @@ parse_lat : LatStruct, optional
     Used by bmad_parser to pass to bmad_parser2 a list of elements that were defined in the lattice file but
     not used. This is useful in preventing errors being generated if group/overlay elements definded by
     lat_file refer to unused slaves in parse_lat.
-)""");
+)"""
+  );
   m.def(
       "bmad_patch_parameters_to_ptc",
       &Bmad::bmad_patch_parameters_to_ptc,
@@ -686,7 +712,8 @@ parse_lat : LatStruct, optional
 ----------
 ang : 
 exi : 
-)""");
+)"""
+  );
   m.def("bp_set_ran_status", &Bmad::bp_set_ran_status, R"""()""");
   m.def(
       "branch_equal_branch",
@@ -697,7 +724,8 @@ exi :
 ----------
 branch1 : 
 branch2 : 
-)""");
+)"""
+  );
   m.def(
       "branch_name",
       &Bmad::branch_name,
@@ -708,7 +736,8 @@ branch2 :
 branch : BranchStruct
     Lattice branch
 name : 
-)""");
+)"""
+  );
   m.def(
       "branch_to_ptc_m_u",
       &Bmad::branch_to_ptc_m_u,
@@ -734,7 +763,8 @@ Parameters
 branch : BranchStruct
     Input branch. branch(:).ptc              -- Pointers to generated layouts. branch(:).ele(:).ptc_fibre --
     Pointer to PTC fibres
-)""");
+)"""
+  );
   m.def(
       "bunch_equal_bunch",
       &Bmad::bunch_equal_bunch,
@@ -744,5 +774,6 @@ branch : BranchStruct
 ----------
 bunch1 : 
 bunch2 : 
-)""");
+)"""
+  );
 }

@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_p(py::module& m) {
+void init_SimUtils_routines_p(py::module &m) {
   m.def(
       "parse_fortran_format",
       &SimUtils::parse_fortran_format,
@@ -22,7 +22,8 @@ power :
 descrip : 
 width : 
 digits : 
-)""");
+)"""
+  );
   m.def(
       "pointer_to_ran_state",
       &SimUtils::pointer_to_ran_state,
@@ -43,7 +44,8 @@ Returns
 -------
 ran_state_ptr : RandomStateStruct
     Pointer to the appropriate state.
-)""");
+)"""
+  );
   m.def(
       "poly_eval",
       &SimUtils::poly_eval,
@@ -60,7 +62,8 @@ x : float
 diff_coef : bool, optional
     poly(:) array are differentials? Default is False.
 y : 
-)""");
+)"""
+  );
   m.def(
       "probability_funct",
       &SimUtils::probability_funct,
@@ -71,7 +74,8 @@ y :
 x : float
     Function argument.
 prob : 
-)""");
+)"""
+  );
   m.def(
       "projdd",
       &SimUtils::projdd,
@@ -83,5 +87,6 @@ prob :
 a : 
 b : 
 projdd : 
-)""");
+)"""
+  );
 }

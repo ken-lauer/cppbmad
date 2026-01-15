@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_h(py::module& m) {
+void init_Bmad_routines_h(py::module &m) {
   m.def(
       "hard_multipole_edge_kick",
       &Bmad::hard_multipole_edge_kick,
@@ -43,7 +43,8 @@ mat6 : float, optional
     fringe.
 make_matrix : float, optional
     Propagate the transfer matrix? Default is False.
-)""");
+)"""
+  );
   m.def(
       "has_attribute",
       &Bmad::has_attribute,
@@ -55,7 +56,8 @@ make_matrix : float, optional
 ele : 
 attrib : 
 has_it : 
-)""");
+)"""
+  );
   m.def(
       "has_curvature",
       &Bmad::has_curvature,
@@ -73,7 +75,8 @@ Returns
 -------
 curved : bool
     Set True if phot_eleace is curved.
-)""");
+)"""
+  );
   m.def(
       "has_orientation_attributes",
       &Bmad::has_orientation_attributes,
@@ -97,7 +100,8 @@ Notes
 -----
 Related routines:
 has_attribute function.
-)""");
+)"""
+  );
   m.def(
       "hdf5_write_beam",
       &Bmad::hdf5_write_beam,
@@ -115,7 +119,8 @@ append :
 error : 
 lat : 
 alive_only : 
-)""");
+)"""
+  );
   m.def(
       "hdf5_write_grid_field",
       &Bmad::hdf5_write_grid_field,
@@ -129,7 +134,8 @@ file_name :
 ele : 
 g_field : 
 err_flag : 
-)""");
+)"""
+  );
   m.def(
       "hwang_bend_edge_kick",
       &Bmad::hwang_bend_edge_kick,
@@ -165,5 +171,6 @@ mat6 : float, optional
     edge.
 make_matrix : float, optional
     Propagate the transfer matrix? Default is False.
-)""");
+)"""
+  );
 }

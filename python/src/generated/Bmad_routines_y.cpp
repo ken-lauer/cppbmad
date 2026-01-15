@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_y(py::module& m) {
+void init_Bmad_routines_y(py::module &m) {
   m.def(
       "ylafun",
       &Bmad::ylafun,
@@ -18,5 +18,6 @@ x :
 y : 
 z : 
 res : 
-)""");
+)"""
+  );
 }

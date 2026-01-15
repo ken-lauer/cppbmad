@@ -1,17 +1,20 @@
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <bmad.hpp>
 
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 
+#include "doctest.h"
+
 using namespace Bmad;
 using namespace SimUtils;
 
-int main() {
+TEST_CASE("CSR") {
   auto lat = bmad_parser("data/csr_example/lat.bmad").lat;
   ran_seed_put(123456);
 
-  auto beam_init{BeamInitProxy()};
+  auto beam_init{BeamInitStruct()};
   beam_init.set_a_norm_emit(4e-12);
   beam_init.set_b_norm_emit(4e-12);
   beam_init.set_dPz_dz(0);
@@ -50,7 +53,7 @@ int main() {
     ave[i] = (n_particles > 0) ? (sum / n_particles) : 0.0;
   }
 
-  auto centroid{CoordProxyAlloc1D()};
+  auto centroid{CoordStructAlloc1D()};
   reallocate_coord(centroid, lat, 0);
   auto centroid0{centroid[0]};
   init_coord(centroid0, ave, ele0, Bmad::DOWNSTREAM_END);
@@ -64,9 +67,28 @@ int main() {
 
   std::cout << "track_beam result=" << track_res << "\n";
 
-  std::cout << "First particle coords at end of lattice:\n";
-  std::cout << beam1.bunch()[0].particle()[0].vec().to_vector() << "\n";
+  auto first_particle_vec = beam1.bunch()[0].particle()[0].vec().to_vector();
 
+  std::cout << "First particle coords at end of lattice:\n";
+  std::cout << first_particle_vec << "\n";
+
+  auto expected = {
+      1.44484E-07,
+      8.51128E-09,
+      -1.21621E-07,
+      -4.29278E-09,
+      2.06790E-04,
+      2.52534E-08,
+  };
+
+  REQUIRE(first_particle_vec.size() == expected.size());
+
+  size_t index = 0;
+  for (const auto &val : expected) {
+    INFO("Checking index: " << index);
+    CHECK(first_particle_vec[index] == doctest::Approx(val));
+    index++;
+  }
   std::ofstream out("csr.dat");
   out.setf(std::ios::fixed, std::ios::floatfield);
   out.precision(8);
@@ -76,5 +98,4 @@ int main() {
     idx++;
   }
   out.close();
-  return 0;
 }

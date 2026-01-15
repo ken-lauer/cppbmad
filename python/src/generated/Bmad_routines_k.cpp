@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_k(py::module& m) {
+void init_Bmad_routines_k(py::module &m) {
   m.def(
       "key_name_to_key_index",
       &Bmad::key_name_to_key_index,
@@ -19,23 +19,25 @@ abbrev_allowed : bool, optional
     Abbreviations (eg: "quad") allowed? Default is False. At least 3 characters are needed (except for
     rfcavity elements) if True.
 key_index : 
-)""");
+)"""
+  );
   py::class_<Bmad::KickVectorCalc, std::unique_ptr<Bmad::KickVectorCalc>>(
-      m, "KickVectorCalc", "kick_vector_calc return type")
+      m,
+      "KickVectorCalc",
+      "kick_vector_calc return type"
+  )
       .def_readonly("dr_ds", &Bmad::KickVectorCalc::dr_ds)
       .def_readonly("err", &Bmad::KickVectorCalc::err)
-      .def("__len__", [](const Bmad::KickVectorCalc&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::KickVectorCalc& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.dr_ds);
-            if (i == 1)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::KickVectorCalc &) { return 2; })
+      .def("__getitem__", [](const Bmad::KickVectorCalc &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.dr_ds);
+        if (i == 1)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "kick_vector_calc",
       &Bmad::kick_vector_calc,
@@ -114,7 +116,8 @@ err : bool
 Notes
 -----
 Remember: In order to simplify the calculation, in the body of any element, P0 is taken to be
-)""");
+)"""
+  );
   m.def(
       "kill_complex_taylor",
       &Bmad::kill_complex_taylor,
@@ -129,7 +132,8 @@ complex_taylor : ComplexTaylorStruct
     complex_taylor to be deallocated. It is OK if complex_taylor has already been deallocated.
     This parameter is an input/output and is modified in-place. As an output: deallocated complex_taylor
     structure.
-)""");
+)"""
+  );
   m.def(
       "kill_ptc_layouts",
       &Bmad::kill_ptc_layouts,
@@ -138,7 +142,8 @@ complex_taylor : ComplexTaylorStruct
 ----------
 lat : LatStruct
     Bmad lattice with associated layouts.
-)""");
+)"""
+  );
   m.def(
       "kill_taylor",
       &Bmad::kill_taylor,
@@ -148,7 +153,8 @@ lat : LatStruct
 bmad_taylor : TaylorStruct
     Taylor to be deallocated.
     This parameter is an input/output and is modified in-place. As an output: deallocated Taylor structure.
-)""");
+)"""
+  );
   m.def(
       "kind_name",
       &Bmad::kind_name,
@@ -166,7 +172,8 @@ Returns
 -------
 kind_str : unknown
     String representation
-)""");
+)"""
+  );
   m.def(
       "knot_interpolate",
       &Bmad::knot_interpolate,
@@ -188,7 +195,8 @@ interpolation : int
 err_flag : bool
     Set True if there is an error. False otherwise.
 y_pt : 
-)""");
+)"""
+  );
   m.def(
       "knots_to_string",
       &Bmad::knots_to_string,
@@ -200,5 +208,6 @@ y_pt :
 x_knot : 
 y_knot : 
 str : 
-)""");
+)"""
+  );
 }

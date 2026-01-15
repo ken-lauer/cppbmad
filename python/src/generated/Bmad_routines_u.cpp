@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_u(py::module& m) {
+void init_Bmad_routines_u(py::module &m) {
   m.def(
       "update_ele_from_fibre",
       &Bmad::update_ele_from_fibre,
@@ -23,7 +23,8 @@ ele : EleStruct
 Notes
 -----
 Remember to call lattice_bookkeeper after calling this routine.
-)""");
+)"""
+  );
   m.def(
       "update_fibre_from_ele",
       &Bmad::update_fibre_from_ele,
@@ -35,7 +36,8 @@ ele : EleStruct
 survey_needed : bool
     Set True if a call to survey will be needed. Calling survey is avoided in this routine to save time if
     multiple elements are being updated.
-)""");
+)"""
+  );
   m.def(
       "update_floor_angles",
       &Bmad::update_floor_angles,
@@ -49,5 +51,6 @@ floor : FloorPositionStruct
 floor0 : FloorPositionStruct, optional
     Reference position. There are two solutions related by: [theta, phi, psi] & [pi+theta, pi-phi, pi+psi] If
     floor0 is present, choose the solution "nearest" the angles in floor0.
-)""");
+)"""
+  );
 }

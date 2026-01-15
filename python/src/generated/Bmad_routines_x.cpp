@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_x(py::module& m) {
+void init_Bmad_routines_x(py::module &m) {
   m.def(
       "xlafun",
       &Bmad::xlafun,
@@ -18,7 +18,8 @@ x :
 y : 
 z : 
 res : 
-)""");
+)"""
+  );
   m.def(
       "xraylib_nist_compound",
       &Bmad::xraylib_nist_compound,
@@ -37,5 +38,6 @@ Returns
 -------
 indx : int
     Compound index. -1 if not found.
-)""");
+)"""
+  );
 }

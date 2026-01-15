@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_p(py::module& m) {
+void init_Bmad_routines_p(py::module &m) {
   m.def(
       "parse_cartesian_map",
       &Bmad::parse_cartesian_map,
@@ -29,7 +29,8 @@ This must read in:
    .
    . ) },
 
-)""");
+)"""
+  );
   m.def(
       "parse_cylindrical_map",
       &Bmad::parse_cylindrical_map,
@@ -47,7 +48,8 @@ lat :
 delim : 
 delim_found : 
 err_flag : 
-)""");
+)"""
+  );
   m.def(
       "parse_gen_grad_map",
       &Bmad::parse_gen_grad_map,
@@ -61,7 +63,8 @@ err_flag :
 
 Subroutine to parse a "gen_grad_map = {}" construct
 
-)""");
+)"""
+  );
   m.def(
       "parse_grid_field",
       &Bmad::parse_grid_field,
@@ -79,7 +82,8 @@ lat :
 delim : 
 delim_found : 
 err_flag : 
-)""");
+)"""
+  );
   m.def(
       "parse_integer_list",
       &Bmad::parse_integer_list,
@@ -104,29 +108,31 @@ Example:   "(1.2, 2.3, 4.4, 8.5)"
 Similar to parse_integer_list2 except does not use allocatable array.
 See parse_integer_list2 for more details
 
-)""");
+)"""
+  );
   py::class_<Bmad::ParseIntegerList2, std::unique_ptr<Bmad::ParseIntegerList2>>(
-      m, "ParseIntegerList2", "parse_integer_list2 return type")
+      m,
+      "ParseIntegerList2",
+      "parse_integer_list2 return type"
+  )
       .def_readonly("num_found", &Bmad::ParseIntegerList2::num_found)
       .def_readonly("delim", &Bmad::ParseIntegerList2::delim)
       .def_readonly("delim_found", &Bmad::ParseIntegerList2::delim_found)
       .def_readonly("is_ok", &Bmad::ParseIntegerList2::is_ok)
-      .def("__len__", [](const Bmad::ParseIntegerList2&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ParseIntegerList2& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.num_found);
-            if (i == 1)
-              return py::cast(s.delim);
-            if (i == 2)
-              return py::cast(s.delim_found);
-            if (i == 3)
-              return py::cast(s.is_ok);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ParseIntegerList2 &) { return 4; })
+      .def("__getitem__", [](const Bmad::ParseIntegerList2 &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.num_found);
+        if (i == 1)
+          return py::cast(s.delim);
+        if (i == 2)
+          return py::cast(s.delim_found);
+        if (i == 3)
+          return py::cast(s.is_ok);
+        throw py::index_error();
+      });
   m.def(
       "parse_integer_list2",
       &Bmad::parse_integer_list2,
@@ -168,28 +174,31 @@ delim : unknown
     Delimiter found where the parsing of the input line stops.
 delim_found : bool
     Delimiter found? False if end of input command.
-)""");
+)"""
+  );
   py::class_<Bmad::ParseRealList, std::unique_ptr<Bmad::ParseRealList>>(
-      m, "ParseRealList", "parse_real_list return type")
+      m,
+      "ParseRealList",
+      "parse_real_list return type"
+  )
       .def_readonly("delim", &Bmad::ParseRealList::delim)
       .def_readonly("delim_found", &Bmad::ParseRealList::delim_found)
       .def_readonly("num_found", &Bmad::ParseRealList::num_found)
       .def_readonly("is_ok", &Bmad::ParseRealList::is_ok)
-      .def("__len__", [](const Bmad::ParseRealList&) { return 4; })
-      .def(
-          "__getitem__", [](const Bmad::ParseRealList& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.delim);
-            if (i == 1)
-              return py::cast(s.delim_found);
-            if (i == 2)
-              return py::cast(s.num_found);
-            if (i == 3)
-              return py::cast(s.is_ok);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ParseRealList &) { return 4; })
+      .def("__getitem__", [](const Bmad::ParseRealList &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.delim);
+        if (i == 1)
+          return py::cast(s.delim_found);
+        if (i == 2)
+          return py::cast(s.num_found);
+        if (i == 3)
+          return py::cast(s.is_ok);
+        throw py::index_error();
+      });
   m.def(
       "parse_real_list",
       &Bmad::parse_real_list,
@@ -234,29 +243,31 @@ Notes
 -----
 Related routines:
 parse_real_matrix.
-)""");
+)"""
+  );
   py::class_<Bmad::ParseRealList2, std::unique_ptr<Bmad::ParseRealList2>>(
-      m, "ParseRealList2", "parse_real_list2 return type")
+      m,
+      "ParseRealList2",
+      "parse_real_list2 return type"
+  )
       .def_readonly("num_found", &Bmad::ParseRealList2::num_found)
       .def_readonly("delim", &Bmad::ParseRealList2::delim)
       .def_readonly("delim_found", &Bmad::ParseRealList2::delim_found)
       .def_readonly("is_ok", &Bmad::ParseRealList2::is_ok)
-      .def("__len__", [](const Bmad::ParseRealList2&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ParseRealList2& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.num_found);
-            if (i == 1)
-              return py::cast(s.delim);
-            if (i == 2)
-              return py::cast(s.delim_found);
-            if (i == 3)
-              return py::cast(s.is_ok);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ParseRealList2 &) { return 4; })
+      .def("__getitem__", [](const Bmad::ParseRealList2 &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.num_found);
+        if (i == 1)
+          return py::cast(s.delim);
+        if (i == 2)
+          return py::cast(s.delim_found);
+        if (i == 3)
+          return py::cast(s.is_ok);
+        throw py::index_error();
+      });
   m.def(
       "parse_real_list2",
       &Bmad::parse_real_list2,
@@ -306,7 +317,8 @@ Notes
 -----
 Related routines:
 pase_real_list parse_real_matrix.
-)""");
+)"""
+  );
   m.def(
       "parser_add_constant",
       &Bmad::parser_add_constant,
@@ -318,7 +330,8 @@ pase_real_list parse_real_matrix.
 word : 
 lat : 
 redef_is_error : 
-)""");
+)"""
+  );
   m.def(
       "parser_call_check",
       &Bmad::parser_call_check,
@@ -332,25 +345,25 @@ redef_is_error :
 
 Routine to check if there is a "call::XXX" construct in the input stream.
 
-)""");
-  py::class_<
-      Bmad::ParserFastComplexRead,
-      std::unique_ptr<Bmad::ParserFastComplexRead>>(
-      m, "ParserFastComplexRead", "parser_fast_complex_read return type")
+)"""
+  );
+  py::class_<Bmad::ParserFastComplexRead, std::unique_ptr<Bmad::ParserFastComplexRead>>(
+      m,
+      "ParserFastComplexRead",
+      "parser_fast_complex_read return type"
+  )
       .def_readonly("delim", &Bmad::ParserFastComplexRead::delim)
       .def_readonly("is_ok", &Bmad::ParserFastComplexRead::is_ok)
-      .def("__len__", [](const Bmad::ParserFastComplexRead&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ParserFastComplexRead& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.delim);
-            if (i == 1)
-              return py::cast(s.is_ok);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ParserFastComplexRead &) { return 2; })
+      .def("__getitem__", [](const Bmad::ParserFastComplexRead &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.delim);
+        if (i == 1)
+          return py::cast(s.is_ok);
+        throw py::index_error();
+      });
   m.def(
       "parser_fast_complex_read",
       &Bmad::parser_fast_complex_read,
@@ -380,7 +393,8 @@ delim : unknown
     Delimitor at end of array. Must be "," or "}"
 is_ok : bool
     True if everything OK. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "parser_fast_integer_read",
       &Bmad::parser_fast_integer_read,
@@ -395,28 +409,28 @@ is_ok : bool
 Returns
 -------
 is_ok
-)""");
-  py::class_<
-      Bmad::ParserFastRealRead,
-      std::unique_ptr<Bmad::ParserFastRealRead>>(
-      m, "ParserFastRealRead", "parser_fast_real_read return type")
+)"""
+  );
+  py::class_<Bmad::ParserFastRealRead, std::unique_ptr<Bmad::ParserFastRealRead>>(
+      m,
+      "ParserFastRealRead",
+      "parser_fast_real_read return type"
+  )
       .def_readonly("delim", &Bmad::ParserFastRealRead::delim)
       .def_readonly("n_real", &Bmad::ParserFastRealRead::n_real)
       .def_readonly("is_ok", &Bmad::ParserFastRealRead::is_ok)
-      .def("__len__", [](const Bmad::ParserFastRealRead&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ParserFastRealRead& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.delim);
-            if (i == 1)
-              return py::cast(s.n_real);
-            if (i == 2)
-              return py::cast(s.is_ok);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ParserFastRealRead &) { return 3; })
+      .def("__getitem__", [](const Bmad::ParserFastRealRead &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.delim);
+        if (i == 1)
+          return py::cast(s.n_real);
+        if (i == 2)
+          return py::cast(s.is_ok);
+        throw py::index_error();
+      });
   m.def(
       "parser_fast_real_read",
       &Bmad::parser_fast_real_read,
@@ -456,7 +470,8 @@ is_ok : bool
     True if everything OK. False otherwise.
 n_real : int
     Number of elements found.
-)""");
+)"""
+  );
   m.def(
       "parser_file_stack",
       &Bmad::parser_file_stack,
@@ -472,7 +487,8 @@ Subroutine to keep track of the files that are opened for reading.
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
 
-)""");
+)"""
+  );
   m.def(
       "parser_get_integer",
       &Bmad::parser_get_integer,
@@ -494,7 +510,8 @@ delim_found :
 err : 
 str1 : 
 str2 : 
-)""");
+)"""
+  );
   m.def(
       "parser_get_logical",
       &Bmad::parser_get_logical,
@@ -512,7 +529,8 @@ ele_name :
 delim : 
 delim_found : 
 err : 
-)""");
+)"""
+  );
   m.def(
       "parser_identify_fork_to_element",
       &Bmad::parser_identify_fork_to_element,
@@ -524,14 +542,16 @@ Routine to identify the elements the forks in a lattice are branching to.
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
 
-)""");
+)"""
+  );
   m.def(
       "parser_init_custom_elements",
       &Bmad::parser_init_custom_elements,
       py::arg("lat"),
       R"""(Subroutine parser_init_custom_elements (lat)
 
-)""");
+)"""
+  );
   m.def(
       "parser_print_line",
       &Bmad::parser_print_line,
@@ -541,7 +561,8 @@ This subroutine is not intended for general use.
 
 This routine is called when a print statement is found in the lattice file.
 
-)""");
+)"""
+  );
   m.def(
       "parser_read_lr_wake",
       &Bmad::parser_read_lr_wake,
@@ -559,7 +580,8 @@ Parameters
 ele : EleStruct
     Element containing wake structure.
     This parameter is an input/output and is modified in-place. As an output: Element with wake information.
-)""");
+)"""
+  );
   m.def(
       "parser_read_old_format_lr_wake",
       &Bmad::parser_read_old_format_lr_wake,
@@ -577,7 +599,8 @@ ele : EleStruct
     This parameter is an input/output and is modified in-place. As an output: Element with wake information.
 lr_file_name : unknown
     Name of long-range wake field file.
-)""");
+)"""
+  );
   m.def(
       "parser_read_old_format_sr_wake",
       &Bmad::parser_read_old_format_sr_wake,
@@ -595,7 +618,8 @@ ele : EleStruct
     This parameter is an input/output and is modified in-place. As an output: Element with wake information.
 sr_file_name : unknown
     Name of short-range wake field file.
-)""");
+)"""
+  );
   m.def(
       "parser_read_sr_wake",
       &Bmad::parser_read_sr_wake,
@@ -613,7 +637,8 @@ Parameters
 ele : EleStruct
     Element containing wake structure.
     This parameter is an input/output and is modified in-place. As an output: Element with wake information.
-)""");
+)"""
+  );
   m.def(
       "parser_transfer_control_struct",
       &Bmad::parser_transfer_control_struct,
@@ -640,7 +665,8 @@ Returns
 -------
 con_out : ControlStruct
     Output control structure.
-)""");
+)"""
+  );
   m.def(
       "particle_in_global_frame",
       &Bmad::particle_in_global_frame,
@@ -670,7 +696,8 @@ particle : CoordStruct
 Returns
 -------
 particle
-)""");
+)"""
+  );
   m.def(
       "particle_is_moving_backwards",
       &Bmad::particle_is_moving_backwards,
@@ -681,7 +708,8 @@ particle
 orbit : CoordStruct
     Particle coordinates
 is_moving_backwards : 
-)""");
+)"""
+  );
   m.def(
       "particle_is_moving_forward",
       &Bmad::particle_is_moving_forward,
@@ -695,7 +723,8 @@ orbit : CoordStruct
 dir : int, optional
     +1 if tracking forward(default) or -1 to return True if tracking backwards.
 is_moving_forward : 
-)""");
+)"""
+  );
   m.def(
       "particle_rf_time",
       &Bmad::particle_rf_time,
@@ -729,7 +758,8 @@ abs_time : float, optional
     If False (default) use setting of bmad_com.absolute_time_tracking. If True, use absolute time instead of
     relative time. Ouput:
 time : 
-)""");
+)"""
+  );
   m.def(
       "patch_flips_propagation_direction",
       &Bmad::patch_flips_propagation_direction,
@@ -743,7 +773,8 @@ x_pitch : float
 y_pitch : float
     Rotation around x-axis.
 is_flip : 
-)""");
+)"""
+  );
   m.def(
       "patch_length",
       &Bmad::patch_length,
@@ -757,35 +788,30 @@ patch : EleStruct
 ref_coords : int, optional
     Reference coords to use. entrance_end$, exit_end$ Default is nint(patch.value(ref_coords$)).
 length : 
-)""");
+)"""
+  );
   py::class_<
       Bmad::PhotonAbsorptionAndPhaseShift,
       std::unique_ptr<Bmad::PhotonAbsorptionAndPhaseShift>>(
       m,
       "PhotonAbsorptionAndPhaseShift",
-      "photon_absorption_and_phase_shift return type")
-      .def_readonly(
-          "absorption", &Bmad::PhotonAbsorptionAndPhaseShift::absorption)
-      .def_readonly(
-          "phase_shift", &Bmad::PhotonAbsorptionAndPhaseShift::phase_shift)
+      "photon_absorption_and_phase_shift return type"
+  )
+      .def_readonly("absorption", &Bmad::PhotonAbsorptionAndPhaseShift::absorption)
+      .def_readonly("phase_shift", &Bmad::PhotonAbsorptionAndPhaseShift::phase_shift)
       .def_readonly("err_flag", &Bmad::PhotonAbsorptionAndPhaseShift::err_flag)
-      .def(
-          "__len__",
-          [](const Bmad::PhotonAbsorptionAndPhaseShift&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::PhotonAbsorptionAndPhaseShift& s,
-             int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.absorption);
-            if (i == 1)
-              return py::cast(s.phase_shift);
-            if (i == 2)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::PhotonAbsorptionAndPhaseShift &) { return 3; })
+      .def("__getitem__", [](const Bmad::PhotonAbsorptionAndPhaseShift &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.absorption);
+        if (i == 1)
+          return py::cast(s.phase_shift);
+        if (i == 2)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "photon_absorption_and_phase_shift",
       &Bmad::photon_absorption_and_phase_shift,
@@ -811,7 +837,8 @@ phase_shift : float
     E_field Phase shift (radians) per unit length relative to vacuum.
 err_flag : bool
     Set true if material not recognized.
-)""");
+)"""
+  );
   m.def(
       "photon_add_to_detector_statistics",
       &Bmad::photon_add_to_detector_statistics,
@@ -840,23 +867,25 @@ ele : EleStruct
 pixel_pt : PixelPtStruct, optional
     If present then use this grid point instead of the grid point determined by the (x, y) coords of the
     photon
-)""");
+)"""
+  );
   py::class_<Bmad::PhotonReflection, std::unique_ptr<Bmad::PhotonReflection>>(
-      m, "PhotonReflection", "photon_reflection return type")
+      m,
+      "PhotonReflection",
+      "photon_reflection return type"
+  )
       .def_readonly("graze_angle_out", &Bmad::PhotonReflection::graze_angle_out)
       .def_readonly("phi_out", &Bmad::PhotonReflection::phi_out)
-      .def("__len__", [](const Bmad::PhotonReflection&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::PhotonReflection& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.graze_angle_out);
-            if (i == 1)
-              return py::cast(s.phi_out);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::PhotonReflection &) { return 2; })
+      .def("__getitem__", [](const Bmad::PhotonReflection &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.graze_angle_out);
+        if (i == 1)
+          return py::cast(s.phi_out);
+        throw py::index_error();
+      });
   m.def(
       "photon_reflection",
       &Bmad::photon_reflection,
@@ -882,7 +911,8 @@ graze_angle_out : float
     graze_angle in radians.
 phi_out : float
     Azimuthal angle in radians.
-)""");
+)"""
+  );
   m.def(
       "photon_reflection_std_surface_init",
       &Bmad::photon_reflection_std_surface_init,
@@ -898,25 +928,25 @@ Returns
 -------
 surface : 
     photon_reflect_surface_struct
-)""");
-  py::class_<
-      Bmad::PhotonReflectivity,
-      std::unique_ptr<Bmad::PhotonReflectivity>>(
-      m, "PhotonReflectivity", "photon_reflectivity return type")
+)"""
+  );
+  py::class_<Bmad::PhotonReflectivity, std::unique_ptr<Bmad::PhotonReflectivity>>(
+      m,
+      "PhotonReflectivity",
+      "photon_reflectivity return type"
+  )
       .def_readonly("p_reflect", &Bmad::PhotonReflectivity::p_reflect)
       .def_readonly("rel_p_specular", &Bmad::PhotonReflectivity::rel_p_specular)
-      .def("__len__", [](const Bmad::PhotonReflectivity&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::PhotonReflectivity& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.p_reflect);
-            if (i == 1)
-              return py::cast(s.rel_p_specular);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::PhotonReflectivity &) { return 2; })
+      .def("__getitem__", [](const Bmad::PhotonReflectivity &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.p_reflect);
+        if (i == 1)
+          return py::cast(s.rel_p_specular);
+        throw py::index_error();
+      });
   m.def(
       "photon_reflectivity",
       &Bmad::photon_reflectivity,
@@ -948,7 +978,8 @@ p_reflect : float
     Reflection probability.
 rel_p_specular : float
     Relative specular reflection probability.
-)""");
+)"""
+  );
   m.def(
       "photon_target_corner_calc",
       &Bmad::photon_target_corner_calc,
@@ -973,7 +1004,8 @@ Returns
 -------
 corner : TargetPointStruct
     Corner coords in source_ele ref frame.
-)""");
+)"""
+  );
   m.def(
       "photon_target_setup",
       &Bmad::photon_target_setup,
@@ -992,7 +1024,8 @@ ele : EleStruct
     Source element to setup. Element will be of type: sample, diffraction_plate or photon_init.
     This parameter is an input/output and is modified in-place. As an output: Source element with target
     parameters setup in ele.photon.target.
-)""");
+)"""
+  );
   m.def(
       "photon_type",
       &Bmad::photon_type,
@@ -1010,7 +1043,8 @@ Returns
 -------
 e_type : int
     coherent$ or incoherent$
-)""");
+)"""
+  );
   m.def(
       "physical_ele_end",
       &Bmad::physical_ele_end,
@@ -1030,7 +1064,8 @@ ele_orientation : int
 return_stream_end : bool, optional
     If True return the stream end instead of the physical end. Default is False.
 physical_end : 
-)""");
+)"""
+  );
   m.def(
       "point_photon_emission",
       &Bmad::point_photon_emission,
@@ -1061,10 +1096,11 @@ max_target_area : float
     field. generally will be equal to twopi or fourpi.
 w_to_surface : float, optional
     Rotation matrix for curved surface.
-)""");
+)"""
+  );
   m.def(
       "pointer_to_branch",
-      py::overload_cast<EleProxy&>(&Bmad::pointer_to_branch),
+      py::overload_cast<EleStruct &>(&Bmad::pointer_to_branch),
       py::arg("ele"),
       R"""(Function pointer_to_branch
 
@@ -1105,14 +1141,13 @@ branch_ptr : BranchStruct
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "pointer_to_branch",
-      py::overload_cast<
-          std::string,
-          LatProxy&,
-          std::optional<bool>,
-          std::optional<int>>(&Bmad::pointer_to_branch),
+      py::overload_cast<std::string, LatStruct &, std::optional<bool>, std::optional<int>>(
+          &Bmad::pointer_to_branch
+      ),
       py::arg("branch_name"),
       py::arg("lat"),
       py::arg("parameter_is_branch0") = py::none(),
@@ -1156,11 +1191,11 @@ branch_ptr : BranchStruct
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "pointer_to_ele",
-      py::overload_cast<LatProxy&, int, std::optional<int>>(
-          &Bmad::pointer_to_ele),
+      py::overload_cast<LatStruct &, int, std::optional<int>>(&Bmad::pointer_to_ele),
       py::arg("lat"),
       py::arg("ix_ele"),
       py::arg("ix_branch") = py::none(),
@@ -1210,10 +1245,11 @@ pointer_to_slave pointer_to_lord
 Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
 pointer_to_ele2 (lat, ele_loc) result (ele_ptr), Function pointer_to_ele3 (lat, ele_name) result (ele_ptr),
 Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
-)""");
+)"""
+  );
   m.def(
       "pointer_to_ele",
-      py::overload_cast<LatProxy&, LatEleLocProxy&>(&Bmad::pointer_to_ele),
+      py::overload_cast<LatStruct &, LatEleLocStruct &>(&Bmad::pointer_to_ele),
       py::arg("lat"),
       py::arg("ele_loc"),
       R"""(Function pointer_to_ele (...)
@@ -1262,10 +1298,11 @@ pointer_to_slave pointer_to_lord
 Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
 pointer_to_ele2 (lat, ele_loc) result (ele_ptr), Function pointer_to_ele3 (lat, ele_name) result (ele_ptr),
 Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
-)""");
+)"""
+  );
   m.def(
       "pointer_to_ele",
-      py::overload_cast<LatProxy&, std::string>(&Bmad::pointer_to_ele),
+      py::overload_cast<LatStruct &, std::string>(&Bmad::pointer_to_ele),
       py::arg("lat"),
       py::arg("ele_name"),
       R"""(Function pointer_to_ele (...)
@@ -1314,10 +1351,11 @@ pointer_to_slave pointer_to_lord
 Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
 pointer_to_ele2 (lat, ele_loc) result (ele_ptr), Function pointer_to_ele3 (lat, ele_name) result (ele_ptr),
 Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
-)""");
+)"""
+  );
   m.def(
       "pointer_to_ele",
-      py::overload_cast<LatProxy&, EleProxy&>(&Bmad::pointer_to_ele),
+      py::overload_cast<LatStruct &, EleStruct &>(&Bmad::pointer_to_ele),
       py::arg("lat"),
       py::arg("foreign_ele"),
       R"""(Function pointer_to_ele (...)
@@ -1366,31 +1404,31 @@ pointer_to_slave pointer_to_lord
 Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
 pointer_to_ele2 (lat, ele_loc) result (ele_ptr), Function pointer_to_ele3 (lat, ele_name) result (ele_ptr),
 Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
-)""");
-  py::class_<
-      Bmad::PointerToElementAtS,
-      std::unique_ptr<Bmad::PointerToElementAtS>>(
-      m, "PointerToElementAtS", "pointer_to_element_at_s return type")
+)"""
+  );
+  py::class_<Bmad::PointerToElementAtS, std::unique_ptr<Bmad::PointerToElementAtS>>(
+      m,
+      "PointerToElementAtS",
+      "pointer_to_element_at_s return type"
+  )
       .def_readonly("err_flag", &Bmad::PointerToElementAtS::err_flag)
       .def_readonly("s_eff", &Bmad::PointerToElementAtS::s_eff)
       .def_readonly("position", &Bmad::PointerToElementAtS::position)
       .def_readonly("ele", &Bmad::PointerToElementAtS::ele)
-      .def("__len__", [](const Bmad::PointerToElementAtS&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const Bmad::PointerToElementAtS& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.s_eff);
-            if (i == 2)
-              return py::cast(s.position);
-            if (i == 3)
-              return py::cast(s.ele);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::PointerToElementAtS &) { return 4; })
+      .def("__getitem__", [](const Bmad::PointerToElementAtS &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.s_eff);
+        if (i == 2)
+          return py::cast(s.position);
+        if (i == 3)
+          return py::cast(s.ele);
+        throw py::index_error();
+      });
   m.def(
       "pointer_to_element_at_s",
       &Bmad::pointer_to_element_at_s,
@@ -1453,7 +1491,8 @@ element_at_s The setting of choose_max only makes a difference when s correspond
 a circular lattice s is evaluated at the effective s which s_eff = s - branch_length * floor(s/branch_length)
 If there are multiple elements that are at the given s position due to the presence of an element with a
 negative length which of the possible elements is actually chosen is ill-defined.
-)""");
+)"""
+  );
   m.def(
       "pointer_to_fibre",
       &Bmad::pointer_to_fibre,
@@ -1464,7 +1503,8 @@ negative length which of the possible elements is actually chosen is ill-defined
 ele : EleStruct
     Bmad element
 assoc_fibre : 
-)""");
+)"""
+  );
   m.def(
       "pointer_to_field_ele",
       &Bmad::pointer_to_field_ele,
@@ -1480,7 +1520,8 @@ ix_field_ele : int
 dz_offset : float
     Longitudinal offset of ele upstream edge from the field ele pointed to.
 field_ele : 
-)""");
+)"""
+  );
   m.def(
       "pointer_to_girder",
       &Bmad::pointer_to_girder,
@@ -1494,28 +1535,31 @@ ix_slave_back : int
     Index back to ele. That is, pointer_to_slave(girder, ix_slave_back) will point back to ele. Set to -1 if
     no girder present
 girder : 
-)""");
+)"""
+  );
   py::class_<Bmad::PointerToLord, std::unique_ptr<Bmad::PointerToLord>>(
-      m, "PointerToLord", "pointer_to_lord return type")
+      m,
+      "PointerToLord",
+      "pointer_to_lord return type"
+  )
       .def_readonly("control", &Bmad::PointerToLord::control)
       .def_readonly("ix_slave_back", &Bmad::PointerToLord::ix_slave_back)
       .def_readonly("ix_control", &Bmad::PointerToLord::ix_control)
       .def_readonly("ix_ic", &Bmad::PointerToLord::ix_ic)
-      .def("__len__", [](const Bmad::PointerToLord&) { return 4; })
-      .def(
-          "__getitem__", [](const Bmad::PointerToLord& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.control);
-            if (i == 1)
-              return py::cast(s.ix_slave_back);
-            if (i == 2)
-              return py::cast(s.ix_control);
-            if (i == 3)
-              return py::cast(s.ix_ic);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::PointerToLord &) { return 4; })
+      .def("__getitem__", [](const Bmad::PointerToLord &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.control);
+        if (i == 1)
+          return py::cast(s.ix_slave_back);
+        if (i == 2)
+          return py::cast(s.ix_control);
+        if (i == 3)
+          return py::cast(s.ix_ic);
+        throw py::index_error();
+      });
   m.def(
       "pointer_to_lord",
       &Bmad::pointer_to_lord,
@@ -1542,25 +1586,25 @@ ix_control : int
 ix_ic : int
     Index of the lat.ic(:) element associated with the control argument.
 lord_ptr : 
-)""");
-  py::class_<
-      Bmad::PointerToMultipassLord,
-      std::unique_ptr<Bmad::PointerToMultipassLord>>(
-      m, "PointerToMultipassLord", "pointer_to_multipass_lord return type")
+)"""
+  );
+  py::class_<Bmad::PointerToMultipassLord, std::unique_ptr<Bmad::PointerToMultipassLord>>(
+      m,
+      "PointerToMultipassLord",
+      "pointer_to_multipass_lord return type"
+  )
       .def_readonly("ix_pass", &Bmad::PointerToMultipassLord::ix_pass)
       .def_readonly("super_lord", &Bmad::PointerToMultipassLord::super_lord)
-      .def("__len__", [](const Bmad::PointerToMultipassLord&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::PointerToMultipassLord& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.ix_pass);
-            if (i == 1)
-              return py::cast(s.super_lord);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::PointerToMultipassLord &) { return 2; })
+      .def("__getitem__", [](const Bmad::PointerToMultipassLord &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.ix_pass);
+        if (i == 1)
+          return py::cast(s.super_lord);
+        throw py::index_error();
+      });
   m.def(
       "pointer_to_multipass_lord",
       &Bmad::pointer_to_multipass_lord,
@@ -1577,7 +1621,8 @@ super_lord : EleStruct
     super_lord of the element. Set to NULL if ele is not a super_slave or super_lord. Note: if ele is a
     multipass_lord there are multiple possible super_lord slaves.
 multi_lord : 
-)""");
+)"""
+  );
   m.def(
       "pointer_to_next_ele",
       &Bmad::pointer_to_next_ele,
@@ -1597,32 +1642,34 @@ skip_beginning : bool, optional
 follow_fork : bool, optional
     If True then fork at any fork element. Default is False.
 next_ele : 
-)""");
+)"""
+  );
   py::class_<Bmad::PointerToSlave, std::unique_ptr<Bmad::PointerToSlave>>(
-      m, "PointerToSlave", "pointer_to_slave return type")
+      m,
+      "PointerToSlave",
+      "pointer_to_slave return type"
+  )
       .def_readonly("control", &Bmad::PointerToSlave::control)
       .def_readonly("ix_lord_back", &Bmad::PointerToSlave::ix_lord_back)
       .def_readonly("ix_control", &Bmad::PointerToSlave::ix_control)
       .def_readonly("ix_ic", &Bmad::PointerToSlave::ix_ic)
       .def_readonly("slave_ptr", &Bmad::PointerToSlave::slave_ptr)
-      .def("__len__", [](const Bmad::PointerToSlave&) { return 5; })
-      .def(
-          "__getitem__",
-          [](const Bmad::PointerToSlave& s, int i) -> py::object {
-            if (i < 0)
-              i += 5;
-            if (i == 0)
-              return py::cast(s.control);
-            if (i == 1)
-              return py::cast(s.ix_lord_back);
-            if (i == 2)
-              return py::cast(s.ix_control);
-            if (i == 3)
-              return py::cast(s.ix_ic);
-            if (i == 4)
-              return py::cast(s.slave_ptr);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::PointerToSlave &) { return 5; })
+      .def("__getitem__", [](const Bmad::PointerToSlave &s, int i) -> py::object {
+        if (i < 0)
+          i += 5;
+        if (i == 0)
+          return py::cast(s.control);
+        if (i == 1)
+          return py::cast(s.ix_lord_back);
+        if (i == 2)
+          return py::cast(s.ix_control);
+        if (i == 3)
+          return py::cast(s.ix_ic);
+        if (i == 4)
+          return py::cast(s.slave_ptr);
+        throw py::index_error();
+      });
   m.def(
       "pointer_to_slave",
       &Bmad::pointer_to_slave,
@@ -1668,31 +1715,31 @@ Notes
 -----
 Related routines:
 pointer_to_lord pointer_to_super_lord pointer_to_ele num_lords
-)""");
-  py::class_<
-      Bmad::PointerToSuperLord,
-      std::unique_ptr<Bmad::PointerToSuperLord>>(
-      m, "PointerToSuperLord", "pointer_to_super_lord return type")
+)"""
+  );
+  py::class_<Bmad::PointerToSuperLord, std::unique_ptr<Bmad::PointerToSuperLord>>(
+      m,
+      "PointerToSuperLord",
+      "pointer_to_super_lord return type"
+  )
       .def_readonly("control", &Bmad::PointerToSuperLord::control)
       .def_readonly("ix_slave_back", &Bmad::PointerToSuperLord::ix_slave_back)
       .def_readonly("ix_control", &Bmad::PointerToSuperLord::ix_control)
       .def_readonly("ix_ic", &Bmad::PointerToSuperLord::ix_ic)
-      .def("__len__", [](const Bmad::PointerToSuperLord&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const Bmad::PointerToSuperLord& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.control);
-            if (i == 1)
-              return py::cast(s.ix_slave_back);
-            if (i == 2)
-              return py::cast(s.ix_control);
-            if (i == 3)
-              return py::cast(s.ix_ic);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::PointerToSuperLord &) { return 4; })
+      .def("__getitem__", [](const Bmad::PointerToSuperLord &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.control);
+        if (i == 1)
+          return py::cast(s.ix_slave_back);
+        if (i == 2)
+          return py::cast(s.ix_control);
+        if (i == 3)
+          return py::cast(s.ix_ic);
+        throw py::index_error();
+      });
   m.def(
       "pointer_to_super_lord",
       &Bmad::pointer_to_super_lord,
@@ -1716,7 +1763,8 @@ ix_ic : int
 lord_type : int, optional
     If present, only return a super_lord of this type.
 lord_ptr : 
-)""");
+)"""
+  );
   m.def(
       "pointer_to_surface_displacement_pt",
       &Bmad::pointer_to_surface_displacement_pt,
@@ -1752,7 +1800,8 @@ pt : GridPointStruct
     Pointer to grid point. Will not be associated if (x,y) outside the grid. xx, yy      -- real(rp),
     optional: Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set
     to be on the nearest grid boundary point.
-)""");
+)"""
+  );
   m.def(
       "pointer_to_surface_segmented_pt",
       &Bmad::pointer_to_surface_segmented_pt,
@@ -1788,7 +1837,8 @@ pt : GridPointStruct
     Pointer to grid point. Will not be associated if (x,y) outside the grid. xx, yy      -- real(rp),
     optional: Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set
     to be on the nearest grid boundary point.
-)""");
+)"""
+  );
   m.def(
       "pointer_to_wake_ele",
       &Bmad::pointer_to_wake_ele,
@@ -1801,26 +1851,28 @@ ele : EleStruct
 delta_s : float
     distance of wake locaiton from beginning of ele.
 wake_ele : 
-)""");
+)"""
+  );
   py::class_<Bmad::PointerToWall3d, std::unique_ptr<Bmad::PointerToWall3d>>(
-      m, "PointerToWall3d", "pointer_to_wall3d return type")
+      m,
+      "PointerToWall3d",
+      "pointer_to_wall3d return type"
+  )
       .def_readonly("ds_offset", &Bmad::PointerToWall3d::ds_offset)
       .def_readonly("is_branch_wall", &Bmad::PointerToWall3d::is_branch_wall)
       .def_readonly("wall3d", &Bmad::PointerToWall3d::wall3d)
-      .def("__len__", [](const Bmad::PointerToWall3d&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::PointerToWall3d& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.ds_offset);
-            if (i == 1)
-              return py::cast(s.is_branch_wall);
-            if (i == 2)
-              return py::cast(s.wall3d);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::PointerToWall3d &) { return 3; })
+      .def("__getitem__", [](const Bmad::PointerToWall3d &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.ds_offset);
+        if (i == 1)
+          return py::cast(s.is_branch_wall);
+        if (i == 2)
+          return py::cast(s.wall3d);
+        throw py::index_error();
+      });
   m.def(
       "pointer_to_wall3d",
       &Bmad::pointer_to_wall3d,
@@ -1848,7 +1900,8 @@ ds_offset : float
     Element offset: s(beginning of ele) - s(beginning of wall3d)
 is_branch_wall : bool
     Set True if wall3d points to branch.wall3d.
-)""");
+)"""
+  );
   m.def(
       "polar_to_spinor",
       &Bmad::polar_to_spinor,
@@ -1859,7 +1912,8 @@ is_branch_wall : bool
 polar : SpinPolarStruct
     includes polar phase
 spinor : 
-)""");
+)"""
+  );
   m.def(
       "polar_to_vec",
       &Bmad::polar_to_vec,
@@ -1870,26 +1924,28 @@ spinor :
 polar : 
     Spin_polar_struct
 vec : 
-)""");
+)"""
+  );
   py::class_<Bmad::ProjectEmitToXyz, std::unique_ptr<Bmad::ProjectEmitToXyz>>(
-      m, "ProjectEmitToXyz", "project_emit_to_xyz return type")
+      m,
+      "ProjectEmitToXyz",
+      "project_emit_to_xyz return type"
+  )
       .def_readonly("sigma_x", &Bmad::ProjectEmitToXyz::sigma_x)
       .def_readonly("sigma_y", &Bmad::ProjectEmitToXyz::sigma_y)
       .def_readonly("sigma_z", &Bmad::ProjectEmitToXyz::sigma_z)
-      .def("__len__", [](const Bmad::ProjectEmitToXyz&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ProjectEmitToXyz& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.sigma_x);
-            if (i == 1)
-              return py::cast(s.sigma_y);
-            if (i == 2)
-              return py::cast(s.sigma_z);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ProjectEmitToXyz &) { return 3; })
+      .def("__getitem__", [](const Bmad::ProjectEmitToXyz &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.sigma_x);
+        if (i == 1)
+          return py::cast(s.sigma_y);
+        if (i == 2)
+          return py::cast(s.sigma_z);
+        throw py::index_error();
+      });
   m.def(
       "project_emit_to_xyz",
       &Bmad::project_emit_to_xyz,
@@ -1931,7 +1987,8 @@ sigma_y : float
     projected vertical beamsize
 sigma_z : float
     projected longitudinal beamsize
-)""");
+)"""
+  );
   m.def(
       "psi_prime_sca",
       &Bmad::psi_prime_sca,
@@ -1957,7 +2014,8 @@ Returns
 -------
 dpdt : float
     dpsi_dt
-)""");
+)"""
+  );
   m.def(
       "ptc_bookkeeper",
       &Bmad::ptc_bookkeeper,
@@ -1966,7 +2024,8 @@ dpdt : float
 ----------
 lat : LatStruct
     Bmad lattice.
-)""");
+)"""
+  );
   m.def(
       "ptc_calculate_tracking_step_size",
       &Bmad::ptc_calculate_tracking_step_size,
@@ -2009,25 +2068,25 @@ crossover : int, optional
 crossover_wiggler(2) : int, optional
     crossover points for wigglers. Default is [30, 60]. -- integer, optional: crossover points for wigglers.
     Default is [30, 60].
-)""");
-  py::class_<
-      Bmad::PtcCheckForLostParticle,
-      std::unique_ptr<Bmad::PtcCheckForLostParticle>>(
-      m, "PtcCheckForLostParticle", "ptc_check_for_lost_particle return type")
+)"""
+  );
+  py::class_<Bmad::PtcCheckForLostParticle, std::unique_ptr<Bmad::PtcCheckForLostParticle>>(
+      m,
+      "PtcCheckForLostParticle",
+      "ptc_check_for_lost_particle return type"
+  )
       .def_readonly("state", &Bmad::PtcCheckForLostParticle::state)
       .def_readonly("ptc_fibre", &Bmad::PtcCheckForLostParticle::ptc_fibre)
-      .def("__len__", [](const Bmad::PtcCheckForLostParticle&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::PtcCheckForLostParticle& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.state);
-            if (i == 1)
-              return py::cast(s.ptc_fibre);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::PtcCheckForLostParticle &) { return 2; })
+      .def("__getitem__", [](const Bmad::PtcCheckForLostParticle &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.state);
+        if (i == 1)
+          return py::cast(s.ptc_fibre);
+        throw py::index_error();
+      });
   m.def(
       "ptc_check_for_lost_particle",
       &Bmad::ptc_check_for_lost_particle,
@@ -2047,7 +2106,8 @@ state : int
     Same as coord_struct.state. alive$, lost$, lost_neg_x$, etc.
 ptc_fibre : unknown
     Pointer to fibre where particle lost. Nullified if particle alive.
-)""");
+)"""
+  );
   m.def(
       "ptc_closed_orbit_calc",
       &Bmad::ptc_closed_orbit_calc,
@@ -2072,13 +2132,17 @@ Returns
 -------
 closed_orbit : CoordStruct
     closed_orbit
-)""");
+)"""
+  );
   py::class_<Bmad::PtcEmitCalc, std::unique_ptr<Bmad::PtcEmitCalc>>(
-      m, "PtcEmitCalc", "ptc_emit_calc return type")
+      m,
+      "PtcEmitCalc",
+      "ptc_emit_calc return type"
+  )
       .def_readonly("norm_mode", &Bmad::PtcEmitCalc::norm_mode)
       .def_readonly("closed_orb", &Bmad::PtcEmitCalc::closed_orb)
-      .def("__len__", [](const Bmad::PtcEmitCalc&) { return 2; })
-      .def("__getitem__", [](const Bmad::PtcEmitCalc& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::PtcEmitCalc &) { return 2; })
+      .def("__getitem__", [](const Bmad::PtcEmitCalc &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -2111,7 +2175,8 @@ sigma_map : float
     Sigma matrix (Bmad coordinates).
 closed_orb : CoordStruct
     Closed orbit at ele (Bmad coordinates). Notice: This closed orbit is the closed orbit with radiation on.
-)""");
+)"""
+  );
   m.def(
       "ptc_layouts_resplit",
       &Bmad::ptc_layouts_resplit,
@@ -2160,7 +2225,8 @@ crossover : int, optional
     in PTC is [4, 18].
 crossover_wiggler(2) : int, optional
     crossover for wiggler elements. -- integer, optional: crossover for wiggler elements.
-)""");
+)"""
+  );
   m.def(
       "ptc_one_turn_mat_and_closed_orbit_calc",
       &Bmad::ptc_one_turn_mat_and_closed_orbit_calc,
@@ -2181,7 +2247,8 @@ branch : BranchStruct
     matrices.
 pz : float, optional
     energy offset around which to calculate the matrices if there is no RF.
-)""");
+)"""
+  );
   m.def(
       "ptc_ran_seed_put",
       &Bmad::ptc_ran_seed_put,
@@ -2190,7 +2257,8 @@ pz : float, optional
 ----------
 iseed : int
     0 -> Use system clock.
-)""");
+)"""
+  );
   m.def(
       "ptc_set_rf_state_for_c_normal",
       &Bmad::ptc_set_rf_state_for_c_normal,
@@ -2199,7 +2267,8 @@ iseed : int
 ----------
 nocavity : bool
     True -> RF is off and vice versa.
-)""");
+)"""
+  );
   m.def(
       "ptc_set_taylor_order_if_needed",
       &Bmad::ptc_set_taylor_order_if_needed,
@@ -2208,13 +2277,17 @@ nocavity : bool
 Routine to see if the taylor_order for PTC needs to be set/changed.
 For example, for a change in bmad_com%taylor_order.
 
-)""");
+)"""
+  );
   py::class_<Bmad::PtcSpinCalc, std::unique_ptr<Bmad::PtcSpinCalc>>(
-      m, "PtcSpinCalc", "ptc_spin_calc return type")
+      m,
+      "PtcSpinCalc",
+      "ptc_spin_calc return type"
+  )
       .def_readonly("norm_mode", &Bmad::PtcSpinCalc::norm_mode)
       .def_readonly("closed_orb", &Bmad::PtcSpinCalc::closed_orb)
-      .def("__len__", [](const Bmad::PtcSpinCalc&) { return 2; })
-      .def("__getitem__", [](const Bmad::PtcSpinCalc& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::PtcSpinCalc &) { return 2; })
+      .def("__getitem__", [](const Bmad::PtcSpinCalc &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -2245,13 +2318,17 @@ sigma_map : float
     Sigma matrix (Bmad coordinates).
 closed_orb : CoordStruct
     Closed orbit at ele (Bmad coordinates). Notice: This closed orbit is the closed orbit with radiation on.
-)""");
+)"""
+  );
   py::class_<Bmad::PtcTrackAll, std::unique_ptr<Bmad::PtcTrackAll>>(
-      m, "PtcTrackAll", "ptc_track_all return type")
+      m,
+      "PtcTrackAll",
+      "ptc_track_all return type"
+  )
       .def_readonly("track_state", &Bmad::PtcTrackAll::track_state)
       .def_readonly("err_flag", &Bmad::PtcTrackAll::err_flag)
-      .def("__len__", [](const Bmad::PtcTrackAll&) { return 2; })
-      .def("__getitem__", [](const Bmad::PtcTrackAll& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::PtcTrackAll &) { return 2; })
+      .def("__getitem__", [](const Bmad::PtcTrackAll &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -2283,7 +2360,8 @@ track_state : int
     Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
 err_flag : bool
     Set true if particle lost or error. False otherwise
-)""");
+)"""
+  );
   m.def(
       "ptc_transfer_map_with_spin",
       &Bmad::ptc_transfer_map_with_spin,
@@ -2318,7 +2396,8 @@ one_turn : bool, optional
     ix1 back to ix1. Default = False.
 unit_start : bool, optional
     If present and False then t_map will be used as the starting map instead of the unit map. Default = True
-)""");
+)"""
+  );
   m.def(
       "pwd_mat",
       &Bmad::pwd_mat,
@@ -2349,5 +2428,6 @@ Returns
 -------
 t6_pwd : float
     1-turn transfer matrix with PWD defocusing applied
-)""");
+)"""
+  );
 }

@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_i(py::module& m) {
+void init_Bmad_routines_i(py::module &m) {
   m.def(
       "ibs_matrix_c",
       &Bmad::ibs_matrix_c,
@@ -24,7 +24,8 @@ energy :
 n_part : 
 species : 
 ibs_mat : 
-)""");
+)"""
+  );
   m.def(
       "igfcoulombfun",
       &Bmad::igfcoulombfun,
@@ -46,7 +47,8 @@ dx :
 dy : 
 dz : 
 res : 
-)""");
+)"""
+  );
   m.def(
       "igfexfun",
       &Bmad::igfexfun,
@@ -68,7 +70,8 @@ dx :
 dy : 
 dz : 
 res : 
-)""");
+)"""
+  );
   m.def(
       "igfeyfun",
       &Bmad::igfeyfun,
@@ -90,7 +93,8 @@ dx :
 dy : 
 dz : 
 res : 
-)""");
+)"""
+  );
   m.def(
       "igfezfun",
       &Bmad::igfezfun,
@@ -112,7 +116,8 @@ dx :
 dy : 
 dz : 
 res : 
-)""");
+)"""
+  );
   m.def(
       "init_attribute_name1",
       &Bmad::init_attribute_name1,
@@ -144,7 +149,8 @@ attrib_state : int, optional
 override : bool, optional
     Normally this routine throws an error if the [ix_key, ix_attrib] has been set previously. If override =
     True then the set is done and no error is generated.
-)""");
+)"""
+  );
   m.def(
       "init_attribute_name_array",
       &Bmad::init_attribute_name_array,
@@ -153,28 +159,28 @@ override : bool, optional
 Private routine to initialize the attribute name array used by routines
 in attribute_mod. Not meant for general use.
 
-)""");
-  py::class_<
-      Bmad::InitBeamDistribution,
-      std::unique_ptr<Bmad::InitBeamDistribution>>(
-      m, "InitBeamDistribution", "init_beam_distribution return type")
+)"""
+  );
+  py::class_<Bmad::InitBeamDistribution, std::unique_ptr<Bmad::InitBeamDistribution>>(
+      m,
+      "InitBeamDistribution",
+      "init_beam_distribution return type"
+  )
       .def_readonly("beam", &Bmad::InitBeamDistribution::beam)
       .def_readonly("err_flag", &Bmad::InitBeamDistribution::err_flag)
       .def_readonly("beam_init_set", &Bmad::InitBeamDistribution::beam_init_set)
-      .def("__len__", [](const Bmad::InitBeamDistribution&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::InitBeamDistribution& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.beam);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            if (i == 2)
-              return py::cast(s.beam_init_set);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::InitBeamDistribution &) { return 3; })
+      .def("__getitem__", [](const Bmad::InitBeamDistribution &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.beam);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        if (i == 2)
+          return py::cast(s.beam_init_set);
+        throw py::index_error();
+      });
   m.def(
       "init_beam_distribution",
       &Bmad::init_beam_distribution,
@@ -226,7 +232,8 @@ err_flag : bool
 beam_init_set : BeamInitStruct
     Set to input beam_init with components like .a_emit set what is used in constructing the beam (which is
     different from beam_init.a_emit if this is set negative).
-)""");
+)"""
+  );
   m.def("init_bmad", &Bmad::init_bmad, R"""()""");
   m.def(
       "init_bmad_parser_common",
@@ -235,29 +242,28 @@ beam_init_set : BeamInitStruct
       R"""(Parameters
 ----------
 lat : 
-)""");
-  py::class_<
-      Bmad::InitBunchDistribution,
-      std::unique_ptr<Bmad::InitBunchDistribution>>(
-      m, "InitBunchDistribution", "init_bunch_distribution return type")
+)"""
+  );
+  py::class_<Bmad::InitBunchDistribution, std::unique_ptr<Bmad::InitBunchDistribution>>(
+      m,
+      "InitBunchDistribution",
+      "init_bunch_distribution return type"
+  )
       .def_readonly("bunch", &Bmad::InitBunchDistribution::bunch)
       .def_readonly("err_flag", &Bmad::InitBunchDistribution::err_flag)
-      .def_readonly(
-          "beam_init_used", &Bmad::InitBunchDistribution::beam_init_used)
-      .def("__len__", [](const Bmad::InitBunchDistribution&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::InitBunchDistribution& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.bunch);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            if (i == 2)
-              return py::cast(s.beam_init_used);
-            throw py::index_error();
-          });
+      .def_readonly("beam_init_used", &Bmad::InitBunchDistribution::beam_init_used)
+      .def("__len__", [](const Bmad::InitBunchDistribution &) { return 3; })
+      .def("__getitem__", [](const Bmad::InitBunchDistribution &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.bunch);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        if (i == 2)
+          return py::cast(s.beam_init_used);
+        throw py::index_error();
+      });
   m.def(
       "init_bunch_distribution",
       &Bmad::init_bunch_distribution,
@@ -327,7 +333,8 @@ beam_init_used : BeamInitStruct
     Set to input beam_init with components like .a_emit set what is used in constructing the beam (which can
     be different from beam_init.a_emit if this is set negative). If reading from a file, beam_init_used will
     equal beam_init.
-)""");
+)"""
+  );
   m.def(
       "init_complex_taylor_series",
       &Bmad::init_complex_taylor_series,
@@ -349,13 +356,14 @@ n_term : int
     Number of terms to allocate. n_term < 1 => complex_taylor.term pointer will be disassociated.
 save : bool, optional
     If True then save any old terms when complex_taylor is resized. Default is False.
-)""");
+)"""
+  );
   m.def(
       "init_coord",
       py::overload_cast<
-          CoordProxy&,
+          CoordStruct &,
           FixedArray1D<Real, 6>,
-          optional_ref<EleProxy>,
+          optional_ref<EleStruct>,
           std::optional<int>,
           std::optional<int>,
           std::optional<int>,
@@ -440,12 +448,13 @@ orb : coord_struct
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "init_coord",
       py::overload_cast<
-          CoordProxy&,
-          optional_ref<EleProxy>,
+          CoordStruct &,
+          optional_ref<EleStruct>,
           std::optional<int>,
           std::optional<int>,
           std::optional<int>,
@@ -532,12 +541,13 @@ orb_out : coord_struct
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "init_coord",
       py::overload_cast<
-          CoordProxy&,
-          optional_ref<EleProxy>,
+          CoordStruct &,
+          optional_ref<EleStruct>,
           std::optional<int>,
           std::optional<int>,
           std::optional<int>,
@@ -617,7 +627,8 @@ orb : coord_struct
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "init_custom",
       &Bmad::init_custom,
@@ -625,7 +636,8 @@ Overloaded versions:
       R"""(Parameters
 ----------
 lat : 
-)""");
+)"""
+  );
   m.def(
       "init_ele",
       &Bmad::init_ele,
@@ -645,7 +657,8 @@ ix_ele : int, optional
     ix_ele index to initalize to. Default = -1.
 branch : BranchStruct, optional
     Branch to point ele.branch and ele.ix_branch to. Otherwise ele.branch is nullified and ele.ix_branch = 0.
-)""");
+)"""
+  );
   m.def(
       "init_em_taylor_series",
       &Bmad::init_em_taylor_series,
@@ -667,7 +680,8 @@ n_term : int
     Number of terms to allocate. n_term < 0 => em_taylor.term pointer will be disassociated.
 save_old : bool, optional
     If True then save any old terms when em_taylor is resized. Default is False.
-)""");
+)"""
+  );
   m.def(
       "init_lat",
       &Bmad::init_lat,
@@ -681,7 +695,8 @@ n : int, optional
     Upper bound lat.ele(0:) array is initialized to. Default is 10.
 init_beginning_ele : bool, optional
     Init lat.ele(0)? Default is False.
-)""");
+)"""
+  );
   m.def(
       "init_multipole_cache",
       &Bmad::init_multipole_cache,
@@ -691,7 +706,8 @@ init_beginning_ele : bool, optional
 ele : EleStruct
     Element to init
     This parameter is an input/output and is modified in-place. As an output: Initalized element.
-)""");
+)"""
+  );
   m.def(
       "init_photon_from_a_photon_init_ele",
       &Bmad::init_photon_from_a_photon_init_ele,
@@ -708,25 +724,25 @@ orbit : CoordStruct
     Output photon coords.
 random_on : bool, optional
     : Default is True. If False then use zero for all random numbers needed in the calc.
-)""");
-  py::class_<
-      Bmad::InitPhotonIntegProb,
-      std::unique_ptr<Bmad::InitPhotonIntegProb>>(
-      m, "InitPhotonIntegProb", "init_photon_integ_prob return type")
+)"""
+  );
+  py::class_<Bmad::InitPhotonIntegProb, std::unique_ptr<Bmad::InitPhotonIntegProb>>(
+      m,
+      "InitPhotonIntegProb",
+      "init_photon_integ_prob return type"
+  )
       .def_readonly("E_photon", &Bmad::InitPhotonIntegProb::E_photon)
       .def_readonly("integ_prob", &Bmad::InitPhotonIntegProb::integ_prob)
-      .def("__len__", [](const Bmad::InitPhotonIntegProb&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::InitPhotonIntegProb& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.E_photon);
-            if (i == 1)
-              return py::cast(s.integ_prob);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::InitPhotonIntegProb &) { return 2; })
+      .def("__getitem__", [](const Bmad::InitPhotonIntegProb &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.E_photon);
+        if (i == 1)
+          return py::cast(s.integ_prob);
+        throw py::index_error();
+      });
   m.def(
       "init_photon_integ_prob",
       &Bmad::init_photon_integ_prob,
@@ -772,7 +788,8 @@ E_photon : float
     See energy_integ_prob. E_photon must be present if energy_integ_prob is.
 integ_prob : float
     Integrated probablility of emitting a photon in given angle and energy range.
-)""");
+)"""
+  );
   m.def(
       "init_spin_distribution",
       &Bmad::init_spin_distribution,
@@ -791,7 +808,8 @@ Returns
 -------
 bunch : BunchStruct
     Bunch of particles. .particle(:).spin
-)""");
+)"""
+  );
   m.def(
       "init_surface_segment",
       &Bmad::init_surface_segment,
@@ -806,7 +824,8 @@ Parameters
 ----------
 phot : unknown
     index of grid point to init.
-)""");
+)"""
+  );
   m.def(
       "init_taylor_series",
       &Bmad::init_taylor_series,
@@ -823,7 +842,8 @@ n_term : int
 save_old : bool, optional
     If True then save any old terms and ref orbit when bmad_taylor is resized. If False zero the ref orbit.
     Default is False.
-)""");
+)"""
+  );
   m.def(
       "init_wake",
       &Bmad::init_wake,
@@ -846,7 +866,8 @@ n_lr_mode : int
     Number of terms: wake.lr.mode.
 always_allocate : bool, optional
     If present and True then allways allocate wake even if n_lr_mode, etc. are all 0. Default is False.
-)""");
+)"""
+  );
   m.def(
       "insert_element",
       &Bmad::insert_element,
@@ -870,7 +891,8 @@ ix_branch : int, optional
 orbit : CoordStruct, optional
     orbit array to enlarge.
     This parameter is an input/output and is modified in-place. As an output: Enlarged orbit array.
-)""");
+)"""
+  );
   m.def(
       "integrand_base",
       &Bmad::integrand_base,
@@ -893,7 +915,8 @@ Parameters
 t : float
     Array of reals over which to evaluate the integrand. <return value> -- REAL(rp): Array of reals containing
     values of integrand at t(:).
-)""");
+)"""
+  );
   m.def(
       "integrate_psi",
       &Bmad::integrate_psi,
@@ -918,7 +941,8 @@ Returns
 -------
 result : float
     Integral of psi from -bound to +bound.
-)""");
+)"""
+  );
   m.def(
       "integrated_mats",
       &Bmad::integrated_mats,
@@ -930,15 +954,13 @@ result : float
       py::arg("mode"),
       R"""(subroutine integrated_mats(eles,coos,Lambda,Theta,Iota,mode)
 
-)""");
+)"""
+  );
   m.def(
       "integration_timer",
-      py::overload_cast<
-          EleProxy&,
-          LatParamProxy&,
-          CoordProxy&,
-          CoordProxy&,
-          double>(&Bmad::integration_timer),
+      py::overload_cast<EleStruct &, LatParamStruct &, CoordStruct &, CoordStruct &, double>(
+          &Bmad::integration_timer
+      ),
       py::arg("ele"),
       py::arg("param"),
       py::arg("start"),
@@ -951,14 +973,13 @@ param :
 start : 
 orb_max : 
 tol : 
-)""");
+)"""
+  );
   m.def(
       "integration_timer",
-      py::overload_cast<
-          FibreRawStruct&,
-          FixedArray1D<Real, 6>,
-          FixedArray1D<Real, 6>,
-          double>(&Bmad::integration_timer),
+      py::overload_cast<Fibre &, FixedArray1D<Real, 6>, FixedArray1D<Real, 6>, double>(
+          &Bmad::integration_timer
+      ),
       py::arg("a_fibre"),
       py::arg("orbit"),
       py::arg("orbit_max"),
@@ -969,7 +990,8 @@ a_fibre :
 orbit : 
 orbit_max : 
 tol_dp : 
-)""");
+)"""
+  );
   m.def(
       "ion_kick",
       &Bmad::ion_kick,
@@ -995,7 +1017,8 @@ sig_ee : float
     Sigma_E/E beam energy spread.
 kick : float
     (x, y, s) kick in m/sec.
-)""");
+)"""
+  );
   m.def(
       "is_attribute",
       &Bmad::is_attribute,
@@ -1016,5 +1039,6 @@ Returns
 -------
 is_attrib : bool
     True if a control variable
-)""");
+)"""
+  );
 }

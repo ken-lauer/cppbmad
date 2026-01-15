@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_bsim_routines_c(py::module& m) {
+void init_bsim_routines_c(py::module &m) {
   m.def(
       "check_rf_freq",
       &bsim::check_rf_freq,
@@ -14,7 +14,8 @@ void init_bsim_routines_c(py::module& m) {
 ----------
 lat : 
 fb : 
-)""");
+)"""
+  );
   m.def(
       "count_lines_in_file",
       &bsim::count_lines_in_file,
@@ -23,5 +24,6 @@ fb :
 ----------
 file_name : 
 lines : 
-)""");
+)"""
+  );
 }

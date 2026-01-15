@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_s(py::module& m) {
+void init_SimUtils_routines_s(py::module &m) {
   m.def(
       "set_parameter",
       py::overload_cast<int, int, int>(&SimUtils::set_parameter),
@@ -16,7 +16,8 @@ void init_SimUtils_routines_s(py::module& m) {
 param_val : 
 set_val : 
 save_val : 
-)""");
+)"""
+  );
   m.def(
       "set_parameter",
       py::overload_cast<bool, bool, bool>(&SimUtils::set_parameter),
@@ -28,7 +29,8 @@ save_val :
 param_val : 
 set_val : 
 save_val : 
-)""");
+)"""
+  );
   m.def(
       "set_parameter",
       py::overload_cast<double, double, double>(&SimUtils::set_parameter),
@@ -40,7 +42,8 @@ save_val :
 param_val : 
 set_val : 
 save_val : 
-)""");
+)"""
+  );
   m.def(
       "set_species_charge",
       &SimUtils::set_species_charge,
@@ -63,7 +66,8 @@ Returns
 -------
 species_charged : int
     Species of the same type as species_in but with different charge.
-)""");
+)"""
+  );
   m.def(
       "sinc",
       &SimUtils::sinc,
@@ -75,7 +79,8 @@ species_charged : int
 x : 
 nd : 
 y : 
-)""");
+)"""
+  );
   m.def(
       "sincc",
       &SimUtils::sincc,
@@ -87,7 +92,8 @@ y :
 x : 
 nd : 
 y : 
-)""");
+)"""
+  );
   m.def(
       "sinhx_x",
       &SimUtils::sinhx_x,
@@ -99,7 +105,8 @@ y :
 x : 
 nd : 
 y : 
-)""");
+)"""
+  );
   m.def(
       "skip_header",
       &SimUtils::skip_header,
@@ -109,7 +116,8 @@ y :
 ----------
 ix_unit : 
 error_flag : 
-)""");
+)"""
+  );
   m.def(
       "species_id",
       &SimUtils::species_id,
@@ -136,7 +144,8 @@ Returns
 -------
 species : int
     Species ID. Will return invalid$ if name is not valid. Will return not_set$ if name is blank
-)""");
+)"""
+  );
   m.def(
       "species_id_from_openpmd",
       &SimUtils::species_id_from_openpmd,
@@ -158,7 +167,8 @@ Returns
 -------
 species : int
     Bmad spicies ID number.
-)""");
+)"""
+  );
   m.def(
       "species_name",
       &SimUtils::species_name,
@@ -176,7 +186,8 @@ Returns
 -------
 name : unknown
     Name of the species. Will return 'INVALID!' (= invalid_name) if index is not valid.
-)""");
+)"""
+  );
   m.def(
       "species_of",
       &SimUtils::species_of,
@@ -198,7 +209,8 @@ Returns
 -------
 species : int
     Species ID. Will return invalid$ if name is not valid.
-)""");
+)"""
+  );
   m.def(
       "spin_of",
       &SimUtils::spin_of,
@@ -221,7 +233,8 @@ Returns
 -------
 spin : float
     Particle spin.
-)""");
+)"""
+  );
   m.def(
       "spline1",
       &SimUtils::spline1,
@@ -251,7 +264,8 @@ Notes
 -----
 Related routines:
 spline_evaluate spline_akima_interpolate use spline_mod
-)""");
+)"""
+  );
   m.def(
       "spline_akima",
       &SimUtils::spline_akima,
@@ -281,28 +295,28 @@ Returns
 -------
 ok : bool
     Set .false. if something is wrong (like less than 2 points used).
-)""");
-  py::class_<
-      SimUtils::SplineAkimaInterpolate,
-      std::unique_ptr<SimUtils::SplineAkimaInterpolate>>(
-      m, "SplineAkimaInterpolate", "spline_akima_interpolate return type")
+)"""
+  );
+  py::class_<SimUtils::SplineAkimaInterpolate, std::unique_ptr<SimUtils::SplineAkimaInterpolate>>(
+      m,
+      "SplineAkimaInterpolate",
+      "spline_akima_interpolate return type"
+  )
       .def_readonly("ok", &SimUtils::SplineAkimaInterpolate::ok)
       .def_readonly("y", &SimUtils::SplineAkimaInterpolate::y)
       .def_readonly("dy", &SimUtils::SplineAkimaInterpolate::dy)
-      .def("__len__", [](const SimUtils::SplineAkimaInterpolate&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::SplineAkimaInterpolate& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.ok);
-            if (i == 1)
-              return py::cast(s.y);
-            if (i == 2)
-              return py::cast(s.dy);
-            throw py::index_error();
-          });
+      .def("__len__", [](const SimUtils::SplineAkimaInterpolate &) { return 3; })
+      .def("__getitem__", [](const SimUtils::SplineAkimaInterpolate &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.ok);
+        if (i == 1)
+          return py::cast(s.y);
+        if (i == 2)
+          return py::cast(s.dy);
+        throw py::index_error();
+      });
   m.def(
       "spline_akima_interpolate",
       &SimUtils::spline_akima_interpolate,
@@ -339,28 +353,28 @@ y : float
     Spline interpolation.
 dy : float
     Spline derivative interpolation.
-)""");
-  py::class_<
-      SimUtils::SplineEvaluate,
-      std::unique_ptr<SimUtils::SplineEvaluate>>(
-      m, "SplineEvaluate", "spline_evaluate return type")
+)"""
+  );
+  py::class_<SimUtils::SplineEvaluate, std::unique_ptr<SimUtils::SplineEvaluate>>(
+      m,
+      "SplineEvaluate",
+      "spline_evaluate return type"
+  )
       .def_readonly("ok", &SimUtils::SplineEvaluate::ok)
       .def_readonly("y", &SimUtils::SplineEvaluate::y)
       .def_readonly("dy", &SimUtils::SplineEvaluate::dy)
-      .def("__len__", [](const SimUtils::SplineEvaluate&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::SplineEvaluate& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.ok);
-            if (i == 1)
-              return py::cast(s.y);
-            if (i == 2)
-              return py::cast(s.dy);
-            throw py::index_error();
-          });
+      .def("__len__", [](const SimUtils::SplineEvaluate &) { return 3; })
+      .def("__getitem__", [](const SimUtils::SplineEvaluate &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.ok);
+        if (i == 1)
+          return py::cast(s.y);
+        if (i == 2)
+          return py::cast(s.dy);
+        throw py::index_error();
+      });
   m.def(
       "spline_evaluate",
       &SimUtils::spline_evaluate,
@@ -393,7 +407,8 @@ Notes
 Related routines:
 spline1 spline_akima_interpolate A spline may be generated using for example the spline_akima routine. use
 spline_mod
-)""");
+)"""
+  );
   m.def(
       "sqrt_alpha",
       &SimUtils::sqrt_alpha,
@@ -405,7 +420,8 @@ spline_mod
 alpha : 
 x : 
 y : 
-)""");
+)"""
+  );
   m.def(
       "sqrt_one",
       &SimUtils::sqrt_one,
@@ -417,7 +433,8 @@ y :
 x : 
 nd : 
 ds1 : 
-)""");
+)"""
+  );
   m.def(
       "str_count",
       &SimUtils::str_count,
@@ -429,7 +446,8 @@ ds1 :
 str : 
 match : 
 num : 
-)""");
+)"""
+  );
   m.def(
       "str_downcase",
       &SimUtils::str_downcase,
@@ -438,7 +456,8 @@ num :
 ----------
 dst : 
 src : 
-)""");
+)"""
+  );
   m.def(
       "str_first_in_set",
       &SimUtils::str_first_in_set,
@@ -452,7 +471,8 @@ line :
 set : 
 ignore_clauses : 
 ix_match : 
-)""");
+)"""
+  );
   m.def(
       "str_first_not_in_set",
       &SimUtils::str_first_not_in_set,
@@ -464,7 +484,8 @@ ix_match :
 line : 
 set : 
 ix_match : 
-)""");
+)"""
+  );
   m.def(
       "str_last_in_set",
       &SimUtils::str_last_in_set,
@@ -476,7 +497,8 @@ ix_match :
 line : 
 set : 
 ix_match : 
-)""");
+)"""
+  );
   m.def(
       "str_last_not_in_set",
       &SimUtils::str_last_not_in_set,
@@ -488,7 +510,8 @@ ix_match :
 line : 
 set : 
 ix_match : 
-)""");
+)"""
+  );
   m.def(
       "str_match_wild",
       &SimUtils::str_match_wild,
@@ -500,7 +523,8 @@ ix_match :
 str : 
 pat : 
 a_match : 
-)""");
+)"""
+  );
   m.def(
       "str_substitute",
       &SimUtils::str_substitute,
@@ -516,7 +540,8 @@ str_match :
 str_replace : 
 do_trim : 
 ignore_escaped : 
-)""");
+)"""
+  );
   m.def(
       "str_upcase",
       &SimUtils::str_upcase,
@@ -525,7 +550,8 @@ ignore_escaped :
 ----------
 dst : 
 src : 
-)""");
+)"""
+  );
   m.def(
       "string_to_int",
       &SimUtils::string_to_int,
@@ -541,7 +567,8 @@ default :
 err_flag : 
 err_print_flag : 
 value : 
-)""");
+)"""
+  );
   m.def(
       "string_to_real",
       &SimUtils::string_to_real,
@@ -557,7 +584,8 @@ default :
 err_flag : 
 err_print_flag : 
 value : 
-)""");
+)"""
+  );
   m.def(
       "string_trim",
       &SimUtils::string_trim,
@@ -569,7 +597,8 @@ value :
 in_string : 
 out_string : 
 word_len : 
-)""");
+)"""
+  );
   m.def(
       "string_trim2",
       &SimUtils::string_trim2,
@@ -587,7 +616,8 @@ out_str :
 ix_word : 
 delim : 
 ix_next : 
-)""");
+)"""
+  );
   m.def(
       "super_bicubic_coef",
       &SimUtils::super_bicubic_coef,
@@ -621,31 +651,30 @@ Returns
 -------
 c : float
     Coefficients.
-)""");
+)"""
+  );
   py::class_<
       SimUtils::SuperBicubicInterpolation,
       std::unique_ptr<SimUtils::SuperBicubicInterpolation>>(
-      m, "SuperBicubicInterpolation", "super_bicubic_interpolation return type")
+      m,
+      "SuperBicubicInterpolation",
+      "super_bicubic_interpolation return type"
+  )
       .def_readonly("ansy", &SimUtils::SuperBicubicInterpolation::ansy)
       .def_readonly("ansy1", &SimUtils::SuperBicubicInterpolation::ansy1)
       .def_readonly("ansy2", &SimUtils::SuperBicubicInterpolation::ansy2)
-      .def(
-          "__len__",
-          [](const SimUtils::SuperBicubicInterpolation&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::SuperBicubicInterpolation& s,
-             int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.ansy);
-            if (i == 1)
-              return py::cast(s.ansy1);
-            if (i == 2)
-              return py::cast(s.ansy2);
-            throw py::index_error();
-          });
+      .def("__len__", [](const SimUtils::SuperBicubicInterpolation &) { return 3; })
+      .def("__getitem__", [](const SimUtils::SuperBicubicInterpolation &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.ansy);
+        if (i == 1)
+          return py::cast(s.ansy1);
+        if (i == 2)
+          return py::cast(s.ansy2);
+        throw py::index_error();
+      });
   m.def(
       "super_bicubic_interpolation",
       &SimUtils::super_bicubic_interpolation,
@@ -698,23 +727,25 @@ ansy1 : float
     1-direction derivative at interpolation point.
 ansy2 : float
     2-direction derivative at interpolation point.
-)""");
+)"""
+  );
   py::class_<SimUtils::SuperPolint, std::unique_ptr<SimUtils::SuperPolint>>(
-      m, "SuperPolint", "super_polint return type")
+      m,
+      "SuperPolint",
+      "super_polint return type"
+  )
       .def_readonly("y", &SimUtils::SuperPolint::y)
       .def_readonly("dy", &SimUtils::SuperPolint::dy)
-      .def("__len__", [](const SimUtils::SuperPolint&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::SuperPolint& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.y);
-            if (i == 1)
-              return py::cast(s.dy);
-            throw py::index_error();
-          });
+      .def("__len__", [](const SimUtils::SuperPolint &) { return 2; })
+      .def("__getitem__", [](const SimUtils::SuperPolint &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.y);
+        if (i == 1)
+          return py::cast(s.dy);
+        throw py::index_error();
+      });
   m.def(
       "super_polint",
       &SimUtils::super_polint,
@@ -734,7 +765,8 @@ Returns
 -------
 y : float
 dy : float
-)""");
+)"""
+  );
   m.def(
       "super_poly",
       &SimUtils::super_poly,
@@ -755,7 +787,8 @@ Returns
 -------
 value : float
     Polynomial value.
-)""");
+)"""
+  );
   m.def(
       "super_sobseq",
       &SimUtils::super_sobseq,
@@ -775,7 +808,8 @@ Returns
 -------
 x : float
     Random vector.
-)""");
+)"""
+  );
   m.def(
       "super_sort",
       &SimUtils::super_sort,
@@ -790,7 +824,8 @@ Parameters
 arr : int
     Array of integers.
     This parameter is an input/output and is modified in-place. As an output: Sorted array.
-)""");
+)"""
+  );
   m.def(
       "system_command",
       &SimUtils::system_command,
@@ -800,5 +835,6 @@ arr : int
 ----------
 line : 
 err_flag : 
-)""");
+)"""
+  );
 }

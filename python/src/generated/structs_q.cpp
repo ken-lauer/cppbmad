@@ -1,4 +1,5 @@
 #include "pybmad/generated/structs_q.hpp"
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -9,300 +10,262 @@ namespace py = pybind11;
 
 // =============================================================================
 // qp_axis_struct
-void init_qp_axis_struct(py::module& m, py::class_<QpAxisProxy>& cls) {
+void init_qp_axis_struct(py::module &m, py::class_<QpAxisStruct> &cls) {
   cls.def(py::init<>())
-      // QpAxisProxy.label (0D_NOT_character -
-      .def_property("label", &QpAxisProxy::label, &QpAxisProxy::set_label)
-      // QpAxisProxy.min (0D_NOT_real - Axis min/max in data units.
-      .def_property("min", &QpAxisProxy::min, &QpAxisProxy::set_min)
-      // QpAxisProxy.max (0D_NOT_real - Axis min/max in data units.
-      .def_property("max", &QpAxisProxy::max, &QpAxisProxy::set_max)
-      // QpAxisProxy.tick_min (0D_NOT_real - Min tick location along axis in data units.
-      .def_property(
-          "tick_min", &QpAxisProxy::tick_min, &QpAxisProxy::set_tick_min)
-      // QpAxisProxy.tick_max (0D_NOT_real - Max tick location along axis in data units.
-      .def_property(
-          "tick_max", &QpAxisProxy::tick_max, &QpAxisProxy::set_tick_max)
-      // QpAxisProxy.eval_min (0D_NOT_real - For general use. Not set by quick_plot.
-      .def_property(
-          "eval_min", &QpAxisProxy::eval_min, &QpAxisProxy::set_eval_min)
-      // QpAxisProxy.eval_max (0D_NOT_real - For general use. Not set by quick_plot.
-      .def_property(
-          "eval_max", &QpAxisProxy::eval_max, &QpAxisProxy::set_eval_max)
-      // QpAxisProxy.dtick (0D_NOT_real - Distance between ticks. In data units. Ticks will be drawn between %min and %max.
-      .def_property("dtick", &QpAxisProxy::dtick, &QpAxisProxy::set_dtick)
-      // QpAxisProxy.number_offset (0D_NOT_real - Offset from axis line in inches.
-      .def_property(
-          "number_offset",
-          &QpAxisProxy::number_offset,
-          &QpAxisProxy::set_number_offset)
-      // QpAxisProxy.label_offset (0D_NOT_real - Offset from numbers in inches.
-      .def_property(
-          "label_offset",
-          &QpAxisProxy::label_offset,
-          &QpAxisProxy::set_label_offset)
-      // QpAxisProxy.major_tick_len (0D_NOT_real - In inches.
+      // QpAxisStruct.label (0D_NOT_character -
+      .def_property("label", &QpAxisStruct::label, &QpAxisStruct::set_label)
+      // QpAxisStruct.min (0D_NOT_real - Axis min/max in data units.
+      .def_property("min", &QpAxisStruct::min, &QpAxisStruct::set_min)
+      // QpAxisStruct.max (0D_NOT_real - Axis min/max in data units.
+      .def_property("max", &QpAxisStruct::max, &QpAxisStruct::set_max)
+      // QpAxisStruct.tick_min (0D_NOT_real - Min tick location along axis in data units.
+      .def_property("tick_min", &QpAxisStruct::tick_min, &QpAxisStruct::set_tick_min)
+      // QpAxisStruct.tick_max (0D_NOT_real - Max tick location along axis in data units.
+      .def_property("tick_max", &QpAxisStruct::tick_max, &QpAxisStruct::set_tick_max)
+      // QpAxisStruct.eval_min (0D_NOT_real - For general use. Not set by quick_plot.
+      .def_property("eval_min", &QpAxisStruct::eval_min, &QpAxisStruct::set_eval_min)
+      // QpAxisStruct.eval_max (0D_NOT_real - For general use. Not set by quick_plot.
+      .def_property("eval_max", &QpAxisStruct::eval_max, &QpAxisStruct::set_eval_max)
+      // QpAxisStruct.dtick (0D_NOT_real - Distance between ticks. In data units. Ticks will be
+      // drawn between %min and %max.
+      .def_property("dtick", &QpAxisStruct::dtick, &QpAxisStruct::set_dtick)
+      // QpAxisStruct.number_offset (0D_NOT_real - Offset from axis line in inches.
+      .def_property("number_offset", &QpAxisStruct::number_offset, &QpAxisStruct::set_number_offset)
+      // QpAxisStruct.label_offset (0D_NOT_real - Offset from numbers in inches.
+      .def_property("label_offset", &QpAxisStruct::label_offset, &QpAxisStruct::set_label_offset)
+      // QpAxisStruct.major_tick_len (0D_NOT_real - In inches.
       .def_property(
           "major_tick_len",
-          &QpAxisProxy::major_tick_len,
-          &QpAxisProxy::set_major_tick_len)
-      // QpAxisProxy.minor_tick_len (0D_NOT_real - In inches.
+          &QpAxisStruct::major_tick_len,
+          &QpAxisStruct::set_major_tick_len
+      )
+      // QpAxisStruct.minor_tick_len (0D_NOT_real - In inches.
       .def_property(
           "minor_tick_len",
-          &QpAxisProxy::minor_tick_len,
-          &QpAxisProxy::set_minor_tick_len)
-      // QpAxisProxy.label_color (0D_NOT_character - Color of the label.
-      .def_property(
-          "label_color",
-          &QpAxisProxy::label_color,
-          &QpAxisProxy::set_label_color)
-      // QpAxisProxy.major_div (0D_NOT_integer - Actual numbrer of major divisions
-      .def_property(
-          "major_div", &QpAxisProxy::major_div, &QpAxisProxy::set_major_div)
-      // QpAxisProxy.major_div_nominal (0D_NOT_integer - Nominal value.
+          &QpAxisStruct::minor_tick_len,
+          &QpAxisStruct::set_minor_tick_len
+      )
+      // QpAxisStruct.label_color (0D_NOT_character - Color of the label.
+      .def_property("label_color", &QpAxisStruct::label_color, &QpAxisStruct::set_label_color)
+      // QpAxisStruct.major_div (0D_NOT_integer - Actual numbrer of major divisions
+      .def_property("major_div", &QpAxisStruct::major_div, &QpAxisStruct::set_major_div)
+      // QpAxisStruct.major_div_nominal (0D_NOT_integer - Nominal value.
       .def_property(
           "major_div_nominal",
-          &QpAxisProxy::major_div_nominal,
-          &QpAxisProxy::set_major_div_nominal)
-      // QpAxisProxy.minor_div (0D_NOT_integer - 0 = auto choose.
-      .def_property(
-          "minor_div", &QpAxisProxy::minor_div, &QpAxisProxy::set_minor_div)
-      // QpAxisProxy.minor_div_max (0D_NOT_integer - Max number for auto choose.
-      .def_property(
-          "minor_div_max",
-          &QpAxisProxy::minor_div_max,
-          &QpAxisProxy::set_minor_div_max)
-      // QpAxisProxy.places (0D_NOT_integer - Number of places after the decimal point to print.
-      .def_property("places", &QpAxisProxy::places, &QpAxisProxy::set_places)
-      // QpAxisProxy.type (0D_NOT_character - Or 'LOG', or 'CUSTOM'
-      .def_property("type", &QpAxisProxy::type, &QpAxisProxy::set_type)
-      // QpAxisProxy.bounds (0D_NOT_character - Or 'ZERO_AT_END' or 'ZERO_SYMMETRIC'
-      .def_property("bounds", &QpAxisProxy::bounds, &QpAxisProxy::set_bounds)
-      // QpAxisProxy.tick_side (0D_NOT_integer - +1 = Draw on the side inside the graph, 0 = both (longer tick), -1 = outside.
-      .def_property(
-          "tick_side", &QpAxisProxy::tick_side, &QpAxisProxy::set_tick_side)
-      // QpAxisProxy.number_side (0D_NOT_integer - +1 = Draw to the side inside the graph, -1 = outside.
-      .def_property(
-          "number_side",
-          &QpAxisProxy::number_side,
-          &QpAxisProxy::set_number_side)
-      // QpAxisProxy.draw_label (0D_NOT_logical -
-      .def_property(
-          "draw_label", &QpAxisProxy::draw_label, &QpAxisProxy::set_draw_label)
-      // QpAxisProxy.draw_numbers (0D_NOT_logical -
-      .def_property(
-          "draw_numbers",
-          &QpAxisProxy::draw_numbers,
-          &QpAxisProxy::set_draw_numbers)
+          &QpAxisStruct::major_div_nominal,
+          &QpAxisStruct::set_major_div_nominal
+      )
+      // QpAxisStruct.minor_div (0D_NOT_integer - 0 = auto choose.
+      .def_property("minor_div", &QpAxisStruct::minor_div, &QpAxisStruct::set_minor_div)
+      // QpAxisStruct.minor_div_max (0D_NOT_integer - Max number for auto choose.
+      .def_property("minor_div_max", &QpAxisStruct::minor_div_max, &QpAxisStruct::set_minor_div_max)
+      // QpAxisStruct.places (0D_NOT_integer - Number of places after the decimal point to print.
+      .def_property("places", &QpAxisStruct::places, &QpAxisStruct::set_places)
+      // QpAxisStruct.type (0D_NOT_character - Or 'LOG', or 'CUSTOM'
+      .def_property("type", &QpAxisStruct::type, &QpAxisStruct::set_type)
+      // QpAxisStruct.bounds (0D_NOT_character - Or 'ZERO_AT_END' or 'ZERO_SYMMETRIC'
+      .def_property("bounds", &QpAxisStruct::bounds, &QpAxisStruct::set_bounds)
+      // QpAxisStruct.tick_side (0D_NOT_integer - +1 = Draw on the side inside the graph, 0 = both
+      // (longer tick), -1 = outside.
+      .def_property("tick_side", &QpAxisStruct::tick_side, &QpAxisStruct::set_tick_side)
+      // QpAxisStruct.number_side (0D_NOT_integer - +1 = Draw to the side inside the graph, -1 =
+      // outside.
+      .def_property("number_side", &QpAxisStruct::number_side, &QpAxisStruct::set_number_side)
+      // QpAxisStruct.draw_label (0D_NOT_logical -
+      .def_property("draw_label", &QpAxisStruct::draw_label, &QpAxisStruct::set_draw_label)
+      // QpAxisStruct.draw_numbers (0D_NOT_logical -
+      .def_property("draw_numbers", &QpAxisStruct::draw_numbers, &QpAxisStruct::set_draw_numbers)
 
-      .def("__repr__", [](const QpAxisProxy& self) { return to_string(self); })
+      .def("__repr__", [](const QpAxisStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const QpAxisProxy& self) {
-            return QpAxisProxy(self); // under-the-hood fortran copy
-          })
+          [](const QpAxisStruct &self) {
+            return QpAxisStruct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const QpAxisProxy& self, py::dict& memo) {
-            return QpAxisProxy(self);
-          })
+          [](const QpAxisStruct &self, py::dict &memo) { return QpAxisStruct(self); }
+      )
 
       ;
 
-  // 1D QpAxisProxy arrays are not used in structs/routines
-  // 2D QpAxisProxy arrays are not used in structs/routines
-  // 3D QpAxisProxy arrays are not used in structs/routines
+  // 1D QpAxisStruct arrays are not used in structs/routines
+  // 2D QpAxisStruct arrays are not used in structs/routines
+  // 3D QpAxisStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
 // qp_legend_struct
-void init_qp_legend_struct(py::module& m, py::class_<QpLegendProxy>& cls) {
+void init_qp_legend_struct(py::module &m, py::class_<QpLegendStruct> &cls) {
   cls.def(py::init<>())
-      // QpLegendProxy.row_spacing (0D_NOT_real - Spacing between rows.
-      .def_property(
-          "row_spacing",
-          &QpLegendProxy::row_spacing,
-          &QpLegendProxy::set_row_spacing)
-      // QpLegendProxy.line_length (0D_NOT_real - Length of the line in points.
-      .def_property(
-          "line_length",
-          &QpLegendProxy::line_length,
-          &QpLegendProxy::set_line_length)
-      // QpLegendProxy.text_offset (0D_NOT_real - Horizontal offset in points between the line and the text.
-      .def_property(
-          "text_offset",
-          &QpLegendProxy::text_offset,
-          &QpLegendProxy::set_text_offset)
-      // QpLegendProxy.draw_line (0D_NOT_logical - Draw lines?
-      .def_property(
-          "draw_line", &QpLegendProxy::draw_line, &QpLegendProxy::set_draw_line)
-      // QpLegendProxy.draw_symbol (0D_NOT_logical - Draw symbols?
-      .def_property(
-          "draw_symbol",
-          &QpLegendProxy::draw_symbol,
-          &QpLegendProxy::set_draw_symbol)
-      // QpLegendProxy.draw_text (0D_NOT_logical - Draw text?
-      .def_property(
-          "draw_text", &QpLegendProxy::draw_text, &QpLegendProxy::set_draw_text)
+      // QpLegendStruct.row_spacing (0D_NOT_real - Spacing between rows.
+      .def_property("row_spacing", &QpLegendStruct::row_spacing, &QpLegendStruct::set_row_spacing)
+      // QpLegendStruct.line_length (0D_NOT_real - Length of the line in points.
+      .def_property("line_length", &QpLegendStruct::line_length, &QpLegendStruct::set_line_length)
+      // QpLegendStruct.text_offset (0D_NOT_real - Horizontal offset in points between the line and
+      // the text.
+      .def_property("text_offset", &QpLegendStruct::text_offset, &QpLegendStruct::set_text_offset)
+      // QpLegendStruct.draw_line (0D_NOT_logical - Draw lines?
+      .def_property("draw_line", &QpLegendStruct::draw_line, &QpLegendStruct::set_draw_line)
+      // QpLegendStruct.draw_symbol (0D_NOT_logical - Draw symbols?
+      .def_property("draw_symbol", &QpLegendStruct::draw_symbol, &QpLegendStruct::set_draw_symbol)
+      // QpLegendStruct.draw_text (0D_NOT_logical - Draw text?
+      .def_property("draw_text", &QpLegendStruct::draw_text, &QpLegendStruct::set_draw_text)
 
-      .def(
-          "__repr__", [](const QpLegendProxy& self) { return to_string(self); })
+      .def("__repr__", [](const QpLegendStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const QpLegendProxy& self) {
-            return QpLegendProxy(self); // under-the-hood fortran copy
-          })
+          [](const QpLegendStruct &self) {
+            return QpLegendStruct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const QpLegendProxy& self, py::dict& memo) {
-            return QpLegendProxy(self);
-          })
+          [](const QpLegendStruct &self, py::dict &memo) { return QpLegendStruct(self); }
+      )
 
       ;
 
-  // 1D QpLegendProxy arrays are not used in structs/routines
-  // 2D QpLegendProxy arrays are not used in structs/routines
-  // 3D QpLegendProxy arrays are not used in structs/routines
+  // 1D QpLegendStruct arrays are not used in structs/routines
+  // 2D QpLegendStruct arrays are not used in structs/routines
+  // 3D QpLegendStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
 // qp_line_struct
-void init_qp_line_struct(py::module& m, py::class_<QpLineProxy>& cls) {
+void init_qp_line_struct(py::module &m, py::class_<QpLineStruct> &cls) {
   cls.def(py::init<>())
-      // QpLineProxy.width (0D_NOT_integer -
-      .def_property("width", &QpLineProxy::width, &QpLineProxy::set_width)
-      // QpLineProxy.color (0D_NOT_character -
-      .def_property("color", &QpLineProxy::color, &QpLineProxy::set_color)
-      // QpLineProxy.pattern (0D_NOT_character -
-      .def_property("pattern", &QpLineProxy::pattern, &QpLineProxy::set_pattern)
+      // QpLineStruct.width (0D_NOT_integer -
+      .def_property("width", &QpLineStruct::width, &QpLineStruct::set_width)
+      // QpLineStruct.color (0D_NOT_character -
+      .def_property("color", &QpLineStruct::color, &QpLineStruct::set_color)
+      // QpLineStruct.pattern (0D_NOT_character -
+      .def_property("pattern", &QpLineStruct::pattern, &QpLineStruct::set_pattern)
 
-      .def("__repr__", [](const QpLineProxy& self) { return to_string(self); })
+      .def("__repr__", [](const QpLineStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const QpLineProxy& self) {
-            return QpLineProxy(self); // under-the-hood fortran copy
-          })
+          [](const QpLineStruct &self) {
+            return QpLineStruct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const QpLineProxy& self, py::dict& memo) {
-            return QpLineProxy(self);
-          })
+          [](const QpLineStruct &self, py::dict &memo) { return QpLineStruct(self); }
+      )
 
       ;
 
-  // 1D QpLineProxy arrays are not used in structs/routines
-  // 2D QpLineProxy arrays are not used in structs/routines
-  // 3D QpLineProxy arrays are not used in structs/routines
+  // 1D QpLineStruct arrays are not used in structs/routines
+  // 2D QpLineStruct arrays are not used in structs/routines
+  // 3D QpLineStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
 // qp_point_struct
-void init_qp_point_struct(py::module& m, py::class_<QpPointProxy>& cls) {
+void init_qp_point_struct(py::module &m, py::class_<QpPointStruct> &cls) {
   cls.def(py::init<>())
-      // QpPointProxy.x (0D_NOT_real -
-      .def_property("x", &QpPointProxy::x, &QpPointProxy::set_x)
-      // QpPointProxy.y (0D_NOT_real -
-      .def_property("y", &QpPointProxy::y, &QpPointProxy::set_y)
-      // QpPointProxy.units (0D_NOT_character -
-      .def_property("units", &QpPointProxy::units, &QpPointProxy::set_units)
+      // QpPointStruct.x (0D_NOT_real -
+      .def_property("x", &QpPointStruct::x, &QpPointStruct::set_x)
+      // QpPointStruct.y (0D_NOT_real -
+      .def_property("y", &QpPointStruct::y, &QpPointStruct::set_y)
+      // QpPointStruct.units (0D_NOT_character -
+      .def_property("units", &QpPointStruct::units, &QpPointStruct::set_units)
 
-      .def("__repr__", [](const QpPointProxy& self) { return to_string(self); })
+      .def("__repr__", [](const QpPointStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const QpPointProxy& self) {
-            return QpPointProxy(self); // under-the-hood fortran copy
-          })
+          [](const QpPointStruct &self) {
+            return QpPointStruct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const QpPointProxy& self, py::dict& memo) {
-            return QpPointProxy(self);
-          })
+          [](const QpPointStruct &self, py::dict &memo) { return QpPointStruct(self); }
+      )
 
       ;
 
-  // 1D QpPointProxy arrays are not used in structs/routines
-  // 2D QpPointProxy arrays are not used in structs/routines
-  // 3D QpPointProxy arrays are not used in structs/routines
+  // 1D QpPointStruct arrays are not used in structs/routines
+  // 2D QpPointStruct arrays are not used in structs/routines
+  // 3D QpPointStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
 // qp_rect_struct
-void init_qp_rect_struct(py::module& m, py::class_<QpRectProxy>& cls) {
+void init_qp_rect_struct(py::module &m, py::class_<QpRectStruct> &cls) {
   cls.def(py::init<>())
-      // QpRectProxy.x1 (0D_NOT_real -
-      .def_property("x1", &QpRectProxy::x1, &QpRectProxy::set_x1)
-      // QpRectProxy.x2 (0D_NOT_real -
-      .def_property("x2", &QpRectProxy::x2, &QpRectProxy::set_x2)
-      // QpRectProxy.y1 (0D_NOT_real -
-      .def_property("y1", &QpRectProxy::y1, &QpRectProxy::set_y1)
-      // QpRectProxy.y2 (0D_NOT_real -
-      .def_property("y2", &QpRectProxy::y2, &QpRectProxy::set_y2)
-      // QpRectProxy.units (0D_NOT_character -
-      .def_property("units", &QpRectProxy::units, &QpRectProxy::set_units)
+      // QpRectStruct.x1 (0D_NOT_real -
+      .def_property("x1", &QpRectStruct::x1, &QpRectStruct::set_x1)
+      // QpRectStruct.x2 (0D_NOT_real -
+      .def_property("x2", &QpRectStruct::x2, &QpRectStruct::set_x2)
+      // QpRectStruct.y1 (0D_NOT_real -
+      .def_property("y1", &QpRectStruct::y1, &QpRectStruct::set_y1)
+      // QpRectStruct.y2 (0D_NOT_real -
+      .def_property("y2", &QpRectStruct::y2, &QpRectStruct::set_y2)
+      // QpRectStruct.units (0D_NOT_character -
+      .def_property("units", &QpRectStruct::units, &QpRectStruct::set_units)
 
-      .def("__repr__", [](const QpRectProxy& self) { return to_string(self); })
+      .def("__repr__", [](const QpRectStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const QpRectProxy& self) {
-            return QpRectProxy(self); // under-the-hood fortran copy
-          })
+          [](const QpRectStruct &self) {
+            return QpRectStruct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const QpRectProxy& self, py::dict& memo) {
-            return QpRectProxy(self);
-          })
+          [](const QpRectStruct &self, py::dict &memo) { return QpRectStruct(self); }
+      )
 
       ;
 
-  // 1D QpRectProxy arrays are not used in structs/routines
-  // 2D QpRectProxy arrays are not used in structs/routines
-  // 3D QpRectProxy arrays are not used in structs/routines
+  // 1D QpRectStruct arrays are not used in structs/routines
+  // 2D QpRectStruct arrays are not used in structs/routines
+  // 3D QpRectStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
 // qp_symbol_struct
-void init_qp_symbol_struct(py::module& m, py::class_<QpSymbolProxy>& cls) {
+void init_qp_symbol_struct(py::module &m, py::class_<QpSymbolStruct> &cls) {
   cls.def(py::init<>())
-      // QpSymbolProxy.type (0D_NOT_character -
-      .def_property("type", &QpSymbolProxy::type, &QpSymbolProxy::set_type)
-      // QpSymbolProxy.height (0D_NOT_real - in points (same as text height)
-      .def_property(
-          "height", &QpSymbolProxy::height, &QpSymbolProxy::set_height)
-      // QpSymbolProxy.color (0D_NOT_character -
-      .def_property("color", &QpSymbolProxy::color, &QpSymbolProxy::set_color)
-      // QpSymbolProxy.fill_pattern (0D_NOT_character -
+      // QpSymbolStruct.type (0D_NOT_character -
+      .def_property("type", &QpSymbolStruct::type, &QpSymbolStruct::set_type)
+      // QpSymbolStruct.height (0D_NOT_real - in points (same as text height)
+      .def_property("height", &QpSymbolStruct::height, &QpSymbolStruct::set_height)
+      // QpSymbolStruct.color (0D_NOT_character -
+      .def_property("color", &QpSymbolStruct::color, &QpSymbolStruct::set_color)
+      // QpSymbolStruct.fill_pattern (0D_NOT_character -
       .def_property(
           "fill_pattern",
-          &QpSymbolProxy::fill_pattern,
-          &QpSymbolProxy::set_fill_pattern)
-      // QpSymbolProxy.line_width (0D_NOT_integer -
-      .def_property(
-          "line_width",
-          &QpSymbolProxy::line_width,
-          &QpSymbolProxy::set_line_width)
+          &QpSymbolStruct::fill_pattern,
+          &QpSymbolStruct::set_fill_pattern
+      )
+      // QpSymbolStruct.line_width (0D_NOT_integer -
+      .def_property("line_width", &QpSymbolStruct::line_width, &QpSymbolStruct::set_line_width)
 
-      .def(
-          "__repr__", [](const QpSymbolProxy& self) { return to_string(self); })
+      .def("__repr__", [](const QpSymbolStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const QpSymbolProxy& self) {
-            return QpSymbolProxy(self); // under-the-hood fortran copy
-          })
+          [](const QpSymbolStruct &self) {
+            return QpSymbolStruct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const QpSymbolProxy& self, py::dict& memo) {
-            return QpSymbolProxy(self);
-          })
+          [](const QpSymbolStruct &self, py::dict &memo) { return QpSymbolStruct(self); }
+      )
 
       ;
 
-  // 1D QpSymbolProxy arrays are not used in structs/routines
-  // 2D QpSymbolProxy arrays are not used in structs/routines
-  // 3D QpSymbolProxy arrays are not used in structs/routines
+  // 1D QpSymbolStruct arrays are not used in structs/routines
+  // 2D QpSymbolStruct arrays are not used in structs/routines
+  // 3D QpSymbolStruct arrays are not used in structs/routines
 }

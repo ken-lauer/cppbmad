@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_n(py::module& m) {
+void init_Bmad_routines_n(py::module &m) {
   m.def(
       "n_attrib_string_max_len",
       &Bmad::n_attrib_string_max_len,
@@ -18,7 +18,8 @@ Returns
 -------
 max_len : int
     Maximum number of characters in any attribute name.
-)""");
+)"""
+  );
   m.def(
       "new_control",
       &Bmad::new_control,
@@ -33,7 +34,8 @@ ix_ele : int
     Index of the new control element
 ele_name : unknown, optional
     Name of the new element. Output
-)""");
+)"""
+  );
   m.def(
       "nint_chk",
       &Bmad::nint_chk,
@@ -53,7 +55,8 @@ Returns
 -------
 int_val : int
     Output nearest integer.
-)""");
+)"""
+  );
   m.def(
       "normal_form_complex_taylors",
       &Bmad::normal_form_complex_taylors,
@@ -73,26 +76,28 @@ L :
 A : 
 A_inverse : 
 order : 
-)""");
+)"""
+  );
   py::class_<Bmad::NormalFormTaylors, std::unique_ptr<Bmad::NormalFormTaylors>>(
-      m, "NormalFormTaylors", "normal_form_taylors return type")
+      m,
+      "NormalFormTaylors",
+      "normal_form_taylors return type"
+  )
       .def_readonly("dhdj", &Bmad::NormalFormTaylors::dhdj)
       .def_readonly("A", &Bmad::NormalFormTaylors::A)
       .def_readonly("A_inverse", &Bmad::NormalFormTaylors::A_inverse)
-      .def("__len__", [](const Bmad::NormalFormTaylors&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::NormalFormTaylors& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.dhdj);
-            if (i == 1)
-              return py::cast(s.A);
-            if (i == 2)
-              return py::cast(s.A_inverse);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::NormalFormTaylors &) { return 3; })
+      .def("__getitem__", [](const Bmad::NormalFormTaylors &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.dhdj);
+        if (i == 1)
+          return py::cast(s.A);
+        if (i == 2)
+          return py::cast(s.A_inverse);
+        throw py::index_error();
+      });
   m.def(
       "normal_form_taylors",
       &Bmad::normal_form_taylors,
@@ -130,26 +135,28 @@ A_inverse : TaylorStruct
     Map from Lab coordinates to Floquet coordinates
 dhdj : TaylorStruct
     Map from Floquet coordinates to phase advances
-)""");
+)"""
+  );
   py::class_<Bmad::NormalMode3Calc, std::unique_ptr<Bmad::NormalMode3Calc>>(
-      m, "NormalMode3Calc", "normal_mode3_calc return type")
+      m,
+      "NormalMode3Calc",
+      "normal_mode3_calc return type"
+  )
       .def_readonly("tune", &Bmad::NormalMode3Calc::tune)
       .def_readonly("B", &Bmad::NormalMode3Calc::B)
       .def_readonly("HV", &Bmad::NormalMode3Calc::HV)
-      .def("__len__", [](const Bmad::NormalMode3Calc&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::NormalMode3Calc& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.tune);
-            if (i == 1)
-              return py::cast(s.B);
-            if (i == 2)
-              return py::cast(s.HV);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::NormalMode3Calc &) { return 3; })
+      .def("__getitem__", [](const Bmad::NormalMode3Calc &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.tune);
+        if (i == 1)
+          return py::cast(s.B);
+        if (i == 2)
+          return py::cast(s.HV);
+        throw py::index_error();
+      });
   m.def(
       "normal_mode3_calc",
       &Bmad::normal_mode3_calc,
@@ -182,7 +189,8 @@ B : float
     B is block diagonal and related to the normal mode Twiss parameters.
 HV : float
     Transforms from normal mode coordinates to canonical coordinates: x = H.V.a
-)""");
+)"""
+  );
   m.def(
       "normal_mode_dispersion",
       &Bmad::normal_mode_dispersion,
@@ -196,7 +204,8 @@ ele : EleStruct
     dispersions.
 reverse : bool, optional
     Default is False. If True, calculate the x,y dispersions from the normal mode ones.
-)""");
+)"""
+  );
   m.def(
       "normalize_evecs",
       &Bmad::normalize_evecs,
@@ -216,7 +225,8 @@ Returns
 -------
 err_flag : bool
     Set true of normalization is not possible due to amplitude is zero.
-)""");
+)"""
+  );
   m.def(
       "num_field_eles",
       &Bmad::num_field_eles,
@@ -227,7 +237,8 @@ err_flag : bool
 ele : EleStruct
     Element with sum number of associated field elements.
 n_field_ele : 
-)""");
+)"""
+  );
   m.def(
       "num_lords",
       &Bmad::num_lords,
@@ -242,5 +253,6 @@ lord_type : int
     Type of lord. super_lord$, multipass_lord$, girder_lord$, group_lord$, overlay_lord$, and governor$ (=
     group + overlay + control + girder)
 num : 
-)""");
+)"""
+  );
 }

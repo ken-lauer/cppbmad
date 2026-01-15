@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_a(py::module& m) {
+void init_SimUtils_routines_a(py::module &m) {
   m.def(
       "allocate_thread_states",
       &SimUtils::allocate_thread_states,
@@ -12,7 +12,8 @@ void init_SimUtils_routines_a(py::module& m) {
 
 Routine to allocate random number state structures when openMP is used.
 
-)""");
+)"""
+  );
   m.def(
       "anomalous_moment_of",
       &SimUtils::anomalous_moment_of,
@@ -30,7 +31,8 @@ Returns
 -------
 moment : float
     Anomalous moment.
-)""");
+)"""
+  );
   m.def(
       "antiparticle",
       &SimUtils::antiparticle,
@@ -49,7 +51,8 @@ Returns
 -------
 anti_species : int
     Antiparticle ID.
-)""");
+)"""
+  );
   m.def(
       "apfft",
       &SimUtils::apfft,
@@ -64,25 +67,28 @@ Implements the All Phase FFT method for obtaining accurate phase from signal dat
 
 The signal data is truncated to an odd length, and the phase is relative to the central point.
 
-)""");
+)"""
+  );
   py::class_<SimUtils::ApfftCorr, std::unique_ptr<SimUtils::ApfftCorr>>(
-      m, "ApfftCorr", "apfft_corr return type")
+      m,
+      "ApfftCorr",
+      "apfft_corr return type"
+  )
       .def_readonly("phase", &SimUtils::ApfftCorr::phase)
       .def_readonly("amp", &SimUtils::ApfftCorr::amp)
       .def_readonly("freq", &SimUtils::ApfftCorr::freq)
-      .def("__len__", [](const SimUtils::ApfftCorr&) { return 3; })
-      .def(
-          "__getitem__", [](const SimUtils::ApfftCorr& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.phase);
-            if (i == 1)
-              return py::cast(s.amp);
-            if (i == 2)
-              return py::cast(s.freq);
-            throw py::index_error();
-          });
+      .def("__len__", [](const SimUtils::ApfftCorr &) { return 3; })
+      .def("__getitem__", [](const SimUtils::ApfftCorr &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.phase);
+        if (i == 1)
+          return py::cast(s.amp);
+        if (i == 2)
+          return py::cast(s.freq);
+        throw py::index_error();
+      });
   m.def(
       "apfft_corr",
       &SimUtils::apfft_corr,
@@ -117,7 +123,8 @@ freq : float
     frequency of peak
 amp : float
     amplitude of peak
-)""");
+)"""
+  );
   m.def(
       "apfft_ext",
       &SimUtils::apfft_ext,
@@ -135,7 +142,8 @@ Implements the All Phase FFT method for obtaining accurate phase from signal dat
 This "extended" apfft subroutine returns the amplitudes and frequency as well, for use
 by the corrected apfft subroutine in this module.
 
-)""");
+)"""
+  );
   m.def(
       "asinc",
       &SimUtils::asinc,
@@ -147,7 +155,8 @@ by the corrected apfft subroutine in this module.
 x : 
 nd : 
 y : 
-)""");
+)"""
+  );
   m.def(
       "assert_equal",
       &SimUtils::assert_equal,
@@ -159,7 +168,8 @@ y :
 int_arr : 
 err_str : 
 ival : 
-)""");
+)"""
+  );
   m.def(
       "atomic_number",
       &SimUtils::atomic_number,
@@ -179,7 +189,8 @@ Returns
 -------
 atomic_num : int
     Atomic index. Set to zero if a molecule
-)""");
+)"""
+  );
   m.def(
       "atomic_species_id",
       &SimUtils::atomic_species_id,
@@ -206,7 +217,8 @@ Returns
 -------
 species_id : int
     Species ID number.
-)""");
+)"""
+  );
   m.def(
       "axis_angle_to_quat",
       &SimUtils::axis_angle_to_quat,
@@ -227,7 +239,8 @@ Returns
 -------
 quat : float
     Rotation quaternion.
-)""");
+)"""
+  );
   m.def(
       "axis_angle_to_w_mat",
       &SimUtils::axis_angle_to_w_mat,
@@ -249,5 +262,6 @@ Returns
 -------
 w_mat : float
     Rotation matrix
-)""");
+)"""
+  );
 }

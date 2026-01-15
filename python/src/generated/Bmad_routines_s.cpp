@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_s(py::module& m) {
+void init_Bmad_routines_s(py::module &m) {
   m.def(
       "s_body_calc",
       &Bmad::s_body_calc,
@@ -18,7 +18,8 @@ orbit : CoordStruct
 ele : EleStruct
     Lattice element
 s_body : 
-)""");
+)"""
+  );
   m.def(
       "s_calc",
       &Bmad::s_calc,
@@ -26,7 +27,8 @@ s_body :
       R"""(Parameters
 ----------
 lat : LatStruct
-)""");
+)"""
+  );
   m.def(
       "sad_mult_hard_bend_edge_kick",
       &Bmad::sad_mult_hard_bend_edge_kick,
@@ -63,7 +65,8 @@ mat6 : float, optional
     fringe.
 make_matrix : float, optional
     Propagate the transfer matrix? Default is False.
-)""");
+)"""
+  );
   m.def(
       "sad_soft_bend_edge_kick",
       &Bmad::sad_soft_bend_edge_kick,
@@ -97,7 +100,8 @@ k0l : float, optional
     Used with sad_mult. If present, use this instead of ele.a_pole/.b_pole.
 t0 : float, optional
     Used with sad_mult. If present, use this instead of ele.a_pole/.b_pole. Must be present if k0l is.
-)""");
+)"""
+  );
   m.def(
       "save_a_beam_step",
       &Bmad::save_a_beam_step,
@@ -119,7 +123,8 @@ s_body : float, optional
 is_time_coords : bool, optional
     Default is False. If True, input beam is using time coordinates in which case there will be a conversion
     to s-coords before bunch_params are computed. Ouput:
-)""");
+)"""
+  );
   m.def(
       "save_a_bunch_step",
       &Bmad::save_a_bunch_step,
@@ -141,7 +146,8 @@ s_body : float, optional
 is_time_coords : bool, optional
     Default is False. If True, input bunch is using time coordinates in which case there will be a conversion
     to s-coords before bunch_params are computed. Ouput:
-)""");
+)"""
+  );
   m.def(
       "save_a_step",
       &Bmad::save_a_step,
@@ -182,7 +188,8 @@ rf_time : float, optional
     standard algorithm. This is only needed if save_field = True.
 strong_beam : StrongBeambeamStruct, optional
     Strong beam info if tracking through a beambeam element. Ouput:
-)""");
+)"""
+  );
   m.def(
       "sbend_body_with_k1_map",
       &Bmad::sbend_body_with_k1_map,
@@ -215,7 +222,8 @@ mat6 : float, optional
     in.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "sc_adaptive_step",
       &Bmad::sc_adaptive_step,
@@ -254,7 +262,8 @@ Returns
 -------
 dt_next : float
     Next SC time step the tracker would take based on the error tolerance
-)""");
+)"""
+  );
   m.def(
       "sc_step",
       &Bmad::sc_step,
@@ -288,7 +297,8 @@ Returns
 -------
 n_emit : int
     The number of particles emitted in this step.
-)""");
+)"""
+  );
   m.def(
       "set_active_fixer",
       &Bmad::set_active_fixer,
@@ -315,7 +325,8 @@ Returns
 -------
 orbit : CoordStruct
     Load with stored fixer phase space and spin values.
-)""");
+)"""
+  );
   m.def(
       "set_custom_attribute_name",
       &Bmad::set_custom_attribute_name,
@@ -338,23 +349,25 @@ Returns
 -------
 err_flag : bool
     Set True if an error. False otherwise.
-)""");
+)"""
+  );
   py::class_<Bmad::SetEleAttribute, std::unique_ptr<Bmad::SetEleAttribute>>(
-      m, "SetEleAttribute", "set_ele_attribute return type")
+      m,
+      "SetEleAttribute",
+      "set_ele_attribute return type"
+  )
       .def_readonly("err_flag", &Bmad::SetEleAttribute::err_flag)
       .def_readonly("err_id", &Bmad::SetEleAttribute::err_id)
-      .def("__len__", [](const Bmad::SetEleAttribute&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::SetEleAttribute& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.err_id);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::SetEleAttribute &) { return 2; })
+      .def("__getitem__", [](const Bmad::SetEleAttribute &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.err_id);
+        throw py::index_error();
+      });
   m.def(
       "set_ele_attribute",
       &Bmad::set_ele_attribute,
@@ -378,7 +391,8 @@ set_lords : bool, optional
 err_id : int
     Set to an integer which identifies the error type. 0 = no error. The higher the error the further along
     the error was encountered.
-)""");
+)"""
+  );
   m.def(
       "set_ele_defaults",
       &Bmad::set_ele_defaults,
@@ -391,7 +405,8 @@ ele : EleStruct
     This parameter is an input/output and is modified in-place. As an output: Initialized element.
 do_allocate : bool, optional
     Do default allocation of element components? Default is True.
-)""");
+)"""
+  );
   m.def(
       "set_ele_name",
       &Bmad::set_ele_name,
@@ -404,7 +419,8 @@ ele : EleStruct
     This parameter is an input/output and is modified in-place. As an output: Element with name set.
 name : unknown
     Name to set.
-)""");
+)"""
+  );
   m.def(
       "set_ele_real_attribute",
       &Bmad::set_ele_real_attribute,
@@ -425,26 +441,28 @@ err_flag : bool
     Set True if there is an error, False otherwise.
 err_print_flag : bool, optional
     If present and False then suppress printing of an error message if attribute is, for example, not free.
-)""");
+)"""
+  );
   py::class_<Bmad::SetEleStatusStale, std::unique_ptr<Bmad::SetEleStatusStale>>(
-      m, "SetEleStatusStale", "set_ele_status_stale return type")
+      m,
+      "SetEleStatusStale",
+      "set_ele_status_stale return type"
+  )
       .def_readonly("ele", &Bmad::SetEleStatusStale::ele)
       .def_readonly("status_group", &Bmad::SetEleStatusStale::status_group)
       .def_readonly("set_slaves", &Bmad::SetEleStatusStale::set_slaves)
-      .def("__len__", [](const Bmad::SetEleStatusStale&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::SetEleStatusStale& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.ele);
-            if (i == 1)
-              return py::cast(s.status_group);
-            if (i == 2)
-              return py::cast(s.set_slaves);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::SetEleStatusStale &) { return 3; })
+      .def("__getitem__", [](const Bmad::SetEleStatusStale &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.ele);
+        if (i == 1)
+          return py::cast(s.status_group);
+        if (i == 2)
+          return py::cast(s.set_slaves);
+        throw py::index_error();
+      });
   m.def(
       "set_ele_status_stale",
       &Bmad::set_ele_status_stale,
@@ -457,11 +475,13 @@ status_group : int
     s_position_group$, s_and_floor_position_group$, ref_energy_group$, or mat6_group$, all_groups$
 set_slaves : bool
     If present and False then do not set the status for any slaves. Default is True.
-)""");
+)"""
+  );
   m.def(
       "set_flags_for_changed_attribute",
-      py::overload_cast<EleProxy&, int, std::optional<bool>>(
-          &Bmad::set_flags_for_changed_attribute),
+      py::overload_cast<EleStruct &, int, std::optional<bool>>(
+          &Bmad::set_flags_for_changed_attribute
+      ),
       py::arg("ele"),
       py::arg("attrib"),
       py::arg("set_dependent") = py::none(),
@@ -514,11 +534,11 @@ set_dependent : bool, optional
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "set_flags_for_changed_attribute",
-      py::overload_cast<LatProxy&, std::optional<bool>>(
-          &Bmad::set_flags_for_changed_attribute),
+      py::overload_cast<LatStruct &, std::optional<bool>>(&Bmad::set_flags_for_changed_attribute),
       py::arg("lat"),
       py::arg("set_dependent") = py::none(),
       R"""(Subroutine set_flags_for_changed_attribute (...)
@@ -570,11 +590,13 @@ set_dependent : bool, optional
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "set_flags_for_changed_attribute",
-      py::overload_cast<EleProxy&, bool, std::optional<bool>>(
-          &Bmad::set_flags_for_changed_attribute),
+      py::overload_cast<EleStruct &, bool, std::optional<bool>>(
+          &Bmad::set_flags_for_changed_attribute
+      ),
       py::arg("ele"),
       py::arg("attrib"),
       py::arg("set_dependent") = py::none(),
@@ -627,11 +649,13 @@ set_dependent : bool, optional
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "set_flags_for_changed_attribute",
-      py::overload_cast<EleProxy&, std::optional<double>, std::optional<bool>>(
-          &Bmad::set_flags_for_changed_attribute),
+      py::overload_cast<EleStruct &, std::optional<double>, std::optional<bool>>(
+          &Bmad::set_flags_for_changed_attribute
+      ),
       py::arg("ele"),
       py::arg("attrib") = py::none(),
       py::arg("set_dependent") = py::none(),
@@ -684,7 +708,8 @@ set_dependent : bool, optional
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "set_fringe_on_off",
       &Bmad::set_fringe_on_off,
@@ -700,7 +725,8 @@ ele_end : int
     Element edge: entrance_end$ or exit_end$
 on_or_off : int
     Turn on$ or off$
-)""");
+)"""
+  );
   m.def(
       "set_lords_status_stale",
       &Bmad::set_lords_status_stale,
@@ -720,7 +746,8 @@ control_bookkeeping : bool, optional
 flag : int, optional
     Do not use. For coordinating recursion. ele.lat    -- Lat_struct: Lattice with status flags of lords of
     ele set.
-)""");
+)"""
+  );
   m.def(
       "set_on_off",
       &Bmad::set_on_off,
@@ -761,7 +788,8 @@ attribute : unknown, optional
     Attribute to turn on/off. Eg: 'K2', 'MULTIPOLE_ON', etc. Default is 'IS_ON'. Must be upper case.
 set_val : int, optional
     Value to set to. Overrides normal set value.
-)""");
+)"""
+  );
   m.def(
       "set_orbit_to_zero",
       &Bmad::set_orbit_to_zero,
@@ -779,7 +807,8 @@ n2 : int
     Upper bound of orbit(:) array subset.
 ix_noset : int, optional
     If present then orbit(ix_noset) will not be zeroed.
-)""");
+)"""
+  );
   m.def(
       "set_ptc",
       &Bmad::set_ptc,
@@ -807,7 +836,8 @@ no_cavity : bool, optional
     no_cavity = .true. will turn any cavity into a drift.
 force_init : bool, optional
     If present and True then force a PTC init.
-)""");
+)"""
+  );
   m.def(
       "set_ptc_base_state",
       &Bmad::set_ptc_base_state,
@@ -822,7 +852,8 @@ set_val : bool
     Value to set to. For TOTALPATH, True => 1, False => 0.
 old_val : bool
     Old value.
-)""");
+)"""
+  );
   m.def(
       "set_ptc_com_pointers",
       &Bmad::set_ptc_com_pointers,
@@ -830,7 +861,8 @@ old_val : bool
 
 Routine to set ptc_com pointers to PTC global variables.
 
-)""");
+)"""
+  );
   m.def(
       "set_ptc_quiet",
       &Bmad::set_ptc_quiet,
@@ -853,7 +885,8 @@ set : bool
 old_val : int
     Old value needed for set = unset$.
     This parameter is an input/output and is modified in-place. As an output: Saved value for set = set$.
-)""");
+)"""
+  );
   m.def(
       "set_ptc_verbose",
       &Bmad::set_ptc_verbose,
@@ -861,7 +894,8 @@ old_val : int
       R"""(Parameters
 ----------
 on : 
-)""");
+)"""
+  );
   m.def(
       "set_pwd_ele",
       &Bmad::set_pwd_ele,
@@ -888,7 +922,8 @@ Returns
 -------
 sigma : float
     Bunch length
-)""");
+)"""
+  );
   m.def(
       "set_status_flags",
       &Bmad::set_status_flags,
@@ -898,7 +933,8 @@ sigma : float
 bookkeeping_state : BookkeepingStateStruct
 stat : int
     bookkeeping status. ok$, stale$, etc.
-)""");
+)"""
+  );
   m.def(
       "set_tune",
       &Bmad::set_tune,
@@ -931,7 +967,8 @@ orb : CoordStruct
 print_err : bool, optional
     Print error message if there is a problem? Default is True.
 ok : 
-)""");
+)"""
+  );
   m.def(
       "set_twiss",
       &Bmad::set_twiss,
@@ -955,7 +992,8 @@ err_flag : bool
     Set True if there is an error. False otherwise.
 print_err : bool, optional
     Print an error message if there is an error? Default is True.
-)""");
+)"""
+  );
   m.def(
       "set_z_tune",
       &Bmad::set_z_tune,
@@ -974,7 +1012,8 @@ ok : bool
     longitudinal tune is negative above transition.
 print_err : bool, optional
     Default is True. If False, suppress error messages
-)""");
+)"""
+  );
   m.def(
       "settable_dep_var_bookkeeping",
       &Bmad::settable_dep_var_bookkeeping,
@@ -986,7 +1025,8 @@ Subroutine to initialize dependent variables in an element.
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
 
-)""");
+)"""
+  );
   m.def(
       "setup_high_energy_space_charge_calc",
       &Bmad::setup_high_energy_space_charge_calc,
@@ -1022,7 +1062,8 @@ beam_init : BeamInitStruct, optional
     Structure holding beam info. Will be combined with info in mode.
 closed_orb : CoordStruct, optional
     Closed orbit. If not present the closed orbit is taken to be zero.
-)""");
+)"""
+  );
   m.def(
       "sigma_mat_ptc_to_bmad",
       &Bmad::sigma_mat_ptc_to_bmad,
@@ -1049,7 +1090,8 @@ Returns
 -------
 sigma_mat_bmad : float
     Bmad sigma matrix.
-)""");
+)"""
+  );
   m.def(
       "significant_difference",
       &Bmad::significant_difference,
@@ -1069,7 +1111,8 @@ abs_tol : float, optional
 rel_tol : float, optional
     Relative tolerance. Default is 0.
 is_different : 
-)""");
+)"""
+  );
   m.def(
       "skip_ele_blender",
       &Bmad::skip_ele_blender,
@@ -1079,7 +1122,8 @@ is_different :
 ----------
 ele : 
 skip : 
-)""");
+)"""
+  );
   m.def(
       "slice_lattice",
       &Bmad::slice_lattice,
@@ -1100,7 +1144,8 @@ error : bool
 do_bookkeeping : bool, optional
     Default is True. If false, the calling routine is responsible for: * Modifying lat.particle_start if
     needed. * Calculating Twiss functions.
-)""");
+)"""
+  );
   m.def(
       "soft_quadrupole_edge_kick",
       &Bmad::soft_quadrupole_edge_kick,
@@ -1133,7 +1178,8 @@ mat6 : float, optional
     added on.
 make_matrix : float, optional
     Propagate the transfer matrix? Default is False.
-)""");
+)"""
+  );
   m.def(
       "sol_quad_mat6_calc",
       &Bmad::sol_quad_mat6_calc,
@@ -1163,7 +1209,8 @@ mat6 : float, optional
     sol_quad.
 make_matrix : bool, optional
     Extend the matrix?
-)""");
+)"""
+  );
   m.def(
       "solve_psi_adaptive",
       &Bmad::solve_psi_adaptive,
@@ -1193,7 +1240,8 @@ Returns
 -------
 p1 : float
     psi(t1)
-)""");
+)"""
+  );
   m.def(
       "solve_psi_fixed_steps",
       &Bmad::solve_psi_fixed_steps,
@@ -1229,7 +1277,8 @@ t : float
     Array of times from t0 to t1
 p : float
     Array of psi evaluated at t(:)
-)""");
+)"""
+  );
   m.def(
       "sort_complex_taylor_terms",
       &Bmad::sort_complex_taylor_terms,
@@ -1255,7 +1304,8 @@ Returns
 -------
 complex_taylor_sorted : ComplexTaylorStruct
     Sorted complex_taylor series.
-)""");
+)"""
+  );
   m.def(
       "spin_dn_dpz_from_mat8",
       &Bmad::spin_dn_dpz_from_mat8,
@@ -1272,7 +1322,8 @@ dn_dpz_partial : float, optional
 error : bool
     Set True if there is an error. False otherwise.
 dn_dpz : 
-)""");
+)"""
+  );
   m.def(
       "spin_dn_dpz_from_qmap",
       &Bmad::spin_dn_dpz_from_qmap,
@@ -1299,7 +1350,8 @@ error : bool
 n0 : float
     3,0).
 dn_dpz : 
-)""");
+)"""
+  );
   m.def(
       "spin_map1_normalize",
       &Bmad::spin_map1_normalize,
@@ -1309,27 +1361,25 @@ dn_dpz :
 spin1 : float
     Unnormalized spin map.
     This parameter is an input/output and is modified in-place. As an output: Normalized spin map.
-)""");
-  py::class_<
-      Bmad::SpinMat8ResonanceStrengths,
-      std::unique_ptr<Bmad::SpinMat8ResonanceStrengths>>(
+)"""
+  );
+  py::class_<Bmad::SpinMat8ResonanceStrengths, std::unique_ptr<Bmad::SpinMat8ResonanceStrengths>>(
       m,
       "SpinMat8ResonanceStrengths",
-      "spin_mat8_resonance_strengths return type")
+      "spin_mat8_resonance_strengths return type"
+  )
       .def_readonly("xi_sum", &Bmad::SpinMat8ResonanceStrengths::xi_sum)
       .def_readonly("xi_diff", &Bmad::SpinMat8ResonanceStrengths::xi_diff)
-      .def("__len__", [](const Bmad::SpinMat8ResonanceStrengths&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::SpinMat8ResonanceStrengths& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.xi_sum);
-            if (i == 1)
-              return py::cast(s.xi_diff);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::SpinMat8ResonanceStrengths &) { return 2; })
+      .def("__getitem__", [](const Bmad::SpinMat8ResonanceStrengths &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.xi_sum);
+        if (i == 1)
+          return py::cast(s.xi_diff);
+        throw py::index_error();
+      });
   m.def(
       "spin_mat8_resonance_strengths",
       &Bmad::spin_mat8_resonance_strengths,
@@ -1345,32 +1395,34 @@ xi_sum : float
     Sum resonance strength.
 xi_diff : float
     Difference resonance strength.
-)""");
+)"""
+  );
   py::class_<Bmad::SpinMatToEigen, std::unique_ptr<Bmad::SpinMatToEigen>>(
-      m, "SpinMatToEigen", "spin_mat_to_eigen return type")
+      m,
+      "SpinMatToEigen",
+      "spin_mat_to_eigen return type"
+  )
       .def_readonly("orb_eval", &Bmad::SpinMatToEigen::orb_eval)
       .def_readonly("orb_evec", &Bmad::SpinMatToEigen::orb_evec)
       .def_readonly("n0", &Bmad::SpinMatToEigen::n0)
       .def_readonly("spin_evec", &Bmad::SpinMatToEigen::spin_evec)
       .def_readonly("error", &Bmad::SpinMatToEigen::error)
-      .def("__len__", [](const Bmad::SpinMatToEigen&) { return 5; })
-      .def(
-          "__getitem__",
-          [](const Bmad::SpinMatToEigen& s, int i) -> py::object {
-            if (i < 0)
-              i += 5;
-            if (i == 0)
-              return py::cast(s.orb_eval);
-            if (i == 1)
-              return py::cast(s.orb_evec);
-            if (i == 2)
-              return py::cast(s.n0);
-            if (i == 3)
-              return py::cast(s.spin_evec);
-            if (i == 4)
-              return py::cast(s.error);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::SpinMatToEigen &) { return 5; })
+      .def("__getitem__", [](const Bmad::SpinMatToEigen &s, int i) -> py::object {
+        if (i < 0)
+          i += 5;
+        if (i == 0)
+          return py::cast(s.orb_eval);
+        if (i == 1)
+          return py::cast(s.orb_evec);
+        if (i == 2)
+          return py::cast(s.n0);
+        if (i == 3)
+          return py::cast(s.spin_evec);
+        if (i == 4)
+          return py::cast(s.error);
+        throw py::index_error();
+      });
   m.def(
       "spin_mat_to_eigen",
       &Bmad::spin_mat_to_eigen,
@@ -1392,7 +1444,8 @@ spin_evec : complex
     Spin eigenvectors. spin_evec(j,:) is the j^th vector.
 error : bool
     Set true if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "spin_omega",
       &Bmad::spin_omega,
@@ -1408,27 +1461,25 @@ orbit :
 sign_z_vel : 
 phase_space_coords : 
 omega : 
-)""");
-  py::class_<
-      Bmad::SpinQuatResonanceStrengths,
-      std::unique_ptr<Bmad::SpinQuatResonanceStrengths>>(
+)"""
+  );
+  py::class_<Bmad::SpinQuatResonanceStrengths, std::unique_ptr<Bmad::SpinQuatResonanceStrengths>>(
       m,
       "SpinQuatResonanceStrengths",
-      "spin_quat_resonance_strengths return type")
+      "spin_quat_resonance_strengths return type"
+  )
       .def_readonly("xi_sum", &Bmad::SpinQuatResonanceStrengths::xi_sum)
       .def_readonly("xi_diff", &Bmad::SpinQuatResonanceStrengths::xi_diff)
-      .def("__len__", [](const Bmad::SpinQuatResonanceStrengths&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::SpinQuatResonanceStrengths& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.xi_sum);
-            if (i == 1)
-              return py::cast(s.xi_diff);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::SpinQuatResonanceStrengths &) { return 2; })
+      .def("__getitem__", [](const Bmad::SpinQuatResonanceStrengths &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.xi_sum);
+        if (i == 1)
+          return py::cast(s.xi_diff);
+        throw py::index_error();
+      });
   m.def(
       "spin_quat_resonance_strengths",
       &Bmad::spin_quat_resonance_strengths,
@@ -1444,7 +1495,8 @@ xi_sum : float
     Sum resonance strength.
 xi_diff : float
     Difference resonance strength.
-)""");
+)"""
+  );
   m.def(
       "spin_taylor_to_linear",
       &Bmad::spin_taylor_to_linear,
@@ -1464,7 +1516,8 @@ dref_orb : float
 is_on : bool
     Is map turned on? If not spin_map1 will be the unit map.
 spin_map1 : 
-)""");
+)"""
+  );
   m.def(
       "spinor_to_polar",
       &Bmad::spinor_to_polar,
@@ -1475,7 +1528,8 @@ spin_map1 :
 spinor : complex
     Spinor
 polar : 
-)""");
+)"""
+  );
   m.def(
       "spinor_to_vec",
       &Bmad::spinor_to_vec,
@@ -1486,7 +1540,8 @@ polar :
 spinor : complex
     Spinor Output
 vec : 
-)""");
+)"""
+  );
   m.def(
       "spline_fit_orbit",
       &Bmad::spline_fit_orbit,
@@ -1504,14 +1559,18 @@ spline_x : float
     Spline coefs for the horizontal trajectory.
 spline_y : float
     Spline coefs for vertical trajectory.
-)""");
+)"""
+  );
   py::class_<Bmad::SplitLat, std::unique_ptr<Bmad::SplitLat>>(
-      m, "SplitLat", "split_lat return type")
+      m,
+      "SplitLat",
+      "split_lat return type"
+  )
       .def_readonly("ix_split", &Bmad::SplitLat::ix_split)
       .def_readonly("split_done", &Bmad::SplitLat::split_done)
       .def_readonly("err_flag", &Bmad::SplitLat::err_flag)
-      .def("__len__", [](const Bmad::SplitLat&) { return 3; })
-      .def("__getitem__", [](const Bmad::SplitLat& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::SplitLat &) { return 3; })
+      .def("__getitem__", [](const Bmad::SplitLat &s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -1567,7 +1626,8 @@ ix_insert : int, optional
     negative length which can create an ambiguity as to where to do the split In this case ix_insert will
     remove the ambiguity. Also useful to ensure where to split if there are elements with zero length nearby.
     Ignored if negative.
-)""");
+)"""
+  );
   m.def(
       "sprint_spin_taylor_map",
       &Bmad::sprint_spin_taylor_map,
@@ -1580,7 +1640,8 @@ ele : EleStruct
     This parameter is an input/output and is modified in-place. As an output: Element with map.
 start_orbit : float, optional
     Reference orbit for the map. Default is zero orbit.
-)""");
+)"""
+  );
   m.def(
       "sr_longitudinal_wake_particle",
       &Bmad::sr_longitudinal_wake_particle,
@@ -1598,7 +1659,8 @@ ele : EleStruct
 orbit : CoordStruct
     Particle coords.
     This parameter is an input/output and is modified in-place. As an output: coords after the kick.
-)""");
+)"""
+  );
   m.def(
       "sr_transverse_wake_particle",
       &Bmad::sr_transverse_wake_particle,
@@ -1616,7 +1678,8 @@ ele : EleStruct
 orbit : CoordStruct
     Starting particle coords.
     This parameter is an input/output and is modified in-place. As an output: Ending particle coords.
-)""");
+)"""
+  );
   m.def(
       "sr_z_long_wake",
       &Bmad::sr_z_long_wake,
@@ -1640,7 +1703,8 @@ Returns
 -------
 orbit : CoordStruct
     Ending particle coords.
-)""");
+)"""
+  );
   m.def(
       "srdt_calc",
       &Bmad::srdt_calc,
@@ -1675,7 +1739,8 @@ Returns
 -------
 srdt_sums : SummationRdtStruct
     contains complex RDT strengths.
-)""");
+)"""
+  );
   m.def(
       "srdt_lsq_solution",
       &Bmad::srdt_lsq_solution,
@@ -1723,7 +1788,8 @@ Returns
 -------
 ls_soln : float
     contains K2 for the indexes in var_indexes
-)""");
+)"""
+  );
   m.def(
       "start_branch_at",
       &Bmad::start_branch_at,
@@ -1742,7 +1808,8 @@ move_end_marker : bool
     the end marker will stay at the end.
 error : bool
     Set True if there is an error Set False if not.
-)""");
+)"""
+  );
   m.def(
       "stream_ele_end",
       &Bmad::stream_ele_end,
@@ -1756,7 +1823,8 @@ physical_end : int
 ele_orientation : int
     Either 1 = Normal or -1 = element reversed.
 stream_end : 
-)""");
+)"""
+  );
   m.def(
       "string_attrib",
       &Bmad::string_attrib,
@@ -1781,28 +1849,28 @@ Returns
 -------
 attrib_value : unknown
     The string associated with the attribute.
-)""");
-  py::class_<
-      Bmad::StrongBeamSigmaCalc,
-      std::unique_ptr<Bmad::StrongBeamSigmaCalc>>(
-      m, "StrongBeamSigmaCalc", "strong_beam_sigma_calc return type")
+)"""
+  );
+  py::class_<Bmad::StrongBeamSigmaCalc, std::unique_ptr<Bmad::StrongBeamSigmaCalc>>(
+      m,
+      "StrongBeamSigmaCalc",
+      "strong_beam_sigma_calc return type"
+  )
       .def_readonly("sigma", &Bmad::StrongBeamSigmaCalc::sigma)
       .def_readonly("bbi_const", &Bmad::StrongBeamSigmaCalc::bbi_const)
       .def_readonly("dsigma_ds", &Bmad::StrongBeamSigmaCalc::dsigma_ds)
-      .def("__len__", [](const Bmad::StrongBeamSigmaCalc&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::StrongBeamSigmaCalc& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.sigma);
-            if (i == 1)
-              return py::cast(s.bbi_const);
-            if (i == 2)
-              return py::cast(s.dsigma_ds);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::StrongBeamSigmaCalc &) { return 3; })
+      .def("__getitem__", [](const Bmad::StrongBeamSigmaCalc &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.sigma);
+        if (i == 1)
+          return py::cast(s.bbi_const);
+        if (i == 2)
+          return py::cast(s.dsigma_ds);
+        throw py::index_error();
+      });
   m.def(
       "strong_beam_sigma_calc",
       &Bmad::strong_beam_sigma_calc,
@@ -1820,7 +1888,8 @@ bbi_const : float
     BBI kick scale factor.
 dsigma_ds : float
     sig_x and sig_y longitudinal derivatives.
-)""");
+)"""
+  );
   m.def(
       "strong_beam_strength",
       &Bmad::strong_beam_strength,
@@ -1831,7 +1900,8 @@ dsigma_ds : float
 ele : EleStruct
     Beambeam element.
 strength : 
-)""");
+)"""
+  );
   m.def(
       "surface_grid_displacement",
       &Bmad::surface_grid_displacement,
@@ -1858,7 +1928,8 @@ z : float
     surface height at (x, y).
 dz_dxy : float, optional
     Surface slope at (x, y).
-)""");
+)"""
+  );
   m.def(
       "symp_lie_bmad",
       &Bmad::symp_lie_bmad,
@@ -1890,5 +1961,6 @@ make_matrix : bool
     If True then make the 6x6 transfer matrix.
 offset_ele : bool, optional
     Offset the element using ele.value(x_offset$), etc. Default is True.
-)""");
+)"""
+  );
 }

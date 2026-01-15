@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_bsim_routines_h(py::module& m) {
+void init_bsim_routines_h(py::module &m) {
   m.def(
       "hom_voltage",
       &bsim::hom_voltage,
@@ -14,5 +14,6 @@ void init_bsim_routines_h(py::module& m) {
 ----------
 lr_wake : 
 voltage : 
-)""");
+)"""
+  );
 }

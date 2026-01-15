@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_i(py::module& m) {
+void init_SimUtils_routines_i(py::module &m) {
   m.def(
       "i_bessel",
       &SimUtils::i_bessel,
@@ -16,7 +16,8 @@ void init_SimUtils_routines_i(py::module& m) {
 m : 
 arg : 
 i_bes : 
-)""");
+)"""
+  );
   m.def(
       "i_bessel_extended",
       &SimUtils::i_bessel_extended,
@@ -28,7 +29,8 @@ i_bes :
 m : 
 arg : 
 i_bes : 
-)""");
+)"""
+  );
   m.def(
       "increment_file_number",
       &SimUtils::increment_file_number,
@@ -42,7 +44,8 @@ file_name :
 digits : 
 number : 
 cnumber : 
-)""");
+)"""
+  );
   m.def(
       "index_nocase",
       &SimUtils::index_nocase,
@@ -54,7 +57,8 @@ cnumber :
 string1 : 
 string2 : 
 indx : 
-)""");
+)"""
+  );
   m.def(
       "initfixedwindowls",
       &SimUtils::initfixedwindowls,
@@ -79,7 +83,8 @@ order : int
 der : int
     Order of derivative to be returned. Set der=0 to obtain the fit. <return value>  -- INTEGER: id of
     windowLS instance created.
-)""");
+)"""
+  );
   m.def(
       "int_str",
       &SimUtils::int_str,
@@ -91,7 +96,8 @@ der : int
 int : 
 width : 
 str : 
-)""");
+)"""
+  );
   m.def(
       "interpolated_fft",
       &SimUtils::interpolated_fft,
@@ -110,7 +116,8 @@ available.
 Returns
 -------
 this_fft
-)""");
+)"""
+  );
   m.def(
       "interpolated_fft_gsl",
       &SimUtils::interpolated_fft_gsl,
@@ -125,7 +132,8 @@ Windows the complex data and uses a mixed-radix GSL routine to find the peak in 
 The result is interpolated to improve the accuracy.  Hanning and Gaussian windowing are
 available.
 
-)""");
+)"""
+  );
   m.def(
       "is_alphabetic",
       &SimUtils::is_alphabetic,
@@ -144,7 +152,8 @@ end function
 Returns
 -------
 prob
-)""");
+)"""
+  );
   m.def(
       "is_decreasing_sequence",
       &SimUtils::is_decreasing_sequence,
@@ -158,7 +167,8 @@ array : float
 strict : bool, optional
     If True (default) sequence must be strictly decreasing.
 is_decreasing : 
-)""");
+)"""
+  );
   m.def(
       "is_false",
       &SimUtils::is_false,
@@ -189,7 +199,8 @@ Notes
 Related routines:
 is_true int_logic ) which is a real array. Some of the elements in the %value array are used to specify
 boolian attributes. For example quadrupoles use ele%value(scale_multipoles$).
-)""");
+)"""
+  );
   m.def(
       "is_increasing_sequence",
       &SimUtils::is_increasing_sequence,
@@ -203,7 +214,8 @@ array : float
 strict : bool, optional
     If True (default) sequence must be strictly increasing.
 is_increasing : 
-)""");
+)"""
+  );
   m.def(
       "is_integer",
       &SimUtils::is_integer,
@@ -219,7 +231,8 @@ int :
 delims : 
 ix_word : 
 valid : 
-)""");
+)"""
+  );
   m.def(
       "is_logical",
       &SimUtils::is_logical,
@@ -231,7 +244,8 @@ valid :
 string : 
 ignore : 
 valid : 
-)""");
+)"""
+  );
   m.def(
       "is_real",
       &SimUtils::is_real,
@@ -245,7 +259,8 @@ string :
 ignore : 
 real_num : 
 valid : 
-)""");
+)"""
+  );
   m.def(
       "is_subatomic_species",
       &SimUtils::is_subatomic_species,
@@ -263,7 +278,8 @@ Returns
 -------
 is_subatomic : bool
     Set True if species corresponds to a subatomic particle.
-)""");
+)"""
+  );
   m.def(
       "is_true",
       &SimUtils::is_true,
@@ -294,5 +310,6 @@ Notes
 Related routines:
 is_false int_logic ) which is a real array. Some of the elements in the %value array are used to specify
 boolian attributes. For example quadrupoles use ele%value(scale_multipoles$).
-)""");
+)"""
+  );
 }

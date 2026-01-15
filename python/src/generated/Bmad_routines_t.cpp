@@ -4,15 +4,18 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_t(py::module& m) {
+void init_Bmad_routines_t(py::module &m) {
   py::class_<Bmad::T6ToB123, std::unique_ptr<Bmad::T6ToB123>>(
-      m, "T6ToB123", "t6_to_b123 return type")
+      m,
+      "T6ToB123",
+      "t6_to_b123 return type"
+  )
       .def_readonly("B1", &Bmad::T6ToB123::B1)
       .def_readonly("B2", &Bmad::T6ToB123::B2)
       .def_readonly("B3", &Bmad::T6ToB123::B3)
       .def_readonly("err_flag", &Bmad::T6ToB123::err_flag)
-      .def("__len__", [](const Bmad::T6ToB123&) { return 4; })
-      .def("__getitem__", [](const Bmad::T6ToB123& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::T6ToB123 &) { return 4; })
+      .def("__getitem__", [](const Bmad::T6ToB123 &s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -54,7 +57,8 @@ B3 : float
     Beta matrix associated with c-mode.
 err_flag : bool
     Set True if there is an error. False otherwise
-)""");
+)"""
+  );
   m.def(
       "taper_mag_strengths",
       &Bmad::taper_mag_strengths,
@@ -73,7 +77,8 @@ ref_lat : LatStruct, optional
 except : unknown, optional
     List of elements not to vary.
 err_flag : 
-)""");
+)"""
+  );
   m.def(
       "target_min_max_calc",
       &Bmad::target_min_max_calc,
@@ -100,22 +105,25 @@ r_corner2 : float
 initial : bool, optional
     If present and True then this is the first edge for computation. y_min, y_max     -- real(rp): min/max
     values. phi_min, phi_max -- real(rp): min/max values.
-)""");
+)"""
+  );
   py::class_<Bmad::TargetRotMats, std::unique_ptr<Bmad::TargetRotMats>>(
-      m, "TargetRotMats", "target_rot_mats return type")
+      m,
+      "TargetRotMats",
+      "target_rot_mats return type"
+  )
       .def_readonly("w_to_target", &Bmad::TargetRotMats::w_to_target)
       .def_readonly("w_to_ele", &Bmad::TargetRotMats::w_to_ele)
-      .def("__len__", [](const Bmad::TargetRotMats&) { return 2; })
-      .def(
-          "__getitem__", [](const Bmad::TargetRotMats& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.w_to_target);
-            if (i == 1)
-              return py::cast(s.w_to_ele);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::TargetRotMats &) { return 2; })
+      .def("__getitem__", [](const Bmad::TargetRotMats &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.w_to_target);
+        if (i == 1)
+          return py::cast(s.w_to_ele);
+        throw py::index_error();
+      });
   m.def(
       "target_rot_mats",
       &Bmad::target_rot_mats,
@@ -136,7 +144,8 @@ w_to_target : float
     Rotation matrix from ele to target coords.
 w_to_ele : float
     Rotation matrix from target to ele coords.
-)""");
+)"""
+  );
   m.def(
       "taylor_equal_taylor",
       &Bmad::taylor_equal_taylor,
@@ -146,7 +155,8 @@ w_to_ele : float
 ----------
 taylor1 : 
 taylor2 : 
-)""");
+)"""
+  );
   m.def(
       "taylor_inverse",
       &Bmad::taylor_inverse,
@@ -167,7 +177,8 @@ taylor_inv : TaylorStruct
     Inverted taylor map.
 err : bool
     Set True if there is no inverse. If not present then print an error message.
-)""");
+)"""
+  );
   m.def(
       "taylor_propagate1",
       &Bmad::taylor_propagate1,
@@ -204,7 +215,8 @@ Returns
 -------
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "taylor_to_mad_map",
       &Bmad::taylor_to_mad_map,
@@ -226,7 +238,8 @@ Returns
 -------
 map : MadMapStruct
     Order 2 map.
-)""");
+)"""
+  );
   m.def(
       "taylors_equal_taylors",
       &Bmad::taylors_equal_taylors,
@@ -236,7 +249,8 @@ map : MadMapStruct
 ----------
 taylor1 : 
 taylor2 : 
-)""");
+)"""
+  );
   m.def(
       "tilt_coords",
       &Bmad::tilt_coords,
@@ -258,7 +272,8 @@ mat6 : float, optional
     after tilt applied.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "tilt_coords_photon",
       &Bmad::tilt_coords_photon,
@@ -276,7 +291,8 @@ coord : float
 w_mat : float, optional
     Rotation matrix before tilt.
     This parameter is an input/output and is modified in-place. As an output: Rotation matrix after tilt.
-)""");
+)"""
+  );
   m.def(
       "tilt_mat6",
       &Bmad::tilt_mat6,
@@ -289,13 +305,17 @@ mat6 : float
     This parameter is an input/output and is modified in-place. As an output: Tilted matrix.
 tilt : float
     Tilt angle.
-)""");
+)"""
+  );
   py::class_<Bmad::ToEtaReading, std::unique_ptr<Bmad::ToEtaReading>>(
-      m, "ToEtaReading", "to_eta_reading return type")
+      m,
+      "ToEtaReading",
+      "to_eta_reading return type"
+  )
       .def_readonly("reading", &Bmad::ToEtaReading::reading)
       .def_readonly("err", &Bmad::ToEtaReading::err)
-      .def("__len__", [](const Bmad::ToEtaReading&) { return 2; })
-      .def("__getitem__", [](const Bmad::ToEtaReading& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::ToEtaReading &) { return 2; })
+      .def("__getitem__", [](const Bmad::ToEtaReading &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -339,7 +359,8 @@ reading : float
     BPM reading
 err : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "to_fieldmap_coords",
       &Bmad::to_fieldmap_coords,
@@ -378,23 +399,25 @@ curved_ref_frame : bool
     rotation angle.
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   py::class_<Bmad::ToOrbitReading, std::unique_ptr<Bmad::ToOrbitReading>>(
-      m, "ToOrbitReading", "to_orbit_reading return type")
+      m,
+      "ToOrbitReading",
+      "to_orbit_reading return type"
+  )
       .def_readonly("reading", &Bmad::ToOrbitReading::reading)
       .def_readonly("err", &Bmad::ToOrbitReading::err)
-      .def("__len__", [](const Bmad::ToOrbitReading&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ToOrbitReading& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.reading);
-            if (i == 1)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ToOrbitReading &) { return 2; })
+      .def("__getitem__", [](const Bmad::ToOrbitReading &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.reading);
+        if (i == 1)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "to_orbit_reading",
       &Bmad::to_orbit_reading,
@@ -429,27 +452,25 @@ reading : float
     BPM reading
 err : bool
     Set True if there is no valid reading. For example, if ele.is_on = False.
-)""");
-  py::class_<
-      Bmad::ToPhaseAndCouplingReading,
-      std::unique_ptr<Bmad::ToPhaseAndCouplingReading>>(
+)"""
+  );
+  py::class_<Bmad::ToPhaseAndCouplingReading, std::unique_ptr<Bmad::ToPhaseAndCouplingReading>>(
       m,
       "ToPhaseAndCouplingReading",
-      "to_phase_and_coupling_reading return type")
+      "to_phase_and_coupling_reading return type"
+  )
       .def_readonly("reading", &Bmad::ToPhaseAndCouplingReading::reading)
       .def_readonly("err", &Bmad::ToPhaseAndCouplingReading::err)
-      .def("__len__", [](const Bmad::ToPhaseAndCouplingReading&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ToPhaseAndCouplingReading& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.reading);
-            if (i == 1)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ToPhaseAndCouplingReading &) { return 2; })
+      .def("__getitem__", [](const Bmad::ToPhaseAndCouplingReading &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.reading);
+        if (i == 1)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "to_phase_and_coupling_reading",
       &Bmad::to_phase_and_coupling_reading,
@@ -477,7 +498,8 @@ reading : BpmPhaseCouplingStruct
     K and Cbar coupling parameters
 err : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "to_photon_angle_coords",
       &Bmad::to_photon_angle_coords,
@@ -499,7 +521,8 @@ Returns
 -------
 orb_out : CoordStruct
     Transformed coordinates.
-)""");
+)"""
+  );
   m.def(
       "to_surface_coords",
       &Bmad::to_surface_coords,
@@ -514,7 +537,8 @@ ele : EleStruct
 surface_orbit : CoordStruct
     Photon position in element body coordinates. .state      -- Set to lost$ if orbit outside of surface (can
     happen with sperical surface).
-)""");
+)"""
+  );
   m.def(
       "touschek_lifetime",
       &Bmad::touschek_lifetime,
@@ -553,7 +577,8 @@ Returns
 -------
 Tl : float
     Touschek lifetime in seconds
-)""");
+)"""
+  );
   m.def(
       "touschek_rate1",
       &Bmad::touschek_rate1,
@@ -614,7 +639,8 @@ Returns
 -------
 rate : float
     Touschek rate, in units particle per second, assuming two particles per event.
-)""");
+)"""
+  );
   m.def(
       "touschek_rate1_zap",
       &Bmad::touschek_rate1_zap,
@@ -630,13 +656,13 @@ rate :
 lat : 
 ix : 
 s : 
-)""");
-  py::class_<Bmad::Track1, std::unique_ptr<Bmad::Track1>>(
-      m, "Track1", "track1 return type")
+)"""
+  );
+  py::class_<Bmad::Track1, std::unique_ptr<Bmad::Track1>>(m, "Track1", "track1 return type")
       .def_readonly("end_orb", &Bmad::Track1::end_orb)
       .def_readonly("err_flag", &Bmad::Track1::err_flag)
-      .def("__len__", [](const Bmad::Track1&) { return 2; })
-      .def("__getitem__", [](const Bmad::Track1& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::Track1 &) { return 2; })
+      .def("__getitem__", [](const Bmad::Track1 &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -681,7 +707,8 @@ make_map1 : bool, optional
 init_to_edge : bool, optional
     Default is True. If True then force the tracked particle to begin at the element's edge. See above. Do not
     use this argument unless you know what you are doing.
-)""");
+)"""
+  );
   m.def(
       "track1_beam",
       &Bmad::track1_beam,
@@ -710,13 +737,17 @@ Returns
 -------
 err : bool
     Set true if there is an error. EG: Too many particles lost for a CSR calc.
-)""");
+)"""
+  );
   py::class_<Bmad::Track1Bmad, std::unique_ptr<Bmad::Track1Bmad>>(
-      m, "Track1Bmad", "track1_bmad return type")
+      m,
+      "Track1Bmad",
+      "track1_bmad return type"
+  )
       .def_readonly("err_flag", &Bmad::Track1Bmad::err_flag)
       .def_readonly("track", &Bmad::Track1Bmad::track)
-      .def("__len__", [](const Bmad::Track1Bmad&) { return 2; })
-      .def("__getitem__", [](const Bmad::Track1Bmad& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::Track1Bmad &) { return 2; })
+      .def("__getitem__", [](const Bmad::Track1Bmad &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -753,7 +784,8 @@ mat6 : float, optional
     through the element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "track1_bmad_photon",
       &Bmad::track1_bmad_photon,
@@ -770,7 +802,8 @@ ele : EleStruct
 param : LatParamStruct
 err_flag : bool
     Set true if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "track1_bunch",
       &Bmad::track1_bunch,
@@ -804,7 +837,8 @@ Returns
 -------
 err : bool
     Set true if there is an error. EG: Too many particles lost for a CSR calc.
-)""");
+)"""
+  );
   m.def(
       "track1_bunch_csr",
       &Bmad::track1_bunch_csr,
@@ -841,7 +875,8 @@ Returns
 -------
 err : bool
     Set true if there is an error. EG: Too many particles lost.
-)""");
+)"""
+  );
   m.def(
       "track1_bunch_csr3d",
       &Bmad::track1_bunch_csr3d,
@@ -882,7 +917,8 @@ Returns
 -------
 err : bool
     Set true if there is an error. EG: Too many particles lost.
-)""");
+)"""
+  );
   m.def(
       "track1_bunch_hom",
       &Bmad::track1_bunch_hom,
@@ -907,7 +943,8 @@ bunch_track : BunchTrackStruct, optional
     Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
     This parameter is an input/output and is modified in-place. As an output: Track information appended to
     track.
-)""");
+)"""
+  );
   m.def(
       "track1_bunch_space_charge",
       &Bmad::track1_bunch_space_charge,
@@ -930,7 +967,8 @@ bunch_track : BunchTrackStruct, optional
     Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
     This parameter is an input/output and is modified in-place. As an output: track information if the
     tracking method does
-)""");
+)"""
+  );
   m.def(
       "track1_crystal",
       &Bmad::track1_crystal,
@@ -950,7 +988,8 @@ param : LatParamStruct
 orbit : CoordStruct
     phase-space coords to be transformed
     This parameter is an input/output and is modified in-place. As an output: final phase-space coords
-)""");
+)"""
+  );
   m.def(
       "track1_diffraction_plate_or_mask",
       &Bmad::track1_diffraction_plate_or_mask,
@@ -970,7 +1009,8 @@ param : LatParamStruct
 orbit : CoordStruct
     phase-space coords to be transformed
     This parameter is an input/output and is modified in-place. As an output: final phase-space coords
-)""");
+)"""
+  );
   m.def(
       "track1_high_energy_space_charge",
       &Bmad::track1_high_energy_space_charge,
@@ -992,7 +1032,8 @@ orbit : CoordStruct
 ele : EleStruct
     Element tracked through.
 param : LatParamStruct
-)""");
+)"""
+  );
   m.def(
       "track1_lens",
       &Bmad::track1_lens,
@@ -1012,7 +1053,8 @@ param : LatParamStruct
 orbit : CoordStruct
     phase-space coords to be transformed
     This parameter is an input/output and is modified in-place. As an output: final phase-space coords
-)""");
+)"""
+  );
   m.def(
       "track1_linear",
       &Bmad::track1_linear,
@@ -1027,7 +1069,8 @@ orbit : CoordStruct
 ele : EleStruct
     Element
 param : LatParamStruct
-)""");
+)"""
+  );
   m.def(
       "track1_lr_wake",
       &Bmad::track1_lr_wake,
@@ -1046,7 +1089,8 @@ ele : EleStruct
 bunch : BunchStruct
     Bunch to track.
     This parameter is an input/output and is modified in-place. As an output: Kicked bunch.
-)""");
+)"""
+  );
   m.def(
       "track1_mad",
       &Bmad::track1_mad,
@@ -1067,7 +1111,8 @@ ele : EleStruct
     Element to track through.
 param : LatParamStruct
     Lattice parameters.
-)""");
+)"""
+  );
   m.def(
       "track1_mirror",
       &Bmad::track1_mirror,
@@ -1087,7 +1132,8 @@ param : LatParamStruct
 orbit : CoordStruct
     phase-space coords to be transformed
     This parameter is an input/output and is modified in-place. As an output: final phase-space coords
-)""");
+)"""
+  );
   m.def(
       "track1_mosaic_crystal",
       &Bmad::track1_mosaic_crystal,
@@ -1107,7 +1153,8 @@ param : LatParamStruct
 orbit : CoordStruct
     phase-space coords to be transformed
     This parameter is an input/output and is modified in-place. As an output: final phase-space coords
-)""");
+)"""
+  );
   m.def(
       "track1_multilayer_mirror",
       &Bmad::track1_multilayer_mirror,
@@ -1128,7 +1175,8 @@ param : LatParamStruct
 orbit : CoordStruct
     phase-space coords to be transformed
     This parameter is an input/output and is modified in-place. As an output: final phase-space coords
-)""");
+)"""
+  );
   m.def(
       "track1_radiation",
       &Bmad::track1_radiation,
@@ -1156,7 +1204,8 @@ ele : EleStruct
     Element generating radiation.
 edge : int
     Where the particle is: start_edge$ or end_edge$.
-)""");
+)"""
+  );
   m.def(
       "track1_radiation_center",
       &Bmad::track1_radiation_center,
@@ -1191,23 +1240,25 @@ Notes
 -----
 Related routines:
 track1_radiation.
-)""");
+)"""
+  );
   py::class_<Bmad::Track1RungeKutta, std::unique_ptr<Bmad::Track1RungeKutta>>(
-      m, "Track1RungeKutta", "track1_runge_kutta return type")
+      m,
+      "Track1RungeKutta",
+      "track1_runge_kutta return type"
+  )
       .def_readonly("err_flag", &Bmad::Track1RungeKutta::err_flag)
       .def_readonly("track", &Bmad::Track1RungeKutta::track)
-      .def("__len__", [](const Bmad::Track1RungeKutta&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::Track1RungeKutta& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.track);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::Track1RungeKutta &) { return 2; })
+      .def("__getitem__", [](const Bmad::Track1RungeKutta &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.track);
+        throw py::index_error();
+      });
   m.def(
       "track1_runge_kutta",
       &Bmad::track1_runge_kutta,
@@ -1235,7 +1286,8 @@ mat6 : float, optional
     through the element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "track1_sample",
       &Bmad::track1_sample,
@@ -1255,13 +1307,17 @@ param : LatParamStruct
 orbit : CoordStruct
     phase-space coords to be transformed
     This parameter is an input/output and is modified in-place. As an output: final phase-space coords
-)""");
+)"""
+  );
   py::class_<Bmad::Track1Spin, std::unique_ptr<Bmad::Track1Spin>>(
-      m, "Track1Spin", "track1_spin return type")
+      m,
+      "Track1Spin",
+      "track1_spin return type"
+  )
       .def_readonly("ele", &Bmad::Track1Spin::ele)
       .def_readonly("end_orb", &Bmad::Track1Spin::end_orb)
-      .def("__len__", [](const Bmad::Track1Spin&) { return 2; })
-      .def("__getitem__", [](const Bmad::Track1Spin& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::Track1Spin &) { return 2; })
+      .def("__getitem__", [](const Bmad::Track1Spin &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -1285,7 +1341,8 @@ param :
 end_orb : CoordStruct
     Ending coords. .spin(2)           -- complex(rp): Ending spin
 make_quaternion : 
-)""");
+)"""
+  );
   m.def(
       "track1_spin_integration",
       &Bmad::track1_spin_integration,
@@ -1299,7 +1356,8 @@ ele :
 param : 
 end_orb : CoordStruct
     .spin(3)       -- Ending spin
-)""");
+)"""
+  );
   m.def(
       "track1_spin_taylor",
       &Bmad::track1_spin_taylor,
@@ -1313,7 +1371,8 @@ ele :
 param : 
 end_orb : CoordStruct
     .spin(3)   -- Ending spin
-)""");
+)"""
+  );
   m.def(
       "track1_sr_wake",
       &Bmad::track1_sr_wake,
@@ -1331,7 +1390,8 @@ bunch : BunchStruct
     the particles.
 ele : EleStruct
     Element with wakefields.
-)""");
+)"""
+  );
   m.def(
       "track1_symp_lie_ptc",
       &Bmad::track1_symp_lie_ptc,
@@ -1348,7 +1408,8 @@ ele : EleStruct
 param : LatParamStruct
 track : TrackStruct
     Structure holding the track information.
-)""");
+)"""
+  );
   m.def(
       "track1_taylor",
       &Bmad::track1_taylor,
@@ -1369,25 +1430,25 @@ mat6 : float
     Transfer matrix through the element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
-  py::class_<
-      Bmad::Track1TimeRungeKutta,
-      std::unique_ptr<Bmad::Track1TimeRungeKutta>>(
-      m, "Track1TimeRungeKutta", "track1_time_runge_kutta return type")
+)"""
+  );
+  py::class_<Bmad::Track1TimeRungeKutta, std::unique_ptr<Bmad::Track1TimeRungeKutta>>(
+      m,
+      "Track1TimeRungeKutta",
+      "track1_time_runge_kutta return type"
+  )
       .def_readonly("err_flag", &Bmad::Track1TimeRungeKutta::err_flag)
       .def_readonly("track", &Bmad::Track1TimeRungeKutta::track)
-      .def("__len__", [](const Bmad::Track1TimeRungeKutta&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::Track1TimeRungeKutta& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.track);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::Track1TimeRungeKutta &) { return 2; })
+      .def("__getitem__", [](const Bmad::Track1TimeRungeKutta &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.track);
+        throw py::index_error();
+      });
   m.def(
       "track1_time_runge_kutta",
       &Bmad::track1_time_runge_kutta,
@@ -1420,23 +1481,25 @@ dt_step : float, optional
     track_bunch_time.
     This parameter is an input/output and is modified in-place. As an output: Next RK time step that this
     tracker would take based on the error tolerance.
-)""");
+)"""
+  );
   py::class_<Bmad::TrackABeambeam, std::unique_ptr<Bmad::TrackABeambeam>>(
-      m, "TrackABeambeam", "track_a_beambeam return type")
+      m,
+      "TrackABeambeam",
+      "track_a_beambeam return type"
+  )
       .def_readonly("track", &Bmad::TrackABeambeam::track)
       .def_readonly("mat6", &Bmad::TrackABeambeam::mat6)
-      .def("__len__", [](const Bmad::TrackABeambeam&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::TrackABeambeam& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.track);
-            if (i == 1)
-              return py::cast(s.mat6);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::TrackABeambeam &) { return 2; })
+      .def("__getitem__", [](const Bmad::TrackABeambeam &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.track);
+        if (i == 1)
+          return py::cast(s.mat6);
+        throw py::index_error();
+      });
   m.def(
       "track_a_beambeam",
       &Bmad::track_a_beambeam,
@@ -1460,7 +1523,8 @@ mat6 : float
     Transfer matrix through the element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "track_a_bend",
       &Bmad::track_a_bend,
@@ -1484,7 +1548,8 @@ mat6 : float, optional
     end.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "track_a_bend_photon",
       &Bmad::track_a_bend_photon,
@@ -1506,7 +1571,8 @@ ele : EleStruct
     Bend element.
 length : float
     length to track.
-)""");
+)"""
+  );
   m.def(
       "track_a_capillary",
       &Bmad::track_a_capillary,
@@ -1523,7 +1589,8 @@ orb : CoordStruct
     This parameter is an input/output and is modified in-place. As an output: Output photon coordinates.
 ele : EleStruct
     Capillary element
-)""");
+)"""
+  );
   m.def(
       "track_a_converter",
       &Bmad::track_a_converter,
@@ -1544,7 +1611,8 @@ mat6 : float
     Transfer matrix through the element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is False.
-)""");
+)"""
+  );
   m.def(
       "track_a_crab_cavity",
       &Bmad::track_a_crab_cavity,
@@ -1565,7 +1633,8 @@ mat6 : float
     Transfer matrix through the element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "track_a_drift",
       &Bmad::track_a_drift,
@@ -1598,7 +1667,8 @@ include_ref_motion : bool, optional
 time : float, optional
     Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
     This parameter is an input/output and is modified in-place. As an output: Updated time.
-)""");
+)"""
+  );
   m.def(
       "track_a_drift_photon",
       &Bmad::track_a_drift_photon,
@@ -1615,7 +1685,8 @@ length : float
 phase_relative_to_ref : bool
     If true then E field phase shift is relative to ref particle. -- logical: If true then E field phase shift
     is relative to ref particle.
-)""");
+)"""
+  );
   m.def(
       "track_a_foil",
       &Bmad::track_a_foil,
@@ -1636,7 +1707,8 @@ mat6 : float
     Transfer matrix through the element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is False.
-)""");
+)"""
+  );
   m.def(
       "track_a_gkicker",
       &Bmad::track_a_gkicker,
@@ -1660,7 +1732,8 @@ mat6 : float, optional
     element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "track_a_lcavity",
       &Bmad::track_a_lcavity,
@@ -1684,7 +1757,8 @@ mat6 : float, optional
     element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "track_a_lcavity_old",
       &Bmad::track_a_lcavity_old,
@@ -1708,7 +1782,8 @@ mat6 : float, optional
     element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "track_a_mask",
       &Bmad::track_a_mask,
@@ -1729,7 +1804,8 @@ mat6 : float
     Transfer matrix through the element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "track_a_match",
       &Bmad::track_a_match,
@@ -1752,14 +1828,18 @@ mat6 : float
     Transfer matrix through the element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   py::class_<Bmad::TrackAPatch, std::unique_ptr<Bmad::TrackAPatch>>(
-      m, "TrackAPatch", "track_a_patch return type")
+      m,
+      "TrackAPatch",
+      "track_a_patch return type"
+  )
       .def_readonly("s_ent", &Bmad::TrackAPatch::s_ent)
       .def_readonly("ds_ref", &Bmad::TrackAPatch::ds_ref)
       .def_readonly("mat6", &Bmad::TrackAPatch::mat6)
-      .def("__len__", [](const Bmad::TrackAPatch&) { return 3; })
-      .def("__getitem__", [](const Bmad::TrackAPatch& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::TrackAPatch &) { return 3; })
+      .def("__getitem__", [](const Bmad::TrackAPatch &s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -1801,7 +1881,8 @@ mat6 : float
     Transfer matrix through the element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "track_a_patch_photon",
       &Bmad::track_a_patch_photon,
@@ -1829,7 +1910,8 @@ drift_to_exit : bool, optional
 use_z_pos : unknown, optional
     If present and True, use orbit.vec(5) as the true z-position relative to the start of the element instead
     of assuming that the particle is at the patch edge.
-)""");
+)"""
+  );
   m.def(
       "track_a_pickup",
       &Bmad::track_a_pickup,
@@ -1852,7 +1934,8 @@ mat6 : float
     Transfer matrix through the element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "track_a_quadrupole",
       &Bmad::track_a_quadrupole,
@@ -1873,7 +1956,8 @@ mat6 : float
     Transfer matrix through the element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "track_a_rfcavity",
       &Bmad::track_a_rfcavity,
@@ -1894,7 +1978,8 @@ mat6 : float
     Transfer matrix through the element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "track_a_sad_mult",
       &Bmad::track_a_sad_mult,
@@ -1917,7 +2002,8 @@ mat6 : float, optional
     This parameter is an input/output and is modified in-place. As an output: Transfer matrix.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "track_a_sol_quad",
       &Bmad::track_a_sol_quad,
@@ -1938,7 +2024,8 @@ mat6 : float
     Transfer matrix through the element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "track_a_thick_multipole",
       &Bmad::track_a_thick_multipole,
@@ -1962,7 +2049,8 @@ mat6 : float, optional
     element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "track_a_wiggler",
       &Bmad::track_a_wiggler,
@@ -1983,25 +2071,25 @@ mat6 : float
     Transfer matrix through the element.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
-  py::class_<
-      Bmad::TrackAZeroLengthElement,
-      std::unique_ptr<Bmad::TrackAZeroLengthElement>>(
-      m, "TrackAZeroLengthElement", "track_a_zero_length_element return type")
+)"""
+  );
+  py::class_<Bmad::TrackAZeroLengthElement, std::unique_ptr<Bmad::TrackAZeroLengthElement>>(
+      m,
+      "TrackAZeroLengthElement",
+      "track_a_zero_length_element return type"
+  )
       .def_readonly("err_flag", &Bmad::TrackAZeroLengthElement::err_flag)
       .def_readonly("track", &Bmad::TrackAZeroLengthElement::track)
-      .def("__len__", [](const Bmad::TrackAZeroLengthElement&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::TrackAZeroLengthElement& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.track);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::TrackAZeroLengthElement &) { return 2; })
+      .def("__getitem__", [](const Bmad::TrackAZeroLengthElement &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.track);
+        throw py::index_error();
+      });
   m.def(
       "track_a_zero_length_element",
       &Bmad::track_a_zero_length_element,
@@ -2021,13 +2109,17 @@ err_flag : bool
     Set True if there is an error. False otherwise.
 track : TrackStruct
     Structure holding the track information.
-)""");
+)"""
+  );
   py::class_<Bmad::TrackAll, std::unique_ptr<Bmad::TrackAll>>(
-      m, "TrackAll", "track_all return type")
+      m,
+      "TrackAll",
+      "track_all return type"
+  )
       .def_readonly("track_state", &Bmad::TrackAll::track_state)
       .def_readonly("err_flag", &Bmad::TrackAll::err_flag)
-      .def("__len__", [](const Bmad::TrackAll&) { return 2; })
-      .def("__getitem__", [](const Bmad::TrackAll& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::TrackAll &) { return 2; })
+      .def("__getitem__", [](const Bmad::TrackAll &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -2062,7 +2154,8 @@ orbit0 : CoordStruct
     the orbit for branch 0.
 init_lost : bool
     Default if False. If True, initialize orbit(N) terms that are not tracked through due to particle loss.
-)""");
+)"""
+  );
   m.def(
       "track_beam",
       &Bmad::track_beam,
@@ -2105,7 +2198,8 @@ Returns
 -------
 err : bool
     Set true if there is an error. EG: Too many particles lost for a CSR calc.
-)""");
+)"""
+  );
   m.def(
       "track_bunch",
       &Bmad::track_bunch,
@@ -2150,7 +2244,8 @@ Returns
 -------
 err : bool
     Set true if there is an error. EG: Too many particles lost for a CSR calc.
-)""");
+)"""
+  );
   m.def(
       "track_bunch_time",
       &Bmad::track_bunch_time,
@@ -2178,7 +2273,8 @@ dt_step : float, optional
     tracker would take based on the error tolerance.
 extra_field : EmFieldStruct, optional
     Per particle static field to be added to the lattice element field. Eg used with space charge.
-)""");
+)"""
+  );
   m.def(
       "track_bunch_to_s",
       &Bmad::track_bunch_to_s,
@@ -2199,7 +2295,8 @@ s : float
     Target coordinate.
 branch : BranchStruct
     Branch being tracked through.
-)""");
+)"""
+  );
   m.def(
       "track_bunch_to_t",
       &Bmad::track_bunch_to_t,
@@ -2220,7 +2317,8 @@ t_target : float
     Target t coordinate.
 branch : BranchStruct
     Lattice branch being tracked through.
-)""");
+)"""
+  );
   m.def(
       "track_complex_taylor",
       &Bmad::track_complex_taylor,
@@ -2242,22 +2340,25 @@ Returns
 -------
 end_orb : complex
     Ending coords.
-)""");
+)"""
+  );
   py::class_<Bmad::TrackFromSToS, std::unique_ptr<Bmad::TrackFromSToS>>(
-      m, "TrackFromSToS", "track_from_s_to_s return type")
+      m,
+      "TrackFromSToS",
+      "track_from_s_to_s return type"
+  )
       .def_readonly("orbit_end", &Bmad::TrackFromSToS::orbit_end)
       .def_readonly("track_state", &Bmad::TrackFromSToS::track_state)
-      .def("__len__", [](const Bmad::TrackFromSToS&) { return 2; })
-      .def(
-          "__getitem__", [](const Bmad::TrackFromSToS& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.orbit_end);
-            if (i == 1)
-              return py::cast(s.track_state);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::TrackFromSToS &) { return 2; })
+      .def("__getitem__", [](const Bmad::TrackFromSToS &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.orbit_end);
+        if (i == 1)
+          return py::cast(s.track_state);
+        throw py::index_error();
+      });
   m.def(
       "track_from_s_to_s",
       &Bmad::track_from_s_to_s,
@@ -2289,7 +2390,8 @@ track_state : int
     Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
 ix_ele_end : int, optional
     If present, ignore s_end and track to in between ix_ele_end and ix_ele_end+1
-)""");
+)"""
+  );
   m.def(
       "track_many",
       &Bmad::track_many,
@@ -2316,7 +2418,8 @@ ix_branch : int, optional
     Branch to track. Default is 0 (main lattice).
 track_state : int
     Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
-)""");
+)"""
+  );
   m.def(
       "track_to_surface",
       &Bmad::track_to_surface,
@@ -2335,23 +2438,25 @@ param : LatParamStruct
     Branch parameters.
 w_surface : 
     real(rp), rotation matrix to transform to surface coords.
-)""");
+)"""
+  );
   py::class_<Bmad::TrackUntilDead, std::unique_ptr<Bmad::TrackUntilDead>>(
-      m, "TrackUntilDead", "track_until_dead return type")
+      m,
+      "TrackUntilDead",
+      "track_until_dead return type"
+  )
       .def_readonly("end_orb", &Bmad::TrackUntilDead::end_orb)
       .def_readonly("track", &Bmad::TrackUntilDead::track)
-      .def("__len__", [](const Bmad::TrackUntilDead&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::TrackUntilDead& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.end_orb);
-            if (i == 1)
-              return py::cast(s.track);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::TrackUntilDead &) { return 2; })
+      .def("__getitem__", [](const Bmad::TrackUntilDead &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.end_orb);
+        if (i == 1)
+          return py::cast(s.track);
+        throw py::index_error();
+      });
   m.def(
       "track_until_dead",
       &Bmad::track_until_dead,
@@ -2377,25 +2482,25 @@ end_orb : CoordStruct
     final coords
 track : TrackStruct
     (optional)
-)""");
-  py::class_<
-      Bmad::TrackingRadMapSetup,
-      std::unique_ptr<Bmad::TrackingRadMapSetup>>(
-      m, "TrackingRadMapSetup", "tracking_rad_map_setup return type")
+)"""
+  );
+  py::class_<Bmad::TrackingRadMapSetup, std::unique_ptr<Bmad::TrackingRadMapSetup>>(
+      m,
+      "TrackingRadMapSetup",
+      "tracking_rad_map_setup return type"
+  )
       .def_readonly("rad_map", &Bmad::TrackingRadMapSetup::rad_map)
       .def_readonly("err_flag", &Bmad::TrackingRadMapSetup::err_flag)
-      .def("__len__", [](const Bmad::TrackingRadMapSetup&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::TrackingRadMapSetup& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.rad_map);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::TrackingRadMapSetup &) { return 2; })
+      .def("__getitem__", [](const Bmad::TrackingRadMapSetup &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.rad_map);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "tracking_rad_map_setup",
       &Bmad::tracking_rad_map_setup,
@@ -2414,7 +2519,8 @@ rad_map : RadMapStruct
     Structure holding the matrices.
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "transfer_ac_kick",
       &Bmad::transfer_ac_kick,
@@ -2425,7 +2531,8 @@ ac_in : AcKickerStruct
     Input
 ac_out : AcKickerStruct
     Gets set equal to ac_in
-)""");
+)"""
+  );
   m.def(
       "transfer_branch",
       &Bmad::transfer_branch,
@@ -2434,7 +2541,8 @@ ac_out : AcKickerStruct
 ----------
 branch1 : BranchStruct
 branch2 : BranchStruct
-)""");
+)"""
+  );
   m.def(
       "transfer_branch_parameters",
       &Bmad::transfer_branch_parameters,
@@ -2445,7 +2553,8 @@ branch_in : BranchStruct
     Input branch.
 branch_out : BranchStruct
     Output branch with parameters set.
-)""");
+)"""
+  );
   m.def(
       "transfer_branches",
       &Bmad::transfer_branches,
@@ -2455,7 +2564,8 @@ branch_out : BranchStruct
 ----------
 branch1 : BranchStruct
 branch2 : BranchStruct
-)""");
+)"""
+  );
   m.def(
       "transfer_ele",
       &Bmad::transfer_ele,
@@ -2469,7 +2579,8 @@ nullify_pointers : bool, optional
     If present and True then nullify the pointers in ele2 except for the ele2.lat and ele2.lord pointers. This
     gives a "bare bones" copy where one does not have to worry about deallocating allocated structure
     components later.
-)""");
+)"""
+  );
   m.def(
       "transfer_ele_taylor",
       &Bmad::transfer_ele_taylor,
@@ -2483,7 +2594,8 @@ ele_out : EleStruct
     Element receiving the Taylor map truncated to order taylor_order.
 taylor_order : int, optional
     Order to truncate the Taylor map at.
-)""");
+)"""
+  );
   m.def(
       "transfer_eles",
       &Bmad::transfer_eles,
@@ -2493,7 +2605,8 @@ taylor_order : int, optional
 ----------
 ele1 : EleStruct
 ele2 : EleStruct
-)""");
+)"""
+  );
   m.def(
       "transfer_fieldmap",
       &Bmad::transfer_fieldmap,
@@ -2507,7 +2620,8 @@ ele_out : EleStruct
     Output element.
 who : int
     Possibilities are: all$, cartesian_map$, cylindrical_map$, or grid_field$
-)""");
+)"""
+  );
   m.def(
       "transfer_fixer_params",
       &Bmad::transfer_fixer_params,
@@ -2537,7 +2651,8 @@ Returns
 -------
 is_ok : 
     logical
-)""");
+)"""
+  );
   m.def(
       "transfer_lat",
       &Bmad::transfer_lat,
@@ -2546,7 +2661,8 @@ is_ok :
 ----------
 lat1 : LatStruct
 lat2 : LatStruct
-)""");
+)"""
+  );
   m.def(
       "transfer_lat_parameters",
       &Bmad::transfer_lat_parameters,
@@ -2557,7 +2673,8 @@ lat_in : LatStruct
     Input lat.
 lat_out : LatStruct
     Output lat with parameters set.
-)""");
+)"""
+  );
   m.def(
       "transfer_map_calc",
       &Bmad::transfer_map_calc,
@@ -2601,25 +2718,25 @@ concat_if_possible : bool, optional
 spin_map : TaylorStruct, optional
     Input quaternion spin map. Output only computed if bmad_com.spin_tracking_on = T
     This parameter is an input/output and is modified in-place. As an output: Quaternion spin map.
-)""");
-  py::class_<
-      Bmad::TransferMapFromSToS,
-      std::unique_ptr<Bmad::TransferMapFromSToS>>(
-      m, "TransferMapFromSToS", "transfer_map_from_s_to_s return type")
+)"""
+  );
+  py::class_<Bmad::TransferMapFromSToS, std::unique_ptr<Bmad::TransferMapFromSToS>>(
+      m,
+      "TransferMapFromSToS",
+      "transfer_map_from_s_to_s return type"
+  )
       .def_readonly("ref_orb_out", &Bmad::TransferMapFromSToS::ref_orb_out)
       .def_readonly("err_flag", &Bmad::TransferMapFromSToS::err_flag)
-      .def("__len__", [](const Bmad::TransferMapFromSToS&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::TransferMapFromSToS& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.ref_orb_out);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::TransferMapFromSToS &) { return 2; })
+      .def("__getitem__", [](const Bmad::TransferMapFromSToS &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.ref_orb_out);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "transfer_map_from_s_to_s",
       &Bmad::transfer_map_from_s_to_s,
@@ -2683,7 +2800,8 @@ ref_orb_out : CoordStruct
     Ending coordinates of the reference orbit. This is also the actual orbit of particle
 err_flag : bool
     Set true if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "transfer_mat2_from_twiss",
       &Bmad::transfer_mat2_from_twiss,
@@ -2699,7 +2817,8 @@ twiss2 : TwissStruct
     at final point.
 mat : float
     Transfer matrix between the two points.
-)""");
+)"""
+  );
   m.def(
       "transfer_mat_from_twiss",
       &Bmad::transfer_mat_from_twiss,
@@ -2722,7 +2841,8 @@ orb2 : float
     Reference orbit at ele2 (affects m(i,6) dispersion terms).
 m : float
     Transfer matrix between the two points.
-)""");
+)"""
+  );
   m.def(
       "transfer_matrix_calc",
       &Bmad::transfer_matrix_calc,
@@ -2749,7 +2869,8 @@ ix_branch : int, optional
 one_turn : bool, optional
     If present and True, and ix1 = ix2, and the lattice is closed: Construct the one-turn matrix from ix1 back
     to ix1. If False, (the default), and ix1 = ix2, mat6 is the unit matrix.
-)""");
+)"""
+  );
   m.def(
       "transfer_twiss",
       &Bmad::transfer_twiss,
@@ -2763,7 +2884,8 @@ ele_out : EleStruct
     Element receiving the Twiss parameters.
 reverse : bool, optional
     Reverse alpha and coupling as if particle is going in the reversed direction? Default is False.
-)""");
+)"""
+  );
   m.def(
       "transfer_wake",
       &Bmad::transfer_wake,
@@ -2774,7 +2896,8 @@ wake_in : WakeStruct
     Input wake.
 wake_out : WakeStruct
     Output wake.
-)""");
+)"""
+  );
   m.def(
       "truncate_complex_taylor_to_order",
       &Bmad::truncate_complex_taylor_to_order,
@@ -2796,23 +2919,25 @@ Returns
 -------
 complex_taylor_out : ComplexTaylorStruct
     Truncated complex_taylor map.
-)""");
+)"""
+  );
   py::class_<Bmad::Twiss1Propagate, std::unique_ptr<Bmad::Twiss1Propagate>>(
-      m, "Twiss1Propagate", "twiss1_propagate return type")
+      m,
+      "Twiss1Propagate",
+      "twiss1_propagate return type"
+  )
       .def_readonly("twiss2", &Bmad::Twiss1Propagate::twiss2)
       .def_readonly("err", &Bmad::Twiss1Propagate::err)
-      .def("__len__", [](const Bmad::Twiss1Propagate&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::Twiss1Propagate& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.twiss2);
-            if (i == 1)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::Twiss1Propagate &) { return 2; })
+      .def("__getitem__", [](const Bmad::Twiss1Propagate &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.twiss2);
+        if (i == 1)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "twiss1_propagate",
       &Bmad::twiss1_propagate,
@@ -2834,7 +2959,8 @@ twiss2 : TwissStruct
     Output Twiss parameters.
 err : bool
     Set True if there is an error, false otherwise.
-)""");
+)"""
+  );
   m.def(
       "twiss3_at_start",
       &Bmad::twiss3_at_start,
@@ -2861,7 +2987,8 @@ error : bool
     Set True if there is no RF. False otherwise.
 tune3 : float
     Normal mode tunes
-)""");
+)"""
+  );
   m.def(
       "twiss3_from_twiss2",
       &Bmad::twiss3_from_twiss2,
@@ -2882,7 +3009,8 @@ Notes
 -----
 Related routines:
 twiss3_at_start
-)""");
+)"""
+  );
   m.def(
       "twiss3_propagate1",
       &Bmad::twiss3_propagate1,
@@ -2894,7 +3022,8 @@ twiss3_at_start
 Subroutine to propagate the twiss parameters using all three normal modes.
 Subroutine from original mode3_mod.
 
-)""");
+)"""
+  );
   m.def(
       "twiss3_propagate_all",
       &Bmad::twiss3_propagate_all,
@@ -2911,12 +3040,13 @@ lat : LatStruct
     Lattice
 ix_branch : int, optional
     : Branch index. 0 = default.
-)""");
+)"""
+  );
   m.def(
       "twiss_and_track",
       py::overload_cast<
-          LatProxy&,
-          CoordArrayProxyAlloc1D&,
+          LatStruct &,
+          CoordArrayStructAlloc1D,
           std::optional<bool>,
           std::optional<bool>>(&Bmad::twiss_and_track),
       py::arg("lat"),
@@ -2986,7 +3116,8 @@ Returns
 -------
 status : int
     Set ok$ if everything is OK and set to something else otherwise. See above for more details.
-)""");
+)"""
+  );
   m.def(
       "twiss_and_track_at_s",
       &Bmad::twiss_and_track_at_s,
@@ -3048,16 +3179,17 @@ Returns
 -------
 err : bool
     Set True if there is a problem in the calculation, False otherwise.
-)""");
+)"""
+  );
   m.def(
       "twiss_and_track",
       py::overload_cast<
-          LatProxy&,
-          CoordProxyAlloc1D&,
+          LatStruct &,
+          CoordStructAlloc1D,
           std::optional<int>,
           std::optional<bool>,
           std::optional<bool>,
-          optional_ref<CoordProxy>>(&Bmad::twiss_and_track),
+          optional_ref<CoordStruct>>(&Bmad::twiss_and_track),
       py::arg("lat"),
       py::arg("orb"),
       py::arg("ix_branch") = py::none(),
@@ -3127,28 +3259,28 @@ Returns
 -------
 status : int
     Set ok$ if everything is OK and set to something else otherwise. See above for more details.
-)""");
-  py::class_<
-      Bmad::TwissAndTrackFromSToS,
-      std::unique_ptr<Bmad::TwissAndTrackFromSToS>>(
-      m, "TwissAndTrackFromSToS", "twiss_and_track_from_s_to_s return type")
+)"""
+  );
+  py::class_<Bmad::TwissAndTrackFromSToS, std::unique_ptr<Bmad::TwissAndTrackFromSToS>>(
+      m,
+      "TwissAndTrackFromSToS",
+      "twiss_and_track_from_s_to_s return type"
+  )
       .def_readonly("orbit_end", &Bmad::TwissAndTrackFromSToS::orbit_end)
       .def_readonly("ele_end", &Bmad::TwissAndTrackFromSToS::ele_end)
       .def_readonly("err", &Bmad::TwissAndTrackFromSToS::err)
-      .def("__len__", [](const Bmad::TwissAndTrackFromSToS&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::TwissAndTrackFromSToS& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.orbit_end);
-            if (i == 1)
-              return py::cast(s.ele_end);
-            if (i == 2)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::TwissAndTrackFromSToS &) { return 3; })
+      .def("__getitem__", [](const Bmad::TwissAndTrackFromSToS &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.orbit_end);
+        if (i == 1)
+          return py::cast(s.ele_end);
+        if (i == 2)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "twiss_and_track_from_s_to_s",
       &Bmad::twiss_and_track_from_s_to_s,
@@ -3180,25 +3312,25 @@ compute_floor_coords : bool, optional
     If present and True then the global "floor" coordinates will be calculated and put in ele_end.floor.
 compute_twiss : bool, optional
     Default True. If False, to save a little time, do not compute Twiss parameters.
-)""");
-  py::class_<
-      Bmad::TwissAndTrackIntraEle,
-      std::unique_ptr<Bmad::TwissAndTrackIntraEle>>(
-      m, "TwissAndTrackIntraEle", "twiss_and_track_intra_ele return type")
+)"""
+  );
+  py::class_<Bmad::TwissAndTrackIntraEle, std::unique_ptr<Bmad::TwissAndTrackIntraEle>>(
+      m,
+      "TwissAndTrackIntraEle",
+      "twiss_and_track_intra_ele return type"
+  )
       .def_readonly("orbit_end", &Bmad::TwissAndTrackIntraEle::orbit_end)
       .def_readonly("err", &Bmad::TwissAndTrackIntraEle::err)
-      .def("__len__", [](const Bmad::TwissAndTrackIntraEle&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::TwissAndTrackIntraEle& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.orbit_end);
-            if (i == 1)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::TwissAndTrackIntraEle &) { return 2; })
+      .def("__getitem__", [](const Bmad::TwissAndTrackIntraEle &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.orbit_end);
+        if (i == 1)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "twiss_and_track_intra_ele",
       &Bmad::twiss_and_track_intra_ele,
@@ -3251,26 +3383,28 @@ compute_twiss : bool, optional
 reuse_ele_end : bool, optional
     If present and True, and if ele_end has the correct lonigitudianal length and key type, reuse ele_end from
     trancking instead of recomputing ele_end from scratch. This can save time.
-)""");
+)"""
+  );
   py::class_<Bmad::TwissAtElement, std::unique_ptr<Bmad::TwissAtElement>>(
-      m, "TwissAtElement", "twiss_at_element return type")
+      m,
+      "TwissAtElement",
+      "twiss_at_element return type"
+  )
       .def_readonly("start", &Bmad::TwissAtElement::start)
       .def_readonly("end", &Bmad::TwissAtElement::end)
       .def_readonly("average", &Bmad::TwissAtElement::average)
-      .def("__len__", [](const Bmad::TwissAtElement&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::TwissAtElement& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.start);
-            if (i == 1)
-              return py::cast(s.end);
-            if (i == 2)
-              return py::cast(s.average);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::TwissAtElement &) { return 3; })
+      .def("__getitem__", [](const Bmad::TwissAtElement &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.start);
+        if (i == 1)
+          return py::cast(s.end);
+        if (i == 2)
+          return py::cast(s.average);
+        throw py::index_error();
+      });
   m.def(
       "twiss_at_element",
       &Bmad::twiss_at_element,
@@ -3286,7 +3420,8 @@ end : EleStruct
 average : EleStruct
     Average Twiss and s of element. .value(l$) -- "Effective" length which for groups and overlays are
     weighted by the control coefficient.
-)""");
+)"""
+  );
   m.def(
       "twiss_at_start",
       &Bmad::twiss_at_start,
@@ -3305,23 +3440,25 @@ ix_branch : int, optional
     Branch to use. Default is 0 (main branch).
 type_out : bool, optional
     If True (the default), print an error message If the 1-turn matrix is unstable.
-)""");
+)"""
+  );
   py::class_<Bmad::TwissFromTracking, std::unique_ptr<Bmad::TwissFromTracking>>(
-      m, "TwissFromTracking", "twiss_from_tracking return type")
+      m,
+      "TwissFromTracking",
+      "twiss_from_tracking return type"
+  )
       .def_readonly("symp_err", &Bmad::TwissFromTracking::symp_err)
       .def_readonly("err_flag", &Bmad::TwissFromTracking::err_flag)
-      .def("__len__", [](const Bmad::TwissFromTracking&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::TwissFromTracking& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.symp_err);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::TwissFromTracking &) { return 2; })
+      .def("__getitem__", [](const Bmad::TwissFromTracking &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.symp_err);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "twiss_from_tracking",
       &Bmad::twiss_from_tracking,
@@ -3343,7 +3480,8 @@ err_flag : bool
     Set True if there is an error. False otherwise.
 d_orb : float, optional
     Vector of offsets to use. If not present or zero bmad_com.d_orb(:) will be used.
-)""");
+)"""
+  );
   m.def(
       "twiss_propagate1",
       &Bmad::twiss_propagate1,
@@ -3366,7 +3504,8 @@ err_flag : bool
     Set True if there is an error. False otherwise.
 forward : bool, optional
     Default is True. If false, propagate the Twiss backwards.
-)""");
+)"""
+  );
   m.def(
       "twiss_propagate_all",
       &Bmad::twiss_propagate_all,
@@ -3389,7 +3528,8 @@ ie_start : int, optional
     is ie_start+1.
 ie_end : int, optional
     Ending element index, Default is branch.n_ele_track.
-)""");
+)"""
+  );
   m.def(
       "twiss_to_1_turn_mat",
       &Bmad::twiss_to_1_turn_mat,
@@ -3403,7 +3543,8 @@ phi : float
     Tune in radians.
 mat2 : float
     1-turn matrix.
-)""");
+)"""
+  );
   m.def(
       "type_coord",
       &Bmad::type_coord,
@@ -3412,7 +3553,8 @@ mat2 : float
 ----------
 coord : CoordStruct
     Coordinate
-)""");
+)"""
+  );
   m.def(
       "type_expression_tree",
       &Bmad::type_expression_tree,
@@ -3429,7 +3571,8 @@ tree : ExpressionTreeStruct
     Tree to print.
 indent : int, optional
     Initial indent. Default is zero.
-)""");
+)"""
+  );
   m.def(
       "type_ptc_layout",
       &Bmad::type_ptc_layout,
@@ -3438,5 +3581,6 @@ indent : int, optional
 
 Subroutine to print the global information in a layout
 
-)""");
+)"""
+  );
 }

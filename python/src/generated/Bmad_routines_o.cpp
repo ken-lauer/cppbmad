@@ -4,13 +4,16 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_o(py::module& m) {
+void init_Bmad_routines_o(py::module &m) {
   py::class_<Bmad::OdeintBmad, std::unique_ptr<Bmad::OdeintBmad>>(
-      m, "OdeintBmad", "odeint_bmad return type")
+      m,
+      "OdeintBmad",
+      "odeint_bmad return type"
+  )
       .def_readonly("err_flag", &Bmad::OdeintBmad::err_flag)
       .def_readonly("track", &Bmad::OdeintBmad::track)
-      .def("__len__", [](const Bmad::OdeintBmad&) { return 2; })
-      .def("__getitem__", [](const Bmad::OdeintBmad& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::OdeintBmad &) { return 2; })
+      .def("__getitem__", [](const Bmad::OdeintBmad &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -69,23 +72,25 @@ err_flag : bool
     aperture, is *not* an error.
 track : TrackStruct
     Structure holding the track information.
-)""");
+)"""
+  );
   py::class_<Bmad::OdeintBmadTime, std::unique_ptr<Bmad::OdeintBmadTime>>(
-      m, "OdeintBmadTime", "odeint_bmad_time return type")
+      m,
+      "OdeintBmadTime",
+      "odeint_bmad_time return type"
+  )
       .def_readonly("err_flag", &Bmad::OdeintBmadTime::err_flag)
       .def_readonly("dt_step", &Bmad::OdeintBmadTime::dt_step)
-      .def("__len__", [](const Bmad::OdeintBmadTime&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::OdeintBmadTime& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.dt_step);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::OdeintBmadTime &) { return 2; })
+      .def("__getitem__", [](const Bmad::OdeintBmadTime &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.dt_step);
+        throw py::index_error();
+      });
   m.def(
       "odeint_bmad_time",
       &Bmad::odeint_bmad_time,
@@ -135,23 +140,25 @@ err_flag : bool
     Set True if there is an error. False otherwise.
 dt_step : float
     Next RK time step that this tracker would take based on the error tolerance. Used by track_bunch_time.
-)""");
+)"""
+  );
   py::class_<Bmad::OffsetParticle, std::unique_ptr<Bmad::OffsetParticle>>(
-      m, "OffsetParticle", "offset_particle return type")
+      m,
+      "OffsetParticle",
+      "offset_particle return type"
+  )
       .def_readonly("s_out", &Bmad::OffsetParticle::s_out)
       .def_readonly("spin_qrot", &Bmad::OffsetParticle::spin_qrot)
-      .def("__len__", [](const Bmad::OffsetParticle&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::OffsetParticle& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.s_out);
-            if (i == 1)
-              return py::cast(s.spin_qrot);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::OffsetParticle &) { return 2; })
+      .def("__getitem__", [](const Bmad::OffsetParticle &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.s_out);
+        if (i == 1)
+          return py::cast(s.spin_qrot);
+        throw py::index_error();
+      });
   m.def(
       "offset_particle",
       &Bmad::offset_particle,
@@ -204,7 +211,8 @@ spin_qrot : float
 time : float, optional
     Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
     This parameter is an input/output and is modified in-place. As an output: Updated time.
-)""");
+)"""
+  );
   m.def(
       "offset_photon",
       &Bmad::offset_photon,
@@ -228,7 +236,8 @@ offset_position_only : bool, optional
     offset the position coordinates.
 rot_mat : float, optional
     Rotation matrix from starting coords to ending coords.
-)""");
+)"""
+  );
   m.def(
       "one_turn_mat_at_ele",
       &Bmad::one_turn_mat_at_ele,
@@ -246,26 +255,28 @@ phi_b : float
     "b" mode tune in radians.
 mat4 : float
     1-Turn coupled matrix.
-)""");
+)"""
+  );
   py::class_<Bmad::OpenBinaryFile, std::unique_ptr<Bmad::OpenBinaryFile>>(
-      m, "OpenBinaryFile", "open_binary_file return type")
+      m,
+      "OpenBinaryFile",
+      "open_binary_file return type"
+  )
       .def_readonly("iu", &Bmad::OpenBinaryFile::iu)
       .def_readonly("iver", &Bmad::OpenBinaryFile::iver)
       .def_readonly("is_ok", &Bmad::OpenBinaryFile::is_ok)
-      .def("__len__", [](const Bmad::OpenBinaryFile&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::OpenBinaryFile& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.iu);
-            if (i == 1)
-              return py::cast(s.iver);
-            if (i == 2)
-              return py::cast(s.is_ok);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::OpenBinaryFile &) { return 3; })
+      .def("__getitem__", [](const Bmad::OpenBinaryFile &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.iu);
+        if (i == 1)
+          return py::cast(s.iver);
+        if (i == 2)
+          return py::cast(s.is_ok);
+        throw py::index_error();
+      });
   m.def(
       "open_binary_file",
       &Bmad::open_binary_file,
@@ -293,31 +304,31 @@ iver : int
     Version number if action = 'READ'
 is_ok : bool
     Open OK?
-)""");
-  py::class_<
-      Bmad::OrbitAmplitudeCalc,
-      std::unique_ptr<Bmad::OrbitAmplitudeCalc>>(
-      m, "OrbitAmplitudeCalc", "orbit_amplitude_calc return type")
+)"""
+  );
+  py::class_<Bmad::OrbitAmplitudeCalc, std::unique_ptr<Bmad::OrbitAmplitudeCalc>>(
+      m,
+      "OrbitAmplitudeCalc",
+      "orbit_amplitude_calc return type"
+  )
       .def_readonly("amp_a", &Bmad::OrbitAmplitudeCalc::amp_a)
       .def_readonly("amp_b", &Bmad::OrbitAmplitudeCalc::amp_b)
       .def_readonly("amp_na", &Bmad::OrbitAmplitudeCalc::amp_na)
       .def_readonly("amp_nb", &Bmad::OrbitAmplitudeCalc::amp_nb)
-      .def("__len__", [](const Bmad::OrbitAmplitudeCalc&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const Bmad::OrbitAmplitudeCalc& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.amp_a);
-            if (i == 1)
-              return py::cast(s.amp_b);
-            if (i == 2)
-              return py::cast(s.amp_na);
-            if (i == 3)
-              return py::cast(s.amp_nb);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::OrbitAmplitudeCalc &) { return 4; })
+      .def("__getitem__", [](const Bmad::OrbitAmplitudeCalc &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.amp_a);
+        if (i == 1)
+          return py::cast(s.amp_b);
+        if (i == 2)
+          return py::cast(s.amp_na);
+        if (i == 3)
+          return py::cast(s.amp_nb);
+        throw py::index_error();
+      });
   m.def(
       "orbit_amplitude_calc",
       &Bmad::orbit_amplitude_calc,
@@ -337,7 +348,8 @@ amp_na : float
     a-mode, energy normalized, amplitude.
 amp_nb : float
     b-mode, energy normalized, amplitude.
-)""");
+)"""
+  );
   m.def(
       "orbit_reference_energy_correction",
       &Bmad::orbit_reference_energy_correction,
@@ -357,7 +369,8 @@ mat6 : float, optional
     including correction.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "orbit_to_floor_phase_space",
       &Bmad::orbit_to_floor_phase_space,
@@ -371,7 +384,8 @@ orbit : CoordStruct
 ele : EleStruct
     Lattice element particle is in.
 floor_phase_space : 
-)""");
+)"""
+  );
   m.def(
       "orbit_to_local_curvilinear",
       &Bmad::orbit_to_local_curvilinear,
@@ -392,7 +406,8 @@ z_direction : int, optional
 relative_to : int, optional
     not_set$ (default), upstream_end$, downstream_end$. If not_set$ then origin is at the entrance end.
 local_position : 
-)""");
+)"""
+  );
   m.def(
       "orbit_too_large",
       &Bmad::orbit_too_large,
@@ -408,25 +423,25 @@ param : LatParamStruct
 check_momentum : bool, optional
     If True (default) check the momentum.
 is_too_large : 
-)""");
-  py::class_<
-      Bmad::OrderEvecsByNSimilarity,
-      std::unique_ptr<Bmad::OrderEvecsByNSimilarity>>(
-      m, "OrderEvecsByNSimilarity", "order_evecs_by_n_similarity return type")
+)"""
+  );
+  py::class_<Bmad::OrderEvecsByNSimilarity, std::unique_ptr<Bmad::OrderEvecsByNSimilarity>>(
+      m,
+      "OrderEvecsByNSimilarity",
+      "order_evecs_by_n_similarity return type"
+  )
       .def_readonly("evec", &Bmad::OrderEvecsByNSimilarity::evec)
       .def_readonly("err_flag", &Bmad::OrderEvecsByNSimilarity::err_flag)
-      .def("__len__", [](const Bmad::OrderEvecsByNSimilarity&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::OrderEvecsByNSimilarity& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.evec);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::OrderEvecsByNSimilarity &) { return 2; })
+      .def("__getitem__", [](const Bmad::OrderEvecsByNSimilarity &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.evec);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "order_evecs_by_n_similarity",
       &Bmad::order_evecs_by_n_similarity,
@@ -457,7 +472,8 @@ evec : complex
     complex eigenvectors arranged down columns.
 err_flag : bool
     Set True if there is an error. False otherwise
-)""");
+)"""
+  );
   m.def(
       "order_evecs_by_plane_dominance",
       &Bmad::order_evecs_by_plane_dominance,
@@ -483,7 +499,8 @@ evec : complex
 mat_tunes : float, optional
     Three normal mode tunes, in radians.
     This parameter is an input/output and is modified in-place. As an output: Reordered same as evecs.
-)""");
+)"""
+  );
   m.def(
       "order_evecs_by_tune",
       &Bmad::order_evecs_by_tune,
@@ -513,7 +530,8 @@ Returns
 -------
 err_flag : bool
     Set to true if an error occured.
-)""");
+)"""
+  );
   m.def(
       "order_particles_in_z",
       &Bmad::order_particles_in_z,
@@ -528,7 +546,8 @@ Parameters
 ----------
 bunch : BunchStruct
     collection of particles. .particle(j).vec(5) -- Longitudinal position of j^th particle.
-)""");
+)"""
+  );
   m.def(
       "order_super_lord_slaves",
       &Bmad::order_super_lord_slaves,
@@ -540,7 +559,8 @@ lat : LatStruct
     Lat with fixed controls.
 ix_lord : int
     Index of lord element. Output
-)""");
+)"""
+  );
   m.def(
       "osc_alloc_freespace_array",
       &Bmad::osc_alloc_freespace_array,
@@ -552,7 +572,8 @@ ix_lord : int
 nlo : 
 nhi : 
 npad : 
-)""");
+)"""
+  );
   m.def(
       "osc_alloc_image_array",
       &Bmad::osc_alloc_image_array,
@@ -564,7 +585,8 @@ npad :
 nlo : 
 nhi : 
 npad : 
-)""");
+)"""
+  );
   m.def(
       "osc_alloc_rectpipe_arrays",
       &Bmad::osc_alloc_rectpipe_arrays,
@@ -576,7 +598,8 @@ npad :
 nlo : 
 nhi : 
 npad : 
-)""");
+)"""
+  );
   m.def(
       "osc_getgrnpipe",
       &Bmad::osc_getgrnpipe,
@@ -594,7 +617,8 @@ b :
 delta : 
 umin : 
 npad : 
-)""");
+)"""
+  );
   m.def("osc_read_rectpipe_grn", &Bmad::osc_read_rectpipe_grn, R"""()""");
   m.def(
       "osc_write_rectpipe_grn",
@@ -617,5 +641,6 @@ umax :
 nlo : 
 nhi : 
 gamma : 
-)""");
+)"""
+  );
 }

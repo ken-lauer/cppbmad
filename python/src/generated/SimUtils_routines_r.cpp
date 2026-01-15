@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_r(py::module& m) {
+void init_SimUtils_routines_r(py::module &m) {
   m.def(
       "ran_default_state",
       &SimUtils::ran_default_state,
@@ -23,7 +23,8 @@ Returns
 -------
 get_state : RandomStateStruct
     Returns the state of the default generator.
-)""");
+)"""
+  );
   m.def(
       "ran_engine",
       &SimUtils::ran_engine,
@@ -45,26 +46,25 @@ get : unknown, optional
     Get the current (before any set) random number engine.
 ran_state : RandomStateStruct, optional
     Internal state. See the ran_seed_put documentation for more details.
-)""");
-  py::class_<
-      SimUtils::RanGaussConverter,
-      std::unique_ptr<SimUtils::RanGaussConverter>>(
-      m, "RanGaussConverter", "ran_gauss_converter return type")
+)"""
+  );
+  py::class_<SimUtils::RanGaussConverter, std::unique_ptr<SimUtils::RanGaussConverter>>(
+      m,
+      "RanGaussConverter",
+      "ran_gauss_converter return type"
+  )
       .def_readonly("get", &SimUtils::RanGaussConverter::get)
-      .def_readonly(
-          "get_sigma_cut", &SimUtils::RanGaussConverter::get_sigma_cut)
-      .def("__len__", [](const SimUtils::RanGaussConverter&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::RanGaussConverter& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.get);
-            if (i == 1)
-              return py::cast(s.get_sigma_cut);
-            throw py::index_error();
-          });
+      .def_readonly("get_sigma_cut", &SimUtils::RanGaussConverter::get_sigma_cut)
+      .def("__len__", [](const SimUtils::RanGaussConverter &) { return 2; })
+      .def("__getitem__", [](const SimUtils::RanGaussConverter &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.get);
+        if (i == 1)
+          return py::cast(s.get_sigma_cut);
+        throw py::index_error();
+      });
   m.def(
       "ran_gauss_converter",
       &SimUtils::ran_gauss_converter,
@@ -106,7 +106,8 @@ get : unknown
     Get the current (before any set) gaussian converter.
 get_sigma_cut : float
     Get the current (before any set) sigma cutoff.
-)""");
+)"""
+  );
   m.def(
       "ran_gauss_scalar",
       &SimUtils::ran_gauss_scalar,
@@ -142,7 +143,8 @@ harvest : float
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "ran_gauss_vector",
       &SimUtils::ran_gauss_vector,
@@ -178,7 +180,8 @@ harvest : float
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "ran_seed_get",
       &SimUtils::ran_seed_get,
@@ -195,7 +198,8 @@ Returns
 -------
 seed : int
     Random number seed used.
-)""");
+)"""
+  );
   m.def(
       "ran_seed_put",
       &SimUtils::ran_seed_put,
@@ -219,11 +223,13 @@ seed : int
 mpi_offset : int, optional
     Offset added to seed. Default is zero. Used with MPI processes ensure different threads use different
     random numbers.
-)""");
+)"""
+  );
   m.def(
       "ran_uniform",
-      py::overload_cast<optional_ref<RandomStateProxy>, std::optional<int>>(
-          &SimUtils::ran_uniform),
+      py::overload_cast<optional_ref<RandomStateStruct>, std::optional<int>>(
+          &SimUtils::ran_uniform
+      ),
       py::arg("ran_state") = py::none(),
       py::arg("index_quasi") = py::none(),
       R"""(Subroutine ran_uniform (harvest, ran_state)
@@ -254,11 +260,11 @@ harvest : float
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "ran_uniform",
-      py::overload_cast<FArray1D<Real>&, optional_ref<RandomStateProxy>>(
-          &SimUtils::ran_uniform),
+      py::overload_cast<FArray1D<Real> &, optional_ref<RandomStateStruct>>(&SimUtils::ran_uniform),
       py::arg("harvest"),
       py::arg("ran_state") = py::none(),
       R"""(Subroutine ran_uniform (harvest, ran_state)
@@ -289,7 +295,8 @@ harvest : float
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "real_num_fortran_format",
       &SimUtils::real_num_fortran_format,
@@ -303,7 +310,8 @@ number :
 width : 
 n_blanks : 
 fmt_str : 
-)""");
+)"""
+  );
   m.def(
       "real_path",
       &SimUtils::real_path,
@@ -315,7 +323,8 @@ fmt_str :
 path_in : 
 path_out : 
 is_ok : 
-)""");
+)"""
+  );
   m.def(
       "real_str",
       &SimUtils::real_str,
@@ -329,7 +338,8 @@ r_num :
 n_signif : 
 n_decimal : 
 str : 
-)""");
+)"""
+  );
   m.def(
       "real_to_string",
       &SimUtils::real_to_string,
@@ -345,7 +355,8 @@ width :
 n_signif : 
 n_decimal : 
 str : 
-)""");
+)"""
+  );
   m.def(
       "reallocate_spline",
       &SimUtils::reallocate_spline,
@@ -371,7 +382,8 @@ n_min : int, optional
     Lower bound of spline array. Default is 1.
 exact : bool, optional
     If present and False then the size of the output array is permitted to be larger than n. Default is True.
-)""");
+)"""
+  );
   m.def(
       "rms_value",
       &SimUtils::rms_value,
@@ -387,7 +399,8 @@ good_val : bool, optional
 ave_val : float
     average value.
 rms_val : 
-)""");
+)"""
+  );
   m.def(
       "rot_2d",
       &SimUtils::rot_2d,
@@ -401,7 +414,8 @@ vec_in : float
 angle : float
     angle in radians.
 vec_out : 
-)""");
+)"""
+  );
   m.def(
       "rotate_vec",
       &SimUtils::rotate_vec,
@@ -421,7 +435,8 @@ axis : int
     x_axis$, y_axis$, or z_axis$
 angle : float
     angle to rotate.
-)""");
+)"""
+  );
   m.def(
       "rotate_vec_given_axis_angle",
       &SimUtils::rotate_vec_given_axis_angle,
@@ -445,7 +460,8 @@ Returns
 -------
 vec_out : float
     Final vector.
-)""");
+)"""
+  );
   m.def(
       "rp8",
       &SimUtils::rp8,
@@ -465,7 +481,8 @@ Returns
 -------
 re_out : float
     Equiv real.
-)""");
+)"""
+  );
   m.def(
       "run_timer",
       &SimUtils::run_timer,
@@ -477,5 +494,6 @@ re_out : float
 command : 
 time : 
 time0 : 
-)""");
+)"""
+  );
 }

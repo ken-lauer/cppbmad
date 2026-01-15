@@ -4,28 +4,27 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_b(py::module& m) {
-  py::class_<
-      SimUtils::BicubicCmplxEval,
-      std::unique_ptr<SimUtils::BicubicCmplxEval>>(
-      m, "BicubicCmplxEval", "bicubic_cmplx_eval return type")
+void init_SimUtils_routines_b(py::module &m) {
+  py::class_<SimUtils::BicubicCmplxEval, std::unique_ptr<SimUtils::BicubicCmplxEval>>(
+      m,
+      "BicubicCmplxEval",
+      "bicubic_cmplx_eval return type"
+  )
       .def_readonly("df_dx", &SimUtils::BicubicCmplxEval::df_dx)
       .def_readonly("df_dy", &SimUtils::BicubicCmplxEval::df_dy)
       .def_readonly("f_val", &SimUtils::BicubicCmplxEval::f_val)
-      .def("__len__", [](const SimUtils::BicubicCmplxEval&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::BicubicCmplxEval& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.df_dx);
-            if (i == 1)
-              return py::cast(s.df_dy);
-            if (i == 2)
-              return py::cast(s.f_val);
-            throw py::index_error();
-          });
+      .def("__len__", [](const SimUtils::BicubicCmplxEval &) { return 3; })
+      .def("__getitem__", [](const SimUtils::BicubicCmplxEval &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.df_dx);
+        if (i == 1)
+          return py::cast(s.df_dy);
+        if (i == 2)
+          return py::cast(s.f_val);
+        throw py::index_error();
+      });
   m.def(
       "bicubic_cmplx_eval",
       &SimUtils::bicubic_cmplx_eval,
@@ -58,7 +57,8 @@ df_dx : complex
     Normalized first derivative: True df/dx = df_dx * dx
 df_dy : complex
     Normalized first derivative: True df/dy = df_dy * dy
-)""");
+)"""
+  );
   m.def(
       "bin_index",
       &SimUtils::bin_index,
@@ -82,7 +82,8 @@ Returns
 -------
 ix_bin : int
     Index of bin x is in.
-)""");
+)"""
+  );
   m.def(
       "bin_x_center",
       &SimUtils::bin_x_center,
@@ -105,7 +106,8 @@ bin_delta : float
 Returns
 -------
 x_center
-)""");
+)"""
+  );
   m.def(
       "bit_set",
       &SimUtils::bit_set,
@@ -125,25 +127,25 @@ pos : int
     position to set.
 set_to_1 : bool
     If True then bit is set to 1. If False bit is set to 0.
-)""");
-  py::class_<
-      SimUtils::BracketIndexForSpline,
-      std::unique_ptr<SimUtils::BracketIndexForSpline>>(
-      m, "BracketIndexForSpline", "bracket_index_for_spline return type")
+)"""
+  );
+  py::class_<SimUtils::BracketIndexForSpline, std::unique_ptr<SimUtils::BracketIndexForSpline>>(
+      m,
+      "BracketIndexForSpline",
+      "bracket_index_for_spline return type"
+  )
       .def_readonly("ix0", &SimUtils::BracketIndexForSpline::ix0)
       .def_readonly("ok", &SimUtils::BracketIndexForSpline::ok)
-      .def("__len__", [](const SimUtils::BracketIndexForSpline&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::BracketIndexForSpline& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.ix0);
-            if (i == 1)
-              return py::cast(s.ok);
-            throw py::index_error();
-          });
+      .def("__len__", [](const SimUtils::BracketIndexForSpline &) { return 2; })
+      .def("__getitem__", [](const SimUtils::BracketIndexForSpline &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.ix0);
+        if (i == 1)
+          return py::cast(s.ok);
+        throw py::index_error();
+      });
   m.def(
       "bracket_index_for_spline",
       &SimUtils::bracket_index_for_spline,
@@ -177,5 +179,6 @@ ix0 : int
     If ok = True, x is in the interval [x_knot(ix0), x_knot(ix0+1)]
 ok : bool
     True if x is in range. False otherwise.
-)""");
+)"""
+  );
 }

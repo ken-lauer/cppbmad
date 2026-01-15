@@ -1,4 +1,5 @@
 #include "pybmad/generated/structs_m.hpp"
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -9,149 +10,142 @@ namespace py = pybind11;
 
 // =============================================================================
 // mode3_struct
-void init_mode3_struct(py::module& m, py::class_<Mode3Proxy>& cls) {
+void init_mode3_struct(py::module &m, py::class_<Mode3Struct> &cls) {
   cls.def(py::init<>())
-      // Mode3Proxy.v (2D_NOT_real -
-      .def_property_readonly("v", &Mode3Proxy::v)
-      // Mode3Proxy.a (0D_NOT_type -
-      .def_property("a", &Mode3Proxy::a, &Mode3Proxy::set_a)
-      // Mode3Proxy.b (0D_NOT_type -
-      .def_property("b", &Mode3Proxy::b, &Mode3Proxy::set_b)
-      // Mode3Proxy.c (0D_NOT_type -
-      .def_property("c", &Mode3Proxy::c, &Mode3Proxy::set_c)
-      // Mode3Proxy.x (0D_NOT_type -
-      .def_property("x", &Mode3Proxy::x, &Mode3Proxy::set_x)
-      // Mode3Proxy.y (0D_NOT_type -
-      .def_property("y", &Mode3Proxy::y, &Mode3Proxy::set_y)
+      // Mode3Struct.v (2D_NOT_real -
+      .def_property_readonly("v", &Mode3Struct::v)
+      // Mode3Struct.a (0D_NOT_type -
+      .def_property("a", &Mode3Struct::a, &Mode3Struct::set_a)
+      // Mode3Struct.b (0D_NOT_type -
+      .def_property("b", &Mode3Struct::b, &Mode3Struct::set_b)
+      // Mode3Struct.c (0D_NOT_type -
+      .def_property("c", &Mode3Struct::c, &Mode3Struct::set_c)
+      // Mode3Struct.x (0D_NOT_type -
+      .def_property("x", &Mode3Struct::x, &Mode3Struct::set_x)
+      // Mode3Struct.y (0D_NOT_type -
+      .def_property("y", &Mode3Struct::y, &Mode3Struct::set_y)
 
-      .def("__repr__", [](const Mode3Proxy& self) { return to_string(self); })
+      .def("__repr__", [](const Mode3Struct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const Mode3Proxy& self) {
-            return Mode3Proxy(self); // under-the-hood fortran copy
-          })
+          [](const Mode3Struct &self) {
+            return Mode3Struct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const Mode3Proxy& self, py::dict& memo) {
-            return Mode3Proxy(self);
-          })
+          [](const Mode3Struct &self, py::dict &memo) { return Mode3Struct(self); }
+      )
 
       ;
 
-  // 1D Mode3Proxy arrays are not used in structs/routines
-  // 2D Mode3Proxy arrays are not used in structs/routines
-  // 3D Mode3Proxy arrays are not used in structs/routines
+  // 1D Mode3Struct arrays are not used in structs/routines
+  // 2D Mode3Struct arrays are not used in structs/routines
+  // 3D Mode3Struct arrays are not used in structs/routines
 }
 
 // =============================================================================
 // mode_info_struct
-void init_mode_info_struct(py::module& m, py::class_<ModeInfoProxy>& cls) {
+void init_mode_info_struct(py::module &m, py::class_<ModeInfoStruct> &cls) {
   cls.def(py::init<>())
-      // ModeInfoProxy.stable (0D_NOT_logical - Is the mode stable?
-      .def_property(
-          "stable", &ModeInfoProxy::stable, &ModeInfoProxy::set_stable)
-      // ModeInfoProxy.tune (0D_NOT_real - 'fractional' tune in radians
-      .def_property("tune", &ModeInfoProxy::tune, &ModeInfoProxy::set_tune)
-      // ModeInfoProxy.emit (0D_NOT_real - Emittance (unnormalized).
-      .def_property("emit", &ModeInfoProxy::emit, &ModeInfoProxy::set_emit)
-      // ModeInfoProxy.chrom (0D_NOT_real - Chromaticity.
-      .def_property("chrom", &ModeInfoProxy::chrom, &ModeInfoProxy::set_chrom)
-      // ModeInfoProxy.sigma (0D_NOT_real - Beam size.
-      .def_property("sigma", &ModeInfoProxy::sigma, &ModeInfoProxy::set_sigma)
-      // ModeInfoProxy.sigmap (0D_NOT_real - Beam divergence.
-      .def_property(
-          "sigmap", &ModeInfoProxy::sigmap, &ModeInfoProxy::set_sigmap)
+      // ModeInfoStruct.stable (0D_NOT_logical - Is the mode stable?
+      .def_property("stable", &ModeInfoStruct::stable, &ModeInfoStruct::set_stable)
+      // ModeInfoStruct.tune (0D_NOT_real - 'fractional' tune in radians
+      .def_property("tune", &ModeInfoStruct::tune, &ModeInfoStruct::set_tune)
+      // ModeInfoStruct.emit (0D_NOT_real - Emittance (unnormalized).
+      .def_property("emit", &ModeInfoStruct::emit, &ModeInfoStruct::set_emit)
+      // ModeInfoStruct.chrom (0D_NOT_real - Chromaticity.
+      .def_property("chrom", &ModeInfoStruct::chrom, &ModeInfoStruct::set_chrom)
+      // ModeInfoStruct.sigma (0D_NOT_real - Beam size.
+      .def_property("sigma", &ModeInfoStruct::sigma, &ModeInfoStruct::set_sigma)
+      // ModeInfoStruct.sigmap (0D_NOT_real - Beam divergence.
+      .def_property("sigmap", &ModeInfoStruct::sigmap, &ModeInfoStruct::set_sigmap)
 
-      .def(
-          "__repr__", [](const ModeInfoProxy& self) { return to_string(self); })
+      .def("__repr__", [](const ModeInfoStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const ModeInfoProxy& self) {
-            return ModeInfoProxy(self); // under-the-hood fortran copy
-          })
+          [](const ModeInfoStruct &self) {
+            return ModeInfoStruct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const ModeInfoProxy& self, py::dict& memo) {
-            return ModeInfoProxy(self);
-          })
+          [](const ModeInfoStruct &self, py::dict &memo) { return ModeInfoStruct(self); }
+      )
 
       ;
 
-  // 1D ModeInfoProxy arrays are not used in structs/routines
-  // 2D ModeInfoProxy arrays are not used in structs/routines
-  // 3D ModeInfoProxy arrays are not used in structs/routines
+  // 1D ModeInfoStruct arrays are not used in structs/routines
+  // 2D ModeInfoStruct arrays are not used in structs/routines
+  // 3D ModeInfoStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
 // mad_energy_struct
-void init_mad_energy_struct(py::module& m, py::class_<MadEnergyProxy>& cls) {
+void init_mad_energy_struct(py::module &m, py::class_<MadEnergyStruct> &cls) {
   cls.def(py::init<>())
-      // MadEnergyProxy.total (0D_NOT_real -
-      .def_property("total", &MadEnergyProxy::total, &MadEnergyProxy::set_total)
-      // MadEnergyProxy.beta (0D_NOT_real - normalized velocity: v/c
-      .def_property("beta", &MadEnergyProxy::beta, &MadEnergyProxy::set_beta)
-      // MadEnergyProxy.gamma (0D_NOT_real - relativistic factor: 1/sqrt(1-beta^2)
-      .def_property("gamma", &MadEnergyProxy::gamma, &MadEnergyProxy::set_gamma)
-      // MadEnergyProxy.kinetic (0D_NOT_real - kinetic energy
-      .def_property(
-          "kinetic", &MadEnergyProxy::kinetic, &MadEnergyProxy::set_kinetic)
-      // MadEnergyProxy.p0c (0D_NOT_real - particle momentum
-      .def_property("p0c", &MadEnergyProxy::p0c, &MadEnergyProxy::set_p0c)
-      // MadEnergyProxy.particle (0D_NOT_integer - particle species
-      .def_property(
-          "particle", &MadEnergyProxy::particle, &MadEnergyProxy::set_particle)
+      // MadEnergyStruct.total (0D_NOT_real -
+      .def_property("total", &MadEnergyStruct::total, &MadEnergyStruct::set_total)
+      // MadEnergyStruct.beta (0D_NOT_real - normalized velocity: v/c
+      .def_property("beta", &MadEnergyStruct::beta, &MadEnergyStruct::set_beta)
+      // MadEnergyStruct.gamma (0D_NOT_real - relativistic factor: 1/sqrt(1-beta^2)
+      .def_property("gamma", &MadEnergyStruct::gamma, &MadEnergyStruct::set_gamma)
+      // MadEnergyStruct.kinetic (0D_NOT_real - kinetic energy
+      .def_property("kinetic", &MadEnergyStruct::kinetic, &MadEnergyStruct::set_kinetic)
+      // MadEnergyStruct.p0c (0D_NOT_real - particle momentum
+      .def_property("p0c", &MadEnergyStruct::p0c, &MadEnergyStruct::set_p0c)
+      // MadEnergyStruct.particle (0D_NOT_integer - particle species
+      .def_property("particle", &MadEnergyStruct::particle, &MadEnergyStruct::set_particle)
 
-      .def(
-          "__repr__",
-          [](const MadEnergyProxy& self) { return to_string(self); })
+      .def("__repr__", [](const MadEnergyStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const MadEnergyProxy& self) {
-            return MadEnergyProxy(self); // under-the-hood fortran copy
-          })
+          [](const MadEnergyStruct &self) {
+            return MadEnergyStruct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const MadEnergyProxy& self, py::dict& memo) {
-            return MadEnergyProxy(self);
-          })
+          [](const MadEnergyStruct &self, py::dict &memo) { return MadEnergyStruct(self); }
+      )
 
       ;
 
-  // 1D MadEnergyProxy arrays are not used in structs/routines
-  // 2D MadEnergyProxy arrays are not used in structs/routines
-  // 3D MadEnergyProxy arrays are not used in structs/routines
+  // 1D MadEnergyStruct arrays are not used in structs/routines
+  // 2D MadEnergyStruct arrays are not used in structs/routines
+  // 3D MadEnergyStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
 // mad_map_struct
-void init_mad_map_struct(py::module& m, py::class_<MadMapProxy>& cls) {
+void init_mad_map_struct(py::module &m, py::class_<MadMapStruct> &cls) {
   cls.def(py::init<>())
-      // MadMapProxy.k (1D_NOT_real - 0th order map.
-      .def_property_readonly("k", &MadMapProxy::k)
-      // MadMapProxy.r (2D_NOT_real - 1st order map.
-      .def_property_readonly("r", &MadMapProxy::r)
-      // MadMapProxy.t (3D_NOT_real - 2nd order map.
-      .def_property_readonly("t", &MadMapProxy::t)
+      // MadMapStruct.k (1D_NOT_real - 0th order map.
+      .def_property_readonly("k", &MadMapStruct::k)
+      // MadMapStruct.r (2D_NOT_real - 1st order map.
+      .def_property_readonly("r", &MadMapStruct::r)
+      // MadMapStruct.t (3D_NOT_real - 2nd order map.
+      .def_property_readonly("t", &MadMapStruct::t)
 
-      .def("__repr__", [](const MadMapProxy& self) { return to_string(self); })
+      .def("__repr__", [](const MadMapStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const MadMapProxy& self) {
-            return MadMapProxy(self); // under-the-hood fortran copy
-          })
+          [](const MadMapStruct &self) {
+            return MadMapStruct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const MadMapProxy& self, py::dict& memo) {
-            return MadMapProxy(self);
-          })
+          [](const MadMapStruct &self, py::dict &memo) { return MadMapStruct(self); }
+      )
 
       ;
 
-  // 1D MadMapProxy arrays are not used in structs/routines
-  // 2D MadMapProxy arrays are not used in structs/routines
-  // 3D MadMapProxy arrays are not used in structs/routines
+  // 1D MadMapStruct arrays are not used in structs/routines
+  // 2D MadMapStruct arrays are not used in structs/routines
+  // 3D MadMapStruct arrays are not used in structs/routines
 }

@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_q(py::module& m) {
+void init_SimUtils_routines_q(py::module &m) {
   m.def(
       "quadratic_roots",
       &SimUtils::quadratic_roots,
@@ -15,7 +15,8 @@ void init_SimUtils_routines_q(py::module& m) {
 coefs : float
     Coefficients of the quadratic equation with 0 = coefs(1) + coefs(2) * x + coefs(3) * x^2
 root : 
-)""");
+)"""
+  );
   m.def(
       "quat_conj",
       py::overload_cast<FixedArray1D<Complex, 4>>(&SimUtils::quat_conj),
@@ -36,7 +37,8 @@ Returns
 -------
 q_out : float
     Conjugate quaternion.
-)""");
+)"""
+  );
   m.def(
       "quat_conj",
       py::overload_cast<FixedArray1D<Real, 4>>(&SimUtils::quat_conj),
@@ -57,7 +59,8 @@ Returns
 -------
 q_out : float
     Conjugate quaternion.
-)""");
+)"""
+  );
   m.def(
       "quat_inverse",
       &SimUtils::quat_inverse,
@@ -75,7 +78,8 @@ Returns
 -------
 q_out : float
     Inverse quaternion.
-)""");
+)"""
+  );
   m.def(
       "quat_mul",
       py::overload_cast<
@@ -116,7 +120,8 @@ Returns
 -------
 q_out : float
     Resultant q1 * q2
-)""");
+)"""
+  );
   m.def(
       "quat_mul",
       py::overload_cast<
@@ -157,11 +162,11 @@ Returns
 -------
 q_out : float
     Resultant q1 * q2
-)""");
+)"""
+  );
   m.def(
       "quat_rotate",
-      py::overload_cast<FixedArray1D<Complex, 4>, FixedArray1D<Complex, 3>>(
-          &SimUtils::quat_rotate),
+      py::overload_cast<FixedArray1D<Complex, 4>, FixedArray1D<Complex, 3>>(&SimUtils::quat_rotate),
       py::arg("quat"),
       py::arg("vec_in"),
       R"""(Function quat_rotate (quat, vec_in) result (vec_out)
@@ -182,11 +187,11 @@ Returns
 -------
 vec_out : float
     Final vector.
-)""");
+)"""
+  );
   m.def(
       "quat_rotate",
-      py::overload_cast<FixedArray1D<Real, 4>, FixedArray1D<Real, 3>>(
-          &SimUtils::quat_rotate),
+      py::overload_cast<FixedArray1D<Real, 4>, FixedArray1D<Real, 3>>(&SimUtils::quat_rotate),
       py::arg("quat"),
       py::arg("vec_in"),
       R"""(Function quat_rotate (quat, vec_in) result (vec_out)
@@ -207,25 +212,25 @@ Returns
 -------
 vec_out : float
     Final vector.
-)""");
-  py::class_<
-      SimUtils::QuatToAxisAngle,
-      std::unique_ptr<SimUtils::QuatToAxisAngle>>(
-      m, "QuatToAxisAngle", "quat_to_axis_angle return type")
+)"""
+  );
+  py::class_<SimUtils::QuatToAxisAngle, std::unique_ptr<SimUtils::QuatToAxisAngle>>(
+      m,
+      "QuatToAxisAngle",
+      "quat_to_axis_angle return type"
+  )
       .def_readonly("axis", &SimUtils::QuatToAxisAngle::axis)
       .def_readonly("angle", &SimUtils::QuatToAxisAngle::angle)
-      .def("__len__", [](const SimUtils::QuatToAxisAngle&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::QuatToAxisAngle& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.axis);
-            if (i == 1)
-              return py::cast(s.angle);
-            throw py::index_error();
-          });
+      .def("__len__", [](const SimUtils::QuatToAxisAngle &) { return 2; })
+      .def("__getitem__", [](const SimUtils::QuatToAxisAngle &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.axis);
+        if (i == 1)
+          return py::cast(s.angle);
+        throw py::index_error();
+      });
   m.def(
       "quat_to_axis_angle",
       &SimUtils::quat_to_axis_angle,
@@ -246,7 +251,8 @@ axis : float
     Axis of rotation.
 angle : float
     angle of rotation in range [0, pi].
-)""");
+)"""
+  );
   m.def(
       "quat_to_omega",
       &SimUtils::quat_to_omega,
@@ -264,7 +270,8 @@ Returns
 -------
 omega : float
     Axis of rotation + magnitude = rotation angle.
-)""");
+)"""
+  );
   m.def(
       "quat_to_w_mat",
       &SimUtils::quat_to_w_mat,
@@ -282,7 +289,8 @@ Returns
 -------
 w_mat : float
     Rotation matrix
-)""");
+)"""
+  );
   m.def(
       "query_string",
       &SimUtils::query_string,
@@ -298,7 +306,8 @@ upcase :
 return_str : 
 ix : 
 ios : 
-)""");
+)"""
+  );
   m.def(
       "quote",
       &SimUtils::quote,
@@ -308,5 +317,6 @@ ios :
 ----------
 str : 
 q_str : 
-)""");
+)"""
+  );
 }

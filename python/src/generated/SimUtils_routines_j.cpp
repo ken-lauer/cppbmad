@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_j(py::module& m) {
+void init_SimUtils_routines_j(py::module &m) {
   m.def(
       "j_bessel",
       &SimUtils::j_bessel,
@@ -16,5 +16,6 @@ void init_SimUtils_routines_j(py::module& m) {
 m : 
 arg : 
 j_bes : 
-)""");
+)"""
+  );
 }

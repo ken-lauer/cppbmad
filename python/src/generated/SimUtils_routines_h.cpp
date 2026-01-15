@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_h(py::module& m) {
+void init_SimUtils_routines_h(py::module &m) {
   m.def(
       "hanhan",
       &SimUtils::hanhan,
@@ -14,5 +14,6 @@ void init_SimUtils_routines_h(py::module& m) {
 ----------
 N : 
 hh : 
-)""");
+)"""
+  );
 }

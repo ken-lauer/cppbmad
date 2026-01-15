@@ -1,4 +1,5 @@
 #include "pybmad/generated/structs_x.hpp"
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -9,39 +10,37 @@ namespace py = pybind11;
 
 // =============================================================================
 // xy_disp_struct
-void init_xy_disp_struct(py::module& m, py::class_<XyDispProxy>& cls) {
+void init_xy_disp_struct(py::module &m, py::class_<XyDispStruct> &cls) {
   cls.def(py::init<>())
-      // XyDispProxy.eta (0D_NOT_real -
-      .def_property("eta", &XyDispProxy::eta, &XyDispProxy::set_eta)
-      // XyDispProxy.etap (0D_NOT_real -
-      .def_property("etap", &XyDispProxy::etap, &XyDispProxy::set_etap)
-      // XyDispProxy.deta_ds (0D_NOT_real -
-      .def_property("deta_ds", &XyDispProxy::deta_ds, &XyDispProxy::set_deta_ds)
-      // XyDispProxy.sigma (0D_NOT_real -
-      .def_property("sigma", &XyDispProxy::sigma, &XyDispProxy::set_sigma)
-      // XyDispProxy.deta_dpz (0D_NOT_real -
-      .def_property(
-          "deta_dpz", &XyDispProxy::deta_dpz, &XyDispProxy::set_deta_dpz)
-      // XyDispProxy.detap_dpz (0D_NOT_real -
-      .def_property(
-          "detap_dpz", &XyDispProxy::detap_dpz, &XyDispProxy::set_detap_dpz)
+      // XyDispStruct.eta (0D_NOT_real -
+      .def_property("eta", &XyDispStruct::eta, &XyDispStruct::set_eta)
+      // XyDispStruct.etap (0D_NOT_real -
+      .def_property("etap", &XyDispStruct::etap, &XyDispStruct::set_etap)
+      // XyDispStruct.deta_ds (0D_NOT_real -
+      .def_property("deta_ds", &XyDispStruct::deta_ds, &XyDispStruct::set_deta_ds)
+      // XyDispStruct.sigma (0D_NOT_real -
+      .def_property("sigma", &XyDispStruct::sigma, &XyDispStruct::set_sigma)
+      // XyDispStruct.deta_dpz (0D_NOT_real -
+      .def_property("deta_dpz", &XyDispStruct::deta_dpz, &XyDispStruct::set_deta_dpz)
+      // XyDispStruct.detap_dpz (0D_NOT_real -
+      .def_property("detap_dpz", &XyDispStruct::detap_dpz, &XyDispStruct::set_detap_dpz)
 
-      .def("__repr__", [](const XyDispProxy& self) { return to_string(self); })
+      .def("__repr__", [](const XyDispStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const XyDispProxy& self) {
-            return XyDispProxy(self); // under-the-hood fortran copy
-          })
+          [](const XyDispStruct &self) {
+            return XyDispStruct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const XyDispProxy& self, py::dict& memo) {
-            return XyDispProxy(self);
-          })
+          [](const XyDispStruct &self, py::dict &memo) { return XyDispStruct(self); }
+      )
 
       ;
 
-  // 1D XyDispProxy arrays are not used in structs/routines
-  // 2D XyDispProxy arrays are not used in structs/routines
-  // 3D XyDispProxy arrays are not used in structs/routines
+  // 1D XyDispStruct arrays are not used in structs/routines
+  // 2D XyDispStruct arrays are not used in structs/routines
+  // 3D XyDispStruct arrays are not used in structs/routines
 }

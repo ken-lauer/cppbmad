@@ -54,10 +54,10 @@ public:
       , ix_branch_(ix_branch)
       , ix_ele_(ix_ele) {}
 
-  Bmad::EleProxy operator*() const { return Bmad::EleProxy(get_fortran_ptr_()); }
+  Bmad::EleStruct operator*() const { return Bmad::EleStruct(get_fortran_ptr_()); }
 
-  std::unique_ptr<Bmad::EleProxy> operator->() const {
-    return std::make_unique<Bmad::EleProxy>(get_fortran_ptr_());
+  std::unique_ptr<Bmad::EleStruct> operator->() const {
+    return std::make_unique<Bmad::EleStruct>(get_fortran_ptr_());
   }
 };
 
@@ -82,10 +82,10 @@ public:
       , ix_lat_(static_cast<int>(lattice_type))
       , ix_branch_(ix_branch) {}
 
-  Bmad::BranchProxy operator*() const { return Bmad::BranchProxy(get_fortran_ptr_()); }
+  Bmad::BranchStruct operator*() const { return Bmad::BranchStruct(get_fortran_ptr_()); }
 
-  std::unique_ptr<Bmad::BranchProxy> operator->() const {
-    return std::make_unique<Bmad::BranchProxy>(get_fortran_ptr_());
+  std::unique_ptr<Bmad::BranchStruct> operator->() const {
+    return std::make_unique<Bmad::BranchStruct>(get_fortran_ptr_());
   }
 
   TaoElementIndexProxy get_element(int ix_ele) const {
@@ -117,9 +117,9 @@ public:
     return TaoBranchIndexProxy(ix_uni_, static_cast<LatticeType>(ix_lat_), ix_branch);
   }
 
-  Bmad::TaoLatticeProxy operator*() const { return Bmad::TaoLatticeProxy(get_fortran_ptr_()); }
-  std::unique_ptr<Bmad::TaoLatticeProxy> operator->() const {
-    return std::make_unique<Bmad::TaoLatticeProxy>(**this);
+  Bmad::TaoLatticeStruct operator*() const { return Bmad::TaoLatticeStruct(get_fortran_ptr_()); }
+  std::unique_ptr<Bmad::TaoLatticeStruct> operator->() const {
+    return std::make_unique<Bmad::TaoLatticeStruct>(**this);
   }
 };
 
@@ -141,9 +141,9 @@ public:
   explicit TaoUniverseIndexProxy(int ix_uni)
       : ix_uni_(ix_uni) {}
 
-  Bmad::TaoUniverseProxy operator*() const;
-  std::unique_ptr<Bmad::TaoUniverseProxy> operator->() const {
-    return std::make_unique<Bmad::TaoUniverseProxy>(get_fortran_ptr_());
+  Bmad::TaoUniverseStruct operator*() const;
+  std::unique_ptr<Bmad::TaoUniverseStruct> operator->() const {
+    return std::make_unique<Bmad::TaoUniverseStruct>(get_fortran_ptr_());
   }
 
   TaoLatticeIndexProxy get_lattice(LatticeType lattice_type) const {

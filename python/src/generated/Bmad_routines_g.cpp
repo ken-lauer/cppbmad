@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_g(py::module& m) {
+void init_Bmad_routines_g(py::module &m) {
   m.def(
       "g_bend_from_em_field",
       &Bmad::g_bend_from_em_field,
@@ -29,28 +29,25 @@ Returns
 -------
 g_bend : float
     bending strength vector.
-)""");
-  py::class_<
-      Bmad::GBendingStrengthFromEmField,
-      std::unique_ptr<Bmad::GBendingStrengthFromEmField>>(
+)"""
+  );
+  py::class_<Bmad::GBendingStrengthFromEmField, std::unique_ptr<Bmad::GBendingStrengthFromEmField>>(
       m,
       "GBendingStrengthFromEmField",
-      "g_bending_strength_from_em_field return type")
+      "g_bending_strength_from_em_field return type"
+  )
       .def_readonly("g", &Bmad::GBendingStrengthFromEmField::g)
       .def_readonly("dg", &Bmad::GBendingStrengthFromEmField::dg)
-      .def(
-          "__len__", [](const Bmad::GBendingStrengthFromEmField&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::GBendingStrengthFromEmField& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.g);
-            if (i == 1)
-              return py::cast(s.dg);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::GBendingStrengthFromEmField &) { return 2; })
+      .def("__getitem__", [](const Bmad::GBendingStrengthFromEmField &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.g);
+        if (i == 1)
+          return py::cast(s.dg);
+        throw py::index_error();
+      });
   m.def(
       "g_bending_strength_from_em_field",
       &Bmad::g_bending_strength_from_em_field,
@@ -76,7 +73,8 @@ g : float
     g = (g_x, g_y, g_s) bending strength vector (|g| = 1/bend_radius).
 dg : float
     dg(:)/dr gradient. Takes into account dg_x/dx in a bend due to curvilinear coords.
-)""");
+)"""
+  );
   m.def(
       "g_integrals_calc",
       &Bmad::g_integrals_calc,
@@ -85,7 +83,8 @@ dg : float
 ----------
 lat : LatStruct
     Lattice to integrate through.
-)""");
+)"""
+  );
   m.def(
       "gamma_ref",
       &Bmad::gamma_ref,
@@ -96,7 +95,8 @@ lat : LatStruct
 ele : EleStruct
     Element to evaluate at.
 gamma : 
-)""");
+)"""
+  );
   m.def(
       "gen_grad1_to_em_taylor",
       &Bmad::gen_grad1_to_em_taylor,
@@ -113,7 +113,8 @@ iz : int
     z-plane index to evaluate.
 em_taylor : EmTaylorStruct
     Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
-)""");
+)"""
+  );
   m.def(
       "gen_grad_at_s_to_em_taylor",
       &Bmad::gen_grad_at_s_to_em_taylor,
@@ -130,7 +131,8 @@ s_pos : float
     Position to evaluate em_taylor at.
 em_taylor : EmTaylorStruct
     Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
-)""");
+)"""
+  );
   m.def(
       "gen_grad_field",
       &Bmad::gen_grad_field,
@@ -146,7 +148,8 @@ gg :
 rho : 
 theta : 
 field : 
-)""");
+)"""
+  );
   m.def(
       "get_bl_from_fwhm",
       &Bmad::get_bl_from_fwhm,
@@ -168,7 +171,8 @@ Returns
 -------
 sigma : float
     Bunch length
-)""");
+)"""
+  );
   m.def(
       "get_called_file",
       &Bmad::get_called_file,
@@ -180,25 +184,25 @@ sigma : float
 delim : 
 call_file : 
 err : 
-)""");
-  py::class_<
-      Bmad::GetEmitFromSigmaMat,
-      std::unique_ptr<Bmad::GetEmitFromSigmaMat>>(
-      m, "GetEmitFromSigmaMat", "get_emit_from_sigma_mat return type")
+)"""
+  );
+  py::class_<Bmad::GetEmitFromSigmaMat, std::unique_ptr<Bmad::GetEmitFromSigmaMat>>(
+      m,
+      "GetEmitFromSigmaMat",
+      "get_emit_from_sigma_mat return type"
+  )
       .def_readonly("normal", &Bmad::GetEmitFromSigmaMat::normal)
       .def_readonly("err_flag", &Bmad::GetEmitFromSigmaMat::err_flag)
-      .def("__len__", [](const Bmad::GetEmitFromSigmaMat&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::GetEmitFromSigmaMat& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.normal);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::GetEmitFromSigmaMat &) { return 2; })
+      .def("__getitem__", [](const Bmad::GetEmitFromSigmaMat &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.normal);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "get_emit_from_sigma_mat",
       &Bmad::get_emit_from_sigma_mat,
@@ -236,7 +240,8 @@ normal : float
     normal mode emittances
 err_flag : bool
     Set to true if something went wrong.  Otherwise set to false.
-)""");
+)"""
+  );
   m.def(
       "get_next_word",
       &Bmad::get_next_word,
@@ -272,7 +277,8 @@ delim_found : bool
     Set true if a delimiter found. A delimiter may not be found if the end of the line is reached first.
 err_flag : bool, optional
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "get_slave_list",
       &Bmad::get_slave_list,
@@ -286,7 +292,8 @@ slaves : ElePointerStruct
     : Array of slaves.
 n_slave : int
     Number of slaves.
-)""");
+)"""
+  );
   m.def(
       "gpt_field_grid_scaling",
       &Bmad::gpt_field_grid_scaling,
@@ -300,7 +307,8 @@ ele :
 dimensions : 
 field_scale : 
 ref_time : 
-)""");
+)"""
+  );
   m.def(
       "gpt_max_field_reference",
       &Bmad::gpt_max_field_reference,
@@ -312,25 +320,25 @@ ref_time :
 pt0 : 
 ele : 
 field_value : 
-)""");
-  py::class_<
-      Bmad::GptToParticleBunch,
-      std::unique_ptr<Bmad::GptToParticleBunch>>(
-      m, "GptToParticleBunch", "gpt_to_particle_bunch return type")
+)"""
+  );
+  py::class_<Bmad::GptToParticleBunch, std::unique_ptr<Bmad::GptToParticleBunch>>(
+      m,
+      "GptToParticleBunch",
+      "gpt_to_particle_bunch return type"
+  )
       .def_readonly("bunch", &Bmad::GptToParticleBunch::bunch)
       .def_readonly("err_flag", &Bmad::GptToParticleBunch::err_flag)
-      .def("__len__", [](const Bmad::GptToParticleBunch&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::GptToParticleBunch& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.bunch);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::GptToParticleBunch &) { return 2; })
+      .def("__getitem__", [](const Bmad::GptToParticleBunch &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.bunch);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "gpt_to_particle_bunch",
       &Bmad::gpt_to_particle_bunch,
@@ -354,7 +362,8 @@ bunch : BunchStruct
     Particle bunch
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "gradient_shift_sr_wake",
       &Bmad::gradient_shift_sr_wake,
@@ -368,7 +377,8 @@ ele : EleStruct
 param : LatParamStruct
     Lattice parameters .n_part        -- Number of particles in a bunch .particle      -- Type of particle
 grad_shift : 
-)""");
+)"""
+  );
   m.def(
       "grid_field_interpolate",
       &Bmad::grid_field_interpolate,
@@ -412,5 +422,6 @@ Returns
 -------
 field : GridFieldPtStruct
     Interpolated field (complex)
-)""");
+)"""
+  );
 }

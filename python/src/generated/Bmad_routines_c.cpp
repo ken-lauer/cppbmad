@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_c(py::module& m) {
+void init_Bmad_routines_c(py::module &m) {
   m.def(
       "c_to_cbar",
       &Bmad::c_to_cbar,
@@ -16,7 +16,8 @@ ele : EleStruct
     parameters .b          -- b-mode Twiss parameters
 cbar_mat : float
     Cbar matrix.
-)""");
+)"""
+  );
   m.def(
       "calc_bunch_params",
       &Bmad::calc_bunch_params,
@@ -55,7 +56,8 @@ error : bool
 n_mat : float, optional
     N matrix defined in Wolski Eq 44 and used to convert from action-angle coords to lab coords (Wolski Eq
     51.).
-)""");
+)"""
+  );
   m.def(
       "calc_bunch_params_slice",
       &Bmad::calc_bunch_params_slice,
@@ -92,7 +94,8 @@ ele : EleStruct, optional
 params : BunchParamsStruct
 err : bool
     Set True if there is an error.
-)""");
+)"""
+  );
   m.def(
       "calc_bunch_params_z_slice",
       &Bmad::calc_bunch_params_z_slice,
@@ -127,7 +130,8 @@ ele : EleStruct, optional
 params : BunchParamsStruct
 err : bool
     Set True if there is an error.
-)""");
+)"""
+  );
   m.def(
       "calc_bunch_sigma_matrix_etc",
       &Bmad::calc_bunch_sigma_matrix_etc,
@@ -150,27 +154,22 @@ Returns
 -------
 bunch_params : BunchParamsStruct
     Bunch parameters. .sigma(6,6) .centroid.vec(6) .centroid.p0c .rel_max(6) .rel_min(6)
-)""");
+)"""
+  );
   py::class_<
       Bmad::CalcEmittancesAndTwissFromSigmaMatrix,
       std::unique_ptr<Bmad::CalcEmittancesAndTwissFromSigmaMatrix>>(
       m,
       "CalcEmittancesAndTwissFromSigmaMatrix",
-      "calc_emittances_and_twiss_from_sigma_matrix return type")
-      .def_readonly(
-          "bunch_params",
-          &Bmad::CalcEmittancesAndTwissFromSigmaMatrix::bunch_params)
-      .def_readonly(
-          "error", &Bmad::CalcEmittancesAndTwissFromSigmaMatrix::error)
-      .def_readonly(
-          "n_mat", &Bmad::CalcEmittancesAndTwissFromSigmaMatrix::n_mat)
-      .def(
-          "__len__",
-          [](const Bmad::CalcEmittancesAndTwissFromSigmaMatrix&) { return 3; })
+      "calc_emittances_and_twiss_from_sigma_matrix return type"
+  )
+      .def_readonly("bunch_params", &Bmad::CalcEmittancesAndTwissFromSigmaMatrix::bunch_params)
+      .def_readonly("error", &Bmad::CalcEmittancesAndTwissFromSigmaMatrix::error)
+      .def_readonly("n_mat", &Bmad::CalcEmittancesAndTwissFromSigmaMatrix::n_mat)
+      .def("__len__", [](const Bmad::CalcEmittancesAndTwissFromSigmaMatrix &) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::CalcEmittancesAndTwissFromSigmaMatrix& s,
-             int i) -> py::object {
+          [](const Bmad::CalcEmittancesAndTwissFromSigmaMatrix &s, int i) -> py::object {
             if (i < 0)
               i += 3;
             if (i == 0)
@@ -180,7 +179,8 @@ bunch_params : BunchParamsStruct
             if (i == 2)
               return py::cast(s.n_mat);
             throw py::index_error();
-          });
+          }
+      );
   m.def(
       "calc_emittances_and_twiss_from_sigma_matrix",
       &Bmad::calc_emittances_and_twiss_from_sigma_matrix,
@@ -207,7 +207,8 @@ error : bool
 n_mat : float
     N matrix defined in Wolski Eq 44 and used to convert from action-angle coords to lab coords (Wolski Eq
     51.).
-)""");
+)"""
+  );
   m.def(
       "calc_spin_params",
       &Bmad::calc_spin_params,
@@ -225,7 +226,8 @@ Returns
 -------
 bunch_params : BunchParamStruct
     Structure holding average centroid.spin(3) -- (x,y,z) polarization.
-)""");
+)"""
+  );
   m.def(
       "calc_super_slave_key",
       &Bmad::calc_super_slave_key,
@@ -243,26 +245,28 @@ slave : EleStruct
 create_jumbo_slave : bool, optional
     If True then slave.key will be set to em_field. -- Logical, optional: If True then slave.key will be set
     to em_field. Default is False.
-)""");
+)"""
+  );
   py::class_<Bmad::CalcWallRadius, std::unique_ptr<Bmad::CalcWallRadius>>(
-      m, "CalcWallRadius", "calc_wall_radius return type")
+      m,
+      "CalcWallRadius",
+      "calc_wall_radius return type"
+  )
       .def_readonly("r_wall", &Bmad::CalcWallRadius::r_wall)
       .def_readonly("dr_dtheta", &Bmad::CalcWallRadius::dr_dtheta)
       .def_readonly("ix_vertex", &Bmad::CalcWallRadius::ix_vertex)
-      .def("__len__", [](const Bmad::CalcWallRadius&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::CalcWallRadius& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.r_wall);
-            if (i == 1)
-              return py::cast(s.dr_dtheta);
-            if (i == 2)
-              return py::cast(s.ix_vertex);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::CalcWallRadius &) { return 3; })
+      .def("__getitem__", [](const Bmad::CalcWallRadius &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.r_wall);
+        if (i == 1)
+          return py::cast(s.dr_dtheta);
+        if (i == 2)
+          return py::cast(s.ix_vertex);
+        throw py::index_error();
+      });
   m.def(
       "calc_wall_radius",
       &Bmad::calc_wall_radius,
@@ -295,7 +299,8 @@ dr_dtheta : float
 ix_vertex : int
     Wall at given angle is between v(ix_vertex-1) and v(ix_vertex). If ix_vertex = 1 then Wall at given angle
     is between v(N) and v(1) where N = size(v).
-)""");
+)"""
+  );
   m.def(
       "calc_z_tune",
       &Bmad::calc_z_tune,
@@ -304,7 +309,8 @@ ix_vertex : int
 ----------
 branch : BranchStruct
     Lattice branch
-)""");
+)"""
+  );
   m.def(
       "canonical_to_angle_coords",
       &Bmad::canonical_to_angle_coords,
@@ -318,7 +324,8 @@ orbit : CoordStruct
 coord_type : unknown, optional
     Angular coordinates type '' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
     y, y' = dy/ds, dt = -z / (beta * c), pz)
-)""");
+)"""
+  );
   m.def(
       "cbar_to_c",
       &Bmad::cbar_to_c,
@@ -335,7 +342,8 @@ b : TwissStruct
     b-mode Twiss parameters
 c_mat : float
     C matrix.
-)""");
+)"""
+  );
   m.def(
       "check_aperture_limit",
       &Bmad::check_aperture_limit,
@@ -360,7 +368,8 @@ old_orb : CoordStruct, optional
     transitions will be ignored.
 check_momentum : bool, optional
     If present and false then checking of p_x and p_y will be disabled.
-)""");
+)"""
+  );
   m.def(
       "check_controller_controls",
       &Bmad::check_controller_controls,
@@ -377,7 +386,8 @@ name : unknown
     Lord name. Used for error reporting.
 err : bool
     Set true if there is a problem. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "check_for_superimpose_problem",
       &Bmad::check_for_superimpose_problem,
@@ -399,23 +409,25 @@ Or:
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
 
-)""");
+)"""
+  );
   py::class_<Bmad::CheckIfSInBounds, std::unique_ptr<Bmad::CheckIfSInBounds>>(
-      m, "CheckIfSInBounds", "check_if_s_in_bounds return type")
+      m,
+      "CheckIfSInBounds",
+      "check_if_s_in_bounds return type"
+  )
       .def_readonly("err_flag", &Bmad::CheckIfSInBounds::err_flag)
       .def_readonly("translated_s", &Bmad::CheckIfSInBounds::translated_s)
-      .def("__len__", [](const Bmad::CheckIfSInBounds&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::CheckIfSInBounds& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.translated_s);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::CheckIfSInBounds &) { return 2; })
+      .def("__getitem__", [](const Bmad::CheckIfSInBounds &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.translated_s);
+        throw py::index_error();
+      });
   m.def(
       "check_if_s_in_bounds",
       &Bmad::check_if_s_in_bounds,
@@ -434,7 +446,8 @@ translated_s : float
     position translated to the range [0, branch_length]
 print_err : bool, optional
     Print error message if there is an error? Default is True.
-)""");
+)"""
+  );
   m.def(
       "choose_quads_for_set_tune",
       &Bmad::choose_quads_for_set_tune,
@@ -455,16 +468,20 @@ mask : unknown, optional
     quads.
 err_flag : bool
     Set True if there is not one quad with positive dk1 and one quad with negative dk1.
-)""");
+)"""
+  );
   py::class_<Bmad::ChromCalc, std::unique_ptr<Bmad::ChromCalc>>(
-      m, "ChromCalc", "chrom_calc return type")
+      m,
+      "ChromCalc",
+      "chrom_calc return type"
+  )
       .def_readonly("chrom_a", &Bmad::ChromCalc::chrom_a)
       .def_readonly("chrom_b", &Bmad::ChromCalc::chrom_b)
       .def_readonly("err_flag", &Bmad::ChromCalc::err_flag)
       .def_readonly("low_E_lat", &Bmad::ChromCalc::low_E_lat)
       .def_readonly("high_E_lat", &Bmad::ChromCalc::high_E_lat)
-      .def("__len__", [](const Bmad::ChromCalc&) { return 5; })
-      .def("__getitem__", [](const Bmad::ChromCalc& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::ChromCalc &) { return 5; })
+      .def("__getitem__", [](const Bmad::ChromCalc &s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -519,7 +536,8 @@ ix_branch : int, optional
 orb0 : CoordStruct, optional
     On-energy orbit at start (fixer point). Default is the branch.particle_start. Only needed if lattice
     branch has an open geometry.
-)""");
+)"""
+  );
   m.def(
       "chrom_tune",
       &Bmad::chrom_tune,
@@ -548,7 +566,8 @@ err_flag : bool
     .false. if match successful, .true. if failed Fails if takes longer than 100 iterations. If it fails the
     sextupoles are set to the last value calculated. Note: This subroutine assumes the Twiss parameters have
     been computed.
-)""");
+)"""
+  );
   m.def(
       "classical_radius",
       &Bmad::classical_radius,
@@ -559,7 +578,8 @@ err_flag : bool
 species : int
     Species of particle.
 radius : 
-)""");
+)"""
+  );
   m.def(
       "clear_lat_1turn_mats",
       &Bmad::clear_lat_1turn_mats,
@@ -567,7 +587,8 @@ radius :
 ----------
 lat : LatStruct
     Lat with 1-turn matrices cleared.
-)""");
+)"""
+  );
   m.def(
       "clear_taylor_maps_from_elements",
       &Bmad::clear_taylor_maps_from_elements,
@@ -577,7 +598,8 @@ lat : LatStruct
 lat : LatStruct
     Lattice
     This parameter is an input/output and is modified in-place. As an output: Lattice with all maps cleared
-)""");
+)"""
+  );
   m.def(
       "closed_orbit_calc",
       &Bmad::closed_orbit_calc,
@@ -611,7 +633,8 @@ err_flag : bool
 print_err : bool, optional
     Print error message if calc does not converge? Default is True. Note: Condition messages like no RF
     voltage with i_dim = 6 will always be printed.
-)""");
+)"""
+  );
   m.def(
       "closed_orbit_from_tracking",
       &Bmad::closed_orbit_from_tracking,
@@ -639,7 +662,8 @@ init_guess : CoordStruct, optional
     value of pz when calculating off-energy orbits. If not present then the origin will be used.
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "cmplx_re_str",
       &Bmad::cmplx_re_str,
@@ -649,7 +673,8 @@ err_flag : bool
 ----------
 cmp : 
 str_out : 
-)""");
+)"""
+  );
   m.def(
       "combine_consecutive_elements",
       &Bmad::combine_consecutive_elements,
@@ -661,7 +686,8 @@ lat : LatStruct
     This parameter is an input/output and is modified in-place. As an output: Lattice with elements combined.
 error : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "complex_taylor_clean",
       &Bmad::complex_taylor_clean,
@@ -669,13 +695,13 @@ error : bool
       R"""(Parameters
 ----------
 complex_taylor : 
-)""");
+)"""
+  );
   m.def(
       "complex_taylor_coef",
-      py::overload_cast<
-          ComplexTaylorProxy&,
-          FArray1D<Int>&,
-          std::complex<double>>(&Bmad::complex_taylor_coef),
+      py::overload_cast<ComplexTaylorStruct &, FArray1D<Int> &, std::complex<double>>(
+          &Bmad::complex_taylor_coef
+      ),
       py::arg("complex_taylor"),
       py::arg("exp"),
       py::arg("coef"),
@@ -714,11 +740,12 @@ Returns
 -------
 complex_taylor_coef : complex
     Coefficient.
-)""");
+)"""
+  );
   m.def(
       "complex_taylor_coef",
       py::overload_cast<
-          ComplexTaylorProxy&,
+          ComplexTaylorStruct &,
           std::optional<int>,
           std::optional<int>,
           std::optional<int>,
@@ -775,7 +802,8 @@ Returns
 -------
 complex_taylor_coef : complex
     Coefficient.
-)""");
+)"""
+  );
   m.def(
       "complex_taylor_equal_complex_taylor",
       &Bmad::complex_taylor_equal_complex_taylor,
@@ -785,7 +813,8 @@ complex_taylor_coef : complex
 ----------
 complex_taylor1 : 
 complex_taylor2 : 
-)""");
+)"""
+  );
   m.def(
       "complex_taylor_exponent_index",
       &Bmad::complex_taylor_exponent_index,
@@ -807,7 +836,8 @@ Returns
 -------
 index : int
     Sorted complex_taylor series.
-)""");
+)"""
+  );
   m.def(
       "complex_taylor_make_unit",
       &Bmad::complex_taylor_make_unit,
@@ -822,25 +852,25 @@ Returns
 -------
 complex_taylor : ComplexTaylorStruct
     Unit complex_taylor map .
-)""");
-  py::class_<
-      Bmad::ComplexTaylorToMat6,
-      std::unique_ptr<Bmad::ComplexTaylorToMat6>>(
-      m, "ComplexTaylorToMat6", "complex_taylor_to_mat6 return type")
+)"""
+  );
+  py::class_<Bmad::ComplexTaylorToMat6, std::unique_ptr<Bmad::ComplexTaylorToMat6>>(
+      m,
+      "ComplexTaylorToMat6",
+      "complex_taylor_to_mat6 return type"
+  )
       .def_readonly("vec0", &Bmad::ComplexTaylorToMat6::vec0)
       .def_readonly("mat6", &Bmad::ComplexTaylorToMat6::mat6)
-      .def("__len__", [](const Bmad::ComplexTaylorToMat6&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ComplexTaylorToMat6& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.vec0);
-            if (i == 1)
-              return py::cast(s.mat6);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ComplexTaylorToMat6 &) { return 2; })
+      .def("__getitem__", [](const Bmad::ComplexTaylorToMat6 &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.vec0);
+        if (i == 1)
+          return py::cast(s.mat6);
+        throw py::index_error();
+      });
   m.def(
       "complex_taylor_to_mat6",
       &Bmad::complex_taylor_to_mat6,
@@ -867,7 +897,8 @@ mat6 : complex
     1st order transfer map (6x6 matrix).
 r_out : complex
     Coordinates at output.
-)""");
+)"""
+  );
   m.def(
       "complex_taylors_equal_complex_taylors",
       &Bmad::complex_taylors_equal_complex_taylors,
@@ -877,7 +908,8 @@ r_out : complex
 ----------
 complex_taylor1 : 
 complex_taylor2 : 
-)""");
+)"""
+  );
   m.def(
       "compute_slave_coupler",
       &Bmad::compute_slave_coupler,
@@ -886,7 +918,8 @@ complex_taylor2 :
 
 This routine is not meant for general use.
 
-)""");
+)"""
+  );
   m.def(
       "concat_ele_taylor",
       &Bmad::concat_ele_taylor,
@@ -925,7 +958,8 @@ Notes
 -----
 Related routines:
 concat_taylor
-)""");
+)"""
+  );
   m.def(
       "concat_taylor",
       &Bmad::concat_taylor,
@@ -948,7 +982,8 @@ taylor2 : TaylorStruct
     Taylor map. Output
 taylor3 : TaylorStruct
     Concatinated map
-)""");
+)"""
+  );
   m.def(
       "concat_transfer_mat",
       &Bmad::concat_transfer_mat,
@@ -974,7 +1009,8 @@ Returns
 -------
 mat_out : float
     Map from s0 to s2
-)""");
+)"""
+  );
   m.def(
       "control_bookkeeper",
       &Bmad::control_bookkeeper,
@@ -990,7 +1026,8 @@ ele : EleStruct, optional
     elements.
 err_flag : bool, optional
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "convert_bend_exact_multipole",
       &Bmad::convert_bend_exact_multipole,
@@ -1010,25 +1047,28 @@ an : float
 bn : float
     Non-skew multipoles.
     This parameter is an input/output and is modified in-place. As an output: Converted Non-skew multipoles.
-)""");
+)"""
+  );
   py::class_<Bmad::ConvertCoords, std::unique_ptr<Bmad::ConvertCoords>>(
-      m, "ConvertCoords", "convert_coords return type")
+      m,
+      "ConvertCoords",
+      "convert_coords return type"
+  )
       .def_readonly("out_type_str", &Bmad::ConvertCoords::out_type_str)
       .def_readonly("coord_out", &Bmad::ConvertCoords::coord_out)
       .def_readonly("err_flag", &Bmad::ConvertCoords::err_flag)
-      .def("__len__", [](const Bmad::ConvertCoords&) { return 3; })
-      .def(
-          "__getitem__", [](const Bmad::ConvertCoords& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.out_type_str);
-            if (i == 1)
-              return py::cast(s.coord_out);
-            if (i == 2)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ConvertCoords &) { return 3; })
+      .def("__getitem__", [](const Bmad::ConvertCoords &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.out_type_str);
+        if (i == 1)
+          return py::cast(s.coord_out);
+        if (i == 2)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "convert_coords",
       &Bmad::convert_coords,
@@ -1053,7 +1093,8 @@ err_flag : bool
     b_bar, b'_bar, z_bar, z'_bar} 'ACTION-ANGLE'       {j_a, phi_a, j_b, phi_b, j_z,  phi_z} x_vec = V_mat *
     (a_vec + eta_vec * z') a_bar  =  sqrt(2*j_a) * cos(phi_a) a'_bar = -sqrt(2*j_a) * sin(phi_a) Note: 1) If
     ELE.Z.BETA = 0 then ELE.Z.BETA is set to 1. 2) phases are in radians
-)""");
+)"""
+  );
   m.def(
       "convert_field_ele_to_lab",
       &Bmad::convert_field_ele_to_lab,
@@ -1084,7 +1125,8 @@ Returns
 -------
 field : EmFieldStruct
     EM field.
-)""");
+)"""
+  );
   m.def(
       "convert_local_cartesian_to_local_curvilinear",
       &Bmad::convert_local_cartesian_to_local_curvilinear,
@@ -1100,7 +1142,8 @@ z :
 g : 
 xout : 
 sout : 
-)""");
+)"""
+  );
   m.def(
       "convert_local_curvilinear_to_local_cartesian",
       &Bmad::convert_local_curvilinear_to_local_cartesian,
@@ -1116,7 +1159,8 @@ s :
 g : 
 xout : 
 zout : 
-)""");
+)"""
+  );
   m.def(
       "convert_particle_coordinates_s_to_t",
       &Bmad::convert_particle_coordinates_s_to_t,
@@ -1131,7 +1175,8 @@ s_body : float
     s-position in element body coords.
 orientation : int
     ele.orientation for vec(6).
-)""");
+)"""
+  );
   m.def(
       "convert_particle_coordinates_t_to_s",
       &Bmad::convert_particle_coordinates_t_to_s,
@@ -1149,9 +1194,13 @@ s_body : float
 use_downstream_p0c : bool, optional
     If True (the default), use ele.value(p0c$) as the reference momentum. If False, use ele.value(p0c_start$)
     as the reference.
-)""");
+)"""
+  );
   py::class_<Bmad::ConvertPcTo, std::unique_ptr<Bmad::ConvertPcTo>>(
-      m, "ConvertPcTo", "convert_pc_to return type")
+      m,
+      "ConvertPcTo",
+      "convert_pc_to return type"
+  )
       .def_readonly("E_tot", &Bmad::ConvertPcTo::E_tot)
       .def_readonly("gamma", &Bmad::ConvertPcTo::gamma)
       .def_readonly("kinetic", &Bmad::ConvertPcTo::kinetic)
@@ -1159,8 +1208,8 @@ use_downstream_p0c : bool, optional
       .def_readonly("brho", &Bmad::ConvertPcTo::brho)
       .def_readonly("beta1", &Bmad::ConvertPcTo::beta1)
       .def_readonly("err_flag", &Bmad::ConvertPcTo::err_flag)
-      .def("__len__", [](const Bmad::ConvertPcTo&) { return 7; })
-      .def("__getitem__", [](const Bmad::ConvertPcTo& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::ConvertPcTo &) { return 7; })
+      .def("__getitem__", [](const Bmad::ConvertPcTo &s, int i) -> py::object {
         if (i < 0)
           i += 7;
         if (i == 0)
@@ -1204,11 +1253,13 @@ beta1 : float
     1 - beta. Equal to 1/(2*gamma^2) in ultra-rel limit.
 err_flag : bool
     Set true if there is an error. False otherwise.
-)""");
-  py::class_<
-      Bmad::ConvertTotalEnergyTo,
-      std::unique_ptr<Bmad::ConvertTotalEnergyTo>>(
-      m, "ConvertTotalEnergyTo", "convert_total_energy_to return type")
+)"""
+  );
+  py::class_<Bmad::ConvertTotalEnergyTo, std::unique_ptr<Bmad::ConvertTotalEnergyTo>>(
+      m,
+      "ConvertTotalEnergyTo",
+      "convert_total_energy_to return type"
+  )
       .def_readonly("gamma", &Bmad::ConvertTotalEnergyTo::gamma)
       .def_readonly("kinetic", &Bmad::ConvertTotalEnergyTo::kinetic)
       .def_readonly("beta", &Bmad::ConvertTotalEnergyTo::beta)
@@ -1216,28 +1267,26 @@ err_flag : bool
       .def_readonly("brho", &Bmad::ConvertTotalEnergyTo::brho)
       .def_readonly("beta1", &Bmad::ConvertTotalEnergyTo::beta1)
       .def_readonly("err_flag", &Bmad::ConvertTotalEnergyTo::err_flag)
-      .def("__len__", [](const Bmad::ConvertTotalEnergyTo&) { return 7; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ConvertTotalEnergyTo& s, int i) -> py::object {
-            if (i < 0)
-              i += 7;
-            if (i == 0)
-              return py::cast(s.gamma);
-            if (i == 1)
-              return py::cast(s.kinetic);
-            if (i == 2)
-              return py::cast(s.beta);
-            if (i == 3)
-              return py::cast(s.pc);
-            if (i == 4)
-              return py::cast(s.brho);
-            if (i == 5)
-              return py::cast(s.beta1);
-            if (i == 6)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ConvertTotalEnergyTo &) { return 7; })
+      .def("__getitem__", [](const Bmad::ConvertTotalEnergyTo &s, int i) -> py::object {
+        if (i < 0)
+          i += 7;
+        if (i == 0)
+          return py::cast(s.gamma);
+        if (i == 1)
+          return py::cast(s.kinetic);
+        if (i == 2)
+          return py::cast(s.beta);
+        if (i == 3)
+          return py::cast(s.pc);
+        if (i == 4)
+          return py::cast(s.brho);
+        if (i == 5)
+          return py::cast(s.beta1);
+        if (i == 6)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "convert_total_energy_to",
       &Bmad::convert_total_energy_to,
@@ -1266,32 +1315,28 @@ err_flag : bool
     Set true if there is an error. False otherwise.
 print_err : bool, optional
     Print error message if E_tot < particle mass? Default is True.
-)""");
-  py::class_<
-      Bmad::ConverterDistributionParser,
-      std::unique_ptr<Bmad::ConverterDistributionParser>>(
+)"""
+  );
+  py::class_<Bmad::ConverterDistributionParser, std::unique_ptr<Bmad::ConverterDistributionParser>>(
       m,
       "ConverterDistributionParser",
-      "converter_distribution_parser return type")
+      "converter_distribution_parser return type"
+  )
       .def_readonly("delim", &Bmad::ConverterDistributionParser::delim)
-      .def_readonly(
-          "delim_found", &Bmad::ConverterDistributionParser::delim_found)
+      .def_readonly("delim_found", &Bmad::ConverterDistributionParser::delim_found)
       .def_readonly("err_flag", &Bmad::ConverterDistributionParser::err_flag)
-      .def(
-          "__len__", [](const Bmad::ConverterDistributionParser&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::ConverterDistributionParser& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.delim);
-            if (i == 1)
-              return py::cast(s.delim_found);
-            if (i == 2)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ConverterDistributionParser &) { return 3; })
+      .def("__getitem__", [](const Bmad::ConverterDistributionParser &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.delim);
+        if (i == 1)
+          return py::cast(s.delim_found);
+        if (i == 2)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "converter_distribution_parser",
       &Bmad::converter_distribution_parser,
@@ -1308,7 +1353,8 @@ delim_found : bool
     Has a delimitor been found?
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "coord_equal_coord",
       &Bmad::coord_equal_coord,
@@ -1329,7 +1375,8 @@ Returns
 -------
 coord1 : CoordStruct
     Output coord.
-)""");
+)"""
+  );
   m.def(
       "coord_state_name",
       &Bmad::coord_state_name,
@@ -1348,7 +1395,8 @@ Returns
 -------
 state_str : unknown
     String representation.
-)""");
+)"""
+  );
   m.def(
       "coords_body_to_local",
       &Bmad::coords_body_to_local,
@@ -1370,7 +1418,8 @@ calculate_angles : bool, optional
     calculate angles for local_position Default: True. False returns local_position angles (.theta, .phi,
     .psi) = 0. Output
 local_position : 
-)""");
+)"""
+  );
   m.def(
       "coords_body_to_rel_exit",
       &Bmad::coords_body_to_rel_exit,
@@ -1392,7 +1441,8 @@ calculate_angles : bool, optional
     calculate angles for rel_exit Default: True. False returns rel_exit angles (.theta, .phi, .psi) = 0.
     Output
 rel_exit : 
-)""");
+)"""
+  );
   m.def(
       "coords_curvilinear_to_floor",
       &Bmad::coords_curvilinear_to_floor,
@@ -1408,28 +1458,28 @@ branch : BranchStruct
 err_flag : bool
     Set True if global floor position cannot be computed.
 global : 
-)""");
-  py::class_<
-      Bmad::CoordsFloorToCurvilinear,
-      std::unique_ptr<Bmad::CoordsFloorToCurvilinear>>(
-      m, "CoordsFloorToCurvilinear", "coords_floor_to_curvilinear return type")
+)"""
+  );
+  py::class_<Bmad::CoordsFloorToCurvilinear, std::unique_ptr<Bmad::CoordsFloorToCurvilinear>>(
+      m,
+      "CoordsFloorToCurvilinear",
+      "coords_floor_to_curvilinear return type"
+  )
       .def_readonly("ele1", &Bmad::CoordsFloorToCurvilinear::ele1)
       .def_readonly("status", &Bmad::CoordsFloorToCurvilinear::status)
       .def_readonly("w_mat", &Bmad::CoordsFloorToCurvilinear::w_mat)
-      .def("__len__", [](const Bmad::CoordsFloorToCurvilinear&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::CoordsFloorToCurvilinear& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.ele1);
-            if (i == 1)
-              return py::cast(s.status);
-            if (i == 2)
-              return py::cast(s.w_mat);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::CoordsFloorToCurvilinear &) { return 3; })
+      .def("__getitem__", [](const Bmad::CoordsFloorToCurvilinear &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.ele1);
+        if (i == 1)
+          return py::cast(s.status);
+        if (i == 2)
+          return py::cast(s.w_mat);
+        throw py::index_error();
+      });
   m.def(
       "coords_floor_to_curvilinear",
       &Bmad::coords_floor_to_curvilinear,
@@ -1450,30 +1500,27 @@ status : bool
 w_mat : float
     W matrix at s, to transform vectors from floor to local. w_mat will only be well defined if status = ok$
 local_coords : 
-)""");
+)"""
+  );
   py::class_<
       Bmad::CoordsFloorToLocalCurvilinear,
       std::unique_ptr<Bmad::CoordsFloorToLocalCurvilinear>>(
       m,
       "CoordsFloorToLocalCurvilinear",
-      "coords_floor_to_local_curvilinear return type")
+      "coords_floor_to_local_curvilinear return type"
+  )
       .def_readonly("status", &Bmad::CoordsFloorToLocalCurvilinear::status)
       .def_readonly("w_mat", &Bmad::CoordsFloorToLocalCurvilinear::w_mat)
-      .def(
-          "__len__",
-          [](const Bmad::CoordsFloorToLocalCurvilinear&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::CoordsFloorToLocalCurvilinear& s,
-             int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.status);
-            if (i == 1)
-              return py::cast(s.w_mat);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::CoordsFloorToLocalCurvilinear &) { return 2; })
+      .def("__getitem__", [](const Bmad::CoordsFloorToLocalCurvilinear &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.status);
+        if (i == 1)
+          return py::cast(s.w_mat);
+        throw py::index_error();
+      });
   m.def(
       "coords_floor_to_local_curvilinear",
       &Bmad::coords_floor_to_local_curvilinear,
@@ -1497,7 +1544,8 @@ relative_to : int, optional
     upstream_end$, local_position.r(3) is relative to the upstream end which will not be the entrance end if
     ele.orientation = -1.
 local_position : 
-)""");
+)"""
+  );
   m.def(
       "coords_floor_to_relative",
       &Bmad::coords_floor_to_relative,
@@ -1519,7 +1567,8 @@ is_delta_position : bool, optional
     If True then treat global_position.r as a difference position in global space and only rotate the position
     but not shift it. Default: False.
 local_position : 
-)""");
+)"""
+  );
   m.def(
       "coords_local_curvilinear_to_body",
       &Bmad::coords_local_curvilinear_to_body,
@@ -1540,7 +1589,8 @@ calculate_angles : bool, optional
     calculate angles for body_position Default: True. False returns body_position angles (.theta, .phi, .psi)
     = 0. Output
 body_position : 
-)""");
+)"""
+  );
   m.def(
       "coords_local_curvilinear_to_floor",
       &Bmad::coords_local_curvilinear_to_floor,
@@ -1572,7 +1622,8 @@ relative_to : int, optional
     upstream_end$, local_position.r(3) is relative to the upstream end which will not be the entrance end if
     ele.orientation = -1.
 global_position : 
-)""");
+)"""
+  );
   m.def(
       "coords_relative_to_floor",
       &Bmad::coords_relative_to_floor,
@@ -1594,7 +1645,8 @@ theta :
 phi : 
 psi : 
 floor1 : 
-)""");
+)"""
+  );
   m.def(
       "coulombfun",
       &Bmad::coulombfun,
@@ -1610,7 +1662,8 @@ v :
 w : 
 gam : 
 res : 
-)""");
+)"""
+  );
   m.def(
       "create_concatenated_wall3d",
       &Bmad::create_concatenated_wall3d,
@@ -1636,25 +1689,25 @@ Returns
 -------
 err_flag : bool
     Set True if there is an error, false otherwise.
-)""");
-  py::class_<
-      Bmad::CreateElementSlice,
-      std::unique_ptr<Bmad::CreateElementSlice>>(
-      m, "CreateElementSlice", "create_element_slice return type")
+)"""
+  );
+  py::class_<Bmad::CreateElementSlice, std::unique_ptr<Bmad::CreateElementSlice>>(
+      m,
+      "CreateElementSlice",
+      "create_element_slice return type"
+  )
       .def_readonly("sliced_ele", &Bmad::CreateElementSlice::sliced_ele)
       .def_readonly("err_flag", &Bmad::CreateElementSlice::err_flag)
-      .def("__len__", [](const Bmad::CreateElementSlice&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::CreateElementSlice& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.sliced_ele);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::CreateElementSlice &) { return 2; })
+      .def("__getitem__", [](const Bmad::CreateElementSlice &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.sliced_ele);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "create_element_slice",
       &Bmad::create_element_slice,
@@ -1692,7 +1745,8 @@ orb_in : CoordStruct, optional
     Incoming orbit if calling routine is doing tracking through the slice. This is used when old_slice is not
     present and there may be an adjustment needed to the orbit ref energy (EG space charge tracking does not
     keep track of ref energy through an lcavity).
-)""");
+)"""
+  );
   m.def(
       "create_field_overlap",
       &Bmad::create_field_overlap,
@@ -1709,7 +1763,8 @@ slave_name : unknown
     Name of the element the lord's field overlaps.
 err_flag : bool
     Set true if there is a problem (like no elements found).
-)""");
+)"""
+  );
   m.def(
       "create_girder",
       &Bmad::create_girder,
@@ -1732,7 +1787,8 @@ girder_info : EleStruct
     Element containing attributes to be transfered to the Girder element: girder_info.name girder_info.alias
     girder_info.descrip girder_info.value(:)
 err_flag : 
-)""");
+)"""
+  );
   m.def(
       "create_group",
       &Bmad::create_group,
@@ -1751,7 +1807,8 @@ contrl : ControlStruct
     name.
 err : bool
     Set True if an attribute is not free to be controlled.
-)""");
+)"""
+  );
   m.def(
       "create_lat_ele_nametable",
       &Bmad::create_lat_ele_nametable,
@@ -1763,7 +1820,8 @@ lat : LatStruct
     Lattice. Ouput:
 nametable : NametableStruct
     Nametable of the elment names
-)""");
+)"""
+  );
   m.def(
       "create_overlay",
       &Bmad::create_overlay,
@@ -1782,25 +1840,25 @@ contrl : ControlStruct
     of attribute to be controlled
 err : bool
     Set True if an attribute is not free to be controlled.
-)""");
-  py::class_<
-      Bmad::CreatePlanarWigglerModel,
-      std::unique_ptr<Bmad::CreatePlanarWigglerModel>>(
-      m, "CreatePlanarWigglerModel", "create_planar_wiggler_model return type")
+)"""
+  );
+  py::class_<Bmad::CreatePlanarWigglerModel, std::unique_ptr<Bmad::CreatePlanarWigglerModel>>(
+      m,
+      "CreatePlanarWigglerModel",
+      "create_planar_wiggler_model return type"
+  )
       .def_readonly("lat", &Bmad::CreatePlanarWigglerModel::lat)
       .def_readonly("err_flag", &Bmad::CreatePlanarWigglerModel::err_flag)
-      .def("__len__", [](const Bmad::CreatePlanarWigglerModel&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::CreatePlanarWigglerModel& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.lat);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::CreatePlanarWigglerModel &) { return 2; })
+      .def("__getitem__", [](const Bmad::CreatePlanarWigglerModel &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.lat);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "create_planar_wiggler_model",
       &Bmad::create_planar_wiggler_model,
@@ -1841,7 +1899,8 @@ lat : LatStruct
     elements in the model.
 err_flag : bool
     Set True if there is an error.
-)""");
+)"""
+  );
   m.def(
       "create_ramper",
       &Bmad::create_ramper,
@@ -1859,7 +1918,8 @@ contrl : ControlStruct
     .attribute        -- name of attribute to be controlled.
 err : bool
     Set True if an attribute is not free to be controlled.
-)""");
+)"""
+  );
   m.def(
       "create_sol_quad_model",
       &Bmad::create_sol_quad_model,
@@ -1875,7 +1935,8 @@ implement a combination solenoid/quadrupole.
 
 Not yet implemented!
 
-)""");
+)"""
+  );
   m.def(
       "create_unique_ele_names",
       &Bmad::create_unique_ele_names,
@@ -1891,7 +1952,8 @@ key : int
     Class key of elements to consider.
 suffix : unknown
     Suffix string. Must have a single "?" character.
-)""");
+)"""
+  );
   m.def(
       "create_wiggler_cartesian_map",
       &Bmad::create_wiggler_cartesian_map,
@@ -1902,7 +1964,8 @@ ele : EleStruct
     Wiggler or undulator element.
 cart_map : CartesianMapStruct
     Cartesian map.
-)""");
+)"""
+  );
   m.def(
       "crystal_attribute_bookkeeper",
       &Bmad::crystal_attribute_bookkeeper,
@@ -1911,7 +1974,8 @@ cart_map : CartesianMapStruct
 ----------
 ele : EleStruct
     Crystal element. .value(bragg_angle_in$) .value(bragg_angle_out$) .value(tilt_corr$) ... etc.
-)""");
+)"""
+  );
   m.def(
       "crystal_h_misalign",
       &Bmad::crystal_h_misalign,
@@ -1931,7 +1995,8 @@ orbit : CoordStruct
 h_vec : float
     H vector before misalignment.
     This parameter is an input/output and is modified in-place. As an output: H vector after misalignment.
-)""");
+)"""
+  );
   m.def(
       "crystal_type_to_crystal_params",
       &Bmad::crystal_type_to_crystal_params,
@@ -1957,7 +2022,8 @@ Returns
 -------
 err_flag : bool
     Set True if crystal type is unrecognized. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "custom_attribute_ubound_index",
       &Bmad::custom_attribute_ubound_index,
@@ -1976,5 +2042,6 @@ Returns
 -------
 ix_ubound : int
     Maximum index needed.
-)""");
+)"""
+  );
 }

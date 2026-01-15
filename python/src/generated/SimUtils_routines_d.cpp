@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_d(py::module& m) {
+void init_SimUtils_routines_d(py::module &m) {
   m.def(
       "date_and_time_stamp",
       &SimUtils::date_and_time_stamp,
@@ -16,7 +16,8 @@ void init_SimUtils_routines_d(py::module& m) {
 string : 
 numeric_month : 
 include_zone : 
-)""");
+)"""
+  );
   m.def(
       "destfixedwindowls",
       &SimUtils::destfixedwindowls,
@@ -24,7 +25,8 @@ include_zone :
       R"""(Parameters
 ----------
 id : 
-)""");
+)"""
+  );
   m.def(
       "detab",
       &SimUtils::detab,
@@ -32,7 +34,8 @@ id :
       R"""(Parameters
 ----------
 str : 
-)""");
+)"""
+  );
   m.def(
       "display_size_and_resolution",
       &SimUtils::display_size_and_resolution,
@@ -48,7 +51,8 @@ x_size :
 y_size : 
 x_res : 
 y_res : 
-)""");
+)"""
+  );
   m.def(
       "dj_bessel",
       &SimUtils::dj_bessel,
@@ -60,7 +64,8 @@ y_res :
 m : 
 arg : 
 dj_bes : 
-)""");
+)"""
+  );
   m.def(
       "djb_hash",
       &SimUtils::djb_hash,
@@ -72,7 +77,8 @@ dj_bes :
 str : 
 old_hash : 
 hash : 
-)""");
+)"""
+  );
   m.def(
       "djb_str_hash",
       &SimUtils::djb_str_hash,
@@ -82,7 +88,8 @@ hash :
 ----------
 in_str : 
 hash_str : 
-)""");
+)"""
+  );
   m.def(
       "downcase_string",
       &SimUtils::downcase_string,
@@ -90,5 +97,6 @@ hash_str :
       R"""(Parameters
 ----------
 string : 
-)""");
+)"""
+  );
 }

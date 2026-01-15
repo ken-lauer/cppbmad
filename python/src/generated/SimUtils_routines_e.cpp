@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_e(py::module& m) {
+void init_SimUtils_routines_e(py::module &m) {
   m.def(
       "end_akima_spline_calc",
       &SimUtils::end_akima_spline_calc,
@@ -22,7 +22,8 @@ spline : SplineStruct
     calculated.
 which_end : int
     0 => calculate slopes for the start end of the array. 1 => calculate slopes for the end end of the array.
-)""");
+)"""
+  );
   m.def(
       "err_exit",
       &SimUtils::err_exit,
@@ -30,5 +31,6 @@ which_end : int
       R"""(Parameters
 ----------
 err_str : 
-)""");
+)"""
+  );
 }

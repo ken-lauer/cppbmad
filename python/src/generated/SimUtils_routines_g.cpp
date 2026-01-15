@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_g(py::module& m) {
+void init_SimUtils_routines_g(py::module &m) {
   m.def(
       "gen_complete_elliptic",
       &SimUtils::gen_complete_elliptic,
@@ -22,7 +22,8 @@ c :
 s : 
 err_tol : 
 value : 
-)""");
+)"""
+  );
   m.def(
       "get_file_number",
       &SimUtils::get_file_number,
@@ -36,7 +37,8 @@ file_name :
 cnum_in : 
 num_out : 
 err_flag : 
-)""");
+)"""
+  );
   m.def(
       "get_file_time_stamp",
       &SimUtils::get_file_time_stamp,
@@ -50,5 +52,6 @@ subroutine get_next_number (filein, cnum, digits)
   integer digits
 end subroutine
 
-)""");
+)"""
+  );
 }

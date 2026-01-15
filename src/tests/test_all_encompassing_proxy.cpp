@@ -1,10 +1,11 @@
-#include "bmad.hpp"
+#include <bmad.hpp>
+
 #include "doctest.h"
 
 using namespace Bmad;
 
-TEST_CASE("AllEncompassingProxy scalar types") {
-  auto proxy = AllEncompassingProxy();
+TEST_CASE("AllEncompassingStruct scalar types") {
+  auto proxy = AllEncompassingStruct();
 
   SUBCASE("complex_dp_0d read/write") {
     auto expected = std::complex<double>(1.0, 2.0);
@@ -48,8 +49,8 @@ TEST_CASE("AllEncompassingProxy scalar types") {
   }
 }
 
-TEST_CASE("AllEncompassingProxy 1D fixed arrays") {
-  auto proxy = AllEncompassingProxy();
+TEST_CASE("AllEncompassingStruct 1D fixed arrays") {
+  auto proxy = AllEncompassingStruct();
 
   SUBCASE("real_dp_1d read/write") {
     auto arr = proxy.real_dp_1d();
@@ -111,8 +112,8 @@ TEST_CASE("AllEncompassingProxy 1D fixed arrays") {
   }
 }
 
-TEST_CASE("AllEncompassingProxy 2D fixed arrays") {
-  auto proxy = AllEncompassingProxy();
+TEST_CASE("AllEncompassingStruct 2D fixed arrays") {
+  auto proxy = AllEncompassingStruct();
 
   SUBCASE("real_dp_2d read/write") {
     auto arr = proxy.real_dp_2d();
@@ -182,8 +183,8 @@ TEST_CASE("AllEncompassingProxy 2D fixed arrays") {
   }
 }
 
-TEST_CASE("AllEncompassingProxy 3D fixed arrays") {
-  auto proxy = AllEncompassingProxy();
+TEST_CASE("AllEncompassingStruct 3D fixed arrays") {
+  auto proxy = AllEncompassingStruct();
 
   SUBCASE("real_dp_3d read/write") {
     auto arr = proxy.real_dp_3d();
@@ -238,8 +239,8 @@ TEST_CASE("AllEncompassingProxy 3D fixed arrays") {
   }
 }
 
-TEST_CASE("AllEncompassingProxy pointer members - read only") {
-  auto proxy = AllEncompassingProxy();
+TEST_CASE("AllEncompassingStruct pointer members - read only") {
+  auto proxy = AllEncompassingStruct();
 
   // Note: Pointer members in Fortran are uninitialized by default (null).
   // This test only verifies that we can safely query pointer state.
@@ -273,8 +274,8 @@ TEST_CASE("AllEncompassingProxy pointer members - read only") {
   }
 }
 
-TEST_CASE("AllEncompassingProxy 1D pointer arrays") {
-  auto proxy = AllEncompassingProxy();
+TEST_CASE("AllEncompassingStruct 1D pointer arrays") {
+  auto proxy = AllEncompassingStruct();
 
   SUBCASE("real_dp_1d_ptr") {
     auto arr = proxy.real_dp_1d_ptr();
@@ -308,8 +309,8 @@ TEST_CASE("AllEncompassingProxy 1D pointer arrays") {
   }
 }
 
-TEST_CASE("AllEncompassingProxy allocatable arrays") {
-  auto proxy = AllEncompassingProxy();
+TEST_CASE("AllEncompassingStruct allocatable arrays") {
+  auto proxy = AllEncompassingStruct();
 
   SUBCASE("real_dp_1d_alloc") {
     auto arr = proxy.real_dp_1d_alloc();
@@ -356,14 +357,14 @@ TEST_CASE("AllEncompassingProxy allocatable arrays") {
   }
 }
 
-TEST_CASE("AllEncompassingProxy nested type (TestSubProxy)") {
-  auto proxy = AllEncompassingProxy();
+TEST_CASE("AllEncompassingStruct nested type (TestSubProxy)") {
+  auto proxy = AllEncompassingStruct();
 
   SUBCASE("type_0d read/write with nested fields") {
     auto sub = proxy.type_0d();
     CHECK_NOTHROW(proxy.type_0d());
 
-    // Access nested TestSubSubProxy via sr()
+    // Access nested TestSubSubStruct via sr()
     auto sub_sub = proxy.type_0d().sr();
 
     // Test int8 field (aaa)
@@ -425,11 +426,11 @@ TEST_CASE("AllEncompassingProxy nested type (TestSubProxy)") {
   }
 }
 
-TEST_CASE("TestSubProxy standalone") {
+TEST_CASE("TestSubStruct standalone") {
   SUBCASE("create and access fields") {
-    auto sub = TestSubProxy();
+    auto sub = TestSubStruct();
 
-    // Access nested TestSubSubProxy
+    // Access nested TestSubSubStruct
     auto sub_sub = sub.sr();
 
     // Test all fields
@@ -447,7 +448,7 @@ TEST_CASE("TestSubProxy standalone") {
   }
 
   SUBCASE("copy behavior") {
-    auto sub1 = TestSubProxy();
+    auto sub1 = TestSubStruct();
     sub1.sr().set_bbb(111);
 
     // Clone creates independent copy
@@ -459,9 +460,9 @@ TEST_CASE("TestSubProxy standalone") {
   }
 }
 
-TEST_CASE("TestSubProxyAlloc1D") {
+TEST_CASE("TestSubStructAlloc1D") {
   SUBCASE("allocate and access") {
-    auto arr = TestSubProxyAlloc1D();
+    auto arr = TestSubStructAlloc1D();
     // resize(lbound, ubound) allocates array from lbound to ubound inclusive
     arr.resize(1, 5); // Fortran array(1:5)
     CHECK(arr.view().lower_bound() == 1);
@@ -480,7 +481,7 @@ TEST_CASE("TestSubProxyAlloc1D") {
   }
 
   SUBCASE("resize with lbound 0") {
-    auto arr = TestSubProxyAlloc1D();
+    auto arr = TestSubStructAlloc1D();
     arr.resize(0, 2); // Fortran array(0:2)
     REQUIRE(arr.size() == 2);
     CHECK(arr.view().lower_bound() == 0);
@@ -495,7 +496,7 @@ TEST_CASE("TestSubProxyAlloc1D") {
   }
 
   SUBCASE("resize and clear") {
-    auto arr = TestSubProxyAlloc1D();
+    auto arr = TestSubStructAlloc1D();
 
     // Initially empty
     CHECK(arr.empty());
@@ -516,8 +517,8 @@ TEST_CASE("TestSubProxyAlloc1D") {
   }
 }
 
-TEST_CASE("AllEncompassingProxy edge cases") {
-  auto proxy = AllEncompassingProxy();
+TEST_CASE("AllEncompassingStruct edge cases") {
+  auto proxy = AllEncompassingStruct();
 
   SUBCASE("zero values") {
     proxy.set_real_dp_0d(0.0);

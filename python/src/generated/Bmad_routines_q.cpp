@@ -4,4 +4,4 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_q(py::module& m) {}
+void init_Bmad_routines_q(py::module &m) {}

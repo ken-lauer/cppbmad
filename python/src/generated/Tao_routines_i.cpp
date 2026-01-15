@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Tao_routines_i(py::module& m) {
+void init_Tao_routines_i(py::module &m) {
   m.def(
       "integrate_max",
       &Tao::integrate_max,
@@ -24,7 +24,8 @@ ix_m :
 branch : 
 vec : 
 datum : 
-)""");
+)"""
+  );
   m.def(
       "integrate_min",
       &Tao::integrate_min,
@@ -44,5 +45,6 @@ ix_m :
 branch : 
 vec : 
 datum : 
-)""");
+)"""
+  );
 }

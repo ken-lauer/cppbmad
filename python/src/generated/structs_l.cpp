@@ -1,4 +1,5 @@
 #include "pybmad/generated/structs_l.hpp"
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -9,499 +10,417 @@ namespace py = pybind11;
 
 // =============================================================================
 // lat_ele_loc_struct
-void init_lat_ele_loc_struct(py::module& m, py::class_<LatEleLocProxy>& cls) {
+void init_lat_ele_loc_struct(py::module &m, py::class_<LatEleLocStruct> &cls) {
   cls.def(py::init<>())
-      // LatEleLocProxy.ix_ele (0D_NOT_integer -
-      .def_property(
-          "ix_ele", &LatEleLocProxy::ix_ele, &LatEleLocProxy::set_ix_ele)
-      // LatEleLocProxy.ix_branch (0D_NOT_integer -
-      .def_property(
-          "ix_branch",
-          &LatEleLocProxy::ix_branch,
-          &LatEleLocProxy::set_ix_branch)
+      // LatEleLocStruct.ix_ele (0D_NOT_integer -
+      .def_property("ix_ele", &LatEleLocStruct::ix_ele, &LatEleLocStruct::set_ix_ele)
+      // LatEleLocStruct.ix_branch (0D_NOT_integer -
+      .def_property("ix_branch", &LatEleLocStruct::ix_branch, &LatEleLocStruct::set_ix_branch)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return LatEleLocProxyAlloc1D(lbound, sz); },
+          [](int sz, int lbound) { return LatEleLocStructAlloc1D(lbound, sz); },
           py::arg("sz"),
-          py::arg("lbound") = 1)
+          py::arg("lbound") = 1
+      )
 
-      .def(
-          "__repr__",
-          [](const LatEleLocProxy& self) { return to_string(self); })
+      .def("__repr__", [](const LatEleLocStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const LatEleLocProxy& self) {
-            return LatEleLocProxy(self); // under-the-hood fortran copy
-          })
+          [](const LatEleLocStruct &self) {
+            return LatEleLocStruct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const LatEleLocProxy& self, py::dict& memo) {
-            return LatEleLocProxy(self);
-          })
+          [](const LatEleLocStruct &self, py::dict &memo) { return LatEleLocStruct(self); }
+      )
 
       ;
 
-  bind_FTypeArrayND<LatEleLocProxyArray1D>(m, "LatEleLocStructArray1D");
-  bind_FTypeAlloc1D<LatEleLocProxyAlloc1D>(m, "LatEleLocStructAlloc1D");
-  // 2D LatEleLocProxy arrays are not used in structs/routines
-  // 3D LatEleLocProxy arrays are not used in structs/routines
+  bind_FTypeArrayND<LatEleLocStructArray1D>(m, "LatEleLocStructArray1D");
+  bind_FTypeAlloc1D<LatEleLocStructAlloc1D>(m, "LatEleLocStructAlloc1D");
+  // 2D LatEleLocStruct arrays are not used in structs/routines
+  // 3D LatEleLocStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
 // lat_ele_order1_struct
-void init_lat_ele_order1_struct(
-    py::module& m,
-    py::class_<LatEleOrder1Proxy>& cls) {
+void init_lat_ele_order1_struct(py::module &m, py::class_<LatEleOrder1Struct> &cls) {
   cls.def(py::init<>())
-      // LatEleOrder1Proxy.ix_branch (0D_NOT_integer - Branch index
-      .def_property(
-          "ix_branch",
-          &LatEleOrder1Proxy::ix_branch,
-          &LatEleOrder1Proxy::set_ix_branch)
-      // LatEleOrder1Proxy.ix_order (0D_NOT_integer - Order index. -1 -> Unique in lattice, 0 -> unique in branch.
-      .def_property(
-          "ix_order",
-          &LatEleOrder1Proxy::ix_order,
-          &LatEleOrder1Proxy::set_ix_order)
+      // LatEleOrder1Struct.ix_branch (0D_NOT_integer - Branch index
+      .def_property("ix_branch", &LatEleOrder1Struct::ix_branch, &LatEleOrder1Struct::set_ix_branch)
+      // LatEleOrder1Struct.ix_order (0D_NOT_integer - Order index. -1 -> Unique in lattice, 0 ->
+      // unique in branch.
+      .def_property("ix_order", &LatEleOrder1Struct::ix_order, &LatEleOrder1Struct::set_ix_order)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) {
-            return LatEleOrder1ProxyAlloc1D(lbound, sz);
-          },
+          [](int sz, int lbound) { return LatEleOrder1StructAlloc1D(lbound, sz); },
           py::arg("sz"),
-          py::arg("lbound") = 1)
+          py::arg("lbound") = 1
+      )
 
-      .def(
-          "__repr__",
-          [](const LatEleOrder1Proxy& self) { return to_string(self); })
+      .def("__repr__", [](const LatEleOrder1Struct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const LatEleOrder1Proxy& self) {
-            return LatEleOrder1Proxy(self); // under-the-hood fortran copy
-          })
+          [](const LatEleOrder1Struct &self) {
+            return LatEleOrder1Struct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const LatEleOrder1Proxy& self, py::dict& memo) {
-            return LatEleOrder1Proxy(self);
-          })
+          [](const LatEleOrder1Struct &self, py::dict &memo) { return LatEleOrder1Struct(self); }
+      )
 
       ;
 
-  bind_FTypeArrayND<LatEleOrder1ProxyArray1D>(m, "LatEleOrder1StructArray1D");
-  bind_FTypeAlloc1D<LatEleOrder1ProxyAlloc1D>(m, "LatEleOrder1StructAlloc1D");
-  // 2D LatEleOrder1Proxy arrays are not used in structs/routines
-  // 3D LatEleOrder1Proxy arrays are not used in structs/routines
+  bind_FTypeArrayND<LatEleOrder1StructArray1D>(m, "LatEleOrder1StructArray1D");
+  bind_FTypeAlloc1D<LatEleOrder1StructAlloc1D>(m, "LatEleOrder1StructAlloc1D");
+  // 2D LatEleOrder1Struct arrays are not used in structs/routines
+  // 3D LatEleOrder1Struct arrays are not used in structs/routines
 }
 
 // =============================================================================
 // lat_ele_order_array_struct
-void init_lat_ele_order_array_struct(
-    py::module& m,
-    py::class_<LatEleOrderArrayProxy>& cls) {
+void init_lat_ele_order_array_struct(py::module &m, py::class_<LatEleOrderArrayStruct> &cls) {
   cls.def(py::init<>())
-      // LatEleOrderArrayProxy.ele (1D_ALLOC_type -
-      .def_property_readonly("ele", &LatEleOrderArrayProxy::ele)
+      // LatEleOrderArrayStruct.ele (1D_ALLOC_type -
+      .def_property_readonly("ele", &LatEleOrderArrayStruct::ele)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) {
-            return LatEleOrderArrayProxyAlloc1D(lbound, sz);
-          },
+          [](int sz, int lbound) { return LatEleOrderArrayStructAlloc1D(lbound, sz); },
           py::arg("sz"),
-          py::arg("lbound") = 1)
+          py::arg("lbound") = 1
+      )
 
-      .def(
-          "__repr__",
-          [](const LatEleOrderArrayProxy& self) { return to_string(self); })
+      .def("__repr__", [](const LatEleOrderArrayStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const LatEleOrderArrayProxy& self) {
-            return LatEleOrderArrayProxy(self); // under-the-hood fortran copy
-          })
+          [](const LatEleOrderArrayStruct &self) {
+            return LatEleOrderArrayStruct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const LatEleOrderArrayProxy& self, py::dict& memo) {
-            return LatEleOrderArrayProxy(self);
-          })
+          [](const LatEleOrderArrayStruct &self, py::dict &memo) {
+            return LatEleOrderArrayStruct(self);
+          }
+      )
 
       ;
 
-  bind_FTypeArrayND<LatEleOrderArrayProxyArray1D>(
-      m, "LatEleOrderArrayStructArray1D");
-  bind_FTypeAlloc1D<LatEleOrderArrayProxyAlloc1D>(
-      m, "LatEleOrderArrayStructAlloc1D");
-  // 2D LatEleOrderArrayProxy arrays are not used in structs/routines
-  // 3D LatEleOrderArrayProxy arrays are not used in structs/routines
+  bind_FTypeArrayND<LatEleOrderArrayStructArray1D>(m, "LatEleOrderArrayStructArray1D");
+  bind_FTypeAlloc1D<LatEleOrderArrayStructAlloc1D>(m, "LatEleOrderArrayStructAlloc1D");
+  // 2D LatEleOrderArrayStruct arrays are not used in structs/routines
+  // 3D LatEleOrderArrayStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
 // lat_ele_order_struct
-void init_lat_ele_order_struct(
-    py::module& m,
-    py::class_<LatEleOrderProxy>& cls) {
+void init_lat_ele_order_struct(py::module &m, py::class_<LatEleOrderStruct> &cls) {
   cls.def(py::init<>())
-      // LatEleOrderProxy.branch (1D_ALLOC_type -
-      .def_property_readonly("branch", &LatEleOrderProxy::branch)
+      // LatEleOrderStruct.branch (1D_ALLOC_type -
+      .def_property_readonly("branch", &LatEleOrderStruct::branch)
 
-      .def(
-          "__repr__",
-          [](const LatEleOrderProxy& self) { return to_string(self); })
+      .def("__repr__", [](const LatEleOrderStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const LatEleOrderProxy& self) {
-            return LatEleOrderProxy(self); // under-the-hood fortran copy
-          })
+          [](const LatEleOrderStruct &self) {
+            return LatEleOrderStruct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const LatEleOrderProxy& self, py::dict& memo) {
-            return LatEleOrderProxy(self);
-          })
+          [](const LatEleOrderStruct &self, py::dict &memo) { return LatEleOrderStruct(self); }
+      )
 
       ;
 
-  // 1D LatEleOrderProxy arrays are not used in structs/routines
-  // 2D LatEleOrderProxy arrays are not used in structs/routines
-  // 3D LatEleOrderProxy arrays are not used in structs/routines
+  // 1D LatEleOrderStruct arrays are not used in structs/routines
+  // 2D LatEleOrderStruct arrays are not used in structs/routines
+  // 3D LatEleOrderStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
 // lat_param_struct
-void init_lat_param_struct(py::module& m, py::class_<LatParamProxy>& cls) {
+void init_lat_param_struct(py::module &m, py::class_<LatParamStruct> &cls) {
   cls.def(py::init<>())
-      // LatParamProxy.n_part (0D_NOT_real - Particles/bunch (for BeamBeam elements).
-      .def_property(
-          "n_part", &LatParamProxy::n_part, &LatParamProxy::set_n_part)
-      // LatParamProxy.total_length (0D_NOT_real - total_length of branch. Warning: branch may not start at s = 0.
+      // LatParamStruct.n_part (0D_NOT_real - Particles/bunch (for BeamBeam elements).
+      .def_property("n_part", &LatParamStruct::n_part, &LatParamStruct::set_n_part)
+      // LatParamStruct.total_length (0D_NOT_real - total_length of branch. Warning: branch may not
+      // start at s = 0.
       .def_property(
           "total_length",
-          &LatParamProxy::total_length,
-          &LatParamProxy::set_total_length)
-      // LatParamProxy.unstable_factor (0D_NOT_real - If positive: Growth rate/turn if unstable in closed branches or |orbit-aperture|/aperture if particle hits wall. Zero otherwise.
+          &LatParamStruct::total_length,
+          &LatParamStruct::set_total_length
+      )
+      // LatParamStruct.unstable_factor (0D_NOT_real - If positive: Growth rate/turn if unstable in
+      // closed branches or |orbit-aperture|/aperture if particle hits wall. Zero otherwise.
       .def_property(
           "unstable_factor",
-          &LatParamProxy::unstable_factor,
-          &LatParamProxy::set_unstable_factor)
-      // LatParamProxy.t1_with_RF (2D_NOT_real - Full 1-turn matrix with RF on.
-      .def_property_readonly("t1_with_RF", &LatParamProxy::t1_with_RF)
-      // LatParamProxy.t1_no_RF (2D_NOT_real - Full 1-turn matrix with RF off.
-      .def_property_readonly("t1_no_RF", &LatParamProxy::t1_no_RF)
-      // LatParamProxy.spin_tune (0D_NOT_real - Closed orbit spin tune.
-      .def_property(
-          "spin_tune", &LatParamProxy::spin_tune, &LatParamProxy::set_spin_tune)
-      // LatParamProxy.particle (0D_NOT_integer - Reference particle: positron$, electron$, etc. Call lattice_bookkeeper if this is changed.
-      .def_property(
-          "particle", &LatParamProxy::particle, &LatParamProxy::set_particle)
-      // LatParamProxy.default_tracking_species (0D_NOT_integer - Default particle type to use in tracking.
+          &LatParamStruct::unstable_factor,
+          &LatParamStruct::set_unstable_factor
+      )
+      // LatParamStruct.t1_with_RF (2D_NOT_real - Full 1-turn matrix with RF on.
+      .def_property_readonly("t1_with_RF", &LatParamStruct::t1_with_RF)
+      // LatParamStruct.t1_no_RF (2D_NOT_real - Full 1-turn matrix with RF off.
+      .def_property_readonly("t1_no_RF", &LatParamStruct::t1_no_RF)
+      // LatParamStruct.spin_tune (0D_NOT_real - Closed orbit spin tune.
+      .def_property("spin_tune", &LatParamStruct::spin_tune, &LatParamStruct::set_spin_tune)
+      // LatParamStruct.particle (0D_NOT_integer - Reference particle: positron$, electron$, etc.
+      // Call lattice_bookkeeper if this is changed.
+      .def_property("particle", &LatParamStruct::particle, &LatParamStruct::set_particle)
+      // LatParamStruct.default_tracking_species (0D_NOT_integer - Default particle type to use in
+      // tracking.
       .def_property(
           "default_tracking_species",
-          &LatParamProxy::default_tracking_species,
-          &LatParamProxy::set_default_tracking_species)
-      // LatParamProxy.geometry (0D_NOT_integer - open$ or closed$
-      .def_property(
-          "geometry", &LatParamProxy::geometry, &LatParamProxy::set_geometry)
-      // LatParamProxy.ixx (0D_NOT_integer - Integer for general use
-      .def_property("ixx", &LatParamProxy::ixx, &LatParamProxy::set_ixx)
-      // LatParamProxy.stable (0D_NOT_logical - is closed lat stable?
-      .def_property(
-          "stable", &LatParamProxy::stable, &LatParamProxy::set_stable)
-      // LatParamProxy.live_branch (0D_NOT_logical - Should tracking be done on the branch?
-      .def_property(
-          "live_branch",
-          &LatParamProxy::live_branch,
-          &LatParamProxy::set_live_branch)
-      // LatParamProxy.g1_integral (0D_NOT_real - Approximate |g| (bending strength) integral of branch.
-      .def_property(
-          "g1_integral",
-          &LatParamProxy::g1_integral,
-          &LatParamProxy::set_g1_integral)
-      // LatParamProxy.g2_integral (0D_NOT_real - Approximate g^2 integral of branch.
-      .def_property(
-          "g2_integral",
-          &LatParamProxy::g2_integral,
-          &LatParamProxy::set_g2_integral)
-      // LatParamProxy.g3_integral (0D_NOT_real - Approximate g^2 integral of branch.
-      .def_property(
-          "g3_integral",
-          &LatParamProxy::g3_integral,
-          &LatParamProxy::set_g3_integral)
-      // LatParamProxy.bookkeeping_state (0D_NOT_type - Overall status for the branch.
+          &LatParamStruct::default_tracking_species,
+          &LatParamStruct::set_default_tracking_species
+      )
+      // LatParamStruct.geometry (0D_NOT_integer - open$ or closed$
+      .def_property("geometry", &LatParamStruct::geometry, &LatParamStruct::set_geometry)
+      // LatParamStruct.ixx (0D_NOT_integer - Integer for general use
+      .def_property("ixx", &LatParamStruct::ixx, &LatParamStruct::set_ixx)
+      // LatParamStruct.stable (0D_NOT_logical - is closed lat stable?
+      .def_property("stable", &LatParamStruct::stable, &LatParamStruct::set_stable)
+      // LatParamStruct.live_branch (0D_NOT_logical - Should tracking be done on the branch?
+      .def_property("live_branch", &LatParamStruct::live_branch, &LatParamStruct::set_live_branch)
+      // LatParamStruct.g1_integral (0D_NOT_real - Approximate |g| (bending strength) integral of
+      // branch.
+      .def_property("g1_integral", &LatParamStruct::g1_integral, &LatParamStruct::set_g1_integral)
+      // LatParamStruct.g2_integral (0D_NOT_real - Approximate g^2 integral of branch.
+      .def_property("g2_integral", &LatParamStruct::g2_integral, &LatParamStruct::set_g2_integral)
+      // LatParamStruct.g3_integral (0D_NOT_real - Approximate g^2 integral of branch.
+      .def_property("g3_integral", &LatParamStruct::g3_integral, &LatParamStruct::set_g3_integral)
+      // LatParamStruct.bookkeeping_state (0D_NOT_type - Overall status for the branch.
       .def_property(
           "bookkeeping_state",
-          &LatParamProxy::bookkeeping_state,
-          &LatParamProxy::set_bookkeeping_state)
-      // LatParamProxy.beam_init (0D_NOT_type - For beam initialization.
-      .def_property(
-          "beam_init", &LatParamProxy::beam_init, &LatParamProxy::set_beam_init)
+          &LatParamStruct::bookkeeping_state,
+          &LatParamStruct::set_bookkeeping_state
+      )
+      // LatParamStruct.beam_init (0D_NOT_type - For beam initialization.
+      .def_property("beam_init", &LatParamStruct::beam_init, &LatParamStruct::set_beam_init)
 
-      .def(
-          "__repr__", [](const LatParamProxy& self) { return to_string(self); })
+      .def("__repr__", [](const LatParamStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const LatParamProxy& self) {
-            return LatParamProxy(self); // under-the-hood fortran copy
-          })
+          [](const LatParamStruct &self) {
+            return LatParamStruct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const LatParamProxy& self, py::dict& memo) {
-            return LatParamProxy(self);
-          })
+          [](const LatParamStruct &self, py::dict &memo) { return LatParamStruct(self); }
+      )
 
       ;
 
-  // 1D LatParamProxy arrays are not used in structs/routines
-  // 2D LatParamProxy arrays are not used in structs/routines
-  // 3D LatParamProxy arrays are not used in structs/routines
+  // 1D LatParamStruct arrays are not used in structs/routines
+  // 2D LatParamStruct arrays are not used in structs/routines
+  // 3D LatParamStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
 // lat_struct
-void init_lat_struct(py::module& m, py::class_<LatProxy>& cls) {
+void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
   cls.def(py::init<>())
-      // LatProxy.use_name (0D_NOT_character - Name of lat given by USE statement
-      .def_property("use_name", &LatProxy::use_name, &LatProxy::set_use_name)
-      // LatProxy.lattice (0D_NOT_character - Lattice
-      .def_property("lattice", &LatProxy::lattice, &LatProxy::set_lattice)
-      // LatProxy.machine (0D_NOT_character - Name of the machine the lattice is for ('LHC', etc).
-      .def_property("machine", &LatProxy::machine, &LatProxy::set_machine)
-      // LatProxy.input_file_name (0D_NOT_character - Name of the lattice input file
-      .def_property(
-          "input_file_name",
-          &LatProxy::input_file_name,
-          &LatProxy::set_input_file_name)
-      // LatProxy.title (0D_NOT_character - General title
-      .def_property("title", &LatProxy::title, &LatProxy::set_title)
-      // LatProxy.print_str (1D_ALLOC_character - Saved print statements.
-      .def_property_readonly("print_str", &LatProxy::print_str)
-      // LatProxy.constant (1D_ALLOC_type - Constants defined in the lattice
-      .def_property_readonly("constant", &LatProxy::constant)
-      // LatProxy.a (0D_PTR_type - Tunes (fractional part), etc.
-      .def_property("a", &LatProxy::a, &LatProxy::set_a)
-      // LatProxy.b (0D_PTR_type - Tunes (fractional part), etc.
-      .def_property("b", &LatProxy::b, &LatProxy::set_b)
-      // LatProxy.z (0D_PTR_type - Tunes (fractional part), etc.
-      .def_property("z", &LatProxy::z, &LatProxy::set_z)
-      // LatProxy.param (0D_PTR_type - Parameters
-      .def_property("param", &LatProxy::param, &LatProxy::set_param)
-      // LatProxy.lord_state (0D_NOT_type - lord bookkeeping status.
-      .def_property(
-          "lord_state", &LatProxy::lord_state, &LatProxy::set_lord_state)
-      // LatProxy.ele_init (0D_NOT_type - For use by any program
-      .def_property("ele_init", &LatProxy::ele_init, &LatProxy::set_ele_init)
-      // LatProxy.ele (1D_PTR_type - Array of elements [=> branch(0)].
-      .def_property_readonly("ele", &LatProxy::ele)
-      // LatProxy.branch (1D_ALLOC_type - Branch(0:) array
-      .def_property_readonly("branch", &LatProxy::branch)
-      // LatProxy.control (1D_ALLOC_type - Control list
-      .def_property_readonly("control", &LatProxy::control)
-      // LatProxy.particle_start (0D_PTR_type - Starting particle_coords.
-      .def_property(
-          "particle_start",
-          &LatProxy::particle_start,
-          &LatProxy::set_particle_start)
-      // LatProxy.beam_init (0D_NOT_type - Beam initialization.
-      .def_property("beam_init", &LatProxy::beam_init, &LatProxy::set_beam_init)
-      // LatProxy.pre_tracker (0D_NOT_type - For OPAL/IMPACT-T
-      .def_property(
-          "pre_tracker", &LatProxy::pre_tracker, &LatProxy::set_pre_tracker)
-      // LatProxy.custom (1D_ALLOC_real - Custom attributes.
-      .def_property_readonly("custom", &LatProxy::custom)
-      // LatProxy.version (0D_NOT_integer - Version number
-      .def_property("version", &LatProxy::version, &LatProxy::set_version)
-      // LatProxy.n_ele_track (0D_PTR_integer - Number of lat elements to track through.
-      .def_property(
-          "n_ele_track", &LatProxy::n_ele_track, &LatProxy::set_n_ele_track)
-      // LatProxy.n_ele_max (0D_PTR_integer - Index of last valid element in %ele(:) array
-      .def_property("n_ele_max", &LatProxy::n_ele_max, &LatProxy::set_n_ele_max)
-      // LatProxy.n_control_max (0D_NOT_integer - Last index used in control_array
-      .def_property(
-          "n_control_max",
-          &LatProxy::n_control_max,
-          &LatProxy::set_n_control_max)
-      // LatProxy.n_ic_max (0D_NOT_integer - Last index used in ic_array
-      .def_property("n_ic_max", &LatProxy::n_ic_max, &LatProxy::set_n_ic_max)
-      // LatProxy.input_taylor_order (0D_NOT_integer - As set in the input file
+      // LatStruct.use_name (0D_NOT_character - Name of lat given by USE statement
+      .def_property("use_name", &LatStruct::use_name, &LatStruct::set_use_name)
+      // LatStruct.lattice (0D_NOT_character - Lattice
+      .def_property("lattice", &LatStruct::lattice, &LatStruct::set_lattice)
+      // LatStruct.machine (0D_NOT_character - Name of the machine the lattice is for ('LHC', etc).
+      .def_property("machine", &LatStruct::machine, &LatStruct::set_machine)
+      // LatStruct.input_file_name (0D_NOT_character - Name of the lattice input file
+      .def_property("input_file_name", &LatStruct::input_file_name, &LatStruct::set_input_file_name)
+      // LatStruct.title (0D_NOT_character - General title
+      .def_property("title", &LatStruct::title, &LatStruct::set_title)
+      // LatStruct.print_str (1D_ALLOC_character - Saved print statements.
+      .def_property_readonly("print_str", &LatStruct::print_str)
+      // LatStruct.constant (1D_ALLOC_type - Constants defined in the lattice
+      .def_property_readonly("constant", &LatStruct::constant)
+      // LatStruct.a (0D_PTR_type - Tunes (fractional part), etc.
+      .def_property("a", &LatStruct::a, &LatStruct::set_a)
+      // LatStruct.b (0D_PTR_type - Tunes (fractional part), etc.
+      .def_property("b", &LatStruct::b, &LatStruct::set_b)
+      // LatStruct.z (0D_PTR_type - Tunes (fractional part), etc.
+      .def_property("z", &LatStruct::z, &LatStruct::set_z)
+      // LatStruct.param (0D_PTR_type - Parameters
+      .def_property("param", &LatStruct::param, &LatStruct::set_param)
+      // LatStruct.lord_state (0D_NOT_type - lord bookkeeping status.
+      .def_property("lord_state", &LatStruct::lord_state, &LatStruct::set_lord_state)
+      // LatStruct.ele_init (0D_NOT_type - For use by any program
+      .def_property("ele_init", &LatStruct::ele_init, &LatStruct::set_ele_init)
+      // LatStruct.ele (1D_PTR_type - Array of elements [=> branch(0)].
+      .def_property_readonly("ele", &LatStruct::ele)
+      // LatStruct.branch (1D_ALLOC_type - Branch(0:) array
+      .def_property_readonly("branch", &LatStruct::branch)
+      // LatStruct.control (1D_ALLOC_type - Control list
+      .def_property_readonly("control", &LatStruct::control)
+      // LatStruct.particle_start (0D_PTR_type - Starting particle_coords.
+      .def_property("particle_start", &LatStruct::particle_start, &LatStruct::set_particle_start)
+      // LatStruct.beam_init (0D_NOT_type - Beam initialization.
+      .def_property("beam_init", &LatStruct::beam_init, &LatStruct::set_beam_init)
+      // LatStruct.pre_tracker (0D_NOT_type - For OPAL/IMPACT-T
+      .def_property("pre_tracker", &LatStruct::pre_tracker, &LatStruct::set_pre_tracker)
+      // LatStruct.custom (1D_ALLOC_real - Custom attributes.
+      .def_property_readonly("custom", &LatStruct::custom)
+      // LatStruct.version (0D_NOT_integer - Version number
+      .def_property("version", &LatStruct::version, &LatStruct::set_version)
+      // LatStruct.n_ele_track (0D_PTR_integer - Number of lat elements to track through.
+      .def_property("n_ele_track", &LatStruct::n_ele_track, &LatStruct::set_n_ele_track)
+      // LatStruct.n_ele_max (0D_PTR_integer - Index of last valid element in %ele(:) array
+      .def_property("n_ele_max", &LatStruct::n_ele_max, &LatStruct::set_n_ele_max)
+      // LatStruct.n_control_max (0D_NOT_integer - Last index used in control_array
+      .def_property("n_control_max", &LatStruct::n_control_max, &LatStruct::set_n_control_max)
+      // LatStruct.n_ic_max (0D_NOT_integer - Last index used in ic_array
+      .def_property("n_ic_max", &LatStruct::n_ic_max, &LatStruct::set_n_ic_max)
+      // LatStruct.input_taylor_order (0D_NOT_integer - As set in the input file
       .def_property(
           "input_taylor_order",
-          &LatProxy::input_taylor_order,
-          &LatProxy::set_input_taylor_order)
-      // LatProxy.ic (1D_ALLOC_integer - Index to %control(:) from slaves.
-      .def_property_readonly("ic", &LatProxy::ic)
-      // LatProxy.photon_type (0D_NOT_integer - Or coherent$. For X-ray simulations.
-      .def_property(
-          "photon_type", &LatProxy::photon_type, &LatProxy::set_photon_type)
-      // LatProxy.creation_hash (0D_NOT_integer - Set by bmad_parser. creation_hash will vary if any of the lattice files are modified.
-      .def_property(
-          "creation_hash",
-          &LatProxy::creation_hash,
-          &LatProxy::set_creation_hash)
-      // LatProxy.ramper_slave_bookkeeping (0D_NOT_integer -
+          &LatStruct::input_taylor_order,
+          &LatStruct::set_input_taylor_order
+      )
+      // LatStruct.ic (1D_ALLOC_integer - Index to %control(:) from slaves.
+      .def_property_readonly("ic", &LatStruct::ic)
+      // LatStruct.photon_type (0D_NOT_integer - Or coherent$. For X-ray simulations.
+      .def_property("photon_type", &LatStruct::photon_type, &LatStruct::set_photon_type)
+      // LatStruct.creation_hash (0D_NOT_integer - Set by bmad_parser. creation_hash will vary if
+      // any of the lattice files are modified.
+      .def_property("creation_hash", &LatStruct::creation_hash, &LatStruct::set_creation_hash)
+      // LatStruct.ramper_slave_bookkeeping (0D_NOT_integer -
       .def_property(
           "ramper_slave_bookkeeping",
-          &LatProxy::ramper_slave_bookkeeping,
-          &LatProxy::set_ramper_slave_bookkeeping)
+          &LatStruct::ramper_slave_bookkeeping,
+          &LatStruct::set_ramper_slave_bookkeeping
+      )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return LatProxyAlloc1D(lbound, sz); },
+          [](int sz, int lbound) { return LatStructAlloc1D(lbound, sz); },
           py::arg("sz"),
-          py::arg("lbound") = 1)
+          py::arg("lbound") = 1
+      )
 
-      .def("__repr__", [](const LatProxy& self) { return to_string(self); })
+      .def("__repr__", [](const LatStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const LatProxy& self) {
-            return LatProxy(self); // under-the-hood fortran copy
-          })
-      .def(
-          "__deepcopy__",
-          [](const LatProxy& self, py::dict& memo) { return LatProxy(self); })
+          [](const LatStruct &self) {
+            return LatStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def("__deepcopy__", [](const LatStruct &self, py::dict &memo) { return LatStruct(self); })
 
       ;
 
-  bind_FTypeArrayND<LatProxyArray1D>(m, "LatStructArray1D");
-  bind_FTypeAlloc1D<LatProxyAlloc1D>(m, "LatStructAlloc1D");
-  // 2D LatProxy arrays are not used in structs/routines
-  // 3D LatProxy arrays are not used in structs/routines
+  bind_FTypeArrayND<LatStructArray1D>(m, "LatStructArray1D");
+  bind_FTypeAlloc1D<LatStructAlloc1D>(m, "LatStructAlloc1D");
+  // 2D LatStruct arrays are not used in structs/routines
+  // 3D LatStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
 // linac_normal_mode_struct
-void init_linac_normal_mode_struct(
-    py::module& m,
-    py::class_<LinacNormalModeProxy>& cls) {
+void init_linac_normal_mode_struct(py::module &m, py::class_<LinacNormalModeStruct> &cls) {
   cls.def(py::init<>())
-      // LinacNormalModeProxy.i2_E4 (0D_NOT_real - Integral: g^2 * gamma^4
-      .def_property(
-          "i2_E4",
-          &LinacNormalModeProxy::i2_E4,
-          &LinacNormalModeProxy::set_i2_E4)
-      // LinacNormalModeProxy.i3_E7 (0D_NOT_real - Integral: g^3 * gamma^7
-      .def_property(
-          "i3_E7",
-          &LinacNormalModeProxy::i3_E7,
-          &LinacNormalModeProxy::set_i3_E7)
-      // LinacNormalModeProxy.i5a_E6 (0D_NOT_real - Integral: (g^3 * H_a) * gamma^6
-      .def_property(
-          "i5a_E6",
-          &LinacNormalModeProxy::i5a_E6,
-          &LinacNormalModeProxy::set_i5a_E6)
-      // LinacNormalModeProxy.i5b_E6 (0D_NOT_real - Integral: (g^3 * H_b) * gamma^6
-      .def_property(
-          "i5b_E6",
-          &LinacNormalModeProxy::i5b_E6,
-          &LinacNormalModeProxy::set_i5b_E6)
-      // LinacNormalModeProxy.sig_E1 (0D_NOT_real - Energy spread after 1 pass (eV)
-      .def_property(
-          "sig_E1",
-          &LinacNormalModeProxy::sig_E1,
-          &LinacNormalModeProxy::set_sig_E1)
-      // LinacNormalModeProxy.a_emittance_end (0D_NOT_real - a mode emittance at end of linac
+      // LinacNormalModeStruct.i2_E4 (0D_NOT_real - Integral: g^2 * gamma^4
+      .def_property("i2_E4", &LinacNormalModeStruct::i2_E4, &LinacNormalModeStruct::set_i2_E4)
+      // LinacNormalModeStruct.i3_E7 (0D_NOT_real - Integral: g^3 * gamma^7
+      .def_property("i3_E7", &LinacNormalModeStruct::i3_E7, &LinacNormalModeStruct::set_i3_E7)
+      // LinacNormalModeStruct.i5a_E6 (0D_NOT_real - Integral: (g^3 * H_a) * gamma^6
+      .def_property("i5a_E6", &LinacNormalModeStruct::i5a_E6, &LinacNormalModeStruct::set_i5a_E6)
+      // LinacNormalModeStruct.i5b_E6 (0D_NOT_real - Integral: (g^3 * H_b) * gamma^6
+      .def_property("i5b_E6", &LinacNormalModeStruct::i5b_E6, &LinacNormalModeStruct::set_i5b_E6)
+      // LinacNormalModeStruct.sig_E1 (0D_NOT_real - Energy spread after 1 pass (eV)
+      .def_property("sig_E1", &LinacNormalModeStruct::sig_E1, &LinacNormalModeStruct::set_sig_E1)
+      // LinacNormalModeStruct.a_emittance_end (0D_NOT_real - a mode emittance at end of linac
       .def_property(
           "a_emittance_end",
-          &LinacNormalModeProxy::a_emittance_end,
-          &LinacNormalModeProxy::set_a_emittance_end)
-      // LinacNormalModeProxy.b_emittance_end (0D_NOT_real - b mode emittance at end of linac
+          &LinacNormalModeStruct::a_emittance_end,
+          &LinacNormalModeStruct::set_a_emittance_end
+      )
+      // LinacNormalModeStruct.b_emittance_end (0D_NOT_real - b mode emittance at end of linac
       .def_property(
           "b_emittance_end",
-          &LinacNormalModeProxy::b_emittance_end,
-          &LinacNormalModeProxy::set_b_emittance_end)
+          &LinacNormalModeStruct::b_emittance_end,
+          &LinacNormalModeStruct::set_b_emittance_end
+      )
 
-      .def(
-          "__repr__",
-          [](const LinacNormalModeProxy& self) { return to_string(self); })
+      .def("__repr__", [](const LinacNormalModeStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const LinacNormalModeProxy& self) {
-            return LinacNormalModeProxy(self); // under-the-hood fortran copy
-          })
+          [](const LinacNormalModeStruct &self) {
+            return LinacNormalModeStruct(self); // under-the-hood fortran copy
+          }
+      )
       .def(
           "__deepcopy__",
-          [](const LinacNormalModeProxy& self, py::dict& memo) {
-            return LinacNormalModeProxy(self);
-          })
+          [](const LinacNormalModeStruct &self, py::dict &memo) {
+            return LinacNormalModeStruct(self);
+          }
+      )
 
       ;
 
-  // 1D LinacNormalModeProxy arrays are not used in structs/routines
-  // 2D LinacNormalModeProxy arrays are not used in structs/routines
-  // 3D LinacNormalModeProxy arrays are not used in structs/routines
+  // 1D LinacNormalModeStruct arrays are not used in structs/routines
+  // 2D LinacNormalModeStruct arrays are not used in structs/routines
+  // 3D LinacNormalModeStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
 // layout
-void init_layout(py::module& m, py::class_<LayoutRawStruct>& cls) {
+void init_layout(py::module &m, py::class_<Layout> &cls) {
   cls.def(py::init<>())
-      // LayoutRawStruct.NAME (0D_PTR_character - IDENTIFICATION
-      .def_property("NAME", &LayoutRawStruct::NAME, &LayoutRawStruct::set_NAME)
-      // LayoutRawStruct.INDEX (0D_PTR_integer - IDENTIFICATION, CHARGE SIGN
-      .def_property(
-          "INDEX", &LayoutRawStruct::INDEX, &LayoutRawStruct::set_INDEX)
-      // LayoutRawStruct.HARMONIC_NUMBER (0D_PTR_real -
-      .def_property(
-          "HARMONIC_NUMBER",
-          &LayoutRawStruct::HARMONIC_NUMBER,
-          &LayoutRawStruct::set_HARMONIC_NUMBER)
-      // LayoutRawStruct.CLOSED (0D_PTR_logical -
-      .def_property(
-          "CLOSED", &LayoutRawStruct::CLOSED, &LayoutRawStruct::set_CLOSED)
-      // LayoutRawStruct.N (0D_PTR_integer - TOTAL ELEMENT IN THE CHAIN
-      .def_property("N", &LayoutRawStruct::N, &LayoutRawStruct::set_N)
-      // LayoutRawStruct.NTHIN (0D_PTR_integer - NUMBER IF THIN LENSES IN COLLECTION  (FOR SPEED ESTIMATES)
-      .def_property(
-          "NTHIN", &LayoutRawStruct::NTHIN, &LayoutRawStruct::set_NTHIN)
-      // LayoutRawStruct.THIN (0D_PTR_real - PARAMETER USED FOR AUTOMATIC CUTTING INTO THIN LENS POINTERS OF LINK LAYOUT
-      .def_property("THIN", &LayoutRawStruct::THIN, &LayoutRawStruct::set_THIN)
-      // LayoutRawStruct.LASTPOS (0D_PTR_integer - POSITION OF LAST VISITED
-      .def_property(
-          "LASTPOS", &LayoutRawStruct::LASTPOS, &LayoutRawStruct::set_LASTPOS)
-      // LayoutRawStruct.LAST (0D_PTR_type - LAST VISITED
-      .def_property("LAST", &LayoutRawStruct::LAST, &LayoutRawStruct::set_LAST)
-      // LayoutRawStruct.END (0D_PTR_type -
-      .def_property("END", &LayoutRawStruct::END, &LayoutRawStruct::set_END)
-      // LayoutRawStruct.START (0D_PTR_type -
-      .def_property(
-          "START", &LayoutRawStruct::START, &LayoutRawStruct::set_START)
-      // LayoutRawStruct.START_GROUND (0D_PTR_type - STORE THE GROUNDED VALUE OF START DURING CIRCULAR SCANNING
-      .def_property(
-          "START_GROUND",
-          &LayoutRawStruct::START_GROUND,
-          &LayoutRawStruct::set_START_GROUND)
-      // LayoutRawStruct.END_GROUND (0D_PTR_type - STORE THE GROUNDED VALUE OF END DURING CIRCULAR SCANNING
-      .def_property(
-          "END_GROUND",
-          &LayoutRawStruct::END_GROUND,
-          &LayoutRawStruct::set_END_GROUND)
-      // LayoutRawStruct.NEXT (0D_PTR_type -
-      .def_property("NEXT", &LayoutRawStruct::NEXT, &LayoutRawStruct::set_NEXT)
-      // LayoutRawStruct.PREVIOUS (0D_PTR_type -
-      .def_property(
-          "PREVIOUS",
-          &LayoutRawStruct::PREVIOUS,
-          &LayoutRawStruct::set_PREVIOUS)
+      // Layout.NAME (0D_PTR_character - IDENTIFICATION
+      .def_property("NAME", &Layout::NAME, &Layout::set_NAME)
+      // Layout.INDEX (0D_PTR_integer - IDENTIFICATION, CHARGE SIGN
+      .def_property("INDEX", &Layout::INDEX, &Layout::set_INDEX)
+      // Layout.HARMONIC_NUMBER (0D_PTR_real -
+      .def_property("HARMONIC_NUMBER", &Layout::HARMONIC_NUMBER, &Layout::set_HARMONIC_NUMBER)
+      // Layout.CLOSED (0D_PTR_logical -
+      .def_property("CLOSED", &Layout::CLOSED, &Layout::set_CLOSED)
+      // Layout.N (0D_PTR_integer - TOTAL ELEMENT IN THE CHAIN
+      .def_property("N", &Layout::N, &Layout::set_N)
+      // Layout.NTHIN (0D_PTR_integer - NUMBER IF THIN LENSES IN COLLECTION  (FOR SPEED ESTIMATES)
+      .def_property("NTHIN", &Layout::NTHIN, &Layout::set_NTHIN)
+      // Layout.THIN (0D_PTR_real - PARAMETER USED FOR AUTOMATIC CUTTING INTO THIN LENS POINTERS OF
+      // LINK LAYOUT
+      .def_property("THIN", &Layout::THIN, &Layout::set_THIN)
+      // Layout.LASTPOS (0D_PTR_integer - POSITION OF LAST VISITED
+      .def_property("LASTPOS", &Layout::LASTPOS, &Layout::set_LASTPOS)
+      // Layout.LAST (0D_PTR_type - LAST VISITED
+      .def_property("LAST", &Layout::LAST, &Layout::set_LAST)
+      // Layout.END (0D_PTR_type -
+      .def_property("END", &Layout::END, &Layout::set_END)
+      // Layout.START (0D_PTR_type -
+      .def_property("START", &Layout::START, &Layout::set_START)
+      // Layout.START_GROUND (0D_PTR_type - STORE THE GROUNDED VALUE OF START DURING CIRCULAR
+      // SCANNING
+      .def_property("START_GROUND", &Layout::START_GROUND, &Layout::set_START_GROUND)
+      // Layout.END_GROUND (0D_PTR_type - STORE THE GROUNDED VALUE OF END DURING CIRCULAR SCANNING
+      .def_property("END_GROUND", &Layout::END_GROUND, &Layout::set_END_GROUND)
+      // Layout.NEXT (0D_PTR_type -
+      .def_property("NEXT", &Layout::NEXT, &Layout::set_NEXT)
+      // Layout.PREVIOUS (0D_PTR_type -
+      .def_property("PREVIOUS", &Layout::PREVIOUS, &Layout::set_PREVIOUS)
 
-      .def(
-          "__repr__",
-          [](const LayoutRawStruct& self) { return to_string(self); })
+      .def("__repr__", [](const Layout &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const LayoutRawStruct& self) {
-            return LayoutRawStruct(self); // under-the-hood fortran copy
-          })
-      .def(
-          "__deepcopy__",
-          [](const LayoutRawStruct& self, py::dict& memo) {
-            return LayoutRawStruct(self);
-          })
+          [](const Layout &self) {
+            return Layout(self); // under-the-hood fortran copy
+          }
+      )
+      .def("__deepcopy__", [](const Layout &self, py::dict &memo) { return Layout(self); })
 
       ;
 
-  // 1D LayoutRawStruct arrays are not used in structs/routines
-  // 2D LayoutRawStruct arrays are not used in structs/routines
-  // 3D LayoutRawStruct arrays are not used in structs/routines
+  // 1D Layout arrays are not used in structs/routines
+  // 2D Layout arrays are not used in structs/routines
+  // 3D Layout arrays are not used in structs/routines
 }

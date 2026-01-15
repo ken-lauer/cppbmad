@@ -9,4 +9,4 @@
 
 namespace py = pybind11;
 
-void init_bsim_routines_b(py::module& m);
+void init_bsim_routines_b(py::module &m);

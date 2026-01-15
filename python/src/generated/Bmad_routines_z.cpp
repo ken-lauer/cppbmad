@@ -4,14 +4,17 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_z(py::module& m) {
+void init_Bmad_routines_z(py::module &m) {
   py::class_<Bmad::ZAtSurface, std::unique_ptr<Bmad::ZAtSurface>>(
-      m, "ZAtSurface", "z_at_surface return type")
+      m,
+      "ZAtSurface",
+      "z_at_surface return type"
+  )
       .def_readonly("err_flag", &Bmad::ZAtSurface::err_flag)
       .def_readonly("dz_dxy", &Bmad::ZAtSurface::dz_dxy)
       .def_readonly("z", &Bmad::ZAtSurface::z)
-      .def("__len__", [](const Bmad::ZAtSurface&) { return 3; })
-      .def("__getitem__", [](const Bmad::ZAtSurface& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::ZAtSurface &) { return 3; })
+      .def("__getitem__", [](const Bmad::ZAtSurface &s, int i) -> py::object {
         if (i < 0)
           i += 3;
         if (i == 0)
@@ -54,7 +57,8 @@ dz_dxy : float
 Notes
 -----
 Remember: +z points into the element.
-)""");
+)"""
+  );
   m.def(
       "zero_ele_kicks",
       &Bmad::zero_ele_kicks,
@@ -62,7 +66,8 @@ Remember: +z points into the element.
 ----------
 ele : EleStruct
     Element with no kicks.
-)""");
+)"""
+  );
   m.def(
       "zero_ele_offsets",
       &Bmad::zero_ele_offsets,
@@ -70,7 +75,8 @@ ele : EleStruct
 ----------
 ele : EleStruct
     Element with no (mis)orientation.
-)""");
+)"""
+  );
   m.def(
       "zero_lr_wakes_in_lat",
       &Bmad::zero_lr_wakes_in_lat,
@@ -84,7 +90,8 @@ Parameters
 ----------
 lat : LatStruct
     Lattice
-)""");
+)"""
+  );
   m.def(
       "zlafun",
       &Bmad::zlafun,
@@ -98,5 +105,6 @@ x :
 y : 
 z : 
 res : 
-)""");
+)"""
+  );
 }

@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_l(py::module& m) {
+void init_Bmad_routines_l(py::module &m) {
   m.def(
       "lafun",
       &Bmad::lafun,
@@ -18,7 +18,8 @@ x :
 y : 
 z : 
 res : 
-)""");
+)"""
+  );
   m.def(
       "lat_compute_ref_energy_and_time",
       &Bmad::lat_compute_ref_energy_and_time,
@@ -29,7 +30,8 @@ lat : LatStruct
     Input lattice. .ele(0).value(E_tot$) -- Energy at the start of the lattice.
 err_flag : bool
     Set true if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "lat_ele_locator",
       &Bmad::lat_ele_locator,
@@ -69,7 +71,8 @@ order_by_index : bool, optional
     and super slaves.
 append_eles : bool, optional
     Default is False. If True, found elements are appended to eles(:) array.
-)""");
+)"""
+  );
   m.def(
       "lat_equal_lat",
       &Bmad::lat_equal_lat,
@@ -79,7 +82,8 @@ append_eles : bool, optional
 ----------
 lat_out : 
 lat_in : 
-)""");
+)"""
+  );
   m.def(
       "lat_geometry",
       &Bmad::lat_geometry,
@@ -88,7 +92,8 @@ lat_in :
 ----------
 lat : LatStruct
     The lattice. .ele(0).floor  -- Floor_position_struct: The starting point for the calculations.
-)""");
+)"""
+  );
   m.def(
       "lat_make_mat6",
       &Bmad::lat_make_mat6,
@@ -110,7 +115,8 @@ ix_branch : int, optional
     ignored).
 err_flag : bool
     True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "lat_sanity_check",
       &Bmad::lat_sanity_check,
@@ -121,7 +127,8 @@ lat : LatStruct
     Lattice to check
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "lat_to_ptc_layout",
       &Bmad::lat_to_ptc_layout,
@@ -131,7 +138,8 @@ err_flag : bool
 lat : LatStruct
     Input lattice lat.branch(:).ptc              -- Pointers to generated layouts.
     lat.branch(:).ele(:).ptc_fibre -- Pointer to PTC fibres
-)""");
+)"""
+  );
   m.def(
       "lat_vec_equal_lat_vec",
       &Bmad::lat_vec_equal_lat_vec,
@@ -141,7 +149,8 @@ lat : LatStruct
 ----------
 lat1 : 
 lat2 : 
-)""");
+)"""
+  );
   m.def(
       "lattice_bookkeeper",
       &Bmad::lattice_bookkeeper,
@@ -153,7 +162,8 @@ lat : LatStruct
     This parameter is an input/output and is modified in-place. As an output: Lattice with bookkeeping done.
 err_flag : bool
     Set true if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "lcavity_rf_step_setup",
       &Bmad::lcavity_rf_step_setup,
@@ -164,7 +174,8 @@ ele : EleStruct
     Lcavity element.
     This parameter is an input/output and is modified in-place. As an output: Element with ele.rf properly
     setup.
-)""");
+)"""
+  );
   m.def(
       "linear_bend_edge_kick",
       &Bmad::linear_bend_edge_kick,
@@ -196,13 +207,17 @@ mat6 : float, optional
     edge.
 make_matrix : float, optional
     Propagate the transfer matrix? Default is False.
-)""");
+)"""
+  );
   py::class_<Bmad::LinearCoef, std::unique_ptr<Bmad::LinearCoef>>(
-      m, "LinearCoef", "linear_coef return type")
+      m,
+      "LinearCoef",
+      "linear_coef return type"
+  )
       .def_readonly("err_flag", &Bmad::LinearCoef::err_flag)
       .def_readonly("coef", &Bmad::LinearCoef::coef)
-      .def("__len__", [](const Bmad::LinearCoef&) { return 2; })
-      .def("__getitem__", [](const Bmad::LinearCoef& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::LinearCoef &) { return 2; })
+      .def("__getitem__", [](const Bmad::LinearCoef &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -230,7 +245,8 @@ err_flag : bool
     Set True if the expression is not linear
 coef : float
     Linear coefficient.
-)""");
+)"""
+  );
   m.def(
       "linear_to_spin_taylor",
       &Bmad::linear_to_spin_taylor,
@@ -241,22 +257,25 @@ q_map : float
     Linear quaternion map.
 spin_taylor : TaylorStruct
     Taylor map
-)""");
+)"""
+  );
   py::class_<Bmad::LoadParseLine, std::unique_ptr<Bmad::LoadParseLine>>(
-      m, "LoadParseLine", "load_parse_line return type")
+      m,
+      "LoadParseLine",
+      "load_parse_line return type"
+  )
       .def_readonly("end_of_file", &Bmad::LoadParseLine::end_of_file)
       .def_readonly("err_flag", &Bmad::LoadParseLine::err_flag)
-      .def("__len__", [](const Bmad::LoadParseLine&) { return 2; })
-      .def(
-          "__getitem__", [](const Bmad::LoadParseLine& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.end_of_file);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::LoadParseLine &) { return 2; })
+      .def("__getitem__", [](const Bmad::LoadParseLine &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.end_of_file);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "load_parse_line",
       &Bmad::load_parse_line,
@@ -281,7 +300,8 @@ end_of_file : bool
     End of file reached?
 err_flag : bool
     Set True if there is an error. False otherwise bp_com.parse_line -- string to append to.
-)""");
+)"""
+  );
   m.def(
       "lord_edge_aligned",
       &Bmad::lord_edge_aligned,
@@ -298,7 +318,8 @@ slave_edge : int
 lord : EleStruct
     Lord element.
 is_aligned : 
-)""");
+)"""
+  );
   m.def(
       "low_energy_z_correction",
       &Bmad::low_energy_z_correction,
@@ -323,5 +344,6 @@ mat6 : float, optional
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
 dz : 
-)""");
+)"""
+  );
 }

@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_o(py::module& m) {
+void init_SimUtils_routines_o(py::module &m) {
   m.def(
       "omega_to_quat",
       &SimUtils::omega_to_quat,
@@ -22,7 +22,8 @@ Returns
 -------
 quat : float
     Rotation quaternion.
-)""");
+)"""
+  );
   m.def(
       "openpmd_species_name",
       &SimUtils::openpmd_species_name,
@@ -42,7 +43,8 @@ Returns
 -------
 pmd_name : unknown
     Name of the species. Will return 'INVALID!' (= invalid_name) if index is not valid.
-)""");
+)"""
+  );
   m.def(
       "ordinal_str",
       &SimUtils::ordinal_str,
@@ -52,5 +54,6 @@ pmd_name : unknown
 ----------
 n : 
 str : 
-)""");
+)"""
+  );
 }

@@ -13,7 +13,7 @@ extern "C" char *tao_c_out_io_buffer_get_line(int n);
 extern "C" int tao_c_out_io_buffer_num_lines();
 
 void test_allocatable() {
-  auto ctr{EleProxyAlloc1D(0, 10)};
+  auto ctr{EleStructAlloc1D(0, 10)};
 
   ctr.resize(0, 5);
   ctr[0].set_name("foo0");
@@ -52,7 +52,7 @@ void test_real_container() {
 }
 
 void test_struct_access() {
-  auto prox{AllEncompassingProxy()};
+  auto prox{AllEncompassingStruct()};
   auto cpx = std::complex<double>(1.0, 2.0);
 
   prox.set_complex_dp_0d(cpx);
@@ -100,7 +100,7 @@ int main() {
 
       // Direct access still works
       // auto element_direct =
-      //     *Bmad::TaoElementProxy(1, Bmad::LatticeType::MODEL, 0, 5);
+      //     *Bmad::TaoElementStruct(1, Bmad::LatticeType::MODEL, 0, 5);
     }
 
   } catch (const Bmad::BmadException &e) {

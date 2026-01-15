@@ -4,25 +4,24 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_w(py::module& m) {
-  py::class_<
-      SimUtils::WMatToAxisAngle,
-      std::unique_ptr<SimUtils::WMatToAxisAngle>>(
-      m, "WMatToAxisAngle", "w_mat_to_axis_angle return type")
+void init_SimUtils_routines_w(py::module &m) {
+  py::class_<SimUtils::WMatToAxisAngle, std::unique_ptr<SimUtils::WMatToAxisAngle>>(
+      m,
+      "WMatToAxisAngle",
+      "w_mat_to_axis_angle return type"
+  )
       .def_readonly("axis", &SimUtils::WMatToAxisAngle::axis)
       .def_readonly("angle", &SimUtils::WMatToAxisAngle::angle)
-      .def("__len__", [](const SimUtils::WMatToAxisAngle&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::WMatToAxisAngle& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.axis);
-            if (i == 1)
-              return py::cast(s.angle);
-            throw py::index_error();
-          });
+      .def("__len__", [](const SimUtils::WMatToAxisAngle &) { return 2; })
+      .def("__getitem__", [](const SimUtils::WMatToAxisAngle &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.axis);
+        if (i == 1)
+          return py::cast(s.angle);
+        throw py::index_error();
+      });
   m.def(
       "w_mat_to_axis_angle",
       &SimUtils::w_mat_to_axis_angle,
@@ -45,7 +44,8 @@ axis : float
     Rotation axis. Normalized to 1.
 angle : float
     Rotation angle in the range [0, pi].
-)""");
+)"""
+  );
   m.def(
       "w_mat_to_quat",
       &SimUtils::w_mat_to_quat,
@@ -63,7 +63,8 @@ Returns
 -------
 quat : float
     Quaternion.
-)""");
+)"""
+  );
   m.def(
       "word_len",
       &SimUtils::word_len,
@@ -73,7 +74,8 @@ quat : float
 ----------
 wording : 
 wlen : 
-)""");
+)"""
+  );
   m.def(
       "word_read",
       &SimUtils::word_read,
@@ -95,5 +97,6 @@ delim :
 delim_found : 
 out_str : 
 ignore_interior : 
-)""");
+)"""
+  );
 }

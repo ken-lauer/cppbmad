@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_m(py::module& m) {
+void init_Bmad_routines_m(py::module &m) {
   m.def(
       "mad_add_offsets_and_multipoles",
       &Bmad::mad_add_offsets_and_multipoles,
@@ -25,7 +25,8 @@ Returns
 -------
 map : MadMapStruct
     Structure holding the transfer map.
-)""");
+)"""
+  );
   m.def(
       "mad_concat_map2",
       &Bmad::mad_concat_map2,
@@ -48,7 +49,8 @@ Returns
 -------
 map3 : MadMapStruct
     Concatinated map.
-)""");
+)"""
+  );
   m.def(
       "mad_drift",
       &Bmad::mad_drift,
@@ -70,7 +72,8 @@ Returns
 -------
 map : MadMapStruct
     Structure holding the transfer map.
-)""");
+)"""
+  );
   m.def(
       "mad_elsep",
       &Bmad::mad_elsep,
@@ -92,7 +95,8 @@ Returns
 -------
 map : MadMapStruct
     Structure holding the transfer map.
-)""");
+)"""
+  );
   m.def(
       "mad_map_to_taylor",
       &Bmad::mad_map_to_taylor,
@@ -115,7 +119,8 @@ Returns
 -------
 taylor : TaylorStruct
     Taylor map.
-)""");
+)"""
+  );
   m.def(
       "mad_quadrupole",
       &Bmad::mad_quadrupole,
@@ -137,7 +142,8 @@ Returns
 -------
 map : MadMapStruct
     Structure holding the transfer map.
-)""");
+)"""
+  );
   m.def(
       "mad_rfcavity",
       &Bmad::mad_rfcavity,
@@ -159,7 +165,8 @@ Returns
 -------
 map : MadMapStruct
     Structure holding the transfer map.
-)""");
+)"""
+  );
   m.def(
       "mad_sbend",
       &Bmad::mad_sbend,
@@ -181,7 +188,8 @@ Returns
 -------
 map : MadMapStruct
     Structure holding the transfer map.
-)""");
+)"""
+  );
   m.def(
       "mad_sbend_body",
       &Bmad::mad_sbend_body,
@@ -205,7 +213,8 @@ Returns
 -------
 map : MadMapStruct
     Structure holding the transfer map.
-)""");
+)"""
+  );
   m.def(
       "mad_sbend_fringe",
       &Bmad::mad_sbend_fringe,
@@ -230,7 +239,8 @@ Returns
 -------
 map : MadMapStruct
     Fringe dipole map. .k(6)     -- 0th order map. .r(6,6)   -- 1st order map. .t(6,6,6) -- 2nd order map.
-)""");
+)"""
+  );
   m.def(
       "mad_sextupole",
       &Bmad::mad_sextupole,
@@ -252,7 +262,8 @@ Returns
 -------
 map : MadMapStruct
     Structure holding the transfer map.
-)""");
+)"""
+  );
   m.def(
       "mad_solenoid",
       &Bmad::mad_solenoid,
@@ -274,15 +285,19 @@ Returns
 -------
 map : MadMapStruct
     Structure holding the transfer map.
-)""");
+)"""
+  );
   py::class_<Bmad::MadTmfoc, std::unique_ptr<Bmad::MadTmfoc>>(
-      m, "MadTmfoc", "mad_tmfoc return type")
+      m,
+      "MadTmfoc",
+      "mad_tmfoc return type"
+  )
       .def_readonly("c", &Bmad::MadTmfoc::c)
       .def_readonly("s", &Bmad::MadTmfoc::s)
       .def_readonly("d", &Bmad::MadTmfoc::d)
       .def_readonly("f", &Bmad::MadTmfoc::f)
-      .def("__len__", [](const Bmad::MadTmfoc&) { return 4; })
-      .def("__getitem__", [](const Bmad::MadTmfoc& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::MadTmfoc &) { return 4; })
+      .def("__getitem__", [](const Bmad::MadTmfoc &s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -322,7 +337,8 @@ d : float
     Dispersion function.              d(k,l)
 f : float
     Integral of dispersion function.  f(k,l)
-)""");
+)"""
+  );
   m.def(
       "mad_tmsymm",
       &Bmad::mad_tmsymm,
@@ -337,7 +353,8 @@ Parameters
 te : float
     array to be symmertrized.
     This parameter is an input/output and is modified in-place. As an output: symmetrized array.
-)""");
+)"""
+  );
   m.def(
       "mad_tmtilt",
       &Bmad::mad_tmtilt,
@@ -356,7 +373,8 @@ map : MadMapStruct
     This parameter is an input/output and is modified in-place. As an output: Rotated transport map.
 tilt : float
     Tilt
-)""");
+)"""
+  );
   m.def(
       "mad_track1",
       &Bmad::mad_track1,
@@ -378,7 +396,8 @@ Returns
 -------
 c1 : CoordStruct
     Ending coords.
-)""");
+)"""
+  );
   m.def(
       "make_g2_mats",
       &Bmad::make_g2_mats,
@@ -391,13 +410,17 @@ twiss : TwissStruct
     Twiss parameters.
 g2_mat : 
 g2_inv_mat : 
-)""");
+)"""
+  );
   py::class_<Bmad::MakeGMats, std::unique_ptr<Bmad::MakeGMats>>(
-      m, "MakeGMats", "make_g_mats return type")
+      m,
+      "MakeGMats",
+      "make_g_mats return type"
+  )
       .def_readonly("g_mat", &Bmad::MakeGMats::g_mat)
       .def_readonly("g_inv_mat", &Bmad::MakeGMats::g_inv_mat)
-      .def("__len__", [](const Bmad::MakeGMats&) { return 2; })
-      .def("__getitem__", [](const Bmad::MakeGMats& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::MakeGMats &) { return 2; })
+      .def("__getitem__", [](const Bmad::MakeGMats &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -418,16 +441,20 @@ g_mat : float
     Normal mode to betaless coords
 g_inv_mat : float
     The inverse of G_MAT
-)""");
+)"""
+  );
   py::class_<Bmad::MakeHvbp, std::unique_ptr<Bmad::MakeHvbp>>(
-      m, "MakeHvbp", "make_hvbp return type")
+      m,
+      "MakeHvbp",
+      "make_hvbp return type"
+  )
       .def_readonly("B", &Bmad::MakeHvbp::B)
       .def_readonly("V", &Bmad::MakeHvbp::V)
       .def_readonly("H", &Bmad::MakeHvbp::H)
       .def_readonly("Vbar", &Bmad::MakeHvbp::Vbar)
       .def_readonly("Hbar", &Bmad::MakeHvbp::Hbar)
-      .def("__len__", [](const Bmad::MakeHvbp&) { return 5; })
-      .def("__getitem__", [](const Bmad::MakeHvbp& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::MakeHvbp &) { return 5; })
+      .def("__getitem__", [](const Bmad::MakeHvbp &s, int i) -> py::object {
         if (i < 0)
           i += 5;
         if (i == 0)
@@ -483,7 +510,8 @@ Vbar : float
     mat_symp_conj(B).V.B
 Hbar : float
     mat_symp_conj(B).H.B
-)""");
+)"""
+  );
   m.def(
       "make_hybrid_lat",
       &Bmad::make_hybrid_lat,
@@ -502,13 +530,17 @@ use_taylor : bool, optional
     other elements in the hybrid element.
 orb0_arr : CoordArrayStruct, optional
     Central orbit for taylor stuff. Each orb0_arr(i).orbit(:) holds the orbit for the i^th lattice branch
-)""");
+)"""
+  );
   py::class_<Bmad::MakeMadMap, std::unique_ptr<Bmad::MakeMadMap>>(
-      m, "MakeMadMap", "make_mad_map return type")
+      m,
+      "MakeMadMap",
+      "make_mad_map return type"
+  )
       .def_readonly("energy", &Bmad::MakeMadMap::energy)
       .def_readonly("map", &Bmad::MakeMadMap::map)
-      .def("__len__", [](const Bmad::MakeMadMap&) { return 2; })
-      .def("__getitem__", [](const Bmad::MakeMadMap& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::MakeMadMap &) { return 2; })
+      .def("__getitem__", [](const Bmad::MakeMadMap &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -539,13 +571,17 @@ energy : MadEnergyStruct
     Energy of the particle
 map : MadMapStruct
     Structure holding the transfer map.
-)""");
+)"""
+  );
   py::class_<Bmad::MakeMat6, std::unique_ptr<Bmad::MakeMat6>>(
-      m, "MakeMat6", "make_mat6 return type")
+      m,
+      "MakeMat6",
+      "make_mat6 return type"
+  )
       .def_readonly("end_orb", &Bmad::MakeMat6::end_orb)
       .def_readonly("err_flag", &Bmad::MakeMat6::err_flag)
-      .def("__len__", [](const Bmad::MakeMat6&) { return 2; })
-      .def("__getitem__", [](const Bmad::MakeMat6& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::MakeMat6 &) { return 2; })
+      .def("__getitem__", [](const Bmad::MakeMat6 &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -572,13 +608,17 @@ end_orb : CoordStruct
     Reference coordinates at the end of element.
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   py::class_<Bmad::MakeMat6Bmad, std::unique_ptr<Bmad::MakeMat6Bmad>>(
-      m, "MakeMat6Bmad", "make_mat6_bmad return type")
+      m,
+      "MakeMat6Bmad",
+      "make_mat6_bmad return type"
+  )
       .def_readonly("end_orb", &Bmad::MakeMat6Bmad::end_orb)
       .def_readonly("err", &Bmad::MakeMat6Bmad::err)
-      .def("__len__", [](const Bmad::MakeMat6Bmad&) { return 2; })
-      .def("__getitem__", [](const Bmad::MakeMat6Bmad& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::MakeMat6Bmad &) { return 2; })
+      .def("__getitem__", [](const Bmad::MakeMat6Bmad &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -606,25 +646,25 @@ end_orb : CoordStruct
     Coordinates at the end of element.
 err : bool
     Set True if there is an error. False otherwise.
-)""");
-  py::class_<
-      Bmad::MakeMat6BmadPhoton,
-      std::unique_ptr<Bmad::MakeMat6BmadPhoton>>(
-      m, "MakeMat6BmadPhoton", "make_mat6_bmad_photon return type")
+)"""
+  );
+  py::class_<Bmad::MakeMat6BmadPhoton, std::unique_ptr<Bmad::MakeMat6BmadPhoton>>(
+      m,
+      "MakeMat6BmadPhoton",
+      "make_mat6_bmad_photon return type"
+  )
       .def_readonly("end_orb", &Bmad::MakeMat6BmadPhoton::end_orb)
       .def_readonly("err", &Bmad::MakeMat6BmadPhoton::err)
-      .def("__len__", [](const Bmad::MakeMat6BmadPhoton&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::MakeMat6BmadPhoton& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.end_orb);
-            if (i == 1)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::MakeMat6BmadPhoton &) { return 2; })
+      .def("__getitem__", [](const Bmad::MakeMat6BmadPhoton &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.end_orb);
+        if (i == 1)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "make_mat6_bmad_photon",
       &Bmad::make_mat6_bmad_photon,
@@ -644,7 +684,8 @@ end_orb : CoordStruct
     Coordinates at the end of element.
 err : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "make_mat6_high_energy_space_charge",
       &Bmad::make_mat6_high_energy_space_charge,
@@ -668,7 +709,8 @@ Returns
 -------
 end : CoordStruct
     End position
-)""");
+)"""
+  );
   m.def(
       "make_mat6_mad",
       &Bmad::make_mat6_mad,
@@ -697,7 +739,8 @@ Returns
 -------
 c1 : CoordStruct
     Coordinates at the end of element.
-)""");
+)"""
+  );
   m.def(
       "make_mat6_symp_lie_ptc",
       &Bmad::make_mat6_symp_lie_ptc,
@@ -712,7 +755,8 @@ start_orb : CoordStruct
     Coordinates at the beginning of element.
 end_orb : CoordStruct
     Coordinates at end of element.
-)""");
+)"""
+  );
   m.def(
       "make_mat6_taylor",
       &Bmad::make_mat6_taylor,
@@ -729,23 +773,25 @@ start_orb : CoordStruct
 end_orb : CoordStruct
     Coordinates at the end of element.
 err_flag : 
-)""");
+)"""
+  );
   py::class_<Bmad::MakeMat6Tracking, std::unique_ptr<Bmad::MakeMat6Tracking>>(
-      m, "MakeMat6Tracking", "make_mat6_tracking return type")
+      m,
+      "MakeMat6Tracking",
+      "make_mat6_tracking return type"
+  )
       .def_readonly("end_orb", &Bmad::MakeMat6Tracking::end_orb)
       .def_readonly("err_flag", &Bmad::MakeMat6Tracking::err_flag)
-      .def("__len__", [](const Bmad::MakeMat6Tracking&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::MakeMat6Tracking& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.end_orb);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::MakeMat6Tracking &) { return 2; })
+      .def("__getitem__", [](const Bmad::MakeMat6Tracking &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.end_orb);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "make_mat6_tracking",
       &Bmad::make_mat6_tracking,
@@ -768,15 +814,15 @@ err_flag : bool
     Set True if there is an error. False otherwise.
 spin_only : bool, optional
     Default False. If True, only calculate ele.spin_taylor.
-)""");
-  py::class_<Bmad::MakeN, std::unique_ptr<Bmad::MakeN>>(
-      m, "MakeN", "make_n return type")
+)"""
+  );
+  py::class_<Bmad::MakeN, std::unique_ptr<Bmad::MakeN>>(m, "MakeN", "make_n return type")
       .def_readonly("N", &Bmad::MakeN::N)
       .def_readonly("err_flag", &Bmad::MakeN::err_flag)
       .def_readonly("tunes_out", &Bmad::MakeN::tunes_out)
       .def_readonly("U", &Bmad::MakeN::U)
-      .def("__len__", [](const Bmad::MakeN&) { return 4; })
-      .def("__getitem__", [](const Bmad::MakeN& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::MakeN &) { return 4; })
+      .def("__getitem__", [](const Bmad::MakeN &s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -826,15 +872,19 @@ tunes_out : float
     Fractional tune (in radians) of the 3 normal modes of t6.
 U : float
     U = Inverse(N).t6.N.  Block diagonal matrix of 2x2 rotation matrices.
-)""");
+)"""
+  );
   py::class_<Bmad::MakePbrh, std::unique_ptr<Bmad::MakePbrh>>(
-      m, "MakePbrh", "make_pbrh return type")
+      m,
+      "MakePbrh",
+      "make_pbrh return type"
+  )
       .def_readonly("P", &Bmad::MakePbrh::P)
       .def_readonly("Bp", &Bmad::MakePbrh::Bp)
       .def_readonly("R", &Bmad::MakePbrh::R)
       .def_readonly("H", &Bmad::MakePbrh::H)
-      .def("__len__", [](const Bmad::MakePbrh&) { return 4; })
-      .def("__getitem__", [](const Bmad::MakePbrh& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::MakePbrh &) { return 4; })
+      .def("__getitem__", [](const Bmad::MakePbrh &s, int i) -> py::object {
         if (i < 0)
           i += 4;
         if (i == 0)
@@ -877,26 +927,28 @@ R : complex
     Eqn. 99.  Transverse coupling.
 H : complex
     Eqn. 100.  Longitudinal coupling.
-)""");
+)"""
+  );
   py::class_<Bmad::MakeSmatFromAbc, std::unique_ptr<Bmad::MakeSmatFromAbc>>(
-      m, "MakeSmatFromAbc", "make_smat_from_abc return type")
+      m,
+      "MakeSmatFromAbc",
+      "make_smat_from_abc return type"
+  )
       .def_readonly("sigma_mat", &Bmad::MakeSmatFromAbc::sigma_mat)
       .def_readonly("err_flag", &Bmad::MakeSmatFromAbc::err_flag)
       .def_readonly("Nout", &Bmad::MakeSmatFromAbc::Nout)
-      .def("__len__", [](const Bmad::MakeSmatFromAbc&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::MakeSmatFromAbc& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.sigma_mat);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            if (i == 2)
-              return py::cast(s.Nout);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::MakeSmatFromAbc &) { return 3; })
+      .def("__getitem__", [](const Bmad::MakeSmatFromAbc &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.sigma_mat);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        if (i == 2)
+          return py::cast(s.Nout);
+        throw py::index_error();
+      });
   m.def(
       "make_smat_from_abc",
       &Bmad::make_smat_from_abc,
@@ -933,7 +985,8 @@ err_flag : bool
     set to true if something goes wrong.  Usually means Eigen decomposition of the 1-turn matrix failed.
 Nout : float
     Contains the normalized eigenvectors that were used to make the sigma matrix.
-)""");
+)"""
+  );
   m.def(
       "make_unit_mad_map",
       &Bmad::make_unit_mad_map,
@@ -947,7 +1000,8 @@ Parameters
 map : MadMapStruct
     2nd order transport map.
     This parameter is an input/output and is modified in-place. As an output: Unity 2nd order map.
-)""");
+)"""
+  );
   m.def(
       "make_v",
       &Bmad::make_v,
@@ -960,13 +1014,17 @@ For a one-turn transfer matrix M, this routine find the eigen matrix V.
 V is ordered such that the per turn phase advance of its column pairs agree with abz_tunes.
 It is normalized to be symplectic.
 
-)""");
+)"""
+  );
   py::class_<Bmad::MakeVMats, std::unique_ptr<Bmad::MakeVMats>>(
-      m, "MakeVMats", "make_v_mats return type")
+      m,
+      "MakeVMats",
+      "make_v_mats return type"
+  )
       .def_readonly("v_mat", &Bmad::MakeVMats::v_mat)
       .def_readonly("v_inv_mat", &Bmad::MakeVMats::v_inv_mat)
-      .def("__len__", [](const Bmad::MakeVMats&) { return 2; })
-      .def("__getitem__", [](const Bmad::MakeVMats& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::MakeVMats &) { return 2; })
+      .def("__getitem__", [](const Bmad::MakeVMats &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -987,7 +1045,8 @@ v_mat : float
     Normal mode to X-Y coords transformation
 v_inv_mat : float
     X-Y coords to Normal mode transformation
-)""");
+)"""
+  );
   m.def(
       "makeup_control_slave",
       &Bmad::makeup_control_slave,
@@ -998,7 +1057,8 @@ v_inv_mat : float
 
 This routine is not meant for general use.
 
-)""");
+)"""
+  );
   m.def(
       "makeup_group_lord",
       &Bmad::makeup_group_lord,
@@ -1010,7 +1070,8 @@ This routine is not meant for general use.
 Subroutine to calculate the attributes of group slave elements.
 This routine is private to bookkeeper_mod.
 
-)""");
+)"""
+  );
   m.def(
       "makeup_multipass_slave",
       &Bmad::makeup_multipass_slave,
@@ -1022,7 +1083,8 @@ This routine is private to bookkeeper_mod.
 Subroutine to calcualte the attributes of multipass slave elements.
 This routine is not meant for guse.
 
-)""");
+)"""
+  );
   m.def(
       "makeup_super_slave",
       &Bmad::makeup_super_slave,
@@ -1034,7 +1096,8 @@ This routine is not meant for guse.
 Subroutine to calcualte the attributes of superposition slave elements.
 This routine is not meant for general use.
 
-)""");
+)"""
+  );
   m.def(
       "makeup_super_slave1",
       &Bmad::makeup_super_slave1,
@@ -1070,7 +1133,8 @@ Returns
 -------
 err_flag : bool
     Set true if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "map1_inverse",
       &Bmad::map1_inverse,
@@ -1081,7 +1145,8 @@ err_flag : bool
 map1 : SpinOrbitMap1Struct
     Input map.
 inv_map1 : 
-)""");
+)"""
+  );
   m.def(
       "map1_make_unit",
       &Bmad::map1_make_unit,
@@ -1089,7 +1154,8 @@ inv_map1 :
 ----------
 map1 : SpinOrbitMap1Struct
     Unit map.
-)""");
+)"""
+  );
   m.def(
       "map1_times_map1",
       &Bmad::map1_times_map1,
@@ -1101,7 +1167,8 @@ map1 : SpinOrbitMap1Struct
 map2 : 
 map1 : 
 map_out : 
-)""");
+)"""
+  );
   m.def(
       "map_to_angle_coords",
       &Bmad::map_to_angle_coords,
@@ -1112,7 +1179,8 @@ t_canon : TaylorStruct
     Taylor map in canonical coords.
 t_angle : TaylorStruct
     Taylor map in angle coords.
-)""");
+)"""
+  );
   m.def(
       "mark_patch_regions",
       &Bmad::mark_patch_regions,
@@ -1128,7 +1196,8 @@ branch : BranchStruct
     Lattice branch with .wall3d beam chamber wall.
     This parameter is an input/output and is modified in-place. As an output: Lattice branch with
     .wall3d.section(i).patch_in_region marked.
-)""");
+)"""
+  );
   m.def(
       "master_parameter_value",
       &Bmad::master_parameter_value,
@@ -1142,7 +1211,8 @@ master_parameter : int
 ele : EleStruct
     Element containing the fieldmap.
 value : 
-)""");
+)"""
+  );
   m.def(
       "mat4_multipole",
       &Bmad::mat4_multipole,
@@ -1161,7 +1231,8 @@ orbit : CoordStruct
     coordinates of particle
 kick_mat : float
     Kick matrix (Jacobian) at orbit.
-)""");
+)"""
+  );
   m.def(
       "mat6_add_offsets",
       &Bmad::mat6_add_offsets,
@@ -1175,7 +1246,8 @@ ele : EleStruct
     .map_ref_orb_out -- Reference orbit at exit end. .value(x_offset$), .value(x_pitch$), .value(tilt$), etc.
     -- Offsets, tilts, and pitches
 param : LatParamStruct
-)""");
+)"""
+  );
   m.def(
       "mat6_add_pitch",
       &Bmad::mat6_add_pitch,
@@ -1194,7 +1266,8 @@ orientation : int
 mat6 : float
     1st order part of the transfer map (Jacobian).
     This parameter is an input/output and is modified in-place. As an output: 1st order xfer map with pitches.
-)""");
+)"""
+  );
   m.def(
       "mat6_to_complex_taylor",
       &Bmad::mat6_to_complex_taylor,
@@ -1216,29 +1289,31 @@ Returns
 -------
 complex_taylor : ComplexTaylorStruct
     first order complex_taylor map.
-)""");
+)"""
+  );
   py::class_<Bmad::MatSympDecouple, std::unique_ptr<Bmad::MatSympDecouple>>(
-      m, "MatSympDecouple", "mat_symp_decouple return type")
+      m,
+      "MatSympDecouple",
+      "mat_symp_decouple return type"
+  )
       .def_readonly("stat", &Bmad::MatSympDecouple::stat)
       .def_readonly("twiss1", &Bmad::MatSympDecouple::twiss1)
       .def_readonly("twiss2", &Bmad::MatSympDecouple::twiss2)
       .def_readonly("gamma", &Bmad::MatSympDecouple::gamma)
-      .def("__len__", [](const Bmad::MatSympDecouple&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const Bmad::MatSympDecouple& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.stat);
-            if (i == 1)
-              return py::cast(s.twiss1);
-            if (i == 2)
-              return py::cast(s.twiss2);
-            if (i == 3)
-              return py::cast(s.gamma);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::MatSympDecouple &) { return 4; })
+      .def("__getitem__", [](const Bmad::MatSympDecouple &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.stat);
+        if (i == 1)
+          return py::cast(s.twiss1);
+        if (i == 2)
+          return py::cast(s.twiss2);
+        if (i == 3)
+          return py::cast(s.gamma);
+        throw py::index_error();
+      });
   m.def(
       "mat_symp_decouple",
       &Bmad::mat_symp_decouple,
@@ -1269,26 +1344,28 @@ gamma : float
     gamma_c factor.
 type_out : bool
     If .true. then an error message is typed out for a non ok$ STAT
-)""");
+)"""
+  );
   py::class_<Bmad::MatchEleToMat6, std::unique_ptr<Bmad::MatchEleToMat6>>(
-      m, "MatchEleToMat6", "match_ele_to_mat6 return type")
+      m,
+      "MatchEleToMat6",
+      "match_ele_to_mat6 return type"
+  )
       .def_readonly("mat6", &Bmad::MatchEleToMat6::mat6)
       .def_readonly("vec0", &Bmad::MatchEleToMat6::vec0)
       .def_readonly("err_flag", &Bmad::MatchEleToMat6::err_flag)
-      .def("__len__", [](const Bmad::MatchEleToMat6&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::MatchEleToMat6& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.mat6);
-            if (i == 1)
-              return py::cast(s.vec0);
-            if (i == 2)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::MatchEleToMat6 &) { return 3; })
+      .def("__getitem__", [](const Bmad::MatchEleToMat6 &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.mat6);
+        if (i == 1)
+          return py::cast(s.vec0);
+        if (i == 2)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "match_ele_to_mat6",
       &Bmad::match_ele_to_mat6,
@@ -1313,7 +1390,8 @@ include_delta_time : bool, optional
 set_trombone : bool, optional
     Default is False. If True, set the beginning and ending Twiss values in the element to create a phase
     trombone.
-)""");
+)"""
+  );
   m.def(
       "mexp",
       &Bmad::mexp,
@@ -1327,7 +1405,8 @@ x : float
 m : int
     Exponent.
 this_exp : 
-)""");
+)"""
+  );
   m.def(
       "mfft1",
       &Bmad::mfft1,
@@ -1344,7 +1423,8 @@ n :
 ndim : 
 isn : 
 ierr : 
-)""");
+)"""
+  );
   m.def(
       "misalign_ptc_fibre",
       &Bmad::misalign_ptc_fibre,
@@ -1369,7 +1449,8 @@ Returns
 -------
 ptc_fibre : unknown
     PTC fibre element with misalignments.
-)""");
+)"""
+  );
   m.def(
       "momentum_compaction",
       &Bmad::momentum_compaction,
@@ -1380,40 +1461,37 @@ ptc_fibre : unknown
 branch : BranchStruct
     Lattice branch to calculate on.
 mom_comp : 
-)""");
-  py::class_<
-      Bmad::MultiTurnTrackingAnalysis,
-      std::unique_ptr<Bmad::MultiTurnTrackingAnalysis>>(
+)"""
+  );
+  py::class_<Bmad::MultiTurnTrackingAnalysis, std::unique_ptr<Bmad::MultiTurnTrackingAnalysis>>(
       m,
       "MultiTurnTrackingAnalysis",
-      "multi_turn_tracking_analysis return type")
+      "multi_turn_tracking_analysis return type"
+  )
       .def_readonly("track0", &Bmad::MultiTurnTrackingAnalysis::track0)
       .def_readonly("ele", &Bmad::MultiTurnTrackingAnalysis::ele)
       .def_readonly("stable", &Bmad::MultiTurnTrackingAnalysis::stable)
-      .def_readonly(
-          "growth_rate", &Bmad::MultiTurnTrackingAnalysis::growth_rate)
+      .def_readonly("growth_rate", &Bmad::MultiTurnTrackingAnalysis::growth_rate)
       .def_readonly("chi", &Bmad::MultiTurnTrackingAnalysis::chi)
       .def_readonly("err_flag", &Bmad::MultiTurnTrackingAnalysis::err_flag)
-      .def("__len__", [](const Bmad::MultiTurnTrackingAnalysis&) { return 6; })
-      .def(
-          "__getitem__",
-          [](const Bmad::MultiTurnTrackingAnalysis& s, int i) -> py::object {
-            if (i < 0)
-              i += 6;
-            if (i == 0)
-              return py::cast(s.track0);
-            if (i == 1)
-              return py::cast(s.ele);
-            if (i == 2)
-              return py::cast(s.stable);
-            if (i == 3)
-              return py::cast(s.growth_rate);
-            if (i == 4)
-              return py::cast(s.chi);
-            if (i == 5)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::MultiTurnTrackingAnalysis &) { return 6; })
+      .def("__getitem__", [](const Bmad::MultiTurnTrackingAnalysis &s, int i) -> py::object {
+        if (i < 0)
+          i += 6;
+        if (i == 0)
+          return py::cast(s.track0);
+        if (i == 1)
+          return py::cast(s.ele);
+        if (i == 2)
+          return py::cast(s.stable);
+        if (i == 3)
+          return py::cast(s.growth_rate);
+        if (i == 4)
+          return py::cast(s.chi);
+        if (i == 5)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "multi_turn_tracking_analysis",
       &Bmad::multi_turn_tracking_analysis,
@@ -1441,7 +1519,8 @@ chi : float
     How symplectic the computed 1-turn matrix is. See mat_symp_check for more details.
 err_flag : bool
     Set true if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "multilayer_type_to_multilayer_params",
       &Bmad::multilayer_type_to_multilayer_params,
@@ -1464,7 +1543,8 @@ Returns
 -------
 err_flag : bool
     Set True if multilayer type is unrecognized. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "multipass_chain",
       &Bmad::multipass_chain,
@@ -1486,23 +1566,25 @@ chain_ele : ElePointerStruct, optional
 use_super_lord : bool, optional
     If present and True and if ele is a super_slave, construct the chain_ele(:) array using the corresponding
     super_lords. Output
-)""");
+)"""
+  );
   py::class_<Bmad::Multipole1AbToKt, std::unique_ptr<Bmad::Multipole1AbToKt>>(
-      m, "Multipole1AbToKt", "multipole1_ab_to_kt return type")
+      m,
+      "Multipole1AbToKt",
+      "multipole1_ab_to_kt return type"
+  )
       .def_readonly("knl", &Bmad::Multipole1AbToKt::knl)
       .def_readonly("tn", &Bmad::Multipole1AbToKt::tn)
-      .def("__len__", [](const Bmad::Multipole1AbToKt&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::Multipole1AbToKt& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.knl);
-            if (i == 1)
-              return py::cast(s.tn);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::Multipole1AbToKt &) { return 2; })
+      .def("__getitem__", [](const Bmad::Multipole1AbToKt &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.knl);
+        if (i == 1)
+          return py::cast(s.tn);
+        throw py::index_error();
+      });
   m.def(
       "multipole1_ab_to_kt",
       &Bmad::multipole1_ab_to_kt,
@@ -1521,23 +1603,25 @@ knl : float
     Multitude magnatude.
 tn : float
     Multipole angle.
-)""");
+)"""
+  );
   py::class_<Bmad::Multipole1KtToAb, std::unique_ptr<Bmad::Multipole1KtToAb>>(
-      m, "Multipole1KtToAb", "multipole1_kt_to_ab return type")
+      m,
+      "Multipole1KtToAb",
+      "multipole1_kt_to_ab return type"
+  )
       .def_readonly("an", &Bmad::Multipole1KtToAb::an)
       .def_readonly("bn", &Bmad::Multipole1KtToAb::bn)
-      .def("__len__", [](const Bmad::Multipole1KtToAb&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::Multipole1KtToAb& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.an);
-            if (i == 1)
-              return py::cast(s.bn);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::Multipole1KtToAb &) { return 2; })
+      .def("__getitem__", [](const Bmad::Multipole1KtToAb &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.an);
+        if (i == 1)
+          return py::cast(s.bn);
+        throw py::index_error();
+      });
   m.def(
       "multipole1_kt_to_ab",
       &Bmad::multipole1_kt_to_ab,
@@ -1559,7 +1643,8 @@ an : float
     Skew multipole component.
 bn : float
     Normal multipole component.
-)""");
+)"""
+  );
   m.def(
       "multipole_ab_to_kt",
       &Bmad::multipole_ab_to_kt,
@@ -1577,29 +1662,31 @@ knl : float
     Multitude magnatude.
 tn : float
     Multipole angle.
-)""");
+)"""
+  );
   py::class_<Bmad::MultipoleEleToAb, std::unique_ptr<Bmad::MultipoleEleToAb>>(
-      m, "MultipoleEleToAb", "multipole_ele_to_ab return type")
+      m,
+      "MultipoleEleToAb",
+      "multipole_ele_to_ab return type"
+  )
       .def_readonly("ix_pole_max", &Bmad::MultipoleEleToAb::ix_pole_max)
       .def_readonly("a", &Bmad::MultipoleEleToAb::a)
       .def_readonly("b", &Bmad::MultipoleEleToAb::b)
       .def_readonly("b1", &Bmad::MultipoleEleToAb::b1)
-      .def("__len__", [](const Bmad::MultipoleEleToAb&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const Bmad::MultipoleEleToAb& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.ix_pole_max);
-            if (i == 1)
-              return py::cast(s.a);
-            if (i == 2)
-              return py::cast(s.b);
-            if (i == 3)
-              return py::cast(s.b1);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::MultipoleEleToAb &) { return 4; })
+      .def("__getitem__", [](const Bmad::MultipoleEleToAb &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.ix_pole_max);
+        if (i == 1)
+          return py::cast(s.a);
+        if (i == 2)
+          return py::cast(s.b);
+        if (i == 3)
+          return py::cast(s.b1);
+        throw py::index_error();
+      });
   m.def(
       "multipole_ele_to_ab",
       &Bmad::multipole_ele_to_ab,
@@ -1635,7 +1722,8 @@ b1 : float
     tracking.
 original : bool, optional
     Default is false. If True, no scaling is applied.
-)""");
+)"""
+  );
   m.def(
       "multipole_ele_to_kt",
       &Bmad::multipole_ele_to_kt,
@@ -1664,7 +1752,8 @@ include_kicks : int, optional
     Possibilities are: no$                      -- Default. Do not include any kick components in a and b
     multipoles. include_kicks$           -- Include hkick/vkick/dg in the n = 0 components. Also included are
     quad k1, sextupole k2 and octupole k3 components.
-)""");
+)"""
+  );
   m.def(
       "multipole_init",
       &Bmad::multipole_init,
@@ -1680,7 +1769,8 @@ who : int
 zero : bool, optional
     If present and True then zero the arrays even if they already exist when this routine is called. Default
     is False which means that if the arrays already exist then this routine will do nothing.
-)""");
+)"""
+  );
   m.def(
       "multipole_kick",
       &Bmad::multipole_kick,
@@ -1716,7 +1806,8 @@ pole_type : int, optional
 ref_orb_offset : bool, optional
     If True and n = 0 then use the MAD convention and model the multipole as a zero length bend with bending
     angle knl. Default is False.
-)""");
+)"""
+  );
   m.def(
       "multipole_kick_mat",
       &Bmad::multipole_kick_mat,
@@ -1742,7 +1833,8 @@ factor : float
     Factor to scale knl by.
 mat6 : float
     matrix with kick values at mat6(2:4:2, 1:3:2). The rest of the matrix is untouched.
-)""");
+)"""
+  );
   m.def(
       "multipole_kicks",
       &Bmad::multipole_kicks,
@@ -1772,7 +1864,8 @@ pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
 ref_orb_offset : bool, optional
     If present and n = 0 then the multipole simulates a zero length bend with bending angle knl.
-)""");
+)"""
+  );
   m.def(
       "multipole_kt_to_ab",
       &Bmad::multipole_kt_to_ab,
@@ -1793,7 +1886,8 @@ an : float
     Skew multipole component.
 bn : float
     Normal multipole component.
-)""");
+)"""
+  );
   m.def(
       "multipole_spin_tracking",
       &Bmad::multipole_spin_tracking,
@@ -1808,7 +1902,8 @@ param :
     Lat_param_struct
 orbit : CoordStruct
     Particle coordinates.
-)""");
+)"""
+  );
   m.def(
       "mytan",
       &Bmad::mytan,
@@ -1820,5 +1915,6 @@ orbit : CoordStruct
 y : 
 x : 
 arg : 
-)""");
+)"""
+  );
 }

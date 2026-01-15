@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_d(py::module& m) {
+void init_Bmad_routines_d(py::module &m) {
   m.def(
       "damping_matrix_d",
       &Bmad::damping_matrix_d,
@@ -24,7 +24,8 @@ B1 :
 delta : 
 species : 
 mat : 
-)""");
+)"""
+  );
   m.def(
       "deallocate_ele_pointers",
       &Bmad::deallocate_ele_pointers,
@@ -44,7 +45,8 @@ nullify_branch : bool, optional
     Nullify ele.branch? Default is True.
 dealloc_poles : bool, optional
     Dealloc ele.a/b_pole, ele.a/b_pole_elec? Default is True.
-)""");
+)"""
+  );
   m.def(
       "deallocate_expression_tree",
       &Bmad::deallocate_expression_tree,
@@ -58,7 +60,8 @@ Parameters
 tree : ExpressionTreeStruct
     Tree to deallocate.
     This parameter is an input/output and is modified in-place. As an output: Deallocated tree.
-)""");
+)"""
+  );
   m.def(
       "deallocate_lat_pointers",
       &Bmad::deallocate_lat_pointers,
@@ -68,7 +71,8 @@ tree : ExpressionTreeStruct
 lat : LatStruct
     Lat with pointers.
     This parameter is an input/output and is modified in-place. As an output: Lat with deallocated pointers.
-)""");
+)"""
+  );
   m.def(
       "default_tracking_species",
       &Bmad::default_tracking_species,
@@ -79,7 +83,8 @@ lat : LatStruct
 param : LatParamStruct
     Parameters for a lattice branch.
 species : 
-)""");
+)"""
+  );
   m.def(
       "detector_pixel_pt",
       &Bmad::detector_pixel_pt,
@@ -100,7 +105,8 @@ Returns
 -------
 ix_pix : int
     index of ele.photon.pixel.pt(:,:) the particle is in.
-)""");
+)"""
+  );
   m.def(
       "diffraction_plate_or_mask_hit_spot",
       &Bmad::diffraction_plate_or_mask_hit_spot,
@@ -114,7 +120,8 @@ ele : EleStruct
 orbit : CoordStruct
     particle position.
 ix_section : 
-)""");
+)"""
+  );
   m.def(
       "diffusion_matrix_b",
       &Bmad::diffusion_matrix_b,
@@ -128,7 +135,8 @@ gamma :
 g_tot : 
 species : 
 mat : 
-)""");
+)"""
+  );
   m.def(
       "distance_to_aperture",
       &Bmad::distance_to_aperture,
@@ -147,7 +155,8 @@ ele : EleStruct
 no_aperture_here : bool
     True if aperture does not exist at the longitudinal location of the particle.
 dist : 
-)""");
+)"""
+  );
   m.def(
       "do_mode_flip",
       &Bmad::do_mode_flip,
@@ -159,7 +168,8 @@ ele : EleStruct
     This parameter is an input/output and is modified in-place. As an output: Flipped element
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "dpc_given_de",
       &Bmad::dpc_given_de,
@@ -173,7 +183,8 @@ pc_old :
 mass : 
 dE : 
 dpc : 
-)""");
+)"""
+  );
   m.def(
       "drift_and_pipe_track_methods_adjustment",
       &Bmad::drift_and_pipe_track_methods_adjustment,
@@ -193,7 +204,8 @@ lat : LatStruct
     Lattice
     This parameter is an input/output and is modified in-place. As an output: Lattice with tracking methods
     adjusted if needed.
-)""");
+)"""
+  );
   m.def(
       "drift_multipass_name_correction",
       &Bmad::drift_multipass_name_correction,
@@ -201,7 +213,8 @@ lat : LatStruct
       R"""(Parameters
 ----------
 lat : 
-)""");
+)"""
+  );
   m.def(
       "drift_orbit_time",
       &Bmad::drift_orbit_time,
@@ -226,7 +239,8 @@ delta_s : float, optional
     s-coordinate distance to drift particle.
 delta_t : float, optional
     -coordinate distancet to drift particle.
-)""");
+)"""
+  );
   m.def(
       "drift_particle_to_s",
       &Bmad::drift_particle_to_s,
@@ -246,7 +260,8 @@ s : float
     Target s coordinate.
 branch : BranchStruct
     Branch being tracked through.
-)""");
+)"""
+  );
   m.def(
       "drift_particle_to_t",
       &Bmad::drift_particle_to_t,
@@ -266,7 +281,8 @@ t : float
     Target t coordinate.
 branch : BranchStruct
     Lattice branch being tracked through.
-)""");
+)"""
+  );
   m.def(
       "dspline_len",
       &Bmad::dspline_len,
@@ -294,7 +310,8 @@ Returns
 -------
 dlen : float
     L_spline - L_chord
-)""");
+)"""
+  );
   m.def(
       "dynamic_aperture_point",
       &Bmad::dynamic_aperture_point,
@@ -328,7 +345,8 @@ check_xy_init : bool, optional
 Returns
 -------
 ap_point : AperturePointStruct
-)""");
+)"""
+  );
   m.def(
       "dynamic_aperture_scan",
       &Bmad::dynamic_aperture_scan,
@@ -356,5 +374,6 @@ Returns
 -------
 aperture_scan : ApertureScanStruct
     Set of scans. One for each pz_start(:).
-)""");
+)"""
+  );
 }

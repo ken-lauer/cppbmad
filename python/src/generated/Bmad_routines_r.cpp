@@ -4,28 +4,27 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_r(py::module& m) {
-  py::class_<
-      Bmad::Rad1DampAndStocMats,
-      std::unique_ptr<Bmad::Rad1DampAndStocMats>>(
-      m, "Rad1DampAndStocMats", "rad1_damp_and_stoc_mats return type")
+void init_Bmad_routines_r(py::module &m) {
+  py::class_<Bmad::Rad1DampAndStocMats, std::unique_ptr<Bmad::Rad1DampAndStocMats>>(
+      m,
+      "Rad1DampAndStocMats",
+      "rad1_damp_and_stoc_mats return type"
+  )
       .def_readonly("rad_map", &Bmad::Rad1DampAndStocMats::rad_map)
       .def_readonly("err_flag", &Bmad::Rad1DampAndStocMats::err_flag)
       .def_readonly("rad_int1", &Bmad::Rad1DampAndStocMats::rad_int1)
-      .def("__len__", [](const Bmad::Rad1DampAndStocMats&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::Rad1DampAndStocMats& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.rad_map);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            if (i == 2)
-              return py::cast(s.rad_int1);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::Rad1DampAndStocMats &) { return 3; })
+      .def("__getitem__", [](const Bmad::Rad1DampAndStocMats &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.rad_map);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        if (i == 2)
+          return py::cast(s.rad_int1);
+        throw py::index_error();
+      });
   m.def(
       "rad1_damp_and_stoc_mats",
       &Bmad::rad1_damp_and_stoc_mats,
@@ -66,35 +65,34 @@ err_flag : bool
     Set true if there is an error. False otherwise.
 rad_int1 : RadInt1Struct
     Radiation integrals
-)""");
-  py::class_<
-      Bmad::RadDampAndStocMats,
-      std::unique_ptr<Bmad::RadDampAndStocMats>>(
-      m, "RadDampAndStocMats", "rad_damp_and_stoc_mats return type")
+)"""
+  );
+  py::class_<Bmad::RadDampAndStocMats, std::unique_ptr<Bmad::RadDampAndStocMats>>(
+      m,
+      "RadDampAndStocMats",
+      "rad_damp_and_stoc_mats return type"
+  )
       .def_readonly("rmap", &Bmad::RadDampAndStocMats::rmap)
       .def_readonly("mode", &Bmad::RadDampAndStocMats::mode)
-      .def_readonly(
-          "xfer_nodamp_mat", &Bmad::RadDampAndStocMats::xfer_nodamp_mat)
+      .def_readonly("xfer_nodamp_mat", &Bmad::RadDampAndStocMats::xfer_nodamp_mat)
       .def_readonly("err_flag", &Bmad::RadDampAndStocMats::err_flag)
       .def_readonly("rad_int_branch", &Bmad::RadDampAndStocMats::rad_int_branch)
-      .def("__len__", [](const Bmad::RadDampAndStocMats&) { return 5; })
-      .def(
-          "__getitem__",
-          [](const Bmad::RadDampAndStocMats& s, int i) -> py::object {
-            if (i < 0)
-              i += 5;
-            if (i == 0)
-              return py::cast(s.rmap);
-            if (i == 1)
-              return py::cast(s.mode);
-            if (i == 2)
-              return py::cast(s.xfer_nodamp_mat);
-            if (i == 3)
-              return py::cast(s.err_flag);
-            if (i == 4)
-              return py::cast(s.rad_int_branch);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::RadDampAndStocMats &) { return 5; })
+      .def("__getitem__", [](const Bmad::RadDampAndStocMats &s, int i) -> py::object {
+        if (i < 0)
+          i += 5;
+        if (i == 0)
+          return py::cast(s.rmap);
+        if (i == 1)
+          return py::cast(s.mode);
+        if (i == 2)
+          return py::cast(s.xfer_nodamp_mat);
+        if (i == 3)
+          return py::cast(s.err_flag);
+        if (i == 4)
+          return py::cast(s.rad_int_branch);
+        throw py::index_error();
+      });
   m.def(
       "rad_damp_and_stoc_mats",
       &Bmad::rad_damp_and_stoc_mats,
@@ -138,7 +136,8 @@ rad_int_branch : RadIntBranchStruct
     Array of element-by-element radiation integrals.
 err_flag : bool
     Set true if there is a problem.
-)""");
+)"""
+  );
   m.def(
       "rad_g_integrals",
       &Bmad::rad_g_integrals,
@@ -178,25 +177,25 @@ Returns
 -------
 int_g : float
     Integrals of (gx,gy) vector. gint_g2, int_g3       -- real(rp): integrals of |g|^2 and |g|^3.
-)""");
-  py::class_<
-      Bmad::RadiationIntegrals,
-      std::unique_ptr<Bmad::RadiationIntegrals>>(
-      m, "RadiationIntegrals", "radiation_integrals return type")
+)"""
+  );
+  py::class_<Bmad::RadiationIntegrals, std::unique_ptr<Bmad::RadiationIntegrals>>(
+      m,
+      "RadiationIntegrals",
+      "radiation_integrals return type"
+  )
       .def_readonly("mode", &Bmad::RadiationIntegrals::mode)
       .def_readonly("rad_int_by_ele", &Bmad::RadiationIntegrals::rad_int_by_ele)
-      .def("__len__", [](const Bmad::RadiationIntegrals&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::RadiationIntegrals& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.mode);
-            if (i == 1)
-              return py::cast(s.rad_int_by_ele);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::RadiationIntegrals &) { return 2; })
+      .def("__getitem__", [](const Bmad::RadiationIntegrals &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.mode);
+        if (i == 1)
+          return py::cast(s.rad_int_by_ele);
+        throw py::index_error();
+      });
   m.def(
       "radiation_integrals",
       &Bmad::radiation_integrals,
@@ -234,7 +233,8 @@ rad_int_by_ele : RadIntAllEleStruct
     one for each element in the branch. Notes: 1) .synch_int(1) = momentum_compaction * lat_length 2) The
     lin_norm_emit values are running sums from the beginning of the lattice and include the beginning
     emittance stored in lat.a.emit and lat.b.emit.
-)""");
+)"""
+  );
   m.def(
       "radiation_map_setup",
       &Bmad::radiation_map_setup,
@@ -256,7 +256,8 @@ Returns
 -------
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "ramper_slave_setup",
       &Bmad::ramper_slave_setup,
@@ -271,7 +272,8 @@ lat : LatStruct
 force_setup : bool, optional
     Default False. If True, do the setup even if lat.ramper_slave_bookkeeping = ok$. But the setup will never
     be done if lat.ramper_slave_bookkeeping = super_ok$.
-)""");
+)"""
+  );
   m.def(
       "ramper_value",
       &Bmad::ramper_value,
@@ -287,7 +289,8 @@ r1 : ControlRamp1Struct
 err_flag : bool
     Set True if there is an error, False otherwise.
 value : 
-)""");
+)"""
+  );
   m.def(
       "randomize_lr_wake_frequencies",
       &Bmad::randomize_lr_wake_frequencies,
@@ -309,7 +312,8 @@ Returns
 -------
 set_done : bool
     Set True if there where lr wakes to be set. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "rchomp",
       &Bmad::rchomp,
@@ -321,7 +325,8 @@ set_done : bool
 rel : 
 plc : 
 out : 
-)""");
+)"""
+  );
   m.def(
       "re_allocate_eles",
       &Bmad::re_allocate_eles,
@@ -341,11 +346,11 @@ save_old : bool, optional
 exact : bool, optional
     If present and True then eles will have size = n If False (default), reallcation will not be done if eles
     is already large enough
-)""");
+)"""
+  );
   m.def(
       "re_allocate",
-      py::overload_cast<Wall3dSectionProxyAlloc1D&, int, std::optional<bool>>(
-          &Bmad::re_allocate),
+      py::overload_cast<Wall3dSectionStructAlloc1D, int, std::optional<bool>>(&Bmad::re_allocate),
       py::arg("section"),
       py::arg("n"),
       py::arg("exact") = py::none(),
@@ -354,11 +359,11 @@ exact : bool, optional
 section : 
 n : 
 exact : 
-)""");
+)"""
+  );
   m.def(
       "re_allocate",
-      py::overload_cast<Wall3dVertexProxyAlloc1D&, int, std::optional<bool>>(
-          &Bmad::re_allocate),
+      py::overload_cast<Wall3dVertexStructAlloc1D, int, std::optional<bool>>(&Bmad::re_allocate),
       py::arg("v"),
       py::arg("n"),
       py::arg("exact") = py::none(),
@@ -367,7 +372,8 @@ exact :
 v : 
 n : 
 exact : 
-)""");
+)"""
+  );
   m.def(
       "re_associate_node_array",
       &Bmad::re_associate_node_array,
@@ -388,7 +394,8 @@ n : int
     Size wanted.
 exact : bool, optional
     Default is False. If False, the size of the output array is permitted to be larger than n.
-)""");
+)"""
+  );
   m.def(
       "re_str",
       py::overload_cast<long double, std::string>(&Bmad::re_str),
@@ -398,7 +405,8 @@ exact : bool, optional
 ----------
 rel : 
 str_out : 
-)""");
+)"""
+  );
   m.def(
       "re_str",
       py::overload_cast<double, std::string>(&Bmad::re_str),
@@ -408,22 +416,25 @@ str_out :
 ----------
 rel : 
 str_out : 
-)""");
+)"""
+  );
   py::class_<Bmad::ReadBeamAscii, std::unique_ptr<Bmad::ReadBeamAscii>>(
-      m, "ReadBeamAscii", "read_beam_ascii return type")
+      m,
+      "ReadBeamAscii",
+      "read_beam_ascii return type"
+  )
       .def_readonly("beam", &Bmad::ReadBeamAscii::beam)
       .def_readonly("err_flag", &Bmad::ReadBeamAscii::err_flag)
-      .def("__len__", [](const Bmad::ReadBeamAscii&) { return 2; })
-      .def(
-          "__getitem__", [](const Bmad::ReadBeamAscii& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.beam);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::ReadBeamAscii &) { return 2; })
+      .def("__getitem__", [](const Bmad::ReadBeamAscii &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.beam);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "read_beam_ascii",
       &Bmad::read_beam_ascii,
@@ -461,13 +472,17 @@ beam : BeamStruct
     Structure holding the beam information.
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   py::class_<Bmad::ReadBeamFile, std::unique_ptr<Bmad::ReadBeamFile>>(
-      m, "ReadBeamFile", "read_beam_file return type")
+      m,
+      "ReadBeamFile",
+      "read_beam_file return type"
+  )
       .def_readonly("beam", &Bmad::ReadBeamFile::beam)
       .def_readonly("err_flag", &Bmad::ReadBeamFile::err_flag)
-      .def("__len__", [](const Bmad::ReadBeamFile&) { return 2; })
-      .def("__getitem__", [](const Bmad::ReadBeamFile& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::ReadBeamFile &) { return 2; })
+      .def("__getitem__", [](const Bmad::ReadBeamFile &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -515,7 +530,8 @@ beam : BeamStruct
     Structure holding the beam information.
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "read_binary_cartesian_map",
       &Bmad::read_binary_cartesian_map,
@@ -537,7 +553,8 @@ cart_map :
     cartesian_map_struct, cartesian map.
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "read_binary_cylindrical_map",
       &Bmad::read_binary_cylindrical_map,
@@ -559,7 +576,8 @@ cl_map :
     cylindrical_map_struct, cylindrical map.
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "read_binary_grid_field",
       &Bmad::read_binary_grid_field,
@@ -581,7 +599,8 @@ g_field :
     grid_field_struct, cylindrical map.
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "read_surface_reflection_file",
       &Bmad::read_surface_reflection_file,
@@ -599,7 +618,8 @@ Returns
 -------
 surface : PhotonReflectSurfaceStruct
     Surface info.
-)""");
+)"""
+  );
   m.def(
       "reallocate_beam",
       &Bmad::reallocate_beam,
@@ -618,7 +638,8 @@ n_particle : int, optional
     Number of particles. Must be non-negative. If save = True then the number of particles in existing bunches
     will not be touched. If not present, beam.bunch(i).particle(:) will be in an undefined state.
 extend : 
-)""");
+)"""
+  );
   m.def("reallocate_bp_com_const", &Bmad::reallocate_bp_com_const, R"""()""");
   m.def(
       "reallocate_bunch",
@@ -633,7 +654,8 @@ n_particle : int
     Number of particles. Must be non-negative.
 save : bool, optional
     If present and True then save the old bunch info.
-)""");
+)"""
+  );
   m.def(
       "reallocate_control",
       &Bmad::reallocate_control,
@@ -645,11 +667,11 @@ lat : LatStruct
     Lattice.
 n : int
     Array size for lat.control(:) and lat.ic(:).
-)""");
+)"""
+  );
   m.def(
       "reallocate_coord",
-      py::overload_cast<CoordArrayProxyAlloc1D&, LatProxy&>(
-          &Bmad::reallocate_coord),
+      py::overload_cast<CoordArrayStructAlloc1D, LatStruct &>(&Bmad::reallocate_coord),
       py::arg("coord_array"),
       py::arg("lat"),
       R"""(Subroutine reallocate_coord (...)
@@ -682,11 +704,13 @@ ix_branch : int, optional
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "reallocate_coord",
-      py::overload_cast<CoordProxyAlloc1D&, LatProxy&, std::optional<int>>(
-          &Bmad::reallocate_coord),
+      py::overload_cast<CoordStructAlloc1D, LatStruct &, std::optional<int>>(
+          &Bmad::reallocate_coord
+      ),
       py::arg("coord"),
       py::arg("lat"),
       py::arg("ix_branch") = py::none(),
@@ -720,10 +744,11 @@ ix_branch : int, optional
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "reallocate_coord",
-      py::overload_cast<CoordProxyAlloc1D&, int>(&Bmad::reallocate_coord),
+      py::overload_cast<CoordStructAlloc1D, int>(&Bmad::reallocate_coord),
       py::arg("coord"),
       py::arg("n_coord"),
       R"""(Subroutine reallocate_coord (...)
@@ -756,7 +781,8 @@ ix_branch : int, optional
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "reallocate_expression_stack",
       &Bmad::reallocate_expression_stack,
@@ -772,7 +798,8 @@ n : int
     Array size needed.
 exact : bool, optional
     If present and False then the size of the output array is permitted to be larger than n. Default is True.
-)""");
+)"""
+  );
   m.def(
       "rel_tracking_charge_to_mass",
       &Bmad::rel_tracking_charge_to_mass,
@@ -786,7 +813,8 @@ orbit : CoordStruct
 ref_species : int
     Reference species
 rel_charge : 
-)""");
+)"""
+  );
   m.def(
       "relative_mode_flip",
       &Bmad::relative_mode_flip,
@@ -798,7 +826,8 @@ rel_charge :
 ele1 : 
 ele2 : 
 relative_mode_flip : 
-)""");
+)"""
+  );
   m.def(
       "release_rad_int_cache",
       &Bmad::release_rad_int_cache,
@@ -813,7 +842,8 @@ Parameters
 ix_cache : int
     Cache number.
     This parameter is an input/output and is modified in-place. As an output: Cache number set to 0,
-)""");
+)"""
+  );
   m.def(
       "remove_constant_taylor",
       &Bmad::remove_constant_taylor,
@@ -844,7 +874,8 @@ taylor_out : TaylorStruct
     Taylor with constant terms removed.
 c0 : float
     The constant part of the taylor map
-)""");
+)"""
+  );
   m.def(
       "remove_dead_from_bunch",
       &Bmad::remove_dead_from_bunch,
@@ -856,7 +887,8 @@ bunch_in : BunchStruct
 bunch_out : BunchStruct
     Output bunch with only alive and pre_born particles. Note: bunch_out can be the same actual argument as
     bunch_in.
-)""");
+)"""
+  );
   m.def(
       "remove_eles_from_lat",
       &Bmad::remove_eles_from_lat,
@@ -869,7 +901,8 @@ lat : LatStruct
     This parameter is an input/output and is modified in-place. As an output: Compressed lattice.
 check_sanity : bool, optional
     If True (default) then call lat_sanity_check
-)""");
+)"""
+  );
   m.def(
       "remove_lord_slave_link",
       &Bmad::remove_lord_slave_link,
@@ -885,7 +918,8 @@ slave : EleStruct
     Slave element
     This parameter is an input/output and is modified in-place. As an output: Slave element with link info
     removed
-)""");
+)"""
+  );
   m.def(
       "reverse_lat",
       &Bmad::reverse_lat,
@@ -899,7 +933,8 @@ lat_rev : LatStruct
     Reversed lattice.
 track_antiparticle : bool, optional
     Set the particle species of the reversed lat to the anti-particle of lat_in? Default is True.
-)""");
+)"""
+  );
   m.def(
       "rf_coupler_kick",
       &Bmad::rf_coupler_kick,
@@ -942,7 +977,8 @@ make_matrix : bool, optional
 Returns
 -------
 ok
-)""");
+)"""
+  );
   m.def(
       "rf_is_on",
       &Bmad::rf_is_on,
@@ -959,7 +995,8 @@ ix_ele1 : int, optional
 ix_ele2 : int, optional
     End of range of elements to check. Default is branch.n_ele_track.
 is_on : 
-)""");
+)"""
+  );
   m.def(
       "rf_ref_time_offset",
       &Bmad::rf_ref_time_offset,
@@ -973,7 +1010,8 @@ ele : EleStruct
 ds : float, optional
     Distance of particle from start edge. Default is zero. Ouput:
 time : 
-)""");
+)"""
+  );
   m.def(
       "rfun",
       &Bmad::rfun,
@@ -999,7 +1037,8 @@ hz :
 i : 
 j : 
 res : 
-)""");
+)"""
+  );
   m.def(
       "rk_adaptive_time_step",
       &Bmad::rk_adaptive_time_step,
@@ -1025,7 +1064,8 @@ dt_did :
 dt_next : 
 err_flag : 
 extra_field : 
-)""");
+)"""
+  );
   m.def(
       "rk_time_step1",
       &Bmad::rk_time_step1,
@@ -1052,7 +1092,8 @@ dr_dt :
 err_flag : 
 print_err : 
 extra_field : 
-)""");
+)"""
+  );
   m.def(
       "rotate3",
       &Bmad::rotate3,
@@ -1064,7 +1105,8 @@ extra_field :
 vec : 
 angle : 
 rvec : 
-)""");
+)"""
+  );
   m.def(
       "rotate_em_field",
       &Bmad::rotate_em_field,
@@ -1089,7 +1131,8 @@ calc_dfield : bool, optional
     If present and True then rotate the field derivatives.
 calc_potential : bool, optional
     Rotate the magnetic vector potential? Default is false.
-)""");
+)"""
+  );
   m.def(
       "rotate_field_zx",
       &Bmad::rotate_field_zx,
@@ -1099,7 +1142,8 @@ calc_potential : bool, optional
 ----------
 field : 
 theta : 
-)""");
+)"""
+  );
   m.def(
       "rotate_for_curved_surface",
       &Bmad::rotate_for_curved_surface,
@@ -1120,7 +1164,8 @@ rot_mat : float
     When set = False, rotation matrix calculated from previous call with set = True.
     This parameter is an input/output and is modified in-place. As an output: When set = True, calculated
     rotation matrix.
-)""");
+)"""
+  );
   m.def(
       "rotate_spin",
       &Bmad::rotate_spin,
@@ -1135,7 +1180,8 @@ spin : float
     This parameter is an input/output and is modified in-place. As an output: Final coords.
 qrot : float
     : rotation quaternion.
-)""");
+)"""
+  );
   m.def(
       "rotate_spin_a_step",
       &Bmad::rotate_spin_a_step,
@@ -1154,7 +1200,8 @@ ele :
     ele_struct, Element being tracked through.
 ds : float
     Longitudinal step in element body frame.
-)""");
+)"""
+  );
   m.def(
       "rotate_spin_given_field",
       &Bmad::rotate_spin_given_field,
@@ -1178,5 +1225,6 @@ qrot : float, optional
     Initial rotation quaternion.
     This parameter is an input/output and is modified in-place. As an output: Rotation quaternion with
     rotation due to the field added in.
-)""");
+)"""
+  );
 }

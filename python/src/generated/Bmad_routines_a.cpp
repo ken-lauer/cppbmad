@@ -4,26 +4,27 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_a(py::module& m) {
+void init_Bmad_routines_a(py::module &m) {
   py::class_<Bmad::AbMultipoleKick, std::unique_ptr<Bmad::AbMultipoleKick>>(
-      m, "AbMultipoleKick", "ab_multipole_kick return type")
+      m,
+      "AbMultipoleKick",
+      "ab_multipole_kick return type"
+  )
       .def_readonly("kx", &Bmad::AbMultipoleKick::kx)
       .def_readonly("ky", &Bmad::AbMultipoleKick::ky)
       .def_readonly("dk", &Bmad::AbMultipoleKick::dk)
-      .def("__len__", [](const Bmad::AbMultipoleKick&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::AbMultipoleKick& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.kx);
-            if (i == 1)
-              return py::cast(s.ky);
-            if (i == 2)
-              return py::cast(s.dk);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::AbMultipoleKick &) { return 3; })
+      .def("__getitem__", [](const Bmad::AbMultipoleKick &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.kx);
+        if (i == 1)
+          return py::cast(s.ky);
+        if (i == 2)
+          return py::cast(s.dk);
+        throw py::index_error();
+      });
   m.def(
       "ab_multipole_kick",
       &Bmad::ab_multipole_kick,
@@ -68,7 +69,8 @@ ky : float
     Y kick.
 dk : float
     Kick derivative: dkick(x,y)/d(x,y).
-)""");
+)"""
+  );
   m.def(
       "ab_multipole_kicks",
       &Bmad::ab_multipole_kicks,
@@ -113,7 +115,8 @@ mat6 : float, optional
     including multipole.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "absolute_photon_position",
       &Bmad::absolute_photon_position,
@@ -134,7 +137,8 @@ e_orb : CoordStruct
 photon_orb : CoordStruct
     Photon position relative to e_orb.
     This parameter is an input/output and is modified in-place. As an output: Absolute photon position.
-)""");
+)"""
+  );
   m.def(
       "absolute_time_tracking",
       &Bmad::absolute_time_tracking,
@@ -145,7 +149,8 @@ photon_orb : CoordStruct
 ele : EleStruct
     Element being tracked through.
 is_abs_time : 
-)""");
+)"""
+  );
   m.def(
       "ac_kicker_amp",
       &Bmad::ac_kicker_amp,
@@ -163,13 +168,17 @@ true_time : float, optional
     The actual time. Normally this time is calculated using orbit.t or orbit.vec(5) but sometimes it is
     convenient to be able to override this. For example, time_runge_kutta uses this.
 ac_amp : 
-)""");
+)"""
+  );
   py::class_<Bmad::ActionToXyz, std::unique_ptr<Bmad::ActionToXyz>>(
-      m, "ActionToXyz", "action_to_xyz return type")
+      m,
+      "ActionToXyz",
+      "action_to_xyz return type"
+  )
       .def_readonly("X", &Bmad::ActionToXyz::X)
       .def_readonly("err_flag", &Bmad::ActionToXyz::err_flag)
-      .def("__len__", [](const Bmad::ActionToXyz&) { return 2; })
-      .def("__getitem__", [](const Bmad::ActionToXyz& s, int i) -> py::object {
+      .def("__len__", [](const Bmad::ActionToXyz &) { return 2; })
+      .def("__getitem__", [](const Bmad::ActionToXyz &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -211,7 +220,8 @@ X : float
     canonical phase space coordinates of the particle
 err_flag : bool
     Set to true on error.  Often means Eigen decomposition failed.
-)""");
+)"""
+  );
   m.def(
       "add_lattice_control_structs",
       &Bmad::add_lattice_control_structs,
@@ -236,23 +246,25 @@ n_add_lord_field : int, optional
 add_at_end : bool, optional
     Used when n_add_slave or n_add_slave_field is non-zero. If True then new space is added at the end of the
     array. If False then new space is added at the front of the array. Default is True.
-)""");
+)"""
+  );
   py::class_<Bmad::AddSuperimpose, std::unique_ptr<Bmad::AddSuperimpose>>(
-      m, "AddSuperimpose", "add_superimpose return type")
+      m,
+      "AddSuperimpose",
+      "add_superimpose return type"
+  )
       .def_readonly("err_flag", &Bmad::AddSuperimpose::err_flag)
       .def_readonly("super_ele_out", &Bmad::AddSuperimpose::super_ele_out)
-      .def("__len__", [](const Bmad::AddSuperimpose&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::AddSuperimpose& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.err_flag);
-            if (i == 1)
-              return py::cast(s.super_ele_out);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::AddSuperimpose &) { return 2; })
+      .def("__getitem__", [](const Bmad::AddSuperimpose &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.super_ele_out);
+        throw py::index_error();
+      });
   m.def(
       "add_superimpose",
       &Bmad::add_superimpose,
@@ -316,7 +328,8 @@ err_flag : bool
     Set True if there is an error. False otherwise
 super_ele_out : EleStruct
     Pointer to the super element in the lattice.
-)""");
+)"""
+  );
   m.def(
       "add_this_multipass",
       &Bmad::add_this_multipass,
@@ -328,7 +341,8 @@ super_ele_out : EleStruct
 lat : 
 m_slaves : 
 lord_in : 
-)""");
+)"""
+  );
   m.def(
       "add_this_taylor_term",
       &Bmad::add_this_taylor_term,
@@ -341,7 +355,8 @@ lord_in :
 Subroutine used by bmad_parser and bmad_parser2 to parse the input file.
 This subroutine is not intended for general use.
 
-)""");
+)"""
+  );
   m.def(
       "adjust_super_slave_names",
       &Bmad::adjust_super_slave_names,
@@ -354,7 +369,8 @@ This subroutine is not intended for general use.
 Routine to adjust the names of the slaves.
 This routine is used by add_superimpose and is not meant for general use.
 
-)""");
+)"""
+  );
   m.def(
       "allocate_branch_array",
       &Bmad::allocate_branch_array,
@@ -366,7 +382,8 @@ lat : LatStruct
     .branch(:)  -- Branch array to be allocated.
 upper_bound : int
     Desired upper bound.
-)""");
+)"""
+  );
   m.def(
       "allocate_lat_ele_array",
       &Bmad::allocate_lat_ele_array,
@@ -385,7 +402,8 @@ ix_branch : int, optional
 do_ramper_slave_setup : bool, optional
     Default False. If true, setup ramper slaves. Generally this needs to be done if reallocating with a fully
     formed lattice.
-)""");
+)"""
+  );
   m.def(
       "angle_between_polars",
       &Bmad::angle_between_polars,
@@ -399,7 +417,8 @@ polar1 :
 polar2 : 
     (spin_polar_struct)
 angle : 
-)""");
+)"""
+  );
   m.def(
       "angle_to_canonical_coords",
       &Bmad::angle_to_canonical_coords,
@@ -413,7 +432,8 @@ orbit : CoordStruct
 coord_type : unknown, optional
     Angular coordinates type '' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
     y, y' = dy/ds, dt = -z / (beta * c), pz)
-)""");
+)"""
+  );
   m.def(
       "aperture_bookkeeper",
       &Bmad::aperture_bookkeeper,
@@ -427,7 +447,8 @@ Parameters
 ele : EleStruct
     Element with aperture.
     This parameter is an input/output and is modified in-place. As an output: Element with apertures set.
-)""");
+)"""
+  );
   m.def(
       "apply_all_rampers",
       &Bmad::apply_all_rampers,
@@ -439,7 +460,8 @@ lat : LatStruct
     This parameter is an input/output and is modified in-place. As an output: Lattice with rampers applied.
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "apply_energy_kick",
       &Bmad::apply_energy_kick,
@@ -464,7 +486,8 @@ mat6 : float, optional
     including energy kick.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-)""");
+)"""
+  );
   m.def(
       "apply_patch_to_ptc_fibre",
       &Bmad::apply_patch_to_ptc_fibre,
@@ -478,7 +501,8 @@ Parameters
 ----------
 ele : EleStruct
     Patch element. ele.ptc_fibre -- PTC Fibre which should be a marker.
-)""");
+)"""
+  );
   m.def(
       "apply_rampers_to_slave",
       &Bmad::apply_rampers_to_slave,
@@ -489,7 +513,8 @@ slave : EleStruct
     Element to apply ramper elements to.
 err_flag : bool
     Set true if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "array_re_str",
       &Bmad::array_re_str,
@@ -501,7 +526,8 @@ err_flag : bool
 arr : 
 parens_in : 
 str_out : 
-)""");
+)"""
+  );
   m.def(
       "astra_max_field_reference",
       &Bmad::astra_max_field_reference,
@@ -513,7 +539,8 @@ str_out :
 pt0 : 
 ele : 
 field_value : 
-)""");
+)"""
+  );
   m.def(
       "at_this_ele_end",
       &Bmad::at_this_ele_end,
@@ -528,7 +555,8 @@ where_at : int
     Which ends have the aperture or fringe field: entrance_end$, exit_end$, continuous$, both_ends$,
     no_aperture$, surface$, wall_transition$.
 is_at_this_end : 
-)""");
+)"""
+  );
   m.def(
       "attribute_bookkeeper",
       &Bmad::attribute_bookkeeper,
@@ -544,29 +572,31 @@ force_bookkeeping : bool, optional
     If present and True then force -- Logical, optional: If present and True then force attribute bookkeeping
     to be done independent of the state of ele.bookkeeping_stat.attributes. This will also cause
     attribute_bookkeeper to assume intelligent bookkeeping.
-)""");
+)"""
+  );
   py::class_<Bmad::AttributeFree1, std::unique_ptr<Bmad::AttributeFree1>>(
-      m, "AttributeFree1", "attribute_free1 return type")
+      m,
+      "AttributeFree1",
+      "attribute_free1 return type"
+  )
       .def_readonly("why_not_free", &Bmad::AttributeFree1::why_not_free)
       .def_readonly("free", &Bmad::AttributeFree1::free)
-      .def("__len__", [](const Bmad::AttributeFree1&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::AttributeFree1& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.why_not_free);
-            if (i == 1)
-              return py::cast(s.free);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::AttributeFree1 &) { return 2; })
+      .def("__getitem__", [](const Bmad::AttributeFree1 &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.why_not_free);
+        if (i == 1)
+          return py::cast(s.free);
+        throw py::index_error();
+      });
   m.def(
       "attribute_free",
       py::overload_cast<
           int,
           std::string,
-          LatProxy&,
+          LatStruct &,
           std::optional<bool>,
           std::optional<bool>,
           std::optional<bool>>(&Bmad::attribute_free),
@@ -626,27 +656,29 @@ why_not_free : int
     -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
     Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
     element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
-)""");
+)"""
+  );
   py::class_<Bmad::AttributeFree2, std::unique_ptr<Bmad::AttributeFree2>>(
-      m, "AttributeFree2", "attribute_free2 return type")
+      m,
+      "AttributeFree2",
+      "attribute_free2 return type"
+  )
       .def_readonly("why_not_free", &Bmad::AttributeFree2::why_not_free)
       .def_readonly("free", &Bmad::AttributeFree2::free)
-      .def("__len__", [](const Bmad::AttributeFree2&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::AttributeFree2& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.why_not_free);
-            if (i == 1)
-              return py::cast(s.free);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::AttributeFree2 &) { return 2; })
+      .def("__getitem__", [](const Bmad::AttributeFree2 &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.why_not_free);
+        if (i == 1)
+          return py::cast(s.free);
+        throw py::index_error();
+      });
   m.def(
       "attribute_free",
       py::overload_cast<
-          EleProxy&,
+          EleStruct &,
           std::string,
           std::optional<bool>,
           std::optional<bool>,
@@ -706,30 +738,32 @@ why_not_free : int
     -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
     Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
     element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
-)""");
+)"""
+  );
   py::class_<Bmad::AttributeFree3, std::unique_ptr<Bmad::AttributeFree3>>(
-      m, "AttributeFree3", "attribute_free3 return type")
+      m,
+      "AttributeFree3",
+      "attribute_free3 return type"
+  )
       .def_readonly("why_not_free", &Bmad::AttributeFree3::why_not_free)
       .def_readonly("free", &Bmad::AttributeFree3::free)
-      .def("__len__", [](const Bmad::AttributeFree3&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::AttributeFree3& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.why_not_free);
-            if (i == 1)
-              return py::cast(s.free);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::AttributeFree3 &) { return 2; })
+      .def("__getitem__", [](const Bmad::AttributeFree3 &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.why_not_free);
+        if (i == 1)
+          return py::cast(s.free);
+        throw py::index_error();
+      });
   m.def(
       "attribute_free",
       py::overload_cast<
           int,
           int,
           std::string,
-          LatProxy&,
+          LatStruct &,
           std::optional<bool>,
           std::optional<bool>,
           std::optional<bool>>(&Bmad::attribute_free),
@@ -790,30 +824,30 @@ why_not_free : int
     -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
     Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
     element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
-)""");
+)"""
+  );
   py::class_<Bmad::AttributeIndex1, std::unique_ptr<Bmad::AttributeIndex1>>(
-      m, "AttributeIndex1", "attribute_index1 return type")
+      m,
+      "AttributeIndex1",
+      "attribute_index1 return type"
+  )
       .def_readonly("full_name", &Bmad::AttributeIndex1::full_name)
       .def_readonly("attrib_index", &Bmad::AttributeIndex1::attrib_index)
-      .def("__len__", [](const Bmad::AttributeIndex1&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::AttributeIndex1& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.full_name);
-            if (i == 1)
-              return py::cast(s.attrib_index);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::AttributeIndex1 &) { return 2; })
+      .def("__getitem__", [](const Bmad::AttributeIndex1 &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.full_name);
+        if (i == 1)
+          return py::cast(s.attrib_index);
+        throw py::index_error();
+      });
   m.def(
       "attribute_index",
-      py::overload_cast<
-          EleProxy&,
-          std::string,
-          std::optional<bool>,
-          std::optional<bool>>(&Bmad::attribute_index),
+      py::overload_cast<EleStruct &, std::string, std::optional<bool>, std::optional<bool>>(
+          &Bmad::attribute_index
+      ),
       py::arg("ele"),
       py::arg("name"),
       py::arg("can_abbreviate") = py::none(),
@@ -861,30 +895,30 @@ attrib_index : int
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   py::class_<Bmad::AttributeIndex2, std::unique_ptr<Bmad::AttributeIndex2>>(
-      m, "AttributeIndex2", "attribute_index2 return type")
+      m,
+      "AttributeIndex2",
+      "attribute_index2 return type"
+  )
       .def_readonly("full_name", &Bmad::AttributeIndex2::full_name)
       .def_readonly("attrib_index", &Bmad::AttributeIndex2::attrib_index)
-      .def("__len__", [](const Bmad::AttributeIndex2&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::AttributeIndex2& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.full_name);
-            if (i == 1)
-              return py::cast(s.attrib_index);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::AttributeIndex2 &) { return 2; })
+      .def("__getitem__", [](const Bmad::AttributeIndex2 &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.full_name);
+        if (i == 1)
+          return py::cast(s.attrib_index);
+        throw py::index_error();
+      });
   m.def(
       "attribute_index",
-      py::overload_cast<
-          int,
-          std::string,
-          std::optional<bool>,
-          std::optional<bool>>(&Bmad::attribute_index),
+      py::overload_cast<int, std::string, std::optional<bool>, std::optional<bool>>(
+          &Bmad::attribute_index
+      ),
       py::arg("key"),
       py::arg("name"),
       py::arg("can_abbreviate") = py::none(),
@@ -932,7 +966,8 @@ attrib_index : int
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "attribute_name",
       py::overload_cast<int, int, std::optional<bool>>(&Bmad::attribute_name),
@@ -974,11 +1009,11 @@ attrib_name : unknown
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "attribute_name",
-      py::overload_cast<EleProxy&, int, std::optional<bool>>(
-          &Bmad::attribute_name),
+      py::overload_cast<EleStruct &, int, std::optional<bool>>(&Bmad::attribute_name),
       py::arg("ele"),
       py::arg("ix_att"),
       py::arg("show_private") = py::none(),
@@ -1017,7 +1052,8 @@ attrib_name : unknown
 Notes
 -----
 Overloaded versions:
-)""");
+)"""
+  );
   m.def(
       "attribute_type",
       &Bmad::attribute_type,
@@ -1053,7 +1089,8 @@ Returns
 attrib_type : int
     Attribute type: is_string$, is_logical$, is_integer$, is_real$, is_switch$, is_struct$ or invalid_name$
     Note: An overlay or group variable will be marked invalid_name$ if ele is missing.
-)""");
+)"""
+  );
   m.def(
       "attribute_units",
       &Bmad::attribute_units,
@@ -1076,7 +1113,8 @@ Returns
 -------
 attrib_units : unknown
     Units associated with the attribute.
-)""");
+)"""
+  );
   m.def(
       "autoscale_phase_and_amp",
       &Bmad::autoscale_phase_and_amp,
@@ -1101,7 +1139,8 @@ scale_amp : bool, optional
     Scale the amplitude? See above.
 call_bookkeeper : bool, optional
     Call lattice_bookkeeper at end? Default is True.
-)""");
+)"""
+  );
   m.def(
       "average_twiss",
       &Bmad::average_twiss,
@@ -1117,5 +1156,6 @@ twiss1 : TwissStruct
     Twiss parameters to average.
 twiss2 : 
 ave_twiss : 
-)""");
+)"""
+  );
 }

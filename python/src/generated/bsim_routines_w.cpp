@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_bsim_routines_w(py::module& m) {
+void init_bsim_routines_w(py::module &m) {
   m.def(
       "write_bunch_by_bunch_info",
       &bsim::write_bunch_by_bunch_info,
@@ -18,5 +18,6 @@ lat :
 bbu_beam : 
 bbu_param : 
 this_stage : 
-)""");
+)"""
+  );
 }

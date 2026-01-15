@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_f(py::module& m) {
+void init_Bmad_routines_f(py::module &m) {
   m.def(
       "fft1",
       &Bmad::fft1,
@@ -19,7 +19,8 @@ b :
 n : 
 isn : 
 ierr : 
-)""");
+)"""
+  );
   m.def(
       "fibre_to_ele",
       &Bmad::fibre_to_ele,
@@ -43,7 +44,8 @@ err_flag : bool
 from_mad : bool, optional
     If True, ignore PTC specific parameters like integrator_order. Default is False. True is used when the
     fibre has been created via MAD. In this case, the PTC specific parameters may not have good values.
-)""");
+)"""
+  );
   m.def(
       "field_attribute_free",
       &Bmad::field_attribute_free,
@@ -69,7 +71,8 @@ Returns
 -------
 free : bool
     Is the attribute free to vary? If the attribute is not recognized, free = True will be returned.
-)""");
+)"""
+  );
   m.def(
       "finalize_reflectivity_table",
       &Bmad::finalize_reflectivity_table,
@@ -86,23 +89,25 @@ table : PhotonReflectTableStruct
     This parameter is an input/output and is modified in-place. As an output: Finalized surface tables.
 in_degrees : bool
     Table angles in degrees?
-)""");
+)"""
+  );
   py::class_<Bmad::FindElementEnds, std::unique_ptr<Bmad::FindElementEnds>>(
-      m, "FindElementEnds", "find_element_ends return type")
+      m,
+      "FindElementEnds",
+      "find_element_ends return type"
+  )
       .def_readonly("ele1", &Bmad::FindElementEnds::ele1)
       .def_readonly("ele2", &Bmad::FindElementEnds::ele2)
-      .def("__len__", [](const Bmad::FindElementEnds&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::FindElementEnds& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.ele1);
-            if (i == 1)
-              return py::cast(s.ele2);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::FindElementEnds &) { return 2; })
+      .def("__getitem__", [](const Bmad::FindElementEnds &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.ele1);
+        if (i == 1)
+          return py::cast(s.ele2);
+        throw py::index_error();
+      });
   m.def(
       "find_element_ends",
       &Bmad::find_element_ends,
@@ -121,7 +126,8 @@ ele2 : EleStruct
     ele1 => ele
 ix_multipass : int, optional
     Which multipass pass to follow. Default is 1. This is ignored if there is no multipass elements.
-)""");
+)"""
+  );
   m.def(
       "find_fwhm",
       &Bmad::find_fwhm,
@@ -149,25 +155,25 @@ Returns
 -------
 fwhm : float
     Full width at half max of psi(t)
-)""");
-  py::class_<
-      Bmad::FindMatchingFieldmap,
-      std::unique_ptr<Bmad::FindMatchingFieldmap>>(
-      m, "FindMatchingFieldmap", "find_matching_fieldmap return type")
+)"""
+  );
+  py::class_<Bmad::FindMatchingFieldmap, std::unique_ptr<Bmad::FindMatchingFieldmap>>(
+      m,
+      "FindMatchingFieldmap",
+      "find_matching_fieldmap return type"
+  )
       .def_readonly("match_ele", &Bmad::FindMatchingFieldmap::match_ele)
       .def_readonly("ix_field", &Bmad::FindMatchingFieldmap::ix_field)
-      .def("__len__", [](const Bmad::FindMatchingFieldmap&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::FindMatchingFieldmap& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.match_ele);
-            if (i == 1)
-              return py::cast(s.ix_field);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::FindMatchingFieldmap &) { return 2; })
+      .def("__getitem__", [](const Bmad::FindMatchingFieldmap &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.match_ele);
+        if (i == 1)
+          return py::cast(s.ix_field);
+        throw py::index_error();
+      });
   m.def(
       "find_matching_fieldmap",
       &Bmad::find_matching_fieldmap,
@@ -190,7 +196,8 @@ ix_field : int
     found.
 ignore_slaves : bool, optional
     If True, ignore any multipass slaves. Default is False.
-)""");
+)"""
+  );
   m.def(
       "find_normalization",
       &Bmad::find_normalization,
@@ -216,23 +223,25 @@ Returns
 -------
 pnrml : float
     Value for psi(0) that results in integral of psi(t) from -bound to +bound being equal to 1.0
-)""");
+)"""
+  );
   py::class_<Bmad::FloorAnglesToWMat, std::unique_ptr<Bmad::FloorAnglesToWMat>>(
-      m, "FloorAnglesToWMat", "floor_angles_to_w_mat return type")
+      m,
+      "FloorAnglesToWMat",
+      "floor_angles_to_w_mat return type"
+  )
       .def_readonly("w_mat", &Bmad::FloorAnglesToWMat::w_mat)
       .def_readonly("w_mat_inv", &Bmad::FloorAnglesToWMat::w_mat_inv)
-      .def("__len__", [](const Bmad::FloorAnglesToWMat&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::FloorAnglesToWMat& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.w_mat);
-            if (i == 1)
-              return py::cast(s.w_mat_inv);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::FloorAnglesToWMat &) { return 2; })
+      .def("__getitem__", [](const Bmad::FloorAnglesToWMat &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.w_mat);
+        if (i == 1)
+          return py::cast(s.w_mat_inv);
+        throw py::index_error();
+      });
   m.def(
       "floor_angles_to_w_mat",
       &Bmad::floor_angles_to_w_mat,
@@ -251,26 +260,28 @@ w_mat : float
     Orientation matrix.
 w_mat_inv : float
     Inverse Orientation matrix.
-)""");
+)"""
+  );
   py::class_<Bmad::FloorWMatToAngles, std::unique_ptr<Bmad::FloorWMatToAngles>>(
-      m, "FloorWMatToAngles", "floor_w_mat_to_angles return type")
+      m,
+      "FloorWMatToAngles",
+      "floor_w_mat_to_angles return type"
+  )
       .def_readonly("theta", &Bmad::FloorWMatToAngles::theta)
       .def_readonly("phi", &Bmad::FloorWMatToAngles::phi)
       .def_readonly("psi", &Bmad::FloorWMatToAngles::psi)
-      .def("__len__", [](const Bmad::FloorWMatToAngles&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::FloorWMatToAngles& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.theta);
-            if (i == 1)
-              return py::cast(s.phi);
-            if (i == 2)
-              return py::cast(s.psi);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::FloorWMatToAngles &) { return 3; })
+      .def("__getitem__", [](const Bmad::FloorWMatToAngles &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.theta);
+        if (i == 1)
+          return py::cast(s.phi);
+        if (i == 2)
+          return py::cast(s.psi);
+        throw py::index_error();
+      });
   m.def(
       "floor_w_mat_to_angles",
       &Bmad::floor_w_mat_to_angles,
@@ -289,7 +300,8 @@ psi : float
 floor0 : FloorPositionStruct, optional
     There are two solutions related by: [theta, phi, psi] & [pi+theta, pi-phi, pi+psi] If floor0 is present,
     choose the solution "nearest" the angles in floor0.
-)""");
+)"""
+  );
   m.def(
       "form_complex_taylor",
       &Bmad::form_complex_taylor,
@@ -311,27 +323,25 @@ Returns
 -------
 complex_taylor : ComplexTaylorStruct
     combined complex taylor
-)""");
-  py::class_<
-      Bmad::FormDigestedBmadFileName,
-      std::unique_ptr<Bmad::FormDigestedBmadFileName>>(
-      m, "FormDigestedBmadFileName", "form_digested_bmad_file_name return type")
-      .def_readonly(
-          "digested_file", &Bmad::FormDigestedBmadFileName::digested_file)
-      .def_readonly(
-          "full_lat_file", &Bmad::FormDigestedBmadFileName::full_lat_file)
-      .def("__len__", [](const Bmad::FormDigestedBmadFileName&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::FormDigestedBmadFileName& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.digested_file);
-            if (i == 1)
-              return py::cast(s.full_lat_file);
-            throw py::index_error();
-          });
+)"""
+  );
+  py::class_<Bmad::FormDigestedBmadFileName, std::unique_ptr<Bmad::FormDigestedBmadFileName>>(
+      m,
+      "FormDigestedBmadFileName",
+      "form_digested_bmad_file_name return type"
+  )
+      .def_readonly("digested_file", &Bmad::FormDigestedBmadFileName::digested_file)
+      .def_readonly("full_lat_file", &Bmad::FormDigestedBmadFileName::full_lat_file)
+      .def("__len__", [](const Bmad::FormDigestedBmadFileName &) { return 2; })
+      .def("__getitem__", [](const Bmad::FormDigestedBmadFileName &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.digested_file);
+        if (i == 1)
+          return py::cast(s.full_lat_file);
+        throw py::index_error();
+      });
   m.def(
       "form_digested_bmad_file_name",
       &Bmad::form_digested_bmad_file_name,
@@ -360,7 +370,8 @@ digested_file : unknown
     Name of the digested file.
 full_lat_file : unknown
     Input lattice file name with full directory. Can be used for error messages.
-)""");
+)"""
+  );
   m.def(
       "fringe_here",
       &Bmad::fringe_here,
@@ -377,5 +388,6 @@ orbit : CoordStruct
 particle_at : int
     Either first_track_edge$ or second_track_edge$.
 is_here : 
-)""");
+)"""
+  );
 }

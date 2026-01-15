@@ -9,4 +9,4 @@
 
 namespace py = pybind11;
 
-void init_Bmad_routines_g(py::module& m);
+void init_Bmad_routines_g(py::module &m);

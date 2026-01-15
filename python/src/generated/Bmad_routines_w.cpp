@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_w(py::module& m) {
+void init_Bmad_routines_w(py::module &m) {
   m.def(
       "w_mat_for_bend_angle",
       &Bmad::w_mat_for_bend_angle,
@@ -23,7 +23,8 @@ r_vec : float, optional
     This parameter is an input/output and is modified in-place. As an output: position with ref_tilt
     transformation
 w_mat : 
-)""");
+)"""
+  );
   m.def(
       "w_mat_for_tilt",
       &Bmad::w_mat_for_tilt,
@@ -37,7 +38,8 @@ tilt : float
 return_inverse : bool, optional
     If True, return the inverse matrix. Default is False.
 w_mat : 
-)""");
+)"""
+  );
   m.def(
       "w_mat_for_x_pitch",
       &Bmad::w_mat_for_x_pitch,
@@ -51,7 +53,8 @@ x_pitch : float
 return_inverse : bool, optional
     If True, return the inverse matrix. Default is False.
 w_mat : 
-)""");
+)"""
+  );
   m.def(
       "w_mat_for_y_pitch",
       &Bmad::w_mat_for_y_pitch,
@@ -65,9 +68,13 @@ y_pitch : float
 return_inverse : bool, optional
     If True, return the inverse matrix. Default is False.
 w_mat : 
-)""");
+)"""
+  );
   py::class_<Bmad::Wall3dDRadius, std::unique_ptr<Bmad::Wall3dDRadius>>(
-      m, "Wall3dDRadius", "wall3d_d_radius return type")
+      m,
+      "Wall3dDRadius",
+      "wall3d_d_radius return type"
+  )
       .def_readonly("perp", &Bmad::Wall3dDRadius::perp)
       .def_readonly("ix_section", &Bmad::Wall3dDRadius::ix_section)
       .def_readonly("no_wall_here", &Bmad::Wall3dDRadius::no_wall_here)
@@ -75,27 +82,26 @@ w_mat :
       .def_readonly("radius_wall", &Bmad::Wall3dDRadius::radius_wall)
       .def_readonly("err_flag", &Bmad::Wall3dDRadius::err_flag)
       .def_readonly("d_radius", &Bmad::Wall3dDRadius::d_radius)
-      .def("__len__", [](const Bmad::Wall3dDRadius&) { return 7; })
-      .def(
-          "__getitem__", [](const Bmad::Wall3dDRadius& s, int i) -> py::object {
-            if (i < 0)
-              i += 7;
-            if (i == 0)
-              return py::cast(s.perp);
-            if (i == 1)
-              return py::cast(s.ix_section);
-            if (i == 2)
-              return py::cast(s.no_wall_here);
-            if (i == 3)
-              return py::cast(s.origin);
-            if (i == 4)
-              return py::cast(s.radius_wall);
-            if (i == 5)
-              return py::cast(s.err_flag);
-            if (i == 6)
-              return py::cast(s.d_radius);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::Wall3dDRadius &) { return 7; })
+      .def("__getitem__", [](const Bmad::Wall3dDRadius &s, int i) -> py::object {
+        if (i < 0)
+          i += 7;
+        if (i == 0)
+          return py::cast(s.perp);
+        if (i == 1)
+          return py::cast(s.ix_section);
+        if (i == 2)
+          return py::cast(s.no_wall_here);
+        if (i == 3)
+          return py::cast(s.origin);
+        if (i == 4)
+          return py::cast(s.radius_wall);
+        if (i == 5)
+          return py::cast(s.err_flag);
+        if (i == 6)
+          return py::cast(s.d_radius);
+        throw py::index_error();
+      });
   m.def(
       "wall3d_d_radius",
       &Bmad::wall3d_d_radius,
@@ -140,7 +146,8 @@ radius_wall : float
     Radius of the wall.
 err_flag : bool
     Set True if error. (EG noassociated .wall3d), false otherwise.
-)""");
+)"""
+  );
   m.def(
       "wall3d_initializer",
       &Bmad::wall3d_initializer,
@@ -162,7 +169,8 @@ Returns
 -------
 err : bool
     Set true if there is a problem.
-)""");
+)"""
+  );
   m.def(
       "wall3d_section_initializer",
       &Bmad::wall3d_section_initializer,
@@ -183,7 +191,8 @@ Returns
 -------
 err : bool
     Set true if there is a problem.
-)""");
+)"""
+  );
   m.def(
       "wall3d_to_position",
       &Bmad::wall3d_to_position,
@@ -207,7 +216,8 @@ Returns
 -------
 position : float
     Position used in wall3d_d_radius call.
-)""");
+)"""
+  );
   m.def(
       "word_to_value",
       &Bmad::word_to_value,
@@ -223,7 +233,8 @@ lat :
 value : 
 err_flag : 
 ele : 
-)""");
+)"""
+  );
   m.def(
       "write_ascii_beam_file",
       &Bmad::write_ascii_beam_file,
@@ -245,7 +256,8 @@ new_file : bool, optional
     New file or append? Default = True.
 alive_only : bool, optional
     Only write live (includes pre_born) particles to the file? Default is False.
-)""");
+)"""
+  );
   m.def(
       "write_astra_bend",
       &Bmad::write_astra_bend,
@@ -265,25 +277,25 @@ d1 :
 d2 : 
 d3 : 
 d4 : 
-)""");
-  py::class_<
-      Bmad::WriteAstraFieldGridFile,
-      std::unique_ptr<Bmad::WriteAstraFieldGridFile>>(
-      m, "WriteAstraFieldGridFile", "write_astra_field_grid_file return type")
+)"""
+  );
+  py::class_<Bmad::WriteAstraFieldGridFile, std::unique_ptr<Bmad::WriteAstraFieldGridFile>>(
+      m,
+      "WriteAstraFieldGridFile",
+      "write_astra_field_grid_file return type"
+  )
       .def_readonly("maxfield", &Bmad::WriteAstraFieldGridFile::maxfield)
       .def_readonly("err", &Bmad::WriteAstraFieldGridFile::err)
-      .def("__len__", [](const Bmad::WriteAstraFieldGridFile&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::WriteAstraFieldGridFile& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.maxfield);
-            if (i == 1)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::WriteAstraFieldGridFile &) { return 2; })
+      .def("__getitem__", [](const Bmad::WriteAstraFieldGridFile &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.maxfield);
+        if (i == 1)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "write_astra_field_grid_file",
       &Bmad::write_astra_field_grid_file,
@@ -313,27 +325,25 @@ maxfield : float
     absolute maximum found for element field scaling
 err : bool
     Set True if, say a file could not be opened.
-)""");
-  py::class_<
-      Bmad::WriteAstraFieldGridFile3d,
-      std::unique_ptr<Bmad::WriteAstraFieldGridFile3d>>(
+)"""
+  );
+  py::class_<Bmad::WriteAstraFieldGridFile3d, std::unique_ptr<Bmad::WriteAstraFieldGridFile3d>>(
       m,
       "WriteAstraFieldGridFile3d",
-      "write_astra_field_grid_file_3d return type")
+      "write_astra_field_grid_file_3d return type"
+  )
       .def_readonly("maxfield", &Bmad::WriteAstraFieldGridFile3d::maxfield)
       .def_readonly("err", &Bmad::WriteAstraFieldGridFile3d::err)
-      .def("__len__", [](const Bmad::WriteAstraFieldGridFile3d&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::WriteAstraFieldGridFile3d& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.maxfield);
-            if (i == 1)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::WriteAstraFieldGridFile3d &) { return 2; })
+      .def("__getitem__", [](const Bmad::WriteAstraFieldGridFile3d &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.maxfield);
+        if (i == 1)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "write_astra_field_grid_file_3d",
       &Bmad::write_astra_field_grid_file_3d,
@@ -371,7 +381,8 @@ maxfield : float
     absolute maximum on-axis field found for element field scaling
 err : bool
     Set True if, say a file could not be opened.
-)""");
+)"""
+  );
   m.def(
       "write_beam_file",
       &Bmad::write_beam_file,
@@ -402,7 +413,8 @@ lat : LatStruct, optional
     If present, lattice info will be writen to hdf5 files.
 alive_only : bool, optional
     Only write live (includes pre_born) particles to the file? Default is False.
-)""");
+)"""
+  );
   m.def(
       "write_beam_floor_positions",
       &Bmad::write_beam_floor_positions,
@@ -420,7 +432,8 @@ ele : EleStruct
     Element that the beam is at.
 new_file : bool, optional
     New file or append? Default = True.
-)""");
+)"""
+  );
   m.def(
       "write_binary_cartesian_map",
       &Bmad::write_binary_cartesian_map,
@@ -443,7 +456,8 @@ cart_map : CartesianMapStruct
     Cartesian map. Ouput:
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "write_binary_cylindrical_map",
       &Bmad::write_binary_cylindrical_map,
@@ -466,7 +480,8 @@ cl_map : CylindricalMapStruct
     Cylindrical map. Ouput:
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "write_binary_grid_field",
       &Bmad::write_binary_grid_field,
@@ -489,7 +504,8 @@ g_field : GridFieldStruct
     Cylindrical map. Ouput:
 err_flag : bool
     Set True if there is an error. False otherwise.
-)""");
+)"""
+  );
   m.def(
       "write_blender_ele",
       &Bmad::write_blender_ele,
@@ -501,7 +517,8 @@ err_flag : bool
 iu : 
 ele : 
 old_format : 
-)""");
+)"""
+  );
   m.def(
       "write_blender_lat_layout",
       &Bmad::write_blender_lat_layout,
@@ -511,7 +528,8 @@ old_format :
 ----------
 file_name : 
 lat : 
-)""");
+)"""
+  );
   m.def(
       "write_bmad_lattice_file",
       &Bmad::write_bmad_lattice_file,
@@ -533,28 +551,28 @@ output_form : int, optional
     Everything in one file.
 orbit0 : CoordStruct, optional
     Initial orbit. Used to write the inital orbit if the lattice geometry is closed.
-)""");
-  py::class_<
-      Bmad::WriteGptFieldGridFile1d,
-      std::unique_ptr<Bmad::WriteGptFieldGridFile1d>>(
-      m, "WriteGptFieldGridFile1d", "write_gpt_field_grid_file_1d return type")
+)"""
+  );
+  py::class_<Bmad::WriteGptFieldGridFile1d, std::unique_ptr<Bmad::WriteGptFieldGridFile1d>>(
+      m,
+      "WriteGptFieldGridFile1d",
+      "write_gpt_field_grid_file_1d return type"
+  )
       .def_readonly("maxfield", &Bmad::WriteGptFieldGridFile1d::maxfield)
       .def_readonly("ref_time", &Bmad::WriteGptFieldGridFile1d::ref_time)
       .def_readonly("err", &Bmad::WriteGptFieldGridFile1d::err)
-      .def("__len__", [](const Bmad::WriteGptFieldGridFile1d&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::WriteGptFieldGridFile1d& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.maxfield);
-            if (i == 1)
-              return py::cast(s.ref_time);
-            if (i == 2)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::WriteGptFieldGridFile1d &) { return 3; })
+      .def("__getitem__", [](const Bmad::WriteGptFieldGridFile1d &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.maxfield);
+        if (i == 1)
+          return py::cast(s.ref_time);
+        if (i == 2)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "write_gpt_field_grid_file_1d",
       &Bmad::write_gpt_field_grid_file_1d,
@@ -586,28 +604,28 @@ ref_time : float
     time that the field was evaluated at
 err : bool
     Set True if, say a file could not be opened.
-)""");
-  py::class_<
-      Bmad::WriteGptFieldGridFile2d,
-      std::unique_ptr<Bmad::WriteGptFieldGridFile2d>>(
-      m, "WriteGptFieldGridFile2d", "write_gpt_field_grid_file_2d return type")
+)"""
+  );
+  py::class_<Bmad::WriteGptFieldGridFile2d, std::unique_ptr<Bmad::WriteGptFieldGridFile2d>>(
+      m,
+      "WriteGptFieldGridFile2d",
+      "write_gpt_field_grid_file_2d return type"
+  )
       .def_readonly("maxfield", &Bmad::WriteGptFieldGridFile2d::maxfield)
       .def_readonly("ref_time", &Bmad::WriteGptFieldGridFile2d::ref_time)
       .def_readonly("err", &Bmad::WriteGptFieldGridFile2d::err)
-      .def("__len__", [](const Bmad::WriteGptFieldGridFile2d&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::WriteGptFieldGridFile2d& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.maxfield);
-            if (i == 1)
-              return py::cast(s.ref_time);
-            if (i == 2)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::WriteGptFieldGridFile2d &) { return 3; })
+      .def("__getitem__", [](const Bmad::WriteGptFieldGridFile2d &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.maxfield);
+        if (i == 1)
+          return py::cast(s.ref_time);
+        if (i == 2)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "write_gpt_field_grid_file_2d",
       &Bmad::write_gpt_field_grid_file_2d,
@@ -643,28 +661,28 @@ ref_time : float
     time that the field was evaluated at
 err : bool
     Set True if, say a file could not be opened.
-)""");
-  py::class_<
-      Bmad::WriteGptFieldGridFile3d,
-      std::unique_ptr<Bmad::WriteGptFieldGridFile3d>>(
-      m, "WriteGptFieldGridFile3d", "write_gpt_field_grid_file_3d return type")
+)"""
+  );
+  py::class_<Bmad::WriteGptFieldGridFile3d, std::unique_ptr<Bmad::WriteGptFieldGridFile3d>>(
+      m,
+      "WriteGptFieldGridFile3d",
+      "write_gpt_field_grid_file_3d return type"
+  )
       .def_readonly("maxfield", &Bmad::WriteGptFieldGridFile3d::maxfield)
       .def_readonly("ref_time", &Bmad::WriteGptFieldGridFile3d::ref_time)
       .def_readonly("err", &Bmad::WriteGptFieldGridFile3d::err)
-      .def("__len__", [](const Bmad::WriteGptFieldGridFile3d&) { return 3; })
-      .def(
-          "__getitem__",
-          [](const Bmad::WriteGptFieldGridFile3d& s, int i) -> py::object {
-            if (i < 0)
-              i += 3;
-            if (i == 0)
-              return py::cast(s.maxfield);
-            if (i == 1)
-              return py::cast(s.ref_time);
-            if (i == 2)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::WriteGptFieldGridFile3d &) { return 3; })
+      .def("__getitem__", [](const Bmad::WriteGptFieldGridFile3d &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.maxfield);
+        if (i == 1)
+          return py::cast(s.ref_time);
+        if (i == 2)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "write_gpt_field_grid_file_3d",
       &Bmad::write_gpt_field_grid_file_3d,
@@ -702,7 +720,8 @@ ref_time : float
     time that the field was evaluated at
 err : bool
     Set True if, say a file could not be opened.
-)""");
+)"""
+  );
   m.def(
       "write_lat_line",
       &Bmad::write_lat_line,
@@ -734,7 +753,8 @@ do_split : bool, optional
     since the expression splitting routine does a much better job of it.
 scibmad : bool, optional
     Default False. If True then do not include "&" line continuation
-)""");
+)"""
+  );
   m.def(
       "write_lattice_in_elegant_format",
       &Bmad::write_lattice_in_elegant_format,
@@ -769,7 +789,8 @@ ix_branch : int, optional
     Index of lattice branch to use. Default = 0.
 err : bool
     Set True if, say a file could not be opened.
-)""");
+)"""
+  );
   m.def(
       "write_lattice_in_foreign_format",
       &Bmad::write_lattice_in_foreign_format,
@@ -807,7 +828,8 @@ ix_branch : int, optional
     Index of lattice branch to use. Default = 0.
 err : bool
     Set True if, say a file could not be opened.
-)""");
+)"""
+  );
   m.def(
       "write_lattice_in_mad_format",
       &Bmad::write_lattice_in_mad_format,
@@ -845,7 +867,8 @@ ix_branch : int, optional
     Index of lattice branch to use. Default = 0.
 err : bool
     Set True if, say a file could not be opened.
-)""");
+)"""
+  );
   m.def(
       "write_lattice_in_sad_format",
       &Bmad::write_lattice_in_sad_format,
@@ -861,25 +884,25 @@ lat :
 include_apertures : 
 ix_branch : 
 err : 
-)""");
-  py::class_<
-      Bmad::WriteLatticeInScibmad,
-      std::unique_ptr<Bmad::WriteLatticeInScibmad>>(
-      m, "WriteLatticeInScibmad", "write_lattice_in_scibmad return type")
+)"""
+  );
+  py::class_<Bmad::WriteLatticeInScibmad, std::unique_ptr<Bmad::WriteLatticeInScibmad>>(
+      m,
+      "WriteLatticeInScibmad",
+      "write_lattice_in_scibmad return type"
+  )
       .def_readonly("scibmad_file", &Bmad::WriteLatticeInScibmad::scibmad_file)
       .def_readonly("err_flag", &Bmad::WriteLatticeInScibmad::err_flag)
-      .def("__len__", [](const Bmad::WriteLatticeInScibmad&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::WriteLatticeInScibmad& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.scibmad_file);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::WriteLatticeInScibmad &) { return 2; })
+      .def("__getitem__", [](const Bmad::WriteLatticeInScibmad &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.scibmad_file);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "write_lattice_in_scibmad",
       &Bmad::write_lattice_in_scibmad,
@@ -892,7 +915,8 @@ lat : LatStruct
     Lattice
 err_flag : bool
     Error flag
-)""");
+)"""
+  );
   m.def(
       "write_line_element",
       &Bmad::write_line_element,
@@ -906,25 +930,25 @@ line :
 iu : 
 ele : 
 lat : 
-)""");
-  py::class_<
-      Bmad::WriteOpalFieldGridFile,
-      std::unique_ptr<Bmad::WriteOpalFieldGridFile>>(
-      m, "WriteOpalFieldGridFile", "write_opal_field_grid_file return type")
+)"""
+  );
+  py::class_<Bmad::WriteOpalFieldGridFile, std::unique_ptr<Bmad::WriteOpalFieldGridFile>>(
+      m,
+      "WriteOpalFieldGridFile",
+      "write_opal_field_grid_file return type"
+  )
       .def_readonly("maxfield", &Bmad::WriteOpalFieldGridFile::maxfield)
       .def_readonly("err", &Bmad::WriteOpalFieldGridFile::err)
-      .def("__len__", [](const Bmad::WriteOpalFieldGridFile&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const Bmad::WriteOpalFieldGridFile& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.maxfield);
-            if (i == 1)
-              return py::cast(s.err);
-            throw py::index_error();
-          });
+      .def("__len__", [](const Bmad::WriteOpalFieldGridFile &) { return 2; })
+      .def("__getitem__", [](const Bmad::WriteOpalFieldGridFile &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.maxfield);
+        if (i == 1)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "write_opal_field_grid_file",
       &Bmad::write_opal_field_grid_file,
@@ -952,7 +976,8 @@ maxfield : float
     absolute maximum found for element field scaling
 err : bool
     Set True if, say a file could not be opened.
-)""");
+)"""
+  );
   m.def(
       "write_opal_lattice_file",
       &Bmad::write_opal_lattice_file,
@@ -974,7 +999,8 @@ Returns
 -------
 err : bool
     Set True if, say a file could not be opened.
-)""");
+)"""
+  );
   m.def(
       "write_time_particle_distribution",
       &Bmad::write_time_particle_distribution,
@@ -1021,5 +1047,6 @@ Returns
 -------
 err : bool
     Set True if, say a file could not be opened.
-)""");
+)"""
+  );
 }

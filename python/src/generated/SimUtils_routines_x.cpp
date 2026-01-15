@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_x(py::module& m) {
+void init_SimUtils_routines_x(py::module &m) {
   m.def(
       "x0_radiation_length",
       &SimUtils::x0_radiation_length,
@@ -23,5 +23,6 @@ Returns
 x0 : float
     Radiation length in kg/m^2. Set to real_garbage$ if species is not atomic or has atomic index greater than
     92.
-)""");
+)"""
+  );
 }

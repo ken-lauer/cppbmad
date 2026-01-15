@@ -4,7 +4,7 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_t(py::module& m) {
+void init_SimUtils_routines_t(py::module &m) {
   m.def(
       "to_str",
       &SimUtils::to_str,
@@ -17,31 +17,31 @@ subroutine test_tune_tracker_lock (tracker_locked)
   logical tracker_locked(2)
 end subroutine
 
-)""");
-  py::class_<
-      SimUtils::TricubicCmplxEval,
-      std::unique_ptr<SimUtils::TricubicCmplxEval>>(
-      m, "TricubicCmplxEval", "tricubic_cmplx_eval return type")
+)"""
+  );
+  py::class_<SimUtils::TricubicCmplxEval, std::unique_ptr<SimUtils::TricubicCmplxEval>>(
+      m,
+      "TricubicCmplxEval",
+      "tricubic_cmplx_eval return type"
+  )
       .def_readonly("df_dx", &SimUtils::TricubicCmplxEval::df_dx)
       .def_readonly("df_dy", &SimUtils::TricubicCmplxEval::df_dy)
       .def_readonly("df_dz", &SimUtils::TricubicCmplxEval::df_dz)
       .def_readonly("f_val", &SimUtils::TricubicCmplxEval::f_val)
-      .def("__len__", [](const SimUtils::TricubicCmplxEval&) { return 4; })
-      .def(
-          "__getitem__",
-          [](const SimUtils::TricubicCmplxEval& s, int i) -> py::object {
-            if (i < 0)
-              i += 4;
-            if (i == 0)
-              return py::cast(s.df_dx);
-            if (i == 1)
-              return py::cast(s.df_dy);
-            if (i == 2)
-              return py::cast(s.df_dz);
-            if (i == 3)
-              return py::cast(s.f_val);
-            throw py::index_error();
-          });
+      .def("__len__", [](const SimUtils::TricubicCmplxEval &) { return 4; })
+      .def("__getitem__", [](const SimUtils::TricubicCmplxEval &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.df_dx);
+        if (i == 1)
+          return py::cast(s.df_dy);
+        if (i == 2)
+          return py::cast(s.df_dz);
+        if (i == 3)
+          return py::cast(s.f_val);
+        throw py::index_error();
+      });
   m.def(
       "tricubic_cmplx_eval",
       &SimUtils::tricubic_cmplx_eval,
@@ -79,7 +79,8 @@ df_dy : complex
     Normalized first derivative: True df/dy = df_dy * dy
 df_dz : complex
     Normalized first derivative: True df/dz = df_dz * dz
-)""");
+)"""
+  );
   m.def(
       "type_this_file",
       &SimUtils::type_this_file,
@@ -87,5 +88,6 @@ df_dz : complex
       R"""(Parameters
 ----------
 filename : 
-)""");
+)"""
+  );
 }
