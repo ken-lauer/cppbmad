@@ -208,9 +208,7 @@ def snake_to_camel(snake_str: str) -> str:
 
 
 def struct_to_proxy_class_name(name: str) -> str:
-    if name.endswith("_struct"):
-        return snake_to_camel(name.removesuffix("_struct") + "_proxy")
-    return snake_to_camel(f"{name}_raw_struct")
+    return snake_to_camel(name)
 
 
 def sorted_routines(routines: dict[str, FortranRoutine] | list[FortranRoutine]) -> list[FortranRoutine]:
