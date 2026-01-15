@@ -8,7 +8,7 @@ import textwrap
 import typing
 from collections.abc import Callable
 
-from .paths import CLANG_FORMAT_PATH
+from .paths import CLANG_FORMAT_PATH, REPO_ROOT
 
 if typing.TYPE_CHECKING:
     from .routines import FortranRoutine
@@ -16,6 +16,27 @@ if typing.TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 N_CHAR_MAX = 95
+
+
+def clang_format(target_path: pathlib.Path, contents: str):
+    if not CLANG_FORMAT_PATH:
+        raise RuntimeError("clang-format not found")
+
+    try:
+        formatted_content = subprocess.run(
+            [CLANG_FORMAT_PATH, "--assume-filename", str(target_path)],
+            input=contents.encode(),
+            capture_output=True,
+            check=True,
+            cwd=REPO_ROOT,
+        )
+    except subprocess.CalledProcessError as e:
+        logger.warning(f"Clang-format failed for {target_path}: {e.stderr.decode('utf-8')}")
+        return contents
+    except subprocess.SubprocessError as e:
+        logger.warning(f"Clang-format failed for {target_path} with error: {e}")
+        return contents
+    return formatted_content.stdout.decode()
 
 
 def write_if_differs(
@@ -59,17 +80,7 @@ def write_if_differs(
         contents = temp_file.read()
 
     if CLANG_FORMAT_PATH and target_path.suffix in (".h", ".hpp", ".cpp"):
-        try:
-            formatted_content = subprocess.run(
-                [CLANG_FORMAT_PATH],
-                input=contents.encode(),
-                capture_output=True,
-                check=True,
-            )
-        except subprocess.SubprocessError:
-            logger.warning(f"Clang-format failed for {target_path}")
-        else:
-            contents = formatted_content.stdout.decode()
+        contents = clang_format(target_path, contents)
 
     if not target_path.exists():
         target_path.parent.mkdir(parents=True, exist_ok=True)
@@ -121,17 +132,7 @@ def write_contents_if_differs(
     target_path = pathlib.Path(target_path)
 
     if CLANG_FORMAT_PATH and target_path.suffix in (".h", ".hpp", ".cpp"):
-        try:
-            formatted_content = subprocess.run(
-                [CLANG_FORMAT_PATH],
-                input=contents.encode(),
-                capture_output=True,
-                check=True,
-            ).stdout.decode()
-        except subprocess.SubprocessError as ex:
-            logger.error("clang-format failed: %s", ex)
-        else:
-            contents = formatted_content
+        contents = clang_format(target_path, contents)
 
     if not target_path.exists():
         target_path.parent.mkdir(parents=True, exist_ok=True)
