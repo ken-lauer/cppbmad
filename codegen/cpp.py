@@ -100,7 +100,7 @@ class CppWrapperTypeArgumentAllocArray(CppWrapperArgument):
             if self.arg.is_optional:
                 lines.append(
                     self.unwrap_optional(
-                        f"{argname}->get().get_fortran_ptr()",
+                        f"{argname}->get_fortran_ptr()",
                         type_="auto*",
                         comment="input, optional",
                     )
@@ -150,8 +150,8 @@ class CppWrapperTypeArgumentArray(CppWrapperArgument):
         if self.arg.intent in {"in", "inout"}:
             if self.arg.is_optional:
                 lines.append(f"if ({argname}) {{")
-                lines.append(f"  {desc_name}.data_ptr = {argname}->get().data();")
-                lines.append(f"  {desc_name}.dims[0] = {argname}->get().size();")
+                lines.append(f"  {desc_name}.data_ptr = {argname}->data();")
+                lines.append(f"  {desc_name}.dims[0] = {argname}->size();")
                 lines.append("} else {")
                 lines.append(f"  {desc_name}.data_ptr = nullptr;")
                 lines.append(f"  {desc_name}.dims[0] = 0;")

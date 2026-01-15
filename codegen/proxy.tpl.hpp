@@ -1,11 +1,11 @@
 #pragma once
 
-#include "bmad/fortran_arrays.hpp"
-#include "bmad/proxy_base.hpp"
-
 #include <complex>
 #include <memory>
 #include <string>
+
+#include "bmad/fortran_arrays.hpp"
+#include "bmad/proxy_base.hpp"
 
 extern "C" {
 // Forward declarations for Fortran interface

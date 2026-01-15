@@ -234,12 +234,19 @@ def get_type_transform(
             return f"optional_ref<{typ}>"
         return f"{typ}&"
 
+    def wrap_optional(typ: str, is_optional: bool):
+        if is_optional:
+            return f"std::optional<{typ}>"
+        return typ
+
     if ft.type == "type":
         if ft.ptr == "ALLOC":
             assert ft.dim > 0
-            cpp_type = wrap_optional_ref(f"{proxy_cls}Alloc{ft.dim}D", is_optional)
+            # cpp_type = wrap_optional_ref(f"{proxy_cls}Alloc{ft.dim}D", is_optional)
+            cpp_type = wrap_optional(f"{proxy_cls}Alloc{ft.dim}D", is_optional)
         elif ft.dim > 0:
-            cpp_type = wrap_optional_ref(f"{proxy_cls}Array{ft.dim}D", is_optional)
+            # cpp_type = wrap_optional_ref(f"{proxy_cls}Array{ft.dim}D", is_optional)
+            cpp_type = wrap_optional(f"{proxy_cls}Array{ft.dim}D", is_optional)
         else:
             assert ft.dim == 0
             # Scalar type

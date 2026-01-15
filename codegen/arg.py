@@ -89,6 +89,14 @@ class Argument:
     @property
     def is_dynamic_array(self) -> bool:
         return ":" in self.array or "0:" in self.array or "*" in self.array
+        # for dim in self.array:
+        #     parts = dim.split(":")
+        #     for part in parts:
+        #         try:
+        #             int(part)
+        #         except ValueError:
+        #             return True
+        # return False
 
     @classmethod
     def from_fstruct(
