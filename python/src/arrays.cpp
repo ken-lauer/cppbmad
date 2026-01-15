@@ -9,7 +9,7 @@ inline int normalize_index(int i, int size) {
     throw py::index_error();
   return i;
 }
-void bind_FCharArray1D(py::module& m) {
+void bind_FCharArray1D(py::module &m) {
   py::class_<FCharArray1D>(m, "FCharArray1D")
       .def(py::init<>())
       .def("is_valid", &FCharArray1D::is_valid)
@@ -17,35 +17,38 @@ void bind_FCharArray1D(py::module& m) {
       // Return std::string directly for Python convenience
       .def(
           "__getitem__",
-          [](FCharArray1D& self, int i) {
+          [](FCharArray1D &self, int i) {
             if (i < 0)
               i += self.size();
             if (i < 0 || i >= self.size())
               throw py::index_error();
             return self[i];
-          })
+          }
+      )
       .def(
           "__setitem__",
-          [](FCharArray1D& self, int i, const std::string& val) {
+          [](FCharArray1D &self, int i, const std::string &val) {
             if (i < 0)
               i += self.size();
             if (i < 0 || i >= self.size())
               throw py::index_error();
             // FCharArray1D::operator[] returns proxy which implements operator=(string)
             self[i] = val;
-          })
+          }
+      )
       .def(
           "__iter__",
-          [](FCharArray1D& self) {
+          [](FCharArray1D &self) {
             // Helper to make iterator that yields strings instead of StringProxy objects
             // to make Python life easier
             return py::make_iterator(self.begin(), self.end());
           },
-          py::keep_alive<0, 1>())
+          py::keep_alive<0, 1>()
+      )
       .def("to_list", &FCharArray1D::to_vector)
-      .def("__str__", [](const FCharArray1D& t) { return Bmad::to_string(t); });
+      .def("__str__", [](const FCharArray1D &t) { return Bmad::to_string(t); });
 }
-void bind_standard_arrays(py::module& m) {
+void bind_standard_arrays(py::module &m) {
   bind_FArray1D<double>(m, "RealArray1D");
 #ifdef __FLOAT128__
   bind_FArray1D<__float128>(m, "Real16Array1D");

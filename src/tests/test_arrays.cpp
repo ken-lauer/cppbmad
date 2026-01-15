@@ -1,9 +1,9 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "bmad/fortran_arrays.hpp" // Assumes the header is here
-#include "doctest.h"
-
 #include <numeric>
 #include <vector>
+
+#include "bmad/fortran_arrays.hpp" // Assumes the header is here
+#include "doctest.h"
 
 // =============================================================================
 // MOCKING INFRASTRUCTURE
@@ -28,28 +28,24 @@ struct IntDescriptor {
   std::vector<int> buffer;
   int cur_lbound = 1;
 
-  void* data_ptr() {
-    return buffer.empty() ? nullptr : buffer.data();
-  }
-  int size() const {
-    return static_cast<int>(buffer.size());
-  }
+  void *data_ptr() { return buffer.empty() ? nullptr : buffer.data(); }
+  int size() const { return static_cast<int>(buffer.size()); }
 };
 
-void* Alloc_IntDesc() {
+void *Alloc_IntDesc() {
   g_alloc_count++;
   return new IntDescriptor();
 }
 
-void Dealloc_IntDesc(void* ptr) {
+void Dealloc_IntDesc(void *ptr) {
   if (ptr) {
     g_dealloc_count++;
-    delete static_cast<IntDescriptor*>(ptr);
+    delete static_cast<IntDescriptor *>(ptr);
   }
 }
 
-void Realloc_IntDesc(void* ptr, int lb, size_t n) {
-  auto* desc = static_cast<IntDescriptor*>(ptr);
+void Realloc_IntDesc(void *ptr, int lb, size_t n) {
+  auto *desc = static_cast<IntDescriptor *>(ptr);
   desc->cur_lbound = lb;
   desc->buffer.resize(n);
   // Fill with predictable data for testing: i * 10
@@ -57,14 +53,8 @@ void Realloc_IntDesc(void* ptr, int lb, size_t n) {
     desc->buffer[i] = static_cast<int>(i) * 10;
 }
 
-void Access_IntDesc(
-    void* ptr,
-    void** d,
-    int* lb,
-    int* sz,
-    size_t* es,
-    bool* alloc) {
-  auto* desc = static_cast<IntDescriptor*>(ptr);
+void Access_IntDesc(void *ptr, void **d, int *lb, int *sz, size_t *es, bool *alloc) {
+  auto *desc = static_cast<IntDescriptor *>(ptr);
   *d = desc->data_ptr();
   *lb = desc->cur_lbound;
   *sz = desc->size();
@@ -78,38 +68,33 @@ void Access_IntDesc(
 
 struct MyType {
   int val;
-  void* raw_addr; // Store access address to verify pointer arithmetic
+  void *raw_addr; // Store access address to verify pointer arithmetic
 };
 
 // A "Proxy" class that users would write to wrap the raw void*
 class MyTypeProxy {
-  void* ptr_;
+  void *ptr_;
 
- public:
-  explicit MyTypeProxy(void* p) : ptr_(p) {}
+public:
+  explicit MyTypeProxy(void *p)
+      : ptr_(p) {}
 
   // Getter simply treats the void* as an int* for this test
-  int get_val() const {
-    return *static_cast<int*>(ptr_);
-  }
-  void set_val(int v) {
-    *static_cast<int*>(ptr_) = v;
-  }
-  void* raw() const {
-    return ptr_;
-  }
+  int get_val() const { return *static_cast<int *>(ptr_); }
+  void set_val(int v) { *static_cast<int *>(ptr_) = v; }
+  void *raw() const { return ptr_; }
 };
 
-void* Alloc_Type(int n, size_t* elem_size) {
+void *Alloc_Type(int n, size_t *elem_size) {
   g_alloc_count++;
   *elem_size = sizeof(int);
   return new int[n]; // Simple int array to simulate a structure
 }
 
-void Dealloc_Type(void* ptr, int /*size_context*/) {
+void Dealloc_Type(void *ptr, int /*size_context*/) {
   if (ptr) {
     g_dealloc_count++;
-    delete[] static_cast<int*>(ptr);
+    delete[] static_cast<int *>(ptr);
   }
 }
 
@@ -239,7 +224,8 @@ TEST_CASE("FCharArray1D : String helper") {
       1,
       n_strings, // Bounds 1:3
       str_len,
-      true);
+      true
+  );
 
   SUBCASE("Reading strings trims whitespace") {
     CHECK(strings(1).str() == "Hello");
@@ -274,10 +260,8 @@ TEST_CASE("FTypeArrayND<T, 1> : Ownership and Lifecycle") {
   // 1. Test "Owned" array (created via .allocate)
   {
     // Allocate array of 10 items, lower bound 5
-    auto arr = FTypeArray1D<
-        Mocks::MyTypeProxy,
-        Mocks::Alloc_Type,
-        Mocks::Dealloc_Type>::allocate(10, 5);
+    auto arr =
+        FTypeArray1D<Mocks::MyTypeProxy, Mocks::Alloc_Type, Mocks::Dealloc_Type>::allocate(10, 5);
 
     CHECK(Mocks::g_alloc_count == 1);
     CHECK(arr.size() == 10);
@@ -302,8 +286,7 @@ TEST_CASE("FTypeArrayND<T, 1> : Ownership and Lifecycle") {
   int raw_int = 42;
   {
     // Create view manually
-    FTypeArray1D<Mocks::MyTypeProxy, nullptr, nullptr> view(
-        &raw_int, 1, 1, 1, true, sizeof(int));
+    FTypeArray1D<Mocks::MyTypeProxy, nullptr, nullptr> view(&raw_int, 1, 1, 1, true, sizeof(int));
     CHECK(view(1).get_val() == 42);
   }
   // View destruction should NOT trigger mock dealloc

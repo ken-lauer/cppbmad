@@ -1,4 +1,5 @@
 #include <bmad.hpp>
+
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -32,8 +33,7 @@ int main() {
 
   auto ele0{lat.ele()[0]};
   auto lat_param{lat.param().value()};
-  auto [beam, err_flag, beam_init_set] =
-      init_beam_distribution(ele0, lat_param, beam_init);
+  auto [beam, err_flag, beam_init_set] = init_beam_distribution(ele0, lat_param, beam_init);
 
   // First bunch and its particles
   auto bunch = beam.bunch()[0];
@@ -44,7 +44,7 @@ int main() {
   auto ave{FixedArray1D<double, 6>()};
   for (int i = 0; i < 6; ++i) {
     double sum = 0.0;
-    for (const auto& p : particles) {
+    for (const auto &p : particles) {
       sum += p.vec()[i];
     }
     ave[i] = (n_particles > 0) ? (sum / n_particles) : 0.0;
@@ -57,12 +57,10 @@ int main() {
 
   track_all(lat, centroid);
 
-  auto [beam1, err_flag1, beam_init_set1] =
-      init_beam_distribution(ele0, lat_param, beam_init);
+  auto [beam1, err_flag1, beam_init_set1] = init_beam_distribution(ele0, lat_param, beam_init);
   std::cout << "init_beam_distribution err=" << err_flag1 << "\n";
 
-  auto track_res =
-      track_beam(lat, beam1, std::nullopt, std::nullopt, centroid.view());
+  auto track_res = track_beam(lat, beam1, std::nullopt, std::nullopt, centroid);
 
   std::cout << "track_beam result=" << track_res << "\n";
 
@@ -73,7 +71,7 @@ int main() {
   out.setf(std::ios::fixed, std::ios::floatfield);
   out.precision(8);
   int idx = 1;
-  for (const auto& part : beam1.bunch()[0].particle()) {
+  for (const auto &part : beam1.bunch()[0].particle()) {
     out << std::setw(8) << idx << " " << part.vec().to_vector() << "\n";
     idx++;
   }

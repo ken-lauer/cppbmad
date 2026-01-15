@@ -1,12 +1,13 @@
 
+#include "bmad/to_string.hpp"
+
 #include <string>
 
 #include "bmad/fortran_arrays.hpp"
-#include "bmad/to_string.hpp"
 
 namespace Bmad {
 
-std::string to_string(const FCharArray1D& arr) {
+std::string to_string(const FCharArray1D &arr) {
   if (!arr.is_valid())
     return "[]";
   std::ostringstream oss;
@@ -22,17 +23,17 @@ std::string to_string(const FCharArray1D& arr) {
 }
 
 std::string repr(
-    const void* obj,
-    const std::string& class_name,
-    const std::initializer_list<std::pair<std::string, std::string>>& fields)
+    const void *obj,
+    const std::string &class_name,
+    const std::initializer_list<std::pair<std::string, std::string>> &fields
+)
 
 {
   std::ostringstream oss;
-  oss << class_name << "(0x" << std::hex
-      << reinterpret_cast<std::uintptr_t>(obj);
+  oss << class_name << "(0x" << std::hex << reinterpret_cast<std::uintptr_t>(obj);
 
   if (fields.size()) {
-    for (const auto& field : fields) {
+    for (const auto &field : fields) {
       oss << ", ";
       oss << field.first << "=" << field.second;
     }

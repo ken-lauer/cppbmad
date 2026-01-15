@@ -100,15 +100,13 @@ TEST_CASE("AllEncompassingProxy 1D fixed arrays") {
     REQUIRE(arr.size() == 3);
 
     for (int i = 0; i < arr.size(); ++i) {
-      arr[i] = std::complex<double>(
-          static_cast<double>(i), static_cast<double>(i) + 0.5);
+      arr[i] = std::complex<double>(static_cast<double>(i), static_cast<double>(i) + 0.5);
     }
 
     auto arr_read = proxy.complex_dp_1d();
     for (int i = 0; i < arr.size(); ++i) {
       CHECK(arr_read[i].real() == doctest::Approx(static_cast<double>(i)));
-      CHECK(
-          arr_read[i].imag() == doctest::Approx(static_cast<double>(i) + 0.5));
+      CHECK(arr_read[i].imag() == doctest::Approx(static_cast<double>(i) + 0.5));
     }
   }
 }
@@ -135,9 +133,7 @@ TEST_CASE("AllEncompassingProxy 2D fixed arrays") {
     auto arr_read = proxy.real_dp_2d();
     for (int i = bounds1.first; i <= bounds1.second; ++i) {
       for (int j = bounds2.first; j <= bounds2.second; ++j) {
-        CHECK(
-            arr_read(i, j) ==
-            doctest::Approx(static_cast<double>(i * 100 + j)));
+        CHECK(arr_read(i, j) == doctest::Approx(static_cast<double>(i * 100 + j)));
       }
     }
   }
@@ -172,8 +168,7 @@ TEST_CASE("AllEncompassingProxy 2D fixed arrays") {
 
     for (int i = bounds1.first; i <= bounds1.second; ++i) {
       for (int j = bounds2.first; j <= bounds2.second; ++j) {
-        arr(i, j) = std::complex<double>(
-            static_cast<double>(i), static_cast<double>(j));
+        arr(i, j) = std::complex<double>(static_cast<double>(i), static_cast<double>(j));
       }
     }
 
@@ -210,9 +205,7 @@ TEST_CASE("AllEncompassingProxy 3D fixed arrays") {
     for (int i = bounds1.first; i <= bounds1.second; ++i) {
       for (int j = bounds2.first; j <= bounds2.second; ++j) {
         for (int k = bounds3.first; k <= bounds3.second; ++k) {
-          CHECK(
-              arr_read(i, j, k) ==
-              doctest::Approx(static_cast<double>(i * 100 + j * 10 + k)));
+          CHECK(arr_read(i, j, k) == doctest::Approx(static_cast<double>(i * 100 + j * 10 + k)));
         }
       }
     }
@@ -351,8 +344,7 @@ TEST_CASE("AllEncompassingProxy allocatable arrays") {
     auto arr = proxy.complex_dp_1d_alloc();
     if (arr.size() > 0) {
       for (int i = 0; i < arr.size(); ++i) {
-        arr[i] = std::complex<double>(
-            static_cast<double>(i), -static_cast<double>(i));
+        arr[i] = std::complex<double>(static_cast<double>(i), -static_cast<double>(i));
       }
 
       auto arr_read = proxy.complex_dp_1d_alloc();
@@ -421,10 +413,7 @@ TEST_CASE("AllEncompassingProxy nested type (TestSubProxy)") {
     auto bounds3 = arr.bounds(3);
 
     arr(bounds1.first, bounds2.first, bounds3.first).sr().set_bbb(777);
-    CHECK(
-        proxy.type_3d()(bounds1.first, bounds2.first, bounds3.first)
-            .sr()
-            .bbb() == 777);
+    CHECK(proxy.type_3d()(bounds1.first, bounds2.first, bounds3.first).sr().bbb() == 777);
   }
 
   SUBCASE("type_0d_ptr access") {

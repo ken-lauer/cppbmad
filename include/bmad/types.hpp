@@ -20,7 +20,7 @@ using Complex = complex<double>;
 using Real = double;
 using Int = int;
 using Int8 = int64_t;
-using Char = char*;
+using Char = char *;
 
 template <typename T, std::size_t DIM1>
 using FixedArray1D = std::array<T, DIM1>;

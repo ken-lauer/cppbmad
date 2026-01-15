@@ -5,8 +5,7 @@
 #include <string>
 
 template <typename T>
-std::optional<std::reference_wrapper<T>> make_opt_ref(
-    std::optional<T>& opt_val) {
+std::optional<std::reference_wrapper<T>> make_opt_ref(std::optional<T> &opt_val) {
   if (opt_val.has_value()) {
     return std::ref(opt_val.value());
   }

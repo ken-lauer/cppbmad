@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-import pybmad
 from pytao import Tao
+
+import pybmad
 
 tao = Tao(init_file="$ACC_ROOT_DIR/bmad-doc/tao_examples/optics_matching/tao.init", noplot=True)
 

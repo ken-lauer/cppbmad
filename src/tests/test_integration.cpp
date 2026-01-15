@@ -1,4 +1,5 @@
 #include <bmad.hpp>
+
 #include <iostream>
 // #include "bmad/fortran_arrays.hpp"
 // #include "bmad/generated/routines.hpp"
@@ -6,9 +7,9 @@
 using namespace Bmad;
 using namespace SimUtils;
 
-extern "C" int tao_c_init_tao(const char*);
+extern "C" int tao_c_init_tao(const char *);
 extern "C" int tao_is_initialized();
-extern "C" char* tao_c_out_io_buffer_get_line(int n);
+extern "C" char *tao_c_out_io_buffer_get_line(int n);
 extern "C" int tao_c_out_io_buffer_num_lines();
 
 void test_allocatable() {
@@ -55,10 +56,8 @@ void test_struct_access() {
   auto cpx = std::complex<double>(1.0, 2.0);
 
   prox.set_complex_dp_0d(cpx);
-  std::cout << "real: " << prox.complex_dp_0d().real() << "vs" << cpx.real()
-            << "\n";
-  std::cout << "imag: " << prox.complex_dp_0d().imag() << "vs" << cpx.imag()
-            << "\n";
+  std::cout << "real: " << prox.complex_dp_0d().real() << "vs" << cpx.real() << "\n";
+  std::cout << "imag: " << prox.complex_dp_0d().imag() << "vs" << cpx.imag() << "\n";
 }
 
 int main() {
@@ -95,8 +94,8 @@ int main() {
                 << branch.ele().size() << std::endl;
 
       for (auto ele : branch.ele()) {
-        std::cout << ele.ix_ele() << " @ " << ele.s() << ": " << ele.name()
-                  << " (" << ele.type() << ")\n";
+        std::cout << ele.ix_ele() << " @ " << ele.s() << ": " << ele.name() << " (" << ele.type()
+                  << ")\n";
       }
 
       // Direct access still works
@@ -104,7 +103,7 @@ int main() {
       //     *Bmad::TaoElementProxy(1, Bmad::LatticeType::MODEL, 0, 5);
     }
 
-  } catch (const Bmad::BmadException& e) {
+  } catch (const Bmad::BmadException &e) {
     std::cerr << "Error: " << e.what() << std::endl;
     return 1;
   }
