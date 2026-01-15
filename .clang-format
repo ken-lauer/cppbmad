@@ -12,7 +12,7 @@ ColumnLimit: 100
 # This forces arguments to break if the line is too long,
 # and prevents them from grouping together if they break.
 BinPackArguments: false
-BinPackParameters: true
+BinPackParameters: false
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowAllArgumentsOnNextLine: false # Good addition for call sites
 BreakBeforeBraces: Custom
