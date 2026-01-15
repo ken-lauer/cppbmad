@@ -61,16 +61,10 @@ TEST_CASE("CSR") {
   track_all(lat, centroid);
 
   auto [beam1, err_flag1, beam_init_set1] = init_beam_distribution(ele0, lat_param, beam_init);
-  std::cout << "init_beam_distribution err=" << err_flag1 << "\n";
 
   auto track_res = track_beam(lat, beam1, std::nullopt, std::nullopt, centroid);
 
-  std::cout << "track_beam result=" << track_res << "\n";
-
   auto first_particle_vec = beam1.bunch()[0].particle()[0].vec().to_vector();
-
-  std::cout << "First particle coords at end of lattice:\n";
-  std::cout << first_particle_vec << "\n";
 
   auto expected = {
       1.44484E-07,
