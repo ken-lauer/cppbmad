@@ -156,7 +156,7 @@ class Argument:
     def get_dim1(self) -> tuple[str, str]:
         if self.ubound[0][-1] == "$":
             f_dim1 = self.ubound[0]
-            c_dim1 = "Bmad::" + self.ubound[0][0:-1].upper()
+            c_dim1 = "Bmad::" + self.ubound[0][:-1].upper()
             if self.lbound[0] != "1":
                 logger.error('lbound not "1" with parameter upper bound!')
                 sys.exit("STOPPING HERE")

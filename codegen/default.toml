@@ -1,3 +1,13 @@
+enum_filenames = [
+  "$ACC_ROOT_DIR/bmad/modules/bmad_struct.f90",
+  "$ACC_ROOT_DIR/sim_utils/io/output_mod.f90",
+  "$ACC_ROOT_DIR/sim_utils/interfaces/physical_constants.f90",
+  "$ACC_ROOT_DIR/sim_utils/interfaces/particle_species_mod.f90",
+  "$ACC_ROOT_DIR/sim_utils/interfaces/sim_utils_struct.f90",
+  "$ACC_ROOT_DIR/sim_utils/plot/quick_plot_struct.f90",
+]
+
+
 struct_list = [
   "spline_struct",
   "spin_polar_struct",

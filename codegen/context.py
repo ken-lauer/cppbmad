@@ -9,6 +9,7 @@ from .proxy import struct_to_proxy_class_name
 if typing.TYPE_CHECKING:
     from .arg import CodegenStructure
     from .config import CodegenConfig
+    from .enums import EnumValue
     from .structs import ParsedStructure
 
 
@@ -17,6 +18,15 @@ class ConfigContext:
     params: CodegenConfig
     parsed_structs: list[ParsedStructure] = dataclasses.field(default_factory=list)
     codegen_structs: list[CodegenStructure] = dataclasses.field(default_factory=list)
+    enums: dict[str, dict[str, EnumValue]] = dataclasses.field(default_factory=dict)
+
+    @property
+    def enums_by_name(self) -> dict[str, EnumValue]:
+        all_enums = {}
+        for enums in self.enums.values():
+            for name, enum in enums.items():
+                all_enums[name.upper()] = enum
+        return all_enums
 
     @property
     def parser_structs_by_cpp_class(self) -> dict[str, ParsedStructure]:

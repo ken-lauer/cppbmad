@@ -24,7 +24,7 @@ from .config import CodegenConfig
 from .context import ConfigContext, config_context
 from .coverage import generate_coverage_report
 from .cpp import generate_to_string_code, generate_to_string_header
-from .enums import ENUM_FILENAME, write_enums
+from .enums import ENUM_FILENAME, get_enum_code, parse_all_enums
 from .paths import (
     CODEGEN_ROOT,
     CPPBMAD_INCLUDE,
@@ -301,12 +301,13 @@ def generate(
     # params.struct_list = sorted(_routine_structs)
 
     structs = get_structure_definitions(params, parsed_structs)
-
+    enums = parse_all_enums(params.enum_filenames)
     config_context.set(
         ConfigContext(
             params=params,
             codegen_structs=structs,
             parsed_structs=parsed_structs,
+            enums=enums,
         )
     )
     assert len(config_context.get().codegen_structs)
@@ -317,7 +318,7 @@ def generate(
 
     missing_struct_attrs = check_missing(structs)
     write_proxy_classes(params, structs)
-    write_if_differs(write_enums, ENUM_FILENAME)
+    write_contents_if_differs(ENUM_FILENAME, get_enum_code(enums))
 
     routines, routines_by_name = generate_routines(params)
 
@@ -341,7 +342,7 @@ def generate(
     write_contents_if_differs(CPPBMAD_SRC / "generated" / "to_string.cpp", contents=to_string_code)
 
     if pybmad:
-        pybmad_files = generate_pybmad(structs, routines_by_name)
+        pybmad_files = generate_pybmad(structs, routines_by_name, enums)
         cpp_gen_src = PYBMAD_SRC / "generated"
         hpp_gen_src = PYBMAD_INCLUDE / "generated"
         existing_files = set(cpp_gen_src.glob("*.cpp")) | set(hpp_gen_src.glob("*.hpp"))
@@ -381,7 +382,9 @@ def main():
     )
     args = parser.parse_args()
 
-    logging.basicConfig(level=args.log_level)
+    logging.basicConfig(
+        level=args.log_level, handlers=[logging.StreamHandler(), logging.FileHandler("build-log.log")]
+    )
     logging.getLogger("codegen").setLevel(args.log_level)
 
     return generate(config_file=args.config_file, pybmad=not args.no_pybmad)

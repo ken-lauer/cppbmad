@@ -42,6 +42,7 @@ class CodegenConfig(pydantic.BaseModel):
     c_to_python_name_translation: dict[str, str]
     skips: list[str]
     routines: list[RoutineSettings] = []
+    enum_filenames: list[NormalizedPath] = []
 
     @classmethod
     def from_file(cls, filename: pathlib.Path) -> CodegenConfig:

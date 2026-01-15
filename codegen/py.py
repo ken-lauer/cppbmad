@@ -7,7 +7,7 @@ import textwrap
 from .arg import CodegenStructure
 from .config import SUPPORTED_ARRAY_DIMS
 from .cpp import CppWrapperArgument
-from .enums import EnumValue, get_ele_attributes, get_ele_keys, parse_all_enums
+from .enums import EnumValue, get_ele_attributes, get_ele_keys
 from .paths import CODEGEN_ROOT, PYBMAD_INCLUDE, PYBMAD_SRC
 from .proxy import templates as proxy_templates
 from .routines import FortranRoutine, RoutineArg, is_python_immutable
@@ -652,7 +652,7 @@ def _generate_main_module_file(
 def generate_pybmad(
     structs: list[CodegenStructure],
     routines_by_name: dict[str, FortranRoutine],
-    enums: dict[str, dict[str, EnumValue]] | None = None,
+    enums: dict[str, dict[str, EnumValue]],
 ) -> dict[pathlib.Path, str]:
     """
     Generate split pybind11 bindings for Bmad.
@@ -671,9 +671,6 @@ def generate_pybmad(
     dict[pathlib.Path, str]
         A dictionary mapping file output paths to their generated string content.
     """
-    if enums is None:
-        enums = parse_all_enums()
-
     files: dict[pathlib.Path, str] = {}
     array_usage = struct_array_usage_dimensions(routines_by_name, structs)
 
