@@ -2794,14 +2794,6 @@ std::string to_string(const Bmad::CheckIfSInBounds& self) {
       {std::pair{"err_flag", to_string(self.err_flag)},
        std::pair{"translated_s", to_string(self.translated_s)}});
 }
-std::string to_string(const Bmad::ChooseQuadsForSetTune& self) {
-  return repr(
-      &self,
-      "Bmad::ChooseQuadsForSetTune",
-      {std::pair{"dk1", to_string(self.dk1)},
-       std::pair{"eles", "[...]"},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
 std::string to_string(const Bmad::ChromCalc& self) {
   return repr(
       &self,
@@ -2810,24 +2802,14 @@ std::string to_string(const Bmad::ChromCalc& self) {
        std::pair{"chrom_b", to_string(self.chrom_b)},
        std::pair{"err_flag", to_string(self.err_flag)},
        std::pair{"low_E_lat", to_string(self.low_E_lat)},
-       std::pair{"high_E_lat", to_string(self.high_E_lat)},
-       std::pair{"low_E_orb", "[...]"},
-       std::pair{"high_E_orb", "[...]"}});
-}
-std::string to_string(const Bmad::ClosedOrbitFromTracking& self) {
-  return repr(
-      &self,
-      "Bmad::ClosedOrbitFromTracking",
-      {std::pair{"closed_orb", "[...]"},
-       std::pair{"err_flag", to_string(self.err_flag)}});
+       std::pair{"high_E_lat", to_string(self.high_E_lat)}});
 }
 std::string to_string(const Bmad::ComplexTaylorToMat6& self) {
   return repr(
       &self,
       "Bmad::ComplexTaylorToMat6",
       {std::pair{"vec0", to_string(self.vec0)},
-       std::pair{"mat6", to_string(self.mat6)},
-       std::pair{"r_out", to_string(self.r_out)}});
+       std::pair{"mat6", to_string(self.mat6)}});
 }
 std::string to_string(const Bmad::ConvertCoords& self) {
   return repr(
@@ -2921,14 +2903,6 @@ std::string to_string(const Bmad::EleToFibre& self) {
       {std::pair{"ptc_fibre", to_string(self.ptc_fibre)},
        std::pair{"err_flag", to_string(self.err_flag)}});
 }
-std::string to_string(const Bmad::EleToPtcMagneticBnAn& self) {
-  return repr(
-      &self,
-      "Bmad::EleToPtcMagneticBnAn",
-      {std::pair{"bn", to_string(self.bn)},
-       std::pair{"an", to_string(self.an)},
-       std::pair{"n_max", to_string(self.n_max)}});
-}
 std::string to_string(const Bmad::EleToTaylor& self) {
   return repr(
       &self,
@@ -3021,8 +2995,7 @@ std::string to_string(const Bmad::ExpressionStringToStack& self) {
   return repr(
       &self,
       "Bmad::ExpressionStringToStack",
-      {std::pair{"stack", "[...]"},
-       std::pair{"n_stack", to_string(self.n_stack)},
+      {std::pair{"n_stack", to_string(self.n_stack)},
        std::pair{"err_flag", to_string(self.err_flag)},
        std::pair{"err_str", self.err_str}});
 }
@@ -3098,13 +3071,6 @@ std::string to_string(const Bmad::GetEmitFromSigmaMat& self) {
       "Bmad::GetEmitFromSigmaMat",
       {std::pair{"normal", to_string(self.normal)},
        std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Bmad::GetSlaveList& self) {
-  return repr(
-      &self,
-      "Bmad::GetSlaveList",
-      {std::pair{"slaves", "[...]"},
-       std::pair{"n_slave", to_string(self.n_slave)}});
 }
 std::string to_string(const Bmad::GptToParticleBunch& self) {
   return repr(
@@ -3293,13 +3259,6 @@ std::string to_string(const Bmad::Multipole1KtToAb& self) {
       {std::pair{"an", to_string(self.an)},
        std::pair{"bn", to_string(self.bn)}});
 }
-std::string to_string(const Bmad::MultipoleAbToKt& self) {
-  return repr(
-      &self,
-      "Bmad::MultipoleAbToKt",
-      {std::pair{"knl", to_string(self.knl)},
-       std::pair{"tn", to_string(self.tn)}});
-}
 std::string to_string(const Bmad::MultipoleEleToAb& self) {
   return repr(
       &self,
@@ -3308,21 +3267,6 @@ std::string to_string(const Bmad::MultipoleEleToAb& self) {
        std::pair{"a", to_string(self.a)},
        std::pair{"b", to_string(self.b)},
        std::pair{"b1", to_string(self.b1)}});
-}
-std::string to_string(const Bmad::MultipoleEleToKt& self) {
-  return repr(
-      &self,
-      "Bmad::MultipoleEleToKt",
-      {std::pair{"ix_pole_max", to_string(self.ix_pole_max)},
-       std::pair{"knl", to_string(self.knl)},
-       std::pair{"tilt", to_string(self.tilt)}});
-}
-std::string to_string(const Bmad::MultipoleKtToAb& self) {
-  return repr(
-      &self,
-      "Bmad::MultipoleKtToAb",
-      {std::pair{"an", to_string(self.an)},
-       std::pair{"bn", to_string(self.bn)}});
 }
 std::string to_string(const Bmad::NormalFormTaylors& self) {
   return repr(
@@ -3398,8 +3342,7 @@ std::string to_string(const Bmad::ParseRealList& self) {
   return repr(
       &self,
       "Bmad::ParseRealList",
-      {std::pair{"real_array", to_string(self.real_array)},
-       std::pair{"delim", self.delim},
+      {std::pair{"delim", self.delim},
        std::pair{"delim_found", to_string(self.delim_found)},
        std::pair{"num_found", to_string(self.num_found)},
        std::pair{"is_ok", to_string(self.is_ok)}});
@@ -3417,16 +3360,14 @@ std::string to_string(const Bmad::ParserFastComplexRead& self) {
   return repr(
       &self,
       "Bmad::ParserFastComplexRead",
-      {std::pair{"cmplx_vec", to_string(self.cmplx_vec)},
-       std::pair{"delim", self.delim},
+      {std::pair{"delim", self.delim},
        std::pair{"is_ok", to_string(self.is_ok)}});
 }
 std::string to_string(const Bmad::ParserFastRealRead& self) {
   return repr(
       &self,
       "Bmad::ParserFastRealRead",
-      {std::pair{"real_vec", to_string(self.real_vec)},
-       std::pair{"delim", self.delim},
+      {std::pair{"delim", self.delim},
        std::pair{"n_real", to_string(self.n_real)},
        std::pair{"is_ok", to_string(self.is_ok)}});
 }
@@ -3593,12 +3534,6 @@ std::string to_string(const Bmad::ReadBeamFile& self) {
       {std::pair{"beam", to_string(self.beam)},
        std::pair{"err_flag", to_string(self.err_flag)}});
 }
-std::string to_string(const Bmad::RemoveConstantTaylor& self) {
-  return repr(
-      &self,
-      "Bmad::RemoveConstantTaylor",
-      {std::pair{"taylor_out", "[...]"}, std::pair{"c0", to_string(self.c0)}});
-}
 std::string to_string(const Bmad::SetEleAttribute& self) {
   return repr(
       &self,
@@ -3613,12 +3548,6 @@ std::string to_string(const Bmad::SetEleStatusStale& self) {
       {std::pair{"ele", to_string(self.ele)},
        std::pair{"status_group", to_string(self.status_group)},
        std::pair{"set_slaves", to_string(self.set_slaves)}});
-}
-std::string to_string(const Bmad::SolvePsiFixedSteps& self) {
-  return repr(
-      &self,
-      "Bmad::SolvePsiFixedSteps",
-      {std::pair{"t", to_string(self.t)}, std::pair{"p", to_string(self.p)}});
 }
 std::string to_string(const Bmad::SpinMat8ResonanceStrengths& self) {
   return repr(
@@ -3706,13 +3635,6 @@ std::string to_string(const Tao::TaoCurveRmsCalc& self) {
       {std::pair{"rms", to_string(self.rms)},
        std::pair{"mean", to_string(self.mean)}});
 }
-std::string to_string(const Tao::TaoDataUseitPlotCalc& self) {
-  return repr(
-      &self,
-      "Tao::TaoDataUseitPlotCalc",
-      {std::pair{"data", "[...]"},
-       std::pair{"most_invalid", self.most_invalid}});
-}
 std::string to_string(const Tao::TaoDatumIntegrate& self) {
   return repr(
       &self,
@@ -3760,62 +3682,6 @@ std::string to_string(const Tao::TaoEvaluateDatumAtS& self) {
        std::pair{"bad_datum", to_string(self.bad_datum)},
        std::pair{"value", to_string(self.value)}});
 }
-std::string to_string(const Tao::TaoEvaluateElementParameters& self) {
-  return repr(
-      &self,
-      "Tao::TaoEvaluateElementParameters",
-      {std::pair{"err", to_string(self.err)},
-       std::pair{"values", to_string(self.values)},
-       std::pair{"info", "[...]"}});
-}
-std::string to_string(const Tao::TaoEvaluateExpression& self) {
-  return repr(
-      &self,
-      "Tao::TaoEvaluateExpression",
-      {std::pair{"value", to_string(self.value)},
-       std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"info", "[...]"},
-       std::pair{"stack", "[...]"}});
-}
-std::string to_string(const Tao::TaoEvaluateExpressionNew& self) {
-  return repr(
-      &self,
-      "Tao::TaoEvaluateExpressionNew",
-      {std::pair{"value", to_string(self.value)},
-       std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"info", "[...]"},
-       std::pair{"stack", "[...]"}});
-}
-std::string to_string(const Tao::TaoEvaluateExpressionOld& self) {
-  return repr(
-      &self,
-      "Tao::TaoEvaluateExpressionOld",
-      {std::pair{"value", to_string(self.value)},
-       std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"info", "[...]"},
-       std::pair{"stack", "[...]"}});
-}
-std::string to_string(const Tao::TaoEvaluateLatOrBeamData& self) {
-  return repr(
-      &self,
-      "Tao::TaoEvaluateLatOrBeamData",
-      {std::pair{"err", to_string(self.err)},
-       std::pair{"values", to_string(self.values)}});
-}
-std::string to_string(const Tao::TaoEvaluateStackOld& self) {
-  return repr(
-      &self,
-      "Tao::TaoEvaluateStackOld",
-      {std::pair{"value", to_string(self.value)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
-std::string to_string(const Tao::TaoEvaluateTree& self) {
-  return repr(
-      &self,
-      "Tao::TaoEvaluateTree",
-      {std::pair{"value", to_string(self.value)},
-       std::pair{"err_flag", to_string(self.err_flag)}});
-}
 std::string to_string(const Tao::TaoFindPlotRegion& self) {
   return repr(
       &self,
@@ -3830,25 +3696,11 @@ std::string to_string(const Tao::TaoFloorToScreen& self) {
       {std::pair{"x_screen", to_string(self.x_screen)},
        std::pair{"y_screen", to_string(self.y_screen)}});
 }
-std::string to_string(const Tao::TaoGetData& self) {
-  return repr(
-      &self,
-      "Tao::TaoGetData",
-      {std::pair{"data_value", to_string(self.data_value)},
-       std::pair{"data_weight", to_string(self.data_weight)},
-       std::pair{"data_meas_value", to_string(self.data_meas_value)},
-       std::pair{"data_ix_dModel", to_string(self.data_ix_dModel)}});
-}
 std::string to_string(const Tao::TaoGetOptVars& self) {
   return repr(
       &self,
       "Tao::TaoGetOptVars",
-      {std::pair{"var_value", to_string(self.var_value)},
-       std::pair{"var_step", to_string(self.var_step)},
-       std::pair{"var_delta", to_string(self.var_delta)},
-       std::pair{"var_weight", to_string(self.var_weight)},
-       std::pair{"var_ix", to_string(self.var_ix)},
-       std::pair{
+      {std::pair{
            "ignore_if_weight_is_zero",
            to_string(self.ignore_if_weight_is_zero)},
        std::pair{
@@ -3860,13 +3712,6 @@ std::string to_string(const Tao::TaoGraphSMinMaxCalc& self) {
       "Tao::TaoGraphSMinMaxCalc",
       {std::pair{"s_min", to_string(self.s_min)},
        std::pair{"s_max", to_string(self.s_max)}});
-}
-std::string to_string(const Tao::TaoInitFindElements& self) {
-  return repr(
-      &self,
-      "Tao::TaoInitFindElements",
-      {std::pair{"eles", "[...]"},
-       std::pair{"found_one", to_string(self.found_one)}});
 }
 std::string to_string(const Tao::TaoInjectBeam& self) {
   return repr(
@@ -3881,18 +3726,6 @@ std::string to_string(const Tao::TaoLatticeCalc& self) {
       "Tao::TaoLatticeCalc",
       {std::pair{"calc_ok", to_string(self.calc_ok)},
        std::pair{"print_err", to_string(self.print_err)}});
-}
-std::string to_string(const Tao::TaoLocateAllElements& self) {
-  return repr(
-      &self,
-      "Tao::TaoLocateAllElements",
-      {std::pair{"eles", "[...]"}, std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const Tao::TaoLocateElements& self) {
-  return repr(
-      &self,
-      "Tao::TaoLocateElements",
-      {std::pair{"eles", "[...]"}, std::pair{"err", to_string(self.err)}});
 }
 std::string to_string(const Tao::TaoParamValueAtS& self) {
   return repr(
@@ -3913,13 +3746,6 @@ std::string to_string(const Tao::TaoParseElementParamStr& self) {
        std::pair{"parameter", self.parameter},
        std::pair{"where", to_string(self.where)},
        std::pair{"component", self.component}});
-}
-std::string to_string(const Tao::TaoParticleDataValue& self) {
-  return repr(
-      &self,
-      "Tao::TaoParticleDataValue",
-      {std::pair{"value", to_string(self.value)},
-       std::pair{"err", to_string(self.err)}});
 }
 std::string to_string(const Tao::TaoPickUniverse& self) {
   return repr(
@@ -3949,8 +3775,7 @@ std::string to_string(const Tao::TaoPointerToUniverses& self) {
   return repr(
       &self,
       "Tao::TaoPointerToUniverses",
-      {std::pair{"unis", "[...]"},
-       std::pair{"err", to_string(self.err)},
+      {std::pair{"err", to_string(self.err)},
        std::pair{"name_out", self.name_out},
        std::pair{"explicit_uni", to_string(self.explicit_uni)}});
 }
@@ -4003,12 +3828,6 @@ std::string to_string(const Tao::TaoSetRealValue& self) {
       {std::pair{"var", to_string(self.var)},
        std::pair{"error", to_string(self.error)}});
 }
-std::string to_string(const Tao::TaoSplitComponent& self) {
-  return repr(
-      &self,
-      "Tao::TaoSplitComponent",
-      {std::pair{"comp", "[...]"}, std::pair{"err", to_string(self.err)}});
-}
 std::string to_string(const Tao::TaoToPhaseAndCouplingReading& self) {
   return repr(
       &self,
@@ -4030,33 +3849,12 @@ std::string to_string(const Tao::TaoTrackingEleIndex& self) {
       {std::pair{"ix_branch", to_string(self.ix_branch)},
        std::pair{"ix_ele", to_string(self.ix_ele)}});
 }
-std::string to_string(const Tao::TaoWaveFit& self) {
-  return repr(
-      &self,
-      "Tao::TaoWaveFit",
-      {std::pair{"coef", to_string(self.coef)},
-       std::pair{"rms", to_string(self.rms)}});
-}
 std::string to_string(const Bmad::TargetRotMats& self) {
   return repr(
       &self,
       "Bmad::TargetRotMats",
       {std::pair{"w_to_target", to_string(self.w_to_target)},
        std::pair{"w_to_ele", to_string(self.w_to_ele)}});
-}
-std::string to_string(const Bmad::TaylorInverse& self) {
-  return repr(
-      &self,
-      "Bmad::TaylorInverse",
-      {std::pair{"taylor_inv", "[...]"},
-       std::pair{"err", to_string(self.err)}});
-}
-std::string to_string(const CppBmadTest::TestBunchStructArray& self) {
-  return repr(
-      &self,
-      "CppBmadTest::TestBunchStructArray",
-      {std::pair{"arr_out", "[...]"},
-       std::pair{"opt_status", to_string(self.opt_status)}});
 }
 std::string to_string(const CppBmadTest::TestBunchStructScalar& self) {
   return repr(
@@ -4072,13 +3870,6 @@ std::string to_string(const CppBmadTest::TestCharacterScalar& self) {
       {std::pair{"val_out", self.val_out},
        std::pair{"opt_status", to_string(self.opt_status)}});
 }
-std::string to_string(const CppBmadTest::TestComplexArray& self) {
-  return repr(
-      &self,
-      "CppBmadTest::TestComplexArray",
-      {std::pair{"arr_out", to_string(self.arr_out)},
-       std::pair{"opt_status", to_string(self.opt_status)}});
-}
 std::string to_string(const CppBmadTest::TestComplexScalar& self) {
   return repr(
       &self,
@@ -4086,24 +3877,11 @@ std::string to_string(const CppBmadTest::TestComplexScalar& self) {
       {std::pair{"val_out", to_string(self.val_out)},
        std::pair{"opt_status", to_string(self.opt_status)}});
 }
-std::string to_string(const CppBmadTest::TestInteger8Array& self) {
-  return repr(
-      &self,
-      "CppBmadTest::TestInteger8Array",
-      {std::pair{"opt_status", to_string(self.opt_status)}});
-}
 std::string to_string(const CppBmadTest::TestInteger8Scalar& self) {
   return repr(
       &self,
       "CppBmadTest::TestInteger8Scalar",
       {std::pair{"val_out", to_string(self.val_out)},
-       std::pair{"opt_status", to_string(self.opt_status)}});
-}
-std::string to_string(const CppBmadTest::TestIntegerArray& self) {
-  return repr(
-      &self,
-      "CppBmadTest::TestIntegerArray",
-      {std::pair{"arr_out", to_string(self.arr_out)},
        std::pair{"opt_status", to_string(self.opt_status)}});
 }
 std::string to_string(const CppBmadTest::TestIntegerScalar& self) {
@@ -4113,12 +3891,6 @@ std::string to_string(const CppBmadTest::TestIntegerScalar& self) {
       {std::pair{"val_out", to_string(self.val_out)},
        std::pair{"opt_status", to_string(self.opt_status)}});
 }
-std::string to_string(const CppBmadTest::TestLogicalArray& self) {
-  return repr(
-      &self,
-      "CppBmadTest::TestLogicalArray",
-      {std::pair{"opt_status", to_string(self.opt_status)}});
-}
 std::string to_string(const CppBmadTest::TestLogicalScalar& self) {
   return repr(
       &self,
@@ -4126,25 +3898,11 @@ std::string to_string(const CppBmadTest::TestLogicalScalar& self) {
       {std::pair{"val_out", to_string(self.val_out)},
        std::pair{"opt_status", to_string(self.opt_status)}});
 }
-std::string to_string(const CppBmadTest::TestReal16Array& self) {
-  return repr(
-      &self,
-      "CppBmadTest::TestReal16Array",
-      {std::pair{"arr_out", to_string(self.arr_out)},
-       std::pair{"opt_status", to_string(self.opt_status)}});
-}
 std::string to_string(const CppBmadTest::TestReal16Scalar& self) {
   return repr(
       &self,
       "CppBmadTest::TestReal16Scalar",
       {std::pair{"val_out", to_string(self.val_out)},
-       std::pair{"opt_status", to_string(self.opt_status)}});
-}
-std::string to_string(const CppBmadTest::TestRealArray& self) {
-  return repr(
-      &self,
-      "CppBmadTest::TestRealArray",
-      {std::pair{"arr_out", to_string(self.arr_out)},
        std::pair{"opt_status", to_string(self.opt_status)}});
 }
 std::string to_string(const CppBmadTest::TestRealScalar& self) {
@@ -4237,15 +3995,13 @@ std::string to_string(const Bmad::TrackAll& self) {
       &self,
       "Bmad::TrackAll",
       {std::pair{"track_state", to_string(self.track_state)},
-       std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"orbit0", "[...]"}});
+       std::pair{"err_flag", to_string(self.err_flag)}});
 }
 std::string to_string(const Bmad::TrackFromSToS& self) {
   return repr(
       &self,
       "Bmad::TrackFromSToS",
       {std::pair{"orbit_end", to_string(self.orbit_end)},
-       std::pair{"all_orb", "[...]"},
        std::pair{"track_state", to_string(self.track_state)}});
 }
 std::string to_string(const Bmad::TrackUntilDead& self) {

@@ -34,12 +34,12 @@ class CppWrapperArgument(ABC):
         assert arg.member is not None
         if len(arg.array):
             if arg.member.type.lower() == "type":
-                if arg.member.type_info.allocatable or arg.is_dynamic_array:
+                if arg.member.type_info.allocatable:  #  or arg.is_dynamic_array:
                     return CppWrapperTypeArgumentAllocArray(arg)
                 return CppWrapperTypeArgumentArray(arg)
             if arg.type == "character":
                 return CppWrapperStringArgumentArray(arg)
-            if arg.is_dynamic_array:
+            if arg.member.type_info.allocatable:  #  or arg.is_dynamic_array:
                 return CppWrapperGeneralArgumentAllocArray(arg)
             return CppWrapperGeneralArgumentArray(arg)
         if arg.member.type.lower() == "type":
@@ -140,32 +140,38 @@ class CppWrapperTypeArgumentArray(CppWrapperArgument):
         lines = []
         argname = self.arg.c_name
         clsname = self.arg.kind_as_cpp_class
+        desc_name = f"{self.fortran_call_arg_name}_desc"
 
+        lines.append(f"// {argname}: {clsname} {self.arg.intent} ({type(self).__name__})")
+        lines.append(f"Bmad::array_descriptor_t {desc_name};")
+        lines.append(f"{desc_name}.rank = 1;")
+
+        # Populate descriptor
         if self.arg.intent in {"in", "inout"}:
             if self.arg.is_optional:
-                lines.append(
-                    self.unwrap_optional(
-                        f"{argname}->data()",
-                        type_="auto*",
-                        comment="input, optional",
-                    )
-                )
+                lines.append(f"if ({argname}) {{")
+                lines.append(f"  {desc_name}.data_ptr = {argname}->get().data();")
+                lines.append(f"  {desc_name}.dims[0] = {argname}->get().size();")
+                lines.append("} else {")
+                lines.append(f"  {desc_name}.data_ptr = nullptr;")
+                lines.append(f"  {desc_name}.dims[0] = 0;")
+                lines.append("}")
+            else:
+                lines.append(f"{desc_name}.data_ptr = {argname}.data();")
+                lines.append(f"{desc_name}.dims[0] = {argname}.size();")
         elif self.arg.intent == "out":
             lines.append(f"""\
         // Output-only type array
         auto {argname} = {clsname}Array1D::allocate({self.arg.c_dim1}, 1);
+        {desc_name}.data_ptr = {argname}.get_fortran_ptr();
+        {desc_name}.dims[0] = {argname}.size();
         """)
+
+        lines.append(f"{desc_name}.strides[0] = 1;")
         return lines
 
     def call_argument(self) -> str:
-        argname = self.arg.c_name
-        if self.arg.intent in {"in", "inout"}:
-            if self.arg.is_optional:
-                return self.fortran_call_arg_name
-            return f"{argname}.data()"
-        if self.arg.intent == "out":
-            return f"{argname}.get_fortran_ptr()"
-        return ""
+        return f"{self.fortran_call_arg_name}_desc"
 
     @property
     def output_arg_name(self) -> str | None:
@@ -333,16 +339,7 @@ class CppWrapperStringArgument(CppWrapperArgument):
         return None
 
 
-_alloc_array_type_map = {
-    ctr.name: ctr.cpp_container_name
-    for ctr in native_type_containers
-    # "real": "RealAlloc1D",
-    # "real8": "Real8Alloc1D",
-    # "integer": "IntAlloc1D",
-    # "integer8": "Int8Alloc1D",
-    # "logical": "BoolAlloc1D",
-    # "complex": "ComplexAlloc1D",
-}
+_alloc_array_type_map = {ctr.name: ctr.cpp_container_name for ctr in native_type_containers}
 
 
 @dataclasses.dataclass
@@ -398,18 +395,42 @@ class CppWrapperGeneralArgumentArray(CppWrapperArgument):
     def pre_call_lines(self) -> list[str]:
         lines = []
         arr = self.arg.array
-        opt_val = f"{self.arg.c_name}.value().data()"
+        # opt_val = f"{self.arg.c_name}.value().data()"
+
+        desc_name = f"{self.fortran_call_arg_name}_desc"
+
+        lines.append(
+            f"// {self.arg.c_name}: {self.arg.intent} {self.arg.full_type.ptr} ({type(self).__name__}) ({arr})"
+        )
+        lines.append(f"Bmad::array_descriptor_t {desc_name};")
+        lines.append(f"{desc_name}.rank = {len(arr)};")
+        # Initialize dims and strides
+        # for i, dim in enumerate(self.arg.c_dims, 0):
+        # for i in range(len(arr)):
+        #     dim = f"{self.arg.c_name}.size()"
+        #     lines.append(f"{desc_name}.dims[{i}] = {dim};")
+        #     # lines.append(f"{desc_name}.strides[{i}] = 1; // Contiguous or fixed layout")  # TODO: stride calc?
+
+        # ptr_name = f"{self.fortran_call_arg_name}_ptr"  # Intermediate pointer holder
 
         if len(arr) == 1:
             if self.arg.intent == "out":
                 pbtype = self.arg.transform.cpp_declare_type
                 lines.append(f"{pbtype} {self.fortran_call_arg_name};")
+                lines.append(f"{desc_name}.data_ptr = {self.fortran_call_arg_name}.data();")
+                # 1D dynamic size update?
+                lines.append(f"{desc_name}.dims[0] = {self.fortran_call_arg_name}.size();")
             elif self.arg.is_optional:
-                lines.append(self.unwrap_optional(opt_val, type_=self.arg.transform.cpp_call_fortran_type))
+                lines.append(f"if ({self.arg.c_name}.has_value()) {{")
+                lines.append(f"  {desc_name}.data_ptr = {self.arg.c_name}->data();")
+                lines.append(f"  {desc_name}.dims[0] = {self.arg.c_name}->size();")
+                lines.append("} else {")
+                lines.append(f"  {desc_name}.data_ptr = nullptr;")
+                lines.append(f"  {desc_name}.dims[0] = 0;")
+                lines.append("}")
             else:
-                lines.append(
-                    f"auto *{self.fortran_call_arg_name} = {self.arg.c_name}.data(); // CppWrapperGeneralArgument"
-                )
+                lines.append(f"{desc_name}.data_ptr = {self.arg.c_name}.data();")
+                lines.append(f"{desc_name}.dims[0] = {self.arg.c_name}.size();")
 
         elif len(arr) in {2, 3}:
             ctype = STANDARD_TYPES[self.arg.type].c_type
@@ -419,14 +440,15 @@ class CppWrapperGeneralArgumentArray(CppWrapperArgument):
             dims = "*".join(str(dim) for dim in self.arg.c_dims)
             vec_name = f"{self.fortran_call_arg_name}_vec"
             lines.append(f"{ctype} {vec_name}[{dims}];")
+            lines.append(f"{desc_name}.data_ptr = {vec_name};")
 
             prefix = "matrix" if len(arr) == 2 else "tensor"
 
             if self.arg.is_optional and self.arg.intent != "out":
-                lines.append(f"const {ctype} *{self.fortran_call_arg_name} = nullptr;")
                 lines.append(f"if ({self.arg.c_name}.has_value()) {{")
                 lines.append(f"  {prefix}_to_vec({self.arg.c_name}.value(), {vec_name});")
-                lines.append(f"  {self.fortran_call_arg_name} = {vec_name};")
+                lines.append("} else {")
+                lines.append(f"  {desc_name}.data_ptr = nullptr;")
                 lines.append("}")
             elif self.arg.intent != "out":
                 if self.arg.is_optional:
@@ -437,14 +459,7 @@ class CppWrapperGeneralArgumentArray(CppWrapperArgument):
         return lines
 
     def call_argument(self) -> str:
-        arr = self.arg.array
-        if len(arr) == 1:
-            if self.arg.intent == "out":
-                return f"{self.fortran_call_arg_name}.data()"
-            return self.fortran_call_arg_name
-        if len(arr) in {2, 3}:
-            return f"{self.fortran_call_arg_name}_vec"
-        return ""
+        return f"{self.fortran_call_arg_name}_desc"
 
     def post_call_lines(self) -> list[str]:
         lines = []

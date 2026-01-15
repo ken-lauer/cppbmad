@@ -4,45 +4,21 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-PyNormalFormComplexTaylors python_normal_form_complex_taylors(
-    FixedArray1D<TaylorProxy, 6> one_turn_taylor,
-    bool rf_on,
-    std::optional<FixedArray1D<ComplexTaylorProxy, 6>> F = std::nullopt,
-    std::optional<FixedArray1D<ComplexTaylorProxy, 6>> L = std::nullopt,
-    std::optional<FixedArray1D<TaylorProxy, 6>> A = std::nullopt,
-    std::optional<FixedArray1D<TaylorProxy, 6>> A_inverse = std::nullopt,
-    std::optional<int> order = std::nullopt) {
-  Bmad::normal_form_complex_taylors(
-      one_turn_taylor, rf_on, F, L, A, A_inverse, make_opt_ref(order));
-  auto py_result{PyNormalFormComplexTaylors{rf_on, order}};
-  return py_result;
-}
-PyNumFieldEles python_num_field_eles(EleProxy& ele, int n_field_ele) {
-  Bmad::num_field_eles(ele, n_field_ele);
-  auto py_result{PyNumFieldEles{n_field_ele}};
-  return py_result;
-}
-PyNumLords python_num_lords(EleProxy& slave, int lord_type, int num) {
-  Bmad::num_lords(slave, lord_type, num);
-  auto py_result{PyNumLords{num}};
-  return py_result;
-}
-
 void init_Bmad_routines_n(py::module& m) {
   m.def(
       "n_attrib_string_max_len",
       &Bmad::n_attrib_string_max_len,
       R"""(Function n_attrib_string_max_len () result (max_len)
 
-  Routine to return the the maximum number of characters in any attribute
-  name known to bmad.
+Routine to return the the maximum number of characters in any attribute
+name known to bmad.
 
 
-  Returns
-  -------
-  max_len : int
-      Maximum number of characters in any attribute name.
-  )""");
+Returns
+-------
+max_len : int
+    Maximum number of characters in any attribute name.
+)""");
   m.def(
       "new_control",
       &Bmad::new_control,
@@ -50,55 +26,37 @@ void init_Bmad_routines_n(py::module& m) {
       py::arg("ix_ele"),
       py::arg("ele_name") = py::none(),
       R"""(Parameters
-  ----------
-  lat : LatStruct
-      Lat used
-  ix_ele : int
-      Index of the new control element
-  ele_name : unknown, optional
-      Name of the new element. Output
-  )""");
+----------
+lat : LatStruct
+    Lat used
+ix_ele : int
+    Index of the new control element
+ele_name : unknown, optional
+    Name of the new element. Output
+)""");
   m.def(
       "nint_chk",
       &Bmad::nint_chk,
       py::arg("re_val"),
       R"""(Function nint_chk (re_val) result (int_val)
 
-  Returns the nearest integer to re_val.
-  Also does out-of-bounds error checking.
-  Used with bmad parsing.
+Returns the nearest integer to re_val.
+Also does out-of-bounds error checking.
+Used with bmad parsing.
 
-  Parameters
-  ----------
-  re_val : float
-      Input real number.
+Parameters
+----------
+re_val : float
+    Input real number.
 
-  Returns
-  -------
-  int_val : int
-      Output nearest integer.
-  )""");
-  py::class_<
-      PyNormalFormComplexTaylors,
-      std::unique_ptr<PyNormalFormComplexTaylors>>(
-      m, "NormalFormComplexTaylors", "normal_form_complex_taylors return type")
-      .def_readonly("rf_on", &PyNormalFormComplexTaylors::rf_on)
-      .def_readonly("order", &PyNormalFormComplexTaylors::order)
-      .def("__len__", [](const PyNormalFormComplexTaylors&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyNormalFormComplexTaylors& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.rf_on);
-            if (i == 1)
-              return py::cast(s.order);
-            throw py::index_error();
-          });
+Returns
+-------
+int_val : int
+    Output nearest integer.
+)""");
   m.def(
       "normal_form_complex_taylors",
-      &python_normal_form_complex_taylors,
+      &Bmad::normal_form_complex_taylors,
       py::arg("one_turn_taylor"),
       py::arg("rf_on"),
       py::arg("F") = py::none(),
@@ -107,15 +65,15 @@ void init_Bmad_routines_n(py::module& m) {
       py::arg("A_inverse") = py::none(),
       py::arg("order") = py::none(),
       R"""(Parameters
-  ----------
-  one_turn_taylor : 
-  rf_on : 
-  F : 
-  L : 
-  A : 
-  A_inverse : 
-  order : 
-  )""");
+----------
+one_turn_taylor : 
+rf_on : 
+F : 
+L : 
+A : 
+A_inverse : 
+order : 
+)""");
   py::class_<Bmad::NormalFormTaylors, std::unique_ptr<Bmad::NormalFormTaylors>>(
       m, "NormalFormTaylors", "normal_form_taylors return type")
       .def_readonly("dhdj", &Bmad::NormalFormTaylors::dhdj)
@@ -142,37 +100,37 @@ void init_Bmad_routines_n(py::module& m) {
       py::arg("rf_on"),
       R"""(Subroutine normal_form_taylors(one_turn_taylor, rf_on, dhdj, A, A_inverse)
 
-  Do a normal form decomposition on a one-turn taylor map M:
-    M = A o R o A_inverse
-  where A maps Floquet (fully normalized) coordinates to lab coordinates.
-  In Floquet coordinates, the amplitudes are defined as J_i = (1/2) (x_i^2 + p_i^2).
-  The map R = exp(:h:) is a pure rotation with h = h(J) is a function of the amplitudes only.
-  The angles (phase advances) are given by phi_i = 2pi*dh/dJ_i.
-  The taylor terms of dhdj are therefore the tunes, chromaticities, amplitude dependent tune shifts, etc.
+Do a normal form decomposition on a one-turn taylor map M:
+  M = A o R o A_inverse
+where A maps Floquet (fully normalized) coordinates to lab coordinates.
+In Floquet coordinates, the amplitudes are defined as J_i = (1/2) (x_i^2 + p_i^2).
+The map R = exp(:h:) is a pure rotation with h = h(J) is a function of the amplitudes only.
+The angles (phase advances) are given by phi_i = 2pi*dh/dJ_i.
+The taylor terms of dhdj are therefore the tunes, chromaticities, amplitude dependent tune shifts, etc.
 
-  The mapping procedure for one turn is:
-   z_Floquet_in = A_inverse o z_Lab_in
-   [phi_a, phi_b, phi_c] = 2 pi * dhdj o z_Floquet_in
-   z_Floquet_out = RotationMatrix(phi_a, phi_b, phi_c) . z_Floquet_in
-   z_Lab_out = A o z_Floquet_out
+The mapping procedure for one turn is:
+ z_Floquet_in = A_inverse o z_Lab_in
+ [phi_a, phi_b, phi_c] = 2 pi * dhdj o z_Floquet_in
+ z_Floquet_out = RotationMatrix(phi_a, phi_b, phi_c) . z_Floquet_in
+ z_Lab_out = A o z_Floquet_out
 
 
-  Parameters
-  ----------
-  one_turn_taylor : TaylorStruct
-      one turn taylor map
-  rf_on : bool
-      Was the map calculated with RF on?
+Parameters
+----------
+one_turn_taylor : TaylorStruct
+    one turn taylor map
+rf_on : bool
+    Was the map calculated with RF on?
 
-  Returns
-  -------
-  A : TaylorStruct
-      Map from Floquet coordinates to Lab coordinates
-  A_inverse : TaylorStruct
-      Map from Lab coordinates to Floquet coordinates
-  dhdj : TaylorStruct
-      Map from Floquet coordinates to phase advances
-  )""");
+Returns
+-------
+A : TaylorStruct
+    Map from Floquet coordinates to Lab coordinates
+A_inverse : TaylorStruct
+    Map from Lab coordinates to Floquet coordinates
+dhdj : TaylorStruct
+    Map from Floquet coordinates to phase advances
+)""");
   py::class_<Bmad::NormalMode3Calc, std::unique_ptr<Bmad::NormalMode3Calc>>(
       m, "NormalMode3Calc", "normal_mode3_calc return type")
       .def_readonly("tune", &Bmad::NormalMode3Calc::tune)
@@ -200,111 +158,89 @@ void init_Bmad_routines_n(py::module& m) {
       py::arg("abz_tunes") = py::none(),
       R"""(Subroutine normal_mode3_calc (mat, tune, B, HV, above_transition)
 
-  Does an Eigen decomposition of the 1-turn transfer matrix (mat) and generates
-  B, V, H.
+Does an Eigen decomposition of the 1-turn transfer matrix (mat) and generates
+B, V, H.
 
-  If the above_transition argument is present and false, then the 3rd (z) mode is assumed
-  to have a positive slip factor (z-mode rotates counter clockwise in phase space).
-  Default is True ==> z-mode has a negative slip factor so the mode rotates clock-wise in phase space.
+If the above_transition argument is present and false, then the 3rd (z) mode is assumed
+to have a positive slip factor (z-mode rotates counter clockwise in phase space).
+Default is True ==> z-mode has a negative slip factor so the mode rotates clock-wise in phase space.
 
-  Parameters
-  ----------
-  mat : float
-      1-turn transfer matrix
-  above_transition : bool, optional
-      If present and false, then z-mode assumes positive slip factor. Else negative slip factor assumed.
-  abz_tunes : float, optional
-      Tunes to order eigensystem by.
+Parameters
+----------
+mat : float
+    1-turn transfer matrix
+above_transition : bool, optional
+    If present and false, then z-mode assumes positive slip factor. Else negative slip factor assumed.
+abz_tunes : float, optional
+    Tunes to order eigensystem by.
 
-  Returns
-  -------
-  tune : float
-      Tunes of the 3 normal modes (radians)
-  B : float
-      B is block diagonal and related to the normal mode Twiss parameters.
-  HV : float
-      Transforms from normal mode coordinates to canonical coordinates: x = H.V.a
-  )""");
+Returns
+-------
+tune : float
+    Tunes of the 3 normal modes (radians)
+B : float
+    B is block diagonal and related to the normal mode Twiss parameters.
+HV : float
+    Transforms from normal mode coordinates to canonical coordinates: x = H.V.a
+)""");
   m.def(
       "normal_mode_dispersion",
       &Bmad::normal_mode_dispersion,
       py::arg("ele"),
       py::arg("reverse") = py::none(),
       R"""(Parameters
-  ----------
-  ele : EleStruct
-      Element whose dispersions are to be adjusted.
-      This parameter is an input/output and is modified in-place. As an output: Element with adjusted
-      dispersions.
-  reverse : bool, optional
-      Default is False. If True, calculate the x,y dispersions from the normal mode ones.
-  )""");
+----------
+ele : EleStruct
+    Element whose dispersions are to be adjusted.
+    This parameter is an input/output and is modified in-place. As an output: Element with adjusted
+    dispersions.
+reverse : bool, optional
+    Default is False. If True, calculate the x,y dispersions from the normal mode ones.
+)""");
   m.def(
       "normalize_evecs",
       &Bmad::normalize_evecs,
       py::arg("evec"),
       R"""(Subroutine normalize_evecs(evec, err_flag)
 
-  Normalizes eigenvectors such that transpose(E).S.E = iS, where E = evec_r + i evec_i
+Normalizes eigenvectors such that transpose(E).S.E = iS, where E = evec_r + i evec_i
 
-  Parameters
-  ----------
-  evec : float
-      complex eigenvectors arranged down columns.
-      This parameter is an input/output and is modified in-place. As an output: Eigensystem normalized to be
-      symplectic.
+Parameters
+----------
+evec : float
+    complex eigenvectors arranged down columns.
+    This parameter is an input/output and is modified in-place. As an output: Eigensystem normalized to be
+    symplectic.
 
-  Returns
-  -------
-  err_flag : bool
-      Set true of normalization is not possible due to amplitude is zero.
-  )""");
-  py::class_<PyNumFieldEles, std::unique_ptr<PyNumFieldEles>>(
-      m, "NumFieldEles", "num_field_eles return type")
-      .def_readonly("n_field_ele", &PyNumFieldEles::n_field_ele)
-      .def("__len__", [](const PyNumFieldEles&) { return 1; })
-      .def("__getitem__", [](const PyNumFieldEles& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.n_field_ele);
-        throw py::index_error();
-      });
+Returns
+-------
+err_flag : bool
+    Set true of normalization is not possible due to amplitude is zero.
+)""");
   m.def(
       "num_field_eles",
-      &python_num_field_eles,
+      &Bmad::num_field_eles,
       py::arg("ele"),
       py::arg("n_field_ele"),
       R"""(Parameters
-  ----------
-  ele : EleStruct
-      Element with sum number of associated field elements.
-  n_field_ele : 
-  )""");
-  py::class_<PyNumLords, std::unique_ptr<PyNumLords>>(
-      m, "NumLords", "num_lords return type")
-      .def_readonly("num", &PyNumLords::num)
-      .def("__len__", [](const PyNumLords&) { return 1; })
-      .def("__getitem__", [](const PyNumLords& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.num);
-        throw py::index_error();
-      });
+----------
+ele : EleStruct
+    Element with sum number of associated field elements.
+n_field_ele : 
+)""");
   m.def(
       "num_lords",
-      &python_num_lords,
+      &Bmad::num_lords,
       py::arg("slave"),
       py::arg("lord_type"),
       py::arg("num"),
       R"""(Parameters
-  ----------
-  slave : EleStruct
-      Slave element.
-  lord_type : int
-      Type of lord. super_lord$, multipass_lord$, girder_lord$, group_lord$, overlay_lord$, and governor$ (=
-      group + overlay + control + girder)
-  num : 
-  )""");
+----------
+slave : EleStruct
+    Slave element.
+lord_type : int
+    Type of lord. super_lord$, multipass_lord$, girder_lord$, group_lord$, overlay_lord$, and governor$ (=
+    group + overlay + control + girder)
+num : 
+)""");
 }

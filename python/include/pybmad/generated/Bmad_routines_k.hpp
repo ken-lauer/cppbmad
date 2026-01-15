@@ -10,20 +10,3 @@
 namespace py = pybind11;
 
 void init_Bmad_routines_k(py::module& m);
-
-struct PyKeyNameToKeyIndex {
-  int key_index;
-};
-struct PyKickVectorCalc : public Bmad::KickVectorCalc {
-  std::optional<bool> print_err;
-  PyKickVectorCalc(Bmad::KickVectorCalc _base, std::optional<bool> print_err)
-      : Bmad::KickVectorCalc(std::move(_base)), print_err(print_err) {}
-};
-
-struct PyKnotInterpolate {
-  bool err_flag;
-  double y_pt;
-};
-struct PyKnotsToString {
-  std::string str;
-};

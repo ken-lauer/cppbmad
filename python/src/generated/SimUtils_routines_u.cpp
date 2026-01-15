@@ -4,30 +4,13 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-PyUpcaseString python_upcase_string(std::string string) {
-  SimUtils::upcase_string(string);
-  auto py_result{PyUpcaseString{string}};
-  return py_result;
-}
-
 void init_SimUtils_routines_u(py::module& m) {
-  py::class_<PyUpcaseString, std::unique_ptr<PyUpcaseString>>(
-      m, "UpcaseString", "upcase_string return type")
-      .def_readonly("string", &PyUpcaseString::string)
-      .def("__len__", [](const PyUpcaseString&) { return 1; })
-      .def("__getitem__", [](const PyUpcaseString& s, int i) -> py::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return py::cast(s.string);
-        throw py::index_error();
-      });
   m.def(
       "upcase_string",
-      &python_upcase_string,
+      &SimUtils::upcase_string,
       py::arg("string"),
       R"""(Parameters
-  ----------
-  string : 
-  )""");
+----------
+string : 
+)""");
 }

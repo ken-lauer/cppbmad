@@ -58,10 +58,10 @@ class FortranWrapperArgument(ABC):
             return FortranWrapperStringArgument(arg, routine, lines, have_err_flag)
         if arg.array:
             if arg_type == "type":
-                if arg.is_dynamic_array:
+                if arg.member.type_info.allocatable:  #  or arg.is_dynamic_array:
                     return FortranWrapperTypeArrayAllocatableArgument(arg, routine, lines, have_err_flag)
                 return FortranWrapperTypeArrayArgument(arg, routine, lines, have_err_flag)
-            if arg.is_dynamic_array:
+            if arg.member.type_info.allocatable:  #  or arg.is_dynamic_array:
                 return FortranWrapperGeneralArrayAllocatableArgument(arg, routine, lines, have_err_flag)
             return FortranWrapperGeneralArrayArgument(arg, routine, lines, have_err_flag)
 
@@ -206,44 +206,62 @@ class FortranWrapperGeneralArrayArgument(FortranWrapperArgument):
 
     def get_declarations(self) -> list[str]:
         arg_ftype = self.native_fortran_argument_type()
-        arg_ctype = "type(c_ptr), intent(in), value"
+        arg_ctype = "type(array_descriptor_t), intent(in)"
         tf_type = change_attributes(self.arg.transform.fortran_type, add=["pointer"], remove=["value"])
         arg_ftype = change_attributes(arg_ftype, remove=["intent"])
         dims = ",".join(self.arg.array)
 
+        if self.arg.is_dynamic_array:
+            dims = ",".join([":"] * len(self.arg.array))
+            arg_ftype = change_attributes(arg_ftype, add=["pointer"])
         return [
             f"  {arg_ctype} :: {self.c_name}",
             f"  {arg_ftype} :: {self.f_name}({dims})",
             f"  {tf_type} :: {self.f_ptr_name}(:)",
         ]
 
-    @property
-    def dimensions(self):
-        return "*".join(str(dim) for dim in self.arg.f_dims)
-
     def get_input_conversion(self) -> list[str]:
         if self.intent == "out" or self.is_function_result:
             return []
 
         result = [f"  !! general array ({self.arg.full_type})"]
+        dims_calc = f"[{self.c_name}%dims(1)]"
+        if len(self.arg.array) > 1:
+            dims_calc = f"[product({self.c_name}%dims(1:{self.c_name}%rank))]"
+
         arr = self.arg.array
+        # check = f"c_associated({self.c_name}%data_ptr)"
+        ptr_conv = f"call c_f_pointer({self.c_name}%data_ptr, {self.f_ptr_name}, {dims_calc})"
+
         if len(arr) == 1:
-            code = textwrap.dedent(f"""\
-                call c_f_pointer({self.c_name}, {self.f_ptr_name}, [{self.dimensions}])
+            if self.arg.is_dynamic_array:
+                if self.arg.array[0].startswith("0"):
+                    ptr = f"{self.f_name}(0:)"
+                else:
+                    ptr = self.f_name
+                code = textwrap.dedent(f"""\
+                {ptr_conv}
+                {ptr} => {self.f_ptr_name}""")
+
+            else:
+                code = textwrap.dedent(f"""\
+                {ptr_conv}
                 {self.f_name} = {self.f_ptr_name}(:)""")
         elif len(arr) == 2:
             code = textwrap.dedent(f"""\
-                call c_f_pointer({self.c_name}, {self.f_ptr_name}, [{self.dimensions}])
+                {ptr_conv}
                 call vec2mat({self.f_ptr_name}, {self.f_name})""")
         elif len(arr) == 3:
             code = textwrap.dedent(f"""\
-                call c_f_pointer({self.c_name}, {self.f_ptr_name}, [{self.dimensions}])
+                {ptr_conv}
                 call vec2tensor({self.f_ptr_name}, {self.f_name})""")
         else:
             raise NotImplementedError(len(arr))
 
         result.extend(
-            self.if_then_else_block(f"c_associated({self.c_name})", code, f"{self.f_ptr_name} => null()")
+            self.if_then_else_block(
+                f"c_associated({self.c_name}%data_ptr)", code, f"{self.f_ptr_name} => null()"
+            )
         )
         return result
 
@@ -254,11 +272,17 @@ class FortranWrapperGeneralArrayArgument(FortranWrapperArgument):
         result = [f"  ! {self.intent}: {self.f_name} {self.arg.full_type}"]
         arr = self.arg.array
 
+        dims_calc = f"[{self.c_name}%dims(1)]"
+        if len(self.arg.array) > 1:
+            dims_calc = f"[product({self.c_name}%dims(1:{self.c_name}%rank))]"
+
+        ptr_conv = f"call c_f_pointer({self.c_name}%data_ptr, {self.f_ptr_name}, {dims_calc})"
+
         if len(arr) == 1:
             code = textwrap.dedent(f"""\
-                call c_f_pointer({self.c_name}, {self.f_ptr_name}, [{self.dimensions}])
+                {ptr_conv}
                 {self.f_ptr_name} = {self.f_name}(:)""")
-            result.extend(self.if_block(f"c_associated({self.c_name})", code))
+            result.extend(self.if_block(f"c_associated({self.c_name}%data_ptr)", code))
         elif len(arr) == 2:
             result.append(f"! TODO general output array 2D {self.arg}")
             # code = textwrap.dedent(f"""\
@@ -517,7 +541,7 @@ class FortranWrapperTypeArrayAllocatableArgument(FortranWrapperTypeArgument):
 @dataclasses.dataclass
 class FortranWrapperTypeArrayArgument(FortranWrapperTypeArgument):
     def get_declarations(self) -> list[str]:
-        arg_ctype = "type(c_ptr), intent(in), value"
+        arg_ctype = "type(array_descriptor_t), intent(in)"
         arg_ftype = f"type({self.type_info.kind}), pointer"
 
         return [
@@ -527,8 +551,14 @@ class FortranWrapperTypeArrayArgument(FortranWrapperTypeArgument):
 
     def get_input_conversion(self) -> list[str]:
         result = [f"  !! type array ({self.arg.full_type})"]
-        dimensions = "*".join(str(dim) for dim in self.arg.f_dims)
-        result.append(f"  call c_f_pointer({self.c_name}, {self.f_name}, [{dimensions}])")
+        dimensions = f"[{self.c_name}%dims(1)]"
+        result.extend(
+            self.if_then_else_block(
+                f"c_associated({self.c_name}%data_ptr)",
+                f"call c_f_pointer({self.c_name}%data_ptr, {self.f_name}, {dimensions})",
+                f"{self.f_name} => null()",
+            )
+        )
         return result
 
     def get_output_conversion(self) -> list[str]:
@@ -559,6 +589,7 @@ def generate_fortran_routine_with_c_binding(routine: FortranRoutine) -> str:
 
     lines.append(wrap_line(f"subroutine {routine_and_args} bind(c)"))
 
+    lines.append("  use array_desc_mod")
     for module, imps in imports.items():
         lines.append(f"  use {module}, only: " + ", ".join(sorted(imps)))
 

@@ -10,8 +10,3 @@
 namespace py = pybind11;
 
 void init_SimUtils_routines_o(py::module& m);
-
-struct PyOrdinalStr {
-  int n;
-  std::string str;
-};

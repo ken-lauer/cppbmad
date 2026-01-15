@@ -10,7 +10,3 @@
 namespace py = pybind11;
 
 void init_SimUtils_routines_h(py::module& m);
-
-struct PyHanhan {
-  int N;
-};

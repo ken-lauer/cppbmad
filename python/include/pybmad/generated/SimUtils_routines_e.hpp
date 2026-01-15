@@ -10,7 +10,3 @@
 namespace py = pybind11;
 
 void init_SimUtils_routines_e(py::module& m);
-
-struct PyErrExit {
-  std::optional<std::string> err_str;
-};

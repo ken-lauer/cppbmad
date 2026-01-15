@@ -151,19 +151,21 @@ class Transform:
                 setattr(self, fld.name, [v.replace(old, new) for v in value])
 
 
-def get_cpp_container(cpp_base: str, dim: int, ptr: str) -> str:
+def get_cpp_container(cpp_base: str, dim: int, ptr: str, is_dynamic_array: bool) -> str:
     """Determines standard Local C++ container syntax."""
     if dim == 0:
         return cpp_base if ptr == "NOT" else f"std::optional<{cpp_base}>"
 
-    if cpp_base == "PROXYCLS" and ptr != "NOT":
-        return f"PROXYCLSAllocatable{dim}D&"
+    if ptr == "ALLOC":
+        return f"{cpp_base}Alloc{dim}D&"
 
-    if ptr == "NOT":
+    if not is_dynamic_array:
         dims = ", ".join(f"DIM{i + 1}" for i in range(dim))
         return f"FixedArray{dim}D<{cpp_base}, {dims}>"
 
-    return f"VariableArray{dim}D<{cpp_base}>"
+    if cpp_base == "PROXYCLS":
+        return f"{cpp_base}Array{dim}D&"
+    return f"FArray1D<{cpp_base}>&"
 
 
 def remove_optional(typ: str) -> str:
@@ -204,11 +206,9 @@ def get_type_transform(
     info = STANDARD_TYPES[ft.type]
     proxy_cls = None
 
-    # Logic:
-    # - Scalars (Fixed/NOT) are passed by Reference (&).
-    # - Everything else (Arrays/Allocatable/Pointers) uses Array Typedefs.
-
-    if ft.type == "type" or is_dynamic_array:
+    if ft.dim > 0 and ft.type != "character" and ft.ptr != "ALLOC":
+        cpp_call_type = "Bmad::array_descriptor_t&"
+    elif ft.type == "type" or is_dynamic_array or (ft.ptr == "ALLOC" and ft.type != "character"):
         cpp_call_type = "void*"
     else:
         # cpp_call_type = info.cpp_call_fortran_type or info.cpp_call_ref
@@ -229,42 +229,43 @@ def get_type_transform(
     else:
         cpp_base = info.c_type
 
-    if ft.dim > 0:
-        # Array handling
-        if ft.dim == 1 and ft.ptr != "NOT" and info.allocatable_container:
-            # Native allocatable array
-            alloc_container = info.allocatable_container
+    def wrap_optional_ref(typ: str, is_optional: bool):
+        if is_optional:
+            return f"optional_ref<{typ}>"
+        return f"{typ}&"
+
+    if ft.type == "type":
+        if ft.ptr == "ALLOC":
+            assert ft.dim > 0
+            cpp_type = wrap_optional_ref(f"{proxy_cls}Alloc{ft.dim}D", is_optional)
+        elif ft.dim > 0:
+            cpp_type = wrap_optional_ref(f"{proxy_cls}Array{ft.dim}D", is_optional)
+        else:
+            assert ft.dim == 0
+            # Scalar type
+            cpp_type = cpp_base
             if is_optional:
-                cpp_type = f"optional_ref<{alloc_container}>"
-            else:
-                cpp_type = f"{alloc_container}&"
-        elif ft.type == "type" and ft.ptr != "NOT":
-            alloc_container = f"{proxy_cls}Alloc{ft.dim}D"
-            if is_optional:
-                cpp_type = f"optional_ref<{alloc_container}>"
-            else:
-                cpp_type = f"{alloc_container}&"
+                cpp_type = cpp_type.replace("&", "")
+                cpp_type = f"optional_ref<{cpp_type}>"
+    elif ft.dim > 0:
+        if ft.ptr == "ALLOC" and ft.type != "character":
+            assert info.allocatable_container
+            assert ft.dim == 1  # only 1D container support for now
+            cpp_type = wrap_optional_ref(info.allocatable_container, is_optional)
         elif is_optional:
-            # Optional array
-            container = get_cpp_container(info.cpp_bmad_type, ft.dim, ft.ptr)
+            container = get_cpp_container(info.cpp_bmad_type, ft.dim, ft.ptr, is_dynamic_array)
             cpp_type = f"std::optional<{container}>"
         else:
-            # Standard array
-            cpp_type = get_cpp_container(info.cpp_bmad_type, ft.dim, ft.ptr)
-    elif ft.type == "type":
-        # Scalar type
-        cpp_type = cpp_base
-        if is_optional:
-            cpp_type = cpp_type.replace("&", "")
-            cpp_type = f"optional_ref<{cpp_type}>"
+            cpp_type = get_cpp_container(info.cpp_bmad_type, ft.dim, ft.ptr, is_dynamic_array)
     elif is_optional:
-        # Optional scalar
         if intent == "inout":
+            # optional inout scalar -> optional ref type
             cpp_type = f"optional_ref<{cpp_base}>"
         else:
+            # optional input scalar -> optional base type
             cpp_type = f"std::optional<{cpp_base}>"
-    # Standard scalar
     elif intent == "inout":
+        # Standard scalar
         cpp_type = f"{cpp_base}&"
     else:
         cpp_type = cpp_base
@@ -297,7 +298,7 @@ def get_type_transform(
             if not cpp_return_type:
                 raise UnsupportedTypeError(f"{ft} {ft.dim} {is_dynamic_array=} allocatable container")
         else:
-            cpp_return_type = get_cpp_container(info.cpp_bmad_type, ft.dim, ft.ptr)
+            cpp_return_type = get_cpp_container(info.cpp_bmad_type, ft.dim, ft.ptr, is_dynamic_array)
 
     # --- Fortran Type Logic ---
     fortran_type = info.fortran_type

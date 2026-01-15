@@ -4,36 +4,6 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-PyHasAttribute python_has_attribute(
-    EleProxy& ele,
-    std::string attrib,
-    bool has_it) {
-  Bmad::has_attribute(ele, attrib, has_it);
-  auto py_result{PyHasAttribute{attrib, has_it}};
-  return py_result;
-}
-PyHdf5WriteBeam python_hdf5_write_beam(
-    std::string file_name,
-    BunchProxyAlloc1D& bunches,
-    bool append,
-    bool error,
-    optional_ref<LatProxy> lat = std::nullopt,
-    std::optional<bool> alive_only = std::nullopt) {
-  Bmad::hdf5_write_beam(
-      file_name, bunches, append, error, lat, make_opt_ref(alive_only));
-  auto py_result{PyHdf5WriteBeam{file_name, append, error, alive_only}};
-  return py_result;
-}
-PyHdf5WriteGridField python_hdf5_write_grid_field(
-    std::string file_name,
-    EleProxy& ele,
-    GridFieldProxyAlloc1D& g_field,
-    bool err_flag) {
-  Bmad::hdf5_write_grid_field(file_name, ele, g_field, err_flag);
-  auto py_result{PyHdf5WriteGridField{file_name, err_flag}};
-  return py_result;
-}
-
 void init_Bmad_routines_h(py::module& m) {
   m.def(
       "hard_multipole_edge_kick",
@@ -46,125 +16,91 @@ void init_Bmad_routines_h(py::module& m) {
       py::arg("make_matrix") = py::none(),
       R"""(Subroutine hard_multipole_edge_kick (ele, param, particle_at, orbit, mat6, make_matrix)
 
-  Routine to track through the hard edge field of a multipole.
-  The dipole component is ignored and only quadrupole and higher multipoles are included.
+Routine to track through the hard edge field of a multipole.
+The dipole component is ignored and only quadrupole and higher multipoles are included.
 
-  This routine handles elements of type:
-    sad_mult, sbend, quadrupole, sextupole
+This routine handles elements of type:
+  sad_mult, sbend, quadrupole, sextupole
 
-  For sad_mult elements, ele%a_pole and ele%b_pole ae used for the multipole values.
-  For the other elements, k1 or k2 is used and it is assumed that we are in the element
-  frame of reference so tilt = 0.
+For sad_mult elements, ele%a_pole and ele%b_pole ae used for the multipole values.
+For the other elements, k1 or k2 is used and it is assumed that we are in the element
+frame of reference so tilt = 0.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element with fringe.
-  param : LatParamStruct
-      Tracking parameters.
-  particle_at : int
-      Either first_track_edge$ or second_track_edge$.
-  orbit : CoordStruct
-      Starting coordinates.
-      This parameter is an input/output and is modified in-place. As an output: Ending coordinates.
-  mat6 : float, optional
-      Transfer matrix up to the fringe.
-      This parameter is an input/output and is modified in-place. As an output: Transfer matrix including the
-      fringe.
-  make_matrix : float, optional
-      Propagate the transfer matrix? Default is False.
-  )""");
-  py::class_<PyHasAttribute, std::unique_ptr<PyHasAttribute>>(
-      m, "HasAttribute", "has_attribute return type")
-      .def_readonly("attrib", &PyHasAttribute::attrib)
-      .def_readonly("has_it", &PyHasAttribute::has_it)
-      .def("__len__", [](const PyHasAttribute&) { return 2; })
-      .def("__getitem__", [](const PyHasAttribute& s, int i) -> py::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return py::cast(s.attrib);
-        if (i == 1)
-          return py::cast(s.has_it);
-        throw py::index_error();
-      });
+Parameters
+----------
+ele : EleStruct
+    Element with fringe.
+param : LatParamStruct
+    Tracking parameters.
+particle_at : int
+    Either first_track_edge$ or second_track_edge$.
+orbit : CoordStruct
+    Starting coordinates.
+    This parameter is an input/output and is modified in-place. As an output: Ending coordinates.
+mat6 : float, optional
+    Transfer matrix up to the fringe.
+    This parameter is an input/output and is modified in-place. As an output: Transfer matrix including the
+    fringe.
+make_matrix : float, optional
+    Propagate the transfer matrix? Default is False.
+)""");
   m.def(
       "has_attribute",
-      &python_has_attribute,
+      &Bmad::has_attribute,
       py::arg("ele"),
       py::arg("attrib"),
       py::arg("has_it"),
       R"""(Parameters
-  ----------
-  ele : 
-  attrib : 
-  has_it : 
-  )""");
+----------
+ele : 
+attrib : 
+has_it : 
+)""");
   m.def(
       "has_curvature",
       &Bmad::has_curvature,
       py::arg("phot_ele"),
       R"""(Function has_curvature (phot_ele) result (curved)
 
-  Routine to determine if a surface is potentially curved or is flat.
+Routine to determine if a surface is potentially curved or is flat.
 
-  Parameters
-  ----------
-  phot_ele : PhotonElementStruct
-      From ele.photon
+Parameters
+----------
+phot_ele : PhotonElementStruct
+    From ele.photon
 
-  Returns
-  -------
-  curved : bool
-      Set True if phot_eleace is curved.
-  )""");
+Returns
+-------
+curved : bool
+    Set True if phot_eleace is curved.
+)""");
   m.def(
       "has_orientation_attributes",
       &Bmad::has_orientation_attributes,
       py::arg("ele"),
       R"""(Function has_orientation_attributes (ele) result (has_attribs)
 
-  Routine to determine whether an element has orientation attributes like x_offset, etc.
-  Also see: has_attribute function.
+Routine to determine whether an element has orientation attributes like x_offset, etc.
+Also see: has_attribute function.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Lattice element.
+Parameters
+----------
+ele : EleStruct
+    Lattice element.
 
-  Returns
-  -------
-  has_attribs : bool
-      True if ele has orientation attributes. False otherwise.
+Returns
+-------
+has_attribs : bool
+    True if ele has orientation attributes. False otherwise.
 
-  Notes
-  -----
-  Related routines:
-  has_attribute function.
-  )""");
-  py::class_<PyHdf5WriteBeam, std::unique_ptr<PyHdf5WriteBeam>>(
-      m, "Hdf5WriteBeam", "hdf5_write_beam return type")
-      .def_readonly("file_name", &PyHdf5WriteBeam::file_name)
-      .def_readonly("append", &PyHdf5WriteBeam::append)
-      .def_readonly("error", &PyHdf5WriteBeam::error)
-      .def_readonly("alive_only", &PyHdf5WriteBeam::alive_only)
-      .def("__len__", [](const PyHdf5WriteBeam&) { return 4; })
-      .def("__getitem__", [](const PyHdf5WriteBeam& s, int i) -> py::object {
-        if (i < 0)
-          i += 4;
-        if (i == 0)
-          return py::cast(s.file_name);
-        if (i == 1)
-          return py::cast(s.append);
-        if (i == 2)
-          return py::cast(s.error);
-        if (i == 3)
-          return py::cast(s.alive_only);
-        throw py::index_error();
-      });
+Notes
+-----
+Related routines:
+has_attribute function.
+)""");
   m.def(
       "hdf5_write_beam",
-      &python_hdf5_write_beam,
+      &Bmad::hdf5_write_beam,
       py::arg("file_name"),
       py::arg("bunches"),
       py::arg("append"),
@@ -172,44 +108,28 @@ void init_Bmad_routines_h(py::module& m) {
       py::arg("lat") = py::none(),
       py::arg("alive_only") = py::none(),
       R"""(Parameters
-  ----------
-  file_name : 
-  bunches : 
-  append : 
-  error : 
-  lat : 
-  alive_only : 
-  )""");
-  py::class_<PyHdf5WriteGridField, std::unique_ptr<PyHdf5WriteGridField>>(
-      m, "Hdf5WriteGridField", "hdf5_write_grid_field return type")
-      .def_readonly("file_name", &PyHdf5WriteGridField::file_name)
-      .def_readonly("err_flag", &PyHdf5WriteGridField::err_flag)
-      .def("__len__", [](const PyHdf5WriteGridField&) { return 2; })
-      .def(
-          "__getitem__",
-          [](const PyHdf5WriteGridField& s, int i) -> py::object {
-            if (i < 0)
-              i += 2;
-            if (i == 0)
-              return py::cast(s.file_name);
-            if (i == 1)
-              return py::cast(s.err_flag);
-            throw py::index_error();
-          });
+----------
+file_name : 
+bunches : 
+append : 
+error : 
+lat : 
+alive_only : 
+)""");
   m.def(
       "hdf5_write_grid_field",
-      &python_hdf5_write_grid_field,
+      &Bmad::hdf5_write_grid_field,
       py::arg("file_name"),
       py::arg("ele"),
       py::arg("g_field"),
       py::arg("err_flag"),
       R"""(Parameters
-  ----------
-  file_name : 
-  ele : 
-  g_field : 
-  err_flag : 
-  )""");
+----------
+file_name : 
+ele : 
+g_field : 
+err_flag : 
+)""");
   m.def(
       "hwang_bend_edge_kick",
       &Bmad::hwang_bend_edge_kick,
@@ -221,29 +141,29 @@ void init_Bmad_routines_h(py::module& m) {
       py::arg("make_matrix") = py::none(),
       R"""(Subroutine hwang_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix)
 
-  Subroutine to track through the edge field of an sbend using a 2nd order map.
-  Adapted from:
-    Hwang and S. Y. Lee,
-    "Dipole Fringe Field Thin Map for Compact Synchrotrons",
-    Phys. Rev. ST Accel. Beams, 12, 122401, (2015).
-  See the Bmad manual for details.
+Subroutine to track through the edge field of an sbend using a 2nd order map.
+Adapted from:
+  Hwang and S. Y. Lee,
+  "Dipole Fringe Field Thin Map for Compact Synchrotrons",
+  Phys. Rev. ST Accel. Beams, 12, 122401, (2015).
+See the Bmad manual for details.
 
-  Parameters
-  ----------
-  orb : CoordStruct
-      Starting coords.
-      This parameter is an input/output and is modified in-place. As an output: Coords after tracking.
-  ele : EleStruct
-      SBend element.
-  param : LatParamStruct
-      Rel charge.
-  particle_at : int
-      first_track_edge$, or second_track_edge$
-  mat6 : float, optional
-      Transfer matrix up to the edge.
-      This parameter is an input/output and is modified in-place. As an output: Transfer matrix including the
-      edge.
-  make_matrix : float, optional
-      Propagate the transfer matrix? Default is False.
-  )""");
+Parameters
+----------
+orb : CoordStruct
+    Starting coords.
+    This parameter is an input/output and is modified in-place. As an output: Coords after tracking.
+ele : EleStruct
+    SBend element.
+param : LatParamStruct
+    Rel charge.
+particle_at : int
+    first_track_edge$, or second_track_edge$
+mat6 : float, optional
+    Transfer matrix up to the edge.
+    This parameter is an input/output and is modified in-place. As an output: Transfer matrix including the
+    edge.
+make_matrix : float, optional
+    Propagate the transfer matrix? Default is False.
+)""");
 }

@@ -10,8 +10,3 @@
 namespace py = pybind11;
 
 void init_bsim_routines_l(py::module& m);
-
-struct PyLogicalToPython {
-  bool logic;
-  std::string string;
-};

@@ -10,16 +10,3 @@
 namespace py = pybind11;
 
 void init_Tao_routines_i(py::module& m);
-
-struct PyIntegrateMax {
-  int ix_start;
-  int ix_ele;
-  double datum_value;
-  int ix_m;
-};
-struct PyIntegrateMin {
-  int ix_start;
-  int ix_ele;
-  double datum_value;
-  int ix_m;
-};

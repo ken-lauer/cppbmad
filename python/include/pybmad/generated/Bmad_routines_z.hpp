@@ -10,16 +10,3 @@
 namespace py = pybind11;
 
 void init_Bmad_routines_z(py::module& m);
-
-struct PyZAtSurface : public Bmad::ZAtSurface {
-  double x;
-  double y;
-  PyZAtSurface(Bmad::ZAtSurface _base, double x, double y)
-      : Bmad::ZAtSurface(std::move(_base)), x(x), y(y) {}
-};
-struct PyZlafun {
-  double x;
-  double y;
-  double z;
-  double res;
-};

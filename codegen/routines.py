@@ -26,7 +26,7 @@ from .structs import (
     parse_declaration,
     split_comment,
 )
-from .types import Intent, RoutineType, get_type_transform
+from .types import ArgumentType, Intent, RoutineType, get_type_transform
 from .util import (
     snake_to_camel,
     sorted_routines,
@@ -97,7 +97,13 @@ docstring_hotfixes["init_coord3"] = {
 # }
 
 
-def normalize_intent(typ: TypeInformation, doc_intent: Intent | None = None) -> Intent:
+def normalize_intent(
+    typ: TypeInformation,
+    arg_type: ArgumentType,
+    doc_intent: Intent | None = None,
+    ndim: int = 0,
+    is_dynamic_array: bool = False,
+) -> Intent:
     if doc_intent:
         intent = doc_intent
     elif not typ.intent:
@@ -107,6 +113,32 @@ def normalize_intent(typ: TypeInformation, doc_intent: Intent | None = None) -> 
 
     if intent not in ("in", "inout", "out"):
         raise ValueError(f"Unsupported intent: {intent}")
+
+    if is_dynamic_array and intent == "out":
+        # The user will need to preallocate this for us - allow them to do
+        # it by making it 'inout'
+        return "inout"
+        # member.type_info = member.type_info.replace(allocatable=True)
+
+    if (
+        intent == "inout"
+        and not typ.intent
+        and ndim == 0
+        and arg_type
+        in (
+            "real",
+            "real16",
+            "complex",
+            "integer",
+            "integer8",
+            "logical",
+            "character",
+            # "type",
+        )
+    ):
+        # For scalar values, assume it's not by reference
+        intent = "in"
+
     return intent
 
 
@@ -158,44 +190,9 @@ class RoutineArg(InterfaceArgument):
     ):
         if params is None:
             params = get_params()
-        # TODO this duplicates/tweaks some ugly stuff from the bmad-side translation layer
-        if member.dimension in {":", "0:"}:
-            # member.type_info = member.type_info.replace(pointer=True)
-            # Well, this isn't strictly true; but we want a container type for this
-            member.type_info = member.type_info.replace(allocatable=True)
 
         arg = cls.from_fstruct(routine, member, params)
 
-        intent = (member.type_info.intent or doc.intent).lower()
-        intent = intent.replace(" ", "")
-
-        if (
-            doc.guessed
-            and intent == "inout"
-            and len(arg.array) == 0
-            and arg.type
-            in (
-                "real",
-                "real16",
-                "complex",
-                "integer",
-                "integer8",
-                "logical",
-                "character",
-                # "type",
-            )
-        ):
-            # For scalar values, assume it's not by reference
-            intent = "in"
-
-        assert intent in ("in", "inout", "out")
-        # arg.transform = get_type_transform(
-        #     arg.full_type,
-        #     intent=intent,
-        #     is_optional=doc.is_optional or member.type_info.optional,
-        #     kind=member.kind or "",
-        #     is_dynamic_array=arg.is_dynamic_array,
-        # )
         # TODO some confusion:
         #   c_name is the argument name C++ callers see on the Fortran side
         #   f_name is the internal name used when converting C->F
@@ -209,7 +206,25 @@ class RoutineArg(InterfaceArgument):
         arg.doc_data_type = doc.data_type
         arg.doc_is_optional = doc.is_optional
 
-        arg.intent = normalize_intent(arg.member.type_info, None if doc.guessed else doc.intent)
+        if arg.type in {"real16", "logical"} and len(arg.array):
+            # Sorry, we need to use allocatable for this as the Fortran
+            # representation doesn't match up with the C++ representation
+            # logical: bitset/1 byte vs 4 bytes
+            # real16:  ...
+            #
+            # This lets us get around copy conversions, with the downside of
+            # making API usage more inconvenient
+            arg.pointer_type = "ALLOC"
+            arg.member.type_info = arg.member.type_info.replace(allocatable=True)
+
+        arg.intent = normalize_intent(
+            arg.member.type_info,
+            doc_intent=None if doc.guessed else doc.intent,
+            ndim=len(arg.array),
+            is_dynamic_array=arg.is_dynamic_array,
+            arg_type=arg.type,
+        )
+
         return arg
 
     @property
@@ -537,10 +552,10 @@ class FortranRoutine:
                     reasons.append(f"Untranslated type: {arg.kind.lower()} ({len(arg.array)}D)")
                 if arg.type == "type" and len(arg.array) > 1:
                     reasons.append(f"TODO type arrays: {arg.c_class} {arg.intent=} {arg.full_type}")
-                if len(arg.array) > 1 and arg.type in {"character"}:
+                if len(arg.array) > 1 and arg.type in {"character", "logical"}:
                     arr = ",".join(arg.array)
                     reasons.append(
-                        f"2D/3D array handling not supported for {arg.type}: {arg.c_name}({arr}) {arg.full_type}"
+                        f"{len(arg.array)}D array handling not supported for {arg.type}: {arg.c_name}({arr}) {arg.full_type}"
                     )
                 if ":" in arg.array or "0:" in arg.array or "*" in arg.array:
                     arr = ",".join(arg.array)

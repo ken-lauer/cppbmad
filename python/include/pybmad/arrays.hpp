@@ -330,8 +330,7 @@ inline void bind_FAlloc1D<BoolAlloc1D>(py::module& m, const std::string& name) {
 template <typename ArrayType>
 void bind_FTypeArrayND(py::module& m, const std::string& name) {
   py::class_<ArrayType>(m, name.c_str())
-      .def(
-          py::init<>()) // Usually these are created C++ side and returned, but init useful for tests
+      .def(py::init<>())
       .def("__len__", [](const ArrayType& a) { return a.total_size(); })
       .def("is_valid", &ArrayType::is_valid)
       .def(

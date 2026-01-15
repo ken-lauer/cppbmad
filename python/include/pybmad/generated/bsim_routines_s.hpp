@@ -10,8 +10,3 @@
 namespace py = pybind11;
 
 void init_bsim_routines_s(py::module& m);
-
-struct PySetTune3d {
-  std::optional<std::string> mask;
-  bool everything_ok;
-};

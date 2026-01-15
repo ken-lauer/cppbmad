@@ -10,7 +10,3 @@
 namespace py = pybind11;
 
 void init_bsim_routines_c(py::module& m);
-
-struct PyCheckRfFreq {
-  double fb;
-};

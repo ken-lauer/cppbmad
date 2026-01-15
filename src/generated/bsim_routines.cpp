@@ -27,8 +27,8 @@ void bsim::bbu_add_a_bunch(
 void bsim::bbu_hom_voltage_calc(
     LatProxy& lat,
     BbuBeamProxy& bbu_beam,
-    int& n_period,
-    int& ix_stage_last_tracked) {
+    int n_period,
+    int ix_stage_last_tracked) {
   fortran_bbu_hom_voltage_calc(
       /* void* */ lat.get_fortran_ptr(),
       /* void* */ bbu_beam.get_fortran_ptr(),
@@ -40,7 +40,7 @@ void bsim::bbu_remove_head_bunch(BbuBeamProxy& bbu_beam) {
 }
 void bsim::bbu_setup(
     LatProxy& lat,
-    double& dt_bunch,
+    double dt_bunch,
     BbuParamProxy& bbu_param,
     BbuBeamProxy& bbu_beam) {
   fortran_bbu_setup(
@@ -53,8 +53,8 @@ void bsim::bbu_track_a_stage(
     LatProxy& lat,
     BbuBeamProxy& bbu_beam,
     BbuParamProxy& bbu_param,
-    bool& lost,
-    int& ix_stage_tracked) {
+    bool lost,
+    int ix_stage_tracked) {
   fortran_bbu_track_a_stage(
       /* void* */ lat.get_fortran_ptr(),
       /* void* */ bbu_beam.get_fortran_ptr(),
@@ -67,10 +67,10 @@ void bsim::bbu_track_all(
     BbuBeamProxy& bbu_beam,
     BbuParamProxy& bbu_param,
     BeamInitProxy& beam_init,
-    double& hom_voltage_normalized,
-    double& growth_rate,
-    bool& lost,
-    int& irep) {
+    double hom_voltage_normalized,
+    double growth_rate,
+    bool lost,
+    int irep) {
   fortran_bbu_track_all(
       /* void* */ lat.get_fortran_ptr(),
       /* void* */ bbu_beam.get_fortran_ptr(),
@@ -81,7 +81,7 @@ void bsim::bbu_track_all(
       /* bool& */ lost,
       /* int& */ irep);
 }
-void bsim::check_rf_freq(LatProxy& lat, double& fb) {
+void bsim::check_rf_freq(LatProxy& lat, double fb) {
   fortran_check_rf_freq(/* void* */ lat.get_fortran_ptr(), /* double& */ fb);
 }
 int bsim::count_lines_in_file(std::string file_name) {
@@ -90,15 +90,15 @@ int bsim::count_lines_in_file(std::string file_name) {
   fortran_count_lines_in_file(/* const char* */ _file_name, /* int& */ _lines);
   return _lines;
 }
-void bsim::hom_voltage(WakeLrModeProxy& lr_wake, double& voltage) {
+void bsim::hom_voltage(WakeLrModeProxy& lr_wake, double voltage) {
   fortran_hom_voltage(
       /* void* */ lr_wake.get_fortran_ptr(), /* double& */ voltage);
 }
 void bsim::insert_phase_trombone(BranchProxy& branch) {
   fortran_insert_phase_trombone(/* void* */ branch.get_fortran_ptr());
 }
-void bsim::logical_to_python(bool& logic, std::string& string) {
-  auto _string = string.c_str(); // ptr, inout, required
+void bsim::logical_to_python(bool logic, std::string string) {
+  auto _string = string.c_str();
   fortran_logical_to_python(/* bool& */ logic, /* const char* */ _string);
 }
 void bsim::rf_cav_names(LatProxy& lat) {
@@ -107,14 +107,18 @@ void bsim::rf_cav_names(LatProxy& lat) {
 void bsim::set_tune_3d(
     BranchProxy& branch,
     FixedArray1D<Real, 3> target_tunes,
-    optional_ref<std::string> mask,
+    std::optional<std::string> mask,
     std::optional<bool> use_phase_trombone,
     std::optional<bool> z_tune_set,
     std::optional<FixedArray1D<string, 2>> group_knobs,
     std::optional<bool> print_err,
-    bool& everything_ok) {
-  auto* _target_tunes = target_tunes.data(); // CppWrapperGeneralArgument
-  const char* _mask = mask.has_value() ? mask->get().c_str() : nullptr;
+    bool everything_ok) {
+  // target_tunes: in NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _target_tunes_desc;
+  _target_tunes_desc.rank = 1;
+  _target_tunes_desc.data_ptr = target_tunes.data();
+  _target_tunes_desc.dims[0] = target_tunes.size();
+  const char* _mask = mask.has_value() ? mask->c_str() : nullptr;
   bool use_phase_trombone_lvalue;
   auto* _use_phase_trombone{&use_phase_trombone_lvalue};
   if (use_phase_trombone.has_value()) {
@@ -145,7 +149,7 @@ void bsim::set_tune_3d(
   }
   fortran_set_tune_3d(
       /* void* */ branch.get_fortran_ptr(),
-      /* double* */ _target_tunes,
+      /* Bmad::array_descriptor_t& */ _target_tunes_desc,
       /* const char* */ _mask,
       /* bool* */ _use_phase_trombone,
       /* bool* */ _z_tune_set,

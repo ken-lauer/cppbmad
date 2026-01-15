@@ -10,7 +10,3 @@
 namespace py = pybind11;
 
 void init_Tao_routines_r(py::module& m);
-
-struct PyReAllocateCDouble {
-  std::optional<double> init_val;
-};

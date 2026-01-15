@@ -10,14 +10,3 @@
 namespace py = pybind11;
 
 void init_Bmad_routines_n(py::module& m);
-
-struct PyNormalFormComplexTaylors {
-  bool rf_on;
-  std::optional<int> order;
-};
-struct PyNumFieldEles {
-  int n_field_ele;
-};
-struct PyNumLords {
-  int num;
-};

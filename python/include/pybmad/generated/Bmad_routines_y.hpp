@@ -10,10 +10,3 @@
 namespace py = pybind11;
 
 void init_Bmad_routines_y(py::module& m);
-
-struct PyYlafun {
-  double x;
-  double y;
-  double z;
-  double res;
-};

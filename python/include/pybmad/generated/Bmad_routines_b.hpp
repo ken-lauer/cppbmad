@@ -10,13 +10,3 @@
 namespace py = pybind11;
 
 void init_Bmad_routines_b(py::module& m);
-
-struct PyBendLengthHasBeenSet {
-  bool is_set;
-};
-struct PyBmadParser2 {
-  std::optional<bool> err_flag;
-};
-struct PyBranchName {
-  std::string name;
-};

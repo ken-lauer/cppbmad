@@ -10,7 +10,3 @@
 namespace py = pybind11;
 
 void init_SimUtils_routines_u(py::module& m);
-
-struct PyUpcaseString {
-  std::string string;
-};

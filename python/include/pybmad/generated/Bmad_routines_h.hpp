@@ -10,18 +10,3 @@
 namespace py = pybind11;
 
 void init_Bmad_routines_h(py::module& m);
-
-struct PyHasAttribute {
-  std::string attrib;
-  bool has_it;
-};
-struct PyHdf5WriteBeam {
-  std::string file_name;
-  bool append;
-  bool error;
-  std::optional<bool> alive_only;
-};
-struct PyHdf5WriteGridField {
-  std::string file_name;
-  bool err_flag;
-};

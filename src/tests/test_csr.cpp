@@ -61,7 +61,8 @@ int main() {
       init_beam_distribution(ele0, lat_param, beam_init);
   std::cout << "init_beam_distribution err=" << err_flag1 << "\n";
 
-  auto track_res = track_beam(lat, beam1, std::nullopt, std::nullopt, centroid);
+  auto track_res =
+      track_beam(lat, beam1, std::nullopt, std::nullopt, centroid.view());
 
   std::cout << "track_beam result=" << track_res << "\n";
 

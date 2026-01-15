@@ -10,7 +10,3 @@
 namespace py = pybind11;
 
 void init_bsim_routines_h(py::module& m);
-
-struct PyHomVoltage {
-  double voltage;
-};

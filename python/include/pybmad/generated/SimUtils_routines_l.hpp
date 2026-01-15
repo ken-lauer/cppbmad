@@ -10,15 +10,3 @@
 namespace py = pybind11;
 
 void init_SimUtils_routines_l(py::module& m);
-
-struct PyLinearFit {
-  int n_data;
-  double a;
-  double b;
-  double sig_a;
-  double sig_b;
-};
-struct PyLogicStr {
-  bool logic;
-  std::string str;
-};

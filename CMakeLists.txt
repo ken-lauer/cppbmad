@@ -54,6 +54,7 @@ add_library(${LIBNAME} SHARED
   src/test_struct_defs.f90
   src/tests/routines/cppbmad_tests.f90
   src/generated/cppbmad_test_routines.f90
+  src/array_desc.f90
 
   src/common_structs.cpp
   src/generated/proxy.cpp

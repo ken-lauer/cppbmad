@@ -10,9 +10,3 @@
 namespace py = pybind11;
 
 void init_SimUtils_routines_j(py::module& m);
-
-struct PyJBessel {
-  int m;
-  double arg;
-  double j_bes;
-};

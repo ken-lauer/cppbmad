@@ -27,29 +27,56 @@ int SimUtils::antiparticle(int species) {
   return _anti_species;
 }
 void SimUtils::apfft(
-    RealAlloc1D& rdata_in,
+    FArray1D<Real>& rdata_in,
     FixedArray1D<Real, 2> bounds,
-    std::string& window,
-    double& phase,
-    optional_ref<int> diag) {
-  // intent=inout allocatable general array
-  auto* _bounds = bounds.data(); // CppWrapperGeneralArgument
-  auto _window = window.c_str(); // ptr, inout, required
-  auto* _diag = diag.has_value() ? &diag->get() : nullptr; // inout, optional
+    std::string window,
+    double phase,
+    std::optional<int> diag) {
+  // rdata_in: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _rdata_in_desc;
+  _rdata_in_desc.rank = 1;
+  _rdata_in_desc.data_ptr = rdata_in.data();
+  _rdata_in_desc.dims[0] = rdata_in.size();
+  // bounds: inout NOT (CppWrapperGeneralArgumentArray) (['2'])
+  Bmad::array_descriptor_t _bounds_desc;
+  _bounds_desc.rank = 1;
+  _bounds_desc.data_ptr = bounds.data();
+  _bounds_desc.dims[0] = bounds.size();
+  auto _window = window.c_str();
+  int diag_lvalue;
+  auto* _diag{&diag_lvalue};
+  if (diag.has_value()) {
+    diag_lvalue = diag.value();
+  } else {
+    _diag = nullptr;
+  }
   fortran_apfft(
-      /* void* */ rdata_in.get_fortran_ptr(),
-      /* double* */ _bounds,
+      /* Bmad::array_descriptor_t& */ _rdata_in_desc,
+      /* Bmad::array_descriptor_t& */ _bounds_desc,
       /* const char* */ _window,
       /* double& */ phase,
       /* int* */ _diag);
 }
 SimUtils::ApfftCorr SimUtils::apfft_corr(
-    RealAlloc1D& rdata_in,
+    FArray1D<Real>& rdata_in,
     std::optional<FixedArray1D<Real, 2>> bounds,
     std::string window,
     std::optional<int> diag) {
-  // intent=in allocatable general array
-  double* _bounds = bounds.has_value() ? bounds.value().data() : nullptr;
+  // rdata_in: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _rdata_in_desc;
+  _rdata_in_desc.rank = 1;
+  _rdata_in_desc.data_ptr = rdata_in.data();
+  _rdata_in_desc.dims[0] = rdata_in.size();
+  // bounds: in NOT (CppWrapperGeneralArgumentArray) (['2'])
+  Bmad::array_descriptor_t _bounds_desc;
+  _bounds_desc.rank = 1;
+  if (bounds.has_value()) {
+    _bounds_desc.data_ptr = bounds->data();
+    _bounds_desc.dims[0] = bounds->size();
+  } else {
+    _bounds_desc.data_ptr = nullptr;
+    _bounds_desc.dims[0] = 0;
+  }
   auto _window = window.c_str();
   double _phase{};
   double _amp{};
@@ -62,8 +89,8 @@ SimUtils::ApfftCorr SimUtils::apfft_corr(
     _diag = nullptr;
   }
   fortran_apfft_corr(
-      /* void* */ rdata_in.get_fortran_ptr(),
-      /* double* */ _bounds,
+      /* Bmad::array_descriptor_t& */ _rdata_in_desc,
+      /* Bmad::array_descriptor_t& */ _bounds_desc,
       /* const char* */ _window,
       /* double& */ _phase,
       /* double& */ _amp,
@@ -72,27 +99,41 @@ SimUtils::ApfftCorr SimUtils::apfft_corr(
   return ApfftCorr{_phase, _amp, _freq};
 }
 void SimUtils::apfft_ext(
-    RealAlloc1D& rdata,
+    FArray1D<Real>& rdata,
     FixedArray1D<Real, 2> bounds,
-    std::string& window,
-    double& phase,
-    double& amp,
-    double& freq,
-    optional_ref<int> diag) {
-  // intent=inout allocatable general array
-  auto* _bounds = bounds.data(); // CppWrapperGeneralArgument
-  auto _window = window.c_str(); // ptr, inout, required
-  auto* _diag = diag.has_value() ? &diag->get() : nullptr; // inout, optional
+    std::string window,
+    double phase,
+    double amp,
+    double freq,
+    std::optional<int> diag) {
+  // rdata: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _rdata_desc;
+  _rdata_desc.rank = 1;
+  _rdata_desc.data_ptr = rdata.data();
+  _rdata_desc.dims[0] = rdata.size();
+  // bounds: inout NOT (CppWrapperGeneralArgumentArray) (['2'])
+  Bmad::array_descriptor_t _bounds_desc;
+  _bounds_desc.rank = 1;
+  _bounds_desc.data_ptr = bounds.data();
+  _bounds_desc.dims[0] = bounds.size();
+  auto _window = window.c_str();
+  int diag_lvalue;
+  auto* _diag{&diag_lvalue};
+  if (diag.has_value()) {
+    diag_lvalue = diag.value();
+  } else {
+    _diag = nullptr;
+  }
   fortran_apfft_ext(
-      /* void* */ rdata.get_fortran_ptr(),
-      /* double* */ _bounds,
+      /* Bmad::array_descriptor_t& */ _rdata_desc,
+      /* Bmad::array_descriptor_t& */ _bounds_desc,
       /* const char* */ _window,
       /* double& */ phase,
       /* double& */ amp,
       /* double& */ freq,
       /* int* */ _diag);
 }
-void SimUtils::asinc(double x, std::optional<int> nd, double& y) {
+void SimUtils::asinc(double x, std::optional<int> nd, double y) {
   int nd_lvalue;
   auto* _nd{&nd_lvalue};
   if (nd.has_value()) {
@@ -103,13 +144,17 @@ void SimUtils::asinc(double x, std::optional<int> nd, double& y) {
   fortran_asinc(/* double& */ x, /* int* */ _nd, /* double& */ y);
 }
 void SimUtils::assert_equal(
-    IntAlloc1D& int_arr,
-    std::string& err_str,
-    int& ival) {
-  // intent=in allocatable general array
-  auto _err_str = err_str.c_str(); // ptr, inout, required
+    FArray1D<Int>& int_arr,
+    std::string err_str,
+    int ival) {
+  // int_arr: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _int_arr_desc;
+  _int_arr_desc.rank = 1;
+  _int_arr_desc.data_ptr = int_arr.data();
+  _int_arr_desc.dims[0] = int_arr.size();
+  auto _err_str = err_str.c_str();
   fortran_assert_equal(
-      /* void* */ int_arr.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _int_arr_desc,
       /* const char* */ _err_str,
       /* int& */ ival);
 }
@@ -135,20 +180,41 @@ int SimUtils::atomic_species_id(
 FixedArray1D<Real, 4> SimUtils::axis_angle_to_quat(
     FixedArray1D<Real, 3> axis,
     double angle) {
-  auto* _axis = axis.data(); // CppWrapperGeneralArgument
+  // axis: in NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _axis_desc;
+  _axis_desc.rank = 1;
+  _axis_desc.data_ptr = axis.data();
+  _axis_desc.dims[0] = axis.size();
+  // quat: out NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _quat_desc;
+  _quat_desc.rank = 1;
   FixedArray1D<Real, 4> _quat;
+  _quat_desc.data_ptr = _quat.data();
+  _quat_desc.dims[0] = _quat.size();
   fortran_axis_angle_to_quat(
-      /* double* */ _axis, /* double& */ angle, /* double* */ _quat.data());
+      /* Bmad::array_descriptor_t& */ _axis_desc,
+      /* double& */ angle,
+      /* Bmad::array_descriptor_t& */ _quat_desc);
   return _quat;
 }
 FixedArray2D<Real, 3, 3> SimUtils::axis_angle_to_w_mat(
     FixedArray1D<Real, 3> axis,
     double angle) {
-  auto* _axis = axis.data(); // CppWrapperGeneralArgument
+  // axis: in NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _axis_desc;
+  _axis_desc.rank = 1;
+  _axis_desc.data_ptr = axis.data();
+  _axis_desc.dims[0] = axis.size();
+  // w_mat: out NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
+  Bmad::array_descriptor_t _w_mat_desc;
+  _w_mat_desc.rank = 2;
   FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
+  _w_mat_desc.data_ptr = _w_mat_vec;
   fortran_axis_angle_to_w_mat(
-      /* double* */ _axis, /* double& */ angle, /* double* */ _w_mat_vec);
+      /* Bmad::array_descriptor_t& */ _axis_desc,
+      /* double& */ angle,
+      /* Bmad::array_descriptor_t& */ _w_mat_desc);
   vec_to_matrix(_w_mat_vec, w_mat);
   return w_mat;
 }
@@ -177,10 +243,7 @@ int SimUtils::bin_index(double x, double bin1_x_min, double bin_delta) {
       /* int& */ _ix_bin);
   return _ix_bin;
 }
-double SimUtils::bin_x_center(
-    int& ix_bin,
-    double bin1_x_min,
-    double bin_delta) {
+double SimUtils::bin_x_center(int ix_bin, double bin1_x_min, double bin_delta) {
   double _x_center{};
   fortran_bin_x_center(
       /* int& */ ix_bin,
@@ -189,15 +252,19 @@ double SimUtils::bin_x_center(
       /* double& */ _x_center);
   return _x_center;
 }
-void SimUtils::bit_set(int& word, int pos, bool set_to_1) {
+void SimUtils::bit_set(int word, int pos, bool set_to_1) {
   fortran_bit_set(/* int& */ word, /* int& */ pos, /* bool& */ set_to_1);
 }
 SimUtils::BracketIndexForSpline SimUtils::bracket_index_for_spline(
-    RealAlloc1D& x_knot,
+    FArray1D<Real>& x_knot,
     double x,
     std::optional<bool> strict,
     std::optional<bool> print_err) {
-  // intent=in allocatable general array
+  // x_knot: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _x_knot_desc;
+  _x_knot_desc.rank = 1;
+  _x_knot_desc.data_ptr = x_knot.data();
+  _x_knot_desc.dims[0] = x_knot.size();
   int _ix0{};
   bool strict_lvalue;
   auto* _strict{&strict_lvalue};
@@ -215,7 +282,7 @@ SimUtils::BracketIndexForSpline SimUtils::bracket_index_for_spline(
   }
   bool _ok{};
   fortran_bracket_index_for_spline(
-      /* void* */ x_knot.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _x_knot_desc,
       /* double& */ x,
       /* int& */ _ix0,
       /* bool* */ _strict,
@@ -224,19 +291,19 @@ SimUtils::BracketIndexForSpline SimUtils::bracket_index_for_spline(
   return BracketIndexForSpline{_ix0, _ok};
 }
 void SimUtils::calc_file_number(
-    std::string& file_name,
-    int& num_in,
-    int& num_out,
-    bool& err_flag) {
-  auto _file_name = file_name.c_str(); // ptr, inout, required
+    std::string file_name,
+    int num_in,
+    int num_out,
+    bool err_flag) {
+  auto _file_name = file_name.c_str();
   fortran_calc_file_number(
       /* const char* */ _file_name,
       /* int& */ num_in,
       /* int& */ num_out,
       /* bool& */ err_flag);
 }
-void SimUtils::change_file_number(std::string& file_name, int& change) {
-  auto _file_name = file_name.c_str(); // ptr, inout, required
+void SimUtils::change_file_number(std::string file_name, int change) {
+  auto _file_name = file_name.c_str();
   fortran_change_file_number(/* const char* */ _file_name, /* int& */ change);
 }
 int SimUtils::charge_of(int species, std::optional<int> default_) {
@@ -259,29 +326,39 @@ double SimUtils::charge_to_mass_of(int species) {
   return _charge_mass_ratio;
 }
 double SimUtils::coarse_frequency_estimate(
-    RealAlloc1D& data,
-    optional_ref<bool> error) {
-  // intent=in allocatable general array
-  auto* _error = error.has_value() ? &error->get() : nullptr; // inout, optional
+    FArray1D<Real>& data,
+    std::optional<bool> error) {
+  // data: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _data_desc;
+  _data_desc.rank = 1;
+  _data_desc.data_ptr = data.data();
+  _data_desc.dims[0] = data.size();
+  bool error_lvalue;
+  auto* _error{&error_lvalue};
+  if (error.has_value()) {
+    error_lvalue = error.value();
+  } else {
+    _error = nullptr;
+  }
   double _frequency{};
   fortran_coarse_frequency_estimate(
-      /* void* */ data.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _data_desc,
       /* bool* */ _error,
       /* double& */ _frequency);
   return _frequency;
 }
 void SimUtils::complex_error_function(
-    double& wr,
-    double& wi,
-    double& zr,
-    double& zi) {
+    double wr,
+    double wi,
+    double zr,
+    double zi) {
   fortran_complex_error_function(
       /* double& */ wr, /* double& */ wi, /* double& */ zr, /* double& */ zi);
 }
-void SimUtils::cos_one(double angle, double& cos1) {
+void SimUtils::cos_one(double angle, double cos1) {
   fortran_cos_one(/* double& */ angle, /* double& */ cos1);
 }
-void SimUtils::cosc(double x, std::optional<int> nd, double& y) {
+void SimUtils::cosc(double x, std::optional<int> nd, double y) {
   int nd_lvalue;
   auto* _nd{&nd_lvalue};
   if (nd.has_value()) {
@@ -292,42 +369,72 @@ void SimUtils::cosc(double x, std::optional<int> nd, double& y) {
   fortran_cosc(/* double& */ x, /* int* */ _nd, /* double& */ y);
 }
 SplineProxy SimUtils::create_a_spline(
-    RealAlloc1D& r0,
-    RealAlloc1D& r1,
+    FArray1D<Real>& r0,
+    FArray1D<Real>& r1,
     double slope0,
     double slope1) {
-  // intent=in allocatable general array
-  // intent=in allocatable general array
+  // r0: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _r0_desc;
+  _r0_desc.rank = 1;
+  _r0_desc.data_ptr = r0.data();
+  _r0_desc.dims[0] = r0.size();
+  // r1: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _r1_desc;
+  _r1_desc.rank = 1;
+  _r1_desc.data_ptr = r1.data();
+  _r1_desc.dims[0] = r1.size();
   SplineProxy _spline;
   fortran_create_a_spline(
-      /* void* */ r0.get_fortran_ptr(),
-      /* void* */ r1.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _r0_desc,
+      /* Bmad::array_descriptor_t& */ _r1_desc,
       /* double& */ slope0,
       /* double& */ slope1,
       /* void* */ _spline.get_fortran_ptr());
   return std::move(_spline);
 }
 void SimUtils::cross_product(
-    RealAlloc1D& a,
-    RealAlloc1D& b,
+    FArray1D<Real>& a,
+    FArray1D<Real>& b,
     FixedArray1D<Real, 3> c) {
-  // intent=in allocatable general array
-  // intent=inout allocatable general array
-  auto* _c = c.data(); // CppWrapperGeneralArgument
+  // a: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _a_desc;
+  _a_desc.rank = 1;
+  _a_desc.data_ptr = a.data();
+  _a_desc.dims[0] = a.size();
+  // b: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _b_desc;
+  _b_desc.rank = 1;
+  _b_desc.data_ptr = b.data();
+  _b_desc.dims[0] = b.size();
+  // c: inout NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _c_desc;
+  _c_desc.rank = 1;
+  _c_desc.data_ptr = c.data();
+  _c_desc.dims[0] = c.size();
   fortran_cross_product(
-      /* void* */ a.get_fortran_ptr(),
-      /* void* */ b.get_fortran_ptr(),
-      /* double* */ _c);
+      /* Bmad::array_descriptor_t& */ _a_desc,
+      /* Bmad::array_descriptor_t& */ _b_desc,
+      /* Bmad::array_descriptor_t& */ _c_desc);
 }
 void SimUtils::date_and_time_stamp(
-    std::string& string,
-    optional_ref<bool> numeric_month,
-    optional_ref<bool> include_zone) {
-  auto _string = string.c_str(); // ptr, inout, required
-  auto* _numeric_month = numeric_month.has_value() ? &numeric_month->get()
-                                                   : nullptr; // inout, optional
-  auto* _include_zone = include_zone.has_value() ? &include_zone->get()
-                                                 : nullptr; // inout, optional
+    std::string string,
+    std::optional<bool> numeric_month,
+    std::optional<bool> include_zone) {
+  auto _string = string.c_str();
+  bool numeric_month_lvalue;
+  auto* _numeric_month{&numeric_month_lvalue};
+  if (numeric_month.has_value()) {
+    numeric_month_lvalue = numeric_month.value();
+  } else {
+    _numeric_month = nullptr;
+  }
+  bool include_zone_lvalue;
+  auto* _include_zone{&include_zone_lvalue};
+  if (include_zone.has_value()) {
+    include_zone_lvalue = include_zone.value();
+  } else {
+    _include_zone = nullptr;
+  }
   fortran_date_and_time_stamp(
       /* const char* */ _string,
       /* bool* */ _numeric_month,
@@ -336,16 +443,16 @@ void SimUtils::date_and_time_stamp(
 void SimUtils::destfixedwindowls(int id) {
   fortran_destfixedwindowls(/* int& */ id);
 }
-void SimUtils::detab(std::string& str) {
-  auto _str = str.c_str(); // ptr, inout, required
+void SimUtils::detab(std::string str) {
+  auto _str = str.c_str();
   fortran_detab(/* const char* */ _str);
 }
 void SimUtils::display_size_and_resolution(
-    int& ix_screen,
-    double& x_size,
-    double& y_size,
-    double& x_res,
-    double& y_res) {
+    int ix_screen,
+    double x_size,
+    double y_size,
+    double x_res,
+    double y_res) {
   fortran_display_size_and_resolution(
       /* int& */ ix_screen,
       /* double& */ x_size,
@@ -353,66 +460,94 @@ void SimUtils::display_size_and_resolution(
       /* double& */ x_res,
       /* double& */ y_res);
 }
-void SimUtils::dj_bessel(int& m, double& arg, double& dj_bes) {
+void SimUtils::dj_bessel(int m, double arg, double dj_bes) {
   fortran_dj_bessel(/* int& */ m, /* double& */ arg, /* double& */ dj_bes);
 }
 void SimUtils::djb_hash(
-    std::string& str,
-    optional_ref<int> old_hash,
-    int& hash) {
-  auto _str = str.c_str(); // ptr, inout, required
-  auto* _old_hash =
-      old_hash.has_value() ? &old_hash->get() : nullptr; // inout, optional
+    std::string str,
+    std::optional<int> old_hash,
+    int hash) {
+  auto _str = str.c_str();
+  int old_hash_lvalue;
+  auto* _old_hash{&old_hash_lvalue};
+  if (old_hash.has_value()) {
+    old_hash_lvalue = old_hash.value();
+  } else {
+    _old_hash = nullptr;
+  }
   fortran_djb_hash(
       /* const char* */ _str, /* int* */ _old_hash, /* int& */ hash);
 }
-void SimUtils::djb_str_hash(std::string& in_str, std::string& hash_str) {
-  auto _in_str = in_str.c_str(); // ptr, inout, required
-  auto _hash_str = hash_str.c_str(); // ptr, inout, required
+void SimUtils::djb_str_hash(std::string in_str, std::string hash_str) {
+  auto _in_str = in_str.c_str();
+  auto _hash_str = hash_str.c_str();
   fortran_djb_str_hash(/* const char* */ _in_str, /* const char* */ _hash_str);
 }
-void SimUtils::downcase_string(std::string& string) {
-  auto _string = string.c_str(); // ptr, inout, required
+void SimUtils::downcase_string(std::string string) {
+  auto _string = string.c_str();
   fortran_downcase_string(/* const char* */ _string);
 }
 void SimUtils::end_akima_spline_calc(
-    SplineProxyAlloc1D& spline,
+    SplineProxyArray1D& spline,
     int which_end) {
-  // intent=inout allocatable type array
+  // spline: SplineProxy inout (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _spline_desc;
+  _spline_desc.rank = 1;
+  _spline_desc.data_ptr = spline.data();
+  _spline_desc.dims[0] = spline.size();
+  _spline_desc.strides[0] = 1;
   fortran_end_akima_spline_calc(
-      /* void* */ spline.get_fortran_ptr(), /* int& */ which_end);
+      /* Bmad::array_descriptor_t& */ _spline_desc, /* int& */ which_end);
 }
-void SimUtils::err_exit(optional_ref<std::string> err_str) {
-  const char* _err_str = err_str.has_value() ? err_str->get().c_str() : nullptr;
+void SimUtils::err_exit(std::optional<std::string> err_str) {
+  const char* _err_str = err_str.has_value() ? err_str->c_str() : nullptr;
   fortran_err_exit(/* const char* */ _err_str);
 }
-void SimUtils::factorial(int& n, double& fact) {
+void SimUtils::factorial(int n, double fact) {
   fortran_factorial(/* int& */ n, /* double& */ fact);
 }
 void SimUtils::faddeeva_function(
     FixedArray1D<Real, 2> z,
     FixedArray1D<Real, 2> w,
     FixedArray2D<Real, 2, 2> dw) {
-  auto* _z = z.data(); // CppWrapperGeneralArgument
-  auto* _w = w.data(); // CppWrapperGeneralArgument
+  // z: inout NOT (CppWrapperGeneralArgumentArray) (['2'])
+  Bmad::array_descriptor_t _z_desc;
+  _z_desc.rank = 1;
+  _z_desc.data_ptr = z.data();
+  _z_desc.dims[0] = z.size();
+  // w: inout NOT (CppWrapperGeneralArgumentArray) (['2'])
+  Bmad::array_descriptor_t _w_desc;
+  _w_desc.rank = 1;
+  _w_desc.data_ptr = w.data();
+  _w_desc.dims[0] = w.size();
+  // dw: inout NOT (CppWrapperGeneralArgumentArray) (['2', '2'])
+  Bmad::array_descriptor_t _dw_desc;
+  _dw_desc.rank = 2;
   double _dw_vec[2 * 2];
+  _dw_desc.data_ptr = _dw_vec;
   matrix_to_vec(dw, _dw_vec);
   fortran_faddeeva_function(
-      /* double* */ _z, /* double* */ _w, /* double* */ _dw_vec);
+      /* Bmad::array_descriptor_t& */ _z_desc,
+      /* Bmad::array_descriptor_t& */ _w_desc,
+      /* Bmad::array_descriptor_t& */ _dw_desc);
   vec_to_matrix(_dw_vec, dw);
 }
-void SimUtils::fft_1d(ComplexAlloc1D& arr, int isign) {
-  // intent=inout allocatable general array
-  fortran_fft_1d(/* void* */ arr.get_fortran_ptr(), /* int& */ isign);
+void SimUtils::fft_1d(FArray1D<Complex>& arr, int isign) {
+  // arr: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _arr_desc;
+  _arr_desc.rank = 1;
+  _arr_desc.data_ptr = arr.data();
+  _arr_desc.dims[0] = arr.size();
+  fortran_fft_1d(/* Bmad::array_descriptor_t& */ _arr_desc, /* int& */ isign);
 }
 void SimUtils::file_directorizer(
-    std::string& in_file,
-    std::string& out_file,
-    std::string& directory,
-    bool& add_switch) {
-  auto _in_file = in_file.c_str(); // ptr, inout, required
-  auto _out_file = out_file.c_str(); // ptr, inout, required
-  auto _directory = directory.c_str(); // ptr, inout, required
+    std::string in_file,
+    std::string out_file,
+    std::string directory,
+    bool add_switch) {
+  auto _in_file = in_file.c_str();
+  auto _out_file = out_file.c_str();
+  auto _directory = directory.c_str();
   fortran_file_directorizer(
       /* const char* */ _in_file,
       /* const char* */ _out_file,
@@ -420,26 +555,26 @@ void SimUtils::file_directorizer(
       /* bool& */ add_switch);
 }
 void SimUtils::file_get(
-    std::string& string,
-    std::string& dflt_file_name,
-    std::string& file_name) {
-  auto _string = string.c_str(); // ptr, inout, required
-  auto _dflt_file_name = dflt_file_name.c_str(); // ptr, inout, required
-  auto _file_name = file_name.c_str(); // ptr, inout, required
+    std::string string,
+    std::string dflt_file_name,
+    std::string file_name) {
+  auto _string = string.c_str();
+  auto _dflt_file_name = dflt_file_name.c_str();
+  auto _file_name = file_name.c_str();
   fortran_file_get(
       /* const char* */ _string,
       /* const char* */ _dflt_file_name,
       /* const char* */ _file_name);
 }
 void SimUtils::file_get_open(
-    std::string& string,
-    std::string& dflt_file_name,
-    std::string& file_name,
-    int& file_unit,
-    bool& readonly) {
-  auto _string = string.c_str(); // ptr, inout, required
-  auto _dflt_file_name = dflt_file_name.c_str(); // ptr, inout, required
-  auto _file_name = file_name.c_str(); // ptr, inout, required
+    std::string string,
+    std::string dflt_file_name,
+    std::string file_name,
+    int file_unit,
+    bool readonly) {
+  auto _string = string.c_str();
+  auto _dflt_file_name = dflt_file_name.c_str();
+  auto _file_name = file_name.c_str();
   fortran_file_get_open(
       /* const char* */ _string,
       /* const char* */ _dflt_file_name,
@@ -448,58 +583,76 @@ void SimUtils::file_get_open(
       /* bool& */ readonly);
 }
 void SimUtils::file_suffixer(
-    std::string& in_file_name,
-    std::string& out_file_name,
-    std::string& suffix,
-    bool& add_switch) {
-  auto _in_file_name = in_file_name.c_str(); // ptr, inout, required
-  auto _out_file_name = out_file_name.c_str(); // ptr, inout, required
-  auto _suffix = suffix.c_str(); // ptr, inout, required
+    std::string in_file_name,
+    std::string out_file_name,
+    std::string suffix,
+    bool add_switch) {
+  auto _in_file_name = in_file_name.c_str();
+  auto _out_file_name = out_file_name.c_str();
+  auto _suffix = suffix.c_str();
   fortran_file_suffixer(
       /* const char* */ _in_file_name,
       /* const char* */ _out_file_name,
       /* const char* */ _suffix,
       /* bool& */ add_switch);
 }
-void SimUtils::find_location(IntAlloc1D& arr, int& value, int& ix_match) {
-  // intent=inout allocatable general array
+void SimUtils::find_location(FArray1D<Int>& arr, int value, int ix_match) {
+  // arr: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _arr_desc;
+  _arr_desc.rank = 1;
+  _arr_desc.data_ptr = arr.data();
+  _arr_desc.dims[0] = arr.size();
   fortran_find_location_int(
-      /* void* */ arr.get_fortran_ptr(), /* int& */ value, /* int& */ ix_match);
+      /* Bmad::array_descriptor_t& */ _arr_desc,
+      /* int& */ value,
+      /* int& */ ix_match);
 }
-void SimUtils::find_location(BoolAlloc1D& arr, bool& value, int& ix_match) {
+void SimUtils::find_location(BoolAlloc1D& arr, bool value, int ix_match) {
   // intent=inout allocatable general array
   fortran_find_location_logic(
       /* void* */ arr.get_fortran_ptr(),
       /* bool& */ value,
       /* int& */ ix_match);
 }
-void SimUtils::find_location(RealAlloc1D& arr, double value, int& ix_match) {
-  // intent=in allocatable general array
+void SimUtils::find_location(FArray1D<Real>& arr, double value, int ix_match) {
+  // arr: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _arr_desc;
+  _arr_desc.rank = 1;
+  _arr_desc.data_ptr = arr.data();
+  _arr_desc.dims[0] = arr.size();
   fortran_find_location_real(
-      /* void* */ arr.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _arr_desc,
       /* double& */ value,
       /* int& */ ix_match);
 }
-double SimUtils::fine_frequency_estimate(RealAlloc1D& data) {
-  // intent=in allocatable general array
+double SimUtils::fine_frequency_estimate(FArray1D<Real>& data) {
+  // data: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _data_desc;
+  _data_desc.rank = 1;
+  _data_desc.data_ptr = data.data();
+  _data_desc.dims[0] = data.size();
   double _frequency{};
   fortran_fine_frequency_estimate(
-      /* void* */ data.get_fortran_ptr(), /* double& */ _frequency);
+      /* Bmad::array_descriptor_t& */ _data_desc, /* double& */ _frequency);
   return _frequency;
 }
-void SimUtils::fixedwindowls(double ynew, int id, double& z) {
+void SimUtils::fixedwindowls(double ynew, int id, double z) {
   fortran_fixedwindowls(/* double& */ ynew, /* int& */ id, /* double& */ z);
 }
 SimUtils::FourierAmplitude SimUtils::fourier_amplitude(
-    RealAlloc1D& data,
+    FArray1D<Real>& data,
     double frequency) {
-  // intent=in allocatable general array
+  // data: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _data_desc;
+  _data_desc.rank = 1;
+  _data_desc.data_ptr = data.data();
+  _data_desc.dims[0] = data.size();
   double _cos_amp{};
   double _sin_amp{};
   double _dcos_amp{};
   double _dsin_amp{};
   fortran_fourier_amplitude(
-      /* void* */ data.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _data_desc,
       /* double& */ frequency,
       /* double& */ _cos_amp,
       /* double& */ _sin_amp,
@@ -508,14 +661,19 @@ SimUtils::FourierAmplitude SimUtils::fourier_amplitude(
   return FourierAmplitude{_cos_amp, _sin_amp, _dcos_amp, _dsin_amp};
 }
 void SimUtils::gen_complete_elliptic(
-    double& kc,
-    double& p,
-    double& c,
-    double& s,
-    optional_ref<double> err_tol,
-    double& value) {
-  auto* _err_tol =
-      err_tol.has_value() ? &err_tol->get() : nullptr; // inout, optional
+    double kc,
+    double p,
+    double c,
+    double s,
+    std::optional<double> err_tol,
+    double value) {
+  double err_tol_lvalue;
+  auto* _err_tol{&err_tol_lvalue};
+  if (err_tol.has_value()) {
+    err_tol_lvalue = err_tol.value();
+  } else {
+    _err_tol = nullptr;
+  }
   fortran_gen_complete_elliptic(
       /* double& */ kc,
       /* double& */ p,
@@ -525,45 +683,49 @@ void SimUtils::gen_complete_elliptic(
       /* double& */ value);
 }
 void SimUtils::get_file_number(
-    std::string& file_name,
-    std::string& cnum_in,
-    int& num_out,
-    bool& err_flag) {
-  auto _file_name = file_name.c_str(); // ptr, inout, required
-  auto _cnum_in = cnum_in.c_str(); // ptr, inout, required
+    std::string file_name,
+    std::string cnum_in,
+    int num_out,
+    bool err_flag) {
+  auto _file_name = file_name.c_str();
+  auto _cnum_in = cnum_in.c_str();
   fortran_get_file_number(
       /* const char* */ _file_name,
       /* const char* */ _cnum_in,
       /* int& */ num_out,
       /* bool& */ err_flag);
 }
-void SimUtils::get_file_time_stamp(std::string& file, std::string& time_stamp) {
-  auto _file = file.c_str(); // ptr, inout, required
-  auto _time_stamp = time_stamp.c_str(); // ptr, inout, required
+void SimUtils::get_file_time_stamp(std::string file, std::string time_stamp) {
+  auto _file = file.c_str();
+  auto _time_stamp = time_stamp.c_str();
   fortran_get_file_time_stamp(
       /* const char* */ _file, /* const char* */ _time_stamp);
 }
-void SimUtils::hanhan(int& N, RealAlloc1D& hh) {
-  // intent=inout allocatable general array
-  fortran_hanhan(/* int& */ N, /* void* */ hh.get_fortran_ptr());
+void SimUtils::hanhan(int N, FArray1D<Real>& hh) {
+  // hh: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _hh_desc;
+  _hh_desc.rank = 1;
+  _hh_desc.data_ptr = hh.data();
+  _hh_desc.dims[0] = hh.size();
+  fortran_hanhan(/* int& */ N, /* Bmad::array_descriptor_t& */ _hh_desc);
 }
-void SimUtils::i_bessel(int& m, double& arg, double& i_bes) {
+void SimUtils::i_bessel(int m, double arg, double i_bes) {
   fortran_i_bessel(/* int& */ m, /* double& */ arg, /* double& */ i_bes);
 }
 void SimUtils::i_bessel_extended(
-    int& m,
-    double& arg,
-    std::complex<double>& i_bes) {
+    int m,
+    double arg,
+    std::complex<double> i_bes) {
   fortran_i_bessel_extended(
       /* int& */ m, /* double& */ arg, /* std::complex<double>& */ i_bes);
 }
 void SimUtils::increment_file_number(
-    std::string& file_name,
-    int& digits,
-    int& number,
-    std::string& cnumber) {
-  auto _file_name = file_name.c_str(); // ptr, inout, required
-  auto _cnumber = cnumber.c_str(); // ptr, inout, required
+    std::string file_name,
+    int digits,
+    int number,
+    std::string cnumber) {
+  auto _file_name = file_name.c_str();
+  auto _cnumber = cnumber.c_str();
   fortran_increment_file_number(
       /* const char* */ _file_name,
       /* int& */ digits,
@@ -571,11 +733,11 @@ void SimUtils::increment_file_number(
       /* const char* */ _cnumber);
 }
 void SimUtils::index_nocase(
-    std::string& string1,
-    std::string& string2,
-    int& indx) {
-  auto _string1 = string1.c_str(); // ptr, inout, required
-  auto _string2 = string2.c_str(); // ptr, inout, required
+    std::string string1,
+    std::string string2,
+    int indx) {
+  auto _string1 = string1.c_str();
+  auto _string2 = string2.c_str();
   fortran_index_nocase(
       /* const char* */ _string1, /* const char* */ _string2, /* int& */ indx);
 }
@@ -589,68 +751,102 @@ int SimUtils::initfixedwindowls(int N, double dt, int order, int der) {
       /* int& */ _id);
   return _id;
 }
-void SimUtils::int_str(int& int_, optional_ref<int> width, std::string& str) {
-  auto* _width = width.has_value() ? &width->get() : nullptr; // inout, optional
-  auto _str = str.c_str(); // ptr, inout, required
+void SimUtils::int_str(int int_, std::optional<int> width, std::string str) {
+  int width_lvalue;
+  auto* _width{&width_lvalue};
+  if (width.has_value()) {
+    width_lvalue = width.value();
+  } else {
+    _width = nullptr;
+  }
+  auto _str = str.c_str();
   fortran_int_str(/* int& */ int_, /* int* */ _width, /* const char* */ _str);
 }
 void SimUtils::interpolated_fft(
-    ComplexAlloc1D& cdata,
-    bool& calc_ok,
-    optional_ref<int> opt_dump_spectrum,
-    optional_ref<int> opt_dump_index,
-    double& this_fft) {
-  // intent=inout allocatable general array
-  auto* _opt_dump_spectrum = opt_dump_spectrum.has_value()
-      ? &opt_dump_spectrum->get()
-      : nullptr; // inout, optional
-  auto* _opt_dump_index = opt_dump_index.has_value()
-      ? &opt_dump_index->get()
-      : nullptr; // inout, optional
+    FArray1D<Complex>& cdata,
+    bool calc_ok,
+    std::optional<int> opt_dump_spectrum,
+    std::optional<int> opt_dump_index,
+    double this_fft) {
+  // cdata: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _cdata_desc;
+  _cdata_desc.rank = 1;
+  _cdata_desc.data_ptr = cdata.data();
+  _cdata_desc.dims[0] = cdata.size();
+  int opt_dump_spectrum_lvalue;
+  auto* _opt_dump_spectrum{&opt_dump_spectrum_lvalue};
+  if (opt_dump_spectrum.has_value()) {
+    opt_dump_spectrum_lvalue = opt_dump_spectrum.value();
+  } else {
+    _opt_dump_spectrum = nullptr;
+  }
+  int opt_dump_index_lvalue;
+  auto* _opt_dump_index{&opt_dump_index_lvalue};
+  if (opt_dump_index.has_value()) {
+    opt_dump_index_lvalue = opt_dump_index.value();
+  } else {
+    _opt_dump_index = nullptr;
+  }
   fortran_interpolated_fft(
-      /* void* */ cdata.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _cdata_desc,
       /* bool& */ calc_ok,
       /* int* */ _opt_dump_spectrum,
       /* int* */ _opt_dump_index,
       /* double& */ this_fft);
 }
 void SimUtils::interpolated_fft_gsl(
-    ComplexAlloc1D& cdata,
-    bool& calc_ok,
-    optional_ref<int> opt_dump_spectrum,
-    optional_ref<int> opt_dump_index,
-    double& this_fft) {
-  // intent=inout allocatable general array
-  auto* _opt_dump_spectrum = opt_dump_spectrum.has_value()
-      ? &opt_dump_spectrum->get()
-      : nullptr; // inout, optional
-  auto* _opt_dump_index = opt_dump_index.has_value()
-      ? &opt_dump_index->get()
-      : nullptr; // inout, optional
+    FArray1D<Complex>& cdata,
+    bool calc_ok,
+    std::optional<int> opt_dump_spectrum,
+    std::optional<int> opt_dump_index,
+    double this_fft) {
+  // cdata: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _cdata_desc;
+  _cdata_desc.rank = 1;
+  _cdata_desc.data_ptr = cdata.data();
+  _cdata_desc.dims[0] = cdata.size();
+  int opt_dump_spectrum_lvalue;
+  auto* _opt_dump_spectrum{&opt_dump_spectrum_lvalue};
+  if (opt_dump_spectrum.has_value()) {
+    opt_dump_spectrum_lvalue = opt_dump_spectrum.value();
+  } else {
+    _opt_dump_spectrum = nullptr;
+  }
+  int opt_dump_index_lvalue;
+  auto* _opt_dump_index{&opt_dump_index_lvalue};
+  if (opt_dump_index.has_value()) {
+    opt_dump_index_lvalue = opt_dump_index.value();
+  } else {
+    _opt_dump_index = nullptr;
+  }
   fortran_interpolated_fft_gsl(
-      /* void* */ cdata.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _cdata_desc,
       /* bool& */ calc_ok,
       /* int* */ _opt_dump_spectrum,
       /* int* */ _opt_dump_index,
       /* double& */ this_fft);
 }
 void SimUtils::is_alphabetic(
-    std::string& string,
-    optional_ref<std::string> valid_chars,
-    bool& is_alpha) {
-  auto _string = string.c_str(); // ptr, inout, required
+    std::string string,
+    std::optional<std::string> valid_chars,
+    bool is_alpha) {
+  auto _string = string.c_str();
   const char* _valid_chars =
-      valid_chars.has_value() ? valid_chars->get().c_str() : nullptr;
+      valid_chars.has_value() ? valid_chars->c_str() : nullptr;
   fortran_is_alphabetic(
       /* const char* */ _string,
       /* const char* */ _valid_chars,
       /* bool& */ is_alpha);
 }
 void SimUtils::is_decreasing_sequence(
-    RealAlloc1D& array,
+    FArray1D<Real>& array,
     std::optional<bool> strict,
-    bool& is_decreasing) {
-  // intent=in allocatable general array
+    bool is_decreasing) {
+  // array: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _array_desc;
+  _array_desc.rank = 1;
+  _array_desc.data_ptr = array.data();
+  _array_desc.dims[0] = array.size();
   bool strict_lvalue;
   auto* _strict{&strict_lvalue};
   if (strict.has_value()) {
@@ -659,7 +855,7 @@ void SimUtils::is_decreasing_sequence(
     _strict = nullptr;
   }
   fortran_is_decreasing_sequence(
-      /* void* */ array.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _array_desc,
       /* bool* */ _strict,
       /* bool& */ is_decreasing);
 }
@@ -669,10 +865,14 @@ bool SimUtils::is_false(double param) {
   return _this_false;
 }
 void SimUtils::is_increasing_sequence(
-    RealAlloc1D& array,
+    FArray1D<Real>& array,
     std::optional<bool> strict,
-    bool& is_increasing) {
-  // intent=in allocatable general array
+    bool is_increasing) {
+  // array: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _array_desc;
+  _array_desc.rank = 1;
+  _array_desc.data_ptr = array.data();
+  _array_desc.dims[0] = array.size();
   bool strict_lvalue;
   auto* _strict{&strict_lvalue};
   if (strict.has_value()) {
@@ -681,21 +881,32 @@ void SimUtils::is_increasing_sequence(
     _strict = nullptr;
   }
   fortran_is_increasing_sequence(
-      /* void* */ array.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _array_desc,
       /* bool* */ _strict,
       /* bool& */ is_increasing);
 }
 void SimUtils::is_integer(
-    std::string& string,
-    optional_ref<int> int_,
-    optional_ref<std::string> delims,
-    optional_ref<int> ix_word,
-    bool& valid) {
-  auto _string = string.c_str(); // ptr, inout, required
-  auto* _int_ = int_.has_value() ? &int_->get() : nullptr; // inout, optional
-  const char* _delims = delims.has_value() ? delims->get().c_str() : nullptr;
-  auto* _ix_word =
-      ix_word.has_value() ? &ix_word->get() : nullptr; // inout, optional
+    std::string string,
+    std::optional<int> int_,
+    std::optional<std::string> delims,
+    std::optional<int> ix_word,
+    bool valid) {
+  auto _string = string.c_str();
+  int int__lvalue;
+  auto* _int_{&int__lvalue};
+  if (int_.has_value()) {
+    int__lvalue = int_.value();
+  } else {
+    _int_ = nullptr;
+  }
+  const char* _delims = delims.has_value() ? delims->c_str() : nullptr;
+  int ix_word_lvalue;
+  auto* _ix_word{&ix_word_lvalue};
+  if (ix_word.has_value()) {
+    ix_word_lvalue = ix_word.value();
+  } else {
+    _ix_word = nullptr;
+  }
   fortran_is_integer(
       /* const char* */ _string,
       /* int* */ _int_,
@@ -704,25 +915,40 @@ void SimUtils::is_integer(
       /* bool& */ valid);
 }
 void SimUtils::is_logical(
-    std::string& string,
-    optional_ref<bool> ignore,
-    bool& valid) {
-  auto _string = string.c_str(); // ptr, inout, required
-  auto* _ignore =
-      ignore.has_value() ? &ignore->get() : nullptr; // inout, optional
+    std::string string,
+    std::optional<bool> ignore,
+    bool valid) {
+  auto _string = string.c_str();
+  bool ignore_lvalue;
+  auto* _ignore{&ignore_lvalue};
+  if (ignore.has_value()) {
+    ignore_lvalue = ignore.value();
+  } else {
+    _ignore = nullptr;
+  }
   fortran_is_logical(
       /* const char* */ _string, /* bool* */ _ignore, /* bool& */ valid);
 }
 void SimUtils::is_real(
-    std::string& string,
-    optional_ref<bool> ignore,
-    optional_ref<double> real_num,
-    bool& valid) {
-  auto _string = string.c_str(); // ptr, inout, required
-  auto* _ignore =
-      ignore.has_value() ? &ignore->get() : nullptr; // inout, optional
-  auto* _real_num =
-      real_num.has_value() ? &real_num->get() : nullptr; // inout, optional
+    std::string string,
+    std::optional<bool> ignore,
+    std::optional<double> real_num,
+    bool valid) {
+  auto _string = string.c_str();
+  bool ignore_lvalue;
+  auto* _ignore{&ignore_lvalue};
+  if (ignore.has_value()) {
+    ignore_lvalue = ignore.value();
+  } else {
+    _ignore = nullptr;
+  }
+  double real_num_lvalue;
+  auto* _real_num{&real_num_lvalue};
+  if (real_num.has_value()) {
+    real_num_lvalue = real_num.value();
+  } else {
+    _real_num = nullptr;
+  }
   fortran_is_real(
       /* const char* */ _string,
       /* bool* */ _ignore,
@@ -739,22 +965,30 @@ bool SimUtils::is_true(double param) {
   fortran_is_true(/* double& */ param, /* bool& */ _this_true);
   return _this_true;
 }
-void SimUtils::j_bessel(int& m, double& arg, double& j_bes) {
+void SimUtils::j_bessel(int m, double arg, double j_bes) {
   fortran_j_bessel(/* int& */ m, /* double& */ arg, /* double& */ j_bes);
 }
 void SimUtils::linear_fit(
-    RealAlloc1D& x,
-    RealAlloc1D& y,
-    int& n_data,
-    double& a,
-    double& b,
-    double& sig_a,
-    double& sig_b) {
-  // intent=inout allocatable general array
-  // intent=inout allocatable general array
+    FArray1D<Real>& x,
+    FArray1D<Real>& y,
+    int n_data,
+    double a,
+    double b,
+    double sig_a,
+    double sig_b) {
+  // x: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _x_desc;
+  _x_desc.rank = 1;
+  _x_desc.data_ptr = x.data();
+  _x_desc.dims[0] = x.size();
+  // y: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _y_desc;
+  _y_desc.rank = 1;
+  _y_desc.data_ptr = y.data();
+  _y_desc.dims[0] = y.size();
   fortran_linear_fit(
-      /* void* */ x.get_fortran_ptr(),
-      /* void* */ y.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _x_desc,
+      /* Bmad::array_descriptor_t& */ _y_desc,
       /* int& */ n_data,
       /* double& */ a,
       /* double& */ b,
@@ -762,22 +996,39 @@ void SimUtils::linear_fit(
       /* double& */ sig_b);
 }
 FixedArray1D<Real, 3> SimUtils::linear_fit_2d(
-    RealAlloc1D& x,
-    RealAlloc1D& y,
-    RealAlloc1D& z) {
-  // intent=in allocatable general array
-  // intent=in allocatable general array
-  // intent=in allocatable general array
+    FArray1D<Real>& x,
+    FArray1D<Real>& y,
+    FArray1D<Real>& z) {
+  // x: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _x_desc;
+  _x_desc.rank = 1;
+  _x_desc.data_ptr = x.data();
+  _x_desc.dims[0] = x.size();
+  // y: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _y_desc;
+  _y_desc.rank = 1;
+  _y_desc.data_ptr = y.data();
+  _y_desc.dims[0] = y.size();
+  // z: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _z_desc;
+  _z_desc.rank = 1;
+  _z_desc.data_ptr = z.data();
+  _z_desc.dims[0] = z.size();
+  // coef: out NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _coef_desc;
+  _coef_desc.rank = 1;
   FixedArray1D<Real, 3> _coef;
+  _coef_desc.data_ptr = _coef.data();
+  _coef_desc.dims[0] = _coef.size();
   fortran_linear_fit_2d(
-      /* void* */ x.get_fortran_ptr(),
-      /* void* */ y.get_fortran_ptr(),
-      /* void* */ z.get_fortran_ptr(),
-      /* double* */ _coef.data());
+      /* Bmad::array_descriptor_t& */ _x_desc,
+      /* Bmad::array_descriptor_t& */ _y_desc,
+      /* Bmad::array_descriptor_t& */ _z_desc,
+      /* Bmad::array_descriptor_t& */ _coef_desc);
   return _coef;
 }
-void SimUtils::logic_str(bool& logic, std::string& str) {
-  auto _str = str.c_str(); // ptr, inout, required
+void SimUtils::logic_str(bool logic, std::string str) {
+  auto _str = str.c_str();
   fortran_logic_str(/* bool& */ logic, /* const char* */ _str);
 }
 int SimUtils::lunget() {
@@ -786,10 +1037,10 @@ int SimUtils::lunget() {
   return _func_retval__;
 }
 void SimUtils::make_legal_comment(
-    std::string& comment_in,
-    std::string& comment_out) {
-  auto _comment_in = comment_in.c_str(); // ptr, inout, required
-  auto _comment_out = comment_out.c_str(); // ptr, inout, required
+    std::string comment_in,
+    std::string comment_out) {
+  auto _comment_in = comment_in.c_str();
+  auto _comment_out = comment_out.c_str();
   fortran_make_legal_comment(
       /* const char* */ _comment_in, /* const char* */ _comment_out);
 }
@@ -798,84 +1049,119 @@ double SimUtils::mass_of(int species) {
   fortran_mass_of(/* int& */ species, /* double& */ _mass);
   return _mass;
 }
-void SimUtils::match_reg(std::string& str, std::string& pat, bool& is_match) {
-  auto _str = str.c_str(); // ptr, inout, required
-  auto _pat = pat.c_str(); // ptr, inout, required
+void SimUtils::match_reg(std::string str, std::string pat, bool is_match) {
+  auto _str = str.c_str();
+  auto _pat = pat.c_str();
   fortran_match_reg(
       /* const char* */ _str, /* const char* */ _pat, /* bool& */ is_match);
 }
 void SimUtils::match_wild(
-    std::string& string,
-    std::string& template_,
-    bool& is_match) {
-  auto _string = string.c_str(); // ptr, inout, required
-  auto _template_ = template_.c_str(); // ptr, inout, required
+    std::string string,
+    std::string template_,
+    bool is_match) {
+  auto _string = string.c_str();
+  auto _template_ = template_.c_str();
   fortran_match_wild(
       /* const char* */ _string,
       /* const char* */ _template_,
       /* bool& */ is_match);
 }
 void SimUtils::maximize_projection(
-    double& seed,
-    ComplexAlloc1D& cdata,
-    double& func_retval__) {
-  // intent=inout allocatable general array
+    double seed,
+    FArray1D<Complex>& cdata,
+    double func_retval__) {
+  // cdata: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _cdata_desc;
+  _cdata_desc.rank = 1;
+  _cdata_desc.data_ptr = cdata.data();
+  _cdata_desc.dims[0] = cdata.size();
   fortran_maximize_projection(
       /* double& */ seed,
-      /* void* */ cdata.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _cdata_desc,
       /* double& */ func_retval__);
 }
-void SimUtils::milli_sleep(int& milli_sec) {
+void SimUtils::milli_sleep(int milli_sec) {
   fortran_milli_sleep(/* int& */ milli_sec);
 }
-void SimUtils::n_bins_automatic(int& n_data, int& n) {
+void SimUtils::n_bins_automatic(int n_data, int n) {
   fortran_n_bins_automatic(/* int& */ n_data, /* int& */ n);
 }
-void SimUtils::n_choose_k(int& n, int& k, double& nck) {
+void SimUtils::n_choose_k(int n, int k, double nck) {
   fortran_n_choose_k(/* int& */ n, /* int& */ k, /* double& */ nck);
 }
-RealAlloc1D SimUtils::n_spline_create(
-    RealAlloc1D& deriv0,
-    RealAlloc1D& deriv1,
-    double x1) {
-  // intent=in allocatable general array
-  // intent=in allocatable general array
-  // intent=out allocatable general array
-  auto n_spline{RealAlloc1D()};
+void SimUtils::n_spline_create(
+    FArray1D<Real>& deriv0,
+    FArray1D<Real>& deriv1,
+    double x1,
+    FArray1D<Real>& n_spline) {
+  // deriv0: in NOT (CppWrapperGeneralArgumentArray) (['0:'])
+  Bmad::array_descriptor_t _deriv0_desc;
+  _deriv0_desc.rank = 1;
+  _deriv0_desc.data_ptr = deriv0.data();
+  _deriv0_desc.dims[0] = deriv0.size();
+  // deriv1: in NOT (CppWrapperGeneralArgumentArray) (['0:'])
+  Bmad::array_descriptor_t _deriv1_desc;
+  _deriv1_desc.rank = 1;
+  _deriv1_desc.data_ptr = deriv1.data();
+  _deriv1_desc.dims[0] = deriv1.size();
+  // n_spline: inout NOT (CppWrapperGeneralArgumentArray) (['0:'])
+  Bmad::array_descriptor_t _n_spline_desc;
+  _n_spline_desc.rank = 1;
+  _n_spline_desc.data_ptr = n_spline.data();
+  _n_spline_desc.dims[0] = n_spline.size();
   fortran_n_spline_create(
-      /* void* */ deriv0.get_fortran_ptr(),
-      /* void* */ deriv1.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _deriv0_desc,
+      /* Bmad::array_descriptor_t& */ _deriv1_desc,
       /* double& */ x1,
-      /* void* */ n_spline.get_fortran_ptr());
-  return std::move(n_spline);
+      /* Bmad::array_descriptor_t& */ _n_spline_desc);
 }
 void SimUtils::naff(
-    ComplexAlloc1D& cdata,
-    RealAlloc1D& freqs,
-    ComplexAlloc1D& amps,
-    optional_ref<int> opt_dump_spectra,
-    optional_ref<bool> opt_zero_first) {
-  // intent=inout allocatable general array
-  // intent=inout allocatable general array
-  // intent=inout allocatable general array
-  auto* _opt_dump_spectra = opt_dump_spectra.has_value()
-      ? &opt_dump_spectra->get()
-      : nullptr; // inout, optional
-  auto* _opt_zero_first = opt_zero_first.has_value()
-      ? &opt_zero_first->get()
-      : nullptr; // inout, optional
+    FArray1D<Complex>& cdata,
+    FArray1D<Real>& freqs,
+    FArray1D<Complex>& amps,
+    std::optional<int> opt_dump_spectra,
+    std::optional<bool> opt_zero_first) {
+  // cdata: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _cdata_desc;
+  _cdata_desc.rank = 1;
+  _cdata_desc.data_ptr = cdata.data();
+  _cdata_desc.dims[0] = cdata.size();
+  // freqs: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _freqs_desc;
+  _freqs_desc.rank = 1;
+  _freqs_desc.data_ptr = freqs.data();
+  _freqs_desc.dims[0] = freqs.size();
+  // amps: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _amps_desc;
+  _amps_desc.rank = 1;
+  _amps_desc.data_ptr = amps.data();
+  _amps_desc.dims[0] = amps.size();
+  int opt_dump_spectra_lvalue;
+  auto* _opt_dump_spectra{&opt_dump_spectra_lvalue};
+  if (opt_dump_spectra.has_value()) {
+    opt_dump_spectra_lvalue = opt_dump_spectra.value();
+  } else {
+    _opt_dump_spectra = nullptr;
+  }
+  bool opt_zero_first_lvalue;
+  auto* _opt_zero_first{&opt_zero_first_lvalue};
+  if (opt_zero_first.has_value()) {
+    opt_zero_first_lvalue = opt_zero_first.value();
+  } else {
+    _opt_zero_first = nullptr;
+  }
   fortran_naff(
-      /* void* */ cdata.get_fortran_ptr(),
-      /* void* */ freqs.get_fortran_ptr(),
-      /* void* */ amps.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _cdata_desc,
+      /* Bmad::array_descriptor_t& */ _freqs_desc,
+      /* Bmad::array_descriptor_t& */ _amps_desc,
       /* int* */ _opt_dump_spectra,
       /* bool* */ _opt_zero_first);
 }
 void SimUtils::nametable_add(
     NametableProxy& nametable,
-    std::string& name,
-    int& ix_name) {
-  auto _name = name.c_str(); // ptr, inout, required
+    std::string name,
+    int ix_name) {
+  auto _name = name.c_str();
   fortran_nametable_add(
       /* void* */ nametable.get_fortran_ptr(),
       /* const char* */ _name,
@@ -883,12 +1169,17 @@ void SimUtils::nametable_add(
 }
 void SimUtils::nametable_bracket_indexx(
     NametableProxy& nametable,
-    std::string& name,
-    optional_ref<int> n_match,
-    int& ix_max) {
-  auto _name = name.c_str(); // ptr, inout, required
-  auto* _n_match =
-      n_match.has_value() ? &n_match->get() : nullptr; // inout, optional
+    std::string name,
+    std::optional<int> n_match,
+    int ix_max) {
+  auto _name = name.c_str();
+  int n_match_lvalue;
+  auto* _n_match{&n_match_lvalue};
+  if (n_match.has_value()) {
+    n_match_lvalue = n_match.value();
+  } else {
+    _n_match = nullptr;
+  }
   fortran_nametable_bracket_indexx(
       /* void* */ nametable.get_fortran_ptr(),
       /* const char* */ _name,
@@ -897,9 +1188,9 @@ void SimUtils::nametable_bracket_indexx(
 }
 void SimUtils::nametable_change1(
     NametableProxy& nametable,
-    std::string& name,
-    int& ix_name) {
-  auto _name = name.c_str(); // ptr, inout, required
+    std::string name,
+    int ix_name) {
+  auto _name = name.c_str();
   fortran_nametable_change1(
       /* void* */ nametable.get_fortran_ptr(),
       /* const char* */ _name,
@@ -907,23 +1198,46 @@ void SimUtils::nametable_change1(
 }
 void SimUtils::nametable_init(
     NametableProxy& nametable,
-    optional_ref<int> n_min,
-    optional_ref<int> n_max) {
-  auto* _n_min = n_min.has_value() ? &n_min->get() : nullptr; // inout, optional
-  auto* _n_max = n_max.has_value() ? &n_max->get() : nullptr; // inout, optional
+    std::optional<int> n_min,
+    std::optional<int> n_max) {
+  int n_min_lvalue;
+  auto* _n_min{&n_min_lvalue};
+  if (n_min.has_value()) {
+    n_min_lvalue = n_min.value();
+  } else {
+    _n_min = nullptr;
+  }
+  int n_max_lvalue;
+  auto* _n_max{&n_max_lvalue};
+  if (n_max.has_value()) {
+    n_max_lvalue = n_max.value();
+  } else {
+    _n_max = nullptr;
+  }
   fortran_nametable_init(
       /* void* */ nametable.get_fortran_ptr(),
       /* int* */ _n_min,
       /* int* */ _n_max);
 }
-void SimUtils::nametable_remove(NametableProxy& nametable, int& ix_name) {
+void SimUtils::nametable_remove(NametableProxy& nametable, int ix_name) {
   fortran_nametable_remove(
       /* void* */ nametable.get_fortran_ptr(), /* int& */ ix_name);
 }
 FixedArray1D<Real, 4> SimUtils::omega_to_quat(FixedArray1D<Real, 3> omega) {
-  auto* _omega = omega.data(); // CppWrapperGeneralArgument
+  // omega: in NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _omega_desc;
+  _omega_desc.rank = 1;
+  _omega_desc.data_ptr = omega.data();
+  _omega_desc.dims[0] = omega.size();
+  // quat: out NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _quat_desc;
+  _quat_desc.rank = 1;
   FixedArray1D<Real, 4> _quat;
-  fortran_omega_to_quat(/* double* */ _omega, /* double* */ _quat.data());
+  _quat_desc.data_ptr = _quat.data();
+  _quat_desc.dims[0] = _quat.size();
+  fortran_omega_to_quat(
+      /* Bmad::array_descriptor_t& */ _omega_desc,
+      /* Bmad::array_descriptor_t& */ _quat_desc);
   return _quat;
 }
 std::string SimUtils::openpmd_species_name(int species) {
@@ -931,19 +1245,19 @@ std::string SimUtils::openpmd_species_name(int species) {
   fortran_openpmd_species_name(/* int& */ species, /* const char* */ _pmd_name);
   return _pmd_name;
 }
-void SimUtils::ordinal_str(int& n, std::string& str) {
-  auto _str = str.c_str(); // ptr, inout, required
+void SimUtils::ordinal_str(int n, std::string str) {
+  auto _str = str.c_str();
   fortran_ordinal_str(/* int& */ n, /* const char* */ _str);
 }
 void SimUtils::parse_fortran_format(
-    std::string& format_str,
-    int& n_repeat,
-    int& power,
-    std::string& descrip,
-    int& width,
-    int& digits) {
-  auto _format_str = format_str.c_str(); // ptr, inout, required
-  auto _descrip = descrip.c_str(); // ptr, inout, required
+    std::string format_str,
+    int n_repeat,
+    int power,
+    std::string descrip,
+    int width,
+    int digits) {
+  auto _format_str = format_str.c_str();
+  auto _descrip = descrip.c_str();
   fortran_parse_fortran_format(
       /* const char* */ _format_str,
       /* int& */ n_repeat,
@@ -972,11 +1286,15 @@ RandomStateProxy SimUtils::pointer_to_ran_state(
   return std::move(RandomStateProxy(_ran_state_ptr));
 }
 void SimUtils::poly_eval(
-    RealAlloc1D& poly,
+    FArray1D<Real>& poly,
     double x,
     std::optional<bool> diff_coef,
-    double& y) {
-  // intent=in allocatable general array
+    double y) {
+  // poly: in NOT (CppWrapperGeneralArgumentArray) (['0:'])
+  Bmad::array_descriptor_t _poly_desc;
+  _poly_desc.rank = 1;
+  _poly_desc.data_ptr = poly.data();
+  _poly_desc.dims[0] = poly.size();
   bool diff_coef_lvalue;
   auto* _diff_coef{&diff_coef_lvalue};
   if (diff_coef.has_value()) {
@@ -985,51 +1303,99 @@ void SimUtils::poly_eval(
     _diff_coef = nullptr;
   }
   fortran_poly_eval(
-      /* void* */ poly.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _poly_desc,
       /* double& */ x,
       /* bool* */ _diff_coef,
       /* double& */ y);
 }
-void SimUtils::probability_funct(double x, double& prob) {
+void SimUtils::probability_funct(double x, double prob) {
   fortran_probability_funct(/* double& */ x, /* double& */ prob);
 }
 void SimUtils::projdd(
-    ComplexAlloc1D& a,
-    ComplexAlloc1D& b,
-    std::complex<double>& func_retval__) {
-  // intent=inout allocatable general array
-  // intent=inout allocatable general array
+    FArray1D<Complex>& a,
+    FArray1D<Complex>& b,
+    std::complex<double> func_retval__) {
+  // a: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _a_desc;
+  _a_desc.rank = 1;
+  _a_desc.data_ptr = a.data();
+  _a_desc.dims[0] = a.size();
+  // b: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _b_desc;
+  _b_desc.rank = 1;
+  _b_desc.data_ptr = b.data();
+  _b_desc.dims[0] = b.size();
   fortran_projdd(
-      /* void* */ a.get_fortran_ptr(),
-      /* void* */ b.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _a_desc,
+      /* Bmad::array_descriptor_t& */ _b_desc,
       /* std::complex<double>& */ func_retval__);
 }
 void SimUtils::quadratic_roots(
     FixedArray1D<Real, 3> coefs,
     FixedArray1D<Complex, 2> root) {
-  auto* _coefs = coefs.data(); // CppWrapperGeneralArgument
-  auto* _root = root.data(); // CppWrapperGeneralArgument
+  // coefs: in NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _coefs_desc;
+  _coefs_desc.rank = 1;
+  _coefs_desc.data_ptr = coefs.data();
+  _coefs_desc.dims[0] = coefs.size();
+  // root: inout NOT (CppWrapperGeneralArgumentArray) (['2'])
+  Bmad::array_descriptor_t _root_desc;
+  _root_desc.rank = 1;
+  _root_desc.data_ptr = root.data();
+  _root_desc.dims[0] = root.size();
   fortran_quadratic_roots(
-      /* double* */ _coefs, /* std::complex<double>* */ _root);
+      /* Bmad::array_descriptor_t& */ _coefs_desc,
+      /* Bmad::array_descriptor_t& */ _root_desc);
 }
 FixedArray1D<Complex, 4> SimUtils::quat_conj(FixedArray1D<Complex, 4> q_in) {
-  auto* _q_in = q_in.data(); // CppWrapperGeneralArgument
+  // q_in: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q_in_desc;
+  _q_in_desc.rank = 1;
+  _q_in_desc.data_ptr = q_in.data();
+  _q_in_desc.dims[0] = q_in.size();
+  // q_out: out NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q_out_desc;
+  _q_out_desc.rank = 1;
   FixedArray1D<Complex, 4> _q_out;
+  _q_out_desc.data_ptr = _q_out.data();
+  _q_out_desc.dims[0] = _q_out.size();
   fortran_quat_conj_complex(
-      /* std::complex<double>* */ _q_in,
-      /* std::complex<double>* */ _q_out.data());
+      /* Bmad::array_descriptor_t& */ _q_in_desc,
+      /* Bmad::array_descriptor_t& */ _q_out_desc);
   return _q_out;
 }
 FixedArray1D<Real, 4> SimUtils::quat_conj(FixedArray1D<Real, 4> q_in) {
-  auto* _q_in = q_in.data(); // CppWrapperGeneralArgument
+  // q_in: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q_in_desc;
+  _q_in_desc.rank = 1;
+  _q_in_desc.data_ptr = q_in.data();
+  _q_in_desc.dims[0] = q_in.size();
+  // q_out: out NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q_out_desc;
+  _q_out_desc.rank = 1;
   FixedArray1D<Real, 4> _q_out;
-  fortran_quat_conj_real(/* double* */ _q_in, /* double* */ _q_out.data());
+  _q_out_desc.data_ptr = _q_out.data();
+  _q_out_desc.dims[0] = _q_out.size();
+  fortran_quat_conj_real(
+      /* Bmad::array_descriptor_t& */ _q_in_desc,
+      /* Bmad::array_descriptor_t& */ _q_out_desc);
   return _q_out;
 }
 FixedArray1D<Real, 4> SimUtils::quat_inverse(FixedArray1D<Real, 4> q_in) {
-  auto* _q_in = q_in.data(); // CppWrapperGeneralArgument
+  // q_in: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q_in_desc;
+  _q_in_desc.rank = 1;
+  _q_in_desc.data_ptr = q_in.data();
+  _q_in_desc.dims[0] = q_in.size();
+  // q_out: out NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q_out_desc;
+  _q_out_desc.rank = 1;
   FixedArray1D<Real, 4> _q_out;
-  fortran_quat_inverse(/* double* */ _q_in, /* double* */ _q_out.data());
+  _q_out_desc.data_ptr = _q_out.data();
+  _q_out_desc.dims[0] = _q_out.size();
+  fortran_quat_inverse(
+      /* Bmad::array_descriptor_t& */ _q_in_desc,
+      /* Bmad::array_descriptor_t& */ _q_out_desc);
   return _q_out;
 }
 FixedArray1D<Complex, 4> SimUtils::quat_mul(
@@ -1042,27 +1408,103 @@ FixedArray1D<Complex, 4> SimUtils::quat_mul(
     std::optional<FixedArray1D<Complex, 4>> q7,
     std::optional<FixedArray1D<Complex, 4>> q8,
     std::optional<FixedArray1D<Complex, 4>> q9) {
-  auto* _q1 = q1.data(); // CppWrapperGeneralArgument
-  auto* _q2 = q2.data(); // CppWrapperGeneralArgument
-  std::complex<double>* _q3 = q3.has_value() ? q3.value().data() : nullptr;
-  std::complex<double>* _q4 = q4.has_value() ? q4.value().data() : nullptr;
-  std::complex<double>* _q5 = q5.has_value() ? q5.value().data() : nullptr;
-  std::complex<double>* _q6 = q6.has_value() ? q6.value().data() : nullptr;
-  std::complex<double>* _q7 = q7.has_value() ? q7.value().data() : nullptr;
-  std::complex<double>* _q8 = q8.has_value() ? q8.value().data() : nullptr;
-  std::complex<double>* _q9 = q9.has_value() ? q9.value().data() : nullptr;
+  // q1: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q1_desc;
+  _q1_desc.rank = 1;
+  _q1_desc.data_ptr = q1.data();
+  _q1_desc.dims[0] = q1.size();
+  // q2: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q2_desc;
+  _q2_desc.rank = 1;
+  _q2_desc.data_ptr = q2.data();
+  _q2_desc.dims[0] = q2.size();
+  // q3: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q3_desc;
+  _q3_desc.rank = 1;
+  if (q3.has_value()) {
+    _q3_desc.data_ptr = q3->data();
+    _q3_desc.dims[0] = q3->size();
+  } else {
+    _q3_desc.data_ptr = nullptr;
+    _q3_desc.dims[0] = 0;
+  }
+  // q4: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q4_desc;
+  _q4_desc.rank = 1;
+  if (q4.has_value()) {
+    _q4_desc.data_ptr = q4->data();
+    _q4_desc.dims[0] = q4->size();
+  } else {
+    _q4_desc.data_ptr = nullptr;
+    _q4_desc.dims[0] = 0;
+  }
+  // q5: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q5_desc;
+  _q5_desc.rank = 1;
+  if (q5.has_value()) {
+    _q5_desc.data_ptr = q5->data();
+    _q5_desc.dims[0] = q5->size();
+  } else {
+    _q5_desc.data_ptr = nullptr;
+    _q5_desc.dims[0] = 0;
+  }
+  // q6: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q6_desc;
+  _q6_desc.rank = 1;
+  if (q6.has_value()) {
+    _q6_desc.data_ptr = q6->data();
+    _q6_desc.dims[0] = q6->size();
+  } else {
+    _q6_desc.data_ptr = nullptr;
+    _q6_desc.dims[0] = 0;
+  }
+  // q7: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q7_desc;
+  _q7_desc.rank = 1;
+  if (q7.has_value()) {
+    _q7_desc.data_ptr = q7->data();
+    _q7_desc.dims[0] = q7->size();
+  } else {
+    _q7_desc.data_ptr = nullptr;
+    _q7_desc.dims[0] = 0;
+  }
+  // q8: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q8_desc;
+  _q8_desc.rank = 1;
+  if (q8.has_value()) {
+    _q8_desc.data_ptr = q8->data();
+    _q8_desc.dims[0] = q8->size();
+  } else {
+    _q8_desc.data_ptr = nullptr;
+    _q8_desc.dims[0] = 0;
+  }
+  // q9: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q9_desc;
+  _q9_desc.rank = 1;
+  if (q9.has_value()) {
+    _q9_desc.data_ptr = q9->data();
+    _q9_desc.dims[0] = q9->size();
+  } else {
+    _q9_desc.data_ptr = nullptr;
+    _q9_desc.dims[0] = 0;
+  }
+  // q_out: out NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q_out_desc;
+  _q_out_desc.rank = 1;
   FixedArray1D<Complex, 4> _q_out;
+  _q_out_desc.data_ptr = _q_out.data();
+  _q_out_desc.dims[0] = _q_out.size();
   fortran_quat_mul_complex(
-      /* std::complex<double>* */ _q1,
-      /* std::complex<double>* */ _q2,
-      /* std::complex<double>* */ _q3,
-      /* std::complex<double>* */ _q4,
-      /* std::complex<double>* */ _q5,
-      /* std::complex<double>* */ _q6,
-      /* std::complex<double>* */ _q7,
-      /* std::complex<double>* */ _q8,
-      /* std::complex<double>* */ _q9,
-      /* std::complex<double>* */ _q_out.data());
+      /* Bmad::array_descriptor_t& */ _q1_desc,
+      /* Bmad::array_descriptor_t& */ _q2_desc,
+      /* Bmad::array_descriptor_t& */ _q3_desc,
+      /* Bmad::array_descriptor_t& */ _q4_desc,
+      /* Bmad::array_descriptor_t& */ _q5_desc,
+      /* Bmad::array_descriptor_t& */ _q6_desc,
+      /* Bmad::array_descriptor_t& */ _q7_desc,
+      /* Bmad::array_descriptor_t& */ _q8_desc,
+      /* Bmad::array_descriptor_t& */ _q9_desc,
+      /* Bmad::array_descriptor_t& */ _q_out_desc);
   return _q_out;
 }
 FixedArray1D<Real, 4> SimUtils::quat_mul(
@@ -1075,84 +1517,218 @@ FixedArray1D<Real, 4> SimUtils::quat_mul(
     std::optional<FixedArray1D<Real, 4>> q7,
     std::optional<FixedArray1D<Real, 4>> q8,
     std::optional<FixedArray1D<Real, 4>> q9) {
-  auto* _q1 = q1.data(); // CppWrapperGeneralArgument
-  auto* _q2 = q2.data(); // CppWrapperGeneralArgument
-  double* _q3 = q3.has_value() ? q3.value().data() : nullptr;
-  double* _q4 = q4.has_value() ? q4.value().data() : nullptr;
-  double* _q5 = q5.has_value() ? q5.value().data() : nullptr;
-  double* _q6 = q6.has_value() ? q6.value().data() : nullptr;
-  double* _q7 = q7.has_value() ? q7.value().data() : nullptr;
-  double* _q8 = q8.has_value() ? q8.value().data() : nullptr;
-  double* _q9 = q9.has_value() ? q9.value().data() : nullptr;
+  // q1: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q1_desc;
+  _q1_desc.rank = 1;
+  _q1_desc.data_ptr = q1.data();
+  _q1_desc.dims[0] = q1.size();
+  // q2: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q2_desc;
+  _q2_desc.rank = 1;
+  _q2_desc.data_ptr = q2.data();
+  _q2_desc.dims[0] = q2.size();
+  // q3: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q3_desc;
+  _q3_desc.rank = 1;
+  if (q3.has_value()) {
+    _q3_desc.data_ptr = q3->data();
+    _q3_desc.dims[0] = q3->size();
+  } else {
+    _q3_desc.data_ptr = nullptr;
+    _q3_desc.dims[0] = 0;
+  }
+  // q4: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q4_desc;
+  _q4_desc.rank = 1;
+  if (q4.has_value()) {
+    _q4_desc.data_ptr = q4->data();
+    _q4_desc.dims[0] = q4->size();
+  } else {
+    _q4_desc.data_ptr = nullptr;
+    _q4_desc.dims[0] = 0;
+  }
+  // q5: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q5_desc;
+  _q5_desc.rank = 1;
+  if (q5.has_value()) {
+    _q5_desc.data_ptr = q5->data();
+    _q5_desc.dims[0] = q5->size();
+  } else {
+    _q5_desc.data_ptr = nullptr;
+    _q5_desc.dims[0] = 0;
+  }
+  // q6: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q6_desc;
+  _q6_desc.rank = 1;
+  if (q6.has_value()) {
+    _q6_desc.data_ptr = q6->data();
+    _q6_desc.dims[0] = q6->size();
+  } else {
+    _q6_desc.data_ptr = nullptr;
+    _q6_desc.dims[0] = 0;
+  }
+  // q7: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q7_desc;
+  _q7_desc.rank = 1;
+  if (q7.has_value()) {
+    _q7_desc.data_ptr = q7->data();
+    _q7_desc.dims[0] = q7->size();
+  } else {
+    _q7_desc.data_ptr = nullptr;
+    _q7_desc.dims[0] = 0;
+  }
+  // q8: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q8_desc;
+  _q8_desc.rank = 1;
+  if (q8.has_value()) {
+    _q8_desc.data_ptr = q8->data();
+    _q8_desc.dims[0] = q8->size();
+  } else {
+    _q8_desc.data_ptr = nullptr;
+    _q8_desc.dims[0] = 0;
+  }
+  // q9: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q9_desc;
+  _q9_desc.rank = 1;
+  if (q9.has_value()) {
+    _q9_desc.data_ptr = q9->data();
+    _q9_desc.dims[0] = q9->size();
+  } else {
+    _q9_desc.data_ptr = nullptr;
+    _q9_desc.dims[0] = 0;
+  }
+  // q_out: out NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _q_out_desc;
+  _q_out_desc.rank = 1;
   FixedArray1D<Real, 4> _q_out;
+  _q_out_desc.data_ptr = _q_out.data();
+  _q_out_desc.dims[0] = _q_out.size();
   fortran_quat_mul_real(
-      /* double* */ _q1,
-      /* double* */ _q2,
-      /* double* */ _q3,
-      /* double* */ _q4,
-      /* double* */ _q5,
-      /* double* */ _q6,
-      /* double* */ _q7,
-      /* double* */ _q8,
-      /* double* */ _q9,
-      /* double* */ _q_out.data());
+      /* Bmad::array_descriptor_t& */ _q1_desc,
+      /* Bmad::array_descriptor_t& */ _q2_desc,
+      /* Bmad::array_descriptor_t& */ _q3_desc,
+      /* Bmad::array_descriptor_t& */ _q4_desc,
+      /* Bmad::array_descriptor_t& */ _q5_desc,
+      /* Bmad::array_descriptor_t& */ _q6_desc,
+      /* Bmad::array_descriptor_t& */ _q7_desc,
+      /* Bmad::array_descriptor_t& */ _q8_desc,
+      /* Bmad::array_descriptor_t& */ _q9_desc,
+      /* Bmad::array_descriptor_t& */ _q_out_desc);
   return _q_out;
 }
 FixedArray1D<Complex, 3> SimUtils::quat_rotate(
     FixedArray1D<Complex, 4> quat,
     FixedArray1D<Complex, 3> vec_in) {
-  auto* _quat = quat.data(); // CppWrapperGeneralArgument
-  auto* _vec_in = vec_in.data(); // CppWrapperGeneralArgument
+  // quat: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _quat_desc;
+  _quat_desc.rank = 1;
+  _quat_desc.data_ptr = quat.data();
+  _quat_desc.dims[0] = quat.size();
+  // vec_in: in NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _vec_in_desc;
+  _vec_in_desc.rank = 1;
+  _vec_in_desc.data_ptr = vec_in.data();
+  _vec_in_desc.dims[0] = vec_in.size();
+  // vec_out: out NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _vec_out_desc;
+  _vec_out_desc.rank = 1;
   FixedArray1D<Complex, 3> _vec_out;
+  _vec_out_desc.data_ptr = _vec_out.data();
+  _vec_out_desc.dims[0] = _vec_out.size();
   fortran_quat_rotate_complex(
-      /* std::complex<double>* */ _quat,
-      /* std::complex<double>* */ _vec_in,
-      /* std::complex<double>* */ _vec_out.data());
+      /* Bmad::array_descriptor_t& */ _quat_desc,
+      /* Bmad::array_descriptor_t& */ _vec_in_desc,
+      /* Bmad::array_descriptor_t& */ _vec_out_desc);
   return _vec_out;
 }
 FixedArray1D<Real, 3> SimUtils::quat_rotate(
     FixedArray1D<Real, 4> quat,
     FixedArray1D<Real, 3> vec_in) {
-  auto* _quat = quat.data(); // CppWrapperGeneralArgument
-  auto* _vec_in = vec_in.data(); // CppWrapperGeneralArgument
+  // quat: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _quat_desc;
+  _quat_desc.rank = 1;
+  _quat_desc.data_ptr = quat.data();
+  _quat_desc.dims[0] = quat.size();
+  // vec_in: in NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _vec_in_desc;
+  _vec_in_desc.rank = 1;
+  _vec_in_desc.data_ptr = vec_in.data();
+  _vec_in_desc.dims[0] = vec_in.size();
+  // vec_out: out NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _vec_out_desc;
+  _vec_out_desc.rank = 1;
   FixedArray1D<Real, 3> _vec_out;
+  _vec_out_desc.data_ptr = _vec_out.data();
+  _vec_out_desc.dims[0] = _vec_out.size();
   fortran_quat_rotate_real(
-      /* double* */ _quat,
-      /* double* */ _vec_in,
-      /* double* */ _vec_out.data());
+      /* Bmad::array_descriptor_t& */ _quat_desc,
+      /* Bmad::array_descriptor_t& */ _vec_in_desc,
+      /* Bmad::array_descriptor_t& */ _vec_out_desc);
   return _vec_out;
 }
 SimUtils::QuatToAxisAngle SimUtils::quat_to_axis_angle(
     FixedArray1D<Real, 4> quat) {
-  auto* _quat = quat.data(); // CppWrapperGeneralArgument
+  // quat: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _quat_desc;
+  _quat_desc.rank = 1;
+  _quat_desc.data_ptr = quat.data();
+  _quat_desc.dims[0] = quat.size();
+  // axis: out NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _axis_desc;
+  _axis_desc.rank = 1;
   FixedArray1D<Real, 3> _axis;
+  _axis_desc.data_ptr = _axis.data();
+  _axis_desc.dims[0] = _axis.size();
   double _angle{};
   fortran_quat_to_axis_angle(
-      /* double* */ _quat, /* double* */ _axis.data(), /* double& */ _angle);
+      /* Bmad::array_descriptor_t& */ _quat_desc,
+      /* Bmad::array_descriptor_t& */ _axis_desc,
+      /* double& */ _angle);
   return QuatToAxisAngle{_axis, _angle};
 }
 FixedArray1D<Real, 3> SimUtils::quat_to_omega(FixedArray1D<Real, 4> quat) {
-  auto* _quat = quat.data(); // CppWrapperGeneralArgument
+  // quat: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _quat_desc;
+  _quat_desc.rank = 1;
+  _quat_desc.data_ptr = quat.data();
+  _quat_desc.dims[0] = quat.size();
+  // omega: out NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _omega_desc;
+  _omega_desc.rank = 1;
   FixedArray1D<Real, 3> _omega;
-  fortran_quat_to_omega(/* double* */ _quat, /* double* */ _omega.data());
+  _omega_desc.data_ptr = _omega.data();
+  _omega_desc.dims[0] = _omega.size();
+  fortran_quat_to_omega(
+      /* Bmad::array_descriptor_t& */ _quat_desc,
+      /* Bmad::array_descriptor_t& */ _omega_desc);
   return _omega;
 }
 FixedArray2D<Real, 3, 3> SimUtils::quat_to_w_mat(FixedArray1D<Real, 4> quat) {
-  auto* _quat = quat.data(); // CppWrapperGeneralArgument
+  // quat: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _quat_desc;
+  _quat_desc.rank = 1;
+  _quat_desc.data_ptr = quat.data();
+  _quat_desc.dims[0] = quat.size();
+  // w_mat: out NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
+  Bmad::array_descriptor_t _w_mat_desc;
+  _w_mat_desc.rank = 2;
   FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
-  fortran_quat_to_w_mat(/* double* */ _quat, /* double* */ _w_mat_vec);
+  _w_mat_desc.data_ptr = _w_mat_vec;
+  fortran_quat_to_w_mat(
+      /* Bmad::array_descriptor_t& */ _quat_desc,
+      /* Bmad::array_descriptor_t& */ _w_mat_desc);
   vec_to_matrix(_w_mat_vec, w_mat);
   return w_mat;
 }
 void SimUtils::query_string(
-    std::string& query_str,
-    bool& upcase,
-    std::string& return_str,
-    int& ix,
-    int& ios) {
-  auto _query_str = query_str.c_str(); // ptr, inout, required
-  auto _return_str = return_str.c_str(); // ptr, inout, required
+    std::string query_str,
+    bool upcase,
+    std::string return_str,
+    int ix,
+    int ios) {
+  auto _query_str = query_str.c_str();
+  auto _return_str = return_str.c_str();
   fortran_query_string(
       /* const char* */ _query_str,
       /* bool& */ upcase,
@@ -1160,9 +1736,9 @@ void SimUtils::query_string(
       /* int& */ ix,
       /* int& */ ios);
 }
-void SimUtils::quote(std::string& str, std::string& q_str) {
-  auto _str = str.c_str(); // ptr, inout, required
-  auto _q_str = q_str.c_str(); // ptr, inout, required
+void SimUtils::quote(std::string str, std::string q_str) {
+  auto _str = str.c_str();
+  auto _q_str = q_str.c_str();
   fortran_quote(/* const char* */ _str, /* const char* */ _q_str);
 }
 RandomStateProxy SimUtils::ran_default_state(
@@ -1212,7 +1788,7 @@ SimUtils::RanGaussConverter SimUtils::ran_gauss_converter(
 double SimUtils::ran_gauss_scalar(
     optional_ref<RandomStateProxy> ran_state,
     std::optional<double> sigma_cut,
-    optional_ref<int> index_quasi) {
+    std::optional<int> index_quasi) {
   double _harvest{};
   auto* _ran_state = ran_state.has_value() ? ran_state->get().get_fortran_ptr()
                                            : nullptr; // input, optional
@@ -1223,8 +1799,13 @@ double SimUtils::ran_gauss_scalar(
   } else {
     _sigma_cut = nullptr;
   }
-  auto* _index_quasi = index_quasi.has_value() ? &index_quasi->get()
-                                               : nullptr; // inout, optional
+  int index_quasi_lvalue;
+  auto* _index_quasi{&index_quasi_lvalue};
+  if (index_quasi.has_value()) {
+    index_quasi_lvalue = index_quasi.value();
+  } else {
+    _index_quasi = nullptr;
+  }
   fortran_ran_gauss_scalar(
       /* double& */ _harvest,
       /* void* */ _ran_state,
@@ -1232,11 +1813,15 @@ double SimUtils::ran_gauss_scalar(
       /* int* */ _index_quasi);
   return _harvest;
 }
-RealAlloc1D SimUtils::ran_gauss_vector(
+void SimUtils::ran_gauss_vector(
+    FArray1D<Real>& harvest,
     optional_ref<RandomStateProxy> ran_state,
     std::optional<double> sigma_cut) {
-  // intent=out allocatable general array
-  auto harvest{RealAlloc1D()};
+  // harvest: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _harvest_desc;
+  _harvest_desc.rank = 1;
+  _harvest_desc.data_ptr = harvest.data();
+  _harvest_desc.dims[0] = harvest.size();
   auto* _ran_state = ran_state.has_value() ? ran_state->get().get_fortran_ptr()
                                            : nullptr; // input, optional
   double sigma_cut_lvalue;
@@ -1247,10 +1832,9 @@ RealAlloc1D SimUtils::ran_gauss_vector(
     _sigma_cut = nullptr;
   }
   fortran_ran_gauss_vector(
-      /* void* */ harvest.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _harvest_desc,
       /* void* */ _ran_state,
       /* double* */ _sigma_cut);
-  return std::move(harvest);
 }
 int SimUtils::ran_seed_get() {
   int _seed{};
@@ -1269,33 +1853,47 @@ void SimUtils::ran_seed_put(int seed, std::optional<int> mpi_offset) {
 }
 double SimUtils::ran_uniform(
     optional_ref<RandomStateProxy> ran_state,
-    optional_ref<int> index_quasi) {
+    std::optional<int> index_quasi) {
   double _harvest{};
   auto* _ran_state = ran_state.has_value() ? ran_state->get().get_fortran_ptr()
                                            : nullptr; // input, optional
-  auto* _index_quasi = index_quasi.has_value() ? &index_quasi->get()
-                                               : nullptr; // inout, optional
+  int index_quasi_lvalue;
+  auto* _index_quasi{&index_quasi_lvalue};
+  if (index_quasi.has_value()) {
+    index_quasi_lvalue = index_quasi.value();
+  } else {
+    _index_quasi = nullptr;
+  }
   fortran_ran_uniform_scalar(
       /* double& */ _harvest, /* void* */ _ran_state, /* int* */ _index_quasi);
   return _harvest;
 }
-RealAlloc1D SimUtils::ran_uniform(optional_ref<RandomStateProxy> ran_state) {
-  // intent=out allocatable general array
-  auto harvest{RealAlloc1D()};
+void SimUtils::ran_uniform(
+    FArray1D<Real>& harvest,
+    optional_ref<RandomStateProxy> ran_state) {
+  // harvest: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _harvest_desc;
+  _harvest_desc.rank = 1;
+  _harvest_desc.data_ptr = harvest.data();
+  _harvest_desc.dims[0] = harvest.size();
   auto* _ran_state = ran_state.has_value() ? ran_state->get().get_fortran_ptr()
                                            : nullptr; // input, optional
   fortran_ran_uniform_vector(
-      /* void* */ harvest.get_fortran_ptr(), /* void* */ _ran_state);
-  return std::move(harvest);
+      /* Bmad::array_descriptor_t& */ _harvest_desc, /* void* */ _ran_state);
 }
 void SimUtils::real_num_fortran_format(
-    double& number,
-    int& width,
-    optional_ref<int> n_blanks,
-    std::string& fmt_str) {
-  auto* _n_blanks =
-      n_blanks.has_value() ? &n_blanks->get() : nullptr; // inout, optional
-  auto _fmt_str = fmt_str.c_str(); // ptr, inout, required
+    double number,
+    int width,
+    std::optional<int> n_blanks,
+    std::string fmt_str) {
+  int n_blanks_lvalue;
+  auto* _n_blanks{&n_blanks_lvalue};
+  if (n_blanks.has_value()) {
+    n_blanks_lvalue = n_blanks.value();
+  } else {
+    _n_blanks = nullptr;
+  }
+  auto _fmt_str = fmt_str.c_str();
   fortran_real_num_fortran_format(
       /* double& */ number,
       /* int& */ width,
@@ -1303,26 +1901,36 @@ void SimUtils::real_num_fortran_format(
       /* const char* */ _fmt_str);
 }
 void SimUtils::real_path(
-    std::string& path_in,
-    std::string& path_out,
-    bool& is_ok) {
-  auto _path_in = path_in.c_str(); // ptr, inout, required
-  auto _path_out = path_out.c_str(); // ptr, inout, required
+    std::string path_in,
+    std::string path_out,
+    bool is_ok) {
+  auto _path_in = path_in.c_str();
+  auto _path_out = path_out.c_str();
   fortran_real_path(
       /* const char* */ _path_in,
       /* const char* */ _path_out,
       /* bool& */ is_ok);
 }
 void SimUtils::real_str(
-    double& r_num,
-    optional_ref<int> n_signif,
-    optional_ref<int> n_decimal,
-    std::string& str) {
-  auto* _n_signif =
-      n_signif.has_value() ? &n_signif->get() : nullptr; // inout, optional
-  auto* _n_decimal =
-      n_decimal.has_value() ? &n_decimal->get() : nullptr; // inout, optional
-  auto _str = str.c_str(); // ptr, inout, required
+    double r_num,
+    std::optional<int> n_signif,
+    std::optional<int> n_decimal,
+    std::string str) {
+  int n_signif_lvalue;
+  auto* _n_signif{&n_signif_lvalue};
+  if (n_signif.has_value()) {
+    n_signif_lvalue = n_signif.value();
+  } else {
+    _n_signif = nullptr;
+  }
+  int n_decimal_lvalue;
+  auto* _n_decimal{&n_decimal_lvalue};
+  if (n_decimal.has_value()) {
+    n_decimal_lvalue = n_decimal.value();
+  } else {
+    _n_decimal = nullptr;
+  }
+  auto _str = str.c_str();
   fortran_real_str(
       /* double& */ r_num,
       /* int* */ _n_signif,
@@ -1330,16 +1938,26 @@ void SimUtils::real_str(
       /* const char* */ _str);
 }
 void SimUtils::real_to_string(
-    double& real_num,
-    int& width,
-    optional_ref<int> n_signif,
-    optional_ref<int> n_decimal,
-    std::string& str) {
-  auto* _n_signif =
-      n_signif.has_value() ? &n_signif->get() : nullptr; // inout, optional
-  auto* _n_decimal =
-      n_decimal.has_value() ? &n_decimal->get() : nullptr; // inout, optional
-  auto _str = str.c_str(); // ptr, inout, required
+    double real_num,
+    int width,
+    std::optional<int> n_signif,
+    std::optional<int> n_decimal,
+    std::string str) {
+  int n_signif_lvalue;
+  auto* _n_signif{&n_signif_lvalue};
+  if (n_signif.has_value()) {
+    n_signif_lvalue = n_signif.value();
+  } else {
+    _n_signif = nullptr;
+  }
+  int n_decimal_lvalue;
+  auto* _n_decimal{&n_decimal_lvalue};
+  if (n_decimal.has_value()) {
+    n_decimal_lvalue = n_decimal.value();
+  } else {
+    _n_decimal = nullptr;
+  }
+  auto _str = str.c_str();
   fortran_real_to_string(
       /* double& */ real_num,
       /* int& */ width,
@@ -1374,16 +1992,20 @@ void SimUtils::reallocate_spline(
       /* bool* */ _exact);
 }
 double SimUtils::rms_value(
-    RealAlloc1D& val_arr,
+    FArray1D<Real>& val_arr,
     optional_ref<BoolAlloc1D> good_val,
-    double& rms_val) {
-  // intent=in allocatable general array
+    double rms_val) {
+  // val_arr: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _val_arr_desc;
+  _val_arr_desc.rank = 1;
+  _val_arr_desc.data_ptr = val_arr.data();
+  _val_arr_desc.dims[0] = val_arr.size();
   // intent=in allocatable general array
   auto* _good_val = good_val.has_value() ? good_val->get().get_fortran_ptr()
                                          : nullptr; // input, optional
   double _ave_val{};
   fortran_rms_value(
-      /* void* */ val_arr.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _val_arr_desc,
       /* void* */ _good_val,
       /* double& */ _ave_val,
       /* double& */ rms_val);
@@ -1393,28 +2015,57 @@ void SimUtils::rot_2d(
     FixedArray1D<Real, 2> vec_in,
     double angle,
     FixedArray1D<Real, 2> vec_out) {
-  auto* _vec_in = vec_in.data(); // CppWrapperGeneralArgument
-  auto* _vec_out = vec_out.data(); // CppWrapperGeneralArgument
+  // vec_in: in NOT (CppWrapperGeneralArgumentArray) (['2'])
+  Bmad::array_descriptor_t _vec_in_desc;
+  _vec_in_desc.rank = 1;
+  _vec_in_desc.data_ptr = vec_in.data();
+  _vec_in_desc.dims[0] = vec_in.size();
+  // vec_out: inout NOT (CppWrapperGeneralArgumentArray) (['2'])
+  Bmad::array_descriptor_t _vec_out_desc;
+  _vec_out_desc.rank = 1;
+  _vec_out_desc.data_ptr = vec_out.data();
+  _vec_out_desc.dims[0] = vec_out.size();
   fortran_rot_2d(
-      /* double* */ _vec_in, /* double& */ angle, /* double* */ _vec_out);
+      /* Bmad::array_descriptor_t& */ _vec_in_desc,
+      /* double& */ angle,
+      /* Bmad::array_descriptor_t& */ _vec_out_desc);
 }
-void SimUtils::rotate_vec(RealAlloc1D& vec, int axis, double angle) {
-  // intent=inout allocatable general array
+void SimUtils::rotate_vec(FArray1D<Real>& vec, int axis, double angle) {
+  // vec: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _vec_desc;
+  _vec_desc.rank = 1;
+  _vec_desc.data_ptr = vec.data();
+  _vec_desc.dims[0] = vec.size();
   fortran_rotate_vec(
-      /* void* */ vec.get_fortran_ptr(), /* int& */ axis, /* double& */ angle);
+      /* Bmad::array_descriptor_t& */ _vec_desc,
+      /* int& */ axis,
+      /* double& */ angle);
 }
 FixedArray1D<Real, 3> SimUtils::rotate_vec_given_axis_angle(
     FixedArray1D<Real, 3> vec_in,
-    RealAlloc1D& axis,
+    FArray1D<Real>& axis,
     double angle) {
-  auto* _vec_in = vec_in.data(); // CppWrapperGeneralArgument
-  // intent=in allocatable general array
+  // vec_in: in NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _vec_in_desc;
+  _vec_in_desc.rank = 1;
+  _vec_in_desc.data_ptr = vec_in.data();
+  _vec_in_desc.dims[0] = vec_in.size();
+  // axis: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _axis_desc;
+  _axis_desc.rank = 1;
+  _axis_desc.data_ptr = axis.data();
+  _axis_desc.dims[0] = axis.size();
+  // vec_out: out NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _vec_out_desc;
+  _vec_out_desc.rank = 1;
   FixedArray1D<Real, 3> _vec_out;
+  _vec_out_desc.data_ptr = _vec_out.data();
+  _vec_out_desc.dims[0] = _vec_out.size();
   fortran_rotate_vec_given_axis_angle(
-      /* double* */ _vec_in,
-      /* void* */ axis.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _vec_in_desc,
+      /* Bmad::array_descriptor_t& */ _axis_desc,
       /* double& */ angle,
-      /* double* */ _vec_out.data());
+      /* Bmad::array_descriptor_t& */ _vec_out_desc);
   return _vec_out;
 }
 double SimUtils::rp8(int int_in) {
@@ -1423,27 +2074,39 @@ double SimUtils::rp8(int int_in) {
   return _re_out;
 }
 void SimUtils::run_timer(
-    std::string& command,
-    optional_ref<double> time,
-    optional_ref<double> time0) {
-  auto _command = command.c_str(); // ptr, inout, required
-  auto* _time = time.has_value() ? &time->get() : nullptr; // inout, optional
-  auto* _time0 = time0.has_value() ? &time0->get() : nullptr; // inout, optional
+    std::string command,
+    std::optional<double> time,
+    std::optional<double> time0) {
+  auto _command = command.c_str();
+  double time_lvalue;
+  auto* _time{&time_lvalue};
+  if (time.has_value()) {
+    time_lvalue = time.value();
+  } else {
+    _time = nullptr;
+  }
+  double time0_lvalue;
+  auto* _time0{&time0_lvalue};
+  if (time0.has_value()) {
+    time0_lvalue = time0.value();
+  } else {
+    _time0 = nullptr;
+  }
   fortran_run_timer(
       /* const char* */ _command, /* double* */ _time, /* double* */ _time0);
 }
-void SimUtils::set_parameter(int& param_val, int& set_val, int& save_val) {
+void SimUtils::set_parameter(int param_val, int set_val, int save_val) {
   fortran_set_parameter_int(
       /* int& */ param_val, /* int& */ set_val, /* int& */ save_val);
 }
-void SimUtils::set_parameter(bool& param_val, bool& set_val, bool& save_val) {
+void SimUtils::set_parameter(bool param_val, bool set_val, bool save_val) {
   fortran_set_parameter_logic(
       /* bool& */ param_val, /* bool& */ set_val, /* bool& */ save_val);
 }
 void SimUtils::set_parameter(
-    double& param_val,
-    double& set_val,
-    double& save_val) {
+    double param_val,
+    double set_val,
+    double save_val) {
   fortran_set_parameter_real(
       /* double& */ param_val, /* double& */ set_val, /* double& */ save_val);
 }
@@ -1453,7 +2116,7 @@ int SimUtils::set_species_charge(int species_in, int charge) {
       /* int& */ species_in, /* int& */ charge, /* int& */ _species_charged);
   return _species_charged;
 }
-void SimUtils::sinc(double x, std::optional<int> nd, double& y) {
+void SimUtils::sinc(double x, std::optional<int> nd, double y) {
   int nd_lvalue;
   auto* _nd{&nd_lvalue};
   if (nd.has_value()) {
@@ -1463,7 +2126,7 @@ void SimUtils::sinc(double x, std::optional<int> nd, double& y) {
   }
   fortran_sinc(/* double& */ x, /* int* */ _nd, /* double& */ y);
 }
-void SimUtils::sincc(double x, std::optional<int> nd, double& y) {
+void SimUtils::sincc(double x, std::optional<int> nd, double y) {
   int nd_lvalue;
   auto* _nd{&nd_lvalue};
   if (nd.has_value()) {
@@ -1473,7 +2136,7 @@ void SimUtils::sincc(double x, std::optional<int> nd, double& y) {
   }
   fortran_sincc(/* double& */ x, /* int* */ _nd, /* double& */ y);
 }
-void SimUtils::sinhx_x(double x, std::optional<int> nd, double& y) {
+void SimUtils::sinhx_x(double x, std::optional<int> nd, double y) {
   int nd_lvalue;
   auto* _nd{&nd_lvalue};
   if (nd.has_value()) {
@@ -1483,7 +2146,7 @@ void SimUtils::sinhx_x(double x, std::optional<int> nd, double& y) {
   }
   fortran_sinhx_x(/* double& */ x, /* int* */ _nd, /* double& */ y);
 }
-void SimUtils::skip_header(int& ix_unit, bool& error_flag) {
+void SimUtils::skip_header(int ix_unit, bool error_flag) {
   fortran_skip_header(/* int& */ ix_unit, /* bool& */ error_flag);
 }
 int SimUtils::species_id(
@@ -1567,24 +2230,38 @@ double SimUtils::spline1(
       /* double& */ _y);
   return _y;
 }
-bool SimUtils::spline_akima(SplineProxyAlloc1D& spline) {
-  // intent=inout allocatable type array
+bool SimUtils::spline_akima(SplineProxyArray1D& spline) {
+  // spline: SplineProxy inout (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _spline_desc;
+  _spline_desc.rank = 1;
+  _spline_desc.data_ptr = spline.data();
+  _spline_desc.dims[0] = spline.size();
+  _spline_desc.strides[0] = 1;
   bool _ok{};
-  fortran_spline_akima(/* void* */ spline.get_fortran_ptr(), /* bool& */ _ok);
+  fortran_spline_akima(
+      /* Bmad::array_descriptor_t& */ _spline_desc, /* bool& */ _ok);
   return _ok;
 }
 SimUtils::SplineAkimaInterpolate SimUtils::spline_akima_interpolate(
-    RealAlloc1D& x_knot,
-    RealAlloc1D& y_knot,
+    FArray1D<Real>& x_knot,
+    FArray1D<Real>& y_knot,
     double x) {
-  // intent=in allocatable general array
-  // intent=in allocatable general array
+  // x_knot: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _x_knot_desc;
+  _x_knot_desc.rank = 1;
+  _x_knot_desc.data_ptr = x_knot.data();
+  _x_knot_desc.dims[0] = x_knot.size();
+  // y_knot: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _y_knot_desc;
+  _y_knot_desc.rank = 1;
+  _y_knot_desc.data_ptr = y_knot.data();
+  _y_knot_desc.dims[0] = y_knot.size();
   bool _ok{};
   double _y{};
   double _dy{};
   fortran_spline_akima_interpolate(
-      /* void* */ x_knot.get_fortran_ptr(),
-      /* void* */ y_knot.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _x_knot_desc,
+      /* Bmad::array_descriptor_t& */ _y_knot_desc,
       /* double& */ x,
       /* bool& */ _ok,
       /* double& */ _y,
@@ -1592,24 +2269,29 @@ SimUtils::SplineAkimaInterpolate SimUtils::spline_akima_interpolate(
   return SplineAkimaInterpolate{_ok, _y, _dy};
 }
 SimUtils::SplineEvaluate SimUtils::spline_evaluate(
-    SplineProxyAlloc1D& spline,
+    SplineProxyArray1D& spline,
     double x) {
-  // intent=in allocatable type array
+  // spline: SplineProxy in (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _spline_desc;
+  _spline_desc.rank = 1;
+  _spline_desc.data_ptr = spline.data();
+  _spline_desc.dims[0] = spline.size();
+  _spline_desc.strides[0] = 1;
   bool _ok{};
   double _y{};
   double _dy{};
   fortran_spline_evaluate(
-      /* void* */ spline.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _spline_desc,
       /* double& */ x,
       /* bool& */ _ok,
       /* double& */ _y,
       /* double& */ _dy);
   return SplineEvaluate{_ok, _y, _dy};
 }
-void SimUtils::sqrt_alpha(double alpha, double x, double& y) {
+void SimUtils::sqrt_alpha(double alpha, double x, double y) {
   fortran_sqrt_alpha(/* double& */ alpha, /* double& */ x, /* double& */ y);
 }
-void SimUtils::sqrt_one(double x, std::optional<int> nd, double& ds1) {
+void SimUtils::sqrt_one(double x, std::optional<int> nd, double ds1) {
   int nd_lvalue;
   auto* _nd{&nd_lvalue};
   if (nd.has_value()) {
@@ -1619,9 +2301,9 @@ void SimUtils::sqrt_one(double x, std::optional<int> nd, double& ds1) {
   }
   fortran_sqrt_one(/* double& */ x, /* int* */ _nd, /* double& */ ds1);
 }
-void SimUtils::str_count(std::string& str, std::string& match, int& num) {
-  auto _str = str.c_str(); // ptr, inout, required
-  auto _match = match.c_str(); // ptr, inout, required
+void SimUtils::str_count(std::string str, std::string match, int num) {
+  auto _str = str.c_str();
+  auto _match = match.c_str();
   fortran_str_count(
       /* const char* */ _str, /* const char* */ _match, /* int& */ num);
 }
@@ -1632,15 +2314,19 @@ std::string SimUtils::str_downcase(std::string src) {
   return _dst;
 }
 void SimUtils::str_first_in_set(
-    std::string& line,
-    std::string& set,
-    optional_ref<bool> ignore_clauses,
-    int& ix_match) {
-  auto _line = line.c_str(); // ptr, inout, required
-  auto _set = set.c_str(); // ptr, inout, required
-  auto* _ignore_clauses = ignore_clauses.has_value()
-      ? &ignore_clauses->get()
-      : nullptr; // inout, optional
+    std::string line,
+    std::string set,
+    std::optional<bool> ignore_clauses,
+    int ix_match) {
+  auto _line = line.c_str();
+  auto _set = set.c_str();
+  bool ignore_clauses_lvalue;
+  auto* _ignore_clauses{&ignore_clauses_lvalue};
+  if (ignore_clauses.has_value()) {
+    ignore_clauses_lvalue = ignore_clauses.value();
+  } else {
+    _ignore_clauses = nullptr;
+  }
   fortran_str_first_in_set(
       /* const char* */ _line,
       /* const char* */ _set,
@@ -1648,57 +2334,62 @@ void SimUtils::str_first_in_set(
       /* int& */ ix_match);
 }
 void SimUtils::str_first_not_in_set(
-    std::string& line,
-    std::string& set,
-    int& ix_match) {
-  auto _line = line.c_str(); // ptr, inout, required
-  auto _set = set.c_str(); // ptr, inout, required
+    std::string line,
+    std::string set,
+    int ix_match) {
+  auto _line = line.c_str();
+  auto _set = set.c_str();
   fortran_str_first_not_in_set(
       /* const char* */ _line, /* const char* */ _set, /* int& */ ix_match);
 }
 void SimUtils::str_last_in_set(
-    std::string& line,
-    std::string& set,
-    int& ix_match) {
-  auto _line = line.c_str(); // ptr, inout, required
-  auto _set = set.c_str(); // ptr, inout, required
+    std::string line,
+    std::string set,
+    int ix_match) {
+  auto _line = line.c_str();
+  auto _set = set.c_str();
   fortran_str_last_in_set(
       /* const char* */ _line, /* const char* */ _set, /* int& */ ix_match);
 }
 void SimUtils::str_last_not_in_set(
-    std::string& line,
-    std::string& set,
-    int& ix_match) {
-  auto _line = line.c_str(); // ptr, inout, required
-  auto _set = set.c_str(); // ptr, inout, required
+    std::string line,
+    std::string set,
+    int ix_match) {
+  auto _line = line.c_str();
+  auto _set = set.c_str();
   fortran_str_last_not_in_set(
       /* const char* */ _line, /* const char* */ _set, /* int& */ ix_match);
 }
-void SimUtils::str_match_wild(
-    std::string& str,
-    std::string& pat,
-    bool& a_match) {
-  auto _str = str.c_str(); // ptr, inout, required
-  auto _pat = pat.c_str(); // ptr, inout, required
+void SimUtils::str_match_wild(std::string str, std::string pat, bool a_match) {
+  auto _str = str.c_str();
+  auto _pat = pat.c_str();
   fortran_str_match_wild(
       /* const char* */ _str, /* const char* */ _pat, /* bool& */ a_match);
 }
 void SimUtils::str_substitute(
-    std::string& string,
-    optional_ref<std::string> str_match,
-    optional_ref<std::string> str_replace,
-    optional_ref<bool> do_trim,
-    optional_ref<bool> ignore_escaped) {
-  auto _string = string.c_str(); // ptr, inout, required
-  const char* _str_match =
-      str_match.has_value() ? str_match->get().c_str() : nullptr;
+    std::string string,
+    std::optional<std::string> str_match,
+    std::optional<std::string> str_replace,
+    std::optional<bool> do_trim,
+    std::optional<bool> ignore_escaped) {
+  auto _string = string.c_str();
+  const char* _str_match = str_match.has_value() ? str_match->c_str() : nullptr;
   const char* _str_replace =
-      str_replace.has_value() ? str_replace->get().c_str() : nullptr;
-  auto* _do_trim =
-      do_trim.has_value() ? &do_trim->get() : nullptr; // inout, optional
-  auto* _ignore_escaped = ignore_escaped.has_value()
-      ? &ignore_escaped->get()
-      : nullptr; // inout, optional
+      str_replace.has_value() ? str_replace->c_str() : nullptr;
+  bool do_trim_lvalue;
+  auto* _do_trim{&do_trim_lvalue};
+  if (do_trim.has_value()) {
+    do_trim_lvalue = do_trim.value();
+  } else {
+    _do_trim = nullptr;
+  }
+  bool ignore_escaped_lvalue;
+  auto* _ignore_escaped{&ignore_escaped_lvalue};
+  if (ignore_escaped.has_value()) {
+    ignore_escaped_lvalue = ignore_escaped.value();
+  } else {
+    _ignore_escaped = nullptr;
+  }
   fortran_str_substitute(
       /* const char* */ _string,
       /* const char* */ _str_match,
@@ -1713,15 +2404,19 @@ std::string SimUtils::str_upcase(std::string src) {
   return _dst;
 }
 void SimUtils::string_to_int(
-    std::string& line,
-    int& default_,
-    bool& err_flag,
-    optional_ref<bool> err_print_flag,
-    int& value) {
-  auto _line = line.c_str(); // ptr, inout, required
-  auto* _err_print_flag = err_print_flag.has_value()
-      ? &err_print_flag->get()
-      : nullptr; // inout, optional
+    std::string line,
+    int default_,
+    bool err_flag,
+    std::optional<bool> err_print_flag,
+    int value) {
+  auto _line = line.c_str();
+  bool err_print_flag_lvalue;
+  auto* _err_print_flag{&err_print_flag_lvalue};
+  if (err_print_flag.has_value()) {
+    err_print_flag_lvalue = err_print_flag.value();
+  } else {
+    _err_print_flag = nullptr;
+  }
   fortran_string_to_int(
       /* const char* */ _line,
       /* int& */ default_,
@@ -1730,15 +2425,19 @@ void SimUtils::string_to_int(
       /* int& */ value);
 }
 void SimUtils::string_to_real(
-    std::string& line,
-    double& default_,
-    bool& err_flag,
-    optional_ref<bool> err_print_flag,
-    double& value) {
-  auto _line = line.c_str(); // ptr, inout, required
-  auto* _err_print_flag = err_print_flag.has_value()
-      ? &err_print_flag->get()
-      : nullptr; // inout, optional
+    std::string line,
+    double default_,
+    bool err_flag,
+    std::optional<bool> err_print_flag,
+    double value) {
+  auto _line = line.c_str();
+  bool err_print_flag_lvalue;
+  auto* _err_print_flag{&err_print_flag_lvalue};
+  if (err_print_flag.has_value()) {
+    err_print_flag_lvalue = err_print_flag.value();
+  } else {
+    _err_print_flag = nullptr;
+  }
   fortran_string_to_real(
       /* const char* */ _line,
       /* double& */ default_,
@@ -1747,27 +2446,27 @@ void SimUtils::string_to_real(
       /* double& */ value);
 }
 void SimUtils::string_trim(
-    std::string& in_string,
-    std::string& out_string,
-    int& word_len) {
-  auto _in_string = in_string.c_str(); // ptr, inout, required
-  auto _out_string = out_string.c_str(); // ptr, inout, required
+    std::string in_string,
+    std::string out_string,
+    int word_len) {
+  auto _in_string = in_string.c_str();
+  auto _out_string = out_string.c_str();
   fortran_string_trim(
       /* const char* */ _in_string,
       /* const char* */ _out_string,
       /* int& */ word_len);
 }
 void SimUtils::string_trim2(
-    std::string& in_str,
-    std::string& delimitors,
-    std::string& out_str,
-    int& ix_word,
-    std::string& delim,
-    int& ix_next) {
-  auto _in_str = in_str.c_str(); // ptr, inout, required
-  auto _delimitors = delimitors.c_str(); // ptr, inout, required
-  auto _out_str = out_str.c_str(); // ptr, inout, required
-  auto _delim = delim.c_str(); // ptr, inout, required
+    std::string in_str,
+    std::string delimitors,
+    std::string out_str,
+    int ix_word,
+    std::string delim,
+    int ix_next) {
+  auto _in_str = in_str.c_str();
+  auto _delimitors = delimitors.c_str();
+  auto _out_str = out_str.c_str();
+  auto _delim = delim.c_str();
   fortran_string_trim2(
       /* const char* */ _in_str,
       /* const char* */ _delimitors,
@@ -1783,20 +2482,40 @@ FixedArray2D<Real, 4, 4> SimUtils::super_bicubic_coef(
     FixedArray1D<Real, 4> y12,
     double d1,
     double d2) {
-  auto* _y = y.data(); // CppWrapperGeneralArgument
-  auto* _y1 = y1.data(); // CppWrapperGeneralArgument
-  auto* _y2 = y2.data(); // CppWrapperGeneralArgument
-  auto* _y12 = y12.data(); // CppWrapperGeneralArgument
+  // y: in NOT (CppWrapperGeneralArgumentArray) (['4'])
+  Bmad::array_descriptor_t _y_desc;
+  _y_desc.rank = 1;
+  _y_desc.data_ptr = y.data();
+  _y_desc.dims[0] = y.size();
+  // y1: in NOT (CppWrapperGeneralArgumentArray) (['4'])
+  Bmad::array_descriptor_t _y1_desc;
+  _y1_desc.rank = 1;
+  _y1_desc.data_ptr = y1.data();
+  _y1_desc.dims[0] = y1.size();
+  // y2: in NOT (CppWrapperGeneralArgumentArray) (['4'])
+  Bmad::array_descriptor_t _y2_desc;
+  _y2_desc.rank = 1;
+  _y2_desc.data_ptr = y2.data();
+  _y2_desc.dims[0] = y2.size();
+  // y12: in NOT (CppWrapperGeneralArgumentArray) (['4'])
+  Bmad::array_descriptor_t _y12_desc;
+  _y12_desc.rank = 1;
+  _y12_desc.data_ptr = y12.data();
+  _y12_desc.dims[0] = y12.size();
+  // c: out NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
+  Bmad::array_descriptor_t _c_desc;
+  _c_desc.rank = 2;
   FixedArray2D<Real, 4, 4> c;
   double _c_vec[4 * 4];
+  _c_desc.data_ptr = _c_vec;
   fortran_super_bicubic_coef(
-      /* double* */ _y,
-      /* double* */ _y1,
-      /* double* */ _y2,
-      /* double* */ _y12,
+      /* Bmad::array_descriptor_t& */ _y_desc,
+      /* Bmad::array_descriptor_t& */ _y1_desc,
+      /* Bmad::array_descriptor_t& */ _y2_desc,
+      /* Bmad::array_descriptor_t& */ _y12_desc,
       /* double& */ d1,
       /* double& */ d2,
-      /* double* */ _c_vec);
+      /* Bmad::array_descriptor_t& */ _c_desc);
   vec_to_matrix(_c_vec, c);
   return c;
 }
@@ -1811,18 +2530,34 @@ SimUtils::SuperBicubicInterpolation SimUtils::super_bicubic_interpolation(
     double x2u,
     double x1,
     double x2) {
-  auto* _y = y.data(); // CppWrapperGeneralArgument
-  auto* _y1 = y1.data(); // CppWrapperGeneralArgument
-  auto* _y2 = y2.data(); // CppWrapperGeneralArgument
-  auto* _y12 = y12.data(); // CppWrapperGeneralArgument
+  // y: in NOT (CppWrapperGeneralArgumentArray) (['4'])
+  Bmad::array_descriptor_t _y_desc;
+  _y_desc.rank = 1;
+  _y_desc.data_ptr = y.data();
+  _y_desc.dims[0] = y.size();
+  // y1: in NOT (CppWrapperGeneralArgumentArray) (['4'])
+  Bmad::array_descriptor_t _y1_desc;
+  _y1_desc.rank = 1;
+  _y1_desc.data_ptr = y1.data();
+  _y1_desc.dims[0] = y1.size();
+  // y2: in NOT (CppWrapperGeneralArgumentArray) (['4'])
+  Bmad::array_descriptor_t _y2_desc;
+  _y2_desc.rank = 1;
+  _y2_desc.data_ptr = y2.data();
+  _y2_desc.dims[0] = y2.size();
+  // y12: in NOT (CppWrapperGeneralArgumentArray) (['4'])
+  Bmad::array_descriptor_t _y12_desc;
+  _y12_desc.rank = 1;
+  _y12_desc.data_ptr = y12.data();
+  _y12_desc.dims[0] = y12.size();
   double _ansy{};
   double _ansy1{};
   double _ansy2{};
   fortran_super_bicubic_interpolation(
-      /* double* */ _y,
-      /* double* */ _y1,
-      /* double* */ _y2,
-      /* double* */ _y12,
+      /* Bmad::array_descriptor_t& */ _y_desc,
+      /* Bmad::array_descriptor_t& */ _y1_desc,
+      /* Bmad::array_descriptor_t& */ _y2_desc,
+      /* Bmad::array_descriptor_t& */ _y12_desc,
       /* double& */ x1l,
       /* double& */ x1u,
       /* double& */ x2l,
@@ -1835,55 +2570,86 @@ SimUtils::SuperBicubicInterpolation SimUtils::super_bicubic_interpolation(
   return SuperBicubicInterpolation{_ansy, _ansy1, _ansy2};
 }
 SimUtils::SuperPolint SimUtils::super_polint(
-    RealAlloc1D& xa,
-    RealAlloc1D& ya,
+    FArray1D<Real>& xa,
+    FArray1D<Real>& ya,
     double x) {
-  // intent=in allocatable general array
-  // intent=in allocatable general array
+  // xa: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _xa_desc;
+  _xa_desc.rank = 1;
+  _xa_desc.data_ptr = xa.data();
+  _xa_desc.dims[0] = xa.size();
+  // ya: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _ya_desc;
+  _ya_desc.rank = 1;
+  _ya_desc.data_ptr = ya.data();
+  _ya_desc.dims[0] = ya.size();
   double _y{};
   double _dy{};
   fortran_super_polint(
-      /* void* */ xa.get_fortran_ptr(),
-      /* void* */ ya.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _xa_desc,
+      /* Bmad::array_descriptor_t& */ _ya_desc,
       /* double& */ x,
       /* double& */ _y,
       /* double& */ _dy);
   return SuperPolint{_y, _dy};
 }
-double SimUtils::super_poly(double x, RealAlloc1D& coeffs) {
-  // intent=in allocatable general array
+double SimUtils::super_poly(double x, FArray1D<Real>& coeffs) {
+  // coeffs: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _coeffs_desc;
+  _coeffs_desc.rank = 1;
+  _coeffs_desc.data_ptr = coeffs.data();
+  _coeffs_desc.dims[0] = coeffs.size();
   double _value{};
   fortran_super_poly(
       /* double& */ x,
-      /* void* */ coeffs.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _coeffs_desc,
       /* double& */ _value);
   return _value;
 }
-RealAlloc1D SimUtils::super_sobseq(optional_ref<RandomStateProxy> ran_state) {
-  // intent=out allocatable general array
-  auto x{RealAlloc1D()};
+void SimUtils::super_sobseq(
+    FArray1D<Real>& x,
+    optional_ref<RandomStateProxy> ran_state) {
+  // x: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _x_desc;
+  _x_desc.rank = 1;
+  _x_desc.data_ptr = x.data();
+  _x_desc.dims[0] = x.size();
   auto* _ran_state = ran_state.has_value() ? ran_state->get().get_fortran_ptr()
                                            : nullptr; // input, optional
-  fortran_super_sobseq(/* void* */ x.get_fortran_ptr(), /* void* */ _ran_state);
-  return std::move(x);
+  fortran_super_sobseq(
+      /* Bmad::array_descriptor_t& */ _x_desc, /* void* */ _ran_state);
 }
-void SimUtils::super_sort(IntAlloc1D& arr) {
-  // intent=inout allocatable general array
-  fortran_super_sort(/* void* */ arr.get_fortran_ptr());
+void SimUtils::super_sort(FArray1D<Int>& arr) {
+  // arr: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _arr_desc;
+  _arr_desc.rank = 1;
+  _arr_desc.data_ptr = arr.data();
+  _arr_desc.dims[0] = arr.size();
+  fortran_super_sort(/* Bmad::array_descriptor_t& */ _arr_desc);
 }
-void SimUtils::system_command(std::string& line, optional_ref<bool> err_flag) {
-  auto _line = line.c_str(); // ptr, inout, required
-  auto* _err_flag =
-      err_flag.has_value() ? &err_flag->get() : nullptr; // inout, optional
+void SimUtils::system_command(std::string line, std::optional<bool> err_flag) {
+  auto _line = line.c_str();
+  bool err_flag_lvalue;
+  auto* _err_flag{&err_flag_lvalue};
+  if (err_flag.has_value()) {
+    err_flag_lvalue = err_flag.value();
+  } else {
+    _err_flag = nullptr;
+  }
   fortran_system_command(/* const char* */ _line, /* bool* */ _err_flag);
 }
 void SimUtils::to_str(
-    double& num,
-    optional_ref<int> max_signif,
-    std::string& string) {
-  auto* _max_signif =
-      max_signif.has_value() ? &max_signif->get() : nullptr; // inout, optional
-  auto _string = string.c_str(); // ptr, inout, required
+    double num,
+    std::optional<int> max_signif,
+    std::string string) {
+  int max_signif_lvalue;
+  auto* _max_signif{&max_signif_lvalue};
+  if (max_signif.has_value()) {
+    max_signif_lvalue = max_signif.value();
+  } else {
+    _max_signif = nullptr;
+  }
+  auto _string = string.c_str();
   fortran_to_str(
       /* double& */ num, /* int* */ _max_signif, /* const char* */ _string);
 }
@@ -1907,12 +2673,12 @@ SimUtils::TricubicCmplxEval SimUtils::tricubic_cmplx_eval(
       /* std::complex<double>& */ _f_val);
   return TricubicCmplxEval{_df_dx, _df_dy, _df_dz, _f_val};
 }
-void SimUtils::type_this_file(std::string& filename) {
-  auto _filename = filename.c_str(); // ptr, inout, required
+void SimUtils::type_this_file(std::string filename) {
+  auto _filename = filename.c_str();
   fortran_type_this_file(/* const char* */ _filename);
 }
-void SimUtils::upcase_string(std::string& string) {
-  auto _string = string.c_str(); // ptr, inout, required
+void SimUtils::upcase_string(std::string string) {
+  auto _string = string.c_str();
   fortran_upcase_string(/* const char* */ _string);
 }
 int SimUtils::virtual_memory_usage() {
@@ -1922,44 +2688,68 @@ int SimUtils::virtual_memory_usage() {
 }
 SimUtils::WMatToAxisAngle SimUtils::w_mat_to_axis_angle(
     FixedArray2D<Real, 3, 3> w_mat) {
+  // w_mat: in NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
+  Bmad::array_descriptor_t _w_mat_desc;
+  _w_mat_desc.rank = 2;
   double _w_mat_vec[3 * 3];
+  _w_mat_desc.data_ptr = _w_mat_vec;
   matrix_to_vec(w_mat, _w_mat_vec);
+  // axis: out NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _axis_desc;
+  _axis_desc.rank = 1;
   FixedArray1D<Real, 3> _axis;
+  _axis_desc.data_ptr = _axis.data();
+  _axis_desc.dims[0] = _axis.size();
   double _angle{};
   fortran_w_mat_to_axis_angle(
-      /* double* */ _w_mat_vec,
-      /* double* */ _axis.data(),
+      /* Bmad::array_descriptor_t& */ _w_mat_desc,
+      /* Bmad::array_descriptor_t& */ _axis_desc,
       /* double& */ _angle);
   return WMatToAxisAngle{_axis, _angle};
 }
 FixedArray1D<Real, 4> SimUtils::w_mat_to_quat(FixedArray2D<Real, 3, 3> w_mat) {
+  // w_mat: in NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
+  Bmad::array_descriptor_t _w_mat_desc;
+  _w_mat_desc.rank = 2;
   double _w_mat_vec[3 * 3];
+  _w_mat_desc.data_ptr = _w_mat_vec;
   matrix_to_vec(w_mat, _w_mat_vec);
+  // quat: out NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  Bmad::array_descriptor_t _quat_desc;
+  _quat_desc.rank = 1;
   FixedArray1D<Real, 4> _quat;
-  fortran_w_mat_to_quat(/* double* */ _w_mat_vec, /* double* */ _quat.data());
+  _quat_desc.data_ptr = _quat.data();
+  _quat_desc.dims[0] = _quat.size();
+  fortran_w_mat_to_quat(
+      /* Bmad::array_descriptor_t& */ _w_mat_desc,
+      /* Bmad::array_descriptor_t& */ _quat_desc);
   return _quat;
 }
-void SimUtils::word_len(std::string& wording, int& wlen) {
-  auto _wording = wording.c_str(); // ptr, inout, required
+void SimUtils::word_len(std::string wording, int wlen) {
+  auto _wording = wording.c_str();
   fortran_word_len(/* const char* */ _wording, /* int& */ wlen);
 }
 void SimUtils::word_read(
-    std::string& in_str,
-    std::string& delim_list,
-    std::string& word,
-    int& ix_word,
-    std::string& delim,
-    bool& delim_found,
-    std::string& out_str,
-    optional_ref<bool> ignore_interior) {
-  auto _in_str = in_str.c_str(); // ptr, inout, required
-  auto _delim_list = delim_list.c_str(); // ptr, inout, required
-  auto _word = word.c_str(); // ptr, inout, required
-  auto _delim = delim.c_str(); // ptr, inout, required
-  auto _out_str = out_str.c_str(); // ptr, inout, required
-  auto* _ignore_interior = ignore_interior.has_value()
-      ? &ignore_interior->get()
-      : nullptr; // inout, optional
+    std::string in_str,
+    std::string delim_list,
+    std::string word,
+    int ix_word,
+    std::string delim,
+    bool delim_found,
+    std::string out_str,
+    std::optional<bool> ignore_interior) {
+  auto _in_str = in_str.c_str();
+  auto _delim_list = delim_list.c_str();
+  auto _word = word.c_str();
+  auto _delim = delim.c_str();
+  auto _out_str = out_str.c_str();
+  bool ignore_interior_lvalue;
+  auto* _ignore_interior{&ignore_interior_lvalue};
+  if (ignore_interior.has_value()) {
+    ignore_interior_lvalue = ignore_interior.value();
+  } else {
+    _ignore_interior = nullptr;
+  }
   fortran_word_read(
       /* const char* */ _in_str,
       /* const char* */ _delim_list,

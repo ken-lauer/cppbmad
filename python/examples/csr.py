@@ -36,7 +36,9 @@ space_charge_com.particle_bin_span = 8
 
 ele0 = lat.ele[0]
 lat_param = lat.param
-beam, err_flag, beam_init_set, _conserve_momentum = pybmad.init_beam_distribution(ele0, lat_param, beam_init)
+
+assert lat_param is not None
+beam, err_flag, beam_init_set = pybmad.init_beam_distribution(ele0, lat_param, beam_init)
 if err_flag:
     raise RuntimeError("init_beam_distribution failed (1)")
 
@@ -58,11 +60,11 @@ pybmad.init_coord(centroid[0], ave, ele0, pybmad.DOWNSTREAM_END)
 
 pybmad.track_all(lat, centroid)
 
-beam1, err_flag, beam_init_set, _conserve_momentum = pybmad.init_beam_distribution(ele0, lat_param, beam_init)
+beam1, err_flag, beam_init_set = pybmad.init_beam_distribution(ele0, lat_param, beam_init)
 if err_flag:
     raise RuntimeError("init_beam_distribution failed (2)")
 
-pybmad.track_beam(lat, beam1, ele1=None, ele2=None, centroid=centroid)
+pybmad.track_beam(lat, beam1, ele1=None, ele2=None, centroid=centroid.view())
 
 print("First particle coords at end of lattice:")
 print(list(beam1.bunch[0].particle[0].vec))

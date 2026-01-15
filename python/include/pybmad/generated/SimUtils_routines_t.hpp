@@ -10,12 +10,3 @@
 namespace py = pybind11;
 
 void init_SimUtils_routines_t(py::module& m);
-
-struct PyToStr {
-  double num;
-  std::optional<int> max_signif;
-  std::string string;
-};
-struct PyTypeThisFile {
-  std::string filename;
-};
