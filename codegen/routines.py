@@ -225,6 +225,10 @@ class RoutineArg(InterfaceArgument):
             arg_type=arg.type,
         )
 
+        if arg.intent == "out" and arg.member.type_info.pointer:
+            # if we get back a null ptr, we need to be able to give std::nullopt
+            arg.member.type_info = arg.member.type_info.replace(optional=True)
+
         return arg
 
     @property
@@ -460,7 +464,8 @@ class FortranRoutine:
         outputs = self.outputs
         if len(outputs) == 1:
             (output,) = outputs
-            return_type = output.transform.cpp_return_type
+            # return_type = output.transform.cpp_return_type
+            return_type, _ = output.cpp.struct_decl()
         elif len(outputs) == 0:
             return_type = "void"
         else:

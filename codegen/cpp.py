@@ -234,11 +234,14 @@ class CppWrapperTypeArgument(CppWrapperArgument):
         if self.arg.intent == "in":
             return self.arg.c_name
         if self.arg.intent == "out" and self.arg.member.type_info.pointer:
-            return f"{self.arg.c_class}({self.fortran_call_arg_name})"
+            # non-owned pointer, most likely
+            return f"({self.fortran_call_arg_name} ? std::make_optional<{self.arg.c_class}>({self.fortran_call_arg_name}) : std::nullopt)"
         return self.fortran_call_arg_name
 
     def struct_decl(self, ignore_intent: bool = False) -> tuple[str, str] | None:
         if self.arg.intent == "out" or ignore_intent:
+            if self.arg.member.type_info.pointer:
+                return f"std::optional<{self.arg.c_class}>", self.arg.c_name
             return self.arg.c_class, self.arg.c_name
         return None
 
