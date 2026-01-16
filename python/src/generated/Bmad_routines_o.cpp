@@ -376,14 +376,14 @@ make_matrix : bool, optional
       &Bmad::orbit_to_floor_phase_space,
       py::arg("orbit"),
       py::arg("ele"),
-      py::arg("floor_phase_space"),
       R"""(Parameters
 ----------
 orbit : CoordStruct
     Particle orbit in local (not element) coordinates.
 ele : EleStruct
     Lattice element particle is in.
-floor_phase_space : 
+floor_phase_space : float
+    Floor phase space
 )"""
   );
   m.def(
@@ -393,7 +393,6 @@ floor_phase_space :
       py::arg("ele"),
       py::arg("z_direction") = py::none(),
       py::arg("relative_to") = py::none(),
-      py::arg("local_position"),
       R"""(Parameters
 ----------
 orbit : CoordStruct
@@ -405,15 +404,32 @@ z_direction : int, optional
     * orbit.direction.
 relative_to : int, optional
     not_set$ (default), upstream_end$, downstream_end$. If not_set$ then origin is at the entrance end.
-local_position : 
+local_position : FloorPositionStruct
+    Position in local coordinates.
 )"""
   );
+  py::class_<Bmad::OrbitTooLarge, std::unique_ptr<Bmad::OrbitTooLarge>>(
+      m,
+      "OrbitTooLarge",
+      "orbit_too_large return type"
+  )
+      .def_readonly("param", &Bmad::OrbitTooLarge::param)
+      .def_readonly("is_too_large", &Bmad::OrbitTooLarge::is_too_large)
+      .def("__len__", [](const Bmad::OrbitTooLarge &) { return 2; })
+      .def("__getitem__", [](const Bmad::OrbitTooLarge &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.param);
+        if (i == 1)
+          return py::cast(s.is_too_large);
+        throw py::index_error();
+      });
   m.def(
       "orbit_too_large",
       &Bmad::orbit_too_large,
       py::arg("orbit"),
       py::arg("check_momentum") = py::none(),
-      py::arg("is_too_large"),
       R"""(Parameters
 ----------
 orbit : CoordStruct
@@ -422,7 +438,8 @@ param : LatParamStruct
     .unstable_factor  -- Set if orbit is too large. Otherwise not set
 check_momentum : bool, optional
     If True (default) check the momentum.
-is_too_large : 
+is_too_large : bool
+    True if orbit is too large. False otherwise.
 )"""
   );
   py::class_<Bmad::OrderEvecsByNSimilarity, std::unique_ptr<Bmad::OrderEvecsByNSimilarity>>(

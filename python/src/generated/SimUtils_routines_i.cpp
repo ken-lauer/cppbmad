@@ -66,6 +66,7 @@ indx :
       py::arg("dt"),
       py::arg("order"),
       py::arg("der"),
+      py::arg("id"),
       R"""(Function initFixedWindowLS
 
 Initializes an instance of the fixed window least squares module.
@@ -159,14 +160,14 @@ prob
       &SimUtils::is_decreasing_sequence,
       py::arg("array"),
       py::arg("strict") = py::none(),
-      py::arg("is_decreasing"),
       R"""(Parameters
 ----------
 array : float
     Sequence.
 strict : bool, optional
     If True (default) sequence must be strictly decreasing.
-is_decreasing : 
+is_decreasing : bool
+    Set True if sequence is decreasing.
 )"""
   );
   m.def(
@@ -206,14 +207,14 @@ boolian attributes. For example quadrupoles use ele%value(scale_multipoles$).
       &SimUtils::is_increasing_sequence,
       py::arg("array"),
       py::arg("strict") = py::none(),
-      py::arg("is_increasing"),
       R"""(Parameters
 ----------
 array : float
     Sequence.
 strict : bool, optional
     If True (default) sequence must be strictly increasing.
-is_increasing : 
+is_increasing : bool
+    Set True if sequence is increasing.
 )"""
   );
   m.def(

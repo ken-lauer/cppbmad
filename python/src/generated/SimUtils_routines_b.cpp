@@ -90,6 +90,7 @@ ix_bin : int
       py::arg("ix_bin"),
       py::arg("bin1_x_min"),
       py::arg("bin_delta"),
+      py::arg("x_center"),
       R"""(Function bin_x_center (ix_bin, bin1_x_min, bin_delta) result(x_center)
 
 Helper function to locate the center of a histogram bin.

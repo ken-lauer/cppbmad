@@ -138,17 +138,17 @@ ix_match :
   );
   m.def(
       "find_location",
-      py::overload_cast<FArray1D<Real> &, double, int>(&SimUtils::find_location),
+      py::overload_cast<FArray1D<Real> &, double>(&SimUtils::find_location),
       py::arg("arr"),
       py::arg("value"),
-      py::arg("ix_match"),
       R"""(Parameters
 ----------
 arr : 
     real(rp), logical, or integer
 value : unknown
     :).
-ix_match : 
+ix_match : int
+    Index of match. Zero if no match found.
 )"""
   );
   m.def(

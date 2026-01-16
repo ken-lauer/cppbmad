@@ -10,14 +10,14 @@ void init_Bmad_routines_s(py::module &m) {
       &Bmad::s_body_calc,
       py::arg("orbit"),
       py::arg("ele"),
-      py::arg("s_body"),
       R"""(Parameters
 ----------
 orbit : CoordStruct
     Particle coordinates.
 ele : EleStruct
     Lattice element
-s_body : 
+s_body : float
+    Body postion.
 )"""
   );
   m.def(
@@ -945,7 +945,6 @@ stat : int
       py::arg("branch"),
       py::arg("orb"),
       py::arg("print_err") = py::none(),
-      py::arg("ok"),
       R"""(Parameters
 ----------
 phi_a_set : float
@@ -966,7 +965,8 @@ orb : CoordStruct
     This parameter is an input/output and is modified in-place. As an output: New closed orbit.
 print_err : bool, optional
     Print error message if there is a problem? Default is True.
-ok : 
+ok : bool
+    Set True if everything is ok. False otherwise.
 )"""
   );
   m.def(
@@ -1099,7 +1099,6 @@ sigma_mat_bmad : float
       py::arg("value2"),
       py::arg("abs_tol") = py::none(),
       py::arg("rel_tol") = py::none(),
-      py::arg("is_different"),
       R"""(Parameters
 ----------
 value1 : float
@@ -1110,7 +1109,8 @@ abs_tol : float, optional
     Absolute tolerance. Default is 0.
 rel_tol : float, optional
     Relative tolerance. Default is 0.
-is_different : 
+is_different : bool
+    Set True if the difference is significant. False otherwise.
 )"""
   );
   m.def(
@@ -1306,12 +1306,28 @@ complex_taylor_sorted : ComplexTaylorStruct
     Sorted complex_taylor series.
 )"""
   );
+  py::class_<Bmad::SpinDnDpzFromMat8, std::unique_ptr<Bmad::SpinDnDpzFromMat8>>(
+      m,
+      "SpinDnDpzFromMat8",
+      "spin_dn_dpz_from_mat8 return type"
+  )
+      .def_readonly("error", &Bmad::SpinDnDpzFromMat8::error)
+      .def_readonly("dn_dpz", &Bmad::SpinDnDpzFromMat8::dn_dpz)
+      .def("__len__", [](const Bmad::SpinDnDpzFromMat8 &) { return 2; })
+      .def("__getitem__", [](const Bmad::SpinDnDpzFromMat8 &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.error);
+        if (i == 1)
+          return py::cast(s.dn_dpz);
+        throw py::index_error();
+      });
   m.def(
       "spin_dn_dpz_from_mat8",
       &Bmad::spin_dn_dpz_from_mat8,
       py::arg("mat_1turn"),
       py::arg("dn_dpz_partial") = py::none(),
-      py::arg("dn_dpz"),
       R"""(Parameters
 ----------
 mat_1turn : float
@@ -1321,9 +1337,27 @@ dn_dpz_partial : float, optional
     a-mode excitation, etc.
 error : bool
     Set True if there is an error. False otherwise.
-dn_dpz : 
+dn_dpz : float
+    dn_dpz (l,n,m) coordinates.
 )"""
   );
+  py::class_<Bmad::SpinDnDpzFromQmap, std::unique_ptr<Bmad::SpinDnDpzFromQmap>>(
+      m,
+      "SpinDnDpzFromQmap",
+      "spin_dn_dpz_from_qmap return type"
+  )
+      .def_readonly("error", &Bmad::SpinDnDpzFromQmap::error)
+      .def_readonly("dn_dpz", &Bmad::SpinDnDpzFromQmap::dn_dpz)
+      .def("__len__", [](const Bmad::SpinDnDpzFromQmap &) { return 2; })
+      .def("__getitem__", [](const Bmad::SpinDnDpzFromQmap &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.error);
+        if (i == 1)
+          return py::cast(s.dn_dpz);
+        throw py::index_error();
+      });
   m.def(
       "spin_dn_dpz_from_qmap",
       &Bmad::spin_dn_dpz_from_qmap,
@@ -1332,7 +1366,6 @@ dn_dpz :
       py::arg("dn_dpz_partial"),
       py::arg("dn_dpz_partial2"),
       py::arg("n0") = py::none(),
-      py::arg("dn_dpz"),
       R"""(Parameters
 ----------
 orb_mat : float
@@ -1349,7 +1382,8 @@ error : bool
     Set True if there is an error. False otherwise.
 n0 : float
     3,0).
-dn_dpz : 
+dn_dpz : float
+    dn_dpz.
 )"""
   );
   m.def(
@@ -1504,7 +1538,6 @@ xi_diff : float
       py::arg("normalize"),
       py::arg("dref_orb"),
       py::arg("is_on"),
-      py::arg("spin_map1"),
       R"""(Parameters
 ----------
 spin_taylor : TaylorStruct
@@ -1515,19 +1548,20 @@ dref_orb : float
     Change in Reference orbit: output_map1_ref - input_taylor_ref.
 is_on : bool
     Is map turned on? If not spin_map1 will be the unit map.
-spin_map1 : 
+spin_map1 : float
+    First order spin map.
 )"""
   );
   m.def(
       "spinor_to_polar",
       &Bmad::spinor_to_polar,
       py::arg("spinor"),
-      py::arg("polar"),
       R"""(Parameters
 ----------
 spinor : complex
     Spinor
-polar : 
+polar : SpinPolarStruct
+    The resultant Unitary Vector in polar coordinates
 )"""
   );
   m.def(
@@ -1539,7 +1573,8 @@ polar :
 ----------
 spinor : complex
     Spinor Output
-vec : 
+vec : float
+    spin vector in cartesian coordinates
 )"""
   );
   m.def(
@@ -1815,14 +1850,15 @@ error : bool
       &Bmad::stream_ele_end,
       py::arg("physical_end"),
       py::arg("ele_orientation"),
-      py::arg("stream_end"),
       R"""(Parameters
 ----------
 physical_end : int
     entrance_end$, exit_end$, surface$, etc.
 ele_orientation : int
     Either 1 = Normal or -1 = element reversed.
-stream_end : 
+stream_end : int
+    upstream_end$, downstream_end$, or set equal to physical_end if physical_end is neither entrance_end$ nor
+    exit_end$
 )"""
   );
   m.def(
@@ -1894,12 +1930,12 @@ dsigma_ds : float
       "strong_beam_strength",
       &Bmad::strong_beam_strength,
       py::arg("ele"),
-      py::arg("strength"),
       R"""(Parameters
 ----------
 ele : EleStruct
     Beambeam element.
-strength : 
+strength : float
+    Strong beam strength.
 )"""
   );
   m.def(

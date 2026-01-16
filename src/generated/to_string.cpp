@@ -2746,6 +2746,13 @@ std::string to_string(const Bmad::BeamTilts &self) {
        std::pair{"angle_ypz", to_string(self.angle_ypz)}}
   );
 }
+std::string to_string(const Bmad::BendShift &self) {
+  return repr(
+      &self,
+      "Bmad::BendShift",
+      {std::pair{"w_mat", to_string(self.w_mat)}, std::pair{"position2", to_string(self.position2)}}
+  );
+}
 std::string to_string(const SimUtils::BicubicCmplxEval &self) {
   return repr(
       &self,
@@ -2860,20 +2867,38 @@ std::string to_string(const Bmad::ConverterDistributionParser &self) {
        std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
+std::string to_string(const Bmad::CoordsCurvilinearToFloor &self) {
+  return repr(
+      &self,
+      "Bmad::CoordsCurvilinearToFloor",
+      {std::pair{"err_flag", to_string(self.err_flag)}, std::pair{"global", to_string(self.global)}}
+  );
+}
 std::string to_string(const Bmad::CoordsFloorToCurvilinear &self) {
   return repr(
       &self,
       "Bmad::CoordsFloorToCurvilinear",
       {std::pair{"ele1", to_string(self.ele1)},
        std::pair{"status", to_string(self.status)},
-       std::pair{"w_mat", to_string(self.w_mat)}}
+       std::pair{"w_mat", to_string(self.w_mat)},
+       std::pair{"local_coords", to_string(self.local_coords)}}
   );
 }
 std::string to_string(const Bmad::CoordsFloorToLocalCurvilinear &self) {
   return repr(
       &self,
       "Bmad::CoordsFloorToLocalCurvilinear",
-      {std::pair{"status", to_string(self.status)}, std::pair{"w_mat", to_string(self.w_mat)}}
+      {std::pair{"status", to_string(self.status)},
+       std::pair{"w_mat", to_string(self.w_mat)},
+       std::pair{"local_position", to_string(self.local_position)}}
+  );
+}
+std::string to_string(const Bmad::CoordsLocalCurvilinearToFloor &self) {
+  return repr(
+      &self,
+      "Bmad::CoordsLocalCurvilinearToFloor",
+      {std::pair{"w_mat", to_string(self.w_mat)},
+       std::pair{"global_position", to_string(self.global_position)}}
   );
 }
 std::string to_string(const Bmad::CreateElementSlice &self) {
@@ -2889,6 +2914,14 @@ std::string to_string(const Bmad::CreatePlanarWigglerModel &self) {
       &self,
       "Bmad::CreatePlanarWigglerModel",
       {std::pair{"lat", to_string(self.lat)}, std::pair{"err_flag", to_string(self.err_flag)}}
+  );
+}
+std::string to_string(const Bmad::DistanceToAperture &self) {
+  return repr(
+      &self,
+      "Bmad::DistanceToAperture",
+      {std::pair{"no_aperture_here", to_string(self.no_aperture_here)},
+       std::pair{"dist", to_string(self.dist)}}
   );
 }
 std::string to_string(const Bmad::EigenDecomp6mat &self) {
@@ -2998,9 +3031,7 @@ std::string to_string(const Bmad::ExpectThis &self) {
   return repr(
       &self,
       "Bmad::ExpectThis",
-      {std::pair{"delim", self.delim},
-       std::pair{"delim_found", to_string(self.delim_found)},
-       std::pair{"is_ok", to_string(self.is_ok)}}
+      {std::pair{"delim", self.delim}, std::pair{"delim_found", to_string(self.delim_found)}}
   );
 }
 std::string to_string(const Bmad::ExpressionStackValue &self) {
@@ -3138,6 +3169,13 @@ std::string to_string(const Bmad::KickVectorCalc &self) {
       &self,
       "Bmad::KickVectorCalc",
       {std::pair{"dr_ds", to_string(self.dr_ds)}, std::pair{"err", to_string(self.err)}}
+  );
+}
+std::string to_string(const Bmad::KnotInterpolate &self) {
+  return repr(
+      &self,
+      "Bmad::KnotInterpolate",
+      {std::pair{"err_flag", to_string(self.err_flag)}, std::pair{"y_pt", to_string(self.y_pt)}}
   );
 }
 std::string to_string(const Bmad::LinearCoef &self) {
@@ -3368,6 +3406,14 @@ std::string to_string(const Bmad::OrbitAmplitudeCalc &self) {
        std::pair{"amp_nb", to_string(self.amp_nb)}}
   );
 }
+std::string to_string(const Bmad::OrbitTooLarge &self) {
+  return repr(
+      &self,
+      "Bmad::OrbitTooLarge",
+      {std::pair{"param", to_string(self.param)},
+       std::pair{"is_too_large", to_string(self.is_too_large)}}
+  );
+}
 std::string to_string(const Bmad::OrderEvecsByNSimilarity &self) {
   return repr(
       &self,
@@ -3391,8 +3437,7 @@ std::string to_string(const Bmad::ParseRealList &self) {
       "Bmad::ParseRealList",
       {std::pair{"delim", self.delim},
        std::pair{"delim_found", to_string(self.delim_found)},
-       std::pair{"num_found", to_string(self.num_found)},
-       std::pair{"is_ok", to_string(self.is_ok)}}
+       std::pair{"num_found", to_string(self.num_found)}}
   );
 }
 std::string to_string(const Bmad::ParseRealList2 &self) {
@@ -3456,6 +3501,22 @@ std::string to_string(const Bmad::PointerToElementAtS &self) {
        std::pair{"ele", to_string(self.ele)}}
   );
 }
+std::string to_string(const Bmad::PointerToFieldEle &self) {
+  return repr(
+      &self,
+      "Bmad::PointerToFieldEle",
+      {std::pair{"dz_offset", to_string(self.dz_offset)},
+       std::pair{"field_ele", to_string(self.field_ele)}}
+  );
+}
+std::string to_string(const Bmad::PointerToGirder &self) {
+  return repr(
+      &self,
+      "Bmad::PointerToGirder",
+      {std::pair{"ix_slave_back", to_string(self.ix_slave_back)},
+       std::pair{"girder", to_string(self.girder)}}
+  );
+}
 std::string to_string(const Bmad::PointerToLord &self) {
   return repr(
       &self,
@@ -3463,7 +3524,8 @@ std::string to_string(const Bmad::PointerToLord &self) {
       {std::pair{"control", to_string(self.control)},
        std::pair{"ix_slave_back", to_string(self.ix_slave_back)},
        std::pair{"ix_control", to_string(self.ix_control)},
-       std::pair{"ix_ic", to_string(self.ix_ic)}}
+       std::pair{"ix_ic", to_string(self.ix_ic)},
+       std::pair{"lord_ptr", to_string(self.lord_ptr)}}
   );
 }
 std::string to_string(const Bmad::PointerToMultipassLord &self) {
@@ -3471,7 +3533,8 @@ std::string to_string(const Bmad::PointerToMultipassLord &self) {
       &self,
       "Bmad::PointerToMultipassLord",
       {std::pair{"ix_pass", to_string(self.ix_pass)},
-       std::pair{"super_lord", to_string(self.super_lord)}}
+       std::pair{"super_lord", to_string(self.super_lord)},
+       std::pair{"multi_lord", to_string(self.multi_lord)}}
   );
 }
 std::string to_string(const Bmad::PointerToSlave &self) {
@@ -3492,7 +3555,16 @@ std::string to_string(const Bmad::PointerToSuperLord &self) {
       {std::pair{"control", to_string(self.control)},
        std::pair{"ix_slave_back", to_string(self.ix_slave_back)},
        std::pair{"ix_control", to_string(self.ix_control)},
-       std::pair{"ix_ic", to_string(self.ix_ic)}}
+       std::pair{"ix_ic", to_string(self.ix_ic)},
+       std::pair{"lord_ptr", to_string(self.lord_ptr)}}
+  );
+}
+std::string to_string(const Bmad::PointerToWakeEle &self) {
+  return repr(
+      &self,
+      "Bmad::PointerToWakeEle",
+      {std::pair{"delta_s", to_string(self.delta_s)},
+       std::pair{"wake_ele", to_string(self.wake_ele)}}
   );
 }
 std::string to_string(const Bmad::PointerToWall3d &self) {
@@ -3579,6 +3651,13 @@ std::string to_string(const Bmad::RadiationIntegrals &self) {
        std::pair{"rad_int_by_ele", to_string(self.rad_int_by_ele)}}
   );
 }
+std::string to_string(const Bmad::RamperValue &self) {
+  return repr(
+      &self,
+      "Bmad::RamperValue",
+      {std::pair{"err_flag", to_string(self.err_flag)}, std::pair{"value", to_string(self.value)}}
+  );
+}
 std::string to_string(const SimUtils::RanGaussConverter &self) {
   return repr(
       &self,
@@ -3600,6 +3679,13 @@ std::string to_string(const Bmad::ReadBeamFile &self) {
       {std::pair{"beam", to_string(self.beam)}, std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
+std::string to_string(const SimUtils::RmsValue &self) {
+  return repr(
+      &self,
+      "SimUtils::RmsValue",
+      {std::pair{"ave_val", to_string(self.ave_val)}, std::pair{"rms_val", to_string(self.rms_val)}}
+  );
+}
 std::string to_string(const Bmad::SetEleAttribute &self) {
   return repr(
       &self,
@@ -3614,6 +3700,20 @@ std::string to_string(const Bmad::SetEleStatusStale &self) {
       {std::pair{"ele", to_string(self.ele)},
        std::pair{"status_group", to_string(self.status_group)},
        std::pair{"set_slaves", to_string(self.set_slaves)}}
+  );
+}
+std::string to_string(const Bmad::SpinDnDpzFromMat8 &self) {
+  return repr(
+      &self,
+      "Bmad::SpinDnDpzFromMat8",
+      {std::pair{"error", to_string(self.error)}, std::pair{"dn_dpz", to_string(self.dn_dpz)}}
+  );
+}
+std::string to_string(const Bmad::SpinDnDpzFromQmap &self) {
+  return repr(
+      &self,
+      "Bmad::SpinDnDpzFromQmap",
+      {std::pair{"error", to_string(self.error)}, std::pair{"dn_dpz", to_string(self.dn_dpz)}}
   );
 }
 std::string to_string(const Bmad::SpinMat8ResonanceStrengths &self) {
@@ -3799,12 +3899,34 @@ std::string to_string(const Tao::TaoInjectBeam &self) {
       {std::pair{"beam", to_string(self.beam)}, std::pair{"init_ok", to_string(self.init_ok)}}
   );
 }
+std::string to_string(const Tao::TaoIsValidName &self) {
+  return repr(
+      &self,
+      "Tao::TaoIsValidName",
+      {std::pair{"why_invalid", self.why_invalid}, std::pair{"is_valid", to_string(self.is_valid)}}
+  );
+}
 std::string to_string(const Tao::TaoLatticeCalc &self) {
   return repr(
       &self,
       "Tao::TaoLatticeCalc",
       {std::pair{"calc_ok", to_string(self.calc_ok)},
        std::pair{"print_err", to_string(self.print_err)}}
+  );
+}
+std::string to_string(const Tao::TaoMerit &self) {
+  return repr(
+      &self,
+      "Tao::TaoMerit",
+      {std::pair{"calc_ok", to_string(self.calc_ok)},
+       std::pair{"this_merit", to_string(self.this_merit)}}
+  );
+}
+std::string to_string(const Tao::TaoOpenScratchFile &self) {
+  return repr(
+      &self,
+      "Tao::TaoOpenScratchFile",
+      {std::pair{"err", to_string(self.err)}, std::pair{"iu", to_string(self.iu)}}
   );
 }
 std::string to_string(const Tao::TaoParamValueAtS &self) {
@@ -3814,7 +3936,8 @@ std::string to_string(const Tao::TaoParamValueAtS &self) {
       {std::pair{"err_flag", to_string(self.err_flag)},
        std::pair{"why_invalid", self.why_invalid},
        std::pair{"print_err", to_string(self.print_err)},
-       std::pair{"bad_datum", to_string(self.bad_datum)}}
+       std::pair{"bad_datum", to_string(self.bad_datum)},
+       std::pair{"value", to_string(self.value)}}
   );
 }
 std::string to_string(const Tao::TaoParseElementParamStr &self) {
@@ -3853,7 +3976,8 @@ std::string to_string(const Tao::TaoPointerToEleShape &self) {
       &self,
       "Tao::TaoPointerToEleShape",
       {std::pair{"dat_var_name", self.dat_var_name},
-       std::pair{"dat_var_value", to_string(self.dat_var_value)}}
+       std::pair{"dat_var_value", to_string(self.dat_var_value)},
+       std::pair{"e_shape", to_string(self.e_shape)}}
   );
 }
 std::string to_string(const Tao::TaoPointerToUniverses &self) {
@@ -3913,6 +4037,13 @@ std::string to_string(const Tao::TaoSetRealValue &self) {
       &self,
       "Tao::TaoSetRealValue",
       {std::pair{"var", to_string(self.var)}, std::pair{"error", to_string(self.error)}}
+  );
+}
+std::string to_string(const Tao::TaoSubinUniNumber &self) {
+  return repr(
+      &self,
+      "Tao::TaoSubinUniNumber",
+      {std::pair{"name_out", self.name_out}, std::pair{"ok", to_string(self.ok)}}
   );
 }
 std::string to_string(const Tao::TaoToPhaseAndCouplingReading &self) {
@@ -4176,6 +4307,13 @@ std::string to_string(const Bmad::TwissFromTracking &self) {
       "Bmad::TwissFromTracking",
       {std::pair{"symp_err", to_string(self.symp_err)},
        std::pair{"err_flag", to_string(self.err_flag)}}
+  );
+}
+std::string to_string(const Bmad::ValueOfAttribute &self) {
+  return repr(
+      &self,
+      "Bmad::ValueOfAttribute",
+      {std::pair{"err_flag", to_string(self.err_flag)}, std::pair{"value", to_string(self.value)}}
   );
 }
 std::string to_string(const SimUtils::WMatToAxisAngle &self) {

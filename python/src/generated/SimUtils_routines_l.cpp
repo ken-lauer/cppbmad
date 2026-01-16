@@ -58,6 +58,7 @@ str :
   m.def(
       "lunget",
       &SimUtils::lunget,
+      py::arg("func_retval__"),
       R"""(Parameters
 ----------
 lunget : 

@@ -142,7 +142,8 @@ modes : NormalModesStruct, optional
     Normal mode parameters. Ouput:
 err_flag : bool, optional
     Set true if there is an error. False otherwise.
-beam_init_set : 
+beam_init_set : BeamInitStruct
+    See above.
 )"""
   );
   py::class_<Bmad::BeamTilts, std::unique_ptr<Bmad::BeamTilts>>(
@@ -303,7 +304,8 @@ calc_potential : bool, optional
 ----------
 ele : EleStruct
     Element to be checked. Ouput:
-is_set : 
+is_set : bool
+    Note: will be set True for non-bend elements.
 )"""
   );
   m.def(
@@ -524,6 +526,23 @@ phi : float
     The photon vertical emission angle (in radians). Note: phi is an increasing monotonic function of r_in.
 )"""
   );
+  py::class_<Bmad::BendShift, std::unique_ptr<Bmad::BendShift>>(
+      m,
+      "BendShift",
+      "bend_shift return type"
+  )
+      .def_readonly("w_mat", &Bmad::BendShift::w_mat)
+      .def_readonly("position2", &Bmad::BendShift::position2)
+      .def("__len__", [](const Bmad::BendShift &) { return 2; })
+      .def("__getitem__", [](const Bmad::BendShift &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.w_mat);
+        if (i == 1)
+          return py::cast(s.position2);
+        throw py::index_error();
+      });
   m.def(
       "bend_shift",
       &Bmad::bend_shift,
@@ -531,7 +550,6 @@ phi : float
       py::arg("g"),
       py::arg("delta_s"),
       py::arg("ref_tilt") = py::none(),
-      py::arg("position2"),
       R"""(Parameters
 ----------
 position1 : FloorPositionStruct
@@ -544,7 +562,8 @@ w_mat : float
     W matrix used in the transformation
 ref_tilt : float, optional
     ref_tilt. Default: 0
-position2 : 
+position2 : FloorPositionStruct
+    particle coordinates relative to the final frame.
 )"""
   );
   m.def(
@@ -730,12 +749,12 @@ branch2 :
       "branch_name",
       &Bmad::branch_name,
       py::arg("branch"),
-      py::arg("name"),
       R"""(Parameters
 ----------
 branch : BranchStruct
     Lattice branch
-name : 
+name : unknown
+    Encoded name
 )"""
   );
   m.def(

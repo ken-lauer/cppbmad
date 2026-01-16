@@ -172,13 +172,13 @@ spline : SplineStruct
       &SimUtils::cross_product,
       py::arg("a"),
       py::arg("b"),
-      py::arg("c"),
       R"""(Parameters
 ----------
 a : float
     Input vectors.
 b : 
-c : 
+c : float
+    Cross product: a X b.
 )"""
   );
 }

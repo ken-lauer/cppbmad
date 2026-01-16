@@ -184,19 +184,16 @@ delim_found : bool
       .def_readonly("delim", &Bmad::ParseRealList::delim)
       .def_readonly("delim_found", &Bmad::ParseRealList::delim_found)
       .def_readonly("num_found", &Bmad::ParseRealList::num_found)
-      .def_readonly("is_ok", &Bmad::ParseRealList::is_ok)
-      .def("__len__", [](const Bmad::ParseRealList &) { return 4; })
+      .def("__len__", [](const Bmad::ParseRealList &) { return 3; })
       .def("__getitem__", [](const Bmad::ParseRealList &s, int i) -> py::object {
         if (i < 0)
-          i += 4;
+          i += 3;
         if (i == 0)
           return py::cast(s.delim);
         if (i == 1)
           return py::cast(s.delim_found);
         if (i == 2)
           return py::cast(s.num_found);
-        if (i == 3)
-          return py::cast(s.is_ok);
         throw py::index_error();
       });
   m.def(
@@ -210,6 +207,7 @@ delim_found : bool
       py::arg("separator") = py::none(),
       py::arg("close_delim") = py::none(),
       py::arg("default_value") = py::none(),
+      py::arg("is_ok"),
       R"""(Function parse_real_list (lat, err_str, real_array, exact_size, delim, delim_found, open_delim,
                                separator, close_delim, default_value, num_found) result (is_ok)
 
@@ -702,12 +700,12 @@ particle
       "particle_is_moving_backwards",
       &Bmad::particle_is_moving_backwards,
       py::arg("orbit"),
-      py::arg("is_moving_backwards"),
       R"""(Parameters
 ----------
 orbit : CoordStruct
     Particle coordinates
-is_moving_backwards : 
+is_moving_backwards : bool
+    True if moving backward. False otherwise.
 )"""
   );
   m.def(
@@ -715,14 +713,14 @@ is_moving_backwards :
       &Bmad::particle_is_moving_forward,
       py::arg("orbit"),
       py::arg("dir") = py::none(),
-      py::arg("is_moving_forward"),
       R"""(Parameters
 ----------
 orbit : CoordStruct
     Particle coordinates
 dir : int, optional
     +1 if tracking forward(default) or -1 to return True if tracking backwards.
-is_moving_forward : 
+is_moving_forward : bool
+    True if moving forward. False otherwise.
 )"""
   );
   m.def(
@@ -757,7 +755,8 @@ rf_freq : float, optional
 abs_time : float, optional
     If False (default) use setting of bmad_com.absolute_time_tracking. If True, use absolute time instead of
     relative time. Ouput:
-time : 
+time : float
+    Current time.
 )"""
   );
   m.def(
@@ -765,14 +764,14 @@ time :
       &Bmad::patch_flips_propagation_direction,
       py::arg("x_pitch"),
       py::arg("y_pitch"),
-      py::arg("is_flip"),
       R"""(Parameters
 ----------
 x_pitch : float
     Rotaion around y-axis
 y_pitch : float
     Rotation around x-axis.
-is_flip : 
+is_flip : bool
+    True if patch does a flip
 )"""
   );
   m.def(
@@ -780,14 +779,14 @@ is_flip :
       &Bmad::patch_length,
       py::arg("patch"),
       py::arg("ref_coords") = py::none(),
-      py::arg("length"),
       R"""(Parameters
 ----------
 patch : EleStruct
     Patch element.
 ref_coords : int, optional
     Reference coords to use. entrance_end$, exit_end$ Default is nint(patch.value(ref_coords$)).
-length : 
+length : float
+    Length of patch.
 )"""
   );
   py::class_<
@@ -1052,7 +1051,6 @@ e_type : int
       py::arg("orbit"),
       py::arg("ele_orientation"),
       py::arg("return_stream_end") = py::none(),
-      py::arg("physical_end"),
       R"""(Parameters
 ----------
 track_end : int
@@ -1063,7 +1061,9 @@ ele_orientation : int
     Either 1 = Normal or -1 = element reversed.
 return_stream_end : bool, optional
     If True return the stream end instead of the physical end. Default is False.
-physical_end : 
+physical_end : int
+    Return_stream_end ->  Possibilities False             ->  entrance_end$, exit_end$, surface$, or
+    in_between$ True              ->  upstream_end$, downstream_end$
 )"""
   );
   m.def(
@@ -1497,20 +1497,36 @@ negative length which of the possible elements is actually chosen is ill-defined
       "pointer_to_fibre",
       &Bmad::pointer_to_fibre,
       py::arg("ele"),
-      py::arg("assoc_fibre"),
       R"""(Parameters
 ----------
 ele : EleStruct
     Bmad element
-assoc_fibre : 
+assoc_fibre : unknown
+    Pointer to the associated fibre.
 )"""
   );
+  py::class_<Bmad::PointerToFieldEle, std::unique_ptr<Bmad::PointerToFieldEle>>(
+      m,
+      "PointerToFieldEle",
+      "pointer_to_field_ele return type"
+  )
+      .def_readonly("dz_offset", &Bmad::PointerToFieldEle::dz_offset)
+      .def_readonly("field_ele", &Bmad::PointerToFieldEle::field_ele)
+      .def("__len__", [](const Bmad::PointerToFieldEle &) { return 2; })
+      .def("__getitem__", [](const Bmad::PointerToFieldEle &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.dz_offset);
+        if (i == 1)
+          return py::cast(s.field_ele);
+        throw py::index_error();
+      });
   m.def(
       "pointer_to_field_ele",
       &Bmad::pointer_to_field_ele,
       py::arg("ele"),
       py::arg("ix_field_ele"),
-      py::arg("field_ele"),
       R"""(Parameters
 ----------
 ele : EleStruct
@@ -1519,14 +1535,31 @@ ix_field_ele : int
     Index of the field element to point to. This index runs from 1 to num_field_eles(ele).
 dz_offset : float
     Longitudinal offset of ele upstream edge from the field ele pointed to.
-field_ele : 
+field_ele : EleStruct
+    Pointer to the field element with index ix_field_ele. Will point to null if ix_field_ele is out of range.
 )"""
   );
+  py::class_<Bmad::PointerToGirder, std::unique_ptr<Bmad::PointerToGirder>>(
+      m,
+      "PointerToGirder",
+      "pointer_to_girder return type"
+  )
+      .def_readonly("ix_slave_back", &Bmad::PointerToGirder::ix_slave_back)
+      .def_readonly("girder", &Bmad::PointerToGirder::girder)
+      .def("__len__", [](const Bmad::PointerToGirder &) { return 2; })
+      .def("__getitem__", [](const Bmad::PointerToGirder &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.ix_slave_back);
+        if (i == 1)
+          return py::cast(s.girder);
+        throw py::index_error();
+      });
   m.def(
       "pointer_to_girder",
       &Bmad::pointer_to_girder,
       py::arg("ele"),
-      py::arg("girder"),
       R"""(Parameters
 ----------
 ele : EleStruct
@@ -1534,7 +1567,8 @@ ele : EleStruct
 ix_slave_back : int
     Index back to ele. That is, pointer_to_slave(girder, ix_slave_back) will point back to ele. Set to -1 if
     no girder present
-girder : 
+girder : EleStruct
+    : Pointer to the girder. Null if ele is not girder supported.
 )"""
   );
   py::class_<Bmad::PointerToLord, std::unique_ptr<Bmad::PointerToLord>>(
@@ -1546,10 +1580,11 @@ girder :
       .def_readonly("ix_slave_back", &Bmad::PointerToLord::ix_slave_back)
       .def_readonly("ix_control", &Bmad::PointerToLord::ix_control)
       .def_readonly("ix_ic", &Bmad::PointerToLord::ix_ic)
-      .def("__len__", [](const Bmad::PointerToLord &) { return 4; })
+      .def_readonly("lord_ptr", &Bmad::PointerToLord::lord_ptr)
+      .def("__len__", [](const Bmad::PointerToLord &) { return 5; })
       .def("__getitem__", [](const Bmad::PointerToLord &s, int i) -> py::object {
         if (i < 0)
-          i += 4;
+          i += 5;
         if (i == 0)
           return py::cast(s.control);
         if (i == 1)
@@ -1558,6 +1593,8 @@ girder :
           return py::cast(s.ix_control);
         if (i == 3)
           return py::cast(s.ix_ic);
+        if (i == 4)
+          return py::cast(s.lord_ptr);
         throw py::index_error();
       });
   m.def(
@@ -1566,7 +1603,6 @@ girder :
       py::arg("slave"),
       py::arg("ix_lord"),
       py::arg("lord_type") = py::none(),
-      py::arg("lord_ptr"),
       R"""(Parameters
 ----------
 slave : EleStruct
@@ -1585,7 +1621,8 @@ ix_control : int
     for the lord.control.ramper(:) array.
 ix_ic : int
     Index of the lat.ic(:) element associated with the control argument.
-lord_ptr : 
+lord_ptr : EleStruct
+    Pointer to the lord. Nullified if there is an error.
 )"""
   );
   py::class_<Bmad::PointerToMultipassLord, std::unique_ptr<Bmad::PointerToMultipassLord>>(
@@ -1595,21 +1632,23 @@ lord_ptr :
   )
       .def_readonly("ix_pass", &Bmad::PointerToMultipassLord::ix_pass)
       .def_readonly("super_lord", &Bmad::PointerToMultipassLord::super_lord)
-      .def("__len__", [](const Bmad::PointerToMultipassLord &) { return 2; })
+      .def_readonly("multi_lord", &Bmad::PointerToMultipassLord::multi_lord)
+      .def("__len__", [](const Bmad::PointerToMultipassLord &) { return 3; })
       .def("__getitem__", [](const Bmad::PointerToMultipassLord &s, int i) -> py::object {
         if (i < 0)
-          i += 2;
+          i += 3;
         if (i == 0)
           return py::cast(s.ix_pass);
         if (i == 1)
           return py::cast(s.super_lord);
+        if (i == 2)
+          return py::cast(s.multi_lord);
         throw py::index_error();
       });
   m.def(
       "pointer_to_multipass_lord",
       &Bmad::pointer_to_multipass_lord,
       py::arg("ele"),
-      py::arg("multi_lord"),
       R"""(Parameters
 ----------
 ele : EleStruct
@@ -1620,7 +1659,8 @@ ix_pass : int
 super_lord : EleStruct
     super_lord of the element. Set to NULL if ele is not a super_slave or super_lord. Note: if ele is a
     multipass_lord there are multiple possible super_lord slaves.
-multi_lord : 
+multi_lord : EleStruct
+    multipass_lord if there is one. Set to NULL if there is no multipass_lord.
 )"""
   );
   m.def(
@@ -1641,7 +1681,8 @@ skip_beginning : bool, optional
     If True then skip beginning element #0 when wrapping around. Default is False.
 follow_fork : bool, optional
     If True then fork at any fork element. Default is False.
-next_ele : 
+next_ele : EleStruct
+    Element after this_ele (if offset = 1). Nullified if there is an error. EG bad this_ele.
 )"""
   );
   py::class_<Bmad::PointerToSlave, std::unique_ptr<Bmad::PointerToSlave>>(
@@ -1726,10 +1767,11 @@ pointer_to_lord pointer_to_super_lord pointer_to_ele num_lords
       .def_readonly("ix_slave_back", &Bmad::PointerToSuperLord::ix_slave_back)
       .def_readonly("ix_control", &Bmad::PointerToSuperLord::ix_control)
       .def_readonly("ix_ic", &Bmad::PointerToSuperLord::ix_ic)
-      .def("__len__", [](const Bmad::PointerToSuperLord &) { return 4; })
+      .def_readonly("lord_ptr", &Bmad::PointerToSuperLord::lord_ptr)
+      .def("__len__", [](const Bmad::PointerToSuperLord &) { return 5; })
       .def("__getitem__", [](const Bmad::PointerToSuperLord &s, int i) -> py::object {
         if (i < 0)
-          i += 4;
+          i += 5;
         if (i == 0)
           return py::cast(s.control);
         if (i == 1)
@@ -1738,6 +1780,8 @@ pointer_to_lord pointer_to_super_lord pointer_to_ele num_lords
           return py::cast(s.ix_control);
         if (i == 3)
           return py::cast(s.ix_ic);
+        if (i == 4)
+          return py::cast(s.lord_ptr);
         throw py::index_error();
       });
   m.def(
@@ -1745,7 +1789,6 @@ pointer_to_lord pointer_to_super_lord pointer_to_ele num_lords
       &Bmad::pointer_to_super_lord,
       py::arg("slave"),
       py::arg("lord_type") = py::none(),
-      py::arg("lord_ptr"),
       R"""(Parameters
 ----------
 slave : EleStruct
@@ -1762,7 +1805,8 @@ ix_ic : int
     Index of the lat.ic(:) element associated with the control argument.
 lord_type : int, optional
     If present, only return a super_lord of this type.
-lord_ptr : 
+lord_ptr : EleStruct
+    Pointer to the lord.
 )"""
   );
   m.def(
@@ -1839,18 +1883,35 @@ pt : GridPointStruct
     to be on the nearest grid boundary point.
 )"""
   );
+  py::class_<Bmad::PointerToWakeEle, std::unique_ptr<Bmad::PointerToWakeEle>>(
+      m,
+      "PointerToWakeEle",
+      "pointer_to_wake_ele return type"
+  )
+      .def_readonly("delta_s", &Bmad::PointerToWakeEle::delta_s)
+      .def_readonly("wake_ele", &Bmad::PointerToWakeEle::wake_ele)
+      .def("__len__", [](const Bmad::PointerToWakeEle &) { return 2; })
+      .def("__getitem__", [](const Bmad::PointerToWakeEle &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.delta_s);
+        if (i == 1)
+          return py::cast(s.wake_ele);
+        throw py::index_error();
+      });
   m.def(
       "pointer_to_wake_ele",
       &Bmad::pointer_to_wake_ele,
       py::arg("ele"),
-      py::arg("wake_ele"),
       R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element.
 delta_s : float
     distance of wake locaiton from beginning of ele.
-wake_ele : 
+wake_ele : EleStruct
+    Element having the associated wake. wake_ele will be nullified if there is no associated wake.
 )"""
   );
   py::class_<Bmad::PointerToWall3d, std::unique_ptr<Bmad::PointerToWall3d>>(
@@ -1906,24 +1967,24 @@ is_branch_wall : bool
       "polar_to_spinor",
       &Bmad::polar_to_spinor,
       py::arg("polar"),
-      py::arg("spinor"),
       R"""(Parameters
 ----------
 polar : SpinPolarStruct
     includes polar phase
-spinor : 
+spinor : complex
+    Spinor
 )"""
   );
   m.def(
       "polar_to_vec",
       &Bmad::polar_to_vec,
       py::arg("polar"),
-      py::arg("vec"),
       R"""(Parameters
 ----------
 polar : 
     Spin_polar_struct
 vec : 
+    Real(3)
 )"""
   );
   py::class_<Bmad::ProjectEmitToXyz, std::unique_ptr<Bmad::ProjectEmitToXyz>>(

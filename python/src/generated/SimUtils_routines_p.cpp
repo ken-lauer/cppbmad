@@ -52,7 +52,6 @@ ran_state_ptr : RandomStateStruct
       py::arg("poly"),
       py::arg("x"),
       py::arg("diff_coef") = py::none(),
-      py::arg("y"),
       R"""(Parameters
 ----------
 poly : float
@@ -61,7 +60,8 @@ x : float
     Point to evaluate at.
 diff_coef : bool, optional
     poly(:) array are differentials? Default is False.
-y : 
+y : float
+    Value of polynomial.
 )"""
   );
   m.def(

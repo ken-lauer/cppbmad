@@ -9,12 +9,12 @@ void init_SimUtils_routines_q(py::module &m) {
       "quadratic_roots",
       &SimUtils::quadratic_roots,
       py::arg("coefs"),
-      py::arg("root"),
       R"""(Parameters
 ----------
 coefs : float
     Coefficients of the quadratic equation with 0 = coefs(1) + coefs(2) * x + coefs(3) * x^2
-root : 
+root : complex
+    Complex roots.
 )"""
   );
   m.def(

@@ -108,17 +108,16 @@ extern "C" bool fortran_set_tune_3d(
     bool *z_tune_set /* 0D_NOT_logical in */,
     const char **group_knobs /* 1D_NOT_character in */,
     bool *print_err /* 0D_NOT_logical in */,
-    bool &everything_ok /* 0D_NOT_logical in */
+    bool &everything_ok /* 0D_NOT_logical out */
 );
-void set_tune_3d(
+bool set_tune_3d(
     BranchStruct &branch,
     FixedArray1D<Real, 3> target_tunes,
-    std::optional<std::string> mask,
-    std::optional<bool> use_phase_trombone,
-    std::optional<bool> z_tune_set,
-    std::optional<FixedArray1D<string, 2>> group_knobs,
-    std::optional<bool> print_err,
-    bool everything_ok
+    std::optional<std::string> mask = std::nullopt,
+    std::optional<bool> use_phase_trombone = std::nullopt,
+    std::optional<bool> z_tune_set = std::nullopt,
+    std::optional<FixedArray1D<string, 2>> group_knobs = std::nullopt,
+    std::optional<bool> print_err = std::nullopt
 );
 
 // Skipped unusable routine track_s_to_s:

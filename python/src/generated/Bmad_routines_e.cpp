@@ -11,7 +11,6 @@ void init_Bmad_routines_e(py::module &m) {
       py::arg("ele"),
       py::arg("voltage_or_gradient"),
       py::arg("bmad_standard_tracking") = py::none(),
-      py::arg("field"),
       R"""(Parameters
 ----------
 ele : EleStruct
@@ -20,7 +19,8 @@ voltage_or_gradient : int
     voltage$ or gradient$
 bmad_standard_tracking : bool, optional
     Using bmad_standard tracking? Default is False.
-field : 
+field : float
+    Cavity field or gradient.
 )"""
   );
   m.def(
@@ -173,14 +173,14 @@ ele : EleStruct
       &Bmad::ele_full_name,
       py::arg("ele"),
       py::arg("template_") = py::none(),
-      py::arg("str"),
       R"""(Parameters
 ----------
 ele : EleStruct
     Element in a lattice
 template : unknown, optional
     Encoding template. Default is "@N (&#)".
-str : 
+str : unknown
+    : Name/location string.
 )"""
   );
   m.def(
@@ -213,7 +213,6 @@ ignore_patch_err : bool, optional
       &Bmad::ele_geometry_with_misalignments,
       py::arg("ele"),
       py::arg("len_scale") = py::none(),
-      py::arg("floor"),
       R"""(Parameters
 ----------
 ele : EleStruct
@@ -221,19 +220,20 @@ ele : EleStruct
 len_scale : float, optional
     factor to scale the length of the element. 1.0_rp => Output is geometry at end of element (default).
     0.5_rp => Output is geometry at center of element. -1.0_rp => Used to propagate geometry in reverse.
-floor : 
+floor : FloorPositionStruct
+    Floor position with misalignments
 )"""
   );
   m.def(
       "ele_has_constant_ds_dt_ref",
       &Bmad::ele_has_constant_ds_dt_ref,
       py::arg("ele"),
-      py::arg("is_const"),
       R"""(Parameters
 ----------
 ele : EleStruct
     Element.
-is_const : 
+is_const : bool
+    True if reference velocity must be a constant.
 )"""
   );
   m.def(
@@ -251,11 +251,11 @@ has_kick :
       "ele_has_nonzero_offset",
       &Bmad::ele_has_nonzero_offset,
       py::arg("ele"),
-      py::arg("has_offset"),
       R"""(Parameters
 ----------
 ele : 
-has_offset : 
+has_offset : bool
+    Set true is element has a non-zero offset.
 )"""
   );
   m.def(
@@ -285,12 +285,12 @@ is_monitor : bool
       "ele_loc",
       &Bmad::ele_loc,
       py::arg("ele"),
-      py::arg("loc"),
       R"""(Parameters
 ----------
 ele : EleStruct
     Element to be identified
-loc : 
+loc : LatEleLocStruct
+    Element identifier.
 )"""
   );
   m.def(
@@ -299,7 +299,6 @@ loc :
       py::arg("ele"),
       py::arg("show_branch0") = py::none(),
       py::arg("parens") = py::none(),
-      py::arg("str"),
       R"""(Parameters
 ----------
 ele : EleStruct
@@ -309,7 +308,8 @@ show_branch0 : bool, optional
 parens : unknown, optional
     If present, enclose location string using the two characters supplied. Typically parens will be set to
     "()" or "[]".
-str : 
+str : unknown
+    Output string. Left justified.
 )"""
   );
   py::class_<Bmad::EleMisalignmentLSCalc, std::unique_ptr<Bmad::EleMisalignmentLSCalc>>(
@@ -347,12 +347,13 @@ S_mis : float
       "ele_nametable_index",
       &Bmad::ele_nametable_index,
       py::arg("ele"),
-      py::arg("ix_nt"),
       R"""(Parameters
 ----------
 ele : EleStruct
     Element in a lattice.
-ix_nt : 
+ix_nt : int
+    Nametable index. lat.nametable.name(ix_nt) and lat.nametable.index(ix_nt) correspond with ele. Set to -1
+    if ele is not a lattice element. For example, a slice_slave is not a lattice element.
 )"""
   );
   m.def(
@@ -399,7 +400,6 @@ make_matrix : bool, optional
       py::arg("E_ref"),
       py::arg("s_rel"),
       py::arg("ele"),
-      py::arg("ix_step"),
       R"""(Parameters
 ----------
 E_ref : float
@@ -408,7 +408,8 @@ s_rel : float
     S-position relative to the beginning of the element
 ele : float
     RF cavity.
-ix_step : 
+ix_step : int
+    Corresponding index in the ele.rf.steps(:) array.
 )"""
   );
   py::class_<Bmad::EleToFibre, std::unique_ptr<Bmad::EleToFibre>>(
@@ -553,7 +554,6 @@ spin_taylor : TaylorStruct
       &Bmad::ele_unique_name,
       py::arg("ele"),
       py::arg("order"),
-      py::arg("unique_name"),
       R"""(Parameters
 ----------
 ele : EleStruct
@@ -561,7 +561,9 @@ ele : EleStruct
 order : LatEleOrderStruct
     Information on element ordering. Before calling this routine, use the routine ele_order_calc to compute
     this argument.
-unique_name : 
+unique_name : unknown
+    Unique name that can can be used to identify ele. The simplist name will be constructed. For example, if
+    the element name is unique, unique_name will be set to the element name.
 )"""
   );
   m.def(
@@ -571,7 +573,6 @@ unique_name :
       py::arg("list"),
       py::arg("abs_tol"),
       py::arg("set_old"),
-      py::arg("has_changed"),
       R"""(Parameters
 ----------
 ele : EleStruct
@@ -585,7 +586,8 @@ abs_tol : float
     changed significantly.
 set_old : bool
     If True then set ele.old_value(j) = ele.value(j) for j in list
-has_changed : 
+has_changed : bool
+    Set True if a value has changed significantly.
 )"""
   );
   m.def(
@@ -1126,14 +1128,14 @@ rad_int_by_ele : RadIntAllEleStruct
       &Bmad::entering_element,
       py::arg("orbit"),
       py::arg("particle_at"),
-      py::arg("is_entering"),
       R"""(Parameters
 ----------
 orbit : CoordStruct
     Particle orbit.
 particle_at : int
     First_track_edge$ or second_track_edge$
-is_entering : 
+is_entering : bool
+    Set True if particle is going from outside to inside and vice versa.
 )"""
   );
   m.def(
@@ -2459,14 +2461,14 @@ is_here :
       &Bmad::equivalent_taylor_attributes,
       py::arg("ele_taylor"),
       py::arg("ele2"),
-      py::arg("equiv"),
       R"""(Parameters
 ----------
 ele_taylor : EleStruct
     Element with a Taylor map
 ele2 : EleStruct
     Element that might receive the Taylor map from ele_taylor.
-equiv : 
+equiv : bool
+    True if elements are equivalent.
 )"""
   );
   m.def(
@@ -2620,6 +2622,7 @@ make_matrix : float, optional
       py::arg("t"),
       py::arg("B1"),
       py::arg("B2"),
+      py::arg("func_retval__"),
       R"""(Function exp_bessi0(t, B1, B2)
 
 This is essentially the Numercal Recipes bessi0 function multiplied by exp(-B1*t).
@@ -2688,17 +2691,14 @@ expect_this
   )
       .def_readonly("delim", &Bmad::ExpectThis::delim)
       .def_readonly("delim_found", &Bmad::ExpectThis::delim_found)
-      .def_readonly("is_ok", &Bmad::ExpectThis::is_ok)
-      .def("__len__", [](const Bmad::ExpectThis &) { return 3; })
+      .def("__len__", [](const Bmad::ExpectThis &) { return 2; })
       .def("__getitem__", [](const Bmad::ExpectThis &s, int i) -> py::object {
         if (i < 0)
-          i += 3;
+          i += 2;
         if (i == 0)
           return py::cast(s.delim);
         if (i == 1)
           return py::cast(s.delim_found);
-        if (i == 2)
-          return py::cast(s.is_ok);
         throw py::index_error();
       });
   m.def(
@@ -2709,6 +2709,7 @@ expect_this
       py::arg("call_check"),
       py::arg("err_str"),
       py::arg("ele"),
+      py::arg("is_ok"),
       R"""(Function expect_this (expecting, check_delim, call_check, err_str, ele, delim, delim_found) result (is_ok)
 
 Checks that the next character or characters in the parse stream corresponds to the

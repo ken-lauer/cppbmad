@@ -378,7 +378,6 @@ full_lat_file : unknown
       py::arg("ele"),
       py::arg("orbit"),
       py::arg("particle_at"),
-      py::arg("is_here"),
       R"""(Parameters
 ----------
 ele : EleStruct
@@ -387,7 +386,8 @@ orbit : CoordStruct
     Particle position.
 particle_at : int
     Either first_track_edge$ or second_track_edge$.
-is_here : 
+is_here : bool
+    True if there is a fringe. False if not.
 )"""
   );
 }

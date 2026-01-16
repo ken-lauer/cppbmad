@@ -143,12 +143,12 @@ photon_orb : CoordStruct
       "absolute_time_tracking",
       &Bmad::absolute_time_tracking,
       py::arg("ele"),
-      py::arg("is_abs_time"),
       R"""(Parameters
 ----------
 ele : EleStruct
     Element being tracked through.
-is_abs_time : 
+is_abs_time : bool
+    True if absolute time tracking is needed.
 )"""
   );
   m.def(
@@ -157,7 +157,6 @@ is_abs_time :
       py::arg("ele"),
       py::arg("orbit"),
       py::arg("true_time") = py::none(),
-      py::arg("ac_amp"),
       R"""(Parameters
 ----------
 ele : EleStruct
@@ -167,7 +166,8 @@ orbit : CoordStruct
 true_time : float, optional
     The actual time. Normally this time is calculated using orbit.t or orbit.vec(5) but sometimes it is
     convenient to be able to override this. For example, time_runge_kutta uses this.
-ac_amp : 
+ac_amp : float
+    Amplitude. Will be set to 1 if the element is not an ac_kicker.
 )"""
   );
   py::class_<Bmad::ActionToXyz, std::unique_ptr<Bmad::ActionToXyz>>(
@@ -409,14 +409,14 @@ do_ramper_slave_setup : bool, optional
       &Bmad::angle_between_polars,
       py::arg("polar1"),
       py::arg("polar2"),
-      py::arg("angle"),
       R"""(Parameters
 ----------
 polar1 : 
     (spin_polar_struct)
 polar2 : 
     (spin_polar_struct)
-angle : 
+angle : float
+    Angle between the polar vectors
 )"""
   );
   m.def(
@@ -546,7 +546,6 @@ field_value :
       &Bmad::at_this_ele_end,
       py::arg("now_at"),
       py::arg("where_at"),
-      py::arg("is_at_this_end"),
       R"""(Parameters
 ----------
 now_at : int
@@ -554,7 +553,8 @@ now_at : int
 where_at : int
     Which ends have the aperture or fringe field: entrance_end$, exit_end$, continuous$, both_ends$,
     no_aperture$, surface$, wall_transition$.
-is_at_this_end : 
+is_at_this_end : bool
+    True if at this end. False otherwise.
 )"""
   );
   m.def(
@@ -1147,7 +1147,6 @@ call_bookkeeper : bool, optional
       py::arg("frac1"),
       py::arg("twiss1"),
       py::arg("twiss2"),
-      py::arg("ave_twiss"),
       R"""(Parameters
 ----------
 frac1 : float
@@ -1155,7 +1154,8 @@ frac1 : float
 twiss1 : TwissStruct
     Twiss parameters to average.
 twiss2 : 
-ave_twiss : 
+ave_twiss : TwissStruct
+    Average twiss.
 )"""
   );
 }

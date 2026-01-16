@@ -15,7 +15,6 @@ void init_bsim_routines_s(py::module &m) {
       py::arg("z_tune_set") = py::none(),
       py::arg("group_knobs") = py::none(),
       py::arg("print_err") = py::none(),
-      py::arg("everything_ok"),
       R"""(Parameters
 ----------
 branch : BranchStruct
@@ -33,7 +32,8 @@ group_knobs : unknown, optional
     If set non-blank, use these group elements for tuning.
 print_err : bool, optional
     Print error message if there is a problem? Default is True.
-everything_ok : 
+everything_ok : bool
+    Returns true or false if set was successful.
 )"""
   );
 }

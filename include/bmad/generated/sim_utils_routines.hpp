@@ -170,9 +170,9 @@ extern "C" bool fortran_bin_x_center(
     int &ix_bin /* 0D_NOT_integer in */,
     double &bin1_x_min /* 0D_NOT_real in */,
     double &bin_delta /* 0D_NOT_real in */,
-    double &x_center /* 0D_NOT_real out */
+    double &x_center /* 0D_NOT_real in */
 );
-double bin_x_center(int ix_bin, double bin1_x_min, double bin_delta);
+void bin_x_center(int ix_bin, double bin1_x_min, double bin_delta, double x_center);
 extern "C" void fortran_bit_set(
     int &word /* 0D_NOT_integer in */,
     int &pos /* 0D_NOT_integer in */,
@@ -275,9 +275,9 @@ SplineStruct create_a_spline(FArray1D<Real> &r0, FArray1D<Real> &r1, double slop
 extern "C" bool fortran_cross_product(
     Bmad::array_descriptor_t &a /* 1D_NOT_real in */,
     Bmad::array_descriptor_t &b /* 1D_NOT_real inout */,
-    Bmad::array_descriptor_t &c /* 1D_NOT_real inout */
+    Bmad::array_descriptor_t &c /* 1D_NOT_real out */
 );
-void cross_product(FArray1D<Real> &a, FArray1D<Real> &b, FixedArray1D<Real, 3> c);
+FixedArray1D<Real, 3> cross_product(FArray1D<Real> &a, FArray1D<Real> &b);
 
 // Skipped unusable routine da2_div:
 // - Variable in sized array: 2D_NOT_real
@@ -438,9 +438,9 @@ void find_location(BoolAlloc1D &arr, bool value, int ix_match);
 extern "C" bool fortran_find_location_real(
     Bmad::array_descriptor_t &arr /* 1D_NOT_real in */,
     double &value /* 0D_NOT_real in */,
-    int &ix_match /* 0D_NOT_integer in */
+    int &ix_match /* 0D_NOT_integer out */
 );
-void find_location(FArray1D<Real> &arr, double value, int ix_match);
+int find_location(FArray1D<Real> &arr, double value);
 
 // Skipped unusable routine find_location_str:
 // - Variable-sized inout character array: 1D_NOT_character
@@ -546,9 +546,9 @@ extern "C" bool fortran_initfixedwindowls(
     double &dt /* 0D_NOT_real in */,
     int &order /* 0D_NOT_integer in */,
     int &der /* 0D_NOT_integer in */,
-    int &id /* 0D_NOT_integer out */
+    int &id /* 0D_NOT_integer in */
 );
-int initfixedwindowls(int N, double dt, int order, int der);
+void initfixedwindowls(int N, double dt, int order, int der, int id);
 
 // Skipped unusable routine int_logic:
 // - Routine in configuration skip list
@@ -604,18 +604,18 @@ void is_alphabetic(std::string string, std::optional<std::string> valid_chars, b
 extern "C" bool fortran_is_decreasing_sequence(
     Bmad::array_descriptor_t &array /* 1D_NOT_real in */,
     bool *strict /* 0D_NOT_logical in */,
-    bool &is_decreasing /* 0D_NOT_logical in */
+    bool &is_decreasing /* 0D_NOT_logical out */
 );
-void is_decreasing_sequence(FArray1D<Real> &array, std::optional<bool> strict, bool is_decreasing);
+bool is_decreasing_sequence(FArray1D<Real> &array, std::optional<bool> strict = std::nullopt);
 extern "C" bool
 fortran_is_false(double &param /* 0D_NOT_real in */, bool &this_false /* 0D_NOT_logical out */);
 bool is_false(double param);
 extern "C" bool fortran_is_increasing_sequence(
     Bmad::array_descriptor_t &array /* 1D_NOT_real in */,
     bool *strict /* 0D_NOT_logical in */,
-    bool &is_increasing /* 0D_NOT_logical in */
+    bool &is_increasing /* 0D_NOT_logical out */
 );
-void is_increasing_sequence(FArray1D<Real> &array, std::optional<bool> strict, bool is_increasing);
+bool is_increasing_sequence(FArray1D<Real> &array, std::optional<bool> strict = std::nullopt);
 extern "C" bool fortran_is_integer(
     const char *string /* 0D_NOT_character in */,
     int *int_ /* 0D_NOT_integer in */,
@@ -696,8 +696,8 @@ FixedArray1D<Real, 3> linear_fit_2d(FArray1D<Real> &x, FArray1D<Real> &y, FArray
 extern "C" bool
 fortran_logic_str(bool &logic /* 0D_NOT_logical in */, const char *str /* 0D_NOT_character in */);
 void logic_str(bool logic, std::string str);
-extern "C" bool fortran_lunget(int &func_retval__ /* 0D_NOT_integer out */);
-int lunget();
+extern "C" bool fortran_lunget(int &func_retval__ /* 0D_NOT_integer in */);
+void lunget(int func_retval__);
 extern "C" void fortran_make_legal_comment(
     const char *comment_in /* 0D_NOT_character in */,
     const char *comment_out /* 0D_NOT_character in */
@@ -905,9 +905,9 @@ extern "C" bool fortran_poly_eval(
     Bmad::array_descriptor_t &poly /* 1D_NOT_real in */,
     double &x /* 0D_NOT_real in */,
     bool *diff_coef /* 0D_NOT_logical in */,
-    double &y /* 0D_NOT_real in */
+    double &y /* 0D_NOT_real out */
 );
-void poly_eval(FArray1D<Real> &poly, double x, std::optional<bool> diff_coef, double y);
+double poly_eval(FArray1D<Real> &poly, double x, std::optional<bool> diff_coef = std::nullopt);
 extern "C" bool
 fortran_probability_funct(double &x /* 0D_NOT_real in */, double &prob /* 0D_NOT_real in */);
 void probability_funct(double x, double prob);
@@ -919,9 +919,9 @@ extern "C" bool fortran_projdd(
 void projdd(FArray1D<Complex> &a, FArray1D<Complex> &b, std::complex<double> func_retval__);
 extern "C" bool fortran_quadratic_roots(
     Bmad::array_descriptor_t &coefs /* 1D_NOT_real in */,
-    Bmad::array_descriptor_t &root /* 1D_NOT_complex inout */
+    Bmad::array_descriptor_t &root /* 1D_NOT_complex out */
 );
-void quadratic_roots(FixedArray1D<Real, 3> coefs, FixedArray1D<Complex, 2> root);
+FixedArray1D<Complex, 2> quadratic_roots(FixedArray1D<Real, 3> coefs);
 extern "C" bool fortran_quat_conj_complex(
     Bmad::array_descriptor_t &q_in /* 1D_NOT_complex in */,
     Bmad::array_descriptor_t &q_out /* 1D_NOT_complex out */
@@ -1170,15 +1170,20 @@ extern "C" bool fortran_rms_value(
     Bmad::array_descriptor_t &val_arr /* 1D_NOT_real in */,
     void *good_val /* 1D_ALLOC_logical in */,
     double &ave_val /* 0D_NOT_real out */,
-    double &rms_val /* 0D_NOT_real in */
+    double &rms_val /* 0D_NOT_real out */
 );
-double rms_value(FArray1D<Real> &val_arr, optional_ref<BoolAlloc1D> good_val, double rms_val);
+struct RmsValue {
+  double ave_val;
+  double rms_val;
+};
+SimUtils::RmsValue
+rms_value(FArray1D<Real> &val_arr, optional_ref<BoolAlloc1D> good_val = std::nullopt);
 extern "C" bool fortran_rot_2d(
     Bmad::array_descriptor_t &vec_in /* 1D_NOT_real in */,
     double &angle /* 0D_NOT_real in */,
-    Bmad::array_descriptor_t &vec_out /* 1D_NOT_real inout */
+    Bmad::array_descriptor_t &vec_out /* 1D_NOT_real out */
 );
-void rot_2d(FixedArray1D<Real, 2> vec_in, double angle, FixedArray1D<Real, 2> vec_out);
+FixedArray1D<Real, 2> rot_2d(FixedArray1D<Real, 2> vec_in, double angle);
 
 // Skipped unusable routine rotate_mat:
 // - Variable inout sized array: 2D_NOT_real
@@ -1732,8 +1737,8 @@ void upcase_string(std::string string);
 
 // Skipped unusable routine value_of_all_ptr:
 // - Untranslated type: all_pointer_struct (0D)
-extern "C" bool fortran_virtual_memory_usage(int &usage /* 0D_NOT_integer out */);
-int virtual_memory_usage();
+extern "C" bool fortran_virtual_memory_usage(int &usage /* 0D_NOT_integer in */);
+void virtual_memory_usage(int usage);
 extern "C" void fortran_w_mat_to_axis_angle(
     Bmad::array_descriptor_t &w_mat /* 2D_NOT_real in */,
     Bmad::array_descriptor_t &axis /* 1D_NOT_real out */,

@@ -455,7 +455,7 @@ subroutine fortran_tao_beam_track_endpoint (ele_id, lat, branch_str, where, u, e
   type(c_ptr), value :: u  ! 0D_NOT_type
   type(tao_universe_struct), pointer :: f_u
   ! ** Out parameters **
-  type(c_ptr), value :: ele  ! 0D_PTR_type
+  type(c_ptr) :: ele  ! 0D_PTR_type
   type(ele_struct), pointer :: f_ele
   ! ** End of parameters **
   ! in: f_ele_id 0D_NOT_character
@@ -5317,7 +5317,7 @@ subroutine fortran_tao_pointer_to_building_wall_shape (wall_name, e_shape) bind(
   character(len=4096), target :: f_wall_name
   character(kind=c_char), pointer :: f_wall_name_ptr(:)
   ! ** Out parameters **
-  type(c_ptr), value :: e_shape  ! 0D_PTR_type
+  type(c_ptr) :: e_shape  ! 0D_PTR_type
   type(tao_ele_shape_struct), pointer :: f_e_shape
   ! ** End of parameters **
   ! in: f_wall_name 0D_NOT_character
@@ -5454,7 +5454,7 @@ subroutine fortran_tao_pointer_to_ele_shape (ix_uni, ele, ele_shape, dat_var_nam
   type(c_ptr), intent(in), value :: dat_var_value  ! 0D_NOT_real
   real(rp) :: f_dat_var_value
   real(c_double), pointer :: f_dat_var_value_ptr
-  type(c_ptr), value :: e_shape  ! 0D_PTR_type
+  type(c_ptr) :: e_shape  ! 0D_PTR_type
   type(tao_ele_shape_struct), pointer :: f_e_shape
   ! ** End of parameters **
   ! in: f_ix_uni 0D_NOT_integer
@@ -5511,7 +5511,7 @@ subroutine fortran_tao_pointer_to_tao_lat (u, lat_type, tao_lat) bind(c)
   integer(c_int) :: f_lat_type
   integer(c_int), pointer :: f_lat_type_ptr
   ! ** Out parameters **
-  type(c_ptr), value :: tao_lat  ! 0D_PTR_type
+  type(c_ptr) :: tao_lat  ! 0D_PTR_type
   type(tao_lattice_struct), pointer :: f_tao_lat
   ! ** End of parameters **
   ! in: f_u 0D_NOT_type

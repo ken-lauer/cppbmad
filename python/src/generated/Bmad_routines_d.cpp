@@ -77,12 +77,12 @@ lat : LatStruct
       "default_tracking_species",
       &Bmad::default_tracking_species,
       py::arg("param"),
-      py::arg("species"),
       R"""(Parameters
 ----------
 param : LatParamStruct
     Parameters for a lattice branch.
-species : 
+species : int
+    Default species to be used for tracking.
 )"""
   );
   m.def(
@@ -112,7 +112,6 @@ ix_pix : int
       &Bmad::diffraction_plate_or_mask_hit_spot,
       py::arg("ele"),
       py::arg("orbit"),
-      py::arg("ix_section"),
       R"""(Parameters
 ----------
 ele : EleStruct
@@ -120,6 +119,7 @@ ele : EleStruct
 orbit : CoordStruct
     particle position.
 ix_section : 
+    integer, Set to index of clear section hit. Set to zero if photon is outside all clear areas.
 )"""
   );
   m.def(
@@ -137,13 +137,29 @@ species :
 mat : 
 )"""
   );
+  py::class_<Bmad::DistanceToAperture, std::unique_ptr<Bmad::DistanceToAperture>>(
+      m,
+      "DistanceToAperture",
+      "distance_to_aperture return type"
+  )
+      .def_readonly("no_aperture_here", &Bmad::DistanceToAperture::no_aperture_here)
+      .def_readonly("dist", &Bmad::DistanceToAperture::dist)
+      .def("__len__", [](const Bmad::DistanceToAperture &) { return 2; })
+      .def("__getitem__", [](const Bmad::DistanceToAperture &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.no_aperture_here);
+        if (i == 1)
+          return py::cast(s.dist);
+        throw py::index_error();
+      });
   m.def(
       "distance_to_aperture",
       &Bmad::distance_to_aperture,
       py::arg("orbit"),
       py::arg("particle_at"),
       py::arg("ele"),
-      py::arg("dist"),
       R"""(Parameters
 ----------
 orbit : CoordStruct
@@ -154,7 +170,8 @@ ele : EleStruct
     Element containing aperture.
 no_aperture_here : bool
     True if aperture does not exist at the longitudinal location of the particle.
-dist : 
+dist : float
+    Normalized distance of the particle from the aperture.
 )"""
   );
   m.def(

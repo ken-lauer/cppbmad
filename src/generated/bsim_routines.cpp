@@ -112,15 +112,14 @@ void bsim::logical_to_python(bool logic, std::string string) {
   fortran_logical_to_python(/* bool& */ logic, /* const char* */ _string);
 }
 void bsim::rf_cav_names(LatStruct &lat) { fortran_rf_cav_names(/* void* */ lat.get_fortran_ptr()); }
-void bsim::set_tune_3d(
+bool bsim::set_tune_3d(
     BranchStruct &branch,
     FixedArray1D<Real, 3> target_tunes,
     std::optional<std::string> mask,
     std::optional<bool> use_phase_trombone,
     std::optional<bool> z_tune_set,
     std::optional<FixedArray1D<string, 2>> group_knobs,
-    std::optional<bool> print_err,
-    bool everything_ok
+    std::optional<bool> print_err
 ) {
   // target_tunes: in NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _target_tunes_desc;
@@ -155,6 +154,7 @@ void bsim::set_tune_3d(
   } else {
     _print_err = nullptr;
   }
+  bool _everything_ok{};
   fortran_set_tune_3d(
       /* void* */ branch.get_fortran_ptr(),
       /* Bmad::array_descriptor_t& */ _target_tunes_desc,
@@ -163,8 +163,9 @@ void bsim::set_tune_3d(
       /* bool* */ _z_tune_set,
       /* const char** */ _group_knobs.size() ? _group_knobs.data() : nullptr,
       /* bool* */ _print_err,
-      /* bool& */ everything_ok
+      /* bool& */ _everything_ok
   );
+  return _everything_ok;
 }
 void bsim::write_bunch_by_bunch_info(
     LatStruct &lat,

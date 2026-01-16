@@ -10,7 +10,6 @@ void init_Bmad_routines_k(py::module &m) {
       &Bmad::key_name_to_key_index,
       py::arg("key_str"),
       py::arg("abbrev_allowed") = py::none(),
-      py::arg("key_index"),
       R"""(Parameters
 ----------
 key_str : unknown
@@ -18,7 +17,8 @@ key_str : unknown
 abbrev_allowed : bool, optional
     Abbreviations (eg: "quad") allowed? Default is False. At least 3 characters are needed (except for
     rfcavity elements) if True.
-key_index : 
+key_index : int
+    Index of the key. Set to -1 if key_name not recognized.
 )"""
   );
   py::class_<Bmad::KickVectorCalc, std::unique_ptr<Bmad::KickVectorCalc>>(
@@ -174,6 +174,23 @@ kind_str : unknown
     String representation
 )"""
   );
+  py::class_<Bmad::KnotInterpolate, std::unique_ptr<Bmad::KnotInterpolate>>(
+      m,
+      "KnotInterpolate",
+      "knot_interpolate return type"
+  )
+      .def_readonly("err_flag", &Bmad::KnotInterpolate::err_flag)
+      .def_readonly("y_pt", &Bmad::KnotInterpolate::y_pt)
+      .def("__len__", [](const Bmad::KnotInterpolate &) { return 2; })
+      .def("__getitem__", [](const Bmad::KnotInterpolate &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.y_pt);
+        throw py::index_error();
+      });
   m.def(
       "knot_interpolate",
       &Bmad::knot_interpolate,
@@ -181,7 +198,6 @@ kind_str : unknown
       py::arg("y_knot"),
       py::arg("x_pt"),
       py::arg("interpolation"),
-      py::arg("y_pt"),
       R"""(Parameters
 ----------
 x_knot : float
@@ -194,7 +210,8 @@ interpolation : int
     Interpolation type. cubic$ or linear$.
 err_flag : bool
     Set True if there is an error. False otherwise.
-y_pt : 
+y_pt : float
+    Interpolated y-value.
 )"""
   );
   m.def(

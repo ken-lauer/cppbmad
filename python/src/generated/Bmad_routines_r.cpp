@@ -274,12 +274,28 @@ force_setup : bool, optional
     be done if lat.ramper_slave_bookkeeping = super_ok$.
 )"""
   );
+  py::class_<Bmad::RamperValue, std::unique_ptr<Bmad::RamperValue>>(
+      m,
+      "RamperValue",
+      "ramper_value return type"
+  )
+      .def_readonly("err_flag", &Bmad::RamperValue::err_flag)
+      .def_readonly("value", &Bmad::RamperValue::value)
+      .def("__len__", [](const Bmad::RamperValue &) { return 2; })
+      .def("__getitem__", [](const Bmad::RamperValue &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.value);
+        throw py::index_error();
+      });
   m.def(
       "ramper_value",
       &Bmad::ramper_value,
       py::arg("ramper"),
       py::arg("r1"),
-      py::arg("value"),
       R"""(Parameters
 ----------
 ramper : EleStruct
@@ -288,7 +304,8 @@ r1 : ControlRamp1Struct
     Slave function.
 err_flag : bool
     Set True if there is an error, False otherwise.
-value : 
+value : float
+    Value of the slave function.
 )"""
   );
   m.def(
@@ -804,14 +821,14 @@ exact : bool, optional
       &Bmad::rel_tracking_charge_to_mass,
       py::arg("orbit"),
       py::arg("ref_species"),
-      py::arg("rel_charge"),
       R"""(Parameters
 ----------
 orbit : CoordStruct
     Particle position structure.
 ref_species : int
     Reference species
-rel_charge : 
+rel_charge : float
+    Relative charge/mass
 )"""
   );
   m.def(
@@ -984,7 +1001,6 @@ ok
       py::arg("branch"),
       py::arg("ix_ele1") = py::none(),
       py::arg("ix_ele2") = py::none(),
-      py::arg("is_on"),
       R"""(Parameters
 ----------
 branch : BranchStruct
@@ -993,7 +1009,8 @@ ix_ele1 : int, optional
     Start of range of elements to check. Default is 0.
 ix_ele2 : int, optional
     End of range of elements to check. Default is branch.n_ele_track.
-is_on : 
+is_on : bool
+    True if any rfcavity is powered. False otherwise.
 )"""
   );
   m.def(
@@ -1008,7 +1025,8 @@ ele : EleStruct
     RF Element being tracked through.
 ds : float, optional
     Distance of particle from start edge. Default is zero. Ouput:
-time : 
+time : float
+    Offset time.
 )"""
   );
   m.def(

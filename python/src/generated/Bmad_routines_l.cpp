@@ -308,7 +308,6 @@ err_flag : bool
       py::arg("slave"),
       py::arg("slave_edge"),
       py::arg("lord"),
-      py::arg("is_aligned"),
       R"""(Parameters
 ----------
 slave : EleStruct
@@ -317,7 +316,9 @@ slave_edge : int
     End under consideration: entrance_end$, exit_end$, in_between$, etc.
 lord : EleStruct
     Lord element.
-is_aligned : 
+is_aligned : int
+    True if a lord edge is aligned with the slave edge. If slave_edge is not entrance_end$ nor exit_end$ then
+    is_aligned is False.
 )"""
   );
   m.def(
@@ -328,7 +329,6 @@ is_aligned :
       py::arg("ds"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      py::arg("dz"),
       R"""(Parameters
 ----------
 orbit : CoordStruct
@@ -343,7 +343,8 @@ mat6 : float, optional
     including multipole.
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-dz : 
+dz : float
+    Change in z.
 )"""
   );
 }

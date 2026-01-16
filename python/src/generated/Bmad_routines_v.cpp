@@ -10,14 +10,14 @@ void init_Bmad_routines_v(py::module &m) {
       &Bmad::valid_field_calc,
       py::arg("ele"),
       py::arg("field_calc"),
-      py::arg("is_valid"),
       R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element.
 field_calc : int
     bmad_standard$, etc.
-is_valid : 
+is_valid : bool
+    True if a valid method. False otherwise.
 )"""
   );
   m.def(
@@ -25,14 +25,14 @@ is_valid :
       &Bmad::valid_fringe_type,
       py::arg("ele"),
       py::arg("fringe_type"),
-      py::arg("is_valid"),
       R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element.
 fringe_type : int
     bmad_standard$, etc.
-is_valid : 
+is_valid : bool
+    True if a valid method. False otherwise.
 )"""
   );
   m.def(
@@ -41,7 +41,6 @@ is_valid :
       py::arg("ele"),
       py::arg("species"),
       py::arg("mat6_calc_method"),
-      py::arg("is_valid"),
       R"""(Parameters
 ----------
 ele : EleStruct
@@ -50,7 +49,8 @@ species :
     Type of particle being tracked. electron$, etc. or not_set$
 mat6_calc_method : int
     bmad_standard$, etc.
-is_valid : 
+is_valid : bool
+    True if a valid method. False otherwise.
 )"""
   );
   m.def(
@@ -58,14 +58,14 @@ is_valid :
       &Bmad::valid_spin_tracking_method,
       py::arg("ele"),
       py::arg("spin_tracking_method"),
-      py::arg("is_valid"),
       R"""(Parameters
 ----------
 ele : EleStruct
     Lattice element.
 spin_tracking_method : int
     bmad_standard$, etc.
-is_valid : 
+is_valid : bool
+    True if a valid method. False otherwise.
 )"""
   );
   m.def(
@@ -74,7 +74,6 @@ is_valid :
       py::arg("ele"),
       py::arg("species"),
       py::arg("tracking_method"),
-      py::arg("is_valid"),
       R"""(Parameters
 ----------
 ele : EleStruct
@@ -83,9 +82,27 @@ species :
     Type of particle being tracked. electron$, etc. or not_set$
 tracking_method : int
     bmad_standard$, etc.
-is_valid : 
+is_valid : bool
+    True if a valid method. False otherwise.
 )"""
   );
+  py::class_<Bmad::ValueOfAttribute, std::unique_ptr<Bmad::ValueOfAttribute>>(
+      m,
+      "ValueOfAttribute",
+      "value_of_attribute return type"
+  )
+      .def_readonly("err_flag", &Bmad::ValueOfAttribute::err_flag)
+      .def_readonly("value", &Bmad::ValueOfAttribute::value)
+      .def("__len__", [](const Bmad::ValueOfAttribute &) { return 2; })
+      .def("__getitem__", [](const Bmad::ValueOfAttribute &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.value);
+        throw py::index_error();
+      });
   m.def(
       "value_of_attribute",
       &Bmad::value_of_attribute,
@@ -93,7 +110,6 @@ is_valid :
       py::arg("attrib_name"),
       py::arg("err_print_flag") = py::none(),
       py::arg("err_value") = py::none(),
-      py::arg("value"),
       R"""(Parameters
 ----------
 ele : EleStruct
@@ -106,7 +122,8 @@ err_print_flag : bool, optional
     If present and True then print an error message if there is an  error.
 err_value : float, optional
     Value to set value argument if there is an error. Default is 0.
-value : 
+value : float
+    Value of the attribute. Set to err_value if not found.
 )"""
   );
   m.def(
@@ -133,14 +150,13 @@ use_comma :
       &Bmad::vec_to_polar,
       py::arg("vec"),
       py::arg("phase") = py::none(),
-      py::arg("polar"),
       R"""(Parameters
 ----------
 vec : float
     unitary spin vector
 phase : float, optional
     Phase of the spinor, if not given then set to zero
-polar : 
+polar : SpinPolarStruct
 )"""
   );
   m.def(
@@ -148,14 +164,14 @@ polar :
       &Bmad::vec_to_spinor,
       py::arg("vec"),
       py::arg("phase") = py::none(),
-      py::arg("spinor"),
       R"""(Parameters
 ----------
 vec : float
     Spin vector in cartesian coordinates
 phase : float
     Phase of the spinor, if not given then set to zero
-spinor : 
+spinor : complex
+    Spinor.
 )"""
   );
   m.def(

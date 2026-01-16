@@ -231,12 +231,12 @@ err_flag : bool
       "num_field_eles",
       &Bmad::num_field_eles,
       py::arg("ele"),
-      py::arg("n_field_ele"),
       R"""(Parameters
 ----------
 ele : EleStruct
     Element with sum number of associated field elements.
-n_field_ele : 
+n_field_ele : int
+    Number of associated field elements.
 )"""
   );
   m.def(
@@ -244,7 +244,6 @@ n_field_ele :
       &Bmad::num_lords,
       py::arg("slave"),
       py::arg("lord_type"),
-      py::arg("num"),
       R"""(Parameters
 ----------
 slave : EleStruct
@@ -252,7 +251,8 @@ slave : EleStruct
 lord_type : int
     Type of lord. super_lord$, multipass_lord$, girder_lord$, group_lord$, overlay_lord$, and governor$ (=
     group + overlay + control + girder)
-num : 
+num : int
+    Number of lords of the given type.
 )"""
   );
 }

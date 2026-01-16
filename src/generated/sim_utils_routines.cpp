@@ -241,15 +241,13 @@ int SimUtils::bin_index(double x, double bin1_x_min, double bin_delta) {
   );
   return _ix_bin;
 }
-double SimUtils::bin_x_center(int ix_bin, double bin1_x_min, double bin_delta) {
-  double _x_center{};
+void SimUtils::bin_x_center(int ix_bin, double bin1_x_min, double bin_delta, double x_center) {
   fortran_bin_x_center(
       /* int& */ ix_bin,
       /* double& */ bin1_x_min,
       /* double& */ bin_delta,
-      /* double& */ _x_center
+      /* double& */ x_center
   );
-  return _x_center;
 }
 void SimUtils::bit_set(int word, int pos, bool set_to_1) {
   fortran_bit_set(/* int& */ word, /* int& */ pos, /* bool& */ set_to_1);
@@ -385,7 +383,7 @@ SimUtils::create_a_spline(FArray1D<Real> &r0, FArray1D<Real> &r1, double slope0,
   );
   return std::move(_spline);
 }
-void SimUtils::cross_product(FArray1D<Real> &a, FArray1D<Real> &b, FixedArray1D<Real, 3> c) {
+FixedArray1D<Real, 3> SimUtils::cross_product(FArray1D<Real> &a, FArray1D<Real> &b) {
   // a: in NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _a_desc;
   _a_desc.rank = 1;
@@ -396,16 +394,18 @@ void SimUtils::cross_product(FArray1D<Real> &a, FArray1D<Real> &b, FixedArray1D<
   _b_desc.rank = 1;
   _b_desc.data_ptr = b.data();
   _b_desc.dims[0] = b.size();
-  // c: inout NOT (CppWrapperGeneralArgumentArray) (['3'])
+  // c: out NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _c_desc;
   _c_desc.rank = 1;
-  _c_desc.data_ptr = c.data();
-  _c_desc.dims[0] = c.size();
+  FixedArray1D<Real, 3> _c;
+  _c_desc.data_ptr = _c.data();
+  _c_desc.dims[0] = _c.size();
   fortran_cross_product(
       /* Bmad::array_descriptor_t& */ _a_desc,
       /* Bmad::array_descriptor_t& */ _b_desc,
       /* Bmad::array_descriptor_t& */ _c_desc
   );
+  return _c;
 }
 void SimUtils::date_and_time_stamp(
     std::string string,
@@ -608,17 +608,19 @@ void SimUtils::find_location(BoolAlloc1D &arr, bool value, int ix_match) {
       /* int& */ ix_match
   );
 }
-void SimUtils::find_location(FArray1D<Real> &arr, double value, int ix_match) {
+int SimUtils::find_location(FArray1D<Real> &arr, double value) {
   // arr: in NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _arr_desc;
   _arr_desc.rank = 1;
   _arr_desc.data_ptr = arr.data();
   _arr_desc.dims[0] = arr.size();
+  int _ix_match{};
   fortran_find_location_real(
       /* Bmad::array_descriptor_t& */ _arr_desc,
       /* double& */ value,
-      /* int& */ ix_match
+      /* int& */ _ix_match
   );
+  return _ix_match;
 }
 double SimUtils::fine_frequency_estimate(FArray1D<Real> &data) {
   // data: in NOT (CppWrapperGeneralArgumentArray) ([':'])
@@ -734,16 +736,14 @@ void SimUtils::index_nocase(std::string string1, std::string string2, int indx) 
   auto _string2 = string2.c_str();
   fortran_index_nocase(/* const char* */ _string1, /* const char* */ _string2, /* int& */ indx);
 }
-int SimUtils::initfixedwindowls(int N, double dt, int order, int der) {
-  int _id{};
+void SimUtils::initfixedwindowls(int N, double dt, int order, int der, int id) {
   fortran_initfixedwindowls(
       /* int& */ N,
       /* double& */ dt,
       /* int& */ order,
       /* int& */ der,
-      /* int& */ _id
+      /* int& */ id
   );
-  return _id;
 }
 void SimUtils::int_str(int int_, std::optional<int> width, std::string str) {
   int width_lvalue;
@@ -837,11 +837,7 @@ void SimUtils::is_alphabetic(
       /* bool& */ is_alpha
   );
 }
-void SimUtils::is_decreasing_sequence(
-    FArray1D<Real> &array,
-    std::optional<bool> strict,
-    bool is_decreasing
-) {
+bool SimUtils::is_decreasing_sequence(FArray1D<Real> &array, std::optional<bool> strict) {
   // array: in NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _array_desc;
   _array_desc.rank = 1;
@@ -854,22 +850,20 @@ void SimUtils::is_decreasing_sequence(
   } else {
     _strict = nullptr;
   }
+  bool _is_decreasing{};
   fortran_is_decreasing_sequence(
       /* Bmad::array_descriptor_t& */ _array_desc,
       /* bool* */ _strict,
-      /* bool& */ is_decreasing
+      /* bool& */ _is_decreasing
   );
+  return _is_decreasing;
 }
 bool SimUtils::is_false(double param) {
   bool _this_false{};
   fortran_is_false(/* double& */ param, /* bool& */ _this_false);
   return _this_false;
 }
-void SimUtils::is_increasing_sequence(
-    FArray1D<Real> &array,
-    std::optional<bool> strict,
-    bool is_increasing
-) {
+bool SimUtils::is_increasing_sequence(FArray1D<Real> &array, std::optional<bool> strict) {
   // array: in NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _array_desc;
   _array_desc.rank = 1;
@@ -882,11 +876,13 @@ void SimUtils::is_increasing_sequence(
   } else {
     _strict = nullptr;
   }
+  bool _is_increasing{};
   fortran_is_increasing_sequence(
       /* Bmad::array_descriptor_t& */ _array_desc,
       /* bool* */ _strict,
-      /* bool& */ is_increasing
+      /* bool& */ _is_increasing
   );
+  return _is_increasing;
 }
 void SimUtils::is_integer(
     std::string string,
@@ -1035,11 +1031,7 @@ void SimUtils::logic_str(bool logic, std::string str) {
   auto _str = str.c_str();
   fortran_logic_str(/* bool& */ logic, /* const char* */ _str);
 }
-int SimUtils::lunget() {
-  int _func_retval__{};
-  fortran_lunget(/* int& */ _func_retval__);
-  return _func_retval__;
-}
+void SimUtils::lunget(int func_retval__) { fortran_lunget(/* int& */ func_retval__); }
 void SimUtils::make_legal_comment(std::string comment_in, std::string comment_out) {
   auto _comment_in = comment_in.c_str();
   auto _comment_out = comment_out.c_str();
@@ -1283,7 +1275,7 @@ RandomStateStruct SimUtils::pointer_to_ran_state(
   );
   return std::move(RandomStateStruct(_ran_state_ptr));
 }
-void SimUtils::poly_eval(FArray1D<Real> &poly, double x, std::optional<bool> diff_coef, double y) {
+double SimUtils::poly_eval(FArray1D<Real> &poly, double x, std::optional<bool> diff_coef) {
   // poly: in NOT (CppWrapperGeneralArgumentArray) (['0:'])
   Bmad::array_descriptor_t _poly_desc;
   _poly_desc.rank = 1;
@@ -1296,12 +1288,14 @@ void SimUtils::poly_eval(FArray1D<Real> &poly, double x, std::optional<bool> dif
   } else {
     _diff_coef = nullptr;
   }
+  double _y{};
   fortran_poly_eval(
       /* Bmad::array_descriptor_t& */ _poly_desc,
       /* double& */ x,
       /* bool* */ _diff_coef,
-      /* double& */ y
+      /* double& */ _y
   );
+  return _y;
 }
 void SimUtils::probability_funct(double x, double prob) {
   fortran_probability_funct(/* double& */ x, /* double& */ prob);
@@ -1327,21 +1321,23 @@ void SimUtils::projdd(
       /* std::complex<double>& */ func_retval__
   );
 }
-void SimUtils::quadratic_roots(FixedArray1D<Real, 3> coefs, FixedArray1D<Complex, 2> root) {
+FixedArray1D<Complex, 2> SimUtils::quadratic_roots(FixedArray1D<Real, 3> coefs) {
   // coefs: in NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _coefs_desc;
   _coefs_desc.rank = 1;
   _coefs_desc.data_ptr = coefs.data();
   _coefs_desc.dims[0] = coefs.size();
-  // root: inout NOT (CppWrapperGeneralArgumentArray) (['2'])
+  // root: out NOT (CppWrapperGeneralArgumentArray) (['2'])
   Bmad::array_descriptor_t _root_desc;
   _root_desc.rank = 1;
-  _root_desc.data_ptr = root.data();
-  _root_desc.dims[0] = root.size();
+  FixedArray1D<Complex, 2> _root;
+  _root_desc.data_ptr = _root.data();
+  _root_desc.dims[0] = _root.size();
   fortran_quadratic_roots(
       /* Bmad::array_descriptor_t& */ _coefs_desc,
       /* Bmad::array_descriptor_t& */ _root_desc
   );
+  return _root;
 }
 FixedArray1D<Complex, 4> SimUtils::quat_conj(FixedArray1D<Complex, 4> q_in) {
   // q_in: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
@@ -2003,8 +1999,8 @@ void SimUtils::reallocate_spline(
       /* bool* */ _exact
   );
 }
-double
-SimUtils::rms_value(FArray1D<Real> &val_arr, optional_ref<BoolAlloc1D> good_val, double rms_val) {
+SimUtils::RmsValue
+SimUtils::rms_value(FArray1D<Real> &val_arr, optional_ref<BoolAlloc1D> good_val) {
   // val_arr: in NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _val_arr_desc;
   _val_arr_desc.rank = 1;
@@ -2014,30 +2010,33 @@ SimUtils::rms_value(FArray1D<Real> &val_arr, optional_ref<BoolAlloc1D> good_val,
   auto *_good_val =
       good_val.has_value() ? good_val->get().get_fortran_ptr() : nullptr; // input, optional
   double _ave_val{};
+  double _rms_val{};
   fortran_rms_value(
       /* Bmad::array_descriptor_t& */ _val_arr_desc,
       /* void* */ _good_val,
       /* double& */ _ave_val,
-      /* double& */ rms_val
+      /* double& */ _rms_val
   );
-  return _ave_val;
+  return RmsValue{_ave_val, _rms_val};
 }
-void SimUtils::rot_2d(FixedArray1D<Real, 2> vec_in, double angle, FixedArray1D<Real, 2> vec_out) {
+FixedArray1D<Real, 2> SimUtils::rot_2d(FixedArray1D<Real, 2> vec_in, double angle) {
   // vec_in: in NOT (CppWrapperGeneralArgumentArray) (['2'])
   Bmad::array_descriptor_t _vec_in_desc;
   _vec_in_desc.rank = 1;
   _vec_in_desc.data_ptr = vec_in.data();
   _vec_in_desc.dims[0] = vec_in.size();
-  // vec_out: inout NOT (CppWrapperGeneralArgumentArray) (['2'])
+  // vec_out: out NOT (CppWrapperGeneralArgumentArray) (['2'])
   Bmad::array_descriptor_t _vec_out_desc;
   _vec_out_desc.rank = 1;
-  _vec_out_desc.data_ptr = vec_out.data();
-  _vec_out_desc.dims[0] = vec_out.size();
+  FixedArray1D<Real, 2> _vec_out;
+  _vec_out_desc.data_ptr = _vec_out.data();
+  _vec_out_desc.dims[0] = _vec_out.size();
   fortran_rot_2d(
       /* Bmad::array_descriptor_t& */ _vec_in_desc,
       /* double& */ angle,
       /* Bmad::array_descriptor_t& */ _vec_out_desc
   );
+  return _vec_out;
 }
 void SimUtils::rotate_vec(FArray1D<Real> &vec, int axis, double angle) {
   // vec: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
@@ -2679,11 +2678,7 @@ void SimUtils::upcase_string(std::string string) {
   auto _string = string.c_str();
   fortran_upcase_string(/* const char* */ _string);
 }
-int SimUtils::virtual_memory_usage() {
-  int _usage{};
-  fortran_virtual_memory_usage(/* int& */ _usage);
-  return _usage;
-}
+void SimUtils::virtual_memory_usage(int usage) { fortran_virtual_memory_usage(/* int& */ usage); }
 SimUtils::WMatToAxisAngle SimUtils::w_mat_to_axis_angle(FixedArray2D<Real, 3, 3> w_mat) {
   // w_mat: in NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
   Bmad::array_descriptor_t _w_mat_desc;

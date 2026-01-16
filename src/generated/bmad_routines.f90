@@ -21893,7 +21893,7 @@ subroutine fortran_pointer_to_fibre (ele, assoc_fibre) bind(c)
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
   ! ** Out parameters **
-  type(c_ptr), value :: assoc_fibre  ! 0D_PTR_type
+  type(c_ptr) :: assoc_fibre  ! 0D_PTR_type
   type(fibre), pointer :: f_assoc_fibre
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
@@ -21918,7 +21918,7 @@ subroutine fortran_pointer_to_field_ele (ele, ix_field_ele, dz_offset, field_ele
   type(c_ptr), intent(in), value :: dz_offset  ! 0D_NOT_real
   real(rp) :: f_dz_offset
   real(c_double), pointer :: f_dz_offset_ptr
-  type(c_ptr), value :: field_ele  ! 0D_PTR_type
+  type(c_ptr) :: field_ele  ! 0D_PTR_type
   type(ele_struct), pointer :: f_field_ele
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
@@ -21951,7 +21951,7 @@ subroutine fortran_pointer_to_girder (ele, ix_slave_back, girder) bind(c)
   type(c_ptr), intent(in), value :: ix_slave_back  ! 0D_NOT_integer
   integer :: f_ix_slave_back
   integer(c_int), pointer :: f_ix_slave_back_ptr
-  type(c_ptr), value :: girder  ! 0D_PTR_type
+  type(c_ptr) :: girder  ! 0D_PTR_type
   type(ele_struct), pointer :: f_girder
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
@@ -21996,7 +21996,7 @@ subroutine fortran_pointer_to_lord (slave, ix_lord, control, ix_slave_back, lord
   type(c_ptr), intent(in), value :: ix_ic  ! 0D_NOT_integer
   integer :: f_ix_ic
   integer(c_int), pointer :: f_ix_ic_ptr
-  type(c_ptr), value :: lord_ptr  ! 0D_PTR_type
+  type(c_ptr) :: lord_ptr  ! 0D_PTR_type
   type(ele_struct), pointer :: f_lord_ptr
   ! ** End of parameters **
   ! in: f_slave 0D_NOT_type
@@ -22058,7 +22058,7 @@ subroutine fortran_pointer_to_multipass_lord (ele, ix_pass, super_lord, multi_lo
   integer(c_int), pointer :: f_ix_pass_ptr
   type(c_ptr) :: super_lord  ! 0D_PTR_type
   type(ele_struct), pointer :: f_super_lord
-  type(c_ptr), value :: multi_lord  ! 0D_PTR_type
+  type(c_ptr) :: multi_lord  ! 0D_PTR_type
   type(ele_struct), pointer :: f_multi_lord
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
@@ -22236,7 +22236,7 @@ subroutine fortran_pointer_to_super_lord (slave, control, ix_slave_back, ix_cont
   type(c_ptr), intent(in), value :: ix_ic  ! 0D_NOT_integer
   integer :: f_ix_ic
   integer(c_int), pointer :: f_ix_ic_ptr
-  type(c_ptr), value :: lord_ptr  ! 0D_PTR_type
+  type(c_ptr) :: lord_ptr  ! 0D_PTR_type
   type(ele_struct), pointer :: f_lord_ptr
   ! ** End of parameters **
   ! in: f_slave 0D_NOT_type
@@ -22460,7 +22460,7 @@ subroutine fortran_pointer_to_wake_ele (ele, delta_s, wake_ele) bind(c)
   type(c_ptr), intent(in), value :: delta_s  ! 0D_NOT_real
   real(rp) :: f_delta_s
   real(c_double), pointer :: f_delta_s_ptr
-  type(c_ptr), value :: wake_ele  ! 0D_PTR_type
+  type(c_ptr) :: wake_ele  ! 0D_PTR_type
   type(ele_struct), pointer :: f_wake_ele
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
@@ -27339,7 +27339,7 @@ subroutine fortran_spin_taylor_to_linear (spin_taylor, normalize, dref_orb, is_o
   f_spin_map1 = spin_taylor_to_linear(f_spin_taylor, f_normalize, f_dref_orb, f_is_on)
 
   ! out: f_spin_map1 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_spin_map1', c_name='spin_map1', python_name='spin_map1', type='real', kind='rp', pointer_type='NOT', array=['0:3', '0:6'], init_value=None, comment='', member=StructureMember(line=2784, definition='real(rp) dref_orb(6), spin_map1(0:3,0:6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='0:3,0:6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='spin_map1', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_spin_map1', c_name='spin_map1', python_name='spin_map1', type='real', kind='rp', pointer_type='NOT', array=['0:3', '0:6'], init_value=None, comment='', member=StructureMember(line=2784, definition='real(rp) dref_orb(6), spin_map1(0:3,0:6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='0:3,0:6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='spin_map1', comment='', default=None), intent='out', description='First order spin map.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_spinor_to_polar (spinor, polar) bind(c)
 
@@ -34020,7 +34020,7 @@ subroutine fortran_w_mat_for_bend_angle (angle, ref_tilt, r_vec, w_mat) bind(c)
   f_w_mat = w_mat_for_bend_angle(f_angle, f_ref_tilt, f_r_vec)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3662, definition='real(rp) angle, ref_tilt, w_mat(3,3), t_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3662, definition='real(rp) angle, ref_tilt, w_mat(3,3), t_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='W matrix', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_w_mat_for_tilt (tilt, return_inverse, w_mat) bind(c)
 
@@ -34052,7 +34052,7 @@ subroutine fortran_w_mat_for_tilt (tilt, return_inverse, w_mat) bind(c)
   f_w_mat = w_mat_for_tilt(f_tilt, f_return_inverse_native_ptr)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3686, definition='real(rp) :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3686, definition='real(rp) :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='Transformation matrix.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_w_mat_for_x_pitch (x_pitch, return_inverse, w_mat) bind(c)
 
@@ -34084,7 +34084,7 @@ subroutine fortran_w_mat_for_x_pitch (x_pitch, return_inverse, w_mat) bind(c)
   f_w_mat = w_mat_for_x_pitch(f_x_pitch, f_return_inverse_native_ptr)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3670, definition='real(rp) :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3670, definition='real(rp) :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='Transformation matrix.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_w_mat_for_y_pitch (y_pitch, return_inverse, w_mat) bind(c)
 
@@ -34116,7 +34116,7 @@ subroutine fortran_w_mat_for_y_pitch (y_pitch, return_inverse, w_mat) bind(c)
   f_w_mat = w_mat_for_y_pitch(f_y_pitch, f_return_inverse_native_ptr)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3678, definition='real(rp) :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3678, definition='real(rp) :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='Transformation matrix.', doc_data_type='float', doc_is_optional=False)
 end subroutine
 subroutine fortran_wall3d_d_radius (position, ele, ix_wall, perp, ix_section, no_wall_here, &
     origin, radius_wall, err_flag, d_radius) bind(c)

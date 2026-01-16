@@ -11,7 +11,6 @@ void init_Bmad_routines_w(py::module &m) {
       py::arg("angle"),
       py::arg("ref_tilt"),
       py::arg("r_vec") = py::none(),
-      py::arg("w_mat"),
       R"""(Parameters
 ----------
 angle : float
@@ -22,7 +21,8 @@ r_vec : float, optional
     Starting position.
     This parameter is an input/output and is modified in-place. As an output: position with ref_tilt
     transformation
-w_mat : 
+w_mat : float
+    W matrix
 )"""
   );
   m.def(
@@ -30,14 +30,14 @@ w_mat :
       &Bmad::w_mat_for_tilt,
       py::arg("tilt"),
       py::arg("return_inverse") = py::none(),
-      py::arg("w_mat"),
       R"""(Parameters
 ----------
 tilt : float
     pitch angle
 return_inverse : bool, optional
     If True, return the inverse matrix. Default is False.
-w_mat : 
+w_mat : float
+    Transformation matrix.
 )"""
   );
   m.def(
@@ -45,14 +45,14 @@ w_mat :
       &Bmad::w_mat_for_x_pitch,
       py::arg("x_pitch"),
       py::arg("return_inverse") = py::none(),
-      py::arg("w_mat"),
       R"""(Parameters
 ----------
 x_pitch : float
     pitch angle
 return_inverse : bool, optional
     If True, return the inverse matrix. Default is False.
-w_mat : 
+w_mat : float
+    Transformation matrix.
 )"""
   );
   m.def(
@@ -60,14 +60,14 @@ w_mat :
       &Bmad::w_mat_for_y_pitch,
       py::arg("y_pitch"),
       py::arg("return_inverse") = py::none(),
-      py::arg("w_mat"),
       R"""(Parameters
 ----------
 y_pitch : float
     pitch angle
 return_inverse : bool, optional
     If True, return the inverse matrix. Default is False.
-w_mat : 
+w_mat : float
+    Transformation matrix.
 )"""
   );
   py::class_<Bmad::Wall3dDRadius, std::unique_ptr<Bmad::Wall3dDRadius>>(

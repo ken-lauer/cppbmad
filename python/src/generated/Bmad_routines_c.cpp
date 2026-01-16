@@ -572,12 +572,12 @@ err_flag : bool
       "classical_radius",
       &Bmad::classical_radius,
       py::arg("species"),
-      py::arg("radius"),
       R"""(Parameters
 ----------
 species : int
     Species of particle.
-radius : 
+radius : float
+    Classical radius.
 )"""
   );
   m.def(
@@ -1417,7 +1417,9 @@ w_mat : float, optional
 calculate_angles : bool, optional
     calculate angles for local_position Default: True. False returns local_position angles (.theta, .phi,
     .psi) = 0. Output
-local_position : 
+local_position : FloorPositionStruct
+    Local laboratory coordinates. .r(3)               [x, y, s] position with s = Position from entrance end
+    of element.
 )"""
   );
   m.def(
@@ -1440,15 +1442,32 @@ w_mat : float, optional
 calculate_angles : bool, optional
     calculate angles for rel_exit Default: True. False returns rel_exit angles (.theta, .phi, .psi) = 0.
     Output
-rel_exit : 
+rel_exit : FloorPositionStruct
+    Cartesian coordinates relative to exit of the element.
 )"""
   );
+  py::class_<Bmad::CoordsCurvilinearToFloor, std::unique_ptr<Bmad::CoordsCurvilinearToFloor>>(
+      m,
+      "CoordsCurvilinearToFloor",
+      "coords_curvilinear_to_floor return type"
+  )
+      .def_readonly("err_flag", &Bmad::CoordsCurvilinearToFloor::err_flag)
+      .def_readonly("global_", &Bmad::CoordsCurvilinearToFloor::global)
+      .def("__len__", [](const Bmad::CoordsCurvilinearToFloor &) { return 2; })
+      .def("__getitem__", [](const Bmad::CoordsCurvilinearToFloor &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.global);
+        throw py::index_error();
+      });
   m.def(
       "coords_curvilinear_to_floor",
       &Bmad::coords_curvilinear_to_floor,
       py::arg("xys"),
       py::arg("branch"),
-      py::arg("global"),
       R"""(Parameters
 ----------
 xys : float
@@ -1457,7 +1476,9 @@ branch : BranchStruct
     Lattice branch that defines the local reference coordinates.
 err_flag : bool
     Set True if global floor position cannot be computed.
-global : 
+global : FloorPositionStruct
+    Global floor position corresponding to (x, y, s) --    .w    -- W matrix to transform vectors: v_global =
+    w_mat * v_local
 )"""
   );
   py::class_<Bmad::CoordsFloorToCurvilinear, std::unique_ptr<Bmad::CoordsFloorToCurvilinear>>(
@@ -1468,16 +1489,19 @@ global :
       .def_readonly("ele1", &Bmad::CoordsFloorToCurvilinear::ele1)
       .def_readonly("status", &Bmad::CoordsFloorToCurvilinear::status)
       .def_readonly("w_mat", &Bmad::CoordsFloorToCurvilinear::w_mat)
-      .def("__len__", [](const Bmad::CoordsFloorToCurvilinear &) { return 3; })
+      .def_readonly("local_coords", &Bmad::CoordsFloorToCurvilinear::local_coords)
+      .def("__len__", [](const Bmad::CoordsFloorToCurvilinear &) { return 4; })
       .def("__getitem__", [](const Bmad::CoordsFloorToCurvilinear &s, int i) -> py::object {
         if (i < 0)
-          i += 3;
+          i += 4;
         if (i == 0)
           return py::cast(s.ele1);
         if (i == 1)
           return py::cast(s.status);
         if (i == 2)
           return py::cast(s.w_mat);
+        if (i == 3)
+          return py::cast(s.local_coords);
         throw py::index_error();
       });
   m.def(
@@ -1485,7 +1509,6 @@ global :
       &Bmad::coords_floor_to_curvilinear,
       py::arg("floor_coords"),
       py::arg("ele0"),
-      py::arg("local_coords"),
       R"""(Parameters
 ----------
 floor_coords : FloorPositionStruct
@@ -1499,7 +1522,9 @@ status : bool
     -> Outside of lattice ends (for open lattices).
 w_mat : float
     W matrix at s, to transform vectors from floor to local. w_mat will only be well defined if status = ok$
-local_coords : 
+local_coords : FloorPositionStruct
+    .r = [x, y, s] position in curvilinear coordinates with respect to ele1 with s relative to start the
+    lattice branch.
 )"""
   );
   py::class_<
@@ -1511,14 +1536,17 @@ local_coords :
   )
       .def_readonly("status", &Bmad::CoordsFloorToLocalCurvilinear::status)
       .def_readonly("w_mat", &Bmad::CoordsFloorToLocalCurvilinear::w_mat)
-      .def("__len__", [](const Bmad::CoordsFloorToLocalCurvilinear &) { return 2; })
+      .def_readonly("local_position", &Bmad::CoordsFloorToLocalCurvilinear::local_position)
+      .def("__len__", [](const Bmad::CoordsFloorToLocalCurvilinear &) { return 3; })
       .def("__getitem__", [](const Bmad::CoordsFloorToLocalCurvilinear &s, int i) -> py::object {
         if (i < 0)
-          i += 2;
+          i += 3;
         if (i == 0)
           return py::cast(s.status);
         if (i == 1)
           return py::cast(s.w_mat);
+        if (i == 2)
+          return py::cast(s.local_position);
         throw py::index_error();
       });
   m.def(
@@ -1527,7 +1555,6 @@ local_coords :
       py::arg("global_position"),
       py::arg("ele"),
       py::arg("relative_to") = py::none(),
-      py::arg("local_position"),
       R"""(Parameters
 ----------
 global_position : FloorPositionStruct
@@ -1543,7 +1570,8 @@ relative_to : int, optional
     not_set$ (default), upstream_end$, or downstream_end$. Force which end is used for z = 0. If
     upstream_end$, local_position.r(3) is relative to the upstream end which will not be the entrance end if
     ele.orientation = -1.
-local_position : 
+local_position : FloorPositionStruct
+    .r = [x, y, z] position in local curvilinear coordinates.
 )"""
   );
   m.def(
@@ -1553,7 +1581,6 @@ local_position :
       py::arg("global_position"),
       py::arg("calculate_angles") = py::none(),
       py::arg("is_delta_position") = py::none(),
-      py::arg("local_position"),
       R"""(Parameters
 ----------
 floor0 : FloorPositionStruct
@@ -1566,7 +1593,8 @@ calculate_angles : bool, optional
 is_delta_position : bool, optional
     If True then treat global_position.r as a difference position in global space and only rotate the position
     but not shift it. Default: False.
-local_position : 
+local_position : FloorPositionStruct
+    position relative to floor0
 )"""
   );
   m.def(
@@ -1588,9 +1616,30 @@ w_mat : float, optional
 calculate_angles : bool, optional
     calculate angles for body_position Default: True. False returns body_position angles (.theta, .phi, .psi)
     = 0. Output
-body_position : 
+body_position : FloorPositionStruct
+    Element coordinates relative to exit of the element. .r(3)               [x, y, s] position with s =
+    Position from entrance end of element.
 )"""
   );
+  py::class_<
+      Bmad::CoordsLocalCurvilinearToFloor,
+      std::unique_ptr<Bmad::CoordsLocalCurvilinearToFloor>>(
+      m,
+      "CoordsLocalCurvilinearToFloor",
+      "coords_local_curvilinear_to_floor return type"
+  )
+      .def_readonly("w_mat", &Bmad::CoordsLocalCurvilinearToFloor::w_mat)
+      .def_readonly("global_position", &Bmad::CoordsLocalCurvilinearToFloor::global_position)
+      .def("__len__", [](const Bmad::CoordsLocalCurvilinearToFloor &) { return 2; })
+      .def("__getitem__", [](const Bmad::CoordsLocalCurvilinearToFloor &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.w_mat);
+        if (i == 1)
+          return py::cast(s.global_position);
+        throw py::index_error();
+      });
   m.def(
       "coords_local_curvilinear_to_floor",
       &Bmad::coords_local_curvilinear_to_floor,
@@ -1599,7 +1648,6 @@ body_position :
       py::arg("in_body_frame") = py::none(),
       py::arg("calculate_angles") = py::none(),
       py::arg("relative_to") = py::none(),
-      py::arg("global_position"),
       R"""(Parameters
 ----------
 local_position : FloorPositionStruct
@@ -1621,7 +1669,8 @@ relative_to : int, optional
     not_set$ (default), upstream_end$, or downstream_end$. Force which end is used for z = 0. If
     upstream_end$, local_position.r(3) is relative to the upstream end which will not be the entrance end if
     ele.orientation = -1.
-global_position : 
+global_position : FloorPositionStruct
+    Position in global coordinates.
 )"""
   );
   m.def(
@@ -1632,7 +1681,6 @@ global_position :
       py::arg("theta") = py::none(),
       py::arg("phi") = py::none(),
       py::arg("psi") = py::none(),
-      py::arg("floor1"),
       R"""(Parameters
 ----------
 floor0 : FloorPositionStruct
@@ -1644,7 +1692,8 @@ dr : float
 theta : 
 phi : 
 psi : 
-floor1 : 
+floor1 : FloorPositionStruct
+    Shifted reference frame.
 )"""
   );
   m.def(

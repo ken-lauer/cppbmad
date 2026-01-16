@@ -89,12 +89,12 @@ lat : LatStruct
       "gamma_ref",
       &Bmad::gamma_ref,
       py::arg("ele"),
-      py::arg("gamma"),
       R"""(Parameters
 ----------
 ele : EleStruct
     Element to evaluate at.
-gamma : 
+gamma : float
+    Relativistic gamma factor Energy/mass*c^2.
 )"""
   );
   m.def(
@@ -369,14 +369,14 @@ err_flag : bool
       &Bmad::gradient_shift_sr_wake,
       py::arg("ele"),
       py::arg("param"),
-      py::arg("grad_shift"),
       R"""(Parameters
 ----------
 ele : EleStruct
     Lcavity element.
 param : LatParamStruct
     Lattice parameters .n_part        -- Number of particles in a bunch .particle      -- Type of particle
-grad_shift : 
+grad_shift : float
+    Shift in gradient
 )"""
   );
   m.def(

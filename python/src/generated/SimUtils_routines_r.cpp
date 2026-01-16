@@ -383,12 +383,28 @@ exact : bool, optional
     If present and False then the size of the output array is permitted to be larger than n. Default is True.
 )"""
   );
+  py::class_<SimUtils::RmsValue, std::unique_ptr<SimUtils::RmsValue>>(
+      m,
+      "RmsValue",
+      "rms_value return type"
+  )
+      .def_readonly("ave_val", &SimUtils::RmsValue::ave_val)
+      .def_readonly("rms_val", &SimUtils::RmsValue::rms_val)
+      .def("__len__", [](const SimUtils::RmsValue &) { return 2; })
+      .def("__getitem__", [](const SimUtils::RmsValue &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.ave_val);
+        if (i == 1)
+          return py::cast(s.rms_val);
+        throw py::index_error();
+      });
   m.def(
       "rms_value",
       &SimUtils::rms_value,
       py::arg("val_arr"),
       py::arg("good_val") = py::none(),
-      py::arg("rms_val"),
       R"""(Parameters
 ----------
 val_arr : float
@@ -397,7 +413,8 @@ good_val : bool, optional
     If present, only calculate RMS where good_val(i) = True.
 ave_val : float
     average value.
-rms_val : 
+rms_val : float
+    RMS value. Set to real_garbage$ if there is a problem.
 )"""
   );
   m.def(
@@ -405,14 +422,14 @@ rms_val :
       &SimUtils::rot_2d,
       py::arg("vec_in"),
       py::arg("angle"),
-      py::arg("vec_out"),
       R"""(Parameters
 ----------
 vec_in : float
     Init vec
 angle : float
     angle in radians.
-vec_out : 
+vec_out : float
+    Rotated vec.
 )"""
   );
   m.def(

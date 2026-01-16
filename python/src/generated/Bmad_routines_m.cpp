@@ -1139,12 +1139,12 @@ err_flag : bool
       "map1_inverse",
       &Bmad::map1_inverse,
       py::arg("map1"),
-      py::arg("inv_map1"),
       R"""(Parameters
 ----------
 map1 : SpinOrbitMap1Struct
     Input map.
-inv_map1 : 
+inv_map1 : SpinOrbitMap1Struct
+    Inverse map.
 )"""
   );
   m.def(
@@ -1203,14 +1203,14 @@ branch : BranchStruct
       &Bmad::master_parameter_value,
       py::arg("master_parameter"),
       py::arg("ele"),
-      py::arg("value"),
       R"""(Parameters
 ----------
 master_parameter : int
     Index of the master parameter.
 ele : EleStruct
     Element containing the fieldmap.
-value : 
+value : float
+    Value of the master parameter.
 )"""
   );
   m.def(
@@ -1397,14 +1397,14 @@ set_trombone : bool, optional
       &Bmad::mexp,
       py::arg("x"),
       py::arg("m"),
-      py::arg("this_exp"),
       R"""(Parameters
 ----------
 x : float
     Number.
 m : int
     Exponent.
-this_exp : 
+this_exp : float
+    Result.
 )"""
   );
   m.def(
@@ -1455,12 +1455,12 @@ ptc_fibre : unknown
       "momentum_compaction",
       &Bmad::momentum_compaction,
       py::arg("branch"),
-      py::arg("mom_comp"),
       R"""(Parameters
 ----------
 branch : BranchStruct
     Lattice branch to calculate on.
-mom_comp : 
+mom_comp : float
+    Momentum compaction.
 )"""
   );
   py::class_<Bmad::MultiTurnTrackingAnalysis, std::unique_ptr<Bmad::MultiTurnTrackingAnalysis>>(

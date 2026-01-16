@@ -8,6 +8,7 @@ void init_SimUtils_routines_v(py::module &m) {
   m.def(
       "virtual_memory_usage",
       &SimUtils::virtual_memory_usage,
+      py::arg("usage"),
       R"""(Parameters
 ----------
 usage : 
