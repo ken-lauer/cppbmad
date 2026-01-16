@@ -14,8 +14,6 @@ use tao_data_and_eval_mod, only: integrate_max, integrate_min, tao_datum_integra
     tao_param_value_routine, tao_pointer_to_datum_ele, tao_scratch_values_calc, tao_to_int, &
     tao_to_phase_and_coupling_reading, tao_tracking_ele_index
 
-use tao_c_interface_mod, only: re_allocate_c_double, tao_c_out_io_buffer_reset
-
 use tao_interface, only: tao_abort_command_file, tao_alias_cmd, tao_beam_emit_calc, &
     tao_beam_track_endpoint, tao_branch_index, tao_chrom_calc_needed, tao_clear_cmd, &
     tao_clip_cmd, tao_close_command_file, tao_command, tao_constraint_type_name, &
@@ -227,46 +225,6 @@ subroutine fortran_integrate_min (ix_start, ix_ele, datum_value, ix_m, branch, v
   if (.not. c_associated(datum)) return
   call c_f_pointer(datum, f_datum)
   call integrate_min(f_ix_start, f_ix_ele, f_datum_value, f_ix_m, f_branch, f_vec, f_datum)
-
-end subroutine
-subroutine fortran_re_allocate_c_double (re, n, exact, init_val) bind(c)
-
-  use array_desc_mod
-  implicit none
-  ! ** In parameters **
-  integer(c_int) :: n  ! 0D_NOT_integer
-  integer :: f_n
-  type(c_ptr), intent(in), value :: exact  ! 0D_NOT_logical
-  logical(c_bool), pointer :: f_exact
-  logical, target :: f_exact_native
-  logical, pointer :: f_exact_native_ptr
-  logical(c_bool), pointer :: f_exact_ptr
-  type(c_ptr), intent(in), value :: init_val  ! 0D_NOT_real
-  real(c_double) :: f_init_val
-  real(c_double), pointer :: f_init_val_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: re
-  type(real_container_alloc), pointer :: f_re
-  ! ** End of parameters **
-  !! container general array (1D_ALLOC_real)
-  if (c_associated(re))   call c_f_pointer(re, f_re)
-  ! in: f_n 0D_NOT_integer
-  f_n = n
-  ! in: f_exact 0D_NOT_logical
-  if (c_associated(exact)) then
-    call c_f_pointer(exact, f_exact_ptr)
-    f_exact_native = f_exact_ptr
-    f_exact_native_ptr => f_exact_native
-  else
-    f_exact_native_ptr => null()
-  endif
-  ! in: f_init_val 0D_NOT_real
-  if (c_associated(init_val)) then
-    call c_f_pointer(init_val, f_init_val_ptr)
-  else
-    f_init_val_ptr => null()
-  endif
-  call re_allocate_c_double(f_re%data, f_n, f_exact_native_ptr, f_init_val_ptr)
 
 end subroutine
 subroutine fortran_tao_abort_command_file (force_abort) bind(c)
@@ -542,14 +500,6 @@ subroutine fortran_tao_branch_index (ix_branch, ix_this) bind(c)
   ! out: f_ix_this 0D_NOT_integer
   call c_f_pointer(ix_this, f_ix_this_ptr)
   f_ix_this_ptr = f_ix_this
-end subroutine
-subroutine fortran_tao_c_out_io_buffer_reset () bind(c)
-
-  use array_desc_mod
-  implicit none
-  ! ** End of parameters **
-  call tao_c_out_io_buffer_reset()
-
 end subroutine
 subroutine fortran_tao_calc_data_at_s_pts (tao_lat, curve, comp_sign, good) bind(c)
 

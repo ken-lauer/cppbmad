@@ -176,15 +176,6 @@ ix_this :
 )"""
   );
   m.def(
-      "tao_c_out_io_buffer_reset",
-      &Tao::tao_c_out_io_buffer_reset,
-      R"""(Subroutine tao_c_out_io_buffer_reset() bind(c)
-
-Routine to reset the buffer.
-
-)"""
-  );
-  m.def(
       "tao_calc_data_at_s_pts",
       &Tao::tao_calc_data_at_s_pts,
       py::arg("tao_lat"),

@@ -55,18 +55,6 @@ void integrate_min(
 
 // Skipped unusable routine jacobian:
 // - Translated arg count mismatch (unsupported?)
-extern "C" void fortran_re_allocate_c_double(
-    void *re /* 1D_ALLOC_real inout */,
-    int &n /* 0D_NOT_integer in */,
-    bool *exact /* 0D_NOT_logical in */,
-    double *init_val /* 0D_NOT_real in */
-);
-void re_allocate_c_double(
-    RealAlloc1D &re,
-    int n,
-    std::optional<bool> exact = std::nullopt,
-    std::optional<double> init_val = std::nullopt
-);
 extern "C" void fortran_tao_abort_command_file(bool *force_abort /* 0D_NOT_logical in */);
 void tao_abort_command_file(std::optional<bool> force_abort = std::nullopt);
 extern "C" void fortran_tao_add_to_normal_mode_h_array(
@@ -147,47 +135,6 @@ extern "C" bool fortran_tao_branch_index(
     int &ix_this /* 0D_NOT_integer in */
 );
 void tao_branch_index(int ix_branch, int ix_this);
-
-// Skipped unusable routine tao_c_command:
-// - Argument not defined: c_str (have: [])
-// - Argument not defined: tao_c_command (have: [])
-// - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine tao_c_get_beam_track_element:
-// - Argument not defined: tao_c_get_beam_track_element (have: [])
-// - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine tao_c_get_integer_array:
-// - Argument not defined: tao_c_get_integer_array (have: [])
-// - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine tao_c_get_real_array:
-// - Argument not defined: tao_c_get_real_array (have: [])
-// - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine tao_c_init_tao:
-// - Argument not defined: c_str (have: [])
-// - Argument not defined: tao_c_init_tao (have: [])
-// - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine tao_c_integer_array_size:
-// - Argument not defined: tao_c_integer_array_size (have: [])
-// - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine tao_c_out_io_buffer_get_line:
-// - Argument not defined: n (have: [])
-// - Argument not defined: tao_c_out_io_buffer_get_line (have: [])
-// - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine tao_c_out_io_buffer_num_lines:
-// - Argument not defined: tao_c_out_io_buffer_num_lines (have: [])
-// - Translated arg count mismatch (unsupported?)
-extern "C" void fortran_tao_c_out_io_buffer_reset();
-void tao_c_out_io_buffer_reset();
-
-// Skipped unusable routine tao_c_real_array_size:
-// - Argument not defined: tao_c_real_array_size (have: [])
-// - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_calc_data_at_s_pts(
     void *tao_lat /* 0D_NOT_type inout */,
     void *curve /* 0D_NOT_type inout */,

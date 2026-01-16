@@ -227,8 +227,7 @@ mpi_offset : int, optional
   );
   m.def(
       "ran_uniform",
-      py::overload_cast<optional_ref<RandomStateStruct>, std::optional<int>>(
-          &SimUtils::ran_uniform
+      py::overload_cast<optional_ref<RandomStateStruct>, std::optional<int>>(&SimUtils::ran_uniform
       ),
       py::arg("ran_state") = py::none(),
       py::arg("index_quasi") = py::none(),

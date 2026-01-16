@@ -855,7 +855,6 @@ PYBIND11_MODULE(_pybmad, m) {
   init_Tao_routines_c(m);
   init_Tao_routines_i(m);
   init_Tao_routines_j(m);
-  init_Tao_routines_r(m);
   init_Tao_routines_t(m);
   init_Tao_routines_u(m);
   init_bsim_routines_b(m);

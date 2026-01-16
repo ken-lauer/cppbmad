@@ -62,34 +62,6 @@ void Tao::integrate_min(
       /* void* */ datum.get_fortran_ptr()
   );
 }
-void Tao::re_allocate_c_double(
-    RealAlloc1D &re,
-    int n,
-    std::optional<bool> exact,
-    std::optional<double> init_val
-) {
-  // intent=inout allocatable general array
-  bool exact_lvalue;
-  auto *_exact{&exact_lvalue};
-  if (exact.has_value()) {
-    exact_lvalue = exact.value();
-  } else {
-    _exact = nullptr;
-  }
-  double init_val_lvalue;
-  auto *_init_val{&init_val_lvalue};
-  if (init_val.has_value()) {
-    init_val_lvalue = init_val.value();
-  } else {
-    _init_val = nullptr;
-  }
-  fortran_re_allocate_c_double(
-      /* void* */ re.get_fortran_ptr(),
-      /* int& */ n,
-      /* bool* */ _exact,
-      /* double* */ _init_val
-  );
-}
 void Tao::tao_abort_command_file(std::optional<bool> force_abort) {
   bool force_abort_lvalue;
   auto *_force_abort{&force_abort_lvalue};
@@ -188,7 +160,6 @@ void Tao::tao_beam_track_endpoint(
 void Tao::tao_branch_index(int ix_branch, int ix_this) {
   fortran_tao_branch_index(/* int& */ ix_branch, /* int& */ ix_this);
 }
-void Tao::tao_c_out_io_buffer_reset() { fortran_tao_c_out_io_buffer_reset(); }
 void Tao::tao_calc_data_at_s_pts(
     TaoLatticeStruct &tao_lat,
     TaoCurveStruct &curve,
