@@ -654,8 +654,6 @@ Tao::TaoEleShapeInfo Tao::tao_ele_shape_info(
     int ix_uni,
     EleStruct &ele,
     TaoEleShapeStructArray1D ele_shapes,
-    double y1,
-    double y2,
     std::optional<int> ix_shape_min
 ) {
   // ele_shapes: TaoEleShapeStruct in (CppWrapperTypeArgumentArray)
@@ -666,6 +664,8 @@ Tao::TaoEleShapeInfo Tao::tao_ele_shape_info(
   _ele_shapes_desc.strides[0] = 1;
   void *_e_shape;
   char _label_name[4096];
+  double _y1{};
+  double _y2{};
   int ix_shape_min_lvalue;
   auto *_ix_shape_min{&ix_shape_min_lvalue};
   if (ix_shape_min.has_value()) {
@@ -679,13 +679,15 @@ Tao::TaoEleShapeInfo Tao::tao_ele_shape_info(
       /* Bmad::array_descriptor_t& */ _ele_shapes_desc,
       /* void* */ &_e_shape,
       /* const char* */ _label_name,
-      /* double& */ y1,
-      /* double& */ y2,
+      /* double& */ _y1,
+      /* double& */ _y2,
       /* int* */ _ix_shape_min
   );
   return TaoEleShapeInfo{
       std::move((_e_shape ? std::make_optional<TaoEleShapeStruct>(_e_shape) : std::nullopt)),
-      _label_name
+      _label_name,
+      _y1,
+      _y2
   };
 }
 Tao::TaoEvalFloorOrbit Tao::tao_eval_floor_orbit(

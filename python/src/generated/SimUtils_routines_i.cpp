@@ -78,12 +78,17 @@ Parameters
 N : int
     Number of data points to fit over. aka window size.
 dt : float
-    Time interval between data points. It is assumed that the data is separated by fixed time intervals.
+    Time interval between data points. It is assumed that the data is
+separated by fixed time intervals. : 
 order : int
     Order of fit polynomial.  Must be greater than or equal to der.
 der : int
-    Order of derivative to be returned. Set der=0 to obtain the fit. <return value>  -- INTEGER: id of
-    windowLS instance created.
+    Order of derivative to be returned. Set der=0 to obtain the fit.
+
+Returns
+-------
+<return value> : int
+    id of windowLS instance created.
 )"""
   );
   m.def(

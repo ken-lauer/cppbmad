@@ -5,7 +5,7 @@ from __future__ import annotations
 import collections.abc
 import enum
 import typing
-__all__: list[str] = ['A0', 'A0_ELEC', 'A21', 'A21_ELEC', 'ABS', 'ABSOLUTE', 'ABSOLUTE_TIME_TRACKING', 'AB_MULTIPOLE', 'ACCORDION_EDGE', 'ACOS', 'ACOSH', 'ACOTH', 'AC_KICKER', 'ALIAS', 'ALIVE', 'ALL', 'ALL_CONTROL_VAR', 'ALL_GROUPS', 'ALPHA_A', 'ALPHA_A0', 'ALPHA_A1', 'ALPHA_ANGLE', 'ALPHA_A_OUT', 'ALPHA_A_STORED', 'ALPHA_A_STRONG', 'ALPHA_B', 'ALPHA_B0', 'ALPHA_B1', 'ALPHA_B_OUT', 'ALPHA_B_STORED', 'ALPHA_B_STRONG', 'AMPERSAND', 'AMP_VS_TIME', 'ANCHOR_BEGINNING', 'ANCHOR_CENTER', 'ANCHOR_END', 'ANGLE', 'ANGLE_OUT_MAX', 'ANOMALOUS_MAG_MOMENT_DEUTERON', 'ANOMALOUS_MAG_MOMENT_ELECTRON', 'ANOMALOUS_MAG_MOMENT_HE3', 'ANOMALOUS_MAG_MOMENT_MUON', 'ANOMALOUS_MAG_MOMENT_NEUTRON', 'ANOMALOUS_MAG_MOMENT_PROTON', 'ANOMALOUS_MOMENT_OF', 'ANTIMUON', 'ANTIPARTICLE', 'ANTIPROTON', 'ANTI_ATOM', 'ANTI_DEUTERON', 'ANTI_HELION', 'ANTI_NEUTRON', 'ANTI_REF_PARTICLE', 'APERTURE', 'APERTURE_AT', 'APERTURE_TYPE', 'AREA_DENSITY', 'AREA_DENSITY_USED', 'ARG_COUNT', 'ARROW', 'ASCII', 'ASIN', 'ASINH', 'ATAN', 'ATAN2', 'ATANH', 'ATOMIC_MASS_UNIT', 'ATTRIBUTE_GROUP', 'AUTO', 'AUTOSCALE_AMPLITUDE', 'AUTOSCALE_PHASE', 'AUTO_APERTURE', 'AVERAGE', 'AbMultipoleKick', 'AcKickerFreqStruct', 'AcKickerFreqStructAlloc1D', 'AcKickerFreqStructArray1D', 'AcKickerStruct', 'AcKickerTimeStruct', 'AcKickerTimeStructAlloc1D', 'AcKickerTimeStructArray1D', 'ActionToXyz', 'AddSuperimpose', 'AllEncompassingStruct', 'AnormalModeStruct', 'ApertureParamStruct', 'AperturePointStruct', 'AperturePointStructAlloc1D', 'AperturePointStructArray1D', 'ApertureScanStruct', 'ApertureScanStructAlloc1D', 'ApertureScanStructArray1D', 'ApfftCorr', 'AttributeFree1', 'AttributeFree2', 'AttributeFree3', 'AttributeIndex1', 'AttributeIndex2', 'B0', 'B0_ELEC', 'B1_GRADIENT', 'B21', 'B21_ELEC', 'B2_GRADIENT', 'B3_GRADIENT', 'BASIC_BEND', 'BBI_CONST', 'BEAMBEAM', 'BEGINNING_ELE', 'BENDS', 'BEND_TILT', 'BETA_A', 'BETA_A0', 'BETA_A1', 'BETA_A_OUT', 'BETA_A_STORED', 'BETA_A_STRONG', 'BETA_B', 'BETA_B0', 'BETA_B1', 'BETA_B_OUT', 'BETA_B_STORED', 'BETA_B_STRONG', 'BINARY', 'BLACK', 'BLANK', 'BLUE', 'BL_HKICK', 'BL_KICK', 'BL_VKICK', 'BMAD_INC_VERSION', 'BMAD_STANDARD', 'BOTH_ENDS', 'BRAGG_ANGLE', 'BRAGG_ANGLE_IN', 'BRAGG_ANGLE_OUT', 'BRAGG_DIFFRACTED', 'BS_FIELD', 'B_FIELD', 'B_FIELD_ERR', 'B_FIELD_TOT', 'B_MAX', 'B_PARAM', 'BbiKick', 'BbuBeamStruct', 'BbuParamStruct', 'BbuStageStruct', 'BbuStageStructAlloc1D', 'BbuStageStructArray1D', 'BeamInitStruct', 'BeamStruct', 'BeamTilts', 'BendShift', 'BicubicCmplxCoefStruct', 'BicubicCmplxCoefStructArray3D', 'BicubicCmplxEval', 'BmadCommonStruct', 'BmadNormalFormStruct', 'BmadParser', 'BookkeepingStateStruct', 'BoolAlloc1D', 'BoolArray1D', 'BoolArray2D', 'BoolArray3D', 'BpmPhaseCouplingStruct', 'BracketIndexForSpline', 'BranchStruct', 'BranchStructAlloc1D', 'BranchStructArray1D', 'BunchParamsStruct', 'BunchParamsStructAlloc1D', 'BunchParamsStructArray1D', 'BunchStruct', 'BunchStructAlloc1D', 'BunchStructArray1D', 'BunchTrackStruct', 'BunchTrackStructAlloc1D', 'BunchTrackStructArray1D', 'C11_MAT0', 'C11_MAT1', 'C12_MAT0', 'C12_MAT1', 'C21_MAT0', 'C21_MAT1', 'C22_MAT0', 'C22_MAT1', 'CANNOT_FIND', 'CAPILLARY', 'CARTESIAN_MAP', 'CATHODE_FFT_3D', 'CAVITY_TYPE', 'CEILING', 'CENTER_PT', 'CHAMBER_WALL', 'CHARGE', 'CHARGE_OF', 'CHECK_SUM', 'CIRCLE_DOT_SYM', 'CIRCLE_FILLED_SYM', 'CIRCLE_PLUS_SYM', 'CIRCLE_SYM', 'CLASSICAL_RADIUS_FACTOR', 'CLEAR', 'CLOSED', 'CMAT_11', 'CMAT_11_STORED', 'CMAT_12', 'CMAT_12_STORED', 'CMAT_21', 'CMAT_21_STORED', 'CMAT_22', 'CMAT_22_STORED', 'COHERENT', 'COLON', 'COMMA', 'COMPOUND', 'CONSTANT', 'CONSTANT_REF_ENERGY', 'CONTINUOUS', 'CONTROL_GROUP', 'CONTROL_LORD', 'CONTROL_VAR', 'CONVERTER', 'COS', 'COSH', 'COT', 'COTH', 'COUPLER_ANGLE', 'COUPLER_AT', 'COUPLER_PHASE', 'COUPLER_STRENGTH', 'CRAB_CAVITY', 'CRAB_TILT', 'CRAB_X1', 'CRAB_X2', 'CRAB_X3', 'CRAB_X4', 'CRAB_X5', 'CREATE_JUMBO_SLAVE', 'CRITICAL_ANGLE', 'CRITICAL_ANGLE_FACTOR', 'CROSSING_TIME', 'CROSS_HATCHED', 'CRUNCH', 'CRUNCH_CALIB', 'CRYSTAL', 'CRYSTAL_TYPE', 'CSC', 'CSR_DS_STEP', 'CSR_METHOD', 'CUBIC', 'CURLY_BRACKETS', 'CURRENT', 'CURVATURE', 'CURVE', 'CUSTOM', 'CUSTOM_APERTURE', 'CUSTOM_ATTRIBUTE0', 'CUSTOM_ATTRIBUTE_NUM', 'CYAN', 'CYCLES', 'CYLINDRICAL_MAP', 'C_LIGHT', 'CalcEmittancesAndTwissFromSigmaMatrix', 'CalcWallRadius', 'CartesianMapStruct', 'CartesianMapStructAlloc1D', 'CartesianMapStructArray1D', 'CartesianMapTerm1Struct', 'CartesianMapTerm1StructAlloc1D', 'CartesianMapTerm1StructArray1D', 'CartesianMapTermStruct', 'CheckIfSInBounds', 'ChromCalc', 'ComplexAlloc1D', 'ComplexArray1D', 'ComplexArray2D', 'ComplexArray3D', 'ComplexTaylorStruct', 'ComplexTaylorStructAlloc1D', 'ComplexTaylorStructArray1D', 'ComplexTaylorTermStruct', 'ComplexTaylorTermStructAlloc1D', 'ComplexTaylorTermStructArray1D', 'ComplexTaylorToMat6', 'ControlRamp1Struct', 'ControlRamp1StructAlloc1D', 'ControlRamp1StructArray1D', 'ControlStruct', 'ControlStructAlloc1D', 'ControlStructArray1D', 'ControlVar1Struct', 'ControlVar1StructAlloc1D', 'ControlVar1StructArray1D', 'ControllerStruct', 'ConvertCoords', 'ConvertPcTo', 'ConvertTotalEnergyTo', 'ConverterDistributionParser', 'CoordArrayStruct', 'CoordArrayStructAlloc1D', 'CoordArrayStructArray1D', 'CoordStruct', 'CoordStructAlloc1D', 'CoordStructArray1D', 'CoordsCurvilinearToFloor', 'CoordsFloorToCurvilinear', 'CoordsFloorToLocalCurvilinear', 'CoordsLocalCurvilinearToFloor', 'CreateElementSlice', 'CreatePlanarWigglerModel', 'CylindricalMapStruct', 'CylindricalMapStructAlloc1D', 'CylindricalMapStructArray1D', 'CylindricalMapTerm1Struct', 'CylindricalMapTerm1StructAlloc1D', 'CylindricalMapTerm1StructArray1D', 'CylindricalMapTermStruct', 'D1_THICKNESS', 'D2_THICKNESS', 'DALPHA_DPZ_A', 'DALPHA_DPZ_A_STORED', 'DALPHA_DPZ_B', 'DALPHA_DPZ_B_STORED', 'DARK_GREY', 'DARWIN_WIDTH_PI', 'DARWIN_WIDTH_SIGMA', 'DASHED', 'DASH_DOT', 'DASH_DOT3', 'DBETA_DPZ_A', 'DBETA_DPZ_A_STORED', 'DBETA_DPZ_B', 'DBETA_DPZ_B_STORED', 'DBRAGG_ANGLE_DE', 'DB_FIELD', 'DCMAT_DPZ_11_STORED', 'DCMAT_DPZ_12_STORED', 'DCMAT_DPZ_21_STORED', 'DCMAT_DPZ_22_STORED', 'DEFAULT_TRACKING_SPECIES', 'DEF_BMAD_COM', 'DEF_LINE', 'DEF_MAD_BEAM', 'DEF_PARAMETER', 'DEF_PARTICLE_START', 'DEF_PTC_COM', 'DEF_SPACE_CHARGE_COM', 'DEGREES', 'DELTA_E_REF', 'DELTA_REF_TIME', 'DELTA_REF_TIME_USER_SET', 'DELTA_TIME', 'DENSITY', 'DENSITY_USED', 'DESCRIP', 'DETAP_DPZ_X', 'DETAP_DPZ_X_STORED', 'DETAP_DPZ_Y', 'DETAP_DPZ_Y_STORED', 'DETA_DPZ_X', 'DETA_DPZ_X_STORED', 'DETA_DPZ_Y', 'DETA_DPZ_Y_STORED', 'DETA_DS_MASTER', 'DETECTOR', 'DEUTERON', 'DE_ETA_MEAS', 'DFLT_DRAW', 'DFLT_SET', 'DG', 'DIAMOND_SYM', 'DIFFRACTION_PLATE', 'DIRECTION', 'DISPATCH', 'DISTRIBUTION', 'DIVIDE', 'DOTTED', 'DOT_SYM', 'DOUBLE_COLON', 'DOWNSTREAM', 'DOWNSTREAM_COORD_DIR', 'DOWNSTREAM_END', 'DPHI_A', 'DPHI_B', 'DPHI_ORIGIN', 'DPSI_ORIGIN', 'DRIFT', 'DRIFT_KICK', 'DS_PHOTON_SLICE', 'DS_SLICE', 'DS_STEP', 'DTHETA_ORIGIN', 'DTHICKNESS_DX', 'DT_MAX', 'DX_ORIGIN', 'DY_ORIGIN', 'DZ_ORIGIN', 'D_SPACING', 'DistanceToAperture', 'E1', 'E1_GRADIENT', 'E2', 'E2_CENTER', 'E2_GRADIENT', 'E2_PROBABILITY', 'E3_GRADIENT', 'ECOLLIMATOR', 'ELECTRIC', 'ELECTRIC_DIPOLE_MOMENT', 'ELECTRON', 'ELEC_MULTIPOLE', 'ELE_ORIGIN', 'ELLIPTICAL', 'ELSEPARATOR', 'EMITTANCE_A', 'EMITTANCE_B', 'EMITTANCE_Z', 'EMIT_FRACTION', 'EM_FIELD', 'END_EDGE', 'END_STACK', 'ENERGY_DISTRIBUTION', 'ENERGY_PROBABILITY_CURVE', 'ENTRANCE_END', 'EPS_STEP_SCALE', 'EQUAL', 'ETAP_A', 'ETAP_B', 'ETAP_X', 'ETAP_X0', 'ETAP_X1', 'ETAP_X_OUT', 'ETAP_X_STORED', 'ETAP_Y', 'ETAP_Y0', 'ETAP_Y1', 'ETAP_Y_OUT', 'ETAP_Y_STORED', 'ETA_A', 'ETA_B', 'ETA_X', 'ETA_X0', 'ETA_X1', 'ETA_X_OUT', 'ETA_X_STORED', 'ETA_Y', 'ETA_Y0', 'ETA_Y1', 'ETA_Y_OUT', 'ETA_Y_STORED', 'ETA_Z', 'EXACT_MISALIGN', 'EXACT_MODEL', 'EXACT_MULTIPOLES', 'EXIT_END', 'EXP', 'E_CENTER', 'E_CENTER_RELATIVE_TO_REF', 'E_CHARGE', 'E_FIELD', 'E_FIELD_X', 'E_FIELD_Y', 'E_GUN', 'E_LOSS', 'E_MASS', 'E_PHOTON', 'E_TOT', 'E_TOT_OFFSET', 'E_TOT_REF_INIT', 'E_TOT_SET', 'E_TOT_START', 'E_TOT_STRONG', 'EigenDecomp6mat', 'EleAttribute', 'EleKey', 'EleMisalignmentLSCalc', 'ElePointerStruct', 'ElePointerStructAlloc1D', 'ElePointerStructArray1D', 'EleStruct', 'EleStructAlloc1D', 'EleStructArray1D', 'EleToFibre', 'EleToTaylor', 'ElecMultipoleField', 'ElementAtSBranch', 'ElementAtSLat', 'EllipseBeamInitStruct', 'EllipseBeamInitStructAlloc1D', 'EllipseBeamInitStructArray1D', 'EmFieldCalc', 'EmFieldStruct', 'EmFieldStructAlloc1D', 'EmFieldStructArray1D', 'EmTaylorStruct', 'EmTaylorStructAlloc1D', 'EmTaylorStructArray1D', 'EmTaylorTermStruct', 'EmTaylorTermStructAlloc1D', 'EmTaylorTermStructArray1D', 'Emit6d', 'EnvelopeRadintsIbs', 'EvaluateArrayIndex', 'EvaluateLogical', 'ExpectThis', 'ExpressionAtomStruct', 'ExpressionAtomStructAlloc1D', 'ExpressionAtomStructArray1D', 'ExpressionStackValue', 'ExpressionStringToStack', 'ExpressionStringToTree', 'ExpressionTreeStruct', 'ExpressionTreeStructAlloc1D', 'ExpressionTreeStructArray1D', 'ExpressionValue', 'FACTORIAL', 'FALSE_', 'FALSE_INT', 'FAMILY_QU', 'FAMILY_SQ', 'FAMILY_X', 'FAMILY_Y', 'FB1', 'FB2', 'FCharArray1D', 'FEEDBACK', 'FFT_3D', 'FIDUCIAL', 'FIDUCIAL_PT', 'FIELDMAP', 'FIELD_AUTOSCALE', 'FIELD_CALC', 'FIELD_LORD', 'FIELD_MASTER', 'FIELD_OVERLAPS', 'FIELD_SCALE_FACTOR', 'FIELD_X', 'FIELD_Y', 'FILLED_ARROW_HEAD', 'FINAL_CHARGE', 'FINE_STRUCTURE_CONSTANT', 'FINT', 'FINTX', 'FIRST_PASS', 'FIRST_TRACK_EDGE', 'FIXED_STEP_RUNGE_KUTTA', 'FIXED_STEP_TIME_RUNGE_KUTTA', 'FIXER', 'FLEXIBLE', 'FLOOR', 'FLOOR_POSITION_GROUP', 'FLOOR_SHIFT', 'FOCAL_STRENGTH', 'FOIL', 'FORK', 'FORWARD_DIFFRACTED', 'FOURPI', 'FQ1', 'FQ2', 'FREE', 'FREQUENCIES', 'FRINGE_AT', 'FRINGE_TYPE', 'FULL', 'FUNCTION', 'FUNC_PARENS', 'F_FACTOR', 'Fibre', 'FindElementEnds', 'FindMatchingFieldmap', 'FloorAnglesToWMat', 'FloorPositionStruct', 'FloorWMatToAngles', 'FormDigestedBmadFileName', 'FourierAmplitude', 'G', 'GANG', 'GAP', 'GAUSSIAN', 'GBendingStrengthFromEmField', 'GEN_GRAD_MAP', 'GEOMETRY', 'GIRDER', 'GIRDER_LORD', 'GKICKER', 'GOVERNOR', 'GRADIENT', 'GRADIENT_ERR', 'GRADIENT_TOT', 'GRAZE_ANGLE', 'GRAZE_ANGLE_IN', 'GRAZE_ANGLE_OUT', 'GREEN', 'GRID_FIELD', 'GROUP', 'GROUP_LORD', 'G_ERR', 'G_MAX', 'G_TOT', 'GenGrad1Struct', 'GenGrad1StructAlloc1D', 'GenGrad1StructArray1D', 'GenGradMapStruct', 'GenGradMapStructAlloc1D', 'GenGradMapStructArray1D', 'GetEmitFromSigmaMat', 'GptToParticleBunch', 'GridBeamInitStruct', 'GridBeamInitStructAlloc1D', 'GridBeamInitStructArray1D', 'GridFieldPt1Struct', 'GridFieldPt1StructArray3D', 'GridFieldPtStruct', 'GridFieldStruct', 'GridFieldStructAlloc1D', 'GridFieldStructArray1D', 'H1', 'H2', 'HARD_EDGE_ONLY', 'HARMON', 'HARMON_MASTER', 'HATCHED', 'HDF5', 'HELICAL_MODEL', 'HELION', 'HGAP', 'HGAPX', 'HIGHLAND', 'HIGH_ENERGY_SPACE_CHARGE_ON', 'HKICK', 'HKICKER', 'HORIZONTALLY_PURE', 'HYBRID', 'HYPER_X', 'HYPER_XY', 'HYPER_Y', 'H_BAR_PLANCK', 'H_DISPLACE', 'H_PLANCK', 'HighEnergySpaceChargeStruct', 'IDENTITY', 'IMPACTT', 'INCLUDE_KICKS', 'INCOHERENT', 'INHERIT_FROM_FORK', 'INIT_NEEDED', 'INPUT_ELE', 'INSIDE', 'INSTRUMENT', 'INT', 'INTEGRATOR_ORDER', 'INTERPOLATION', 'INT_GARBAGE', 'INVALID', 'INVALID_NAME', 'IN_BETWEEN', 'IN_STOP_BAND', 'IS_INTEGER', 'IS_LOGICAL', 'IS_MOSAIC', 'IS_ON', 'IS_REAL', 'IS_STRING', 'IS_STRUCT', 'IS_SWITCH', 'IX_BRANCH', 'IX_FIXER', 'IX_SLICE_SLAVE', 'IX_TO_BRANCH', 'IX_TO_ELEMENT', 'InitBeamDistribution', 'InitBunchDistribution', 'InitPhotonIntegProb', 'Int8Alloc1D', 'Int8Array1D', 'IntAlloc1D', 'IntArray1D', 'IntArray2D', 'IntArray3D', 'Interval1CoefStruct', 'Interval1CoefStructAlloc1D', 'Interval1CoefStructArray1D', 'K0L', 'K0SL', 'K1', 'K1X', 'K1Y', 'K2', 'K21L', 'K21SL', 'K3', 'KICK', 'KICK0', 'KICKER', 'KS', 'KX', 'KickVectorCalc', 'KnotInterpolate', 'KvBeamInitStruct', 'L', 'LATTICE', 'LATTICE_TYPE', 'LB_SUBATOMIC', 'LCAVITY', 'LEADING', 'LENS', 'LIGHT_GREEN', 'LIGHT_GREY', 'LINEAR', 'LINEAR_EDGE', 'LIVE_BRANCH', 'LOG', 'LONGITUDINAL_MODE', 'LORD_DEFINED', 'LORD_PAD1', 'LORD_PAD2', 'LOST', 'LOST_NEG_X', 'LOST_NEG_X_APERTURE', 'LOST_NEG_Y', 'LOST_NEG_Y_APERTURE', 'LOST_POS_X', 'LOST_POS_X_APERTURE', 'LOST_POS_Y', 'LOST_POS_Y_APERTURE', 'LOST_PZ', 'LOST_PZ_APERTURE', 'LOST_Z', 'LOST_Z_APERTURE', 'LR_FREQ_SPREAD', 'LR_SELF_WAKE_ON', 'LR_WAKE', 'LR_WAKE_FILE', 'LYNCH_DAHL', 'L_ACTIVE', 'L_CHORD', 'L_FUNC_PARENS', 'L_PARENS', 'L_PERIOD', 'L_RECTANGLE', 'L_SAGITTA', 'L_SOFT_EDGE', 'LatEleLocStruct', 'LatEleLocStructAlloc1D', 'LatEleLocStructArray1D', 'LatEleOrder1Struct', 'LatEleOrder1StructAlloc1D', 'LatEleOrder1StructArray1D', 'LatEleOrderArrayStruct', 'LatEleOrderArrayStructAlloc1D', 'LatEleOrderArrayStructArray1D', 'LatEleOrderStruct', 'LatParamStruct', 'LatStruct', 'LatStructAlloc1D', 'LatStructArray1D', 'Layout', 'LinacNormalModeStruct', 'LinearCoef', 'LoadParseLine', 'MACHINE', 'MAD', 'MAGENTA', 'MAGNETIC', 'MAGNUS', 'MARKER', 'MASK', 'MASK_PLATE', 'MASS_OF', 'MAT6_CALC_METHOD', 'MAT6_GROUP', 'MATCH', 'MATCH_ORBIT', 'MATCH_TWISS', 'MATERIAL_TYPE', 'MATRIX', 'MATRIX_KICK', 'MAX', 'MAX_FRINGE_ORDER', 'MAYBE', 'MEAN_EXCITATION_ENERGY', 'MIN', 'MINOR_SLAVE', 'MINUS', 'MIRROR', 'MIXED', 'MODE', 'MODE_FLIP', 'MODE_FLIP0', 'MODE_FLIP1', 'MODE_FLIP_STORED', 'MODULO', 'MONITOR', 'MOSAIC_ANGLE_RMS_IN_PLANE', 'MOSAIC_ANGLE_RMS_OUT_PLANE', 'MOSAIC_DIFFRACTION_NUM', 'MOSAIC_THICKNESS', 'MOVING_FORWARD', 'MULTILAYER_MIRROR', 'MULTIPASS_LORD', 'MULTIPASS_REF_ENERGY', 'MULTIPASS_SLAVE', 'MULTIPOLE', 'MULTIPOLES_ON', 'MULTIPOLE_SOURCE', 'MULTIPOLE_SYMMETRY', 'MUON', 'MU_0_VAC', 'M_DEUTERON', 'M_ELECTRON', 'M_HELION', 'M_MUON', 'M_NEUTRON', 'M_PION_0', 'M_PION_CHARGED', 'M_PROTON', 'MadEnergyStruct', 'MadMapStruct', 'MadTmfoc', 'MakeGMats', 'MakeHvbp', 'MakeMadMap', 'MakeMat6', 'MakeMat6Bmad', 'MakeMat6BmadPhoton', 'MakeMat6Tracking', 'MakeN', 'MakePbrh', 'MakeSmatFromAbc', 'MakeVMats', 'MatSympDecouple', 'MatchEleToMat6', 'Mode3Struct', 'ModeInfoStruct', 'MultiTurnTrackingAnalysis', 'Multipole1AbToKt', 'Multipole1KtToAb', 'MultipoleEleToAb', 'NAVY_BLUE', 'NEUTRON', 'NEW_BRANCH', 'NINT', 'NO', 'NOISE', 'NONE', 'NONE_PT', 'NON_SYMPLECTIC', 'NORMAL', 'NOT_A_LORD', 'NOT_SET', 'NOWHERE', 'NO_APERTURE', 'NO_CLOSED_ORBIT', 'NO_COMPLETE_ORBIT', 'NO_DELIM', 'NO_END', 'NO_END_MARKER', 'NO_FIELD', 'NO_FILL', 'NO_MISALIGNMENT', 'NULL_ELE', 'NUMERIC', 'NUM_ELE_ATTRIB', 'NUM_ELE_ATTRIB_EXTENDED', 'NUM_STEPS', 'N_AVOGADRO', 'N_CELL', 'N_KEY', 'N_PART', 'N_PARTICLE', 'N_PERIOD', 'N_PLANE', 'N_POLE_MAXX', 'N_RF_STEPS', 'N_SAMPLE', 'N_SLICE', 'N_SLICE_SPLINE', 'N_VAR_MAX', 'NametableStruct', 'NormalFormTaylors', 'NormalMode3Calc', 'NormalModesStruct', 'OCTUPOLE', 'OFF', 'OFFSET_MOVES_APERTURE', 'OFF_AND_SAVE', 'OK', 'OLD_ASCII', 'OLD_CONTROL_VAR', 'OLD_CONTROL_VAR_OFFSET', 'OLD_INTEGRATOR', 'ON', 'ONE_DIM', 'ONE_FILE', 'OPAL', 'OPAQUE', 'OPEN', 'ORANGE', 'ORIGIN_ELE', 'ORIGIN_ELE_REF_PT', 'OSC_AMPLITUDE', 'OUTLINE_ARROW_HEAD', 'OUTPUT_ELE', 'OUTSIDE', 'OVERLAY', 'OVERLAY_LORD', 'OdeintBmad', 'OdeintBmadTime', 'OffsetParticle', 'OpenBinaryFile', 'OrbitAmplitudeCalc', 'OrbitTooLarge', 'OrderEvecsByNSimilarity', 'P0C', 'P0C_REF_INIT', 'P0C_SET', 'P0C_START', 'P88', 'P89', 'P90', 'PARENS', 'PARTICLE', 'PATCH', 'PATCH_PROBLEM', 'PC_OUT_MAX', 'PC_OUT_MIN', 'PC_STRONG', 'PENDELLOSUNG_PERIOD_PI', 'PENDELLOSUNG_PERIOD_SIGMA', 'PHASE_TROMBONE', 'PHASE_X', 'PHASE_Y', 'PHI0', 'PHI0_AUTOSCALE', 'PHI0_ERR', 'PHI0_MAX', 'PHI0_MULTIPASS', 'PHI_A', 'PHI_A_STORED', 'PHI_B', 'PHI_B_STORED', 'PHI_POSITION', 'PHOTON', 'PHOTON_FORK', 'PHOTON_INIT', 'PHOTON_TYPE', 'PHYSICAL_SOURCE', 'PI', 'PICKUP', 'PION_0', 'PION_MINUS', 'PION_PLUS', 'PIPE', 'PIXEL', 'PLANAR_MODEL', 'PLUS', 'PLUS_SYM', 'POLARITY', 'POLARIZED', 'POSITRON', 'POWER', 'PRE_BORN', 'PRINT_PAGE_LONG_LEN', 'PRINT_PAGE_SHORT_LEN', 'PROTON', 'PROVISIONAL', 'PSI_ANGLE', 'PSI_POSITION', 'PTC_CANONICAL_COORDS', 'PTC_FIELD_GEOMETRY', 'PTC_FRINGE_GEOMETRY', 'PTC_INTEGRATION_TYPE', 'PTC_STANDARD', 'PURPLE', 'PX', 'PX0', 'PX1', 'PX_APERTURE_CENTER', 'PX_APERTURE_WIDTH2', 'PX_KICK', 'PX_REF', 'PX_STORED', 'PY', 'PY0', 'PY1', 'PY_APERTURE_CENTER', 'PY_APERTURE_WIDTH2', 'PY_KICK', 'PY_REF', 'PY_STORED', 'PZ', 'PZ0', 'PZ1', 'PZ_APERTURE_CENTER', 'PZ_APERTURE_WIDTH2', 'PZ_KICK', 'PZ_REF', 'PZ_STORED', 'P_MASS', 'ParseIntegerList2', 'ParseRealList', 'ParseRealList2', 'ParserFastComplexRead', 'ParserFastRealRead', 'PhotonAbsorptionAndPhaseShift', 'PhotonElementStruct', 'PhotonMaterialStruct', 'PhotonReflectSurfaceStruct', 'PhotonReflectTableStruct', 'PhotonReflectTableStructAlloc1D', 'PhotonReflectTableStructArray1D', 'PhotonReflection', 'PhotonReflectivity', 'PhotonTargetStruct', 'PixelDetecStruct', 'PixelPtStruct', 'PixelPtStructArray2D', 'PointerToElementAtS', 'PointerToFieldEle', 'PointerToGirder', 'PointerToLord', 'PointerToMultipassLord', 'PointerToSlave', 'PointerToSuperLord', 'PointerToWakeEle', 'PointerToWall3d', 'PreTrackerStruct', 'ProjectEmitToXyz', 'PtcCheckForLostParticle', 'PtcEmitCalc', 'PtcNormalFormStruct', 'PtcSpinCalc', 'PtcTrackAll', 'QUADRUPOLE', 'QUAD_TILT', 'QpAxisStruct', 'QpLegendStruct', 'QpLineStruct', 'QpPointStruct', 'QpRectStruct', 'QpSymbolStruct', 'QuatToAxisAngle', 'R0_ELEC', 'R0_MAG', 'RADIANS', 'RADIANS_OVER_2PI', 'RADIATION_LENGTH', 'RADIATION_LENGTH_USED', 'RADIUS', 'RAD_INT_GROUP', 'RAMPER', 'RAMPER_LORD', 'RAN', 'RAN_GAUSS', 'RAN_SEED', 'RBEND', 'RCOLLIMATOR', 'REAL_GARBAGE', 'RECALC', 'RECTANGULAR', 'RED', 'REDDISH_PURPLE', 'RED_CROSS_SYM', 'REFERENCE', 'REFER_TO_LORDS', 'REFLECTION', 'REFLECTIVITY_TABLE', 'REF_CAP_GAMMA', 'REF_COORDS', 'REF_ENERGY_GROUP', 'REF_ORBIT', 'REF_ORBIT_FOLLOWS', 'REF_ORIGIN', 'REF_PARTICLE', 'REF_SPECIES', 'REF_TILT', 'REF_TILT_TOT', 'REF_TIME', 'REF_TIME_START', 'REF_WAVELENGTH', 'RELATIVE', 'REPETITION_FREQUENCY', 'RESTORE_STATE', 'RFCAVITY', 'RF_BEND', 'RF_FREQUENCY', 'RF_WAVELENGTH', 'RHO', 'RIPKEN_KICK', 'RMS', 'ROLL', 'ROLL_TOT', 'ROOT', 'ROTATIONALLY_SYMMETRIC_RZ', 'RUNGE_KUTTA', 'R_E', 'R_P', 'R_PARENS', 'R_SOLENOID', 'Rad1DampAndStocMats', 'RadDampAndStocMats', 'RadInt1Struct', 'RadInt1StructAlloc1D', 'RadInt1StructArray1D', 'RadIntAllEleStruct', 'RadIntBranchStruct', 'RadIntBranchStructAlloc1D', 'RadIntBranchStructArray1D', 'RadMapEleStruct', 'RadMapStruct', 'RadiationIntegrals', 'RamperLordStruct', 'RamperLordStructAlloc1D', 'RamperLordStructArray1D', 'RamperValue', 'RanGaussConverter', 'RandomStateStruct', 'ReadBeamAscii', 'ReadBeamFile', 'Real16Alloc1D', 'Real16Array1D', 'RealAlloc1D', 'RealArray1D', 'RealArray2D', 'RealArray3D', 'ResonanceHStruct', 'ResonanceHStructAlloc1D', 'ResonanceHStructArray1D', 'RfEleStruct', 'RfStairStepStruct', 'RfStairStepStructAlloc1D', 'RfStairStepStructArray1D', 'RmsValue', 'SAD_FULL', 'SAD_MULT', 'SAMPLE', 'SAVE_STATE', 'SBEND', 'SCALE_FIELD_TO_ONE', 'SCALE_MULTIPOLES', 'SCATTER_METHOD', 'SCATTER_TEST', 'SEC', 'SECOND_TRACK_EDGE', 'SECTOR', 'SEXTUPOLE', 'SHIFTED_TO_RELATIVE', 'SHORT', 'SIGN', 'SIG_E', 'SIG_E2', 'SIG_PZ', 'SIG_VX', 'SIG_VY', 'SIG_X', 'SIG_Y', 'SIG_Z', 'SIN', 'SINC', 'SINH', 'SLAVE', 'SLICE', 'SLICE_SLAVE', 'SMALL_REL_CHANGE', 'SOFT_EDGE', 'SOFT_EDGE_ONLY', 'SOLENOID', 'SOLID', 'SOLID_FILL', 'SOL_QUAD', 'SPACE_CHARGE_METHOD', 'SPATIAL_DISTRIBUTION', 'SPECIES', 'SPECIES_CONST', 'SPECIES_OUT', 'SPECIES_STRONG', 'SPHERICAL', 'SPIN_DN_DPZ_X', 'SPIN_DN_DPZ_Y', 'SPIN_DN_DPZ_Z', 'SPIN_FRINGE_ON', 'SPIN_INTEGRATION', 'SPIN_TRACKING_METHOD', 'SPIN_X', 'SPIN_X_STORED', 'SPIN_Y', 'SPIN_Y_STORED', 'SPIN_Z', 'SPIN_Z_STORED', 'SPLIT_ID', 'SPRINT', 'SQRT', 'SQRT_2', 'SQRT_3', 'SQUARE_BRACKETS', 'SQUARE_CONCAVE_SYM', 'SQUARE_FILLED_SYM', 'SQUARE_SYM', 'SR_WAKE', 'SR_WAKE_FILE', 'STALE', 'STANDARD', 'STANDING_WAVE', 'STAR5_FILLED_SYM', 'STAR5_SYM', 'START_EDGE', 'START_END', 'STAR_OF_DAVID_SYM', 'STEADY_STATE_3D', 'STRAIGHT', 'SUM', 'SUPERIMPOSE', 'SUPER_LORD', 'SUPER_OFFSET', 'SUPER_OK', 'SUPER_SLAVE', 'SURFACE', 'SYMMETRY', 'SYMPLECTIFY', 'SYMP_LIE_BMAD', 'SYMP_LIE_PTC', 'S_ABORT', 'S_AND_FLOOR_POSITION_GROUP', 'S_BLANK', 'S_DINFO', 'S_DWARN', 'S_ERROR', 'S_FATAL', 'S_IMPORTANT', 'S_INFO', 'S_LONG', 'S_NOOUTPUT', 'S_PLANE', 'S_POSITION', 'S_POSITION_GROUP', 'S_SUCCESS', 'S_TWISS_REF', 'S_WARN', 'SetEleAttribute', 'SetEleStatusStale', 'SpaceChargeCommonStruct', 'SpinAxisStruct', 'SpinDnDpzFromMat8', 'SpinDnDpzFromQmap', 'SpinMat8ResonanceStrengths', 'SpinMatToEigen', 'SpinOrbitMap1Struct', 'SpinOrbitMap1StructAlloc1D', 'SpinOrbitMap1StructArray1D', 'SpinPolarStruct', 'SpinQuatResonanceStrengths', 'SplineAkimaInterpolate', 'SplineEvaluate', 'SplineStruct', 'SplineStructAlloc1D', 'SplineStructArray1D', 'SplitLat', 'StrongBeamSigmaCalc', 'StrongBeamStruct', 'SummationRdtStruct', 'SummationRdtStructAlloc1D', 'SummationRdtStructArray1D', 'SuperBicubicInterpolation', 'SuperPolint', 'SurfaceCurvatureStruct', 'SurfaceDisplacementPtStruct', 'SurfaceDisplacementPtStructArray2D', 'SurfaceDisplacementStruct', 'SurfaceHMisalignPtStruct', 'SurfaceHMisalignPtStructArray2D', 'SurfaceHMisalignStruct', 'SurfaceSegmentedPtStruct', 'SurfaceSegmentedPtStructArray2D', 'SurfaceSegmentedStruct', 'T', 'T0', 'T21', 'T6ToB123', 'TAN', 'TANH', 'TAYLOR', 'TAYLOR_MAP_INCLUDES_OFFSETS', 'TAYLOR_OFFSET', 'TAYLOR_ORDER', 'TERM', 'THETA_POSITION', 'THICKNESS', 'THICK_MULTIPOLE', 'TILT', 'TILT_CALIB', 'TILT_CORR', 'TILT_TOT', 'TIMES', 'TIMES_SYM', 'TIME_RUNGE_KUTTA', 'TO_ELEMENT', 'TO_LINE', 'TRACKING', 'TRACKING_METHOD', 'TRAILING', 'TRANSMISSION', 'TRANSPARENT', 'TRANSVERSE_KICK', 'TRANSVERSE_SIGMA_CUT', 'TRAVELING_WAVE', 'TRIANGLE_FILLED_SYM', 'TRIANGLE_SYM', 'TRUE_', 'TRUE_INT', 'TT', 'TWISS_PROPAGATE_FAILURE', 'TWOPI', 'TYPE', 'T_OFFSET', 'TaoBeamBranchStruct', 'TaoBeamUniStruct', 'TaoBuildingWallOrientationStruct', 'TaoBuildingWallPointStruct', 'TaoBuildingWallPointStructAlloc1D', 'TaoBuildingWallPointStructArray1D', 'TaoBuildingWallSectionStruct', 'TaoBuildingWallSectionStructAlloc1D', 'TaoBuildingWallSectionStructArray1D', 'TaoBuildingWallStruct', 'TaoCmdHistoryStruct', 'TaoCmdHistoryStructAlloc1D', 'TaoCmdHistoryStructArray1D', 'TaoCommonStruct', 'TaoCurveColorStruct', 'TaoCurveOrbitStruct', 'TaoCurveRmsCalc', 'TaoCurveStruct', 'TaoCurveStructAlloc1D', 'TaoCurveStructArray1D', 'TaoD1DataStruct', 'TaoD1DataStructAlloc1D', 'TaoD1DataStructArray1D', 'TaoD2DataStruct', 'TaoD2DataStructAlloc1D', 'TaoD2DataStructArray1D', 'TaoDataStruct', 'TaoDataStructAlloc1D', 'TaoDataStructArray1D', 'TaoDataVarComponentStruct', 'TaoDataVarComponentStructAlloc1D', 'TaoDataVarComponentStructArray1D', 'TaoDatumIntegrate', 'TaoDrawingStruct', 'TaoDynamicApertureStruct', 'TaoEleGeometryWithMisalignments', 'TaoElePointerStruct', 'TaoElePointerStructAlloc1D', 'TaoElePointerStructArray1D', 'TaoEleShapeInfo', 'TaoEleShapeStruct', 'TaoEleShapeStructAlloc1D', 'TaoEleShapeStructArray1D', 'TaoEvalFloorOrbit', 'TaoEvalNodeStruct', 'TaoEvalNodeStructAlloc1D', 'TaoEvalNodeStructArray1D', 'TaoEvaluateADatum', 'TaoEvaluateDatumAtS', 'TaoExpressionInfoStruct', 'TaoExpressionInfoStructAlloc1D', 'TaoExpressionInfoStructArray1D', 'TaoFindPlotRegion', 'TaoFloorPlanStruct', 'TaoFloorToScreen', 'TaoGetOptVars', 'TaoGlobalStruct', 'TaoGraphSMinMaxCalc', 'TaoGraphStruct', 'TaoGraphStructAlloc1D', 'TaoGraphStructArray1D', 'TaoHistogramStruct', 'TaoInitStruct', 'TaoInjectBeam', 'TaoIsValidName', 'TaoLatSigmaStruct', 'TaoLatSigmaStructAlloc1D', 'TaoLatSigmaStructArray1D', 'TaoLatticeBranchStruct', 'TaoLatticeBranchStructAlloc1D', 'TaoLatticeBranchStructArray1D', 'TaoLatticeCalc', 'TaoLatticeStruct', 'TaoMerit', 'TaoModelBranchStruct', 'TaoModelBranchStructAlloc1D', 'TaoModelBranchStructArray1D', 'TaoModelElementStruct', 'TaoModelElementStructAlloc1D', 'TaoModelElementStructArray1D', 'TaoOpenScratchFile', 'TaoParamValueAtS', 'TaoParseElementParamStr', 'TaoPickUniverse', 'TaoPingScaleStruct', 'TaoPlotCacheStruct', 'TaoPlotCacheStructAlloc1D', 'TaoPlotCacheStructArray1D', 'TaoPlotPageStruct', 'TaoPlotRegionStruct', 'TaoPlotRegionStructAlloc1D', 'TaoPlotRegionStructArray1D', 'TaoPlotStruct', 'TaoPlotStructAlloc1D', 'TaoPlotStructArray1D', 'TaoPointerToDatumEle', 'TaoPointerToEleShape', 'TaoPointerToUniverses', 'TaoScaleGraph', 'TaoSetIntegerValue', 'TaoSetLogicalValue', 'TaoSetQpAxisStruct', 'TaoSetQpPointStruct', 'TaoSetQpRectStruct', 'TaoSetRealValue', 'TaoShapePatternPointStruct', 'TaoShapePatternPointStructAlloc1D', 'TaoShapePatternPointStructArray1D', 'TaoShapePatternStruct', 'TaoShapePatternStructAlloc1D', 'TaoShapePatternStructArray1D', 'TaoSpinDnDpzStruct', 'TaoSpinEleStruct', 'TaoSpinEleStructAlloc1D', 'TaoSpinEleStructArray1D', 'TaoSpinMapStruct', 'TaoSpinPolarizationStruct', 'TaoSubinUniNumber', 'TaoSuperUniverseStruct', 'TaoTitleStruct', 'TaoToPhaseAndCouplingReading', 'TaoToReal', 'TaoTrackingEleIndex', 'TaoUniverseCalcStruct', 'TaoUniversePointerStruct', 'TaoUniversePointerStructAlloc1D', 'TaoUniversePointerStructArray1D', 'TaoUniverseStruct', 'TaoUniverseStructAlloc1D', 'TaoUniverseStructArray1D', 'TaoV1VarStruct', 'TaoV1VarStructAlloc1D', 'TaoV1VarStructArray1D', 'TaoVarSlaveStruct', 'TaoVarSlaveStructAlloc1D', 'TaoVarSlaveStructArray1D', 'TaoVarStruct', 'TaoVarStructAlloc1D', 'TaoVarStructArray1D', 'TaoWaveKickPtStruct', 'TaoWaveKickPtStructAlloc1D', 'TaoWaveKickPtStructArray1D', 'TaoWaveStruct', 'TargetPointStruct', 'TargetPointStructAlloc1D', 'TargetPointStructArray1D', 'TargetRotMats', 'TaylorStruct', 'TaylorStructAlloc1D', 'TaylorStructArray1D', 'TaylorTermStruct', 'TaylorTermStructAlloc1D', 'TaylorTermStructArray1D', 'TestBunchStructScalar', 'TestCharacterScalar', 'TestComplexScalar', 'TestInteger8Scalar', 'TestIntegerScalar', 'TestLogicalScalar', 'TestReal16Scalar', 'TestRealScalar', 'TestSubStruct', 'TestSubStructAlloc1D', 'TestSubStructArray1D', 'TestSubStructArray2D', 'TestSubStructArray3D', 'TestSubSubStruct', 'ToEtaReading', 'ToOrbitReading', 'ToPhaseAndCouplingReading', 'Track1', 'Track1Bmad', 'Track1RungeKutta', 'Track1Spin', 'Track1TimeRungeKutta', 'TrackABeambeam', 'TrackAPatch', 'TrackAZeroLengthElement', 'TrackAll', 'TrackFromSToS', 'TrackPointStruct', 'TrackPointStructAlloc1D', 'TrackPointStructArray1D', 'TrackStruct', 'TrackUntilDead', 'TrackingRadMapSetup', 'TransferMapFromSToS', 'TricubicCmplxCoefStruct', 'TricubicCmplxCoefStructArray3D', 'TricubicCmplxEval', 'Twiss1Propagate', 'TwissAndTrackFromSToS', 'TwissAndTrackIntraEle', 'TwissAtElement', 'TwissFromTracking', 'TwissStruct', 'UB_SUBATOMIC', 'UNARY_MINUS', 'UNARY_PLUS', 'UNDIFFRACTED', 'UNDULATOR', 'UNIFORM', 'UNKNOWN', 'UNPOLARIZED', 'UNSTABLE', 'UNSTABLE_A', 'UNSTABLE_B', 'UPSTREAM', 'UPSTREAM_COORD_DIR', 'UPSTREAM_END', 'USER_SET', 'USER_SETS_LENGTH', 'USE_REFLECTIVITY_TABLE', 'V1_UNITCELL', 'V2_UNITCELL', 'VAL1', 'VAL10', 'VAL11', 'VAL12', 'VAL2', 'VAL3', 'VAL4', 'VAL5', 'VAL6', 'VAL7', 'VAL8', 'VAL9', 'VAR', 'VARIABLE', 'VAR_OFFSET', 'VELOCITY_DISTRIBUTION', 'VERTICALLY_PURE', 'VERTICAL_BAR', 'VERTICAL_KICK', 'VKICK', 'VKICKER', 'VOLTAGE', 'VOLTAGE_ERR', 'VOLTAGE_TOT', 'V_DISPLACE', 'V_UNITCELL', 'ValueOfAttribute', 'WALL', 'WALL3D', 'WALL_END', 'WALL_START', 'WALL_TRANSITION', 'WHITE', 'WIGGLER', 'WIGGLERS', 'WMatToAxisAngle', 'WRAP_SUPERIMPOSE', 'WakeLrModeStruct', 'WakeLrModeStructAlloc1D', 'WakeLrModeStructArray1D', 'WakeLrStruct', 'WakeSrModeStruct', 'WakeSrModeStructAlloc1D', 'WakeSrModeStructArray1D', 'WakeSrStruct', 'WakeSrZLongStruct', 'WakeStruct', 'Wall3DSectionStruct', 'Wall3DSectionStructAlloc1D', 'Wall3DSectionStructArray1D', 'Wall3DStruct', 'Wall3DStructAlloc1D', 'Wall3DStructArray1D', 'Wall3DVertexStruct', 'Wall3DVertexStructAlloc1D', 'Wall3DVertexStructArray1D', 'Wall3dDRadius', 'WriteAstraFieldGridFile', 'WriteAstraFieldGridFile3d', 'WriteGptFieldGridFile1d', 'WriteGptFieldGridFile2d', 'WriteGptFieldGridFile3d', 'WriteLatticeInScibmad', 'WriteOpalFieldGridFile', 'X', 'X0', 'X1', 'X1_EDGE', 'X1_LIMIT', 'X2_EDGE', 'X2_LIMIT', 'XFER_MAT_CALC_FAILURE', 'XY', 'XYZ', 'XY_AXIS', 'X_AXIS', 'X_DISPERSION_CALIB', 'X_DISPERSION_ERR', 'X_GAIN_CALIB', 'X_GAIN_ERR', 'X_INVARIANT', 'X_KICK', 'X_KNOT', 'X_LEADING', 'X_LIMIT', 'X_OFFSET', 'X_OFFSET_CALIB', 'X_OFFSET_MULT', 'X_OFFSET_TOT', 'X_PITCH', 'X_PITCH_TOT', 'X_PLANE', 'X_POLARIZATION', 'X_POSITION', 'X_QUAD', 'X_REF', 'X_STORED', 'X_SYMBOL_SYM', 'X_TRAILING', 'XyDispStruct', 'Y', 'Y0', 'Y1', 'Y1_EDGE', 'Y1_LIMIT', 'Y2_EDGE', 'Y2_LIMIT', 'YELLOW', 'YELLOW_GREEN', 'YES', 'Y_AXIS', 'Y_DISPERSION_CALIB', 'Y_DISPERSION_ERR', 'Y_GAIN_CALIB', 'Y_GAIN_ERR', 'Y_KICK', 'Y_KNOT', 'Y_LEADING', 'Y_LIMIT', 'Y_OFFSET', 'Y_OFFSET_CALIB', 'Y_OFFSET_MULT', 'Y_OFFSET_TOT', 'Y_PITCH', 'Y_PITCH_TOT', 'Y_PLANE', 'Y_POLARIZATION', 'Y_POSITION', 'Y_QUAD', 'Y_REF', 'Y_STORED', 'Y_TRAILING', 'Z', 'Z0', 'Z1', 'ZAtSurface', 'ZERO', 'Z_APERTURE_CENTER', 'Z_APERTURE_WIDTH2', 'Z_AXIS', 'Z_KICK', 'Z_OFFSET', 'Z_OFFSET_TOT', 'Z_PLANE', 'Z_POSITION', 'Z_REF', 'Z_STORED', 'ab_multipole_kick', 'ab_multipole_kicks', 'absolute_photon_position', 'absolute_time_tracking', 'ac_kicker_amp', 'action_to_xyz', 'add_lattice_control_structs', 'add_superimpose', 'add_this_multipass', 'add_this_taylor_term', 'adjust_super_slave_names', 'allocate_branch_array', 'allocate_lat_ele_array', 'allocate_thread_states', 'angle_between_polars', 'angle_to_canonical_coords', 'anomalous_moment_of', 'antiparticle', 'aperture_bookkeeper', 'apfft', 'apfft_corr', 'apfft_ext', 'apply_all_rampers', 'apply_energy_kick', 'apply_patch_to_ptc_fibre', 'apply_rampers_to_slave', 'array_re_str', 'asinc', 'assert_equal', 'astra_max_field_reference', 'at_this_ele_end', 'atomic_number', 'atomic_species_id', 'attribute_bookkeeper', 'attribute_free', 'attribute_index', 'attribute_name', 'attribute_type', 'attribute_units', 'autoscale_phase_and_amp', 'average_twiss', 'axis_angle_to_quat', 'axis_angle_to_w_mat', 'bbi_kick', 'bbi_slice_calc', 'bbu_add_a_bunch', 'bbu_hom_voltage_calc', 'bbu_remove_head_bunch', 'bbu_setup', 'bbu_track_a_stage', 'bbu_track_all', 'beam_envelope_ibs', 'beam_equal_beam', 'beam_init_setup', 'beam_tilts', 'beambeam_fibre_setup', 'bend_edge_kick', 'bend_exact_multipole_field', 'bend_length_has_been_set', 'bend_photon_e_rel_init', 'bend_photon_energy_integ_prob', 'bend_photon_energy_normalized_probability', 'bend_photon_init', 'bend_photon_polarization_init', 'bend_photon_vert_angle_init', 'bend_shift', 'bend_vert_angle_integ_prob', 'bicubic_cmplx_eval', 'bin_index', 'bin_x_center', 'bit_set', 'bl_via_vlassov', 'bmad_parser', 'bmad_parser2', 'bmad_patch_parameters_to_ptc', 'bp_set_ran_status', 'bracket_index_for_spline', 'branch_equal_branch', 'branch_name', 'branch_to_ptc_m_u', 'bunch_equal_bunch', 'c_to_cbar', 'calc_bunch_params', 'calc_bunch_params_slice', 'calc_bunch_params_z_slice', 'calc_bunch_sigma_matrix_etc', 'calc_emittances_and_twiss_from_sigma_matrix', 'calc_file_number', 'calc_spin_params', 'calc_super_slave_key', 'calc_wall_radius', 'calc_z_tune', 'canonical_to_angle_coords', 'cbar_to_c', 'change_file_number', 'charge_of', 'charge_to_mass_of', 'check_aperture_limit', 'check_controller_controls', 'check_for_superimpose_problem', 'check_if_s_in_bounds', 'check_rf_freq', 'choose_quads_for_set_tune', 'chrom_calc', 'chrom_tune', 'classical_radius', 'clear_lat_1turn_mats', 'clear_taylor_maps_from_elements', 'closed_orbit_calc', 'closed_orbit_from_tracking', 'cmplx_re_str', 'coarse_frequency_estimate', 'combine_consecutive_elements', 'complex_error_function', 'complex_taylor_clean', 'complex_taylor_coef', 'complex_taylor_equal_complex_taylor', 'complex_taylor_exponent_index', 'complex_taylor_make_unit', 'complex_taylor_to_mat6', 'complex_taylors_equal_complex_taylors', 'compute_slave_coupler', 'concat_ele_taylor', 'concat_taylor', 'concat_transfer_mat', 'control_bookkeeper', 'convert_bend_exact_multipole', 'convert_coords', 'convert_field_ele_to_lab', 'convert_local_cartesian_to_local_curvilinear', 'convert_local_curvilinear_to_local_cartesian', 'convert_particle_coordinates_s_to_t', 'convert_particle_coordinates_t_to_s', 'convert_pc_to', 'convert_total_energy_to', 'converter_distribution_parser', 'coord_equal_coord', 'coord_state_name', 'coords_body_to_local', 'coords_body_to_rel_exit', 'coords_curvilinear_to_floor', 'coords_floor_to_curvilinear', 'coords_floor_to_local_curvilinear', 'coords_floor_to_relative', 'coords_local_curvilinear_to_body', 'coords_local_curvilinear_to_floor', 'coords_relative_to_floor', 'cos_one', 'cosc', 'coulombfun', 'count_lines_in_file', 'create_a_spline', 'create_concatenated_wall3d', 'create_element_slice', 'create_field_overlap', 'create_girder', 'create_group', 'create_lat_ele_nametable', 'create_overlay', 'create_planar_wiggler_model', 'create_ramper', 'create_sol_quad_model', 'create_unique_ele_names', 'create_wiggler_cartesian_map', 'cross_product', 'crystal_attribute_bookkeeper', 'crystal_h_misalign', 'crystal_type_to_crystal_params', 'custom_attribute_ubound_index', 'damping_matrix_d', 'date_and_time_stamp', 'deallocate_ele_pointers', 'deallocate_expression_tree', 'deallocate_lat_pointers', 'default_tracking_species', 'destfixedwindowls', 'detab', 'detector_pixel_pt', 'diffraction_plate_or_mask_hit_spot', 'diffusion_matrix_b', 'display_size_and_resolution', 'distance_to_aperture', 'dj_bessel', 'djb_hash', 'djb_str_hash', 'do_mode_flip', 'downcase_string', 'dpc_given_de', 'drift_and_pipe_track_methods_adjustment', 'drift_multipass_name_correction', 'drift_orbit_time', 'drift_particle_to_s', 'drift_particle_to_t', 'dspline_len', 'dynamic_aperture_point', 'dynamic_aperture_scan', 'e_accel_field', 'e_crit_photon', 'eigen_decomp_6mat', 'ele_compute_ref_energy_and_time', 'ele_equal_ele', 'ele_equals_ele', 'ele_finalizer', 'ele_full_name', 'ele_geometry', 'ele_geometry_with_misalignments', 'ele_has_constant_ds_dt_ref', 'ele_has_nonzero_kick', 'ele_has_nonzero_offset', 'ele_is_monitor', 'ele_loc', 'ele_loc_name', 'ele_misalignment_l_s_calc', 'ele_nametable_index', 'ele_order_calc', 'ele_reference_energy_correction', 'ele_rf_step_index', 'ele_to_fibre', 'ele_to_ptc_magnetic_bn_an', 'ele_to_spin_taylor', 'ele_to_taylor', 'ele_unique_name', 'ele_value_has_changed', 'ele_vec_equal_ele_vec', 'elec_multipole_field', 'element_at_s', 'element_slice_iterator', 'ellipinc_test', 'em_field_calc', 'em_field_derivatives', 'em_field_kick_vector_time', 'em_field_plus_em_field', 'em_taylor_equal_em_taylor', 'em_taylors_equal_em_taylors', 'emit_6d', 'end_akima_spline_calc', 'entering_element', 'envelope_radints', 'envelope_radints_ibs', 'eq_ac_kicker', 'eq_ac_kicker_freq', 'eq_ac_kicker_time', 'eq_anormal_mode', 'eq_aperture_param', 'eq_aperture_point', 'eq_aperture_scan', 'eq_beam', 'eq_beam_init', 'eq_bmad_common', 'eq_bookkeeping_state', 'eq_bpm_phase_coupling', 'eq_branch', 'eq_bunch', 'eq_bunch_params', 'eq_cartesian_map', 'eq_cartesian_map_term', 'eq_cartesian_map_term1', 'eq_complex_taylor', 'eq_complex_taylor_term', 'eq_control', 'eq_control_ramp1', 'eq_control_var1', 'eq_controller', 'eq_coord', 'eq_coord_array', 'eq_cylindrical_map', 'eq_cylindrical_map_term', 'eq_cylindrical_map_term1', 'eq_ele', 'eq_ellipse_beam_init', 'eq_em_field', 'eq_em_taylor', 'eq_em_taylor_term', 'eq_expression_atom', 'eq_floor_position', 'eq_gen_grad1', 'eq_gen_grad_map', 'eq_grid_beam_init', 'eq_grid_field', 'eq_grid_field_pt', 'eq_grid_field_pt1', 'eq_high_energy_space_charge', 'eq_interval1_coef', 'eq_kv_beam_init', 'eq_lat', 'eq_lat_ele_loc', 'eq_lat_param', 'eq_linac_normal_mode', 'eq_mode3', 'eq_mode_info', 'eq_normal_modes', 'eq_photon_element', 'eq_photon_material', 'eq_photon_reflect_surface', 'eq_photon_reflect_table', 'eq_photon_target', 'eq_pixel_detec', 'eq_pixel_pt', 'eq_pre_tracker', 'eq_rad_int1', 'eq_rad_int_all_ele', 'eq_rad_int_branch', 'eq_rad_map', 'eq_rad_map_ele', 'eq_ramper_lord', 'eq_space_charge_common', 'eq_spin_polar', 'eq_spline', 'eq_strong_beam', 'eq_surface_curvature', 'eq_surface_displacement', 'eq_surface_displacement_pt', 'eq_surface_h_misalign', 'eq_surface_h_misalign_pt', 'eq_surface_segmented', 'eq_surface_segmented_pt', 'eq_target_point', 'eq_taylor', 'eq_taylor_term', 'eq_track', 'eq_track_point', 'eq_twiss', 'eq_wake', 'eq_wake_lr', 'eq_wake_lr_mode', 'eq_wake_sr', 'eq_wake_sr_mode', 'eq_wake_sr_z_long', 'eq_wall3d', 'eq_wall3d_section', 'eq_wall3d_vertex', 'eq_xy_disp', 'equal_sign_here', 'equivalent_taylor_attributes', 'err_exit', 'etdiv', 'evaluate_array_index', 'evaluate_logical', 'exact_bend_edge_kick', 'exp_bessi0', 'expect_one_of', 'expect_this', 'expression_stack_to_string', 'expression_stack_value', 'expression_string_to_stack', 'expression_string_to_tree', 'expression_tree_to_string', 'expression_value', 'factorial', 'faddeeva_function', 'fft1', 'fft_1d', 'fibre_to_ele', 'field_attribute_free', 'file_directorizer', 'file_get', 'file_get_open', 'file_suffixer', 'finalize_reflectivity_table', 'find_element_ends', 'find_fwhm', 'find_location', 'find_matching_fieldmap', 'find_normalization', 'fine_frequency_estimate', 'fixedwindowls', 'floor_angles_to_w_mat', 'floor_w_mat_to_angles', 'form_complex_taylor', 'form_digested_bmad_file_name', 'fourier_amplitude', 'fringe_here', 'g_bend_from_em_field', 'g_bending_strength_from_em_field', 'g_integrals_calc', 'gamma_ref', 'gen_complete_elliptic', 'gen_grad1_to_em_taylor', 'gen_grad_at_s_to_em_taylor', 'gen_grad_field', 'get_bl_from_fwhm', 'get_bmad_com', 'get_called_file', 'get_emit_from_sigma_mat', 'get_file_number', 'get_file_time_stamp', 'get_next_word', 'get_slave_list', 'get_space_charge_com', 'get_super_universe', 'gpt_field_grid_scaling', 'gpt_max_field_reference', 'gpt_to_particle_bunch', 'gradient_shift_sr_wake', 'grid_field_interpolate', 'hanhan', 'hard_multipole_edge_kick', 'has_attribute', 'has_curvature', 'has_orientation_attributes', 'hdf5_write_beam', 'hdf5_write_grid_field', 'hom_voltage', 'hwang_bend_edge_kick', 'i_bessel', 'i_bessel_extended', 'ibs_matrix_c', 'igfcoulombfun', 'igfexfun', 'igfeyfun', 'igfezfun', 'increment_file_number', 'index_nocase', 'init_attribute_name1', 'init_attribute_name_array', 'init_beam_distribution', 'init_bmad', 'init_bmad_parser_common', 'init_bunch_distribution', 'init_complex_taylor_series', 'init_coord', 'init_custom', 'init_ele', 'init_em_taylor_series', 'init_lat', 'init_multipole_cache', 'init_photon_from_a_photon_init_ele', 'init_photon_integ_prob', 'init_spin_distribution', 'init_surface_segment', 'init_taylor_series', 'init_wake', 'initfixedwindowls', 'insert_element', 'insert_phase_trombone', 'int_str', 'integrand_base', 'integrate_max', 'integrate_min', 'integrate_psi', 'integrated_mats', 'integration_timer', 'interpolated_fft', 'interpolated_fft_gsl', 'ion_kick', 'is_alphabetic', 'is_attribute', 'is_decreasing_sequence', 'is_false', 'is_increasing_sequence', 'is_integer', 'is_logical', 'is_real', 'is_subatomic_species', 'is_true', 'j_bessel', 'key_name_to_key_index', 'kick_vector_calc', 'kill_complex_taylor', 'kill_ptc_layouts', 'kill_taylor', 'kind_name', 'knot_interpolate', 'knots_to_string', 'lafun', 'lat_compute_ref_energy_and_time', 'lat_ele_locator', 'lat_equal_lat', 'lat_geometry', 'lat_make_mat6', 'lat_sanity_check', 'lat_to_ptc_layout', 'lat_vec_equal_lat_vec', 'lattice_bookkeeper', 'lcavity_rf_step_setup', 'linear_bend_edge_kick', 'linear_coef', 'linear_fit', 'linear_fit_2d', 'linear_to_spin_taylor', 'load_parse_line', 'logic_str', 'logical_to_python', 'lord_edge_aligned', 'low_energy_z_correction', 'lunget', 'mad_add_offsets_and_multipoles', 'mad_concat_map2', 'mad_drift', 'mad_elsep', 'mad_map_to_taylor', 'mad_quadrupole', 'mad_rfcavity', 'mad_sbend', 'mad_sbend_body', 'mad_sbend_fringe', 'mad_sextupole', 'mad_solenoid', 'mad_tmfoc', 'mad_tmsymm', 'mad_tmtilt', 'mad_track1', 'make_g2_mats', 'make_g_mats', 'make_hvbp', 'make_hybrid_lat', 'make_legal_comment', 'make_mad_map', 'make_mat6', 'make_mat6_bmad', 'make_mat6_bmad_photon', 'make_mat6_high_energy_space_charge', 'make_mat6_mad', 'make_mat6_symp_lie_ptc', 'make_mat6_taylor', 'make_mat6_tracking', 'make_n', 'make_pbrh', 'make_smat_from_abc', 'make_unit_mad_map', 'make_v', 'make_v_mats', 'makeup_control_slave', 'makeup_group_lord', 'makeup_multipass_slave', 'makeup_super_slave', 'makeup_super_slave1', 'map1_inverse', 'map1_make_unit', 'map1_times_map1', 'map_to_angle_coords', 'mark_patch_regions', 'mass_of', 'master_parameter_value', 'mat4_multipole', 'mat6_add_offsets', 'mat6_add_pitch', 'mat6_to_complex_taylor', 'mat_symp_decouple', 'match_ele_to_mat6', 'match_reg', 'match_wild', 'maximize_projection', 'mexp', 'mfft1', 'milli_sleep', 'misalign_ptc_fibre', 'momentum_compaction', 'multi_turn_tracking_analysis', 'multilayer_type_to_multilayer_params', 'multipass_chain', 'multipole1_ab_to_kt', 'multipole1_kt_to_ab', 'multipole_ab_to_kt', 'multipole_ele_to_ab', 'multipole_ele_to_kt', 'multipole_init', 'multipole_kick', 'multipole_kick_mat', 'multipole_kicks', 'multipole_kt_to_ab', 'multipole_spin_tracking', 'mytan', 'n_attrib_string_max_len', 'n_bins_automatic', 'n_choose_k', 'n_spline_create', 'naff', 'nametable_add', 'nametable_bracket_indexx', 'nametable_change1', 'nametable_init', 'nametable_remove', 'new_control', 'nint_chk', 'normal_form_complex_taylors', 'normal_form_taylors', 'normal_mode3_calc', 'normal_mode_dispersion', 'normalize_evecs', 'num_field_eles', 'num_lords', 'odeint_bmad', 'odeint_bmad_time', 'offset_particle', 'offset_photon', 'omega_to_quat', 'one_turn_mat_at_ele', 'open_binary_file', 'openpmd_species_name', 'orbit_amplitude_calc', 'orbit_reference_energy_correction', 'orbit_to_floor_phase_space', 'orbit_to_local_curvilinear', 'orbit_too_large', 'order_evecs_by_n_similarity', 'order_evecs_by_plane_dominance', 'order_evecs_by_tune', 'order_particles_in_z', 'order_super_lord_slaves', 'ordinal_str', 'osc_alloc_freespace_array', 'osc_alloc_image_array', 'osc_alloc_rectpipe_arrays', 'osc_getgrnpipe', 'osc_read_rectpipe_grn', 'osc_write_rectpipe_grn', 'parse_cartesian_map', 'parse_cylindrical_map', 'parse_fortran_format', 'parse_gen_grad_map', 'parse_grid_field', 'parse_integer_list', 'parse_integer_list2', 'parse_real_list', 'parse_real_list2', 'parser_add_constant', 'parser_call_check', 'parser_fast_complex_read', 'parser_fast_integer_read', 'parser_fast_real_read', 'parser_file_stack', 'parser_get_integer', 'parser_get_logical', 'parser_identify_fork_to_element', 'parser_init_custom_elements', 'parser_print_line', 'parser_read_lr_wake', 'parser_read_old_format_lr_wake', 'parser_read_old_format_sr_wake', 'parser_read_sr_wake', 'parser_transfer_control_struct', 'particle_in_global_frame', 'particle_is_moving_backwards', 'particle_is_moving_forward', 'particle_rf_time', 'patch_flips_propagation_direction', 'patch_length', 'photon_absorption_and_phase_shift', 'photon_add_to_detector_statistics', 'photon_reflection', 'photon_reflection_std_surface_init', 'photon_reflectivity', 'photon_target_corner_calc', 'photon_target_setup', 'photon_type', 'physical_ele_end', 'point_photon_emission', 'pointer_to_branch', 'pointer_to_ele', 'pointer_to_element_at_s', 'pointer_to_fibre', 'pointer_to_field_ele', 'pointer_to_girder', 'pointer_to_lord', 'pointer_to_multipass_lord', 'pointer_to_next_ele', 'pointer_to_ran_state', 'pointer_to_slave', 'pointer_to_super_lord', 'pointer_to_surface_displacement_pt', 'pointer_to_surface_segmented_pt', 'pointer_to_wake_ele', 'pointer_to_wall3d', 'polar_to_spinor', 'polar_to_vec', 'poly_eval', 'probability_funct', 'projdd', 'project_emit_to_xyz', 'psi_prime_sca', 'ptc_bookkeeper', 'ptc_calculate_tracking_step_size', 'ptc_check_for_lost_particle', 'ptc_closed_orbit_calc', 'ptc_emit_calc', 'ptc_layouts_resplit', 'ptc_one_turn_mat_and_closed_orbit_calc', 'ptc_ran_seed_put', 'ptc_set_rf_state_for_c_normal', 'ptc_set_taylor_order_if_needed', 'ptc_spin_calc', 'ptc_track_all', 'ptc_transfer_map_with_spin', 'pwd_mat', 'quadratic_roots', 'quat_conj', 'quat_inverse', 'quat_mul', 'quat_rotate', 'quat_to_axis_angle', 'quat_to_omega', 'quat_to_w_mat', 'query_string', 'quote', 'rad1_damp_and_stoc_mats', 'rad_damp_and_stoc_mats', 'rad_g_integrals', 'radiation_integrals', 'radiation_map_setup', 'ramper_slave_setup', 'ramper_value', 'ran_default_state', 'ran_engine', 'ran_gauss_converter', 'ran_gauss_scalar', 'ran_gauss_vector', 'ran_seed_get', 'ran_seed_put', 'ran_uniform', 'randomize_lr_wake_frequencies', 'rchomp', 're_allocate', 're_allocate_eles', 're_associate_node_array', 're_str', 'read_beam_ascii', 'read_beam_file', 'read_binary_cartesian_map', 'read_binary_cylindrical_map', 'read_binary_grid_field', 'read_surface_reflection_file', 'real_num_fortran_format', 'real_path', 'real_str', 'real_to_string', 'reallocate_beam', 'reallocate_bp_com_const', 'reallocate_bunch', 'reallocate_control', 'reallocate_coord', 'reallocate_expression_stack', 'reallocate_spline', 'rel_tracking_charge_to_mass', 'relative_mode_flip', 'release_rad_int_cache', 'remove_constant_taylor', 'remove_dead_from_bunch', 'remove_eles_from_lat', 'remove_lord_slave_link', 'reverse_lat', 'rf_cav_names', 'rf_coupler_kick', 'rf_is_on', 'rf_ref_time_offset', 'rfun', 'rk_adaptive_time_step', 'rk_time_step1', 'rms_value', 'rot_2d', 'rotate3', 'rotate_em_field', 'rotate_field_zx', 'rotate_for_curved_surface', 'rotate_spin', 'rotate_spin_a_step', 'rotate_spin_given_field', 'rotate_vec', 'rotate_vec_given_axis_angle', 'rp8', 'run_timer', 's_body_calc', 's_calc', 'sad_mult_hard_bend_edge_kick', 'sad_soft_bend_edge_kick', 'save_a_beam_step', 'save_a_bunch_step', 'save_a_step', 'sbend_body_with_k1_map', 'sc_adaptive_step', 'sc_step', 'set_active_fixer', 'set_custom_attribute_name', 'set_ele_attribute', 'set_ele_defaults', 'set_ele_name', 'set_ele_real_attribute', 'set_ele_status_stale', 'set_flags_for_changed_attribute', 'set_fringe_on_off', 'set_lords_status_stale', 'set_on_off', 'set_orbit_to_zero', 'set_parameter', 'set_ptc', 'set_ptc_base_state', 'set_ptc_com_pointers', 'set_ptc_quiet', 'set_ptc_verbose', 'set_pwd_ele', 'set_species_charge', 'set_status_flags', 'set_tune', 'set_tune_3d', 'set_twiss', 'set_z_tune', 'settable_dep_var_bookkeeping', 'setup_high_energy_space_charge_calc', 'sigma_mat_ptc_to_bmad', 'significant_difference', 'sinc', 'sincc', 'sinhx_x', 'skip_ele_blender', 'skip_header', 'slice_lattice', 'soft_quadrupole_edge_kick', 'sol_quad_mat6_calc', 'solve_psi_adaptive', 'solve_psi_fixed_steps', 'sort_complex_taylor_terms', 'species_id', 'species_id_from_openpmd', 'species_name', 'species_of', 'spin_dn_dpz_from_mat8', 'spin_dn_dpz_from_qmap', 'spin_map1_normalize', 'spin_mat8_resonance_strengths', 'spin_mat_to_eigen', 'spin_of', 'spin_omega', 'spin_quat_resonance_strengths', 'spin_taylor_to_linear', 'spinor_to_polar', 'spinor_to_vec', 'spline1', 'spline_akima', 'spline_akima_interpolate', 'spline_evaluate', 'spline_fit_orbit', 'split_lat', 'sprint_spin_taylor_map', 'sqrt_alpha', 'sqrt_one', 'sr_longitudinal_wake_particle', 'sr_transverse_wake_particle', 'sr_z_long_wake', 'srdt_calc', 'srdt_lsq_solution', 'start_branch_at', 'str_count', 'str_downcase', 'str_first_in_set', 'str_first_not_in_set', 'str_last_in_set', 'str_last_not_in_set', 'str_match_wild', 'str_substitute', 'str_upcase', 'stream_ele_end', 'string_attrib', 'string_to_int', 'string_to_real', 'string_trim', 'string_trim2', 'strong_beam_sigma_calc', 'strong_beam_strength', 'super_bicubic_coef', 'super_bicubic_interpolation', 'super_polint', 'super_poly', 'super_sobseq', 'super_sort', 'surface_grid_displacement', 'symp_lie_bmad', 'system_command', 't6_to_b123', 'tao_abort_command_file', 'tao_add_to_normal_mode_h_array', 'tao_alias_cmd', 'tao_allocate_data_array', 'tao_allocate_v1_var', 'tao_allocate_var_array', 'tao_beam_emit_calc', 'tao_beam_track', 'tao_beam_track_endpoint', 'tao_branch_index', 'tao_calc_data_at_s_pts', 'tao_cbar_wave_anal', 'tao_change_ele', 'tao_change_tune', 'tao_change_var', 'tao_change_z_tune', 'tao_chrom_calc_needed', 'tao_clear_cmd', 'tao_clip_cmd', 'tao_close_command_file', 'tao_cmd_history_record', 'tao_command', 'tao_constraint_type_name', 'tao_control_tree_list', 'tao_count_strings', 'tao_create_plot_window', 'tao_curve_beam_ellipse_setup', 'tao_curve_check_universe', 'tao_curve_data_setup', 'tao_curve_datum_calc', 'tao_curve_ele_ref', 'tao_curve_ix_uni', 'tao_curve_name', 'tao_curve_rms_calc', 'tao_d2_d1_name', 'tao_d2_data_stuffit', 'tao_data_check', 'tao_data_coupling_init', 'tao_data_sanity_check', 'tao_data_type_substitute', 'tao_data_useit_plot_calc', 'tao_datum_has_associated_ele', 'tao_datum_integrate', 'tao_datum_name', 'tao_datum_s_position', 'tao_de_optimizer', 'tao_deallocate_plot_cache', 'tao_deallocate_tree', 'tao_destroy_plot_window', 'tao_dmerit_calc', 'tao_dmodel_dvar_calc', 'tao_do_wire_scan', 'tao_draw_beam_chamber_wall', 'tao_draw_curve_data', 'tao_draw_ele_for_floor_plan', 'tao_draw_floor_plan', 'tao_draw_graph_axes', 'tao_draw_histogram_data', 'tao_draw_lat_layout', 'tao_draw_plots', 'tao_ele_geometry_with_misalignments', 'tao_ele_shape_info', 'tao_eval_floor_orbit', 'tao_evaluate_a_datum', 'tao_evaluate_datum_at_s', 'tao_evaluate_element_parameters', 'tao_evaluate_expression', 'tao_evaluate_expression_new', 'tao_evaluate_expression_old', 'tao_evaluate_lat_or_beam_data', 'tao_evaluate_stack_old', 'tao_evaluate_tree', 'tao_evaluate_tune', 'tao_expression_hash_substitute', 'tao_expression_tree_to_string', 'tao_find_plot_region', 'tao_fixer', 'tao_floor_to_screen', 'tao_floor_to_screen_coords', 'tao_geodesic_lm_optimizer', 'tao_get_data', 'tao_get_opt_vars', 'tao_get_user_input', 'tao_graph_controller_setup', 'tao_graph_data_setup', 'tao_graph_data_slice_setup', 'tao_graph_dynamic_aperture_setup', 'tao_graph_histogram_setup', 'tao_graph_name', 'tao_graph_phase_space_setup', 'tao_graph_s_min_max_calc', 'tao_graph_setup', 'tao_init', 'tao_init_beam_in_universe', 'tao_init_beams', 'tao_init_data', 'tao_init_data_end_stuff', 'tao_init_data_in_universe', 'tao_init_dynamic_aperture', 'tao_init_find_elements', 'tao_init_global', 'tao_init_lattice', 'tao_init_plotting', 'tao_init_variables', 'tao_inject_beam', 'tao_inject_particle', 'tao_is_valid_name', 'tao_json_cmd', 'tao_key_info_to_str', 'tao_lat_bookkeeper', 'tao_lat_emit_calc', 'tao_lat_sigma_calc_needed', 'tao_lat_sigma_track', 'tao_lattice_branches_equal_tao_lattice_branches', 'tao_lattice_calc', 'tao_lattice_equal_tao_lattice', 'tao_limit_calc', 'tao_lm_optimizer', 'tao_lmdif_optimizer', 'tao_load_this_datum', 'tao_locate_all_elements', 'tao_locate_elements', 'tao_mark_lattice_ele', 'tao_merit', 'tao_next_word', 'tao_one_turn_map_calc_needed', 'tao_open_file', 'tao_open_scratch_file', 'tao_optimization_status', 'tao_orbit_beta_wave_anal', 'tao_oreint_building_wall_pt', 'tao_param_value_at_s', 'tao_param_value_routine', 'tao_parse_command_args', 'tao_parse_element_param_str', 'tao_particle_data_value', 'tao_pause_cmd', 'tao_phase_space_axis_index', 'tao_phase_wave_anal', 'tao_pick_universe', 'tao_pipe_cmd', 'tao_place_cmd', 'tao_plot_cmd', 'tao_plot_data', 'tao_plot_histogram', 'tao_plot_key_table', 'tao_plot_setup', 'tao_plot_struct_transfer', 'tao_plot_wave', 'tao_pointer_to_building_wall_shape', 'tao_pointer_to_datum', 'tao_pointer_to_datum_ele', 'tao_pointer_to_ele_shape', 'tao_pointer_to_tao_lat', 'tao_pointer_to_universe', 'tao_pointer_to_universes', 'tao_pointer_to_var_in_lattice', 'tao_pointer_to_var_in_lattice2', 'tao_print_command_line_info', 'tao_ptc_normal_form', 'tao_python_cmd', 'tao_quiet_set', 'tao_rad_int_calc_needed', 'tao_re_allocate_expression_info', 'tao_re_associate_node_array', 'tao_re_execute', 'tao_read_cmd', 'tao_read_phase_space_index', 'tao_regression_test', 'tao_remove_blank_characters', 'tao_run_cmd', 'tao_scale_cmd', 'tao_scale_graph', 'tao_scale_ping_data', 'tao_scale_plot', 'tao_scratch_values_calc', 'tao_set_beam_cmd', 'tao_set_beam_init_cmd', 'tao_set_bmad_com_cmd', 'tao_set_branch_cmd', 'tao_set_calculate_cmd', 'tao_set_curve_cmd', 'tao_set_curve_invalid', 'tao_set_data_cmd', 'tao_set_data_useit_opt', 'tao_set_default_cmd', 'tao_set_drawing_cmd', 'tao_set_dynamic_aperture_cmd', 'tao_set_elements_cmd', 'tao_set_floor_plan_axis_label', 'tao_set_geodesic_lm_cmd', 'tao_set_global_cmd', 'tao_set_graph_cmd', 'tao_set_integer_value', 'tao_set_invalid', 'tao_set_key_cmd', 'tao_set_lattice_cmd', 'tao_set_logical_value', 'tao_set_openmp_n_threads', 'tao_set_opt_vars', 'tao_set_opti_de_param_cmd', 'tao_set_particle_start_cmd', 'tao_set_plot_cmd', 'tao_set_plot_page_cmd', 'tao_set_ptc_com_cmd', 'tao_set_qp_axis_struct', 'tao_set_qp_point_struct', 'tao_set_qp_rect_struct', 'tao_set_ran_state_cmd', 'tao_set_real_value', 'tao_set_region_cmd', 'tao_set_space_charge_com_cmd', 'tao_set_symbolic_number_cmd', 'tao_set_tune_cmd', 'tao_set_universe_cmd', 'tao_set_var_cmd', 'tao_set_var_model_value', 'tao_set_var_useit_opt', 'tao_set_wave_cmd', 'tao_set_z_tune_cmd', 'tao_setup_key_table', 'tao_shape_init', 'tao_show_cmd', 'tao_show_constraints', 'tao_single_mode', 'tao_single_track', 'tao_spin_matrices_calc_needed', 'tao_spin_tracking_turn_on', 'tao_split_component', 'tao_srdt_calc_needed', 'tao_subin_uni_number', 'tao_svd_optimizer', 'tao_symbol_import_from_lat', 'tao_taper_cmd', 'tao_to_change_number', 'tao_to_int', 'tao_to_phase_and_coupling_reading', 'tao_to_real', 'tao_too_many_particles_lost', 'tao_top10_derivative_print', 'tao_top10_merit_categories_print', 'tao_top_level', 'tao_tracking_ele_index', 'tao_turn_on_special_calcs_if_needed_for_plotting', 'tao_type_expression_tree', 'tao_uni_atsign_index', 'tao_universe_index', 'tao_use_data', 'tao_use_var', 'tao_user_is_terminating_optimization', 'tao_var1_name', 'tao_var_attrib_name', 'tao_var_check', 'tao_var_repoint', 'tao_var_target_calc', 'tao_var_useit_plot_calc', 'tao_var_write', 'tao_veto_vars_with_zero_dmodel', 'tao_wave_analysis', 'tao_wave_cmd', 'tao_wave_fit', 'tao_write_cmd', 'tao_x_axis_cmd', 'tao_x_scale_cmd', 'tao_x_scale_graph', 'tao_x_scale_plot', 'taper_mag_strengths', 'target_min_max_calc', 'target_rot_mats', 'taylor_equal_taylor', 'taylor_inverse', 'taylor_propagate1', 'taylor_to_mad_map', 'taylors_equal_taylors', 'test_bunch_struct_array', 'test_bunch_struct_scalar', 'test_character_scalar', 'test_complex_array', 'test_complex_scalar', 'test_integer8_array', 'test_integer8_scalar', 'test_integer_array', 'test_integer_scalar', 'test_logical_array', 'test_logical_scalar', 'test_real16_array', 'test_real16_scalar', 'test_real_array', 'test_real_scalar', 'tilt_coords', 'tilt_coords_photon', 'tilt_mat6', 'to_eta_reading', 'to_fieldmap_coords', 'to_orbit_reading', 'to_phase_and_coupling_reading', 'to_photon_angle_coords', 'to_str', 'to_surface_coords', 'touschek_lifetime', 'touschek_rate1', 'touschek_rate1_zap', 'track1', 'track1_beam', 'track1_bmad', 'track1_bmad_photon', 'track1_bunch', 'track1_bunch_csr', 'track1_bunch_csr3d', 'track1_bunch_hom', 'track1_bunch_space_charge', 'track1_crystal', 'track1_diffraction_plate_or_mask', 'track1_high_energy_space_charge', 'track1_lens', 'track1_linear', 'track1_lr_wake', 'track1_mad', 'track1_mirror', 'track1_mosaic_crystal', 'track1_multilayer_mirror', 'track1_radiation', 'track1_radiation_center', 'track1_runge_kutta', 'track1_sample', 'track1_spin', 'track1_spin_integration', 'track1_spin_taylor', 'track1_sr_wake', 'track1_symp_lie_ptc', 'track1_taylor', 'track1_time_runge_kutta', 'track_a_beambeam', 'track_a_bend', 'track_a_bend_photon', 'track_a_capillary', 'track_a_converter', 'track_a_crab_cavity', 'track_a_drift', 'track_a_drift_photon', 'track_a_foil', 'track_a_gkicker', 'track_a_lcavity', 'track_a_lcavity_old', 'track_a_mask', 'track_a_match', 'track_a_patch', 'track_a_patch_photon', 'track_a_pickup', 'track_a_quadrupole', 'track_a_rfcavity', 'track_a_sad_mult', 'track_a_sol_quad', 'track_a_thick_multipole', 'track_a_wiggler', 'track_a_zero_length_element', 'track_all', 'track_beam', 'track_bunch', 'track_bunch_time', 'track_bunch_to_s', 'track_bunch_to_t', 'track_complex_taylor', 'track_from_s_to_s', 'track_many', 'track_to_surface', 'track_until_dead', 'tracking_rad_map_setup', 'transfer_ac_kick', 'transfer_branch', 'transfer_branch_parameters', 'transfer_branches', 'transfer_ele', 'transfer_ele_taylor', 'transfer_eles', 'transfer_fieldmap', 'transfer_fixer_params', 'transfer_lat', 'transfer_lat_parameters', 'transfer_map_calc', 'transfer_map_from_s_to_s', 'transfer_mat2_from_twiss', 'transfer_mat_from_twiss', 'transfer_matrix_calc', 'transfer_twiss', 'transfer_wake', 'tricubic_cmplx_eval', 'truncate_complex_taylor_to_order', 'twiss1_propagate', 'twiss3_at_start', 'twiss3_from_twiss2', 'twiss3_propagate1', 'twiss3_propagate_all', 'twiss_and_track', 'twiss_and_track_at_s', 'twiss_and_track_from_s_to_s', 'twiss_and_track_intra_ele', 'twiss_at_element', 'twiss_at_start', 'twiss_from_tracking', 'twiss_propagate1', 'twiss_propagate_all', 'twiss_to_1_turn_mat', 'type_coord', 'type_expression_tree', 'type_ptc_layout', 'type_this_file', 'upcase_string', 'update_ele_from_fibre', 'update_fibre_from_ele', 'update_floor_angles', 'valid_field_calc', 'valid_fringe_type', 'valid_mat6_calc_method', 'valid_spin_tracking_method', 'valid_tracking_method', 'value_of_attribute', 'value_to_line', 'vec_to_polar', 'vec_to_spinor', 'verify_valid_name', 'virtual_memory_usage', 'w_mat_for_bend_angle', 'w_mat_for_tilt', 'w_mat_for_x_pitch', 'w_mat_for_y_pitch', 'w_mat_to_axis_angle', 'w_mat_to_quat', 'wall3d_d_radius', 'wall3d_initializer', 'wall3d_section_initializer', 'wall3d_to_position', 'word_len', 'word_read', 'word_to_value', 'write_ascii_beam_file', 'write_astra_bend', 'write_astra_field_grid_file', 'write_astra_field_grid_file_3d', 'write_beam_file', 'write_beam_floor_positions', 'write_binary_cartesian_map', 'write_binary_cylindrical_map', 'write_binary_grid_field', 'write_blender_ele', 'write_blender_lat_layout', 'write_bmad_lattice_file', 'write_bunch_by_bunch_info', 'write_gpt_field_grid_file_1d', 'write_gpt_field_grid_file_2d', 'write_gpt_field_grid_file_3d', 'write_lat_line', 'write_lattice_in_elegant_format', 'write_lattice_in_foreign_format', 'write_lattice_in_mad_format', 'write_lattice_in_sad_format', 'write_lattice_in_scibmad', 'write_line_element', 'write_opal_field_grid_file', 'write_opal_lattice_file', 'write_time_particle_distribution', 'x0_radiation_length', 'xlafun', 'xraylib_nist_compound', 'ylafun', 'z_at_surface', 'zero_ele_kicks', 'zero_ele_offsets', 'zero_lr_wakes_in_lat', 'zlafun']
+__all__: list[str] = ['A0', 'A0_ELEC', 'A21', 'A21_ELEC', 'ABS', 'ABSOLUTE', 'ABSOLUTE_TIME_TRACKING', 'AB_MULTIPOLE', 'ACCORDION_EDGE', 'ACOS', 'ACOSH', 'ACOTH', 'AC_KICKER', 'ALIAS', 'ALIVE', 'ALL', 'ALL_CONTROL_VAR', 'ALL_GROUPS', 'ALPHA_A', 'ALPHA_A0', 'ALPHA_A1', 'ALPHA_ANGLE', 'ALPHA_A_OUT', 'ALPHA_A_STORED', 'ALPHA_A_STRONG', 'ALPHA_B', 'ALPHA_B0', 'ALPHA_B1', 'ALPHA_B_OUT', 'ALPHA_B_STORED', 'ALPHA_B_STRONG', 'AMPERSAND', 'AMP_VS_TIME', 'ANCHOR_BEGINNING', 'ANCHOR_CENTER', 'ANCHOR_END', 'ANGLE', 'ANGLE_OUT_MAX', 'ANOMALOUS_MAG_MOMENT_DEUTERON', 'ANOMALOUS_MAG_MOMENT_ELECTRON', 'ANOMALOUS_MAG_MOMENT_HE3', 'ANOMALOUS_MAG_MOMENT_MUON', 'ANOMALOUS_MAG_MOMENT_NEUTRON', 'ANOMALOUS_MAG_MOMENT_PROTON', 'ANOMALOUS_MOMENT_OF', 'ANTIMUON', 'ANTIPARTICLE', 'ANTIPROTON', 'ANTI_ATOM', 'ANTI_DEUTERON', 'ANTI_HELION', 'ANTI_NEUTRON', 'ANTI_REF_PARTICLE', 'APERTURE', 'APERTURE_AT', 'APERTURE_TYPE', 'AREA_DENSITY', 'AREA_DENSITY_USED', 'ARG_COUNT', 'ARROW', 'ASCII', 'ASIN', 'ASINH', 'ATAN', 'ATAN2', 'ATANH', 'ATOMIC_MASS_UNIT', 'ATTRIBUTE_GROUP', 'AUTO', 'AUTOSCALE_AMPLITUDE', 'AUTOSCALE_PHASE', 'AUTO_APERTURE', 'AVERAGE', 'AbMultipoleKick', 'AcKickerFreqStruct', 'AcKickerFreqStructAlloc1D', 'AcKickerFreqStructArray1D', 'AcKickerStruct', 'AcKickerTimeStruct', 'AcKickerTimeStructAlloc1D', 'AcKickerTimeStructArray1D', 'ActionToXyz', 'AddSuperimpose', 'AllEncompassingStruct', 'AnormalModeStruct', 'ApertureParamStruct', 'AperturePointStruct', 'AperturePointStructAlloc1D', 'AperturePointStructArray1D', 'ApertureScanStruct', 'ApertureScanStructAlloc1D', 'ApertureScanStructArray1D', 'ApfftCorr', 'AttributeFree1', 'AttributeFree2', 'AttributeFree3', 'AttributeIndex1', 'AttributeIndex2', 'B0', 'B0_ELEC', 'B1_GRADIENT', 'B21', 'B21_ELEC', 'B2_GRADIENT', 'B3_GRADIENT', 'BASIC_BEND', 'BBI_CONST', 'BEAMBEAM', 'BEGINNING_ELE', 'BENDS', 'BEND_TILT', 'BETA_A', 'BETA_A0', 'BETA_A1', 'BETA_A_OUT', 'BETA_A_STORED', 'BETA_A_STRONG', 'BETA_B', 'BETA_B0', 'BETA_B1', 'BETA_B_OUT', 'BETA_B_STORED', 'BETA_B_STRONG', 'BINARY', 'BLACK', 'BLANK', 'BLUE', 'BL_HKICK', 'BL_KICK', 'BL_VKICK', 'BMAD_INC_VERSION', 'BMAD_STANDARD', 'BOTH_ENDS', 'BRAGG_ANGLE', 'BRAGG_ANGLE_IN', 'BRAGG_ANGLE_OUT', 'BRAGG_DIFFRACTED', 'BS_FIELD', 'B_FIELD', 'B_FIELD_ERR', 'B_FIELD_TOT', 'B_MAX', 'B_PARAM', 'BbiKick', 'BbuBeamStruct', 'BbuParamStruct', 'BbuStageStruct', 'BbuStageStructAlloc1D', 'BbuStageStructArray1D', 'BeamInitStruct', 'BeamStruct', 'BeamTilts', 'BendShift', 'BicubicCmplxCoefStruct', 'BicubicCmplxCoefStructArray3D', 'BicubicCmplxEval', 'BmadCommonStruct', 'BmadNormalFormStruct', 'BmadParser', 'BookkeepingStateStruct', 'BoolAlloc1D', 'BoolArray1D', 'BoolArray2D', 'BoolArray3D', 'BpmPhaseCouplingStruct', 'BracketIndexForSpline', 'BranchStruct', 'BranchStructAlloc1D', 'BranchStructArray1D', 'BunchParamsStruct', 'BunchParamsStructAlloc1D', 'BunchParamsStructArray1D', 'BunchStruct', 'BunchStructAlloc1D', 'BunchStructArray1D', 'BunchTrackStruct', 'BunchTrackStructAlloc1D', 'BunchTrackStructArray1D', 'C11_MAT0', 'C11_MAT1', 'C12_MAT0', 'C12_MAT1', 'C21_MAT0', 'C21_MAT1', 'C22_MAT0', 'C22_MAT1', 'CANNOT_FIND', 'CAPILLARY', 'CARTESIAN_MAP', 'CATHODE_FFT_3D', 'CAVITY_TYPE', 'CEILING', 'CENTER_PT', 'CHAMBER_WALL', 'CHARGE', 'CHARGE_OF', 'CHECK_SUM', 'CIRCLE_DOT_SYM', 'CIRCLE_FILLED_SYM', 'CIRCLE_PLUS_SYM', 'CIRCLE_SYM', 'CLASSICAL_RADIUS_FACTOR', 'CLEAR', 'CLOSED', 'CMAT_11', 'CMAT_11_STORED', 'CMAT_12', 'CMAT_12_STORED', 'CMAT_21', 'CMAT_21_STORED', 'CMAT_22', 'CMAT_22_STORED', 'COHERENT', 'COLON', 'COMMA', 'COMPOUND', 'CONSTANT', 'CONSTANT_REF_ENERGY', 'CONTINUOUS', 'CONTROL_GROUP', 'CONTROL_LORD', 'CONTROL_VAR', 'CONVERTER', 'COS', 'COSH', 'COT', 'COTH', 'COUPLER_ANGLE', 'COUPLER_AT', 'COUPLER_PHASE', 'COUPLER_STRENGTH', 'CRAB_CAVITY', 'CRAB_TILT', 'CRAB_X1', 'CRAB_X2', 'CRAB_X3', 'CRAB_X4', 'CRAB_X5', 'CREATE_JUMBO_SLAVE', 'CRITICAL_ANGLE', 'CRITICAL_ANGLE_FACTOR', 'CROSSING_TIME', 'CROSS_HATCHED', 'CRUNCH', 'CRUNCH_CALIB', 'CRYSTAL', 'CRYSTAL_TYPE', 'CSC', 'CSR_DS_STEP', 'CSR_METHOD', 'CUBIC', 'CURLY_BRACKETS', 'CURRENT', 'CURVATURE', 'CURVE', 'CUSTOM', 'CUSTOM_APERTURE', 'CUSTOM_ATTRIBUTE0', 'CUSTOM_ATTRIBUTE_NUM', 'CYAN', 'CYCLES', 'CYLINDRICAL_MAP', 'C_LIGHT', 'CalcEmittancesAndTwissFromSigmaMatrix', 'CalcWallRadius', 'CartesianMapStruct', 'CartesianMapStructAlloc1D', 'CartesianMapStructArray1D', 'CartesianMapTerm1Struct', 'CartesianMapTerm1StructAlloc1D', 'CartesianMapTerm1StructArray1D', 'CartesianMapTermStruct', 'CheckIfSInBounds', 'ChromCalc', 'ComplexAlloc1D', 'ComplexArray1D', 'ComplexArray2D', 'ComplexArray3D', 'ComplexTaylorStruct', 'ComplexTaylorStructAlloc1D', 'ComplexTaylorStructArray1D', 'ComplexTaylorTermStruct', 'ComplexTaylorTermStructAlloc1D', 'ComplexTaylorTermStructArray1D', 'ComplexTaylorToMat6', 'ConcatTransferMat', 'ControlRamp1Struct', 'ControlRamp1StructAlloc1D', 'ControlRamp1StructArray1D', 'ControlStruct', 'ControlStructAlloc1D', 'ControlStructArray1D', 'ControlVar1Struct', 'ControlVar1StructAlloc1D', 'ControlVar1StructArray1D', 'ControllerStruct', 'ConvertCoords', 'ConvertPcTo', 'ConvertTotalEnergyTo', 'ConverterDistributionParser', 'CoordArrayStruct', 'CoordArrayStructAlloc1D', 'CoordArrayStructArray1D', 'CoordStruct', 'CoordStructAlloc1D', 'CoordStructArray1D', 'CoordsCurvilinearToFloor', 'CoordsFloorToCurvilinear', 'CoordsFloorToLocalCurvilinear', 'CoordsLocalCurvilinearToFloor', 'CreateElementSlice', 'CreatePlanarWigglerModel', 'CylindricalMapStruct', 'CylindricalMapStructAlloc1D', 'CylindricalMapStructArray1D', 'CylindricalMapTerm1Struct', 'CylindricalMapTerm1StructAlloc1D', 'CylindricalMapTerm1StructArray1D', 'CylindricalMapTermStruct', 'D1_THICKNESS', 'D2_THICKNESS', 'DALPHA_DPZ_A', 'DALPHA_DPZ_A_STORED', 'DALPHA_DPZ_B', 'DALPHA_DPZ_B_STORED', 'DARK_GREY', 'DARWIN_WIDTH_PI', 'DARWIN_WIDTH_SIGMA', 'DASHED', 'DASH_DOT', 'DASH_DOT3', 'DBETA_DPZ_A', 'DBETA_DPZ_A_STORED', 'DBETA_DPZ_B', 'DBETA_DPZ_B_STORED', 'DBRAGG_ANGLE_DE', 'DB_FIELD', 'DCMAT_DPZ_11_STORED', 'DCMAT_DPZ_12_STORED', 'DCMAT_DPZ_21_STORED', 'DCMAT_DPZ_22_STORED', 'DEFAULT_TRACKING_SPECIES', 'DEF_BMAD_COM', 'DEF_LINE', 'DEF_MAD_BEAM', 'DEF_PARAMETER', 'DEF_PARTICLE_START', 'DEF_PTC_COM', 'DEF_SPACE_CHARGE_COM', 'DEGREES', 'DELTA_E_REF', 'DELTA_REF_TIME', 'DELTA_REF_TIME_USER_SET', 'DELTA_TIME', 'DENSITY', 'DENSITY_USED', 'DESCRIP', 'DETAP_DPZ_X', 'DETAP_DPZ_X_STORED', 'DETAP_DPZ_Y', 'DETAP_DPZ_Y_STORED', 'DETA_DPZ_X', 'DETA_DPZ_X_STORED', 'DETA_DPZ_Y', 'DETA_DPZ_Y_STORED', 'DETA_DS_MASTER', 'DETECTOR', 'DEUTERON', 'DE_ETA_MEAS', 'DFLT_DRAW', 'DFLT_SET', 'DG', 'DIAMOND_SYM', 'DIFFRACTION_PLATE', 'DIRECTION', 'DISPATCH', 'DISTRIBUTION', 'DIVIDE', 'DOTTED', 'DOT_SYM', 'DOUBLE_COLON', 'DOWNSTREAM', 'DOWNSTREAM_COORD_DIR', 'DOWNSTREAM_END', 'DPHI_A', 'DPHI_B', 'DPHI_ORIGIN', 'DPSI_ORIGIN', 'DRIFT', 'DRIFT_KICK', 'DS_PHOTON_SLICE', 'DS_SLICE', 'DS_STEP', 'DTHETA_ORIGIN', 'DTHICKNESS_DX', 'DT_MAX', 'DX_ORIGIN', 'DY_ORIGIN', 'DZ_ORIGIN', 'D_SPACING', 'DistanceToAperture', 'E1', 'E1_GRADIENT', 'E2', 'E2_CENTER', 'E2_GRADIENT', 'E2_PROBABILITY', 'E3_GRADIENT', 'ECOLLIMATOR', 'ELECTRIC', 'ELECTRIC_DIPOLE_MOMENT', 'ELECTRON', 'ELEC_MULTIPOLE', 'ELE_ORIGIN', 'ELLIPTICAL', 'ELSEPARATOR', 'EMITTANCE_A', 'EMITTANCE_B', 'EMITTANCE_Z', 'EMIT_FRACTION', 'EM_FIELD', 'END_EDGE', 'END_STACK', 'ENERGY_DISTRIBUTION', 'ENERGY_PROBABILITY_CURVE', 'ENTRANCE_END', 'EPS_STEP_SCALE', 'EQUAL', 'ETAP_A', 'ETAP_B', 'ETAP_X', 'ETAP_X0', 'ETAP_X1', 'ETAP_X_OUT', 'ETAP_X_STORED', 'ETAP_Y', 'ETAP_Y0', 'ETAP_Y1', 'ETAP_Y_OUT', 'ETAP_Y_STORED', 'ETA_A', 'ETA_B', 'ETA_X', 'ETA_X0', 'ETA_X1', 'ETA_X_OUT', 'ETA_X_STORED', 'ETA_Y', 'ETA_Y0', 'ETA_Y1', 'ETA_Y_OUT', 'ETA_Y_STORED', 'ETA_Z', 'EXACT_MISALIGN', 'EXACT_MODEL', 'EXACT_MULTIPOLES', 'EXIT_END', 'EXP', 'E_CENTER', 'E_CENTER_RELATIVE_TO_REF', 'E_CHARGE', 'E_FIELD', 'E_FIELD_X', 'E_FIELD_Y', 'E_GUN', 'E_LOSS', 'E_MASS', 'E_PHOTON', 'E_TOT', 'E_TOT_OFFSET', 'E_TOT_REF_INIT', 'E_TOT_SET', 'E_TOT_START', 'E_TOT_STRONG', 'EigenDecomp6mat', 'EleAttribute', 'EleKey', 'EleMisalignmentLSCalc', 'ElePointerStruct', 'ElePointerStructAlloc1D', 'ElePointerStructArray1D', 'EleStruct', 'EleStructAlloc1D', 'EleStructArray1D', 'EleToFibre', 'EleToTaylor', 'ElecMultipoleField', 'ElementAtSBranch', 'ElementAtSLat', 'EllipseBeamInitStruct', 'EllipseBeamInitStructAlloc1D', 'EllipseBeamInitStructArray1D', 'EmFieldCalc', 'EmFieldStruct', 'EmFieldStructAlloc1D', 'EmFieldStructArray1D', 'EmTaylorStruct', 'EmTaylorStructAlloc1D', 'EmTaylorStructArray1D', 'EmTaylorTermStruct', 'EmTaylorTermStructAlloc1D', 'EmTaylorTermStructArray1D', 'Emit6d', 'EnvelopeRadintsIbs', 'EvaluateArrayIndex', 'EvaluateLogical', 'ExpectThis', 'ExpressionAtomStruct', 'ExpressionAtomStructAlloc1D', 'ExpressionAtomStructArray1D', 'ExpressionStackValue', 'ExpressionStringToStack', 'ExpressionStringToTree', 'ExpressionTreeStruct', 'ExpressionTreeStructAlloc1D', 'ExpressionTreeStructArray1D', 'ExpressionValue', 'FACTORIAL', 'FALSE_', 'FALSE_INT', 'FAMILY_QU', 'FAMILY_SQ', 'FAMILY_X', 'FAMILY_Y', 'FB1', 'FB2', 'FCharArray1D', 'FEEDBACK', 'FFT_3D', 'FIDUCIAL', 'FIDUCIAL_PT', 'FIELDMAP', 'FIELD_AUTOSCALE', 'FIELD_CALC', 'FIELD_LORD', 'FIELD_MASTER', 'FIELD_OVERLAPS', 'FIELD_SCALE_FACTOR', 'FIELD_X', 'FIELD_Y', 'FILLED_ARROW_HEAD', 'FINAL_CHARGE', 'FINE_STRUCTURE_CONSTANT', 'FINT', 'FINTX', 'FIRST_PASS', 'FIRST_TRACK_EDGE', 'FIXED_STEP_RUNGE_KUTTA', 'FIXED_STEP_TIME_RUNGE_KUTTA', 'FIXER', 'FLEXIBLE', 'FLOOR', 'FLOOR_POSITION_GROUP', 'FLOOR_SHIFT', 'FOCAL_STRENGTH', 'FOIL', 'FORK', 'FORWARD_DIFFRACTED', 'FOURPI', 'FQ1', 'FQ2', 'FREE', 'FREQUENCIES', 'FRINGE_AT', 'FRINGE_TYPE', 'FULL', 'FUNCTION', 'FUNC_PARENS', 'F_FACTOR', 'Fibre', 'FindElementEnds', 'FindMatchingFieldmap', 'FloorAnglesToWMat', 'FloorPositionStruct', 'FloorWMatToAngles', 'FormDigestedBmadFileName', 'FourierAmplitude', 'G', 'GANG', 'GAP', 'GAUSSIAN', 'GBendingStrengthFromEmField', 'GEN_GRAD_MAP', 'GEOMETRY', 'GIRDER', 'GIRDER_LORD', 'GKICKER', 'GOVERNOR', 'GRADIENT', 'GRADIENT_ERR', 'GRADIENT_TOT', 'GRAZE_ANGLE', 'GRAZE_ANGLE_IN', 'GRAZE_ANGLE_OUT', 'GREEN', 'GRID_FIELD', 'GROUP', 'GROUP_LORD', 'G_ERR', 'G_MAX', 'G_TOT', 'GenGrad1Struct', 'GenGrad1StructAlloc1D', 'GenGrad1StructArray1D', 'GenGradMapStruct', 'GenGradMapStructAlloc1D', 'GenGradMapStructArray1D', 'GetEmitFromSigmaMat', 'GptToParticleBunch', 'GridBeamInitStruct', 'GridBeamInitStructAlloc1D', 'GridBeamInitStructArray1D', 'GridFieldPt1Struct', 'GridFieldPt1StructArray3D', 'GridFieldPtStruct', 'GridFieldStruct', 'GridFieldStructAlloc1D', 'GridFieldStructArray1D', 'H1', 'H2', 'HARD_EDGE_ONLY', 'HARMON', 'HARMON_MASTER', 'HATCHED', 'HDF5', 'HELICAL_MODEL', 'HELION', 'HGAP', 'HGAPX', 'HIGHLAND', 'HIGH_ENERGY_SPACE_CHARGE_ON', 'HKICK', 'HKICKER', 'HORIZONTALLY_PURE', 'HYBRID', 'HYPER_X', 'HYPER_XY', 'HYPER_Y', 'H_BAR_PLANCK', 'H_DISPLACE', 'H_PLANCK', 'HighEnergySpaceChargeStruct', 'IDENTITY', 'IMPACTT', 'INCLUDE_KICKS', 'INCOHERENT', 'INHERIT_FROM_FORK', 'INIT_NEEDED', 'INPUT_ELE', 'INSIDE', 'INSTRUMENT', 'INT', 'INTEGRATOR_ORDER', 'INTERPOLATION', 'INT_GARBAGE', 'INVALID', 'INVALID_NAME', 'IN_BETWEEN', 'IN_STOP_BAND', 'IS_INTEGER', 'IS_LOGICAL', 'IS_MOSAIC', 'IS_ON', 'IS_REAL', 'IS_STRING', 'IS_STRUCT', 'IS_SWITCH', 'IX_BRANCH', 'IX_FIXER', 'IX_SLICE_SLAVE', 'IX_TO_BRANCH', 'IX_TO_ELEMENT', 'InitBeamDistribution', 'InitBunchDistribution', 'InitPhotonIntegProb', 'Int8Alloc1D', 'Int8Array1D', 'IntAlloc1D', 'IntArray1D', 'IntArray2D', 'IntArray3D', 'Interval1CoefStruct', 'Interval1CoefStructAlloc1D', 'Interval1CoefStructArray1D', 'K0L', 'K0SL', 'K1', 'K1X', 'K1Y', 'K2', 'K21L', 'K21SL', 'K3', 'KICK', 'KICK0', 'KICKER', 'KS', 'KX', 'KickVectorCalc', 'KnotInterpolate', 'KvBeamInitStruct', 'L', 'LATTICE', 'LATTICE_TYPE', 'LB_SUBATOMIC', 'LCAVITY', 'LEADING', 'LENS', 'LIGHT_GREEN', 'LIGHT_GREY', 'LINEAR', 'LINEAR_EDGE', 'LIVE_BRANCH', 'LOG', 'LONGITUDINAL_MODE', 'LORD_DEFINED', 'LORD_PAD1', 'LORD_PAD2', 'LOST', 'LOST_NEG_X', 'LOST_NEG_X_APERTURE', 'LOST_NEG_Y', 'LOST_NEG_Y_APERTURE', 'LOST_POS_X', 'LOST_POS_X_APERTURE', 'LOST_POS_Y', 'LOST_POS_Y_APERTURE', 'LOST_PZ', 'LOST_PZ_APERTURE', 'LOST_Z', 'LOST_Z_APERTURE', 'LR_FREQ_SPREAD', 'LR_SELF_WAKE_ON', 'LR_WAKE', 'LR_WAKE_FILE', 'LYNCH_DAHL', 'L_ACTIVE', 'L_CHORD', 'L_FUNC_PARENS', 'L_PARENS', 'L_PERIOD', 'L_RECTANGLE', 'L_SAGITTA', 'L_SOFT_EDGE', 'LatEleLocStruct', 'LatEleLocStructAlloc1D', 'LatEleLocStructArray1D', 'LatEleOrder1Struct', 'LatEleOrder1StructAlloc1D', 'LatEleOrder1StructArray1D', 'LatEleOrderArrayStruct', 'LatEleOrderArrayStructAlloc1D', 'LatEleOrderArrayStructArray1D', 'LatEleOrderStruct', 'LatParamStruct', 'LatStruct', 'LatStructAlloc1D', 'LatStructArray1D', 'Layout', 'LinacNormalModeStruct', 'LinearCoef', 'LoadParseLine', 'MACHINE', 'MAD', 'MAGENTA', 'MAGNETIC', 'MAGNUS', 'MARKER', 'MASK', 'MASK_PLATE', 'MASS_OF', 'MAT6_CALC_METHOD', 'MAT6_GROUP', 'MATCH', 'MATCH_ORBIT', 'MATCH_TWISS', 'MATERIAL_TYPE', 'MATRIX', 'MATRIX_KICK', 'MAX', 'MAX_FRINGE_ORDER', 'MAYBE', 'MEAN_EXCITATION_ENERGY', 'MIN', 'MINOR_SLAVE', 'MINUS', 'MIRROR', 'MIXED', 'MODE', 'MODE_FLIP', 'MODE_FLIP0', 'MODE_FLIP1', 'MODE_FLIP_STORED', 'MODULO', 'MONITOR', 'MOSAIC_ANGLE_RMS_IN_PLANE', 'MOSAIC_ANGLE_RMS_OUT_PLANE', 'MOSAIC_DIFFRACTION_NUM', 'MOSAIC_THICKNESS', 'MOVING_FORWARD', 'MULTILAYER_MIRROR', 'MULTIPASS_LORD', 'MULTIPASS_REF_ENERGY', 'MULTIPASS_SLAVE', 'MULTIPOLE', 'MULTIPOLES_ON', 'MULTIPOLE_SOURCE', 'MULTIPOLE_SYMMETRY', 'MUON', 'MU_0_VAC', 'M_DEUTERON', 'M_ELECTRON', 'M_HELION', 'M_MUON', 'M_NEUTRON', 'M_PION_0', 'M_PION_CHARGED', 'M_PROTON', 'MadEnergyStruct', 'MadMapStruct', 'MadTmfoc', 'MakeGMats', 'MakeHvbp', 'MakeMadMap', 'MakeMat6', 'MakeMat6Bmad', 'MakeMat6BmadPhoton', 'MakeMat6Tracking', 'MakeN', 'MakePbrh', 'MakeSmatFromAbc', 'MakeVMats', 'MatSympDecouple', 'MatchEleToMat6', 'Mode3Struct', 'ModeInfoStruct', 'MultiTurnTrackingAnalysis', 'Multipole1AbToKt', 'Multipole1KtToAb', 'MultipoleEleToAb', 'NAVY_BLUE', 'NEUTRON', 'NEW_BRANCH', 'NINT', 'NO', 'NOISE', 'NONE', 'NONE_PT', 'NON_SYMPLECTIC', 'NORMAL', 'NOT_A_LORD', 'NOT_SET', 'NOWHERE', 'NO_APERTURE', 'NO_CLOSED_ORBIT', 'NO_COMPLETE_ORBIT', 'NO_DELIM', 'NO_END', 'NO_END_MARKER', 'NO_FIELD', 'NO_FILL', 'NO_MISALIGNMENT', 'NULL_ELE', 'NUMERIC', 'NUM_ELE_ATTRIB', 'NUM_ELE_ATTRIB_EXTENDED', 'NUM_STEPS', 'N_AVOGADRO', 'N_CELL', 'N_KEY', 'N_PART', 'N_PARTICLE', 'N_PERIOD', 'N_PLANE', 'N_POLE_MAXX', 'N_RF_STEPS', 'N_SAMPLE', 'N_SLICE', 'N_SLICE_SPLINE', 'N_VAR_MAX', 'NametableStruct', 'NormalFormTaylors', 'NormalMode3Calc', 'NormalModesStruct', 'OCTUPOLE', 'OFF', 'OFFSET_MOVES_APERTURE', 'OFF_AND_SAVE', 'OK', 'OLD_ASCII', 'OLD_CONTROL_VAR', 'OLD_CONTROL_VAR_OFFSET', 'OLD_INTEGRATOR', 'ON', 'ONE_DIM', 'ONE_FILE', 'OPAL', 'OPAQUE', 'OPEN', 'ORANGE', 'ORIGIN_ELE', 'ORIGIN_ELE_REF_PT', 'OSC_AMPLITUDE', 'OUTLINE_ARROW_HEAD', 'OUTPUT_ELE', 'OUTSIDE', 'OVERLAY', 'OVERLAY_LORD', 'OdeintBmad', 'OdeintBmadTime', 'OffsetParticle', 'OpenBinaryFile', 'OrbitAmplitudeCalc', 'OrbitTooLarge', 'OrderEvecsByNSimilarity', 'P0C', 'P0C_REF_INIT', 'P0C_SET', 'P0C_START', 'P88', 'P89', 'P90', 'PARENS', 'PARTICLE', 'PATCH', 'PATCH_PROBLEM', 'PC_OUT_MAX', 'PC_OUT_MIN', 'PC_STRONG', 'PENDELLOSUNG_PERIOD_PI', 'PENDELLOSUNG_PERIOD_SIGMA', 'PHASE_TROMBONE', 'PHASE_X', 'PHASE_Y', 'PHI0', 'PHI0_AUTOSCALE', 'PHI0_ERR', 'PHI0_MAX', 'PHI0_MULTIPASS', 'PHI_A', 'PHI_A_STORED', 'PHI_B', 'PHI_B_STORED', 'PHI_POSITION', 'PHOTON', 'PHOTON_FORK', 'PHOTON_INIT', 'PHOTON_TYPE', 'PHYSICAL_SOURCE', 'PI', 'PICKUP', 'PION_0', 'PION_MINUS', 'PION_PLUS', 'PIPE', 'PIXEL', 'PLANAR_MODEL', 'PLUS', 'PLUS_SYM', 'POLARITY', 'POLARIZED', 'POSITRON', 'POWER', 'PRE_BORN', 'PRINT_PAGE_LONG_LEN', 'PRINT_PAGE_SHORT_LEN', 'PROTON', 'PROVISIONAL', 'PSI_ANGLE', 'PSI_POSITION', 'PTC_CANONICAL_COORDS', 'PTC_FIELD_GEOMETRY', 'PTC_FRINGE_GEOMETRY', 'PTC_INTEGRATION_TYPE', 'PTC_STANDARD', 'PURPLE', 'PX', 'PX0', 'PX1', 'PX_APERTURE_CENTER', 'PX_APERTURE_WIDTH2', 'PX_KICK', 'PX_REF', 'PX_STORED', 'PY', 'PY0', 'PY1', 'PY_APERTURE_CENTER', 'PY_APERTURE_WIDTH2', 'PY_KICK', 'PY_REF', 'PY_STORED', 'PZ', 'PZ0', 'PZ1', 'PZ_APERTURE_CENTER', 'PZ_APERTURE_WIDTH2', 'PZ_KICK', 'PZ_REF', 'PZ_STORED', 'P_MASS', 'ParseIntegerList2', 'ParseRealList', 'ParseRealList2', 'ParserFastComplexRead', 'ParserFastRealRead', 'PhotonAbsorptionAndPhaseShift', 'PhotonAddToDetectorStatistics', 'PhotonElementStruct', 'PhotonMaterialStruct', 'PhotonReflectSurfaceStruct', 'PhotonReflectTableStruct', 'PhotonReflectTableStructAlloc1D', 'PhotonReflectTableStructArray1D', 'PhotonReflection', 'PhotonReflectivity', 'PhotonTargetStruct', 'PixelDetecStruct', 'PixelPtStruct', 'PixelPtStructArray2D', 'PointerToElementAtS', 'PointerToFieldEle', 'PointerToGirder', 'PointerToLord', 'PointerToMultipassLord', 'PointerToSlave', 'PointerToSuperLord', 'PointerToSurfaceDisplacementPt', 'PointerToSurfaceSegmentedPt', 'PointerToWakeEle', 'PointerToWall3d', 'PreTrackerStruct', 'ProjectEmitToXyz', 'PtcCheckForLostParticle', 'PtcEmitCalc', 'PtcNormalFormStruct', 'PtcSpinCalc', 'PtcTrackAll', 'QUADRUPOLE', 'QUAD_TILT', 'QpAxisStruct', 'QpLegendStruct', 'QpLineStruct', 'QpPointStruct', 'QpRectStruct', 'QpSymbolStruct', 'QuatToAxisAngle', 'R0_ELEC', 'R0_MAG', 'RADIANS', 'RADIANS_OVER_2PI', 'RADIATION_LENGTH', 'RADIATION_LENGTH_USED', 'RADIUS', 'RAD_INT_GROUP', 'RAMPER', 'RAMPER_LORD', 'RAN', 'RAN_GAUSS', 'RAN_SEED', 'RBEND', 'RCOLLIMATOR', 'REAL_GARBAGE', 'RECALC', 'RECTANGULAR', 'RED', 'REDDISH_PURPLE', 'RED_CROSS_SYM', 'REFERENCE', 'REFER_TO_LORDS', 'REFLECTION', 'REFLECTIVITY_TABLE', 'REF_CAP_GAMMA', 'REF_COORDS', 'REF_ENERGY_GROUP', 'REF_ORBIT', 'REF_ORBIT_FOLLOWS', 'REF_ORIGIN', 'REF_PARTICLE', 'REF_SPECIES', 'REF_TILT', 'REF_TILT_TOT', 'REF_TIME', 'REF_TIME_START', 'REF_WAVELENGTH', 'RELATIVE', 'REPETITION_FREQUENCY', 'RESTORE_STATE', 'RFCAVITY', 'RF_BEND', 'RF_FREQUENCY', 'RF_WAVELENGTH', 'RHO', 'RIPKEN_KICK', 'RMS', 'ROLL', 'ROLL_TOT', 'ROOT', 'ROTATIONALLY_SYMMETRIC_RZ', 'RUNGE_KUTTA', 'R_E', 'R_P', 'R_PARENS', 'R_SOLENOID', 'Rad1DampAndStocMats', 'RadDampAndStocMats', 'RadGIntegrals', 'RadInt1Struct', 'RadInt1StructAlloc1D', 'RadInt1StructArray1D', 'RadIntAllEleStruct', 'RadIntBranchStruct', 'RadIntBranchStructAlloc1D', 'RadIntBranchStructArray1D', 'RadMapEleStruct', 'RadMapStruct', 'RadiationIntegrals', 'RamperLordStruct', 'RamperLordStructAlloc1D', 'RamperLordStructArray1D', 'RamperValue', 'RanGaussConverter', 'RandomStateStruct', 'ReadBeamAscii', 'ReadBeamFile', 'Real16Alloc1D', 'Real16Array1D', 'RealAlloc1D', 'RealArray1D', 'RealArray2D', 'RealArray3D', 'ResonanceHStruct', 'ResonanceHStructAlloc1D', 'ResonanceHStructArray1D', 'RfEleStruct', 'RfStairStepStruct', 'RfStairStepStructAlloc1D', 'RfStairStepStructArray1D', 'RmsValue', 'SAD_FULL', 'SAD_MULT', 'SAMPLE', 'SAVE_STATE', 'SBEND', 'SCALE_FIELD_TO_ONE', 'SCALE_MULTIPOLES', 'SCATTER_METHOD', 'SCATTER_TEST', 'SEC', 'SECOND_TRACK_EDGE', 'SECTOR', 'SEXTUPOLE', 'SHIFTED_TO_RELATIVE', 'SHORT', 'SIGN', 'SIG_E', 'SIG_E2', 'SIG_PZ', 'SIG_VX', 'SIG_VY', 'SIG_X', 'SIG_Y', 'SIG_Z', 'SIN', 'SINC', 'SINH', 'SLAVE', 'SLICE', 'SLICE_SLAVE', 'SMALL_REL_CHANGE', 'SOFT_EDGE', 'SOFT_EDGE_ONLY', 'SOLENOID', 'SOLID', 'SOLID_FILL', 'SOL_QUAD', 'SPACE_CHARGE_METHOD', 'SPATIAL_DISTRIBUTION', 'SPECIES', 'SPECIES_CONST', 'SPECIES_OUT', 'SPECIES_STRONG', 'SPHERICAL', 'SPIN_DN_DPZ_X', 'SPIN_DN_DPZ_Y', 'SPIN_DN_DPZ_Z', 'SPIN_FRINGE_ON', 'SPIN_INTEGRATION', 'SPIN_TRACKING_METHOD', 'SPIN_X', 'SPIN_X_STORED', 'SPIN_Y', 'SPIN_Y_STORED', 'SPIN_Z', 'SPIN_Z_STORED', 'SPLIT_ID', 'SPRINT', 'SQRT', 'SQRT_2', 'SQRT_3', 'SQUARE_BRACKETS', 'SQUARE_CONCAVE_SYM', 'SQUARE_FILLED_SYM', 'SQUARE_SYM', 'SR_WAKE', 'SR_WAKE_FILE', 'STALE', 'STANDARD', 'STANDING_WAVE', 'STAR5_FILLED_SYM', 'STAR5_SYM', 'START_EDGE', 'START_END', 'STAR_OF_DAVID_SYM', 'STEADY_STATE_3D', 'STRAIGHT', 'SUM', 'SUPERIMPOSE', 'SUPER_LORD', 'SUPER_OFFSET', 'SUPER_OK', 'SUPER_SLAVE', 'SURFACE', 'SYMMETRY', 'SYMPLECTIFY', 'SYMP_LIE_BMAD', 'SYMP_LIE_PTC', 'S_ABORT', 'S_AND_FLOOR_POSITION_GROUP', 'S_BLANK', 'S_DINFO', 'S_DWARN', 'S_ERROR', 'S_FATAL', 'S_IMPORTANT', 'S_INFO', 'S_LONG', 'S_NOOUTPUT', 'S_PLANE', 'S_POSITION', 'S_POSITION_GROUP', 'S_SUCCESS', 'S_TWISS_REF', 'S_WARN', 'SetEleAttribute', 'SetEleStatusStale', 'SpaceChargeCommonStruct', 'SpinAxisStruct', 'SpinDnDpzFromMat8', 'SpinDnDpzFromQmap', 'SpinMat8ResonanceStrengths', 'SpinMatToEigen', 'SpinOrbitMap1Struct', 'SpinOrbitMap1StructAlloc1D', 'SpinOrbitMap1StructArray1D', 'SpinPolarStruct', 'SpinQuatResonanceStrengths', 'SplineAkimaInterpolate', 'SplineEvaluate', 'SplineStruct', 'SplineStructAlloc1D', 'SplineStructArray1D', 'SplitLat', 'StrongBeamSigmaCalc', 'StrongBeamStruct', 'SummationRdtStruct', 'SummationRdtStructAlloc1D', 'SummationRdtStructArray1D', 'SuperBicubicInterpolation', 'SuperPolint', 'SurfaceCurvatureStruct', 'SurfaceDisplacementPtStruct', 'SurfaceDisplacementPtStructArray2D', 'SurfaceDisplacementStruct', 'SurfaceHMisalignPtStruct', 'SurfaceHMisalignPtStructArray2D', 'SurfaceHMisalignStruct', 'SurfaceSegmentedPtStruct', 'SurfaceSegmentedPtStructArray2D', 'SurfaceSegmentedStruct', 'T', 'T0', 'T21', 'T6ToB123', 'TAN', 'TANH', 'TAYLOR', 'TAYLOR_MAP_INCLUDES_OFFSETS', 'TAYLOR_OFFSET', 'TAYLOR_ORDER', 'TERM', 'THETA_POSITION', 'THICKNESS', 'THICK_MULTIPOLE', 'TILT', 'TILT_CALIB', 'TILT_CORR', 'TILT_TOT', 'TIMES', 'TIMES_SYM', 'TIME_RUNGE_KUTTA', 'TO_ELEMENT', 'TO_LINE', 'TRACKING', 'TRACKING_METHOD', 'TRAILING', 'TRANSMISSION', 'TRANSPARENT', 'TRANSVERSE_KICK', 'TRANSVERSE_SIGMA_CUT', 'TRAVELING_WAVE', 'TRIANGLE_FILLED_SYM', 'TRIANGLE_SYM', 'TRUE_', 'TRUE_INT', 'TT', 'TWISS_PROPAGATE_FAILURE', 'TWOPI', 'TYPE', 'T_OFFSET', 'TaoBeamBranchStruct', 'TaoBeamUniStruct', 'TaoBuildingWallOrientationStruct', 'TaoBuildingWallPointStruct', 'TaoBuildingWallPointStructAlloc1D', 'TaoBuildingWallPointStructArray1D', 'TaoBuildingWallSectionStruct', 'TaoBuildingWallSectionStructAlloc1D', 'TaoBuildingWallSectionStructArray1D', 'TaoBuildingWallStruct', 'TaoCmdHistoryStruct', 'TaoCmdHistoryStructAlloc1D', 'TaoCmdHistoryStructArray1D', 'TaoCommonStruct', 'TaoCurveColorStruct', 'TaoCurveOrbitStruct', 'TaoCurveRmsCalc', 'TaoCurveStruct', 'TaoCurveStructAlloc1D', 'TaoCurveStructArray1D', 'TaoD1DataStruct', 'TaoD1DataStructAlloc1D', 'TaoD1DataStructArray1D', 'TaoD2DataStruct', 'TaoD2DataStructAlloc1D', 'TaoD2DataStructArray1D', 'TaoDataStruct', 'TaoDataStructAlloc1D', 'TaoDataStructArray1D', 'TaoDataVarComponentStruct', 'TaoDataVarComponentStructAlloc1D', 'TaoDataVarComponentStructArray1D', 'TaoDatumIntegrate', 'TaoDrawingStruct', 'TaoDynamicApertureStruct', 'TaoEleGeometryWithMisalignments', 'TaoElePointerStruct', 'TaoElePointerStructAlloc1D', 'TaoElePointerStructArray1D', 'TaoEleShapeInfo', 'TaoEleShapeStruct', 'TaoEleShapeStructAlloc1D', 'TaoEleShapeStructArray1D', 'TaoEvalFloorOrbit', 'TaoEvalNodeStruct', 'TaoEvalNodeStructAlloc1D', 'TaoEvalNodeStructArray1D', 'TaoEvaluateADatum', 'TaoEvaluateDatumAtS', 'TaoExpressionInfoStruct', 'TaoExpressionInfoStructAlloc1D', 'TaoExpressionInfoStructArray1D', 'TaoFindPlotRegion', 'TaoFloorPlanStruct', 'TaoFloorToScreen', 'TaoGetOptVars', 'TaoGlobalStruct', 'TaoGraphSMinMaxCalc', 'TaoGraphStruct', 'TaoGraphStructAlloc1D', 'TaoGraphStructArray1D', 'TaoHistogramStruct', 'TaoInitStruct', 'TaoInjectBeam', 'TaoIsValidName', 'TaoLatSigmaStruct', 'TaoLatSigmaStructAlloc1D', 'TaoLatSigmaStructArray1D', 'TaoLatticeBranchStruct', 'TaoLatticeBranchStructAlloc1D', 'TaoLatticeBranchStructArray1D', 'TaoLatticeCalc', 'TaoLatticeStruct', 'TaoMerit', 'TaoModelBranchStruct', 'TaoModelBranchStructAlloc1D', 'TaoModelBranchStructArray1D', 'TaoModelElementStruct', 'TaoModelElementStructAlloc1D', 'TaoModelElementStructArray1D', 'TaoOpenScratchFile', 'TaoParamValueAtS', 'TaoParseElementParamStr', 'TaoPickUniverse', 'TaoPingScaleStruct', 'TaoPlotCacheStruct', 'TaoPlotCacheStructAlloc1D', 'TaoPlotCacheStructArray1D', 'TaoPlotPageStruct', 'TaoPlotRegionStruct', 'TaoPlotRegionStructAlloc1D', 'TaoPlotRegionStructArray1D', 'TaoPlotStruct', 'TaoPlotStructAlloc1D', 'TaoPlotStructArray1D', 'TaoPointerToDatumEle', 'TaoPointerToEleShape', 'TaoPointerToUniverses', 'TaoScaleGraph', 'TaoSetIntegerValue', 'TaoSetLogicalValue', 'TaoSetQpAxisStruct', 'TaoSetQpPointStruct', 'TaoSetQpRectStruct', 'TaoSetRealValue', 'TaoShapePatternPointStruct', 'TaoShapePatternPointStructAlloc1D', 'TaoShapePatternPointStructArray1D', 'TaoShapePatternStruct', 'TaoShapePatternStructAlloc1D', 'TaoShapePatternStructArray1D', 'TaoSpinDnDpzStruct', 'TaoSpinEleStruct', 'TaoSpinEleStructAlloc1D', 'TaoSpinEleStructArray1D', 'TaoSpinMapStruct', 'TaoSpinPolarizationStruct', 'TaoSubinUniNumber', 'TaoSuperUniverseStruct', 'TaoTitleStruct', 'TaoToPhaseAndCouplingReading', 'TaoToReal', 'TaoTrackingEleIndex', 'TaoUniverseCalcStruct', 'TaoUniversePointerStruct', 'TaoUniversePointerStructAlloc1D', 'TaoUniversePointerStructArray1D', 'TaoUniverseStruct', 'TaoUniverseStructAlloc1D', 'TaoUniverseStructArray1D', 'TaoV1VarStruct', 'TaoV1VarStructAlloc1D', 'TaoV1VarStructArray1D', 'TaoVarSlaveStruct', 'TaoVarSlaveStructAlloc1D', 'TaoVarSlaveStructArray1D', 'TaoVarStruct', 'TaoVarStructAlloc1D', 'TaoVarStructArray1D', 'TaoWaveKickPtStruct', 'TaoWaveKickPtStructAlloc1D', 'TaoWaveKickPtStructArray1D', 'TaoWaveStruct', 'TargetPointStruct', 'TargetPointStructAlloc1D', 'TargetPointStructArray1D', 'TargetRotMats', 'TaylorStruct', 'TaylorStructAlloc1D', 'TaylorStructArray1D', 'TaylorTermStruct', 'TaylorTermStructAlloc1D', 'TaylorTermStructArray1D', 'TestBunchStructScalar', 'TestCharacterScalar', 'TestComplexScalar', 'TestInteger8Scalar', 'TestIntegerScalar', 'TestLogicalScalar', 'TestReal16Scalar', 'TestRealScalar', 'TestSubStruct', 'TestSubStructAlloc1D', 'TestSubStructArray1D', 'TestSubStructArray2D', 'TestSubStructArray3D', 'TestSubSubStruct', 'ToEtaReading', 'ToOrbitReading', 'ToPhaseAndCouplingReading', 'Track1', 'Track1Bmad', 'Track1RungeKutta', 'Track1Spin', 'Track1TimeRungeKutta', 'TrackABeambeam', 'TrackAPatch', 'TrackAZeroLengthElement', 'TrackAll', 'TrackFromSToS', 'TrackPointStruct', 'TrackPointStructAlloc1D', 'TrackPointStructArray1D', 'TrackStruct', 'TrackUntilDead', 'TrackingRadMapSetup', 'TransferMapFromSToS', 'TricubicCmplxCoefStruct', 'TricubicCmplxCoefStructArray3D', 'TricubicCmplxEval', 'Twiss1Propagate', 'TwissAndTrackFromSToS', 'TwissAndTrackIntraEle', 'TwissAtElement', 'TwissFromTracking', 'TwissStruct', 'UB_SUBATOMIC', 'UNARY_MINUS', 'UNARY_PLUS', 'UNDIFFRACTED', 'UNDULATOR', 'UNIFORM', 'UNKNOWN', 'UNPOLARIZED', 'UNSTABLE', 'UNSTABLE_A', 'UNSTABLE_B', 'UPSTREAM', 'UPSTREAM_COORD_DIR', 'UPSTREAM_END', 'USER_SET', 'USER_SETS_LENGTH', 'USE_REFLECTIVITY_TABLE', 'V1_UNITCELL', 'V2_UNITCELL', 'VAL1', 'VAL10', 'VAL11', 'VAL12', 'VAL2', 'VAL3', 'VAL4', 'VAL5', 'VAL6', 'VAL7', 'VAL8', 'VAL9', 'VAR', 'VARIABLE', 'VAR_OFFSET', 'VELOCITY_DISTRIBUTION', 'VERTICALLY_PURE', 'VERTICAL_BAR', 'VERTICAL_KICK', 'VKICK', 'VKICKER', 'VOLTAGE', 'VOLTAGE_ERR', 'VOLTAGE_TOT', 'V_DISPLACE', 'V_UNITCELL', 'ValueOfAttribute', 'WALL', 'WALL3D', 'WALL_END', 'WALL_START', 'WALL_TRANSITION', 'WHITE', 'WIGGLER', 'WIGGLERS', 'WMatToAxisAngle', 'WRAP_SUPERIMPOSE', 'WakeLrModeStruct', 'WakeLrModeStructAlloc1D', 'WakeLrModeStructArray1D', 'WakeLrStruct', 'WakeSrModeStruct', 'WakeSrModeStructAlloc1D', 'WakeSrModeStructArray1D', 'WakeSrStruct', 'WakeSrZLongStruct', 'WakeStruct', 'Wall3DSectionStruct', 'Wall3DSectionStructAlloc1D', 'Wall3DSectionStructArray1D', 'Wall3DStruct', 'Wall3DStructAlloc1D', 'Wall3DStructArray1D', 'Wall3DVertexStruct', 'Wall3DVertexStructAlloc1D', 'Wall3DVertexStructArray1D', 'Wall3dDRadius', 'WriteAstraFieldGridFile', 'WriteAstraFieldGridFile3d', 'WriteGptFieldGridFile1d', 'WriteGptFieldGridFile2d', 'WriteGptFieldGridFile3d', 'WriteLatticeInScibmad', 'WriteOpalFieldGridFile', 'X', 'X0', 'X1', 'X1_EDGE', 'X1_LIMIT', 'X2_EDGE', 'X2_LIMIT', 'XFER_MAT_CALC_FAILURE', 'XY', 'XYZ', 'XY_AXIS', 'X_AXIS', 'X_DISPERSION_CALIB', 'X_DISPERSION_ERR', 'X_GAIN_CALIB', 'X_GAIN_ERR', 'X_INVARIANT', 'X_KICK', 'X_KNOT', 'X_LEADING', 'X_LIMIT', 'X_OFFSET', 'X_OFFSET_CALIB', 'X_OFFSET_MULT', 'X_OFFSET_TOT', 'X_PITCH', 'X_PITCH_TOT', 'X_PLANE', 'X_POLARIZATION', 'X_POSITION', 'X_QUAD', 'X_REF', 'X_STORED', 'X_SYMBOL_SYM', 'X_TRAILING', 'XyDispStruct', 'Y', 'Y0', 'Y1', 'Y1_EDGE', 'Y1_LIMIT', 'Y2_EDGE', 'Y2_LIMIT', 'YELLOW', 'YELLOW_GREEN', 'YES', 'Y_AXIS', 'Y_DISPERSION_CALIB', 'Y_DISPERSION_ERR', 'Y_GAIN_CALIB', 'Y_GAIN_ERR', 'Y_KICK', 'Y_KNOT', 'Y_LEADING', 'Y_LIMIT', 'Y_OFFSET', 'Y_OFFSET_CALIB', 'Y_OFFSET_MULT', 'Y_OFFSET_TOT', 'Y_PITCH', 'Y_PITCH_TOT', 'Y_PLANE', 'Y_POLARIZATION', 'Y_POSITION', 'Y_QUAD', 'Y_REF', 'Y_STORED', 'Y_TRAILING', 'Z', 'Z0', 'Z1', 'ZAtSurface', 'ZERO', 'Z_APERTURE_CENTER', 'Z_APERTURE_WIDTH2', 'Z_AXIS', 'Z_KICK', 'Z_OFFSET', 'Z_OFFSET_TOT', 'Z_PLANE', 'Z_POSITION', 'Z_REF', 'Z_STORED', 'ab_multipole_kick', 'ab_multipole_kicks', 'absolute_photon_position', 'absolute_time_tracking', 'ac_kicker_amp', 'action_to_xyz', 'add_lattice_control_structs', 'add_superimpose', 'add_this_multipass', 'add_this_taylor_term', 'adjust_super_slave_names', 'allocate_branch_array', 'allocate_lat_ele_array', 'allocate_thread_states', 'angle_between_polars', 'angle_to_canonical_coords', 'anomalous_moment_of', 'antiparticle', 'aperture_bookkeeper', 'apfft', 'apfft_corr', 'apfft_ext', 'apply_all_rampers', 'apply_energy_kick', 'apply_patch_to_ptc_fibre', 'apply_rampers_to_slave', 'array_re_str', 'asinc', 'assert_equal', 'astra_max_field_reference', 'at_this_ele_end', 'atomic_number', 'atomic_species_id', 'attribute_bookkeeper', 'attribute_free', 'attribute_index', 'attribute_name', 'attribute_type', 'attribute_units', 'autoscale_phase_and_amp', 'average_twiss', 'axis_angle_to_quat', 'axis_angle_to_w_mat', 'bbi_kick', 'bbi_slice_calc', 'bbu_add_a_bunch', 'bbu_hom_voltage_calc', 'bbu_remove_head_bunch', 'bbu_setup', 'bbu_track_a_stage', 'bbu_track_all', 'beam_envelope_ibs', 'beam_equal_beam', 'beam_init_setup', 'beam_tilts', 'beambeam_fibre_setup', 'bend_edge_kick', 'bend_exact_multipole_field', 'bend_length_has_been_set', 'bend_photon_e_rel_init', 'bend_photon_energy_integ_prob', 'bend_photon_energy_normalized_probability', 'bend_photon_init', 'bend_photon_polarization_init', 'bend_photon_vert_angle_init', 'bend_shift', 'bend_vert_angle_integ_prob', 'bicubic_cmplx_eval', 'bin_index', 'bin_x_center', 'bit_set', 'bl_via_vlassov', 'bmad_parser', 'bmad_parser2', 'bmad_patch_parameters_to_ptc', 'bp_set_ran_status', 'bracket_index_for_spline', 'branch_equal_branch', 'branch_name', 'branch_to_ptc_m_u', 'bunch_equal_bunch', 'c_to_cbar', 'calc_bunch_params', 'calc_bunch_params_slice', 'calc_bunch_params_z_slice', 'calc_bunch_sigma_matrix_etc', 'calc_emittances_and_twiss_from_sigma_matrix', 'calc_file_number', 'calc_spin_params', 'calc_super_slave_key', 'calc_wall_radius', 'calc_z_tune', 'canonical_to_angle_coords', 'cbar_to_c', 'change_file_number', 'charge_of', 'charge_to_mass_of', 'check_aperture_limit', 'check_controller_controls', 'check_for_superimpose_problem', 'check_if_s_in_bounds', 'check_rf_freq', 'choose_quads_for_set_tune', 'chrom_calc', 'chrom_tune', 'classical_radius', 'clear_lat_1turn_mats', 'clear_taylor_maps_from_elements', 'closed_orbit_calc', 'closed_orbit_from_tracking', 'cmplx_re_str', 'coarse_frequency_estimate', 'combine_consecutive_elements', 'complex_error_function', 'complex_taylor_clean', 'complex_taylor_coef', 'complex_taylor_equal_complex_taylor', 'complex_taylor_exponent_index', 'complex_taylor_make_unit', 'complex_taylor_to_mat6', 'complex_taylors_equal_complex_taylors', 'compute_slave_coupler', 'concat_ele_taylor', 'concat_taylor', 'concat_transfer_mat', 'control_bookkeeper', 'convert_bend_exact_multipole', 'convert_coords', 'convert_field_ele_to_lab', 'convert_local_cartesian_to_local_curvilinear', 'convert_local_curvilinear_to_local_cartesian', 'convert_particle_coordinates_s_to_t', 'convert_particle_coordinates_t_to_s', 'convert_pc_to', 'convert_total_energy_to', 'converter_distribution_parser', 'coord_equal_coord', 'coord_state_name', 'coords_body_to_local', 'coords_body_to_rel_exit', 'coords_curvilinear_to_floor', 'coords_floor_to_curvilinear', 'coords_floor_to_local_curvilinear', 'coords_floor_to_relative', 'coords_local_curvilinear_to_body', 'coords_local_curvilinear_to_floor', 'coords_relative_to_floor', 'cos_one', 'cosc', 'coulombfun', 'count_lines_in_file', 'create_a_spline', 'create_concatenated_wall3d', 'create_element_slice', 'create_field_overlap', 'create_girder', 'create_group', 'create_lat_ele_nametable', 'create_overlay', 'create_planar_wiggler_model', 'create_ramper', 'create_sol_quad_model', 'create_unique_ele_names', 'create_wiggler_cartesian_map', 'cross_product', 'crystal_attribute_bookkeeper', 'crystal_h_misalign', 'crystal_type_to_crystal_params', 'custom_attribute_ubound_index', 'damping_matrix_d', 'date_and_time_stamp', 'deallocate_ele_pointers', 'deallocate_expression_tree', 'deallocate_lat_pointers', 'default_tracking_species', 'destfixedwindowls', 'detab', 'detector_pixel_pt', 'diffraction_plate_or_mask_hit_spot', 'diffusion_matrix_b', 'display_size_and_resolution', 'distance_to_aperture', 'dj_bessel', 'djb_hash', 'djb_str_hash', 'do_mode_flip', 'downcase_string', 'dpc_given_de', 'drift_and_pipe_track_methods_adjustment', 'drift_multipass_name_correction', 'drift_orbit_time', 'drift_particle_to_s', 'drift_particle_to_t', 'dspline_len', 'dynamic_aperture_point', 'dynamic_aperture_scan', 'e_accel_field', 'e_crit_photon', 'eigen_decomp_6mat', 'ele_compute_ref_energy_and_time', 'ele_equal_ele', 'ele_equals_ele', 'ele_finalizer', 'ele_full_name', 'ele_geometry', 'ele_geometry_with_misalignments', 'ele_has_constant_ds_dt_ref', 'ele_has_nonzero_kick', 'ele_has_nonzero_offset', 'ele_is_monitor', 'ele_loc', 'ele_loc_name', 'ele_misalignment_l_s_calc', 'ele_nametable_index', 'ele_order_calc', 'ele_reference_energy_correction', 'ele_rf_step_index', 'ele_to_fibre', 'ele_to_ptc_magnetic_bn_an', 'ele_to_spin_taylor', 'ele_to_taylor', 'ele_unique_name', 'ele_value_has_changed', 'ele_vec_equal_ele_vec', 'elec_multipole_field', 'element_at_s', 'element_slice_iterator', 'ellipinc_test', 'em_field_calc', 'em_field_derivatives', 'em_field_kick_vector_time', 'em_field_plus_em_field', 'em_taylor_equal_em_taylor', 'em_taylors_equal_em_taylors', 'emit_6d', 'end_akima_spline_calc', 'entering_element', 'envelope_radints', 'envelope_radints_ibs', 'eq_ac_kicker', 'eq_ac_kicker_freq', 'eq_ac_kicker_time', 'eq_anormal_mode', 'eq_aperture_param', 'eq_aperture_point', 'eq_aperture_scan', 'eq_beam', 'eq_beam_init', 'eq_bmad_common', 'eq_bookkeeping_state', 'eq_bpm_phase_coupling', 'eq_branch', 'eq_bunch', 'eq_bunch_params', 'eq_cartesian_map', 'eq_cartesian_map_term', 'eq_cartesian_map_term1', 'eq_complex_taylor', 'eq_complex_taylor_term', 'eq_control', 'eq_control_ramp1', 'eq_control_var1', 'eq_controller', 'eq_coord', 'eq_coord_array', 'eq_cylindrical_map', 'eq_cylindrical_map_term', 'eq_cylindrical_map_term1', 'eq_ele', 'eq_ellipse_beam_init', 'eq_em_field', 'eq_em_taylor', 'eq_em_taylor_term', 'eq_expression_atom', 'eq_floor_position', 'eq_gen_grad1', 'eq_gen_grad_map', 'eq_grid_beam_init', 'eq_grid_field', 'eq_grid_field_pt', 'eq_grid_field_pt1', 'eq_high_energy_space_charge', 'eq_interval1_coef', 'eq_kv_beam_init', 'eq_lat', 'eq_lat_ele_loc', 'eq_lat_param', 'eq_linac_normal_mode', 'eq_mode3', 'eq_mode_info', 'eq_normal_modes', 'eq_photon_element', 'eq_photon_material', 'eq_photon_reflect_surface', 'eq_photon_reflect_table', 'eq_photon_target', 'eq_pixel_detec', 'eq_pixel_pt', 'eq_pre_tracker', 'eq_rad_int1', 'eq_rad_int_all_ele', 'eq_rad_int_branch', 'eq_rad_map', 'eq_rad_map_ele', 'eq_ramper_lord', 'eq_space_charge_common', 'eq_spin_polar', 'eq_spline', 'eq_strong_beam', 'eq_surface_curvature', 'eq_surface_displacement', 'eq_surface_displacement_pt', 'eq_surface_h_misalign', 'eq_surface_h_misalign_pt', 'eq_surface_segmented', 'eq_surface_segmented_pt', 'eq_target_point', 'eq_taylor', 'eq_taylor_term', 'eq_track', 'eq_track_point', 'eq_twiss', 'eq_wake', 'eq_wake_lr', 'eq_wake_lr_mode', 'eq_wake_sr', 'eq_wake_sr_mode', 'eq_wake_sr_z_long', 'eq_wall3d', 'eq_wall3d_section', 'eq_wall3d_vertex', 'eq_xy_disp', 'equal_sign_here', 'equivalent_taylor_attributes', 'err_exit', 'etdiv', 'evaluate_array_index', 'evaluate_logical', 'exact_bend_edge_kick', 'exp_bessi0', 'expect_one_of', 'expect_this', 'expression_stack_to_string', 'expression_stack_value', 'expression_string_to_stack', 'expression_string_to_tree', 'expression_tree_to_string', 'expression_value', 'factorial', 'faddeeva_function', 'fft1', 'fft_1d', 'fibre_to_ele', 'field_attribute_free', 'file_directorizer', 'file_get', 'file_get_open', 'file_suffixer', 'finalize_reflectivity_table', 'find_element_ends', 'find_fwhm', 'find_location', 'find_matching_fieldmap', 'find_normalization', 'fine_frequency_estimate', 'fixedwindowls', 'floor_angles_to_w_mat', 'floor_w_mat_to_angles', 'form_complex_taylor', 'form_digested_bmad_file_name', 'fourier_amplitude', 'fringe_here', 'g_bend_from_em_field', 'g_bending_strength_from_em_field', 'g_integrals_calc', 'gamma_ref', 'gen_complete_elliptic', 'gen_grad1_to_em_taylor', 'gen_grad_at_s_to_em_taylor', 'gen_grad_field', 'get_bl_from_fwhm', 'get_bmad_com', 'get_called_file', 'get_emit_from_sigma_mat', 'get_file_number', 'get_file_time_stamp', 'get_next_word', 'get_slave_list', 'get_space_charge_com', 'get_super_universe', 'gpt_field_grid_scaling', 'gpt_max_field_reference', 'gpt_to_particle_bunch', 'gradient_shift_sr_wake', 'grid_field_interpolate', 'hanhan', 'hard_multipole_edge_kick', 'has_attribute', 'has_curvature', 'has_orientation_attributes', 'hdf5_write_beam', 'hdf5_write_grid_field', 'hom_voltage', 'hwang_bend_edge_kick', 'i_bessel', 'i_bessel_extended', 'ibs_matrix_c', 'igfcoulombfun', 'igfexfun', 'igfeyfun', 'igfezfun', 'increment_file_number', 'index_nocase', 'init_attribute_name1', 'init_attribute_name_array', 'init_beam_distribution', 'init_bmad', 'init_bmad_parser_common', 'init_bunch_distribution', 'init_complex_taylor_series', 'init_coord', 'init_custom', 'init_ele', 'init_em_taylor_series', 'init_lat', 'init_multipole_cache', 'init_photon_from_a_photon_init_ele', 'init_photon_integ_prob', 'init_spin_distribution', 'init_surface_segment', 'init_taylor_series', 'init_wake', 'initfixedwindowls', 'insert_element', 'insert_phase_trombone', 'int_str', 'integrand_base', 'integrate_max', 'integrate_min', 'integrate_psi', 'integrated_mats', 'integration_timer', 'interpolated_fft', 'interpolated_fft_gsl', 'ion_kick', 'is_alphabetic', 'is_attribute', 'is_decreasing_sequence', 'is_false', 'is_increasing_sequence', 'is_integer', 'is_logical', 'is_real', 'is_subatomic_species', 'is_true', 'j_bessel', 'key_name_to_key_index', 'kick_vector_calc', 'kill_complex_taylor', 'kill_ptc_layouts', 'kill_taylor', 'kind_name', 'knot_interpolate', 'knots_to_string', 'lafun', 'lat_compute_ref_energy_and_time', 'lat_ele_locator', 'lat_equal_lat', 'lat_geometry', 'lat_make_mat6', 'lat_sanity_check', 'lat_to_ptc_layout', 'lat_vec_equal_lat_vec', 'lattice_bookkeeper', 'lcavity_rf_step_setup', 'linear_bend_edge_kick', 'linear_coef', 'linear_fit', 'linear_fit_2d', 'linear_to_spin_taylor', 'load_parse_line', 'logic_str', 'logical_to_python', 'lord_edge_aligned', 'low_energy_z_correction', 'lunget', 'mad_add_offsets_and_multipoles', 'mad_concat_map2', 'mad_drift', 'mad_elsep', 'mad_map_to_taylor', 'mad_quadrupole', 'mad_rfcavity', 'mad_sbend', 'mad_sbend_body', 'mad_sbend_fringe', 'mad_sextupole', 'mad_solenoid', 'mad_tmfoc', 'mad_tmsymm', 'mad_tmtilt', 'mad_track1', 'make_g2_mats', 'make_g_mats', 'make_hvbp', 'make_hybrid_lat', 'make_legal_comment', 'make_mad_map', 'make_mat6', 'make_mat6_bmad', 'make_mat6_bmad_photon', 'make_mat6_high_energy_space_charge', 'make_mat6_mad', 'make_mat6_symp_lie_ptc', 'make_mat6_taylor', 'make_mat6_tracking', 'make_n', 'make_pbrh', 'make_smat_from_abc', 'make_unit_mad_map', 'make_v', 'make_v_mats', 'makeup_control_slave', 'makeup_group_lord', 'makeup_multipass_slave', 'makeup_super_slave', 'makeup_super_slave1', 'map1_inverse', 'map1_make_unit', 'map1_times_map1', 'map_to_angle_coords', 'mark_patch_regions', 'mass_of', 'master_parameter_value', 'mat4_multipole', 'mat6_add_offsets', 'mat6_add_pitch', 'mat6_to_complex_taylor', 'mat_symp_decouple', 'match_ele_to_mat6', 'match_reg', 'match_wild', 'maximize_projection', 'mexp', 'mfft1', 'milli_sleep', 'misalign_ptc_fibre', 'momentum_compaction', 'multi_turn_tracking_analysis', 'multilayer_type_to_multilayer_params', 'multipass_chain', 'multipole1_ab_to_kt', 'multipole1_kt_to_ab', 'multipole_ab_to_kt', 'multipole_ele_to_ab', 'multipole_ele_to_kt', 'multipole_init', 'multipole_kick', 'multipole_kick_mat', 'multipole_kicks', 'multipole_kt_to_ab', 'multipole_spin_tracking', 'mytan', 'n_attrib_string_max_len', 'n_bins_automatic', 'n_choose_k', 'n_spline_create', 'naff', 'nametable_add', 'nametable_bracket_indexx', 'nametable_change1', 'nametable_init', 'nametable_remove', 'new_control', 'nint_chk', 'normal_form_complex_taylors', 'normal_form_taylors', 'normal_mode3_calc', 'normal_mode_dispersion', 'normalize_evecs', 'num_field_eles', 'num_lords', 'odeint_bmad', 'odeint_bmad_time', 'offset_particle', 'offset_photon', 'omega_to_quat', 'one_turn_mat_at_ele', 'open_binary_file', 'openpmd_species_name', 'orbit_amplitude_calc', 'orbit_reference_energy_correction', 'orbit_to_floor_phase_space', 'orbit_to_local_curvilinear', 'orbit_too_large', 'order_evecs_by_n_similarity', 'order_evecs_by_plane_dominance', 'order_evecs_by_tune', 'order_particles_in_z', 'order_super_lord_slaves', 'ordinal_str', 'osc_alloc_freespace_array', 'osc_alloc_image_array', 'osc_alloc_rectpipe_arrays', 'osc_getgrnpipe', 'osc_read_rectpipe_grn', 'osc_write_rectpipe_grn', 'parse_cartesian_map', 'parse_cylindrical_map', 'parse_fortran_format', 'parse_gen_grad_map', 'parse_grid_field', 'parse_integer_list', 'parse_integer_list2', 'parse_real_list', 'parse_real_list2', 'parser_add_constant', 'parser_call_check', 'parser_fast_complex_read', 'parser_fast_integer_read', 'parser_fast_real_read', 'parser_file_stack', 'parser_get_integer', 'parser_get_logical', 'parser_identify_fork_to_element', 'parser_init_custom_elements', 'parser_print_line', 'parser_read_lr_wake', 'parser_read_old_format_lr_wake', 'parser_read_old_format_sr_wake', 'parser_read_sr_wake', 'parser_transfer_control_struct', 'particle_in_global_frame', 'particle_is_moving_backwards', 'particle_is_moving_forward', 'particle_rf_time', 'patch_flips_propagation_direction', 'patch_length', 'photon_absorption_and_phase_shift', 'photon_add_to_detector_statistics', 'photon_reflection', 'photon_reflection_std_surface_init', 'photon_reflectivity', 'photon_target_corner_calc', 'photon_target_setup', 'photon_type', 'physical_ele_end', 'point_photon_emission', 'pointer_to_branch', 'pointer_to_ele', 'pointer_to_element_at_s', 'pointer_to_fibre', 'pointer_to_field_ele', 'pointer_to_girder', 'pointer_to_lord', 'pointer_to_multipass_lord', 'pointer_to_next_ele', 'pointer_to_ran_state', 'pointer_to_slave', 'pointer_to_super_lord', 'pointer_to_surface_displacement_pt', 'pointer_to_surface_segmented_pt', 'pointer_to_wake_ele', 'pointer_to_wall3d', 'polar_to_spinor', 'polar_to_vec', 'poly_eval', 'probability_funct', 'projdd', 'project_emit_to_xyz', 'psi_prime_sca', 'ptc_bookkeeper', 'ptc_calculate_tracking_step_size', 'ptc_check_for_lost_particle', 'ptc_closed_orbit_calc', 'ptc_emit_calc', 'ptc_layouts_resplit', 'ptc_one_turn_mat_and_closed_orbit_calc', 'ptc_ran_seed_put', 'ptc_set_rf_state_for_c_normal', 'ptc_set_taylor_order_if_needed', 'ptc_spin_calc', 'ptc_track_all', 'ptc_transfer_map_with_spin', 'pwd_mat', 'quadratic_roots', 'quat_conj', 'quat_inverse', 'quat_mul', 'quat_rotate', 'quat_to_axis_angle', 'quat_to_omega', 'quat_to_w_mat', 'query_string', 'quote', 'rad1_damp_and_stoc_mats', 'rad_damp_and_stoc_mats', 'rad_g_integrals', 'radiation_integrals', 'radiation_map_setup', 'ramper_slave_setup', 'ramper_value', 'ran_default_state', 'ran_engine', 'ran_gauss_converter', 'ran_gauss_scalar', 'ran_gauss_vector', 'ran_seed_get', 'ran_seed_put', 'ran_uniform', 'randomize_lr_wake_frequencies', 'rchomp', 're_allocate', 're_allocate_eles', 're_associate_node_array', 're_str', 'read_beam_ascii', 'read_beam_file', 'read_binary_cartesian_map', 'read_binary_cylindrical_map', 'read_binary_grid_field', 'read_surface_reflection_file', 'real_num_fortran_format', 'real_path', 'real_str', 'real_to_string', 'reallocate_beam', 'reallocate_bp_com_const', 'reallocate_bunch', 'reallocate_control', 'reallocate_coord', 'reallocate_expression_stack', 'reallocate_spline', 'rel_tracking_charge_to_mass', 'relative_mode_flip', 'release_rad_int_cache', 'remove_constant_taylor', 'remove_dead_from_bunch', 'remove_eles_from_lat', 'remove_lord_slave_link', 'reverse_lat', 'rf_cav_names', 'rf_coupler_kick', 'rf_is_on', 'rf_ref_time_offset', 'rfun', 'rk_adaptive_time_step', 'rk_time_step1', 'rms_value', 'rot_2d', 'rotate3', 'rotate_em_field', 'rotate_field_zx', 'rotate_for_curved_surface', 'rotate_spin', 'rotate_spin_a_step', 'rotate_spin_given_field', 'rotate_vec', 'rotate_vec_given_axis_angle', 'rp8', 'run_timer', 's_body_calc', 's_calc', 'sad_mult_hard_bend_edge_kick', 'sad_soft_bend_edge_kick', 'save_a_beam_step', 'save_a_bunch_step', 'save_a_step', 'sbend_body_with_k1_map', 'sc_adaptive_step', 'sc_step', 'set_active_fixer', 'set_custom_attribute_name', 'set_ele_attribute', 'set_ele_defaults', 'set_ele_name', 'set_ele_real_attribute', 'set_ele_status_stale', 'set_flags_for_changed_attribute', 'set_fringe_on_off', 'set_lords_status_stale', 'set_on_off', 'set_orbit_to_zero', 'set_parameter', 'set_ptc', 'set_ptc_base_state', 'set_ptc_com_pointers', 'set_ptc_quiet', 'set_ptc_verbose', 'set_pwd_ele', 'set_species_charge', 'set_status_flags', 'set_tune', 'set_tune_3d', 'set_twiss', 'set_z_tune', 'settable_dep_var_bookkeeping', 'setup_high_energy_space_charge_calc', 'sigma_mat_ptc_to_bmad', 'significant_difference', 'sinc', 'sincc', 'sinhx_x', 'skip_ele_blender', 'skip_header', 'slice_lattice', 'soft_quadrupole_edge_kick', 'sol_quad_mat6_calc', 'solve_psi_adaptive', 'solve_psi_fixed_steps', 'sort_complex_taylor_terms', 'species_id', 'species_id_from_openpmd', 'species_name', 'species_of', 'spin_dn_dpz_from_mat8', 'spin_dn_dpz_from_qmap', 'spin_map1_normalize', 'spin_mat8_resonance_strengths', 'spin_mat_to_eigen', 'spin_of', 'spin_omega', 'spin_quat_resonance_strengths', 'spin_taylor_to_linear', 'spinor_to_polar', 'spinor_to_vec', 'spline1', 'spline_akima', 'spline_akima_interpolate', 'spline_evaluate', 'spline_fit_orbit', 'split_lat', 'sprint_spin_taylor_map', 'sqrt_alpha', 'sqrt_one', 'sr_longitudinal_wake_particle', 'sr_transverse_wake_particle', 'sr_z_long_wake', 'srdt_calc', 'srdt_lsq_solution', 'start_branch_at', 'str_count', 'str_downcase', 'str_first_in_set', 'str_first_not_in_set', 'str_last_in_set', 'str_last_not_in_set', 'str_match_wild', 'str_substitute', 'str_upcase', 'stream_ele_end', 'string_attrib', 'string_to_int', 'string_to_real', 'string_trim', 'string_trim2', 'strong_beam_sigma_calc', 'strong_beam_strength', 'super_bicubic_coef', 'super_bicubic_interpolation', 'super_polint', 'super_poly', 'super_sobseq', 'super_sort', 'surface_grid_displacement', 'symp_lie_bmad', 'system_command', 't6_to_b123', 'tao_abort_command_file', 'tao_add_to_normal_mode_h_array', 'tao_alias_cmd', 'tao_allocate_data_array', 'tao_allocate_v1_var', 'tao_allocate_var_array', 'tao_beam_emit_calc', 'tao_beam_track', 'tao_beam_track_endpoint', 'tao_branch_index', 'tao_calc_data_at_s_pts', 'tao_cbar_wave_anal', 'tao_change_ele', 'tao_change_tune', 'tao_change_var', 'tao_change_z_tune', 'tao_chrom_calc_needed', 'tao_clear_cmd', 'tao_clip_cmd', 'tao_close_command_file', 'tao_cmd_history_record', 'tao_command', 'tao_constraint_type_name', 'tao_control_tree_list', 'tao_count_strings', 'tao_create_plot_window', 'tao_curve_beam_ellipse_setup', 'tao_curve_check_universe', 'tao_curve_data_setup', 'tao_curve_datum_calc', 'tao_curve_ele_ref', 'tao_curve_ix_uni', 'tao_curve_name', 'tao_curve_rms_calc', 'tao_d2_d1_name', 'tao_d2_data_stuffit', 'tao_data_check', 'tao_data_coupling_init', 'tao_data_sanity_check', 'tao_data_type_substitute', 'tao_data_useit_plot_calc', 'tao_datum_has_associated_ele', 'tao_datum_integrate', 'tao_datum_name', 'tao_datum_s_position', 'tao_de_optimizer', 'tao_deallocate_plot_cache', 'tao_deallocate_tree', 'tao_destroy_plot_window', 'tao_dmerit_calc', 'tao_dmodel_dvar_calc', 'tao_do_wire_scan', 'tao_draw_beam_chamber_wall', 'tao_draw_curve_data', 'tao_draw_ele_for_floor_plan', 'tao_draw_floor_plan', 'tao_draw_graph_axes', 'tao_draw_histogram_data', 'tao_draw_lat_layout', 'tao_draw_plots', 'tao_ele_geometry_with_misalignments', 'tao_ele_shape_info', 'tao_eval_floor_orbit', 'tao_evaluate_a_datum', 'tao_evaluate_datum_at_s', 'tao_evaluate_element_parameters', 'tao_evaluate_expression', 'tao_evaluate_expression_new', 'tao_evaluate_expression_old', 'tao_evaluate_lat_or_beam_data', 'tao_evaluate_stack_old', 'tao_evaluate_tree', 'tao_evaluate_tune', 'tao_expression_hash_substitute', 'tao_expression_tree_to_string', 'tao_find_plot_region', 'tao_fixer', 'tao_floor_to_screen', 'tao_floor_to_screen_coords', 'tao_geodesic_lm_optimizer', 'tao_get_data', 'tao_get_opt_vars', 'tao_get_user_input', 'tao_graph_controller_setup', 'tao_graph_data_setup', 'tao_graph_data_slice_setup', 'tao_graph_dynamic_aperture_setup', 'tao_graph_histogram_setup', 'tao_graph_name', 'tao_graph_phase_space_setup', 'tao_graph_s_min_max_calc', 'tao_graph_setup', 'tao_init', 'tao_init_beam_in_universe', 'tao_init_beams', 'tao_init_data', 'tao_init_data_end_stuff', 'tao_init_data_in_universe', 'tao_init_dynamic_aperture', 'tao_init_find_elements', 'tao_init_global', 'tao_init_lattice', 'tao_init_plotting', 'tao_init_variables', 'tao_inject_beam', 'tao_inject_particle', 'tao_is_valid_name', 'tao_json_cmd', 'tao_key_info_to_str', 'tao_lat_bookkeeper', 'tao_lat_emit_calc', 'tao_lat_sigma_calc_needed', 'tao_lat_sigma_track', 'tao_lattice_branches_equal_tao_lattice_branches', 'tao_lattice_calc', 'tao_lattice_equal_tao_lattice', 'tao_limit_calc', 'tao_lm_optimizer', 'tao_lmdif_optimizer', 'tao_load_this_datum', 'tao_locate_all_elements', 'tao_locate_elements', 'tao_mark_lattice_ele', 'tao_merit', 'tao_next_word', 'tao_one_turn_map_calc_needed', 'tao_open_file', 'tao_open_scratch_file', 'tao_optimization_status', 'tao_orbit_beta_wave_anal', 'tao_oreint_building_wall_pt', 'tao_param_value_at_s', 'tao_param_value_routine', 'tao_parse_command_args', 'tao_parse_element_param_str', 'tao_particle_data_value', 'tao_pause_cmd', 'tao_phase_space_axis_index', 'tao_phase_wave_anal', 'tao_pick_universe', 'tao_pipe_cmd', 'tao_place_cmd', 'tao_plot_cmd', 'tao_plot_data', 'tao_plot_histogram', 'tao_plot_key_table', 'tao_plot_setup', 'tao_plot_struct_transfer', 'tao_plot_wave', 'tao_pointer_to_building_wall_shape', 'tao_pointer_to_datum', 'tao_pointer_to_datum_ele', 'tao_pointer_to_ele_shape', 'tao_pointer_to_tao_lat', 'tao_pointer_to_universe', 'tao_pointer_to_universes', 'tao_pointer_to_var_in_lattice', 'tao_pointer_to_var_in_lattice2', 'tao_print_command_line_info', 'tao_ptc_normal_form', 'tao_python_cmd', 'tao_quiet_set', 'tao_rad_int_calc_needed', 'tao_re_allocate_expression_info', 'tao_re_associate_node_array', 'tao_re_execute', 'tao_read_cmd', 'tao_read_phase_space_index', 'tao_regression_test', 'tao_remove_blank_characters', 'tao_run_cmd', 'tao_scale_cmd', 'tao_scale_graph', 'tao_scale_ping_data', 'tao_scale_plot', 'tao_scratch_values_calc', 'tao_set_beam_cmd', 'tao_set_beam_init_cmd', 'tao_set_bmad_com_cmd', 'tao_set_branch_cmd', 'tao_set_calculate_cmd', 'tao_set_curve_cmd', 'tao_set_curve_invalid', 'tao_set_data_cmd', 'tao_set_data_useit_opt', 'tao_set_default_cmd', 'tao_set_drawing_cmd', 'tao_set_dynamic_aperture_cmd', 'tao_set_elements_cmd', 'tao_set_floor_plan_axis_label', 'tao_set_geodesic_lm_cmd', 'tao_set_global_cmd', 'tao_set_graph_cmd', 'tao_set_integer_value', 'tao_set_invalid', 'tao_set_key_cmd', 'tao_set_lattice_cmd', 'tao_set_logical_value', 'tao_set_openmp_n_threads', 'tao_set_opt_vars', 'tao_set_opti_de_param_cmd', 'tao_set_particle_start_cmd', 'tao_set_plot_cmd', 'tao_set_plot_page_cmd', 'tao_set_ptc_com_cmd', 'tao_set_qp_axis_struct', 'tao_set_qp_point_struct', 'tao_set_qp_rect_struct', 'tao_set_ran_state_cmd', 'tao_set_real_value', 'tao_set_region_cmd', 'tao_set_space_charge_com_cmd', 'tao_set_symbolic_number_cmd', 'tao_set_tune_cmd', 'tao_set_universe_cmd', 'tao_set_var_cmd', 'tao_set_var_model_value', 'tao_set_var_useit_opt', 'tao_set_wave_cmd', 'tao_set_z_tune_cmd', 'tao_setup_key_table', 'tao_shape_init', 'tao_show_cmd', 'tao_show_constraints', 'tao_single_mode', 'tao_single_track', 'tao_spin_matrices_calc_needed', 'tao_spin_tracking_turn_on', 'tao_split_component', 'tao_srdt_calc_needed', 'tao_subin_uni_number', 'tao_svd_optimizer', 'tao_symbol_import_from_lat', 'tao_taper_cmd', 'tao_to_change_number', 'tao_to_int', 'tao_to_phase_and_coupling_reading', 'tao_to_real', 'tao_too_many_particles_lost', 'tao_top10_derivative_print', 'tao_top10_merit_categories_print', 'tao_top_level', 'tao_tracking_ele_index', 'tao_turn_on_special_calcs_if_needed_for_plotting', 'tao_type_expression_tree', 'tao_uni_atsign_index', 'tao_universe_index', 'tao_use_data', 'tao_use_var', 'tao_user_is_terminating_optimization', 'tao_var1_name', 'tao_var_attrib_name', 'tao_var_check', 'tao_var_repoint', 'tao_var_target_calc', 'tao_var_useit_plot_calc', 'tao_var_write', 'tao_veto_vars_with_zero_dmodel', 'tao_wave_analysis', 'tao_wave_cmd', 'tao_wave_fit', 'tao_write_cmd', 'tao_x_axis_cmd', 'tao_x_scale_cmd', 'tao_x_scale_graph', 'tao_x_scale_plot', 'taper_mag_strengths', 'target_min_max_calc', 'target_rot_mats', 'taylor_equal_taylor', 'taylor_inverse', 'taylor_propagate1', 'taylor_to_mad_map', 'taylors_equal_taylors', 'test_bunch_struct_array', 'test_bunch_struct_scalar', 'test_character_scalar', 'test_complex_array', 'test_complex_scalar', 'test_integer8_array', 'test_integer8_scalar', 'test_integer_array', 'test_integer_scalar', 'test_logical_array', 'test_logical_scalar', 'test_real16_array', 'test_real16_scalar', 'test_real_array', 'test_real_scalar', 'tilt_coords', 'tilt_coords_photon', 'tilt_mat6', 'to_eta_reading', 'to_fieldmap_coords', 'to_orbit_reading', 'to_phase_and_coupling_reading', 'to_photon_angle_coords', 'to_str', 'to_surface_coords', 'touschek_lifetime', 'touschek_rate1', 'touschek_rate1_zap', 'track1', 'track1_beam', 'track1_bmad', 'track1_bmad_photon', 'track1_bunch', 'track1_bunch_csr', 'track1_bunch_csr3d', 'track1_bunch_hom', 'track1_bunch_space_charge', 'track1_crystal', 'track1_diffraction_plate_or_mask', 'track1_high_energy_space_charge', 'track1_lens', 'track1_linear', 'track1_lr_wake', 'track1_mad', 'track1_mirror', 'track1_mosaic_crystal', 'track1_multilayer_mirror', 'track1_radiation', 'track1_radiation_center', 'track1_runge_kutta', 'track1_sample', 'track1_spin', 'track1_spin_integration', 'track1_spin_taylor', 'track1_sr_wake', 'track1_symp_lie_ptc', 'track1_taylor', 'track1_time_runge_kutta', 'track_a_beambeam', 'track_a_bend', 'track_a_bend_photon', 'track_a_capillary', 'track_a_converter', 'track_a_crab_cavity', 'track_a_drift', 'track_a_drift_photon', 'track_a_foil', 'track_a_gkicker', 'track_a_lcavity', 'track_a_lcavity_old', 'track_a_mask', 'track_a_match', 'track_a_patch', 'track_a_patch_photon', 'track_a_pickup', 'track_a_quadrupole', 'track_a_rfcavity', 'track_a_sad_mult', 'track_a_sol_quad', 'track_a_thick_multipole', 'track_a_wiggler', 'track_a_zero_length_element', 'track_all', 'track_beam', 'track_bunch', 'track_bunch_time', 'track_bunch_to_s', 'track_bunch_to_t', 'track_complex_taylor', 'track_from_s_to_s', 'track_many', 'track_to_surface', 'track_until_dead', 'tracking_rad_map_setup', 'transfer_ac_kick', 'transfer_branch', 'transfer_branch_parameters', 'transfer_branches', 'transfer_ele', 'transfer_ele_taylor', 'transfer_eles', 'transfer_fieldmap', 'transfer_fixer_params', 'transfer_lat', 'transfer_lat_parameters', 'transfer_map_calc', 'transfer_map_from_s_to_s', 'transfer_mat2_from_twiss', 'transfer_mat_from_twiss', 'transfer_matrix_calc', 'transfer_twiss', 'transfer_wake', 'tricubic_cmplx_eval', 'truncate_complex_taylor_to_order', 'twiss1_propagate', 'twiss3_at_start', 'twiss3_from_twiss2', 'twiss3_propagate1', 'twiss3_propagate_all', 'twiss_and_track', 'twiss_and_track_at_s', 'twiss_and_track_from_s_to_s', 'twiss_and_track_intra_ele', 'twiss_at_element', 'twiss_at_start', 'twiss_from_tracking', 'twiss_propagate1', 'twiss_propagate_all', 'twiss_to_1_turn_mat', 'type_coord', 'type_expression_tree', 'type_ptc_layout', 'type_this_file', 'upcase_string', 'update_ele_from_fibre', 'update_fibre_from_ele', 'update_floor_angles', 'valid_field_calc', 'valid_fringe_type', 'valid_mat6_calc_method', 'valid_spin_tracking_method', 'valid_tracking_method', 'value_of_attribute', 'value_to_line', 'vec_to_polar', 'vec_to_spinor', 'verify_valid_name', 'virtual_memory_usage', 'w_mat_for_bend_angle', 'w_mat_for_tilt', 'w_mat_for_x_pitch', 'w_mat_for_y_pitch', 'w_mat_to_axis_angle', 'w_mat_to_quat', 'wall3d_d_radius', 'wall3d_initializer', 'wall3d_section_initializer', 'wall3d_to_position', 'word_len', 'word_read', 'word_to_value', 'write_ascii_beam_file', 'write_astra_bend', 'write_astra_field_grid_file', 'write_astra_field_grid_file_3d', 'write_beam_file', 'write_beam_floor_positions', 'write_binary_cartesian_map', 'write_binary_cylindrical_map', 'write_binary_grid_field', 'write_blender_ele', 'write_blender_lat_layout', 'write_bmad_lattice_file', 'write_bunch_by_bunch_info', 'write_gpt_field_grid_file_1d', 'write_gpt_field_grid_file_2d', 'write_gpt_field_grid_file_3d', 'write_lat_line', 'write_lattice_in_elegant_format', 'write_lattice_in_foreign_format', 'write_lattice_in_mad_format', 'write_lattice_in_sad_format', 'write_lattice_in_scibmad', 'write_line_element', 'write_opal_field_grid_file', 'write_opal_lattice_file', 'write_time_particle_distribution', 'x0_radiation_length', 'xlafun', 'xraylib_nist_compound', 'ylafun', 'z_at_surface', 'zero_ele_kicks', 'zero_ele_offsets', 'zero_lr_wakes_in_lat', 'zlafun']
 class AbMultipoleKick:
     """
     ab_multipole_kick return type
@@ -2860,6 +2860,20 @@ class ComplexTaylorToMat6:
         ...
     @property
     def vec0(self) -> typing.Annotated[list[complex], "FixedSize(6)"]:
+        ...
+class ConcatTransferMat:
+    """
+    concat_transfer_mat return type
+    """
+    def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
+        ...
+    def __len__(self) -> int:
+        ...
+    @property
+    def mat_out(self) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
+        ...
+    @property
+    def vec_out(self) -> typing.Annotated[list[float], "FixedSize(6)"]:
         ...
 class ControlRamp1Struct:
     """
@@ -7183,6 +7197,21 @@ class MatSympDecouple:
     def __len__(self) -> int:
         ...
     @property
+    def G(self) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(4)"]], "FixedSize(4)"]:
+        ...
+    @property
+    def U(self) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(4)"]], "FixedSize(4)"]:
+        ...
+    @property
+    def Ubar(self) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(4)"]], "FixedSize(4)"]:
+        ...
+    @property
+    def V(self) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(4)"]], "FixedSize(4)"]:
+        ...
+    @property
+    def Vbar(self) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(4)"]], "FixedSize(4)"]:
+        ...
+    @property
     def gamma(self) -> float:
         ...
     @property
@@ -7691,6 +7720,20 @@ class PhotonAbsorptionAndPhaseShift:
     @property
     def phase_shift(self) -> float:
         ...
+class PhotonAddToDetectorStatistics:
+    """
+    photon_add_to_detector_statistics return type
+    """
+    def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
+        ...
+    def __len__(self) -> int:
+        ...
+    @property
+    def ix_pt(self) -> int:
+        ...
+    @property
+    def iy_pt(self) -> int:
+        ...
 class PhotonElementStruct:
     """
     Fortran struct: photon_element_struct
@@ -8165,6 +8208,52 @@ class PointerToSuperLord:
         ...
     @property
     def lord_ptr(self) -> EleStruct | None:
+        ...
+class PointerToSurfaceDisplacementPt:
+    """
+    pointer_to_surface_displacement_pt return type
+    """
+    def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
+        ...
+    def __len__(self) -> int:
+        ...
+    @property
+    def ix(self) -> int:
+        ...
+    @property
+    def iy(self) -> int:
+        ...
+    @property
+    def pt(self) -> SurfaceDisplacementPtStruct | None:
+        ...
+    @property
+    def xx(self) -> float:
+        ...
+    @property
+    def yy(self) -> float:
+        ...
+class PointerToSurfaceSegmentedPt:
+    """
+    pointer_to_surface_segmented_pt return type
+    """
+    def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
+        ...
+    def __len__(self) -> int:
+        ...
+    @property
+    def ix(self) -> int:
+        ...
+    @property
+    def iy(self) -> int:
+        ...
+    @property
+    def pt(self) -> SurfaceSegmentedPtStruct | None:
+        ...
+    @property
+    def xx(self) -> float:
+        ...
+    @property
+    def yy(self) -> float:
         ...
 class PointerToWakeEle:
     """
@@ -8644,6 +8733,20 @@ class RadDampAndStocMats:
         ...
     @property
     def xfer_nodamp_mat(self) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
+        ...
+class RadGIntegrals:
+    """
+    rad_g_integrals return type
+    """
+    def __getitem__(self, arg0: typing.SupportsInt) -> typing.Any:
+        ...
+    def __len__(self) -> int:
+        ...
+    @property
+    def int_g(self) -> typing.Annotated[list[float], "FixedSize(2)"]:
+        ...
+    @property
+    def int_g3(self) -> float:
         ...
 class RadInt1Struct:
     """
@@ -11744,6 +11847,12 @@ class TaoEleShapeInfo:
         ...
     @property
     def label_name(self) -> str:
+        ...
+    @property
+    def y1(self) -> float:
+        ...
+    @property
+    def y2(self) -> float:
         ...
 class TaoEleShapeStruct:
     """
@@ -17093,8 +17202,8 @@ def ab_multipole_kick(a: typing.SupportsFloat, b: typing.SupportsFloat, n: typin
     ref_species : int
         Reference species.
     ele_orientation : int
-        Element orientation +1 = normal, -1 = reversed, 0 = Ignore orientation and tracking species (used with
-        pole_type = magnetic$).
+        Element orientation +1 = normal, -1 = reversed,
+    0 = Ignore orientation and tracking species : 
     coord : CoordStruct
         Particle position and direction of travel.
     pole_type : int, optional
@@ -17138,8 +17247,9 @@ def ab_multipole_kicks(an: RealArray1D, bn: RealArray1D, ix_pole_max: typing.Sup
     pole_type : int, optional
         Type of multipole. magnetic$ (default) or electric$.
     scale : float, optional
-        Factor to scale the kicks. Default is 1. For pole_type = electric$, set scale to the longitudinal length
-        of the field region
+        Factor to scale the kicks. Default is 1.
+    For pole_type = electric$ : 
+    set scale to the longitudinal length of the field region : 
     mat6 : float, optional
         Transfer matrix before the multipole.
         This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
@@ -17204,7 +17314,12 @@ def action_to_xyz(ring: LatStruct, ix: typing.SupportsInt, J: typing.Annotated[c
     Parameters
     ----------
     ring : LatStruct
-        lattice .a.tune   -- a-mode tune (horizontal-like) .b.tune   -- b-mode tune (vertical-like) .z.tune   --
+        lattice
+    %a%tune : 
+        a-mode tune (horizontal-like)
+    %b%tune : 
+        b-mode tune (vertical-like)
+    %z%tune : 
         c-mode tune (synchrotron-like)
     ix : int
         element index at which to calculate J
@@ -17258,25 +17373,29 @@ def add_superimpose(lat: LatStruct, super_ele_in: EleStruct, ix_branch: typing.S
         Lat to modify.
         This parameter is an input/output and is modified in-place. As an output: Modified lat.
     super_ele_in : EleStruct
-        Element to superimpose. .s               -- Position of end of element. Negative distances mean distance
-        from the end.
+        Element to superimpose.
+    %s : 
+        Position of end of element.
+    Negative distances mean distance from the end. : 
     ix_branch : int
         Branch index to put element.
     save_null_drift : bool, optional
         Save a copy of a drift to be split as a null_ele? This is useful if further superpositions might use this
         drift as a reference element. After all superpositions are done, remove_eles_from_lat can be called to
-        remove all null_eles. Default is False.
+        remove all null_eles.
+    Default is False. : 
     create_jumbo_slave : bool, optional
         Default is False. If True then super_slaves that are created that have super_ele_in as their super_lord
-        are em_field elements.
+        are
+    em_field elements. : 
     ix_insert : int, optional
         If present and positive, and super_ele_in has zero length, use ix_insert as the index to insert
         super_ele_in at. ix_insert is useful when superposing next to another element that has zero or negative
-        length (EG a patch) and you want to make sure that the superimposed element is on the correct side of the
-        element.
+        length (EG a patch) and you want
+    to make sure that the superimposed element is on the correct side of the element. : 
     mangle_slave_names : bool, optional
-        If True (default), adjust slave names appropriately. Name mangeling can take time so bmad_parser will do
-        this all at once at the end.
+        If True (default), adjust slave names appropriately. Name
+    mangeling can take time so bmad_parser will do this all at once at the end. : 
     wrap : bool, optional
         If True (default), and if the superimposed element has an end that extends beyond the starting or ending
         edge of the lattice, wrap the element around the lattice so that the beginning portion of the element is
@@ -17318,7 +17437,6 @@ def allocate_branch_array(lat: LatStruct, upper_bound: typing.SupportsInt) -> No
     Parameters
     ----------
     lat : LatStruct
-        .branch(:)  -- Branch array to be allocated.
     upper_bound : int
         Desired upper bound.
     """
@@ -17327,9 +17445,9 @@ def allocate_lat_ele_array(lat: LatStruct, upper_bound: typing.SupportsInt | Non
     Parameters
     ----------
     lat : LatStruct
-        Lattice with element array. .branch(ix_branch).ele(:)  -- Element array to reallocate.
+        Lattice with element array.
     upper_bound : int, optional
-        Optional desired upper bound. Default: 1.3*ubound(ele(:)) or 10 if ele is not allocated.
+        Optional desired upper bound.
     ix_branch : int, optional
         Branch index. Default is 0.
     do_ramper_slave_setup : bool, optional
@@ -17495,7 +17613,12 @@ def apply_patch_to_ptc_fibre(ele: EleStruct) -> None:
     Parameters
     ----------
     ele : EleStruct
-        Patch element. ele.ptc_fibre -- PTC Fibre which should be a marker.
+        Patch element.
+    
+    Returns
+    -------
+    ele%ptc_fibre : 
+        PTC Fibre which should be a marker.
     """
 def apply_rampers_to_slave(slave: EleStruct) -> bool:
     """
@@ -17598,10 +17721,10 @@ def attribute_bookkeeper(ele: EleStruct, force_bookkeeping: bool | None = None) 
         Element with attributes
         This parameter is an input/output and is modified in-place. As an output: Element with self-consistant
         attributes.
-    force_bookkeeping : bool, optional
-        If present and True then force -- Logical, optional: If present and True then force attribute bookkeeping
-        to be done independent of the state of ele.bookkeeping_stat.attributes. This will also cause
-        attribute_bookkeeper to assume intelligent bookkeeping.
+    force_bookkeeping : unknown, optional
+        If present and True then force attribute bookkeeping to be done independent of the state of
+        ele.bookkeeping_stat.attributes. This will also cause attribute_bookkeeper to assume intelligent
+        bookkeeping.
     """
 @typing.overload
 def attribute_free(ix_ele: typing.SupportsInt, attrib_name: str, lat: LatStruct, err_print_flag: bool | None = None, except_overlay: bool | None = None, dependent_attribs_free: bool | None = None) -> AttributeFree1:
@@ -17638,10 +17761,13 @@ def attribute_free(ix_ele: typing.SupportsInt, attrib_name: str, lat: LatStruct,
     lat : LatStruct
         Lattice structure.
     err_print_flag : bool, optional
-        If present and False then suppress printing of an error message if attribute is not free.
+        If present and False then suppress
+    printing of an error message if attribute is not free. : 
     except_overlay : bool, optional
-        If present and True then an attribute that is controlled by an overlay will be treated as free. This is
-        used by, for example, the create_overlay routine.
+        If present and True then an attribute that is controlled by an overlay will be treated as free.
+    This is used by : 
+    for example : 
+    the create_overlay routine. : 
     dependent_attribs_free : bool, optional
         If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
         b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
@@ -17649,7 +17775,8 @@ def attribute_free(ix_ele: typing.SupportsInt, attrib_name: str, lat: LatStruct,
     Returns
     -------
     free : bool
-        Set True if attribtute not found or attriubte cannot be changed directly.
+        Set True if attribtute not found or attriubte
+    cannot be changed directly. : 
     why_not_free : int
         Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
         -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
@@ -17692,10 +17819,13 @@ def attribute_free(ele: EleStruct, attrib_name: str, err_print_flag: bool | None
     lat : LatStruct
         Lattice structure.
     err_print_flag : bool, optional
-        If present and False then suppress printing of an error message if attribute is not free.
+        If present and False then suppress
+    printing of an error message if attribute is not free. : 
     except_overlay : bool, optional
-        If present and True then an attribute that is controlled by an overlay will be treated as free. This is
-        used by, for example, the create_overlay routine.
+        If present and True then an attribute that is controlled by an overlay will be treated as free.
+    This is used by : 
+    for example : 
+    the create_overlay routine. : 
     dependent_attribs_free : bool, optional
         If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
         b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
@@ -17703,7 +17833,8 @@ def attribute_free(ele: EleStruct, attrib_name: str, err_print_flag: bool | None
     Returns
     -------
     free : bool
-        Set True if attribtute not found or attriubte cannot be changed directly.
+        Set True if attribtute not found or attriubte
+    cannot be changed directly. : 
     why_not_free : int
         Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
         -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
@@ -17746,10 +17877,13 @@ def attribute_free(ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt, at
     lat : LatStruct
         Lattice structure.
     err_print_flag : bool, optional
-        If present and False then suppress printing of an error message if attribute is not free.
+        If present and False then suppress
+    printing of an error message if attribute is not free. : 
     except_overlay : bool, optional
-        If present and True then an attribute that is controlled by an overlay will be treated as free. This is
-        used by, for example, the create_overlay routine.
+        If present and True then an attribute that is controlled by an overlay will be treated as free.
+    This is used by : 
+    for example : 
+    the create_overlay routine. : 
     dependent_attribs_free : bool, optional
         If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
         b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
@@ -17757,7 +17891,8 @@ def attribute_free(ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt, at
     Returns
     -------
     free : bool
-        Set True if attribtute not found or attriubte cannot be changed directly.
+        Set True if attribtute not found or attriubte
+    cannot be changed directly. : 
     why_not_free : int
         Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
         -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
@@ -17790,7 +17925,8 @@ def attribute_index(ele: EleStruct, name: str, can_abbreviate: bool | None = Non
     Parameters
     ----------
     ele : EleStruct
-        attribute_index will restrict the name search to valid attributes of the given element.
+        attribute_index will restrict the name search to
+    valid attributes of the given element. : 
     key : int
         Equivalent to ele.key.
     name : unknown
@@ -17837,7 +17973,8 @@ def attribute_index(key: typing.SupportsInt, name: str, can_abbreviate: bool | N
     Parameters
     ----------
     ele : EleStruct
-        attribute_index will restrict the name search to valid attributes of the given element.
+        attribute_index will restrict the name search to
+    valid attributes of the given element. : 
     key : int
         Equivalent to ele.key.
     name : unknown
@@ -17878,7 +18015,8 @@ def attribute_name(key: typing.SupportsInt, ix_att: typing.SupportsInt, show_pri
     Parameters
     ----------
     ele : EleStruct
-        .key             -- Integer: Key name of element type (e.g. SBEND$, etc.)
+    %key : int
+        Key name of element type (e.g. SBEND$, etc.)
     key : int
         Key name of element type (e.g. sbend$, etc.)
     ix_att : int
@@ -17917,7 +18055,8 @@ def attribute_name(ele: EleStruct, ix_att: typing.SupportsInt, show_private: boo
     Parameters
     ----------
     ele : EleStruct
-        .key             -- Integer: Key name of element type (e.g. SBEND$, etc.)
+    %key : int
+        Key name of element type (e.g. SBEND$, etc.)
     key : int
         Key name of element type (e.g. sbend$, etc.)
     ix_att : int
@@ -18070,7 +18209,7 @@ def bbi_kick(x: typing.SupportsFloat, y: typing.SupportsFloat, sigma: typing.Ann
         Beam (x,y) sigmas.
     nk : float
         Normalized, dimensionless kick component. In terms of the the actual kick: nk = [kick_x / (xi_x * sigma_x
-        / beta_x), kick_y / (xi_y * sigma_y / beta_y) nk = -4 * pi * [x/sigma_x, y/sigma_y] in the linear region
+        / beta_x), kick_y / (xi_y * sigma_y / beta_y)
     dnk : float
         derivatives of nk. EG: dnk(2,1) = dnk(2)/dy Note: xi_x = beta_x * bbi_const / sig_x     ! Horizontal tune
         shift parameter xi_y = beta_y * bbi_const / sig_y     ! Vertical   tune shift parameter where bbi_const =
@@ -18206,7 +18345,7 @@ def beam_init_setup(beam_init_in: BeamInitStruct, ele: EleStruct, species: typin
     species : int
         Beam particle species.
     modes : NormalModesStruct, optional
-        Normal mode parameters. Ouput:
+        Normal mode parameters.
     err_flag : bool, optional
         Set true if there is an error. False otherwise.
     beam_init_set : BeamInitStruct
@@ -18304,7 +18443,7 @@ def bend_exact_multipole_field(ele: EleStruct, param: LatParamStruct, orbit: Coo
     orbit : CoordStruct
         particle position.
     local_ref_frame : bool
-        Is the particle position in the local element ref frame (as opposed to the lab frame)?
+        Is the particle position in the local element ref
     field : EmFieldStruct
         Field
     calc_dfield : bool, optional
@@ -18317,7 +18456,7 @@ def bend_length_has_been_set(ele: EleStruct, is_set: bool) -> None:
     Parameters
     ----------
     ele : EleStruct
-        Element to be checked. Ouput:
+        Element to be checked.
     is_set : bool
         Note: will be set True for non-bend elements.
     """
@@ -18430,20 +18569,24 @@ def bend_photon_init(g_bend_x: typing.SupportsFloat, g_bend_y: typing.SupportsFl
     E_min : float, optional
         Minimum photon energy. Default is zero. Ignored if negative.
     E_max : float, optional
-        Maximum photon energy.  Default is Infinity. Ignored if negative. If non-positive then E_max will be taken
-        to be Infinity.
+        Maximum photon energy.  Default is Infinity. Ignored if negative.
+    If non-positive then E_max will be taken to be Infinity. : 
     E_integ_prob : float
-        , optional :: integrated energy probability. See above. If E_integ_prob is non-negative, it must be in the
-        range [0, 1].
+        , optional :: integrated energy probability. See above.
+    If E_integ_prob is non-negative : 
+    it must be in the range [0 : 
+    1]. : 
     vert_angle_min : float, optional
-        Minimum vertical angle to emit a photon. -pi/2 is used if argument not present or if argument is less than
-        -pi/2.
+        Minimum vertical angle to emit a photon.
+    -pi/2 is used if argument not present or if argument is less than -pi/2. : 
     vert_angle_max : float, optional
-        Maximum vertical angle to emit a photon. pi/2 is used if argument not present or if argument is greater
-        than pi/2.
+        Maximum vertical angle to emit a photon.
+    pi/2 is used if argument not present or if argument is greater than pi/2. : 
     vert_angle_symmetric : bool, optional
         Default is False. If True, photons will be emitted in the range [-vert_angle_max, -vert_angle_min] as well
-        as the range [vert_angle_min, vert_angle_max]. In this case vert_angle_min/max must be positive.
+        as the range
+    [vert_angle_min : 
+    vert_angle_max]. In this case vert_angle_min/max must be positive. : 
     emit_probability : float, optional
         Probability of emitting a photon in the range [E_min, E_max] or in the vertical angular range given. The
         probability is normalized so that the probability of emitting if no ranges are given is 1.
@@ -18475,8 +18618,11 @@ def bend_photon_polarization_init(g_bend_x: typing.SupportsFloat, g_bend_y: typi
     Returns
     -------
     orbit : CoordStruct
-        Photon coords .field(2)     -- (x,y) polaraization. Will have unit magnitude .phase(2)     -- (x,y)
-        phases. Will be [0, pi/2].
+        Photon coords
+    %field : 
+        (x,y) polaraization. Will have unit magnitude
+    %phase : 
+        (x,y) phases. Will be [0, pi/2].
     """
 def bend_photon_vert_angle_init(E_rel: typing.SupportsFloat, gamma: typing.SupportsFloat, r_in: typing.SupportsFloat | None = None, invert: bool | None = None) -> float:
     """
@@ -18493,7 +18639,9 @@ def bend_photon_vert_angle_init(E_rel: typing.SupportsFloat, gamma: typing.Suppo
     gamma : float
         beam relativistic factor
     r_in : float, optional
-        Integrated probability in the range [0,1]. If not present, a random number will be used.
+        Integrated probability in the range [0,1].
+    If not present : 
+    a random number will be used. : 
     invert : float, optional
         If True then take r_in as the inverse integrated probability with inverted probability = 1 - probability.
         This is useful to avoid round-off errors when for looking at the tail of the distribution where the
@@ -18672,19 +18820,16 @@ def bmad_parser(lat_file: str, make_mats6: bool | None = None, use_line: str | N
     lat_file : unknown
         Name of the input file.
     lat : LatStruct
-        Lat structure. See bmad_struct.f90 for more details. .ele(:).mat6      -- This is computed assuming an on-
-        axis orbit if make_mats6 = T.
+        Lat structure. See bmad_struct.f90 for more details.
     make_mats6 : bool, optional
-        Compute the 6x6 transport matrices for the Elements? Default is True. Do not set False unless you know
-        what you are doing.
+        Compute the 6x6 transport matrices for the Elements?
     digested_read_ok : bool
-        Set True if the digested file was successfully read. False otherwise.
+        Set True if the digested file was
     use_line : unknown, optional
         If present and not blank, override the use statement in the lattice file and use use_line instead.
     err_flag : bool
         Set true if there is an error, false otherwise. Note: err_flag does *not* include errors in lat_make_mat6
-        since if there is a match element, there is an error raised since the Twiss parameters have not been set
-        but this is expected.
+        since if there is a match element, there is an error raised since
     parse_lat : LatStruct
         List of elements used to construct the lattice. Useful if bmad_parser2 will be called. See bmad_parser2
         documentation.
@@ -18699,9 +18844,9 @@ def bmad_parser2(lat_file: str, lat: LatStruct, orbit: CoordStructArray1D | None
         lattice with existing layout.
         This parameter is an input/output and is modified in-place. As an output: lattice with modifications.
     orbit : CoordStruct, optional
-        closed orbit for when bmad_parser2 calls lat_make_mat6
+        closed orbit for when
     make_mats6 : bool, optional
-        Make the 6x6 transport matrices for then Elements? Default is True.
+        Make the 6x6 transport matrices for then
     err_flag : 
     parse_lat : LatStruct, optional
         Used by bmad_parser to pass to bmad_parser2 a list of elements that were defined in the lattice file but
@@ -18783,8 +18928,9 @@ def branch_to_ptc_m_u(branch: BranchStruct) -> None:
     Parameters
     ----------
     branch : BranchStruct
-        Input branch. branch(:).ptc              -- Pointers to generated layouts. branch(:).ele(:).ptc_fibre --
-        Pointer to PTC fibres
+        Input branch.
+        This parameter is an input/output and is modified in-place. As an output: Pointers to generated layouts.
+        This parameter is an input/output and is modified in-place. As an output: Pointer to PTC fibres
     """
 def bunch_equal_bunch(bunch1: BunchStruct, bunch2: BunchStruct) -> None:
     """
@@ -18798,8 +18944,7 @@ def c_to_cbar(ele: EleStruct) -> typing.Annotated[list[typing.Annotated[list[flo
     Parameters
     ----------
     ele : EleStruct
-        Element with C matrix and Twiss parameters. .c_mat(2,2) -- C matrix. .a          -- a-mode Twiss
-        parameters .b          -- b-mode Twiss parameters
+        Element with C matrix and Twiss parameters.
     cbar_mat : float
         Cbar matrix.
     """
@@ -18822,11 +18967,13 @@ def calc_bunch_params(bunch: BunchStruct, bunch_params: BunchParamsStruct, error
     bunch : 
         Bunch_struct
     print_err : bool, optional
-        If present and False then suppress "no eigen-system found" messages.
+        If present and False then suppress
+    "no eigen-system found" messages. : 
     is_time_coords : bool, optional
         Are particle coords using time coords. Default is False.
     ele : EleStruct, optional
-        Element being tracked through. Must be present if is_time_coords = True. Output
+        Element being tracked through. Must be present if is_time_coords = True.
+    Output : 
     bunch_params : BunchParamsStruct
     error : bool
         Set True if there is an error.
@@ -18851,12 +18998,14 @@ def calc_bunch_params_slice(bunch: BunchStruct, bunch_params: BunchParamsStruct,
     slice_spread : float
         +/- spread in slice about center.
     print_err : bool, optional
-        If present and False then suppress "no eigen-system found" messages.
+        If present and False then suppress
+    "no eigen-system found" messages. : 
     is_time_coords : bool, optional
-        Default is False. If True, input bunch is using time coordinates in which case there will be a conversion
-        to s-coords before bunch_params are computed.
+        Default is False. If True, input bunch is using time coordinates in which
+    case there will be a conversion to s-coords before bunch_params are computed. : 
     ele : EleStruct, optional
-        Element being tracked through. Must be present if is_time_coords = True. Output
+        Element being tracked through. Must be present if is_time_coords = True.
+    Output : 
     params : BunchParamsStruct
     err : bool
         Set True if there is an error.
@@ -18875,15 +19024,17 @@ def calc_bunch_params_z_slice(bunch: BunchStruct, bunch_params: BunchParamsStruc
     bunch : 
         bunch_struct
     slice_bounds : float
-        Slice bounds in percentage of particles ordered by z-position. 0.0 is the back of the bunch and 1.0 is the
-        front of the bunch.
+        Slice bounds in percentage of particles ordered by z-position.
+    0.0 is the back of the bunch and 1.0 is the front of the bunch. : 
     print_err : bool, optional
-        If present and False then suppress "no eigen-system found" messages.
+        If present and False then suppress
+    "no eigen-system found" messages. : 
     is_time_coords : bool, optional
-        Default is False. If True, input bunch is using time coordinates in which case there will be a conversion
-        to s-coords before bunch_params are computed.
+        Default is False. If True, input bunch is using time coordinates in which
+    case there will be a conversion to s-coords before bunch_params are computed. : 
     ele : EleStruct, optional
-        Element being tracked through. Must be present if is_time_coords = True. Output
+        Element being tracked through. Must be present if is_time_coords = True.
+    Output : 
     params : BunchParamsStruct
     err : bool
         Set True if there is an error.
@@ -18953,21 +19104,22 @@ def calc_spin_params(bunch: BunchStruct) -> BunchParamsStruct:
     Returns
     -------
     bunch_params : BunchParamStruct
-        Structure holding average centroid.spin(3) -- (x,y,z) polarization.
+        Structure holding average
+    centroid%spin : 
+        (x,y,z) polarization.
     """
 def calc_super_slave_key(lord1: EleStruct, lord2: EleStruct, create_jumbo_slave: bool | None = None) -> EleStruct:
     """
     Parameters
     ----------
     lord1 : EleStruct
-        First slave. .key .sub_key
+        First slave. .key
     lord2 : EleStruct
         Second slave. .key .sub_key
     slave : EleStruct
-        Super_slave element. .key        -- Set to -1 if there is an error. .sub_key
-    create_jumbo_slave : bool, optional
-        If True then slave.key will be set to em_field. -- Logical, optional: If True then slave.key will be set
-        to em_field. Default is False.
+        Super_slave element.
+    create_jumbo_slave : unknown, optional
+        If True then slave.key will be set to em_field. Default is False.
     """
 def calc_wall_radius(v: Wall3DVertexStructArray1D, cos_ang: typing.SupportsFloat, sin_ang: typing.SupportsFloat) -> CalcWallRadius:
     """
@@ -19004,6 +19156,11 @@ def calc_z_tune(branch: BranchStruct) -> None:
     ----------
     branch : BranchStruct
         Lattice branch
+        This parameter is an input/output and is modified in-place. As an output: Synchrotron tune (radians). If
+        unstable tune = 0.
+        This parameter is an input/output and is modified in-place. As an output: Is the mode stable? If no rf
+        then tune is zero but is stable.
+        This parameter is an input/output and is modified in-place. As an output: 6x6 1-turn matrix.
     """
 def canonical_to_angle_coords(orbit: CoordStruct, coord_type: str | None = None) -> None:
     """
@@ -19083,8 +19240,7 @@ def check_aperture_limit(orb: CoordStruct, ele: EleStruct, particle_at: typing.S
     param : LatParamStruct
         Lattice global parameter structure.
     old_orb : CoordStruct, optional
-        Old coordinates at last check. Needed if ele.aperture_at = wall_transition$. If not present then wall
-        transitions will be ignored.
+        Old coordinates at last check. Needed if ele.aperture_at = wall_transition$.
     check_momentum : bool, optional
         If present and false then checking of p_x and p_y will be disabled.
     """
@@ -19161,8 +19317,7 @@ def chrom_calc(lat: LatStruct, delta_e: typing.SupportsFloat, pz: typing.Support
     lat : LatStruct
         Lat
     delta_e : float
-        +/- Delta energy used for the calculation. Notice that the energy difference between high and low is 2 *
-        delta_e. If 0 then default of 1.0d-4 is used.
+        +/- Delta energy used for the calculation. Notice that the energy difference
         This parameter is an input/output and is modified in-place. As an output: Set to 1.0d-4 if on input
         DELTA_E =< 0.
     chrom_a : float
@@ -19195,7 +19350,7 @@ def chrom_tune(lat: LatStruct, delta_e: typing.SupportsFloat, target_x: typing.S
         Lat to use,
         This parameter is an input/output and is modified in-place. As an output: Lat with sextupole set
     delta_e : float
-        Delta energy used for the calculation. If 0 then default of 1.0d-4 is used.
+        Delta energy used for the calculation.
         This parameter is an input/output and is modified in-place. As an output: Set to 1.0d-4 if on input
         DELTA_E =< 0.
     target_x : float
@@ -19242,19 +19397,16 @@ def closed_orbit_calc(lat: LatStruct, closed_orb: CoordStructAlloc1D, i_dim: typ
         Lat to track through.
     closed_orb : CoordStruct
         closed_orb(nt) is the initial guess where nt = 0 for direction = 1 and nt = lat.n_ele_track for direction
-        = -1. Additionally, if i_dim = 4, then closed_orb(nt).vec(6) is used as the energy around which the closed
-        orbit is calculated.
+        = -1. Additionally, if i_dim = 4, then closed_orb(nt).vec(6) is used as the energy
         This parameter is an input/output and is modified in-place. As an output: Closed orbit. closed_orb(i)
     i_dim : int, optional
         Phase space dimensions to use: = 4  Transverse closed orbit at constant energy (RF off). (dE/E =
         closed_orb(0).vec(6)) = 5 Transverse closed orbit at constant energy (RF off) with the energy adjusted so
-        that vec(5) is the same at the beginning and at the end. = 6 True closed orbit. Default: 4 if RF is off, 6
-        if RF is on.
+        that vec(5) is the same at the beginning and at the end. = 6 True closed orbit.
     direction : int, optional
-        Direction of tracking. +1 --> forwad (default), -1 --> backward. The closed orbit will be dependent on
-        direction only in the case that radiation damping is turned on.
+        Direction of tracking.
     ix_branch : int, optional
-        Lattice branch to find the closed orbit of. Default is 0 (main branch).
+        Lattice branch to find the closed orbit of.
     err_flag : bool
         Set true if there is an error. False otherwise.
     print_err : bool, optional
@@ -19268,14 +19420,13 @@ def closed_orbit_from_tracking(lat: LatStruct, closed_orb: CoordStructAlloc1D, i
     lat : LatStruct
         Lat to track through.
     closed_orb : CoordStruct
-        closed orbit. This routine will allocate this array for you.
+        closed orbit.
     i_dim : int
-        = 2,4  Transverse closed orbit at constant energy. = 6    Full closed orbit using the entire transfer 6x6
-        matrix.
+        = 2,4  Transverse closed orbit at constant energy.
     eps_rel : float, optional
-        Relative allowed error. Default is bmad_com.rel_tol_tracking
+        Relative allowed error.
     eps_abs : float, optional
-        Absolute allowed error. Default is bmad_com.abs_tol_tracking
+        Absolute allowed error.
     init_guess : CoordStruct, optional
         Starting guess for the closed orbit at the start of the lattice. Set init_guess.vec(6) to the appropriate
         value of pz when calculating off-energy orbits. If not present then the origin will be used.
@@ -19508,7 +19659,8 @@ def concat_ele_taylor(orb_taylor: TaylorStructArray1D, ele: EleStruct, err_flag:
     ele : EleStruct
         Element containing a Taylor map.
     spin_taylor : TaylorStruct, optional
-        Spin map to propagate Output
+        Spin map to propagate
+    Output : 
     orb_taylor : TaylorStruct
         Concatinated orbital map
     err_flag : bool
@@ -19536,11 +19688,12 @@ def concat_taylor(taylor1: TaylorStructArray1D, taylor2: TaylorStructArray1D, ta
     taylor1 : TaylorStruct
         Taylor map.
     taylor2 : TaylorStruct
-        Taylor map. Output
+        Taylor map.
+    Output : 
     taylor3 : TaylorStruct
         Concatinated map
     """
-def concat_transfer_mat(mat_1: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], vec_1: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], mat_0: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], vec_0: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], vec_out: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
+def concat_transfer_mat(mat_1: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], vec_1: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], mat_0: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], vec_0: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]) -> ConcatTransferMat:
     """
     Subroutine concat_transfer_mat (mat_1, vec_1, mat_0, vec_0, mat_out, vec_out)
     
@@ -19552,12 +19705,18 @@ def concat_transfer_mat(mat_1: typing.Annotated[collections.abc.Sequence[typing.
     ----------
     mat_1 : float
         Map from s1 to s2
+    vec_1 : float
+        Map from s1 to s2
     mat_0 : float
+        Map from s0 to s1
+    vec_0 : float
         Map from s0 to s1
     
     Returns
     -------
     mat_out : float
+        Map from s0 to s2
+    vec_out : float
         Map from s0 to s2
     """
 def control_bookkeeper(lat: LatStruct, ele: EleStruct | None = None, err_flag: bool | None = None) -> None:
@@ -19567,8 +19726,7 @@ def control_bookkeeper(lat: LatStruct, ele: EleStruct | None = None, err_flag: b
     lat : LatStruct
         lattice to be used
     ele : EleStruct, optional
-        Element whose attribute values have been changed. If not present bookkeeping will be done for all
-        elements.
+        Element whose attribute values have been changed. If not present bookkeeping will be done
     err_flag : bool, optional
         Set True if there is an error. False otherwise.
     """
@@ -19781,33 +19939,29 @@ def coords_body_to_local(body_position: FloorPositionStruct, ele: EleStruct, w_m
     Parameters
     ----------
     body_position : FloorPositionStruct
-        Element body frame coordinates. .r(3)               [x, y, s] position with s = Position from entrance end
-        of element.
+        Element body frame coordinates.
     ele : EleStruct
         element that local_position coordinates are relative to.
     w_mat : float, optional
         W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
     calculate_angles : bool, optional
         calculate angles for local_position Default: True. False returns local_position angles (.theta, .phi,
-        .psi) = 0. Output
+        .psi) = 0.
     local_position : FloorPositionStruct
-        Local laboratory coordinates. .r(3)               [x, y, s] position with s = Position from entrance end
-        of element.
+        Local laboratory coordinates.
     """
 def coords_body_to_rel_exit(body_position: FloorPositionStruct, ele: EleStruct, w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"] | None = None, calculate_angles: bool | None = None, rel_exit: FloorPositionStruct) -> None:
     """
     Parameters
     ----------
     body_position : FloorPositionStruct
-        Element body frame coordinates. .r                  [x, y, s] position with s = Position from entrance end
-        of element .
+        Element body frame coordinates.
     ele : EleStruct
         element that rel_exit coordinates are relative to.
     w_mat : float, optional
         W matrix at to transform vectors. v_rel_exit = w_mat . v_body v_body     = transpose(w_mat) . v_rel_exit
     calculate_angles : bool, optional
         calculate angles for rel_exit Default: True. False returns rel_exit angles (.theta, .phi, .psi) = 0.
-        Output
     rel_exit : FloorPositionStruct
         Cartesian coordinates relative to exit of the element.
     """
@@ -19836,13 +19990,11 @@ def coords_floor_to_curvilinear(floor_coords: FloorPositionStruct, ele0: EleStru
     ele1 : EleStruct
         Element that local_coords is with respect to.
     status : bool
-        ok$             -> Local_coords found. patch_problem$  -> No solution due to a patch element. outside$
-        -> Outside of lattice ends (for open lattices).
+        ok$             -> Local_coords found. patch_problem$  -> No solution due to a patch element.
     w_mat : float
         W matrix at s, to transform vectors from floor to local. w_mat will only be well defined if status = ok$
     local_coords : FloorPositionStruct
-        .r = [x, y, s] position in curvilinear coordinates with respect to ele1 with s relative to start the
-        lattice branch.
+        .r = [x, y, s] position in curvilinear coordinates
     """
 def coords_floor_to_local_curvilinear(global_position: FloorPositionStruct, ele: EleStruct, relative_to: typing.SupportsInt | None = None) -> CoordsFloorToLocalCurvilinear:
     """
@@ -19854,7 +20006,6 @@ def coords_floor_to_local_curvilinear(global_position: FloorPositionStruct, ele:
         element to find local coordinates of.
     status : bool
         longitudinal position: inside$: Inside the element. upstream_end$: At upstream end of element or beyound.
-        downstream_end$: At downstream end of element or beyound.
     w_mat : float
         W matrix at s, to transform vectors. v_global = w_mat.v_local v_local = transpose(w_mat).v_global
     relative_to : int, optional
@@ -19873,8 +20024,7 @@ def coords_floor_to_relative(floor0: FloorPositionStruct, global_position: Floor
     global_position : FloorPositionStruct
         global position
     calculate_angles : bool, optional
-        calculate angles for local_position Default: True. False returns local_position angles (.theta, .phi,
-        .psi) = 0.
+        calculate angles for local_position Default: True.
     is_delta_position : bool, optional
         If True then treat global_position.r as a difference position in global space and only rotate the position
         but not shift it. Default: False.
@@ -19886,17 +20036,16 @@ def coords_local_curvilinear_to_body(local_position: FloorPositionStruct, ele: E
     Parameters
     ----------
     local_position : FloorPositionStruct
-        local coordinates. .r(3)               [x, y, s] position with s = Position from entrance end of element.
+        local coordinates.
     ele : EleStruct
         element that coordinates are relative to.
     w_mat : float, optional
         W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
     calculate_angles : bool, optional
         calculate angles for body_position Default: True. False returns body_position angles (.theta, .phi, .psi)
-        = 0. Output
+        = 0.
     body_position : FloorPositionStruct
-        Element coordinates relative to exit of the element. .r(3)               [x, y, s] position with s =
-        Position from entrance end of element.
+        Element coordinates relative to exit of the element.
     """
 def coords_local_curvilinear_to_floor(local_position: FloorPositionStruct, ele: EleStruct, in_body_frame: bool | None = None, calculate_angles: bool | None = None, relative_to: typing.SupportsInt | None = None) -> CoordsLocalCurvilinearToFloor:
     """
@@ -19905,18 +20054,15 @@ def coords_local_curvilinear_to_floor(local_position: FloorPositionStruct, ele: 
     local_position : FloorPositionStruct
         Floor position in local curvilinear coordinates, with .r = [x, y, z_local] where z_local is wrt the
         entrance end of the element except if relative_to = downstream_end$. In this case, z_local is a distance
-        -ele.value(l$) from the exit end (important for patch elements).
+        -ele.value(l$)
     ele : EleStruct
         element that local_position coordinates are relative to.
     in_body_frame : bool, optional
-        True => local_position is in ele body frame and includes misalignments. Ignored if element is a patch.
-        Default: False.
+        True => local_position is in ele body frame and includes misalignments.
     w_mat : float
-        W matrix at z, to transform vectors. v_global     = w_mat . v_local/body v_local/body = transpose(w_mat) .
-        v_global
+        W matrix at z, to transform vectors. v_global     = w_mat . v_local/body
     calculate_angles : bool, optional
-        calculate angles for global_position Default: True. False returns local_position angles (.theta, .phi,
-        .psi) = 0.
+        calculate angles for global_position Default: True.
     relative_to : int, optional
         not_set$ (default), upstream_end$, or downstream_end$. Force which end is used for z = 0. If
         upstream_end$, local_position.r(3) is relative to the upstream end which will not be the entrance end if
@@ -19931,12 +20077,16 @@ def coords_relative_to_floor(floor0: FloorPositionStruct, dr: typing.Annotated[c
     floor0 : FloorPositionStruct
         Initial reference frame.
     dr : float
-        (x, y, z) positional shift of the reference frame. theta, phi, psi -- real(rp), optional: Angular shift of
-        the reference frame. See the Bmad manual on the Global Coordinate system for more details. All angles must
-        either be absent or present.
-    theta : 
-    phi : 
-    psi : 
+        (x, y, z) positional shift of the reference frame.
+    theta : unknown, optional
+        Angular shift of the reference frame. See the Bmad manual on the Global Coordinate system for more
+        details. All angles must either be absent or present.
+    phi : unknown, optional
+        Angular shift of the reference frame. See the Bmad manual on the Global Coordinate system for more
+        details. All angles must either be absent or present.
+    psi : unknown, optional
+        Angular shift of the reference frame. See the Bmad manual on the Global Coordinate system for more
+        details. All angles must either be absent or present.
     floor1 : FloorPositionStruct
         Shifted reference frame.
     """
@@ -20045,7 +20195,7 @@ def create_element_slice(ele_in: EleStruct, l_slice: typing.SupportsFloat, offse
     old_slice : EleStruct, optional
         Previous slice or, if offset = 0, the previous element. If present this saves computation time of the
         reference energy and time at the start of the present slice. Also makes the ref energy continuous (there
-        can be some small differences when using, say, runge_kutta tracking due to tracking tolerances).
+        can be some small differences when
     orb_in : CoordStruct, optional
         Incoming orbit if calling routine is doing tracking through the slice. This is used when old_slice is not
         present and there may be an adjustment needed to the orbit ref energy (EG space charge tracking does not
@@ -20074,8 +20224,7 @@ def create_girder(lat: LatStruct, ix_girder: typing.SupportsInt, contrl: Control
     ix_girder : int
         Index of girder element.
     contrl : ControlStruct
-        Array of elements that are supported by the girder. slave.ix_ele       -- Integer: Index in
-        lat.branch().ele() of element controlled. .ix_branch      -- Integer: Branch index.
+        Array of elements that are supported by the girder.
     girder_info : EleStruct
         Element containing attributes to be transfered to the Girder element: girder_info.name girder_info.alias
         girder_info.descrip girder_info.value(:)
@@ -20086,13 +20235,10 @@ def create_group(lord: EleStruct, contrl: ControlStructArray1D, err: bool) -> No
     Parameters
     ----------
     lord : EleStruct
-        Group element. .control.type
+        Group element.
         This parameter is an input/output and is modified in-place. As an output: Modified group elment
     contrl : ControlStruct
-        control info. 1 element for each slave. .stack         -- Arithmetic expression stack for evaluating the
-        controlled parameter value. .y_knot(:)     -- Knot points for spline interpolation. .slave         --
-        Integer: Index to lat.branch().ele() of element controlled. .attribute     -- character(40): Attribute
-        name.
+        control info. 1 element for each slave.
     err : bool
         Set True if an attribute is not free to be controlled.
     """
@@ -20101,7 +20247,7 @@ def create_lat_ele_nametable(lat: LatStruct, nametable: NametableStruct) -> None
     Parameters
     ----------
     lat : LatStruct
-        Lattice. Ouput:
+        Lattice.
     nametable : NametableStruct
         Nametable of the elment names
     """
@@ -20110,13 +20256,10 @@ def create_overlay(lord: EleStruct, contrl: ControlStructArray1D, err: bool) -> 
     Parameters
     ----------
     lord : EleStruct
-        Overlay element. .control.type
+        Overlay element.
         This parameter is an input/output and is modified in-place. As an output: Modified overlay elment
     contrl : ControlStruct
-        control info. 1 element for each slave. .stack(:)      -- Arithmetic expression stack for evaluating the
-        controlled parameter value. .y_knot(:)     -- Knot points for spline interpolation. slave.ix_ele   --
-        Index of element to control .ix_branch     -- Index of branch element belongs to. .attribute     -- name
-        of attribute to be controlled
+        control info. 1 element for each slave.
     err : bool
         Set True if an attribute is not free to be controlled.
     """
@@ -20146,15 +20289,19 @@ def create_planar_wiggler_model(wiggler_in: EleStruct, print_err: bool | None = 
     wiggler : EleStruct
         Planar model wiggler to match to.
     wig_model_com : WigglerModelingCommonStruct
-        Global variable that can be used to set weights and step sizes for the optimization.
+        Global variable that can be used
+    to set weights and step sizes for the optimization. : 
     print_err : bool, optional
         If True (default) print an error message if there is an error.
     
     Returns
     -------
     lat : LatStruct
-        Lattice containing the wiggler model .ele(:)      -- Array of bends and drifts. .n_ele_track -- Number of
-        elements in the model.
+        Lattice containing the wiggler model
+    %ele : 
+        Array of bends and drifts.
+    %n_ele_track : 
+        Number of elements in the model.
     err_flag : bool
         Set True if there is an error.
     """
@@ -20163,12 +20310,10 @@ def create_ramper(lord: EleStruct, contrl: ControlStructArray1D, err: bool) -> N
     Parameters
     ----------
     lord : EleStruct
-        Ramper element. .control.type
+        Ramper element.
         This parameter is an input/output and is modified in-place. As an output: Modified ramper elment
     contrl : ControlStruct
-        control info. 1 element for each slave. .stack(:)         -- Arithmetic expression stack for evaluating
-        the controlled parameter value. .y_knot(:)        -- Knot points for spline or linear interpolation.
-        .attribute        -- name of attribute to be controlled.
+        control info. 1 element for each slave.
     err : bool
         Set True if an attribute is not free to be controlled.
     """
@@ -20211,7 +20356,8 @@ def cross_product(a: RealArray1D, b: RealArray1D) -> typing.Annotated[list[float
     ----------
     a : float
         Input vectors.
-    b : 
+    b : float
+        Input vectors.
     c : float
         Cross product: a X b.
     """
@@ -20252,10 +20398,14 @@ def crystal_type_to_crystal_params(ele: EleStruct) -> bool:
     Parameters
     ----------
     ele : EleStruct
-        Crystal element. .component_name -- Character: Crystal type name. Assumed upper case. A blank name is not
-        an error and results in nothing set. .value(e_tot$)  -- Photon energy in eV.
+        Crystal element.
         This parameter is an input/output and is modified in-place. As an output: Crystal element with computed
         parameter..
+    %component_name : unknown
+        Crystal type name. Assumed upper case.
+    A blank name is not an error and results in nothing set. : 
+    %value : 
+        Photon energy in eV.
     
     Returns
     -------
@@ -20582,7 +20732,9 @@ def dynamic_aperture_point(branch: BranchStruct, ele0: EleStruct, orb0: CoordStr
     orb0 : CoordStruct
         reference orbit at the start of tracking.
     theta_xy : float
-        Angle of radial line (in radians) in x-y space. Angle is "normalized" by .x_init, .y_init.
+        Angle of radial line (in radians) in x-y space.
+    Angle is "normalized" by %x_init : 
+    %y_init. : 
     ap_param : ApertureParamStruct
         Structure holding the input data:
     check_xy_init : bool, optional
@@ -20675,7 +20827,7 @@ def ele_compute_ref_energy_and_time(ele0: EleStruct, ele: EleStruct, param: LatP
     ele0 : EleStruct
         Previous element in lattice with starting energy and time values.
     ele : EleStruct
-        Lattice element .time_ref_orb_in  -- Starting orbit for ref time calc.
+        Lattice element
         This parameter is an input/output and is modified in-place. As an output: Lattice element with reference
         energy and time.
     param : LatParamStruct
@@ -20741,16 +20893,14 @@ def ele_geometry(floor_start: FloorPositionStruct, ele: EleStruct, len_scale: ty
     Parameters
     ----------
     floor_start : 
-        Starting floor coordinates at upstream end. Not used for fiducial and girder elements.
+        Starting floor coordinates at upstream end.
     ele : EleStruct
         Element to propagate the geometry through.
     floor_end : FloorPositionStruct
-        Output floor position. If not present then ele.floor will be used and ele.bookkeeping_state.floor_position
-        will be set to ok$. .r(3)              -- X, Y, Z Floor position at end of element .w(3,3)            -- W
-        matrix corresponding to orientation angles .theta, phi, .psi  -- Orientation angles
+        Output floor position. If not present then
     len_scale : float, optional
         factor to scale the length of the element. 1.0_rp => Output is geometry at end of element (default).
-        0.5_rp => Output is geometry at center of element. -1.0_rp => Used to propagate geometry in reverse.
+        0.5_rp => Output is geometry at center of element.
     ignore_patch_err : bool, optional
         If present and True, ignore flexible patch errors. This is used by ele_compute_ref_energy_and_time to
         suppress unnecessary messages.
@@ -20827,7 +20977,7 @@ def ele_loc_name(ele: EleStruct, show_branch0: bool | None = None, parens: str |
     ele : EleStruct
         Element in a lattice
     show_branch0 : bool, optional
-        Explicitly show branch for main lattice elements? Default is False.
+        Explicitly show branch for main
     parens : unknown, optional
         If present, enclose location string using the two characters supplied. Typically parens will be set to
         "()" or "[]".
@@ -20875,7 +21025,6 @@ def ele_reference_energy_correction(ele: EleStruct, orbit: CoordStruct, particle
     particle_at : int
         first_track_edge$ (that is, entering the element), or second_track_edge$ (that is, leaving the element),
         or upstream_end$ (inherit ele.value(p0c_start$) ref), or downstream_end$ (inherit ele.value(p0c$)).
-        inside$ (or anything else) -> Do nothing.
     mat6 : float, optional
         Transfer matrix before correction.
         This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
@@ -20910,11 +21059,10 @@ def ele_to_fibre(ele: EleStruct, use_offsets: bool, integ_order: typing.Supports
         Set True if setup OK. False otherwise.
     integ_order : int, optional
         Order for the sympletic integrator. Possibilities are: 2, 4, or 6 Overrides ele.value(integrator_order$).
-        default = 2 (if not set with set_ptc).
     steps : int, optional
-        Number of integration steps. Overrides ele.value(ds_step$).
+        Number of integration steps.
     for_layout : bool, optional
-        If True then fibre will be put in the PTC layout. Default is False.
+        If True then fibre will be put in the PTC layout.
     ref_in : CoordStruct, optional
         Particle to be tracked. ref_particle$, electron$, etc. This argument should only be present when the fibre
         is not to be put in a layout.
@@ -20965,13 +21113,12 @@ def ele_to_taylor(ele: EleStruct, orb0: CoordStruct | None = None, taylor_map_in
         Element to construct map for.
     orb0 : CoordStruct, optional
         Starting coords around which the Taylor map is evaluated. Default is the zero orbit.
-    taylor_map_includes_offsets : bool, optional
-        If present then value overrides ele.taylor_map_includes_offsets. -- Logical, optional: If present then
-        value overrides ele.taylor_map_includes_offsets.
+    taylor_map_includes_offsets : unknown, optional
+        If present then value overrides ele.taylor_map_includes_offsets.
     include_damping : bool, optional
         Sets if radiation damping is included. Default is what is set in ptc_private.base_state.
     orbital_taylor : TaylorStruct
-        Orbital taylor map. If not present then the map is put in ele.taylor.
+        Orbital taylor map.
     spin_taylor : TaylorStruct
         Spin taylor map. If not present then the map is put in ele.spin_taylor.
     """
@@ -20999,8 +21146,7 @@ def ele_value_has_changed(ele: EleStruct, list: IntArray1D, abs_tol: RealArray1D
     list : int
         List of indexes of ele.value(:) array to check.
     abs_tol : float
-        List of values such that if the change in parameter value is less than this it is not considered to have
-        changed significantly.
+        List of values such that if the change in parameter value is
     set_old : bool
         If True then set ele.old_value(j) = ele.value(j) for j in list
     has_changed : bool
@@ -21093,7 +21239,12 @@ def element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choose_max: bool
     s_eff : float
         Effective s. Equal to s with a open lattice. See above.
     position : CoordStruct
-        Positional information. .s         -- Same as input s. .ix_ele    -- Same as output ix_ele .location  --
+        Positional information.
+    %s : 
+        Same as input s.
+    %ix_ele : 
+        Same as output ix_ele
+    %location : 
         Location relative to element. Upstream_end$, downstream_end$, or inside$
     
     Notes
@@ -21167,7 +21318,12 @@ def element_at_s(lat: LatStruct, s: typing.SupportsFloat, choose_max: bool, ix_b
     s_eff : float
         Effective s. Equal to s with a open lattice. See above.
     position : CoordStruct
-        Positional information. .s         -- Same as input s. .ix_ele    -- Same as output ix_ele .location  --
+        Positional information.
+    %s : 
+        Same as input s.
+    %ix_ele : 
+        Same as output ix_ele
+    %location : 
         Location relative to element. Upstream_end$, downstream_end$, or inside$
     
     Notes
@@ -21211,14 +21367,11 @@ def em_field_calc(ele: EleStruct, param: LatParamStruct, s_pos: typing.SupportsF
         Lattice parameters.
     s_pos : float
         Longitudinal position. If local_ref_frame = T: In Body coords relative to the entrance edge of the
-        element. If local_ref_frame = F: In Lab coords relative to the upstream edge of the element.
+        element.
     orbit : CoordStruct
-        Transverse coordinates. .vec(1), .vec(3)    -- Transverse coords. .t                  -- Used with
-        absolute time tracking. .vec(5)             -- Used with relative time tracking (except with time Runge-
-        Kutta).
+        Transverse coordinates.
     local_ref_frame : 
-        Logical, If True then take the input coordinates and output fields as being with respect to the frame of
-        referene of the element (ignore misalignments).
+        Logical, If True then take the input coordinates and output fields
     field : EmFieldStruct
         E and B fields and derivatives.
     calc_dfield : bool, optional
@@ -21230,19 +21383,15 @@ def em_field_calc(ele: EleStruct, param: LatParamStruct, s_pos: typing.SupportsF
         wigglers at present.
     use_overlap : bool, optional
         Add in overlap fields from other elements? Default is True.
-    grid_allow_s_out_of_bounds : bool, optional
-        For grids, allow s-coordinate to be grossly out of bounds -- logical, optional: For grids, allow
-        s-coordinate to be grossly out of bounds and return zero instead of an error? Default: False. Used
-        internally for overlapping fields.
+    grid_allow_s_out_of_bounds : unknown, optional
+        For grids, allow s-coordinate to be grossly out of bounds
     rf_time : float, optional
         Set the time relative to the RF clock. Normally this time is calculated using orbit.t or orbit.vec(5) but
-        sometimes it is convenient to be able to override this. For example, time_runge_kutta uses this.
+        sometimes it is convenient to be able to override this.
     used_eles : ElePointerStruct, optional
-        For internal use only when this routine is called recursively. Used to prevent double counting when there
-        is field overlap.
+        For internal use only when this routine is
     print_err : bool, optional
-        Print an error message? Default is True. For example, if the particle is out of bounds when the field is
-        defined on a grid.
+        Print an error message? Default is True.
     original_ele : EleStruct, optional
         Used with recursive calls that pass the lord as the ele argument. In this case original_ele is the
         original ele argument.
@@ -21341,8 +21490,8 @@ def emit_6d(ele_ref: EleStruct, include_opening_angle: bool, closed_orbit: Coord
     ele_ref : EleStruct
         Origin of the 1-turn maps used to evaluate the emittances.
     include_opening_angle : bool
-        If True include the effect of the vertical opening angle of emitted radiation. Generally use True unless
-        comparing against other codes.
+        If True include the effect of the vertical opening angle of emitted radiation.
+    Generally use True unless comparing against other codes. : 
     closed_orbit : CoordStruct, optional
         Closed orbit. If not present this routine will calculate it.
     
@@ -21422,12 +21571,21 @@ def envelope_radints_ibs(Lambda: typing.Annotated[collections.abc.Sequence[typin
     Iota : float
         Integrated vertical excitation matrix.
     eles : EleStruct
-        array of element structures representing ring. .mat6(6,6)            -- real(rp): element transfer matrix.
-        .value(l$)            -- real(rp): element (slice) length. .value(E_TOT$)        -- real(rp): Beam energy
-        in element.
-    mode : unknown
-        tune of a-mode. .b.tune                  -- real(rp): tune of b-mode. .z.tune                  --
-        real(rp): tune of z-mode.
+        array of element structures representing ring.
+    %mat6 : float
+        element transfer matrix.
+    %value : float
+        element (slice) length.
+    %value : float
+        Beam energy in element.
+    mode : 
+        normal_modes_struct
+    %a%tune : float
+        tune of a-mode.
+    %b%tune : float
+        tune of b-mode.
+    %z%tune : float
+        tune of z-mode.
     tail_cut : bool
         apply tail cut.
     npart : float
@@ -22310,7 +22468,12 @@ def exp_bessi0(t: typing.SupportsFloat, B1: typing.SupportsFloat, B2: typing.Sup
     B1 : float
         Scalar value.  Eq. 33 from Piwinski's paper.
     B2 : float
-        Scalar value.  Eq. 34 from Piwinski's paper. <return value> -- Real(rp): Scalar return value.
+        Scalar value.  Eq. 34 from Piwinski's paper.
+    
+    Returns
+    -------
+    <return value> : float
+        Scalar return value.
     """
 def expect_one_of(delim_list: str, check_input_delim: bool, ele_name: str, delim: str, delim_found: bool, is_ok: bool) -> None:
     """
@@ -22327,10 +22490,10 @@ def expect_one_of(delim_list: str, check_input_delim: bool, ele_name: str, delim
     delim_list : unknown
         List of expected (valid) delimitors. If list contains a space character then no delimitor (indicating the
         end of the command) is a valid possibility.
-    check_input_delim : bool
-        If True, then check if delim argument is in the delim_list. -- logical: If True, then check if delim
-        argument is in the delim_list. If False, check that the next character in the parse stream is an expected
-        delimitor.
+    check_input_delim : unknown
+        If True, then check if delim argument is in the delim_list.
+    If False : 
+    check that the next character in the parse stream is an expected delimitor. : 
     ele_name : unknown
         Lattice element under construction. Used for error messages.
     delim : unknown
@@ -22362,8 +22525,8 @@ def expect_this(expecting: str, check_delim: bool, call_check: bool, err_str: st
     expecting : unknown
         list of characters that are expected to be next in the parse stream.
     check_delim : bool
-        If True then use delim argument as first token to check. A blank character indicates end of command is
-        expected.
+        If True then use delim argument as first token to check.
+    A blank character indicates end of command is expected. : 
     call_check : bool
         If True then check for 'call::<filename>' construct.
     err_str : unknown
@@ -22416,7 +22579,8 @@ def expression_stack_value(stack: ExpressionAtomStructArray1D, var: ControlVar1S
     stack : ExpressionAtomStruct
         Expression to evaluate.
     var : ControlVar1Struct, optional
-        Array of control variables. Used with Bmad controller elements.
+        Array of control variables.
+    Used with Bmad controller elements. : 
     use_old : bool, optional
         Use var.old_value? Must be present if var(:) is present.
     
@@ -22522,9 +22686,11 @@ def expression_tree_to_string(tree: ExpressionTreeStruct, include_root: bool | N
         Root of tree to print.
     include_root : bool, optional
         Default is True. If True, do not inculde in the output string the root node. Note: If the root node is of
-        type root$, this node is always ignored.
+        type root$, this node is
+    always ignored. : 
     n_node : int, optional
-        Node index. parent.node(n_node) === tree. Internal use only. Used with recursive calls.
+        Node index. parent.node(n_node) === tree.
+    Internal use only. Used with recursive calls. : 
     parent : ExpressionTreeStruct, optional
         Internal use only. Used with recusive calls.
     
@@ -22544,7 +22710,8 @@ def expression_value(expression: str, var: ControlVar1StructArray1D | None = Non
     expression : unknown
         Expression string.
     var : ControlVar1Struct, optional
-        Array of control variables. Used with Bmad controller elements.
+        Array of control variables.
+    Used with Bmad controller elements. : 
     use_old : bool, optional
         Use var.old_value? Must be present if var(:) is present.
     
@@ -22836,6 +23003,16 @@ def fixedwindowls(ynew: typing.SupportsFloat, id: typing.SupportsInt, z: typing.
     
     initFixedWindowLS must be called prior to calling this function.  destFixedWindowLS should be
     called when the instance is no longer needed.
+    
+    Parameters
+    ----------
+    ynew: : float
+        New data point.
+    
+    Returns
+    -------
+    <return value) : float
+        Derivative of fit polynomial evaluated at end of window.
     """
 def floor_angles_to_w_mat(theta: typing.SupportsFloat, phi: typing.SupportsFloat, psi: typing.SupportsFloat) -> FloorAnglesToWMat:
     """
@@ -23157,15 +23334,18 @@ def get_next_word(word: str, ix_word: typing.SupportsInt, delim_list: str, delim
     delim_list : unknown
         List of valid delimiters
     upper_case_word : bool, optional
-        if True then convert word to upper case. Default is True.
+        if True then convert word to
+    upper case. Default is True. : 
     call_check : bool, optional
-        If present and True then check for 'call::<filename>' construct. Default is False. Output
+        If present and True then check for 'call::<filename>' construct. Default is False.
+    Output : 
     ix_word : int
         length of word argument
     delim : unknown
         Actual delimiter found
     delim_found : bool
-        Set true if a delimiter found. A delimiter may not be found if the end of the line is reached first.
+        Set true if a delimiter found. A delimiter
+    may not be found if the end of the line is reached first. : 
     err_flag : bool, optional
         Set True if there is an error. False otherwise.
     """
@@ -23233,7 +23413,7 @@ def gradient_shift_sr_wake(ele: EleStruct, param: LatParamStruct) -> float:
     ele : EleStruct
         Lcavity element.
     param : LatParamStruct
-        Lattice parameters .n_part        -- Number of particles in a bunch .particle      -- Type of particle
+        Lattice parameters
     grad_shift : float
         Shift in gradient
     """
@@ -23262,7 +23442,8 @@ def grid_field_interpolate(ele: EleStruct, orbit: CoordStruct, grid: GridFieldSt
         dimension 3 interpolation point.
     allow_s_out_of_bounds : bool, optional
         allow s-coordinate grossly out of bounds to return zero field without an error. This is used when the
-        field of one element overlaps the field of another. Default is False.
+        field of one element overlaps
+    the field of another. Default is False. : 
     print_err : bool, optional
         print an error message if the particle is out of bounds? Default is True.
     
@@ -23526,10 +23707,11 @@ def init_attribute_name1(is_ok: bool, ix_key: typing.SupportsInt, ix_attrib: typ
     ix_attrib : int
         Attribute index.
     name : unknown
-        Attribute name. Should be uppercase if attrib_state = is_free$. Should contain non-uppercase characters if
-        attrib_state = private$.
+        Attribute name. Should be uppercase if attrib_state = is_free$.
+    Should contain non-uppercase characters if attrib_state = private$. : 
     attrib_state : int, optional
-        Class of attribute: does_not_exist$, is_free$, etc. Defaults to is_free$.
+        Class of attribute: does_not_exist$, is_free$, etc.
+    Defaults to is_free$. : 
     override : bool, optional
         Normally this routine throws an error if the [ix_key, ix_attrib] has been set previously. If override =
         True then the set is done and no error is generated.
@@ -23566,7 +23748,9 @@ def init_beam_distribution(ele: EleStruct, param: LatParamStruct, beam_init: Bea
     ele : EleStruct
         element to initialize distribution at (downstream end).
     param : LatParamStruct
-        Lattice parameters .particle              -- Type of particle.
+        Lattice parameters
+    %particle : 
+        Type of particle.
     beam_init : BeamInitStruct
         Use "getf beam_init_struct" for more details.
     modes : NormalModesStruct, optional
@@ -23670,7 +23854,8 @@ def init_complex_taylor_series(complex_taylor: ComplexTaylorStruct, n_term: typi
         Old structure.
         This parameter is an input/output and is modified in-place. As an output: Initalized structure.
     n_term : int
-        Number of terms to allocate. n_term < 1 => complex_taylor.term pointer will be disassociated.
+        Number of terms to allocate.
+    n_term < 1 => complex_taylor%term pointer will be disassociated. : 
     save : bool, optional
         If True then save any old terms when complex_taylor is resized. Default is False.
     """
@@ -23709,18 +23894,22 @@ def init_coord(orb: CoordStruct, vec: typing.Annotated[collections.abc.Sequence[
     element_end : int, optional
         upstream_end$, downstream_end$, inside$, or start_end$. Must be present if ele argument is present.
         start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
-        upstream_end$. Note: If ele is the beginning element (index zero), the setting of element_end will not
-        matter.
+        upstream_end$. Note: If ele is the beginning element (index zero), the
+    setting of element_end will not matter. : 
     particle : int, optional
-        Particle type (electron$, etc.). If particle = not_set$ and orb_in is present, use orb_in.species instead.
+        Particle type (electron$, etc.).
+    If particle = not_set$ and orb_in is present : 
+    use orb_in%species instead. : 
     direction : int, optional
         +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
-        orb.direction except for photons which get set according to orb.vec(6).
+        orb.direction except for photons which get set
+    according to orb%vec : 
     E_photon : float, optional
         Photon energy if particle is a photon. Ignored otherwise.
     t_offset : float, optional
         Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
-        a particular particle is pegged to the time of the center of the bunch.
+        a particular particle
+    is pegged to the time of the center of the bunch. : 
     shift_vec6 : bool, optional
         If present and False, prevent the shift of orb.vec(6).
     spin : float, optional
@@ -23776,18 +23965,22 @@ def init_coord(orb_in: CoordStruct, ele: EleStruct | None = None, element_end: t
     element_end : int, optional
         upstream_end$, downstream_end$, inside$, or start_end$. Must be present if ele argument is present.
         start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
-        upstream_end$. Note: If ele is the beginning element (index zero), the setting of element_end will not
-        matter.
+        upstream_end$. Note: If ele is the beginning element (index zero), the
+    setting of element_end will not matter. : 
     particle : int, optional
-        Particle type (electron$, etc.). If particle = not_set$ and orb_in is present, use orb_in.species instead.
+        Particle type (electron$, etc.).
+    If particle = not_set$ and orb_in is present : 
+    use orb_in%species instead. : 
     direction : int, optional
         +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
-        orb.direction except for photons which get set according to orb.vec(6).
+        orb.direction except for photons which get set
+    according to orb%vec : 
     E_photon : float, optional
         Photon energy if particle is a photon. Ignored otherwise.
     t_offset : float, optional
         Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
-        a particular particle is pegged to the time of the center of the bunch.
+        a particular particle
+    is pegged to the time of the center of the bunch. : 
     shift_vec6 : bool, optional
         If present and False, prevent the shift of orb.vec(6).
     spin : float, optional
@@ -23846,18 +24039,22 @@ def init_coord(orb: CoordStruct, ele: EleStruct | None = None, element_end: typi
     element_end : int, optional
         upstream_end$, downstream_end$, inside$, or start_end$. Must be present if ele argument is present.
         start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
-        upstream_end$. Note: If ele is the beginning element (index zero), the setting of element_end will not
-        matter.
+        upstream_end$. Note: If ele is the beginning element (index zero), the
+    setting of element_end will not matter. : 
     particle : int, optional
-        Particle type (electron$, etc.). If particle = not_set$ and orb_in is present, use orb_in.species instead.
+        Particle type (electron$, etc.).
+    If particle = not_set$ and orb_in is present : 
+    use orb_in%species instead. : 
     direction : int, optional
         +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
-        orb.direction except for photons which get set according to orb.vec(6).
+        orb.direction except for photons which get set
+    according to orb%vec : 
     E_photon : float, optional
         Photon energy if particle is a photon. Ignored otherwise.
     t_offset : float, optional
         Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
-        a particular particle is pegged to the time of the center of the bunch.
+        a particular particle
+    is pegged to the time of the center of the bunch. : 
     shift_vec6 : bool, optional
         If present and False, prevent the shift of orb.vec(6).
     spin : float, optional
@@ -23913,7 +24110,8 @@ def init_em_taylor_series(em_taylor: EmTaylorStruct, n_term: typing.SupportsInt,
         Old structure.
         This parameter is an input/output and is modified in-place. As an output: Initalized structure.
     n_term : int
-        Number of terms to allocate. n_term < 0 => em_taylor.term pointer will be disassociated.
+        Number of terms to allocate.
+    n_term < 0 => em_taylor%term pointer will be disassociated. : 
     save_old : bool, optional
         If True then save any old terms when em_taylor is resized. Default is False.
     """
@@ -23924,7 +24122,7 @@ def init_lat(n: typing.SupportsInt | None = None, init_beginning_ele: bool | Non
     lat : LatStruct
         Initialized lat.
     n : int, optional
-        Upper bound lat.ele(0:) array is initialized to. Default is 10.
+        Upper bound lat.ele(0:) array is initialized to.
     init_beginning_ele : bool, optional
         Init lat.ele(0)? Default is False.
     """
@@ -23972,8 +24170,10 @@ def init_photon_integ_prob(gamma: typing.SupportsFloat, g: typing.SupportsFloat,
     vert_angle_max : float, optional
         Upper bound of vertical angle range.
     vert_angle_symmetric : float, optional
-        Use two symmetric ranges [-vert_angle_max, -vert_angle_min] and [vert_angle_min, vert_angle_max] instead
-        of just [vert_angle_min, vert_angle_max]?
+        Use two symmetric ranges [-vert_angle_max, -vert_angle_min] and
+    [vert_angle_min : 
+    vert_angle_max] instead of just [vert_angle_min : 
+    vert_angle_max]? : 
     energy_integ_prob : float, optional
         If present, E_photon will be set to the photon energy such that the integrated probability of generating a
         photon in the given angle and energy range in the interval [E_min, E_photon] is energy_integ_prob. That
@@ -23995,7 +24195,9 @@ def init_spin_distribution(beam_init: BeamInitStruct, ele: EleStruct) -> BunchSt
     Parameters
     ----------
     beam_init : BeamInitStruct
-        Initialization parameters .spin(3)  -- (x, y, z) spin coordinates ele
+        Initialization parameters
+    %spin : 
+        (x, y, z) spin coordinates ele
     
     Returns
     -------
@@ -24010,7 +24212,11 @@ def init_surface_segment(phot: PhotonElementStruct, ix: typing.SupportsInt, iy: 
     
     Parameters
     ----------
-    phot : unknown
+    phot : 
+        Surface structure.
+    ix : int
+        index of grid point to init.
+    iy : int
         index of grid point to init.
     """
 def init_taylor_series(bmad_taylor: TaylorStruct, n_term: typing.SupportsInt, save_old: bool | None = None) -> None:
@@ -24021,7 +24227,7 @@ def init_taylor_series(bmad_taylor: TaylorStruct, n_term: typing.SupportsInt, sa
         Old structure.
         This parameter is an input/output and is modified in-place. As an output: Initalized structure.
     n_term : int
-        Number of terms to allocate. n_term < 0 => bmad_taylor.term pointer will be disassociated.
+        Number of terms to allocate.
     save_old : bool, optional
         If True then save any old terms and ref orbit when bmad_taylor is resized. If False zero the ref orbit.
         Default is False.
@@ -24056,12 +24262,17 @@ def initfixedwindowls(N: typing.SupportsInt, dt: typing.SupportsFloat, order: ty
     N : int
         Number of data points to fit over. aka window size.
     dt : float
-        Time interval between data points. It is assumed that the data is separated by fixed time intervals.
+        Time interval between data points. It is assumed that the data is
+    separated by fixed time intervals. : 
     order : int
         Order of fit polynomial.  Must be greater than or equal to der.
     der : int
-        Order of derivative to be returned. Set der=0 to obtain the fit. <return value>  -- INTEGER: id of
-        windowLS instance created.
+        Order of derivative to be returned. Set der=0 to obtain the fit.
+    
+    Returns
+    -------
+    <return value> : int
+        id of windowLS instance created.
     """
 def insert_element(lat: LatStruct, insert_ele: EleStruct, ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt | None = None, orbit: CoordStructAlloc1D | None = None) -> None:
     """
@@ -24114,8 +24325,12 @@ def integrand_base(t: typing.SupportsFloat, args: RealArray1D, func_retval__: ty
     Parameters
     ----------
     t : float
-        Array of reals over which to evaluate the integrand. <return value> -- REAL(rp): Array of reals containing
-        values of integrand at t(:).
+        Array of reals over which to evaluate the integrand.
+    
+    Returns
+    -------
+    <return value> : float
+        Array of reals containing values of integrand at t(:).
     """
 def integrate_max(ix_start: typing.SupportsInt, ix_ele: typing.SupportsInt, datum_value: typing.SupportsFloat, ix_m: typing.SupportsInt, branch: BranchStruct, vec: RealArray1D, datum: TaoDataStruct) -> None:
     """
@@ -24459,9 +24674,9 @@ def kick_vector_calc(ele: EleStruct, param: LatParamStruct, s_body: typing.Suppo
         Distance from the start of the element to the particle.
     orbit : CoordStruct
         Position of particle.
-    local_ref_frame : !
-        Logical, If True then take the input coordinates -- Logical, If True then take the input coordinates as
-        being with respect to the frame of referene of the element.
+    local_ref_frame : 
+        -- Logical, If True then take the input coordinates as being with respect to the frame of referene of the
+        element.
     
     Returns
     -------
@@ -24559,7 +24774,7 @@ def lat_compute_ref_energy_and_time(lat: LatStruct) -> bool:
     Parameters
     ----------
     lat : LatStruct
-        Input lattice. .ele(0).value(E_tot$) -- Energy at the start of the lattice.
+        Input lattice.
     err_flag : bool
         Set true if there is an error. False otherwise.
     """
@@ -24579,18 +24794,15 @@ def lat_ele_locator(loc_str: str, lat: LatStruct, eles: ElePointerStructAlloc1D,
         This parameter is an input/output and is modified in-place. As an output: Number of locations found.
     err : bool
         Set True if there is a decode error. Note: Not finding any matching element is not an error.
-    above_ubound_is_err : bool, optional
-        Default is True. If the upper bound "e2" on an "e1:e2" range construct -- logical, optional: Default is
-        True. If the upper bound "e2" on an "e1:e2" range construct is an integer and above the maximum element
-        index then treat this as an error? If False, treat e2 as the maximum element index.
+    above_ubound_is_err : unknown, optional
+        Default is True. If the upper bound "e2" on an "e1:e2" range construct is an integer and above the maximum
+        element index then treat this as an error?
     ix_dflt_branch : int, optional
         If present and not -1 then restrict search to specified branch. If not present or -1: Search all branches.
-        Exception: For elements specified using an integer index (EG: "43"), if ix_dflt_branch is not present or
-        -1 use branch 0.
+        Exception: For elements specified using
     order_by_index : bool, optional
         False is default. If True, order a component of loc_str like "quad::*" by element index instead of
-        longitudinal s-position. Index ordering and s-position ordering are different when there are super lords
-        and super slaves.
+        longitudinal s-position. Index ordering and s-position ordering
     append_eles : bool, optional
         Default is False. If True, found elements are appended to eles(:) array.
     """
@@ -24606,7 +24818,7 @@ def lat_geometry(lat: LatStruct) -> None:
     Parameters
     ----------
     lat : LatStruct
-        The lattice. .ele(0).floor  -- Floor_position_struct: The starting point for the calculations.
+        The lattice.
     """
 def lat_make_mat6(lat: LatStruct, ix_ele: typing.SupportsInt | None = None, ref_orb: CoordStructArray1D | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
@@ -24615,10 +24827,9 @@ def lat_make_mat6(lat: LatStruct, ix_ele: typing.SupportsInt | None = None, ref_
     lat : LatStruct
         Lat containing the elements.
     ix_ele : int, optional
-        Index of the element. If not present or negative, the matrices for all elements will be calculated.
+        Index of the element. If not present
     ref_orb : CoordStruct, optional
-        Coordinates of the reference orbit around which the matrix is calculated. If not present then the
-        referemce is taken to be the origin.
+        Coordinates of the reference orbit around which the matrix is calculated. If not present
     ix_branch : int, optional
         Branch index. Default is 0 (main lattice). -1 => All branches/all elements (ref_orb & ix_ele will be
         ignored).
@@ -24639,8 +24850,7 @@ def lat_to_ptc_layout(lat: LatStruct) -> None:
     Parameters
     ----------
     lat : LatStruct
-        Input lattice lat.branch(:).ptc              -- Pointers to generated layouts.
-        lat.branch(:).ele(:).ptc_fibre -- Pointer to PTC fibres
+        Input lattice
     """
 def lat_vec_equal_lat_vec(lat1: LatStructArray1D, lat2: LatStructArray1D) -> None:
     """
@@ -24765,7 +24975,9 @@ def load_parse_line(action: str, ix_start: typing.SupportsInt) -> LoadParseLine:
     end_of_file : bool
         End of file reached?
     err_flag : bool
-        Set True if there is an error. False otherwise bp_com.parse_line -- string to append to.
+        Set True if there is an error. False otherwise
+    bp_com%parse_line : 
+        string to append to.
     """
 def logic_str(logic: bool, str: str) -> None:
     """
@@ -25013,7 +25225,13 @@ def mad_sbend_fringe(ele: EleStruct, energy: MadEnergyStruct, into: bool) -> Mad
     Returns
     -------
     map : MadMapStruct
-        Fringe dipole map. .k(6)     -- 0th order map. .r(6,6)   -- 1st order map. .t(6,6,6) -- 2nd order map.
+        Fringe dipole map.
+    %k : 
+        0th order map.
+    %r : 
+        1st order map.
+    %t : 
+        2nd order map.
     """
 def mad_sextupole(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     """
@@ -25101,9 +25319,14 @@ def mad_tmtilt(map: MadMapStruct, tilt: typing.SupportsFloat) -> None:
     Parameters
     ----------
     map : MadMapStruct
-        Unrotated transport map. .k(6)     -- 0th order map. .r(6,6)   -- 1st order map. .t(6,6,6) -- 2nd order
-        map.
+        Unrotated transport map.
         This parameter is an input/output and is modified in-place. As an output: Rotated transport map.
+    %k : 
+        0th order map.
+    %r : 
+        1st order map.
+    %t : 
+        2nd order map.
     tilt : float
         Tilt
     """
@@ -25191,13 +25414,13 @@ def make_hybrid_lat(lat_in: LatStruct, use_taylor: bool | None = None, orb0_arr:
     Parameters
     ----------
     lat_in : LatStruct
-        Input lattice. .branch(:).ele(:).select  -- Roughly: Set True to keep and False to hybridize. See above.
+        Input lattice.
     lat_out : LatStruct
         Lattice with hybrid elements. Note: Lat_out must not be the same actual argument as lat_in.
     use_taylor : bool, optional
         If present and True then the hybrid elements will have a taylor series instead of a simple linear matrix.
         If an element to be concatenated has a taylor series then this taylor series will be concatenated with the
-        other elements in the hybrid element.
+        other elements
     orb0_arr : CoordArrayStruct, optional
         Central orbit for taylor stuff. Each orb0_arr(i).orbit(:) holds the orbit for the i^th lattice branch
     """
@@ -25318,6 +25541,10 @@ def make_mat6_mad(ele: EleStruct, param: LatParamStruct, c0: CoordStruct) -> Coo
     
     Returns
     -------
+    %c0 : 
+        0th order transfer matrix.
+    %mat6 : 
+        6x6 1st order transfer matrix.
     c1 : CoordStruct
         Coordinates at the end of element.
     """
@@ -25446,11 +25673,19 @@ def make_smat_from_abc(t6: typing.Annotated[collections.abc.Sequence[typing.Anno
     t6 : float
         1-turn transfer matrix
     mode : NormalModesStruct
-        normal mode emittances .a.emittance -- real(rp): a-mode emittance .b.emittance -- real(rp): b-mode
-        emittance .z.emittance -- real(rp): z-mode emittance .a.tune      -- real(rp): a-mode tune.  Used to
-        associate emittances with the proper mode. .b.tune      -- real(rp): b-mode tune.  Used to associate
-        emittances with the proper mode. .z.tune      -- real(rp): z-mode tune.  Used to associate emittances with
-        the proper mode.
+        normal mode emittances
+    %a%emittance : float
+        a-mode emittance
+    %b%emittance : float
+        b-mode emittance
+    %z%emittance : float
+        z-mode emittance
+    %a%tune : float
+        a-mode tune.  Used to associate emittances with the proper mode.
+    %b%tune : float
+        b-mode tune.  Used to associate emittances with the proper mode.
+    %z%tune : float
+        z-mode tune.  Used to associate emittances with the proper mode.
     
     Returns
     -------
@@ -25646,10 +25881,7 @@ def mat6_add_offsets(ele: EleStruct, param: LatParamStruct) -> None:
     Parameters
     ----------
     ele : EleStruct
-        Element with given orientation. .vec0(6)         -- 0th order part of the transfer map. .mat6(6,6)
-        -- 1st order part of the transfer map (Jacobian). .map_ref_orb_in  -- Reference orbit at entrance end.
-        .map_ref_orb_out -- Reference orbit at exit end. .value(x_offset$), .value(x_pitch$), .value(tilt$), etc.
-        -- Offsets, tilts, and pitches
+        Element with given orientation.
     param : LatParamStruct
     """
 def mat6_add_pitch(x_pitch_tot: typing.SupportsFloat, y_pitch_tot: typing.SupportsFloat, orientation: typing.SupportsInt, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> None:
@@ -25685,7 +25917,7 @@ def mat6_to_complex_taylor(vec0: typing.Annotated[collections.abc.Sequence[compl
     complex_taylor : ComplexTaylorStruct
         first order complex_taylor map.
     """
-def mat_symp_decouple(t0: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]], "FixedSize(4)"], U: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]], "FixedSize(4)"], V: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]], "FixedSize(4)"], Ubar: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]], "FixedSize(4)"], Vbar: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]], "FixedSize(4)"], G: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]], "FixedSize(4)"], type_out: bool) -> MatSympDecouple:
+def mat_symp_decouple(t0: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]], "FixedSize(4)"], type_out: bool) -> MatSympDecouple:
     """
     Parameters
     ----------
@@ -25693,16 +25925,20 @@ def mat_symp_decouple(t0: typing.Annotated[collections.abc.Sequence[typing.Annot
         Input matrix
     stat : int
         status of results: ok$, in_stop_band$, or unstable$
-    U : 
-    V : 
-    Ubar : 
-    Vbar : 
-    G : 
+    u : unknown
+        See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+    v : unknown
+        See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+    ubar : unknown
+        See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+    vbar : unknown
+        See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+    g : unknown
+        See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
     twiss1 : TwissStruct
-        Twiss params for the "upper left" mode. .phi     -- Rotation angle in radians, 0 < .PHI < twopi
+        Twiss params for the "upper left" mode.
     twiss2 : TwissStruct
-        Twiss params for the "lower right" mode. u(4,4), v(4,4), ubar(4,4), vbar(4,4), g(4,4) -- Real(rp): See MGB
-        CBN 85-2 and PPB/DLR PAC89 papers for more info.
+        Twiss params for the "lower right" mode.
     gamma : float
         gamma_c factor.
     type_out : bool
@@ -25723,7 +25959,7 @@ def match_ele_to_mat6(ele: EleStruct, start_orb: CoordStruct, include_delta_time
     err_flag : bool
         Set true if there is an error. False otherwise.
     include_delta_time : bool, optional
-        If False, ignore any finite ele.value(delta_time$). Default is True.
+        If False, ignore any finite ele.value(delta_time$).
     set_trombone : bool, optional
         Default is False. If True, set the beginning and ending Twiss values in the element to create a phase
         trombone.
@@ -25790,8 +26026,8 @@ def misalign_ptc_fibre(ele: EleStruct, use_offsets: bool, for_layout: bool) -> F
     ele : EleStruct
         Bmad element with misalignments.
     use_offsets : bool
-        Does ptc_fibre include element offsets, pitches and tilt? This argument is ignored if the element is a
-        patch.
+        Does ptc_fibre include element offsets, pitches and tilt?
+    This argument is ignored if the element is a patch. : 
     for_layout : bool
         If True then fibre is being created as part of a layout as opposed to a stand-alone fibre
     
@@ -25814,23 +26050,19 @@ def multi_turn_tracking_analysis(track: CoordStructArray1D, i_dim: typing.Suppor
     Parameters
     ----------
     track : CooordStruct
-        multi-turn tracking data to analyze. track(i) is the particle position at a given point in the lat on the
-        i^th turn.
+        multi-turn tracking data to analyze. track(i) is the particle position at a given point
     i_dim : int
         number of dimensions used in the tracking: 2, or 4.
     track0 : CoordStruct
         Closed orbit.
     ele : EleStruct
-        structure holding the 1-turn matrix and Twiss parameters. .mat6        -- Symplectified 1-turn matrix. If
-        you want the true non-symplectified 1-turn matrix use the routine multi_turn_tracking_to_mat. .a.beta, etc
-        -- a-mode beta,  etc. .a.phi       -- a-mode fractional tune in radians. .a.sigma     -- a-mode amplitude
-        = sqrt(ele.a.beta * ele.a.sigma) .c_mat       -- c coupling matrix (only with i_dim = 4)
+        structure holding the 1-turn matrix and Twiss parameters.
     stable : bool
         Is motion stable?
     growth_rate : float
         Unstable growth rate (= 0 if stable).
     chi : float
-        How symplectic the computed 1-turn matrix is. See mat_symp_check for more details.
+        How symplectic the computed 1-turn matrix is.
     err_flag : bool
         Set true if there is an error. False otherwise.
     """
@@ -25847,11 +26079,16 @@ def multilayer_type_to_multilayer_params(ele: EleStruct) -> bool:
     Parameters
     ----------
     ele : EleStruct
-        Multilayer element. .component_name -- Character: Multilayer type name. Assumed upper case. A blank name
-        is not an error and results in nothing set. .value(e_tot$)  -- Photon energy in eV.
+        Multilayer element.
+    %component_name : unknown
+        Multilayer type name. Assumed upper case.
+    A blank name is not an error and results in nothing set. : 
+    %value : 
+        Photon energy in eV.
     
     Returns
     -------
+    %photon%material%f0_m2 : 
     err_flag : bool
         Set True if multilayer type is unrecognized. False otherwise.
     """
@@ -25862,14 +26099,14 @@ def multipass_chain(ele: EleStruct, ix_pass: typing.SupportsInt, n_links: typing
     ele : ElePointerStruct
         Element in a multipass chain.
     ix_pass : int
-        Multipass pass number of the input element. Set to -1 if input element is not in a multipass section.
+        Multipass pass number of the input element.
     n_links : int
         Number of times the physical element is passed through.
     chain_ele : ElePointerStruct, optional
         pointers to the elements of the chain. Note: chain_ele(ix_pass).ele => ele
     use_super_lord : bool, optional
         If present and True and if ele is a super_slave, construct the chain_ele(:) array using the corresponding
-        super_lords. Output
+        super_lords.
     """
 def multipole1_ab_to_kt(an: typing.SupportsFloat, bn: typing.SupportsFloat, n: typing.SupportsInt) -> Multipole1AbToKt:
     """
@@ -25921,13 +26158,11 @@ def multipole_ele_to_ab(ele: EleStruct, use_ele_tilt: bool, pole_type: typing.Su
     Parameters
     ----------
     ele : EleStruct
-        Element. .value()      -- ab_multipole values.
+        Element.
     use_ele_tilt : bool
-        If True then include ele.value(tilt_tot$) in calculations. use_ele_tilt is ignored in the case of
-        multipole$ elements.
+        If True then include ele.value(tilt_tot$) in calculations.
     ix_pole_max : int
-        Index of largest nonzero a(:) or b(:) pole. Set to -1 if all multipoles are zero. ix_pole_max is set
-        independent of a nonzero b1 (if present).
+        Index of largest nonzero a(:) or b(:) pole. Set to -1 if all multipoles are zero.
     a : float
         Array of multipole values.
     b : float
@@ -25935,10 +26170,7 @@ def multipole_ele_to_ab(ele: EleStruct, use_ele_tilt: bool, pole_type: typing.Su
     pole_type : int, optional
         Type of multipole. magnetic$ (default) or electric$.
     include_kicks : int, optional
-        Ignored for for pole_type == electric$ for non-elseparator elements. Possibilities are: no$
-        -- Default. Do not include any kick components in a and b multipoles. include_kicks$           -- Include
-        hkick/vkick/dg in the n = 0 components. Also included are quad k1, sextupole k2 and octupole k3
-        components.
+        Ignored for for pole_type == electric$ for non-elseparator elements.
     b1 : float
         If present, b1 is set to the value of the b(1) component of the b(:) array and b(1) is set to zero. Also
         ix_pole_max is ajusted as needed. This is used by routines that want to handle b(1) in a special way in
@@ -25953,8 +26185,7 @@ def multipole_ele_to_kt(ele: EleStruct, use_ele_tilt: bool, knl: RealArray1D, ti
     ele : EleStruct
         Lattice element.
     use_ele_tilt : bool
-        If True then include ele.value(tilt_tot$) in calculations. use_ele_tilt is ignored in the case of
-        multipole$ elements.
+        If True then include ele.value(tilt_tot$) in calculations.
     ix_pole_max : int
         Index of largest nonzero pole.
     knl : float
@@ -25964,17 +26195,14 @@ def multipole_ele_to_kt(ele: EleStruct, use_ele_tilt: bool, knl: RealArray1D, ti
     pole_type : int, optional
         Type of multipole. magnetic$ (default) or electric$.
     include_kicks : int, optional
-        Possibilities are: no$                      -- Default. Do not include any kick components in a and b
-        multipoles. include_kicks$           -- Include hkick/vkick/dg in the n = 0 components. Also included are
-        quad k1, sextupole k2 and octupole k3 components.
+        Possibilities are:
     """
 def multipole_init(who: typing.SupportsInt, zero: bool | None = None) -> EleStruct:
     """
     Parameters
     ----------
     ele : EleStruct
-        Element holding the multipoles. .a_pole(0:n_pole_maxx) -- Multipole An array .b_pole(0:n_pole_maxx) --
-        Multipole Bn array
+        Element holding the multipoles.
     who : int
         electric$, magnetic$, or all$
     zero : bool, optional
@@ -26007,6 +26235,11 @@ def multipole_kick(knl: typing.SupportsFloat, tilt: typing.SupportsFloat, n: typ
     ref_orb_offset : bool, optional
         If True and n = 0 then use the MAD convention and model the multipole as a zero length bend with bending
         angle knl. Default is False.
+    
+    Returns
+    -------
+    %vec : unknown
+        Y kick.
     """
 def multipole_kick_mat(knl: RealArray1D, tilt: RealArray1D, ref_species: typing.SupportsInt, ele: EleStruct, orbit: CoordStruct, factor: typing.SupportsFloat) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
@@ -26021,7 +26254,7 @@ def multipole_kick_mat(knl: RealArray1D, tilt: RealArray1D, ref_species: typing.
     ele : EleStruct
         Lattice element containing multipoles.
     orbit : CoordStruct
-        coordinates of particle around which the multipole kick matrix is computed.
+        coordinates of particle around which the
     factor : float
         Factor to scale knl by.
     mat6 : float
@@ -26185,7 +26418,7 @@ def new_control(lat: LatStruct, ix_ele: typing.SupportsInt, ele_name: str | None
     ix_ele : int
         Index of the new control element
     ele_name : unknown, optional
-        Name of the new element. Output
+        Name of the new element.
     """
 def nint_chk(re_val: typing.SupportsFloat) -> int:
     """
@@ -26268,7 +26501,8 @@ def normal_mode3_calc(t6: typing.Annotated[collections.abc.Sequence[typing.Annot
     mat : float
         1-turn transfer matrix
     above_transition : bool, optional
-        If present and false, then z-mode assumes positive slip factor. Else negative slip factor assumed.
+        If present and false, then z-mode assumes positive slip factor.
+    Else negative slip factor assumed. : 
     abz_tunes : float, optional
         Tunes to order eigensystem by.
     
@@ -26369,8 +26603,10 @@ def odeint_bmad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, s1_bo
     Returns
     -------
     err_flag : bool
-        Set True if there is an error. False otherwise. Note: a particle getting lost, for example hitting an
-        aperture, is *not* an error.
+        Set True if there is an error. False otherwise. Note: a particle getting
+    lost : 
+    for example hitting an aperture : 
+    is *not* an error. : 
     track : TrackStruct
         Structure holding the track information.
     """
@@ -26389,9 +26625,10 @@ def odeint_bmad_time(orb: CoordStruct, ele: EleStruct, param: LatParamStruct, t_
         Starting coords: (x, px, y, py, s, ps) [t-based]
         This parameter is an input/output and is modified in-place. As an output: Ending coords
     ele : EleStruct
-        Element to track through. .tracking_method -- Determines which subroutine to use to calculate the field.
-        Note: BMAD does no supply em_field_custom. == custom$ then use em_field_custom /= custom$ then use
-        em_field_standard
+        Element to track through.
+    %tracking_method : unknown
+        BMAD does no supply em_field_custom. == custom$ then use em_field_custom
+    /= custom$ then use em_field_standard : 
     param : LatParamStruct
         Beam parameters.
     t_dir : float
@@ -26400,11 +26637,13 @@ def odeint_bmad_time(orb: CoordStruct, ele: EleStruct, param: LatParamStruct, t_
         Time relative to RF clock.
         This parameter is an input/output and is modified in-place. As an output: Updated time.
     track : TrackStruct, optional
-        Structure holding the track information. .save_track   -- Logical: Set True if track is to be saved.
+        Structure holding the track information.
+    %save_track : bool
+        Set True if track is to be saved.
     t_end : float, optional
         If present, maximum time to which the particle will be tracked. Used for tracking with given time steps.
-        The time orb.t at which tracking stops may be less than this if the particle gets to the end of the
-        element
+        The time orb.t at which tracking stops
+    may be less than this if the particle gets to the end of the element : 
     extra_field : EmFieldStruct, optional
         Static field to be added to the element field. Eg used with space charge.
     
@@ -26422,28 +26661,24 @@ def offset_particle(ele: EleStruct, set: bool, orbit: CoordStruct, set_tilt: boo
     ele : EleStruct
         Element
     set : bool
-        T (= set$)   -> Translate from lab coords to the local element coords. F (= unset$) -> Translate back from
-        element to lab coords.
+        T (= set$)   -> Translate from lab coords to the local element coords.
     orbit : CoordStruct
         Coordinates of the particle.
         This parameter is an input/output and is modified in-place. As an output: Coordinates of particle.
     set_tilt : bool, optional
-        Default is True. T -> Rotate using ele.value(tilt$) and ele.value(roll$) for sbends. F -> Do not rotate
+        Default is True. T -> Rotate using ele.value(tilt$) and ele.value(roll$) for sbends.
     set_hvkicks : bool, optional
-        Default is True. T -> Apply 1/2 any hkick or vkick.
+        Default is True.
     drift_to_edge : int, optional
         no$             -> Do not propagate (drift) particle. no$ is default if s_pos is present. upstream_end$
         -> Propagate to upsteam edge. This is default if set = set$ and s_pos is not present. downstream_end$ ->
-        Propagate to downsteam edge. This is default if set = unset$ and s_pos is not present. Note: "edge" is
-        body edge if set = set$ and is laboratory (nominal non-misaligned) edge if set = unset$
+        Propagate to downsteam edge. This is default if set = unset$ and s_pos is not present.
     s_pos : float, optional
-        Longitudinal particle position: If set = set$: Relative to upstream end (in lab coords). If set = unset$:
-        Relative to entrance end (in body coords).
+        Longitudinal particle position: If set = set$: Relative to upstream end (in lab coords).
     s_out : float
-        Longitudinal particle position. If set = set$: Relative to entrance end (in body coords). If set = unset$:
-        Relative to upstream end (in lab coords).
+        Longitudinal particle position. If set = set$: Relative to entrance end (in body coords).
     set_spin : bool, optional
-        Default if False. Rotate spin coordinates? Also bmad_com.spin_tracking_on must be T to rotate.
+        Default if False.
     mat6 : float, optional
         Transfer matrix before off setting.
         This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
@@ -26468,9 +26703,8 @@ def offset_photon(ele: EleStruct, orbit: CoordStruct, set: bool, offset_position
     set : bool
         T (= set$)   -> Translate from lab coords to element coords. F (= unset$) -> Translate from element coords
         to lab coords.
-    offset_position_only : bool, optional
-        If present and True, only offset the position coordinates. -- Logical, optional: If present and True, only
-        offset the position coordinates.
+    offset_position_only : unknown, optional
+        If present and True, only offset the position coordinates.
     rot_mat : float, optional
         Rotation matrix from starting coords to ending coords.
     """
@@ -26495,8 +26729,7 @@ def one_turn_mat_at_ele(ele: EleStruct, phi_a: typing.SupportsFloat, phi_b: typi
     Parameters
     ----------
     ele : EleStruct
-        Reference element. .a       -- "a" mode Twiss parameter structure. .b       -- "b" mode Twiss parameter
-        structure. .c_mat   -- 2x2 C matrix. .gamma_c -- gamma associated with C matrix.
+        Reference element.
     phi_a : float
         "a" mode tune in radians.
     phi_b : float
@@ -26551,7 +26784,7 @@ def orbit_amplitude_calc(ele: EleStruct, orb: CoordStruct) -> OrbitAmplitudeCalc
     Parameters
     ----------
     ele : EleStruct
-        Element holding the Twiss parameters, dispersion and coupling info.
+        Element holding the Twiss parameters,
     orb : CoordStruct
         Orbit coordinates at the exit end of ele.
     amp_a : float
@@ -26598,8 +26831,7 @@ def orbit_to_local_curvilinear(orbit: CoordStruct, ele: EleStruct, z_direction: 
     ele : EleStruct
         Lattice element particle is in.
     z_direction : int, optional
-        Set to +1 or -1.  Z-direction of particle velocity relative to element z-axis. Default is ele.orientation
-        * orbit.direction.
+        Set to +1 or -1.  Z-direction of particle velocity
     relative_to : int, optional
         not_set$ (default), upstream_end$, downstream_end$. If not_set$ then origin is at the entrance end.
     local_position : FloorPositionStruct
@@ -26612,7 +26844,6 @@ def orbit_too_large(orbit: CoordStruct, check_momentum: bool | None = None) -> O
     orbit : CoordStruct
         Particle orbit.
     param : LatParamStruct
-        .unstable_factor  -- Set if orbit is too large. Otherwise not set
     check_momentum : bool, optional
         If True (default) check the momentum.
     is_too_large : bool
@@ -26703,7 +26934,15 @@ def order_particles_in_z(bunch: BunchStruct) -> None:
     Parameters
     ----------
     bunch : BunchStruct
-        collection of particles. .particle(j).vec(5) -- Longitudinal position of j^th particle.
+        collection of particles.
+    %particle : 
+        Longitudinal position of j^th particle.
+    
+    Returns
+    -------
+    %ix_z : unknown
+        .bunch.ix_z(1) is the particle at the bunch head. Only live particles are ordered so if particle with
+        index .bunch.ix_z(i) is dead, all particles with index .bunch.ix_z(j) with j > i are dead.
     """
 def order_super_lord_slaves(lat: LatStruct, ix_lord: typing.SupportsInt) -> None:
     """
@@ -26712,7 +26951,7 @@ def order_super_lord_slaves(lat: LatStruct, ix_lord: typing.SupportsInt) -> None
     lat : LatStruct
         Lat with fixed controls.
     ix_lord : int
-        Index of lord element. Output
+        Index of lord element.
     """
 def ordinal_str(n: typing.SupportsInt, str: str) -> None:
     """
@@ -26855,11 +27094,21 @@ def parse_integer_list2(err_str: str, lat: LatStruct, int_array: IntAlloc1D, num
     lat : LatStruct
         lattice
     int_array : int
-        the array to be read in Optional: num_expected = 1     -- integer: number of expected arguments. Used to
-        initialize int_array. open_delim   = '('   -- character(1): opening delimeter. separator    = ','   --
-        character(1): separating character. close_delim  = ')'   -- character(1): closing delimeter. default_value
-        = 0    -- real(rp): inital assignment of int_array elements.
+        the array to be read in
         This parameter is an input/output and is modified in-place. As an output: Array of values.
+    Optional: : 
+    num_expected = 1 : int
+        number of expected arguments. Used to initialize int_array.
+    open_delim   = ' : unknown
+        opening delimeter.
+    separator    = ' : unknown
+        separating character.
+    ' : unknown
+        separating character.
+    close_delim  = ')' : unknown
+        closing delimeter.
+    default_value = 0 : float
+        inital assignment of int_array elements.
     
     Returns
     -------
@@ -26924,13 +27173,23 @@ def parse_real_list2(lat: LatStruct, err_str: str, real_array: RealAlloc1D, num_
     err_str : unknown
         Error string to print if there is an error.
     real_array : float
-        the array to be read in num_expected = 10       -- integer, optional: number of expected arguments Used to
-        initialize real_array open_brace   = '('      -- character(1), optional: opening delimeter. separator    =
-        ','      -- character(1), optional: separating character close_brace  = ')'      -- character(1),
-        optional: closing delimeter default_value = 0.0_rp  -- real(rp), optional: inital assignment of real_array
-        elements. single_value = False    -- logical, optional: If true then an array with a single value and no
-        braces is accepted.
+        the array to be read in
         This parameter is an input/output and is modified in-place. As an output: Array of values
+    num_expected = 10 : int, optional
+        number of expected arguments
+    Used to initialize real_array : 
+    open_brace   = ' : unknown, optional
+        opening delimeter.
+    separator    = ' : unknown, optional
+        separating character
+    ' : unknown, optional
+        separating character
+    close_brace  = ')' : unknown, optional
+        closing delimeter
+    default_value = 0.0_rp : float, optional
+        inital assignment of real_array elements.
+    single_value = False : bool, optional
+        If true then an array with a single value and no braces is accepted.
     
     Returns
     -------
@@ -27016,7 +27275,8 @@ def parser_fast_real_read(real_vec: RealArray1D, ele: EleStruct, end_delims: str
     end_delims : unknown
         List of possible ending delimitors.
     err_str : unknown
-        String used when printing error messages identifying where in the lattice file the error is occuring.
+        String used when printing error messages identifying where in
+    the lattice file the error is occuring. : 
     exact_size : bool, optional
         If True (default), number of values must match real_vec size.
     
@@ -27094,6 +27354,11 @@ def parser_read_lr_wake(ele: EleStruct, delim: str, delim_found: bool, err_flag:
     ele : EleStruct
         Element containing wake structure.
         This parameter is an input/output and is modified in-place. As an output: Element with wake information.
+    
+    Returns
+    -------
+    %wake%lr : 
+        Long-range wake.
     """
 def parser_read_old_format_lr_wake(ele: EleStruct, lr_file_name: str) -> None:
     """
@@ -27109,6 +27374,11 @@ def parser_read_old_format_lr_wake(ele: EleStruct, lr_file_name: str) -> None:
         This parameter is an input/output and is modified in-place. As an output: Element with wake information.
     lr_file_name : unknown
         Name of long-range wake field file.
+    
+    Returns
+    -------
+    %wake%lr%mode : 
+        Long-range wake potential.
     """
 def parser_read_old_format_sr_wake(ele: EleStruct, sr_file_name: str) -> None:
     """
@@ -27124,6 +27394,15 @@ def parser_read_old_format_sr_wake(ele: EleStruct, sr_file_name: str) -> None:
         This parameter is an input/output and is modified in-place. As an output: Element with wake information.
     sr_file_name : unknown
         Name of short-range wake field file.
+    
+    Returns
+    -------
+    %wake%sr%table : 
+        Short-range wake potential.
+    %wake%sr%long : 
+        Short-range wake potential.
+    %wake%sr%trans : 
+        Short-range wake potential.
     """
 def parser_read_sr_wake(ele: EleStruct, delim: str, delim_found: bool, err_flag: bool) -> None:
     """
@@ -27137,6 +27416,11 @@ def parser_read_sr_wake(ele: EleStruct, delim: str, delim_found: bool, err_flag:
     ele : EleStruct
         Element containing wake structure.
         This parameter is an input/output and is modified in-place. As an output: Element with wake information.
+    
+    Returns
+    -------
+    %wake%sr : 
+        Short-range wake potential.
     """
 def parser_transfer_control_struct(con_in: ControlStruct, lord: EleStruct, ix_var: typing.SupportsInt) -> ControlStruct:
     """
@@ -27174,9 +27458,11 @@ def particle_in_global_frame(orb: CoordStruct, branch: BranchStruct, in_time_coo
     branch : BranchStruct
         branch that contains branch.ele(orb.ix_ele)
     in_time_coordinates : bool
-        Default is false. If true, orb will taken as in time coordinates.
+        Default is false. If true, orb
+    will taken as in time coordinates. : 
     in_body_frame : bool
-        Default is true. If false, ele offsets will be ignored. Result:
+        Default is true. If false, ele offsets will be ignored.
+    Result: : 
     particle : CoordStruct
         particle in global time coordinates
     
@@ -27212,21 +27498,18 @@ def particle_rf_time(orbit: CoordStruct, ele: EleStruct, reference_active_edge: 
         Particle coordinates
     ele : EleStruct
         Element being tracked through.
-    reference_active_edge : bool
-        If True, and ele is a rfcavity or lcavity, use the active edge (edge of the -- logical: If True, and ele
-        is a rfcavity or lcavity, use the active edge (edge of the region with non-zero field) as the reference
-        point.
+    reference_active_edge : unknown
+        If True, and ele is a rfcavity or lcavity, use the active edge (edge of the
     s_rel : float, optional
-        Longitudinal position relative to the upstream edge of the element. Needed for relative time tracking when
-        the particle is inside the element. Default is 0.
+        Longitudinal position relative to the upstream edge of the element.
     time_coords : bool, optional
         Default False. If True then orbit is using time based phase space coordinates.
     rf_freq : float, optional
         If present, the returned time shifted by an integer multiple of 1/rf_freq to be in the range
-        [-1/2*rf_freq, 1/2*rf_freq]. This is useful to avoid round-off errors.
+        [-1/2*rf_freq, 1/2*rf_freq]. This is useful to
     abs_time : float, optional
         If False (default) use setting of bmad_com.absolute_time_tracking. If True, use absolute time instead of
-        relative time. Ouput:
+        relative time.
     time : float
         Current time.
     """
@@ -27275,7 +27558,7 @@ def photon_absorption_and_phase_shift(material: str, Energy: typing.SupportsFloa
     err_flag : bool
         Set true if material not recognized.
     """
-def photon_add_to_detector_statistics(orbit0: CoordStruct, orbit: CoordStruct, ele: EleStruct, ix_pt: typing.SupportsInt | None = None, iy_pt: typing.SupportsInt | None = None, pixel_pt: PixelPtStruct | None = None) -> None:
+def photon_add_to_detector_statistics(orbit0: CoordStruct, orbit: CoordStruct, ele: EleStruct, pixel_pt: PixelPtStruct | None = None) -> PhotonAddToDetectorStatistics:
     """
     Subroutine photon_add_to_detector_statistics (orbit0, orbit, ele, ix_pt, iy_pt, pixel_pt)
     
@@ -27296,6 +27579,15 @@ def photon_add_to_detector_statistics(orbit0: CoordStruct, orbit: CoordStruct, e
     pixel_pt : PixelPtStruct, optional
         If present then use this grid point instead of the grid point determined by the (x, y) coords of the
         photon
+    
+    Returns
+    -------
+    ix_pt : int
+        Index of upgraded ele.photon.surface.grid.pt(:,:) point. These arguments are not set if the pixel_pt
+        argument is present.
+    iy_pt : int
+        Index of upgraded ele.photon.surface.grid.pt(:,:) point. These arguments are not set if the pixel_pt
+        argument is present.
     """
 def photon_reflection(graze_angle_in: typing.SupportsFloat, energy: typing.SupportsFloat, surface: PhotonReflectSurfaceStruct) -> PhotonReflection:
     """
@@ -27371,8 +27663,11 @@ def photon_target_corner_calc(aperture_ele: EleStruct, x_lim: typing.SupportsFlo
     Parameters
     ----------
     aperture_ele : EleStruct
-        Element containing the aperture x_lim, y_lim  -- real(rp): Transverse corner points in aperture_ele coord
-        frame.
+        Element containing the aperture
+    x_lim : float
+        Transverse corner points in aperture_ele coord frame.
+    y_lim : float
+        Transverse corner points in aperture_ele coord frame.
     source_ele : EleStruct
         Photon source element.
     
@@ -27450,7 +27745,8 @@ def point_photon_emission(ele: EleStruct, param: LatParamStruct, orbit: CoordStr
         +1 -> Emit in forward +z direction, -1 -> emit backwards.
     max_target_area : float
         Area of the solid angle photons may be emitted over. max_target_area is used for normalizing the photon
-        field. generally will be equal to twopi or fourpi.
+        field.
+    generally will be equal to twopi or fourpi. : 
     w_to_surface : float, optional
         Rotation matrix for curved surface.
     """
@@ -27484,7 +27780,8 @@ def pointer_to_branch(ele: EleStruct) -> BranchStruct | None:
     lat : LatStruct
         Lattice to search.
     parameter_is_branch0 : bool, optional
-        If True, 'PARAMETER' is taken to be an alternative name for branch(0). Default is False.
+        If True, 'PARAMETER' is taken to be
+    an alternative name for branch : 
     blank_branch : int, optional
         Branch index if branch_name = ''. Default is blank is an error.
     
@@ -27527,7 +27824,8 @@ def pointer_to_branch(branch_name: str, lat: LatStruct, parameter_is_branch0: bo
     lat : LatStruct
         Lattice to search.
     parameter_is_branch0 : bool, optional
-        If True, 'PARAMETER' is taken to be an alternative name for branch(0). Default is False.
+        If True, 'PARAMETER' is taken to be
+    an alternative name for branch : 
     blank_branch : int, optional
         Branch index if branch_name = ''. Default is blank is an error.
     
@@ -27787,7 +28085,12 @@ def pointer_to_element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choos
     s_eff : float
         Effective s. Equal to s with a open lattice. See above.
     position : CoordStruct
-        Positional information. .s         -- Same as input s. .ix_ele    -- Same as output ix_ele .location  --
+        Positional information.
+    %s : 
+        Same as input s.
+    %ix_ele : 
+        Same as output ix_ele
+    %location : 
         Location relative to element. Upstream_end$, downstream_end$, or inside$
     
     Notes
@@ -27818,7 +28121,7 @@ def pointer_to_field_ele(ele: EleStruct, ix_field_ele: typing.SupportsInt) -> Po
     dz_offset : float
         Longitudinal offset of ele upstream edge from the field ele pointed to.
     field_ele : EleStruct
-        Pointer to the field element with index ix_field_ele. Will point to null if ix_field_ele is out of range.
+        Pointer to the field element with index ix_field_ele.
     """
 def pointer_to_girder(ele: EleStruct) -> PointerToGirder:
     """
@@ -27827,8 +28130,7 @@ def pointer_to_girder(ele: EleStruct) -> PointerToGirder:
     ele : EleStruct
         Element to check.
     ix_slave_back : int
-        Index back to ele. That is, pointer_to_slave(girder, ix_slave_back) will point back to ele. Set to -1 if
-        no girder present
+        Index back to ele. That is, pointer_to_slave(girder, ix_slave_back)
     girder : EleStruct
         : Pointer to the girder. Null if ele is not girder supported.
     """
@@ -27841,19 +28143,17 @@ def pointer_to_lord(slave: EleStruct, ix_lord: typing.SupportsInt, lord_type: ty
     ix_lord : int
         Index of the lord.
     control : ControlStruct
-        Pointer to control info for this lord/slave relationship. Nullified if there is an error.
+        Pointer to control info for this lord/slave relationship.
     ix_slave_back : int
-        Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back) will point back to slave. Set
-        to -1 if there is an error or the slave is a slice_slave.
+        Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back)
     lord_type : int, optional
         See above.
     ix_control : int
-        Index in lat.control(:) array the control argument is at. For ramper lord elements, ix_control is index
-        for the lord.control.ramper(:) array.
+        Index in lat.control(:) array the control argument is at.
     ix_ic : int
         Index of the lat.ic(:) element associated with the control argument.
     lord_ptr : EleStruct
-        Pointer to the lord. Nullified if there is an error.
+        Pointer to the lord.
     """
 def pointer_to_multipass_lord(ele: EleStruct) -> PointerToMultipassLord:
     """
@@ -27862,11 +28162,9 @@ def pointer_to_multipass_lord(ele: EleStruct) -> PointerToMultipassLord:
     ele : EleStruct
         Lattice element.
     ix_pass : int
-        Multipass turn number. Set to 0 if element is a multipass_lord. Set to -1 if element is not a
-        multipass_slave.
+        Multipass turn number. Set to 0 if element is a multipass_lord.
     super_lord : EleStruct
-        super_lord of the element. Set to NULL if ele is not a super_slave or super_lord. Note: if ele is a
-        multipass_lord there are multiple possible super_lord slaves.
+        super_lord of the element. Set to NULL if ele is not a super_slave or super_lord.
     multi_lord : EleStruct
         multipass_lord if there is one. Set to NULL if there is no multipass_lord.
     """
@@ -27877,9 +28175,9 @@ def pointer_to_next_ele(this_ele: EleStruct, offset: typing.SupportsInt | None =
     this_ele : EleStruct
         Starting element.
     offset : int, optional
-        +1 -> return next element, +2 -> element after that, etc. Can be negative. Default = +1.
+        +1 -> return next element, +2 -> element
     skip_beginning : bool, optional
-        If True then skip beginning element #0 when wrapping around. Default is False.
+        If True then skip beginning element #0
     follow_fork : bool, optional
         If True then fork at any fork element. Default is False.
     next_ele : EleStruct
@@ -27894,7 +28192,8 @@ def pointer_to_ran_state(ran_state: RandomStateStruct | None = None, ix_thread: 
     Parameters
     ----------
     ran_state : RandomStateStruct, optional
-        Point to this if present. Otherwise point to the global saved state.
+        Point to this if present.
+    Otherwise point to the global saved state. : 
     ix_thread : int, optional
         Thread index.
     
@@ -27929,12 +28228,14 @@ def pointer_to_slave(lord: EleStruct, ix_slave: typing.SupportsInt, lord_type: t
     Returns
     -------
     slave_ptr : EleStruct
-        Pointer to the slave. Nullified if there is an error.
+        Pointer to the slave.
+    Nullified if there is an error. : 
     control : ControlStruct
-        Pointer to control info for this lord/slave relationship. Nullified if there is an error.
+        Pointer to control info for this lord/slave relationship.
+    Nullified if there is an error. : 
     ix_lord_back : int
-        Index back to the lord. That is, pointer_to_lord(slave_ptr, ix_lord_back) will point back to the lord. Set
-        to -1 if there is an error.
+        Index back to the lord. That is, pointer_to_lord(slave_ptr, ix_lord_back)
+    will point back to the lord. Set to -1 if there is an error. : 
     ix_control : int
         Index in lat.control(:) array the control argument is at.
     ix_ic : int
@@ -27952,13 +28253,11 @@ def pointer_to_super_lord(slave: EleStruct, lord_type: typing.SupportsInt | None
     slave : EleStruct
         Slave element.
     control : ControlStruct
-        Pointer to control info for this lord/slave relationship. Nullified if there is an error.
+        Pointer to control info for this lord/slave relationship.
     ix_slave_back : int
-        Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back) will point back to slave. Set
-        to -1 if there is an error or the slave is a slice_slave.
+        Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back)
     ix_control : int
-        Index in lat.control(:) array the control argument is at. For ramper lord elements, ix_control is index
-        for the lord.control.ramper(:) array.
+        Index in lat.control(:) array the control argument is at.
     ix_ic : int
         Index of the lat.ic(:) element associated with the control argument.
     lord_type : int, optional
@@ -27966,7 +28265,7 @@ def pointer_to_super_lord(slave: EleStruct, lord_type: typing.SupportsInt | None
     lord_ptr : EleStruct
         Pointer to the lord.
     """
-def pointer_to_surface_displacement_pt(ele: EleStruct, nearest: bool, x: typing.SupportsFloat, y: typing.SupportsFloat, ix: typing.SupportsInt | None = None, iy: typing.SupportsInt | None = None, extend_grid: bool | None = None, xx: typing.SupportsFloat | None = None, yy: typing.SupportsFloat | None = None) -> SurfaceDisplacementPtStruct | None:
+def pointer_to_surface_displacement_pt(ele: EleStruct, nearest: bool, x: typing.SupportsFloat, y: typing.SupportsFloat, extend_grid: bool | None = None) -> PointerToSurfaceDisplacementPt:
     """
     Function pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
     
@@ -27979,20 +28278,33 @@ def pointer_to_surface_displacement_pt(ele: EleStruct, nearest: bool, x: typing.
     ele : EleStruct
         Element containing the grid
     nearest : bool
-        If True, return pointer to nearest grid point. If False, return pointer to the grid point lower and left
-        of (x,y). x, y        -- real(rp): Photon position.
+        If True, return pointer to nearest grid point.
+    If False : 
+    return pointer to the grid point lower and left of : 
+    x : float
+        Photon position.
+    y : float
+        Photon position.
     extend_grid : bool, optional
-        If (x,y) past grid pretend (x,y) is at grid boundary. Default is False. ix, iy      -- integer, optional:
-        Grid point index.
+        If (x,y) past grid pretend (x,y) is at grid boundary. Default is False.
     
     Returns
     -------
+    ix : int
+        Grid point index.
+    iy : int
+        Grid point index.
     pt : GridPointStruct
-        Pointer to grid point. Will not be associated if (x,y) outside the grid. xx, yy      -- real(rp),
-        optional: Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set
-        to be on the nearest grid boundary point.
+        Pointer to grid point.
+    Will not be associated if : 
+    xx : float
+        Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
+        the nearest grid boundary point.
+    yy : float
+        Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
+        the nearest grid boundary point.
     """
-def pointer_to_surface_segmented_pt(ele: EleStruct, nearest: bool, x: typing.SupportsFloat, y: typing.SupportsFloat, ix: typing.SupportsInt | None = None, iy: typing.SupportsInt | None = None, extend_grid: bool | None = None, xx: typing.SupportsFloat | None = None, yy: typing.SupportsFloat | None = None) -> SurfaceSegmentedPtStruct | None:
+def pointer_to_surface_segmented_pt(ele: EleStruct, nearest: bool, x: typing.SupportsFloat, y: typing.SupportsFloat, extend_grid: bool | None = None) -> PointerToSurfaceSegmentedPt:
     """
     Function pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
     
@@ -28005,18 +28317,31 @@ def pointer_to_surface_segmented_pt(ele: EleStruct, nearest: bool, x: typing.Sup
     ele : EleStruct
         Element containing the grid
     nearest : bool
-        If True, return pointer to nearest grid point. If False, return pointer to the grid point lower and left
-        of (x,y). x, y        -- real(rp): Photon position.
+        If True, return pointer to nearest grid point.
+    If False : 
+    return pointer to the grid point lower and left of : 
+    x : float
+        Photon position.
+    y : float
+        Photon position.
     extend_grid : bool, optional
-        If (x,y) past grid pretend (x,y) is at grid boundary. Default is False. ix, iy      -- integer, optional:
-        Grid point index.
+        If (x,y) past grid pretend (x,y) is at grid boundary. Default is False.
     
     Returns
     -------
+    ix : int
+        Grid point index.
+    iy : int
+        Grid point index.
     pt : GridPointStruct
-        Pointer to grid point. Will not be associated if (x,y) outside the grid. xx, yy      -- real(rp),
-        optional: Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set
-        to be on the nearest grid boundary point.
+        Pointer to grid point.
+    Will not be associated if : 
+    xx : float
+        Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
+        the nearest grid boundary point.
+    yy : float
+        Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
+        the nearest grid boundary point.
     """
 def pointer_to_wake_ele(ele: EleStruct) -> PointerToWakeEle:
     """
@@ -28027,7 +28352,7 @@ def pointer_to_wake_ele(ele: EleStruct) -> PointerToWakeEle:
     delta_s : float
         distance of wake locaiton from beginning of ele.
     wake_ele : EleStruct
-        Element having the associated wake. wake_ele will be nullified if there is no associated wake.
+        Element having the associated wake.
     """
 def pointer_to_wall3d(ele: EleStruct, ix_wall: typing.SupportsInt | None = None) -> PointerToWall3d:
     """
@@ -28048,7 +28373,8 @@ def pointer_to_wall3d(ele: EleStruct, ix_wall: typing.SupportsInt | None = None)
     Returns
     -------
     wall3d : Wall3DStruct
-        Pointer to the associated wall structure. Will be nullified if there is no associated wall.
+        Pointer to the associated wall structure.
+    Will be nullified if there is no associated wall. : 
     ds_offset : float
         Element offset: s(beginning of ele) - s(beginning of wall3d)
     is_branch_wall : bool
@@ -28125,10 +28451,17 @@ def project_emit_to_xyz(ring: LatStruct, ix: typing.SupportsInt, mode: NormalMod
     ix : int
         element at which to make the projection
     mode : NormalModesStruct
-        normal mode emittances .a.emittance -- real(rp): a-mode emittance .b.emittance -- real(rp): b-mode
-        emittance .z.emittance -- real(rp): z-mode emittance .a.tune      -- real(rp): a-mode tune.  Used to
-        associate emittances with the proper mode. .b.tune      -- real(rp): b-mode tune.  Used to associate
-        emittances with the proper mode.
+        normal mode emittances
+    %a%emittance : float
+        a-mode emittance
+    %b%emittance : float
+        b-mode emittance
+    %z%emittance : float
+        z-mode emittance
+    %a%tune : float
+        a-mode tune.  Used to associate emittances with the proper mode.
+    %b%tune : float
+        b-mode tune.  Used to associate emittances with the proper mode.
     
     Returns
     -------
@@ -28186,20 +28519,23 @@ def ptc_calculate_tracking_step_size(ptc_layout: Layout, kl_max: typing.Supports
     kl_max : float
         Maximum K1*L per tracking step.
     ds_max : float
-        Maximum ds for any step. Useful when including other physicas like space charge.
+        Maximum ds for any step.
+    Useful when including other physicas like space charge. : 
     even_steps : bool, optional
-        Always use an even number of steps for a fibre? Useful if need to evaluate at the center of fibres.
+        Always use an even number of steps for a fibre?
+    Useful if need to evaluate at the center of fibres. : 
     r_typical : float, optional
-        Typical transverse offset. Used for computing the effective contribution of K1*L due to sextupoles.
+        Typical transverse offset. Used for computing the
+    effective contribution of K1*L due to sextupoles. : 
     dx_tol_bend : float
         Tolerable residual orbit in a bend.
     use_2nd_order : bool, optional
-        If present and True then force the use of 2nd order integrator.
+        If present and True then force the use of 2nd order
+    integrator. : 
     crossover : int, optional
         crossover points between orders for all elements except wigglers. Default is [4, 18].
-    crossover_wiggler(2) : int, optional
-        crossover points for wigglers. Default is [30, 60]. -- integer, optional: crossover points for wigglers.
-        Default is [30, 60].
+    crossover_wiggler : unknown, optional
+        crossover points for wigglers. Default is [30, 60].
     """
 def ptc_check_for_lost_particle(do_reset: bool) -> PtcCheckForLostParticle:
     """
@@ -28231,9 +28567,9 @@ def ptc_closed_orbit_calc(branch: BranchStruct, closed_orbit: CoordStructAlloc1D
     ----------
     branch : BranchStruct
         Branch of a lattice.
-    radiation_damping_on : bool, optional
-        If True, radiation dampling is included in the calculation. -- logical, optional: If True, radiation
-        dampling is included in the calculation. Default is the setting of bmad_com..radiation_damping_on.
+    radiation_damping_on : unknown, optional
+        If True, radiation dampling is included in the calculation. Default is the setting of
+        bmad_com..radiation_damping_on.
     
     Returns
     -------
@@ -28256,7 +28592,9 @@ def ptc_emit_calc(ele: EleStruct, sigma_mat: typing.Annotated[collections.abc.Se
     Returns
     -------
     norm_mode : 
-        Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc. %a%emittance, etc.
+        Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc.
+    %a%emittance : 
+    etc. : 
     sigma_map : float
         Sigma matrix (Bmad coordinates).
     closed_orb : CoordStruct
@@ -28274,33 +28612,35 @@ def ptc_layouts_resplit(dKL_max: typing.SupportsFloat, l_max: typing.SupportsFlo
     Parameters
     ----------
     dKL_max : float
-        Maximum K1 * L quadrupole strength allowed for an integration step. Reasonable value would be something
-        like 0.04.
+        Maximum K1 * L quadrupole strength allowed for an integration step.
+    Reasonable value would be something like 0.04. : 
     l_max : float
         Maximum step length. Ignored if set to 0.
-    l_max_drift_only : bool
-        If True then l_max is only used for splitting drifts. -- logical: If True then l_max is only used for
-        splitting drifts.
+    l_max_drift_only : unknown
+        If True then l_max is only used for splitting drifts.
     bend_dorb : float
         Residual bend orbit error. With some integration methods a zero orbit at the start of the bend will not be
         zero at the end. In this case, bend_dorb sets a maximum allowable orbit deviation. If set to zero, this
         argument will be ignored. A resonable value is 10d-7. Note that the actual orbit deviation is not simply
         related to bend_dorb and can be larger. In any case, lowering bend_dorb (without making it zero) will
         lower the
+    orbit deviation. : 
     sex_dx : float
         To split sextupoles, sex_dx is used as the reference position about which the quadrupole strength is
         calculated. This quadrupole strength is then used with dKL_max to calculate the number of integration
-        steps. Set to zero to ignore.
+        steps.
+    Set to zero to ignore. : 
     even : bool, optional
         If True then each fibre  will have an even number of steps. If False then the number of steps will be odd.
-        If not present then number of steps is not constrained to be even or odd.
+        If not present then number
+    of steps is not constrained to be even or odd. : 
     crossover : int, optional
         crossover(1) sets the maximum number of 2nd order integration steps to use. If the number of steps would
         exceed crossover(1) then integration is switched to 4th order. crossover(2) sets the maximum number of 4th
         order integration steps. If this number is exceeded, 6th order integration is used. Currently the default
         in PTC is [4, 18].
-    crossover_wiggler(2) : int, optional
-        crossover for wiggler elements. -- integer, optional: crossover for wiggler elements.
+    crossover_wiggler : unknown, optional
+        crossover for wiggler elements.
     """
 def ptc_one_turn_mat_and_closed_orbit_calc(branch: BranchStruct, pz: typing.SupportsFloat | None = None) -> None:
     """
@@ -28319,6 +28659,12 @@ def ptc_one_turn_mat_and_closed_orbit_calc(branch: BranchStruct, pz: typing.Supp
         matrices.
     pz : float, optional
         energy offset around which to calculate the matrices if there is no RF.
+    
+    Returns
+    -------
+    %ele : unknown
+        Closed orbit at entrance.
+        This parameter is an input/output and is modified in-place. As an output: Closed orbit at exit.
     """
 def ptc_ran_seed_put(iseed: typing.SupportsInt) -> None:
     """
@@ -28355,7 +28701,9 @@ def ptc_spin_calc(ele: EleStruct, sigma_mat: typing.Annotated[collections.abc.Se
     Returns
     -------
     norm_mode : 
-        Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc. %a%emittance, etc.
+        Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc.
+    %a%emittance : 
+    etc. : 
     sigma_map : float
         Sigma matrix (Bmad coordinates).
     closed_orb : CoordStruct
@@ -28378,7 +28726,8 @@ def ptc_track_all(branch: BranchStruct, orbit: CoordStructAlloc1D) -> PtcTrackAl
     Returns
     -------
     track_state : int
-        Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
+        Set to moving_forward$ if everything is OK.
+    Otherwise: set to index of element where particle was lost. : 
     err_flag : bool
         Set true if particle lost or error. False otherwise
     """
@@ -28399,12 +28748,11 @@ def ptc_transfer_map_with_spin(branch: BranchStruct, t_map: TaylorStructArray1D,
     err_flag : bool
         Set True if problem like number overflow, etc.
     ix1 : int, optional
-        Element start index for the calculation. Default is 0.
+        Element start index for the calculation.
     ix2 : int, optional
-        Element end index for the calculation. Default is branch.n_ele_track.
+        Element end index for the calculation.
     one_turn : bool, optional
-        If present and True, and if ix1 = ix2, and the lattice is circular, then construct the one-turn map from
-        ix1 back to ix1. Default = False.
+        If present and True, and if ix1 = ix2, and the lattice is circular, then construct the one-turn
     unit_start : bool, optional
         If present and False then t_map will be used as the starting map instead of the unit map. Default = True
     """
@@ -28420,8 +28768,12 @@ def pwd_mat(lat: LatStruct, t6: typing.Annotated[collections.abc.Sequence[typing
     
     Parameters
     ----------
-    lat : LatStruct
-        Bunch current in # per bunch .ele(0).value(E_TOT$) -- real(rp): Beam energy
+    lat : 
+        TYPE(lat_struct)
+    %param%n_part : float
+        Bunch current in # per bunch
+    %ele : float
+        Beam energy
     t6 : float
         1-turn transfer matrix
     inductance : float
@@ -28514,7 +28866,13 @@ def quat_mul(q1: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(
     ----------
     q1 : float
         Quaternions.
+    q2 : float
+        Quaternions.
     q3 : float, optional
+        More quaternions.
+    ... : float, optional
+        More quaternions.
+    q9 : float, optional
         More quaternions.
     
     Returns
@@ -28537,7 +28895,13 @@ def quat_mul(q1: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat]
     ----------
     q1 : float
         Quaternions.
+    q2 : float
+        Quaternions.
     q3 : float, optional
+        More quaternions.
+    ... : float, optional
+        More quaternions.
+    q9 : float, optional
         More quaternions.
     
     Returns
@@ -28668,8 +29032,8 @@ def rad1_damp_and_stoc_mats(ele: EleStruct, include_opening_angle: bool, orb_in:
     ele : EleStruct
         Element under consideration.
     include_opening_angle : bool
-        If True include the effect of the vertical opening angle of emitted radiation. Generally use True unless
-        comparing against other codes.
+        If True include the effect of the vertical opening angle of emitted radiation.
+    Generally use True unless comparing against other codes. : 
     orb_in : CoordStruct
         Entrance orbit about which to compute the matrices.
     orb_out : CoordStruct
@@ -28684,7 +29048,9 @@ def rad1_damp_and_stoc_mats(ele: EleStruct, include_opening_angle: bool, orb_in:
     Returns
     -------
     rad_map : RadMapStruct
-        Damping and stochastic matrices. .stoc_mat             -- Variance matrix.
+        Damping and stochastic matrices.
+    %stoc_mat : 
+        Variance matrix.
     err_flag : bool
         Set true if there is an error. False otherwise.
     rad_int1 : RadInt1Struct
@@ -28710,18 +29076,22 @@ def rad_damp_and_stoc_mats(ele1: EleStruct, ele2: EleStruct, include_opening_ang
     ele2 : EleStruct
         End element of integration range.
     include_opening_angle : bool
-        If True include the effect of the vertical opening angle of emitted radiation. Generally use True unless
-        comparing against other codes.
+        If True include the effect of the vertical opening angle of emitted radiation.
+    Generally use True unless comparing against other codes. : 
     closed_orbit : CoordStruct, optional
         Closed orbit. If not present this routine will calculate it.
     
     Returns
     -------
     rmap : RadMapStruct
-        Damping and stochastic mats .stoc_mat               --  stochastic variance matrix.
+        Damping and stochastic mats
+    %stoc_mat : 
+        stochastic variance matrix.
     mode : NormalModesStruct
-        .dpz_damp                 -- Change in pz without RF. .pz_average               -- Average pz due to
-        damping.
+    %dpz_damp : 
+        Change in pz without RF.
+    %pz_average : 
+        Average pz due to damping.
     xfer_nodamp_mat : float
         Transfer matrix without damping.
     rad_int_branch : RadIntBranchStruct
@@ -28729,7 +29099,7 @@ def rad_damp_and_stoc_mats(ele1: EleStruct, ele2: EleStruct, include_opening_ang
     err_flag : bool
         Set true if there is a problem.
     """
-def rad_g_integrals(ele: EleStruct, where: typing.SupportsInt, orb_in: CoordStruct, orb_out: CoordStruct, int_g2: typing.SupportsFloat, int_g3: typing.SupportsFloat, g_tol: typing.SupportsFloat, g2_tol: typing.SupportsFloat, g3_tol: typing.SupportsFloat) -> typing.Annotated[list[float], "FixedSize(2)"]:
+def rad_g_integrals(ele: EleStruct, where: typing.SupportsInt, orb_in: CoordStruct, orb_out: CoordStruct, int_g2: typing.SupportsFloat, g_tol: typing.SupportsFloat, g2_tol: typing.SupportsFloat, g3_tol: typing.SupportsFloat) -> RadGIntegrals:
     """
     Subroutine rad_g_integrals (ele, where, orb_in, orb_out, int_g, int_g2, int_g3, g_tol, g2_tol, g3_tol)
     
@@ -28741,8 +29111,10 @@ def rad_g_integrals(ele: EleStruct, where: typing.SupportsInt, orb_in: CoordStru
     ele : EleStruct
         Element under consideration.
     where : int
-        What part of ele to integrate over. upstream$ -> 1st half of element, downsteam$ -> 2nd half, all$ ->
-        everything.
+        What part of ele to integrate over.
+    upstream$ -> 1st half of element : 
+    downsteam$ -> 2nd half : 
+    all$ -> everything. : 
     orb_in : CoordStruct
         Entrance orbit about which to compute the matrices.
     orb_out : CoordStruct
@@ -28757,40 +29129,30 @@ def rad_g_integrals(ele: EleStruct, where: typing.SupportsInt, orb_in: CoordStru
     Returns
     -------
     int_g : float
-        Integrals of (gx,gy) vector. gint_g2, int_g3       -- real(rp): integrals of |g|^2 and |g|^3.
+        Integrals of (gx,gy) vector.
+    gint_g2 : float
+        integrals of |g|^2 and |g|^3.
+    int_g3 : float
+        integrals of |g|^2 and |g|^3.
     """
 def radiation_integrals(lat: LatStruct, orbit: CoordStructArray1D, ix_cache: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None) -> RadiationIntegrals:
     """
     Parameters
     ----------
     lat : LatStruct
-        Lattice to use. The calculation assumes that the Twiss parameters have been calculated.
+        Lattice to use. The calculation assumes that
     orbit : CoordStruct
         Closed orbit for the branch.
     mode : NormalModesStruct
-        Parameters for the ("horizontal like") a-mode, ("vertical like") b-mode, and the z-mode .synch_int(0:3) --
-        Synchrotron integrals. See Bmad manual .sigE_E         -- Sigma_E/E energy spread .sig_z          -- Bunch
-        Length .e_loss         -- Energy loss in eV per turn .a, .b, .z      -- Anormal_mode_struct: Substructure
-        .emittance      -- Emittance. B-mode emit includes photon opening angle (I6) contribution. .synch_int(4:6)
-        -- Synchrotron integrals .j_damp         -- Damping partition factor .alpha_damp     -- Exponential
-        damping coefficient per turn .lin            -- Linac version of the integrals. .i2_E4           --
-        Integral: g^2 * gamma^4 .i3_E7           -- Integral: g^3 * gamma^7 .i5a_E6          -- Integral: (g^3 *
-        H_a) * gamma^6 .i5b_E6          -- Integral: (g^3 * H_b) * gamma^6 .sig_E1          -- Energy spread after
-        1 pass (eV) .a_emittance_end -- a-mode emittance at end of linac .b_emittance_end -- b-mode emittance at
-        end of linac
+        Parameters for the ("horizontal like") a-mode,
     ix_cache : int, optional
-        Cache pointer. = -2 --> No temporary wiggler cache. This is slow so only use as a check. = -1 --> Use
-        temporary cache for wiggler elements only (default). =  0 --> Create a new cache for all elements. >  0
-        --> Use the corresponding cache.
+        Cache pointer.
         This parameter is an input/output and is modified in-place. As an output: Cache pointer. If ix_cache = 0
         at input then
     ix_branch : int, optional
         Lattice branch index. Default is 0.
     rad_int_by_ele : RadIntAllEleStruct
-        Radiation integrals element by element. .branch(ix_branch).ele(0:) -- Array of rad_int1_struct structures,
-        one for each element in the branch. Notes: 1) .synch_int(1) = momentum_compaction * lat_length 2) The
-        lin_norm_emit values are running sums from the beginning of the lattice and include the beginning
-        emittance stored in lat.a.emit and lat.b.emit.
+        Radiation integrals element by element.
     """
 def radiation_map_setup(ele: EleStruct, ref_orbit_in: CoordStruct | None = None) -> bool:
     """
@@ -28865,7 +29227,8 @@ def ran_engine(set: str | None = None, get: str | None = None, ran_state: Random
     ----------
     set : unknown, optional
         Set the random number engine. Possibilities are: 'pseudo' -> Uses ran from Numerical Recipies (F90).
-        'quasi'  -> Uses sobseq from Numerical Recipes. ''       -> Do nothing.
+        'quasi'  -> Uses sobseq from Numerical Recipes.
+    ''       -> Do nothing. : 
     get : unknown, optional
         Get the current (before any set) random number engine.
     ran_state : RandomStateStruct, optional
@@ -28895,8 +29258,8 @@ def ran_gauss_converter(set: str | None = None, set_sigma_cut: typing.SupportsFl
     Parameters
     ----------
     set : unknown, optional
-        Set the random number engine. Possibilities are: 'exact' 'quick'  ! Old deprecated: 'limited' ''       !
-        Do nothing
+        Set the random number engine. Possibilities are: 'exact' 'quick'  ! Old deprecated: 'limited'
+    ''       ! Do nothing : 
     set_sigma_cut : float, optional
         Sigma cutoff. Initially: sigma_cut = -1.
     ran_state : RandomStateStruct, optional
@@ -28927,15 +29290,17 @@ def ran_gauss_scalar(ran_state: RandomStateStruct | None = None, sigma_cut: typi
     Parameters
     ----------
     ran_state : RandomStateStruct, optional
-        Internal state. See the ran_seed_put documentation for more details.
+        Internal state.
+    See the ran_seed_put documentation for more details. : 
     sigma_cut : float, optional
         If present and positive will override setting of ran_state.gauss_sigma_cut.
     
     Returns
     -------
     harvest : float
-        Random number. Or
+        Random number.
         This parameter is an input/output and is modified in-place. As an output: Random number array.
+    Or : 
     
     Notes
     -----
@@ -28959,15 +29324,17 @@ def ran_gauss_vector(harvest: RealArray1D, ran_state: RandomStateStruct | None =
     Parameters
     ----------
     ran_state : RandomStateStruct, optional
-        Internal state. See the ran_seed_put documentation for more details.
+        Internal state.
+    See the ran_seed_put documentation for more details. : 
     sigma_cut : float, optional
         If present and positive will override setting of ran_state.gauss_sigma_cut.
     
     Returns
     -------
     harvest : float
-        Random number. Or
+        Random number.
         This parameter is an input/output and is modified in-place. As an output: Random number array.
+    Or : 
     
     Notes
     -----
@@ -29005,7 +29372,8 @@ def ran_seed_put(seed: typing.SupportsInt, mpi_offset: typing.SupportsInt | None
     Parameters
     ----------
     seed : int
-        Seed number. If seed = 0 then a seed will be choosen based upon the system clock.
+        Seed number. If seed = 0 then a
+    seed will be choosen based upon the system clock. : 
     mpi_offset : int, optional
         Offset added to seed. Default is zero. Used with MPI processes ensure different threads use different
         random numbers.
@@ -29035,8 +29403,9 @@ def ran_uniform(ran_state: RandomStateStruct | None = None, index_quasi: typing.
     Returns
     -------
     harvest : float
-        Random number. Or
+        Random number.
         This parameter is an input/output and is modified in-place. As an output: Random number array.
+    Or : 
     
     Notes
     -----
@@ -29067,8 +29436,9 @@ def ran_uniform(harvest: RealArray1D, ran_state: RandomStateStruct | None = None
     Returns
     -------
     harvest : float
-        Random number. Or
+        Random number.
         This parameter is an input/output and is modified in-place. As an output: Random number array.
+    Or : 
     
     Notes
     -----
@@ -29085,12 +29455,16 @@ def randomize_lr_wake_frequencies(ele: EleStruct) -> bool:
     Parameters
     ----------
     ele : EleStruct
-        Element with wake. If no wake then nothing is done. .value(freq_in$)        -- Frequency.
+        Element with wake. If no wake then nothing is done.
         This parameter is an input/output and is modified in-place. As an output: Element with wake frequencies
         set.
+    %value : 
+        Frequency.
     
     Returns
     -------
+    %wake%lr%mode : 
+        Set frequency.
     set_done : bool
         Set True if there where lr wakes to be set. False otherwise.
     """
@@ -29248,7 +29622,8 @@ def read_binary_cartesian_map(file_name: str, ele: EleStruct, cart_map: Cartesia
     file_name : unknown
         File to create.
     ele : EleStruct
-        Element associated with the map. Ouput:
+        Element associated with the map.
+    Ouput: : 
     cart_map : 
         cartesian_map_struct, cartesian map.
     err_flag : bool
@@ -29265,7 +29640,8 @@ def read_binary_cylindrical_map(file_name: str, ele: EleStruct, cl_map: Cylindri
     file_name : unknown
         File to create.
     ele : EleStruct
-        Element associated with the map. Ouput:
+        Element associated with the map.
+    Ouput: : 
     cl_map : 
         cylindrical_map_struct, cylindrical map.
     err_flag : bool
@@ -29282,7 +29658,8 @@ def read_binary_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldStr
     file_name : unknown
         File to create.
     ele : EleStruct
-        Element associated with the map. Ouput:
+        Element associated with the map.
+    Ouput: : 
     g_field : 
         grid_field_struct, cylindrical map.
     err_flag : bool
@@ -29351,7 +29728,7 @@ def reallocate_beam(beam: BeamStruct, n_bunch: typing.SupportsInt, n_particle: t
         Number of bunches.
     n_particle : int, optional
         Number of particles. Must be non-negative. If save = True then the number of particles in existing bunches
-        will not be touched. If not present, beam.bunch(i).particle(:) will be in an undefined state.
+        will not be touched.
     extend : 
     """
 def reallocate_bp_com_const() -> None:
@@ -29526,8 +29903,10 @@ def relative_mode_flip(ele1: EleStruct, ele2: EleStruct, func_retval__: bool) ->
     """
     Parameters
     ----------
-    ele1 : 
-    ele2 : 
+    ele1 : EleStruct
+        Elements to compare.
+    ele2 : EleStruct
+        Elements to compare.
     relative_mode_flip : 
     """
 def release_rad_int_cache(ix_cache: typing.SupportsInt) -> None:
@@ -29674,7 +30053,7 @@ def rf_ref_time_offset(ele: EleStruct, ds: typing.SupportsFloat | None = None, t
     ele : EleStruct
         RF Element being tracked through.
     ds : float, optional
-        Distance of particle from start edge. Default is zero. Ouput:
+        Distance of particle from start edge. Default is zero.
     time : float
         Offset time.
     """
@@ -29791,8 +30170,7 @@ def rotate_for_curved_surface(ele: EleStruct, orbit: CoordStruct, set: bool, rot
     orbit : CoordStruct
         Photon position.
     set : bool
-        True -> Transform body coords to local curved body coords. False -> Transform local curved body to body
-        coords.
+        True -> Transform body coords to local curved body coords.
     rot_mat : float
         When set = False, rotation matrix calculated from previous call with set = True.
         This parameter is an input/output and is modified in-place. As an output: When set = True, calculated
@@ -29974,7 +30352,9 @@ def sad_soft_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: 
     make_matrix : float, optional
         Propagate the transfer matrix? Default is False.
     k0l : float, optional
-        Used with sad_mult. If present, use this instead of ele.a_pole/.b_pole.
+        Used with sad_mult.
+    If present : 
+    use this instead of ele%a_pole/%b_pole. : 
     t0 : float, optional
         Used with sad_mult. If present, use this instead of ele.a_pole/.b_pole. Must be present if k0l is.
     """
@@ -29992,7 +30372,7 @@ def save_a_beam_step(ele: EleStruct, beam: BeamStruct, bunch_tracks: BunchTrackS
         Body s-position from beginning of element.
     is_time_coords : bool, optional
         Default is False. If True, input beam is using time coordinates in which case there will be a conversion
-        to s-coords before bunch_params are computed. Ouput:
+        to s-coords before bunch_params are computed.
     """
 def save_a_bunch_step(ele: EleStruct, bunch: BunchStruct, bunch_track: BunchTrackStruct | None = None, s_body: typing.SupportsFloat | None = None, is_time_coords: bool | None = None) -> None:
     """
@@ -30008,7 +30388,7 @@ def save_a_bunch_step(ele: EleStruct, bunch: BunchStruct, bunch_track: BunchTrac
         Body s-position from beginning of element.
     is_time_coords : bool, optional
         Default is False. If True, input bunch is using time coordinates in which case there will be a conversion
-        to s-coords before bunch_params are computed. Ouput:
+        to s-coords before bunch_params are computed.
     """
 def save_a_step(track: TrackStruct, ele: EleStruct, param: LatParamStruct, local_ref_frame: bool, orb: CoordStruct, s_rel: typing.SupportsFloat, save_field: bool | None = None, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None, rf_time: typing.SupportsFloat | None = None, strong_beam: StrongBeamStruct | None = None) -> None:
     """
@@ -30025,8 +30405,7 @@ def save_a_step(track: TrackStruct, ele: EleStruct, param: LatParamStruct, local
     orb : CoordStruct
         trajectory at s with respect to element coordinates.
     s_rel : float
-        Longitudinal position wrt the element. If local_ref_frame = F: Lab coords. If local_ref_frame = T: body
-        coords.
+        Longitudinal position wrt the element. If local_ref_frame = F: Lab coords.
     save_field : bool, optional
         Save electric and magnetic field values? Default is False.
     mat6 : float, optional
@@ -30035,9 +30414,9 @@ def save_a_step(track: TrackStruct, ele: EleStruct, param: LatParamStruct, local
         Is mat6 a valid matrix? Default is False.
     rf_time : float, optional
         RF clock time used for calculating the field.. If not present then the time will be calculated using the
-        standard algorithm. This is only needed if save_field = True.
+        standard algorithm.
     strong_beam : StrongBeambeamStruct, optional
-        Strong beam info if tracking through a beambeam element. Ouput:
+        Strong beam info if tracking through a beambeam element.
     """
 def sbend_body_with_k1_map(ele: EleStruct, dg: typing.SupportsFloat, b1: typing.SupportsFloat, param: LatParamStruct, n_step: typing.SupportsInt, orbit: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
@@ -30052,7 +30431,7 @@ def sbend_body_with_k1_map(ele: EleStruct, dg: typing.SupportsFloat, b1: typing.
     param : LatParamStruct
         Branch parameters.
     n_step : int
-        Number of steps to divide the bend into. Only one step is taken by this routine.
+        Number of steps to divide the bend into.
     orbit : CoordStruct
         Orbit at beginning of the bend.
         This parameter is an input/output and is modified in-place. As an output: Ending coordinates.
@@ -30157,7 +30536,8 @@ def set_custom_attribute_name(custom_name: str, custom_index: typing.SupportsInt
     ----------
     custom_name : unknown
         Name of the custom attribute. If prefixed by "<class>::" then the custom name will be set only for that
-        element class. Example: "quadrupole::error" will set the alias custom namefor quadrupoles.
+        element class. Example:
+    "quadrupole::error" will set the alias custom namefor quadrupoles. : 
     custom_index : int, optional
         Index used in assigning where in the ele_struct the custom attribute is put. If not present or 0 then the
         next unused slot is used.
@@ -30179,7 +30559,7 @@ def set_ele_attribute(ele: EleStruct, set_string: str, err_print_flag: bool | No
     err_flag : bool
         Set True if there is an error, False otherwise.
     err_print_flag : bool, optional
-        If present and False then suppress printing of an error message if attribute is, for example, not free.
+        If present and False then suppress printing
     set_lords : bool, optional
         Default False. If True, set the super_lord(s) if the element is a super_slave.
     err_id : int
@@ -30191,7 +30571,7 @@ def set_ele_defaults(ele: EleStruct, do_allocate: bool | None = None) -> None:
     Parameters
     ----------
     ele : EleStruct
-        Element to init. .key          -- Type of element.
+        Element to init.
         This parameter is an input/output and is modified in-place. As an output: Initialized element.
     do_allocate : bool, optional
         Do default allocation of element components? Default is True.
@@ -30227,10 +30607,10 @@ def set_ele_status_stale() -> SetEleStatusStale:
     Parameters
     ----------
     ele : EleStruct
-        Element. .bookkeeping_state   -- Status block to set.
+        Element.
     status_group : int
         Which flag groups to set. Possibilities are: attribute_group$, control_group$, floor_position_group$,
-        s_position_group$, s_and_floor_position_group$, ref_energy_group$, or mat6_group$, all_groups$
+        s_position_group$,
     set_slaves : bool
         If present and False then do not set the status for any slaves. Default is True.
     """
@@ -30270,12 +30650,14 @@ def set_flags_for_changed_attribute(ele: EleStruct, attrib: typing.SupportsInt, 
     ele : 
         ele_struct, Element being modified.
     real_attrib : float, optional
-        Attribute that has been changed. For example: ele.value(hkick$). If not present then assume everything has
-        potentially changed.
+        Attribute that has been changed. For example: ele.value(hkick$).
+    If not present then assume everything has potentially changed. : 
     int_attrib : int
-        Attribute that has been changed. For example: ele.mat6_calc_method.
-    logic_attrib : unknown
-        ele.is_on.
+        Attribute that has been changed.
+    For example: ele%mat6_calc_method. : 
+    logic_attrib : 
+        logical; Attribute that has been changed.
+    For example: ele%is_on. : 
     all_attrib : AllPointerStruct
         Pointer to attribute.
     set_dependent : bool, optional
@@ -30323,12 +30705,14 @@ def set_flags_for_changed_attribute(lat: LatStruct, set_dependent: bool | None =
     ele : 
         ele_struct, Element being modified.
     real_attrib : float, optional
-        Attribute that has been changed. For example: ele.value(hkick$). If not present then assume everything has
-        potentially changed.
+        Attribute that has been changed. For example: ele.value(hkick$).
+    If not present then assume everything has potentially changed. : 
     int_attrib : int
-        Attribute that has been changed. For example: ele.mat6_calc_method.
-    logic_attrib : unknown
-        ele.is_on.
+        Attribute that has been changed.
+    For example: ele%mat6_calc_method. : 
+    logic_attrib : 
+        logical; Attribute that has been changed.
+    For example: ele%is_on. : 
     all_attrib : AllPointerStruct
         Pointer to attribute.
     set_dependent : bool, optional
@@ -30376,12 +30760,14 @@ def set_flags_for_changed_attribute(ele: EleStruct, attrib: bool, set_dependent:
     ele : 
         ele_struct, Element being modified.
     real_attrib : float, optional
-        Attribute that has been changed. For example: ele.value(hkick$). If not present then assume everything has
-        potentially changed.
+        Attribute that has been changed. For example: ele.value(hkick$).
+    If not present then assume everything has potentially changed. : 
     int_attrib : int
-        Attribute that has been changed. For example: ele.mat6_calc_method.
-    logic_attrib : unknown
-        ele.is_on.
+        Attribute that has been changed.
+    For example: ele%mat6_calc_method. : 
+    logic_attrib : 
+        logical; Attribute that has been changed.
+    For example: ele%is_on. : 
     all_attrib : AllPointerStruct
         Pointer to attribute.
     set_dependent : bool, optional
@@ -30429,12 +30815,14 @@ def set_flags_for_changed_attribute(ele: EleStruct, attrib: typing.SupportsFloat
     ele : 
         ele_struct, Element being modified.
     real_attrib : float, optional
-        Attribute that has been changed. For example: ele.value(hkick$). If not present then assume everything has
-        potentially changed.
+        Attribute that has been changed. For example: ele.value(hkick$).
+    If not present then assume everything has potentially changed. : 
     int_attrib : int
-        Attribute that has been changed. For example: ele.mat6_calc_method.
-    logic_attrib : unknown
-        ele.is_on.
+        Attribute that has been changed.
+    For example: ele%mat6_calc_method. : 
+    logic_attrib : 
+        logical; Attribute that has been changed.
+    For example: ele%is_on. : 
     all_attrib : AllPointerStruct
         Pointer to attribute.
     set_dependent : bool, optional
@@ -30466,12 +30854,10 @@ def set_lords_status_stale(ele: EleStruct, stat_group: typing.SupportsInt, contr
         Element
     stat_group : int
         which status group to set. floor_position_group$, etc. See set_ele_status_stale for more details.
-    control_bookkeeping : bool, optional
-        Call control_bookkeeper for each lord if needed? -- logical, optional: Call control_bookkeeper for each
-        lord if needed? Default if False.
+    control_bookkeeping : unknown, optional
+        Call control_bookkeeper for each lord if needed?
     flag : int, optional
-        Do not use. For coordinating recursion. ele.lat    -- Lat_struct: Lattice with status flags of lords of
-        ele set.
+        Do not use. For coordinating recursion.
     """
 def set_on_off(key: typing.SupportsInt, lat: LatStruct, switch_: typing.SupportsInt, orb: CoordStructArray1D | None = None, use_ref_orb: bool | None = None, ix_branch: typing.SupportsInt | None = None, saved_values: RealAlloc1D | None = None, attribute: str | None = None, set_val: typing.SupportsInt | None = None) -> None:
     """
@@ -30486,21 +30872,18 @@ def set_on_off(key: typing.SupportsInt, lat: LatStruct, switch_: typing.Supports
         on$            => Turn elements on. If saved_values argument is present, use this. If not present (only
         for logical attributes), set to True. off$           => Turn elements off (but will not store the present
         state). off_and_save$  => Save on/off state and then turn elements off. save_state$    => Save present
-        on/off state. No turning on or off is done. restore_state$ => Restore saved on/off state from saved_values
-        argument.
+        on/off state. No turning on or off is done.
     orb : CoordStruct, optional
         Needed for lat_make_mat6
     use_ref_orb : bool, optional
-        If present and true then use ele.map_ref_orb for the reference orbit for calculating .mat6. Default is
-        false.
+        If present and true then use ele.map_ref_orb for the reference orbit for
     ix_branch : int, optional
-        If present then only set for this lattice branch.
+        If present then only set for
     saved_values : float, optional
-        Element-by element saved values of the component. Must be present if needed (EG if switch =
-        restore_state$, etc.).
+        Element-by element saved values of the component.
         This parameter is an input/output and is modified in-place. As an output: Saved values of the component.
     attribute : unknown, optional
-        Attribute to turn on/off. Eg: 'K2', 'MULTIPOLE_ON', etc. Default is 'IS_ON'. Must be upper case.
+        Attribute to turn on/off. Eg: 'K2', 'MULTIPOLE_ON', etc.
     set_val : int, optional
         Value to set to. Overrides normal set value.
     """
@@ -30551,16 +30934,15 @@ def set_ptc(e_tot: typing.SupportsFloat | None = None, particle: typing.Supports
     e_tot : float, optional
         Energy in eV.
     particle : int, optional
-        Type of particle: electron$, proton$, etc.
+        Type of particle:
     taylor_order : int, optional
-        Maximum order of the taylor polynomials. 0 => Use default.
+        Maximum order of the taylor polynomials.
     integ_order : int, optional
-        Default Order for the drift-kick-drift sympletic integrator. Possibilities are: 2, 4, or 6 Default = 2
+        Default Order for the drift-kick-drift sympletic integrator. Possibilities are: 2, 4, or 6
     n_step : int, optional
-        Default Number of integration steps. Default = 1
+        Default Number of integration steps.
     no_cavity : bool, optional
         No RF Cavity exists? Default = False. Corresponds to the nocavity option of the PTC init routine.
-        no_cavity = .true. will turn any cavity into a drift.
     force_init : bool, optional
         If present and True then force a PTC init.
     """
@@ -30569,8 +30951,7 @@ def set_ptc_base_state(component: str, set_val: bool) -> bool:
     Parameters
     ----------
     component : unknown
-        Name of component. "TOTALPATH", "SPIN", "NOCAVITY", "TIME", etc. See the PTC internal_state structure for
-        component names.
+        Name of component. "TOTALPATH", "SPIN", "NOCAVITY", "TIME", etc.
     set_val : bool
         Value to set to. For TOTALPATH, True => 1, False => 0.
     old_val : bool
@@ -30669,7 +31050,7 @@ def set_tune(phi_a_set: typing.SupportsFloat, phi_b_set: typing.SupportsFloat, d
     dk1 : float
         Relative amount to vary a quad in tuning. The variation will be proportional to dk1. Those quads with a
         positive dk1(i) will be varied as one group and the quads with negative dk1(i) will be varied as another
-        group. The routine choose_quads_for_set_tune can be used to calculate values for dk1.
+        group.
     eles : ElePointerStruct
         eles(i).ele points to quadrupole corresponding to dk1(i).
     branch : BranchStruct
@@ -30694,8 +31075,7 @@ def set_tune_3d(branch: BranchStruct, target_tunes: typing.Annotated[collections
         tunes for a, b, z modes (rad/2pi). Must include integer part.
     mask : 
     use_phase_trombone : bool, optional
-        Default False. If true, use a match element in phase trombone mode to adjust the tunes. The match element
-        must be the first element in the lattice. Use insert_phase_trombone to insert one.
+        Default False. If true, use a match element in phase trombone mode to adjust the tunes.
     z_tune_set : bool, optional
         Default True. If false, do not try to set the synch tune.
     group_knobs : unknown, optional
@@ -30861,8 +31241,7 @@ def slice_lattice(lat: LatStruct, ele_list: str, do_bookkeeping: bool | None = N
         This parameter is an input/output and is modified in-place. As an output: Lattice with unwanted elements
         sliced out.
     ele_list : unknown
-        List of elements to retain. See the documentation for the lat_ele_locator routine for the syntax of the
-        list.
+        List of elements to retain. See the documentation for
     error : bool
         Set True if there is an error Set False if not.
     do_bookkeeping : bool, optional
@@ -31008,7 +31387,9 @@ def species_id(name: str, default_: typing.SupportsInt | None = None, print_err:
     name : unknown
         Name of the species.
     default : int, optional
-        Default species to use if name is blank or 'ref_species'. If not present, a blank name is an error.
+        Default species to use if name is blank or 'ref_species'.
+    If not present : 
+    a blank name is an error. : 
     print_err : bool, optional
         Print error message? Default is True. If False, return species = invalid$,
     
@@ -31094,11 +31475,9 @@ def spin_dn_dpz_from_qmap(orb_mat: typing.Annotated[collections.abc.Sequence[typ
     q_map : float
         1-turn spin linear quaternion map.
     dn_dpz_partial : float
-        ) is dn_dpz with only one osccilation mode "excited". So dn_dpz_partial(1,:) represents a-mode excitation,
-        etc.
+        ) is dn_dpz with only one osccilation
     dn_dpz_partial2 : float
         ) is dn_dpz with only two osccilation modes "excited". So dn_dpz_partial(1,:) represents b-mode and c-mode
-        excitation without the a-mode, etc.
     error : bool
         Set True if there is an error. False otherwise.
     n0 : float
@@ -31218,7 +31597,7 @@ def spinor_to_vec(spinor: typing.Annotated[collections.abc.Sequence[complex], "F
     Parameters
     ----------
     spinor : complex
-        Spinor Output
+        Spinor
     vec : float
         spin vector in cartesian coordinates
     """
@@ -31269,10 +31648,15 @@ def spline_akima(spline: SplineStructArray1D) -> bool:
     Parameters
     ----------
     spline : SplineStruct
-        .x0  -- X-component of a point. Note: points must be in assending order. .y0  -- Y-component of a point.
+    %x0 : unknown
+        points must be in assending order.
+    %y0 : 
+        Y-component of a point.
     
     Returns
     -------
+    %coef : 
+        Spline coefficients at a point.
     ok : bool
         Set .false. if something is wrong (like less than 2 points used).
     """
@@ -31294,7 +31678,8 @@ def spline_akima_interpolate(x_knot: RealArray1D, y_knot: RealArray1D, x: typing
     Parameters
     ----------
     x_knot : float
-        Array of x values for the knot points. Must have more than 2 points and be in asending order.
+        Array of x values for the knot points.
+    Must have more than 2 points and be in asending order. : 
     y_knot : float
         Array of y values for the knot points. Must be same size as x_knot(:).
     x : float
@@ -31368,12 +31753,12 @@ def split_lat(lat: LatStruct, s_split: typing.SupportsFloat, ix_branch: typing.S
     split_done : bool
         True if lat was split.
     add_suffix : bool, optional
-        If True (default) add '#1' and '#2" suffixes to the split elements.
+        If True (default) add '#1' and '#2" suffixes
     check_sanity : bool, optional
-        If True (default) then call lat_sanity_check after the split to make sure everything is ok.
+        If True (default) then call lat_sanity_check
     save_null_drift : bool, optional
         Save a copy of a drift to be split as a null_ele? This is useful when superpositions are done. See
-        add_superimpose for more info. Default is False.
+        add_superimpose for more info.
     err_flag : bool
         Set true if there is an error, false otherwise.
     choose_max : bool, optional
@@ -31382,7 +31767,7 @@ def split_lat(lat: LatStruct, s_split: typing.SupportsFloat, ix_branch: typing.S
         ix_split will be chosen to be the maximum possible index and if choose_max = False ix_split will be chosen
         to be the minimal possible index. If s_split is not at an element boundary, the setting of choose_max is
         immaterial. If ix_insert is present, the default value of choose_max is set to give the closest element to
-        ix_insert. If ix_insert is not present, the default value of choose_max is False.
+        ix_insert.
     ix_insert : int, optional
         Element index near the point to be split. ix_insert is useful in the case where there is a patch with a
         negative length which can create an ambiguity as to where to do the split In this case ix_insert will
@@ -31796,6 +32181,7 @@ def super_polint(xa: RealArray1D, ya: RealArray1D, x: typing.SupportsFloat) -> S
     Parameters
     ----------
     xa : float
+    ya : float
     x : float
     
     Returns
@@ -31860,9 +32246,14 @@ def surface_grid_displacement(ele: EleStruct, x: typing.SupportsFloat, y: typing
     Parameters
     ----------
     ele : EleStruct
-        Element containing the grid x, y          -- real(rp): Photon coords at surface.
+        Element containing the grid
+    x : float
+        Photon coords at surface.
+    y : float
+        Photon coords at surface.
     extend_grid : bool, optional
-        If (x,y) past grid pretend (x,y) is at grid boundary. Default is False. Output
+        If (x,y) past grid pretend (x,y) is at grid boundary. Default is False.
+    Output : 
     err_flag : bool
         Set True if there is a problem.
     z : float
@@ -31885,7 +32276,7 @@ def symp_lie_bmad(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct, mat
         element.
     track : TrackStruct
         Structure holding the track information. When tracking through multiple elements, the trajectory in an
-        element is appended to the existing trajectory. To reset: Set track.n_pt = -1.
+        element
     mat6 : float, optional
         Transfer matrix before the element.
         This parameter is an input/output and is modified in-place. As an output: Transfer matrix propagated
@@ -32085,8 +32476,9 @@ def tao_change_ele(ele_name: str, attrib_name: str, num_str: str, update: bool) 
     Returns
     -------
     err_flag : 
-        logical, Set true if there is an error, false otherwise. s%u(s%global%default_universe)%model -- model
-        lattice where the variable lives.
+        logical, Set true if there is an error, false otherwise.
+    s%u : 
+        model lattice where the variable lives.
     """
 def tao_change_tune(branch_str: str, mask_str: str, print_list: bool, dqa_str: str, dqb_str: str) -> bool:
     """
@@ -32121,15 +32513,17 @@ def tao_change_var(name: str, num_str: str, silent: bool) -> bool:
     name : unknown
         Name of variable or element.
     num_str : unknown
-        Change in value. A '@' signifies a absolute set. A 'd' signifies a set relative design.
+        Change in value. A '@' signifies a absolute set.
+    A 'd' signifies a set relative design. : 
     silent : bool
         If True then do not print any info.
     
     Returns
     -------
     err_flag : 
-        logical, Set true if there is an error, false otherwise. s%u(s%global%default_universe)%model -- model
-        lattice where the variable lives.
+        logical, Set true if there is an error, false otherwise.
+    s%u : 
+        model lattice where the variable lives.
     """
 def tao_change_z_tune(branch_str: str, dq_str: str) -> bool:
     """
@@ -32205,7 +32599,7 @@ def tao_control_tree_list(ele: EleStruct, tree: ElePointerStructAlloc1D) -> None
     Parameters
     ----------
     ele : EleStruct
-        Lattice element to start at. Ouput:
+        Lattice element to start at.
     tree : ElePointerStruct
         Array of elements.
     """
@@ -32410,7 +32804,8 @@ def tao_data_useit_plot_calc(curve: TaoCurveStruct, graph: TaoGraphStruct, data:
     Returns
     -------
     data : TaoDataStruct
-        .useit_plot         -- True if good for plotting.
+    %useit_plot : 
+        True if good for plotting.
     most_invalid : unknown
         String documenting biggest invalid data problem.
     """
@@ -32423,10 +32818,6 @@ def tao_datum_has_associated_ele(data_type: str, branch_geometry: typing.Support
     branch_geometry : int, optional
         Geometry of the associated lattice branch. open$ or closed$.
     has_associated_ele : int
-        no$          -- Must not have an associated lattice element. yes$         -- Must have an associated
-        lattice element. maybe$       -- Is possible to have an associated lattice element or not. provisional$ --
-        Does not have an associated lattice element for closed geometies. Only used if the branch_geometry
-        argument is not present.
     """
 def tao_datum_integrate(datum: TaoDataStruct, branch: BranchStruct, s_pos: RealArray1D, values: RealArray1D) -> TaoDatumIntegrate:
     """
@@ -32476,7 +32867,8 @@ def tao_datum_s_position(datum: TaoDataStruct, ele: EleStruct) -> float:
     datum : TaoDataStruct
         Datum under conideration.
     ele : EleStruct
-        Associated lattice element. Output
+        Associated lattice element.
+    Output : 
     s_pos : float
         Associated longitudinal position.
     
@@ -32527,12 +32919,13 @@ def tao_dmodel_dvar_calc(force_calc: bool) -> bool:
         This parameter is an input/output and is modified in-place. As an output: Super_universe_struct.
     force_calc : bool
         If true then force recalculation of the matrix. If False then only calculate matrix if it doesn't exist.
-    veto_vars_with_zero_dmodel : bool
-        Veto variables where -- Logical, optional (default False): Veto variables where all dModel_dvar for that
-        var are zero. Sets the var.good_var logical to False.
+    veto_vars_with_zero_dmodel : unknown
+        Veto variables where all dModel_dvar for that var are zero. Sets the var.good_var logical to False.
     
     Returns
     -------
+    %u : 
+        Derivative matrix
     err_flag : bool
         Set true if there is an error. False otherwise.
     """
@@ -32551,7 +32944,10 @@ def tao_do_wire_scan(ele: EleStruct, theta: typing.SupportsFloat, beam: BeamStru
     Parameters
     ----------
     ele : ElementStruct
-        .value(noise$) -- relative wire resolution RMS .value(tilt$)  -- wire angle error in radians rms.
+    %value : 
+        relative wire resolution RMS
+    %value : 
+        wire angle error in radians rms.
     theta : float
         wire angle wrt x axis (in degrees)
     beam : BeamStruct
@@ -32613,11 +33009,14 @@ def tao_draw_ele_for_floor_plan(plot: TaoPlotStruct, graph: TaoGraphStruct, tao_
     ele : EleStruct
         Element to draw.
     ele_shape : TaoEleShapeStruct
-        Shape to draw from s.plot_page.floor_plan.ele_shape(:) array. Will be NULL if no associated shape for this
-        element.
+        Shape to draw from s.plot_page.floor_plan.ele_shape(:) array.
+    Will be NULL if no associated shape for this element. : 
     label_name : unknown
-        Shape label. offset1, offset2  -- real(rp): Transverse distances used to scale the drawing of the element
-        shape.
+        Shape label.
+    offset1 : float
+        Transverse distances used to scale the drawing of the element shape.
+    offset2 : float
+        Transverse distances used to scale the drawing of the element shape.
     """
 def tao_draw_floor_plan(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
@@ -32712,7 +33111,7 @@ def tao_ele_geometry_with_misalignments(datum: TaoDataStruct, ele: EleStruct) ->
     value : float
         Datum value.
     """
-def tao_ele_shape_info(ix_uni: typing.SupportsInt, ele: EleStruct, ele_shapes: TaoEleShapeStructArray1D, y1: typing.SupportsFloat, y2: typing.SupportsFloat, ix_shape_min: typing.SupportsInt | None = None) -> TaoEleShapeInfo:
+def tao_ele_shape_info(ix_uni: typing.SupportsInt, ele: EleStruct, ele_shapes: TaoEleShapeStructArray1D, ix_shape_min: typing.SupportsInt | None = None) -> TaoEleShapeInfo:
     """
     Parameters
     ----------
@@ -32725,9 +33124,11 @@ def tao_ele_shape_info(ix_uni: typing.SupportsInt, ele: EleStruct, ele_shapes: T
     e_shape : TaoEleShapeStruct
         element shape. Will be nullified if no associated shape.
     label_name : unknown
-        Label name. y1, y2        -- real(rp): shape transverse sizes.
-    y1 : 
-    y2 : 
+        Label name.
+    y1 : float
+        shape transverse sizes.
+    y2 : float
+        shape transverse sizes.
     ix_shape_min : int, optional
         Index of minimum ele_shape(:) index to start search from. Default is 1.
         This parameter is an input/output and is modified in-place. As an output: Ele_shape(
@@ -32775,9 +33176,8 @@ def tao_evaluate_a_datum(datum: TaoDataStruct, u: TaoUniverseStruct, tao_lat: Ta
         Set false when there is a problem. Set true otherwise.
     why_invalid : unknown
         Tells why datum value is invalid.
-    called_from_lat_calc : bool, optional
-        Default is False. If true, prevents infinite loop of this -- logical, optional: Default is False. If true,
-        prevents infinite loop of this routine calling tao_lattice_calc
+    called_from_lat_calc : unknown, optional
+        Default is False. If true, prevents infinite loop of this
     print_err : bool, optional
         Default is True. If False, do not print an error message.
     """
@@ -32804,8 +33204,8 @@ def tao_evaluate_datum_at_s(datum: TaoDataStruct, tao_lat: TaoLatticeStruct, ele
     err_str : unknown
         Error string for printing an error message.
     bad_datum : bool
-        True -> datum is malformed. False -> Could evaluate or evaluation problem was not due to the datum itself
-        (EG: the lattice was unstable).
+        True -> datum is malformed. False -> Could evaluate or evaluation problem was not due to the datum
+    itself : 
     value : float
         Datum value.
     """
@@ -32840,25 +33240,22 @@ def tao_evaluate_expression(expression: str, n_size: typing.SupportsInt, use_goo
         Arithmetic expression.
     n_size : int
         Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
-        this value. If n_size = 0, the natural size is determined by the expression itself.
+        this value.
     use_good_user : bool
         Use the good_user logical in evaluating good(:)
     value : float
         Value of arithmetic expression.
     err_flag : bool
-        True on an error. EG: Invalid expression. A divide by zero is not an error but good(:) will be set to
-        False.
+        True on an error. EG: Invalid expression.
     print_err : bool, optional
-        If False then supress evaluation error messages. This does not affect syntax error messages. Default is
-        True.
+        If False then supress evaluation error messages.
     info : TaoExpressionInfoStruct
         Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
-        orbit.x[23]|good_user is False.
     stack : TaoEvalNodeStruct
         Array of nodes of variable names. This is useful to check what datums or variables are used in the
         expression.
     dflt_component : unknown, optional
-        Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
+        Component to use if not specified in the expression.
     dflt_source : unknown, optional
         Default source ('lat', 'data', etc.). Default is ''.
     dflt_ele_ref : EleStruct, optional
@@ -32889,25 +33286,22 @@ def tao_evaluate_expression_new(expression: str, n_size: typing.SupportsInt, use
         Arithmetic expression.
     n_size : int
         Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
-        this value. If n_size = 0, the natural size is determined by the expression itself.
+        this value.
     use_good_user : bool
         Use the good_user logical in evaluating good(:)
     value : float
         Value of arithmetic expression.
     err_flag : bool
-        True on an error. EG: Invalid expression. A divide by zero is not an error but good(:) will be set to
-        False.
+        True on an error. EG: Invalid expression.
     print_err : bool, optional
-        If False then supress evaluation error messages. This does not affect syntax error messages. Default is
-        True.
+        If False then supress evaluation error messages.
     info : TaoExpressionInfoStruct
         Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
-        orbit.x[23]|good_user is False.
     stack : TaoEvalNodeStruct
         Array of nodes of variable names. This is useful to check what datums or variables are used in the
         expression.
     dflt_component : unknown, optional
-        Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
+        Component to use if not specified in the expression.
     dflt_source : unknown, optional
         Default source ('lat', 'data', etc.). Default is ''.
     dflt_ele_ref : EleStruct, optional
@@ -32938,25 +33332,22 @@ def tao_evaluate_expression_old(expression: str, n_size: typing.SupportsInt, use
         Arithmetic expression.
     n_size : int
         Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
-        this value. If n_size = 0, the natural size is determined by the expression itself.
+        this value.
     use_good_user : bool
         Use the good_user logical in evaluating good(:)
     value : float
         Value of arithmetic expression.
     err_flag : bool
-        True on an error. EG: Invalid expression. A divide by zero is not an error but good(:) will be set to
-        False.
+        True on an error. EG: Invalid expression.
     print_err : bool, optional
-        If False then supress evaluation error messages. This does not affect syntax error messages. Default is
-        True.
+        If False then supress evaluation error messages.
     info : TaoExpressionInfoStruct
         Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
-        orbit.x[23]|good_user is False.
     stack : TaoEvalNodeStruct
         Array of nodes of variable names. This is useful to check what datums or variables are used in the
         expression.
     dflt_component : unknown, optional
-        Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
+        Component to use if not specified in the expression.
     dflt_source : unknown, optional
         Default source ('lat', 'data', etc.). Default is ''.
     dflt_ele_ref : EleStruct, optional
@@ -33035,12 +33426,14 @@ def tao_evaluate_stack_old(stack: TaoEvalNodeStructArray1D, n_size_in: typing.Su
         Expression stack
     n_size_in : int
         Desired array size. If the expression evaluates to a a scalar, each value in the value array will get this
-        value. If n_size = 0, the natural size is determined by the expression itself.
+        value.
+    If n_size = 0 : 
+    the natural size is determined by the expression itself. : 
     use_good_user : bool
         Use the good_user logical in evaluating good(:)
     print_err : bool
-        If False then supress evaluation error messages. This does not affect syntax error messages. Default is
-        True.
+        If False then supress evaluation error messages.
+    This does not affect syntax error messages. Default is True. : 
     expression : unknown
         Original expression. Used for error messages.
     
@@ -33050,7 +33443,7 @@ def tao_evaluate_stack_old(stack: TaoEvalNodeStructArray1D, n_size_in: typing.Su
         Value of arithmetic expression.
     info : TaoExpressionInfoStruct
         Is the value valid? Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
-        orbit.x[23]|good_user is False.
+    orbit.x[23]|good_user is False. : 
     err_flag : bool
         True on error. False otherwise
     """
@@ -33068,8 +33461,7 @@ def tao_evaluate_tree(tao_tree: TaoEvalNodeStruct, n_size: typing.SupportsInt, u
     err_flag : bool
         True on error. False otherwise
     print_err : bool
-        If False then supress evaluation error messages. This does not affect syntax error messages. Default is
-        True.
+        If False then supress evaluation error messages.
     expression : unknown
         Original expression. Used for error messages.
     info_in : 
@@ -33081,9 +33473,9 @@ def tao_evaluate_tune(q_str: str, q0: typing.SupportsFloat, delta_input: bool, q
     q_str : unknown
         String expression.
     q0 : float
-        Default to use if q_str evaluates to zero. Also used to set the integer part of the tune.
+        Default to use if q_str evaluates to zero.
     delta_input : bool
-        If true then qa_str and qb_str are deltas from present tune. Outut:
+        If true then qa_str and qb_str are deltas from present tune.
     q_val : float
         Tune value. Set zero if there is an error.
     """
@@ -33123,7 +33515,8 @@ def tao_expression_tree_to_string(tree: TaoEvalNodeStruct, include_root: bool | 
         Tree to print.
     include_root : bool, optional
         Default is True. If True, do not inculde in the output string the root node. Note: If the root node is of
-        type root$, this node is always ignored.
+        type root$, this node is
+    always ignored. : 
     n_node : int, optional
         Internal use only. Used with recursive calls.
     parent : TaoEvalNodeStruct, optional
@@ -33179,8 +33572,7 @@ def tao_floor_to_screen_coords(graph: TaoGraphStruct, floor: FloorPositionStruct
     floor : FloorPositionStruct
         3D coordinate.
     screen : FloorPositionStruct
-        Projected point .r(3)   -- projected (x, y) = (.r(1), .r(2)) .theta  -- angle in (x, y) plane of
-        projection of the orientation vector.
+        Projected point
     """
 def tao_geodesic_lm_optimizer() -> bool:
     """
@@ -33232,7 +33624,7 @@ def tao_get_opt_vars(var_value: RealAlloc1D | None = None, var_step: RealAlloc1D
     var_ix : int
         Variable s.var(:) indexes
     ignore_if_weight_is_zero : bool
-        If present and True then ignore all variables whose merit weight is zero.
+        If present and True then ignore
     ignore_if_not_limited : bool
         If present and True then ignore all variables with limit constraint that are not limited.
     """
@@ -33258,7 +33650,8 @@ def tao_get_user_input(prompt_str: str | None = None, wait_flag: bool | None = N
     Parameters
     ----------
     prompt_str : unknown, optional
-        Primpt string to print at terminal. If not present then s.global.prompt_string will be used.
+        Primpt string to print at terminal. If not
+    present then s%global%prompt_string will be used. : 
     wait_flag : bool, optional
         Used for single mode: Wait state for get_a_char call.
     cmd_in : unknown, optional
@@ -33418,7 +33811,7 @@ def tao_init_find_elements(u: TaoUniverseStruct, search_string: str, eles: ElePo
     search_string : unknown
         What to search for
     eles : ElePointerStruct
-        List of matching elements. Size is zero if no elements found.
+        List of matching elements.
     attribute : unknown, optional
         Check that attribute of element is free to vary.
     found_one : bool
@@ -33587,7 +33980,7 @@ def tao_lattice_calc() -> TaoLatticeCalc:
     Parameters
     ----------
     calc_ok : bool
-        Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
+        Set False if there was an error in the
     print_err : bool
         Default True. If False, do not print error messages if, for example, the lattice is unstable.
     """
@@ -33651,7 +34044,7 @@ def tao_locate_all_elements(ele_list: str, eles: ElePointerStructAlloc1D, ignore
     ele_list : unknown
         String with element names using element list format.
     eles : unknown
-        : Array of elements in the model lat. .id  -- Set to universe number.
+        : Array of elements in the model lat.
     err : bool
         Set true on error.
     ignore_blank : bool, optional
@@ -33664,8 +34057,7 @@ def tao_locate_elements(ele_list: str, ix_universe: typing.SupportsInt, eles: El
     ele_list : unknown
         String with element names using element list format.
     ix_universe : int
-        Universe to search. -1 => search s.global.default_universe. -2 (all unis) => error. ix_universe is ignored
-        if ele_list starts with a universe specifier "N@".
+        Universe to search. -1 => search s.global.default_universe. -2 (all unis) => error.
     eles : unknown
         : Array of elements in the model lat.
     err : bool
@@ -33673,17 +34065,15 @@ def tao_locate_elements(ele_list: str, ix_universe: typing.SupportsInt, eles: El
     lat_type : int, optional
         model$ (default), design$, or base$.
     ignore_blank : bool, optional
-        If present and true then do nothing if ele_list is blank. otherwise treated as an error.
+        If present and true then do nothing if
     err_stat_level : int, optional
-        Status level for error messages. If not present, print with level s_error$. Use s_nooutput$ to prevent
-        printing.
+        Status level for error messages. If not present,
     above_ubound_is_err : 
     ix_branch : int, optional
         If present and non-negative then use this as the branch index for elements specified using an integer
         index (EG: "43"). If -1 use the default branch, search all branches.
-    multiple_eles_is_err : bool, optional
-        If present and True then matching to more than one element is an error. -- logical, optional: If present
-        and True then matching to more than one element is an error.
+    multiple_eles_is_err : unknown, optional
+        If present and True then matching to more than one element is an error.
     """
 def tao_mark_lattice_ele(lat: LatStruct) -> None:
     """
@@ -33698,7 +34088,7 @@ def tao_merit() -> TaoMerit:
     Parameters
     ----------
     calc_ok : bool
-        Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
+        Set False if there was an error in the
     this_merit : float
         Merit value.
     """
@@ -33742,7 +34132,7 @@ def tao_open_file(file: str, file_name: str, error_severity: typing.SupportsInt,
         File name.
     error_severity : int
         Severity level used in the error message. Possibilities are s_fatal$, etc. See out_io doc for more
-        details. Use -1 to not print a message if file cannot be opened.
+        details.
     binary : bool, optional
         If present and True then open a binary file, Defaut is False.
     """
@@ -33910,7 +34300,7 @@ def tao_pick_universe(name_in: str, picked: BoolAlloc1D, dflt_uni: typing.Suppor
     name_out : unknown
         name_in without any "n@" beginning.
     picked : bool
-        Array showing picked universes. The array will be resized if necessary.
+        Array showing picked universes.
     err : bool
         Set True if an error is detected.
     ix_uni : int
@@ -33938,8 +34328,7 @@ def tao_place_cmd(where: str, who: str, no_buffer: bool | None = None) -> None:
     who : unknown
         Type of plot. Eg: 'orbit'.
     no_buffer : bool, optional
-        If present and True then prevents buffering in the case when s.global.external_plotting = T Output
-        s.plot_page.plot(j) -- Plot matched to where.
+        If present and True then prevents buffering in the case when s.global.external_plotting = T
     """
 def tao_plot_cmd(where: str, component: str) -> None:
     """
@@ -34029,7 +34418,7 @@ def tao_pointer_to_datum(d1: TaoD1DataStruct, ele_name: str, datum_ptr: TaoDataS
     d1 : TaoD1DataStruct
         D1 data struct to search.
     ele_name : unknown
-        Name of lattice element to match to. Ouput:
+        Name of lattice element to match to.
     datum_ptr : DataStruct
         Pointer to the matched datum. Will be null if no match found.
     """
@@ -34057,9 +34446,11 @@ def tao_pointer_to_datum_ele(lat: LatStruct, ele_name: str, ix_ele: typing.Suppo
     Returns
     -------
     ele : EleStruct
-        : Pointer to the element. Set to NULL if not valid or no associated element.
+        : Pointer to the element. Set to NULL if not valid
+    or no associated element. : 
     valid : bool
-        Set False if element does not have a definite location. Set True otherwise
+        Set False if element does not have a definite location.
+    Set True otherwise : 
     why_invalid : unknown
         Tells why datum value is invalid.
     """
@@ -34074,16 +34465,14 @@ def tao_pointer_to_ele_shape(ix_uni: typing.SupportsInt, ele: EleStruct, ele_sha
     ele_shape : TaoEleShapeStruct
         Array of shapes to search.
     dat_var_name : unknown
-        Name of datum or variable associated with e_shape. Will be set to "" if there is no associated datum or
-        variable.
+        Name of datum or variable associated with e_shape.
     dat_var_value : float
-        Value of datum or variable associated with e_shape. Will be set to zero if there is no associated datum or
-        variable.
+        Value of datum or variable associated with e_shape.
     ix_shape_min : int, optional
         Index of minimum ele_shape(:) index to start search from. Default is 1.
         This parameter is an input/output and is modified in-place. As an output: Ele_shape(
     e_shape : TaoEleShapeStruct
-        Associated shape. Nullified if there is no associated shape.
+        Associated shape.
     """
 def tao_pointer_to_tao_lat(u: TaoUniverseStruct, lat_type: typing.SupportsInt | None = None) -> TaoLatticeStruct | None:
     """
@@ -34114,11 +34503,14 @@ def tao_pointer_to_universe(ix_uni: typing.SupportsInt, neg2_to_default: bool | 
     Parameters
     ----------
     ix_uni : int
-        Index to the s.u(:) array If ix_uni is -1 -> u(s.global.default_universe) will be used.
+        Index to the s.u(:) array
+    If ix_uni is -1 -> u : 
     string : unknown
-        String in the form "<ix_uni>@..." or, if no "@" is present, u will point to the default universe.
+        String in the form "<ix_uni>@..." or, if
         This parameter is an input/output and is modified in-place. As an output: String with universe prefix
         stripped off.
+    no "@" is present : 
+    u will point to the default universe. : 
     neg2_to_default : bool, optional
         i_uni = -2 (all universes) maps to the default uni? Default if False.
     
@@ -34145,11 +34537,14 @@ def tao_pointer_to_universe(string: str, neg2_to_default: bool | None = None) ->
     Parameters
     ----------
     ix_uni : int
-        Index to the s.u(:) array If ix_uni is -1 -> u(s.global.default_universe) will be used.
+        Index to the s.u(:) array
+    If ix_uni is -1 -> u : 
     string : unknown
-        String in the form "<ix_uni>@..." or, if no "@" is present, u will point to the default universe.
+        String in the form "<ix_uni>@..." or, if
         This parameter is an input/output and is modified in-place. As an output: String with universe prefix
         stripped off.
+    no "@" is present : 
+    u will point to the default universe. : 
     neg2_to_default : bool, optional
         i_uni = -2 (all universes) maps to the default uni? Default if False.
     
@@ -34165,7 +34560,7 @@ def tao_pointer_to_universes(name_in: str, unis: TaoUniversePointerStructAlloc1D
     name_in : unknown
         data name with possible universe spec.
     unis : TaoUniversePointerStruct
-        Array of pointers to picked universes. The array will be resized if necessary.
+        Array of pointers to picked universes.
     err : bool
         Set True if an error is detected.
     name_out : unknown
@@ -34189,11 +34584,13 @@ def tao_pointer_to_var_in_lattice(var: TaoVarStruct, ix_uni: typing.SupportsInt,
     ix_uni : int
         the universe to use
     ix_ele : int
-        Index of element. var.slave(ix_slave) -- Tao_var_slave_struct: New component of .slave(:) array is added.
-        .model_ptr .base_ptr .ix_ele .ix_uni
+        Index of element.
     
     Returns
     -------
+    var%slave : TaoVarSlaveStruct
+        New component of .slave(:) array is added. .model_ptr .base_ptr .ix_ele
+    %ix_uni : 
     err : bool
         Set True if there is an error. False otherwise.
     """
@@ -34209,11 +34606,13 @@ def tao_pointer_to_var_in_lattice2(var: TaoVarStruct, ix_uni: typing.SupportsInt
     var : TaoVarStruct
         Structure has the info of where to point.
     ix_uni : int
-        the universe to use var.slave(ix_slave) -- Tao_var_slave_struct: New component of .slave(:) array is
-        added. .model_ptr .base_ptr .ix_ele .ix_uni
+        the universe to use
     
     Returns
     -------
+    var%slave : TaoVarSlaveStruct
+        New component of .slave(:) array is added. .model_ptr .base_ptr .ix_ele
+    %ix_uni : 
     err : bool
         Set True if there is an error. False otherwise.
     """
@@ -34330,8 +34729,7 @@ def tao_run_cmd(which: str) -> bool:
     Parameters
     ----------
     which : unknown
-        which optimizer to use. ' '        -- Same as last time 'de'       -- Differential Evolution. 'lm'
-        -- Levenberg - Marquardt (aka lmdif). 'custom'   -- Custom routine.
+        which optimizer to use.
     abort : bool
         Set True if the run was aborted by the user, an at minimum condition, a singular matrix condition, etc..
         False otherwise.
@@ -34354,13 +34752,13 @@ def tao_scale_cmd(where: str, y_min_in: typing.SupportsFloat, y_max_in: typing.S
     axis : unknown, optional
         'y', 'y2', or '' (both). Default = ''.
     include_wall : bool, optional
-        Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
-        include the building wall position will be included in determining the the scale.
+        Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in.
+    If present and True include the building wall position will be included in determining the the scale. : 
     gang : unknown, optional
         'gang', 'nogang', ''. Default = ''.
     exact : bool, optional
-        Exact plot y_max, y_min to correspond to y_min_in, y_max_in? Default is False. Only relavent when y_min_in
-        /= y_max_in.
+        Exact plot y_max, y_min to correspond to y_min_in, y_max_in?
+    Default is False. Only relavent when y_min_in /= y_max_in. : 
     turn_autoscale_off : bool, optional
         If True (default) then turn off plot.autoscale_y logical for all plots that are scaled.
     """
@@ -34382,7 +34780,8 @@ def tao_scale_graph(graph: TaoGraphStruct, y_min: typing.SupportsFloat, y_max: t
     y_max : float
         Axis [min, max] must cover [y_min, y_max] if not autoscaling.
     axis : unknown, optional
-        Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis. 'y2' -> scale y2-axis
+        Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis.
+    'y2' -> scale y2-axis : 
     include_wall : bool, optional
         Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
         include the building wall position will be included in determining the the scale.
@@ -34418,13 +34817,15 @@ def tao_scale_plot(plot: TaoPlotStruct, y_min_in: typing.SupportsFloat, y_max_in
     y_max_in : float
         Axis [min, max] must cover [y_min_in, y_max_in] if not autoscaling.
     axis : unknown, optional
-        Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis. 'y2' -> scale y2-axis
+        Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis.
+    'y2' -> scale y2-axis : 
     include_wall : bool, optional
-        Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
-        include the building wall position will be included in determining the the scale.
+        Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in.
+    If present and True include the building wall position will be included in determining the the scale. : 
     gang : unknown, optional
         If autoscale then make all graph y-axes the same and/or make all y2-axes the same? ''        -> (default)
-        Use setting of plot.autoscale_gang_y 'gang'    -> Gang graphs. 'nogang'  -> Do not gang graphs.
+        Use setting of plot.autoscale_gang_y 'gang'    -> Gang graphs.
+    'nogang'  -> Do not gang graphs. : 
     skip_lat_layout : bool, optional
         If True, skip scaling any lat_layout graphs. Default is false.
     """
@@ -34467,7 +34868,12 @@ def tao_set_beam_init_cmd(who: str, value_str: str, branch_str: str) -> None:
     value_str : unknown
         Value to set to.
     branch_str : unknown
-        Branch to use. '' => branch 0 s.beam_init  -- Beam_init variables structure.
+        Branch to use. '' => branch 0
+    
+    Returns
+    -------
+    s%beam_init : 
+        Beam_init variables structure.
     """
 def tao_set_bmad_com_cmd(who: str, value_str: str) -> None:
     """
@@ -34580,7 +34986,12 @@ def tao_set_drawing_cmd(drawing: TaoDrawingStruct, component: str, value_str: st
     component : unknown
         Which shape component to set.
     value_str : unknown
-        Value to set to. s.shape  -- Shape variables structure.
+        Value to set to.
+    
+    Returns
+    -------
+    s%shape : 
+        Shape variables structure.
     """
 def tao_set_dynamic_aperture_cmd(who: str, value_str: str) -> None:
     """
@@ -34643,7 +35054,12 @@ def tao_set_global_cmd(who: str, value_str: str) -> None:
     who : unknown
         which global variable to set
     value_str : unknown
-        Value to set to. s.global  -- Global variables structure.
+        Value to set to.
+    
+    Returns
+    -------
+    s%global : 
+        Global variables structure.
     """
 def tao_set_graph_cmd(graph_name: str, component: str, value_str: str) -> None:
     """
@@ -34700,7 +35116,7 @@ def tao_set_invalid(datum: TaoDataStruct, message: str, exterminate: bool | None
     why_invalid : unknown
         Set to message if present.
     exterminate : bool, optional
-        Default is False. If True, set datum.exists to False so that Tao will ignore this datum from now on.
+        Default is False. If True, set datum.exists
     err_level : int, optional
         s_error$ (default), s_warn$, etc.
     print_err : bool, optional
@@ -34728,9 +35144,15 @@ def tao_set_lattice_cmd(dest_lat: str, source_lat: str) -> None:
     Parameters
     ----------
     dest_lat : unknown
-        Maybe: 'model', 'design', or 'base' with optional '@n' at beginning to indicate the universe
+        Maybe: 'model', 'design', or 'base' with
+    optional '@n' at beginning to indicate the universe : 
     source_lat : unknown
-        Maybe: 'model', 'design', or 'base' s.u(n) -- lat_struct: changes specified lattice in specified universe
+        Maybe: 'model', 'design', or 'base'
+    
+    Returns
+    -------
+    s%u : LatStruct
+        changes specified lattice in specified universe
     """
 def tao_set_logical_value(var_str: str, value_str: str) -> TaoSetLogicalValue:
     """
@@ -34772,9 +35194,8 @@ def tao_set_opt_vars(var_vec: RealArray1D, print_limit_warning: bool | None = No
     ----------
     var_vec : float
         Vector of variables.
-    print_limit_warning : bool, optional
-        Print a warning if the value is past the variable's limits. -- Logical, optional: Print a warning if the
-        value is past the variable's limits. Default is True.
+    print_limit_warning : unknown, optional
+        Print a warning if the value is past the variable's limits. Default is True.
     """
 def tao_set_opti_de_param_cmd(who: str, value_str: str) -> None:
     """
@@ -34800,7 +35221,12 @@ def tao_set_particle_start_cmd(who: str, value_str: str) -> None:
     who : unknown
         which particle_start variable to set
     value_str : unknown
-        Value to set to. s.particle_start  -- Beam_start variables structure.
+        Value to set to.
+    
+    Returns
+    -------
+    s%particle_start : 
+        Beam_start variables structure.
     """
 def tao_set_plot_cmd(plot_name: str, component: str, value_str: str) -> None:
     """
@@ -34830,7 +35256,11 @@ def tao_set_plot_page_cmd(component: str, value_str: str, value_str2: str | None
     value_str : unknown
         What value to set to.
     value_str2 : unknown
-        2nd value if component is an array. s.plot       -- tao_plotting_struct:
+        2nd value if component is an array.
+    
+    Returns
+    -------
+    s%plot : TaoPlottingStruct
     """
 def tao_set_ptc_com_cmd(who: str, value_str: str) -> None:
     """
@@ -35069,9 +35499,8 @@ def tao_set_var_model_value(var: TaoVarStruct, value: typing.SupportsFloat, prin
         Variable to set
     value : float
         Value to set to
-    print_limit_warning : bool, optional
-        Print a warning if the value is past the variable's limits. -- Logical, optional: Print a warning if the
-        value is past the variable's limits. Default is True.
+    print_limit_warning : unknown, optional
+        Print a warning if the value is past the variable's limits. Default is True.
     """
 def tao_set_var_useit_opt() -> None:
     ...
@@ -35091,7 +35520,9 @@ def tao_set_wave_cmd(who: str, value_str: str) -> bool:
     Returns
     -------
     err : bool
-        Set True if there is an error. False otherwise. s.wave  -- Wave variables structure.
+        Set True if there is an error. False otherwise.
+    s%wave : 
+        Wave variables structure.
     """
 def tao_set_z_tune_cmd(branch_str: str, q_str: str, delta_input: bool) -> None:
     """
@@ -35452,7 +35883,6 @@ def tao_var_useit_plot_calc(graph: TaoGraphStruct, var: TaoVarStructArray1D) -> 
     ----------
     graph : 
     var : TaoVarStruct
-        .useit_plot -- True if good for plotting.
     """
 def tao_var_write(out_file: str, show_good_opt_only: bool | None = None, tao_format: bool | None = None) -> None:
     """
@@ -35475,7 +35905,8 @@ def tao_var_write(out_file: str, show_good_opt_only: bool | None = None, tao_for
     out_file : unknown
         Name of output file. If blank. Ouput to the terminal.
     show_good_opt_only : bool, optional
-        Write only the variables used in the optimization? Default is False.
+        Write only the variables used in the optimization?
+    Default is False. : 
     tao_format : bool, optional
         Output format. Default False. See above.
     """
@@ -35574,13 +36005,13 @@ def tao_x_scale_cmd(where: str, x_min_in: typing.SupportsFloat, x_max_in: typing
     x_max_in : float
         Plot x-axis max value.
     include_wall : bool, optional
-        Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
-        include the building wall position will be included in determining the the scale.
+        Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in.
+    If present and True include the building wall position will be included in determining the the scale. : 
     gang : unknown, optional
         'gang', 'nogang', ''. Default = ''.
     exact : bool, optional
-        Exact plot y_max, y_min to correspond to y_min_in, y_max_in? Default is False. Only relavent when y_min_in
-        /= y_max_in.
+        Exact plot y_max, y_min to correspond to y_min_in, y_max_in?
+    Default is False. Only relavent when y_min_in /= y_max_in. : 
     turn_autoscale_off : bool, optional
         If True (default) then turn off plot.autoscale_x logical for all plots that are scaled.
     
@@ -35615,8 +36046,8 @@ def tao_x_scale_plot(plot: TaoPlotStruct, x_min_in: typing.SupportsFloat, x_max_
     x_max_in : float
         Plot x-axis max value.
     include_wall : bool, optional
-        Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
-        include the building wall position will be included in determining the the scale.
+        Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in.
+    If present and True include the building wall position will be included in determining the the scale. : 
     gang : unknown, optional
         'gang', 'nogang', ''. Default = ''.
     
@@ -35651,12 +36082,17 @@ def target_min_max_calc(r_corner1: typing.Annotated[collections.abc.Sequence[typ
     r_corner1 : float
         In target coords: A corner of the target. Must be normalized to 1.
     r_corner2 : float
-        In target coords: Adjacent corner of the target. Must be normalized to 1. y_min, y_max     -- real(rp):
-        min/max values. Only needed if initial = False. phi_min, phi_max -- real(rp): min/max values. Only needed
-        if initial = False.
+        In target coords: Adjacent corner of the target. Must be normalized to 1.
+    y_min : float
+        min/max values. Only needed if initial = False.
+    y_max : float
+        min/max values. Only needed if initial = False.
+    phi_min : float
+        min/max values. Only needed if initial = False.
+    phi_max : float
+        min/max values. Only needed if initial = False.
     initial : bool, optional
-        If present and True then this is the first edge for computation. y_min, y_max     -- real(rp): min/max
-        values. phi_min, phi_max -- real(rp): min/max values.
+        If present and True then this is the first edge for computation.
     """
 def target_rot_mats(r_center: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> TargetRotMats:
     """
@@ -35722,8 +36158,8 @@ def taylor_propagate1(orb_taylor: TaylorStructArray1D, ele: EleStruct, param: La
         Element to track through
     param : LatParamStruct
     ref_in : CoordStruct, optional
-        Particle to be tracked. Must be present if the particle to be tracked is not the reference particle or if
-        the direction of propagation is backwards.
+        Particle to be tracked. Must be present if the particle to be tracked is not the reference particle or
+    if the direction of propagation is backwards. : 
     spin_taylor : TaylorStruct, optional
         Spin map to be tracked
         This parameter is an input/output and is modified in-place. As an output: Tracked spin map.
@@ -35980,10 +36416,18 @@ def to_eta_reading(eta_actual: RealArray1D, ele: EleStruct, axis: typing.Support
     eta_actual : float
         Actual (eta_x, eta_y) dispersion.
     ele : EleStruct
-        Element where the orbit is measured. .value(dE_eta_meas$)   -- Percent energy change used in dispersion
-        measurement. .value(noise$)         -- relative bpm resolution RMS .value(tilt_tot$)      -- angle error
-        in radians rms. .value(x_gain_calib$)  -- Horizontal gain correction. .value(y_gain_err$)    -- Horizontal
-        gain error. ... etc ...
+        Element where the orbit is measured.
+    %value : 
+        Percent energy change used in dispersion measurement.
+    %value : 
+        relative bpm resolution RMS
+    %value : 
+        angle error in radians rms.
+    %value : 
+        Horizontal gain correction.
+    %value : 
+        Horizontal gain error.
+    ... etc ... : 
     axis : int
         x_plane$ or y_plane$
     add_noise : bool
@@ -36016,9 +36460,18 @@ def to_fieldmap_coords(ele: EleStruct, local_orb: CoordStruct, s_body: typing.Su
     r0 : float
         origin point of the fieldmap.
     curved_ref_frame : bool
-        If the element is a bend: Does the field map follow the bend reference coords? Outpt: x, y, z           --
-        real(rp): Coords relative to the field map. cos_ang, sin_ang  -- real(rp): cos and sin of coordinate
-        rotation angle.
+        If the element is a bend: Does the field map follow the bend reference coords?
+    Outpt: : 
+    x : float
+        Coords relative to the field map.
+    y : float
+        Coords relative to the field map.
+    z : float
+        Coords relative to the field map.
+    cos_ang : float
+        cos and sin of coordinate rotation angle.
+    sin_ang : float
+        cos and sin of coordinate rotation angle.
     err_flag : bool
         Set True if there is an error. False otherwise.
     """
@@ -36037,9 +36490,16 @@ def to_orbit_reading(orb: CoordStruct, ele: EleStruct, axis: typing.SupportsInt,
     orb : CoordStruct
         Orbit position at BPM.
     ele : EleStruct
-        Element where the orbit is measured. .value(noise$)         -- relative bpm resolution RMS
-        .value(tilt_tot$)      -- angle error in radians rms. .value(x_gain_calib$)  -- Horizontal gain
-        correction. .value(y_gain_err$)    -- Horizontal gain error. ... etc ...
+        Element where the orbit is measured.
+    %value : 
+        relative bpm resolution RMS
+    %value : 
+        angle error in radians rms.
+    %value : 
+        Horizontal gain correction.
+    %value : 
+        Horizontal gain error.
+    ... etc ... : 
     axis : int
         x_plane$ or y_plane$
     add_noise : bool
@@ -36066,7 +36526,9 @@ def to_phase_and_coupling_reading(ele: EleStruct, add_noise: bool) -> ToPhaseAnd
     actual_phase : float
         Actual phase reading.
     ele : EleStruct
-        Element where phase is measured. .value(phase_noise$) -- RMS Noise in radians.
+        Element where phase is measured.
+    %value : 
+        RMS Noise in radians.
     add_noise : bool
         If True add noise to the reading
     
@@ -36113,8 +36575,7 @@ def to_surface_coords(lab_orbit: CoordStruct, ele: EleStruct) -> CoordStruct:
     ele : EleStruct
         Detector element.
     surface_orbit : CoordStruct
-        Photon position in element body coordinates. .state      -- Set to lost$ if orbit outside of surface (can
-        happen with sperical surface).
+        Photon position in element body coordinates.
     """
 def touschek_lifetime(mode: NormalModesStruct, lat: LatStruct) -> float:
     """
@@ -36143,9 +36604,13 @@ def touschek_lifetime(mode: NormalModesStruct, lat: LatStruct) -> float:
     Parameters
     ----------
     mode : NormalModesStruct
-        beam properties .pz_aperture -- Real(rp): momentum aperture
+        beam properties
+    %pz_aperture : float
+        momentum aperture
     lat : LatStruct
-        Accelerator Lattice .param.n_part -- Real(rp): number particles per bunch
+        Accelerator Lattice
+    %param%n_part : float
+        number particles per bunch
     
     Returns
     -------
@@ -36238,9 +36703,8 @@ def track1(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct, track:
     err_flag : bool
         Set true if there is an error. False otherwise. Note: The particle getting lost (EG hitting an aperture)
         is *not* an error. An error is something like start_orb not being properly initialized.
-    ignore_radiation : bool, optional
-        If present and True then do not include radiation -- Logical, optional: If present and True then do not
-        include radiation effects along with space charge effects.
+    ignore_radiation : unknown, optional
+        If present and True then do not include radiation
     make_map1 : bool, optional
         Make ele.mat6 and ele.spin_q components? Default is false.
     init_to_edge : bool, optional
@@ -36261,8 +36725,8 @@ def track1_beam(beam: BeamStruct, ele: EleStruct, centroid: CoordStructArray1D |
     ele : EleStruct
         element to track through.
     centroid : CoordStruct, optional
-        Approximate centroid orbit. Only needed if CSR is on. Hint: Calculate this before beam tracking by
-        tracking a single particle.
+        Approximate centroid orbit. Only needed if CSR is on.
+    Hint: Calculate this before beam tracking by tracking a single particle. : 
     direction : int, optional
         +1 (default) -> Track forward, -1 -> Track backwards.
     
@@ -36281,12 +36745,10 @@ def track1_bmad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6:
     ele : EleStruct
         Element
     param : LatParamStruct
-        .particle     -- Particle type
     err_flag : bool
         Set true if there is an error. False otherwise.
     track : TrackStruct
-        Structure holding the track information if the lattice element does tracking step-by-step. See track1 for
-        more details.
+        Structure holding the track information if the
     mat6 : float, optional
         Transfer matrix before the element.
         This parameter is an input/output and is modified in-place. As an output: Transfer matrix propagated
@@ -36321,8 +36783,8 @@ def track1_bunch(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1
     ele : EleStruct
         element to track through.
     centroid : CoordStruct, optional
-        Approximate centroid orbit. Only needed if CSR is on. Hint: Calculate this before beam tracking by
-        tracking a single particle.
+        Approximate centroid orbit. Only needed if CSR is on.
+    Hint: Calculate this before beam tracking by tracking a single particle. : 
     direction : int, optional
         +1 (default) -> Track forward, -1 -> Track backwards.
     bunch_track : BunchTrackStruct, optional
@@ -36333,7 +36795,8 @@ def track1_bunch(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1
     Returns
     -------
     err : bool
-        Set true if there is an error. EG: Too many particles lost for a CSR calc.
+        Set true if there is an error.
+    EG: Too many particles lost for a CSR calc. : 
     """
 def track1_bunch_csr(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1D, s_start: typing.SupportsFloat | None = None, s_end: typing.SupportsFloat | None = None, bunch_track: BunchTrackStruct | None = None) -> bool:
     """
@@ -36349,8 +36812,8 @@ def track1_bunch_csr(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructAr
     ele : EleStruct
         The element to track through. Must be part of a lattice.
     centroid : 
-        coord_struct, Approximate beam centroid orbit for the lattice branch. Calculate this before beam tracking
-        by tracking a single particle.
+        coord_struct, Approximate beam centroid orbit for the lattice branch.
+    Calculate this before beam tracking by tracking a single particle. : 
     s_start : float, optional
         Starting position relative to ele. Default = 0
     s_end : float, optional
@@ -36383,8 +36846,8 @@ def track1_bunch_csr3d(bunch: BunchStruct, ele: EleStruct, centroid: CoordStruct
     ele : EleStruct
         The element to track through. Must be part of a lattice.
     centroid : 
-        coord_struct, Approximate beam centroid orbit for the lattice branch. Calculate this before beam tracking
-        by tracking a single particle.
+        coord_struct, Approximate beam centroid orbit for the lattice branch.
+    Calculate this before beam tracking by tracking a single particle. : 
     s_start : float, optional
         Starting position relative to ele. Default = 0
     s_end : float, optional
@@ -36431,7 +36894,7 @@ def track1_bunch_space_charge(bunch: BunchStruct, ele: EleStruct, track_to_same_
     err : bool
         Set true if there is an error. EG: Too many particles lost for a CSR calc.
     track_to_same_s : bool, optional
-        Default is True. If True, drift particles to all have the same s-position.
+        Default is True. If True, drift particles to all have the
     bunch_track : BunchTrackStruct, optional
         Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
         This parameter is an input/output and is modified in-place. As an output: track information if the
@@ -36693,10 +37156,10 @@ def track1_spin(start_orb: CoordStruct, param: LatParamStruct, make_quaternion: 
     ----------
     start_orb : 
     ele : EleStruct
-        Element to track through .spin_q            -- 1st order spin map made if make_quaternion = True.
+        Element to track through
     param : 
     end_orb : CoordStruct
-        Ending coords. .spin(2)           -- complex(rp): Ending spin
+        Ending coords.
     make_quaternion : 
     """
 def track1_spin_integration(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct) -> CoordStruct:
@@ -36707,7 +37170,6 @@ def track1_spin_integration(start_orb: CoordStruct, ele: EleStruct, param: LatPa
     ele : 
     param : 
     end_orb : CoordStruct
-        .spin(3)       -- Ending spin
     """
 def track1_spin_taylor(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct) -> CoordStruct:
     """
@@ -36717,7 +37179,6 @@ def track1_spin_taylor(start_orb: CoordStruct, ele: EleStruct, param: LatParamSt
     ele : 
     param : 
     end_orb : CoordStruct
-        .spin(3)   -- Ending spin
     """
 def track1_sr_wake(bunch: BunchStruct, ele: EleStruct) -> None:
     """
@@ -36778,12 +37239,10 @@ def track1_time_runge_kutta(orbit: CoordStruct, ele: EleStruct, param: LatParamS
         Set True if there is an error. False otherwise
     track : TrackStruct
         Contains array of the step-by-step particle trajectory along with the field at these positions. When
-        tracking through multiple elements, the trajectory in an element is appended to the existing trajectory.
-        To reset: Set track.n_pt = -1.
+        tracking through multiple elements, the trajectory in an element
     t_end : float, optional
         If present, maximum time to which the particle will be tracked. Used for tracking with given time steps.
-        The time orb.t at which tracking stops may be less than this if the particle gets to the end of the
-        element
+        The time orb.t at which tracking stops
     dt_step : float, optional
         If positive, next RK time step to take. This overrides bmad_com.init_ds_adaptive_tracking. Used by
         track_bunch_time.
@@ -36802,8 +37261,7 @@ def track_a_beambeam(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, 
     param : LatParamStruct
         Lattice parameters.
     track : TrackStruct
-        Structure holding the track information if the lattice element does tracking step-by-step. See track1 for
-        more details.
+        Structure holding the track information if the
     mat6 : float
         Transfer matrix through the element.
     make_matrix : bool, optional
@@ -36911,7 +37369,7 @@ def track_a_drift(orb: CoordStruct, length: typing.SupportsFloat, mat6: typing.A
         Element orientation. Default is orb.direction.
     include_ref_motion : bool, optional
         Include effect of the motion of the reference particle? Default is True. False is basically only used by
-        offset_particle. Additionally, if False, orb.s is not changed.
+        offset_particle.
     time : float, optional
         Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
         This parameter is an input/output and is modified in-place. As an output: Updated time.
@@ -36925,9 +37383,8 @@ def track_a_drift_photon(orb: CoordStruct, length: typing.SupportsFloat, phase_r
         This parameter is an input/output and is modified in-place. As an output: Orbit at end of the drift
     length : float
         Longitudinal length to drift through.
-    phase_relative_to_ref : bool
-        If true then E field phase shift is relative to ref particle. -- logical: If true then E field phase shift
-        is relative to ref particle.
+    phase_relative_to_ref : unknown
+        If true then E field phase shift is relative to ref particle.
     """
 def track_a_foil(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
@@ -37044,15 +37501,14 @@ def track_a_patch(ele: EleStruct, orbit: CoordStruct, drift_to_exit: bool | None
         transformation.
     drift_to_exit : bool, optional
         If False then do not drift the particle from beginning to end face. Also do not correct for a reference
-        energy shift. Default is True.
+        energy shift.
     s_ent : float
         Longitudinal coordinate of the initial particle position in the frame of reference of the face where the
-        particle exits. For a patch with positive z_offset and all other attributes zero, s_ent = -z_offset.
+        particle exits.
     ds_ref : float
         Distance reference particle travels from entrance to exit.
     track_spin : bool, optional
-        If True rotate the spin vector appropriately. If ele.spin_tracking_method = symp_lie_ptc -> default =
-        True. Else default = False.
+        If True rotate the spin vector appropriately.
     mat6 : float
         Transfer matrix through the element.
     make_matrix : bool, optional
@@ -37076,7 +37532,8 @@ def track_a_patch_photon(ele: EleStruct, orbit: CoordStruct, drift_to_exit: bool
         This parameter is an input/output and is modified in-place. As an output: Coords after applying a patch
         transformation.
     drift_to_exit : bool, optional
-        If False then do not drift the particle from start to ending faces. Default is True.
+        If False then do not drift the particle from
+    start to ending faces. Default is True. : 
     use_z_pos : unknown, optional
         If present and True, use orbit.vec(5) as the true z-position relative to the start of the element instead
         of assuming that the particle is at the patch edge.
@@ -37220,12 +37677,12 @@ def track_all(lat: LatStruct, orbit: CoordStructAlloc1D, ix_branch: typing.Suppo
     lat : LatStruct
         Lat to track through.
     orbit : CoordStruct
-        orbit(0) is the starting coordinates for tracking. If not allocated, the zero orbit will be used.
+        orbit(0) is the starting coordinates for tracking.
         This parameter is an input/output and is modified in-place. As an output: Orbit array.
     ix_branch : int, optional
         Index of branch to track. Default is 0 (main branch).
     track_state : int
-        Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
+        Set to moving_forward$ if everything is OK.
     err_flag : bool
         Set true if particle lost or error. False otherwise
     orbit0 : CoordStruct
@@ -37251,12 +37708,14 @@ def track_beam(lat: LatStruct, beam: BeamStruct, ele1: EleStruct | None = None, 
         Beam at end of element ix1.
         This parameter is an input/output and is modified in-place. As an output: Beam at end of element ix2.
     ele1 : EleStruct, optional
-        Starting element (this element is NOT tracked through). Default is lat.ele(0).
+        Starting element (this element
+    is NOT tracked through). Default is lat%ele : 
     ele2 : EleStruct, optional
-        Ending element. Default is lat.ele(lat.n_ele_track).
+        Ending element.
+    Default is lat%ele : 
     centroid : CoordStruct, optional
-        Approximate centroid orbit. Only needed if CSR is on. Hint: Calculate this before beam tracking by
-        tracking a single particle.
+        Approximate centroid orbit. Only needed if CSR is on.
+    Hint: Calculate this before beam tracking by tracking a single particle. : 
     direction : int, optional
         +1 (default) -> Track forward, -1 -> Track backwards.
     bunch_tracks : BunchTrackStruct, optional
@@ -37267,7 +37726,8 @@ def track_beam(lat: LatStruct, beam: BeamStruct, ele1: EleStruct | None = None, 
     Returns
     -------
     err : bool
-        Set true if there is an error. EG: Too many particles lost for a CSR calc.
+        Set true if there is an error.
+    EG: Too many particles lost for a CSR calc. : 
     """
 def track_bunch(lat: LatStruct, bunch: BunchStruct, ele1: EleStruct | None = None, ele2: EleStruct | None = None, centroid: CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None, bunch_track: BunchTrackStruct | None = None) -> bool:
     """
@@ -37288,12 +37748,14 @@ def track_bunch(lat: LatStruct, bunch: BunchStruct, ele1: EleStruct | None = Non
         Bunch at end of element ix1.
         This parameter is an input/output and is modified in-place. As an output: Bunch at end of element ix2.
     ele1 : EleStruct, optional
-        Starting element (this element is NOT tracked through). Default is lat.ele(0).
+        Starting element (this element
+    is NOT tracked through). Default is lat%ele : 
     ele2 : EleStruct, optional
-        Ending element. Default is lat.ele(lat.n_ele_track).
+        Ending element.
+    Default is lat%ele : 
     centroid : CoordStruct, optional
-        Approximate centroid orbit. Only needed if CSR is on. Hint: Calculate this before bunch tracking by
-        tracking a single particle.
+        Approximate centroid orbit. Only needed if CSR is on.
+    Hint: Calculate this before bunch tracking by tracking a single particle. : 
     direction : int, optional
         +1 (default) -> Track forward, -1 -> Track backwards.
     bunch_track : BunchTrackStruct, optional
@@ -37304,7 +37766,8 @@ def track_bunch(lat: LatStruct, bunch: BunchStruct, ele1: EleStruct | None = Non
     Returns
     -------
     err : bool
-        Set true if there is an error. EG: Too many particles lost for a CSR calc.
+        Set true if there is an error.
+    EG: Too many particles lost for a CSR calc. : 
     """
 def track_bunch_time(bunch: BunchStruct, branch: BranchStruct, t_end: typing.SupportsFloat, s_end: typing.SupportsFloat, dt_step: RealArray1D | None = None, extra_field: EmFieldStructArray1D | None = None) -> None:
     """
@@ -37321,7 +37784,7 @@ def track_bunch_time(bunch: BunchStruct, branch: BranchStruct, t_end: typing.Sup
     s_end : float
         Ending s-position.
     dt_step : float, optional
-        Initial step to take for each particle. Overrides bmad_com.init_ds_adaptive_tracking.
+        Initial step to take for each particle.
         This parameter is an input/output and is modified in-place. As an output: Next RK time step that this
         tracker would take based on the error tolerance.
     extra_field : EmFieldStruct, optional
@@ -37394,8 +37857,7 @@ def track_from_s_to_s(lat: LatStruct, s_start: typing.SupportsFloat, s_end: typi
     orbit_end : CoordStruct
         Ending coordinates.
     all_orb : CoordStruct
-        If present then the orbit at the exit ends of the elements tracked through will be recorded in this
-        structure.
+        If present then the orbit at the exit ends
     ix_branch : int, optional
         Lattice branch index. Default is 0 (main branch).
     track_state : int
@@ -37417,7 +37879,7 @@ def track_many(lat: LatStruct, orbit: CoordStructArray1D, ix_start: typing.Suppo
     ix_end : int
         End index (See Note).
     direction : int
-        Direction to track. = +1 -> Track forward (+s) = -1 -> Track backward (-s)
+        Direction to track. = +1 -> Track forward (+s)
     ix_branch : int, optional
         Branch to track. Default is 0 (main lattice).
     track_state : int
@@ -37601,23 +38063,20 @@ def transfer_map_calc(lat: LatStruct, orb_map: TaylorStructArray1D, ix1: typing.
     err_flag : bool
         Set True if problem like number overflow, etc.
     ix1 : int, optional
-        Element start index for the calculation. Default is 0.
+        Element start index for the calculation.
     ix2 : int, optional
-        Element end index for the calculation. Default is lat.n_ele_track.
+        Element end index for the calculation.
     ref_orb : CoordStruct, optional
         Reference orbit/particle at s1 around which the map is made. This arg is needed if: unit_start = True or
-        particle is not the same as the reference particle of the lattice.
+        particle is not the same as the reference
     ix_branch : int, optional
         Lattice branch index. Default is 0.
     one_turn : bool, optional
-        If present and True, and if ix1 = ix2, and the lattice is circular, then construct the one-turn map from
-        ix1 back to ix1. Default = False.
+        If present and True, and if ix1 = ix2, and the lattice is circular, then construct the one-turn
     unit_start : bool, optional
         If present and False then orb_map will be used as the starting map instead of the unit map. Default = True
-    concat_if_possible : bool, optional
-        If present and True then use map concatenation rather than tracking -- logical, optional: If present and
-        True then use map concatenation rather than tracking if a map is present for a given lattice element. See
-        above. Default is False.
+    concat_if_possible : unknown, optional
+        If present and True then use map concatenation rather than tracking
     spin_map : TaylorStruct, optional
         Input quaternion spin map. Output only computed if bmad_com.spin_tracking_on = T
         This parameter is an input/output and is modified in-place. As an output: Quaternion spin map.
@@ -37646,23 +38105,26 @@ def transfer_map_from_s_to_s(lat: LatStruct, t_map: TaylorStructArray1D, s1: typ
         Initial map (used when unit_start = False)
         This parameter is an input/output and is modified in-place. As an output: Transfer map.
     s1 : float, optional
-        Element start position for the calculation. Default is 0.
+        Element start position for the calculation.
+    Default is 0. : 
     s2 : float, optional
-        Element end position for the calculation. Default is lat.param.total_length.
+        Element end position for the calculation.
+    Default is lat%param%total_length. : 
     ref_orb_in : CoordStruct, optional
         Reference orbit/particle at s1 around which the map is made. This arg is needed if: unit_start = True or
-        particle is not the same as the reference particle of the lattice.
+        particle is not the same as the reference
+    particle of the lattice. : 
     ix_branch : int, optional
         Lattice branch index. Default is 0 (main branch).
     one_turn : bool, optional
         If present and True, and s1 = s2, and the lattice is circular: Construct the one-turn map from s1 back to
-        s1. Otherwise t_map is unchanged or the unit map if unit_start = T. Default = False.
+        s1. Otherwise t_map is unchanged or the unit map if unit_start = T.
+    Default = False. : 
     unit_start : bool, optional
         If present and False then t_map will be used as the starting map instead of the unit map. Default = True
-    concat_if_possible : bool, optional
-        If present and True then use map concatenation rather than tracking -- logical, optional: If present and
-        True then use map concatenation rather than tracking if a map is present for a given lattice element. See
-        above. Default is False.
+    concat_if_possible : unknown, optional
+        If present and True then use map concatenation rather than tracking
+    if a map is present for a given lattice element. See above. Default is False. : 
     spin_map : TaylorStruct, optional
         Initial spin map.
         This parameter is an input/output and is modified in-place. As an output: Final spin map. Only computed if
@@ -37671,7 +38133,8 @@ def transfer_map_from_s_to_s(lat: LatStruct, t_map: TaylorStructArray1D, s1: typ
     Returns
     -------
     ref_orb_out : CoordStruct
-        Ending coordinates of the reference orbit. This is also the actual orbit of particle
+        Ending coordinates of the reference orbit.
+    This is also the actual orbit of particle : 
     err_flag : bool
         Set true if there is an error. False otherwise.
     """
@@ -37680,11 +38143,9 @@ def transfer_mat2_from_twiss(twiss1: TwissStruct, twiss2: TwissStruct) -> typing
     Parameters
     ----------
     twiss1 : TwissStruct
-        Twiss parameters at the initial point. .beta   -- Beta parameter. .alpha  -- Alpha parameter. .phi    --
-        Phase at initial point.
+        Twiss parameters at the initial point.
     twiss2 : TwissStruct
-        Twiss parameters at the end point. .beta   -- Beta parameter. .alpha  -- Alpha parameter. .phi    -- Phase
-        at final point.
+        Twiss parameters at the end point.
     mat : float
         Transfer matrix between the two points.
     """
@@ -37693,10 +38154,7 @@ def transfer_mat_from_twiss(ele1: EleStruct, ele2: EleStruct, orb1: typing.Annot
     Parameters
     ----------
     ele1 : EleStruct
-        Element with twiss parameters for the starting point. .a, .b       -- a-mode and b-mode Twiss paramters
-        .beta         -- Beta parameter. .alpha        -- Alpha parameter. .phi          -- Phase at initial
-        point. .x, .y       -- dispersion values .eta          -- Dispersion at initial point. .etap         --
-        Dispersion derivative at initial point. .c_mat(2,2)  -- Coupling matrix
+        Element with twiss parameters for the starting point.
     ele2 : EleStruct
         Element with twiss parameters for the ending point.
     orb1 : float
@@ -37711,14 +38169,14 @@ def transfer_matrix_calc(lat: LatStruct, xfer_mat: typing.Annotated[collections.
     Parameters
     ----------
     lat : LatStruct
-        Lattice used in the calculation. .ele(:).mat6  -- Transfer matrices used in the calculation.
+        Lattice used in the calculation.
     xfer_mat : 
     xfer_vec : 
     ix1 : int, optional
-        Element start index for the calculation. Default is 0.
+        Element start index for the calculation.
     ix2 : int, optional
         Element end index for the calculation. Defaults: If ix1 is not present: ix2 = lat.n_ele_track If ix1 is
-        present and lattice is closed: Calculate the one-turn matrix from ix1 back to ix1.
+        present and lattice is closed: Calculate the
     ix_branch : int, optional
         Branch index. Default is 0.
     one_turn : bool, optional
@@ -37831,6 +38289,18 @@ def twiss3_at_start(lat: LatStruct, err_flag: bool, ix_branch: typing.SupportsIn
     
     Returns
     -------
+    %branch : EleStruct
+        Starting element
+    %mode3 : Mode3Struct
+        Structure holding the normal modes.
+    %v : float
+        V coupling matrix.
+    %a : TwissStruct
+        "a" normal mode Twiss parameters.
+    %b : TwissStruct
+        "b" normal mode Twiss parameters.
+    %c : TwissStruct
+        "c" normal mode Twiss parameters.
     error : bool
         Set True if there is no RF. False otherwise.
     tune3 : float
@@ -37915,9 +38385,11 @@ def twiss_and_track(lat: LatStruct, orb_array: CoordArrayStructAlloc1D, print_er
     Parameters
     ----------
     lat : LatStruct
-        lattice. .param.geometry      -- Used to determine if lattice is open or closed.
+        lattice.
         This parameter is an input/output and is modified in-place. As an output: Lat with computed twiss
         parameters.
+    %param%geometry : 
+        Used to determine if lattice is open or closed.
     orb : CoordStruct
         Orbit to be computed
     orb : 
@@ -37940,6 +38412,10 @@ def twiss_and_track(lat: LatStruct, orb_array: CoordArrayStructAlloc1D, print_er
     
     Returns
     -------
+    %param%stable : 
+        Set true or false.
+    %param%unstable_factor : 
+        unstable growth rate (= 0 if stable)
     status : int
         Set ok$ if everything is OK and set to something else otherwise. See above for more details.
     """
@@ -37982,9 +38458,11 @@ def twiss_and_track(lat: LatStruct, orb: CoordStructAlloc1D, ix_branch: typing.S
     Parameters
     ----------
     lat : LatStruct
-        lattice. .param.geometry      -- Used to determine if lattice is open or closed.
+        lattice.
         This parameter is an input/output and is modified in-place. As an output: Lat with computed twiss
         parameters.
+    %param%geometry : 
+        Used to determine if lattice is open or closed.
     orb : CoordStruct
         Orbit to be computed
     orb : 
@@ -38007,6 +38485,10 @@ def twiss_and_track(lat: LatStruct, orb: CoordStructAlloc1D, ix_branch: typing.S
     
     Returns
     -------
+    %param%stable : 
+        Set true or false.
+    %param%unstable_factor : 
+        unstable growth rate (= 0 if stable)
     status : int
         Set ok$ if everything is OK and set to something else otherwise. See above for more details.
     """
@@ -38035,31 +38517,35 @@ def twiss_and_track_at_s(lat: LatStruct, s: typing.SupportsFloat, ele_at_s: EleS
     lat : LatStruct
         Lattice.
     s : float
-        Longitudinal position. If s is negative the the position is taken to be lat.param.total_length - s.
+        Longitudinal position. If s is negative the
+    the position is taken to be lat%param%total_length - s. : 
     ele_at_s : EleStruct, optional
         If the use_last argument is True, ele_at_s is taken to contain valid Twiss parameters stored from a
-        previous call to this routine.
+        previous call
         This parameter is an input/output and is modified in-place. As an output: Element structure holding the
         Twiss parameters.
+    to this routine. : 
     orb : CoordStruct, optional
         Orbit through the Lattice.
     orb_at_s : CoordStruct, optional
-        If the use_last argument is True, orb_at_s is taken to contain the valid orbit stored from a previous
-        call.
+        If the use_last argument is True, orb_at_s is
         This parameter is an input/output and is modified in-place. As an output: Particle position at the
         position s.
+    taken to contain the valid orbit stored from a previous call. : 
     ix_branch : int, optional
         Branch index, Default is 0 (main lattice).
     use_last : bool, optional
         If present and True, and if ele_at_s.s < s, then use ele_at_s and orb_at_s as the starting point for the
         present calculation. This can speed things up when the present s-position is in the middle of a long
         complicated element and the tracking (EG: Runge-Kutta) is slow.
-    compute_floor_coords : bool, optional
-        If present and True then the global "floor" coordinates (without -- logical, optional: If present and True
-        then the global "floor" coordinates (without misalignments) will be calculated and put in ele_at_s.floor.
+    compute_floor_coords : unknown, optional
+        If present and True then the global "floor" coordinates (without misalignments) will be calculated and put
+        in ele_at_s.floor.
     
     Returns
     -------
+    with respect to the zero orbit. : 
+    present. : 
     err : bool
         Set True if there is a problem in the calculation, False otherwise.
     """
@@ -38070,8 +38556,7 @@ def twiss_and_track_from_s_to_s(branch: BranchStruct, orbit_start: CoordStruct, 
     branch : BranchStruct
         Lattice branch to track through.
     orbit_start : CoordStruct
-        Starting phase space coordinates at s_start. .s                     -- Starting position. .ix_ele
-        -- Starting element. .location              -- Location relative element.
+        Starting phase space coordinates at s_start.
     s_end : float
         Ending position.
     orbit_end : CoordStruct
@@ -38079,12 +38564,11 @@ def twiss_and_track_from_s_to_s(branch: BranchStruct, orbit_start: CoordStruct, 
     ele_start : EleStruct, optional
         Holds the starting parameters at s_start.
     ele_end : EleStruct
-        Holds the ending Twiss parameters and the transfer matrix. If present then the ele_start argument must
-        also be present.
+        Holds the ending Twiss parameters and the transfer matrix.
     err : bool
         Set True if there is a problem like the particle gets lost in tracking
     compute_floor_coords : bool, optional
-        If present and True then the global "floor" coordinates will be calculated and put in ele_end.floor.
+        If present and True then the global "floor" coordinates will be
     compute_twiss : bool, optional
         Default True. If False, to save a little time, do not compute Twiss parameters.
     """
@@ -38100,30 +38584,25 @@ def twiss_and_track_intra_ele(ele: EleStruct, param: LatParamStruct, l_start: ty
     l_end : float
         Stop position measured from the beginning of the element.
     track_upstream_end : bool
-        If True then entrance effects are included in the tracking. But only if l_start = 0 and
-        orbit_start.location /= inside$.
+        If True then entrance effects are included in the tracking.
     track_downstream_end : bool
-        If True then exit effects are included in the tracking but only if l_end = ele.value(l$) (within
-        bmad_com.significant_length tol)
+        If True then exit effects are included in the tracking but
     orbit_start : CoordStruct, optional
         Starting phase space coordinates at l_start.
     orbit_end : CoordStruct
-        End phase space coordinates. If present then the orbit_start argument must also be present.
+        End phase space coordinates.
     ele_start : EleStruct, optional
         Holds the starting Twiss parameters at l_start.
     ele_end : EleStruct, optional
-        If reuse_ele_end is set True then reuse ele_end from trancking instead of recomputing ele_end from
-        scratch. This can save time.
+        If reuse_ele_end is set True then reuse ele_end from trancking
         This parameter is an input/output and is modified in-place. As an output: Holds the ending Twiss
         parameters at l_end (except for photons).
     err : bool
         Set True if there is a problem like the particle gets lost in tracking
     compute_floor_coords : bool, optional
-        If present and True then the global "floor" coordinates (without misalignments) will be calculated and put
-        in ele_end.floor.
+        If present and True then the global "floor" coordinates
     compute_twiss : bool, optional
-        Default True. If False, to save a little time, do not compute Twiss parameters. Also if ele_start is not
-        present, no Twiss parameters are computed.
+        Default True. If False, to save a little time, do not compute
     reuse_ele_end : bool, optional
         If present and True, and if ele_end has the correct lonigitudianal length and key type, reuse ele_end from
         trancking instead of recomputing ele_end from scratch. This can save time.
@@ -38139,8 +38618,7 @@ def twiss_at_element(ele: EleStruct) -> TwissAtElement:
     end : EleStruct
         Twiss and s at end of element.
     average : EleStruct
-        Average Twiss and s of element. .value(l$) -- "Effective" length which for groups and overlays are
-        weighted by the control coefficient.
+        Average Twiss and s of element.
     """
 def twiss_at_start(lat: LatStruct, ix_branch: typing.SupportsInt | None = None, type_out: bool | None = None) -> int:
     """
@@ -38168,8 +38646,7 @@ def twiss_from_tracking(lat: LatStruct, ref_orb0: CoordStruct, d_orb: RealArray1
     ref_orb0 : CoordStruct
         Reference orbit at lat.ele(0).
     symp_err : float
-        A measure of how symplectic the constructed matrices were before symplecitification. mat_symp_check for
-        more details.
+        A measure of how symplectic the constructed matrices were before symplecitification.
     err_flag : bool
         Set True if there is an error. False otherwise.
     d_orb : float, optional
@@ -38184,9 +38661,7 @@ def twiss_propagate1(ele1: EleStruct, ele2: EleStruct, forward: bool | None = No
         This parameter is an input/output and is modified in-place. As an output: Element for the ending Twiss
         parameters for backwards propagation.
     ele2 : EleStruct
-        Element holding the transfer matrix and, if backwards propagation, the starting Twiss. .key
-        -- Needed since, for example, Match element are handled differently from other elements. .map_ref_orb_in
-        -- Important for the dispersion calc. .map_ref_orb_out    -- Important for the dispersion calc.
+        Element holding the transfer matrix and, if backwards propagation, the starting Twiss.
         This parameter is an input/output and is modified in-place. As an output: Element for the ending Twiss
         parameters for forward propagation.
     err_flag : bool
@@ -38199,7 +38674,7 @@ def twiss_propagate_all(lat: LatStruct, ix_branch: typing.SupportsInt | None = N
     Parameters
     ----------
     lat : LatStruct
-        lattice. .branch(ix_branch).ele(0) -- Branch beginning element with the starting parameters.
+        lattice.
         This parameter is an input/output and is modified in-place. As an output: Lattice with parameters computed
         for the branch.
     ix_branch : int, optional
@@ -38207,8 +38682,7 @@ def twiss_propagate_all(lat: LatStruct, ix_branch: typing.SupportsInt | None = N
     err_flag : bool
         Set True if there is an error. False otherwise.
     ie_start : int, optional
-        Starting element index. Default is 0. Note: The first element at which the Twiss parameters are calculated
-        is ie_start+1.
+        Starting element index. Default is 0.
     ie_end : int, optional
         Ending element index, Default is branch.n_ele_track.
     """
@@ -38217,7 +38691,7 @@ def twiss_to_1_turn_mat(twiss: TwissStruct, phi: typing.SupportsFloat) -> typing
     Parameters
     ----------
     twiss : TwissStruct
-        Structure holding the Twiss parameters. .beta .alpha
+        Structure holding the Twiss parameters. .beta
     phi : float
         Tune in radians.
     mat2 : float
@@ -38284,7 +38758,7 @@ def update_fibre_from_ele(ele: EleStruct) -> bool:
     Parameters
     ----------
     ele : EleStruct
-        Element with corresponding PTC fibre. ele.ptc_fibre -- PTC fibre.
+        Element with corresponding PTC fibre.
     survey_needed : bool
         Set True if a call to survey will be needed. Calling survey is avoided in this routine to save time if
         multiple elements are being updated.
@@ -38294,7 +38768,7 @@ def update_floor_angles(floor: FloorPositionStruct, floor0: FloorPositionStruct 
     Parameters
     ----------
     floor : FloorPositionStruct
-        Position with input w matrix. .w      -- w matrix.
+        Position with input w matrix.
         This parameter is an input/output and is modified in-place. As an output: Position with output angles.
     floor0 : FloorPositionStruct, optional
         Reference position. There are two solutions related by: [theta, phi, psi] & [pi+theta, pi-phi, pi+psi] If
@@ -38364,9 +38838,9 @@ def value_of_attribute(ele: EleStruct, attrib_name: str, err_print_flag: bool | 
     Parameters
     ----------
     ele : EleStruct
-        After this routine finishes Ptr_attrib will point to a variable within this element.
+        After this routine finishes Ptr_attrib
     attrib_name : unknown
-        Name of attribute. Must be uppercase. For example: "HKICK".
+        Name of attribute. Must be uppercase.
     err_flag : bool
         Set True if attribtute not found. False otherwise.
     err_print_flag : bool, optional
@@ -38430,7 +38904,8 @@ def verify_valid_name(name: str, ix_name: typing.SupportsInt, pure_name: bool | 
     ix_name : int
         Number of characters in the name.
     pure_name : bool, optional
-        If True, reject names that contain "[", "]", "(", ")", "." characters. Default is False.
+        If True, reject names that contain "[", "]", "(", ")", "." characters.
+    Default is False. : 
     include_wild : bool, optional
         Name can include wild card characters and additionally type prefixes like "QUAD::". Default is False.
     
@@ -38548,7 +39023,8 @@ def wall3d_d_radius(position: RealArray1D, ele: EleStruct, ix_wall: typing.Suppo
     position : float
         Particle position in element coordinates. In a patch, with respect to entrance coords. [position(1),
         position(3)] = [x, y] transverse coords. position(5)                = Longitudinal position relative to
-        beginning of element. position(6)                = Longitudinal velocity (only +/- sign matters).
+        beginning of element.
+    position : 
     ele : EleStruct
         Element with wall
     ix_wall : int, optional
@@ -38561,11 +39037,14 @@ def wall3d_d_radius(position: RealArray1D, ele: EleStruct, ix_wall: typing.Suppo
     perp : float
         Perpendicular normal to the wall.
     ix_section : int
-        Set to wall slice section particle is in. That is between ix_section and ix_section+1.
+        Set to wall slice section particle is in.
+    That is between ix_section and ix_section+1. : 
     no_wall_here : bool
-        True if the sub-chamber under consideration does not exist at the longitudinal location of the particle.
+        True if the sub-chamber under consideration does not exist at the
+    longitudinal location of the particle. : 
     origin : float
-        (x, y, s) origin with respect to the radius is measured. Uses the same coords as position.
+        (x, y, s) origin with respect to the radius is measured.
+    Uses the same coords as position. : 
     radius_wall : float
         Radius of the wall.
     err_flag : bool
@@ -38703,7 +39182,10 @@ def write_astra_field_grid_file(astra_file_unit: typing.SupportsInt, ele: EleStr
     Parameters
     ----------
     astra_file_unit : int
-        unit number to write to, if > 0 if < 0, nothing is written, and only maxfield is returned
+        unit number to write to, if > 0
+    if < 0 : 
+    nothing is written : 
+    and only maxfield is returned : 
     ele : EleStruct
         element to make map
     dz : float, optional
@@ -38736,8 +39218,9 @@ def write_astra_field_grid_file_3d(base_filename: str, ele: EleStruct, dz: typin
     Parameters
     ----------
     base_filename : unknown
-        Base filename. Files will be written as: base_filename.ex, .ey, .ez, .bx, .by, .bz If set to '', no files
-        will be written
+        Base filename. Files will be written as: base_filename.ex, .ey, .ez, .bx, .by, .bz
+    If set to '' : 
+    no files will be written : 
     ele : EleStruct
         element to make map
     dz : float, optional
@@ -38801,7 +39284,8 @@ def write_binary_cartesian_map(file_name: str, ele: EleStruct, cart_map: Cartesi
     ele : EleStruct
         Element associated with the map.
     cart_map : CartesianMapStruct
-        Cartesian map. Ouput:
+        Cartesian map.
+    Ouput: : 
     err_flag : bool
         Set True if there is an error. False otherwise.
     """
@@ -38819,7 +39303,8 @@ def write_binary_cylindrical_map(file_name: str, ele: EleStruct, cl_map: Cylindr
     ele : EleStruct
         Element associated with the map.
     cl_map : CylindricalMapStruct
-        Cylindrical map. Ouput:
+        Cylindrical map.
+    Ouput: : 
     err_flag : bool
         Set True if there is an error. False otherwise.
     """
@@ -38837,7 +39322,8 @@ def write_binary_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldSt
     ele : EleStruct
         Element associated with the map.
     g_field : GridFieldStruct
-        Cylindrical map. Ouput:
+        Cylindrical map.
+    Ouput: : 
     err_flag : bool
         Set True if there is an error. False otherwise.
     """
@@ -38868,8 +39354,7 @@ def write_bmad_lattice_file(bmad_file: str, lat: LatStruct, output_form: typing.
         Set True if, say a file could not be opened.
     output_form : int, optional
         binary$   -> Write grid_field info in binary hdf5 form in separate files. Default. All other fields are
-        writen in separate files in ASCII ascii$    -> Fields will be put in separate ASCII files. one_file$ ->
-        Everything in one file.
+        writen in separate files in ASCII ascii$    -> Fields will be put in separate ASCII files.
     orbit0 : CoordStruct, optional
         Initial orbit. Used to write the inital orbit if the lattice geometry is closed.
     """
@@ -38895,7 +39380,10 @@ def write_gpt_field_grid_file_1d(gpt_file_unit: typing.SupportsInt, ele: EleStru
     Parameters
     ----------
     gpt_file_unit : int
-        unit number to write to, if > 0 if < 0, nothing is written, and only maxfield is returned
+        unit number to write to, if > 0
+    if < 0 : 
+    nothing is written : 
+    and only maxfield is returned : 
     ele : EleStruct
         element to make map
     dz : float, optional
@@ -38921,7 +39409,10 @@ def write_gpt_field_grid_file_2d(gpt_file_unit: typing.SupportsInt, ele: EleStru
     Parameters
     ----------
     gpt_file_unit : int
-        unit number to write to, if > 0 if < 0, nothing is written, and only maxfield is returned
+        unit number to write to, if > 0
+    if < 0 : 
+    nothing is written : 
+    and only maxfield is returned : 
     ele : EleStruct
         element to make map
     dr : float, optional
@@ -38958,8 +39449,9 @@ def write_gpt_field_grid_file_3d(base_filename: str, ele: EleStruct, dz: typing.
     Parameters
     ----------
     base_filename : unknown
-        Base filename. Files will be written as: base_filename_E_ASCII.gpt, _H_ASCII.gpt If set to '', no files
-        will be written
+        Base filename. Files will be written as: base_filename_E_ASCII.gpt, _H_ASCII.gpt
+    If set to '' : 
+    no files will be written : 
     ele : EleStruct
         element to make map
     dz : float, optional
@@ -38993,10 +39485,12 @@ def write_lat_line(line: str, iu: typing.SupportsInt, end_is_neigh: bool, do_spl
     iu : int
         Unit number to write to.
     end_is_neigh : bool
-        If true then write out everything. Otherwise wait for a full line of max_char characters or so.
+        If true then write out everything.
+    Otherwise wait for a full line of max_char characters or so. : 
     do_split : bool, optional
         Split line if overlength? Default is True. False is used when line has already been split for expressions
-        since the expression splitting routine does a much better job of it.
+        since
+    the expression splitting routine does a much better job of it. : 
     scibmad : bool, optional
         Default False. If True then do not include "&" line continuation
     """
@@ -39010,18 +39504,16 @@ def write_lattice_in_elegant_format(out_file_name: str, lat: LatStruct, ref_orbi
         Holds the lattice information.
     ref_orbit : CoordStruct, optional
         Referece orbit for sad_mult and patch elements. This argument must be present if the lattice has sad_mult
-        or patch elements and is being translated to MAD-8 or SAD.
+        or patch elements and is
     use_matrix_model : bool, optional
         Use a drift-matrix_drift model for wigglers/undulators? [A MAD "matrix" is a 2nd order Taylor map.] This
-        switch is ignored for SAD conversion. Default is False -> Use a bend-drift-bend model. Note: sol_quad
-        elements always use a drift-matrix-drift model.
+        switch is ignored for SAD conversion. Default is False -> Use a bend-drift-bend model.
     include_apertures : bool, optional
         If True (the default), add to the output lattice a zero length collimator element next to any non-
         collimator element that has an aperture. Note: MADX translations for non-drift elements can handle non-
-        collimator elements with an aperture so in this case this argument is ignored.
+        collimator elements
     dr12_drift_max : float, optional
-        Max deviation for drifts allowed before a correction matrix element is added. Default value is 1d-5. A
-        negative number means use default.
+        Max deviation for drifts allowed before a correction matrix element
     ix_branch : int, optional
         Index of lattice branch to use. Default = 0.
     err : bool
@@ -39039,18 +39531,16 @@ def write_lattice_in_foreign_format(out_type: str, out_file_name: str, lat: LatS
         Holds the lattice information.
     ref_orbit : CoordStruct, optional
         Referece orbit for sad_mult and patch elements. This argument must be present if the lattice has sad_mult
-        or patch elements and is being translated to MAD-8 or SAD.
+        or patch elements and is
     use_matrix_model : bool, optional
         Use a drift-matrix_drift model for wigglers/undulators? [A MAD "matrix" is a 2nd order Taylor map.] This
-        switch is ignored for SAD conversion. Default is False -> Use a bend-drift-bend model. Note: sol_quad
-        elements always use a drift-matrix-drift model.
+        switch is ignored for SAD conversion. Default is False -> Use a bend-drift-bend model.
     include_apertures : bool, optional
         If True (the default), add to the output lattice a zero length collimator element next to any non-
         collimator element that has an aperture. Note: MADX translations for non-drift elements can handle non-
-        collimator elements with an aperture so in this case this argument is ignored.
+        collimator elements
     dr12_drift_max : float, optional
-        Max deviation for drifts allowed before a correction matrix element is added. Default value is 1d-5. A
-        negative number means use default.
+        Max deviation for drifts allowed before a correction matrix element
     ix_branch : int, optional
         Index of lattice branch to use. Default = 0.
     err : bool
@@ -39068,18 +39558,16 @@ def write_lattice_in_mad_format(out_type: str, out_file_name: str, lat: LatStruc
         Holds the lattice information.
     ref_orbit : CoordStruct, optional
         Referece orbit for sad_mult and patch elements. This argument must be present if the lattice has sad_mult
-        or patch elements and is being translated to MAD-8 or SAD.
+        or patch elements and is
     use_matrix_model : bool, optional
         Use a drift-matrix_drift model for wigglers/undulators? [A MAD "matrix" is a 2nd order Taylor map.] This
-        switch is ignored for SAD conversion. Default is False -> Use a bend-drift-bend model. Note: sol_quad
-        elements always use a drift-matrix-drift model.
+        switch is ignored for SAD conversion. Default is False -> Use a bend-drift-bend model.
     include_apertures : bool, optional
         If True (the default), add to the output lattice a zero length collimator element next to any non-
         collimator element that has an aperture. Note: MADX translations for non-drift elements can handle non-
-        collimator elements with an aperture so in this case this argument is ignored.
+        collimator elements
     dr12_drift_max : float, optional
-        Max deviation for drifts allowed before a correction matrix element is added. Default value is 1d-5. A
-        negative number means use default.
+        Max deviation for drifts allowed before a correction matrix element
     ix_branch : int, optional
         Index of lattice branch to use. Default = 0.
     err : bool
@@ -39126,7 +39614,10 @@ def write_opal_field_grid_file(opal_file_unit: typing.SupportsInt, ele: EleStruc
     Parameters
     ----------
     opal_file_unit : int
-        unit number to write to, if > 0 if < 0, nothing is written, and only maxfield is returned
+        unit number to write to, if > 0
+    if < 0 : 
+    nothing is written : 
+    and only maxfield is returned : 
     ele : EleStruct
         element to make map
     param : LatParamStruct
@@ -39183,11 +39674,16 @@ def write_time_particle_distribution(time_file_unit: typing.SupportsInt, bunch: 
     time_file_unit : int
         unit number to write to, if > 0
     bunch : BunchStruct
-        bunch to be written. Particles are drifted to bmad_bunch.t_center for output
+        bunch to be written.
+    Particles are drifted to bmad_bunch%t_center for output : 
     ele : EleStruct
         Element being tracked through.
     style : unknown, optional
-        Style of output file: 'BMAD' (default), 'OPAL', 'ASTRA', 'GPT'
+        Style of output file:
+    'BMAD' : 
+    'OPAL' : 
+    'ASTRA' : 
+    'GPT' : 
     branch : BranchStruct, optional
         Required for 'ASTRA' style
     format : unknown
@@ -39260,7 +39756,11 @@ def z_at_surface(ele: EleStruct, x: typing.SupportsFloat, y: typing.SupportsFloa
     Parameters
     ----------
     ele : EleStruct
-        Element x, y        -- real(rp): Photon coordinates on surface.
+        Element
+    x : float
+        Photon coordinates on surface.
+    y : float
+        Photon coordinates on surface.
     extend_grid : bool, optional
         If a grid is involved and (x, y) is outside of the grid, and extend_grid = True: Pretend (x, y) is at
         edge. Default is False.
@@ -39270,7 +39770,8 @@ def z_at_surface(ele: EleStruct, x: typing.SupportsFloat, y: typing.SupportsFloa
     z : float
         z coordinate.
     err_flag : bool
-        Set True if cannot compute z due to, say, point being outside of ellipseoid or grid bounds.
+        Set True if cannot compute z due to, say, point
+    being outside of ellipseoid or grid bounds. : 
     dz_dxy : float
         Surface slope at (x, y).
     
@@ -39303,6 +39804,11 @@ def zero_lr_wakes_in_lat(lat: LatStruct) -> None:
     ----------
     lat : LatStruct
         Lattice
+    
+    Returns
+    -------
+    %ele : unknown
+        :).b_cos -> Set to zero .wake.lr.mode(:).a_sin -> Set to zero .wake.lr.mode(:).a_cos -> Set to zero
     """
 def zlafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsFloat, res: typing.SupportsFloat) -> None:
     """

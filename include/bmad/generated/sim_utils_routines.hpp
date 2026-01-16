@@ -274,7 +274,7 @@ extern "C" bool fortran_create_a_spline(
 SplineStruct create_a_spline(FArray1D<Real> &r0, FArray1D<Real> &r1, double slope0, double slope1);
 extern "C" bool fortran_cross_product(
     Bmad::array_descriptor_t &a /* 1D_NOT_real in */,
-    Bmad::array_descriptor_t &b /* 1D_NOT_real inout */,
+    Bmad::array_descriptor_t &b /* 1D_NOT_real in */,
     Bmad::array_descriptor_t &c /* 1D_NOT_real out */
 );
 FixedArray1D<Real, 3> cross_product(FArray1D<Real> &a, FArray1D<Real> &b);
@@ -939,14 +939,14 @@ extern "C" bool fortran_quat_inverse(
 FixedArray1D<Real, 4> quat_inverse(FixedArray1D<Real, 4> q_in);
 extern "C" bool fortran_quat_mul_complex(
     Bmad::array_descriptor_t &q1 /* 1D_NOT_complex in */,
-    Bmad::array_descriptor_t &q2 /* 1D_NOT_complex inout */,
+    Bmad::array_descriptor_t &q2 /* 1D_NOT_complex in */,
     Bmad::array_descriptor_t &q3 /* 1D_NOT_complex in */,
     Bmad::array_descriptor_t &q4 /* 1D_NOT_complex inout */,
     Bmad::array_descriptor_t &q5 /* 1D_NOT_complex inout */,
     Bmad::array_descriptor_t &q6 /* 1D_NOT_complex inout */,
     Bmad::array_descriptor_t &q7 /* 1D_NOT_complex inout */,
     Bmad::array_descriptor_t &q8 /* 1D_NOT_complex inout */,
-    Bmad::array_descriptor_t &q9 /* 1D_NOT_complex inout */,
+    Bmad::array_descriptor_t &q9 /* 1D_NOT_complex in */,
     Bmad::array_descriptor_t &q_out /* 1D_NOT_complex out */
 );
 FixedArray1D<Complex, 4> quat_mul(
@@ -962,14 +962,14 @@ FixedArray1D<Complex, 4> quat_mul(
 );
 extern "C" bool fortran_quat_mul_real(
     Bmad::array_descriptor_t &q1 /* 1D_NOT_real in */,
-    Bmad::array_descriptor_t &q2 /* 1D_NOT_real inout */,
+    Bmad::array_descriptor_t &q2 /* 1D_NOT_real in */,
     Bmad::array_descriptor_t &q3 /* 1D_NOT_real in */,
     Bmad::array_descriptor_t &q4 /* 1D_NOT_real inout */,
     Bmad::array_descriptor_t &q5 /* 1D_NOT_real inout */,
     Bmad::array_descriptor_t &q6 /* 1D_NOT_real inout */,
     Bmad::array_descriptor_t &q7 /* 1D_NOT_real inout */,
     Bmad::array_descriptor_t &q8 /* 1D_NOT_real inout */,
-    Bmad::array_descriptor_t &q9 /* 1D_NOT_real inout */,
+    Bmad::array_descriptor_t &q9 /* 1D_NOT_real in */,
     Bmad::array_descriptor_t &q_out /* 1D_NOT_real out */
 );
 FixedArray1D<Real, 4> quat_mul(

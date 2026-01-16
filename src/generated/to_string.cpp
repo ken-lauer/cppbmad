@@ -2823,6 +2823,13 @@ std::string to_string(const Bmad::ComplexTaylorToMat6 &self) {
       {std::pair{"vec0", to_string(self.vec0)}, std::pair{"mat6", to_string(self.mat6)}}
   );
 }
+std::string to_string(const Bmad::ConcatTransferMat &self) {
+  return repr(
+      &self,
+      "Bmad::ConcatTransferMat",
+      {std::pair{"mat_out", to_string(self.mat_out)}, std::pair{"vec_out", to_string(self.vec_out)}}
+  );
+}
 std::string to_string(const Bmad::ConvertCoords &self) {
   return repr(
       &self,
@@ -3299,6 +3306,11 @@ std::string to_string(const Bmad::MatSympDecouple &self) {
       &self,
       "Bmad::MatSympDecouple",
       {std::pair{"stat", to_string(self.stat)},
+       std::pair{"U", to_string(self.U)},
+       std::pair{"V", to_string(self.V)},
+       std::pair{"Ubar", to_string(self.Ubar)},
+       std::pair{"Vbar", to_string(self.Vbar)},
+       std::pair{"G", to_string(self.G)},
        std::pair{"twiss1", to_string(self.twiss1)},
        std::pair{"twiss2", to_string(self.twiss2)},
        std::pair{"gamma", to_string(self.gamma)}}
@@ -3475,6 +3487,13 @@ std::string to_string(const Bmad::PhotonAbsorptionAndPhaseShift &self) {
        std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
+std::string to_string(const Bmad::PhotonAddToDetectorStatistics &self) {
+  return repr(
+      &self,
+      "Bmad::PhotonAddToDetectorStatistics",
+      {std::pair{"ix_pt", to_string(self.ix_pt)}, std::pair{"iy_pt", to_string(self.iy_pt)}}
+  );
+}
 std::string to_string(const Bmad::PhotonReflection &self) {
   return repr(
       &self,
@@ -3559,6 +3578,28 @@ std::string to_string(const Bmad::PointerToSuperLord &self) {
        std::pair{"lord_ptr", to_string(self.lord_ptr)}}
   );
 }
+std::string to_string(const Bmad::PointerToSurfaceDisplacementPt &self) {
+  return repr(
+      &self,
+      "Bmad::PointerToSurfaceDisplacementPt",
+      {std::pair{"ix", to_string(self.ix)},
+       std::pair{"iy", to_string(self.iy)},
+       std::pair{"xx", to_string(self.xx)},
+       std::pair{"yy", to_string(self.yy)},
+       std::pair{"pt", to_string(self.pt)}}
+  );
+}
+std::string to_string(const Bmad::PointerToSurfaceSegmentedPt &self) {
+  return repr(
+      &self,
+      "Bmad::PointerToSurfaceSegmentedPt",
+      {std::pair{"ix", to_string(self.ix)},
+       std::pair{"iy", to_string(self.iy)},
+       std::pair{"xx", to_string(self.xx)},
+       std::pair{"yy", to_string(self.yy)},
+       std::pair{"pt", to_string(self.pt)}}
+  );
+}
 std::string to_string(const Bmad::PointerToWakeEle &self) {
   return repr(
       &self,
@@ -3641,6 +3682,13 @@ std::string to_string(const Bmad::RadDampAndStocMats &self) {
        std::pair{"xfer_nodamp_mat", to_string(self.xfer_nodamp_mat)},
        std::pair{"err_flag", to_string(self.err_flag)},
        std::pair{"rad_int_branch", to_string(self.rad_int_branch)}}
+  );
+}
+std::string to_string(const Bmad::RadGIntegrals &self) {
+  return repr(
+      &self,
+      "Bmad::RadGIntegrals",
+      {std::pair{"int_g", to_string(self.int_g)}, std::pair{"int_g3", to_string(self.int_g3)}}
   );
 }
 std::string to_string(const Bmad::RadiationIntegrals &self) {
@@ -3832,7 +3880,10 @@ std::string to_string(const Tao::TaoEleShapeInfo &self) {
   return repr(
       &self,
       "Tao::TaoEleShapeInfo",
-      {std::pair{"e_shape", to_string(self.e_shape)}, std::pair{"label_name", self.label_name}}
+      {std::pair{"e_shape", to_string(self.e_shape)},
+       std::pair{"label_name", self.label_name},
+       std::pair{"y1", to_string(self.y1)},
+       std::pair{"y2", to_string(self.y2)}}
   );
 }
 std::string to_string(const Tao::TaoEvalFloorOrbit &self) {

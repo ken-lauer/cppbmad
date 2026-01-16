@@ -136,7 +136,9 @@ Parameters
 name : unknown
     Name of the species.
 default : int, optional
-    Default species to use if name is blank or 'ref_species'. If not present, a blank name is an error.
+    Default species to use if name is blank or 'ref_species'.
+If not present : 
+a blank name is an error. : 
 print_err : bool, optional
     Print error message? Default is True. If False, return species = invalid$,
 
@@ -289,10 +291,15 @@ Modules used:
 Parameters
 ----------
 spline : SplineStruct
-    .x0  -- X-component of a point. Note: points must be in assending order. .y0  -- Y-component of a point.
+%x0 : unknown
+    points must be in assending order.
+%y0 : 
+    Y-component of a point.
 
 Returns
 -------
+%coef : 
+    Spline coefficients at a point.
 ok : bool
     Set .false. if something is wrong (like less than 2 points used).
 )"""
@@ -339,7 +346,8 @@ length between an end point and the point just inside the end point.
 Parameters
 ----------
 x_knot : float
-    Array of x values for the knot points. Must have more than 2 points and be in asending order.
+    Array of x values for the knot points.
+Must have more than 2 points and be in asending order. : 
 y_knot : float
     Array of y values for the knot points. Must be same size as x_knot(:).
 x : float
@@ -759,6 +767,7 @@ This is essentially polint from Numerical Recipes.
 Parameters
 ----------
 xa : float
+ya : float
 x : float
 
 Returns

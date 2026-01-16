@@ -389,7 +389,7 @@ FixedArray1D<Real, 3> SimUtils::cross_product(FArray1D<Real> &a, FArray1D<Real> 
   _a_desc.rank = 1;
   _a_desc.data_ptr = a.data();
   _a_desc.dims[0] = a.size();
-  // b: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  // b: in NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _b_desc;
   _b_desc.rank = 1;
   _b_desc.data_ptr = b.data();
@@ -1411,7 +1411,7 @@ FixedArray1D<Complex, 4> SimUtils::quat_mul(
   _q1_desc.rank = 1;
   _q1_desc.data_ptr = q1.data();
   _q1_desc.dims[0] = q1.size();
-  // q2: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  // q2: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
   Bmad::array_descriptor_t _q2_desc;
   _q2_desc.rank = 1;
   _q2_desc.data_ptr = q2.data();
@@ -1476,7 +1476,7 @@ FixedArray1D<Complex, 4> SimUtils::quat_mul(
     _q8_desc.data_ptr = nullptr;
     _q8_desc.dims[0] = 0;
   }
-  // q9: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  // q9: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
   Bmad::array_descriptor_t _q9_desc;
   _q9_desc.rank = 1;
   if (q9.has_value()) {
@@ -1522,7 +1522,7 @@ FixedArray1D<Real, 4> SimUtils::quat_mul(
   _q1_desc.rank = 1;
   _q1_desc.data_ptr = q1.data();
   _q1_desc.dims[0] = q1.size();
-  // q2: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  // q2: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
   Bmad::array_descriptor_t _q2_desc;
   _q2_desc.rank = 1;
   _q2_desc.data_ptr = q2.data();
@@ -1587,7 +1587,7 @@ FixedArray1D<Real, 4> SimUtils::quat_mul(
     _q8_desc.data_ptr = nullptr;
     _q8_desc.dims[0] = 0;
   }
-  // q9: inout NOT (CppWrapperGeneralArgumentArray) (['0:3'])
+  // q9: in NOT (CppWrapperGeneralArgumentArray) (['0:3'])
   Bmad::array_descriptor_t _q9_desc;
   _q9_desc.rank = 1;
   if (q9.has_value()) {

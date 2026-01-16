@@ -2180,12 +2180,11 @@ void Bmad::concat_taylor(
       /* Bmad::array_descriptor_t& */ _taylor3_desc
   );
 }
-FixedArray2D<Real, 6, 6> Bmad::concat_transfer_mat(
+Bmad::ConcatTransferMat Bmad::concat_transfer_mat(
     FixedArray2D<Real, 6, 6> mat_1,
     FixedArray1D<Real, 6> vec_1,
     FixedArray2D<Real, 6, 6> mat_0,
-    FixedArray1D<Real, 6> vec_0,
-    FixedArray1D<Real, 6> vec_out
+    FixedArray1D<Real, 6> vec_0
 ) {
   // mat_1: in NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _mat_1_desc;
@@ -2193,7 +2192,7 @@ FixedArray2D<Real, 6, 6> Bmad::concat_transfer_mat(
   double _mat_1_vec[6 * 6];
   _mat_1_desc.data_ptr = _mat_1_vec;
   matrix_to_vec(mat_1, _mat_1_vec);
-  // vec_1: inout NOT (CppWrapperGeneralArgumentArray) (['6'])
+  // vec_1: in NOT (CppWrapperGeneralArgumentArray) (['6'])
   Bmad::array_descriptor_t _vec_1_desc;
   _vec_1_desc.rank = 1;
   _vec_1_desc.data_ptr = vec_1.data();
@@ -2204,7 +2203,7 @@ FixedArray2D<Real, 6, 6> Bmad::concat_transfer_mat(
   double _mat_0_vec[6 * 6];
   _mat_0_desc.data_ptr = _mat_0_vec;
   matrix_to_vec(mat_0, _mat_0_vec);
-  // vec_0: inout NOT (CppWrapperGeneralArgumentArray) (['6'])
+  // vec_0: in NOT (CppWrapperGeneralArgumentArray) (['6'])
   Bmad::array_descriptor_t _vec_0_desc;
   _vec_0_desc.rank = 1;
   _vec_0_desc.data_ptr = vec_0.data();
@@ -2215,11 +2214,12 @@ FixedArray2D<Real, 6, 6> Bmad::concat_transfer_mat(
   FixedArray2D<Real, 6, 6> mat_out;
   double _mat_out_vec[6 * 6];
   _mat_out_desc.data_ptr = _mat_out_vec;
-  // vec_out: inout NOT (CppWrapperGeneralArgumentArray) (['6'])
+  // vec_out: out NOT (CppWrapperGeneralArgumentArray) (['6'])
   Bmad::array_descriptor_t _vec_out_desc;
   _vec_out_desc.rank = 1;
-  _vec_out_desc.data_ptr = vec_out.data();
-  _vec_out_desc.dims[0] = vec_out.size();
+  FixedArray1D<Real, 6> _vec_out;
+  _vec_out_desc.data_ptr = _vec_out.data();
+  _vec_out_desc.dims[0] = _vec_out.size();
   fortran_concat_transfer_mat(
       /* Bmad::array_descriptor_t& */ _mat_1_desc,
       /* Bmad::array_descriptor_t& */ _vec_1_desc,
@@ -2229,7 +2229,7 @@ FixedArray2D<Real, 6, 6> Bmad::concat_transfer_mat(
       /* Bmad::array_descriptor_t& */ _vec_out_desc
   );
   vec_to_matrix(_mat_out_vec, mat_out);
-  return mat_out;
+  return ConcatTransferMat{mat_out, _vec_out};
 }
 void Bmad::control_bookkeeper(
     LatStruct &lat,
@@ -7919,15 +7919,7 @@ Bmad::mat6_to_complex_taylor(FixedArray1D<Complex, 6> vec0, FixedArray2D<Complex
   );
   return std::move(std::move(complex_taylor));
 }
-Bmad::MatSympDecouple Bmad::mat_symp_decouple(
-    FixedArray2D<Real, 4, 4> t0,
-    FixedArray2D<Real, 4, 4> U,
-    FixedArray2D<Real, 4, 4> V,
-    FixedArray2D<Real, 4, 4> Ubar,
-    FixedArray2D<Real, 4, 4> Vbar,
-    FixedArray2D<Real, 4, 4> G,
-    bool type_out
-) {
+Bmad::MatSympDecouple Bmad::mat_symp_decouple(FixedArray2D<Real, 4, 4> t0, bool type_out) {
   // t0: in NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
   Bmad::array_descriptor_t _t0_desc;
   _t0_desc.rank = 2;
@@ -7935,36 +7927,36 @@ Bmad::MatSympDecouple Bmad::mat_symp_decouple(
   _t0_desc.data_ptr = _t0_vec;
   matrix_to_vec(t0, _t0_vec);
   int _stat{};
-  // U: inout NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
+  // U: out NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
   Bmad::array_descriptor_t _U_desc;
   _U_desc.rank = 2;
+  FixedArray2D<Real, 4, 4> U;
   double _U_vec[4 * 4];
   _U_desc.data_ptr = _U_vec;
-  matrix_to_vec(U, _U_vec);
-  // V: inout NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
+  // V: out NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
   Bmad::array_descriptor_t _V_desc;
   _V_desc.rank = 2;
+  FixedArray2D<Real, 4, 4> V;
   double _V_vec[4 * 4];
   _V_desc.data_ptr = _V_vec;
-  matrix_to_vec(V, _V_vec);
-  // Ubar: inout NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
+  // Ubar: out NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
   Bmad::array_descriptor_t _Ubar_desc;
   _Ubar_desc.rank = 2;
+  FixedArray2D<Real, 4, 4> Ubar;
   double _Ubar_vec[4 * 4];
   _Ubar_desc.data_ptr = _Ubar_vec;
-  matrix_to_vec(Ubar, _Ubar_vec);
-  // Vbar: inout NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
+  // Vbar: out NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
   Bmad::array_descriptor_t _Vbar_desc;
   _Vbar_desc.rank = 2;
+  FixedArray2D<Real, 4, 4> Vbar;
   double _Vbar_vec[4 * 4];
   _Vbar_desc.data_ptr = _Vbar_vec;
-  matrix_to_vec(Vbar, _Vbar_vec);
-  // G: inout NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
+  // G: out NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
   Bmad::array_descriptor_t _G_desc;
   _G_desc.rank = 2;
+  FixedArray2D<Real, 4, 4> G;
   double _G_vec[4 * 4];
   _G_desc.data_ptr = _G_vec;
-  matrix_to_vec(G, _G_vec);
   TwissStruct _twiss1;
   TwissStruct _twiss2;
   double _gamma{};
@@ -7986,7 +7978,17 @@ Bmad::MatSympDecouple Bmad::mat_symp_decouple(
   vec_to_matrix(_Ubar_vec, Ubar);
   vec_to_matrix(_Vbar_vec, Vbar);
   vec_to_matrix(_G_vec, G);
-  return MatSympDecouple{_stat, std::move(_twiss1), std::move(_twiss2), _gamma};
+  return MatSympDecouple{
+      _stat,
+      U,
+      V,
+      Ubar,
+      Vbar,
+      G,
+      std::move(_twiss1),
+      std::move(_twiss2),
+      _gamma
+  };
 }
 Bmad::MatchEleToMat6 Bmad::match_ele_to_mat6(
     EleStruct &ele,
@@ -10023,38 +10025,25 @@ Bmad::photon_absorption_and_phase_shift(std::string material, double Energy) {
   );
   return PhotonAbsorptionAndPhaseShift{_absorption, _phase_shift, _err_flag};
 }
-void Bmad::photon_add_to_detector_statistics(
+Bmad::PhotonAddToDetectorStatistics Bmad::photon_add_to_detector_statistics(
     CoordStruct &orbit0,
     CoordStruct &orbit,
     EleStruct &ele,
-    std::optional<int> ix_pt,
-    std::optional<int> iy_pt,
     optional_ref<PixelPtStruct> pixel_pt
 ) {
-  int ix_pt_lvalue;
-  auto *_ix_pt{&ix_pt_lvalue};
-  if (ix_pt.has_value()) {
-    ix_pt_lvalue = ix_pt.value();
-  } else {
-    _ix_pt = nullptr;
-  }
-  int iy_pt_lvalue;
-  auto *_iy_pt{&iy_pt_lvalue};
-  if (iy_pt.has_value()) {
-    iy_pt_lvalue = iy_pt.value();
-  } else {
-    _iy_pt = nullptr;
-  }
+  int _ix_pt{};
+  int _iy_pt{};
   auto *_pixel_pt =
       pixel_pt.has_value() ? pixel_pt->get().get_fortran_ptr() : nullptr; // input, optional
   fortran_photon_add_to_detector_statistics(
       /* void* */ orbit0.get_fortran_ptr(),
       /* void* */ orbit.get_fortran_ptr(),
       /* void* */ ele.get_fortran_ptr(),
-      /* int* */ _ix_pt,
-      /* int* */ _iy_pt,
+      /* int& */ _ix_pt,
+      /* int& */ _iy_pt,
       /* void* */ _pixel_pt
   );
+  return PhotonAddToDetectorStatistics{_ix_pt, _iy_pt};
 }
 Bmad::PhotonReflection
 Bmad::photon_reflection(double graze_angle_in, double energy, PhotonReflectSurfaceStruct &surface) {
@@ -10459,31 +10448,15 @@ Bmad::pointer_to_super_lord(EleStruct &slave, std::optional<int> lord_type) {
       std::move((_lord_ptr ? std::make_optional<EleStruct>(_lord_ptr) : std::nullopt))
   };
 }
-std::optional<SurfaceDisplacementPtStruct> Bmad::pointer_to_surface_displacement_pt(
+Bmad::PointerToSurfaceDisplacementPt Bmad::pointer_to_surface_displacement_pt(
     EleStruct &ele,
     bool nearest,
     double x,
     double y,
-    std::optional<int> ix,
-    std::optional<int> iy,
-    std::optional<bool> extend_grid,
-    std::optional<double> xx,
-    std::optional<double> yy
+    std::optional<bool> extend_grid
 ) {
-  int ix_lvalue;
-  auto *_ix{&ix_lvalue};
-  if (ix.has_value()) {
-    ix_lvalue = ix.value();
-  } else {
-    _ix = nullptr;
-  }
-  int iy_lvalue;
-  auto *_iy{&iy_lvalue};
-  if (iy.has_value()) {
-    iy_lvalue = iy.value();
-  } else {
-    _iy = nullptr;
-  }
+  int _ix{};
+  int _iy{};
   bool extend_grid_lvalue;
   auto *_extend_grid{&extend_grid_lvalue};
   if (extend_grid.has_value()) {
@@ -10491,60 +10464,38 @@ std::optional<SurfaceDisplacementPtStruct> Bmad::pointer_to_surface_displacement
   } else {
     _extend_grid = nullptr;
   }
-  double xx_lvalue;
-  auto *_xx{&xx_lvalue};
-  if (xx.has_value()) {
-    xx_lvalue = xx.value();
-  } else {
-    _xx = nullptr;
-  }
-  double yy_lvalue;
-  auto *_yy{&yy_lvalue};
-  if (yy.has_value()) {
-    yy_lvalue = yy.value();
-  } else {
-    _yy = nullptr;
-  }
+  double _xx{};
+  double _yy{};
   void *_pt;
   fortran_pointer_to_surface_displacement_pt(
       /* void* */ ele.get_fortran_ptr(),
       /* bool& */ nearest,
       /* double& */ x,
       /* double& */ y,
-      /* int* */ _ix,
-      /* int* */ _iy,
+      /* int& */ _ix,
+      /* int& */ _iy,
       /* bool* */ _extend_grid,
-      /* double* */ _xx,
-      /* double* */ _yy,
+      /* double& */ _xx,
+      /* double& */ _yy,
       /* void* */ &_pt
   );
-  return std::move((_pt ? std::make_optional<SurfaceDisplacementPtStruct>(_pt) : std::nullopt));
+  return PointerToSurfaceDisplacementPt{
+      _ix,
+      _iy,
+      _xx,
+      _yy,
+      std::move((_pt ? std::make_optional<SurfaceDisplacementPtStruct>(_pt) : std::nullopt))
+  };
 }
-std::optional<SurfaceSegmentedPtStruct> Bmad::pointer_to_surface_segmented_pt(
+Bmad::PointerToSurfaceSegmentedPt Bmad::pointer_to_surface_segmented_pt(
     EleStruct &ele,
     bool nearest,
     double x,
     double y,
-    std::optional<int> ix,
-    std::optional<int> iy,
-    std::optional<bool> extend_grid,
-    std::optional<double> xx,
-    std::optional<double> yy
+    std::optional<bool> extend_grid
 ) {
-  int ix_lvalue;
-  auto *_ix{&ix_lvalue};
-  if (ix.has_value()) {
-    ix_lvalue = ix.value();
-  } else {
-    _ix = nullptr;
-  }
-  int iy_lvalue;
-  auto *_iy{&iy_lvalue};
-  if (iy.has_value()) {
-    iy_lvalue = iy.value();
-  } else {
-    _iy = nullptr;
-  }
+  int _ix{};
+  int _iy{};
   bool extend_grid_lvalue;
   auto *_extend_grid{&extend_grid_lvalue};
   if (extend_grid.has_value()) {
@@ -10552,34 +10503,28 @@ std::optional<SurfaceSegmentedPtStruct> Bmad::pointer_to_surface_segmented_pt(
   } else {
     _extend_grid = nullptr;
   }
-  double xx_lvalue;
-  auto *_xx{&xx_lvalue};
-  if (xx.has_value()) {
-    xx_lvalue = xx.value();
-  } else {
-    _xx = nullptr;
-  }
-  double yy_lvalue;
-  auto *_yy{&yy_lvalue};
-  if (yy.has_value()) {
-    yy_lvalue = yy.value();
-  } else {
-    _yy = nullptr;
-  }
+  double _xx{};
+  double _yy{};
   void *_pt;
   fortran_pointer_to_surface_segmented_pt(
       /* void* */ ele.get_fortran_ptr(),
       /* bool& */ nearest,
       /* double& */ x,
       /* double& */ y,
-      /* int* */ _ix,
-      /* int* */ _iy,
+      /* int& */ _ix,
+      /* int& */ _iy,
       /* bool* */ _extend_grid,
-      /* double* */ _xx,
-      /* double* */ _yy,
+      /* double& */ _xx,
+      /* double& */ _yy,
       /* void* */ &_pt
   );
-  return std::move((_pt ? std::make_optional<SurfaceSegmentedPtStruct>(_pt) : std::nullopt));
+  return PointerToSurfaceSegmentedPt{
+      _ix,
+      _iy,
+      _xx,
+      _yy,
+      std::move((_pt ? std::make_optional<SurfaceSegmentedPtStruct>(_pt) : std::nullopt))
+  };
 }
 Bmad::PointerToWakeEle Bmad::pointer_to_wake_ele(EleStruct &ele) {
   double _delta_s{};
@@ -10728,7 +10673,7 @@ void Bmad::ptc_calculate_tracking_step_size(
     _crossover_desc.data_ptr = nullptr;
     _crossover_desc.dims[0] = 0;
   }
-  // crossover_wiggler: inout NOT (CppWrapperGeneralArgumentArray) (['2'])
+  // crossover_wiggler: in NOT (CppWrapperGeneralArgumentArray) (['2'])
   Bmad::array_descriptor_t _crossover_wiggler_desc;
   _crossover_wiggler_desc.rank = 1;
   if (crossover_wiggler.has_value()) {
@@ -10827,7 +10772,7 @@ void Bmad::ptc_layouts_resplit(
     _crossover_desc.data_ptr = nullptr;
     _crossover_desc.dims[0] = 0;
   }
-  // crossover_wiggler: inout NOT (CppWrapperGeneralArgumentArray) (['2'])
+  // crossover_wiggler: in NOT (CppWrapperGeneralArgumentArray) (['2'])
   Bmad::array_descriptor_t _crossover_wiggler_desc;
   _crossover_wiggler_desc.rank = 1;
   if (crossover_wiggler.has_value()) {
@@ -11058,13 +11003,12 @@ Bmad::RadDampAndStocMats Bmad::rad_damp_and_stoc_mats(
       std::move(_rad_int_branch)
   };
 }
-FixedArray1D<Real, 2> Bmad::rad_g_integrals(
+Bmad::RadGIntegrals Bmad::rad_g_integrals(
     EleStruct &ele,
     int where,
     CoordStruct &orb_in,
     CoordStruct &orb_out,
     double int_g2,
-    double int_g3,
     double g_tol,
     double g2_tol,
     double g3_tol
@@ -11075,6 +11019,7 @@ FixedArray1D<Real, 2> Bmad::rad_g_integrals(
   FixedArray1D<Real, 2> _int_g;
   _int_g_desc.data_ptr = _int_g.data();
   _int_g_desc.dims[0] = _int_g.size();
+  double _int_g3{};
   fortran_rad_g_integrals(
       /* void* */ ele.get_fortran_ptr(),
       /* int& */ where,
@@ -11082,12 +11027,12 @@ FixedArray1D<Real, 2> Bmad::rad_g_integrals(
       /* void* */ orb_out.get_fortran_ptr(),
       /* Bmad::array_descriptor_t& */ _int_g_desc,
       /* double& */ int_g2,
-      /* double& */ int_g3,
+      /* double& */ _int_g3,
       /* double& */ g_tol,
       /* double& */ g2_tol,
       /* double& */ g3_tol
   );
-  return _int_g;
+  return RadGIntegrals{_int_g, _int_g3};
 }
 Bmad::RadiationIntegrals Bmad::radiation_integrals(
     LatStruct &lat,

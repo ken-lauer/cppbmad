@@ -188,6 +188,15 @@ a number of data points equal to N has been entered.
 initFixedWindowLS must be called prior to calling this function.  destFixedWindowLS should be
 called when the instance is no longer needed.
 
+Parameters
+----------
+ynew: : float
+    New data point.
+
+Returns
+-------
+<return value) : float
+    Derivative of fit polynomial evaluated at end of window.
 )"""
   );
   py::class_<SimUtils::FourierAmplitude, std::unique_ptr<SimUtils::FourierAmplitude>>(

@@ -238,7 +238,13 @@ into : bool
 Returns
 -------
 map : MadMapStruct
-    Fringe dipole map. .k(6)     -- 0th order map. .r(6,6)   -- 1st order map. .t(6,6,6) -- 2nd order map.
+    Fringe dipole map.
+%k : 
+    0th order map.
+%r : 
+    1st order map.
+%t : 
+    2nd order map.
 )"""
   );
   m.def(
@@ -368,9 +374,14 @@ The equivalent MAD-8 routine is: TMTILT
 Parameters
 ----------
 map : MadMapStruct
-    Unrotated transport map. .k(6)     -- 0th order map. .r(6,6)   -- 1st order map. .t(6,6,6) -- 2nd order
-    map.
+    Unrotated transport map.
     This parameter is an input/output and is modified in-place. As an output: Rotated transport map.
+%k : 
+    0th order map.
+%r : 
+    1st order map.
+%t : 
+    2nd order map.
 tilt : float
     Tilt
 )"""
@@ -521,13 +532,13 @@ Hbar : float
       R"""(Parameters
 ----------
 lat_in : LatStruct
-    Input lattice. .branch(:).ele(:).select  -- Roughly: Set True to keep and False to hybridize. See above.
+    Input lattice.
 lat_out : LatStruct
     Lattice with hybrid elements. Note: Lat_out must not be the same actual argument as lat_in.
 use_taylor : bool, optional
     If present and True then the hybrid elements will have a taylor series instead of a simple linear matrix.
     If an element to be concatenated has a taylor series then this taylor series will be concatenated with the
-    other elements in the hybrid element.
+    other elements
 orb0_arr : CoordArrayStruct, optional
     Central orbit for taylor stuff. Each orb0_arr(i).orbit(:) holds the orbit for the i^th lattice branch
 )"""
@@ -737,6 +748,10 @@ c0 : CoordStruct
 
 Returns
 -------
+%c0 : 
+    0th order transfer matrix.
+%mat6 : 
+    6x6 1st order transfer matrix.
 c1 : CoordStruct
     Coordinates at the end of element.
 )"""
@@ -971,11 +986,19 @@ Parameters
 t6 : float
     1-turn transfer matrix
 mode : NormalModesStruct
-    normal mode emittances .a.emittance -- real(rp): a-mode emittance .b.emittance -- real(rp): b-mode
-    emittance .z.emittance -- real(rp): z-mode emittance .a.tune      -- real(rp): a-mode tune.  Used to
-    associate emittances with the proper mode. .b.tune      -- real(rp): b-mode tune.  Used to associate
-    emittances with the proper mode. .z.tune      -- real(rp): z-mode tune.  Used to associate emittances with
-    the proper mode.
+    normal mode emittances
+%a%emittance : float
+    a-mode emittance
+%b%emittance : float
+    b-mode emittance
+%z%emittance : float
+    z-mode emittance
+%a%tune : float
+    a-mode tune.  Used to associate emittances with the proper mode.
+%b%tune : float
+    b-mode tune.  Used to associate emittances with the proper mode.
+%z%tune : float
+    z-mode tune.  Used to associate emittances with the proper mode.
 
 Returns
 -------
@@ -1241,10 +1264,7 @@ kick_mat : float
       R"""(Parameters
 ----------
 ele : EleStruct
-    Element with given orientation. .vec0(6)         -- 0th order part of the transfer map. .mat6(6,6)
-    -- 1st order part of the transfer map (Jacobian). .map_ref_orb_in  -- Reference orbit at entrance end.
-    .map_ref_orb_out -- Reference orbit at exit end. .value(x_offset$), .value(x_pitch$), .value(tilt$), etc.
-    -- Offsets, tilts, and pitches
+    Element with given orientation.
 param : LatParamStruct
 )"""
   );
@@ -1297,20 +1317,35 @@ complex_taylor : ComplexTaylorStruct
       "mat_symp_decouple return type"
   )
       .def_readonly("stat", &Bmad::MatSympDecouple::stat)
+      .def_readonly("U", &Bmad::MatSympDecouple::U)
+      .def_readonly("V", &Bmad::MatSympDecouple::V)
+      .def_readonly("Ubar", &Bmad::MatSympDecouple::Ubar)
+      .def_readonly("Vbar", &Bmad::MatSympDecouple::Vbar)
+      .def_readonly("G", &Bmad::MatSympDecouple::G)
       .def_readonly("twiss1", &Bmad::MatSympDecouple::twiss1)
       .def_readonly("twiss2", &Bmad::MatSympDecouple::twiss2)
       .def_readonly("gamma", &Bmad::MatSympDecouple::gamma)
-      .def("__len__", [](const Bmad::MatSympDecouple &) { return 4; })
+      .def("__len__", [](const Bmad::MatSympDecouple &) { return 9; })
       .def("__getitem__", [](const Bmad::MatSympDecouple &s, int i) -> py::object {
         if (i < 0)
-          i += 4;
+          i += 9;
         if (i == 0)
           return py::cast(s.stat);
         if (i == 1)
-          return py::cast(s.twiss1);
+          return py::cast(s.U);
         if (i == 2)
-          return py::cast(s.twiss2);
+          return py::cast(s.V);
         if (i == 3)
+          return py::cast(s.Ubar);
+        if (i == 4)
+          return py::cast(s.Vbar);
+        if (i == 5)
+          return py::cast(s.G);
+        if (i == 6)
+          return py::cast(s.twiss1);
+        if (i == 7)
+          return py::cast(s.twiss2);
+        if (i == 8)
           return py::cast(s.gamma);
         throw py::index_error();
       });
@@ -1318,11 +1353,6 @@ complex_taylor : ComplexTaylorStruct
       "mat_symp_decouple",
       &Bmad::mat_symp_decouple,
       py::arg("t0"),
-      py::arg("U"),
-      py::arg("V"),
-      py::arg("Ubar"),
-      py::arg("Vbar"),
-      py::arg("G"),
       py::arg("type_out"),
       R"""(Parameters
 ----------
@@ -1330,16 +1360,20 @@ t0 : float
     Input matrix
 stat : int
     status of results: ok$, in_stop_band$, or unstable$
-U : 
-V : 
-Ubar : 
-Vbar : 
-G : 
+u : unknown
+    See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+v : unknown
+    See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+ubar : unknown
+    See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+vbar : unknown
+    See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+g : unknown
+    See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
 twiss1 : TwissStruct
-    Twiss params for the "upper left" mode. .phi     -- Rotation angle in radians, 0 < .PHI < twopi
+    Twiss params for the "upper left" mode.
 twiss2 : TwissStruct
-    Twiss params for the "lower right" mode. u(4,4), v(4,4), ubar(4,4), vbar(4,4), g(4,4) -- Real(rp): See MGB
-    CBN 85-2 and PPB/DLR PAC89 papers for more info.
+    Twiss params for the "lower right" mode.
 gamma : float
     gamma_c factor.
 type_out : bool
@@ -1386,7 +1420,7 @@ vec0 : float
 err_flag : bool
     Set true if there is an error. False otherwise.
 include_delta_time : bool, optional
-    If False, ignore any finite ele.value(delta_time$). Default is True.
+    If False, ignore any finite ele.value(delta_time$).
 set_trombone : bool, optional
     Default is False. If True, set the beginning and ending Twiss values in the element to create a phase
     trombone.
@@ -1440,8 +1474,8 @@ Parameters
 ele : EleStruct
     Bmad element with misalignments.
 use_offsets : bool
-    Does ptc_fibre include element offsets, pitches and tilt? This argument is ignored if the element is a
-    patch.
+    Does ptc_fibre include element offsets, pitches and tilt?
+This argument is ignored if the element is a patch. : 
 for_layout : bool
     If True then fibre is being created as part of a layout as opposed to a stand-alone fibre
 
@@ -1500,23 +1534,19 @@ mom_comp : float
       R"""(Parameters
 ----------
 track : CooordStruct
-    multi-turn tracking data to analyze. track(i) is the particle position at a given point in the lat on the
-    i^th turn.
+    multi-turn tracking data to analyze. track(i) is the particle position at a given point
 i_dim : int
     number of dimensions used in the tracking: 2, or 4.
 track0 : CoordStruct
     Closed orbit.
 ele : EleStruct
-    structure holding the 1-turn matrix and Twiss parameters. .mat6        -- Symplectified 1-turn matrix. If
-    you want the true non-symplectified 1-turn matrix use the routine multi_turn_tracking_to_mat. .a.beta, etc
-    -- a-mode beta,  etc. .a.phi       -- a-mode fractional tune in radians. .a.sigma     -- a-mode amplitude
-    = sqrt(ele.a.beta * ele.a.sigma) .c_mat       -- c coupling matrix (only with i_dim = 4)
+    structure holding the 1-turn matrix and Twiss parameters.
 stable : bool
     Is motion stable?
 growth_rate : float
     Unstable growth rate (= 0 if stable).
 chi : float
-    How symplectic the computed 1-turn matrix is. See mat_symp_check for more details.
+    How symplectic the computed 1-turn matrix is.
 err_flag : bool
     Set true if there is an error. False otherwise.
 )"""
@@ -1536,11 +1566,16 @@ Where "AAA" is the atomic formula for the top layer crystal and "BBB" is the sec
 Parameters
 ----------
 ele : EleStruct
-    Multilayer element. .component_name -- Character: Multilayer type name. Assumed upper case. A blank name
-    is not an error and results in nothing set. .value(e_tot$)  -- Photon energy in eV.
+    Multilayer element.
+%component_name : unknown
+    Multilayer type name. Assumed upper case.
+A blank name is not an error and results in nothing set. : 
+%value : 
+    Photon energy in eV.
 
 Returns
 -------
+%photon%material%f0_m2 : 
 err_flag : bool
     Set True if multilayer type is unrecognized. False otherwise.
 )"""
@@ -1558,14 +1593,14 @@ err_flag : bool
 ele : ElePointerStruct
     Element in a multipass chain.
 ix_pass : int
-    Multipass pass number of the input element. Set to -1 if input element is not in a multipass section.
+    Multipass pass number of the input element.
 n_links : int
     Number of times the physical element is passed through.
 chain_ele : ElePointerStruct, optional
     pointers to the elements of the chain. Note: chain_ele(ix_pass).ele => ele
 use_super_lord : bool, optional
     If present and True and if ele is a super_slave, construct the chain_ele(:) array using the corresponding
-    super_lords. Output
+    super_lords.
 )"""
   );
   py::class_<Bmad::Multipole1AbToKt, std::unique_ptr<Bmad::Multipole1AbToKt>>(
@@ -1698,13 +1733,11 @@ tn : float
       R"""(Parameters
 ----------
 ele : EleStruct
-    Element. .value()      -- ab_multipole values.
+    Element.
 use_ele_tilt : bool
-    If True then include ele.value(tilt_tot$) in calculations. use_ele_tilt is ignored in the case of
-    multipole$ elements.
+    If True then include ele.value(tilt_tot$) in calculations.
 ix_pole_max : int
-    Index of largest nonzero a(:) or b(:) pole. Set to -1 if all multipoles are zero. ix_pole_max is set
-    independent of a nonzero b1 (if present).
+    Index of largest nonzero a(:) or b(:) pole. Set to -1 if all multipoles are zero.
 a : float
     Array of multipole values.
 b : float
@@ -1712,10 +1745,7 @@ b : float
 pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
 include_kicks : int, optional
-    Ignored for for pole_type == electric$ for non-elseparator elements. Possibilities are: no$
-    -- Default. Do not include any kick components in a and b multipoles. include_kicks$           -- Include
-    hkick/vkick/dg in the n = 0 components. Also included are quad k1, sextupole k2 and octupole k3
-    components.
+    Ignored for for pole_type == electric$ for non-elseparator elements.
 b1 : float
     If present, b1 is set to the value of the b(1) component of the b(:) array and b(1) is set to zero. Also
     ix_pole_max is ajusted as needed. This is used by routines that want to handle b(1) in a special way in
@@ -1738,8 +1768,7 @@ original : bool, optional
 ele : EleStruct
     Lattice element.
 use_ele_tilt : bool
-    If True then include ele.value(tilt_tot$) in calculations. use_ele_tilt is ignored in the case of
-    multipole$ elements.
+    If True then include ele.value(tilt_tot$) in calculations.
 ix_pole_max : int
     Index of largest nonzero pole.
 knl : float
@@ -1749,9 +1778,7 @@ tilt : float
 pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
 include_kicks : int, optional
-    Possibilities are: no$                      -- Default. Do not include any kick components in a and b
-    multipoles. include_kicks$           -- Include hkick/vkick/dg in the n = 0 components. Also included are
-    quad k1, sextupole k2 and octupole k3 components.
+    Possibilities are:
 )"""
   );
   m.def(
@@ -1762,8 +1789,7 @@ include_kicks : int, optional
       R"""(Parameters
 ----------
 ele : EleStruct
-    Element holding the multipoles. .a_pole(0:n_pole_maxx) -- Multipole An array .b_pole(0:n_pole_maxx) --
-    Multipole Bn array
+    Element holding the multipoles.
 who : int
     electric$, magnetic$, or all$
 zero : bool, optional
@@ -1806,6 +1832,11 @@ pole_type : int, optional
 ref_orb_offset : bool, optional
     If True and n = 0 then use the MAD convention and model the multipole as a zero length bend with bending
     angle knl. Default is False.
+
+Returns
+-------
+%vec : unknown
+    Y kick.
 )"""
   );
   m.def(
@@ -1828,7 +1859,7 @@ ref_species : int
 ele : EleStruct
     Lattice element containing multipoles.
 orbit : CoordStruct
-    coordinates of particle around which the multipole kick matrix is computed.
+    coordinates of particle around which the
 factor : float
     Factor to scale knl by.
 mat6 : float

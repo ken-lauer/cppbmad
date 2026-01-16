@@ -12,8 +12,7 @@ void init_Bmad_routines_c(py::module &m) {
       R"""(Parameters
 ----------
 ele : EleStruct
-    Element with C matrix and Twiss parameters. .c_mat(2,2) -- C matrix. .a          -- a-mode Twiss
-    parameters .b          -- b-mode Twiss parameters
+    Element with C matrix and Twiss parameters.
 cbar_mat : float
     Cbar matrix.
 )"""
@@ -45,11 +44,13 @@ Parameters
 bunch : 
     Bunch_struct
 print_err : bool, optional
-    If present and False then suppress "no eigen-system found" messages.
+    If present and False then suppress
+"no eigen-system found" messages. : 
 is_time_coords : bool, optional
     Are particle coords using time coords. Default is False.
 ele : EleStruct, optional
-    Element being tracked through. Must be present if is_time_coords = True. Output
+    Element being tracked through. Must be present if is_time_coords = True.
+Output : 
 bunch_params : BunchParamsStruct
 error : bool
     Set True if there is an error.
@@ -85,12 +86,14 @@ slice_center : float
 slice_spread : float
     +/- spread in slice about center.
 print_err : bool, optional
-    If present and False then suppress "no eigen-system found" messages.
+    If present and False then suppress
+"no eigen-system found" messages. : 
 is_time_coords : bool, optional
-    Default is False. If True, input bunch is using time coordinates in which case there will be a conversion
-    to s-coords before bunch_params are computed.
+    Default is False. If True, input bunch is using time coordinates in which
+case there will be a conversion to s-coords before bunch_params are computed. : 
 ele : EleStruct, optional
-    Element being tracked through. Must be present if is_time_coords = True. Output
+    Element being tracked through. Must be present if is_time_coords = True.
+Output : 
 params : BunchParamsStruct
 err : bool
     Set True if there is an error.
@@ -118,15 +121,17 @@ Parameters
 bunch : 
     bunch_struct
 slice_bounds : float
-    Slice bounds in percentage of particles ordered by z-position. 0.0 is the back of the bunch and 1.0 is the
-    front of the bunch.
+    Slice bounds in percentage of particles ordered by z-position.
+0.0 is the back of the bunch and 1.0 is the front of the bunch. : 
 print_err : bool, optional
-    If present and False then suppress "no eigen-system found" messages.
+    If present and False then suppress
+"no eigen-system found" messages. : 
 is_time_coords : bool, optional
-    Default is False. If True, input bunch is using time coordinates in which case there will be a conversion
-    to s-coords before bunch_params are computed.
+    Default is False. If True, input bunch is using time coordinates in which
+case there will be a conversion to s-coords before bunch_params are computed. : 
 ele : EleStruct, optional
-    Element being tracked through. Must be present if is_time_coords = True. Output
+    Element being tracked through. Must be present if is_time_coords = True.
+Output : 
 params : BunchParamsStruct
 err : bool
     Set True if there is an error.
@@ -225,7 +230,9 @@ bunch : BunchStruct
 Returns
 -------
 bunch_params : BunchParamStruct
-    Structure holding average centroid.spin(3) -- (x,y,z) polarization.
+    Structure holding average
+centroid%spin : 
+    (x,y,z) polarization.
 )"""
   );
   m.def(
@@ -237,14 +244,13 @@ bunch_params : BunchParamStruct
       R"""(Parameters
 ----------
 lord1 : EleStruct
-    First slave. .key .sub_key
+    First slave. .key
 lord2 : EleStruct
     Second slave. .key .sub_key
 slave : EleStruct
-    Super_slave element. .key        -- Set to -1 if there is an error. .sub_key
-create_jumbo_slave : bool, optional
-    If True then slave.key will be set to em_field. -- Logical, optional: If True then slave.key will be set
-    to em_field. Default is False.
+    Super_slave element.
+create_jumbo_slave : unknown, optional
+    If True then slave.key will be set to em_field. Default is False.
 )"""
   );
   py::class_<Bmad::CalcWallRadius, std::unique_ptr<Bmad::CalcWallRadius>>(
@@ -309,6 +315,11 @@ ix_vertex : int
 ----------
 branch : BranchStruct
     Lattice branch
+    This parameter is an input/output and is modified in-place. As an output: Synchrotron tune (radians). If
+    unstable tune = 0.
+    This parameter is an input/output and is modified in-place. As an output: Is the mode stable? If no rf
+    then tune is zero but is stable.
+    This parameter is an input/output and is modified in-place. As an output: 6x6 1-turn matrix.
 )"""
   );
   m.def(
@@ -364,8 +375,7 @@ particle_at : int
 param : LatParamStruct
     Lattice global parameter structure.
 old_orb : CoordStruct, optional
-    Old coordinates at last check. Needed if ele.aperture_at = wall_transition$. If not present then wall
-    transitions will be ignored.
+    Old coordinates at last check. Needed if ele.aperture_at = wall_transition$.
 check_momentum : bool, optional
     If present and false then checking of p_x and p_y will be disabled.
 )"""
@@ -511,8 +521,7 @@ err_flag : bool
 lat : LatStruct
     Lat
 delta_e : float
-    +/- Delta energy used for the calculation. Notice that the energy difference between high and low is 2 *
-    delta_e. If 0 then default of 1.0d-4 is used.
+    +/- Delta energy used for the calculation. Notice that the energy difference
     This parameter is an input/output and is modified in-place. As an output: Set to 1.0d-4 if on input
     DELTA_E =< 0.
 chrom_a : float
@@ -552,7 +561,7 @@ lat : LatStruct
     Lat to use,
     This parameter is an input/output and is modified in-place. As an output: Lat with sextupole set
 delta_e : float
-    Delta energy used for the calculation. If 0 then default of 1.0d-4 is used.
+    Delta energy used for the calculation.
     This parameter is an input/output and is modified in-place. As an output: Set to 1.0d-4 if on input
     DELTA_E =< 0.
 target_x : float
@@ -615,19 +624,16 @@ lat : LatStruct
     Lat to track through.
 closed_orb : CoordStruct
     closed_orb(nt) is the initial guess where nt = 0 for direction = 1 and nt = lat.n_ele_track for direction
-    = -1. Additionally, if i_dim = 4, then closed_orb(nt).vec(6) is used as the energy around which the closed
-    orbit is calculated.
+    = -1. Additionally, if i_dim = 4, then closed_orb(nt).vec(6) is used as the energy
     This parameter is an input/output and is modified in-place. As an output: Closed orbit. closed_orb(i)
 i_dim : int, optional
     Phase space dimensions to use: = 4  Transverse closed orbit at constant energy (RF off). (dE/E =
     closed_orb(0).vec(6)) = 5 Transverse closed orbit at constant energy (RF off) with the energy adjusted so
-    that vec(5) is the same at the beginning and at the end. = 6 True closed orbit. Default: 4 if RF is off, 6
-    if RF is on.
+    that vec(5) is the same at the beginning and at the end. = 6 True closed orbit.
 direction : int, optional
-    Direction of tracking. +1 --> forwad (default), -1 --> backward. The closed orbit will be dependent on
-    direction only in the case that radiation damping is turned on.
+    Direction of tracking.
 ix_branch : int, optional
-    Lattice branch to find the closed orbit of. Default is 0 (main branch).
+    Lattice branch to find the closed orbit of.
 err_flag : bool
     Set true if there is an error. False otherwise.
 print_err : bool, optional
@@ -649,14 +655,13 @@ print_err : bool, optional
 lat : LatStruct
     Lat to track through.
 closed_orb : CoordStruct
-    closed orbit. This routine will allocate this array for you.
+    closed orbit.
 i_dim : int
-    = 2,4  Transverse closed orbit at constant energy. = 6    Full closed orbit using the entire transfer 6x6
-    matrix.
+    = 2,4  Transverse closed orbit at constant energy.
 eps_rel : float, optional
-    Relative allowed error. Default is bmad_com.rel_tol_tracking
+    Relative allowed error.
 eps_abs : float, optional
-    Absolute allowed error. Default is bmad_com.abs_tol_tracking
+    Absolute allowed error.
 init_guess : CoordStruct, optional
     Starting guess for the closed orbit at the start of the lattice. Set init_guess.vec(6) to the appropriate
     value of pz when calculating off-energy orbits. If not present then the origin will be used.
@@ -946,7 +951,8 @@ orb_taylor : TaylorStruct
 ele : EleStruct
     Element containing a Taylor map.
 spin_taylor : TaylorStruct, optional
-    Spin map to propagate Output
+    Spin map to propagate
+Output : 
 orb_taylor : TaylorStruct
     Concatinated orbital map
 err_flag : bool
@@ -979,11 +985,29 @@ Parameters
 taylor1 : TaylorStruct
     Taylor map.
 taylor2 : TaylorStruct
-    Taylor map. Output
+    Taylor map.
+Output : 
 taylor3 : TaylorStruct
     Concatinated map
 )"""
   );
+  py::class_<Bmad::ConcatTransferMat, std::unique_ptr<Bmad::ConcatTransferMat>>(
+      m,
+      "ConcatTransferMat",
+      "concat_transfer_mat return type"
+  )
+      .def_readonly("mat_out", &Bmad::ConcatTransferMat::mat_out)
+      .def_readonly("vec_out", &Bmad::ConcatTransferMat::vec_out)
+      .def("__len__", [](const Bmad::ConcatTransferMat &) { return 2; })
+      .def("__getitem__", [](const Bmad::ConcatTransferMat &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.mat_out);
+        if (i == 1)
+          return py::cast(s.vec_out);
+        throw py::index_error();
+      });
   m.def(
       "concat_transfer_mat",
       &Bmad::concat_transfer_mat,
@@ -991,7 +1015,6 @@ taylor3 : TaylorStruct
       py::arg("vec_1"),
       py::arg("mat_0"),
       py::arg("vec_0"),
-      py::arg("vec_out"),
       R"""(Subroutine concat_transfer_mat (mat_1, vec_1, mat_0, vec_0, mat_out, vec_out)
 
 Routine to concatinate two linear maps:
@@ -1002,12 +1025,18 @@ Parameters
 ----------
 mat_1 : float
     Map from s1 to s2
+vec_1 : float
+    Map from s1 to s2
 mat_0 : float
+    Map from s0 to s1
+vec_0 : float
     Map from s0 to s1
 
 Returns
 -------
 mat_out : float
+    Map from s0 to s2
+vec_out : float
     Map from s0 to s2
 )"""
   );
@@ -1022,8 +1051,7 @@ mat_out : float
 lat : LatStruct
     lattice to be used
 ele : EleStruct, optional
-    Element whose attribute values have been changed. If not present bookkeeping will be done for all
-    elements.
+    Element whose attribute values have been changed. If not present bookkeeping will be done
 err_flag : bool, optional
     Set True if there is an error. False otherwise.
 )"""
@@ -1408,18 +1436,16 @@ state_str : unknown
       R"""(Parameters
 ----------
 body_position : FloorPositionStruct
-    Element body frame coordinates. .r(3)               [x, y, s] position with s = Position from entrance end
-    of element.
+    Element body frame coordinates.
 ele : EleStruct
     element that local_position coordinates are relative to.
 w_mat : float, optional
     W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
 calculate_angles : bool, optional
     calculate angles for local_position Default: True. False returns local_position angles (.theta, .phi,
-    .psi) = 0. Output
+    .psi) = 0.
 local_position : FloorPositionStruct
-    Local laboratory coordinates. .r(3)               [x, y, s] position with s = Position from entrance end
-    of element.
+    Local laboratory coordinates.
 )"""
   );
   m.def(
@@ -1433,15 +1459,13 @@ local_position : FloorPositionStruct
       R"""(Parameters
 ----------
 body_position : FloorPositionStruct
-    Element body frame coordinates. .r                  [x, y, s] position with s = Position from entrance end
-    of element .
+    Element body frame coordinates.
 ele : EleStruct
     element that rel_exit coordinates are relative to.
 w_mat : float, optional
     W matrix at to transform vectors. v_rel_exit = w_mat . v_body v_body     = transpose(w_mat) . v_rel_exit
 calculate_angles : bool, optional
     calculate angles for rel_exit Default: True. False returns rel_exit angles (.theta, .phi, .psi) = 0.
-    Output
 rel_exit : FloorPositionStruct
     Cartesian coordinates relative to exit of the element.
 )"""
@@ -1518,13 +1542,11 @@ ele0 : EleStruct
 ele1 : EleStruct
     Element that local_coords is with respect to.
 status : bool
-    ok$             -> Local_coords found. patch_problem$  -> No solution due to a patch element. outside$
-    -> Outside of lattice ends (for open lattices).
+    ok$             -> Local_coords found. patch_problem$  -> No solution due to a patch element.
 w_mat : float
     W matrix at s, to transform vectors from floor to local. w_mat will only be well defined if status = ok$
 local_coords : FloorPositionStruct
-    .r = [x, y, s] position in curvilinear coordinates with respect to ele1 with s relative to start the
-    lattice branch.
+    .r = [x, y, s] position in curvilinear coordinates
 )"""
   );
   py::class_<
@@ -1563,7 +1585,6 @@ ele : EleStruct
     element to find local coordinates of.
 status : bool
     longitudinal position: inside$: Inside the element. upstream_end$: At upstream end of element or beyound.
-    downstream_end$: At downstream end of element or beyound.
 w_mat : float
     W matrix at s, to transform vectors. v_global = w_mat.v_local v_local = transpose(w_mat).v_global
 relative_to : int, optional
@@ -1588,8 +1609,7 @@ floor0 : FloorPositionStruct
 global_position : FloorPositionStruct
     global position
 calculate_angles : bool, optional
-    calculate angles for local_position Default: True. False returns local_position angles (.theta, .phi,
-    .psi) = 0.
+    calculate angles for local_position Default: True.
 is_delta_position : bool, optional
     If True then treat global_position.r as a difference position in global space and only rotate the position
     but not shift it. Default: False.
@@ -1608,17 +1628,16 @@ local_position : FloorPositionStruct
       R"""(Parameters
 ----------
 local_position : FloorPositionStruct
-    local coordinates. .r(3)               [x, y, s] position with s = Position from entrance end of element.
+    local coordinates.
 ele : EleStruct
     element that coordinates are relative to.
 w_mat : float, optional
     W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
 calculate_angles : bool, optional
     calculate angles for body_position Default: True. False returns body_position angles (.theta, .phi, .psi)
-    = 0. Output
+    = 0.
 body_position : FloorPositionStruct
-    Element coordinates relative to exit of the element. .r(3)               [x, y, s] position with s =
-    Position from entrance end of element.
+    Element coordinates relative to exit of the element.
 )"""
   );
   py::class_<
@@ -1653,18 +1672,15 @@ body_position : FloorPositionStruct
 local_position : FloorPositionStruct
     Floor position in local curvilinear coordinates, with .r = [x, y, z_local] where z_local is wrt the
     entrance end of the element except if relative_to = downstream_end$. In this case, z_local is a distance
-    -ele.value(l$) from the exit end (important for patch elements).
+    -ele.value(l$)
 ele : EleStruct
     element that local_position coordinates are relative to.
 in_body_frame : bool, optional
-    True => local_position is in ele body frame and includes misalignments. Ignored if element is a patch.
-    Default: False.
+    True => local_position is in ele body frame and includes misalignments.
 w_mat : float
-    W matrix at z, to transform vectors. v_global     = w_mat . v_local/body v_local/body = transpose(w_mat) .
-    v_global
+    W matrix at z, to transform vectors. v_global     = w_mat . v_local/body
 calculate_angles : bool, optional
-    calculate angles for global_position Default: True. False returns local_position angles (.theta, .phi,
-    .psi) = 0.
+    calculate angles for global_position Default: True.
 relative_to : int, optional
     not_set$ (default), upstream_end$, or downstream_end$. Force which end is used for z = 0. If
     upstream_end$, local_position.r(3) is relative to the upstream end which will not be the entrance end if
@@ -1686,12 +1702,16 @@ global_position : FloorPositionStruct
 floor0 : FloorPositionStruct
     Initial reference frame.
 dr : float
-    (x, y, z) positional shift of the reference frame. theta, phi, psi -- real(rp), optional: Angular shift of
-    the reference frame. See the Bmad manual on the Global Coordinate system for more details. All angles must
-    either be absent or present.
-theta : 
-phi : 
-psi : 
+    (x, y, z) positional shift of the reference frame.
+theta : unknown, optional
+    Angular shift of the reference frame. See the Bmad manual on the Global Coordinate system for more
+    details. All angles must either be absent or present.
+phi : unknown, optional
+    Angular shift of the reference frame. See the Bmad manual on the Global Coordinate system for more
+    details. All angles must either be absent or present.
+psi : unknown, optional
+    Angular shift of the reference frame. See the Bmad manual on the Global Coordinate system for more
+    details. All angles must either be absent or present.
 floor1 : FloorPositionStruct
     Shifted reference frame.
 )"""
@@ -1789,7 +1809,7 @@ err_flag : bool
 old_slice : EleStruct, optional
     Previous slice or, if offset = 0, the previous element. If present this saves computation time of the
     reference energy and time at the start of the present slice. Also makes the ref energy continuous (there
-    can be some small differences when using, say, runge_kutta tracking due to tracking tolerances).
+    can be some small differences when
 orb_in : CoordStruct, optional
     Incoming orbit if calling routine is doing tracking through the slice. This is used when old_slice is not
     present and there may be an adjustment needed to the orbit ref energy (EG space charge tracking does not
@@ -1830,8 +1850,7 @@ lat : LatStruct
 ix_girder : int
     Index of girder element.
 contrl : ControlStruct
-    Array of elements that are supported by the girder. slave.ix_ele       -- Integer: Index in
-    lat.branch().ele() of element controlled. .ix_branch      -- Integer: Branch index.
+    Array of elements that are supported by the girder.
 girder_info : EleStruct
     Element containing attributes to be transfered to the Girder element: girder_info.name girder_info.alias
     girder_info.descrip girder_info.value(:)
@@ -1847,13 +1866,10 @@ err_flag :
       R"""(Parameters
 ----------
 lord : EleStruct
-    Group element. .control.type
+    Group element.
     This parameter is an input/output and is modified in-place. As an output: Modified group elment
 contrl : ControlStruct
-    control info. 1 element for each slave. .stack         -- Arithmetic expression stack for evaluating the
-    controlled parameter value. .y_knot(:)     -- Knot points for spline interpolation. .slave         --
-    Integer: Index to lat.branch().ele() of element controlled. .attribute     -- character(40): Attribute
-    name.
+    control info. 1 element for each slave.
 err : bool
     Set True if an attribute is not free to be controlled.
 )"""
@@ -1866,7 +1882,7 @@ err : bool
       R"""(Parameters
 ----------
 lat : LatStruct
-    Lattice. Ouput:
+    Lattice.
 nametable : NametableStruct
     Nametable of the elment names
 )"""
@@ -1880,13 +1896,10 @@ nametable : NametableStruct
       R"""(Parameters
 ----------
 lord : EleStruct
-    Overlay element. .control.type
+    Overlay element.
     This parameter is an input/output and is modified in-place. As an output: Modified overlay elment
 contrl : ControlStruct
-    control info. 1 element for each slave. .stack(:)      -- Arithmetic expression stack for evaluating the
-    controlled parameter value. .y_knot(:)     -- Knot points for spline interpolation. slave.ix_ele   --
-    Index of element to control .ix_branch     -- Index of branch element belongs to. .attribute     -- name
-    of attribute to be controlled
+    control info. 1 element for each slave.
 err : bool
     Set True if an attribute is not free to be controlled.
 )"""
@@ -1937,15 +1950,19 @@ Parameters
 wiggler : EleStruct
     Planar model wiggler to match to.
 wig_model_com : WigglerModelingCommonStruct
-    Global variable that can be used to set weights and step sizes for the optimization.
+    Global variable that can be used
+to set weights and step sizes for the optimization. : 
 print_err : bool, optional
     If True (default) print an error message if there is an error.
 
 Returns
 -------
 lat : LatStruct
-    Lattice containing the wiggler model .ele(:)      -- Array of bends and drifts. .n_ele_track -- Number of
-    elements in the model.
+    Lattice containing the wiggler model
+%ele : 
+    Array of bends and drifts.
+%n_ele_track : 
+    Number of elements in the model.
 err_flag : bool
     Set True if there is an error.
 )"""
@@ -1959,12 +1976,10 @@ err_flag : bool
       R"""(Parameters
 ----------
 lord : EleStruct
-    Ramper element. .control.type
+    Ramper element.
     This parameter is an input/output and is modified in-place. As an output: Modified ramper elment
 contrl : ControlStruct
-    control info. 1 element for each slave. .stack(:)         -- Arithmetic expression stack for evaluating
-    the controlled parameter value. .y_knot(:)        -- Knot points for spline or linear interpolation.
-    .attribute        -- name of attribute to be controlled.
+    control info. 1 element for each slave.
 err : bool
     Set True if an attribute is not free to be controlled.
 )"""
@@ -2062,10 +2077,14 @@ vetor specifying the diffraction plans.
 Parameters
 ----------
 ele : EleStruct
-    Crystal element. .component_name -- Character: Crystal type name. Assumed upper case. A blank name is not
-    an error and results in nothing set. .value(e_tot$)  -- Photon energy in eV.
+    Crystal element.
     This parameter is an input/output and is modified in-place. As an output: Crystal element with computed
     parameter..
+%component_name : unknown
+    Crystal type name. Assumed upper case.
+A blank name is not an error and results in nothing set. : 
+%value : 
+    Photon energy in eV.
 
 Returns
 -------

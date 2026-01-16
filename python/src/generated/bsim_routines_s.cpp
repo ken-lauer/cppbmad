@@ -24,8 +24,7 @@ target_tunes : float
     tunes for a, b, z modes (rad/2pi). Must include integer part.
 mask : 
 use_phase_trombone : bool, optional
-    Default False. If true, use a match element in phase trombone mode to adjust the tunes. The match element
-    must be the first element in the lattice. Use insert_phase_trombone to insert one.
+    Default False. If true, use a match element in phase trombone mode to adjust the tunes.
 z_tune_set : bool, optional
     Default True. If false, do not try to set the synch tune.
 group_knobs : unknown, optional

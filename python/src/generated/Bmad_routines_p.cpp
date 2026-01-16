@@ -158,11 +158,21 @@ err_str : unknown
 lat : LatStruct
     lattice
 int_array : int
-    the array to be read in Optional: num_expected = 1     -- integer: number of expected arguments. Used to
-    initialize int_array. open_delim   = '('   -- character(1): opening delimeter. separator    = ','   --
-    character(1): separating character. close_delim  = ')'   -- character(1): closing delimeter. default_value
-    = 0    -- real(rp): inital assignment of int_array elements.
+    the array to be read in
     This parameter is an input/output and is modified in-place. As an output: Array of values.
+Optional: : 
+num_expected = 1 : int
+    number of expected arguments. Used to initialize int_array.
+open_delim   = ' : unknown
+    opening delimeter.
+separator    = ' : unknown
+    separating character.
+' : unknown
+    separating character.
+close_delim  = ')' : unknown
+    closing delimeter.
+default_value = 0 : float
+    inital assignment of int_array elements.
 
 Returns
 -------
@@ -292,13 +302,23 @@ lat : LatStruct
 err_str : unknown
     Error string to print if there is an error.
 real_array : float
-    the array to be read in num_expected = 10       -- integer, optional: number of expected arguments Used to
-    initialize real_array open_brace   = '('      -- character(1), optional: opening delimeter. separator    =
-    ','      -- character(1), optional: separating character close_brace  = ')'      -- character(1),
-    optional: closing delimeter default_value = 0.0_rp  -- real(rp), optional: inital assignment of real_array
-    elements. single_value = False    -- logical, optional: If true then an array with a single value and no
-    braces is accepted.
+    the array to be read in
     This parameter is an input/output and is modified in-place. As an output: Array of values
+num_expected = 10 : int, optional
+    number of expected arguments
+Used to initialize real_array : 
+open_brace   = ' : unknown, optional
+    opening delimeter.
+separator    = ' : unknown, optional
+    separating character
+' : unknown, optional
+    separating character
+close_brace  = ')' : unknown, optional
+    closing delimeter
+default_value = 0.0_rp : float, optional
+    inital assignment of real_array elements.
+single_value = False : bool, optional
+    If true then an array with a single value and no braces is accepted.
 
 Returns
 -------
@@ -454,7 +474,8 @@ ele : EleStruct
 end_delims : unknown
     List of possible ending delimitors.
 err_str : unknown
-    String used when printing error messages identifying where in the lattice file the error is occuring.
+    String used when printing error messages identifying where in
+the lattice file the error is occuring. : 
 exact_size : bool, optional
     If True (default), number of values must match real_vec size.
 
@@ -578,6 +599,11 @@ Parameters
 ele : EleStruct
     Element containing wake structure.
     This parameter is an input/output and is modified in-place. As an output: Element with wake information.
+
+Returns
+-------
+%wake%lr : 
+    Long-range wake.
 )"""
   );
   m.def(
@@ -597,6 +623,11 @@ ele : EleStruct
     This parameter is an input/output and is modified in-place. As an output: Element with wake information.
 lr_file_name : unknown
     Name of long-range wake field file.
+
+Returns
+-------
+%wake%lr%mode : 
+    Long-range wake potential.
 )"""
   );
   m.def(
@@ -616,6 +647,15 @@ ele : EleStruct
     This parameter is an input/output and is modified in-place. As an output: Element with wake information.
 sr_file_name : unknown
     Name of short-range wake field file.
+
+Returns
+-------
+%wake%sr%table : 
+    Short-range wake potential.
+%wake%sr%long : 
+    Short-range wake potential.
+%wake%sr%trans : 
+    Short-range wake potential.
 )"""
   );
   m.def(
@@ -635,6 +675,11 @@ Parameters
 ele : EleStruct
     Element containing wake structure.
     This parameter is an input/output and is modified in-place. As an output: Element with wake information.
+
+Returns
+-------
+%wake%sr : 
+    Short-range wake potential.
 )"""
   );
   m.def(
@@ -685,9 +730,11 @@ orb : CoordStruct
 branch : BranchStruct
     branch that contains branch.ele(orb.ix_ele)
 in_time_coordinates : bool
-    Default is false. If true, orb will taken as in time coordinates.
+    Default is false. If true, orb
+will taken as in time coordinates. : 
 in_body_frame : bool
-    Default is true. If false, ele offsets will be ignored. Result:
+    Default is true. If false, ele offsets will be ignored.
+Result: : 
 particle : CoordStruct
     particle in global time coordinates
 
@@ -740,21 +787,18 @@ orbit : CoordStruct
     Particle coordinates
 ele : EleStruct
     Element being tracked through.
-reference_active_edge : bool
-    If True, and ele is a rfcavity or lcavity, use the active edge (edge of the -- logical: If True, and ele
-    is a rfcavity or lcavity, use the active edge (edge of the region with non-zero field) as the reference
-    point.
+reference_active_edge : unknown
+    If True, and ele is a rfcavity or lcavity, use the active edge (edge of the
 s_rel : float, optional
-    Longitudinal position relative to the upstream edge of the element. Needed for relative time tracking when
-    the particle is inside the element. Default is 0.
+    Longitudinal position relative to the upstream edge of the element.
 time_coords : bool, optional
     Default False. If True then orbit is using time based phase space coordinates.
 rf_freq : float, optional
     If present, the returned time shifted by an integer multiple of 1/rf_freq to be in the range
-    [-1/2*rf_freq, 1/2*rf_freq]. This is useful to avoid round-off errors.
+    [-1/2*rf_freq, 1/2*rf_freq]. This is useful to
 abs_time : float, optional
     If False (default) use setting of bmad_com.absolute_time_tracking. If True, use absolute time instead of
-    relative time. Ouput:
+    relative time.
 time : float
     Current time.
 )"""
@@ -838,14 +882,31 @@ err_flag : bool
     Set true if material not recognized.
 )"""
   );
+  py::class_<
+      Bmad::PhotonAddToDetectorStatistics,
+      std::unique_ptr<Bmad::PhotonAddToDetectorStatistics>>(
+      m,
+      "PhotonAddToDetectorStatistics",
+      "photon_add_to_detector_statistics return type"
+  )
+      .def_readonly("ix_pt", &Bmad::PhotonAddToDetectorStatistics::ix_pt)
+      .def_readonly("iy_pt", &Bmad::PhotonAddToDetectorStatistics::iy_pt)
+      .def("__len__", [](const Bmad::PhotonAddToDetectorStatistics &) { return 2; })
+      .def("__getitem__", [](const Bmad::PhotonAddToDetectorStatistics &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.ix_pt);
+        if (i == 1)
+          return py::cast(s.iy_pt);
+        throw py::index_error();
+      });
   m.def(
       "photon_add_to_detector_statistics",
       &Bmad::photon_add_to_detector_statistics,
       py::arg("orbit0"),
       py::arg("orbit"),
       py::arg("ele"),
-      py::arg("ix_pt") = py::none(),
-      py::arg("iy_pt") = py::none(),
       py::arg("pixel_pt") = py::none(),
       R"""(Subroutine photon_add_to_detector_statistics (orbit0, orbit, ele, ix_pt, iy_pt, pixel_pt)
 
@@ -866,6 +927,15 @@ ele : EleStruct
 pixel_pt : PixelPtStruct, optional
     If present then use this grid point instead of the grid point determined by the (x, y) coords of the
     photon
+
+Returns
+-------
+ix_pt : int
+    Index of upgraded ele.photon.surface.grid.pt(:,:) point. These arguments are not set if the pixel_pt
+    argument is present.
+iy_pt : int
+    Index of upgraded ele.photon.surface.grid.pt(:,:) point. These arguments are not set if the pixel_pt
+    argument is present.
 )"""
   );
   py::class_<Bmad::PhotonReflection, std::unique_ptr<Bmad::PhotonReflection>>(
@@ -994,8 +1064,11 @@ Routine to calculate the corner coords in the source_ele ref frame.
 Parameters
 ----------
 aperture_ele : EleStruct
-    Element containing the aperture x_lim, y_lim  -- real(rp): Transverse corner points in aperture_ele coord
-    frame.
+    Element containing the aperture
+x_lim : float
+    Transverse corner points in aperture_ele coord frame.
+y_lim : float
+    Transverse corner points in aperture_ele coord frame.
 source_ele : EleStruct
     Photon source element.
 
@@ -1093,7 +1166,8 @@ direction : int
     +1 -> Emit in forward +z direction, -1 -> emit backwards.
 max_target_area : float
     Area of the solid angle photons may be emitted over. max_target_area is used for normalizing the photon
-    field. generally will be equal to twopi or fourpi.
+    field.
+generally will be equal to twopi or fourpi. : 
 w_to_surface : float, optional
     Rotation matrix for curved surface.
 )"""
@@ -1129,7 +1203,8 @@ branch_name : unknown
 lat : LatStruct
     Lattice to search.
 parameter_is_branch0 : bool, optional
-    If True, 'PARAMETER' is taken to be an alternative name for branch(0). Default is False.
+    If True, 'PARAMETER' is taken to be
+an alternative name for branch : 
 blank_branch : int, optional
     Branch index if branch_name = ''. Default is blank is an error.
 
@@ -1179,7 +1254,8 @@ branch_name : unknown
 lat : LatStruct
     Lattice to search.
 parameter_is_branch0 : bool, optional
-    If True, 'PARAMETER' is taken to be an alternative name for branch(0). Default is False.
+    If True, 'PARAMETER' is taken to be
+an alternative name for branch : 
 blank_branch : int, optional
     Branch index if branch_name = ''. Default is blank is an error.
 
@@ -1481,7 +1557,12 @@ err_flag : bool
 s_eff : float
     Effective s. Equal to s with a open lattice. See above.
 position : CoordStruct
-    Positional information. .s         -- Same as input s. .ix_ele    -- Same as output ix_ele .location  --
+    Positional information.
+%s : 
+    Same as input s.
+%ix_ele : 
+    Same as output ix_ele
+%location : 
     Location relative to element. Upstream_end$, downstream_end$, or inside$
 
 Notes
@@ -1536,7 +1617,7 @@ ix_field_ele : int
 dz_offset : float
     Longitudinal offset of ele upstream edge from the field ele pointed to.
 field_ele : EleStruct
-    Pointer to the field element with index ix_field_ele. Will point to null if ix_field_ele is out of range.
+    Pointer to the field element with index ix_field_ele.
 )"""
   );
   py::class_<Bmad::PointerToGirder, std::unique_ptr<Bmad::PointerToGirder>>(
@@ -1565,8 +1646,7 @@ field_ele : EleStruct
 ele : EleStruct
     Element to check.
 ix_slave_back : int
-    Index back to ele. That is, pointer_to_slave(girder, ix_slave_back) will point back to ele. Set to -1 if
-    no girder present
+    Index back to ele. That is, pointer_to_slave(girder, ix_slave_back)
 girder : EleStruct
     : Pointer to the girder. Null if ele is not girder supported.
 )"""
@@ -1610,19 +1690,17 @@ slave : EleStruct
 ix_lord : int
     Index of the lord.
 control : ControlStruct
-    Pointer to control info for this lord/slave relationship. Nullified if there is an error.
+    Pointer to control info for this lord/slave relationship.
 ix_slave_back : int
-    Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back) will point back to slave. Set
-    to -1 if there is an error or the slave is a slice_slave.
+    Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back)
 lord_type : int, optional
     See above.
 ix_control : int
-    Index in lat.control(:) array the control argument is at. For ramper lord elements, ix_control is index
-    for the lord.control.ramper(:) array.
+    Index in lat.control(:) array the control argument is at.
 ix_ic : int
     Index of the lat.ic(:) element associated with the control argument.
 lord_ptr : EleStruct
-    Pointer to the lord. Nullified if there is an error.
+    Pointer to the lord.
 )"""
   );
   py::class_<Bmad::PointerToMultipassLord, std::unique_ptr<Bmad::PointerToMultipassLord>>(
@@ -1654,11 +1732,9 @@ lord_ptr : EleStruct
 ele : EleStruct
     Lattice element.
 ix_pass : int
-    Multipass turn number. Set to 0 if element is a multipass_lord. Set to -1 if element is not a
-    multipass_slave.
+    Multipass turn number. Set to 0 if element is a multipass_lord.
 super_lord : EleStruct
-    super_lord of the element. Set to NULL if ele is not a super_slave or super_lord. Note: if ele is a
-    multipass_lord there are multiple possible super_lord slaves.
+    super_lord of the element. Set to NULL if ele is not a super_slave or super_lord.
 multi_lord : EleStruct
     multipass_lord if there is one. Set to NULL if there is no multipass_lord.
 )"""
@@ -1676,9 +1752,9 @@ multi_lord : EleStruct
 this_ele : EleStruct
     Starting element.
 offset : int, optional
-    +1 -> return next element, +2 -> element after that, etc. Can be negative. Default = +1.
+    +1 -> return next element, +2 -> element
 skip_beginning : bool, optional
-    If True then skip beginning element #0 when wrapping around. Default is False.
+    If True then skip beginning element #0
 follow_fork : bool, optional
     If True then fork at any fork element. Default is False.
 next_ele : EleStruct
@@ -1741,12 +1817,14 @@ lord_type : int, optional
 Returns
 -------
 slave_ptr : EleStruct
-    Pointer to the slave. Nullified if there is an error.
+    Pointer to the slave.
+Nullified if there is an error. : 
 control : ControlStruct
-    Pointer to control info for this lord/slave relationship. Nullified if there is an error.
+    Pointer to control info for this lord/slave relationship.
+Nullified if there is an error. : 
 ix_lord_back : int
-    Index back to the lord. That is, pointer_to_lord(slave_ptr, ix_lord_back) will point back to the lord. Set
-    to -1 if there is an error.
+    Index back to the lord. That is, pointer_to_lord(slave_ptr, ix_lord_back)
+will point back to the lord. Set to -1 if there is an error. : 
 ix_control : int
     Index in lat.control(:) array the control argument is at.
 ix_ic : int
@@ -1794,13 +1872,11 @@ pointer_to_lord pointer_to_super_lord pointer_to_ele num_lords
 slave : EleStruct
     Slave element.
 control : ControlStruct
-    Pointer to control info for this lord/slave relationship. Nullified if there is an error.
+    Pointer to control info for this lord/slave relationship.
 ix_slave_back : int
-    Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back) will point back to slave. Set
-    to -1 if there is an error or the slave is a slice_slave.
+    Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back)
 ix_control : int
-    Index in lat.control(:) array the control argument is at. For ramper lord elements, ix_control is index
-    for the lord.control.ramper(:) array.
+    Index in lat.control(:) array the control argument is at.
 ix_ic : int
     Index of the lat.ic(:) element associated with the control argument.
 lord_type : int, optional
@@ -1809,6 +1885,34 @@ lord_ptr : EleStruct
     Pointer to the lord.
 )"""
   );
+  py::class_<
+      Bmad::PointerToSurfaceDisplacementPt,
+      std::unique_ptr<Bmad::PointerToSurfaceDisplacementPt>>(
+      m,
+      "PointerToSurfaceDisplacementPt",
+      "pointer_to_surface_displacement_pt return type"
+  )
+      .def_readonly("ix", &Bmad::PointerToSurfaceDisplacementPt::ix)
+      .def_readonly("iy", &Bmad::PointerToSurfaceDisplacementPt::iy)
+      .def_readonly("xx", &Bmad::PointerToSurfaceDisplacementPt::xx)
+      .def_readonly("yy", &Bmad::PointerToSurfaceDisplacementPt::yy)
+      .def_readonly("pt", &Bmad::PointerToSurfaceDisplacementPt::pt)
+      .def("__len__", [](const Bmad::PointerToSurfaceDisplacementPt &) { return 5; })
+      .def("__getitem__", [](const Bmad::PointerToSurfaceDisplacementPt &s, int i) -> py::object {
+        if (i < 0)
+          i += 5;
+        if (i == 0)
+          return py::cast(s.ix);
+        if (i == 1)
+          return py::cast(s.iy);
+        if (i == 2)
+          return py::cast(s.xx);
+        if (i == 3)
+          return py::cast(s.yy);
+        if (i == 4)
+          return py::cast(s.pt);
+        throw py::index_error();
+      });
   m.def(
       "pointer_to_surface_displacement_pt",
       &Bmad::pointer_to_surface_displacement_pt,
@@ -1816,11 +1920,7 @@ lord_ptr : EleStruct
       py::arg("nearest"),
       py::arg("x"),
       py::arg("y"),
-      py::arg("ix") = py::none(),
-      py::arg("iy") = py::none(),
       py::arg("extend_grid") = py::none(),
-      py::arg("xx") = py::none(),
-      py::arg("yy") = py::none(),
       R"""(Function pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
 
 Routine to point to the grid point struct associated with point (x,y).
@@ -1832,20 +1932,59 @@ Parameters
 ele : EleStruct
     Element containing the grid
 nearest : bool
-    If True, return pointer to nearest grid point. If False, return pointer to the grid point lower and left
-    of (x,y). x, y        -- real(rp): Photon position.
+    If True, return pointer to nearest grid point.
+If False : 
+return pointer to the grid point lower and left of : 
+x : float
+    Photon position.
+y : float
+    Photon position.
 extend_grid : bool, optional
-    If (x,y) past grid pretend (x,y) is at grid boundary. Default is False. ix, iy      -- integer, optional:
-    Grid point index.
+    If (x,y) past grid pretend (x,y) is at grid boundary. Default is False.
 
 Returns
 -------
+ix : int
+    Grid point index.
+iy : int
+    Grid point index.
 pt : GridPointStruct
-    Pointer to grid point. Will not be associated if (x,y) outside the grid. xx, yy      -- real(rp),
-    optional: Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set
-    to be on the nearest grid boundary point.
+    Pointer to grid point.
+Will not be associated if : 
+xx : float
+    Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
+    the nearest grid boundary point.
+yy : float
+    Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
+    the nearest grid boundary point.
 )"""
   );
+  py::class_<Bmad::PointerToSurfaceSegmentedPt, std::unique_ptr<Bmad::PointerToSurfaceSegmentedPt>>(
+      m,
+      "PointerToSurfaceSegmentedPt",
+      "pointer_to_surface_segmented_pt return type"
+  )
+      .def_readonly("ix", &Bmad::PointerToSurfaceSegmentedPt::ix)
+      .def_readonly("iy", &Bmad::PointerToSurfaceSegmentedPt::iy)
+      .def_readonly("xx", &Bmad::PointerToSurfaceSegmentedPt::xx)
+      .def_readonly("yy", &Bmad::PointerToSurfaceSegmentedPt::yy)
+      .def_readonly("pt", &Bmad::PointerToSurfaceSegmentedPt::pt)
+      .def("__len__", [](const Bmad::PointerToSurfaceSegmentedPt &) { return 5; })
+      .def("__getitem__", [](const Bmad::PointerToSurfaceSegmentedPt &s, int i) -> py::object {
+        if (i < 0)
+          i += 5;
+        if (i == 0)
+          return py::cast(s.ix);
+        if (i == 1)
+          return py::cast(s.iy);
+        if (i == 2)
+          return py::cast(s.xx);
+        if (i == 3)
+          return py::cast(s.yy);
+        if (i == 4)
+          return py::cast(s.pt);
+        throw py::index_error();
+      });
   m.def(
       "pointer_to_surface_segmented_pt",
       &Bmad::pointer_to_surface_segmented_pt,
@@ -1853,11 +1992,7 @@ pt : GridPointStruct
       py::arg("nearest"),
       py::arg("x"),
       py::arg("y"),
-      py::arg("ix") = py::none(),
-      py::arg("iy") = py::none(),
       py::arg("extend_grid") = py::none(),
-      py::arg("xx") = py::none(),
-      py::arg("yy") = py::none(),
       R"""(Function pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
 
 Routine to point to the grid point struct associated with point (x,y).
@@ -1869,18 +2004,31 @@ Parameters
 ele : EleStruct
     Element containing the grid
 nearest : bool
-    If True, return pointer to nearest grid point. If False, return pointer to the grid point lower and left
-    of (x,y). x, y        -- real(rp): Photon position.
+    If True, return pointer to nearest grid point.
+If False : 
+return pointer to the grid point lower and left of : 
+x : float
+    Photon position.
+y : float
+    Photon position.
 extend_grid : bool, optional
-    If (x,y) past grid pretend (x,y) is at grid boundary. Default is False. ix, iy      -- integer, optional:
-    Grid point index.
+    If (x,y) past grid pretend (x,y) is at grid boundary. Default is False.
 
 Returns
 -------
+ix : int
+    Grid point index.
+iy : int
+    Grid point index.
 pt : GridPointStruct
-    Pointer to grid point. Will not be associated if (x,y) outside the grid. xx, yy      -- real(rp),
-    optional: Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set
-    to be on the nearest grid boundary point.
+    Pointer to grid point.
+Will not be associated if : 
+xx : float
+    Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
+    the nearest grid boundary point.
+yy : float
+    Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
+    the nearest grid boundary point.
 )"""
   );
   py::class_<Bmad::PointerToWakeEle, std::unique_ptr<Bmad::PointerToWakeEle>>(
@@ -1911,7 +2059,7 @@ ele : EleStruct
 delta_s : float
     distance of wake locaiton from beginning of ele.
 wake_ele : EleStruct
-    Element having the associated wake. wake_ele will be nullified if there is no associated wake.
+    Element having the associated wake.
 )"""
   );
   py::class_<Bmad::PointerToWall3d, std::unique_ptr<Bmad::PointerToWall3d>>(
@@ -1956,7 +2104,8 @@ ix_wall : int, optional
 Returns
 -------
 wall3d : Wall3DStruct
-    Pointer to the associated wall structure. Will be nullified if there is no associated wall.
+    Pointer to the associated wall structure.
+Will be nullified if there is no associated wall. : 
 ds_offset : float
     Element offset: s(beginning of ele) - s(beginning of wall3d)
 is_branch_wall : bool
@@ -2035,10 +2184,17 @@ ring : LatStruct
 ix : int
     element at which to make the projection
 mode : NormalModesStruct
-    normal mode emittances .a.emittance -- real(rp): a-mode emittance .b.emittance -- real(rp): b-mode
-    emittance .z.emittance -- real(rp): z-mode emittance .a.tune      -- real(rp): a-mode tune.  Used to
-    associate emittances with the proper mode. .b.tune      -- real(rp): b-mode tune.  Used to associate
-    emittances with the proper mode.
+    normal mode emittances
+%a%emittance : float
+    a-mode emittance
+%b%emittance : float
+    b-mode emittance
+%z%emittance : float
+    z-mode emittance
+%a%tune : float
+    a-mode tune.  Used to associate emittances with the proper mode.
+%b%tune : float
+    b-mode tune.  Used to associate emittances with the proper mode.
 
 Returns
 -------
@@ -2115,20 +2271,23 @@ ptc_layout : unknown
 kl_max : float
     Maximum K1*L per tracking step.
 ds_max : float
-    Maximum ds for any step. Useful when including other physicas like space charge.
+    Maximum ds for any step.
+Useful when including other physicas like space charge. : 
 even_steps : bool, optional
-    Always use an even number of steps for a fibre? Useful if need to evaluate at the center of fibres.
+    Always use an even number of steps for a fibre?
+Useful if need to evaluate at the center of fibres. : 
 r_typical : float, optional
-    Typical transverse offset. Used for computing the effective contribution of K1*L due to sextupoles.
+    Typical transverse offset. Used for computing the
+effective contribution of K1*L due to sextupoles. : 
 dx_tol_bend : float
     Tolerable residual orbit in a bend.
 use_2nd_order : bool, optional
-    If present and True then force the use of 2nd order integrator.
+    If present and True then force the use of 2nd order
+integrator. : 
 crossover : int, optional
     crossover points between orders for all elements except wigglers. Default is [4, 18].
-crossover_wiggler(2) : int, optional
-    crossover points for wigglers. Default is [30, 60]. -- integer, optional: crossover points for wigglers.
-    Default is [30, 60].
+crossover_wiggler : unknown, optional
+    crossover points for wigglers. Default is [30, 60].
 )"""
   );
   py::class_<Bmad::PtcCheckForLostParticle, std::unique_ptr<Bmad::PtcCheckForLostParticle>>(
@@ -2185,9 +2344,9 @@ Parameters
 ----------
 branch : BranchStruct
     Branch of a lattice.
-radiation_damping_on : bool, optional
-    If True, radiation dampling is included in the calculation. -- logical, optional: If True, radiation
-    dampling is included in the calculation. Default is the setting of bmad_com..radiation_damping_on.
+radiation_damping_on : unknown, optional
+    If True, radiation dampling is included in the calculation. Default is the setting of
+    bmad_com..radiation_damping_on.
 
 Returns
 -------
@@ -2231,7 +2390,9 @@ ele : EleStruct
 Returns
 -------
 norm_mode : 
-    Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc. %a%emittance, etc.
+    Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc.
+%a%emittance : 
+etc. : 
 sigma_map : float
     Sigma matrix (Bmad coordinates).
 closed_orb : CoordStruct
@@ -2259,33 +2420,35 @@ For the fibres in all layouts. After doing a resplit, the tune (and any other re
 Parameters
 ----------
 dKL_max : float
-    Maximum K1 * L quadrupole strength allowed for an integration step. Reasonable value would be something
-    like 0.04.
+    Maximum K1 * L quadrupole strength allowed for an integration step.
+Reasonable value would be something like 0.04. : 
 l_max : float
     Maximum step length. Ignored if set to 0.
-l_max_drift_only : bool
-    If True then l_max is only used for splitting drifts. -- logical: If True then l_max is only used for
-    splitting drifts.
+l_max_drift_only : unknown
+    If True then l_max is only used for splitting drifts.
 bend_dorb : float
     Residual bend orbit error. With some integration methods a zero orbit at the start of the bend will not be
     zero at the end. In this case, bend_dorb sets a maximum allowable orbit deviation. If set to zero, this
     argument will be ignored. A resonable value is 10d-7. Note that the actual orbit deviation is not simply
     related to bend_dorb and can be larger. In any case, lowering bend_dorb (without making it zero) will
     lower the
+orbit deviation. : 
 sex_dx : float
     To split sextupoles, sex_dx is used as the reference position about which the quadrupole strength is
     calculated. This quadrupole strength is then used with dKL_max to calculate the number of integration
-    steps. Set to zero to ignore.
+    steps.
+Set to zero to ignore. : 
 even : bool, optional
     If True then each fibre  will have an even number of steps. If False then the number of steps will be odd.
-    If not present then number of steps is not constrained to be even or odd.
+    If not present then number
+of steps is not constrained to be even or odd. : 
 crossover : int, optional
     crossover(1) sets the maximum number of 2nd order integration steps to use. If the number of steps would
     exceed crossover(1) then integration is switched to 4th order. crossover(2) sets the maximum number of 4th
     order integration steps. If this number is exceeded, 6th order integration is used. Currently the default
     in PTC is [4, 18].
-crossover_wiggler(2) : int, optional
-    crossover for wiggler elements. -- integer, optional: crossover for wiggler elements.
+crossover_wiggler : unknown, optional
+    crossover for wiggler elements.
 )"""
   );
   m.def(
@@ -2308,6 +2471,12 @@ branch : BranchStruct
     matrices.
 pz : float, optional
     energy offset around which to calculate the matrices if there is no RF.
+
+Returns
+-------
+%ele : unknown
+    Closed orbit at entrance.
+    This parameter is an input/output and is modified in-place. As an output: Closed orbit at exit.
 )"""
   );
   m.def(
@@ -2374,7 +2543,9 @@ ele : EleStruct
 Returns
 -------
 norm_mode : 
-    Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc. %a%emittance, etc.
+    Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc.
+%a%emittance : 
+etc. : 
 sigma_map : float
     Sigma matrix (Bmad coordinates).
 closed_orb : CoordStruct
@@ -2418,7 +2589,8 @@ orbit : CoordStruct
 Returns
 -------
 track_state : int
-    Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
+    Set to moving_forward$ if everything is OK.
+Otherwise: set to index of element where particle was lost. : 
 err_flag : bool
     Set true if particle lost or error. False otherwise
 )"""
@@ -2449,12 +2621,11 @@ orb0 : CoordStruct
 err_flag : bool
     Set True if problem like number overflow, etc.
 ix1 : int, optional
-    Element start index for the calculation. Default is 0.
+    Element start index for the calculation.
 ix2 : int, optional
-    Element end index for the calculation. Default is branch.n_ele_track.
+    Element end index for the calculation.
 one_turn : bool, optional
-    If present and True, and if ix1 = ix2, and the lattice is circular, then construct the one-turn map from
-    ix1 back to ix1. Default = False.
+    If present and True, and if ix1 = ix2, and the lattice is circular, then construct the one-turn
 unit_start : bool, optional
     If present and False then t_map will be used as the starting map instead of the unit map. Default = True
 )"""
@@ -2476,8 +2647,12 @@ Mpwd(6,5) = omega_RF * Vpwd / c_light / lat%ele(0)%value(E_TOT$) * branch%ele(i)
 
 Parameters
 ----------
-lat : LatStruct
-    Bunch current in # per bunch .ele(0).value(E_TOT$) -- real(rp): Beam energy
+lat : 
+    TYPE(lat_struct)
+%param%n_part : float
+    Bunch current in # per bunch
+%ele : float
+    Beam energy
 t6 : float
     1-turn transfer matrix
 inductance : float

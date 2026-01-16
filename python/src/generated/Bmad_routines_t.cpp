@@ -99,12 +99,17 @@ Parameters
 r_corner1 : float
     In target coords: A corner of the target. Must be normalized to 1.
 r_corner2 : float
-    In target coords: Adjacent corner of the target. Must be normalized to 1. y_min, y_max     -- real(rp):
-    min/max values. Only needed if initial = False. phi_min, phi_max -- real(rp): min/max values. Only needed
-    if initial = False.
+    In target coords: Adjacent corner of the target. Must be normalized to 1.
+y_min : float
+    min/max values. Only needed if initial = False.
+y_max : float
+    min/max values. Only needed if initial = False.
+phi_min : float
+    min/max values. Only needed if initial = False.
+phi_max : float
+    min/max values. Only needed if initial = False.
 initial : bool, optional
-    If present and True then this is the first edge for computation. y_min, y_max     -- real(rp): min/max
-    values. phi_min, phi_max -- real(rp): min/max values.
+    If present and True then this is the first edge for computation.
 )"""
   );
   py::class_<Bmad::TargetRotMats, std::unique_ptr<Bmad::TargetRotMats>>(
@@ -205,8 +210,8 @@ ele : EleStruct
     Element to track through
 param : LatParamStruct
 ref_in : CoordStruct, optional
-    Particle to be tracked. Must be present if the particle to be tracked is not the reference particle or if
-    the direction of propagation is backwards.
+    Particle to be tracked. Must be present if the particle to be tracked is not the reference particle or
+if the direction of propagation is backwards. : 
 spin_taylor : TaylorStruct, optional
     Spin map to be tracked
     This parameter is an input/output and is modified in-place. As an output: Tracked spin map.
@@ -344,10 +349,18 @@ Parameters
 eta_actual : float
     Actual (eta_x, eta_y) dispersion.
 ele : EleStruct
-    Element where the orbit is measured. .value(dE_eta_meas$)   -- Percent energy change used in dispersion
-    measurement. .value(noise$)         -- relative bpm resolution RMS .value(tilt_tot$)      -- angle error
-    in radians rms. .value(x_gain_calib$)  -- Horizontal gain correction. .value(y_gain_err$)    -- Horizontal
-    gain error. ... etc ...
+    Element where the orbit is measured.
+%value : 
+    Percent energy change used in dispersion measurement.
+%value : 
+    relative bpm resolution RMS
+%value : 
+    angle error in radians rms.
+%value : 
+    Horizontal gain correction.
+%value : 
+    Horizontal gain error.
+... etc ... : 
 axis : int
     x_plane$ or y_plane$
 add_noise : bool
@@ -394,9 +407,18 @@ ele_anchor_pt : int
 r0 : float
     origin point of the fieldmap.
 curved_ref_frame : bool
-    If the element is a bend: Does the field map follow the bend reference coords? Outpt: x, y, z           --
-    real(rp): Coords relative to the field map. cos_ang, sin_ang  -- real(rp): cos and sin of coordinate
-    rotation angle.
+    If the element is a bend: Does the field map follow the bend reference coords?
+Outpt: : 
+x : float
+    Coords relative to the field map.
+y : float
+    Coords relative to the field map.
+z : float
+    Coords relative to the field map.
+cos_ang : float
+    cos and sin of coordinate rotation angle.
+sin_ang : float
+    cos and sin of coordinate rotation angle.
 err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -438,9 +460,16 @@ Parameters
 orb : CoordStruct
     Orbit position at BPM.
 ele : EleStruct
-    Element where the orbit is measured. .value(noise$)         -- relative bpm resolution RMS
-    .value(tilt_tot$)      -- angle error in radians rms. .value(x_gain_calib$)  -- Horizontal gain
-    correction. .value(y_gain_err$)    -- Horizontal gain error. ... etc ...
+    Element where the orbit is measured.
+%value : 
+    relative bpm resolution RMS
+%value : 
+    angle error in radians rms.
+%value : 
+    Horizontal gain correction.
+%value : 
+    Horizontal gain error.
+... etc ... : 
 axis : int
     x_plane$ or y_plane$
 add_noise : bool
@@ -488,7 +517,9 @@ Parameters
 actual_phase : float
     Actual phase reading.
 ele : EleStruct
-    Element where phase is measured. .value(phase_noise$) -- RMS Noise in radians.
+    Element where phase is measured.
+%value : 
+    RMS Noise in radians.
 add_noise : bool
     If True add noise to the reading
 
@@ -535,8 +566,7 @@ lab_orbit : CoordStruct
 ele : EleStruct
     Detector element.
 surface_orbit : CoordStruct
-    Photon position in element body coordinates. .state      -- Set to lost$ if orbit outside of surface (can
-    happen with sperical surface).
+    Photon position in element body coordinates.
 )"""
   );
   m.def(
@@ -569,9 +599,13 @@ per bunch.
 Parameters
 ----------
 mode : NormalModesStruct
-    beam properties .pz_aperture -- Real(rp): momentum aperture
+    beam properties
+%pz_aperture : float
+    momentum aperture
 lat : LatStruct
-    Accelerator Lattice .param.n_part -- Real(rp): number particles per bunch
+    Accelerator Lattice
+%param%n_part : float
+    number particles per bunch
 
 Returns
 -------
@@ -699,9 +733,8 @@ track : TrackStruct, optional
 err_flag : bool
     Set true if there is an error. False otherwise. Note: The particle getting lost (EG hitting an aperture)
     is *not* an error. An error is something like start_orb not being properly initialized.
-ignore_radiation : bool, optional
-    If present and True then do not include radiation -- Logical, optional: If present and True then do not
-    include radiation effects along with space charge effects.
+ignore_radiation : unknown, optional
+    If present and True then do not include radiation
 make_map1 : bool, optional
     Make ele.mat6 and ele.spin_q components? Default is false.
 init_to_edge : bool, optional
@@ -728,8 +761,8 @@ beam : BeamStruct
 ele : EleStruct
     element to track through.
 centroid : CoordStruct, optional
-    Approximate centroid orbit. Only needed if CSR is on. Hint: Calculate this before beam tracking by
-    tracking a single particle.
+    Approximate centroid orbit. Only needed if CSR is on.
+Hint: Calculate this before beam tracking by tracking a single particle. : 
 direction : int, optional
     +1 (default) -> Track forward, -1 -> Track backwards.
 
@@ -772,12 +805,10 @@ orbit : CoordStruct
 ele : EleStruct
     Element
 param : LatParamStruct
-    .particle     -- Particle type
 err_flag : bool
     Set true if there is an error. False otherwise.
 track : TrackStruct
-    Structure holding the track information if the lattice element does tracking step-by-step. See track1 for
-    more details.
+    Structure holding the track information if the
 mat6 : float, optional
     Transfer matrix before the element.
     This parameter is an input/output and is modified in-place. As an output: Transfer matrix propagated
@@ -824,8 +855,8 @@ bunch : BunchStruct
 ele : EleStruct
     element to track through.
 centroid : CoordStruct, optional
-    Approximate centroid orbit. Only needed if CSR is on. Hint: Calculate this before beam tracking by
-    tracking a single particle.
+    Approximate centroid orbit. Only needed if CSR is on.
+Hint: Calculate this before beam tracking by tracking a single particle. : 
 direction : int, optional
     +1 (default) -> Track forward, -1 -> Track backwards.
 bunch_track : BunchTrackStruct, optional
@@ -836,7 +867,8 @@ bunch_track : BunchTrackStruct, optional
 Returns
 -------
 err : bool
-    Set true if there is an error. EG: Too many particles lost for a CSR calc.
+    Set true if there is an error.
+EG: Too many particles lost for a CSR calc. : 
 )"""
   );
   m.def(
@@ -860,8 +892,8 @@ bunch : BunchStruct
 ele : EleStruct
     The element to track through. Must be part of a lattice.
 centroid : 
-    coord_struct, Approximate beam centroid orbit for the lattice branch. Calculate this before beam tracking
-    by tracking a single particle.
+    coord_struct, Approximate beam centroid orbit for the lattice branch.
+Calculate this before beam tracking by tracking a single particle. : 
 s_start : float, optional
     Starting position relative to ele. Default = 0
 s_end : float, optional
@@ -902,8 +934,8 @@ bunch : BunchStruct
 ele : EleStruct
     The element to track through. Must be part of a lattice.
 centroid : 
-    coord_struct, Approximate beam centroid orbit for the lattice branch. Calculate this before beam tracking
-    by tracking a single particle.
+    coord_struct, Approximate beam centroid orbit for the lattice branch.
+Calculate this before beam tracking by tracking a single particle. : 
 s_start : float, optional
     Starting position relative to ele. Default = 0
 s_end : float, optional
@@ -962,7 +994,7 @@ ele : EleStruct
 err : bool
     Set true if there is an error. EG: Too many particles lost for a CSR calc.
 track_to_same_s : bool, optional
-    Default is True. If True, drift particles to all have the same s-position.
+    Default is True. If True, drift particles to all have the
 bunch_track : BunchTrackStruct, optional
     Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
     This parameter is an input/output and is modified in-place. As an output: track information if the
@@ -1336,10 +1368,10 @@ orbit : CoordStruct
 ----------
 start_orb : 
 ele : EleStruct
-    Element to track through .spin_q            -- 1st order spin map made if make_quaternion = True.
+    Element to track through
 param : 
 end_orb : CoordStruct
-    Ending coords. .spin(2)           -- complex(rp): Ending spin
+    Ending coords.
 make_quaternion : 
 )"""
   );
@@ -1355,7 +1387,6 @@ start_orb :
 ele : 
 param : 
 end_orb : CoordStruct
-    .spin(3)       -- Ending spin
 )"""
   );
   m.def(
@@ -1370,7 +1401,6 @@ start_orb :
 ele : 
 param : 
 end_orb : CoordStruct
-    .spin(3)   -- Ending spin
 )"""
   );
   m.def(
@@ -1470,12 +1500,10 @@ err_flag : bool
     Set True if there is an error. False otherwise
 track : TrackStruct
     Contains array of the step-by-step particle trajectory along with the field at these positions. When
-    tracking through multiple elements, the trajectory in an element is appended to the existing trajectory.
-    To reset: Set track.n_pt = -1.
+    tracking through multiple elements, the trajectory in an element
 t_end : float, optional
     If present, maximum time to which the particle will be tracked. Used for tracking with given time steps.
-    The time orb.t at which tracking stops may be less than this if the particle gets to the end of the
-    element
+    The time orb.t at which tracking stops
 dt_step : float, optional
     If positive, next RK time step to take. This overrides bmad_com.init_ds_adaptive_tracking. Used by
     track_bunch_time.
@@ -1517,8 +1545,7 @@ ele : EleStruct
 param : LatParamStruct
     Lattice parameters.
 track : TrackStruct
-    Structure holding the track information if the lattice element does tracking step-by-step. See track1 for
-    more details.
+    Structure holding the track information if the
 mat6 : float
     Transfer matrix through the element.
 make_matrix : bool, optional
@@ -1663,7 +1690,7 @@ ele_orientation : int, optional
     Element orientation. Default is orb.direction.
 include_ref_motion : bool, optional
     Include effect of the motion of the reference particle? Default is True. False is basically only used by
-    offset_particle. Additionally, if False, orb.s is not changed.
+    offset_particle.
 time : float, optional
     Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
     This parameter is an input/output and is modified in-place. As an output: Updated time.
@@ -1682,9 +1709,8 @@ orb : CoordStruct
     This parameter is an input/output and is modified in-place. As an output: Orbit at end of the drift
 length : float
     Longitudinal length to drift through.
-phase_relative_to_ref : bool
-    If true then E field phase shift is relative to ref particle. -- logical: If true then E field phase shift
-    is relative to ref particle.
+phase_relative_to_ref : unknown
+    If true then E field phase shift is relative to ref particle.
 )"""
   );
   m.def(
@@ -1868,15 +1894,14 @@ orbit : CoordStruct
     transformation.
 drift_to_exit : bool, optional
     If False then do not drift the particle from beginning to end face. Also do not correct for a reference
-    energy shift. Default is True.
+    energy shift.
 s_ent : float
     Longitudinal coordinate of the initial particle position in the frame of reference of the face where the
-    particle exits. For a patch with positive z_offset and all other attributes zero, s_ent = -z_offset.
+    particle exits.
 ds_ref : float
     Distance reference particle travels from entrance to exit.
 track_spin : bool, optional
-    If True rotate the spin vector appropriately. If ele.spin_tracking_method = symp_lie_ptc -> default =
-    True. Else default = False.
+    If True rotate the spin vector appropriately.
 mat6 : float
     Transfer matrix through the element.
 make_matrix : bool, optional
@@ -1906,7 +1931,8 @@ orbit : CoordStruct
     This parameter is an input/output and is modified in-place. As an output: Coords after applying a patch
     transformation.
 drift_to_exit : bool, optional
-    If False then do not drift the particle from start to ending faces. Default is True.
+    If False then do not drift the particle from
+start to ending faces. Default is True. : 
 use_z_pos : unknown, optional
     If present and True, use orbit.vec(5) as the true z-position relative to the start of the element instead
     of assuming that the particle is at the patch edge.
@@ -2141,12 +2167,12 @@ track : TrackStruct
 lat : LatStruct
     Lat to track through.
 orbit : CoordStruct
-    orbit(0) is the starting coordinates for tracking. If not allocated, the zero orbit will be used.
+    orbit(0) is the starting coordinates for tracking.
     This parameter is an input/output and is modified in-place. As an output: Orbit array.
 ix_branch : int, optional
     Index of branch to track. Default is 0 (main branch).
 track_state : int
-    Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
+    Set to moving_forward$ if everything is OK.
 err_flag : bool
     Set true if particle lost or error. False otherwise
 orbit0 : CoordStruct
@@ -2181,12 +2207,14 @@ beam : BeamStruct
     Beam at end of element ix1.
     This parameter is an input/output and is modified in-place. As an output: Beam at end of element ix2.
 ele1 : EleStruct, optional
-    Starting element (this element is NOT tracked through). Default is lat.ele(0).
+    Starting element (this element
+is NOT tracked through). Default is lat%ele : 
 ele2 : EleStruct, optional
-    Ending element. Default is lat.ele(lat.n_ele_track).
+    Ending element.
+Default is lat%ele : 
 centroid : CoordStruct, optional
-    Approximate centroid orbit. Only needed if CSR is on. Hint: Calculate this before beam tracking by
-    tracking a single particle.
+    Approximate centroid orbit. Only needed if CSR is on.
+Hint: Calculate this before beam tracking by tracking a single particle. : 
 direction : int, optional
     +1 (default) -> Track forward, -1 -> Track backwards.
 bunch_tracks : BunchTrackStruct, optional
@@ -2197,7 +2225,8 @@ bunch_tracks : BunchTrackStruct, optional
 Returns
 -------
 err : bool
-    Set true if there is an error. EG: Too many particles lost for a CSR calc.
+    Set true if there is an error.
+EG: Too many particles lost for a CSR calc. : 
 )"""
   );
   m.def(
@@ -2227,12 +2256,14 @@ bunch : BunchStruct
     Bunch at end of element ix1.
     This parameter is an input/output and is modified in-place. As an output: Bunch at end of element ix2.
 ele1 : EleStruct, optional
-    Starting element (this element is NOT tracked through). Default is lat.ele(0).
+    Starting element (this element
+is NOT tracked through). Default is lat%ele : 
 ele2 : EleStruct, optional
-    Ending element. Default is lat.ele(lat.n_ele_track).
+    Ending element.
+Default is lat%ele : 
 centroid : CoordStruct, optional
-    Approximate centroid orbit. Only needed if CSR is on. Hint: Calculate this before bunch tracking by
-    tracking a single particle.
+    Approximate centroid orbit. Only needed if CSR is on.
+Hint: Calculate this before bunch tracking by tracking a single particle. : 
 direction : int, optional
     +1 (default) -> Track forward, -1 -> Track backwards.
 bunch_track : BunchTrackStruct, optional
@@ -2243,7 +2274,8 @@ bunch_track : BunchTrackStruct, optional
 Returns
 -------
 err : bool
-    Set true if there is an error. EG: Too many particles lost for a CSR calc.
+    Set true if there is an error.
+EG: Too many particles lost for a CSR calc. : 
 )"""
   );
   m.def(
@@ -2268,7 +2300,7 @@ t_end : float
 s_end : float
     Ending s-position.
 dt_step : float, optional
-    Initial step to take for each particle. Overrides bmad_com.init_ds_adaptive_tracking.
+    Initial step to take for each particle.
     This parameter is an input/output and is modified in-place. As an output: Next RK time step that this
     tracker would take based on the error tolerance.
 extra_field : EmFieldStruct, optional
@@ -2382,8 +2414,7 @@ orbit_start : CoordStruct
 orbit_end : CoordStruct
     Ending coordinates.
 all_orb : CoordStruct
-    If present then the orbit at the exit ends of the elements tracked through will be recorded in this
-    structure.
+    If present then the orbit at the exit ends
 ix_branch : int, optional
     Lattice branch index. Default is 0 (main branch).
 track_state : int
@@ -2413,7 +2444,7 @@ ix_start : int
 ix_end : int
     End index (See Note).
 direction : int
-    Direction to track. = +1 -> Track forward (+s) = -1 -> Track backward (-s)
+    Direction to track. = +1 -> Track forward (+s)
 ix_branch : int, optional
     Branch to track. Default is 0 (main lattice).
 track_state : int
@@ -2698,23 +2729,20 @@ orb_map : TaylorStruct
 err_flag : bool
     Set True if problem like number overflow, etc.
 ix1 : int, optional
-    Element start index for the calculation. Default is 0.
+    Element start index for the calculation.
 ix2 : int, optional
-    Element end index for the calculation. Default is lat.n_ele_track.
+    Element end index for the calculation.
 ref_orb : CoordStruct, optional
     Reference orbit/particle at s1 around which the map is made. This arg is needed if: unit_start = True or
-    particle is not the same as the reference particle of the lattice.
+    particle is not the same as the reference
 ix_branch : int, optional
     Lattice branch index. Default is 0.
 one_turn : bool, optional
-    If present and True, and if ix1 = ix2, and the lattice is circular, then construct the one-turn map from
-    ix1 back to ix1. Default = False.
+    If present and True, and if ix1 = ix2, and the lattice is circular, then construct the one-turn
 unit_start : bool, optional
     If present and False then orb_map will be used as the starting map instead of the unit map. Default = True
-concat_if_possible : bool, optional
-    If present and True then use map concatenation rather than tracking -- logical, optional: If present and
-    True then use map concatenation rather than tracking if a map is present for a given lattice element. See
-    above. Default is False.
+concat_if_possible : unknown, optional
+    If present and True then use map concatenation rather than tracking
 spin_map : TaylorStruct, optional
     Input quaternion spin map. Output only computed if bmad_com.spin_tracking_on = T
     This parameter is an input/output and is modified in-place. As an output: Quaternion spin map.
@@ -2772,23 +2800,26 @@ t_map : TaylorStruct
     Initial map (used when unit_start = False)
     This parameter is an input/output and is modified in-place. As an output: Transfer map.
 s1 : float, optional
-    Element start position for the calculation. Default is 0.
+    Element start position for the calculation.
+Default is 0. : 
 s2 : float, optional
-    Element end position for the calculation. Default is lat.param.total_length.
+    Element end position for the calculation.
+Default is lat%param%total_length. : 
 ref_orb_in : CoordStruct, optional
     Reference orbit/particle at s1 around which the map is made. This arg is needed if: unit_start = True or
-    particle is not the same as the reference particle of the lattice.
+    particle is not the same as the reference
+particle of the lattice. : 
 ix_branch : int, optional
     Lattice branch index. Default is 0 (main branch).
 one_turn : bool, optional
     If present and True, and s1 = s2, and the lattice is circular: Construct the one-turn map from s1 back to
-    s1. Otherwise t_map is unchanged or the unit map if unit_start = T. Default = False.
+    s1. Otherwise t_map is unchanged or the unit map if unit_start = T.
+Default = False. : 
 unit_start : bool, optional
     If present and False then t_map will be used as the starting map instead of the unit map. Default = True
-concat_if_possible : bool, optional
-    If present and True then use map concatenation rather than tracking -- logical, optional: If present and
-    True then use map concatenation rather than tracking if a map is present for a given lattice element. See
-    above. Default is False.
+concat_if_possible : unknown, optional
+    If present and True then use map concatenation rather than tracking
+if a map is present for a given lattice element. See above. Default is False. : 
 spin_map : TaylorStruct, optional
     Initial spin map.
     This parameter is an input/output and is modified in-place. As an output: Final spin map. Only computed if
@@ -2797,7 +2828,8 @@ spin_map : TaylorStruct, optional
 Returns
 -------
 ref_orb_out : CoordStruct
-    Ending coordinates of the reference orbit. This is also the actual orbit of particle
+    Ending coordinates of the reference orbit.
+This is also the actual orbit of particle : 
 err_flag : bool
     Set true if there is an error. False otherwise.
 )"""
@@ -2810,11 +2842,9 @@ err_flag : bool
       R"""(Parameters
 ----------
 twiss1 : TwissStruct
-    Twiss parameters at the initial point. .beta   -- Beta parameter. .alpha  -- Alpha parameter. .phi    --
-    Phase at initial point.
+    Twiss parameters at the initial point.
 twiss2 : TwissStruct
-    Twiss parameters at the end point. .beta   -- Beta parameter. .alpha  -- Alpha parameter. .phi    -- Phase
-    at final point.
+    Twiss parameters at the end point.
 mat : float
     Transfer matrix between the two points.
 )"""
@@ -2829,10 +2859,7 @@ mat : float
       R"""(Parameters
 ----------
 ele1 : EleStruct
-    Element with twiss parameters for the starting point. .a, .b       -- a-mode and b-mode Twiss paramters
-    .beta         -- Beta parameter. .alpha        -- Alpha parameter. .phi          -- Phase at initial
-    point. .x, .y       -- dispersion values .eta          -- Dispersion at initial point. .etap         --
-    Dispersion derivative at initial point. .c_mat(2,2)  -- Coupling matrix
+    Element with twiss parameters for the starting point.
 ele2 : EleStruct
     Element with twiss parameters for the ending point.
 orb1 : float
@@ -2856,14 +2883,14 @@ m : float
       R"""(Parameters
 ----------
 lat : LatStruct
-    Lattice used in the calculation. .ele(:).mat6  -- Transfer matrices used in the calculation.
+    Lattice used in the calculation.
 xfer_mat : 
 xfer_vec : 
 ix1 : int, optional
-    Element start index for the calculation. Default is 0.
+    Element start index for the calculation.
 ix2 : int, optional
     Element end index for the calculation. Defaults: If ix1 is not present: ix2 = lat.n_ele_track If ix1 is
-    present and lattice is closed: Calculate the one-turn matrix from ix1 back to ix1.
+    present and lattice is closed: Calculate the
 ix_branch : int, optional
     Branch index. Default is 0.
 one_turn : bool, optional
@@ -2983,6 +3010,18 @@ ix_branch : int, optional
 
 Returns
 -------
+%branch : EleStruct
+    Starting element
+%mode3 : Mode3Struct
+    Structure holding the normal modes.
+%v : float
+    V coupling matrix.
+%a : TwissStruct
+    "a" normal mode Twiss parameters.
+%b : TwissStruct
+    "b" normal mode Twiss parameters.
+%c : TwissStruct
+    "c" normal mode Twiss parameters.
 error : bool
     Set True if there is no RF. False otherwise.
 tune3 : float
@@ -3089,9 +3128,11 @@ which is mapped to 1.
 Parameters
 ----------
 lat : LatStruct
-    lattice. .param.geometry      -- Used to determine if lattice is open or closed.
+    lattice.
     This parameter is an input/output and is modified in-place. As an output: Lat with computed twiss
     parameters.
+%param%geometry : 
+    Used to determine if lattice is open or closed.
 orb : CoordStruct
     Orbit to be computed
 orb : 
@@ -3114,6 +3155,10 @@ orb_start : CoordStruct, optional
 
 Returns
 -------
+%param%stable : 
+    Set true or false.
+%param%unstable_factor : 
+    unstable growth rate (= 0 if stable)
 status : int
     Set ok$ if everything is OK and set to something else otherwise. See above for more details.
 )"""
@@ -3152,31 +3197,35 @@ Parameters
 lat : LatStruct
     Lattice.
 s : float
-    Longitudinal position. If s is negative the the position is taken to be lat.param.total_length - s.
+    Longitudinal position. If s is negative the
+the position is taken to be lat%param%total_length - s. : 
 ele_at_s : EleStruct, optional
     If the use_last argument is True, ele_at_s is taken to contain valid Twiss parameters stored from a
-    previous call to this routine.
+    previous call
     This parameter is an input/output and is modified in-place. As an output: Element structure holding the
     Twiss parameters.
+to this routine. : 
 orb : CoordStruct, optional
     Orbit through the Lattice.
 orb_at_s : CoordStruct, optional
-    If the use_last argument is True, orb_at_s is taken to contain the valid orbit stored from a previous
-    call.
+    If the use_last argument is True, orb_at_s is
     This parameter is an input/output and is modified in-place. As an output: Particle position at the
     position s.
+taken to contain the valid orbit stored from a previous call. : 
 ix_branch : int, optional
     Branch index, Default is 0 (main lattice).
 use_last : bool, optional
     If present and True, and if ele_at_s.s < s, then use ele_at_s and orb_at_s as the starting point for the
     present calculation. This can speed things up when the present s-position is in the middle of a long
     complicated element and the tracking (EG: Runge-Kutta) is slow.
-compute_floor_coords : bool, optional
-    If present and True then the global "floor" coordinates (without -- logical, optional: If present and True
-    then the global "floor" coordinates (without misalignments) will be calculated and put in ele_at_s.floor.
+compute_floor_coords : unknown, optional
+    If present and True then the global "floor" coordinates (without misalignments) will be calculated and put
+    in ele_at_s.floor.
 
 Returns
 -------
+with respect to the zero orbit. : 
+present. : 
 err : bool
     Set True if there is a problem in the calculation, False otherwise.
 )"""
@@ -3232,9 +3281,11 @@ which is mapped to 1.
 Parameters
 ----------
 lat : LatStruct
-    lattice. .param.geometry      -- Used to determine if lattice is open or closed.
+    lattice.
     This parameter is an input/output and is modified in-place. As an output: Lat with computed twiss
     parameters.
+%param%geometry : 
+    Used to determine if lattice is open or closed.
 orb : CoordStruct
     Orbit to be computed
 orb : 
@@ -3257,6 +3308,10 @@ orb_start : CoordStruct, optional
 
 Returns
 -------
+%param%stable : 
+    Set true or false.
+%param%unstable_factor : 
+    unstable growth rate (= 0 if stable)
 status : int
     Set ok$ if everything is OK and set to something else otherwise. See above for more details.
 )"""
@@ -3295,8 +3350,7 @@ status : int
 branch : BranchStruct
     Lattice branch to track through.
 orbit_start : CoordStruct
-    Starting phase space coordinates at s_start. .s                     -- Starting position. .ix_ele
-    -- Starting element. .location              -- Location relative element.
+    Starting phase space coordinates at s_start.
 s_end : float
     Ending position.
 orbit_end : CoordStruct
@@ -3304,12 +3358,11 @@ orbit_end : CoordStruct
 ele_start : EleStruct, optional
     Holds the starting parameters at s_start.
 ele_end : EleStruct
-    Holds the ending Twiss parameters and the transfer matrix. If present then the ele_start argument must
-    also be present.
+    Holds the ending Twiss parameters and the transfer matrix.
 err : bool
     Set True if there is a problem like the particle gets lost in tracking
 compute_floor_coords : bool, optional
-    If present and True then the global "floor" coordinates will be calculated and put in ele_end.floor.
+    If present and True then the global "floor" coordinates will be
 compute_twiss : bool, optional
     Default True. If False, to save a little time, do not compute Twiss parameters.
 )"""
@@ -3356,30 +3409,25 @@ l_start : float
 l_end : float
     Stop position measured from the beginning of the element.
 track_upstream_end : bool
-    If True then entrance effects are included in the tracking. But only if l_start = 0 and
-    orbit_start.location /= inside$.
+    If True then entrance effects are included in the tracking.
 track_downstream_end : bool
-    If True then exit effects are included in the tracking but only if l_end = ele.value(l$) (within
-    bmad_com.significant_length tol)
+    If True then exit effects are included in the tracking but
 orbit_start : CoordStruct, optional
     Starting phase space coordinates at l_start.
 orbit_end : CoordStruct
-    End phase space coordinates. If present then the orbit_start argument must also be present.
+    End phase space coordinates.
 ele_start : EleStruct, optional
     Holds the starting Twiss parameters at l_start.
 ele_end : EleStruct, optional
-    If reuse_ele_end is set True then reuse ele_end from trancking instead of recomputing ele_end from
-    scratch. This can save time.
+    If reuse_ele_end is set True then reuse ele_end from trancking
     This parameter is an input/output and is modified in-place. As an output: Holds the ending Twiss
     parameters at l_end (except for photons).
 err : bool
     Set True if there is a problem like the particle gets lost in tracking
 compute_floor_coords : bool, optional
-    If present and True then the global "floor" coordinates (without misalignments) will be calculated and put
-    in ele_end.floor.
+    If present and True then the global "floor" coordinates
 compute_twiss : bool, optional
-    Default True. If False, to save a little time, do not compute Twiss parameters. Also if ele_start is not
-    present, no Twiss parameters are computed.
+    Default True. If False, to save a little time, do not compute
 reuse_ele_end : bool, optional
     If present and True, and if ele_end has the correct lonigitudianal length and key type, reuse ele_end from
     trancking instead of recomputing ele_end from scratch. This can save time.
@@ -3418,8 +3466,7 @@ start : EleStruct
 end : EleStruct
     Twiss and s at end of element.
 average : EleStruct
-    Average Twiss and s of element. .value(l$) -- "Effective" length which for groups and overlays are
-    weighted by the control coefficient.
+    Average Twiss and s of element.
 )"""
   );
   m.def(
@@ -3474,8 +3521,7 @@ lat : LatStruct
 ref_orb0 : CoordStruct
     Reference orbit at lat.ele(0).
 symp_err : float
-    A measure of how symplectic the constructed matrices were before symplecitification. mat_symp_check for
-    more details.
+    A measure of how symplectic the constructed matrices were before symplecitification.
 err_flag : bool
     Set True if there is an error. False otherwise.
 d_orb : float, optional
@@ -3495,9 +3541,7 @@ ele1 : EleStruct
     This parameter is an input/output and is modified in-place. As an output: Element for the ending Twiss
     parameters for backwards propagation.
 ele2 : EleStruct
-    Element holding the transfer matrix and, if backwards propagation, the starting Twiss. .key
-    -- Needed since, for example, Match element are handled differently from other elements. .map_ref_orb_in
-    -- Important for the dispersion calc. .map_ref_orb_out    -- Important for the dispersion calc.
+    Element holding the transfer matrix and, if backwards propagation, the starting Twiss.
     This parameter is an input/output and is modified in-place. As an output: Element for the ending Twiss
     parameters for forward propagation.
 err_flag : bool
@@ -3516,7 +3560,7 @@ forward : bool, optional
       R"""(Parameters
 ----------
 lat : LatStruct
-    lattice. .branch(ix_branch).ele(0) -- Branch beginning element with the starting parameters.
+    lattice.
     This parameter is an input/output and is modified in-place. As an output: Lattice with parameters computed
     for the branch.
 ix_branch : int, optional
@@ -3524,8 +3568,7 @@ ix_branch : int, optional
 err_flag : bool
     Set True if there is an error. False otherwise.
 ie_start : int, optional
-    Starting element index. Default is 0. Note: The first element at which the Twiss parameters are calculated
-    is ie_start+1.
+    Starting element index. Default is 0.
 ie_end : int, optional
     Ending element index, Default is branch.n_ele_track.
 )"""
@@ -3538,7 +3581,7 @@ ie_end : int, optional
       R"""(Parameters
 ----------
 twiss : TwissStruct
-    Structure holding the Twiss parameters. .beta .alpha
+    Structure holding the Twiss parameters. .beta
 phi : float
     Tune in radians.
 mat2 : float

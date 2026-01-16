@@ -485,20 +485,20 @@ extern "C" void fortran_tao_ele_shape_info(
     Bmad::array_descriptor_t &ele_shapes /* 1D_NOT_type in */,
     void *e_shape /* 0D_PTR_type out */,
     const char *label_name /* 0D_NOT_character out */,
-    double &y1 /* 0D_NOT_real in */,
-    double &y2 /* 0D_NOT_real in */,
+    double &y1 /* 0D_NOT_real out */,
+    double &y2 /* 0D_NOT_real out */,
     int *ix_shape_min /* 0D_NOT_integer in */
 );
 struct TaoEleShapeInfo {
   std::optional<TaoEleShapeStruct> e_shape;
   std::string label_name;
+  double y1;
+  double y2;
 };
 Tao::TaoEleShapeInfo tao_ele_shape_info(
     int ix_uni,
     EleStruct &ele,
     TaoEleShapeStructArray1D ele_shapes,
-    double y1,
-    double y2,
     std::optional<int> ix_shape_min = std::nullopt
 );
 

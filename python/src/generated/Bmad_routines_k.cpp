@@ -100,9 +100,9 @@ s_rel : float
     Distance from the start of the element to the particle.
 orbit : CoordStruct
     Position of particle.
-local_ref_frame : !
-    Logical, If True then take the input coordinates -- Logical, If True then take the input coordinates as
-    being with respect to the frame of referene of the element.
+local_ref_frame : 
+    -- Logical, If True then take the input coordinates as being with respect to the frame of referene of the
+    element.
 
 Returns
 -------

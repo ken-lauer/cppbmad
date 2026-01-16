@@ -2943,11 +2943,11 @@ subroutine fortran_branch_to_ptc_m_u (branch) bind(c)
   use array_desc_mod
   use bmad_struct, only: branch_struct
   implicit none
-  ! ** In parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: branch  ! 0D_NOT_type
   type(branch_struct), pointer :: f_branch
   ! ** End of parameters **
-  ! in: f_branch 0D_NOT_type
+  ! inout: f_branch 0D_NOT_type
   if (.not. c_associated(branch)) return
   call c_f_pointer(branch, f_branch)
   call branch_to_ptc_m_u(f_branch)
@@ -4490,20 +4490,19 @@ subroutine fortran_concat_transfer_mat (mat_1, vec_1, mat_0, vec_0, mat_out, vec
   type(array_descriptor_t), intent(in) :: mat_1
   real(rp) :: f_mat_1(6,6)
   real(c_double), pointer :: f_mat_1_ptr(:)
+  type(array_descriptor_t), intent(in) :: vec_1
+  real(rp) :: f_vec_1(6)
+  real(c_double), pointer :: f_vec_1_ptr(:)
   type(array_descriptor_t), intent(in) :: mat_0
   real(rp) :: f_mat_0(6,6)
   real(c_double), pointer :: f_mat_0_ptr(:)
+  type(array_descriptor_t), intent(in) :: vec_0
+  real(rp) :: f_vec_0(6)
+  real(c_double), pointer :: f_vec_0_ptr(:)
   ! ** Out parameters **
   type(array_descriptor_t), intent(in) :: mat_out
   real(rp) :: f_mat_out(6,6)
   real(c_double), pointer :: f_mat_out_ptr(:)
-  ! ** Inout parameters **
-  type(array_descriptor_t), intent(in) :: vec_1
-  real(rp) :: f_vec_1(6)
-  real(c_double), pointer :: f_vec_1_ptr(:)
-  type(array_descriptor_t), intent(in) :: vec_0
-  real(rp) :: f_vec_0(6)
-  real(c_double), pointer :: f_vec_0_ptr(:)
   type(array_descriptor_t), intent(in) :: vec_out
   real(rp) :: f_vec_out(6)
   real(c_double), pointer :: f_vec_out_ptr(:)
@@ -4536,17 +4535,15 @@ subroutine fortran_concat_transfer_mat (mat_1, vec_1, mat_0, vec_0, mat_out, vec
   else
     f_vec_0_ptr => null()
   endif
-  !! general array (1D_NOT_real)
-  if (c_associated(vec_out%data_ptr)) then
-    call c_f_pointer(vec_out%data_ptr, f_vec_out_ptr, [vec_out%dims(1)])
-    f_vec_out = f_vec_out_ptr(:)
-  else
-    f_vec_out_ptr => null()
-  endif
   call concat_transfer_mat(f_mat_1, f_vec_1, f_mat_0, f_vec_0, f_mat_out, f_vec_out)
 
   ! out: f_mat_out 2D_NOT_real
 ! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat_out', c_name='mat_out', python_name='mat_out', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=564, definition='real(rp) mat_1(6,6), vec_1(6), mat_0(6,6), vec_0(6), mat_out(6,6), vec_out(6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat_out', comment='', default=None), intent='out', description='Map from s0 to s2', doc_data_type='float', doc_is_optional=False)
+  ! out: f_vec_out 1D_NOT_real
+  if (c_associated(vec_out%data_ptr)) then
+    call c_f_pointer(vec_out%data_ptr, f_vec_out_ptr, [vec_out%dims(1)])
+    f_vec_out_ptr = f_vec_out(:)
+  endif
 end subroutine
 subroutine fortran_control_bookkeeper (lat, ele, err_flag) bind(c)
 
@@ -5575,7 +5572,7 @@ subroutine fortran_coords_local_curvilinear_to_floor (local_position, ele, in_bo
       f_in_body_frame_native_ptr, f_w_mat, f_calculate_angles_native_ptr, f_relative_to_ptr)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=766, definition='real(rp), optional :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='W matrix at z, to transform vectors. v_global     = w_mat . v_local/body v_local/body = transpose(w_mat) . v_global', doc_data_type='float', doc_is_optional=False)
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=766, definition='real(rp), optional :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='W matrix at z, to transform vectors. v_global     = w_mat . v_local/body', doc_data_type='float', doc_is_optional=False)
   ! out: f_global_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -17286,14 +17283,6 @@ subroutine fortran_mat_symp_decouple (t0, stat, U, V, Ubar, Vbar, G, twiss1, twi
   type(c_ptr), intent(in), value :: stat  ! 0D_NOT_integer
   integer :: f_stat
   integer(c_int), pointer :: f_stat_ptr
-  type(c_ptr), value :: twiss1  ! 0D_NOT_type
-  type(twiss_struct), pointer :: f_twiss1
-  type(c_ptr), value :: twiss2  ! 0D_NOT_type
-  type(twiss_struct), pointer :: f_twiss2
-  type(c_ptr), intent(in), value :: gamma  ! 0D_NOT_real
-  real(rp) :: f_gamma
-  real(c_double), pointer :: f_gamma_ptr
-  ! ** Inout parameters **
   type(array_descriptor_t), intent(in) :: U
   real(rp) :: f_U(4,4)
   real(c_double), pointer :: f_U_ptr(:)
@@ -17309,6 +17298,13 @@ subroutine fortran_mat_symp_decouple (t0, stat, U, V, Ubar, Vbar, G, twiss1, twi
   type(array_descriptor_t), intent(in) :: G
   real(rp) :: f_G(4,4)
   real(c_double), pointer :: f_G_ptr(:)
+  type(c_ptr), value :: twiss1  ! 0D_NOT_type
+  type(twiss_struct), pointer :: f_twiss1
+  type(c_ptr), value :: twiss2  ! 0D_NOT_type
+  type(twiss_struct), pointer :: f_twiss2
+  type(c_ptr), intent(in), value :: gamma  ! 0D_NOT_real
+  real(rp) :: f_gamma
+  real(c_double), pointer :: f_gamma_ptr
   ! ** End of parameters **
   !! general array (2D_NOT_real)
   if (c_associated(t0%data_ptr)) then
@@ -17316,41 +17312,6 @@ subroutine fortran_mat_symp_decouple (t0, stat, U, V, Ubar, Vbar, G, twiss1, twi
     call vec2mat(f_t0_ptr, f_t0)
   else
     f_t0_ptr => null()
-  endif
-  !! general array (2D_NOT_real)
-  if (c_associated(U%data_ptr)) then
-    call c_f_pointer(U%data_ptr, f_U_ptr, [product(U%dims(1:U%rank))])
-    call vec2mat(f_U_ptr, f_U)
-  else
-    f_U_ptr => null()
-  endif
-  !! general array (2D_NOT_real)
-  if (c_associated(V%data_ptr)) then
-    call c_f_pointer(V%data_ptr, f_V_ptr, [product(V%dims(1:V%rank))])
-    call vec2mat(f_V_ptr, f_V)
-  else
-    f_V_ptr => null()
-  endif
-  !! general array (2D_NOT_real)
-  if (c_associated(Ubar%data_ptr)) then
-    call c_f_pointer(Ubar%data_ptr, f_Ubar_ptr, [product(Ubar%dims(1:Ubar%rank))])
-    call vec2mat(f_Ubar_ptr, f_Ubar)
-  else
-    f_Ubar_ptr => null()
-  endif
-  !! general array (2D_NOT_real)
-  if (c_associated(Vbar%data_ptr)) then
-    call c_f_pointer(Vbar%data_ptr, f_Vbar_ptr, [product(Vbar%dims(1:Vbar%rank))])
-    call vec2mat(f_Vbar_ptr, f_Vbar)
-  else
-    f_Vbar_ptr => null()
-  endif
-  !! general array (2D_NOT_real)
-  if (c_associated(G%data_ptr)) then
-    call c_f_pointer(G%data_ptr, f_G_ptr, [product(G%dims(1:G%rank))])
-    call vec2mat(f_G_ptr, f_G)
-  else
-    f_G_ptr => null()
   endif
   ! out: f_twiss1 0D_NOT_type
   if (.not. c_associated(twiss1)) return
@@ -17366,6 +17327,16 @@ subroutine fortran_mat_symp_decouple (t0, stat, U, V, Ubar, Vbar, G, twiss1, twi
   ! out: f_stat 0D_NOT_integer
   call c_f_pointer(stat, f_stat_ptr)
   f_stat_ptr = f_stat
+  ! out: f_U 2D_NOT_real
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_U', c_name='U', python_name='U', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1790, definition='real(rp) t0(4,4), U(4,4), V(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='U', comment='', default=None), intent='out', description='See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.', doc_data_type='unknown', doc_is_optional=False)
+  ! out: f_V 2D_NOT_real
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_V', c_name='V', python_name='V', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1790, definition='real(rp) t0(4,4), U(4,4), V(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='V', comment='', default=None), intent='out', description='See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.', doc_data_type='unknown', doc_is_optional=False)
+  ! out: f_Ubar 2D_NOT_real
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_Ubar', c_name='Ubar', python_name='Ubar', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1792, definition='real(rp) Ubar(4,4), Vbar(4,4), G(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='Ubar', comment='', default=None), intent='out', description='See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.', doc_data_type='unknown', doc_is_optional=False)
+  ! out: f_Vbar 2D_NOT_real
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_Vbar', c_name='Vbar', python_name='Vbar', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1792, definition='real(rp) Ubar(4,4), Vbar(4,4), G(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='Vbar', comment='', default=None), intent='out', description='See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.', doc_data_type='unknown', doc_is_optional=False)
+  ! out: f_G 2D_NOT_real
+! TODO general output array 2D RoutineArg(is_component=True, f_name='f_G', c_name='G', python_name='G', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1792, definition='real(rp) Ubar(4,4), Vbar(4,4), G(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='G', comment='', default=None), intent='out', description='See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.', doc_data_type='unknown', doc_is_optional=False)
   ! out: f_twiss1 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_twiss2 0D_NOT_type
@@ -21316,14 +21287,15 @@ subroutine fortran_photon_add_to_detector_statistics (orbit0, orbit, ele, ix_pt,
   type(coord_struct), pointer :: f_orbit0
   type(c_ptr), value :: orbit  ! 0D_NOT_type
   type(coord_struct), pointer :: f_orbit
-  type(c_ptr), intent(in), value :: ix_pt  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_pt
-  integer(c_int), pointer :: f_ix_pt_ptr
-  type(c_ptr), intent(in), value :: iy_pt  ! 0D_NOT_integer
-  integer(c_int) :: f_iy_pt
-  integer(c_int), pointer :: f_iy_pt_ptr
   type(c_ptr), value :: pixel_pt  ! 0D_NOT_type
   type(pixel_pt_struct), pointer :: f_pixel_pt
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: ix_pt  ! 0D_NOT_integer
+  integer :: f_ix_pt
+  integer(c_int), pointer :: f_ix_pt_ptr
+  type(c_ptr), intent(in), value :: iy_pt  ! 0D_NOT_integer
+  integer :: f_iy_pt
+  integer(c_int), pointer :: f_iy_pt_ptr
   ! ** Inout parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
@@ -21337,13 +21309,13 @@ subroutine fortran_photon_add_to_detector_statistics (orbit0, orbit, ele, ix_pt,
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  ! in: f_ix_pt 0D_NOT_integer
+  ! out: f_ix_pt 0D_NOT_integer
   if (c_associated(ix_pt)) then
     call c_f_pointer(ix_pt, f_ix_pt_ptr)
   else
     f_ix_pt_ptr => null()
   endif
-  ! in: f_iy_pt 0D_NOT_integer
+  ! out: f_iy_pt 0D_NOT_integer
   if (c_associated(iy_pt)) then
     call c_f_pointer(iy_pt, f_iy_pt_ptr)
   else
@@ -21351,9 +21323,13 @@ subroutine fortran_photon_add_to_detector_statistics (orbit0, orbit, ele, ix_pt,
   endif
   ! in: f_pixel_pt 0D_NOT_type
   if (c_associated(pixel_pt))   call c_f_pointer(pixel_pt, f_pixel_pt)
-  call photon_add_to_detector_statistics(f_orbit0, f_orbit, f_ele, f_ix_pt_ptr, f_iy_pt_ptr, &
+  call photon_add_to_detector_statistics(f_orbit0, f_orbit, f_ele, f_ix_pt, f_iy_pt, &
       f_pixel_pt)
 
+  ! out: f_ix_pt 0D_NOT_integer
+  ! no output conversion for f_ix_pt
+  ! out: f_iy_pt 0D_NOT_integer
+  ! no output conversion for f_iy_pt
 end subroutine
 subroutine fortran_photon_reflection (graze_angle_in, energy, surface, graze_angle_out, &
     phi_out) bind(c)
@@ -22286,24 +22262,24 @@ subroutine fortran_pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, i
   real(rp) :: f_x
   real(c_double) :: y  ! 0D_NOT_real
   real(rp) :: f_y
-  type(c_ptr), intent(in), value :: ix  ! 0D_NOT_integer
-  integer(c_int) :: f_ix
-  integer(c_int), pointer :: f_ix_ptr
-  type(c_ptr), intent(in), value :: iy  ! 0D_NOT_integer
-  integer(c_int) :: f_iy
-  integer(c_int), pointer :: f_iy_ptr
   type(c_ptr), intent(in), value :: extend_grid  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_extend_grid
   logical, target :: f_extend_grid_native
   logical, pointer :: f_extend_grid_native_ptr
   logical(c_bool), pointer :: f_extend_grid_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: ix  ! 0D_NOT_integer
+  integer :: f_ix
+  integer(c_int), pointer :: f_ix_ptr
+  type(c_ptr), intent(in), value :: iy  ! 0D_NOT_integer
+  integer :: f_iy
+  integer(c_int), pointer :: f_iy_ptr
   type(c_ptr), intent(in), value :: xx  ! 0D_NOT_real
-  real(c_double) :: f_xx
+  real(rp) :: f_xx
   real(c_double), pointer :: f_xx_ptr
   type(c_ptr), intent(in), value :: yy  ! 0D_NOT_real
-  real(c_double) :: f_yy
+  real(rp) :: f_yy
   real(c_double), pointer :: f_yy_ptr
-  ! ** Out parameters **
   type(c_ptr) :: pt  ! 0D_PTR_type
   type(surface_displacement_pt_struct), pointer :: f_pt
   ! ** End of parameters **
@@ -22316,13 +22292,13 @@ subroutine fortran_pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, i
   f_x = x
   ! in: f_y 0D_NOT_real
   f_y = y
-  ! in: f_ix 0D_NOT_integer
+  ! out: f_ix 0D_NOT_integer
   if (c_associated(ix)) then
     call c_f_pointer(ix, f_ix_ptr)
   else
     f_ix_ptr => null()
   endif
-  ! in: f_iy 0D_NOT_integer
+  ! out: f_iy 0D_NOT_integer
   if (c_associated(iy)) then
     call c_f_pointer(iy, f_iy_ptr)
   else
@@ -22336,21 +22312,29 @@ subroutine fortran_pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, i
   else
     f_extend_grid_native_ptr => null()
   endif
-  ! in: f_xx 0D_NOT_real
+  ! out: f_xx 0D_NOT_real
   if (c_associated(xx)) then
     call c_f_pointer(xx, f_xx_ptr)
   else
     f_xx_ptr => null()
   endif
-  ! in: f_yy 0D_NOT_real
+  ! out: f_yy 0D_NOT_real
   if (c_associated(yy)) then
     call c_f_pointer(yy, f_yy_ptr)
   else
     f_yy_ptr => null()
   endif
-  f_pt => pointer_to_surface_displacement_pt(f_ele, f_nearest, f_x, f_y, f_ix_ptr, f_iy_ptr, &
-      f_extend_grid_native_ptr, f_xx_ptr, f_yy_ptr)
+  f_pt => pointer_to_surface_displacement_pt(f_ele, f_nearest, f_x, f_y, f_ix, f_iy, &
+      f_extend_grid_native_ptr, f_xx, f_yy)
 
+  ! out: f_ix 0D_NOT_integer
+  ! no output conversion for f_ix
+  ! out: f_iy 0D_NOT_integer
+  ! no output conversion for f_iy
+  ! out: f_xx 0D_NOT_real
+  ! no output conversion for f_xx
+  ! out: f_yy 0D_NOT_real
+  ! no output conversion for f_yy
   ! out: f_pt 0D_PTR_type
   pt = c_loc(f_pt)
 end subroutine
@@ -22369,24 +22353,24 @@ subroutine fortran_pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, 
   real(rp) :: f_x
   real(c_double) :: y  ! 0D_NOT_real
   real(rp) :: f_y
-  type(c_ptr), intent(in), value :: ix  ! 0D_NOT_integer
-  integer(c_int) :: f_ix
-  integer(c_int), pointer :: f_ix_ptr
-  type(c_ptr), intent(in), value :: iy  ! 0D_NOT_integer
-  integer(c_int) :: f_iy
-  integer(c_int), pointer :: f_iy_ptr
   type(c_ptr), intent(in), value :: extend_grid  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_extend_grid
   logical, target :: f_extend_grid_native
   logical, pointer :: f_extend_grid_native_ptr
   logical(c_bool), pointer :: f_extend_grid_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: ix  ! 0D_NOT_integer
+  integer :: f_ix
+  integer(c_int), pointer :: f_ix_ptr
+  type(c_ptr), intent(in), value :: iy  ! 0D_NOT_integer
+  integer :: f_iy
+  integer(c_int), pointer :: f_iy_ptr
   type(c_ptr), intent(in), value :: xx  ! 0D_NOT_real
-  real(c_double) :: f_xx
+  real(rp) :: f_xx
   real(c_double), pointer :: f_xx_ptr
   type(c_ptr), intent(in), value :: yy  ! 0D_NOT_real
-  real(c_double) :: f_yy
+  real(rp) :: f_yy
   real(c_double), pointer :: f_yy_ptr
-  ! ** Out parameters **
   type(c_ptr) :: pt  ! 0D_PTR_type
   type(surface_segmented_pt_struct), pointer :: f_pt
   ! ** End of parameters **
@@ -22399,13 +22383,13 @@ subroutine fortran_pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, 
   f_x = x
   ! in: f_y 0D_NOT_real
   f_y = y
-  ! in: f_ix 0D_NOT_integer
+  ! out: f_ix 0D_NOT_integer
   if (c_associated(ix)) then
     call c_f_pointer(ix, f_ix_ptr)
   else
     f_ix_ptr => null()
   endif
-  ! in: f_iy 0D_NOT_integer
+  ! out: f_iy 0D_NOT_integer
   if (c_associated(iy)) then
     call c_f_pointer(iy, f_iy_ptr)
   else
@@ -22419,21 +22403,29 @@ subroutine fortran_pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, 
   else
     f_extend_grid_native_ptr => null()
   endif
-  ! in: f_xx 0D_NOT_real
+  ! out: f_xx 0D_NOT_real
   if (c_associated(xx)) then
     call c_f_pointer(xx, f_xx_ptr)
   else
     f_xx_ptr => null()
   endif
-  ! in: f_yy 0D_NOT_real
+  ! out: f_yy 0D_NOT_real
   if (c_associated(yy)) then
     call c_f_pointer(yy, f_yy_ptr)
   else
     f_yy_ptr => null()
   endif
-  f_pt => pointer_to_surface_segmented_pt(f_ele, f_nearest, f_x, f_y, f_ix_ptr, f_iy_ptr, &
-      f_extend_grid_native_ptr, f_xx_ptr, f_yy_ptr)
+  f_pt => pointer_to_surface_segmented_pt(f_ele, f_nearest, f_x, f_y, f_ix, f_iy, &
+      f_extend_grid_native_ptr, f_xx, f_yy)
 
+  ! out: f_ix 0D_NOT_integer
+  ! no output conversion for f_ix
+  ! out: f_iy 0D_NOT_integer
+  ! no output conversion for f_iy
+  ! out: f_xx 0D_NOT_real
+  ! no output conversion for f_xx
+  ! out: f_yy 0D_NOT_real
+  ! no output conversion for f_yy
   ! out: f_pt 0D_PTR_type
   pt = c_loc(f_pt)
 end subroutine
@@ -22687,12 +22679,12 @@ subroutine fortran_ptc_calculate_tracking_step_size (ptc_layout, kl_max, ds_max,
   type(array_descriptor_t), intent(in) :: crossover
   integer :: f_crossover(2)
   integer(c_int), pointer :: f_crossover_ptr(:)
-  ! ** Inout parameters **
-  type(c_ptr), value :: ptc_layout  ! 0D_NOT_type
-  type(layout), pointer :: f_ptc_layout
   type(array_descriptor_t), intent(in) :: crossover_wiggler
   integer :: f_crossover_wiggler(2)
   integer(c_int), pointer :: f_crossover_wiggler_ptr(:)
+  ! ** Inout parameters **
+  type(c_ptr), value :: ptc_layout  ! 0D_NOT_type
+  type(layout), pointer :: f_ptc_layout
   ! ** End of parameters **
   ! inout: f_ptc_layout 0D_NOT_type
   if (.not. c_associated(ptc_layout)) return
@@ -22871,7 +22863,6 @@ subroutine fortran_ptc_layouts_resplit (dKL_max, l_max, l_max_drift_only, bend_d
   type(array_descriptor_t), intent(in) :: crossover
   integer :: f_crossover(2)
   integer(c_int), pointer :: f_crossover_ptr(:)
-  ! ** Inout parameters **
   type(array_descriptor_t), intent(in) :: crossover_wiggler
   integer :: f_crossover_wiggler(2)
   integer(c_int), pointer :: f_crossover_wiggler_ptr(:)
@@ -23374,8 +23365,6 @@ subroutine fortran_rad_g_integrals (ele, where, orb_in, orb_out, int_g, int_g2, 
   type(coord_struct), pointer :: f_orb_out
   real(c_double) :: int_g2  ! 0D_NOT_real
   real(rp) :: f_int_g2
-  real(c_double) :: int_g3  ! 0D_NOT_real
-  real(rp) :: f_int_g3
   real(c_double) :: g_tol  ! 0D_NOT_real
   real(rp) :: f_g_tol
   real(c_double) :: g2_tol  ! 0D_NOT_real
@@ -23386,6 +23375,9 @@ subroutine fortran_rad_g_integrals (ele, where, orb_in, orb_out, int_g, int_g2, 
   type(array_descriptor_t), intent(in) :: int_g
   real(rp) :: f_int_g(2)
   real(c_double), pointer :: f_int_g_ptr(:)
+  type(c_ptr), intent(in), value :: int_g3  ! 0D_NOT_real
+  real(rp) :: f_int_g3
+  real(c_double), pointer :: f_int_g3_ptr
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
@@ -23400,8 +23392,6 @@ subroutine fortran_rad_g_integrals (ele, where, orb_in, orb_out, int_g, int_g2, 
   call c_f_pointer(orb_out, f_orb_out)
   ! in: f_int_g2 0D_NOT_real
   f_int_g2 = int_g2
-  ! in: f_int_g3 0D_NOT_real
-  f_int_g3 = int_g3
   ! in: f_g_tol 0D_NOT_real
   f_g_tol = g_tol
   ! in: f_g2_tol 0D_NOT_real
@@ -23416,6 +23406,9 @@ subroutine fortran_rad_g_integrals (ele, where, orb_in, orb_out, int_g, int_g2, 
     call c_f_pointer(int_g%data_ptr, f_int_g_ptr, [int_g%dims(1)])
     f_int_g_ptr = f_int_g(:)
   endif
+  ! out: f_int_g3 0D_NOT_real
+  call c_f_pointer(int_g3, f_int_g3_ptr)
+  f_int_g3_ptr = f_int_g3
 end subroutine
 subroutine fortran_radiation_integrals (lat, orbit, mode, ix_cache, ix_branch, rad_int_by_ele) &
     bind(c)
@@ -24289,20 +24282,20 @@ subroutine fortran_relative_mode_flip (ele1, ele2, func_retval__) bind(c)
   use array_desc_mod
   use bmad_struct, only: ele_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: func_retval__  ! 0D_NOT_logical
-  logical :: f_func_retval__
-  logical(c_bool), pointer :: f_func_retval___ptr
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: ele1  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele1
   type(c_ptr), value :: ele2  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele2
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: func_retval__  ! 0D_NOT_logical
+  logical :: f_func_retval__
+  logical(c_bool), pointer :: f_func_retval___ptr
   ! ** End of parameters **
-  ! inout: f_ele1 0D_NOT_type
+  ! in: f_ele1 0D_NOT_type
   if (.not. c_associated(ele1)) return
   call c_f_pointer(ele1, f_ele1)
-  ! inout: f_ele2 0D_NOT_type
+  ! in: f_ele2 0D_NOT_type
   if (.not. c_associated(ele2)) return
   call c_f_pointer(ele2, f_ele2)
   f_func_retval__ = relative_mode_flip(f_ele1, f_ele2)

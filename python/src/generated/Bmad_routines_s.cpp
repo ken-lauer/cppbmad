@@ -97,7 +97,9 @@ mat6 : float, optional
 make_matrix : float, optional
     Propagate the transfer matrix? Default is False.
 k0l : float, optional
-    Used with sad_mult. If present, use this instead of ele.a_pole/.b_pole.
+    Used with sad_mult.
+If present : 
+use this instead of ele%a_pole/%b_pole. : 
 t0 : float, optional
     Used with sad_mult. If present, use this instead of ele.a_pole/.b_pole. Must be present if k0l is.
 )"""
@@ -122,7 +124,7 @@ s_body : float, optional
     Body s-position from beginning of element.
 is_time_coords : bool, optional
     Default is False. If True, input beam is using time coordinates in which case there will be a conversion
-    to s-coords before bunch_params are computed. Ouput:
+    to s-coords before bunch_params are computed.
 )"""
   );
   m.def(
@@ -145,7 +147,7 @@ s_body : float, optional
     Body s-position from beginning of element.
 is_time_coords : bool, optional
     Default is False. If True, input bunch is using time coordinates in which case there will be a conversion
-    to s-coords before bunch_params are computed. Ouput:
+    to s-coords before bunch_params are computed.
 )"""
   );
   m.def(
@@ -175,8 +177,7 @@ local_ref_frame : bool
 orb : CoordStruct
     trajectory at s with respect to element coordinates.
 s_rel : float
-    Longitudinal position wrt the element. If local_ref_frame = F: Lab coords. If local_ref_frame = T: body
-    coords.
+    Longitudinal position wrt the element. If local_ref_frame = F: Lab coords.
 save_field : bool, optional
     Save electric and magnetic field values? Default is False.
 mat6 : float, optional
@@ -185,9 +186,9 @@ make_matrix : bool, optional
     Is mat6 a valid matrix? Default is False.
 rf_time : float, optional
     RF clock time used for calculating the field.. If not present then the time will be calculated using the
-    standard algorithm. This is only needed if save_field = True.
+    standard algorithm.
 strong_beam : StrongBeambeamStruct, optional
-    Strong beam info if tracking through a beambeam element. Ouput:
+    Strong beam info if tracking through a beambeam element.
 )"""
   );
   m.def(
@@ -212,7 +213,7 @@ b1 : float
 param : LatParamStruct
     Branch parameters.
 n_step : int
-    Number of steps to divide the bend into. Only one step is taken by this routine.
+    Number of steps to divide the bend into.
 orbit : CoordStruct
     Orbit at beginning of the bend.
     This parameter is an input/output and is modified in-place. As an output: Ending coordinates.
@@ -340,7 +341,8 @@ Parameters
 ----------
 custom_name : unknown
     Name of the custom attribute. If prefixed by "<class>::" then the custom name will be set only for that
-    element class. Example: "quadrupole::error" will set the alias custom namefor quadrupoles.
+    element class. Example:
+"quadrupole::error" will set the alias custom namefor quadrupoles. : 
 custom_index : int, optional
     Index used in assigning where in the ele_struct the custom attribute is put. If not present or 0 then the
     next unused slot is used.
@@ -385,7 +387,7 @@ set_string : unknown
 err_flag : bool
     Set True if there is an error, False otherwise.
 err_print_flag : bool, optional
-    If present and False then suppress printing of an error message if attribute is, for example, not free.
+    If present and False then suppress printing
 set_lords : bool, optional
     Default False. If True, set the super_lord(s) if the element is a super_slave.
 err_id : int
@@ -401,7 +403,7 @@ err_id : int
       R"""(Parameters
 ----------
 ele : EleStruct
-    Element to init. .key          -- Type of element.
+    Element to init.
     This parameter is an input/output and is modified in-place. As an output: Initialized element.
 do_allocate : bool, optional
     Do default allocation of element components? Default is True.
@@ -469,10 +471,10 @@ err_print_flag : bool, optional
       R"""(Parameters
 ----------
 ele : EleStruct
-    Element. .bookkeeping_state   -- Status block to set.
+    Element.
 status_group : int
     Which flag groups to set. Possibilities are: attribute_group$, control_group$, floor_position_group$,
-    s_position_group$, s_and_floor_position_group$, ref_energy_group$, or mat6_group$, all_groups$
+    s_position_group$,
 set_slaves : bool
     If present and False then do not set the status for any slaves. Default is True.
 )"""
@@ -518,12 +520,14 @@ lat : LatStruct
 ele : 
     ele_struct, Element being modified.
 real_attrib : float, optional
-    Attribute that has been changed. For example: ele.value(hkick$). If not present then assume everything has
-    potentially changed.
+    Attribute that has been changed. For example: ele.value(hkick$).
+If not present then assume everything has potentially changed. : 
 int_attrib : int
-    Attribute that has been changed. For example: ele.mat6_calc_method.
-logic_attrib : unknown
-    ele.is_on.
+    Attribute that has been changed.
+For example: ele%mat6_calc_method. : 
+logic_attrib : 
+    logical; Attribute that has been changed.
+For example: ele%is_on. : 
 all_attrib : AllPointerStruct
     Pointer to attribute.
 set_dependent : bool, optional
@@ -574,12 +578,14 @@ lat : LatStruct
 ele : 
     ele_struct, Element being modified.
 real_attrib : float, optional
-    Attribute that has been changed. For example: ele.value(hkick$). If not present then assume everything has
-    potentially changed.
+    Attribute that has been changed. For example: ele.value(hkick$).
+If not present then assume everything has potentially changed. : 
 int_attrib : int
-    Attribute that has been changed. For example: ele.mat6_calc_method.
-logic_attrib : unknown
-    ele.is_on.
+    Attribute that has been changed.
+For example: ele%mat6_calc_method. : 
+logic_attrib : 
+    logical; Attribute that has been changed.
+For example: ele%is_on. : 
 all_attrib : AllPointerStruct
     Pointer to attribute.
 set_dependent : bool, optional
@@ -633,12 +639,14 @@ lat : LatStruct
 ele : 
     ele_struct, Element being modified.
 real_attrib : float, optional
-    Attribute that has been changed. For example: ele.value(hkick$). If not present then assume everything has
-    potentially changed.
+    Attribute that has been changed. For example: ele.value(hkick$).
+If not present then assume everything has potentially changed. : 
 int_attrib : int
-    Attribute that has been changed. For example: ele.mat6_calc_method.
-logic_attrib : unknown
-    ele.is_on.
+    Attribute that has been changed.
+For example: ele%mat6_calc_method. : 
+logic_attrib : 
+    logical; Attribute that has been changed.
+For example: ele%is_on. : 
 all_attrib : AllPointerStruct
     Pointer to attribute.
 set_dependent : bool, optional
@@ -692,12 +700,14 @@ lat : LatStruct
 ele : 
     ele_struct, Element being modified.
 real_attrib : float, optional
-    Attribute that has been changed. For example: ele.value(hkick$). If not present then assume everything has
-    potentially changed.
+    Attribute that has been changed. For example: ele.value(hkick$).
+If not present then assume everything has potentially changed. : 
 int_attrib : int
-    Attribute that has been changed. For example: ele.mat6_calc_method.
-logic_attrib : unknown
-    ele.is_on.
+    Attribute that has been changed.
+For example: ele%mat6_calc_method. : 
+logic_attrib : 
+    logical; Attribute that has been changed.
+For example: ele%is_on. : 
 all_attrib : AllPointerStruct
     Pointer to attribute.
 set_dependent : bool, optional
@@ -740,12 +750,10 @@ ele : EleStruct
     Element
 stat_group : int
     which status group to set. floor_position_group$, etc. See set_ele_status_stale for more details.
-control_bookkeeping : bool, optional
-    Call control_bookkeeper for each lord if needed? -- logical, optional: Call control_bookkeeper for each
-    lord if needed? Default if False.
+control_bookkeeping : unknown, optional
+    Call control_bookkeeper for each lord if needed?
 flag : int, optional
-    Do not use. For coordinating recursion. ele.lat    -- Lat_struct: Lattice with status flags of lords of
-    ele set.
+    Do not use. For coordinating recursion.
 )"""
   );
   m.def(
@@ -771,21 +779,18 @@ switch : int
     on$            => Turn elements on. If saved_values argument is present, use this. If not present (only
     for logical attributes), set to True. off$           => Turn elements off (but will not store the present
     state). off_and_save$  => Save on/off state and then turn elements off. save_state$    => Save present
-    on/off state. No turning on or off is done. restore_state$ => Restore saved on/off state from saved_values
-    argument.
+    on/off state. No turning on or off is done.
 orb : CoordStruct, optional
     Needed for lat_make_mat6
 use_ref_orb : bool, optional
-    If present and true then use ele.map_ref_orb for the reference orbit for calculating .mat6. Default is
-    false.
+    If present and true then use ele.map_ref_orb for the reference orbit for
 ix_branch : int, optional
-    If present then only set for this lattice branch.
+    If present then only set for
 saved_values : float, optional
-    Element-by element saved values of the component. Must be present if needed (EG if switch =
-    restore_state$, etc.).
+    Element-by element saved values of the component.
     This parameter is an input/output and is modified in-place. As an output: Saved values of the component.
 attribute : unknown, optional
-    Attribute to turn on/off. Eg: 'K2', 'MULTIPOLE_ON', etc. Default is 'IS_ON'. Must be upper case.
+    Attribute to turn on/off. Eg: 'K2', 'MULTIPOLE_ON', etc.
 set_val : int, optional
     Value to set to. Overrides normal set value.
 )"""
@@ -824,16 +829,15 @@ ix_noset : int, optional
 e_tot : float, optional
     Energy in eV.
 particle : int, optional
-    Type of particle: electron$, proton$, etc.
+    Type of particle:
 taylor_order : int, optional
-    Maximum order of the taylor polynomials. 0 => Use default.
+    Maximum order of the taylor polynomials.
 integ_order : int, optional
-    Default Order for the drift-kick-drift sympletic integrator. Possibilities are: 2, 4, or 6 Default = 2
+    Default Order for the drift-kick-drift sympletic integrator. Possibilities are: 2, 4, or 6
 n_step : int, optional
-    Default Number of integration steps. Default = 1
+    Default Number of integration steps.
 no_cavity : bool, optional
     No RF Cavity exists? Default = False. Corresponds to the nocavity option of the PTC init routine.
-    no_cavity = .true. will turn any cavity into a drift.
 force_init : bool, optional
     If present and True then force a PTC init.
 )"""
@@ -846,8 +850,7 @@ force_init : bool, optional
       R"""(Parameters
 ----------
 component : unknown
-    Name of component. "TOTALPATH", "SPIN", "NOCAVITY", "TIME", etc. See the PTC internal_state structure for
-    component names.
+    Name of component. "TOTALPATH", "SPIN", "NOCAVITY", "TIME", etc.
 set_val : bool
     Value to set to. For TOTALPATH, True => 1, False => 0.
 old_val : bool
@@ -954,7 +957,7 @@ phi_b_set : float
 dk1 : float
     Relative amount to vary a quad in tuning. The variation will be proportional to dk1. Those quads with a
     positive dk1(i) will be varied as one group and the quads with negative dk1(i) will be varied as another
-    group. The routine choose_quads_for_set_tune can be used to calculate values for dk1.
+    group.
 eles : ElePointerStruct
     eles(i).ele points to quadrupole corresponding to dk1(i).
 branch : BranchStruct
@@ -1137,8 +1140,7 @@ lat : LatStruct
     This parameter is an input/output and is modified in-place. As an output: Lattice with unwanted elements
     sliced out.
 ele_list : unknown
-    List of elements to retain. See the documentation for the lat_ele_locator routine for the syntax of the
-    list.
+    List of elements to retain. See the documentation for
 error : bool
     Set True if there is an error Set False if not.
 do_bookkeeping : bool, optional
@@ -1373,11 +1375,9 @@ orb_mat : float
 q_map : float
     1-turn spin linear quaternion map.
 dn_dpz_partial : float
-    ) is dn_dpz with only one osccilation mode "excited". So dn_dpz_partial(1,:) represents a-mode excitation,
-    etc.
+    ) is dn_dpz with only one osccilation
 dn_dpz_partial2 : float
     ) is dn_dpz with only two osccilation modes "excited". So dn_dpz_partial(1,:) represents b-mode and c-mode
-    excitation without the a-mode, etc.
 error : bool
     Set True if there is an error. False otherwise.
 n0 : float
@@ -1572,7 +1572,7 @@ polar : SpinPolarStruct
       R"""(Parameters
 ----------
 spinor : complex
-    Spinor Output
+    Spinor
 vec : float
     spin vector in cartesian coordinates
 )"""
@@ -1641,12 +1641,12 @@ ix_split : int
 split_done : bool
     True if lat was split.
 add_suffix : bool, optional
-    If True (default) add '#1' and '#2" suffixes to the split elements.
+    If True (default) add '#1' and '#2" suffixes
 check_sanity : bool, optional
-    If True (default) then call lat_sanity_check after the split to make sure everything is ok.
+    If True (default) then call lat_sanity_check
 save_null_drift : bool, optional
     Save a copy of a drift to be split as a null_ele? This is useful when superpositions are done. See
-    add_superimpose for more info. Default is False.
+    add_superimpose for more info.
 err_flag : bool
     Set true if there is an error, false otherwise.
 choose_max : bool, optional
@@ -1655,7 +1655,7 @@ choose_max : bool, optional
     ix_split will be chosen to be the maximum possible index and if choose_max = False ix_split will be chosen
     to be the minimal possible index. If s_split is not at an element boundary, the setting of choose_max is
     immaterial. If ix_insert is present, the default value of choose_max is set to give the closest element to
-    ix_insert. If ix_insert is not present, the default value of choose_max is False.
+    ix_insert.
 ix_insert : int, optional
     Element index near the point to be split. ix_insert is useful in the case where there is a patch with a
     negative length which can create an ambiguity as to where to do the split In this case ix_insert will
@@ -1955,9 +1955,14 @@ Routine to add in the z displacement defined by the grid
 Parameters
 ----------
 ele : EleStruct
-    Element containing the grid x, y          -- real(rp): Photon coords at surface.
+    Element containing the grid
+x : float
+    Photon coords at surface.
+y : float
+    Photon coords at surface.
 extend_grid : bool, optional
-    If (x,y) past grid pretend (x,y) is at grid boundary. Default is False. Output
+    If (x,y) past grid pretend (x,y) is at grid boundary. Default is False.
+Output : 
 err_flag : bool
     Set True if there is a problem.
 z : float
@@ -1988,7 +1993,7 @@ orbit : CoordStruct
     element.
 track : TrackStruct
     Structure holding the track information. When tracking through multiple elements, the trajectory in an
-    element is appended to the existing trajectory. To reset: Set track.n_pt = -1.
+    element
 mat6 : float, optional
     Transfer matrix before the element.
     This parameter is an input/output and is modified in-place. As an output: Transfer matrix propagated

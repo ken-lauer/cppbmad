@@ -41,7 +41,8 @@ Parameters
 ----------
 set : unknown, optional
     Set the random number engine. Possibilities are: 'pseudo' -> Uses ran from Numerical Recipies (F90).
-    'quasi'  -> Uses sobseq from Numerical Recipes. ''       -> Do nothing.
+    'quasi'  -> Uses sobseq from Numerical Recipes.
+''       -> Do nothing. : 
 get : unknown, optional
     Get the current (before any set) random number engine.
 ran_state : RandomStateStruct, optional
@@ -93,8 +94,8 @@ used independent of what was set with this routine.
 Parameters
 ----------
 set : unknown, optional
-    Set the random number engine. Possibilities are: 'exact' 'quick'  ! Old deprecated: 'limited' ''       !
-    Do nothing
+    Set the random number engine. Possibilities are: 'exact' 'quick'  ! Old deprecated: 'limited'
+''       ! Do nothing : 
 set_sigma_cut : float, optional
     Sigma cutoff. Initially: sigma_cut = -1.
 ran_state : RandomStateStruct, optional
@@ -130,15 +131,17 @@ Note: Use ran_gauss_converter to set which conversion routine to use.
 Parameters
 ----------
 ran_state : RandomStateStruct, optional
-    Internal state. See the ran_seed_put documentation for more details.
+    Internal state.
+See the ran_seed_put documentation for more details. : 
 sigma_cut : float, optional
     If present and positive will override setting of ran_state.gauss_sigma_cut.
 
 Returns
 -------
 harvest : float
-    Random number. Or
+    Random number.
     This parameter is an input/output and is modified in-place. As an output: Random number array.
+Or : 
 
 Notes
 -----
@@ -167,15 +170,17 @@ Note: Use ran_gauss_converter to set which conversion routine to use.
 Parameters
 ----------
 ran_state : RandomStateStruct, optional
-    Internal state. See the ran_seed_put documentation for more details.
+    Internal state.
+See the ran_seed_put documentation for more details. : 
 sigma_cut : float, optional
     If present and positive will override setting of ran_state.gauss_sigma_cut.
 
 Returns
 -------
 harvest : float
-    Random number. Or
+    Random number.
     This parameter is an input/output and is modified in-place. As an output: Random number array.
+Or : 
 
 Notes
 -----
@@ -219,7 +224,8 @@ Note: Use pointer_to_ran_state() to access the ran state directly.
 Parameters
 ----------
 seed : int
-    Seed number. If seed = 0 then a seed will be choosen based upon the system clock.
+    Seed number. If seed = 0 then a
+seed will be choosen based upon the system clock. : 
 mpi_offset : int, optional
     Offset added to seed. Default is zero. Used with MPI processes ensure different threads use different
     random numbers.
@@ -253,8 +259,9 @@ ran_state : RandomStateStruct, optional
 Returns
 -------
 harvest : float
-    Random number. Or
+    Random number.
     This parameter is an input/output and is modified in-place. As an output: Random number array.
+Or : 
 
 Notes
 -----
@@ -288,8 +295,9 @@ ran_state : RandomStateStruct, optional
 Returns
 -------
 harvest : float
-    Random number. Or
+    Random number.
     This parameter is an input/output and is modified in-place. As an output: Random number array.
+Or : 
 
 Notes
 -----

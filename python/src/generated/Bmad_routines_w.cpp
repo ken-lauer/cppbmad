@@ -124,7 +124,8 @@ Parameters
 position : float
     Particle position in element coordinates. In a patch, with respect to entrance coords. [position(1),
     position(3)] = [x, y] transverse coords. position(5)                = Longitudinal position relative to
-    beginning of element. position(6)                = Longitudinal velocity (only +/- sign matters).
+    beginning of element.
+position : 
 ele : EleStruct
     Element with wall
 ix_wall : int, optional
@@ -137,11 +138,14 @@ d_radius : float
 perp : float
     Perpendicular normal to the wall.
 ix_section : int
-    Set to wall slice section particle is in. That is between ix_section and ix_section+1.
+    Set to wall slice section particle is in.
+That is between ix_section and ix_section+1. : 
 no_wall_here : bool
-    True if the sub-chamber under consideration does not exist at the longitudinal location of the particle.
+    True if the sub-chamber under consideration does not exist at the
+longitudinal location of the particle. : 
 origin : float
-    (x, y, s) origin with respect to the radius is measured. Uses the same coords as position.
+    (x, y, s) origin with respect to the radius is measured.
+Uses the same coords as position. : 
 radius_wall : float
     Radius of the wall.
 err_flag : bool
@@ -313,7 +317,10 @@ d4 :
 Parameters
 ----------
 astra_file_unit : int
-    unit number to write to, if > 0 if < 0, nothing is written, and only maxfield is returned
+    unit number to write to, if > 0
+if < 0 : 
+nothing is written : 
+and only maxfield is returned : 
 ele : EleStruct
     element to make map
 dz : float, optional
@@ -368,8 +375,9 @@ err : bool
 Parameters
 ----------
 base_filename : unknown
-    Base filename. Files will be written as: base_filename.ex, .ey, .ez, .bx, .by, .bz If set to '', no files
-    will be written
+    Base filename. Files will be written as: base_filename.ex, .ey, .ez, .bx, .by, .bz
+If set to '' : 
+no files will be written : 
 ele : EleStruct
     element to make map
 dz : float, optional
@@ -453,7 +461,8 @@ file_name : unknown
 ele : EleStruct
     Element associated with the map.
 cart_map : CartesianMapStruct
-    Cartesian map. Ouput:
+    Cartesian map.
+Ouput: : 
 err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -477,7 +486,8 @@ file_name : unknown
 ele : EleStruct
     Element associated with the map.
 cl_map : CylindricalMapStruct
-    Cylindrical map. Ouput:
+    Cylindrical map.
+Ouput: : 
 err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -501,7 +511,8 @@ file_name : unknown
 ele : EleStruct
     Element associated with the map.
 g_field : GridFieldStruct
-    Cylindrical map. Ouput:
+    Cylindrical map.
+Ouput: : 
 err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -547,8 +558,7 @@ err : bool
     Set True if, say a file could not be opened.
 output_form : int, optional
     binary$   -> Write grid_field info in binary hdf5 form in separate files. Default. All other fields are
-    writen in separate files in ASCII ascii$    -> Fields will be put in separate ASCII files. one_file$ ->
-    Everything in one file.
+    writen in separate files in ASCII ascii$    -> Fields will be put in separate ASCII files.
 orbit0 : CoordStruct, optional
     Initial orbit. Used to write the inital orbit if the lattice geometry is closed.
 )"""
@@ -590,7 +600,10 @@ orbit0 : CoordStruct, optional
 Parameters
 ----------
 gpt_file_unit : int
-    unit number to write to, if > 0 if < 0, nothing is written, and only maxfield is returned
+    unit number to write to, if > 0
+if < 0 : 
+nothing is written : 
+and only maxfield is returned : 
 ele : EleStruct
     element to make map
 dz : float, optional
@@ -643,7 +656,10 @@ a lat_struct. Optionally only part of the lattice can be generated.
 Parameters
 ----------
 gpt_file_unit : int
-    unit number to write to, if > 0 if < 0, nothing is written, and only maxfield is returned
+    unit number to write to, if > 0
+if < 0 : 
+nothing is written : 
+and only maxfield is returned : 
 ele : EleStruct
     element to make map
 dr : float, optional
@@ -705,8 +721,9 @@ err : bool
 Parameters
 ----------
 base_filename : unknown
-    Base filename. Files will be written as: base_filename_E_ASCII.gpt, _H_ASCII.gpt If set to '', no files
-    will be written
+    Base filename. Files will be written as: base_filename_E_ASCII.gpt, _H_ASCII.gpt
+If set to '' : 
+no files will be written : 
 ele : EleStruct
     element to make map
 dz : float, optional
@@ -747,10 +764,12 @@ line : unknown
 iu : int
     Unit number to write to.
 end_is_neigh : bool
-    If true then write out everything. Otherwise wait for a full line of max_char characters or so.
+    If true then write out everything.
+Otherwise wait for a full line of max_char characters or so. : 
 do_split : bool, optional
     Split line if overlength? Default is True. False is used when line has already been split for expressions
-    since the expression splitting routine does a much better job of it.
+    since
+the expression splitting routine does a much better job of it. : 
 scibmad : bool, optional
     Default False. If True then do not include "&" line continuation
 )"""
@@ -773,18 +792,16 @@ lat : LatStruct
     Holds the lattice information.
 ref_orbit : CoordStruct, optional
     Referece orbit for sad_mult and patch elements. This argument must be present if the lattice has sad_mult
-    or patch elements and is being translated to MAD-8 or SAD.
+    or patch elements and is
 use_matrix_model : bool, optional
     Use a drift-matrix_drift model for wigglers/undulators? [A MAD "matrix" is a 2nd order Taylor map.] This
-    switch is ignored for SAD conversion. Default is False -> Use a bend-drift-bend model. Note: sol_quad
-    elements always use a drift-matrix-drift model.
+    switch is ignored for SAD conversion. Default is False -> Use a bend-drift-bend model.
 include_apertures : bool, optional
     If True (the default), add to the output lattice a zero length collimator element next to any non-
     collimator element that has an aperture. Note: MADX translations for non-drift elements can handle non-
-    collimator elements with an aperture so in this case this argument is ignored.
+    collimator elements
 dr12_drift_max : float, optional
-    Max deviation for drifts allowed before a correction matrix element is added. Default value is 1d-5. A
-    negative number means use default.
+    Max deviation for drifts allowed before a correction matrix element
 ix_branch : int, optional
     Index of lattice branch to use. Default = 0.
 err : bool
@@ -812,18 +829,16 @@ lat : LatStruct
     Holds the lattice information.
 ref_orbit : CoordStruct, optional
     Referece orbit for sad_mult and patch elements. This argument must be present if the lattice has sad_mult
-    or patch elements and is being translated to MAD-8 or SAD.
+    or patch elements and is
 use_matrix_model : bool, optional
     Use a drift-matrix_drift model for wigglers/undulators? [A MAD "matrix" is a 2nd order Taylor map.] This
-    switch is ignored for SAD conversion. Default is False -> Use a bend-drift-bend model. Note: sol_quad
-    elements always use a drift-matrix-drift model.
+    switch is ignored for SAD conversion. Default is False -> Use a bend-drift-bend model.
 include_apertures : bool, optional
     If True (the default), add to the output lattice a zero length collimator element next to any non-
     collimator element that has an aperture. Note: MADX translations for non-drift elements can handle non-
-    collimator elements with an aperture so in this case this argument is ignored.
+    collimator elements
 dr12_drift_max : float, optional
-    Max deviation for drifts allowed before a correction matrix element is added. Default value is 1d-5. A
-    negative number means use default.
+    Max deviation for drifts allowed before a correction matrix element
 ix_branch : int, optional
     Index of lattice branch to use. Default = 0.
 err : bool
@@ -851,18 +866,16 @@ lat : LatStruct
     Holds the lattice information.
 ref_orbit : CoordStruct, optional
     Referece orbit for sad_mult and patch elements. This argument must be present if the lattice has sad_mult
-    or patch elements and is being translated to MAD-8 or SAD.
+    or patch elements and is
 use_matrix_model : bool, optional
     Use a drift-matrix_drift model for wigglers/undulators? [A MAD "matrix" is a 2nd order Taylor map.] This
-    switch is ignored for SAD conversion. Default is False -> Use a bend-drift-bend model. Note: sol_quad
-    elements always use a drift-matrix-drift model.
+    switch is ignored for SAD conversion. Default is False -> Use a bend-drift-bend model.
 include_apertures : bool, optional
     If True (the default), add to the output lattice a zero length collimator element next to any non-
     collimator element that has an aperture. Note: MADX translations for non-drift elements can handle non-
-    collimator elements with an aperture so in this case this argument is ignored.
+    collimator elements
 dr12_drift_max : float, optional
-    Max deviation for drifts allowed before a correction matrix element is added. Default value is 1d-5. A
-    negative number means use default.
+    Max deviation for drifts allowed before a correction matrix element
 ix_branch : int, optional
     Index of lattice branch to use. Default = 0.
 err : bool
@@ -964,7 +977,10 @@ a lat_struct. Optionally only part of the lattice can be generated.
 Parameters
 ----------
 opal_file_unit : int
-    unit number to write to, if > 0 if < 0, nothing is written, and only maxfield is returned
+    unit number to write to, if > 0
+if < 0 : 
+nothing is written : 
+and only maxfield is returned : 
 ele : EleStruct
     element to make map
 param : LatParamStruct
@@ -1033,11 +1049,16 @@ Parameters
 time_file_unit : int
     unit number to write to, if > 0
 bunch : BunchStruct
-    bunch to be written. Particles are drifted to bmad_bunch.t_center for output
+    bunch to be written.
+Particles are drifted to bmad_bunch%t_center for output : 
 ele : EleStruct
     Element being tracked through.
 style : unknown, optional
-    Style of output file: 'BMAD' (default), 'OPAL', 'ASTRA', 'GPT'
+    Style of output file:
+'BMAD' : 
+'OPAL' : 
+'ASTRA' : 
+'GPT' : 
 branch : BranchStruct, optional
     Required for 'ASTRA' style
 format : unknown

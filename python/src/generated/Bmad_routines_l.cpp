@@ -27,7 +27,7 @@ res :
       R"""(Parameters
 ----------
 lat : LatStruct
-    Input lattice. .ele(0).value(E_tot$) -- Energy at the start of the lattice.
+    Input lattice.
 err_flag : bool
     Set true if there is an error. False otherwise.
 )"""
@@ -57,18 +57,15 @@ n_loc : int
     This parameter is an input/output and is modified in-place. As an output: Number of locations found.
 err : bool
     Set True if there is a decode error. Note: Not finding any matching element is not an error.
-above_ubound_is_err : bool, optional
-    Default is True. If the upper bound "e2" on an "e1:e2" range construct -- logical, optional: Default is
-    True. If the upper bound "e2" on an "e1:e2" range construct is an integer and above the maximum element
-    index then treat this as an error? If False, treat e2 as the maximum element index.
+above_ubound_is_err : unknown, optional
+    Default is True. If the upper bound "e2" on an "e1:e2" range construct is an integer and above the maximum
+    element index then treat this as an error?
 ix_dflt_branch : int, optional
     If present and not -1 then restrict search to specified branch. If not present or -1: Search all branches.
-    Exception: For elements specified using an integer index (EG: "43"), if ix_dflt_branch is not present or
-    -1 use branch 0.
+    Exception: For elements specified using
 order_by_index : bool, optional
     False is default. If True, order a component of loc_str like "quad::*" by element index instead of
-    longitudinal s-position. Index ordering and s-position ordering are different when there are super lords
-    and super slaves.
+    longitudinal s-position. Index ordering and s-position ordering
 append_eles : bool, optional
     Default is False. If True, found elements are appended to eles(:) array.
 )"""
@@ -91,7 +88,7 @@ lat_in :
       R"""(Parameters
 ----------
 lat : LatStruct
-    The lattice. .ele(0).floor  -- Floor_position_struct: The starting point for the calculations.
+    The lattice.
 )"""
   );
   m.def(
@@ -106,10 +103,9 @@ lat : LatStruct
 lat : LatStruct
     Lat containing the elements.
 ix_ele : int, optional
-    Index of the element. If not present or negative, the matrices for all elements will be calculated.
+    Index of the element. If not present
 ref_orb : CoordStruct, optional
-    Coordinates of the reference orbit around which the matrix is calculated. If not present then the
-    referemce is taken to be the origin.
+    Coordinates of the reference orbit around which the matrix is calculated. If not present
 ix_branch : int, optional
     Branch index. Default is 0 (main lattice). -1 => All branches/all elements (ref_orb & ix_ele will be
     ignored).
@@ -136,8 +132,7 @@ err_flag : bool
       R"""(Parameters
 ----------
 lat : LatStruct
-    Input lattice lat.branch(:).ptc              -- Pointers to generated layouts.
-    lat.branch(:).ele(:).ptc_fibre -- Pointer to PTC fibres
+    Input lattice
 )"""
   );
   m.def(
@@ -299,7 +294,9 @@ Returns
 end_of_file : bool
     End of file reached?
 err_flag : bool
-    Set True if there is an error. False otherwise bp_com.parse_line -- string to append to.
+    Set True if there is an error. False otherwise
+bp_com%parse_line : 
+    string to append to.
 )"""
   );
   m.def(

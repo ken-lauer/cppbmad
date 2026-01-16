@@ -142,10 +142,11 @@ ix_key : int
 ix_attrib : int
     Attribute index.
 name : unknown
-    Attribute name. Should be uppercase if attrib_state = is_free$. Should contain non-uppercase characters if
-    attrib_state = private$.
+    Attribute name. Should be uppercase if attrib_state = is_free$.
+Should contain non-uppercase characters if attrib_state = private$. : 
 attrib_state : int, optional
-    Class of attribute: does_not_exist$, is_free$, etc. Defaults to is_free$.
+    Class of attribute: does_not_exist$, is_free$, etc.
+Defaults to is_free$. : 
 override : bool, optional
     Normally this routine throws an error if the [ix_key, ix_attrib] has been set previously. If override =
     True then the set is done and no error is generated.
@@ -213,7 +214,9 @@ Parameters
 ele : EleStruct
     element to initialize distribution at (downstream end).
 param : LatParamStruct
-    Lattice parameters .particle              -- Type of particle.
+    Lattice parameters
+%particle : 
+    Type of particle.
 beam_init : BeamInitStruct
     Use "getf beam_init_struct" for more details.
 modes : NormalModesStruct, optional
@@ -353,7 +356,8 @@ complex_taylor : ComplexTaylorStruct
     Old structure.
     This parameter is an input/output and is modified in-place. As an output: Initalized structure.
 n_term : int
-    Number of terms to allocate. n_term < 1 => complex_taylor.term pointer will be disassociated.
+    Number of terms to allocate.
+n_term < 1 => complex_taylor%term pointer will be disassociated. : 
 save : bool, optional
     If True then save any old terms when complex_taylor is resized. Default is False.
 )"""
@@ -417,18 +421,22 @@ ele : EleStruct, optional
 element_end : int, optional
     upstream_end$, downstream_end$, inside$, or start_end$. Must be present if ele argument is present.
     start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
-    upstream_end$. Note: If ele is the beginning element (index zero), the setting of element_end will not
-    matter.
+    upstream_end$. Note: If ele is the beginning element (index zero), the
+setting of element_end will not matter. : 
 particle : int, optional
-    Particle type (electron$, etc.). If particle = not_set$ and orb_in is present, use orb_in.species instead.
+    Particle type (electron$, etc.).
+If particle = not_set$ and orb_in is present : 
+use orb_in%species instead. : 
 direction : int, optional
     +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
-    orb.direction except for photons which get set according to orb.vec(6).
+    orb.direction except for photons which get set
+according to orb%vec : 
 E_photon : float, optional
     Photon energy if particle is a photon. Ignored otherwise.
 t_offset : float, optional
     Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
-    a particular particle is pegged to the time of the center of the bunch.
+    a particular particle
+is pegged to the time of the center of the bunch. : 
 shift_vec6 : bool, optional
     If present and False, prevent the shift of orb.vec(6).
 spin : float, optional
@@ -507,18 +515,22 @@ ele : EleStruct, optional
 element_end : int, optional
     upstream_end$, downstream_end$, inside$, or start_end$. Must be present if ele argument is present.
     start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
-    upstream_end$. Note: If ele is the beginning element (index zero), the setting of element_end will not
-    matter.
+    upstream_end$. Note: If ele is the beginning element (index zero), the
+setting of element_end will not matter. : 
 particle : int, optional
-    Particle type (electron$, etc.). If particle = not_set$ and orb_in is present, use orb_in.species instead.
+    Particle type (electron$, etc.).
+If particle = not_set$ and orb_in is present : 
+use orb_in%species instead. : 
 direction : int, optional
     +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
-    orb.direction except for photons which get set according to orb.vec(6).
+    orb.direction except for photons which get set
+according to orb%vec : 
 E_photon : float, optional
     Photon energy if particle is a photon. Ignored otherwise.
 t_offset : float, optional
     Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
-    a particular particle is pegged to the time of the center of the bunch.
+    a particular particle
+is pegged to the time of the center of the bunch. : 
 shift_vec6 : bool, optional
     If present and False, prevent the shift of orb.vec(6).
 spin : float, optional
@@ -596,18 +608,22 @@ ele : EleStruct, optional
 element_end : int, optional
     upstream_end$, downstream_end$, inside$, or start_end$. Must be present if ele argument is present.
     start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
-    upstream_end$. Note: If ele is the beginning element (index zero), the setting of element_end will not
-    matter.
+    upstream_end$. Note: If ele is the beginning element (index zero), the
+setting of element_end will not matter. : 
 particle : int, optional
-    Particle type (electron$, etc.). If particle = not_set$ and orb_in is present, use orb_in.species instead.
+    Particle type (electron$, etc.).
+If particle = not_set$ and orb_in is present : 
+use orb_in%species instead. : 
 direction : int, optional
     +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
-    orb.direction except for photons which get set according to orb.vec(6).
+    orb.direction except for photons which get set
+according to orb%vec : 
 E_photon : float, optional
     Photon energy if particle is a photon. Ignored otherwise.
 t_offset : float, optional
     Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
-    a particular particle is pegged to the time of the center of the bunch.
+    a particular particle
+is pegged to the time of the center of the bunch. : 
 shift_vec6 : bool, optional
     If present and False, prevent the shift of orb.vec(6).
 spin : float, optional
@@ -677,7 +693,8 @@ em_taylor : EmTaylorStruct
     Old structure.
     This parameter is an input/output and is modified in-place. As an output: Initalized structure.
 n_term : int
-    Number of terms to allocate. n_term < 0 => em_taylor.term pointer will be disassociated.
+    Number of terms to allocate.
+n_term < 0 => em_taylor%term pointer will be disassociated. : 
 save_old : bool, optional
     If True then save any old terms when em_taylor is resized. Default is False.
 )"""
@@ -692,7 +709,7 @@ save_old : bool, optional
 lat : LatStruct
     Initialized lat.
 n : int, optional
-    Upper bound lat.ele(0:) array is initialized to. Default is 10.
+    Upper bound lat.ele(0:) array is initialized to.
 init_beginning_ele : bool, optional
     Init lat.ele(0)? Default is False.
 )"""
@@ -775,8 +792,10 @@ vert_angle_min : float, optional
 vert_angle_max : float, optional
     Upper bound of vertical angle range.
 vert_angle_symmetric : float, optional
-    Use two symmetric ranges [-vert_angle_max, -vert_angle_min] and [vert_angle_min, vert_angle_max] instead
-    of just [vert_angle_min, vert_angle_max]?
+    Use two symmetric ranges [-vert_angle_max, -vert_angle_min] and
+[vert_angle_min : 
+vert_angle_max] instead of just [vert_angle_min : 
+vert_angle_max]? : 
 energy_integ_prob : float, optional
     If present, E_photon will be set to the photon energy such that the integrated probability of generating a
     photon in the given angle and energy range in the interval [E_min, E_photon] is energy_integ_prob. That
@@ -802,7 +821,9 @@ Initializes a spin distribution according to beam_init%spin.
 Parameters
 ----------
 beam_init : BeamInitStruct
-    Initialization parameters .spin(3)  -- (x, y, z) spin coordinates ele
+    Initialization parameters
+%spin : 
+    (x, y, z) spin coordinates ele
 
 Returns
 -------
@@ -822,7 +843,11 @@ Routine to init the componentes in ele%photon%segmented%pt(ix,iy) for use with s
 
 Parameters
 ----------
-phot : unknown
+phot : 
+    Surface structure.
+ix : int
+    index of grid point to init.
+iy : int
     index of grid point to init.
 )"""
   );
@@ -838,7 +863,7 @@ bmad_taylor : TaylorStruct
     Old structure.
     This parameter is an input/output and is modified in-place. As an output: Initalized structure.
 n_term : int
-    Number of terms to allocate. n_term < 0 => bmad_taylor.term pointer will be disassociated.
+    Number of terms to allocate.
 save_old : bool, optional
     If True then save any old terms and ref orbit when bmad_taylor is resized. If False zero the ref orbit.
     Default is False.
@@ -913,8 +938,12 @@ using qtrap.
 Parameters
 ----------
 t : float
-    Array of reals over which to evaluate the integrand. <return value> -- REAL(rp): Array of reals containing
-    values of integrand at t(:).
+    Array of reals over which to evaluate the integrand.
+
+Returns
+-------
+<return value> : float
+    Array of reals containing values of integrand at t(:).
 )"""
   );
   m.def(

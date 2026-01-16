@@ -176,7 +176,8 @@ spline : SplineStruct
 ----------
 a : float
     Input vectors.
-b : 
+b : float
+    Input vectors.
 c : float
     Cross product: a X b.
 )"""

@@ -730,7 +730,7 @@ void branch_equal_branch(BranchStruct &branch1, BranchStruct &branch2);
 extern "C" bool
 fortran_branch_name(void *branch /* 0D_NOT_type in */, const char *name /* 0D_NOT_character out */);
 std::string branch_name(BranchStruct &branch);
-extern "C" void fortran_branch_to_ptc_m_u(void *branch /* 0D_NOT_type in */);
+extern "C" void fortran_branch_to_ptc_m_u(void *branch /* 0D_NOT_type inout */);
 void branch_to_ptc_m_u(BranchStruct &branch);
 extern "C" void
 fortran_bunch_equal_bunch(void *bunch1 /* 0D_NOT_type inout */, void *bunch2 /* 0D_NOT_type in */);
@@ -1186,18 +1186,21 @@ void concat_taylor(
 );
 extern "C" void fortran_concat_transfer_mat(
     Bmad::array_descriptor_t &mat_1 /* 2D_NOT_real in */,
-    Bmad::array_descriptor_t &vec_1 /* 1D_NOT_real inout */,
+    Bmad::array_descriptor_t &vec_1 /* 1D_NOT_real in */,
     Bmad::array_descriptor_t &mat_0 /* 2D_NOT_real in */,
-    Bmad::array_descriptor_t &vec_0 /* 1D_NOT_real inout */,
+    Bmad::array_descriptor_t &vec_0 /* 1D_NOT_real in */,
     Bmad::array_descriptor_t &mat_out /* 2D_NOT_real out */,
-    Bmad::array_descriptor_t &vec_out /* 1D_NOT_real inout */
+    Bmad::array_descriptor_t &vec_out /* 1D_NOT_real out */
 );
-FixedArray2D<Real, 6, 6> concat_transfer_mat(
+struct ConcatTransferMat {
+  FixedArray2D<Real, 6, 6> mat_out;
+  FixedArray1D<Real, 6> vec_out;
+};
+Bmad::ConcatTransferMat concat_transfer_mat(
     FixedArray2D<Real, 6, 6> mat_1,
     FixedArray1D<Real, 6> vec_1,
     FixedArray2D<Real, 6, 6> mat_0,
-    FixedArray1D<Real, 6> vec_0,
-    FixedArray1D<Real, 6> vec_out
+    FixedArray1D<Real, 6> vec_0
 );
 extern "C" void fortran_control_bookkeeper(
     void *lat /* 0D_NOT_type in */,
@@ -4661,11 +4664,11 @@ mat6_to_complex_taylor(FixedArray1D<Complex, 6> vec0, FixedArray2D<Complex, 6, 6
 extern "C" void fortran_mat_symp_decouple(
     Bmad::array_descriptor_t &t0 /* 2D_NOT_real in */,
     int &stat /* 0D_NOT_integer out */,
-    Bmad::array_descriptor_t &U /* 2D_NOT_real inout */,
-    Bmad::array_descriptor_t &V /* 2D_NOT_real inout */,
-    Bmad::array_descriptor_t &Ubar /* 2D_NOT_real inout */,
-    Bmad::array_descriptor_t &Vbar /* 2D_NOT_real inout */,
-    Bmad::array_descriptor_t &G /* 2D_NOT_real inout */,
+    Bmad::array_descriptor_t &U /* 2D_NOT_real out */,
+    Bmad::array_descriptor_t &V /* 2D_NOT_real out */,
+    Bmad::array_descriptor_t &Ubar /* 2D_NOT_real out */,
+    Bmad::array_descriptor_t &Vbar /* 2D_NOT_real out */,
+    Bmad::array_descriptor_t &G /* 2D_NOT_real out */,
     void *twiss1 /* 0D_NOT_type out */,
     void *twiss2 /* 0D_NOT_type out */,
     double &gamma /* 0D_NOT_real out */,
@@ -4673,19 +4676,16 @@ extern "C" void fortran_mat_symp_decouple(
 );
 struct MatSympDecouple {
   int stat;
+  FixedArray2D<Real, 4, 4> U;
+  FixedArray2D<Real, 4, 4> V;
+  FixedArray2D<Real, 4, 4> Ubar;
+  FixedArray2D<Real, 4, 4> Vbar;
+  FixedArray2D<Real, 4, 4> G;
   TwissStruct twiss1;
   TwissStruct twiss2;
   double gamma;
 };
-Bmad::MatSympDecouple mat_symp_decouple(
-    FixedArray2D<Real, 4, 4> t0,
-    FixedArray2D<Real, 4, 4> U,
-    FixedArray2D<Real, 4, 4> V,
-    FixedArray2D<Real, 4, 4> Ubar,
-    FixedArray2D<Real, 4, 4> Vbar,
-    FixedArray2D<Real, 4, 4> G,
-    bool type_out
-);
+Bmad::MatSympDecouple mat_symp_decouple(FixedArray2D<Real, 4, 4> t0, bool type_out);
 extern "C" void fortran_match_ele_to_mat6(
     void *ele /* 0D_NOT_type in */,
     void *start_orb /* 0D_NOT_type in */,
@@ -5830,16 +5830,18 @@ extern "C" void fortran_photon_add_to_detector_statistics(
     void *orbit0 /* 0D_NOT_type in */,
     void *orbit /* 0D_NOT_type in */,
     void *ele /* 0D_NOT_type inout */,
-    int *ix_pt /* 0D_NOT_integer in */,
-    int *iy_pt /* 0D_NOT_integer in */,
+    int &ix_pt /* 0D_NOT_integer out */,
+    int &iy_pt /* 0D_NOT_integer out */,
     void *pixel_pt /* 0D_NOT_type in */
 );
-void photon_add_to_detector_statistics(
+struct PhotonAddToDetectorStatistics {
+  int ix_pt;
+  int iy_pt;
+};
+Bmad::PhotonAddToDetectorStatistics photon_add_to_detector_statistics(
     CoordStruct &orbit0,
     CoordStruct &orbit,
     EleStruct &ele,
-    std::optional<int> ix_pt = std::nullopt,
-    std::optional<int> iy_pt = std::nullopt,
     optional_ref<PixelPtStruct> pixel_pt = std::nullopt
 );
 
@@ -6111,46 +6113,52 @@ extern "C" bool fortran_pointer_to_surface_displacement_pt(
     bool &nearest /* 0D_NOT_logical in */,
     double &x /* 0D_NOT_real in */,
     double &y /* 0D_NOT_real in */,
-    int *ix /* 0D_NOT_integer in */,
-    int *iy /* 0D_NOT_integer in */,
+    int &ix /* 0D_NOT_integer out */,
+    int &iy /* 0D_NOT_integer out */,
     bool *extend_grid /* 0D_NOT_logical in */,
-    double *xx /* 0D_NOT_real in */,
-    double *yy /* 0D_NOT_real in */,
+    double &xx /* 0D_NOT_real out */,
+    double &yy /* 0D_NOT_real out */,
     void *pt /* 0D_PTR_type out */
 );
-std::optional<SurfaceDisplacementPtStruct> pointer_to_surface_displacement_pt(
+struct PointerToSurfaceDisplacementPt {
+  int ix;
+  int iy;
+  double xx;
+  double yy;
+  std::optional<SurfaceDisplacementPtStruct> pt;
+};
+Bmad::PointerToSurfaceDisplacementPt pointer_to_surface_displacement_pt(
     EleStruct &ele,
     bool nearest,
     double x,
     double y,
-    std::optional<int> ix = std::nullopt,
-    std::optional<int> iy = std::nullopt,
-    std::optional<bool> extend_grid = std::nullopt,
-    std::optional<double> xx = std::nullopt,
-    std::optional<double> yy = std::nullopt
+    std::optional<bool> extend_grid = std::nullopt
 );
 extern "C" bool fortran_pointer_to_surface_segmented_pt(
     void *ele /* 0D_NOT_type in */,
     bool &nearest /* 0D_NOT_logical in */,
     double &x /* 0D_NOT_real in */,
     double &y /* 0D_NOT_real in */,
-    int *ix /* 0D_NOT_integer in */,
-    int *iy /* 0D_NOT_integer in */,
+    int &ix /* 0D_NOT_integer out */,
+    int &iy /* 0D_NOT_integer out */,
     bool *extend_grid /* 0D_NOT_logical in */,
-    double *xx /* 0D_NOT_real in */,
-    double *yy /* 0D_NOT_real in */,
+    double &xx /* 0D_NOT_real out */,
+    double &yy /* 0D_NOT_real out */,
     void *pt /* 0D_PTR_type out */
 );
-std::optional<SurfaceSegmentedPtStruct> pointer_to_surface_segmented_pt(
+struct PointerToSurfaceSegmentedPt {
+  int ix;
+  int iy;
+  double xx;
+  double yy;
+  std::optional<SurfaceSegmentedPtStruct> pt;
+};
+Bmad::PointerToSurfaceSegmentedPt pointer_to_surface_segmented_pt(
     EleStruct &ele,
     bool nearest,
     double x,
     double y,
-    std::optional<int> ix = std::nullopt,
-    std::optional<int> iy = std::nullopt,
-    std::optional<bool> extend_grid = std::nullopt,
-    std::optional<double> xx = std::nullopt,
-    std::optional<double> yy = std::nullopt
+    std::optional<bool> extend_grid = std::nullopt
 );
 extern "C" bool fortran_pointer_to_wake_ele(
     void *ele /* 0D_NOT_type in */,
@@ -6235,7 +6243,7 @@ extern "C" void fortran_ptc_calculate_tracking_step_size(
     double *dx_tol_bend /* 0D_NOT_real in */,
     bool *use_2nd_order /* 0D_NOT_logical in */,
     Bmad::array_descriptor_t &crossover /* 1D_NOT_integer in */,
-    Bmad::array_descriptor_t &crossover_wiggler /* 1D_NOT_integer inout */
+    Bmad::array_descriptor_t &crossover_wiggler /* 1D_NOT_integer in */
 );
 void ptc_calculate_tracking_step_size(
     Layout &ptc_layout,
@@ -6290,7 +6298,7 @@ extern "C" void fortran_ptc_layouts_resplit(
     double &sex_dx /* 0D_NOT_real in */,
     bool *even /* 0D_NOT_logical in */,
     Bmad::array_descriptor_t &crossover /* 1D_NOT_integer in */,
-    Bmad::array_descriptor_t &crossover_wiggler /* 1D_NOT_integer inout */
+    Bmad::array_descriptor_t &crossover_wiggler /* 1D_NOT_integer in */
 );
 void ptc_layouts_resplit(
     double dKL_max,
@@ -6473,18 +6481,21 @@ extern "C" void fortran_rad_g_integrals(
     void *orb_out /* 0D_NOT_type in */,
     Bmad::array_descriptor_t &int_g /* 1D_NOT_real out */,
     double &int_g2 /* 0D_NOT_real in */,
-    double &int_g3 /* 0D_NOT_real in */,
+    double &int_g3 /* 0D_NOT_real out */,
     double &g_tol /* 0D_NOT_real in */,
     double &g2_tol /* 0D_NOT_real in */,
     double &g3_tol /* 0D_NOT_real in */
 );
-FixedArray1D<Real, 2> rad_g_integrals(
+struct RadGIntegrals {
+  FixedArray1D<Real, 2> int_g;
+  double int_g3;
+};
+Bmad::RadGIntegrals rad_g_integrals(
     EleStruct &ele,
     int where,
     CoordStruct &orb_in,
     CoordStruct &orb_out,
     double int_g2,
-    double int_g3,
     double g_tol,
     double g2_tol,
     double g3_tol
@@ -6737,8 +6748,8 @@ extern "C" bool fortran_rel_tracking_charge_to_mass(
 );
 double rel_tracking_charge_to_mass(CoordStruct &orbit, int ref_species);
 extern "C" bool fortran_relative_mode_flip(
-    void *ele1 /* 0D_NOT_type inout */,
-    void *ele2 /* 0D_NOT_type inout */,
+    void *ele1 /* 0D_NOT_type in */,
+    void *ele2 /* 0D_NOT_type in */,
     bool &func_retval__ /* 0D_NOT_logical in */
 );
 void relative_mode_flip(EleStruct &ele1, EleStruct &ele2, bool func_retval__);

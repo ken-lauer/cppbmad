@@ -44,8 +44,8 @@ Parameters
 ele : EleStruct
     Element under consideration.
 include_opening_angle : bool
-    If True include the effect of the vertical opening angle of emitted radiation. Generally use True unless
-    comparing against other codes.
+    If True include the effect of the vertical opening angle of emitted radiation.
+Generally use True unless comparing against other codes. : 
 orb_in : CoordStruct
     Entrance orbit about which to compute the matrices.
 orb_out : CoordStruct
@@ -60,7 +60,9 @@ ele0 : EleStruct, optional
 Returns
 -------
 rad_map : RadMapStruct
-    Damping and stochastic matrices. .stoc_mat             -- Variance matrix.
+    Damping and stochastic matrices.
+%stoc_mat : 
+    Variance matrix.
 err_flag : bool
     Set true if there is an error. False otherwise.
 rad_int1 : RadInt1Struct
@@ -118,18 +120,22 @@ ele1 : EleStruct
 ele2 : EleStruct
     End element of integration range.
 include_opening_angle : bool
-    If True include the effect of the vertical opening angle of emitted radiation. Generally use True unless
-    comparing against other codes.
+    If True include the effect of the vertical opening angle of emitted radiation.
+Generally use True unless comparing against other codes. : 
 closed_orbit : CoordStruct, optional
     Closed orbit. If not present this routine will calculate it.
 
 Returns
 -------
 rmap : RadMapStruct
-    Damping and stochastic mats .stoc_mat               --  stochastic variance matrix.
+    Damping and stochastic mats
+%stoc_mat : 
+    stochastic variance matrix.
 mode : NormalModesStruct
-    .dpz_damp                 -- Change in pz without RF. .pz_average               -- Average pz due to
-    damping.
+%dpz_damp : 
+    Change in pz without RF.
+%pz_average : 
+    Average pz due to damping.
 xfer_nodamp_mat : float
     Transfer matrix without damping.
 rad_int_branch : RadIntBranchStruct
@@ -138,6 +144,23 @@ err_flag : bool
     Set true if there is a problem.
 )"""
   );
+  py::class_<Bmad::RadGIntegrals, std::unique_ptr<Bmad::RadGIntegrals>>(
+      m,
+      "RadGIntegrals",
+      "rad_g_integrals return type"
+  )
+      .def_readonly("int_g", &Bmad::RadGIntegrals::int_g)
+      .def_readonly("int_g3", &Bmad::RadGIntegrals::int_g3)
+      .def("__len__", [](const Bmad::RadGIntegrals &) { return 2; })
+      .def("__getitem__", [](const Bmad::RadGIntegrals &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.int_g);
+        if (i == 1)
+          return py::cast(s.int_g3);
+        throw py::index_error();
+      });
   m.def(
       "rad_g_integrals",
       &Bmad::rad_g_integrals,
@@ -146,7 +169,6 @@ err_flag : bool
       py::arg("orb_in"),
       py::arg("orb_out"),
       py::arg("int_g2"),
-      py::arg("int_g3"),
       py::arg("g_tol"),
       py::arg("g2_tol"),
       py::arg("g3_tol"),
@@ -160,8 +182,10 @@ Parameters
 ele : EleStruct
     Element under consideration.
 where : int
-    What part of ele to integrate over. upstream$ -> 1st half of element, downsteam$ -> 2nd half, all$ ->
-    everything.
+    What part of ele to integrate over.
+upstream$ -> 1st half of element : 
+downsteam$ -> 2nd half : 
+all$ -> everything. : 
 orb_in : CoordStruct
     Entrance orbit about which to compute the matrices.
 orb_out : CoordStruct
@@ -176,7 +200,11 @@ g3_tol : float
 Returns
 -------
 int_g : float
-    Integrals of (gx,gy) vector. gint_g2, int_g3       -- real(rp): integrals of |g|^2 and |g|^3.
+    Integrals of (gx,gy) vector.
+gint_g2 : float
+    integrals of |g|^2 and |g|^3.
+int_g3 : float
+    integrals of |g|^2 and |g|^3.
 )"""
   );
   py::class_<Bmad::RadiationIntegrals, std::unique_ptr<Bmad::RadiationIntegrals>>(
@@ -206,33 +234,19 @@ int_g : float
       R"""(Parameters
 ----------
 lat : LatStruct
-    Lattice to use. The calculation assumes that the Twiss parameters have been calculated.
+    Lattice to use. The calculation assumes that
 orbit : CoordStruct
     Closed orbit for the branch.
 mode : NormalModesStruct
-    Parameters for the ("horizontal like") a-mode, ("vertical like") b-mode, and the z-mode .synch_int(0:3) --
-    Synchrotron integrals. See Bmad manual .sigE_E         -- Sigma_E/E energy spread .sig_z          -- Bunch
-    Length .e_loss         -- Energy loss in eV per turn .a, .b, .z      -- Anormal_mode_struct: Substructure
-    .emittance      -- Emittance. B-mode emit includes photon opening angle (I6) contribution. .synch_int(4:6)
-    -- Synchrotron integrals .j_damp         -- Damping partition factor .alpha_damp     -- Exponential
-    damping coefficient per turn .lin            -- Linac version of the integrals. .i2_E4           --
-    Integral: g^2 * gamma^4 .i3_E7           -- Integral: g^3 * gamma^7 .i5a_E6          -- Integral: (g^3 *
-    H_a) * gamma^6 .i5b_E6          -- Integral: (g^3 * H_b) * gamma^6 .sig_E1          -- Energy spread after
-    1 pass (eV) .a_emittance_end -- a-mode emittance at end of linac .b_emittance_end -- b-mode emittance at
-    end of linac
+    Parameters for the ("horizontal like") a-mode,
 ix_cache : int, optional
-    Cache pointer. = -2 --> No temporary wiggler cache. This is slow so only use as a check. = -1 --> Use
-    temporary cache for wiggler elements only (default). =  0 --> Create a new cache for all elements. >  0
-    --> Use the corresponding cache.
+    Cache pointer.
     This parameter is an input/output and is modified in-place. As an output: Cache pointer. If ix_cache = 0
     at input then
 ix_branch : int, optional
     Lattice branch index. Default is 0.
 rad_int_by_ele : RadIntAllEleStruct
-    Radiation integrals element by element. .branch(ix_branch).ele(0:) -- Array of rad_int1_struct structures,
-    one for each element in the branch. Notes: 1) .synch_int(1) = momentum_compaction * lat_length 2) The
-    lin_norm_emit values are running sums from the beginning of the lattice and include the beginning
-    emittance stored in lat.a.emit and lat.b.emit.
+    Radiation integrals element by element.
 )"""
   );
   m.def(
@@ -321,12 +335,16 @@ where rr is a Gaussian distributed random number with unit variance.
 Parameters
 ----------
 ele : EleStruct
-    Element with wake. If no wake then nothing is done. .value(freq_in$)        -- Frequency.
+    Element with wake. If no wake then nothing is done.
     This parameter is an input/output and is modified in-place. As an output: Element with wake frequencies
     set.
+%value : 
+    Frequency.
 
 Returns
 -------
+%wake%lr%mode : 
+    Set frequency.
 set_done : bool
     Set True if there where lr wakes to be set. False otherwise.
 )"""
@@ -565,7 +583,8 @@ Parameters
 file_name : unknown
     File to create.
 ele : EleStruct
-    Element associated with the map. Ouput:
+    Element associated with the map.
+Ouput: : 
 cart_map : 
     cartesian_map_struct, cartesian map.
 err_flag : bool
@@ -588,7 +607,8 @@ Parameters
 file_name : unknown
     File to create.
 ele : EleStruct
-    Element associated with the map. Ouput:
+    Element associated with the map.
+Ouput: : 
 cl_map : 
     cylindrical_map_struct, cylindrical map.
 err_flag : bool
@@ -611,7 +631,8 @@ Parameters
 file_name : unknown
     File to create.
 ele : EleStruct
-    Element associated with the map. Ouput:
+    Element associated with the map.
+Ouput: : 
 g_field : 
     grid_field_struct, cylindrical map.
 err_flag : bool
@@ -653,7 +674,7 @@ n_bunch : int
     Number of bunches.
 n_particle : int, optional
     Number of particles. Must be non-negative. If save = True then the number of particles in existing bunches
-    will not be touched. If not present, beam.bunch(i).particle(:) will be in an undefined state.
+    will not be touched.
 extend : 
 )"""
   );
@@ -839,8 +860,10 @@ rel_charge : float
       py::arg("func_retval__"),
       R"""(Parameters
 ----------
-ele1 : 
-ele2 : 
+ele1 : EleStruct
+    Elements to compare.
+ele2 : EleStruct
+    Elements to compare.
 relative_mode_flip : 
 )"""
   );
@@ -1024,7 +1047,7 @@ is_on : bool
 ele : EleStruct
     RF Element being tracked through.
 ds : float, optional
-    Distance of particle from start edge. Default is zero. Ouput:
+    Distance of particle from start edge. Default is zero.
 time : float
     Offset time.
 )"""
@@ -1175,8 +1198,7 @@ ele : EleStruct
 orbit : CoordStruct
     Photon position.
 set : bool
-    True -> Transform body coords to local curved body coords. False -> Transform local curved body to body
-    coords.
+    True -> Transform body coords to local curved body coords.
 rot_mat : float
     When set = False, rotation matrix calculated from previous call with set = True.
     This parameter is an input/output and is modified in-place. As an output: When set = True, calculated

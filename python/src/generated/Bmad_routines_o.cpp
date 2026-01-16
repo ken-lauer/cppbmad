@@ -68,8 +68,10 @@ make_matrix : bool, optional
 Returns
 -------
 err_flag : bool
-    Set True if there is an error. False otherwise. Note: a particle getting lost, for example hitting an
-    aperture, is *not* an error.
+    Set True if there is an error. False otherwise. Note: a particle getting
+lost : 
+for example hitting an aperture : 
+is *not* an error. : 
 track : TrackStruct
     Structure holding the track information.
 )"""
@@ -115,9 +117,10 @@ orb : CoordStruct
     Starting coords: (x, px, y, py, s, ps) [t-based]
     This parameter is an input/output and is modified in-place. As an output: Ending coords
 ele : EleStruct
-    Element to track through. .tracking_method -- Determines which subroutine to use to calculate the field.
-    Note: BMAD does no supply em_field_custom. == custom$ then use em_field_custom /= custom$ then use
-    em_field_standard
+    Element to track through.
+%tracking_method : unknown
+    BMAD does no supply em_field_custom. == custom$ then use em_field_custom
+/= custom$ then use em_field_standard : 
 param : LatParamStruct
     Beam parameters.
 t_dir : float
@@ -126,11 +129,13 @@ rf_time : float
     Time relative to RF clock.
     This parameter is an input/output and is modified in-place. As an output: Updated time.
 track : TrackStruct, optional
-    Structure holding the track information. .save_track   -- Logical: Set True if track is to be saved.
+    Structure holding the track information.
+%save_track : bool
+    Set True if track is to be saved.
 t_end : float, optional
     If present, maximum time to which the particle will be tracked. Used for tracking with given time steps.
-    The time orb.t at which tracking stops may be less than this if the particle gets to the end of the
-    element
+    The time orb.t at which tracking stops
+may be less than this if the particle gets to the end of the element : 
 extra_field : EmFieldStruct, optional
     Static field to be added to the element field. Eg used with space charge.
 
@@ -178,28 +183,24 @@ dt_step : float
 ele : EleStruct
     Element
 set : bool
-    T (= set$)   -> Translate from lab coords to the local element coords. F (= unset$) -> Translate back from
-    element to lab coords.
+    T (= set$)   -> Translate from lab coords to the local element coords.
 orbit : CoordStruct
     Coordinates of the particle.
     This parameter is an input/output and is modified in-place. As an output: Coordinates of particle.
 set_tilt : bool, optional
-    Default is True. T -> Rotate using ele.value(tilt$) and ele.value(roll$) for sbends. F -> Do not rotate
+    Default is True. T -> Rotate using ele.value(tilt$) and ele.value(roll$) for sbends.
 set_hvkicks : bool, optional
-    Default is True. T -> Apply 1/2 any hkick or vkick.
+    Default is True.
 drift_to_edge : int, optional
     no$             -> Do not propagate (drift) particle. no$ is default if s_pos is present. upstream_end$
     -> Propagate to upsteam edge. This is default if set = set$ and s_pos is not present. downstream_end$ ->
-    Propagate to downsteam edge. This is default if set = unset$ and s_pos is not present. Note: "edge" is
-    body edge if set = set$ and is laboratory (nominal non-misaligned) edge if set = unset$
+    Propagate to downsteam edge. This is default if set = unset$ and s_pos is not present.
 s_pos : float, optional
-    Longitudinal particle position: If set = set$: Relative to upstream end (in lab coords). If set = unset$:
-    Relative to entrance end (in body coords).
+    Longitudinal particle position: If set = set$: Relative to upstream end (in lab coords).
 s_out : float
-    Longitudinal particle position. If set = set$: Relative to entrance end (in body coords). If set = unset$:
-    Relative to upstream end (in lab coords).
+    Longitudinal particle position. If set = set$: Relative to entrance end (in body coords).
 set_spin : bool, optional
-    Default if False. Rotate spin coordinates? Also bmad_com.spin_tracking_on must be T to rotate.
+    Default if False.
 mat6 : float, optional
     Transfer matrix before off setting.
     This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
@@ -231,9 +232,8 @@ orbit : CoordStruct
 set : bool
     T (= set$)   -> Translate from lab coords to element coords. F (= unset$) -> Translate from element coords
     to lab coords.
-offset_position_only : bool, optional
-    If present and True, only offset the position coordinates. -- Logical, optional: If present and True, only
-    offset the position coordinates.
+offset_position_only : unknown, optional
+    If present and True, only offset the position coordinates.
 rot_mat : float, optional
     Rotation matrix from starting coords to ending coords.
 )"""
@@ -247,8 +247,7 @@ rot_mat : float, optional
       R"""(Parameters
 ----------
 ele : EleStruct
-    Reference element. .a       -- "a" mode Twiss parameter structure. .b       -- "b" mode Twiss parameter
-    structure. .c_mat   -- 2x2 C matrix. .gamma_c -- gamma associated with C matrix.
+    Reference element.
 phi_a : float
     "a" mode tune in radians.
 phi_b : float
@@ -337,7 +336,7 @@ is_ok : bool
       R"""(Parameters
 ----------
 ele : EleStruct
-    Element holding the Twiss parameters, dispersion and coupling info.
+    Element holding the Twiss parameters,
 orb : CoordStruct
     Orbit coordinates at the exit end of ele.
 amp_a : float
@@ -400,8 +399,7 @@ orbit : CoordStruct
 ele : EleStruct
     Lattice element particle is in.
 z_direction : int, optional
-    Set to +1 or -1.  Z-direction of particle velocity relative to element z-axis. Default is ele.orientation
-    * orbit.direction.
+    Set to +1 or -1.  Z-direction of particle velocity
 relative_to : int, optional
     not_set$ (default), upstream_end$, downstream_end$. If not_set$ then origin is at the entrance end.
 local_position : FloorPositionStruct
@@ -435,7 +433,6 @@ local_position : FloorPositionStruct
 orbit : CoordStruct
     Particle orbit.
 param : LatParamStruct
-    .unstable_factor  -- Set if orbit is too large. Otherwise not set
 check_momentum : bool, optional
     If True (default) check the momentum.
 is_too_large : bool
@@ -562,7 +559,15 @@ Only live particles are ordered.
 Parameters
 ----------
 bunch : BunchStruct
-    collection of particles. .particle(j).vec(5) -- Longitudinal position of j^th particle.
+    collection of particles.
+%particle : 
+    Longitudinal position of j^th particle.
+
+Returns
+-------
+%ix_z : unknown
+    .bunch.ix_z(1) is the particle at the bunch head. Only live particles are ordered so if particle with
+    index .bunch.ix_z(i) is dead, all particles with index .bunch.ix_z(j) with j > i are dead.
 )"""
   );
   m.def(
@@ -575,7 +580,7 @@ bunch : BunchStruct
 lat : LatStruct
     Lat with fixed controls.
 ix_lord : int
-    Index of lord element. Output
+    Index of lord element.
 )"""
   );
   m.def(

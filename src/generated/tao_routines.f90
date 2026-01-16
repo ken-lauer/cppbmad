@@ -1906,10 +1906,6 @@ subroutine fortran_tao_ele_shape_info (ix_uni, ele, ele_shapes, e_shape, label_n
   type(ele_struct), pointer :: f_ele
   type(array_descriptor_t), intent(in) :: ele_shapes
   type(tao_ele_shape_struct), pointer :: f_ele_shapes(:)
-  real(c_double) :: y1  ! 0D_NOT_real
-  real(rp) :: f_y1
-  real(c_double) :: y2  ! 0D_NOT_real
-  real(rp) :: f_y2
   type(c_ptr), intent(in), value :: ix_shape_min  ! 0D_NOT_integer
   integer(c_int) :: f_ix_shape_min
   integer(c_int), pointer :: f_ix_shape_min_ptr
@@ -1919,6 +1915,12 @@ subroutine fortran_tao_ele_shape_info (ix_uni, ele, ele_shapes, e_shape, label_n
   type(c_ptr), intent(in), value :: label_name
   character(len=4096), target :: f_label_name
   character(kind=c_char), pointer :: f_label_name_ptr(:)
+  type(c_ptr), intent(in), value :: y1  ! 0D_NOT_real
+  real(rp) :: f_y1
+  real(c_double), pointer :: f_y1_ptr
+  type(c_ptr), intent(in), value :: y2  ! 0D_NOT_real
+  real(rp) :: f_y2
+  real(c_double), pointer :: f_y2_ptr
   ! ** End of parameters **
   ! in: f_ix_uni 0D_NOT_integer
   f_ix_uni = ix_uni
@@ -1933,10 +1935,6 @@ subroutine fortran_tao_ele_shape_info (ix_uni, ele, ele_shapes, e_shape, label_n
   endif
   ! out: f_e_shape 0D_PTR_type
   if (c_associated(e_shape))   call c_f_pointer(e_shape, f_e_shape)
-  ! in: f_y1 0D_NOT_real
-  f_y1 = y1
-  ! in: f_y2 0D_NOT_real
-  f_y2 = y2
   ! in: f_ix_shape_min 0D_NOT_integer
   if (c_associated(ix_shape_min)) then
     call c_f_pointer(ix_shape_min, f_ix_shape_min_ptr)
@@ -1951,6 +1949,12 @@ subroutine fortran_tao_ele_shape_info (ix_uni, ele, ele_shapes, e_shape, label_n
   ! out: f_label_name 0D_NOT_character
   call c_f_pointer(label_name, f_label_name_ptr, [len_trim(f_label_name) + 1]) ! output-only string
   call to_c_str(f_label_name, f_label_name_ptr)
+  ! out: f_y1 0D_NOT_real
+  call c_f_pointer(y1, f_y1_ptr)
+  f_y1_ptr = f_y1
+  ! out: f_y2 0D_NOT_real
+  call c_f_pointer(y2, f_y2_ptr)
+  f_y2_ptr = f_y2
 end subroutine
 subroutine fortran_tao_eval_floor_orbit (datum, ele, orbit, bunch_params, valid_value, &
     why_invalid, value) bind(c)

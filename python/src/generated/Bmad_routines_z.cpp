@@ -40,7 +40,11 @@ Remember: +z points into the element.
 Parameters
 ----------
 ele : EleStruct
-    Element x, y        -- real(rp): Photon coordinates on surface.
+    Element
+x : float
+    Photon coordinates on surface.
+y : float
+    Photon coordinates on surface.
 extend_grid : bool, optional
     If a grid is involved and (x, y) is outside of the grid, and extend_grid = True: Pretend (x, y) is at
     edge. Default is False.
@@ -50,7 +54,8 @@ Returns
 z : float
     z coordinate.
 err_flag : bool
-    Set True if cannot compute z due to, say, point being outside of ellipseoid or grid bounds.
+    Set True if cannot compute z due to, say, point
+being outside of ellipseoid or grid bounds. : 
 dz_dxy : float
     Surface slope at (x, y).
 
@@ -90,6 +95,11 @@ Parameters
 ----------
 lat : LatStruct
     Lattice
+
+Returns
+-------
+%ele : unknown
+    :).b_cos -> Set to zero .wake.lr.mode(:).a_sin -> Set to zero .wake.lr.mode(:).a_cos -> Set to zero
 )"""
   );
   m.def(

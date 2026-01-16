@@ -223,8 +223,9 @@ num_str : unknown
 Returns
 -------
 err_flag : 
-    logical, Set true if there is an error, false otherwise. s%u(s%global%default_universe)%model -- model
-    lattice where the variable lives.
+    logical, Set true if there is an error, false otherwise.
+s%u : 
+    model lattice where the variable lives.
 )"""
   );
   m.def(
@@ -271,15 +272,17 @@ Parameters
 name : unknown
     Name of variable or element.
 num_str : unknown
-    Change in value. A '@' signifies a absolute set. A 'd' signifies a set relative design.
+    Change in value. A '@' signifies a absolute set.
+A 'd' signifies a set relative design. : 
 silent : bool
     If True then do not print any info.
 
 Returns
 -------
 err_flag : 
-    logical, Set true if there is an error, false otherwise. s%u(s%global%default_universe)%model -- model
-    lattice where the variable lives.
+    logical, Set true if there is an error, false otherwise.
+s%u : 
+    model lattice where the variable lives.
 )"""
   );
   m.def(
@@ -387,7 +390,7 @@ datum_name : unknown
       R"""(Parameters
 ----------
 ele : EleStruct
-    Lattice element to start at. Ouput:
+    Lattice element to start at.
 tree : ElePointerStruct
     Array of elements.
 )"""
@@ -682,7 +685,8 @@ check_s_position : bool
 Returns
 -------
 data : TaoDataStruct
-    .useit_plot         -- True if good for plotting.
+%useit_plot : 
+    True if good for plotting.
 most_invalid : unknown
     String documenting biggest invalid data problem.
 )"""
@@ -699,10 +703,6 @@ data_type : unknown
 branch_geometry : int, optional
     Geometry of the associated lattice branch. open$ or closed$.
 has_associated_ele : int
-    no$          -- Must not have an associated lattice element. yes$         -- Must have an associated
-    lattice element. maybe$       -- Is possible to have an associated lattice element or not. provisional$ --
-    Does not have an associated lattice element for closed geometies. Only used if the branch_geometry
-    argument is not present.
 )"""
   );
   py::class_<Tao::TaoDatumIntegrate, std::unique_ptr<Tao::TaoDatumIntegrate>>(
@@ -786,7 +786,8 @@ Parameters
 datum : TaoDataStruct
     Datum under conideration.
 ele : EleStruct
-    Associated lattice element. Output
+    Associated lattice element.
+Output : 
 s_pos : float
     Associated longitudinal position.
 
@@ -850,12 +851,13 @@ s : SuperUniverseStruct
     This parameter is an input/output and is modified in-place. As an output: Super_universe_struct.
 force_calc : bool
     If true then force recalculation of the matrix. If False then only calculate matrix if it doesn't exist.
-veto_vars_with_zero_dmodel : bool
-    Veto variables where -- Logical, optional (default False): Veto variables where all dModel_dvar for that
-    var are zero. Sets the var.good_var logical to False.
+veto_vars_with_zero_dmodel : unknown
+    Veto variables where all dModel_dvar for that var are zero. Sets the var.good_var logical to False.
 
 Returns
 -------
+%u : 
+    Derivative matrix
 err_flag : bool
     Set true if there is an error. False otherwise.
 )"""
@@ -879,7 +881,10 @@ accounted for!
 Parameters
 ----------
 ele : ElementStruct
-    .value(noise$) -- relative wire resolution RMS .value(tilt$)  -- wire angle error in radians rms.
+%value : 
+    relative wire resolution RMS
+%value : 
+    wire angle error in radians rms.
 theta : float
     wire angle wrt x axis (in degrees)
 beam : BeamStruct
@@ -961,11 +966,14 @@ tao_lat : TaoLatticeStruct
 ele : EleStruct
     Element to draw.
 ele_shape : TaoEleShapeStruct
-    Shape to draw from s.plot_page.floor_plan.ele_shape(:) array. Will be NULL if no associated shape for this
-    element.
+    Shape to draw from s.plot_page.floor_plan.ele_shape(:) array.
+Will be NULL if no associated shape for this element. : 
 label_name : unknown
-    Shape label. offset1, offset2  -- real(rp): Transverse distances used to scale the drawing of the element
-    shape.
+    Shape label.
+offset1 : float
+    Transverse distances used to scale the drawing of the element shape.
+offset2 : float
+    Transverse distances used to scale the drawing of the element shape.
 )"""
   );
   m.def(
@@ -1115,14 +1123,20 @@ value : float
   )
       .def_readonly("e_shape", &Tao::TaoEleShapeInfo::e_shape)
       .def_readonly("label_name", &Tao::TaoEleShapeInfo::label_name)
-      .def("__len__", [](const Tao::TaoEleShapeInfo &) { return 2; })
+      .def_readonly("y1", &Tao::TaoEleShapeInfo::y1)
+      .def_readonly("y2", &Tao::TaoEleShapeInfo::y2)
+      .def("__len__", [](const Tao::TaoEleShapeInfo &) { return 4; })
       .def("__getitem__", [](const Tao::TaoEleShapeInfo &s, int i) -> py::object {
         if (i < 0)
-          i += 2;
+          i += 4;
         if (i == 0)
           return py::cast(s.e_shape);
         if (i == 1)
           return py::cast(s.label_name);
+        if (i == 2)
+          return py::cast(s.y1);
+        if (i == 3)
+          return py::cast(s.y2);
         throw py::index_error();
       });
   m.def(
@@ -1131,8 +1145,6 @@ value : float
       py::arg("ix_uni"),
       py::arg("ele"),
       py::arg("ele_shapes"),
-      py::arg("y1"),
-      py::arg("y2"),
       py::arg("ix_shape_min") = py::none(),
       R"""(Parameters
 ----------
@@ -1145,9 +1157,11 @@ ele_shapes : TaoEleShapeStruct
 e_shape : TaoEleShapeStruct
     element shape. Will be nullified if no associated shape.
 label_name : unknown
-    Label name. y1, y2        -- real(rp): shape transverse sizes.
-y1 : 
-y2 : 
+    Label name.
+y1 : float
+    shape transverse sizes.
+y2 : float
+    shape transverse sizes.
 ix_shape_min : int, optional
     Index of minimum ele_shape(:) index to start search from. Default is 1.
     This parameter is an input/output and is modified in-place. As an output: Ele_shape(
@@ -1248,9 +1262,8 @@ valid_value : bool
     Set false when there is a problem. Set true otherwise.
 why_invalid : unknown
     Tells why datum value is invalid.
-called_from_lat_calc : bool, optional
-    Default is False. If true, prevents infinite loop of this -- logical, optional: Default is False. If true,
-    prevents infinite loop of this routine calling tao_lattice_calc
+called_from_lat_calc : unknown, optional
+    Default is False. If true, prevents infinite loop of this
 print_err : bool, optional
     Default is True. If False, do not print an error message.
 )"""
@@ -1304,8 +1317,8 @@ Returns
 err_str : unknown
     Error string for printing an error message.
 bad_datum : bool
-    True -> datum is malformed. False -> Could evaluate or evaluation problem was not due to the datum itself
-    (EG: the lattice was unstable).
+    True -> datum is malformed. False -> Could evaluate or evaluation problem was not due to the datum
+itself : 
 value : float
     Datum value.
 )"""
@@ -1371,25 +1384,22 @@ expression : unknown
     Arithmetic expression.
 n_size : int
     Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
-    this value. If n_size = 0, the natural size is determined by the expression itself.
+    this value.
 use_good_user : bool
     Use the good_user logical in evaluating good(:)
 value : float
     Value of arithmetic expression.
 err_flag : bool
-    True on an error. EG: Invalid expression. A divide by zero is not an error but good(:) will be set to
-    False.
+    True on an error. EG: Invalid expression.
 print_err : bool, optional
-    If False then supress evaluation error messages. This does not affect syntax error messages. Default is
-    True.
+    If False then supress evaluation error messages.
 info : TaoExpressionInfoStruct
     Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
-    orbit.x[23]|good_user is False.
 stack : TaoEvalNodeStruct
     Array of nodes of variable names. This is useful to check what datums or variables are used in the
     expression.
 dflt_component : unknown, optional
-    Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
+    Component to use if not specified in the expression.
 dflt_source : unknown, optional
     Default source ('lat', 'data', etc.). Default is ''.
 dflt_ele_ref : EleStruct, optional
@@ -1440,25 +1450,22 @@ expression : unknown
     Arithmetic expression.
 n_size : int
     Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
-    this value. If n_size = 0, the natural size is determined by the expression itself.
+    this value.
 use_good_user : bool
     Use the good_user logical in evaluating good(:)
 value : float
     Value of arithmetic expression.
 err_flag : bool
-    True on an error. EG: Invalid expression. A divide by zero is not an error but good(:) will be set to
-    False.
+    True on an error. EG: Invalid expression.
 print_err : bool, optional
-    If False then supress evaluation error messages. This does not affect syntax error messages. Default is
-    True.
+    If False then supress evaluation error messages.
 info : TaoExpressionInfoStruct
     Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
-    orbit.x[23]|good_user is False.
 stack : TaoEvalNodeStruct
     Array of nodes of variable names. This is useful to check what datums or variables are used in the
     expression.
 dflt_component : unknown, optional
-    Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
+    Component to use if not specified in the expression.
 dflt_source : unknown, optional
     Default source ('lat', 'data', etc.). Default is ''.
 dflt_ele_ref : EleStruct, optional
@@ -1509,25 +1516,22 @@ expression : unknown
     Arithmetic expression.
 n_size : int
     Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
-    this value. If n_size = 0, the natural size is determined by the expression itself.
+    this value.
 use_good_user : bool
     Use the good_user logical in evaluating good(:)
 value : float
     Value of arithmetic expression.
 err_flag : bool
-    True on an error. EG: Invalid expression. A divide by zero is not an error but good(:) will be set to
-    False.
+    True on an error. EG: Invalid expression.
 print_err : bool, optional
-    If False then supress evaluation error messages. This does not affect syntax error messages. Default is
-    True.
+    If False then supress evaluation error messages.
 info : TaoExpressionInfoStruct
     Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
-    orbit.x[23]|good_user is False.
 stack : TaoEvalNodeStruct
     Array of nodes of variable names. This is useful to check what datums or variables are used in the
     expression.
 dflt_component : unknown, optional
-    Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
+    Component to use if not specified in the expression.
 dflt_source : unknown, optional
     Default source ('lat', 'data', etc.). Default is ''.
 dflt_ele_ref : EleStruct, optional
@@ -1628,12 +1632,14 @@ stack : TaoEvalNodeStruct
     Expression stack
 n_size_in : int
     Desired array size. If the expression evaluates to a a scalar, each value in the value array will get this
-    value. If n_size = 0, the natural size is determined by the expression itself.
+    value.
+If n_size = 0 : 
+the natural size is determined by the expression itself. : 
 use_good_user : bool
     Use the good_user logical in evaluating good(:)
 print_err : bool
-    If False then supress evaluation error messages. This does not affect syntax error messages. Default is
-    True.
+    If False then supress evaluation error messages.
+This does not affect syntax error messages. Default is True. : 
 expression : unknown
     Original expression. Used for error messages.
 
@@ -1643,7 +1649,7 @@ value : float
     Value of arithmetic expression.
 info : TaoExpressionInfoStruct
     Is the value valid? Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
-    orbit.x[23]|good_user is False.
+orbit.x[23]|good_user is False. : 
 err_flag : bool
     True on error. False otherwise
 )"""
@@ -1670,8 +1676,7 @@ value : float
 err_flag : bool
     True on error. False otherwise
 print_err : bool
-    If False then supress evaluation error messages. This does not affect syntax error messages. Default is
-    True.
+    If False then supress evaluation error messages.
 expression : unknown
     Original expression. Used for error messages.
 info_in : 
@@ -1689,9 +1694,9 @@ info_in :
 q_str : unknown
     String expression.
 q0 : float
-    Default to use if q_str evaluates to zero. Also used to set the integer part of the tune.
+    Default to use if q_str evaluates to zero.
 delta_input : bool
-    If true then qa_str and qb_str are deltas from present tune. Outut:
+    If true then qa_str and qb_str are deltas from present tune.
 q_val : float
     Tune value. Set zero if there is an error.
 )"""
@@ -1741,7 +1746,8 @@ tree : TaoEvalNodeStruct
     Tree to print.
 include_root : bool, optional
     Default is True. If True, do not inculde in the output string the root node. Note: If the root node is of
-    type root$, this node is always ignored.
+    type root$, this node is
+always ignored. : 
 n_node : int, optional
     Internal use only. Used with recursive calls.
 parent : TaoEvalNodeStruct, optional
@@ -1848,8 +1854,7 @@ graph : TaoGraphStruct
 floor : FloorPositionStruct
     3D coordinate.
 screen : FloorPositionStruct
-    Projected point .r(3)   -- projected (x, y) = (.r(1), .r(2)) .theta  -- angle in (x, y) plane of
-    projection of the orientation vector.
+    Projected point
 )"""
   );
   m.def(
@@ -1933,7 +1938,7 @@ var_weight : float
 var_ix : int
     Variable s.var(:) indexes
 ignore_if_weight_is_zero : bool
-    If present and True then ignore all variables whose merit weight is zero.
+    If present and True then ignore
 ignore_if_not_limited : bool
     If present and True then ignore all variables with limit constraint that are not limited.
 )"""
@@ -1964,7 +1969,8 @@ Note: In single character mode, the input precedence order is ignored and input 
 Parameters
 ----------
 prompt_str : unknown, optional
-    Primpt string to print at terminal. If not present then s.global.prompt_string will be used.
+    Primpt string to print at terminal. If not
+present then s%global%prompt_string will be used. : 
 wait_flag : bool, optional
     Used for single mode: Wait state for get_a_char call.
 cmd_in : unknown, optional
@@ -2204,7 +2210,7 @@ u : TaoUniverseStruct
 search_string : unknown
     What to search for
 eles : ElePointerStruct
-    List of matching elements. Size is zero if no elements found.
+    List of matching elements.
 attribute : unknown, optional
     Check that attribute of element is free to vary.
 found_one : bool
@@ -2487,7 +2493,7 @@ tlb2 :
       R"""(Parameters
 ----------
 calc_ok : bool
-    Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
+    Set False if there was an error in the
 print_err : bool
     Default True. If False, do not print error messages if, for example, the lattice is unstable.
 )"""
@@ -2578,7 +2584,7 @@ good :
 ele_list : unknown
     String with element names using element list format.
 eles : unknown
-    : Array of elements in the model lat. .id  -- Set to universe number.
+    : Array of elements in the model lat.
 err : bool
     Set true on error.
 ignore_blank : bool, optional
@@ -2602,8 +2608,7 @@ ignore_blank : bool, optional
 ele_list : unknown
     String with element names using element list format.
 ix_universe : int
-    Universe to search. -1 => search s.global.default_universe. -2 (all unis) => error. ix_universe is ignored
-    if ele_list starts with a universe specifier "N@".
+    Universe to search. -1 => search s.global.default_universe. -2 (all unis) => error.
 eles : unknown
     : Array of elements in the model lat.
 err : bool
@@ -2611,17 +2616,15 @@ err : bool
 lat_type : int, optional
     model$ (default), design$, or base$.
 ignore_blank : bool, optional
-    If present and true then do nothing if ele_list is blank. otherwise treated as an error.
+    If present and true then do nothing if
 err_stat_level : int, optional
-    Status level for error messages. If not present, print with level s_error$. Use s_nooutput$ to prevent
-    printing.
+    Status level for error messages. If not present,
 above_ubound_is_err : 
 ix_branch : int, optional
     If present and non-negative then use this as the branch index for elements specified using an integer
     index (EG: "43"). If -1 use the default branch, search all branches.
-multiple_eles_is_err : bool, optional
-    If present and True then matching to more than one element is an error. -- logical, optional: If present
-    and True then matching to more than one element is an error.
+multiple_eles_is_err : unknown, optional
+    If present and True then matching to more than one element is an error.
 )"""
   );
   m.def(
@@ -2654,7 +2657,7 @@ lat : LatStruct
       R"""(Parameters
 ----------
 calc_ok : bool
-    Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
+    Set False if there was an error in the
 this_merit : float
     Merit value.
 )"""
@@ -2712,7 +2715,7 @@ file_name : unknown
     File name.
 error_severity : int
     Severity level used in the error message. Possibilities are s_fatal$, etc. See out_io doc for more
-    details. Use -1 to not print a message if file cannot be opened.
+    details.
 binary : bool, optional
     If present and True then open a binary file, Defaut is False.
 )"""
@@ -3044,7 +3047,7 @@ name_in : unknown
 name_out : unknown
     name_in without any "n@" beginning.
 picked : bool
-    Array showing picked universes. The array will be resized if necessary.
+    Array showing picked universes.
 err : bool
     Set True if an error is detected.
 ix_uni : int
@@ -3080,8 +3083,7 @@ where : unknown
 who : unknown
     Type of plot. Eg: 'orbit'.
 no_buffer : bool, optional
-    If present and True then prevents buffering in the case when s.global.external_plotting = T Output
-    s.plot_page.plot(j) -- Plot matched to where.
+    If present and True then prevents buffering in the case when s.global.external_plotting = T
 )"""
   );
   m.def(
@@ -3201,7 +3203,7 @@ e_shape : TaoEleShapeStruct
 d1 : TaoD1DataStruct
     D1 data struct to search.
 ele_name : unknown
-    Name of lattice element to match to. Ouput:
+    Name of lattice element to match to.
 datum_ptr : DataStruct
     Pointer to the matched datum. Will be null if no match found.
 )"""
@@ -3256,9 +3258,11 @@ print_err : bool, optional
 Returns
 -------
 ele : EleStruct
-    : Pointer to the element. Set to NULL if not valid or no associated element.
+    : Pointer to the element. Set to NULL if not valid
+or no associated element. : 
 valid : bool
-    Set False if element does not have a definite location. Set True otherwise
+    Set False if element does not have a definite location.
+Set True otherwise : 
 why_invalid : unknown
     Tells why datum value is invalid.
 )"""
@@ -3299,16 +3303,14 @@ ele : EleStruct
 ele_shape : TaoEleShapeStruct
     Array of shapes to search.
 dat_var_name : unknown
-    Name of datum or variable associated with e_shape. Will be set to "" if there is no associated datum or
-    variable.
+    Name of datum or variable associated with e_shape.
 dat_var_value : float
-    Value of datum or variable associated with e_shape. Will be set to zero if there is no associated datum or
-    variable.
+    Value of datum or variable associated with e_shape.
 ix_shape_min : int, optional
     Index of minimum ele_shape(:) index to start search from. Default is 1.
     This parameter is an input/output and is modified in-place. As an output: Ele_shape(
 e_shape : TaoEleShapeStruct
-    Associated shape. Nullified if there is no associated shape.
+    Associated shape.
 )"""
   );
   m.def(
@@ -3346,11 +3348,14 @@ That is, it cannot handlle something like "[1,3,4]@...". To handle multiple univ
 Parameters
 ----------
 ix_uni : int
-    Index to the s.u(:) array If ix_uni is -1 -> u(s.global.default_universe) will be used.
+    Index to the s.u(:) array
+If ix_uni is -1 -> u : 
 string : unknown
-    String in the form "<ix_uni>@..." or, if no "@" is present, u will point to the default universe.
+    String in the form "<ix_uni>@..." or, if
     This parameter is an input/output and is modified in-place. As an output: String with universe prefix
     stripped off.
+no "@" is present : 
+u will point to the default universe. : 
 neg2_to_default : bool, optional
     i_uni = -2 (all universes) maps to the default uni? Default if False.
 
@@ -3380,11 +3385,14 @@ That is, it cannot handlle something like "[1,3,4]@...". To handle multiple univ
 Parameters
 ----------
 ix_uni : int
-    Index to the s.u(:) array If ix_uni is -1 -> u(s.global.default_universe) will be used.
+    Index to the s.u(:) array
+If ix_uni is -1 -> u : 
 string : unknown
-    String in the form "<ix_uni>@..." or, if no "@" is present, u will point to the default universe.
+    String in the form "<ix_uni>@..." or, if
     This parameter is an input/output and is modified in-place. As an output: String with universe prefix
     stripped off.
+no "@" is present : 
+u will point to the default universe. : 
 neg2_to_default : bool, optional
     i_uni = -2 (all universes) maps to the default uni? Default if False.
 
@@ -3425,7 +3433,7 @@ u : TaoUniverseStruct
 name_in : unknown
     data name with possible universe spec.
 unis : TaoUniversePointerStruct
-    Array of pointers to picked universes. The array will be resized if necessary.
+    Array of pointers to picked universes.
 err : bool
     Set True if an error is detected.
 name_out : unknown
@@ -3454,11 +3462,13 @@ var : TaoVarStruct
 ix_uni : int
     the universe to use
 ix_ele : int
-    Index of element. var.slave(ix_slave) -- Tao_var_slave_struct: New component of .slave(:) array is added.
-    .model_ptr .base_ptr .ix_ele .ix_uni
+    Index of element.
 
 Returns
 -------
+var%slave : TaoVarSlaveStruct
+    New component of .slave(:) array is added. .model_ptr .base_ptr .ix_ele
+%ix_uni : 
 err : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -3478,11 +3488,13 @@ Parameters
 var : TaoVarStruct
     Structure has the info of where to point.
 ix_uni : int
-    the universe to use var.slave(ix_slave) -- Tao_var_slave_struct: New component of .slave(:) array is
-    added. .model_ptr .base_ptr .ix_ele .ix_uni
+    the universe to use
 
 Returns
 -------
+var%slave : TaoVarSlaveStruct
+    New component of .slave(:) array is added. .model_ptr .base_ptr .ix_ele
+%ix_uni : 
 err : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -3646,8 +3658,7 @@ str : unknown
       R"""(Parameters
 ----------
 which : unknown
-    which optimizer to use. ' '        -- Same as last time 'de'       -- Differential Evolution. 'lm'
-    -- Levenberg - Marquardt (aka lmdif). 'custom'   -- Custom routine.
+    which optimizer to use.
 abort : bool
     Set True if the run was aborted by the user, an at minimum condition, a singular matrix condition, etc..
     False otherwise.
@@ -3680,13 +3691,13 @@ y_max_in : float
 axis : unknown, optional
     'y', 'y2', or '' (both). Default = ''.
 include_wall : bool, optional
-    Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
-    include the building wall position will be included in determining the the scale.
+    Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in.
+If present and True include the building wall position will be included in determining the the scale. : 
 gang : unknown, optional
     'gang', 'nogang', ''. Default = ''.
 exact : bool, optional
-    Exact plot y_max, y_min to correspond to y_min_in, y_max_in? Default is False. Only relavent when y_min_in
-    /= y_max_in.
+    Exact plot y_max, y_min to correspond to y_min_in, y_max_in?
+Default is False. Only relavent when y_min_in /= y_max_in. : 
 turn_autoscale_off : bool, optional
     If True (default) then turn off plot.autoscale_y logical for all plots that are scaled.
 )"""
@@ -3732,7 +3743,8 @@ y_min : float
 y_max : float
     Axis [min, max] must cover [y_min, y_max] if not autoscaling.
 axis : unknown, optional
-    Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis. 'y2' -> scale y2-axis
+    Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis.
+'y2' -> scale y2-axis : 
 include_wall : bool, optional
     Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
     include the building wall position will be included in determining the the scale.
@@ -3780,13 +3792,15 @@ y_min_in : float
 y_max_in : float
     Axis [min, max] must cover [y_min_in, y_max_in] if not autoscaling.
 axis : unknown, optional
-    Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis. 'y2' -> scale y2-axis
+    Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis.
+'y2' -> scale y2-axis : 
 include_wall : bool, optional
-    Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
-    include the building wall position will be included in determining the the scale.
+    Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in.
+If present and True include the building wall position will be included in determining the the scale. : 
 gang : unknown, optional
     If autoscale then make all graph y-axes the same and/or make all y2-axes the same? ''        -> (default)
-    Use setting of plot.autoscale_gang_y 'gang'    -> Gang graphs. 'nogang'  -> Do not gang graphs.
+    Use setting of plot.autoscale_gang_y 'gang'    -> Gang graphs.
+'nogang'  -> Do not gang graphs. : 
 skip_lat_layout : bool, optional
     If True, skip scaling any lat_layout graphs. Default is false.
 )"""
@@ -3847,7 +3861,12 @@ who : unknown
 value_str : unknown
     Value to set to.
 branch_str : unknown
-    Branch to use. '' => branch 0 s.beam_init  -- Beam_init variables structure.
+    Branch to use. '' => branch 0
+
+Returns
+-------
+s%beam_init : 
+    Beam_init variables structure.
 )"""
   );
   m.def(
@@ -4000,7 +4019,12 @@ drawing : TaoDrawingStruct
 component : unknown
     Which shape component to set.
 value_str : unknown
-    Value to set to. s.shape  -- Shape variables structure.
+    Value to set to.
+
+Returns
+-------
+s%shape : 
+    Shape variables structure.
 )"""
   );
   m.def(
@@ -4087,7 +4111,12 @@ Parameters
 who : unknown
     which global variable to set
 value_str : unknown
-    Value to set to. s.global  -- Global variables structure.
+    Value to set to.
+
+Returns
+-------
+s%global : 
+    Global variables structure.
 )"""
   );
   m.def(
@@ -4180,7 +4209,7 @@ message : unknown
 why_invalid : unknown
     Set to message if present.
 exterminate : bool, optional
-    Default is False. If True, set datum.exists to False so that Tao will ignore this datum from now on.
+    Default is False. If True, set datum.exists
 err_level : int, optional
     s_error$ (default), s_warn$, etc.
 print_err : bool, optional
@@ -4216,9 +4245,15 @@ Sets a lattice equal to another. This will also update the data structs
 Parameters
 ----------
 dest_lat : unknown
-    Maybe: 'model', 'design', or 'base' with optional '@n' at beginning to indicate the universe
+    Maybe: 'model', 'design', or 'base' with
+optional '@n' at beginning to indicate the universe : 
 source_lat : unknown
-    Maybe: 'model', 'design', or 'base' s.u(n) -- lat_struct: changes specified lattice in specified universe
+    Maybe: 'model', 'design', or 'base'
+
+Returns
+-------
+s%u : LatStruct
+    changes specified lattice in specified universe
 )"""
   );
   py::class_<Tao::TaoSetLogicalValue, std::unique_ptr<Tao::TaoSetLogicalValue>>(
@@ -4288,9 +4323,8 @@ n_threads : int
 ----------
 var_vec : float
     Vector of variables.
-print_limit_warning : bool, optional
-    Print a warning if the value is past the variable's limits. -- Logical, optional: Print a warning if the
-    value is past the variable's limits. Default is True.
+print_limit_warning : unknown, optional
+    Print a warning if the value is past the variable's limits. Default is True.
 )"""
   );
   m.def(
@@ -4324,7 +4358,12 @@ Parameters
 who : unknown
     which particle_start variable to set
 value_str : unknown
-    Value to set to. s.particle_start  -- Beam_start variables structure.
+    Value to set to.
+
+Returns
+-------
+s%particle_start : 
+    Beam_start variables structure.
 )"""
   );
   m.def(
@@ -4364,7 +4403,11 @@ component : unknown
 value_str : unknown
     What value to set to.
 value_str2 : unknown
-    2nd value if component is an array. s.plot       -- tao_plotting_struct:
+    2nd value if component is an array.
+
+Returns
+-------
+s%plot : TaoPlottingStruct
 )"""
   );
   m.def(
@@ -4739,9 +4782,8 @@ var : TaoVarStruct
     Variable to set
 value : float
     Value to set to
-print_limit_warning : bool, optional
-    Print a warning if the value is past the variable's limits. -- Logical, optional: Print a warning if the
-    value is past the variable's limits. Default is True.
+print_limit_warning : unknown, optional
+    Print a warning if the value is past the variable's limits. Default is True.
 )"""
   );
   m.def("tao_set_var_useit_opt", &Tao::tao_set_var_useit_opt, R"""()""");
@@ -4764,7 +4806,9 @@ value_str : unknown
 Returns
 -------
 err : bool
-    Set True if there is an error. False otherwise. s.wave  -- Wave variables structure.
+    Set True if there is an error. False otherwise.
+s%wave : 
+    Wave variables structure.
 )"""
   );
   m.def(
@@ -5317,7 +5361,6 @@ silent : bool
 ----------
 graph : 
 var : TaoVarStruct
-    .useit_plot -- True if good for plotting.
 )"""
   );
   m.def(
@@ -5345,7 +5388,8 @@ Parameters
 out_file : unknown
     Name of output file. If blank. Ouput to the terminal.
 show_good_opt_only : bool, optional
-    Write only the variables used in the optimization? Default is False.
+    Write only the variables used in the optimization?
+Default is False. : 
 tao_format : bool, optional
     Output format. Default False. See above.
 )"""
@@ -5482,13 +5526,13 @@ x_min_in : float
 x_max_in : float
     Plot x-axis max value.
 include_wall : bool, optional
-    Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
-    include the building wall position will be included in determining the the scale.
+    Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in.
+If present and True include the building wall position will be included in determining the the scale. : 
 gang : unknown, optional
     'gang', 'nogang', ''. Default = ''.
 exact : bool, optional
-    Exact plot y_max, y_min to correspond to y_min_in, y_max_in? Default is False. Only relavent when y_min_in
-    /= y_max_in.
+    Exact plot y_max, y_min to correspond to y_min_in, y_max_in?
+Default is False. Only relavent when y_min_in /= y_max_in. : 
 turn_autoscale_off : bool, optional
     If True (default) then turn off plot.autoscale_x logical for all plots that are scaled.
 
@@ -5537,8 +5581,8 @@ x_min_in : float
 x_max_in : float
     Plot x-axis max value.
 include_wall : bool, optional
-    Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
-    include the building wall position will be included in determining the the scale.
+    Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in.
+If present and True include the building wall position will be included in determining the the scale. : 
 gang : unknown, optional
     'gang', 'nogang', ''. Default = ''.
 

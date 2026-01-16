@@ -923,14 +923,13 @@ subroutine fortran_cross_product (a, b, c) bind(c)
   type(array_descriptor_t), intent(in) :: a
   real(rp), pointer :: f_a(:)
   real(c_double), pointer :: f_a_ptr(:)
+  type(array_descriptor_t), intent(in) :: b
+  real(rp), pointer :: f_b(:)
+  real(c_double), pointer :: f_b_ptr(:)
   ! ** Out parameters **
   type(array_descriptor_t), intent(in) :: c
   real(rp) :: f_c(3)
   real(c_double), pointer :: f_c_ptr(:)
-  ! ** Inout parameters **
-  type(array_descriptor_t), intent(in) :: b
-  real(rp), pointer :: f_b(:)
-  real(c_double), pointer :: f_b_ptr(:)
   ! ** End of parameters **
   !! general array (1D_NOT_real)
   if (c_associated(a%data_ptr)) then
@@ -3263,17 +3262,20 @@ subroutine fortran_quat_mul_complex (q1, q2, q3, q4, q5, q6, q7, q8, q9, q_out) 
   type(array_descriptor_t), intent(in) :: q1
   complex(rp) :: f_q1(0:3)
   complex(c_double_complex), pointer :: f_q1_ptr(:)
+  type(array_descriptor_t), intent(in) :: q2
+  complex(rp) :: f_q2(0:3)
+  complex(c_double_complex), pointer :: f_q2_ptr(:)
   type(array_descriptor_t), intent(in) :: q3
   complex(rp) :: f_q3(0:3)
   complex(c_double_complex), pointer :: f_q3_ptr(:)
+  type(array_descriptor_t), intent(in) :: q9
+  complex(rp) :: f_q9(0:3)
+  complex(c_double_complex), pointer :: f_q9_ptr(:)
   ! ** Out parameters **
   type(array_descriptor_t), intent(in) :: q_out
   complex(rp) :: f_q_out(0:3)
   complex(c_double_complex), pointer :: f_q_out_ptr(:)
   ! ** Inout parameters **
-  type(array_descriptor_t), intent(in) :: q2
-  complex(rp) :: f_q2(0:3)
-  complex(c_double_complex), pointer :: f_q2_ptr(:)
   type(array_descriptor_t), intent(in) :: q4
   complex(rp) :: f_q4(0:3)
   complex(c_double_complex), pointer :: f_q4_ptr(:)
@@ -3289,9 +3291,6 @@ subroutine fortran_quat_mul_complex (q1, q2, q3, q4, q5, q6, q7, q8, q9, q_out) 
   type(array_descriptor_t), intent(in) :: q8
   complex(rp) :: f_q8(0:3)
   complex(c_double_complex), pointer :: f_q8_ptr(:)
-  type(array_descriptor_t), intent(in) :: q9
-  complex(rp) :: f_q9(0:3)
-  complex(c_double_complex), pointer :: f_q9_ptr(:)
   ! ** End of parameters **
   !! general array (1D_NOT_complex)
   if (c_associated(q1%data_ptr)) then
@@ -3372,17 +3371,20 @@ subroutine fortran_quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9, q_out) bin
   type(array_descriptor_t), intent(in) :: q1
   real(rp) :: f_q1(0:3)
   real(c_double), pointer :: f_q1_ptr(:)
+  type(array_descriptor_t), intent(in) :: q2
+  real(rp) :: f_q2(0:3)
+  real(c_double), pointer :: f_q2_ptr(:)
   type(array_descriptor_t), intent(in) :: q3
   real(rp) :: f_q3(0:3)
   real(c_double), pointer :: f_q3_ptr(:)
+  type(array_descriptor_t), intent(in) :: q9
+  real(rp) :: f_q9(0:3)
+  real(c_double), pointer :: f_q9_ptr(:)
   ! ** Out parameters **
   type(array_descriptor_t), intent(in) :: q_out
   real(rp) :: f_q_out(0:3)
   real(c_double), pointer :: f_q_out_ptr(:)
   ! ** Inout parameters **
-  type(array_descriptor_t), intent(in) :: q2
-  real(rp) :: f_q2(0:3)
-  real(c_double), pointer :: f_q2_ptr(:)
   type(array_descriptor_t), intent(in) :: q4
   real(rp) :: f_q4(0:3)
   real(c_double), pointer :: f_q4_ptr(:)
@@ -3398,9 +3400,6 @@ subroutine fortran_quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9, q_out) bin
   type(array_descriptor_t), intent(in) :: q8
   real(rp) :: f_q8(0:3)
   real(c_double), pointer :: f_q8_ptr(:)
-  type(array_descriptor_t), intent(in) :: q9
-  real(rp) :: f_q9(0:3)
-  real(c_double), pointer :: f_q9_ptr(:)
   ! ** End of parameters **
   !! general array (1D_NOT_real)
   if (c_associated(q1%data_ptr)) then

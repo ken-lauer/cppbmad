@@ -33,7 +33,7 @@ lat : LatStruct
 ix_ele : int
     Index of the new control element
 ele_name : unknown, optional
-    Name of the new element. Output
+    Name of the new element.
 )"""
   );
   m.def(
@@ -177,7 +177,8 @@ Parameters
 mat : float
     1-turn transfer matrix
 above_transition : bool, optional
-    If present and false, then z-mode assumes positive slip factor. Else negative slip factor assumed.
+    If present and false, then z-mode assumes positive slip factor.
+Else negative slip factor assumed. : 
 abz_tunes : float, optional
     Tunes to order eigensystem by.
 

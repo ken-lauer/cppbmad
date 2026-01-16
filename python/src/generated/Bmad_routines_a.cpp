@@ -51,8 +51,8 @@ n : float
 ref_species : int
     Reference species.
 ele_orientation : int
-    Element orientation +1 = normal, -1 = reversed, 0 = Ignore orientation and tracking species (used with
-    pole_type = magnetic$).
+    Element orientation +1 = normal, -1 = reversed,
+0 = Ignore orientation and tracking species : 
 coord : CoordStruct
     Particle position and direction of travel.
 pole_type : int, optional
@@ -107,8 +107,9 @@ orbit : CoordStruct
 pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
 scale : float, optional
-    Factor to scale the kicks. Default is 1. For pole_type = electric$, set scale to the longitudinal length
-    of the field region
+    Factor to scale the kicks. Default is 1.
+For pole_type = electric$ : 
+set scale to the longitudinal length of the field region : 
 mat6 : float, optional
     Transfer matrix before the multipole.
     This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
@@ -207,7 +208,12 @@ Where N is from the Eigen decomposition of the 1-turn transfer matrix.
 Parameters
 ----------
 ring : LatStruct
-    lattice .a.tune   -- a-mode tune (horizontal-like) .b.tune   -- b-mode tune (vertical-like) .z.tune   --
+    lattice
+%a%tune : 
+    a-mode tune (horizontal-like)
+%b%tune : 
+    b-mode tune (vertical-like)
+%z%tune : 
     c-mode tune (synchrotron-like)
 ix : int
     element index at which to calculate J
@@ -296,25 +302,29 @@ lat : LatStruct
     Lat to modify.
     This parameter is an input/output and is modified in-place. As an output: Modified lat.
 super_ele_in : EleStruct
-    Element to superimpose. .s               -- Position of end of element. Negative distances mean distance
-    from the end.
+    Element to superimpose.
+%s : 
+    Position of end of element.
+Negative distances mean distance from the end. : 
 ix_branch : int
     Branch index to put element.
 save_null_drift : bool, optional
     Save a copy of a drift to be split as a null_ele? This is useful if further superpositions might use this
     drift as a reference element. After all superpositions are done, remove_eles_from_lat can be called to
-    remove all null_eles. Default is False.
+    remove all null_eles.
+Default is False. : 
 create_jumbo_slave : bool, optional
     Default is False. If True then super_slaves that are created that have super_ele_in as their super_lord
-    are em_field elements.
+    are
+em_field elements. : 
 ix_insert : int, optional
     If present and positive, and super_ele_in has zero length, use ix_insert as the index to insert
     super_ele_in at. ix_insert is useful when superposing next to another element that has zero or negative
-    length (EG a patch) and you want to make sure that the superimposed element is on the correct side of the
-    element.
+    length (EG a patch) and you want
+to make sure that the superimposed element is on the correct side of the element. : 
 mangle_slave_names : bool, optional
-    If True (default), adjust slave names appropriately. Name mangeling can take time so bmad_parser will do
-    this all at once at the end.
+    If True (default), adjust slave names appropriately. Name
+mangeling can take time so bmad_parser will do this all at once at the end. : 
 wrap : bool, optional
     If True (default), and if the superimposed element has an end that extends beyond the starting or ending
     edge of the lattice, wrap the element around the lattice so that the beginning portion of the element is
@@ -379,7 +389,6 @@ This routine is used by add_superimpose and is not meant for general use.
       R"""(Parameters
 ----------
 lat : LatStruct
-    .branch(:)  -- Branch array to be allocated.
 upper_bound : int
     Desired upper bound.
 )"""
@@ -394,9 +403,9 @@ upper_bound : int
       R"""(Parameters
 ----------
 lat : LatStruct
-    Lattice with element array. .branch(ix_branch).ele(:)  -- Element array to reallocate.
+    Lattice with element array.
 upper_bound : int, optional
-    Optional desired upper bound. Default: 1.3*ubound(ele(:)) or 10 if ele is not allocated.
+    Optional desired upper bound.
 ix_branch : int, optional
     Branch index. Default is 0.
 do_ramper_slave_setup : bool, optional
@@ -500,7 +509,12 @@ transfer them to the associated PTC fibre.
 Parameters
 ----------
 ele : EleStruct
-    Patch element. ele.ptc_fibre -- PTC Fibre which should be a marker.
+    Patch element.
+
+Returns
+-------
+ele%ptc_fibre : 
+    PTC Fibre which should be a marker.
 )"""
   );
   m.def(
@@ -568,10 +582,10 @@ ele : EleStruct
     Element with attributes
     This parameter is an input/output and is modified in-place. As an output: Element with self-consistant
     attributes.
-force_bookkeeping : bool, optional
-    If present and True then force -- Logical, optional: If present and True then force attribute bookkeeping
-    to be done independent of the state of ele.bookkeeping_stat.attributes. This will also cause
-    attribute_bookkeeper to assume intelligent bookkeeping.
+force_bookkeeping : unknown, optional
+    If present and True then force attribute bookkeeping to be done independent of the state of
+    ele.bookkeeping_stat.attributes. This will also cause attribute_bookkeeper to assume intelligent
+    bookkeeping.
 )"""
   );
   py::class_<Bmad::AttributeFree1, std::unique_ptr<Bmad::AttributeFree1>>(
@@ -638,10 +652,13 @@ attrib_name : unknown
 lat : LatStruct
     Lattice structure.
 err_print_flag : bool, optional
-    If present and False then suppress printing of an error message if attribute is not free.
+    If present and False then suppress
+printing of an error message if attribute is not free. : 
 except_overlay : bool, optional
-    If present and True then an attribute that is controlled by an overlay will be treated as free. This is
-    used by, for example, the create_overlay routine.
+    If present and True then an attribute that is controlled by an overlay will be treated as free.
+This is used by : 
+for example : 
+the create_overlay routine. : 
 dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
     b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
@@ -649,7 +666,8 @@ dependent_attribs_free : bool, optional
 Returns
 -------
 free : bool
-    Set True if attribtute not found or attriubte cannot be changed directly.
+    Set True if attribtute not found or attriubte
+cannot be changed directly. : 
 why_not_free : int
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
     -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
@@ -720,10 +738,13 @@ attrib_name : unknown
 lat : LatStruct
     Lattice structure.
 err_print_flag : bool, optional
-    If present and False then suppress printing of an error message if attribute is not free.
+    If present and False then suppress
+printing of an error message if attribute is not free. : 
 except_overlay : bool, optional
-    If present and True then an attribute that is controlled by an overlay will be treated as free. This is
-    used by, for example, the create_overlay routine.
+    If present and True then an attribute that is controlled by an overlay will be treated as free.
+This is used by : 
+for example : 
+the create_overlay routine. : 
 dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
     b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
@@ -731,7 +752,8 @@ dependent_attribs_free : bool, optional
 Returns
 -------
 free : bool
-    Set True if attribtute not found or attriubte cannot be changed directly.
+    Set True if attribtute not found or attriubte
+cannot be changed directly. : 
 why_not_free : int
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
     -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
@@ -806,10 +828,13 @@ attrib_name : unknown
 lat : LatStruct
     Lattice structure.
 err_print_flag : bool, optional
-    If present and False then suppress printing of an error message if attribute is not free.
+    If present and False then suppress
+printing of an error message if attribute is not free. : 
 except_overlay : bool, optional
-    If present and True then an attribute that is controlled by an overlay will be treated as free. This is
-    used by, for example, the create_overlay routine.
+    If present and True then an attribute that is controlled by an overlay will be treated as free.
+This is used by : 
+for example : 
+the create_overlay routine. : 
 dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
     b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
@@ -817,7 +842,8 @@ dependent_attribs_free : bool, optional
 Returns
 -------
 free : bool
-    Set True if attribtute not found or attriubte cannot be changed directly.
+    Set True if attribtute not found or attriubte
+cannot be changed directly. : 
 why_not_free : int
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
     -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
@@ -874,7 +900,8 @@ See also:
 Parameters
 ----------
 ele : EleStruct
-    attribute_index will restrict the name search to valid attributes of the given element.
+    attribute_index will restrict the name search to
+valid attributes of the given element. : 
 key : int
     Equivalent to ele.key.
 name : unknown
@@ -945,7 +972,8 @@ See also:
 Parameters
 ----------
 ele : EleStruct
-    attribute_index will restrict the name search to valid attributes of the given element.
+    attribute_index will restrict the name search to
+valid attributes of the given element. : 
 key : int
     Equivalent to ele.key.
 name : unknown
@@ -990,7 +1018,8 @@ Use attributge_name (ele, ix_att) is this is needed.
 Parameters
 ----------
 ele : EleStruct
-    .key             -- Integer: Key name of element type (e.g. SBEND$, etc.)
+%key : int
+    Key name of element type (e.g. SBEND$, etc.)
 key : int
     Key name of element type (e.g. sbend$, etc.)
 ix_att : int
@@ -1033,7 +1062,8 @@ Use attributge_name (ele, ix_att) is this is needed.
 Parameters
 ----------
 ele : EleStruct
-    .key             -- Integer: Key name of element type (e.g. SBEND$, etc.)
+%key : int
+    Key name of element type (e.g. SBEND$, etc.)
 key : int
     Key name of element type (e.g. sbend$, etc.)
 ix_att : int

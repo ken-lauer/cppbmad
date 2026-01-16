@@ -34,7 +34,7 @@ sigma : float
     Beam (x,y) sigmas.
 nk : float
     Normalized, dimensionless kick component. In terms of the the actual kick: nk = [kick_x / (xi_x * sigma_x
-    / beta_x), kick_y / (xi_y * sigma_y / beta_y) nk = -4 * pi * [x/sigma_x, y/sigma_y] in the linear region
+    / beta_x), kick_y / (xi_y * sigma_y / beta_y)
 dnk : float
     derivatives of nk. EG: dnk(2,1) = dnk(2)/dy Note: xi_x = beta_x * bbi_const / sig_x     ! Horizontal tune
     shift parameter xi_y = beta_y * bbi_const / sig_y     ! Vertical   tune shift parameter where bbi_const =
@@ -139,7 +139,7 @@ ele : EleStruct
 species : int
     Beam particle species.
 modes : NormalModesStruct, optional
-    Normal mode parameters. Ouput:
+    Normal mode parameters.
 err_flag : bool, optional
     Set true if there is an error. False otherwise.
 beam_init_set : BeamInitStruct
@@ -286,7 +286,7 @@ param : LatParamStruct
 orbit : CoordStruct
     particle position.
 local_ref_frame : bool
-    Is the particle position in the local element ref frame (as opposed to the lab frame)?
+    Is the particle position in the local element ref
 field : EmFieldStruct
     Field
 calc_dfield : bool, optional
@@ -303,7 +303,7 @@ calc_potential : bool, optional
       R"""(Parameters
 ----------
 ele : EleStruct
-    Element to be checked. Ouput:
+    Element to be checked.
 is_set : bool
     Note: will be set True for non-bend elements.
 )"""
@@ -439,20 +439,24 @@ gamma : float
 E_min : float, optional
     Minimum photon energy. Default is zero. Ignored if negative.
 E_max : float, optional
-    Maximum photon energy.  Default is Infinity. Ignored if negative. If non-positive then E_max will be taken
-    to be Infinity.
+    Maximum photon energy.  Default is Infinity. Ignored if negative.
+If non-positive then E_max will be taken to be Infinity. : 
 E_integ_prob : float
-    , optional :: integrated energy probability. See above. If E_integ_prob is non-negative, it must be in the
-    range [0, 1].
+    , optional :: integrated energy probability. See above.
+If E_integ_prob is non-negative : 
+it must be in the range [0 : 
+1]. : 
 vert_angle_min : float, optional
-    Minimum vertical angle to emit a photon. -pi/2 is used if argument not present or if argument is less than
-    -pi/2.
+    Minimum vertical angle to emit a photon.
+-pi/2 is used if argument not present or if argument is less than -pi/2. : 
 vert_angle_max : float, optional
-    Maximum vertical angle to emit a photon. pi/2 is used if argument not present or if argument is greater
-    than pi/2.
+    Maximum vertical angle to emit a photon.
+pi/2 is used if argument not present or if argument is greater than pi/2. : 
 vert_angle_symmetric : bool, optional
     Default is False. If True, photons will be emitted in the range [-vert_angle_max, -vert_angle_min] as well
-    as the range [vert_angle_min, vert_angle_max]. In this case vert_angle_min/max must be positive.
+    as the range
+[vert_angle_min : 
+vert_angle_max]. In this case vert_angle_min/max must be positive. : 
 emit_probability : float, optional
     Probability of emitting a photon in the range [E_min, E_max] or in the vertical angular range given. The
     probability is normalized so that the probability of emitting if no ranges are given is 1.
@@ -490,8 +494,11 @@ gamma_phi : float
 Returns
 -------
 orbit : CoordStruct
-    Photon coords .field(2)     -- (x,y) polaraization. Will have unit magnitude .phase(2)     -- (x,y)
-    phases. Will be [0, pi/2].
+    Photon coords
+%field : 
+    (x,y) polaraization. Will have unit magnitude
+%phase : 
+    (x,y) phases. Will be [0, pi/2].
 )"""
   );
   m.def(
@@ -514,7 +521,9 @@ E_rel : float
 gamma : float
     beam relativistic factor
 r_in : float, optional
-    Integrated probability in the range [0,1]. If not present, a random number will be used.
+    Integrated probability in the range [0,1].
+If not present : 
+a random number will be used. : 
 invert : float, optional
     If True then take r_in as the inverse integrated probability with inverted probability = 1 - probability.
     This is useful to avoid round-off errors when for looking at the tail of the distribution where the
@@ -677,19 +686,16 @@ sigma_z : float
 lat_file : unknown
     Name of the input file.
 lat : LatStruct
-    Lat structure. See bmad_struct.f90 for more details. .ele(:).mat6      -- This is computed assuming an on-
-    axis orbit if make_mats6 = T.
+    Lat structure. See bmad_struct.f90 for more details.
 make_mats6 : bool, optional
-    Compute the 6x6 transport matrices for the Elements? Default is True. Do not set False unless you know
-    what you are doing.
+    Compute the 6x6 transport matrices for the Elements?
 digested_read_ok : bool
-    Set True if the digested file was successfully read. False otherwise.
+    Set True if the digested file was
 use_line : unknown, optional
     If present and not blank, override the use statement in the lattice file and use use_line instead.
 err_flag : bool
     Set true if there is an error, false otherwise. Note: err_flag does *not* include errors in lat_make_mat6
-    since if there is a match element, there is an error raised since the Twiss parameters have not been set
-    but this is expected.
+    since if there is a match element, there is an error raised since
 parse_lat : LatStruct
     List of elements used to construct the lattice. Useful if bmad_parser2 will be called. See bmad_parser2
     documentation.
@@ -712,9 +718,9 @@ lat : LatStruct
     lattice with existing layout.
     This parameter is an input/output and is modified in-place. As an output: lattice with modifications.
 orbit : CoordStruct, optional
-    closed orbit for when bmad_parser2 calls lat_make_mat6
+    closed orbit for when
 make_mats6 : bool, optional
-    Make the 6x6 transport matrices for then Elements? Default is True.
+    Make the 6x6 transport matrices for then
 err_flag : 
 parse_lat : LatStruct, optional
     Used by bmad_parser to pass to bmad_parser2 a list of elements that were defined in the lattice file but
@@ -780,8 +786,9 @@ exit end of ele will correspond to the exit end of ele%ptc_fibre.
 Parameters
 ----------
 branch : BranchStruct
-    Input branch. branch(:).ptc              -- Pointers to generated layouts. branch(:).ele(:).ptc_fibre --
-    Pointer to PTC fibres
+    Input branch.
+    This parameter is an input/output and is modified in-place. As an output: Pointers to generated layouts.
+    This parameter is an input/output and is modified in-place. As an output: Pointer to PTC fibres
 )"""
   );
   m.def(

@@ -106,7 +106,7 @@ tunes : float
 ele0 : EleStruct
     Previous element in lattice with starting energy and time values.
 ele : EleStruct
-    Lattice element .time_ref_orb_in  -- Starting orbit for ref time calc.
+    Lattice element
     This parameter is an input/output and is modified in-place. As an output: Lattice element with reference
     energy and time.
 param : LatParamStruct
@@ -193,16 +193,14 @@ str : unknown
       R"""(Parameters
 ----------
 floor_start : 
-    Starting floor coordinates at upstream end. Not used for fiducial and girder elements.
+    Starting floor coordinates at upstream end.
 ele : EleStruct
     Element to propagate the geometry through.
 floor_end : FloorPositionStruct
-    Output floor position. If not present then ele.floor will be used and ele.bookkeeping_state.floor_position
-    will be set to ok$. .r(3)              -- X, Y, Z Floor position at end of element .w(3,3)            -- W
-    matrix corresponding to orientation angles .theta, phi, .psi  -- Orientation angles
+    Output floor position. If not present then
 len_scale : float, optional
     factor to scale the length of the element. 1.0_rp => Output is geometry at end of element (default).
-    0.5_rp => Output is geometry at center of element. -1.0_rp => Used to propagate geometry in reverse.
+    0.5_rp => Output is geometry at center of element.
 ignore_patch_err : bool, optional
     If present and True, ignore flexible patch errors. This is used by ele_compute_ref_energy_and_time to
     suppress unnecessary messages.
@@ -304,7 +302,7 @@ loc : LatEleLocStruct
 ele : EleStruct
     Element in a lattice
 show_branch0 : bool, optional
-    Explicitly show branch for main lattice elements? Default is False.
+    Explicitly show branch for main
 parens : unknown, optional
     If present, enclose location string using the two characters supplied. Typically parens will be set to
     "()" or "[]".
@@ -385,7 +383,6 @@ orbit : CoordStruct
 particle_at : int
     first_track_edge$ (that is, entering the element), or second_track_edge$ (that is, leaving the element),
     or upstream_end$ (inherit ele.value(p0c_start$) ref), or downstream_end$ (inherit ele.value(p0c$)).
-    inside$ (or anything else) -> Do nothing.
 mat6 : float, optional
     Transfer matrix before correction.
     This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
@@ -450,11 +447,10 @@ err_flag : bool
     Set True if setup OK. False otherwise.
 integ_order : int, optional
     Order for the sympletic integrator. Possibilities are: 2, 4, or 6 Overrides ele.value(integrator_order$).
-    default = 2 (if not set with set_ptc).
 steps : int, optional
-    Number of integration steps. Overrides ele.value(ds_step$).
+    Number of integration steps.
 for_layout : bool, optional
-    If True then fibre will be put in the PTC layout. Default is False.
+    If True then fibre will be put in the PTC layout.
 ref_in : CoordStruct, optional
     Particle to be tracked. ref_particle$, electron$, etc. This argument should only be present when the fibre
     is not to be put in a layout.
@@ -538,13 +534,12 @@ ele : ElementStruct
     Element to construct map for.
 orb0 : CoordStruct, optional
     Starting coords around which the Taylor map is evaluated. Default is the zero orbit.
-taylor_map_includes_offsets : bool, optional
-    If present then value overrides ele.taylor_map_includes_offsets. -- Logical, optional: If present then
-    value overrides ele.taylor_map_includes_offsets.
+taylor_map_includes_offsets : unknown, optional
+    If present then value overrides ele.taylor_map_includes_offsets.
 include_damping : bool, optional
     Sets if radiation damping is included. Default is what is set in ptc_private.base_state.
 orbital_taylor : TaylorStruct
-    Orbital taylor map. If not present then the map is put in ele.taylor.
+    Orbital taylor map.
 spin_taylor : TaylorStruct
     Spin taylor map. If not present then the map is put in ele.spin_taylor.
 )"""
@@ -582,8 +577,7 @@ ele : EleStruct
 list : int
     List of indexes of ele.value(:) array to check.
 abs_tol : float
-    List of values such that if the change in parameter value is less than this it is not considered to have
-    changed significantly.
+    List of values such that if the change in parameter value is
 set_old : bool
     If True then set ele.old_value(j) = ele.value(j) for j in list
 has_changed : bool
@@ -737,7 +731,12 @@ err_flag : bool
 s_eff : float
     Effective s. Equal to s with a open lattice. See above.
 position : CoordStruct
-    Positional information. .s         -- Same as input s. .ix_ele    -- Same as output ix_ele .location  --
+    Positional information.
+%s : 
+    Same as input s.
+%ix_ele : 
+    Same as output ix_ele
+%location : 
     Location relative to element. Upstream_end$, downstream_end$, or inside$
 
 Notes
@@ -842,7 +841,12 @@ err_flag : bool
 s_eff : float
     Effective s. Equal to s with a open lattice. See above.
 position : CoordStruct
-    Positional information. .s         -- Same as input s. .ix_ele    -- Same as output ix_ele .location  --
+    Positional information.
+%s : 
+    Same as input s.
+%ix_ele : 
+    Same as output ix_ele
+%location : 
     Location relative to element. Upstream_end$, downstream_end$, or inside$
 
 Notes
@@ -926,14 +930,11 @@ param : LatParamStruct
     Lattice parameters.
 s_pos : float
     Longitudinal position. If local_ref_frame = T: In Body coords relative to the entrance edge of the
-    element. If local_ref_frame = F: In Lab coords relative to the upstream edge of the element.
+    element.
 orbit : CoordStruct
-    Transverse coordinates. .vec(1), .vec(3)    -- Transverse coords. .t                  -- Used with
-    absolute time tracking. .vec(5)             -- Used with relative time tracking (except with time Runge-
-    Kutta).
+    Transverse coordinates.
 local_ref_frame : 
-    Logical, If True then take the input coordinates and output fields as being with respect to the frame of
-    referene of the element (ignore misalignments).
+    Logical, If True then take the input coordinates and output fields
 field : EmFieldStruct
     E and B fields and derivatives.
 calc_dfield : bool, optional
@@ -945,19 +946,15 @@ calc_potential : bool, optional
     wigglers at present.
 use_overlap : bool, optional
     Add in overlap fields from other elements? Default is True.
-grid_allow_s_out_of_bounds : bool, optional
-    For grids, allow s-coordinate to be grossly out of bounds -- logical, optional: For grids, allow
-    s-coordinate to be grossly out of bounds and return zero instead of an error? Default: False. Used
-    internally for overlapping fields.
+grid_allow_s_out_of_bounds : unknown, optional
+    For grids, allow s-coordinate to be grossly out of bounds
 rf_time : float, optional
     Set the time relative to the RF clock. Normally this time is calculated using orbit.t or orbit.vec(5) but
-    sometimes it is convenient to be able to override this. For example, time_runge_kutta uses this.
+    sometimes it is convenient to be able to override this.
 used_eles : ElePointerStruct, optional
-    For internal use only when this routine is called recursively. Used to prevent double counting when there
-    is field overlap.
+    For internal use only when this routine is
 print_err : bool, optional
-    Print an error message? Default is True. For example, if the particle is out of bounds when the field is
-    defined on a grid.
+    Print an error message? Default is True.
 original_ele : EleStruct, optional
     Used with recursive calls that pass the lord as the ele argument. In this case original_ele is the
     original ele argument.
@@ -1108,8 +1105,8 @@ Parameters
 ele_ref : EleStruct
     Origin of the 1-turn maps used to evaluate the emittances.
 include_opening_angle : bool
-    If True include the effect of the vertical opening angle of emitted radiation. Generally use True unless
-    comparing against other codes.
+    If True include the effect of the vertical opening angle of emitted radiation.
+Generally use True unless comparing against other codes. : 
 closed_orbit : CoordStruct, optional
     Closed orbit. If not present this routine will calculate it.
 
@@ -1213,12 +1210,21 @@ Theta : float
 Iota : float
     Integrated vertical excitation matrix.
 eles : EleStruct
-    array of element structures representing ring. .mat6(6,6)            -- real(rp): element transfer matrix.
-    .value(l$)            -- real(rp): element (slice) length. .value(E_TOT$)        -- real(rp): Beam energy
-    in element.
-mode : unknown
-    tune of a-mode. .b.tune                  -- real(rp): tune of b-mode. .z.tune                  --
-    real(rp): tune of z-mode.
+    array of element structures representing ring.
+%mat6 : float
+    element transfer matrix.
+%value : float
+    element (slice) length.
+%value : float
+    Beam energy in element.
+mode : 
+    normal_modes_struct
+%a%tune : float
+    tune of a-mode.
+%b%tune : float
+    tune of b-mode.
+%z%tune : float
+    tune of z-mode.
 tail_cut : bool
     apply tail cut.
 npart : float
@@ -2638,7 +2644,12 @@ t : float
 B1 : float
     Scalar value.  Eq. 33 from Piwinski's paper.
 B2 : float
-    Scalar value.  Eq. 34 from Piwinski's paper. <return value> -- Real(rp): Scalar return value.
+    Scalar value.  Eq. 34 from Piwinski's paper.
+
+Returns
+-------
+<return value> : float
+    Scalar return value.
 )"""
   );
   m.def(
@@ -2663,10 +2674,10 @@ Parameters
 delim_list : unknown
     List of expected (valid) delimitors. If list contains a space character then no delimitor (indicating the
     end of the command) is a valid possibility.
-check_input_delim : bool
-    If True, then check if delim argument is in the delim_list. -- logical: If True, then check if delim
-    argument is in the delim_list. If False, check that the next character in the parse stream is an expected
-    delimitor.
+check_input_delim : unknown
+    If True, then check if delim argument is in the delim_list.
+If False : 
+check that the next character in the parse stream is an expected delimitor. : 
 ele_name : unknown
     Lattice element under construction. Used for error messages.
 delim : unknown
@@ -2723,8 +2734,8 @@ Parameters
 expecting : unknown
     list of characters that are expected to be next in the parse stream.
 check_delim : bool
-    If True then use delim argument as first token to check. A blank character indicates end of command is
-    expected.
+    If True then use delim argument as first token to check.
+A blank character indicates end of command is expected. : 
 call_check : bool
     If True then check for 'call::<filename>' construct.
 err_str : unknown
@@ -2806,7 +2817,8 @@ Parameters
 stack : ExpressionAtomStruct
     Expression to evaluate.
 var : ControlVar1Struct, optional
-    Array of control variables. Used with Bmad controller elements.
+    Array of control variables.
+Used with Bmad controller elements. : 
 use_old : bool, optional
     Use var.old_value? Must be present if var(:) is present.
 
@@ -2963,9 +2975,11 @@ tree : ExpressionTreeStruct
     Root of tree to print.
 include_root : bool, optional
     Default is True. If True, do not inculde in the output string the root node. Note: If the root node is of
-    type root$, this node is always ignored.
+    type root$, this node is
+always ignored. : 
 n_node : int, optional
-    Node index. parent.node(n_node) === tree. Internal use only. Used with recursive calls.
+    Node index. parent.node(n_node) === tree.
+Internal use only. Used with recursive calls. : 
 parent : ExpressionTreeStruct, optional
     Internal use only. Used with recusive calls.
 
@@ -3010,7 +3024,8 @@ Parameters
 expression : unknown
     Expression string.
 var : ControlVar1Struct, optional
-    Array of control variables. Used with Bmad controller elements.
+    Array of control variables.
+Used with Bmad controller elements. : 
 use_old : bool, optional
     Use var.old_value? Must be present if var(:) is present.
 

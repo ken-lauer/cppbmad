@@ -113,7 +113,13 @@ Parameters
 ----------
 q1 : float
     Quaternions.
+q2 : float
+    Quaternions.
 q3 : float, optional
+    More quaternions.
+... : float, optional
+    More quaternions.
+q9 : float, optional
     More quaternions.
 
 Returns
@@ -155,7 +161,13 @@ Parameters
 ----------
 q1 : float
     Quaternions.
+q2 : float
+    Quaternions.
 q3 : float, optional
+    More quaternions.
+... : float, optional
+    More quaternions.
+q9 : float, optional
     More quaternions.
 
 Returns
