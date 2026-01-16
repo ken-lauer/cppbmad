@@ -1567,8 +1567,15 @@ SimUtils::SuperBicubicInterpolation super_bicubic_interpolation(
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine super_mrqcof:
-// - Variable inout sized array: 2D_NOT_real
-// - Untranslated type: super_mrqmin_storage_struct (0D)
+// - Argument not defined: a (have: [])
+// - Argument not defined: y (have: [])
+// - Argument not defined: co_alpha (have: [])
+// - Argument not defined: da_beta (have: [])
+// - Argument not defined: weight (have: [])
+// - Argument not defined: chisq (have: [])
+// - Argument not defined: funcs (have: [])
+// - Argument not defined: storage (have: [])
+// - Argument not defined: status (have: [])
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine super_mrqmin:
@@ -1627,6 +1634,13 @@ double super_poly(double x, FArray1D<Real> &coeffs);
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine super_rtsafe:
+// - Argument not defined: funcs (have: [])
+// - Argument not defined: x1 (have: [])
+// - Argument not defined: x2 (have: [])
+// - Argument not defined: rel_tol (have: [])
+// - Argument not defined: abs_tol (have: [])
+// - Argument not defined: status (have: [])
+// - Argument not defined: x_zero (have: [])
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_super_sobseq(
     Bmad::array_descriptor_t &x /* 1D_NOT_real inout */,
