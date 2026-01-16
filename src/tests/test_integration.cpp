@@ -43,7 +43,7 @@ void test_real_container() {
   bview[1] = 2.;
   bview[2] = 3.;
 
-  auto ierr = fft1(a.view(), b.view(), n, isn);
+  auto ierr = fft1(a, b, n, isn);
   std::cout << "a=" << a.view().to_vector() << "\n";
   std::cout << "b=" << b.view().to_vector() << "\n";
   std::cout << "ierr=" << ierr << "\n";
